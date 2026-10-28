@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createRoot } from "react-dom/client"
-import { Button } from "../../registry/ui/button"
+import { Button, buttonVariants } from "../../registry/ui/button"
 import "./style.css"
 
 const params = new URLSearchParams(location.search)
@@ -18,6 +18,7 @@ function Fixture() {
     <Button asChild><a href="#destination">Continue</a></Button>
     <Button disabled onClick={() => setCount(count + 100)}>Disabled</Button>
     <Button variant="outline">Outline</Button>
+    <a href="#utility" className={buttonVariants()}>Utility link</a>
   </>
 }
 

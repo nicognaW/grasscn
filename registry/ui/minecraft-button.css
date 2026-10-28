@@ -6,6 +6,7 @@
     --mc-pixel: calc(1px * var(--mc-scale, 2));
     --mc-ink: #fff;
     --mc-shadow: #3f3f3f;
+    --mc-image: var(--mc-normal-image);
     --mc-border: var(--mc-normal-border);
     --mc-border-px: calc(var(--mc-border) * var(--mc-pixel));
     --mc-tile-width: calc((200 - 2 * var(--mc-border)) * var(--mc-pixel));
@@ -26,9 +27,9 @@
     padding: 0;
     border: 0;
     border-radius: 0;
-    background: transparent;
+    background: var(--mc-image) center / 100% 100% no-repeat;
     color: var(--mc-ink);
-    font-family: monospace;
+    font-family: "Minecraft Pilot 26.2", monospace;
     font-size: calc(8 * var(--mc-pixel));
     font-weight: 400;
     font-style: normal;
@@ -38,10 +39,12 @@
     line-height: 1;
     text-transform: none;
     text-decoration: none;
+    text-shadow: var(--mc-pixel) var(--mc-pixel) 0 var(--mc-shadow);
     image-rendering: pixelated;
     cursor: pointer;
   }
   .mc-button:is(:hover, :focus-visible):not(:disabled, [aria-disabled="true"]) {
+    --mc-image: var(--mc-highlighted-image);
     --mc-piece-0: var(--mc-highlighted-0);
     --mc-piece-1: var(--mc-highlighted-1);
     --mc-piece-2: var(--mc-highlighted-2);
@@ -53,6 +56,7 @@
     --mc-piece-8: var(--mc-highlighted-8);
   }
   .mc-button:is(:disabled, [aria-disabled="true"]) {
+    --mc-image: var(--mc-disabled-image);
     --mc-border: var(--mc-disabled-border);
     --mc-ink: #a0a0a0;
     --mc-shadow: #282828;

@@ -1,5 +1,17 @@
 import { test, expect } from "@playwright/test"
 
+test("buttonVariants styles a standalone link with the Minecraft skin", async ({ page }) => {
+  await page.goto("/")
+  const link = page.getByRole("link", { name: "Utility link" })
+  await expect(link).toHaveCSS("width", "400px")
+  await expect(link).toHaveCSS("height", "40px")
+  await expect(link).not.toHaveCSS("background-image", "none")
+  await expect(link).toHaveCSS("font-family", '"Minecraft Pilot 26.2", monospace')
+  await link.focus()
+  await page.keyboard.press("Enter")
+  await expect(page).toHaveURL(/#utility$/)
+})
+
 test("default button uses native proportions and supports keyboard activation", async ({ page }) => {
   await page.goto("/")
   const button = page.getByRole("button", { name: "Button", exact: true })
