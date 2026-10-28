@@ -1,5 +1,22 @@
 [
-  { "name": "button", "title": "Button", "category": "Actions" },
-  { "name": "checkbox", "title": "Checkbox", "category": "Selection" },
-  { "name": "slider", "title": "Slider", "category": "Selection" }
+  {
+    "name": "button",
+    "title": "Button",
+    "category": "Actions"
+  },
+  {
+    "name": "checkbox",
+    "title": "Checkbox",
+    "category": "Selection"
+  },
+  {
+    "name": "slider",
+    "title": "Slider",
+    "category": "Selection"
+  },
+  {
+    "name": "input",
+    "title": "Input",
+    "category": "Text entry"
+  }
 ]

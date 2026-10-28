@@ -23,7 +23,7 @@ LoadingDotsWidget MultiLineEditBox MultiLineLabel PlayerFaceExtractor PlayerFace
 StringWidget TabButton AbstractDebugChart ProfilerPieChart MenuTabBar TabNavigationBar SystemToast TutorialToast
 ConfirmScreen LoadingDotsText Screen DialogScreen MultiButtonDialogScreen SimpleDialogScreen InputControlHandlers
 BookViewScreen PageButton TooltipRenderUtil KeyBindsList RecipeBookComponent RecipeBookPage RecipeButton SwitchGrid
-WorldSelectionList""".split())
+WorldSelectionList TextCursorUtils GuiGraphicsExtractor RenderPipelines""".split())
 assets, classes, resources = {}, {}, {}
 with zipfile.ZipFile(args.jar) as archive:
     names = set(archive.namelist())

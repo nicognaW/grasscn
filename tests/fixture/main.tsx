@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import { Button, buttonVariants } from "../../registry/ui/button"
 import { Checkbox } from "../../registry/ui/checkbox"
 import { Slider } from "../../registry/ui/slider"
+import { Input } from "../../registry/ui/input"
 import "./style.css"
 
 const params = new URLSearchParams(location.search)
@@ -16,6 +17,24 @@ function Fixture() {
   const [commits, setCommits] = React.useState(0)
   const [refName, setRefName] = React.useState("")
   const sliderRef = React.useRef<HTMLSpanElement>(null)
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [inputValue, setInputValue] = React.useState(params.get("text") ?? "Hello Minecraft")
+  const [submitted, setSubmitted] = React.useState(0)
+  if (params.get("component") === "input") return <>
+    <form id="input-form" onSubmit={event => { event.preventDefault(); setSubmitted(current => current + 1) }}>
+      <Input ref={inputRef} id="subject" name="message" aria-label="Test input" scale={scale} style={{ width: width * scale }}
+        value={params.has("uncontrolled") ? undefined : inputValue} defaultValue={params.has("uncontrolled") ? params.get("text") ?? "Hello Minecraft" : undefined}
+        type={params.get("type") ?? "text"} placeholder={params.get("placeholder") ?? undefined} disabled={state === "disabled"} readOnly={state.includes("readonly")}
+        required={params.has("required")} pattern={params.get("pattern") ?? undefined} maxLength={params.has("maxLength") ? Number(params.get("maxLength")) : undefined}
+        onChange={event => { setInputValue(event.target.value); setCount(current => current + 1) }} />
+      <button id="submit">Submit</button>
+      <button type="reset" id="reset">Reset</button>
+    </form>
+    <output aria-label="Input changes">{count}</output><output aria-label="Input value">{inputValue}</output><output aria-label="Submissions">{submitted}</output>
+    <button id="next">Next focus target</button>
+    <button id="read-ref" onClick={() => setRefName(inputRef.current?.tagName ?? "missing")}>Read ref</button><output aria-label="Root ref">{refName}</output>
+    <button id="imperative" onClick={() => { if (inputRef.current) inputRef.current.value = "Done" }}>Set through ref</button>
+  </>
   const [checked, setChecked] = React.useState<boolean | "indeterminate">(params.get("checked") === "mixed" ? "indeterminate" : params.get("checked") === "true")
   const [values, setValues] = React.useState((params.get("values") ?? params.get("value") ?? "500").split(",").map(Number))
   if (params.get("component") === "slider") return <>

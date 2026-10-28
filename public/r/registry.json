@@ -100,6 +100,38 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Minecraft Input",
+      "description": "Vanilla Java 26.2 EditBox appearance on a real HTML input: original texture/glyph raster, caret phases, selection and horizontal text clipping. 306 native ASCII cases; other input types/glyphs retain browser rendering.",
+      "files": [
+        {
+          "path": "registry/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-paint.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text-assets.css",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "assets": {
+    "assets/minecraft/textures/gui/sprites/widget/text_field.png": {
+      "sha256": "612f7835250f9d8477efbe54b9602ad800bbde89e2c983efc3f4bfbb80fb57d0",
+      "embeddedBytes": "unchanged",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 1
+      },
+      "metadataSha256": "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5"
+    },
+    "assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png": {
+      "sha256": "5495b8c462529aea99e953a67916026de845eeb6065cccf2b4a093d10f9151bb",
+      "embeddedBytes": "unchanged",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 1
+      },
+      "metadataSha256": "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5"
+    },
+    "assets/minecraft/textures/font/ascii.png": {
+      "sha256": "e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a",
+      "embeddedBytes": "unchanged"
+    }
+  },
+  "rendering": "Software raster from original textures and glyph alpha; expected pixels come independently from the original EditBox GPU renderer."
+}

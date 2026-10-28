@@ -27,7 +27,16 @@
       "scope": "225 explicit horizontal single-thumb cases. Range, RTL, inverted and vertical have web behavior tests; no native pixel guarantee for those extensions.",
       "minecraftVersion": "26.2",
       "sourceRevision": "34a48e1b2771b224169b5787f49ed9a463f3b52e83e16e3125a095bd9d7cde55"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "category": "Text entry",
+      "referenceCases": 306,
+      "scope": "306 explicit ASCII text-input cases at integer scales 1–3, including caret/selection/scrolling. Password, Unicode, RTL and specialized types use browser rendering; their pixels are not native-verified.",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "edf001dea3f57d16eeedc85ee0bd0a2591c0bd511c1edc57d9a27d5fd0e450e9"
     }
   ],
-  "updatedAt": "2026-10-28T14:26:59.674Z"
+  "updatedAt": "2026-10-28T14:53:07.683Z"
 }

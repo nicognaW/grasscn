@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -18,7 +19,7 @@ import net.minecraft.network.chat.Component;
 public final class ControlsReferenceMain {
     private static final Path OUTPUT = Path.of(System.getProperty("registry.reference.output"));
     private static final Path FRAMES = Path.of(System.getProperty("registry.reference.frames"));
-    record Case(String name, String element, String state, boolean checked, int width, int height, int x, int y, int page, double value, String label) {}
+    record Case(String name, String element, String state, boolean checked, int width, int height, int x, int y, int page, double value, String label, String text, String placeholder, Integer cursor, Integer anchor, int caretMs, Integer maxLength) {}
     private static Case[] cases;
 
     public static void main(String[] args) throws Exception {
@@ -59,6 +60,7 @@ public final class ControlsReferenceMain {
                 AbstractWidget widget = switch (c.element()) {
                     case "checkbox" -> Checkbox.builder(Component.empty(), font).pos(c.x(), c.y()).selected(c.checked()).build();
                     case "slider" -> new ReferenceSlider(c);
+                    case "input" -> createEditBox(c);
                     default -> throw new IllegalArgumentException("No native renderer configured for " + c.element());
                 };
                 widget.active = !c.state().equals("disabled");
@@ -70,10 +72,29 @@ public final class ControlsReferenceMain {
             stableSince = System.nanoTime();
         }
 
+        private EditBox createEditBox(Case c) {
+            EditBox input = new EditBox(font, c.x(), c.y(), c.width(), c.height(), Component.literal("Input"));
+            input.setMaxLength(c.maxLength() == null ? 1024 : c.maxLength());
+            input.setValue(c.text() == null ? "" : c.text());
+            input.moveCursorToStart(false);
+            input.moveCursorTo(c.cursor() == null ? input.getValue().length() : c.cursor(), false);
+            if (c.anchor() != null) input.setHighlightPos(c.anchor());
+            input.setEditable(!c.state().equals("disabled") && !c.state().contains("readonly"));
+            if (c.placeholder() != null) input.setHint(Component.literal(c.placeholder()));
+            return input;
+        }
+
         @Override public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
             graphics.fill(0, 0, width, height, 0xff202020);
             for (int i = 0; i < widgets.size(); i++) {
                 AbstractWidget widget = widgets.get(i);
+                if (widget instanceof EditBox input && input.isFocused()) {
+                    try {
+                        var focusedTime = EditBox.class.getDeclaredField("focusedTime");
+                        focusedTime.setAccessible(true);
+                        focusedTime.setLong(input, net.minecraft.util.Util.getMillis() - pageCases.get(i).caretMs());
+                    } catch (ReflectiveOperationException error) { throw new IllegalStateException(error); }
+                }
                 boolean hover = pageCases.get(i).state().equals("hover");
                 widget.extractRenderState(graphics, hover ? widget.getX() + 1 : -100, hover ? widget.getY() + 1 : -100, partialTick);
             }

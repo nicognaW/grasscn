@@ -29,6 +29,8 @@ test("Preview includes every finished component with working interactions", asyn
   await page.getByRole("slider", { name: "Volume", exact: true }).focus()
   await page.keyboard.press("ArrowRight")
   await expect(page.getByLabel("Slider value")).toHaveText("51%")
+  await page.getByRole("textbox", { name: "Demo input", exact: true }).fill("Done")
+  await expect(page.getByLabel("Input character count")).toHaveText("4 characters")
   expect(errors).toEqual([])
 })
 test("Preview navigation, search, editing, width and scale work", async ({ page }) => {
@@ -76,6 +78,18 @@ for (const scale of [1, 2, 3]) {
     await slider.hover()
     await nativePixels(slider, `tests/reference/slider/captures/slider-w200-v500-hover-s${scale}.png`)
     await nativePixels(page.locator('#component-slider [data-slot="slider"]').nth(1), `tests/reference/slider/captures/slider-w200-v500-disabled-s${scale}.png`)
+    await page.goto(`${origin}#input`)
+    await page.getByRole("button", { name: `${scale}×`, exact: true }).click()
+    const input = page.getByRole("textbox", { name: "Demo input", exact: true })
+    await expect(input).toHaveAttribute("data-mc-ready", "true")
+    await page.mouse.move(0, 0)
+    await nativePixels(input, `tests/reference/input/captures/input-w200-normal-c39-s${scale}.png`)
+    const readonly = page.getByRole("textbox", { name: "Read-only demo input", exact: true })
+    await expect(readonly).toHaveAttribute("data-mc-ready", "true")
+    await nativePixels(readonly, `tests/reference/input/captures/input-w200-readonly-c44-s${scale}.png`)
+    const disabled = page.getByRole("textbox", { name: "Disabled demo input", exact: true })
+    await expect(disabled).toHaveAttribute("data-mc-ready", "true")
+    await nativePixels(disabled, `tests/reference/input/captures/input-w200-disabled-c41-s${scale}.png`)
   })
 }
 test("Mobile preview contains every scale without page overflow", async ({ page }) => {

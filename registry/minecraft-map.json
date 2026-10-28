@@ -12,7 +12,7 @@
     "composition": "Native constituents may be pixel-verified; a newly designed composition cannot be called a pixel-perfect port of a nonexistent vanilla widget.",
     "nonvisual": "Layout and behavior providers have no independent pixels. Verify child appearance and provider behavior.",
     "nativeSelect": "The operating-system native popup cannot be fully skinned by registry CSS; exact full-control Minecraft fidelity is not promised.",
-    "runtime": "Button, Checkbox and Slider have independent native references and pixel suites. Other mappings have static evidence only."
+    "runtime": "Button, Checkbox, Slider and Input have independent native references and pixel suites. Other mappings have static evidence only."
   },
   "families": {
     "text": {
@@ -101,19 +101,25 @@
     "input": {
       "target": "EditBox",
       "classes": [
-        "net.minecraft.client.gui.components.EditBox"
+        "net.minecraft.client.gui.components.EditBox",
+        "net.minecraft.client.gui.components.TextCursorUtils",
+        "net.minecraft.client.gui.GuiGraphicsExtractor",
+        "net.minecraft.client.renderer.RenderPipelines"
       ],
       "assets": [
         "assets/minecraft/textures/gui/sprites/widget/text_field.png",
         "assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png"
       ],
       "observations": [
-        "Two original text-field sprites are referenced by the class."
+        "EditBox uses widget/text_field or widget/text_field_highlighted from active/focused state, independently of hover; border1 nine-slice metadata is preserved.",
+        "Bordered text starts atx+4 and y+floor((height-8)/2). Editableink#E0E0E0; uneditable#707070. Empty unstyled hints receive DEFAULT_HINT_STYLE DARK_GRAY#555555 and are hidden when focused.",
+        "TextCursorUtils blink interval300ms. Insert caret is a 1×11 logical rectangle; append caret uses original underscore glyph. Cursor/anchor direction changes highlight bounds.",
+        "Selection uses GUI_INVERT then additiveblue, applied after text. Original bitmap glyph/shadow raster is painted into the real input background, preserving all native DOM editing semantics."
       ],
       "remainingNativeProbes": [
-        "Recover caret timing, selection color/compositing, horizontal scroll, padding and disabled text. Freeze cursor phase."
+        "ASCII text cases captured atdeclared dimensions. Other font providers, bidi/RTL, arbitrary dimensions, rich IME preedit and specialized input types have no native pixel claim."
       ],
-      "renderRuleStatus": "static-evidence-runtime-pending"
+      "renderRuleStatus": "native-verified-for-306-declared-EditBox-cases"
     },
     "textarea": {
       "target": "MultiLineEditBox",
@@ -1735,26 +1741,28 @@
         "limitation": "Input types password/search/number and browser decorations require explicit treatment."
       },
       "referenceCases": {
-        "status": "not-yet-captured",
+        "status": "306-ASCII-EditBox-cases-defined",
         "requiredDimensions": [
-          "empty/value",
-          "hover/focus/disabled",
-          "selection",
-          "scroll",
-          "cursor phases"
+          "widths 103,200,257 at logical height20; original ASCII groups atwidth300",
+          "normal/hover/disabled/read-only/focus/focus-read-only",
+          "empty, text, hint, insert/append caret,100ms/450ms blink phases",
+          "forward/backward selection; blurred selection; horizontal scrolling; maxLength",
+          "scales1,2,3"
         ],
-        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+        "settings": "Original Java26.2 EditBox GPU renderer; caret phase controlled through focusedTime only; en_us; #202020; Edge/DPR1/zoom100%."
       },
       "implementation": {
-        "status": "not-implemented",
-        "registryItem": null
+        "status": "implemented-and-install-verified",
+        "registryItem": "input"
       },
       "pixelVerification": {
-        "status": "unverified",
-        "manifest": null,
-        "scope": null
+        "status": "verified-declared-cases",
+        "manifest": "tests/reference/input/manifest.json",
+        "scope": "306 explicit ASCII text-input cases at integer scales 1–3, including caret/selection/scrolling. Password, Unicode, RTL and specialized types use browser rendering; their pixels are not native-verified.",
+        "installationReport": "tests/reference/input/installation-verification.json",
+        "repeatabilityReport": "tests/reference/input/repeatability.json"
       },
-      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+      "nextStep": "Keep306declarednativecases, DOM behavior tests and live preview current. Extend independent native references before expanding glyph, browser, scale, size or specialized-type fidelity claims."
     },
     {
       "name": "input-group",

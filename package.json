@@ -24,7 +24,8 @@
     "preview:check": "npm run map:check && node scripts/prepare-preview.mjs",
     "preview:build": "npm run preview:check && vite build --config vite.preview.config.ts",
     "preview:sync": "node scripts/sync-preview-site.mjs",
-    "test:preview": "playwright test preview.spec.ts"
+    "test:preview": "playwright test preview.spec.ts",
+    "test:input": "playwright test input.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

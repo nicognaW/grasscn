@@ -3,7 +3,7 @@ import { createHash } from "node:crypto"
 import { readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { chromium } from "@playwright/test"
+import { chromium, expect } from "@playwright/test"
 import { PNG } from "pngjs"
 
 const [consumerDir, name, url, uiDirectory = "src/components/ui"] = process.argv.slice(2)
@@ -36,17 +36,33 @@ const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, dev
 const pageErrors = [], cases = []
 page.on("pageerror", error => pageErrors.push(error.message))
 try {
+  if (name === "input") {
+    await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") })
+    await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"))
+  }
   for (const c of manifest.cases) {
     const params = new URLSearchParams({ component: c.element ?? name, scale: String(c.scale), state: c.state, width: String(c.width), label: c.label ?? "", checked: String(c.checked ?? false) })
     if (c.element === "slider") params.set("value", String(Math.round(c.value * 1000)))
+    if (c.element === "input") {
+      params.set("text", c.text)
+      params.set("placeholder", c.placeholder ?? "")
+      if (c.maxLength != null) params.set("maxLength", String(c.maxLength))
+    }
     await page.goto(`${url}?${params}`)
     const subject = page.locator("#subject")
     await subject.waitFor()
+    if (c.element === "input") await expect(subject).toHaveAttribute("data-mc-ready", "true")
     await page.mouse.move(0, 0)
     if (c.state === "hover") await subject.hover()
     if (c.state.startsWith("focus")) {
       await page.keyboard.press("Tab")
       if (c.state === "focus-locked") await page.keyboard.press("Enter")
+    }
+    if (c.element === "input") {
+      const cursor = c.cursor ?? c.text.length, anchor = c.anchor ?? cursor
+      await subject.evaluate((node, selection) => node.setSelectionRange(Math.min(selection.cursor, selection.anchor), Math.max(selection.cursor, selection.anchor), selection.cursor < selection.anchor ? "backward" : "forward"), { cursor, anchor })
+      await page.clock.runFor(c.caretMs)
+      await expect(subject).toHaveAttribute("data-mc-ready", "true")
     }
     const expectedBytes = await readFile(path.join(repo, path.dirname(manifestFile), "captures", c.name))
     assert.equal(sha(expectedBytes), c.sha256)
