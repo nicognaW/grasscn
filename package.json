@@ -1,0 +1,16 @@
+{
+  "name": "simple-shadcn-registry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run registry:build && node scripts/serve.mjs",
+    "registry:build": "shadcn build",
+    "build": "npm run registry:build",
+    "serve": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "shadcn": "4.23.0"
+  },
+  "engines": { "node": ">=22.12.0" }
+}

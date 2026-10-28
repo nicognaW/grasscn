@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "simple-registry",
+  "homepage": "http://localhost:5173",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "The standard shadcn/ui Radix Button with six variants, sizes, disabled state, and asChild composition.",
+      "dependencies": ["class-variance-authority", "radix-ui"],
+      "files": [
+        { "path": "registry/ui/button.tsx", "type": "registry:ui" }
+      ]
+    }
+  ]
+}
