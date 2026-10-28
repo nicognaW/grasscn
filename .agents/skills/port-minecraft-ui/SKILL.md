@@ -7,7 +7,7 @@ description: Port Minecraft Java UI elements into this shadcn registry using ori
 
 Produce a shadcn component whose appearance matches the selected vanilla element in an explicit set of reference cases. Keep shadcn APIs and accessible web interactions. This is a porting and verification workflow, not a claim that any widget can be converted automatically.
 
-Resolve repository paths below from the Git root. Read `GLOSSARY.md`, relevant ADRs, `registry.json`, and current package scripts before changing the component. The repo is a registry with test fixtures; build only the requested elements. Publication and a product website are separate work.
+Resolve repository paths below from the Git root. Read `GLOSSARY.md`, relevant ADRs, `registry.json`, and current package scripts before changing the component. The repo includes a maintained private preview site; completing a component also means updating its live demo.
 
 ## 1. Define the reference cases
 
@@ -75,4 +75,6 @@ Test web behavior separately at the public primitive: keyboard operation, focus 
 
 Build the registry, install the item through the actual shadcn CLI into a separate initialized consumer, and verify its types and rendering/assets resolve. Run the relevant component tests during implementation and the full suite after the final change. Read current package scripts for exact commands.
 
-**Complete when:** every agreed reference case has zero differing pixels, required web behavior passes, the built item installs with its resources, and existing verified components still pass. Summarize the exact version/cases/environment proved and any remaining limitations. Keep incomplete work explicitly unverified rather than claiming universal pixel perfection.
+Add each finished component to `preview/demos.json` and provide its interactive module in `preview/demos/`. The preview coverage check rejects missing demos and unfinished items. Run the preview checks, build and browser tests, then update the same private Site identified by `.openai/hosting.json` using the Sites skill. The preview imports the actual registry components. Keep the published URL stable and verify successful deployment before reporting that it is updated.
+
+**Complete when:** every agreed reference case has zero differing pixels, required web behavior passes, the built item installs with its resources, existing verified components still pass, and the private preview contains the new component's working demo. Summarize the exact version/cases/environment proved and any remaining limitations. Keep incomplete work explicitly unverified rather than claiming universal pixel perfection.

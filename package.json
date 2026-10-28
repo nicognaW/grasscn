@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run registry:build && node scripts/serve.mjs",
     "registry:build": "shadcn build",
-    "build": "npm run registry:build",
+    "build": "npm run registry:build && npm run preview:build",
     "serve": "node scripts/serve.mjs",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
@@ -19,7 +19,12 @@
     "reference:controls": "node tests/reference/capture-controls.mjs",
     "test:controls": "playwright test controls.spec.ts",
     "test:slider": "playwright test slider.spec.ts",
-    "reference:repeat": "node scripts/verify-reference-repeat.mjs"
+    "reference:repeat": "node scripts/verify-reference-repeat.mjs",
+    "preview": "node scripts/prepare-preview.mjs && vite --config vite.preview.config.ts",
+    "preview:check": "npm run map:check && node scripts/prepare-preview.mjs",
+    "preview:build": "npm run preview:check && vite build --config vite.preview.config.ts",
+    "preview:sync": "node scripts/sync-preview-site.mjs",
+    "test:preview": "playwright test preview.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

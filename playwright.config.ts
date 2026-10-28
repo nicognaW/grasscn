@@ -11,5 +11,8 @@ export default defineConfig({
     viewport: { width: 1280, height: 900 },
     deviceScaleFactor: 1,
   },
-  webServer: { command: "node node_modules/vite/bin/vite.js", url: "http://127.0.0.1:5174", reuseExistingServer: !process.env.CI },
+  webServer: [
+    { command: "node node_modules/vite/bin/vite.js", url: "http://127.0.0.1:5174", reuseExistingServer: !process.env.CI },
+    { command: "npm run preview", url: "http://127.0.0.1:5176", reuseExistingServer: !process.env.CI },
+  ],
 })

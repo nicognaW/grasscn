@@ -1,0 +1,33 @@
+{
+  "total": 68,
+  "components": [
+    {
+      "name": "button",
+      "title": "Button",
+      "category": "Actions",
+      "referenceCases": 66,
+      "scope": "Default variant only; see native manifest and tests. No new test result claimed by this map.",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "6dbe8f5e5608d526f0642ed923cf58f73e0072214dba61734afb4b3600087c5f"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "category": "Selection",
+      "referenceCases": 24,
+      "scope": "Checkbox root only; checked/unchecked × normal/hover/focus/disabled × scales 1–3. Mixed state is a web composition without native pixel proof. Edge/DPR 1.",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "058c1f03fd0316a34de27dcafe536f5263b400a9349fe2a3c014f079b16b6a18"
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "category": "Selection",
+      "referenceCases": 225,
+      "scope": "225 explicit horizontal single-thumb cases. Range, RTL, inverted and vertical have web behavior tests; no native pixel guarantee for those extensions.",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "34a48e1b2771b224169b5787f49ed9a463f3b52e83e16e3125a095bd9d7cde55"
+    }
+  ],
+  "updatedAt": "2026-10-28T14:26:59.674Z"
+}

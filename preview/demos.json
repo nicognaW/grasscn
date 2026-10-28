@@ -1,0 +1,5 @@
+[
+  { "name": "button", "title": "Button", "category": "Actions" },
+  { "name": "checkbox", "title": "Checkbox", "category": "Selection" },
+  { "name": "slider", "title": "Slider", "category": "Selection" }
+]
