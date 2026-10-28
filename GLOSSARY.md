@@ -19,7 +19,7 @@ _Avoid_: Minecraft behavior
 Minecraft Java 26.2 as represented by the supplied game artifact, excluding visual modifications from the surrounding modpack.
 
 **Reference case**:
-A fixed button label, size, visual state, and integer display scale for which an independent vanilla capture is available.
+A UI element with fixed content or value, dimensions, visual state, display settings, and time or frame where applicable, backed by an independent vanilla capture.
 
 **Pixel-perfect match**:
 Zero differing pixels between a component capture and its vanilla reference case, including textures, glyphs, spacing, and text shadows.
