@@ -1,6 +1,7 @@
 import * as React from "react"
 import { createRoot } from "react-dom/client"
 import { Button, buttonVariants } from "../../registry/ui/button"
+import { Checkbox } from "../../registry/ui/checkbox"
 import "./style.css"
 
 const params = new URLSearchParams(location.search)
@@ -11,6 +12,13 @@ const label = params.get("label") || "Button"
 
 function Fixture() {
   const [count, setCount] = React.useState(0)
+  const [checked, setChecked] = React.useState<boolean | "indeterminate">(params.get("checked") === "mixed" ? "indeterminate" : params.get("checked") === "true")
+  if (params.get("component") === "checkbox") return <>
+    <Checkbox id="subject" aria-label="Test checkbox" scale={scale} checked={checked}
+      disabled={state === "disabled"} onCheckedChange={value => { setChecked(value); setCount(count + 1) }} />
+    <output aria-label="Changes">{count}</output>
+    <button id="next">Next focus target</button>
+  </>
   return <>
     <Button id="subject" scale={scale} disabled={state === "disabled"}
       style={params.has("width") ? { width: width * scale } : undefined} onClick={() => setCount(count + 1)}>{label}</Button>

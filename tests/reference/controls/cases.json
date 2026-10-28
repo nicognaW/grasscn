@@ -1,0 +1,82 @@
+[
+  {
+    "name": "checkbox-unchecked-normal",
+    "element": "checkbox",
+    "state": "normal",
+    "checked": false,
+    "width": 17,
+    "height": 17,
+    "x": 16,
+    "y": 16
+  },
+  {
+    "name": "checkbox-unchecked-hover",
+    "element": "checkbox",
+    "state": "hover",
+    "checked": false,
+    "width": 17,
+    "height": 17,
+    "x": 16,
+    "y": 48
+  },
+  {
+    "name": "checkbox-unchecked-focus",
+    "element": "checkbox",
+    "state": "focus",
+    "checked": false,
+    "width": 17,
+    "height": 17,
+    "x": 16,
+    "y": 80
+  },
+  {
+    "name": "checkbox-unchecked-disabled",
+    "element": "checkbox",
+    "state": "disabled",
+    "checked": false,
+    "width": 17,
+    "height": 17,
+    "x": 16,
+    "y": 112
+  },
+  {
+    "name": "checkbox-checked-normal",
+    "element": "checkbox",
+    "state": "normal",
+    "checked": true,
+    "width": 17,
+    "height": 17,
+    "x": 80,
+    "y": 16
+  },
+  {
+    "name": "checkbox-checked-hover",
+    "element": "checkbox",
+    "state": "hover",
+    "checked": true,
+    "width": 17,
+    "height": 17,
+    "x": 80,
+    "y": 48
+  },
+  {
+    "name": "checkbox-checked-focus",
+    "element": "checkbox",
+    "state": "focus",
+    "checked": true,
+    "width": 17,
+    "height": 17,
+    "x": 80,
+    "y": 80
+  },
+  {
+    "name": "checkbox-checked-disabled",
+    "element": "checkbox",
+    "state": "disabled",
+    "checked": true,
+    "width": 17,
+    "height": 17,
+    "x": 80,
+    "y": 112
+  }
+]

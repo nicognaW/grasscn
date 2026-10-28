@@ -1,0 +1,176 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "2d122ab3a694b37354fe3c013f94a1ed6a20bca322d3e2b4264428a008273575",
+  "caseDefinitionSha256": "1a1280a9de7e94f51c307ee96fb80b8338cd4f831ffa21f867d2436df3b6a8b0",
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "checkbox-unchecked-normal-s1.png",
+      "runOnePngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "runTwoPngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-hover-s1.png",
+      "runOnePngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "runTwoPngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-focus-s1.png",
+      "runOnePngSha256": "c09f7ef110396e28ee0a5d2f1881f19d3292ba98e92aa3134162fc7dbb99bd60",
+      "runTwoPngSha256": "c09f7ef110396e28ee0a5d2f1881f19d3292ba98e92aa3134162fc7dbb99bd60",
+      "decodedRgbaSha256": "13e22886df3b4906d13ab13ddab7a730cec25022e3399fe2f4d30c351cd94554",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s1.png",
+      "runOnePngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "runTwoPngSha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081",
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-normal-s1.png",
+      "runOnePngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "runTwoPngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-hover-s1.png",
+      "runOnePngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "runTwoPngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-focus-s1.png",
+      "runOnePngSha256": "d358929c0e1e04d05af835d947fc031f03456bb44c7a827fa5c4644100cdd258",
+      "runTwoPngSha256": "d358929c0e1e04d05af835d947fc031f03456bb44c7a827fa5c4644100cdd258",
+      "decodedRgbaSha256": "7df773b49f893559fd99043ebef36c7b520b4c1f5f6aa8a169840b8006b3e820",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-disabled-s1.png",
+      "runOnePngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "runTwoPngSha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6",
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-normal-s2.png",
+      "runOnePngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "runTwoPngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-hover-s2.png",
+      "runOnePngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "runTwoPngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-focus-s2.png",
+      "runOnePngSha256": "e8145bf8807bbac519a5931d65f1259f1382bcd97d26fafb5eddf48e248eba92",
+      "runTwoPngSha256": "e8145bf8807bbac519a5931d65f1259f1382bcd97d26fafb5eddf48e248eba92",
+      "decodedRgbaSha256": "a5aa3c87b02c7f65a84cf85a26919c2df2713ad750f9fd0d2c0ab2b50e76d884",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s2.png",
+      "runOnePngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "runTwoPngSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-normal-s2.png",
+      "runOnePngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "runTwoPngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-hover-s2.png",
+      "runOnePngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "runTwoPngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-focus-s2.png",
+      "runOnePngSha256": "6d581b98202a6f5b34c99dff3d353ef730998a9380ba7ad5ef8f5acee65df7ce",
+      "runTwoPngSha256": "6d581b98202a6f5b34c99dff3d353ef730998a9380ba7ad5ef8f5acee65df7ce",
+      "decodedRgbaSha256": "13aea591213b02ce7c02372bacf760592c40556af208dbeec3026089cd0863b1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-disabled-s2.png",
+      "runOnePngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "runTwoPngSha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec",
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-normal-s3.png",
+      "runOnePngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "runTwoPngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-hover-s3.png",
+      "runOnePngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "runTwoPngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-focus-s3.png",
+      "runOnePngSha256": "9cd0e2f1a01ead8e73031ecf23ad59f21b9f8dfa9a36e39542e16f0aca3b956e",
+      "runTwoPngSha256": "9cd0e2f1a01ead8e73031ecf23ad59f21b9f8dfa9a36e39542e16f0aca3b956e",
+      "decodedRgbaSha256": "39bce04967376c7ee04485319c9cd95556ef14d3442063a7bc4904b32b49d206",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s3.png",
+      "runOnePngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "runTwoPngSha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33",
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-normal-s3.png",
+      "runOnePngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "runTwoPngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-hover-s3.png",
+      "runOnePngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "runTwoPngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-focus-s3.png",
+      "runOnePngSha256": "cc6c62e7eea7db3373093b337137d4c7fae1b7ac517270b6f8bd95d0a64d57f8",
+      "runTwoPngSha256": "cc6c62e7eea7db3373093b337137d4c7fae1b7ac517270b6f8bd95d0a64d57f8",
+      "decodedRgbaSha256": "a7e242d4e77f78075298b502dae6efda087a2bf9bac23af09498b0393e8ee474",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "checkbox-checked-disabled-s3.png",
+      "runOnePngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "runTwoPngSha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46",
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
+      "mismatchedPixels": 0
+    }
+  ]
+}

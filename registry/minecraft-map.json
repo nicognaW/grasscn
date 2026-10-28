@@ -1,0 +1,3139 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-28",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "catalog": "tests/reference/catalog/shadcn-catalog.json",
+  "nativeInventory": "tests/reference/catalog/native-inventory.json",
+  "skill": ".agents/skills/port-minecraft-ui/SKILL.md",
+  "scope": "Complete mapping of the pinned standard shadcn catalog; this file is a port plan, not pixel-perfect implementation evidence.",
+  "fidelityContract": {
+    "acceptance": "Zero differing decoded RGBA pixels against two repeatable independent vanilla-renderer launches per declared case; preserve standard shadcn APIs and accessible web behavior.",
+    "composition": "Native constituents may be pixel-verified; a newly designed composition cannot be called a pixel-perfect port of a nonexistent vanilla widget.",
+    "nonvisual": "Layout and behavior providers have no independent pixels. Verify child appearance and provider behavior.",
+    "nativeSelect": "The operating-system native popup cannot be fully skinned by registry CSS; exact full-control Minecraft fidelity is not promised.",
+    "runtime": "Button and Checkbox have independent native references and pixel suites. All other mappings have static evidence only."
+  },
+  "families": {
+    "text": {
+      "target": "Vanilla font and StringWidget",
+      "classes": [
+        "net.minecraft.client.gui.Font",
+        "net.minecraft.client.gui.components.StringWidget",
+        "net.minecraft.client.gui.components.MultiLineLabel"
+      ],
+      "assets": [
+        "assets/minecraft/textures/font/ascii.png"
+      ],
+      "observations": [
+        "The existing bitmap font port covers printable ASCII; full Minecraft font providers are outside that claim."
+      ],
+      "remainingNativeProbes": [
+        "Line wrapping, formatting, bidi layout, scaling and shadows need case-specific native captures."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending",
+      "fontDefinitions": [
+        "assets/minecraft/font/default.json",
+        "assets/minecraft/font/include/default.json"
+      ]
+    },
+    "button": {
+      "target": "Button / AbstractButton",
+      "classes": [
+        "net.minecraft.client.gui.components.Button",
+        "net.minecraft.client.gui.components.AbstractButton"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/button.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_disabled.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_highlighted.png"
+      ],
+      "observations": [
+        "Normal/highlighted border 3; disabled border 1. Original pilot captures exist."
+      ],
+      "remainingNativeProbes": [
+        "Non-default shadcn variants and arbitrary content are unverified."
+      ],
+      "renderRuleStatus": "native-verified-for-pilot-cases"
+    },
+    "checkbox": {
+      "target": "Checkbox",
+      "classes": [
+        "net.minecraft.client.gui.components.Checkbox"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/checkbox.png",
+        "assets/minecraft/textures/gui/sprites/widget/checkbox_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/widget/checkbox_selected.png",
+        "assets/minecraft/textures/gui/sprites/widget/checkbox_selected_highlighted.png"
+      ],
+      "observations": [
+        "extractContents chooses selected and isFocused sprites; hover alone does not select highlighted sprite.",
+        "The class uses getBoxSize(font), label gap 4, and alpha tint. There are four source sprites, not a separate disabled sprite.",
+        "Native getBoxSize returns 17 logical pixels although PNGs are 20×20. Exact texel-boundary sampling picks the lower texel; deterministic derivatives preserve the observed nearest samples at scales 1–3."
+      ],
+      "remainingNativeProbes": [
+        "Disabled and indeterminate web states require explicit reference decisions; no indeterminate sprite found in widget inventory."
+      ],
+      "renderRuleStatus": "native-verified-for-24-boolean-root-cases"
+    },
+    "slider": {
+      "target": "AbstractSliderButton",
+      "classes": [
+        "net.minecraft.client.gui.components.AbstractSliderButton"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/slider.png",
+        "assets/minecraft/textures/gui/sprites/widget/slider_handle.png",
+        "assets/minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png"
+      ],
+      "observations": [
+        "Track and handle are separate sprites with independent metadata."
+      ],
+      "remainingNativeProbes": [
+        "Recover handle position/rounding, focus editing mode, min/max and value text. Multi-thumb, vertical and disabled web cases need separate decisions."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "input": {
+      "target": "EditBox",
+      "classes": [
+        "net.minecraft.client.gui.components.EditBox"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/text_field.png",
+        "assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png"
+      ],
+      "observations": [
+        "Two original text-field sprites are referenced by the class."
+      ],
+      "remainingNativeProbes": [
+        "Recover caret timing, selection color/compositing, horizontal scroll, padding and disabled text. Freeze cursor phase."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "textarea": {
+      "target": "MultiLineEditBox",
+      "classes": [
+        "net.minecraft.client.gui.components.MultiLineEditBox",
+        "net.minecraft.client.gui.components.AbstractTextAreaWidget"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/text_field.png",
+        "assets/minecraft/textures/gui/sprites/widget/text_field_highlighted.png"
+      ],
+      "observations": [
+        "A native multiline editor and scrollable text-area base exist."
+      ],
+      "remainingNativeProbes": [
+        "Determine which border is actually rendered; wrapping, selection, scroll clipping and caret require native captures."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "scroll": {
+      "target": "AbstractScrollArea / AbstractSelectionList",
+      "classes": [
+        "net.minecraft.client.gui.components.AbstractScrollArea",
+        "net.minecraft.client.gui.components.AbstractSelectionList"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/scroller.png",
+        "assets/minecraft/textures/gui/sprites/widget/scroller_background.png",
+        "assets/minecraft/textures/gui/menu_list_background.png"
+      ],
+      "observations": [
+        "AbstractScrollArea references widget/scroller and widget/scroller_background."
+      ],
+      "remainingNativeProbes": [
+        "Recover thumb size/rounding, minimum size, disabled state, clipping and scrolled tile origin."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "tabs": {
+      "target": "TabButton / TabNavigationBar",
+      "classes": [
+        "net.minecraft.client.gui.components.TabButton",
+        "net.minecraft.client.gui.components.tabs.TabNavigationBar",
+        "net.minecraft.client.gui.components.tabs.MenuTabBar"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/tab.png",
+        "assets/minecraft/textures/gui/sprites/widget/tab_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/widget/tab_selected.png",
+        "assets/minecraft/textures/gui/sprites/widget/tab_selected_highlighted.png"
+      ],
+      "observations": [
+        "Four widget/tab state sprites exist."
+      ],
+      "remainingNativeProbes": [
+        "Inspect sprite use in navigation bar, selected/focus/hover precedence and selected-tab geometry."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "tooltip": {
+      "target": "TooltipRenderUtil",
+      "classes": [
+        "net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/tooltip/background.png",
+        "assets/minecraft/textures/gui/sprites/tooltip/frame.png"
+      ],
+      "observations": [
+        "extractTooltipBackground draws separate background and frame. Each starts at content x/y minus 12 and spans content size plus 24."
+      ],
+      "remainingNativeProbes": [
+        "Capture actual tooltip content/margins, opacity/compositing and positioning near viewport edges."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "popup": {
+      "target": "PopupScreen",
+      "classes": [
+        "net.minecraft.client.gui.components.PopupScreen"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/popup/background.png"
+      ],
+      "observations": [
+        "PopupScreen references popup/background and draws around its layout with 18 logical pixels on each side."
+      ],
+      "remainingNativeProbes": [
+        "Recover layout, title/body baseline, button spacing, background blur/dimming and exact total bounds."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "dialog": {
+      "target": "DialogScreen / SimpleDialogScreen / ConfirmScreen",
+      "classes": [
+        "net.minecraft.client.gui.screens.dialog.DialogScreen",
+        "net.minecraft.client.gui.screens.dialog.SimpleDialogScreen",
+        "net.minecraft.client.gui.screens.dialog.MultiButtonDialogScreen",
+        "net.minecraft.client.gui.screens.ConfirmScreen",
+        "net.minecraft.client.gui.screens.dialog.input.InputControlHandlers"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/dialog/warning_button.png",
+        "assets/minecraft/textures/gui/sprites/dialog/warning_button_disabled.png",
+        "assets/minecraft/textures/gui/sprites/dialog/warning_button_highlighted.png"
+      ],
+      "observations": [
+        "Native screen/dialog classes and input-control handlers exist. Warning buttons have three sprites."
+      ],
+      "remainingNativeProbes": [
+        "Screen-sized background is context dependent. Select the actual native layout before using it as a modal reference."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "toast": {
+      "target": "SystemToast / TutorialToast",
+      "classes": [
+        "net.minecraft.client.gui.components.toasts.SystemToast",
+        "net.minecraft.client.gui.components.toasts.TutorialToast"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/toast/system.png",
+        "assets/minecraft/textures/gui/sprites/toast/tutorial.png"
+      ],
+      "observations": [
+        "SystemToast references toast/system."
+      ],
+      "remainingNativeProbes": [
+        "Freeze entry/exit time; capture multiline sizing, stacking, clipping and alpha."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "progress": {
+      "target": "BossHealthOverlay",
+      "classes": [
+        "net.minecraft.client.gui.components.BossHealthOverlay"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/boss_bar/blue_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/blue_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/green_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/green_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_10_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_10_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_12_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_12_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_20_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_20_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_6_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/notched_6_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/pink_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/pink_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/purple_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/purple_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/red_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/red_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/white_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/white_progress.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/yellow_background.png",
+        "assets/minecraft/textures/gui/sprites/boss_bar/yellow_progress.png"
+      ],
+      "observations": [
+        "Separate color backgrounds/progress and notch overlays exist."
+      ],
+      "remainingNativeProbes": [
+        "Recover integer fill-width arithmetic, color/style state and overlay order. Vanilla boss-bar dimensions do not prove arbitrary web resizing."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "loading": {
+      "target": "LoadingDotsWidget / LoadingDotsText",
+      "classes": [
+        "net.minecraft.client.gui.components.LoadingDotsWidget",
+        "net.minecraft.client.gui.screens.LoadingDotsText"
+      ],
+      "assets": [],
+      "observations": [
+        "LoadingDotsWidget reads Util.getMillis and calls LoadingDotsText.get(time). It is a dots treatment, not a rotating circle."
+      ],
+      "remainingNativeProbes": [
+        "Capture each exact phase using a controlled time source without replacing native rendering."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "avatar": {
+      "target": "PlayerFaceWidget / PlayerFaceExtractor",
+      "classes": [
+        "net.minecraft.client.gui.components.PlayerFaceWidget",
+        "net.minecraft.client.gui.components.PlayerFaceExtractor"
+      ],
+      "assets": [
+        "assets/minecraft/textures/entity/player/wide/steve.png"
+      ],
+      "observations": [
+        "Player-face rendering classes exist; appearance depends on a skin texture and hat layer."
+      ],
+      "remainingNativeProbes": [
+        "Capture the bundled wide Steve face crop with hat on/off at declared sizes; verify fallback and arbitrary supplied skin behavior independently."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "chart": {
+      "target": "AbstractDebugChart / ProfilerPieChart",
+      "classes": [
+        "net.minecraft.client.gui.components.debugchart.AbstractDebugChart",
+        "net.minecraft.client.gui.components.debugchart.ProfilerPieChart"
+      ],
+      "assets": [],
+      "observations": [
+        "Vanilla has specific debug bar/pie charts, not a universal chart system."
+      ],
+      "remainingNativeProbes": [
+        "Supply fixed sample data and recover colors, axes, units and scale. Other chart types need designed compositions."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "list": {
+      "target": "WorldSelectionList / AbstractSelectionList",
+      "classes": [
+        "net.minecraft.client.gui.screens.worldselection.WorldSelectionList",
+        "net.minecraft.client.gui.components.AbstractSelectionList"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/menu_list_background.png"
+      ],
+      "observations": [
+        "Selection-list classes exist."
+      ],
+      "remainingNativeProbes": [
+        "Capture row height, selected/hover outline, truncation, empty list and scroll offsets."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "suggestions": {
+      "target": "CommandSuggestions",
+      "classes": [
+        "net.minecraft.client.gui.components.CommandSuggestions"
+      ],
+      "assets": [],
+      "observations": [
+        "The native command-suggestion class exists."
+      ],
+      "remainingNativeProbes": [
+        "Inspect nested suggestion-list renderer; recover row geometry, selected color, completion prefix and placement."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "cycle": {
+      "target": "CycleButton / SwitchGrid",
+      "classes": [
+        "net.minecraft.client.gui.components.CycleButton",
+        "net.minecraft.client.gui.screens.worldselection.SwitchGrid"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/button.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_disabled.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_highlighted.png"
+      ],
+      "observations": [
+        "CycleButton.onOffBuilder uses the vanilla on/off labels and boolean options."
+      ],
+      "remainingNativeProbes": [
+        "It looks like a button, not a sliding switch. Preserve shadcn role/value behavior while verifying two labeled appearances."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "toggle": {
+      "target": "RecipeBookComponent filter CycleButton",
+      "classes": [
+        "net.minecraft.client.gui.screens.recipebook.RecipeBookComponent",
+        "net.minecraft.client.gui.components.CycleButton"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/recipe_book/filter_disabled.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/filter_disabled_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/filter_enabled.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/filter_enabled_highlighted.png"
+      ],
+      "observations": [
+        "RecipeBookComponent.filterButton is a CycleButton<Boolean>. Its builder uses withSprite and DisplayState.HIDE. StateSwitchingButton is not present in this artifact."
+      ],
+      "remainingNativeProbes": [
+        "Inspect the concrete recipe-book subclass getFilterButtonTextures and sprite supplier before choosing generic text/icon toggle layout."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "item": {
+      "target": "ItemDisplayWidget",
+      "classes": [
+        "net.minecraft.client.gui.components.ItemDisplayWidget"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/container/slot.png"
+      ],
+      "observations": [
+        "A native item display widget and original container slot sprite exist."
+      ],
+      "remainingNativeProbes": [
+        "Pin actual item content and model/resource dependencies, layout and tooltip; arbitrary uploaded file icons are designed extensions."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "pagination": {
+      "target": "RecipeBookPage / PageButton",
+      "classes": [
+        "net.minecraft.client.gui.screens.recipebook.RecipeBookPage",
+        "net.minecraft.client.gui.screens.inventory.PageButton"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/page_backward.png",
+        "assets/minecraft/textures/gui/sprites/widget/page_backward_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/widget/page_forward.png",
+        "assets/minecraft/textures/gui/sprites/widget/page_forward_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/page_backward.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/page_backward_highlighted.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/page_forward.png",
+        "assets/minecraft/textures/gui/sprites/recipe_book/page_forward_highlighted.png"
+      ],
+      "observations": [
+        "Book and recipe-book page controls have distinct sprite families."
+      ],
+      "remainingNativeProbes": [
+        "Select one reference family; inspect forward/backward hover states and page-count text."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "chat": {
+      "target": "ChatComponent",
+      "classes": [
+        "net.minecraft.client.gui.components.ChatComponent"
+      ],
+      "assets": [],
+      "observations": [
+        "The vanilla chat HUD provides a text/message composition."
+      ],
+      "remainingNativeProbes": [
+        "Freeze opacity, message age, fade time, scrolling, wrapped lines and background settings."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "keybinds": {
+      "target": "KeyBindsList",
+      "classes": [
+        "net.minecraft.client.gui.screens.options.controls.KeyBindsList"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/sprites/widget/button.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_disabled.png",
+        "assets/minecraft/textures/gui/sprites/widget/button_highlighted.png"
+      ],
+      "observations": [
+        "Key binding rows use controls that can supply a key-label treatment."
+      ],
+      "remainingNativeProbes": [
+        "This is not evidence of a native keycap primitive. Pin key labels/layout and distinguish display-only Kbd semantics."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "book": {
+      "target": "BookViewScreen",
+      "classes": [
+        "net.minecraft.client.gui.screens.inventory.BookViewScreen"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/book.png"
+      ],
+      "observations": [
+        "Book screen exists with original book texture."
+      ],
+      "remainingNativeProbes": [
+        "Capture static page background/text; do not stretch a whole book into an arbitrary card."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    },
+    "menu": {
+      "target": "Screen background and separators",
+      "classes": [
+        "net.minecraft.client.gui.screens.Screen"
+      ],
+      "assets": [
+        "assets/minecraft/textures/gui/menu_background.png",
+        "assets/minecraft/textures/gui/header_separator.png",
+        "assets/minecraft/textures/gui/footer_separator.png"
+      ],
+      "observations": [
+        "Vanilla contains menu backgrounds and header/footer separators."
+      ],
+      "remainingNativeProbes": [
+        "Choose title-screen or in-world context; check tiling, fade and separators without assuming interchangeable textures."
+      ],
+      "renderRuleStatus": "static-evidence-runtime-pending"
+    }
+  },
+  "components": [
+    {
+      "name": "accordion",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/accordion",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Button headers controlling native-styled text/list sections",
+        "families": [
+          "button",
+          "text",
+          "list"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native Accordion counterpart established; expansion layout and disclosure marker are design decisions."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "collapsed",
+          "expanded",
+          "hover",
+          "keyboard focus",
+          "disabled",
+          "single/multiple"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "alert",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/alert",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Popup panel and vanilla warning/text treatment in an inline layout",
+        "families": [
+          "popup",
+          "text",
+          "dialog"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Inline alert semantics/layout are composed; warning appearance does not establish all severity variants."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "info",
+          "warning",
+          "destructive",
+          "title/body",
+          "wrapping"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "alert-dialog",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/alert-dialog",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-layout",
+        "target": "ConfirmScreen confirmation content with web AlertDialog semantics",
+        "families": [
+          "dialog",
+          "button",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Capture confirmation content and modal background in a declared context."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "confirm/cancel focus",
+          "disabled action",
+          "wrapping"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "aspect-ratio",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/aspect-ratio",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "layout",
+        "target": "Unskinned ratio-constrained box around pixel-rendered content",
+        "families": [],
+        "authority": "analyst-designed-composition",
+        "limitation": "No visible primitive; child asset fidelity is independent. Fractional ratios cannot silently resample pixel art."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "1:1",
+          "4:3",
+          "16:9",
+          "clipping"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Verify web behavior and each visible child independently."
+    },
+    {
+      "name": "attachment",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/attachment",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "ItemDisplayWidget-style attachment row",
+        "families": [
+          "item",
+          "list",
+          "text",
+          "tooltip"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "ItemDisplayWidget is a candidate visual analogy; file preview, upload progress and removal have no established native counterpart."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "file label",
+          "icon",
+          "preview",
+          "remove focus",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "avatar",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/avatar",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "PlayerFaceWidget face crop with optional hat layer",
+        "families": [
+          "avatar"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Fallback and generic image handling are web composition; source skin is not selected yet."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "skin face",
+          "hat on/off",
+          "fallback",
+          "several integer scales"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "badge",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/badge",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla styled text on a small tooltip/panel surface",
+        "families": [
+          "text",
+          "tooltip"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No generic native Badge established; palette, padding and variants need designed reference cases."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "short/long text",
+          "status variants"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "breadcrumb",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/breadcrumb",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla text plus page/navigation controls",
+        "families": [
+          "text",
+          "pagination"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native breadcrumb renderer established; separator and collapse layout are designed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "nested path",
+          "current page",
+          "overflow",
+          "focus"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "bubble",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/bubble",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Chat message text on a vanilla chat backdrop",
+        "families": [
+          "chat",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Rounded bubble silhouette and tails are not vanilla chat; use explicit designed geometry if required."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "incoming/outgoing",
+          "multiline",
+          "grouped",
+          "timestamp"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "button",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/button",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "Original Button pilot",
+        "families": [
+          "button",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Other variants, glyphs, fractional scaling, rich children and browsers are unverified."
+      },
+      "referenceCases": {
+        "status": "pilot-defined",
+        "requiredDimensions": [
+          "existing default normal/hover/focus/disabled",
+          "widths 103/150/200/257",
+          "scales 1/2/3",
+          "ASCII matrix"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "installed-pilot",
+        "registryItem": "button"
+      },
+      "pixelVerification": {
+        "status": "reference-and-tests-available",
+        "manifest": "tests/reference/manifest.json",
+        "scope": "Default variant only; see native manifest and tests. No new test result claimed by this map."
+      },
+      "nextStep": "Retain pilot cases; extend references before adding variants."
+    },
+    {
+      "name": "button-group",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/button-group",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Adjacent original Button components",
+        "families": [
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Vanilla buttons do not establish fused edges, separators or spacing for every group orientation."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "first/middle/last",
+          "horizontal/vertical",
+          "focus",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "calendar",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/calendar",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Popup panel, vanilla text and page buttons arranged into a date grid",
+        "families": [
+          "popup",
+          "text",
+          "pagination",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No vanilla date/calendar widget established. Grid, weekday headers, date states and range styling are original designs."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "month navigation",
+          "selected/today",
+          "range",
+          "disabled dates",
+          "outside days"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "card",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/card",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "PopupScreen panel surface with title/body/action layout",
+        "families": [
+          "popup",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Reusing panel texture preserves its pixels; arbitrary card layout is not a native PopupScreen match."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "title/body/footer",
+          "compact/wrapped content"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "carousel",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/carousel",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Recipe/book page navigation around fixed image/content pages",
+        "families": [
+          "pagination",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Sliding animation, touch gestures and continuous positions have no selected vanilla reference."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "first/middle/last",
+          "previous/next",
+          "focus",
+          "disabled bounds"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "chart",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/chart",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "Vanilla debug bar/pie chart treatment for matching chart types",
+        "families": [
+          "chart",
+          "text",
+          "tooltip"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Recharts line/area/radar and arbitrary chart APIs are designed extensions, not native equivalents."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "fixed data",
+          "empty",
+          "min/max",
+          "tooltips",
+          "bar/pie"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "checkbox",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/checkbox",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "Checkbox sprites and native label placement",
+        "families": [
+          "checkbox",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Vanilla mixed-state appearance is absent from the inspected sprite family; do not fabricate a pixel-perfect claim for it."
+      },
+      "referenceCases": {
+        "status": "boolean-matrix-defined",
+        "requiredDimensions": [
+          "checked/unchecked × normal/hover/focus/disabled",
+          "mixed state",
+          "wrapped label"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "implemented-and-install-verified",
+        "registryItem": "checkbox"
+      },
+      "pixelVerification": {
+        "status": "verified-declared-cases",
+        "manifest": "tests/reference/controls/manifest.json",
+        "scope": "Checkbox root only; checked/unchecked × normal/hover/focus/disabled × scales 1–3. Mixed state is a web composition without native pixel proof. Edge/DPR 1.",
+        "installationReport": "tests/reference/controls/installation-verification.json",
+        "repeatabilityReport": "tests/reference/controls/repeatability.json"
+      },
+      "nextStep": "Retain the 24 boolean root cases and three behavior checks; native fidelity of indeterminate, external labels, arbitrary resizing, other glyphs/environments is unverified."
+    },
+    {
+      "name": "code-block",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/code-block",
+        "radixRegistry": false,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla font on chat/panel surface with optional copied action",
+        "families": [
+          "text",
+          "chat",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Syntax palette, line numbers and copy controls lack a native code-block reference."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "plain code",
+          "long lines",
+          "scroll",
+          "copy focus",
+          "highlighted tokens"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "collapsible",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/collapsible",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla Button trigger and shown/hidden content",
+        "families": [
+          "button",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Open-content geometry and animations require a declared composition."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open/closed",
+          "focus",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "combobox",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/combobox",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "EditBox plus command-suggestion popup",
+        "families": [
+          "input",
+          "suggestions",
+          "scroll",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Editable combobox behavior remains web semantics; native CommandSuggestions does not prove full combobox equivalence."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/query",
+          "matches/none",
+          "selected",
+          "active option",
+          "focus",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "command",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/command",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-layout",
+        "target": "CommandSuggestions list with EditBox query",
+        "families": [
+          "suggestions",
+          "input",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Command palette grouping, shortcuts and dialog layout are composed extensions."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "query",
+          "selected suggestion",
+          "no results",
+          "scroll",
+          "keyboard selection"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "context-menu",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/context-menu",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Command-suggestion row treatment on a popup surface",
+        "families": [
+          "suggestions",
+          "popup",
+          "text",
+          "checkbox"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No general right-click menu renderer established; submenu geometry and checks are composed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "active row",
+          "disabled",
+          "checked",
+          "separator",
+          "submenu"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "data-table",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/data-table",
+        "radixRegistry": false,
+        "indexRegistry": false
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Selection-list row treatment with vanilla field/header controls",
+        "families": [
+          "list",
+          "input",
+          "button",
+          "checkbox",
+          "scroll"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "WorldSelectionList is not a native sortable data grid; columns/header/sort indicators need composed references."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "rows",
+          "sort",
+          "filter",
+          "selection",
+          "pagination",
+          "empty",
+          "scroll"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "date-picker",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/date-picker",
+        "radixRegistry": false,
+        "indexRegistry": false
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla Button trigger, Popup panel and composed Calendar",
+        "families": [
+          "button",
+          "popup",
+          "text",
+          "pagination"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native date picker; Calendar is a designed dependency."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/value",
+          "open/closed",
+          "range",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "dialog",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/dialog",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-layout",
+        "target": "PopupScreen / dialog-screen title, body and buttons",
+        "families": [
+          "popup",
+          "dialog",
+          "button",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Select PopupScreen as the panel reference; capture its total bounds and composited backdrop."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "title/body",
+          "scroll",
+          "close focus",
+          "action disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "direction",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/direction",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "layout",
+        "target": "Web direction provider with native text layout constraints",
+        "families": [],
+        "authority": "analyst-designed-composition",
+        "limitation": "No visible primitive. The pilot only verifies en_us ASCII, not Minecraft RTL/bidi rendering."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "ltr/rtl",
+          "nested direction",
+          "focus navigation"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Verify web behavior and each visible child independently."
+    },
+    {
+      "name": "drawer",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/drawer",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Popup panel in a screen-edge drawer arrangement",
+        "families": [
+          "popup",
+          "text",
+          "button",
+          "scroll"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Minecraft PopupScreen does not prove a sliding edge drawer or drag animation."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open/closed",
+          "edges",
+          "snap points",
+          "drag positions"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "dropdown-menu",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/dropdown-menu",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Button trigger with native suggestion/list row surfaces",
+        "families": [
+          "button",
+          "suggestions",
+          "popup",
+          "text",
+          "checkbox"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "General menu and submenu geometry are designed compositions."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "active",
+          "disabled",
+          "checked/radio",
+          "nested submenu"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "empty",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/empty",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-layout",
+        "target": "Empty world/list screen text and action treatment",
+        "families": [
+          "list",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Recover an actual empty-list screen; decorative icons/marketing copy are not native evidence."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "no entries",
+          "optional icon",
+          "action focus"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "field",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/field",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Dialog input-control label, description and input layout",
+        "families": [
+          "dialog",
+          "text",
+          "input",
+          "checkbox"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Inspect actual InputControlHandlers layouts; invalid decoration needs a specific native or designed reference."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "label",
+          "helper",
+          "invalid",
+          "disabled",
+          "horizontal/vertical"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "form",
+      "upstream": {
+        "documentation": null,
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "behavior",
+        "target": "Unskinned form integration with Minecraft Field/Input appearances",
+        "families": [],
+        "authority": "analyst-designed-composition",
+        "limitation": "Form has no independent surface. Verify dependent fields visually and form behavior separately."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "submit",
+          "validation",
+          "focus error",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Verify web behavior and each visible child independently."
+    },
+    {
+      "name": "hover-card",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/hover-card",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "Rich native tooltip treatment",
+        "families": [
+          "tooltip",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Interactive hover-card semantics and rich children extend the native noninteractive tooltip."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open/closed",
+          "multiline",
+          "links",
+          "viewport collision"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "input",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/input",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "EditBox border, text, caret and selection",
+        "families": [
+          "input",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Input types password/search/number and browser decorations require explicit treatment."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/value",
+          "hover/focus/disabled",
+          "selection",
+          "scroll",
+          "cursor phases"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "input-group",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/input-group",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "EditBox with vanilla text/icon/button addons",
+        "families": [
+          "input",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native input-group counterpart established; addon borders and spacing are designed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "prefix/suffix",
+          "invalid",
+          "disabled",
+          "focus within"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "input-otp",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/input-otp",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Fixed-character EditBox cells",
+        "families": [
+          "input",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Minecraft has no selected segmented OTP widget; cell geometry and caret behavior are composed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/partial/full",
+          "focused cell",
+          "invalid",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "item",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/item",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "Vanilla selection-list row and ItemDisplayWidget content",
+        "families": [
+          "item",
+          "list",
+          "text",
+          "tooltip"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Generic item variants and action slots need composed reference layouts."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "default/selected/hover",
+          "icon",
+          "description",
+          "action"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "kbd",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/kbd",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "KeyBindsList key-label/button treatment",
+        "families": [
+          "keybinds",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native keycap primitive established; keyboard glyphs/localization outside ASCII are unverified."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "single key",
+          "chord",
+          "modifier",
+          "focus display"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "label",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/label",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "StringWidget text metrics and shadow",
+        "families": [
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Label association is web behavior; label colors depend on parent context."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "enabled/disabled",
+          "alignment",
+          "wrapped/nowrap"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "marker",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/marker",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla colored text/tooltip highlighting",
+        "families": [
+          "text",
+          "tooltip"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No general Marker component established; inspect upstream behavior before fixing geometry."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "inline marker",
+          "selected/reference state"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "menubar",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/menubar",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla text/button menu triggers and composed menu panels",
+        "families": [
+          "button",
+          "text",
+          "popup",
+          "suggestions"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No desktop menubar counterpart established."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "active menu",
+          "keyboard navigation",
+          "submenu",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "message",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/message",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "ChatComponent message row",
+        "families": [
+          "chat",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Chat history requires fixed age/opacity; generic message actions/roles are composed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "single/multiline",
+          "age",
+          "selected",
+          "metadata",
+          "actions"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "message-scroller",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/message-scroller",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "ChatComponent-style history in a web ScrollArea",
+        "families": [
+          "chat",
+          "scroll",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Web streaming/autoscroll behavior has no direct native visual counterpart."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "top/bottom",
+          "overflow",
+          "new message",
+          "follow",
+          "paused follow"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "native-select",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/native-select",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "platform-limited",
+        "target": "CycleButton visual treatment where browser closed control permits",
+        "families": [
+          "cycle",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "OS-native open select popup is browser-controlled; exact Minecraft pixels cannot be promised. Use Select for a fully skinnable popup."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "closed selected/disabled/focus",
+          "open OS list"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Retain native-select semantics and document OS-popup fidelity boundary; use custom Select for exact popup styling."
+    },
+    {
+      "name": "navigation-menu",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/navigation-menu",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "TabNavigationBar triggers with popup content",
+        "families": [
+          "tabs",
+          "popup",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Native navigation tabs do not establish megamenu layout, links or opening transitions."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "selected",
+          "hover/focus",
+          "panel",
+          "viewport collision"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "pagination",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/pagination",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "Recipe-book page arrows and page-count label",
+        "families": [
+          "pagination",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Numeric page buttons and ellipsis extend the original arrows/count layout."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "first/middle/last",
+          "hover/focus",
+          "disabled",
+          "count"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "popover",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/popover",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "PopupScreen surface and vanilla typography",
+        "families": [
+          "popup",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Anchoring and collision behavior are web behavior; only declared native panel/crop appearances can match."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "side/alignment",
+          "collision",
+          "interactive content"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "progress",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/progress",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "BossHealthOverlay bar fill, background and notches",
+        "families": [
+          "progress"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Indeterminate progress and arbitrary dimensions require separately chosen references."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "0/1/25/50/99/100 percent",
+          "colors",
+          "notches"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "questionnaire",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/questionnaire",
+        "radixRegistry": false,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla dialog input controls with field/action layout",
+        "families": [
+          "dialog",
+          "input",
+          "checkbox",
+          "cycle",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No single questionnaire widget established; each question control and composition needs reference cases."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "question types",
+          "selected values",
+          "invalid",
+          "submit",
+          "multi-step"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "radio-group",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/radio-group",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Exclusive-selection group using vanilla Checkbox appearances",
+        "families": [
+          "checkbox",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Checkbox-shaped radio is a proposed appearance; no circular radio sprite established."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "none/one selected",
+          "focus",
+          "disabled",
+          "keyboard navigation"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "resizable",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/resizable",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla separator/scrollbar texture treatment on web split panels",
+        "families": [
+          "menu",
+          "scroll"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No vanilla resizable split-pane renderer established. Handle and intermediate positions are designed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "horizontal/vertical",
+          "min/max",
+          "drag",
+          "keyboard resize"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "scroll-area",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/scroll-area",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "AbstractScrollArea scrollbar and viewport clipping",
+        "families": [
+          "scroll"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Horizontal scrollbar needs an explicit native reference or designed orientation, not an assumed rotation."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/fitting/overflow",
+          "top/middle/bottom",
+          "thumb drag",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "select",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/select",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "CycleButton-like trigger with selection-list popup",
+        "families": [
+          "cycle",
+          "list",
+          "popup",
+          "scroll",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Vanilla CycleButton cycles directly; an open select popup is an intentional web composition."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/value",
+          "open",
+          "active option",
+          "disabled",
+          "scroll"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "separator",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/separator",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "Original menu header/footer separator strips",
+        "families": [
+          "menu"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Vertical separator is an extension unless its own native reference is selected."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "horizontal title/inworld",
+          "integer widths/scales"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "sheet",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/sheet",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Popup panel anchored to a viewport edge",
+        "families": [
+          "popup",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No edge-sheet renderer established; geometry and transitions are designed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "open",
+          "top/right/bottom/left",
+          "close focus",
+          "scrolling"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "sidebar",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/sidebar",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "TabNavigationBar/list treatment arranged as side navigation",
+        "families": [
+          "tabs",
+          "list",
+          "text",
+          "button",
+          "scroll"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Desktop collapse and mobile sheet are composed layouts without a direct native sidebar reference."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "expanded/collapsed",
+          "active",
+          "nested",
+          "scroll",
+          "mobile sheet"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "skeleton",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/skeleton",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla menu/panel muted placeholders",
+        "families": [
+          "menu",
+          "popup"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native skeleton-loading widget established. Placeholder shapes and animation require original design references."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "static lines/cards",
+          "fixed animation phases"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "slider",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/slider",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "AbstractSliderButton track, handle, label and focus mode",
+        "families": [
+          "slider",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Range/multi-thumb and vertical sliders are extensions. Capture rounding at non-divisible widths."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "min/max/mid/fractional values",
+          "hover/focus/disabled",
+          "drag",
+          "keyboard mode"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "sonner",
+      "upstream": {
+        "documentation": null,
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "SystemToast skin over Sonner web behavior",
+        "families": [
+          "toast",
+          "text",
+          "button"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Action buttons, error/success variants, swipe and arbitrary Sonner layouts extend native toast."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "shown",
+          "multiline",
+          "dismiss/action",
+          "stack",
+          "entry/exit phases"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "spinner",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/spinner",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "LoadingDotsWidget/LoadingDotsText phases",
+        "families": [
+          "loading",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "The selected vanilla appearance is loading dots; a rotating icon has no chosen native counterpart."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "all dot phases",
+          "label",
+          "fixed time",
+          "reduced motion"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "switch",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/switch",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "CycleButton.onOffBuilder two labeled states",
+        "families": [
+          "cycle",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Use web switch semantics with vanilla on/off-button appearance; a sliding thumb would be a designed alternative."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "on/off",
+          "normal/hover/focus/disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "table",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/table",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla list text/background with column alignment",
+        "families": [
+          "list",
+          "text",
+          "menu"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No general native HTML-like table renderer established. Borders and header layout are designed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "headers",
+          "rows",
+          "numeric alignment",
+          "selected",
+          "empty",
+          "overflow"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "tabs",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/tabs",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "TabButton/TabNavigationBar selected and unselected tabs",
+        "families": [
+          "tabs",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Vertical orientation, arbitrary content and disabled treatment need their own cases."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "selected/unselected × normal/hover/focus",
+          "disabled",
+          "long titles"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "textarea",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/textarea",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "MultiLineEditBox text, selection and scroll viewport",
+        "families": [
+          "textarea",
+          "scroll",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Editable native multiline rendering rules remain to be captured."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "empty/multiline",
+          "focus",
+          "selection",
+          "caret phases",
+          "scroll",
+          "disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "toast",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/toast",
+        "radixRegistry": false,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "SystemToast appearance",
+        "families": [
+          "toast",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Variants and action/dismiss controls beyond native layout are composed."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "single/multiline",
+          "shown",
+          "entering/exiting",
+          "stack",
+          "fixed time"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "toggle",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/toggle",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "Vanilla recipe-filter CycleButton treatment",
+        "families": [
+          "toggle",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Original filter is an icon control; generic pressed text button layout is a composition."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "pressed/unpressed",
+          "hover/focus/disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "toggle-group",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/toggle-group",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Exclusive or multiple vanilla filter/toggle controls",
+        "families": [
+          "toggle",
+          "text"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "Group geometry and mutual exclusion remain web semantics; individual toggle skin reference is pending."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "single/multiple",
+          "none/one/many",
+          "hover/focus/disabled"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "tooltip",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/tooltip",
+        "radixRegistry": true,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "native-element",
+        "target": "TooltipRenderUtil background/frame with native text",
+        "families": [
+          "tooltip",
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Capture total painted extent including outer frame/shadow, not only content bounds."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "single/multiline",
+          "wrap",
+          "all viewport edges",
+          "focus trigger"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    },
+    {
+      "name": "trace",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/trace",
+        "radixRegistry": false,
+        "indexRegistry": true
+      },
+      "mapping": {
+        "kind": "composition",
+        "target": "Vanilla debug-text/list treatment for expandable trace rows",
+        "families": [
+          "text",
+          "list",
+          "button"
+        ],
+        "authority": "analyst-designed-composition",
+        "limitation": "No native trace viewer established. Indentation, status icons and timing display are original compositions."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "collapsed/expanded",
+          "nested",
+          "active/error",
+          "empty"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Define the designed layout, capture each native constituent, and keep composition correctness separate from native-element pixel equality."
+    },
+    {
+      "name": "typography",
+      "upstream": {
+        "documentation": "https://ui.shadcn.com/docs/components/base/typography",
+        "radixRegistry": false,
+        "indexRegistry": false
+      },
+      "mapping": {
+        "kind": "native-subset",
+        "target": "Vanilla font providers, colors, shadows and wrapping",
+        "families": [
+          "text"
+        ],
+        "authority": "analyst-selected-native-reference",
+        "limitation": "Minecraft has no HTML heading/prose scale equivalence; only selected native text styles can be exact."
+      },
+      "referenceCases": {
+        "status": "not-yet-captured",
+        "requiredDimensions": [
+          "plain/emphasis",
+          "headings",
+          "wrapped text",
+          "links",
+          "supported glyphs"
+        ],
+        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+      },
+      "implementation": {
+        "status": "not-implemented",
+        "registryItem": null
+      },
+      "pixelVerification": {
+        "status": "unverified",
+        "manifest": null,
+        "scope": null
+      },
+      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+    }
+  ]
+}

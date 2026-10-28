@@ -1,0 +1,150 @@
+{
+  "command": "shadcn add http://localhost:5173/r/checkbox.json --yes --overwrite",
+  "consumer": "separate initialized shadcn Vite/React consumer",
+  "browser": "155.0.4283.62",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "files": [
+    {
+      "path": "checkbox.tsx",
+      "installedSha256": "99097a03073a13c82ff4f0ee7b50a7f92d467a82211325f07b755237365b5e51",
+      "sourceSha256": "99097a03073a13c82ff4f0ee7b50a7f92d467a82211325f07b755237365b5e51",
+      "comparison": "Equal after removing comments only; original data URIs unchanged"
+    },
+    {
+      "path": "minecraft-checkbox.css",
+      "installedSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
+      "sourceSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
+      "comparison": "Equal after removing comments only; original data URIs unchanged"
+    },
+    {
+      "path": "minecraft-control-assets.css",
+      "installedSha256": "63a88789ebb8baef5eb3dd08b7d6822a2a3c557bf40862d8f44035d96278fc1b",
+      "sourceSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
+      "comparison": "Equal after removing comments only; original data URIs unchanged"
+    }
+  ],
+  "cases": [
+    {
+      "name": "checkbox-unchecked-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "13e22886df3b4906d13ab13ddab7a730cec25022e3399fe2f4d30c351cd94554"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
+    },
+    {
+      "name": "checkbox-checked-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
+    },
+    {
+      "name": "checkbox-checked-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
+    },
+    {
+      "name": "checkbox-checked-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7df773b49f893559fd99043ebef36c7b520b4c1f5f6aa8a169840b8006b3e820"
+    },
+    {
+      "name": "checkbox-checked-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
+    },
+    {
+      "name": "checkbox-unchecked-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a5aa3c87b02c7f65a84cf85a26919c2df2713ad750f9fd0d2c0ab2b50e76d884"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
+    },
+    {
+      "name": "checkbox-checked-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
+    },
+    {
+      "name": "checkbox-checked-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
+    },
+    {
+      "name": "checkbox-checked-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "13aea591213b02ce7c02372bacf760592c40556af208dbeec3026089cd0863b1"
+    },
+    {
+      "name": "checkbox-checked-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
+    },
+    {
+      "name": "checkbox-unchecked-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "39bce04967376c7ee04485319c9cd95556ef14d3442063a7bc4904b32b49d206"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
+    },
+    {
+      "name": "checkbox-checked-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
+    },
+    {
+      "name": "checkbox-checked-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
+    },
+    {
+      "name": "checkbox-checked-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a7e242d4e77f78075298b502dae6efda087a2bf9bac23af09498b0393e8ee474"
+    },
+    {
+      "name": "checkbox-checked-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
+    }
+  ],
+  "pageErrors": []
+}

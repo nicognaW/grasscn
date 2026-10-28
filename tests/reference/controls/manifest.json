@@ -1,0 +1,322 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "2d122ab3a694b37354fe3c013f94a1ed6a20bca322d3e2b4264428a008273575",
+  "caseDefinitionSha256": "1a1280a9de7e94f51c307ee96fb80b8338cd4f831ffa21f867d2436df3b6a8b0",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "f95c47b2bddb721a8430d964163c38a609e51cd904366781d960a2e9d6ed210d"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "351529ba05123ba2e2b2338dbb721f72617435957e5bedff3826377ac9ca2c91"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "8eaa5018163997a6d2dfc5b2a4d51cf55d81b26087c8d03115614f2caa7dc68c"
+    }
+  ],
+  "cases": [
+    {
+      "name": "checkbox-unchecked-normal-s1.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 16,
+      "scale": 1,
+      "sha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s1.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 48,
+      "scale": 1,
+      "sha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s1.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 80,
+      "scale": 1,
+      "sha256": "c09f7ef110396e28ee0a5d2f1881f19d3292ba98e92aa3134162fc7dbb99bd60"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s1.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 112,
+      "scale": 1,
+      "sha256": "314b399c2f68153b976e1687f8a7fcada4dd65404100fb569a6dfaca20765081"
+    },
+    {
+      "name": "checkbox-checked-normal-s1.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 16,
+      "scale": 1,
+      "sha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6"
+    },
+    {
+      "name": "checkbox-checked-hover-s1.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 48,
+      "scale": 1,
+      "sha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6"
+    },
+    {
+      "name": "checkbox-checked-focus-s1.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 80,
+      "scale": 1,
+      "sha256": "d358929c0e1e04d05af835d947fc031f03456bb44c7a827fa5c4644100cdd258"
+    },
+    {
+      "name": "checkbox-checked-disabled-s1.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 112,
+      "scale": 1,
+      "sha256": "3bcc7565da4eb5017af5f9ed7e857d414ab44dbbf074c5ccbeda8cf2d96557f6"
+    },
+    {
+      "name": "checkbox-unchecked-normal-s2.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 16,
+      "scale": 2,
+      "sha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s2.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 48,
+      "scale": 2,
+      "sha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s2.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 80,
+      "scale": 2,
+      "sha256": "e8145bf8807bbac519a5931d65f1259f1382bcd97d26fafb5eddf48e248eba92"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s2.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 112,
+      "scale": 2,
+      "sha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795"
+    },
+    {
+      "name": "checkbox-checked-normal-s2.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 16,
+      "scale": 2,
+      "sha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec"
+    },
+    {
+      "name": "checkbox-checked-hover-s2.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 48,
+      "scale": 2,
+      "sha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec"
+    },
+    {
+      "name": "checkbox-checked-focus-s2.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 80,
+      "scale": 2,
+      "sha256": "6d581b98202a6f5b34c99dff3d353ef730998a9380ba7ad5ef8f5acee65df7ce"
+    },
+    {
+      "name": "checkbox-checked-disabled-s2.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 112,
+      "scale": 2,
+      "sha256": "00222509039d9c1d23d8215eed009f5fcc070d0663087d271ad82474aeaf94ec"
+    },
+    {
+      "name": "checkbox-unchecked-normal-s3.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 16,
+      "scale": 3,
+      "sha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33"
+    },
+    {
+      "name": "checkbox-unchecked-hover-s3.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 48,
+      "scale": 3,
+      "sha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33"
+    },
+    {
+      "name": "checkbox-unchecked-focus-s3.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 80,
+      "scale": 3,
+      "sha256": "9cd0e2f1a01ead8e73031ecf23ad59f21b9f8dfa9a36e39542e16f0aca3b956e"
+    },
+    {
+      "name": "checkbox-unchecked-disabled-s3.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": false,
+      "width": 17,
+      "height": 17,
+      "x": 16,
+      "y": 112,
+      "scale": 3,
+      "sha256": "89ab4708d39d56eb3ba91bdcb293427cd6c18c24b7e67c904d0319c591116f33"
+    },
+    {
+      "name": "checkbox-checked-normal-s3.png",
+      "element": "checkbox",
+      "state": "normal",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 16,
+      "scale": 3,
+      "sha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46"
+    },
+    {
+      "name": "checkbox-checked-hover-s3.png",
+      "element": "checkbox",
+      "state": "hover",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 48,
+      "scale": 3,
+      "sha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46"
+    },
+    {
+      "name": "checkbox-checked-focus-s3.png",
+      "element": "checkbox",
+      "state": "focus",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 80,
+      "scale": 3,
+      "sha256": "cc6c62e7eea7db3373093b337137d4c7fae1b7ac517270b6f8bd95d0a64d57f8"
+    },
+    {
+      "name": "checkbox-checked-disabled-s3.png",
+      "element": "checkbox",
+      "state": "disabled",
+      "checked": true,
+      "width": 17,
+      "height": 17,
+      "x": 80,
+      "y": 112,
+      "scale": 3,
+      "sha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46"
+    }
+  ],
+  "framesDirectory": "frames"
+}
