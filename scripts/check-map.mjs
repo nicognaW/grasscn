@@ -3,6 +3,7 @@ import { createHash } from "node:crypto"
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { PNG } from "pngjs"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const json = async file => JSON.parse(await readFile(path.resolve(root, file), "utf8"))
@@ -39,6 +40,10 @@ for (const [id, family] of Object.entries(map.families)) {
     assert.ok(asset.width > 0 && asset.height > 0, `${id}: invalid PNG geometry`)
     if (asset.metadata) hash(asset.metadataSha256)
   }
+  for (const member of family.fontDefinitions ?? []) {
+    assert.ok(inventory.resources[member], `${id}: absent font definition ${member}`)
+    hash(inventory.resources[member].sha256)
+  }
 }
 const kinds = new Set(["native-element", "native-layout", "native-subset", "composition", "layout", "behavior", "platform-limited"])
 for (const component of map.components) {
@@ -54,6 +59,12 @@ for (const component of map.components) {
     const manifest = await json(component.pixelVerification.manifest)
     assert.equal(manifest.sourceJarSha256, map.sourceJarSha256)
     assert.ok(manifest.cases.length, `${component.name}: empty reference matrix`)
+    if (manifest.sourceDirectory) {
+      const source = path.join(path.dirname(component.pixelVerification.manifest), manifest.sourceDirectory, "ControlsReferenceMain.java")
+      assert.equal(digest(await readFile(path.resolve(root, source))), manifest.captureSourceSha256, `Native harness snapshot integrity: ${source}`)
+      const casesFile = path.join(path.dirname(component.pixelVerification.manifest), "cases.json")
+      assert.equal(digest(await readFile(path.resolve(root, casesFile))), manifest.caseDefinitionSha256, `Native case definition integrity: ${casesFile}`)
+    }
     for (const reference of manifest.cases) {
       const file = path.join(path.dirname(component.pixelVerification.manifest), "captures", reference.name)
       assert.equal(digest(await readFile(path.resolve(root, file))), reference.sha256, `Reference integrity: ${file}`)
@@ -81,6 +92,8 @@ for (const component of map.components) {
         assert.equal(installed.mismatchedPixels, 0)
         assert.equal(repeated.mismatchedPixels, 0)
         assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256)
+        const referenceFile = path.join(path.dirname(component.pixelVerification.manifest), "captures", reference.name)
+        assert.equal(digest(PNG.sync.read(await readFile(path.resolve(root, referenceFile))).data), repeated.decodedRgbaSha256)
         assert.equal(repeated.runOnePngSha256, reference.sha256)
         assert.equal(repeated.runTwoPngSha256, reference.sha256)
       }

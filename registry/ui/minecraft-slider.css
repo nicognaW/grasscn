@@ -1,0 +1,43 @@
+@layer theme, base, components, utilities;
+@layer components {
+  .mc-slider {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    --mc-ink: #fff;
+    --mc-shadow: #3f3f3f;
+    position: relative;
+    display: block;
+    width: calc(200 * var(--mc-pixel));
+    height: calc(20 * var(--mc-pixel));
+    min-width: calc(8 * var(--mc-pixel));
+    touch-action: none;
+    user-select: none;
+  }
+  .mc-slider[data-disabled] { --mc-ink: #a0a0a0; --mc-shadow: #282828; }
+  .mc-slider-track, .mc-slider-position { position: absolute; inset: 0; }
+  .mc-slider-position { pointer-events: none; }
+  .mc-slider-range { display: none; }
+  .mc-slider-position > span:first-child {
+    left: calc(round(down, (100% - 8 * var(--mc-pixel)) * var(--mc-thumb-fraction), var(--mc-pixel)) + 4 * var(--mc-pixel)) !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    top: 0;
+  }
+  .mc-slider-thumb { display: block; width: calc(8 * var(--mc-pixel)); height: calc(20 * var(--mc-pixel)); outline: none; pointer-events: auto; }
+  .mc-slider-handle { display: block; position: absolute; inset: 0; }
+  .mc-slider-label {
+    position: absolute;
+    pointer-events: none;
+    left: round(down, 50%, var(--mc-pixel));
+    top: calc(round(down, (100% - 9 * var(--mc-pixel)) / 2, var(--mc-pixel)) + var(--mc-pixel));
+    transform: translateX(round(up, -50%, var(--mc-pixel)));
+  }
+  .mc-slider[data-orientation="vertical"] { width: calc(20 * var(--mc-pixel)); height: calc(200 * var(--mc-pixel)); }
+  .mc-slider[data-orientation="vertical"] .mc-slider-position > span:first-child {
+    left: 0 !important;
+    top: calc(round(down, (100% - 8 * var(--mc-pixel)) * var(--mc-thumb-fraction), var(--mc-pixel)) + 4 * var(--mc-pixel)) !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+  .mc-slider[data-orientation="vertical"] .mc-slider-thumb { width: calc(20 * var(--mc-pixel)); height: calc(8 * var(--mc-pixel)); }
+  .mc-slider[data-orientation="vertical"] .mc-slider-handle { width: calc(8 * var(--mc-pixel)); height: calc(20 * var(--mc-pixel)); inset: auto; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+}

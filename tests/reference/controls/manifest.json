@@ -318,5 +318,6 @@
       "sha256": "247afcc63142053381b487550f69c9e34bbce13dc9aef5011352b46ad575bf46"
     }
   ],
-  "framesDirectory": "frames"
+  "framesDirectory": "frames",
+  "sourceDirectory": "source"
 }

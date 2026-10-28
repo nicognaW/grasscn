@@ -53,6 +53,53 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Minecraft Slider",
+      "description": "Original Java 26.2 slider track/handle, logical-pixel position rounding, and ASCII labels with standard shadcn/Radix values and events. Native matrix: 225 single-thumb horizontal cases at scales 1–3. Range/RTL/vertical are web extensions.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/slider.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-slider.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-slider-sprites.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text-assets.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

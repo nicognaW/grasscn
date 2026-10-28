@@ -16,8 +16,13 @@ const jar = path.join(versionDir, `${instanceName}.jar`)
 const runtime = path.resolve(process.env.MINECRAFT_REFERENCE_WORK_DIR ?? path.join(here, "../../.native-reference/controls"))
 const gameDir = path.join(runtime, "game")
 const classes = path.join(runtime, "classes")
-const outputDir = path.resolve(process.env.MINECRAFT_REFERENCE_OUTPUT_DIR ?? path.join(here, "controls"))
 const caseFile = path.resolve(process.argv[4] ?? path.join(here, "controls/cases.json"))
+const definitions = JSON.parse(await readFile(caseFile, "utf8"))
+if (!definitions.length || new Set(definitions.map(c => c.name)).size !== definitions.length) throw new Error("Empty or duplicate native cases")
+for (const c of definitions) {
+  if (!/^[a-z0-9-]+$/.test(c.name) || ![c.x, c.y, c.width, c.height, c.page ?? 0].every(Number.isInteger) || c.x < 0 || c.y < 0 || c.width <= 0 || c.height <= 0 || (c.x + c.width) * 3 > 1536 || (c.y + c.height) * 3 > 900) throw new Error(`Invalid reference bounds: ${c.name}`)
+}
+const outputDir = path.resolve(process.env.MINECRAFT_REFERENCE_OUTPUT_DIR ?? path.dirname(caseFile))
 const captures = path.join(outputDir, "captures")
 const frames = path.join(runtime, "frames")
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex")
@@ -69,13 +74,25 @@ const output = await javaCommand("java", javaArgs)
 if (!output.includes("REGISTRY_REFERENCE_COMPLETE")) throw new Error("Client exited without completing reference captures")
 if (sha256(await readFile(jar)) !== sourceJarSha256) throw new Error("Source JAR changed during capture")
 
-const definitions = JSON.parse(await readFile(caseFile, "utf8"))
 const cases = []
 for (const scale of [1, 2, 3]) for (const definition of definitions) {
   const name = definition.name + "-s" + scale + ".png"
   const bytes = await readFile(path.join(captures, name))
   cases.push({ ...definition, name, scale, sha256: sha256(bytes) })
 }
-const manifest = { source: "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.", minecraftVersion: "26.2", sourceJarSha256, captureSourceSha256: sha256(await readFile(path.join(here, "ControlsReferenceMain.java"))), caseDefinitionSha256: sha256(await readFile(caseFile)), mods: [], resourcePacks: [], background: "#202020", guiScales: [1, 2, 3], labelLanguage: "en_us", differenceTolerance: 0, frames: await Promise.all([1, 2, 3].map(async scale => { const name = "native-controls-s" + scale + ".png"; return { name, sha256: sha256(await readFile(path.join(frames, name))) } })), cases }
+const pages = [...new Set(definitions.map(c => c.page ?? 0))].sort((a, b) => a - b)
+if (pages.some((page, index) => page !== index)) throw new Error("Native pages must be contiguous from zero")
+await mkdir(path.join(outputDir, "frames"), { recursive: true })
+const frameRecords = []
+for (const page of pages) for (const scale of [1, 2, 3]) {
+  const name = `native-controls-${pages.length > 1 ? `p${page}-` : ""}s${scale}.png`
+  const bytes = await readFile(path.join(frames, name))
+  await writeFile(path.join(outputDir, "frames", name), bytes)
+  frameRecords.push({ name, sha256: sha256(bytes) })
+}
+const manifest = { source: "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.", minecraftVersion: "26.2", sourceJarSha256, captureSourceSha256: sha256(await readFile(path.join(here, "ControlsReferenceMain.java"))), caseDefinitionSha256: sha256(await readFile(caseFile)), mods: [], resourcePacks: [], background: "#202020", guiScales: [1, 2, 3], labelLanguage: "en_us", differenceTolerance: 0, framesDirectory: "frames", frames: frameRecords, cases }
+await mkdir(path.join(outputDir, "source"), { recursive: true })
+await writeFile(path.join(outputDir, "source/ControlsReferenceMain.java"), await readFile(path.join(here, "ControlsReferenceMain.java")))
+manifest.sourceDirectory = "source"
 await writeFile(path.join(outputDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n")
 console.log("Captured " + cases.length + " native control references")

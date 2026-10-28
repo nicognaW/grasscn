@@ -17,7 +17,9 @@
     "map:check": "node scripts/check-map.mjs",
     "map:list": "node scripts/check-map.mjs --list",
     "reference:controls": "node tests/reference/capture-controls.mjs",
-    "test:controls": "playwright test controls.spec.ts"
+    "test:controls": "playwright test controls.spec.ts",
+    "test:slider": "playwright test slider.spec.ts",
+    "reference:repeat": "node scripts/verify-reference-repeat.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

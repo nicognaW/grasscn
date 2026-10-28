@@ -12,7 +12,7 @@
     "composition": "Native constituents may be pixel-verified; a newly designed composition cannot be called a pixel-perfect port of a nonexistent vanilla widget.",
     "nonvisual": "Layout and behavior providers have no independent pixels. Verify child appearance and provider behavior.",
     "nativeSelect": "The operating-system native popup cannot be fully skinned by registry CSS; exact full-control Minecraft fidelity is not promised.",
-    "runtime": "Button and Checkbox have independent native references and pixel suites. All other mappings have static evidence only."
+    "runtime": "Button, Checkbox and Slider have independent native references and pixel suites. Other mappings have static evidence only."
   },
   "families": {
     "text": {
@@ -89,12 +89,14 @@
         "assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png"
       ],
       "observations": [
-        "Track and handle are separate sprites with independent metadata."
+        "Track border 1; handle has asymmetric left/top/right 2, bottom 3. Each original metadata file is parsed independently.",
+        "Handle x = floor(value * (width - 8)) logical pixels. Track highlights when focused and not editing. Handle highlights on hover or editing, only while active.",
+        "Optional ASCII label uses original glyph atlas/advances/shadow and native centering. The source has no filled colored range."
       ],
       "remainingNativeProbes": [
-        "Recover handle position/rounding, focus editing mode, min/max and value text. Multi-thumb, vertical and disabled web cases need separate decisions."
+        "Horizontal single-thumb declared matrix covered. Range, vertical, RTL and arbitrary glyphs/environments are extensions with no native pixel proof."
       ],
-      "renderRuleStatus": "static-evidence-runtime-pending"
+      "renderRuleStatus": "native-verified-for-225-horizontal-single-thumb-cases"
     },
     "input": {
       "target": "EditBox",
@@ -2655,25 +2657,28 @@
         "limitation": "Range/multi-thumb and vertical sliders are extensions. Capture rounding at non-divisible widths."
       },
       "referenceCases": {
-        "status": "not-yet-captured",
+        "status": "225-horizontal-single-thumb-cases-defined",
         "requiredDimensions": [
-          "min/max/mid/fractional values",
-          "hover/focus/disabled",
-          "drag",
-          "keyboard mode"
+          "widths 103,200,257 logical pixels; height 20",
+          "normalized values 0,.1,.5,.87,1",
+          "normal,hover,focus-editing,focus-locked,disabled",
+          "scales 1,2,3",
+          "empty label or printable ASCII sample"
         ],
-        "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
+        "settings": "Native Java 26.2; original atlas/font; en_us; #202020; web Edge/DPR 1/zoom 100%; manifest is authoritative."
       },
       "implementation": {
-        "status": "not-implemented",
-        "registryItem": null
+        "status": "implemented-and-install-verified",
+        "registryItem": "slider"
       },
       "pixelVerification": {
-        "status": "unverified",
-        "manifest": null,
-        "scope": null
+        "status": "verified-declared-cases",
+        "manifest": "tests/reference/slider/manifest.json",
+        "scope": "225 explicit horizontal single-thumb cases. Range, RTL, inverted and vertical have web behavior tests; no native pixel guarantee for those extensions.",
+        "installationReport": "tests/reference/slider/installation-verification.json",
+        "repeatabilityReport": "tests/reference/slider/repeatability.json"
       },
-      "nextStep": "Recover remaining rules, capture the original renderer twice, implement public shadcn API, and compare all decoded RGBA pixels with zero tolerance."
+      "nextStep": "Retain 225 native cases and eight web behavior checks. Extend native references before claiming fidelity for range, vertical, RTL, resizing beyond the matrix, other glyphs or environments."
     },
     {
       "name": "sonner",

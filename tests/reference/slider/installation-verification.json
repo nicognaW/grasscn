@@ -1,0 +1,1192 @@
+{
+  "command": "shadcn add http://localhost:5173/r/slider.json --yes --overwrite",
+  "consumer": "separate initialized shadcn Vite/React consumer",
+  "consumerRsc": false,
+  "browser": "155.0.4283.62",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "files": [
+    {
+      "path": "slider.tsx",
+      "installedSha256": "d722ce9ebe9671d39fff0419113b0d1ed017e88104d7947952c7258b284aade8",
+      "sourceSha256": "0a807585f79d602c03e3071078b1ec90a77f52e15d7b9b551dcdf53cbeaee33e",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-slider.css",
+      "installedSha256": "c1259362034351747a8404321b356b3d895c43b726d43820a5810015fb17f9f2",
+      "sourceSha256": "c1259362034351747a8404321b356b3d895c43b726d43820a5810015fb17f9f2",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-slider-sprites.ts",
+      "installedSha256": "939622a1422c59c4188a1b8beed1b51743c87e38cdfe542c71c5cc01126c8ffc",
+      "sourceSha256": "b3f3142daf80f927b3ac155cef2bc353785b4cc8b36b258118477bf878dbdc5b",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-surface.css",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    }
+  ],
+  "cases": [
+    {
+      "name": "slider-w103-v0-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d18999e015d3e10481ccfcec00ddfe090a1b909f7068fc6c0bd0e6bf9a8f448e"
+    },
+    {
+      "name": "slider-w103-v0-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2f6edb07e4df6201940f8fed955fd5a01aab4c508876850ff40afd73110475eb"
+    },
+    {
+      "name": "slider-w103-v0-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d8ad2e12fad35a2db221a00481b9a0c171df9e58d74a8272239bda1b2becd345"
+    },
+    {
+      "name": "slider-w103-v0-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "198a16a58d77f274ef017f41f27de3b9dfe8157946703f69f9cac8b975075f90"
+    },
+    {
+      "name": "slider-w103-v0-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1fe39095cd20f69fe325745e6f6025a8879996a42f065d917efe2dc5a20e4755"
+    },
+    {
+      "name": "slider-w103-v100-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5f1d8fada71938a00a387528faa0e716fabe07083090702939e8c9d450b16ced"
+    },
+    {
+      "name": "slider-w103-v100-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "35065f8400e1056882bba63b7bd393a46f44716fe734fe3071bb6125aabf303d"
+    },
+    {
+      "name": "slider-w103-v100-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8500fdc975f52d7a3496d41d037cf4cf44e23bf4057e6431c87ec56feb661b3f"
+    },
+    {
+      "name": "slider-w103-v100-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "552e7169a4722534dd78b147d78dbad791ce1cbf6787b15b51c327bad581f365"
+    },
+    {
+      "name": "slider-w103-v100-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b40ac53c20f356411661f16124f44da9b6aa3969f1f8cc6b7c7bd587bf333113"
+    },
+    {
+      "name": "slider-w103-v500-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "964b542c9046d98c55263689bf33dbc4ca4c489aca96511a8f0738e30b0e58a0"
+    },
+    {
+      "name": "slider-w103-v500-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5fc812285d3d9af1e34e82e5d770105301e05fe8f726f8a6786feadd197ed100"
+    },
+    {
+      "name": "slider-w103-v500-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "06899210f6ec1842ad76da41e1023ff647a989e32feeda73542166c8ca3c5817"
+    },
+    {
+      "name": "slider-w103-v500-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "58ffd4d504dab0c02f545d6fc99e94ff9d331d918c06806f36d7b0425cfd8fe1"
+    },
+    {
+      "name": "slider-w103-v500-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "655c8ae06916ed84728ef74aa162b4d940edc14c5ee1db7e1053df8b5094bd78"
+    },
+    {
+      "name": "slider-w103-v870-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8bb6ae1226b9e1fedc9b946cbfdb16d9042eb1743b424b2a2481f81279e18f93"
+    },
+    {
+      "name": "slider-w103-v870-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8065c90fead4e9b0e53d8e8b80b6976be10218d4cd365d1d003ee2a9db49ddfe"
+    },
+    {
+      "name": "slider-w103-v870-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4d6309d3dbd805e70d73042e47bbdcc967c05a20240f448fca3ad19233594534"
+    },
+    {
+      "name": "slider-w103-v870-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "89bd8de6b956e0012571fab0ccc5b99864f433707a9976bb2582bf98249948a5"
+    },
+    {
+      "name": "slider-w103-v870-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "557d82de96c7c45d32a8daf6d5c4a34448ffb915a23a378b21cb63bd49a99048"
+    },
+    {
+      "name": "slider-w103-v1000-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "22447965ee41d62c4146e846ce0161a6c5db69e42f9c955467d0daa115eff721"
+    },
+    {
+      "name": "slider-w103-v1000-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d4ea4b2d776a97cccc11443cc99ff439ae7bcbf4e8bdfbe7bf93c8eb7b7834c4"
+    },
+    {
+      "name": "slider-w103-v1000-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cf628a518de0c28d1314d9ec5bb7eb4aba46a34fbc1e4f4d060a91e83f118812"
+    },
+    {
+      "name": "slider-w103-v1000-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3fb9aab9722e07b7e412120c7db80d4a0de82354b9f71b38dc6e43c32b71765a"
+    },
+    {
+      "name": "slider-w103-v1000-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c0dc648da9fbb2753e0d511a51cbea7901bd2c265c08a0f3c382dbe68da246e4"
+    },
+    {
+      "name": "slider-w200-v0-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6c2cc1fea28d81feaddb844ff680bfcc4a3303f02967da7355f0d3176b0e2262"
+    },
+    {
+      "name": "slider-w200-v0-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da161f2a9d617a885097f6b9aac437a2e63d7ac4140dd6a6359300566d412cd6"
+    },
+    {
+      "name": "slider-w200-v0-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d3d18423b0287cacb8371f8296dee54c6c01327e07d9abb86e94668e473b6016"
+    },
+    {
+      "name": "slider-w200-v0-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "58555386df87bc1de785314586e7c260bed1fa88f0cf1b74b64ac0733f845155"
+    },
+    {
+      "name": "slider-w200-v0-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "45bbd5c614d60da99b5e2d210f34eaced7341229820914d8de22ad38dd8fc2b1"
+    },
+    {
+      "name": "slider-w200-v100-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4638b5f10268de41a6f430b43cfff6dfed149440cd70cc2124837f5f940f7c84"
+    },
+    {
+      "name": "slider-w200-v100-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a5bf26b2334556f34961b893dc1862254e9ea974133ca8c617773aec26337fc6"
+    },
+    {
+      "name": "slider-w200-v100-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d6839dfaea0a8fb8db54ef0873039ad497a5d512c60be70f4363cf532c6e21e7"
+    },
+    {
+      "name": "slider-w200-v100-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "585755313a435643af5ec7055cd814c86feff74458b6b08a393bd23f264830d3"
+    },
+    {
+      "name": "slider-w200-v100-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "88a50de0e53f3ef229fe501e142408a4f072c120f72466fbbbc913b0cacf4ba8"
+    },
+    {
+      "name": "slider-w200-v500-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "004d7ee6e794d11a154dba05c90469d2b1fcb76f9b1ad3422fcf60ea613d14a4"
+    },
+    {
+      "name": "slider-w200-v500-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e603f88ad949c224e0dc6132de92587466e76b5a89075ef2b43cf203b4d34110"
+    },
+    {
+      "name": "slider-w200-v500-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "21c1d40dca92576bc977669bef22fff49fdbaacc6780ee4844f37b2a7474f66b"
+    },
+    {
+      "name": "slider-w200-v500-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8f2300226f2c3765de4cf3f383c1da13cef548f762d600b4beda4e02659d2ab0"
+    },
+    {
+      "name": "slider-w200-v500-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bd352e1b8996ee52777491480834d0b4d29fca48160a8485c7a98ce138c20094"
+    },
+    {
+      "name": "slider-w200-v870-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e45f9f6a9a0d5dc8c8504bfa5049a9fda3e7950be6fa69f65fa5d16fd9fe4208"
+    },
+    {
+      "name": "slider-w200-v870-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0c7872e0f22aa6d36ef3f6754275ac9668f1607185f0538cc12fa0aad7555aef"
+    },
+    {
+      "name": "slider-w200-v870-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2d3acda0246c64ce66e7c6e3f68d71c4178854a2848c47613c39fbb2369b9941"
+    },
+    {
+      "name": "slider-w200-v870-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "59edf34b08875f0bb2cdb37463526b298663ac7fe948802245cdb63849cb373b"
+    },
+    {
+      "name": "slider-w200-v870-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4d1ca656c35b1ba8b64c8386ba536758ea7f3f1d99d7eb06f982dac05e350549"
+    },
+    {
+      "name": "slider-w200-v1000-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4cc21dd62668acad709dede184fff357ff32d8f5d44b325cda8b532d12a430ef"
+    },
+    {
+      "name": "slider-w200-v1000-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dcb1a864fadf7c11eb6aac0e797931677dcdceee2500fde2475ca20fe8506167"
+    },
+    {
+      "name": "slider-w200-v1000-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f446dd3aa54d12594793668cf1574296c25d882e4370f10246fac6d05c08d116"
+    },
+    {
+      "name": "slider-w200-v1000-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7405d3cc4e84ef6043ca1c262ff609761b357f330426c483769f5482075d9a56"
+    },
+    {
+      "name": "slider-w200-v1000-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "48630fbbef4b97d2b7e630f529cfc37a17f0ad64687a366ef671a99deb496bbc"
+    },
+    {
+      "name": "slider-w257-v0-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b0328c5a642a6ec05a65c0dd540723819a45fc52620d2a613fbf5c55d35c5734"
+    },
+    {
+      "name": "slider-w257-v0-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f955ee85119f3335b6124890bb4f8a1f9d97788aadbd9168932aa597df47e6b5"
+    },
+    {
+      "name": "slider-w257-v0-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "24b8300fc625f46adcef373940c8321cf87e2892bc9c5f05bd1d382697dd3dea"
+    },
+    {
+      "name": "slider-w257-v0-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1efa62dd1155d1e36ea1745e790b65d6a00668f279a77d369c9684e0fe81eeda"
+    },
+    {
+      "name": "slider-w257-v0-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dde8fa07303e09e5cc904ae965c1901b59d3fe2050ca6a55faa6c95b16ec73ba"
+    },
+    {
+      "name": "slider-w257-v100-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "af79a0b8ee66be81e5a8b80b7f00ff893a17aa87d5c23b127eec02c1e67d3d53"
+    },
+    {
+      "name": "slider-w257-v100-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6a74dcc0b6f399148155acd851dfbdab480935ff23d32e7acc685221ad8f5e5e"
+    },
+    {
+      "name": "slider-w257-v100-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "14a2449cd4d3b34792f1fd9aa5e6ddca0a2fcc5523755e0f8113cc2409480684"
+    },
+    {
+      "name": "slider-w257-v100-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "228d2e0de3d684f94fa79055b5beae40e01d0645eae2c3cc15bbcfcd8638eb24"
+    },
+    {
+      "name": "slider-w257-v100-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "995a3af17877d257f0b5cec9d3a632812b365fefd6068a09efa682d412246345"
+    },
+    {
+      "name": "slider-w257-v500-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1ed7714e7d99f98a11b08f634cd154fe6a60f67851ae46fddec57d6e88252061"
+    },
+    {
+      "name": "slider-w257-v500-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f44510200d26c1bb25838ff629c690c84817a55189505176ae7d7877c076f89f"
+    },
+    {
+      "name": "slider-w257-v500-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "344aa7c972fd35c1cd8634b30330de9fd6177b0f86156f8f08781715f22a6e16"
+    },
+    {
+      "name": "slider-w257-v500-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7c66eb8b467629b1a06df6404c7f20d71fafbefb5a89f6d3fcf6cbcdae0686a6"
+    },
+    {
+      "name": "slider-w257-v500-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b112feef3d922ed43dbd13ca374ac791144526431b4d409b76b21c753d716b85"
+    },
+    {
+      "name": "slider-w257-v870-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8f43a193f69ba0a55b789f361c002ef1135d88efe8884d441dfbd8280c8609e9"
+    },
+    {
+      "name": "slider-w257-v870-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "563ece408359ba571dc3cc651faa2a431de16501030aa053c0416ad97fd8c9fc"
+    },
+    {
+      "name": "slider-w257-v870-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "23b0aae54dc102ca3df0e8f9bdd7f9281d5ef2cc28cfced6eae82748c583e32e"
+    },
+    {
+      "name": "slider-w257-v870-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e8c448365e77fadd0a8162c82a6efecd7c72b8f28cc0f0ee179497c671644769"
+    },
+    {
+      "name": "slider-w257-v870-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ee317f4192b276605cfe136238cc82dde3f4deb978513647d1163df9ccd23b"
+    },
+    {
+      "name": "slider-w257-v1000-normal-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cf0741c2281e2e61dfeeb42d1ca506099bacc0d16acb1b6a3de20d99782b81ce"
+    },
+    {
+      "name": "slider-w257-v1000-hover-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3d644b0d553ff442356829aac4420322cb7c99ab4bac276dbd5146356c811f6a"
+    },
+    {
+      "name": "slider-w257-v1000-focus-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d2824003ba2773b18c9e21110bb3e1929c45f90b3b564df4b37fa7f7e3045519"
+    },
+    {
+      "name": "slider-w257-v1000-focus-locked-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fc5ae6776955c8008f239fa24c4332256a37d073aa2430080645c358af087643"
+    },
+    {
+      "name": "slider-w257-v1000-disabled-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0da36a9b2eddfb5428a3dd416f42a0588173d47861c2d5c00808cc041383ee27"
+    },
+    {
+      "name": "slider-w103-v0-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e8956e78253b10df62ac413cd3836f2e52e9de8b3d9443b2e3a51c344c34dc7d"
+    },
+    {
+      "name": "slider-w103-v0-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "64289e656ce3df42ff068c38ce5d380fd48a5631d6714a65f8765c0feef6d45b"
+    },
+    {
+      "name": "slider-w103-v0-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fa42e5cef4435bfbea2ee8b7ab4acd63a6b7cc26bc7c96219ebf5d48f8d1753b"
+    },
+    {
+      "name": "slider-w103-v0-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c2ccd33d4214101334bac5412fa3543b5d6da4a6f175cb863af93cbb0dd463e9"
+    },
+    {
+      "name": "slider-w103-v0-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f412875d66b4d6b7686fdc92ff95e9e6534e1064388d5c530c2b3e2f93137cdf"
+    },
+    {
+      "name": "slider-w103-v100-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d7910f40089a43cbcfb62fde3b9c5d38dd723d40064f40491919454bfdb0c1ae"
+    },
+    {
+      "name": "slider-w103-v100-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3a9ea72c5d18b4d2f7eaeb8bf50390820b92cd3689ec5e080ee32519b408b009"
+    },
+    {
+      "name": "slider-w103-v100-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ebfce0cbadd9f24a6c5d3d32d90321ccd0e5a3da46f50f211be9177a9b7be4f7"
+    },
+    {
+      "name": "slider-w103-v100-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2ce12b70afbf298d66700c1d4c77c88b815e86386a9fdc2591aaec425bcc8a93"
+    },
+    {
+      "name": "slider-w103-v100-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "037f05c4860a77628a3030f90675dffb390ac2161f0f7289b1f1128d6d4757f0"
+    },
+    {
+      "name": "slider-w103-v500-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da394030435d523699b04e7468376cb68cc59695c73a4fe4da37371f5df6c887"
+    },
+    {
+      "name": "slider-w103-v500-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0be348da776a781790071eb586af00683836fdc07b10409ae7ecf28ee8a15f80"
+    },
+    {
+      "name": "slider-w103-v500-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ad112e53e78084767659ed1e51457f69e3974e88098d249c6d139fd934ccad7d"
+    },
+    {
+      "name": "slider-w103-v500-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6aa8a50f7802bdff6305310cdf7c050b02c14e686d2b6d3f69c58796db8ea5ec"
+    },
+    {
+      "name": "slider-w103-v500-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "aace80ae5b756eb42a27dd88389ae8a6d1e342fb581752182f75ca0b23dcb5c9"
+    },
+    {
+      "name": "slider-w103-v870-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a7b29fa3d1da298cb69ca032a5590d370f0d89fffe31d78d21da8dfce77467e4"
+    },
+    {
+      "name": "slider-w103-v870-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "86c1b483a6f76d5b42fe9c0f52e8cbe8374e5be8183ddeaaca2d1e14a7e45258"
+    },
+    {
+      "name": "slider-w103-v870-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4fd18403e7f747acb356883e41aa3f12de947b990be0b630b1949a802b72727b"
+    },
+    {
+      "name": "slider-w103-v870-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "35a00601d112fdb594faefba0a7077e7bb09b21de755c76fbb4c9c924e5dd8a1"
+    },
+    {
+      "name": "slider-w103-v870-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c98e08844663be8b5c82221225327806bfd04c0d81600e6722d4fc5e3d17dcf1"
+    },
+    {
+      "name": "slider-w103-v1000-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5680f7ea534c5f0d8987167f2a012837b7b27ad98aca2de2711a9c48a0f55772"
+    },
+    {
+      "name": "slider-w103-v1000-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "66a1c640cd0dc7c826b20ac8b339ba6dcb4bc11db1f8b60731113c7d2dfe5da2"
+    },
+    {
+      "name": "slider-w103-v1000-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e5c92ccee512a356039d4b124462756466837037a8f8b3406130bee5c2f6f549"
+    },
+    {
+      "name": "slider-w103-v1000-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ea0414c79257aa3b8134a5e6018d7ed765d5333a5bf5ae53ea61223bfddf5e97"
+    },
+    {
+      "name": "slider-w103-v1000-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "48aeb21206fbc1d5cacce9b1196c624dfe9d863abd36866bb22ada9c3140b8cf"
+    },
+    {
+      "name": "slider-w200-v0-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8653eacd23b09a38a7a4c637af6a21773cc785811311f46611e0cc9d95509076"
+    },
+    {
+      "name": "slider-w200-v0-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "556eef969cac6705f03817e2219a06dc81c9f07a05bc22e11dd05e0d9d493603"
+    },
+    {
+      "name": "slider-w200-v0-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3b59f0c89e74b216505cb35890a0500d79277cf6c44e73ccd3c5efae13a57f1b"
+    },
+    {
+      "name": "slider-w200-v0-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ef766342e32a47896a6f9b80f48a2ea7c0e4b128b1576f2245afc594f9397e9"
+    },
+    {
+      "name": "slider-w200-v0-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cb469169ec5bca642721ce2ed7c08315b86d8d8600c7868e6d874d668db5fc4d"
+    },
+    {
+      "name": "slider-w200-v100-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da62ee213b5f136e33d32dad4b8af23124f917e69e3ea4afe7d6e67df0e8a82a"
+    },
+    {
+      "name": "slider-w200-v100-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "83a4e8496872c1db8f2badfc8c0938cd8a772ecea443a67983e1810e7467788a"
+    },
+    {
+      "name": "slider-w200-v100-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a07ef61e7a4948fba228dbcb76fa38c89b05b4614f37b0b4c06c2ab33f91e37d"
+    },
+    {
+      "name": "slider-w200-v100-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6bc927087c4c01df9b14d0119ced78bf87960af8f8bce95fd590845fd8c7a23"
+    },
+    {
+      "name": "slider-w200-v100-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3912902ae3b4452702228eb17bd74e464d7d04c75b549c7d102ec8bdd86c3228"
+    },
+    {
+      "name": "slider-w200-v500-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5a895ea3471aa4b81e22dd4783700ef87447e47e137b7feba0a7b331ea29dbaa"
+    },
+    {
+      "name": "slider-w200-v500-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e7e2cd8eef99d192cbca92fd015db09e5307ed0946d4c8a1d6decb3f8d215764"
+    },
+    {
+      "name": "slider-w200-v500-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b8cc4078fb16193dd675bc42f779f304b8701c3e52b6d29aeebe13810f7abd77"
+    },
+    {
+      "name": "slider-w200-v500-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "31fb3375431d80794c7a35a35e6b0cdc9b8bb25a29f7c6d70c6d5881d58de65f"
+    },
+    {
+      "name": "slider-w200-v500-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8e60182baee6438a631703115f9c9d9c37b8f056e6e8b71e1441fd83aa62f437"
+    },
+    {
+      "name": "slider-w200-v870-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0f7201161840e2c0ed497f85a234fb7a601c31271b2384338688906032c7746e"
+    },
+    {
+      "name": "slider-w200-v870-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ad41388c83ba4550fc986f84e4d752caf455dacd09b39412198127bf56b43470"
+    },
+    {
+      "name": "slider-w200-v870-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "45da2a998a7f838e00b3a289e52f31fef55e82c0766bb2bec830f9e88dce7bd3"
+    },
+    {
+      "name": "slider-w200-v870-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7fc4471afc0940a1f3fbb6315e421513c60a057ed5c426b10628cafbd5bf1cf1"
+    },
+    {
+      "name": "slider-w200-v870-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4f2871e8c8724844d823eea4f38a4bf61bdd4c710817dcf62253618bd9c7694d"
+    },
+    {
+      "name": "slider-w200-v1000-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5f7e201ba1bc616202f69f33530751703917ccfe9dff95c65049fed1d1fbf246"
+    },
+    {
+      "name": "slider-w200-v1000-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1b5129d1fbb454b3d81925825664204cda620756a9cb0420e57912f1a94fd271"
+    },
+    {
+      "name": "slider-w200-v1000-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "16187d899521e01d15198b47458d944c09641691c6b1fe72ca23e1c6a19431ac"
+    },
+    {
+      "name": "slider-w200-v1000-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9547607c630937e90af2735cbb2b173983270159fed7fabd5d9e52b81f7d10f0"
+    },
+    {
+      "name": "slider-w200-v1000-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e12bfbba5dd6d0c75b5d47008373b51394a9d04c53e579818bc8aee77711831f"
+    },
+    {
+      "name": "slider-w257-v0-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ec4ddd664d29d0d0506d526563fd60f93d2900827f3cc10a805672c19050530c"
+    },
+    {
+      "name": "slider-w257-v0-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "11b0c26ad8de78f62fab9192f26755dfae0f3fdaf7065c2187ad2d21fdc56b09"
+    },
+    {
+      "name": "slider-w257-v0-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c61b44b67b53ea2253555b638228f8bbeea2f79d48a9316c6d6e462ab988cfa2"
+    },
+    {
+      "name": "slider-w257-v0-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da1f8a028ab5cd986dc9ddb52d84ca2fd9a56d586e4a2705d99de1ce265425ce"
+    },
+    {
+      "name": "slider-w257-v0-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "79fc5e834554c1d2135db9b08ccce8abbf082ad374f171c2b32ede8bcb118387"
+    },
+    {
+      "name": "slider-w257-v100-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "67c175dc7ba41a4d04f323553247fc78580db9d6bb9d235c76f7ca1dbf9e48a3"
+    },
+    {
+      "name": "slider-w257-v100-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bbd14ff2af5bad97aeddb2a48b8879717afd02ac00bbca43fe4d6546efc31615"
+    },
+    {
+      "name": "slider-w257-v100-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6a060672efc2f68d079d5351b49f06f4bc78bd9f6167a00da2433d2942dbf8ec"
+    },
+    {
+      "name": "slider-w257-v100-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c88041683a8c7559a263338788fe12278994cb42f97ab014efa0b407b51ad3d6"
+    },
+    {
+      "name": "slider-w257-v100-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2e4805846e290d0322dd391abca78c948ce194faf69ce6bb573c265499d2e29b"
+    },
+    {
+      "name": "slider-w257-v500-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f64a0a89f23b25d713e9085bafc0035ff1c4544c91d75af23525c7862b114b37"
+    },
+    {
+      "name": "slider-w257-v500-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a75996388b8576de86be3a8fcd9d5b5cdf8c7ab13875779ace31f92135d107e4"
+    },
+    {
+      "name": "slider-w257-v500-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "015b1c93e8c0ef457c9030fcc2fe8034a26a6b37795c3c5e1babd7a8b7d67879"
+    },
+    {
+      "name": "slider-w257-v500-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "267454190f3879f62d543bc6c8475638e0ab385645af93cfa5d87e3f3cca6843"
+    },
+    {
+      "name": "slider-w257-v500-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f39aa645fb76eacb250ea84b61f4fb31c6db294361ec48a2ab7e84fe0f5d3859"
+    },
+    {
+      "name": "slider-w257-v870-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ca372b348ba1741995d969a47499e165414918e0261060036dbe3be5f386309"
+    },
+    {
+      "name": "slider-w257-v870-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "72ee6deef4f6877af2a8944e70f21c2b041e6a5348068fe0435fcd05f3aeb50f"
+    },
+    {
+      "name": "slider-w257-v870-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5769cf8d98223aee87f204959a9f949983225681a18e02315dae6bb5508df9e1"
+    },
+    {
+      "name": "slider-w257-v870-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ad030d75c1a7573defad28e4a020267ee519e9ee3d8418e3074822089fbd5df"
+    },
+    {
+      "name": "slider-w257-v870-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d2ae94678afa6c6295296c8f797a852f6c947b402370d2afadb561673abcc482"
+    },
+    {
+      "name": "slider-w257-v1000-normal-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1f0b8131aaaea5978b7699979ad13a2154c92f73b3706eb4e8fac6d42800f950"
+    },
+    {
+      "name": "slider-w257-v1000-hover-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3b33c0d821c642b9355dc8d89505bad6d0ea6ac3da39c8662854ff4ee88aed81"
+    },
+    {
+      "name": "slider-w257-v1000-focus-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6ac0b79a83f8cc32b4a33a5364e6d95b40e6ed36b8bdb36107750a7f1cbe7c57"
+    },
+    {
+      "name": "slider-w257-v1000-focus-locked-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c7e02643049e803dda2691814a5f7f3c11c35b9e2b8ec08f5c7a33417ed40fb7"
+    },
+    {
+      "name": "slider-w257-v1000-disabled-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1f142b6c1736e0cda219277f4c94f23c5dbcbefca3db3f2a73f184dc2b50c151"
+    },
+    {
+      "name": "slider-w103-v0-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "65ccd1a6329b86bd88dbe2bbcbd64f5875598c4719641f5ecfac211b530f50e8"
+    },
+    {
+      "name": "slider-w103-v0-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "720f166ab01f4eedc1dabf62899d2398e531cd94538b7b61254e7542b3aa7d81"
+    },
+    {
+      "name": "slider-w103-v0-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f7866e4d774bd0cfdf801bb1f5658a99cc76bbfa9d205fb1c0ee597f390073c9"
+    },
+    {
+      "name": "slider-w103-v0-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "11101fc5c8aaf0158395812bcb4092feeced9360a3549b03dcb673070cb13b63"
+    },
+    {
+      "name": "slider-w103-v0-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7c1b6936daf2fef95f041be265a2b7d231d3826606e03cb7be2db43a6ad3b1a5"
+    },
+    {
+      "name": "slider-w103-v100-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "23fe13db655b39a772808b1f5275800d4a7d5450c1f78d96da1db1f2eb50d01f"
+    },
+    {
+      "name": "slider-w103-v100-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cd340437eecf1b5661dabf0830a1be3f32c7bc23c3d757dea048276ccc0e6e9b"
+    },
+    {
+      "name": "slider-w103-v100-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e84880c34443c3fb8f803b62957ceb4a9dbf8ac043cf841bb10f5c317736e1d7"
+    },
+    {
+      "name": "slider-w103-v100-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2f305fcce32930a03a7d3e7c744c80ab8e2c8023b7cb0e8eb85775d1847ab28d"
+    },
+    {
+      "name": "slider-w103-v100-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2da27bbdeb25abaf884f5661c018edc1bc7eee50fd100d0cc35cdcd76b41503"
+    },
+    {
+      "name": "slider-w103-v500-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b50f03eb83c0f11e06cb393dabcc60c8d8183b3a0cf6509b18431f47c6c2ee2a"
+    },
+    {
+      "name": "slider-w103-v500-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0343dedf892ad520661c277cdc577f2155811c8717938c694434df2f3d156b06"
+    },
+    {
+      "name": "slider-w103-v500-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3b4ac7c0c646be52b2eb57c2670e078ccb4c260e8dc67c9abf19a03d9546ae3c"
+    },
+    {
+      "name": "slider-w103-v500-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "eed93e5f60d3c81a79926936748ef9da6f228508b307862edf37d96591b9c685"
+    },
+    {
+      "name": "slider-w103-v500-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8608819488fe329e100f5939ca9da2b89c48fbf0a90cd427950e3680a32ce13a"
+    },
+    {
+      "name": "slider-w103-v870-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b0627e72d14967ea9b66e55fe3e26ed7d384387cdfd413b4df8bf48e602ade5b"
+    },
+    {
+      "name": "slider-w103-v870-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2024387bfa00b4346dd3c3075b9532d1824ebfe95d245e10498f5dc1bc14c1bb"
+    },
+    {
+      "name": "slider-w103-v870-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0a5556060f751859fb9fcab8217b13a56dca4898c97885e8827284a88195f864"
+    },
+    {
+      "name": "slider-w103-v870-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1dc9ebb6396a69e74f157b3f46858cc6caabe44601addde83da0055865e3e91b"
+    },
+    {
+      "name": "slider-w103-v870-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4304eb229218e09e2b878ba93a1cc9e3dea1f9390fcf185b4192d57478171ea4"
+    },
+    {
+      "name": "slider-w103-v1000-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cf3873738540b7426340d85e3190d13cad1c57b0adcdb83dea28b89f5b078225"
+    },
+    {
+      "name": "slider-w103-v1000-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "64c6e1f24732a2ec705c9a4db58dcb292d65788e7c79fbac4ebb5238b03bfc67"
+    },
+    {
+      "name": "slider-w103-v1000-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7c8dfb6476241eb5e736f6cbfe5e9891623a36e04995fad9c74f5edceab7b6ca"
+    },
+    {
+      "name": "slider-w103-v1000-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b853b4e01b9c9f12a5c9abaa43cb028a2a277d8c12e7a6875097caf9f182c265"
+    },
+    {
+      "name": "slider-w103-v1000-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c920e0e06634f4b556349bffb3bde7d5ee5ccef4eb6dbdcb71f935427ea57b71"
+    },
+    {
+      "name": "slider-w200-v0-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6578e4bc4743f63b1fdf5f928fa1acc3539e979791776b1b4c09d797222175b9"
+    },
+    {
+      "name": "slider-w200-v0-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4ee42456a6e51c727570c96c9cfc32ab20d5f909f582dd6cf2ec957a136d756a"
+    },
+    {
+      "name": "slider-w200-v0-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0773e0d00729658dc5bec933e2bd05695ba5ddfc6d2a736073db5b68e7c92f82"
+    },
+    {
+      "name": "slider-w200-v0-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f0093ca02171458c90906eabca42fc495fd4673cde1152d369ebd12fa1f2aa01"
+    },
+    {
+      "name": "slider-w200-v0-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ab037e66c1090acbbc832dc32065fa57a29087a0ec6d28c9aa2fa993a56e58b7"
+    },
+    {
+      "name": "slider-w200-v100-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3df38db70cc881b0fc8d9201ee3a36990454f9416710476b63c31e066abf44d0"
+    },
+    {
+      "name": "slider-w200-v100-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "550c3a6de2ed810af389927f07d35a27eb685a2c6040dcd4eb656210e402f0ac"
+    },
+    {
+      "name": "slider-w200-v100-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "000ff39920530bc2a42091ff7e91096a2f1b27ac13faf4e9c26552007817a385"
+    },
+    {
+      "name": "slider-w200-v100-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1fcb121133cecbb0de119a164423f59b37daf5e8e88fe838d3e8d44ee3377d51"
+    },
+    {
+      "name": "slider-w200-v100-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dbab2cdcb1afbe9ce2f9696ae778ca1aac7054981b4a9bed90f130dd771c7d8e"
+    },
+    {
+      "name": "slider-w200-v500-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b44c715ebda00af11dc7dec5082ef864a65eae374bc21e271b114386158f95fc"
+    },
+    {
+      "name": "slider-w200-v500-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "eb7f6a91779a76898b33477c53e4540846e0ca9edde3f6f03fcb0a50ce7ceef8"
+    },
+    {
+      "name": "slider-w200-v500-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bb7f5b3173b35adda15f0db11f647c22804154b2cfe44db5de9de8a24c58ae73"
+    },
+    {
+      "name": "slider-w200-v500-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a4b25fdee68e9db826ace657d1218098e819ff690463f6312d549129e6195702"
+    },
+    {
+      "name": "slider-w200-v500-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "15fb92281b3c82a9ab8e8a7ad6d94d7e96cb0f0b153805a288e95764c7af3cb3"
+    },
+    {
+      "name": "slider-w200-v870-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a7a0b9e6c5b58a769c5e67965d9de22cc1dda641d4a940268ec9d9e85c3a2bdb"
+    },
+    {
+      "name": "slider-w200-v870-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2e6bc6ee256e78308ab16f6ef712a0b529695d9dfc54f6495fde6658f1d2cd2"
+    },
+    {
+      "name": "slider-w200-v870-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6f44ff2b3b570b1b641790061066848a6f867a8c9f6e5489e81c28c410a816fb"
+    },
+    {
+      "name": "slider-w200-v870-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "05e628ffac001cd95f5e23cfc1dd8afe176212dd50034275475f587ac6982b16"
+    },
+    {
+      "name": "slider-w200-v870-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "24223463c4646c52c220e0fbc399976a4124f57cfa6077295e405b228a670e30"
+    },
+    {
+      "name": "slider-w200-v1000-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "39f75daf2f3133b736112489f1ae305b8ecd1fdb13ed0499fd08f2876d85c07f"
+    },
+    {
+      "name": "slider-w200-v1000-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "03916043563f9175d39df97bbe4630321d7b24690ee72d61c17d9b6f4a6e41c1"
+    },
+    {
+      "name": "slider-w200-v1000-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "535cd3dbf6f60538b2218c3f9f3264efab2ea66320a68676cd29f48e63f72b3e"
+    },
+    {
+      "name": "slider-w200-v1000-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "67076c97e574a16d7092d9e11c1aa204e999ba4cbc2e353e7d01c8b398aa15a9"
+    },
+    {
+      "name": "slider-w200-v1000-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8adae4bd6edd58d21e2cf2d01e16c6c1255d61586ab5c39e1ab5ecabcdddb4a2"
+    },
+    {
+      "name": "slider-w257-v0-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "90662cbb5a7e83f2ffe807880861b80e602c5264bfa1c01e1d284c4b99472545"
+    },
+    {
+      "name": "slider-w257-v0-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "abee0652322036c094a7e79a38edb2a8088f74dc7449e7882937dae1ed050375"
+    },
+    {
+      "name": "slider-w257-v0-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "004369254fbdfac9525b29583bbb533c09b449e684b0a9d7618d69f142cbb80b"
+    },
+    {
+      "name": "slider-w257-v0-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fa90c7b10a5361ec29dc52f5ae19aecc62974fc9547581b316ad0e11ded3f238"
+    },
+    {
+      "name": "slider-w257-v0-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "80938b5f5974da98e6192de9d03d1c7707e00488cbfeff98ba4a09e371cedd4e"
+    },
+    {
+      "name": "slider-w257-v100-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a79122647a5a332010295ec27891831014df618fe79747a5d266610050325dab"
+    },
+    {
+      "name": "slider-w257-v100-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0c3bef362b79b28da8d4805dd31938ea84a0d75278ca3a5a95de8b9012f0f231"
+    },
+    {
+      "name": "slider-w257-v100-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "15aa9373581679e380b7fa2b7d27e85bbb4b94e22c6efc75754f5776b1707ad1"
+    },
+    {
+      "name": "slider-w257-v100-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d06fb5c5c312f1b455d91c29bee37099f61d15fff922b04e281feabd7e190677"
+    },
+    {
+      "name": "slider-w257-v100-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "01a1402c300aca31c38576f0f9fefcf156089a969197b0516376735e7050d49b"
+    },
+    {
+      "name": "slider-w257-v500-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9f37b3afaaf2d9666544b33117a6f1e54b0a77cf41a82ae602a9e09db46a4d23"
+    },
+    {
+      "name": "slider-w257-v500-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f2cbaa19c680106dcf6075e9ce8770691f51c634e744553ae6e6342096114be5"
+    },
+    {
+      "name": "slider-w257-v500-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b60159c6e9d91e74c1fbba3fecfa3a471471120d2c10a8e3ca37b8803535d675"
+    },
+    {
+      "name": "slider-w257-v500-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e6d06f2fc6da690551bf16c95ef1367a210fc7e867ca3334ec7bc3795df0b96a"
+    },
+    {
+      "name": "slider-w257-v500-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3a9e43c31e1481bb7e65198ef77e11b042c39b7624668b868e840f0bbb7d163a"
+    },
+    {
+      "name": "slider-w257-v870-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7527b0baf95998877ebe5e377ec9f20cb31f0d4d01ec23bb8d54dc3a0414b686"
+    },
+    {
+      "name": "slider-w257-v870-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "59558790bacb8cb9c0c1525d227b6d33caadcf02872dfe02ce025c3892f9a5a0"
+    },
+    {
+      "name": "slider-w257-v870-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e840257e846a6e35f4fdec6547fc1915ea001555fa2131e4ec527e1c8944e2d5"
+    },
+    {
+      "name": "slider-w257-v870-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0d655d6eec52b7f964aeee0ff6b52548cd51513c32f8e2d7e43ad5313d7d9476"
+    },
+    {
+      "name": "slider-w257-v870-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5e601d9dc7d76e938640b6ca0c1f8bb3f11c5681960df785ce989fb65dc2e67d"
+    },
+    {
+      "name": "slider-w257-v1000-normal-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "593979a59e8a38c71d9aaa63ec881ccc7a5627daba7f9c939db01f29a0782104"
+    },
+    {
+      "name": "slider-w257-v1000-hover-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d05464d4f688d61bd4fcd93951bfdc54d15c62364c8ec03455d6af903349c091"
+    },
+    {
+      "name": "slider-w257-v1000-focus-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6d6efb88f8c2871da103a9a4db7d15150588f3f7cdba54f081bee13f0c162b72"
+    },
+    {
+      "name": "slider-w257-v1000-focus-locked-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f3495bd01b2679501a6d5ca6ae0061f9b74faf33ced4f1ce8b1001a7a04ccaff"
+    },
+    {
+      "name": "slider-w257-v1000-disabled-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c68a6b49b034c49615e2f1e45ffc98c89dbd16726c944b653768bb0ba84b0f79"
+    }
+  ],
+  "pageErrors": []
+}

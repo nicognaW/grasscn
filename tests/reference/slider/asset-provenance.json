@@ -1,0 +1,56 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/widget/slider.png": {
+      "sha256": "19866c723b986b57300a5248f6255ceb0e464faf673f73fdcf4158da1195c250",
+      "metadataSha256": "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/slider_highlighted.png": {
+      "sha256": "406e28df8f21c63364a44d2215f0914bd240854683b06fbf6c53167736bd7c98",
+      "metadataSha256": "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/slider_handle.png": {
+      "sha256": "f2517ca7604176f2f6b669bf54988af811b03f66bd0369b9964d0318b064d70d",
+      "metadataSha256": "e455ece745d4f9d34e477a20dc60f0899e769e7c4fbdf0c2b7a9ccfab615201c",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 8,
+        "height": 20,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 3
+        }
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/slider_handle_highlighted.png": {
+      "sha256": "4993928f1426f89f540e221abef79f4086d0a57d14b663bcc008fb0c80ebde74",
+      "metadataSha256": "e455ece745d4f9d34e477a20dc60f0899e769e7c4fbdf0c2b7a9ccfab615201c",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 8,
+        "height": 20,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 3
+        }
+      }
+    }
+  },
+  "font": "Original ASCII bitmap atlas and existing recovered advances; texture pieces are exact crops, never reference screenshots."
+}

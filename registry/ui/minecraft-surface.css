@@ -1,0 +1,11 @@
+@layer theme, base, components, utilities;
+@layer components {
+  .mc-surface {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    pointer-events: none;
+    image-rendering: pixelated;
+  }
+  .mc-surface > span { background-repeat: repeat; }
+}
