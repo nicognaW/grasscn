@@ -7,10 +7,34 @@
     "dev": "npm run registry:build && node scripts/serve.mjs",
     "registry:build": "shadcn build",
     "build": "npm run registry:build",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "test:behavior": "playwright test button.spec.ts",
+    "test:pixels": "playwright test pixels.spec.ts",
+    "reference:capture": "node tests/reference/capture.mjs",
+    "assets:generate": "node scripts/generate-assets.mjs"
   },
   "devDependencies": {
-    "shadcn": "4.23.0"
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/pngjs": "^6.0.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "pngjs": "^7.0.0",
+    "radix-ui": "^1.8.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "shadcn": "4.23.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   },
-  "engines": { "node": ">=22.12.0" }
+  "engines": {
+    "node": ">=22.12.0"
+  }
 }

@@ -1,0 +1,640 @@
+{
+  "source": "Actual Minecraft Java Button rendered by the unmodified vanilla game classes and GPU pipeline; test-only Screen supplies layout and state.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "28dbc2ff09722b94838f2e642dc448d39437469219e0e8029f61f30a50c8e8d3",
+  "entryPoint": "ReferenceMain -> net.minecraft.client.main.Main",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "shaderPipeline": "vanilla",
+  "differenceTolerance": 0,
+  "frames": [
+    {
+      "name": "native-scale-1.png",
+      "sha256": "31c978a26a05c6efe76d64cedd873f049412255bc00af8adc7b5a89437bc90db"
+    },
+    {
+      "name": "native-scale-2.png",
+      "sha256": "ee156354dc052ea469ef93da94f0be5107b02fa70623232c20a0b20fbe7196dd"
+    },
+    {
+      "name": "native-scale-3.png",
+      "sha256": "c040f1262ea2d771576d11270a212f5aab4013394f53e0385570a198aafea5df"
+    },
+    {
+      "name": "native-ascii-scale-1.png",
+      "sha256": "5410fd1d394be835f862e4349f697a89a35c32723528c9267a31eadecc5cbdb9"
+    },
+    {
+      "name": "native-ascii-scale-2.png",
+      "sha256": "b6f5337b11c8d7757023fc7f095b2cf5640faaf8ee3d9716630d8ee2abb1452c"
+    },
+    {
+      "name": "native-ascii-scale-3.png",
+      "sha256": "d50db23091160349896cf3e6e397f16061f025d7aad13d9a2a8f680a11476f73"
+    }
+  ],
+  "cases": [
+    {
+      "name": "normal-w200-s1.png",
+      "state": "normal",
+      "width": 200,
+      "height": 20,
+      "scale": 1,
+      "label": "Button",
+      "sha256": "86da182ac69ce79024fee0725f4b83e04c59d65d78fa2b34002fc553191ec4d3"
+    },
+    {
+      "name": "hover-w200-s1.png",
+      "state": "hover",
+      "width": 200,
+      "height": 20,
+      "scale": 1,
+      "label": "Button",
+      "sha256": "bf038b33f0e4fff8366c44e96736c48a4d24ec4323bffaf38489cb48c8e414b4"
+    },
+    {
+      "name": "focus-w200-s1.png",
+      "state": "focus",
+      "width": 200,
+      "height": 20,
+      "scale": 1,
+      "label": "Button",
+      "sha256": "bf038b33f0e4fff8366c44e96736c48a4d24ec4323bffaf38489cb48c8e414b4"
+    },
+    {
+      "name": "disabled-w200-s1.png",
+      "state": "disabled",
+      "width": 200,
+      "height": 20,
+      "scale": 1,
+      "label": "Button",
+      "sha256": "2e9cfd4cb47c6774f682651fd9c2a59c0dbfcfbb2fbcf6a6f84cd43eee6aae6f"
+    },
+    {
+      "name": "normal-w150-s1.png",
+      "state": "normal",
+      "width": 150,
+      "height": 20,
+      "scale": 1,
+      "label": "Done",
+      "sha256": "fadfeb5e3b79a2a09bb605702f36f705142121ec8951e3fb9b8dc9f9f32f4c5d"
+    },
+    {
+      "name": "hover-w150-s1.png",
+      "state": "hover",
+      "width": 150,
+      "height": 20,
+      "scale": 1,
+      "label": "Done",
+      "sha256": "8e8efd0859d6dffef2995ddbaea0d0f88aff62bdda9c6b9aeddb4ba861cbab5c"
+    },
+    {
+      "name": "focus-w150-s1.png",
+      "state": "focus",
+      "width": 150,
+      "height": 20,
+      "scale": 1,
+      "label": "Done",
+      "sha256": "8e8efd0859d6dffef2995ddbaea0d0f88aff62bdda9c6b9aeddb4ba861cbab5c"
+    },
+    {
+      "name": "disabled-w150-s1.png",
+      "state": "disabled",
+      "width": 150,
+      "height": 20,
+      "scale": 1,
+      "label": "Done",
+      "sha256": "31a3ca528b807b2821816d70a39a43c2b47f124aaca11b01e2c15bc8435289ed"
+    },
+    {
+      "name": "normal-w103-s1.png",
+      "state": "normal",
+      "width": 103,
+      "height": 20,
+      "scale": 1,
+      "label": "iIl! MW@09",
+      "sha256": "7b651fb0525271b0105719b7033f4e08baa6a524d995fdf27839e5d49f64e4dd"
+    },
+    {
+      "name": "hover-w103-s1.png",
+      "state": "hover",
+      "width": 103,
+      "height": 20,
+      "scale": 1,
+      "label": "iIl! MW@09",
+      "sha256": "361aa4999171eac2809ca65b67ae8c1f68fdf6f611ff9303946b3c1c3bb191ea"
+    },
+    {
+      "name": "focus-w103-s1.png",
+      "state": "focus",
+      "width": 103,
+      "height": 20,
+      "scale": 1,
+      "label": "iIl! MW@09",
+      "sha256": "361aa4999171eac2809ca65b67ae8c1f68fdf6f611ff9303946b3c1c3bb191ea"
+    },
+    {
+      "name": "disabled-w103-s1.png",
+      "state": "disabled",
+      "width": 103,
+      "height": 20,
+      "scale": 1,
+      "label": "iIl! MW@09",
+      "sha256": "ebe598543ef296c7a0aceb2e81fbec4c8c13f35f2378da3140caa51cef24e5ac"
+    },
+    {
+      "name": "normal-w257-s1.png",
+      "state": "normal",
+      "width": 257,
+      "height": 20,
+      "scale": 1,
+      "label": "Wider button",
+      "sha256": "dc671cfc5f17cfd6b4f1e1d4988160fe27a68badf3456139e6dd8c0a3cc61f33"
+    },
+    {
+      "name": "hover-w257-s1.png",
+      "state": "hover",
+      "width": 257,
+      "height": 20,
+      "scale": 1,
+      "label": "Wider button",
+      "sha256": "e980bd75ae0cc3ee1f131b7a77fb6b35ddc40bd7f7d1e00373ea714ec54d263d"
+    },
+    {
+      "name": "focus-w257-s1.png",
+      "state": "focus",
+      "width": 257,
+      "height": 20,
+      "scale": 1,
+      "label": "Wider button",
+      "sha256": "e980bd75ae0cc3ee1f131b7a77fb6b35ddc40bd7f7d1e00373ea714ec54d263d"
+    },
+    {
+      "name": "disabled-w257-s1.png",
+      "state": "disabled",
+      "width": 257,
+      "height": 20,
+      "scale": 1,
+      "label": "Wider button",
+      "sha256": "5deee0638253f62c43b0a0018af64f66eeeae17fda05f466e2eaf544013ada51"
+    },
+    {
+      "name": "ascii-32-63-normal-s1.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "5a29f5dc3aa1f0cc265d67b56760c8ac1348153f8b9d296670f625128f83b7ed"
+    },
+    {
+      "name": "ascii-32-63-disabled-s1.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "d8c8d983192f80ae07a5264a77dfcced015014377290d332202bfbab784975ea"
+    },
+    {
+      "name": "ascii-64-95-normal-s1.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "61b817fbd9d0166f54e6de49f208e74b9a853587b73493d788353c3c3766a344"
+    },
+    {
+      "name": "ascii-64-95-disabled-s1.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "cca6f0aa5b757da033018b84d97df9e158c66ed8dbd4d5cca6891a942ba51ece"
+    },
+    {
+      "name": "ascii-96-126-normal-s1.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "569d07bb5da08ee1cc29c334d7f8e6177c49a5de5bd76def34f50a3d3ba5da32"
+    },
+    {
+      "name": "ascii-96-126-disabled-s1.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 1,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "04708ba195274f1c13f7f0a805f8298f68676f9b5db8f859bdfb50e7929a0f34"
+    },
+    {
+      "name": "normal-w200-s2.png",
+      "state": "normal",
+      "width": 200,
+      "height": 20,
+      "scale": 2,
+      "label": "Button",
+      "sha256": "df62aa575215cf6cc5ab30488a19a53bfda5a32b85c3389da01bcb6968e1934c"
+    },
+    {
+      "name": "hover-w200-s2.png",
+      "state": "hover",
+      "width": 200,
+      "height": 20,
+      "scale": 2,
+      "label": "Button",
+      "sha256": "8df9ae68fdfbe479606141476e57e933447b8d7401fd3ba92d3120dfae7b192e"
+    },
+    {
+      "name": "focus-w200-s2.png",
+      "state": "focus",
+      "width": 200,
+      "height": 20,
+      "scale": 2,
+      "label": "Button",
+      "sha256": "8df9ae68fdfbe479606141476e57e933447b8d7401fd3ba92d3120dfae7b192e"
+    },
+    {
+      "name": "disabled-w200-s2.png",
+      "state": "disabled",
+      "width": 200,
+      "height": 20,
+      "scale": 2,
+      "label": "Button",
+      "sha256": "451aad19233c470219a156aca6b735a55e81d2d661311dae1bf99fbc53af3e4b"
+    },
+    {
+      "name": "normal-w150-s2.png",
+      "state": "normal",
+      "width": 150,
+      "height": 20,
+      "scale": 2,
+      "label": "Done",
+      "sha256": "84322fee9f99aba072edd3b022222f2367a9bf10e741f153dc6ac4a875c875ad"
+    },
+    {
+      "name": "hover-w150-s2.png",
+      "state": "hover",
+      "width": 150,
+      "height": 20,
+      "scale": 2,
+      "label": "Done",
+      "sha256": "21753a305b87803ee347ac3a290125098dcecd702a6b7f1e79bbef2f0c86095a"
+    },
+    {
+      "name": "focus-w150-s2.png",
+      "state": "focus",
+      "width": 150,
+      "height": 20,
+      "scale": 2,
+      "label": "Done",
+      "sha256": "21753a305b87803ee347ac3a290125098dcecd702a6b7f1e79bbef2f0c86095a"
+    },
+    {
+      "name": "disabled-w150-s2.png",
+      "state": "disabled",
+      "width": 150,
+      "height": 20,
+      "scale": 2,
+      "label": "Done",
+      "sha256": "d27ec4b3fa4c47fb3235f95b2a8da4ad2b7255e4a7faa9acb01561b8c1576d67"
+    },
+    {
+      "name": "normal-w103-s2.png",
+      "state": "normal",
+      "width": 103,
+      "height": 20,
+      "scale": 2,
+      "label": "iIl! MW@09",
+      "sha256": "bf668284f0e286501dad90a8acb672af8e5d5ce72033d4d5977831e4b0daf888"
+    },
+    {
+      "name": "hover-w103-s2.png",
+      "state": "hover",
+      "width": 103,
+      "height": 20,
+      "scale": 2,
+      "label": "iIl! MW@09",
+      "sha256": "f92e66b33b1da70114c7ef604be793594da01f26d6c93e8eee1ea4880966aa4b"
+    },
+    {
+      "name": "focus-w103-s2.png",
+      "state": "focus",
+      "width": 103,
+      "height": 20,
+      "scale": 2,
+      "label": "iIl! MW@09",
+      "sha256": "f92e66b33b1da70114c7ef604be793594da01f26d6c93e8eee1ea4880966aa4b"
+    },
+    {
+      "name": "disabled-w103-s2.png",
+      "state": "disabled",
+      "width": 103,
+      "height": 20,
+      "scale": 2,
+      "label": "iIl! MW@09",
+      "sha256": "3911b1604f8220e111fb81532b1a6598e1cbf485c50cc7fde5161fd809ee0306"
+    },
+    {
+      "name": "normal-w257-s2.png",
+      "state": "normal",
+      "width": 257,
+      "height": 20,
+      "scale": 2,
+      "label": "Wider button",
+      "sha256": "44cc73f049ff6f3f8a7c1b113bc46230de0d00d23979953862b65162af24ab01"
+    },
+    {
+      "name": "hover-w257-s2.png",
+      "state": "hover",
+      "width": 257,
+      "height": 20,
+      "scale": 2,
+      "label": "Wider button",
+      "sha256": "6a0e0669cee0af08617e049834b6e3bd1f8fabd4fd704b584a7de5570372ba4a"
+    },
+    {
+      "name": "focus-w257-s2.png",
+      "state": "focus",
+      "width": 257,
+      "height": 20,
+      "scale": 2,
+      "label": "Wider button",
+      "sha256": "6a0e0669cee0af08617e049834b6e3bd1f8fabd4fd704b584a7de5570372ba4a"
+    },
+    {
+      "name": "disabled-w257-s2.png",
+      "state": "disabled",
+      "width": 257,
+      "height": 20,
+      "scale": 2,
+      "label": "Wider button",
+      "sha256": "2fa9a56f1baa203e7246b1953e712ac6a8fde0b60eda3538cf6079b8ea739179"
+    },
+    {
+      "name": "ascii-32-63-normal-s2.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "6475d2b18b682fbbb80ec0c930480bb56513e27185998271cff7a7e5432ca5ad"
+    },
+    {
+      "name": "ascii-32-63-disabled-s2.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "affc21c5148552fdd370d1db4dc6be3d2cf753aee0646afbee536387b9e1361f"
+    },
+    {
+      "name": "ascii-64-95-normal-s2.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "15b284601bf5098e0cba8143afc4bb0114c66ce0b375fbdbd5e03f71446855e3"
+    },
+    {
+      "name": "ascii-64-95-disabled-s2.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "c5eb676aea49f8d17199c3cf1353a83449598145ccadcf99235fa9169f74b78e"
+    },
+    {
+      "name": "ascii-96-126-normal-s2.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "b6940387ab6c4db4f4ccb13113784aba04fc2d119c79114c2a3d3603f953b308"
+    },
+    {
+      "name": "ascii-96-126-disabled-s2.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 2,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "7dc736fb636358d7969a21898cde956d649eb6041d906a8b5bb5de8df04e654d"
+    },
+    {
+      "name": "normal-w200-s3.png",
+      "state": "normal",
+      "width": 200,
+      "height": 20,
+      "scale": 3,
+      "label": "Button",
+      "sha256": "54a2dd5780c47f790181b9861107c1dedf235ea11edd3e0f6ee68f0913913dc0"
+    },
+    {
+      "name": "hover-w200-s3.png",
+      "state": "hover",
+      "width": 200,
+      "height": 20,
+      "scale": 3,
+      "label": "Button",
+      "sha256": "80ad6ccfb79b03d6ad12d2a46535121576646e478204495ff8a6d3879f2a6b27"
+    },
+    {
+      "name": "focus-w200-s3.png",
+      "state": "focus",
+      "width": 200,
+      "height": 20,
+      "scale": 3,
+      "label": "Button",
+      "sha256": "80ad6ccfb79b03d6ad12d2a46535121576646e478204495ff8a6d3879f2a6b27"
+    },
+    {
+      "name": "disabled-w200-s3.png",
+      "state": "disabled",
+      "width": 200,
+      "height": 20,
+      "scale": 3,
+      "label": "Button",
+      "sha256": "5d3afe8458ba60c2025f39b696448e54e34ab6ab890b441cfab033ba499dee0a"
+    },
+    {
+      "name": "normal-w150-s3.png",
+      "state": "normal",
+      "width": 150,
+      "height": 20,
+      "scale": 3,
+      "label": "Done",
+      "sha256": "860dac7a26aa0b80480e657915cdd43fd6af64746b43234865145277f3b8e532"
+    },
+    {
+      "name": "hover-w150-s3.png",
+      "state": "hover",
+      "width": 150,
+      "height": 20,
+      "scale": 3,
+      "label": "Done",
+      "sha256": "f2eb1c2bd073ae71edec2d1157636f27492d7784eb0d5dbc861aa3b0bc3db177"
+    },
+    {
+      "name": "focus-w150-s3.png",
+      "state": "focus",
+      "width": 150,
+      "height": 20,
+      "scale": 3,
+      "label": "Done",
+      "sha256": "f2eb1c2bd073ae71edec2d1157636f27492d7784eb0d5dbc861aa3b0bc3db177"
+    },
+    {
+      "name": "disabled-w150-s3.png",
+      "state": "disabled",
+      "width": 150,
+      "height": 20,
+      "scale": 3,
+      "label": "Done",
+      "sha256": "27f9e3363f3016c6ccd6734eceb683d59fcbc7d1052108675bd5af14ca0d36fc"
+    },
+    {
+      "name": "normal-w103-s3.png",
+      "state": "normal",
+      "width": 103,
+      "height": 20,
+      "scale": 3,
+      "label": "iIl! MW@09",
+      "sha256": "585c21e923605c3a13a1aba22a34d634b5ac6ff1e8ff2b98f5a2c825557e0582"
+    },
+    {
+      "name": "hover-w103-s3.png",
+      "state": "hover",
+      "width": 103,
+      "height": 20,
+      "scale": 3,
+      "label": "iIl! MW@09",
+      "sha256": "e92d20d4d09cd27dbc886ec950b070d9c3b4de7262ad192cef6c1b0f4d22ed21"
+    },
+    {
+      "name": "focus-w103-s3.png",
+      "state": "focus",
+      "width": 103,
+      "height": 20,
+      "scale": 3,
+      "label": "iIl! MW@09",
+      "sha256": "e92d20d4d09cd27dbc886ec950b070d9c3b4de7262ad192cef6c1b0f4d22ed21"
+    },
+    {
+      "name": "disabled-w103-s3.png",
+      "state": "disabled",
+      "width": 103,
+      "height": 20,
+      "scale": 3,
+      "label": "iIl! MW@09",
+      "sha256": "4f61143357783e15cc5a0efdf9157bda97fb9070381c630c48fd300cf3fc3210"
+    },
+    {
+      "name": "normal-w257-s3.png",
+      "state": "normal",
+      "width": 257,
+      "height": 20,
+      "scale": 3,
+      "label": "Wider button",
+      "sha256": "796a3f2ef8192bf37f5175e20d7e686fa545ecbb45af645e8c746e8fe2395606"
+    },
+    {
+      "name": "hover-w257-s3.png",
+      "state": "hover",
+      "width": 257,
+      "height": 20,
+      "scale": 3,
+      "label": "Wider button",
+      "sha256": "1a962efbdcd0b2d355bd10739fa30bb07f92a7a68bbd39987d4b788b29b0410c"
+    },
+    {
+      "name": "focus-w257-s3.png",
+      "state": "focus",
+      "width": 257,
+      "height": 20,
+      "scale": 3,
+      "label": "Wider button",
+      "sha256": "1a962efbdcd0b2d355bd10739fa30bb07f92a7a68bbd39987d4b788b29b0410c"
+    },
+    {
+      "name": "disabled-w257-s3.png",
+      "state": "disabled",
+      "width": 257,
+      "height": 20,
+      "scale": 3,
+      "label": "Wider button",
+      "sha256": "5d78ef4e4d5a143374d417d85f1a9ef5a5ddb644f7d5de6460dcadb9d70d41eb"
+    },
+    {
+      "name": "ascii-32-63-normal-s3.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "8c5add5d459b0f0c4cdcd4f673032e98e7c00f9c5f34a93a077fc8b3d8445328"
+    },
+    {
+      "name": "ascii-32-63-disabled-s3.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "sha256": "5cd09e7d09ba1f052e12d2fcbc6e1d6d25c0a0d9ac733fc713a6d1b8b8f5c4fc"
+    },
+    {
+      "name": "ascii-64-95-normal-s3.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "73d74c93175ba28f6752e2e4c9482bcabf303bc88f458a8475f5bbae0e7969df"
+    },
+    {
+      "name": "ascii-64-95-disabled-s3.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "sha256": "5e396819d3554dd0e4b5019bac9ac2226de0291676cff86da8ec5fb961b3b204"
+    },
+    {
+      "name": "ascii-96-126-normal-s3.png",
+      "state": "normal",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "81d462040ec5a37f6ad701872bea536608a981dfc597fc176d4ab5fdcb9f7a85"
+    },
+    {
+      "name": "ascii-96-126-disabled-s3.png",
+      "state": "disabled",
+      "width": 300,
+      "height": 20,
+      "scale": 3,
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "sha256": "dd545c09eb1ed372f1fa5b0df311ace24d807f9c0ef4ce3d12b08507b7c563ec"
+    }
+  ]
+}

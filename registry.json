@@ -6,11 +6,14 @@
     {
       "name": "button",
       "type": "registry:ui",
-      "title": "Button",
-      "description": "The standard shadcn/ui Radix Button with six variants, sizes, disabled state, and asChild composition.",
+      "title": "Minecraft Button Pilot",
+      "description": "Minecraft Java 26.2 vanilla Button skin with embedded original textures and ASCII bitmap font. Standard shadcn API; pixel verification covers the default variant at integer scales 1–3.",
       "dependencies": ["class-variance-authority", "radix-ui"],
       "files": [
-        { "path": "registry/ui/button.tsx", "type": "registry:ui" }
+        { "path": "registry/ui/button.tsx", "type": "registry:ui" },
+        { "path": "registry/ui/minecraft-font.ts", "type": "registry:ui" },
+        { "path": "registry/ui/minecraft-button.css", "type": "registry:ui" },
+        { "path": "registry/ui/minecraft-assets.css", "type": "registry:ui" }
       ]
     }
   ]
