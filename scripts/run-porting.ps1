@@ -1,4 +1,4 @@
-param([ValidateSet('regressions','pixels','all')][string]$Suite='regressions',[ValidateRange(1,4)][int]$Workers=1,[ValidateRange(1,20)][int]$CpuPercent=5)
+param([ValidateSet('regressions','pixels','all')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5)
 $grasscnHeavyMutex=[Threading.Mutex]::new($false,'Local\GrasscnHeavyVerification');if(-not $grasscnHeavyMutex.WaitOne(0)){ $grasscnHeavyMutex.Dispose();throw 'Another guarded verification batch is active.' };try {
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
@@ -35,7 +35,7 @@ public static class GrasscnBudget {
   var job=CreateJobObject(IntPtr.Zero,null);if(job==IntPtr.Zero)throw new Exception("CreateJobObject "+Marshal.GetLastWin32Error());
   var cpu=new Cpu{Flags=5,Rate=cpuPercent*100};
   if(!SetCpu(job,15,ref cpu,(uint)Marshal.SizeOf(cpu)))throw new Exception("CPU cap "+Marshal.GetLastWin32Error());
-  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(8,Environment.ProcessorCount))-1);limits.JobMemory=(UIntPtr)memoryBytes;
+  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(16,Environment.ProcessorCount))-1);limits.JobMemory=(UIntPtr)memoryBytes;
   if(!SetExtended(job,9,ref limits,(uint)Marshal.SizeOf(limits)))throw new Exception("Memory cap "+Marshal.GetLastWin32Error());
   return job;
  }
@@ -43,12 +43,12 @@ public static class GrasscnBudget {
 '@
 $baseline=[GrasscnBudget]::Ram()
 $usedBytes=$baseline.Total-$baseline.Available
-$headroom=[Math]::Min(6GB,[Math]::Floor($baseline.Total*.89-$usedBytes))
+$headroom=[Math]::Min(10GB,[Math]::Floor($baseline.Total*.89-$usedBytes))
 if($baseline.Load -ge 86 -or $headroom -lt .4GB){throw 'Insufficient headroom to start safely; no browser workers launched.'}
 $memoryBudget=[uint64]$headroom
 
 $cpuBefore=[GrasscnBudget]::Times();Start-Sleep -Seconds 1;$cpuAfter=[GrasscnBudget]::Times();$cpuDelta=($cpuAfter[1]-$cpuBefore[1])+($cpuAfter[2]-$cpuBefore[2]);$baselineCpu=100.*(1-($cpuAfter[0]-$cpuBefore[0])/$cpuDelta)
-$cpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor(70-$baselineCpu)))
+$cpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor(60-$baselineCpu)))
 
 if($baselineCpu -gt 45){throw 'CPU preflight exceeds the verification headroom budget.'}
 $job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget)
@@ -73,7 +73,7 @@ try {
  if(-not [GrasscnBudget]::AssignProcessToJobObject($job,$processHandle)){Stop-Process -Id $process.Id;throw 'Could not enforce job limits; stopped test launcher.'}
  [IO.File]::WriteAllText($budgetGate,([pscustomobject]@{pid=$process.Id;enforced=$true}|ConvertTo-Json -Compress),[Text.UTF8Encoding]::new($false))
  $process.PriorityClass='BelowNormal'
- [pscustomobject]@{RootPid=$process.Id;CpuHardCapPercent=$cpuBudget;MemoryCapGiB=[Math]::Round($memoryBudget/1GB,3);SystemCpuStopThresholdPercent=65;SystemRamStopThresholdPercent=88;SampleIntervalMilliseconds=500;Workers=$Workers;LogicalProcessorLimit=[Math]::Min(8,[Environment]::ProcessorCount);BaselineRamPercent=$baseline.Load;CpuReadback=$limits.Rate} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $runDirectory 'resource-policy.json')
+ [pscustomobject]@{RootPid=$process.Id;CpuHardCapPercent=$cpuBudget;MemoryCapGiB=[Math]::Round($memoryBudget/1GB,3);SystemCpuStopThresholdPercent=65;SystemRamStopThresholdPercent=88;SampleIntervalMilliseconds=500;Workers=$Workers;LogicalProcessorLimit=[Math]::Min(16,[Environment]::ProcessorCount);BaselineRamPercent=$baseline.Load;CpuReadback=$limits.Rate} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $runDirectory 'resource-policy.json')
  $before=[GrasscnBudget]::Times()
  while(-not $process.HasExited){
   Start-Sleep -Milliseconds 500

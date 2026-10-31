@@ -8,7 +8,7 @@ import {reusableBrowserTests,browserFilePattern} from './browser-checkpoints.mjs
 const root = fileURLToPath(new URL('..', import.meta.url))
 const [suite, output, workerArgument='1'] = process.argv.slice(2)
 const workers=Number(workerArgument)
-if(!Number.isInteger(workers)||workers<1||workers>4)throw Error('Use 1-4 browser workers')
+if(!Number.isInteger(workers)||workers<1||workers>8)throw Error('Use 1-8 browser workers')
 if (!['regressions', 'pixels', 'all'].includes(suite) || !output) throw Error('Use the guarded package commands')
 await mkdir(output, {recursive:true})
 const git = args => execFileSync('git', args, {cwd:root, encoding:'utf8', maxBuffer:16*1024*1024}).trim()
