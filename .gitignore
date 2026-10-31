@@ -5,3 +5,17 @@ dist/
 .DS_Store
 test-results/
 playwright-report/
+
+# Rebuilt by shadcn build and scripts/prepare-preview.mjs.
+/public/r/
+/preview/catalog.generated.json
+/preview/search.generated.json
+/preview/component-sources.generated.ts
+
+# Compiler and tool caches.
+coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
