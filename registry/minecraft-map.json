@@ -1027,7 +1027,7 @@
         "repeatabilityReport": "tests/reference/badge-advancement/repeatability.json",
         "scope": "18 exact original Minecraft Java26.2 AdvancementWidget.extractHover cases: challenge/goal/task, obtained/unobtained, original diamond item and ASCII title Diamonds!, GUI scales1\u20133, native117x26 logical geometry, Edge/DPR1 viewport1536x900 on #202020. Two separate isolated original client launches retain full frames and original source/asset hashes. Default content-sized widths, long/CJK title wrapping, responsive layouts, arbitrary icon composition and link focus are web adaptations tested separately; they are not asserted to be native advancement geometry. Prior Tooltip180 Badge corpus is historical and does not verify this new appearance."
       },
-      "nextStep": "Retain native oracle integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope.",
+      "nextStep": "Retain captured reference integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope.",
       "historicalPixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/tooltip/manifest.json",
@@ -1082,7 +1082,7 @@
           }
         ]
       },
-      "nextStep": "Retain native oracle integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
+      "nextStep": "Retain captured reference integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
     },
     {
       "name": "button",
@@ -1093,7 +1093,7 @@
       },
       "mapping": {
         "kind": "native-element",
-        "target": "Original Button pilot",
+        "target": "Minecraft Button",
         "families": [
           "button",
           "text"
@@ -2026,7 +2026,7 @@
           }
         ]
       },
-      "nextStep": "Preserve the repeated native oracle and both component-specific CLI installation proofs. General menu geometry, nesting and mixed state remain designed web composition; capture additional native cases before extending exact appearance claims."
+      "nextStep": "Preserve the repeated captured reference and both component-specific CLI installation proofs. General menu geometry, nesting and mixed state remain designed web composition; capture additional native cases before extending exact appearance claims."
     },
     {
       "name": "empty",
@@ -2402,7 +2402,7 @@
           "tests/reference/button-cjk/manifest.json": "tests/reference/kbd/cjk-installation-verification.json"
         }
       },
-      "nextStep": "Retain native oracle integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
+      "nextStep": "Retain captured reference integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
     },
     {
       "name": "label",
@@ -3967,7 +3967,7 @@
           }
         ]
       },
-      "nextStep": "Retain native oracle integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
+      "nextStep": "Retain captured reference integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope."
     },
     {
       "name": "advancement-tree",

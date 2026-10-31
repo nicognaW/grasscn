@@ -14,6 +14,33 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
+## Contributing a new UI port
+
+PR authors adding a UI port must include screenshots or a short video showing the component in the working preview. Use screenshots for appearance and video for motion or interaction sequences. Label the content, states, game version and display conditions shown; include the corresponding captured reference when claiming a pixel-perfect match. Show relevant web adaptations explicitly.
+
+Follow the Matt Pocock `pr` skill's body structure, using the glossary's terms and brief prose. Contributors can follow this format directly without installing the skill:
+
+```markdown
+## Summary
+
+<What UI port is added, with the smallest useful component tree or diff sketch.>
+
+## Evidence
+
+- **Before:** <Existing preview or missing component; captured Minecraft reference for the target appearance.>
+  **After:** <Screenshot or video of the new UI port in the working preview.>
+- **Checks:** <Checks actually run, their results, and remaining verification gaps.>
+- **Coverage:** <Reference cases, game version and display conditions shown; web adaptations.>
+
+## Merge Danger
+
+**Door:** <one-way or two-way>
+
+**Blast Radius:** <One-word scope, followed by affected components or consumers if needed.>
+```
+
+For a new port, the before state may be absence of the component; identify that rather than inventing a before screenshot. Captured references establish the Minecraft target, while preview media shows the contributed implementation. Report the checks actually performed. Maintainers handle local PR verification before merging; GitHub Actions is not used.
+
 ## Pull requests as a triage surface
 
 **PRs as a request surface: no.** _(Set to `yes` if this repo treats external PRs as feature requests; `/triage` reads this flag.)_
