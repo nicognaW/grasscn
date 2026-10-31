@@ -22,5 +22,5 @@ for (const reference of first.cases) {
   assert.ok(actual.data.equals(other.data), `Non-repeatable native pixels: ${reference.name}`)
   cases.push({ name: reference.name, runOnePngSha256: hash(a), runTwoPngSha256: hash(b), decodedRgbaSha256: hash(actual.data), mismatchedPixels: 0 })
 }
-await writeFile(path.join(firstDir, "repeatability.json"), JSON.stringify({ sourceJarSha256: first.sourceJarSha256, captureSourceSha256: first.captureSourceSha256, caseDefinitionSha256: first.caseDefinitionSha256, method: "Two separate isolated vanilla launches; decoded RGBA compared exactly per case", cases }, null, 2) + "\n")
+await writeFile(path.join(firstDir, "repeatability.json"), JSON.stringify({ sourceJarSha256: first.sourceJarSha256, captureSourceSha256: first.captureSourceSha256, caseDefinitionSha256: first.caseDefinitionSha256, glyphObservationEnabled: { runOne: first.glyphObservationEnabled ?? null, runTwo: second.glyphObservationEnabled ?? null }, method: "Two separate isolated vanilla launches; decoded RGBA compared exactly per case", cases }, null, 2) + "\n")
 console.log(`${cases.length}/${cases.length} native cases repeat with identical decoded RGBA pixels`)

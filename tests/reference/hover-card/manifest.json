@@ -1,0 +1,2266 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "cebb868e010e74f10ba2207079e32997be9574d888912acd69f21faf121d0ff8",
+  "caseDefinitionSha256": "fece3b9496e7eef3092c4141556ac5fba9083522326496f1ea2800ea601dc8d3",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "3b681ae39117a70f197321d0965879556ab737a1bcec2751be4e68622275b5cb"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "8bc1e642830eb8862da41a2f714b00870df0c51885c9d9ebb13476ca221b751b"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "6f08ce5abfccd3b65c7ef740b47173325c2670ff4924b1d240ba014aa6708ce4"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "43a52906a9bf30f84878936cbb69a4215e008376a746212e82c77f9eb1b2597c"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "86fefcef90f2713e89cf632be898044610ef31c73f2ca9646015690f600a3b8e"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "352bf68c8b93b2bdfd3db81be35da106f73b6b4868922e3773c7f181ece31902"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "fc59f21089a119eea44a23905b6a5d57374a64feb8139494dbefa504704f7c31"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "aceb9c0b13b87bc2e4c7222d51a7413a765db5844379c1504699dc21f8cd62ad"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "d52e0c4fc1ad65d5622a11e83eda4955299028d325e5fe4ad5a58f888d9e2983"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "53773a30c2c2aa84af629cf950d76b44236e79146feff45f5943691d5342f996"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "18172b73174f9bb3c39e74c0daa7932a6ab07f0b53c8f0cba5c49b6decccc918"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "ba952f1a30e2dc2d4633d41f112a00bc56c919026e83bb3616bc6494df138d75"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "b35b46dfbc434f5dda3d31c2391916edfbbde68ae99d37b122c360200b3b1dec"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "6bb3eb59311b6a9fbee917212f722ffcb8624b449cea9029df4bd928e6e89c23"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "c30a5a0aa10f7fc7893efd9bdf24a83f1a21c7a987caebb15667bd36eef8c758"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "a9422a59966ca9688659859fb78d32e0b15ccdbe4ee64b98ef372f7d545d5383"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "fed61bd7f07b54d9b6c84d4c93d5976f5e2abc88f4755dbfcb6a53c35d36adb6"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "437d135a783ce33b1de6ccacbe83528b7616bf88ad18e28d38e3a1faa35fec13"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "b35b46dfbc434f5dda3d31c2391916edfbbde68ae99d37b122c360200b3b1dec"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "6bb3eb59311b6a9fbee917212f722ffcb8624b449cea9029df4bd928e6e89c23"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "c30a5a0aa10f7fc7893efd9bdf24a83f1a21c7a987caebb15667bd36eef8c758"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "a9422a59966ca9688659859fb78d32e0b15ccdbe4ee64b98ef372f7d545d5383"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "fed61bd7f07b54d9b6c84d4c93d5976f5e2abc88f4755dbfcb6a53c35d36adb6"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "437d135a783ce33b1de6ccacbe83528b7616bf88ad18e28d38e3a1faa35fec13"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "6ed541a1fa52a86b3f477862cde1f3f48b54ce6f4bff2f3cfb87b6dad7fe1696"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "eef07c1dd7ca14a6e4651b01954070b47a0391f392f65f43680c437546993bf8"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "49404dcf4b317d158271ebf27af85717b53938397b90f452c19a4b42aebb77ae"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "30c2aa2d52f91dc99043b3c9ed11b0dd8f3e6889f8abff1e5c143b283b798012"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "7f0b21a962ace004d8f6115861418eda179460e822ea0083bfe8ec677393a2e1"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "b2e30226f014cf21042c05ef350d2ec302b21120a97ef9c18892eeaab2bed5a3"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "6ed541a1fa52a86b3f477862cde1f3f48b54ce6f4bff2f3cfb87b6dad7fe1696"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "eef07c1dd7ca14a6e4651b01954070b47a0391f392f65f43680c437546993bf8"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "49404dcf4b317d158271ebf27af85717b53938397b90f452c19a4b42aebb77ae"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "30c2aa2d52f91dc99043b3c9ed11b0dd8f3e6889f8abff1e5c143b283b798012"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "7f0b21a962ace004d8f6115861418eda179460e822ea0083bfe8ec677393a2e1"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "b2e30226f014cf21042c05ef350d2ec302b21120a97ef9c18892eeaab2bed5a3"
+    },
+    {
+      "name": "native-controls-p12-s1.png",
+      "sha256": "aa3e98953b326310741e3b5e6ece1c5cd07ef6b465692f0e0e309e5192366d31"
+    },
+    {
+      "name": "native-controls-p12-s2.png",
+      "sha256": "f9b40f49b8f38d15796cecb78ab64ecc1533012b4ca0d2ef61775f53b68f3c21"
+    },
+    {
+      "name": "native-controls-p12-s3.png",
+      "sha256": "9d206e74776c5f904675fb4f6f5f6500b006193c7880ea7ccbb4d5f156a87ca9"
+    },
+    {
+      "name": "native-controls-p13-s1.png",
+      "sha256": "02f765b3a6b65780504dfd4f1f505f0e6fb72abdae4c46d0c26b66c70fea1a4d"
+    },
+    {
+      "name": "native-controls-p13-s2.png",
+      "sha256": "74cf8607b1f74ad99798f2f6a4ccb17a044b0200a9c54357c519db6925fbdfc9"
+    },
+    {
+      "name": "native-controls-p13-s3.png",
+      "sha256": "66ef403ab9d69de1ae95bfa4aa0d977bd70de27f042d8664d7dbac3edc2f2fba"
+    },
+    {
+      "name": "native-controls-p14-s1.png",
+      "sha256": "aa3e98953b326310741e3b5e6ece1c5cd07ef6b465692f0e0e309e5192366d31"
+    },
+    {
+      "name": "native-controls-p14-s2.png",
+      "sha256": "f9b40f49b8f38d15796cecb78ab64ecc1533012b4ca0d2ef61775f53b68f3c21"
+    },
+    {
+      "name": "native-controls-p14-s3.png",
+      "sha256": "9d206e74776c5f904675fb4f6f5f6500b006193c7880ea7ccbb4d5f156a87ca9"
+    },
+    {
+      "name": "native-controls-p15-s1.png",
+      "sha256": "02f765b3a6b65780504dfd4f1f505f0e6fb72abdae4c46d0c26b66c70fea1a4d"
+    },
+    {
+      "name": "native-controls-p15-s2.png",
+      "sha256": "74cf8607b1f74ad99798f2f6a4ccb17a044b0200a9c54357c519db6925fbdfc9"
+    },
+    {
+      "name": "native-controls-p15-s3.png",
+      "sha256": "66ef403ab9d69de1ae95bfa4aa0d977bd70de27f042d8664d7dbac3edc2f2fba"
+    },
+    {
+      "name": "native-controls-p16-s1.png",
+      "sha256": "14730be7e15dd1fec4991cce0ba2c4d14fb4856f4e15fbe33f4ba3221c69a223"
+    },
+    {
+      "name": "native-controls-p16-s2.png",
+      "sha256": "03cdfee6010d61de35a4221c2ae876c3f827d82d6e0ff2b87b92eb6d0ccafd00"
+    },
+    {
+      "name": "native-controls-p16-s3.png",
+      "sha256": "cfc9b0a7ed8e930470916ab14cf7e7967b0fae306afc43c9706686e2dc65d061"
+    },
+    {
+      "name": "native-controls-p17-s1.png",
+      "sha256": "313e7a1d5af027eb13ad521fc28fc479f696e79471b6aa116dc13851dd0dbdf5"
+    },
+    {
+      "name": "native-controls-p17-s2.png",
+      "sha256": "4bde8ef08df0dca768fdf8191a1cdebc25e18521f9fae5a927b7a8c741f74bb2"
+    },
+    {
+      "name": "native-controls-p17-s3.png",
+      "sha256": "f228cbf65a3915963b69368e55bfabf7a43d49666fb991fae30ae4fab67947b2"
+    },
+    {
+      "name": "native-controls-p18-s1.png",
+      "sha256": "14730be7e15dd1fec4991cce0ba2c4d14fb4856f4e15fbe33f4ba3221c69a223"
+    },
+    {
+      "name": "native-controls-p18-s2.png",
+      "sha256": "03cdfee6010d61de35a4221c2ae876c3f827d82d6e0ff2b87b92eb6d0ccafd00"
+    },
+    {
+      "name": "native-controls-p18-s3.png",
+      "sha256": "cfc9b0a7ed8e930470916ab14cf7e7967b0fae306afc43c9706686e2dc65d061"
+    },
+    {
+      "name": "native-controls-p19-s1.png",
+      "sha256": "313e7a1d5af027eb13ad521fc28fc479f696e79471b6aa116dc13851dd0dbdf5"
+    },
+    {
+      "name": "native-controls-p19-s2.png",
+      "sha256": "4bde8ef08df0dca768fdf8191a1cdebc25e18521f9fae5a927b7a8c741f74bb2"
+    },
+    {
+      "name": "native-controls-p19-s3.png",
+      "sha256": "f228cbf65a3915963b69368e55bfabf7a43d49666fb991fae30ae4fab67947b2"
+    },
+    {
+      "name": "native-controls-p20-s1.png",
+      "sha256": "ee273ac5c443deda92ca79d1e6f36c56bec82a44cecd638840eda6cc4e285f0a"
+    },
+    {
+      "name": "native-controls-p20-s2.png",
+      "sha256": "20cea0f1a467cfa9f73931d1df14cd72501358ea829d25456bbbaf81e938b013"
+    },
+    {
+      "name": "native-controls-p20-s3.png",
+      "sha256": "855dbf30688e88f663e46ca7a62041320993217aa62fe1a04e83edc2d118c959"
+    },
+    {
+      "name": "native-controls-p21-s1.png",
+      "sha256": "41cf150a5df15a96ea0e3e9c2da94e74e5d6bd4e70939500a59abbca2a80ab07"
+    },
+    {
+      "name": "native-controls-p21-s2.png",
+      "sha256": "fc4594196201b114acfe5749fc92e2b94a3b888d3b350895297be916aed425ee"
+    },
+    {
+      "name": "native-controls-p21-s3.png",
+      "sha256": "f55249cc09665e65cf04c1a8679a58ad7afa403ca129dc240a362c5420df1c0c"
+    },
+    {
+      "name": "native-controls-p22-s1.png",
+      "sha256": "ee273ac5c443deda92ca79d1e6f36c56bec82a44cecd638840eda6cc4e285f0a"
+    },
+    {
+      "name": "native-controls-p22-s2.png",
+      "sha256": "20cea0f1a467cfa9f73931d1df14cd72501358ea829d25456bbbaf81e938b013"
+    },
+    {
+      "name": "native-controls-p22-s3.png",
+      "sha256": "855dbf30688e88f663e46ca7a62041320993217aa62fe1a04e83edc2d118c959"
+    },
+    {
+      "name": "native-controls-p23-s1.png",
+      "sha256": "41cf150a5df15a96ea0e3e9c2da94e74e5d6bd4e70939500a59abbca2a80ab07"
+    },
+    {
+      "name": "native-controls-p23-s2.png",
+      "sha256": "fc4594196201b114acfe5749fc92e2b94a3b888d3b350895297be916aed425ee"
+    },
+    {
+      "name": "native-controls-p23-s3.png",
+      "sha256": "f55249cc09665e65cf04c1a8679a58ad7afa403ca129dc240a362c5420df1c0c"
+    },
+    {
+      "name": "native-controls-p24-s1.png",
+      "sha256": "f2b2648635d15d2b7ede282e348da7cbce677df7bb11c18014ad9e4cb32aa08e"
+    },
+    {
+      "name": "native-controls-p24-s2.png",
+      "sha256": "574713abbc781877e5201fe157a01b99d0252e386af495eadc5018208554dac9"
+    },
+    {
+      "name": "native-controls-p24-s3.png",
+      "sha256": "18565bd321d29f60f80e33e78cf4701501844ab0550af6314d1d0f1adea3f87b"
+    },
+    {
+      "name": "native-controls-p25-s1.png",
+      "sha256": "306401d5aefe97119f3ec577dec25cadb186f38e0483af52d11eaa5cdcf93fa3"
+    },
+    {
+      "name": "native-controls-p25-s2.png",
+      "sha256": "f7ec332ce6aca784feba7761b04691991e709f698f668f0ae85ee4a3cb87cd3a"
+    },
+    {
+      "name": "native-controls-p25-s3.png",
+      "sha256": "b91a1cb541c57d2cf2f9d173cadc2ddabd15780e4ecb33d7290f07ba47c7ca38"
+    },
+    {
+      "name": "native-controls-p26-s1.png",
+      "sha256": "416caa4f1ad8bb55cb34c1275844bd3add45e65521289ad50894739a8fa0a38d"
+    },
+    {
+      "name": "native-controls-p26-s2.png",
+      "sha256": "5af9bf66439ce7fe445d5a916674d97a30fbfadecf6292cbcb49d2cf0ee65ec4"
+    },
+    {
+      "name": "native-controls-p26-s3.png",
+      "sha256": "5f5622781c8df253f660056b006b5cd924d3395a7d739d4906f24e978762b037"
+    },
+    {
+      "name": "native-controls-p27-s1.png",
+      "sha256": "0cff2b55360dee65d7258ac02a0378306257266c75c708406cb763fe2889b329"
+    },
+    {
+      "name": "native-controls-p27-s2.png",
+      "sha256": "795602a3e13039af971b842688c015f9d7c62a927934dbf58d9812c942c2a783"
+    },
+    {
+      "name": "native-controls-p27-s3.png",
+      "sha256": "2b9dae7b1f9a5be217b82a04e3c683075c69971c865c373b1bab33e83c101c95"
+    },
+    {
+      "name": "native-controls-p28-s1.png",
+      "sha256": "9cba806c904b626ffceb2d0fcd5990d64707c05a05afa9eedd802c22c6d19920"
+    },
+    {
+      "name": "native-controls-p28-s2.png",
+      "sha256": "09de9383e962dac85ce2f8a1bc0a532a76ab6840e7cfd951f5808aa78b898ca2"
+    },
+    {
+      "name": "native-controls-p28-s3.png",
+      "sha256": "e614b05b352c45b81225611bce2e84e809e5317b94525c2bb67eefad9659ee2f"
+    },
+    {
+      "name": "native-controls-p29-s1.png",
+      "sha256": "546d42835890f69b40507f510a7a9a4a3c6b4cca091f592742a08cafa65c085a"
+    },
+    {
+      "name": "native-controls-p29-s2.png",
+      "sha256": "5a75eaa1b7696e0ce77d47af939b7e406f5ce706fcc1d745f1ae0c02519be183"
+    },
+    {
+      "name": "native-controls-p29-s3.png",
+      "sha256": "39e9a2d79ccec7b9d9f933033a3c9ce462b72fb4a53f4c313aae68b779b99538"
+    },
+    {
+      "name": "native-controls-p30-s1.png",
+      "sha256": "a381f3bd05817658b7a44d5cdef004fb7bef98fb179ad00e1596b82bf1fbac76"
+    },
+    {
+      "name": "native-controls-p30-s2.png",
+      "sha256": "5ca757c7bf5bafbe9501af04b19b6438b55eb4dcac71769aba546c972cb75920"
+    },
+    {
+      "name": "native-controls-p30-s3.png",
+      "sha256": "54d281aa60102f5ec25d56490f8e153203ced46dd7499f034155d8c3c2d6f4e2"
+    },
+    {
+      "name": "native-controls-p31-s1.png",
+      "sha256": "609e8fa90c7557f5eba00f9487801e8e3d47a5753ad9184d3741efcce92b75e2"
+    },
+    {
+      "name": "native-controls-p31-s2.png",
+      "sha256": "e3edfdef5df2756a381a4de08ce6d4e2a4482766999cded7f535bb468533f749"
+    },
+    {
+      "name": "native-controls-p31-s3.png",
+      "sha256": "a3b6278133e0d63d844a05764c4e3d718cca10d73d1631adfdf8e4626c441b50"
+    }
+  ],
+  "cases": [
+    {
+      "name": "hover-card-c0-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 1,
+      "sha256": "cd3f8334bbc92db09233784ab8622445c01f79267342a35374942ec482ddd827"
+    },
+    {
+      "name": "hover-card-c1-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 1,
+      "sha256": "8613f91a779f3fd2dae682cbb9322c9f76fab083831fd0295772d8c27fd1d21f"
+    },
+    {
+      "name": "hover-card-c2-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#202020",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "53f885df2d2d17188eb65c9c7e83afe888d573a4064b4fa93dddc762d8c8cffe"
+    },
+    {
+      "name": "hover-card-c3-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#808080",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "20daaf93391aa284fb6842c79ca39947915b97b11407026677f9b98effe360ef"
+    },
+    {
+      "name": "hover-card-c4-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "f7c8ecddbc3754286a232328423fa317357d86c35f6e5235ed20fd97b34e1d14"
+    },
+    {
+      "name": "hover-card-c5-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "66a7f9f0db62db315aa1226552bc6812f0acb3d513996dadf3742adbfe4ee01b"
+    },
+    {
+      "name": "hover-card-c6-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "f7c8ecddbc3754286a232328423fa317357d86c35f6e5235ed20fd97b34e1d14"
+    },
+    {
+      "name": "hover-card-c7-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "66a7f9f0db62db315aa1226552bc6812f0acb3d513996dadf3742adbfe4ee01b"
+    },
+    {
+      "name": "hover-card-c8-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "6edfbd4da7dde44f721ad84058c640e54a485e2556d92702edf73f84ce7abc99"
+    },
+    {
+      "name": "hover-card-c9-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "93bf73db6929bb8da792f532ea383ce6f080519472bdd020c7edc6410243103f"
+    },
+    {
+      "name": "hover-card-c10-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "6edfbd4da7dde44f721ad84058c640e54a485e2556d92702edf73f84ce7abc99"
+    },
+    {
+      "name": "hover-card-c11-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "93bf73db6929bb8da792f532ea383ce6f080519472bdd020c7edc6410243103f"
+    },
+    {
+      "name": "hover-card-c12-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 1,
+      "sha256": "17269001a9c7ffa1c0bbc0e2287081c456ee55931644319c076bba3f2254ff1d"
+    },
+    {
+      "name": "hover-card-c13-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 1,
+      "sha256": "aefefec554a815619fc9c3eacf8bd760f9668fa1038844999349df84f7b54caa"
+    },
+    {
+      "name": "hover-card-c14-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 1,
+      "sha256": "17269001a9c7ffa1c0bbc0e2287081c456ee55931644319c076bba3f2254ff1d"
+    },
+    {
+      "name": "hover-card-c15-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 1,
+      "sha256": "aefefec554a815619fc9c3eacf8bd760f9668fa1038844999349df84f7b54caa"
+    },
+    {
+      "name": "hover-card-c16-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 1,
+      "sha256": "de3ae9fedbc91c32ccd113259db6569f0cdc4da2ed0f6bc431bce1e7a9627402"
+    },
+    {
+      "name": "hover-card-c17-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 1,
+      "sha256": "b1b0722ff0735f084d1bb499ab678370cf6d554754c35ddc079f6684de923187"
+    },
+    {
+      "name": "hover-card-c18-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 1,
+      "sha256": "de3ae9fedbc91c32ccd113259db6569f0cdc4da2ed0f6bc431bce1e7a9627402"
+    },
+    {
+      "name": "hover-card-c19-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 1,
+      "sha256": "b1b0722ff0735f084d1bb499ab678370cf6d554754c35ddc079f6684de923187"
+    },
+    {
+      "name": "hover-card-c20-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "47f510d25316cbe4e5bfa9e69163d13052f735c4384311d9b9bcc7ac6d07754a"
+    },
+    {
+      "name": "hover-card-c21-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "576251dd40733788c08d75b903c0b90e985857531287bfaa6f1399b6d6be4aa3"
+    },
+    {
+      "name": "hover-card-c22-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "47f510d25316cbe4e5bfa9e69163d13052f735c4384311d9b9bcc7ac6d07754a"
+    },
+    {
+      "name": "hover-card-c23-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 1,
+      "sha256": "576251dd40733788c08d75b903c0b90e985857531287bfaa6f1399b6d6be4aa3"
+    },
+    {
+      "name": "hover-card-c24-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 1,
+      "sha256": "232405e9563ac4bcaa48d3df0166dfe9bcc66c9fc7cc07362a83887aca4a23ea"
+    },
+    {
+      "name": "hover-card-c25-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 1,
+      "sha256": "bfeff0954d41ad99363a6e5daea790731cae8eb01e1202d8a244324742673297"
+    },
+    {
+      "name": "hover-card-c26-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "3b7f669d06d202c3c1906fbd2fecedf92e3a8eaf142fc88b39b6e47cd9c98e3e"
+    },
+    {
+      "name": "hover-card-c27-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "cb77c7cef340f6414e060c038ba0b78c498ecbd67f2a4e934ea72d214a575c35"
+    },
+    {
+      "name": "hover-card-c28-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 1,
+      "sha256": "819cb4b91740873a80ac338a142d1d1eb3e4891b8bd7c9ef3869ec1443e9baf1"
+    },
+    {
+      "name": "hover-card-c29-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 1,
+      "sha256": "045a7a4dc0273d8f46520d054a3e9ff97c5e59ae945341cd64da63230d626595"
+    },
+    {
+      "name": "hover-card-c30-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 1,
+      "sha256": "b937db6ccfd0d00213603fc22848709e733e5178a1af4376a2d69e12d7dfaf17"
+    },
+    {
+      "name": "hover-card-c31-s1.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 1,
+      "sha256": "b8bacfb8c6ad38d1e8cf27239a91a33571d0f4ae3fc17b72ac9dc7f0d415950c"
+    },
+    {
+      "name": "hover-card-c0-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 2,
+      "sha256": "df6b21ba3babe5e3e46a47ccbbe1b8485acf2074eb7d48254c69e944f55ae400"
+    },
+    {
+      "name": "hover-card-c1-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 2,
+      "sha256": "4a1b2ae7b7e139e8937813301e8fb896a4dd0a7206698351e13afe1e9a1394a4"
+    },
+    {
+      "name": "hover-card-c2-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#202020",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "3d33d96bf1d834ae3d2e04c50e0d339dfa649ca682f04e74cfd3b9b30c559e86"
+    },
+    {
+      "name": "hover-card-c3-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#808080",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "8c9967a4187d36b15c36cb95430ee6307225d89a749bfa98bed04e1b5a42ba08"
+    },
+    {
+      "name": "hover-card-c4-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "9a512ab3873f8426b93110f7a89f3ab80350a8596716bdff72ce5c877f49fdeb"
+    },
+    {
+      "name": "hover-card-c5-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "aa32414db5b0b5087966a409fb6bc8fbfd9524a9a053a27da2b1ff988383fd94"
+    },
+    {
+      "name": "hover-card-c6-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "9a512ab3873f8426b93110f7a89f3ab80350a8596716bdff72ce5c877f49fdeb"
+    },
+    {
+      "name": "hover-card-c7-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "aa32414db5b0b5087966a409fb6bc8fbfd9524a9a053a27da2b1ff988383fd94"
+    },
+    {
+      "name": "hover-card-c8-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "04f456dfe16196b8434a8510b056039e4b2526ab19dfda739a93bb0a67a65006"
+    },
+    {
+      "name": "hover-card-c9-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "fca375f9401114215e0346b676b4350b97806ebcd1472ff6d5adefd0e7286b99"
+    },
+    {
+      "name": "hover-card-c10-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "04f456dfe16196b8434a8510b056039e4b2526ab19dfda739a93bb0a67a65006"
+    },
+    {
+      "name": "hover-card-c11-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "fca375f9401114215e0346b676b4350b97806ebcd1472ff6d5adefd0e7286b99"
+    },
+    {
+      "name": "hover-card-c12-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 2,
+      "sha256": "adb6703af826bfb9c1e4d96d3597560ffbc2a80efd0044db4337e06f29d40c8a"
+    },
+    {
+      "name": "hover-card-c13-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 2,
+      "sha256": "310f07bb9a2aaf32d7eaf416f3744080cb31ef5f4c281ec029f5d001155408f5"
+    },
+    {
+      "name": "hover-card-c14-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 2,
+      "sha256": "adb6703af826bfb9c1e4d96d3597560ffbc2a80efd0044db4337e06f29d40c8a"
+    },
+    {
+      "name": "hover-card-c15-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 2,
+      "sha256": "310f07bb9a2aaf32d7eaf416f3744080cb31ef5f4c281ec029f5d001155408f5"
+    },
+    {
+      "name": "hover-card-c16-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 2,
+      "sha256": "038332c0c8c94614d4a29e5ddb19fb51972b38c47731fae37ccca2bd44f9504b"
+    },
+    {
+      "name": "hover-card-c17-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 2,
+      "sha256": "c3b4c2aad489ebff8ca2515566ca9738fa9c6d607447cd123886838835b39338"
+    },
+    {
+      "name": "hover-card-c18-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 2,
+      "sha256": "038332c0c8c94614d4a29e5ddb19fb51972b38c47731fae37ccca2bd44f9504b"
+    },
+    {
+      "name": "hover-card-c19-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 2,
+      "sha256": "c3b4c2aad489ebff8ca2515566ca9738fa9c6d607447cd123886838835b39338"
+    },
+    {
+      "name": "hover-card-c20-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "dbca747c0f95f4124107cc0ed55be9084c73acc781e698520fd105cd23fe7bf1"
+    },
+    {
+      "name": "hover-card-c21-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "b9d8e648fd0909c719435aef4b53894afaac9badb2c9d6db6e15426d4d56148c"
+    },
+    {
+      "name": "hover-card-c22-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "dbca747c0f95f4124107cc0ed55be9084c73acc781e698520fd105cd23fe7bf1"
+    },
+    {
+      "name": "hover-card-c23-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 2,
+      "sha256": "b9d8e648fd0909c719435aef4b53894afaac9badb2c9d6db6e15426d4d56148c"
+    },
+    {
+      "name": "hover-card-c24-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 2,
+      "sha256": "7fd92766c12185c324e28657b175bc010712fa51245d053c275df9327d8040b3"
+    },
+    {
+      "name": "hover-card-c25-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 2,
+      "sha256": "475e4a2907506792f54ff85ab9c667b5d502886f52b22716f2acce4468eeb37f"
+    },
+    {
+      "name": "hover-card-c26-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "9a72ba3be10fb65b14f7c16cc59fe9c90ad28e6dd6c730be9e086ac527ddb275"
+    },
+    {
+      "name": "hover-card-c27-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "f9b19ac2ec053a6dfb1acc13ea8e8dcc98e4b7ca0bd78bff54b44da9d589aabb"
+    },
+    {
+      "name": "hover-card-c28-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 2,
+      "sha256": "acd6f72d2c69874e6cb27a87d5e74b49f89ca52519a1325f06115c20591f5f91"
+    },
+    {
+      "name": "hover-card-c29-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 2,
+      "sha256": "817f63b7edbac2d2c4e8db1db471180d9194b7f5029cdd98c054c522c1873f5c"
+    },
+    {
+      "name": "hover-card-c30-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 2,
+      "sha256": "406344c07952acdf1d710201aec14a25f003a128c4da5ae66807df9a78b5b7a5"
+    },
+    {
+      "name": "hover-card-c31-s2.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 2,
+      "sha256": "cd9ac16b4b040964be83af3144522dcdc74c64b3dbbd7ae356304d59bd6c3a40"
+    },
+    {
+      "name": "hover-card-c0-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 3,
+      "sha256": "760a8b085230d0eca3f9f05ada0a7d2830d6c0ac0b4ebaff2b79199979259a6a"
+    },
+    {
+      "name": "hover-card-c1-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@A",
+        "BCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^",
+        "_`abcdefghijklmnopqrstuvwxyz{|}",
+        "~"
+      ],
+      "scale": 3,
+      "sha256": "9770b9e8c1dff1ee18fb5516862e7c644c78ec0bbaef5c6356ef5dfac1e43af4"
+    },
+    {
+      "name": "hover-card-c2-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#202020",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "9a9c238b9789dda8d80230995f94a55f70dd66b5f277f6a897bbaac02d94c153"
+    },
+    {
+      "name": "hover-card-c3-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 236,
+      "background": "#808080",
+      "width": 259,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLM",
+        "NOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw",
+        "xyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "a3ad212ee2a9bc592a9c5771585a61be2a3395dc17310317d3f74b86359852e0"
+    },
+    {
+      "name": "hover-card-c4-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "bcf7527d65ed5fe29ad661bdb7d438a93bb2ef89133dc5a5e900c0d99abf8cf7"
+    },
+    {
+      "name": "hover-card-c5-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "bd0516bab85deff03d8de3ea826651e4c311e1fa3f79ed04d78c9bee3afa3b9a"
+    },
+    {
+      "name": "hover-card-c6-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "bcf7527d65ed5fe29ad661bdb7d438a93bb2ef89133dc5a5e900c0d99abf8cf7"
+    },
+    {
+      "name": "hover-card-c7-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "bd0516bab85deff03d8de3ea826651e4c311e1fa3f79ed04d78c9bee3afa3b9a"
+    },
+    {
+      "name": "hover-card-c8-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "c5c2d64d6b21be03f3d84042d2f53cd2398ac879c15b0d4a65a720435b48ecf2"
+    },
+    {
+      "name": "hover-card-c9-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "22fb9dae4676c80faee96826abb229dc6076339a36b8051369a17364722c189c"
+    },
+    {
+      "name": "hover-card-c10-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "c5c2d64d6b21be03f3d84042d2f53cd2398ac879c15b0d4a65a720435b48ecf2"
+    },
+    {
+      "name": "hover-card-c11-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "こんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 69,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "22fb9dae4676c80faee96826abb229dc6076339a36b8051369a17364722c189c"
+    },
+    {
+      "name": "hover-card-c12-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 3,
+      "sha256": "3791afa817247d4c55a97aa2b771feffbfef42dfde9e04d6ca8b0e570ffa59e4"
+    },
+    {
+      "name": "hover-card-c13-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 3,
+      "sha256": "8edd2417e84d4c9024e4d693401a8121e10f4088671aa759fbfff652781a9a9e"
+    },
+    {
+      "name": "hover-card-c14-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 3,
+      "sha256": "3791afa817247d4c55a97aa2b771feffbfef42dfde9e04d6ca8b0e570ffa59e4"
+    },
+    {
+      "name": "hover-card-c15-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 67,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "renderedLines": [
+        "안녕하세요"
+      ],
+      "scale": 3,
+      "sha256": "8edd2417e84d4c9024e4d693401a8121e10f4088671aa759fbfff652781a9a9e"
+    },
+    {
+      "name": "hover-card-c16-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 3,
+      "sha256": "fd9493b5c17a314f053174afc6ccefdf8046c2e03468b1cedba527dbf046038c"
+    },
+    {
+      "name": "hover-card-c17-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 3,
+      "sha256": "a39053daf0d7dcf470cb19f7f72050eada97f26274aedf385acfb585dd01de2a"
+    },
+    {
+      "name": "hover-card-c18-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 3,
+      "sha256": "fd9493b5c17a314f053174afc6ccefdf8046c2e03468b1cedba527dbf046038c"
+    },
+    {
+      "name": "hover-card-c19-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "renderedLines": [
+        "Hello 世界"
+      ],
+      "scale": 3,
+      "sha256": "a39053daf0d7dcf470cb19f7f72050eada97f26274aedf385acfb585dd01de2a"
+    },
+    {
+      "name": "hover-card-c20-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "087c952f8ff0880561be50d275f38eea81c25873f09ad397cdc1351368b8f06a"
+    },
+    {
+      "name": "hover-card-c21-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "10bf992de3d71a86c2041211a84f2194ec668223635b2849bd37cadab163309e"
+    },
+    {
+      "name": "hover-card-c22-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "087c952f8ff0880561be50d275f38eea81c25873f09ad397cdc1351368b8f06a"
+    },
+    {
+      "name": "hover-card-c23-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "renderedLines": [
+        "Hello 世界",
+        "你好，世界",
+        "こんにちは"
+      ],
+      "scale": 3,
+      "sha256": "10bf992de3d71a86c2041211a84f2194ec668223635b2849bd37cadab163309e"
+    },
+    {
+      "name": "hover-card-c24-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 3,
+      "sha256": "e5478616a061d84fa56e03e3b3711d622354483ab523aaf034370975211ff055"
+    },
+    {
+      "name": "hover-card-c25-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 87,
+      "height": 74,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "renderedLines": [
+        "你好，世界你好",
+        "，世界你好，世",
+        "界你好，世界你",
+        "好，世界你好，",
+        "世界"
+      ],
+      "scale": 3,
+      "sha256": "edfea3496ddd5abb1ba321f3e8773f517ade17b8a08e54ba8b1950409bb6494e"
+    },
+    {
+      "name": "hover-card-c26-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "90b63f3b593f821fd448a03315bdaf184c2158b17ab45edde2dcada2031703eb"
+    },
+    {
+      "name": "hover-card-c27-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 186,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "renderedLines": [
+        "你好，世界你好，世界你好，世界你好，",
+        "世界你好，世界你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "375f336b385712afa0fe7dc6c6bf53aceacb6373c10ed8b12fd873fbcb42719b"
+    },
+    {
+      "name": "hover-card-c28-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#202020",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 3,
+      "sha256": "4553aa0d4097a202e12c77ac9d92e14989b19396139c573b2cac7d57c8757212"
+    },
+    {
+      "name": "hover-card-c29-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 64,
+      "background": "#808080",
+      "width": 67,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "renderedLines": [
+        "안녕하세요",
+        "Hello",
+        "世 Hello"
+      ],
+      "scale": 3,
+      "sha256": "c2efb29b50e1d8bfb281ee6641d21b09aa68110118861ac1413cd5c116f8e327"
+    },
+    {
+      "name": "hover-card-c30-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 3,
+      "sha256": "38c39f3a175786a24a88f6b0d1d92e528b9fdf62b6789af86cd272f49ecb1c34"
+    },
+    {
+      "name": "hover-card-c31-s3.png",
+      "element": "hover-card",
+      "state": "normal",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 95,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "renderedLines": [
+        "안녕하세요 Hello",
+        "世 Hello"
+      ],
+      "scale": 3,
+      "sha256": "3da1dc0b5f2b6529fd61669d05264cea163a7a631b900a14f9854f2729c761b0"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

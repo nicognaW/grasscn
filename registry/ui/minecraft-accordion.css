@@ -1,0 +1,9 @@
+@layer components {
+.mc-accordion{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;flex-direction:column;gap:calc(2 * var(--mc-pixel));width:calc(200 * var(--mc-pixel));max-width:100%;color:#fff;font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel));image-rendering:pixelated;}
+.mc-accordion[data-orientation="horizontal"]{flex-direction:row;}
+.mc-accordion-item{min-width:0;}
+.mc-accordion-header{display:flex;margin:0;padding:0;font:inherit;}
+.mc-accordion-trigger{width:100%;}
+.mc-accordion-content{box-sizing:border-box;min-width:0;padding:calc(6 * var(--mc-pixel));outline:none;}
+.mc-accordion-content[hidden]{display:none;}
+}

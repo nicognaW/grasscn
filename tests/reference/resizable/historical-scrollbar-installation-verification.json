@@ -1,0 +1,256 @@
+{
+  "component": "resizable",
+  "manifest": "tests/reference/resizable/manifest.json",
+  "targetReport": "tests/reference/resizable/installation-verification.json",
+  "dryRun": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "consumerRsc": false,
+  "cliInvocation": {
+    "command": "C:\\Program Files\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
+      "add",
+      "http://127.0.0.1:5173/r/button.json",
+      "http://127.0.0.1:5173/r/checkbox.json",
+      "http://127.0.0.1:5173/r/slider.json",
+      "http://127.0.0.1:5173/r/input.json",
+      "http://127.0.0.1:5173/r/tooltip.json",
+      "http://127.0.0.1:5173/r/card.json",
+      "http://127.0.0.1:5173/r/textarea.json",
+      "http://127.0.0.1:5173/r/label.json",
+      "http://127.0.0.1:5173/r/separator.json",
+      "http://127.0.0.1:5173/r/scroll-area.json",
+      "http://127.0.0.1:5173/r/progress.json",
+      "http://127.0.0.1:5173/r/tabs.json",
+      "http://127.0.0.1:5173/r/select.json",
+      "http://127.0.0.1:5173/r/radio-group.json",
+      "http://127.0.0.1:5173/r/switch.json",
+      "http://127.0.0.1:5173/r/dialog.json",
+      "http://127.0.0.1:5173/r/alert-dialog.json",
+      "http://127.0.0.1:5173/r/popover.json",
+      "http://127.0.0.1:5173/r/hover-card.json",
+      "http://127.0.0.1:5173/r/dropdown-menu.json",
+      "http://127.0.0.1:5173/r/context-menu.json",
+      "http://127.0.0.1:5173/r/menubar.json",
+      "http://127.0.0.1:5173/r/navigation-menu.json",
+      "http://127.0.0.1:5173/r/accordion.json",
+      "http://127.0.0.1:5173/r/collapsible.json",
+      "http://127.0.0.1:5173/r/toggle.json",
+      "http://127.0.0.1:5173/r/toggle-group.json",
+      "http://127.0.0.1:5173/r/aspect-ratio.json",
+      "http://127.0.0.1:5173/r/button-group.json",
+      "http://127.0.0.1:5173/r/pagination.json",
+      "http://127.0.0.1:5173/r/badge.json",
+      "http://127.0.0.1:5173/r/typography.json",
+      "http://127.0.0.1:5173/r/breadcrumb.json",
+      "http://127.0.0.1:5173/r/kbd.json",
+      "http://127.0.0.1:5173/r/sheet.json",
+      "http://127.0.0.1:5173/r/drawer.json",
+      "http://127.0.0.1:5173/r/alert.json",
+      "http://127.0.0.1:5173/r/empty.json",
+      "http://127.0.0.1:5173/r/resizable.json",
+      "http://127.0.0.1:5173/r/command.json",
+      "http://127.0.0.1:5173/r/sidebar.json",
+      "http://127.0.0.1:5173/r/sonner.json",
+      "http://127.0.0.1:5173/r/avatar.json",
+      "http://127.0.0.1:5173/r/input-group.json",
+      "http://127.0.0.1:5173/r/table.json",
+      "http://127.0.0.1:5173/r/calendar.json",
+      "http://127.0.0.1:5173/r/date-picker.json",
+      "http://127.0.0.1:5173/r/item.json",
+      "http://127.0.0.1:5173/r/data-table.json",
+      "http://127.0.0.1:5173/r/carousel.json",
+      "http://127.0.0.1:5173/r/message.json",
+      "http://127.0.0.1:5173/r/bubble.json",
+      "http://127.0.0.1:5173/r/form.json",
+      "http://127.0.0.1:5173/r/field.json",
+      "http://127.0.0.1:5173/r/code-block.json",
+      "http://127.0.0.1:5173/r/chart.json",
+      "http://127.0.0.1:5173/r/trace.json",
+      "http://127.0.0.1:5173/r/message-scroller.json",
+      "http://127.0.0.1:5173/r/skeleton.json",
+      "http://127.0.0.1:5173/r/spinner.json",
+      "http://127.0.0.1:5173/r/native-select.json",
+      "http://127.0.0.1:5173/r/marker.json",
+      "http://127.0.0.1:5173/r/input-otp.json",
+      "http://127.0.0.1:5173/r/questionnaire.json",
+      "http://127.0.0.1:5173/r/attachment.json",
+      "http://127.0.0.1:5173/r/combobox.json",
+      "--yes",
+      "--overwrite"
+    ],
+    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+    "startedAt": "2026-10-30T03:07:13.021Z"
+  },
+  "frozenBundle": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-final-complete\\bundle-manifest.json",
+    "sha256": "52ce755165f2b02610d9a974c280583484b815bd5a308f823142bda992dc054f"
+  },
+  "files": [
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
+      "installedPath": "src/components/ui/minecraft-textarea-assets.ts",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "resizable.tsx",
+      "sourcePath": "registry/ui/resizable.tsx",
+      "installedPath": "src/components/ui/resizable.tsx",
+      "sourceSha256": "3dea9f7cc20acf750b0ab5904698cc690ba8463c1f8339683f228a0124b2610e",
+      "installedSha256": "c05fe3e52d67ad78f96d8a04d2362578d4e05ea8a84bf3f84450940559bdd5e5",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-resizable.css",
+      "sourcePath": "registry/ui/minecraft-resizable.css",
+      "installedPath": "src/components/ui/minecraft-resizable.css",
+      "sourceSha256": "c4fd6c65acbda3c589c4f4c00d172d4971c80dd28af15e43007f520c83c602a7",
+      "installedSha256": "c4fd6c65acbda3c589c4f4c00d172d4971c80dd28af15e43007f520c83c602a7",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    }
+  ],
+  "typecheck": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "pageErrorEvidence": {
+    "status": "separate-pinned-gallery-audit",
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-proof-merged\\gallery-audit\\report.json",
+    "sha256": "7767a4697b19e8662226e1d875fa2eff071044c81fef99f55a1705007c285846",
+    "bundleSha256": "52ce755165f2b02610d9a974c280583484b815bd5a308f823142bda992dc054f",
+    "scope": "Global pageerror listener across all 66 maintained preview demos, desktop/mobile navigation; native matrix pixels verified separately. No claim that every native-case page error event was monitored by the suite harness.",
+    "pageErrors": [],
+    "browser": "156.0.4314.50"
+  },
+  "browserEvidence": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-proof-merged\\browser-process-provenance.json",
+    "sha256": "19949a7a37d0d62fe620b8e7efb713fd187a2382c9b2d25ceb56725a45d9d7d9",
+    "observedVersions": [
+      "156.0.4314.50"
+    ],
+    "processCount": 12,
+    "scope": "Observed active browser process versions; no per-case browser launch lineage is inferred."
+  },
+  "cases": [
+    {
+      "name": "native-scroll-thumb-s1.png",
+      "decodedRgbaSha256": "b045f8151a895e812a78d4ec5a871ee7f648da9ef207b77f6c5ba16831569298",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "resizable",
+        "manifest": "tests/reference/resizable/manifest.json",
+        "case": "native-scroll-thumb-s1.png",
+        "part": "grip",
+        "alias": "base",
+        "variants": {
+          "component": "resizable",
+          "manifest": "tests/reference/resizable/manifest.json",
+          "case": "native-scroll-thumb-s1.png",
+          "part": "grip",
+          "alias": "base"
+        },
+        "query": {
+          "component": "resizable",
+          "scale": "1"
+        },
+        "testId": "7bec589ade1fa1fb714f-1e08b449641232b7322b",
+        "runtimeUrl": "http://127.0.0.1:5311/?component=resizable&scale=1",
+        "subjectSlot": "resizable-handle",
+        "subjectElement": "DIV",
+        "joinBasis": "explicit-metrics",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-final-complete\\test-results\\resizable-Resizable-native-b9aeb-grip-exact-pixels-at-scale1\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\resizable\\captures\\native-scroll-thumb-s1.png",
+        "width": 6,
+        "height": 32,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b045f8151a895e812a78d4ec5a871ee7f648da9ef207b77f6c5ba16831569298",
+        "pngSha256": "8758630b5e4825682233ab3dbbccd668d26429b2c5e67ec48421d260f6dba4dd",
+        "bundleSha256": "52ce755165f2b02610d9a974c280583484b815bd5a308f823142bda992dc054f"
+      }
+    },
+    {
+      "name": "native-scroll-thumb-s2.png",
+      "decodedRgbaSha256": "505c4f131448e42fbd9a809cb7d109ed3af8768d015d6a90f6b0ed71cf5f5387",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "resizable",
+        "manifest": "tests/reference/resizable/manifest.json",
+        "case": "native-scroll-thumb-s2.png",
+        "part": "grip",
+        "alias": "base",
+        "variants": {
+          "component": "resizable",
+          "manifest": "tests/reference/resizable/manifest.json",
+          "case": "native-scroll-thumb-s2.png",
+          "part": "grip",
+          "alias": "base"
+        },
+        "query": {
+          "component": "resizable",
+          "scale": "2"
+        },
+        "testId": "7bec589ade1fa1fb714f-b776f54849082e2073e0",
+        "runtimeUrl": "http://127.0.0.1:5311/?component=resizable&scale=2",
+        "subjectSlot": "resizable-handle",
+        "subjectElement": "DIV",
+        "joinBasis": "explicit-metrics",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-final-complete\\test-results\\resizable-Resizable-native-c1061-grip-exact-pixels-at-scale2\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\resizable\\captures\\native-scroll-thumb-s2.png",
+        "width": 12,
+        "height": 64,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "505c4f131448e42fbd9a809cb7d109ed3af8768d015d6a90f6b0ed71cf5f5387",
+        "pngSha256": "023678567c61fdaab2f9735eb097a1177445558106db2495fac408bc3f615f61",
+        "bundleSha256": "52ce755165f2b02610d9a974c280583484b815bd5a308f823142bda992dc054f"
+      }
+    },
+    {
+      "name": "native-scroll-thumb-s3.png",
+      "decodedRgbaSha256": "ac01b107538e19666ebd4a571af5d60e1618457de3b017ebbb24ea1e7d125a3a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "resizable",
+        "manifest": "tests/reference/resizable/manifest.json",
+        "case": "native-scroll-thumb-s3.png",
+        "part": "grip",
+        "alias": "base",
+        "variants": {
+          "component": "resizable",
+          "manifest": "tests/reference/resizable/manifest.json",
+          "case": "native-scroll-thumb-s3.png",
+          "part": "grip",
+          "alias": "base"
+        },
+        "query": {
+          "component": "resizable",
+          "scale": "3"
+        },
+        "testId": "7bec589ade1fa1fb714f-c46db8bc9829b5bb0d00",
+        "runtimeUrl": "http://127.0.0.1:5311/?component=resizable&scale=3",
+        "subjectSlot": "resizable-handle",
+        "subjectElement": "DIV",
+        "joinBasis": "explicit-metrics",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-final-complete\\test-results\\resizable-Resizable-native-b3a42-grip-exact-pixels-at-scale3\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\resizable\\captures\\native-scroll-thumb-s3.png",
+        "width": 18,
+        "height": 96,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ac01b107538e19666ebd4a571af5d60e1618457de3b017ebbb24ea1e7d125a3a",
+        "pngSha256": "16c9f080ee7211d74d64910c368711365ae75403dc4bbcefeb1798208e516e47",
+        "bundleSha256": "52ce755165f2b02610d9a974c280583484b815bd5a308f823142bda992dc054f"
+      }
+    }
+  ],
+  "appliedAt": "2026-10-30T04:15:24.637Z",
+  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/hover-card.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/navigation-menu.json http://127.0.0.1:5173/r/accordion.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/alert.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
+  "pageErrors": [],
+  "pageErrorsScope": "Global pageerror listener across all 66 maintained preview demos, desktop/mobile navigation; native matrix pixels verified separately. No claim that every native-case page error event was monitored by the suite harness.",
+  "browser": "156.0.4314.50"
+}

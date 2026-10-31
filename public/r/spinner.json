@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "title": "Minecraft Spinner",
+  "description": "Standard current shadcn spinner APIs using original Minecraft font, palette, sprites or loading phases. Layout and web interactions compose native constituents; verified scope is recorded separately.",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/minecraft-loading-glyphs.ts",
+      "content": "// Exact binary alpha positions from original Minecraft Java26.2 ASCII atlas. PNG sha256 e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a\r\nexport const minecraftLoadingGlyphs = {\"O\":{\"advance\":6,\"pixels\":[[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[4,2],[0,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]]},\"o\":{\"advance\":6,\"pixels\":[[1,2],[2,2],[3,2],[0,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]]},\"+\":{\"advance\":6,\"pixels\":[[2,1],[2,2],[0,3],[1,3],[2,3],[3,3],[4,3],[2,4],[2,5]]},\"-\":{\"advance\":6,\"pixels\":[[0,3],[1,3],[2,3],[3,3],[4,3]]}} as const\r\n\r\nexport const minecraftLoadingAsciiPng = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAAQMAAAD58POIAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAtJJREFUeNrtk6GPG1cQxj90eqBSnoIWVPKoCgg02qtK7oECwyXlBgcMH+vCAQWjolWRoVUVWEUGBQUBgYaBkUL2L4gWXQZEt5l5jq3bVZILDMjn2efVb3+aefukxffMwruGhJh4B0sooO0aTikRgGgAypHAtLuAJtPGABQKKkZIBwduJFiaYdUhpTNg2JQNiP2WeboDWDLlXOlSc/YRnCFrkeecRAQgJMGWQlgNHESYk1LAnpZLCUPMLcCIEUdKQYOQBJ9JBCER80kiQJqArJpDtllr5gim2TY8eciDait9EBbJaMXCzJJCx6+Pgj90YOn7rabQ834v+E/MNKEYshX8cwGlh+CFWAqQE2DxKZylz6JlCmax562KR3vuCfAOZEvTBE7UmGE9HBBFAwKwSCgGERPhDJq9UOJYQCdi4LUQfwQbyeRdSPvQA/MoGIyAJZgDs6PkoKw4AeRD3thuDxw6fjVkIBxlK0mOHHa8FwFaYVF/9/DyBMTCyfGOpRhDbttyXJ15+XIKQMYlCSXEfDsBidMWOGwObS8eNQDguD1y8vOQyEzwqZwN7EnoZAwth2QH1LTpBDjwQC21EpSYC7js5NvNEogTsAKeT0ACCJ7Jwc6NLwMFdgDmUsl6jWlih5Jn3Xngx5vVCqfkdWmJ7hlwSXhoDIOD0uPx/PTbm6qqaqCurSpA/v19CoqhNfSuvr+r1Y23xaiu6qurs6F6d2/G3f296rlHbVUDqNyYAO8xBZUVnKD8PgsW9fXNu/F6fDdejOUSsAIW4+h1fWOPi4HiVKWBL4+DUpVdhkcMT8ZPAKvFwv4mRvXAGMfxZrG4GUe17QxPfEjtl7/EV4Jpfvl5Bn5NM/Anz8BfOgN/82M9/i9T5qEUf4jAGvjRF7wnoqeRbjsg9p0C0JieRmwddKQnI0bFujKQ9NQjRtyiQtcNbqC4WwAN4Iaqxg6eJc6JDz6OD74blGMNvZoZAAAAAElFTkSuQmCC\"\r\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/minecraft-spinner.css",
+      "content": "@layer theme,base,components,utilities;\r\n@layer components{.mc-spinner{display:inline-block;flex-shrink:0;vertical-align:middle;image-rendering:pixelated;shape-rendering:crispEdges;overflow:hidden}}\r\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "registry/ui/spinner.tsx",
+      "content": "\"use client\"\r\n\r\nimport * as React from \"react\"\r\nimport {minecraftLoadingGlyphs} from \"./minecraft-loading-glyphs\"\r\nimport \"./minecraft-spinner.css\"\r\n\r\nconst frames=[\"O o o\",\"o O o\",\"o o O\",\"o O o\"] as const\r\nfunction Spinner({className,scale=2,timeMs,logicalWidth=26,style,children,...props}:React.ComponentProps<\"svg\">&{scale?:1|2|3;timeMs?:number;logicalWidth?:number}){\r\n const [time,setTime]=React.useState(0)\r\n React.useEffect(()=>{if(timeMs!=null)return;let frame=0;const motion=matchMedia(\"(prefers-reduced-motion: reduce)\");const tick=()=>{setTime(motion.matches?0:Math.floor(performance.now()/300)*300);frame=requestAnimationFrame(tick)};frame=requestAnimationFrame(tick);return()=>cancelAnimationFrame(frame)},[timeMs])\r\n const text=frames[Math.floor(Math.max(0,timeMs??time)/300)%4],pixels:Array<[number,number]>=[];let x=Math.floor(logicalWidth/2)-13;for(const char of text){if(char===\" \"){x+=4;continue}const glyph=minecraftLoadingGlyphs[char as \"O\"|\"o\"];for(const [px,py] of glyph.pixels)pixels.push([x+px,py]);x+=glyph.advance}\r\n return <svg data-slot=\"spinner\" role=\"status\" aria-label=\"Loading\" viewBox={`0 0 ${logicalWidth} 9`} width={logicalWidth*scale} height={9*scale} className={`mc-spinner ${className??\"\"}`} style={{\"--mc-scale\":scale,...style} as React.CSSProperties} {...props}><g aria-hidden=\"true\" fill=\"#202020\">{pixels.map(([x,y],index)=><rect key={index} x={x+1} y={y+1} width=\"1\" height=\"1\"/>)}</g><g aria-hidden=\"true\" fill=\"#808080\">{pixels.map(([x,y],index)=><rect key={index} x={x} y={y} width=\"1\" height=\"1\"/>)}</g>{children}</svg>\r\n}\r\nexport {Spinner}\r\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

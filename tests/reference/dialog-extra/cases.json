@@ -1,0 +1,194 @@
+[
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c0",
+    "page": 0,
+    "background": "#202020",
+    "checked": true,
+    "label": "World settings",
+    "text": "A helpful description."
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c1",
+    "page": 1,
+    "background": "#808080",
+    "checked": true,
+    "label": "World settings",
+    "text": "A helpful description."
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c2",
+    "page": 2,
+    "background": "#202020",
+    "label": "你好，世界",
+    "text": "你好，世界\n你好，世界"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c3",
+    "page": 3,
+    "background": "#808080",
+    "label": "你好，世界",
+    "text": "你好，世界\n你好，世界"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c4",
+    "page": 4,
+    "background": "#202020",
+    "label": "こんにちは",
+    "text": "こんにちは\nこんにちは"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c5",
+    "page": 5,
+    "background": "#808080",
+    "label": "こんにちは",
+    "text": "こんにちは\nこんにちは"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c6",
+    "page": 6,
+    "background": "#202020",
+    "label": "안녕하세요",
+    "text": "안녕하세요\n안녕하세요"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c7",
+    "page": 7,
+    "background": "#808080",
+    "label": "안녕하세요",
+    "text": "안녕하세요\n안녕하세요"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c8",
+    "page": 8,
+    "background": "#202020",
+    "label": "Hello 世界",
+    "text": "Hello 世界\nHello 世界"
+  },
+  {
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "wrapWidth": 250,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "name": "dialog-extra-c9",
+    "page": 9,
+    "background": "#808080",
+    "label": "Hello 世界",
+    "text": "Hello 世界\nHello 世界"
+  }
+]

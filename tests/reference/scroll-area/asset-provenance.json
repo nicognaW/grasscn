@@ -1,0 +1,26 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/widget/scroller.png": {
+      "sha256": "597fe534e56c7028ff948a57d30ac6e9ca4073da8df1b0c51d002bdac8f24acc",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/scroller_background.png": {
+      "sha256": "0955e3a96511b678ac3e86b6c71fe5548b105c27ca1286ab05268c4789767be0",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    }
+  },
+  "rendering": "Original AbstractTextAreaWidget with its background/decorations disabled and zero inner padding supplied by the test subclass. Original renderer provides 1-logical-pixel inset scissor, scrolling pose transform and AbstractScrollArea scrollbar. Test content is original Button rows at24-pixel spacing; the web fixture uses the separately verified Button component. Native scrollbar is outside its content pane; outer crop includes6 pixels only for overflow. Thumb is native clamp(int(float(height*height)/contentHeight),32,height-8); position truncates logical scroll before integer ratio. No horizontal scrollbar or hover-only skin is established. Tested scroll offsets are logical integers. Mth.clamp applies max(value,32) then min(result,height-8); at height32 the upper bound produces a24-pixel thumb."
+}

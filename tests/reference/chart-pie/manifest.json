@@ -1,0 +1,600 @@
+{
+  "source": "Unchanged original ProfilerPieChart and original GuiGraphicsExtractor/PIP GPU. Test adapter supplies fixed logical viewport dimensions. Declared subset excludes unrelated FPS pilot pages.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "abcbb3b92a631ef54ad433cf55a0db38593918c3001223fbc3bce2c34fbf4b87",
+  "caseDefinitionSha256": "6844792d9bd73cbb8f29276731a52a725ed049cdad93b7b67ec95f3e785b59e6",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "7cade7b3b406da857f5335694ec6b4f93849064eafbf2709e17a09d9f14e74da"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "b1c0ff1f8c4173a5c87b36de442bd6155e35578111bcb7725b86825a84401829"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "1fcee1bb1787353074f7a7ccabb7dd9b88355421b60e73e3b81e18bbe000b082"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "5d2e18c780e228e6b3e931a8d9d35f8210403933a76881003ea86a759723d1f3"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "92831e5a3a25b04c3645206f6fff36b54cd24723fba23ba3feea48efa37416f6"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "3208dcd5e8d024a6ec253a68a0de7ded1f75b85c5e46ddb3b54bcf13ca807cc1"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "627d1a541934607e9ae44df2ac4f30f83fe5fd6da0009e84fb570f884d0ca047"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "6706a6c3a5362b8b54c143f82a84a53fd7172d924229b71e2fbb7aa507559dc8"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "14321e380f0b8ae79b1887a9ab252c2a5b9583737388f3ac46c27d1521e47048"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "3cd42876aa8e9ac6fb3e16687756a4c139e3ffb1da5ec19071e3e2989d5b7cee"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "eca9a1c17fecfe97a84453d582882800759293a648453814786e3a02443183c1"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "b881b0f084eeb8a16bb69fefa9d72cf390b9e40f07522ef1757b4311d4bcc8c0"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "66fcf9cec4533215d1756790a375c6a0c4d5881590988c3d8bbed4a6ba10fc38"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "c48cf2e98f39eb43c7b316dd6fb99ca22dee0c188f2668e87de706b7b8245633"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "fc1efb9b785366ca40a8d2b7148a9aae6ac3e3c812b68efefd975514acf0a9b7"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "96b1621b49288d5805f87b10c3795a9310163ee0b2f31749aa837a1d6d4814ca"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "4225b1c64800014801f61eacf967b51a573bbb722663d0be01d2bc1690496a3e"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "5d99d2d0a684a720d113eb6eed4032e6a5f30349b9da8ff800f7c3e95bcabcaf"
+    }
+  ],
+  "cases": [
+    {
+      "name": "chart-pie-c0-0-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "efc4f6f78b2e56c9086d2e82d2fadf5e38fa9e76e7aec46773e9d3a5fdddf6a7"
+    },
+    {
+      "name": "chart-pie-c0-1-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "65eaf5bd18c8684057f382a9e042da23aeb436b7b68253518c29c520a5a04e5c"
+    },
+    {
+      "name": "chart-pie-c1-0-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "ce9275b8d66bccc3c59114f8f9cb632f27f7b9a3f068894b45620d9a8760f4c5"
+    },
+    {
+      "name": "chart-pie-c1-1-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "08b32524a67df15321f5ee008d01fb699e8cfe5cb5c3ff4ccdb110f9bd4e1cdd"
+    },
+    {
+      "name": "chart-pie-c2-0-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "058a0bfda2bbae48107e83b59a4aa5d4d3a09d4fcea7167ced45c7ca16b74753"
+    },
+    {
+      "name": "chart-pie-c2-1-s1.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 1,
+      "sha256": "201d9ba6cb6273f322d77593e5f2f046c0cc96061b04369150ac06d4ee6e0331"
+    },
+    {
+      "name": "chart-pie-c0-0-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "bc6bbf0cfb816bab0d3db034514ae7c07e76ca453c1382e0ed112923e186dd3d"
+    },
+    {
+      "name": "chart-pie-c0-1-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "9d20cea6a5b59aec6f219a79ca62883259794210cc93f961665cbf3c5e7fce67"
+    },
+    {
+      "name": "chart-pie-c1-0-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "0b9efabdcfc222061a3f51a187a626cf5c9dc2e12e2bd906c6b19ddb07589c2b"
+    },
+    {
+      "name": "chart-pie-c1-1-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "732029df6c77db06a16187e230b63fbafed703e1f45c95c0630609196e8ed8ad"
+    },
+    {
+      "name": "chart-pie-c2-0-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "d4e8c4f2a0af28157ef3c5c824f809d42f6ce1dbd26554991a7cb45fbf294db2"
+    },
+    {
+      "name": "chart-pie-c2-1-s2.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 2,
+      "sha256": "673af2b01035870e007ada5a8aea32a51b036d1a6e6c1f392e75bb784581e374"
+    },
+    {
+      "name": "chart-pie-c0-0-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "e0e7044f148cacc63e5773dc54281456a9267bd28cc67475f2bd635e24ab71a1"
+    },
+    {
+      "name": "chart-pie-c0-1-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick"
+      ],
+      "percentages": [
+        50,
+        50
+      ],
+      "globalPercentages": [
+        50,
+        50
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "3e73b5a14df78a65c5cd141cea90beb1b7710a7807f666cddc61922c340e4f61"
+    },
+    {
+      "name": "chart-pie-c1-0-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "3cf83ab94ecee9897aafa478342cd6f462637c089ec9b7d406010b3f40702456"
+    },
+    {
+      "name": "chart-pie-c1-1-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 175,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "labels": [
+        "render",
+        "tick",
+        "sound",
+        "unspecified"
+      ],
+      "percentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "globalPercentages": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "d6b6ab60a0dac6e1c96dc1a5949753107a26b8e7a8a8d43b6adc73e0c40728df"
+    },
+    {
+      "name": "chart-pie-c2-0-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "5ac04f551b493eaa24ce60b5d4b14344a0fdfad5a599a57445181e56021d190a"
+    },
+    {
+      "name": "chart-pie-c2-1-s3.png",
+      "element": "chart-pie",
+      "state": "normal",
+      "width": 270,
+      "height": 157,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "labels": [
+        "logic",
+        "world"
+      ],
+      "percentages": [
+        33.333333,
+        66.666667
+      ],
+      "globalPercentages": [
+        33.333333,
+        66.666667
+      ],
+      "rootName": "root",
+      "scale": 3,
+      "sha256": "3da31f8be5c12827b438ae26dca44acdec1330763724718a6db783d0fd52f151"
+    }
+  ],
+  "sourceDirectory": "source"
+}

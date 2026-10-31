@@ -1,0 +1,72 @@
+import type { UnihexGlyph } from "./minecraft-unifont"
+import { dialogUnihexAtlas as nativeUnihexAtlas } from "./minecraft-dialog-atlas"
+
+type Painter = { canvas: HTMLCanvasElement; gl: WebGLRenderingContext; buffer: WebGLBuffer; texture: WebGLTexture; program: WebGLProgram }
+const painters = new WeakMap<CanvasRenderingContext2D, Painter | null>()
+const origins = new WeakMap<CanvasRenderingContext2D, DOMRect>()
+export type UnihexAtlas = Record<string, { u0: number; u1: number; v0: number; v1: number }>
+const atlases = new WeakMap<CanvasRenderingContext2D, UnihexAtlas>()
+export function setUnihexAtlas(context: CanvasRenderingContext2D, atlas?: UnihexAtlas) {
+  if (atlas) atlases.set(context, atlas)
+  else atlases.delete(context)
+}
+export function positionUnihex(context: CanvasRenderingContext2D, bounds: DOMRect) { origins.set(context, bounds) }
+export function disposeUnihex(context: CanvasRenderingContext2D) { painters.get(context)?.gl.getExtension("WEBGL_lose_context")?.loseContext(); painters.delete(context) }
+function create(): Painter | null {
+  const canvas = document.createElement("canvas"), gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false, antialias: false, preserveDrawingBuffer: true })
+  if (!gl) return null
+  const compile = (kind: number, source: string) => {
+    const shader = gl.createShader(kind)!
+    gl.shaderSource(shader, source); gl.compileShader(shader)
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader) ?? "Native font shader failed")
+    return shader
+  }
+  const vertex = compile(gl.VERTEX_SHADER, "attribute vec2 position; attribute vec2 uv; uniform vec2 projection; varying vec2 coord; void main(){gl_Position=vec4(position*projection+vec2(-1.,1.),0.,1.);coord=uv;}")
+  const fragment = compile(gl.FRAGMENT_SHADER, "precision highp float; varying vec2 coord; uniform sampler2D atlas; uniform float ink; void main(){float a=texture2D(atlas,coord).a;if(a<.1)discard;gl_FragColor=vec4(vec3(ink),a);}")
+  const program = gl.createProgram()!
+  gl.attachShader(program, vertex); gl.attachShader(program, fragment); gl.linkProgram(program); gl.useProgram(program)
+  gl.deleteShader(vertex); gl.deleteShader(fragment)
+  const texture = gl.createTexture()!
+  gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 256, 256, 0, gl.RGBA, gl.UNSIGNED_BYTE, null)
+  const buffer = gl.createBuffer()!
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+  for (const [name, offset] of [["position", 0], ["uv", 8]] as const) {
+    const location = gl.getAttribLocation(program, name)
+    gl.enableVertexAttribArray(location); gl.vertexAttribPointer(location, 2, gl.FLOAT, false, 16, offset)
+  }
+  gl.disable(gl.DITHER)
+  return { canvas, gl, buffer, texture, program }
+}
+export function paintUnihexGPU(context: CanvasRenderingContext2D, glyph: UnihexGlyph, x: number, y: number, scale: number, thickness = 0) {
+  let painter = painters.get(context)
+  if (painter === undefined) { painter = create(); painters.set(context, painter) }
+  if (!painter) return false
+  const { gl, canvas, program } = painter, bounds = origins.get(context)
+  const originX = Math.round(bounds?.x ?? 0), originY = Math.round(bounds?.y ?? 0)
+  if (canvas.width !== innerWidth) canvas.width = innerWidth
+  if (canvas.height !== innerHeight) canvas.height = innerHeight
+  gl.viewport(0, 0, canvas.width, canvas.height)
+  gl.uniform2f(gl.getUniformLocation(program, "projection"), 2 / canvas.width, -2 / canvas.height)
+  const fill = String(context.fillStyle)
+  const ink = fill.startsWith("#") ? parseInt(fill.slice(1, 3), 16) : fill.match(/[\d.]+/g)?.map(Number)?.[0] ?? 224
+  gl.uniform1f(gl.getUniformLocation(program, "ink"), ink / 255)
+  gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT)
+  const rgba = new Uint8Array(glyph.width * 16 * 4)
+  for (let row = 0; row < 16; row++) for (let col = 0; col < glyph.width; col++) {
+    const on = (glyph.rows[row] >>> (glyph.bitWidth - 1 - col - glyph.left)) & 1
+    rgba.set([255, 255, 255, on ? 255 : 0], (row * glyph.width + col) * 4)
+  }
+  const observed = (atlases.get(context) ?? nativeUnihexAtlas)[glyph.code.toString(16)]
+  const atlasX = observed ? Math.round(observed.u0 * 256 - .01) : 0, atlasY = observed ? Math.round(observed.v0 * 256 - .01) : 0
+  gl.texSubImage2D(gl.TEXTURE_2D, 0, atlasX, atlasY, glyph.width, 16, gl.RGBA, gl.UNSIGNED_BYTE, rgba)
+  // BakedSheetGlyph.extraThickness expands bold quads by 0.1 logical pixels.
+  const left = originX + (x-thickness) * scale, top = originY + (y-thickness) * scale, right = originX + (x+glyph.width/2+thickness) * scale, bottom = originY + (y+8+thickness) * scale
+  const u0 = observed?.u0 ?? Math.fround(.01) / 256, u1 = observed?.u1 ?? Math.fround(glyph.width - Math.fround(.01)) / 256, v0 = observed?.v0 ?? u0, v1 = observed?.v1 ?? Math.fround(16 - Math.fround(.01)) / 256
+  const a = [left, top, u0, v0], b = [left, bottom, u0, v1], c = [right, bottom, u1, v1], d = [right, top, u1, v0]
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]), gl.STREAM_DRAW); gl.drawArrays(gl.TRIANGLES, 0, 6)
+  context.drawImage(canvas, originX, originY, context.canvas.width, context.canvas.height, 0, 0, context.canvas.width, context.canvas.height)
+  return true
+}

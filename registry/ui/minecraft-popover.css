@@ -1,0 +1,11 @@
+@layer components {
+  .mc-popover {z-index:50;width:calc(250 * var(--mc-pixel));max-width:var(--radix-popover-content-available-width);max-height:var(--radix-popover-content-available-height);outline:none;overflow:auto;transform:translateZ(0);}
+  .mc-popover-background {position:fixed;inset:0;z-index:-1;pointer-events:none;}
+  .mc-popover::-webkit-scrollbar {width:calc(6 * var(--mc-pixel));height:calc(6 * var(--mc-pixel));}
+  .mc-popover::-webkit-scrollbar-track {border-image:var(--mc-popover-scroll-track) 1 fill / var(--mc-pixel) / 0 stretch;}
+  .mc-popover::-webkit-scrollbar-thumb {min-height:calc(32 * var(--mc-pixel));border-image:var(--mc-popover-scroll-thumb) 1 fill / var(--mc-pixel) / 0 stretch;}
+  .mc-popover::-webkit-scrollbar-button {display:none;}
+  .mc-popover[data-state="closed"] {display:none;}
+  .mc-popover-title,.mc-popover-description {margin:0;padding:0;font:inherit;}
+  .mc-popover-text {display:block;width:100%;}
+}

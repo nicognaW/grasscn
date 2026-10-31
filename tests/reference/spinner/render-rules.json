@@ -1,0 +1,16 @@
+{
+  "frames": [
+    "O o o",
+    "o O o",
+    "o o O",
+    "o O o"
+  ],
+  "intervalMs": 300,
+  "periodMs": 1200,
+  "nativeColor": "0xff808080",
+  "shadowColor": "0xff202020",
+  "textWidth": 26,
+  "alignment": "centerX=x+floor(width/2); textX=centerX-floor(26/2)",
+  "y": "Original empty-label LoadingDotsWidget height11 places dots at bottom-9-2 = y; crop retains nine bitmap text rows",
+  "scope": "Native widths26/34, times0/299/300/599/600/899/900/1199/1200, two backgrounds, GUI1\u20133; web logicalWidth/timeMs expose deterministic matching inputs; default web motion uses the unchanged four-frame sequence; no original interaction sound"
+}

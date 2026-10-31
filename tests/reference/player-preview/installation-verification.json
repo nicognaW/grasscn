@@ -1,0 +1,166 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/player-preview.json --yes --overwrite",
+  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "minecraft-avatar-assets.ts",
+      "sourcePath": "registry/ui/minecraft-avatar-assets.ts",
+      "sourceSha256": "fd93027ca25a8ed525ca9c98c1fab754c5192725703ff33246f24d065c8b2250",
+      "installedSha256": "0640dbc22b32a607c27f4c329d5c23b0d2e8cb9d58164f882a67acee6e3a1aaa"
+    },
+    {
+      "path": "minecraft-player-mesh.ts",
+      "sourcePath": "registry/ui/minecraft-player-mesh.ts",
+      "sourceSha256": "c776c30b76561b67f8684850c34138950ce1d8ab12290589897defc96fd609e8",
+      "installedSha256": "c776c30b76561b67f8684850c34138950ce1d8ab12290589897defc96fd609e8"
+    },
+    {
+      "path": "minecraft-player-preview.css",
+      "sourcePath": "registry/ui/minecraft-player-preview.css",
+      "sourceSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03",
+      "installedSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03"
+    },
+    {
+      "path": "player-preview.tsx",
+      "sourcePath": "registry/ui/player-preview.tsx",
+      "sourceSha256": "3d22825b051b9a3325b44297aa03dbfb2b92e7ef494009353a8092caa8aedd46",
+      "installedSha256": "d25bac23c32202a22cf5807a12c472c49fd23cb70400eed8750270943f7f3ecb"
+    },
+    {
+      "path": "minecraft-player-skin.ts",
+      "sourcePath": "registry/ui/minecraft-player-skin.ts",
+      "sourceSha256": "c528efd99256df1186f02411c55ec42f2f665337105fe9ab3ab222186a238a5e",
+      "installedSha256": "13e0182078fec60d3bb4050cdf61bccc615fa7c2b914f3cb54b8c6be94843b07"
+    }
+  ],
+  "cases": [
+    {
+      "name": "player-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8570324933c406a38fa6f3acd9e1b5ec11c69b93446378fb8c9c05cc52963e0b"
+    },
+    {
+      "name": "player-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f427c9b0a38f93361c3600acffb9e92200c1cc0e426a871e214a67b3ebf990e9"
+    },
+    {
+      "name": "player-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a92f6ee1aface1a6d6fc1a1f194515fee75e43c9ccf65be67d76d4bf35811225"
+    },
+    {
+      "name": "player-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e6eeb9ffedc8b8655d13a29bcbc33f649d2ea5fb34258c9c31dd37459511b708"
+    },
+    {
+      "name": "player-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a768accf1724a3532106994e65e1ae10dc3ab82e21e11b8c102df7595877eeee"
+    },
+    {
+      "name": "player-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cbf1caa8cfbfeb15985d2603209741239fc4308355a67154317c1cf4133c866b"
+    },
+    {
+      "name": "player-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "de9cd811d891a7076614024df38e25bd9fc43c3cc592193185c8aadb7a559b94"
+    },
+    {
+      "name": "player-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "88437f32cbda19169b7537b4eeef59446599e4947066a0d56154a8dab4c94aa6"
+    },
+    {
+      "name": "player-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "87d16632fe658a531ca3c1b0c00f88484c603e22e33ec01aa0c2e6dddf5e0153"
+    },
+    {
+      "name": "player-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3f5d162726b9cebb870c8736169e5db24a235546780a1b1a930ce30c8de80253"
+    },
+    {
+      "name": "player-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c5a029a515ef1044160a74138e0c6487a8a82a9cf1169b66a8ede47f933bb5a3"
+    },
+    {
+      "name": "player-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9facfecd9f5e8c6210832dfbecacabe2bfc2c32bab10c669b325aff552392aad"
+    },
+    {
+      "name": "player-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bf7c016884da9bf0c23b8bc42aa7b6e5add6a014aa088896824342ad431fb7ce"
+    },
+    {
+      "name": "player-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "700aa0efee966e4b60df721dd2a258a68bcef8ebee82531cb4e3647ff66fa5e9"
+    },
+    {
+      "name": "player-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "32b2a1a93d58cbabf259178fe39f09bd6e4b34e388859033e64b3c1965584361"
+    },
+    {
+      "name": "player-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "08e452dc39943fd2d98b31b6917cf551964ac2779a943c2961337ac4d6a8a58b"
+    },
+    {
+      "name": "player-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "02aa2c15a9530dc4d96ac1b37e6baf85286a886c62c8a05ccd250f0ad9021594"
+    },
+    {
+      "name": "player-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "61e2858702c8627e3019540273d2ff854f53902cc1cd2bb4ca5b77e331ade694"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Keyboard and pointer rotation, native pitch clamp and Home reset",
+      "Automatic slim Dream selection after Steve preset",
+      "Automatic classic skin selection after Alex preset",
+      "Website Load skin after both presets, with native-exact Dream back pixels",
+      "One-pixel comparator negative control"
+    ]
+  },
+  "environment": {
+    "browser": "Microsoft Edge via Playwright",
+    "viewport": [
+      1536,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "scales": [
+      1,
+      2,
+      3
+    ],
+    "renderer": "Hardware WebGL2, 32-bit floating depth target and native per-face lighting"
+  },
+  "limitations": [
+    "80x120 logical viewport, scales 1-3, Edge/DPR1 hardware WebGL2: original wide Steve/slim Alex default, front and side poses; frozen Dream slim front, back, angled-back and side; custom wide Steve back and angled-back; builtin Steve/Alex back and angled-back. Other skins, dimensions, poses and raster environments are outside the exact pixel matrix.",
+    "Automatic arm-model inference uses standard transparent unused UV regions in 64x64 PNGs. Nonstandard/ambiguous textures should specify model explicitly; no live Mojang metadata lookup is performed."
+  ],
+  "evidence": {
+    "installedTestLog": "../../work/grasscn-website/final2/custom-player-installed/stdout.log",
+    "regressionTestLog": "../../work/grasscn-website/final2/custom-skin-installed-final/stdout.log"
+  }
+}

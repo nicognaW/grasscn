@@ -1,0 +1,6112 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "d4676a7fd2f0a8f364d046154f18606e9cedc7bc78e69f3fd2ebae35d9db700b",
+  "caseDefinitionSha256": "493b557e34a9dd5bd6c66cf9ee0223821a4bc9a489bf150277f5916a1e4a4f19",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "633774d87060d1a6148453aeef7bf82768d1f0cc597084d5bcc66aab677242c0"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "cfd6366e6037fb9c34543381d5531467ad2ff8faf4bfb29c950692e51d822a26"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "31071c1938007f4fc2db169d666a82b2a5a36436d92f71518caf8f2179782158"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "4bc9e052d595d3152551636e55a4456186ccc9d1a8e7286eed2f9d3f2aa4c2aa"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "08d8e630c5dc9445a25535ec44392b27d9ded0a40885543fc164507170a1f814"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "eb134563b51ff34bc6af6fd076cc6ce9f1c63a229426997e99c588cebb80a372"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "7025c1414f2c1218248eb29ad14d229f071db879ef4d0698ab64b281bb3ff522"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "dc0b2ae15f4bc11e9442d85b6ba14f0ffb9417ba99c9af667d6fdb3f418c6dcb"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "3403a618160158257649655579fa25ea0827d05e8735b99ecb4d3dc39ab423b9"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "a876120cfc07c4bcd76009cff9f4c68961233bf3403bbd42a2768fc973017249"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "72cce64b095cd6649a5123998ea614789b0e799a7f3885e69f4a542a004da254"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "579f95100273198f78ccf895d491e2b6064f83aa6419404ba7cc251787ca0b0b"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "f8390ebf5c514010c8272bc4f9e840856bffeafc1a1df8534bc869a69eb8083f"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "4bea8b6bfa8c00c1c3977c075716f197396f6d8cba30fbbefc6a338bee7e29d5"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "38474b291e59a8953b18a68dfcbbb9b83939e525729042665f2e0341db8a6047"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "b735cbcf966489d8da7d33cb6fe0fe705a80b43a4ada00288bf3da11c29712c9"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "0f3e8480cf8d7b8929059503fd5aa06d462276aaf38740eda8f850c99f06b696"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "d281dc9b3436af54b5c6aa77a0b910bc7999c1e9909d6bebe65131c3c4da94c2"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "404a9c081c8eb1aae2b0bb176efef2eb8a428d6c4593b21b3d6bd52ffe373cd7"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "8977c8d779d63fc0477506fb21939a24b3d04e63cee37be81a045150a79c8c69"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "85f54ed3c97f84e91862ac0d2257c5641fc5a0fbb4ab4d1cd890a259340c2d98"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "63dcb043a6c48910ee2c1c5a0c6df75a56708fd9414b7fd93c36ccb70922955a"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "2870e526abd040d94abd9990101681f426a82aeaf18c6287a78ed092e9dbc1aa"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "6d2c8a473fe08f63f8744ff6f8b74768cb656a50d24f40490fa208033a1bfb8b"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "f4f0c62b6d66e781d12b599dcc6d4aea0693a8d392d961c3f40f6b505ca6ae38"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "1c262df45db092352df573110679892ccb449765b2f297f724e8089194d4f200"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "bbf0c3e73b590eeab02017affa61f9f04350458b5d2642d6831f75767f99b802"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "9f820a8e2329a50386c7f40fdfe0962b9aa7b9e408692eb7c489f32c3527eae7"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "44da052c507882504caa9b9e07190656340438aa90873945d996f3be51847953"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "ae389c166e7381c8e7f357446a0493f2ab9cd86e6c24111d82aec142e9e9c13a"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "a1387f29bc6085faa468017de54fdced3e0c2e14798da766331fe599e2dcb4e8"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "3303ff1cfaadafd10ac399113e8c2b9648e32cca64959d55bae63ae20d7240f4"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "c8b0e8e748d8814ba47acb6734b9374b70255cf078b0017e986c37d958581b8f"
+    }
+  ],
+  "cases": [
+    {
+      "name": "tabs-extra-c0-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "8e9aef9b22740ab398255f369e6c48dfbd64b37e0199b0d0208470c356152293"
+    },
+    {
+      "name": "tabs-extra-c1-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "7ba789ba6927cdafaa467a9c7a5e09a751f21b6aa745ffdc2bd0ceabe7cc643b"
+    },
+    {
+      "name": "tabs-extra-c2-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "6edd5cd6fdf60d6fe3ba3e52388db0540ac6632e54019d463f6d3ecc99ee5f63"
+    },
+    {
+      "name": "tabs-extra-c3-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "15db95af2e2a0d8576ff206e3f140daec5fc61504761a3ecf08be463e5fe4e5e"
+    },
+    {
+      "name": "tabs-extra-c4-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "003b851e25197f3b65ec05ed5fcef3d091b3a910f6f165b5135d9e2ef01d7624"
+    },
+    {
+      "name": "tabs-extra-c5-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "cfba284cc2084b28195646a8f06f05ae9d282929f028e707eb1b50cf1480fb54"
+    },
+    {
+      "name": "tabs-extra-c6-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "41614b0726b8c5cadfab180d95da36b8f762a6a886f9b14be2829018f52ca6a7"
+    },
+    {
+      "name": "tabs-extra-c7-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "efa1d592e17d5bfe670943474572194bf678baa1138c61f7f8150e5d6cdbfbef"
+    },
+    {
+      "name": "tabs-extra-c8-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "293600b20ee905c93e8027992390cbb72370e01ae0dcfcf0fb4bc6891790805a"
+    },
+    {
+      "name": "tabs-extra-c9-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "7ba7f1b736ac3277b0775c334330c487288b54a1cfff273dd72e056851b212fe"
+    },
+    {
+      "name": "tabs-extra-c10-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "c55b98ce751f72fb51ce58392f9fa71691a60f68aba2682b87a2bd72be5c2488"
+    },
+    {
+      "name": "tabs-extra-c11-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ff4d52bcfb5886e4a72192e2394d0c95f3d3c1513109dd1c2b649e7694e97664"
+    },
+    {
+      "name": "tabs-extra-c12-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f923334748c2fdd8827ba2200e460e1a0665a12f0e4f169e0c47f8ea3d79b468"
+    },
+    {
+      "name": "tabs-extra-c13-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "87083ec006685ff30b340aa597132e047a919e433d2849d54b486f9c925e7c43"
+    },
+    {
+      "name": "tabs-extra-c14-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "9c57241ad0d0309f6d254f828a86cce11f7f3afb2c85a1804288ac33c6969b98"
+    },
+    {
+      "name": "tabs-extra-c15-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "15fd7664a7f1d76e32324340c6d32d0ee511e61e85b735990be01dbcfd11b2df"
+    },
+    {
+      "name": "tabs-extra-c16-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "78f09d1cc0d3b8cc883fac2419329e576edfcbf310bf035f47242fa9b136698d"
+    },
+    {
+      "name": "tabs-extra-c17-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f2847a0bd920fe50a4a942e91245d8f0d1bcb82e333c4a1691c1e6c83903f5da"
+    },
+    {
+      "name": "tabs-extra-c18-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "04300dd65e80822ef7ac530b6b484fae222e9fc9de3addbc1bee96d67114f7db"
+    },
+    {
+      "name": "tabs-extra-c19-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "70151ee932c74391b7c6c8960ecb4411257703bfd670dd7864f0a4e672190458"
+    },
+    {
+      "name": "tabs-extra-c20-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "b77766e6eddb0718e076d67986a2237a1339651062ea13d9b17f1f799a521614"
+    },
+    {
+      "name": "tabs-extra-c21-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "79f27fcda6e5817dfda01e383dc42bbb677fb01ccf84560c298c3fa894867c8f"
+    },
+    {
+      "name": "tabs-extra-c22-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5867092e1d935c2fa81d3c5cd3b8ad9160c0bbb14454449cdaf0fc1bc4028199"
+    },
+    {
+      "name": "tabs-extra-c23-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ece01d83c398e82f2b117b3deb086dbce910c7ea316ae9cfd45874a2bd7d9ba8"
+    },
+    {
+      "name": "tabs-extra-c24-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "6567f604afa00e18b1a845d47be8309cbf04265bea52d46b0ec2708cf0147b39"
+    },
+    {
+      "name": "tabs-extra-c25-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "106a98c9cdaa1397ed75757fc2d24b1965d033a9e95c572be7dd279ff55aab51"
+    },
+    {
+      "name": "tabs-extra-c26-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "3e79a42d1c408709b923f53ac638d8c6c2dc16e0e52c9f593ef9015bf3219697"
+    },
+    {
+      "name": "tabs-extra-c27-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "275df876e96e8096e7ec5e0de24b57ac43ea0a892b3e2222c42400c94bfa556e"
+    },
+    {
+      "name": "tabs-extra-c28-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "e5858cc8bd66986c2dd42033e210e5f10a5afddef9ea1bca8499bdc5281a9e6e"
+    },
+    {
+      "name": "tabs-extra-c29-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5df4e1b0fdff07cf3a3cd177b3c52ed976a32e546752a4a910a3f820f6e3999d"
+    },
+    {
+      "name": "tabs-extra-c30-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "d868ad0fa26b45e184cad3162332360b52b492f1f68963c61e08619d7136083d"
+    },
+    {
+      "name": "tabs-extra-c31-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "215e0f78403600abb88528fba5584b31bf6d4ceabbaa5531c691a9daa086b15e"
+    },
+    {
+      "name": "tabs-extra-c32-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "3cb9a4ea71b4ae999fd2d64fd42095fdab721ef3aa24060d1fdaf7082a027d07"
+    },
+    {
+      "name": "tabs-extra-c33-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "050fe65b2424fa2f4eb4072ecc8b4e5630815e8e0384023f9c04e18bb7d1630b"
+    },
+    {
+      "name": "tabs-extra-c34-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "6cf1310562e1237b6c3944521aed99fd0023a28f0fca9aee9c7ac254991576ab"
+    },
+    {
+      "name": "tabs-extra-c35-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "3cb5149097a295b0a5436a35c8efab89edf0cd23fb5111c38d9c48962a3c087a"
+    },
+    {
+      "name": "tabs-extra-c36-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "8340f54c24a364fcdeef78bb6a7ccb0d1105de6ea83396c81bff847fa21d10d6"
+    },
+    {
+      "name": "tabs-extra-c37-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "dbfe1b363baedfb899ea159a63caea18d3b0471fe297666e40557e86d5ad1abd"
+    },
+    {
+      "name": "tabs-extra-c38-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "af15b471707aff3ef593981bc8c8a47db9e7c045c143658988bbdd235839d5d3"
+    },
+    {
+      "name": "tabs-extra-c39-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5c1a1f281f16ccb153a273d7d0a4fa8f476c510a94d3ed5ad2eba971e2573f7c"
+    },
+    {
+      "name": "tabs-extra-c40-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "686f0452d423f2cb60cdcb2ff70908ed24ba7ef81e7e10d44ebdb4891b200f0b"
+    },
+    {
+      "name": "tabs-extra-c41-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "76a444755d37caaee257197b64a4a1543e3110a2436becb3a0dca249510d4295"
+    },
+    {
+      "name": "tabs-extra-c42-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "dc4a670104478da9ac08292e6e5fe62f8dff5c29e2bfe1e14cd965708211f8c8"
+    },
+    {
+      "name": "tabs-extra-c43-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "d75958325e9d57f0aa141fc224128f7c5097fad5623aab4119e84823b2f40c01"
+    },
+    {
+      "name": "tabs-extra-c44-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "3f963bbf145ac7c6dbf50edc68caeb6e4c88e7e31ed23a607926e5782111165c"
+    },
+    {
+      "name": "tabs-extra-c45-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "05a34c942ed902b14943ab468bb6ed4ce44af4c684405680f140eb6d006d4428"
+    },
+    {
+      "name": "tabs-extra-c46-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "19c6bba7a9813d30de6c09bc879d10f0a47ab2879c62640ab0c6803084aeecea"
+    },
+    {
+      "name": "tabs-extra-c47-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ae702f53a748413e8aaac6bfa1e15f13ce7e60956a371917ad7d89b730c39aca"
+    },
+    {
+      "name": "tabs-extra-c48-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "bbbb380c19a44906bbacaed82a8ffe04556286d26cddf651b6907e731a260ce6"
+    },
+    {
+      "name": "tabs-extra-c49-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "384d63537fb204ae61ffb83434467d3e8781db6031e257efde90d848b1f45841"
+    },
+    {
+      "name": "tabs-extra-c50-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "088c30f71d6b2577c04ada532ccf60479fff219dae14f1457863037d24da0d1b"
+    },
+    {
+      "name": "tabs-extra-c51-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "a05a63d97335d184e5eb9a7702eae3c91961e200a69164d890167bed50ed86ba"
+    },
+    {
+      "name": "tabs-extra-c52-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "7920bb0f568e9d13e82db04ea341ac3d3637760708798626d3e8b78ef22990e3"
+    },
+    {
+      "name": "tabs-extra-c53-s1.png",
+      "x": 16,
+      "y": 100,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "9647afeaf1dde3f625d63f0707d33ac863404a0711d9af1b97f46669e707f801"
+    },
+    {
+      "name": "tabs-extra-c54-s1.png",
+      "x": 16,
+      "y": 128,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "0e568eed7404233cf8d0ca7606a71819cf9c8fd5553de8273c2e7f8bc78b8cfb"
+    },
+    {
+      "name": "tabs-extra-c55-s1.png",
+      "x": 16,
+      "y": 156,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "8f4c6e706a111edfd3da31a04ed47332b866ce3b220e31825f77c572d33a8e2d"
+    },
+    {
+      "name": "tabs-extra-c56-s1.png",
+      "x": 16,
+      "y": 184,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "1959fe2e880fa5412f4441c1161a77fdbf98b7b987e1a040135c758c0bcb652a"
+    },
+    {
+      "name": "tabs-extra-c57-s1.png",
+      "x": 16,
+      "y": 212,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "017a082c8014d9b824a1add341c1953c94580be4e318869dcba46e7472137ca3"
+    },
+    {
+      "name": "tabs-extra-c58-s1.png",
+      "x": 16,
+      "y": 240,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "3ce8a4e521646fea6707765ee7827ce9ffa13075e354788f16028688a62ccdd3"
+    },
+    {
+      "name": "tabs-extra-c59-s1.png",
+      "x": 16,
+      "y": 268,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "631094fee70b157f375a2b918076cd3f75c84f94fe1350d4e24add30a4ff6c97"
+    },
+    {
+      "name": "tabs-extra-c60-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "d1af38192db7d11c47a3660442b582d2b184a6c93ae1985fefcdab70f7fcde6d"
+    },
+    {
+      "name": "tabs-extra-c61-s1.png",
+      "x": 16,
+      "y": 44,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "181a2ff56b16ce0aefa40bbf739c1078e82f16440cd90fc4be15295e333f1053"
+    },
+    {
+      "name": "tabs-extra-c62-s1.png",
+      "x": 16,
+      "y": 72,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "d7e63b6c1f2e2da697f7e353f5232181455c1384a60bb0d34f18a37512cd3c36"
+    },
+    {
+      "name": "tabs-extra-c63-s1.png",
+      "x": 16,
+      "y": 164,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "f427c41cc225d8bdd6625446ccc520f39f47a52426575759ebf92be7aa599924"
+    },
+    {
+      "name": "tabs-extra-c64-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "4573ffa13377da7e43dc41360b61943c2cf3432af9f2122b31d325d792262de5"
+    },
+    {
+      "name": "tabs-extra-c65-s1.png",
+      "x": 16,
+      "y": 108,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "81b6a0afdd73bc767e5de14c721919ec95d51c2355b8a63a3a36628107e51b51"
+    },
+    {
+      "name": "tabs-extra-c66-s1.png",
+      "x": 16,
+      "y": 200,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "0b34e5c2812b3e85127e7fa5d1836034324fb450418e49fa322b11b2684cdb5a"
+    },
+    {
+      "name": "tabs-extra-c67-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "8a52529888348ebf0845347a7d830d8e80b23d11b62487f2c92c84d4b729f381"
+    },
+    {
+      "name": "tabs-extra-c68-s1.png",
+      "x": 16,
+      "y": 108,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "c72ea07c37d5f853509dd38d4c93964695d89201a55be50eb1752eb1636ed7f5"
+    },
+    {
+      "name": "tabs-extra-c69-s1.png",
+      "x": 16,
+      "y": 200,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "70a5eeb80fe2cb76b07221a364c32abeb309ef5dd77ecbc662790f4b35513cb6"
+    },
+    {
+      "name": "tabs-extra-c70-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "a5f00a3e715d7a3ee714e423fa7a3cf507587644131abe12df1d755dc4aed8bd"
+    },
+    {
+      "name": "tabs-extra-c71-s1.png",
+      "x": 16,
+      "y": 108,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "7d1a8ae59f1401a6e246007c1c7ff33930a471f049d88312801bf6c7cef40215"
+    },
+    {
+      "name": "tabs-extra-c72-s1.png",
+      "x": 16,
+      "y": 200,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "a33933a86da150fdd0d7bb090c9393b91c5e6d25b4678e9639f77d7b173c4af5"
+    },
+    {
+      "name": "tabs-extra-c73-s1.png",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "00b4cf466bbfdf87ee1f0c4f532dfeb793b800e5bcf524345f6a36cea433d9a7"
+    },
+    {
+      "name": "tabs-extra-c0-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "06cc17bf4146a2dd934099a6edc7ec35d29f4386b6290ade6abdbb0f50db9139"
+    },
+    {
+      "name": "tabs-extra-c1-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e07dab4bab2d04569e2479ec7b6a7569f0d69983e8db6b344c4526d9b8e23924"
+    },
+    {
+      "name": "tabs-extra-c2-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "f54b0d0bc1568b4b7a5e617a474cdef837418cc4e8a5bff64da32b6b0f20ad8d"
+    },
+    {
+      "name": "tabs-extra-c3-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "40267255fee85b86bd966382818c7f937bf9649a1ba59e92109aaba89a1b58cb"
+    },
+    {
+      "name": "tabs-extra-c4-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "4c98f09e407ad241b8c4633c051285d1be88ac3dd640973d4202576b3e3d18ed"
+    },
+    {
+      "name": "tabs-extra-c5-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "013d37d93b63db1d1015c638b05c14759933741e2ed40a683b0989e57ea909c3"
+    },
+    {
+      "name": "tabs-extra-c6-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "8156c239de8caf04222619ee98db92373cf73a4cc8c1633f7f50614a890f8038"
+    },
+    {
+      "name": "tabs-extra-c7-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "7ba8e54de59c1bde340c92af383f39bb0be4ac24dfbf4fbf031840b4aadf6295"
+    },
+    {
+      "name": "tabs-extra-c8-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "77e297af673e75729aca2658d326d9a30b953c694e7fe44cc6a18a25e530e095"
+    },
+    {
+      "name": "tabs-extra-c9-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "42a662e7c3dc0fe9a1444a7e544a1b7085c72948edb8e42b485ed347c057ddc1"
+    },
+    {
+      "name": "tabs-extra-c10-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "1ac779d5876964e54ccd7f07f5b681df9bba43b717adf4b6baf899a1b9a4c540"
+    },
+    {
+      "name": "tabs-extra-c11-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "8b1a5b19324b7865bb7a9a1a0e900518c34381cc004f9a8f6d3fd8ad794331c3"
+    },
+    {
+      "name": "tabs-extra-c12-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "2c57c0cda043b5d440af567a869eda1630f70387dca797ae6da6b968441380fe"
+    },
+    {
+      "name": "tabs-extra-c13-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "be29c7dacb72861e1d4c12850090c2529020ec7621de0cdfb396b307b7a2f5d7"
+    },
+    {
+      "name": "tabs-extra-c14-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "af28ece476d6a0636b43a9ce30175e7496eac23b295151954ca05e967cdf0b3a"
+    },
+    {
+      "name": "tabs-extra-c15-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "1d2375436b07f4695eda2128aee26ff179be6ccf73fb1b181c1c6f058bb8cf5c"
+    },
+    {
+      "name": "tabs-extra-c16-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "54eacbc119849645906607dba4f0b340c733761905049eb0618335b3ccb82bf6"
+    },
+    {
+      "name": "tabs-extra-c17-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "3a501fb070d7194d2780ce3a9e6c66e68697779821ec23889e62193f034f3250"
+    },
+    {
+      "name": "tabs-extra-c18-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "8630156bdcd53c5f49c2b56debc653e2aeca6c2213740529719b9e2d20ef2e4c"
+    },
+    {
+      "name": "tabs-extra-c19-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9ad940e2237dfd630aa8206004d369ad388d0406da49d37deb1ecf945d944e11"
+    },
+    {
+      "name": "tabs-extra-c20-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "a36ade6db00e2e5989c317055d2fe221bda31fe92a4fc6ae5c6d2681d1827ced"
+    },
+    {
+      "name": "tabs-extra-c21-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "49175ef255bf468cee36b6a094b76c51f746d0800c5698d641870f7eac4bc3ff"
+    },
+    {
+      "name": "tabs-extra-c22-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "8a579d69bfdeac58f4a3c1bb72f853a32da8761b42f4ada7a291aca13a337103"
+    },
+    {
+      "name": "tabs-extra-c23-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "2f1dd4348e3f8a599ac10235941c260e93bca5b6f8775062ac19f78d97efa062"
+    },
+    {
+      "name": "tabs-extra-c24-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "d35a7847804b563fe0de8b9684c2bdd939fc75cb76c3df73914b9ded5e6334c5"
+    },
+    {
+      "name": "tabs-extra-c25-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "d2b6adbee5dee08d327edf5768013894f5b08f2537f477ab517a4ae10add5aed"
+    },
+    {
+      "name": "tabs-extra-c26-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e3678fcf2bd52fefe60360899911bdfee823beb7d5f2e406244156bdfd3b0f8a"
+    },
+    {
+      "name": "tabs-extra-c27-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "6354a17a48304278a16f68a94f8880b5529a9439e3732ff518ae1cdc3b6928f7"
+    },
+    {
+      "name": "tabs-extra-c28-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "994da865c70a7a77e1783f92b620b516532cef48c4f8916ec27004c7964eb465"
+    },
+    {
+      "name": "tabs-extra-c29-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "aefebb5a244fa77fc04f6526ebd1e3f0074e86508db700fdebf6458fa5af6dea"
+    },
+    {
+      "name": "tabs-extra-c30-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "dfb6b8f75f63daab455aebd1ac72be534350a0f7c9cc90fc3a665111c9eb2a6a"
+    },
+    {
+      "name": "tabs-extra-c31-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "30c2fd684b0dca7b4045980bd9adb000a1cae5f39383e4f677625c30cbd18717"
+    },
+    {
+      "name": "tabs-extra-c32-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "5a7ec307a206fdaf861fa3b8717e8a32edaf82851a28e0a59e6aae6b7ed692ad"
+    },
+    {
+      "name": "tabs-extra-c33-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "b6d4ec025c49dc6cce7cb1e6b0344386dcd40e7247fee16f97cbe17a04d746cb"
+    },
+    {
+      "name": "tabs-extra-c34-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "8407d44de45320fda2182417bf60ec182e7fb02045af5b48fe14bcc98a656113"
+    },
+    {
+      "name": "tabs-extra-c35-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e2480a287261c1705b792dcafac6338eb920a63c84ab01f4a46f6d38bc0aed3d"
+    },
+    {
+      "name": "tabs-extra-c36-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "b4512f6a0be019d790c7027db12c4f4b767dafddcd2e771e9113d8a4694977ae"
+    },
+    {
+      "name": "tabs-extra-c37-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "41233078f8eb6537631e6d171f06cca4254d1caa2e54716e69af5534ebb6a5d2"
+    },
+    {
+      "name": "tabs-extra-c38-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9cf2f8f1604dcf21bbac3d7f1f761a5453fa7f2e49ae410a3ed3bdfff5c812a8"
+    },
+    {
+      "name": "tabs-extra-c39-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "58b2fdb8df71b932d5d171b85f1ec010f3beb3e01333abde52123f8a09d454c4"
+    },
+    {
+      "name": "tabs-extra-c40-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e5d2cb7a4b90608d024156282dcf82e8615447ad1875fcdd4e6bd3479447e594"
+    },
+    {
+      "name": "tabs-extra-c41-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "ec44fa9500f1d329130d8455ef1d0d2ba4baee42c19acebe66d5069a7981bf1f"
+    },
+    {
+      "name": "tabs-extra-c42-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "b17966343aba4332cc9709e6f32ac2fa43b85cee01d55d59ff09286b47e39448"
+    },
+    {
+      "name": "tabs-extra-c43-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "22d65fccb2f48118c7a51fd34e31e7ac6c8e30fb00db42136a84e89bd9b03b74"
+    },
+    {
+      "name": "tabs-extra-c44-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "f804243c886fdf478d2e7b523419b664f41ee330d5836c037baddd330776af81"
+    },
+    {
+      "name": "tabs-extra-c45-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9c4a9513a7dba669fe38b1f6f7bcfcfc866930609b2e882f658648421e44fa95"
+    },
+    {
+      "name": "tabs-extra-c46-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "13f23bd397bf9de9396082551a96eef288483e784bf57b02ea6d6a10ece75dc3"
+    },
+    {
+      "name": "tabs-extra-c47-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9125285d20177e1d066af73fe3bd9dc579bfe6e9f1fdedb5aaf34388f3d08774"
+    },
+    {
+      "name": "tabs-extra-c48-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "ed6ec000ffc3cac61f2e85527249df53e67bf9c496494dbf21e41458a02a9b12"
+    },
+    {
+      "name": "tabs-extra-c49-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "f52b34d401d05c701ac32d82d48e1b9659d7a826da0bdd0acd77b4b68be1d8b2"
+    },
+    {
+      "name": "tabs-extra-c50-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "7a6ada092a10086968a31c92ca7b3430e2e96846d4d731b10ecd523860da131d"
+    },
+    {
+      "name": "tabs-extra-c51-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "77850cfc090879dcd79b592fdb38e07e067f8f8c54968460b0d822bbef969270"
+    },
+    {
+      "name": "tabs-extra-c52-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "9d0280163fd304d674b188ce605aff2de98d549d5eab37a02840c45d5ff1d1d9"
+    },
+    {
+      "name": "tabs-extra-c53-s2.png",
+      "x": 16,
+      "y": 100,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "85af5042b0d5d3f29bc89151c8ec7cc266c4e14e4dfec5488eabcaa4a3992cee"
+    },
+    {
+      "name": "tabs-extra-c54-s2.png",
+      "x": 16,
+      "y": 128,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "29aced861c09d381b8ac1ed8cb4bcf6265213499fe75804a5f7975949e025820"
+    },
+    {
+      "name": "tabs-extra-c55-s2.png",
+      "x": 16,
+      "y": 156,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "53de3a37863b716ed27811fcdc9037d8de68ee19d69a1a22db9d81920cae0784"
+    },
+    {
+      "name": "tabs-extra-c56-s2.png",
+      "x": 16,
+      "y": 184,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "03db7a54ed4c7ecbdaee548e43c3201d4a4b95a9fad3fe79bbf2bd293a1c28d7"
+    },
+    {
+      "name": "tabs-extra-c57-s2.png",
+      "x": 16,
+      "y": 212,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "87b23ae58e952e57f058c43bc5b753c0eb20d5658670b73bb593de8f996f0b99"
+    },
+    {
+      "name": "tabs-extra-c58-s2.png",
+      "x": 16,
+      "y": 240,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "b254613529e1eec6e8971f9d84903f6f0461d116d177ec170cbd01b055a82ce7"
+    },
+    {
+      "name": "tabs-extra-c59-s2.png",
+      "x": 16,
+      "y": 268,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "6a70605f78b1acd3d16e481922fc37d2eb949583179cf29dcac9501474c957c3"
+    },
+    {
+      "name": "tabs-extra-c60-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "edf2e5e0771fc586cb821d816368a2f7298aa7f9535a8961c4119c36b9b6f8f4"
+    },
+    {
+      "name": "tabs-extra-c61-s2.png",
+      "x": 16,
+      "y": 44,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "7d29336a536ba7173e3add69028593a17fc9f19f92d89e051c9d794de87a554c"
+    },
+    {
+      "name": "tabs-extra-c62-s2.png",
+      "x": 16,
+      "y": 72,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "d3d0695668e87cdfe2f554ca80f27910bd7e97c75aa007bf70a313bd6d7f76c5"
+    },
+    {
+      "name": "tabs-extra-c63-s2.png",
+      "x": 16,
+      "y": 164,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "cb3f7189edb865bf40d784b32b88fb118e13405a873774ae2c8e76f45e549dfe"
+    },
+    {
+      "name": "tabs-extra-c64-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "124c451a77b66dba29ba1fb216b04512c2188a2f2a7540b95d01a82a4a2b56a1"
+    },
+    {
+      "name": "tabs-extra-c65-s2.png",
+      "x": 16,
+      "y": 108,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "05f2d7c17d6743f8236a111f4fa4e622f6b5b175108e864894be7e540ed696c4"
+    },
+    {
+      "name": "tabs-extra-c66-s2.png",
+      "x": 16,
+      "y": 200,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "0c1ea7f3868e91c9ee516ab2a6722d2d9c3a157896e308afc9494dec1bdd9938"
+    },
+    {
+      "name": "tabs-extra-c67-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "6e6dfc0ee66c22ce0084ef0986b9937df6b9a8672c7cc27c2582ece8a5fbdf4a"
+    },
+    {
+      "name": "tabs-extra-c68-s2.png",
+      "x": 16,
+      "y": 108,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "6d2356c362e234fdf97679c6f45348335f00af07d8f4ef3abfd699edd96260a8"
+    },
+    {
+      "name": "tabs-extra-c69-s2.png",
+      "x": 16,
+      "y": 200,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "bb20e98494e1b83409752d4cbf56eaab88cde432fbe8db492bc81f466bec8dc1"
+    },
+    {
+      "name": "tabs-extra-c70-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "e66ddee139f720edce9872456e52feb9285bb3a0c1116bf062cbb3b0a5f74fde"
+    },
+    {
+      "name": "tabs-extra-c71-s2.png",
+      "x": 16,
+      "y": 108,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "faaeafa2ceb6a7e4c0eabfa7a81731550cd5f4b183b77c7a103d40cd3c2af129"
+    },
+    {
+      "name": "tabs-extra-c72-s2.png",
+      "x": 16,
+      "y": 200,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "31bcf1ff31a7410afc11624b2419878375de09b30f98be793f702c478456de5e"
+    },
+    {
+      "name": "tabs-extra-c73-s2.png",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "a840f49ba29498a1bb502099934b5b5180281b9664a0891d0d22561525ee454c"
+    },
+    {
+      "name": "tabs-extra-c0-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3b33acfa8f03528be8f2023c0f3b8b001d140ede3c8f24ea8e21c41c0921ac66"
+    },
+    {
+      "name": "tabs-extra-c1-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "06e0cdc1860fe36eb25f287f21013f03336c4802931a4017b98282319767c687"
+    },
+    {
+      "name": "tabs-extra-c2-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "f41640aa9a268c15223e8c5eea7f4781dfb9026214f2ebb6e43d80342ef5d9bf"
+    },
+    {
+      "name": "tabs-extra-c3-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "925f3350310eb03ea55c9cf8bb8b96e45cacb5e5b93db798d6ec95ba2fde04e8"
+    },
+    {
+      "name": "tabs-extra-c4-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "88ca44e317fd6170e10ac85d8e3c9832442a956a2a383e85c8ac861416c998e8"
+    },
+    {
+      "name": "tabs-extra-c5-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "ab9959028fe845e01ccae3f145a51b26c10bcffa854d0bc6c50282eb2b153421"
+    },
+    {
+      "name": "tabs-extra-c6-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "70c8d2c8c3ce72842369a3682cdd787c25cfa9c18a7d80d104199cd1bbfff365"
+    },
+    {
+      "name": "tabs-extra-c7-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "86f0752b5404e8091a4443804bf334c152069f7a05633a2810ea773041455564"
+    },
+    {
+      "name": "tabs-extra-c8-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "81c0c75a154a54642ed30b21da3e20a259374cf974b987e75d0ee68ea0b368c6"
+    },
+    {
+      "name": "tabs-extra-c9-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 0,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "50f3d87aa42a86c9dfb5a34c1e45959d8253fc97c85c489f872d51238475ac95"
+    },
+    {
+      "name": "tabs-extra-c10-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "5a51a724d2281c7a8e2a97d5f6343b07415ac94463266928d389d64b35881f69"
+    },
+    {
+      "name": "tabs-extra-c11-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "你好，世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "bedd467d09f207c2770d4fe912ac11925a7021d10382a7ebaf719696a25a23b5"
+    },
+    {
+      "name": "tabs-extra-c12-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "0ccefce7b258b4025699328211adb6f89eeb8e313e11b4ffbfe54e54f07fcbac"
+    },
+    {
+      "name": "tabs-extra-c13-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "864ba4f62adeb795aff240de7e3784d4e79fc0064e3ecd34a188776172ab0ac2"
+    },
+    {
+      "name": "tabs-extra-c14-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "a772b04d3b95503ac76d329a6170278f456643598175feb07c2f8d7ea8c0a096"
+    },
+    {
+      "name": "tabs-extra-c15-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "bef565bce31bbf6b38f9420d42ea82c4009db2989dbb0c7161303c09b075f65a"
+    },
+    {
+      "name": "tabs-extra-c16-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "8aa4e4df9e6c11c78f4679419fa468e31bae2f32531b39aa99e3b3da35267bb3"
+    },
+    {
+      "name": "tabs-extra-c17-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "1b72f0ae04ebb60b72d5b939ef848bab53a5516190088fe8af542bb02bf1ce40"
+    },
+    {
+      "name": "tabs-extra-c18-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "62a00b49a0f8fcd2ad7f0d3d861c2b99d934b800a74eca8965464c5d6cb79c44"
+    },
+    {
+      "name": "tabs-extra-c19-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 1,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "6fc3613f0ca3dae71a0d58644105de9bc296f04ba0e9f6e2d3f57a2ced99ae82"
+    },
+    {
+      "name": "tabs-extra-c20-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3ff7f216c661f219760ab07dac546ca7e4c5d8cd746d8c31469d50f580560353"
+    },
+    {
+      "name": "tabs-extra-c21-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "a73050b00c8c25d4999e6fd3a35d0972447658bf34307500cd4627912d7b3b74"
+    },
+    {
+      "name": "tabs-extra-c22-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "52756aa67e92865302eafed370c58a20e96e7567af01da03d297154ca8db4a94"
+    },
+    {
+      "name": "tabs-extra-c23-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "こんにちは世界",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "15fe8750ae4a1e87237087a5a8c8331ec593e9d4a90c4f9746042737fc538a2e"
+    },
+    {
+      "name": "tabs-extra-c24-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "b002d0e579b0661eeba4e786cf40ff5120def83d41eb7826b962e52734934456"
+    },
+    {
+      "name": "tabs-extra-c25-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "ac9f9fc53269734da92b24812d5d9f230548614a565f5984fa8280729a16b4f9"
+    },
+    {
+      "name": "tabs-extra-c26-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "bb3d8547449519e7363fab19064ecfa7e323947e4fd336c5f4ff394adda2ff0a"
+    },
+    {
+      "name": "tabs-extra-c27-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "8e0dfc69450b21b46421f1badb0d59aa9951b2c2e0809cd2e7bb637c10a5c727"
+    },
+    {
+      "name": "tabs-extra-c28-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "fc8bee08a7629df44e961511e0086b67065440f8262f3790d14e7a15ab66626a"
+    },
+    {
+      "name": "tabs-extra-c29-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 2,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "9c1668d290dc82df5b4eafdb777626dd7a94d0ce6d3cbdd59b81020daaaf23c1"
+    },
+    {
+      "name": "tabs-extra-c30-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "dfff8ca86d691a4860151d1e5958a0fe42f3a701668b9d9bfa65c349119c8503"
+    },
+    {
+      "name": "tabs-extra-c31-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "b40c293a663c1a4a98eb1375e07f91d767653eeaf73fc2ac7bc6011453731b4d"
+    },
+    {
+      "name": "tabs-extra-c32-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "5071e1a2d0fbffcb3965e4d937ab78daa52811c72f6e6a9f988e351b85532533"
+    },
+    {
+      "name": "tabs-extra-c33-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "7a7f26b3d6fb47408ff361dcbbe1744385084afa177a5939284f44de8f3a57e2"
+    },
+    {
+      "name": "tabs-extra-c34-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "a38056762e023fab5b5a7aee02fdaf006d5b68f4195bfd91e3c2731fe0a99940"
+    },
+    {
+      "name": "tabs-extra-c35-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "안녕하세요 세계",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "2aa399f217f0e0a3b4ea6a945707978b16e7b62dd24cf39f2294108f2216fe6e"
+    },
+    {
+      "name": "tabs-extra-c36-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "dfea8cac94672651d589d51bdf793c2c261d0cbf1710f44c452feaa9915787fc"
+    },
+    {
+      "name": "tabs-extra-c37-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "c1912ff0bbaa6c8f980a2dae90acc23e9136806d4da842d2a95e44b41c02becd"
+    },
+    {
+      "name": "tabs-extra-c38-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "c43d579e83646cb5288c8d894484efbfc0dda82ff77730de7430586693655d91"
+    },
+    {
+      "name": "tabs-extra-c39-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 3,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "9253758e4b978a094dcde17294c62a2af7ae88ade808db730a90c9ffeb5a005a"
+    },
+    {
+      "name": "tabs-extra-c40-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "a50085ebb4a0a44efc1a73f6b073f5ddcee6e66e97e9b4e6a612f63cea07127b"
+    },
+    {
+      "name": "tabs-extra-c41-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 93,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "32595996e018b85ffc1ee3f33ab59b55fa8b618389fea27328df0e337f853237"
+    },
+    {
+      "name": "tabs-extra-c42-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "2a6cd5004d551ccb4595e425874036d5994bfd7167c9d1b2dda3ee9a3c5a4e13"
+    },
+    {
+      "name": "tabs-extra-c43-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "f69faa384acae139c47812ffcc9b4d043d3d499cc8e36a772345c384609e89b4"
+    },
+    {
+      "name": "tabs-extra-c44-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": false,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "fc10da2efe1b31e7d6e64db7b6988e3718e891d01f21c273793861ba5955bc5d"
+    },
+    {
+      "name": "tabs-extra-c45-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "normal",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "b6f22233e814a5620a575d50e4b63eb673bd22ca6d3775f8d82bff3996052986"
+    },
+    {
+      "name": "tabs-extra-c46-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "focus",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "2099c0291e04fa82b757b81c26b3775fd74d3ee398f2def9ada044cc66641647"
+    },
+    {
+      "name": "tabs-extra-c47-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs-trigger",
+      "label": "Hello 世界 123",
+      "width": 124,
+      "selected": true,
+      "state": "disabled",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "07d7535f177843a35a5780064e6d357067c00fe13819551ba371b9938c32e6ff"
+    },
+    {
+      "name": "tabs-extra-c48-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "dca74943d7181dafbcc948d4c70faa3d152fe8c77ca3cbc802dd07e11b54ad56"
+    },
+    {
+      "name": "tabs-extra-c49-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 4,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "9e19ea148844c46960b51fa7d29b013f2c52844f787e3fe17833502f613194d9"
+    },
+    {
+      "name": "tabs-extra-c50-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "de5a6f57b327d00f6a37a659e457a2fe23606d69066d1dcb8142930f444e9735"
+    },
+    {
+      "name": "tabs-extra-c51-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "0b03ddfe78d0d2a64a5df3589eb74eb3bec9dcb716f12564c4f5849be1f57477"
+    },
+    {
+      "name": "tabs-extra-c52-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "c7b791cb031e40a07df45230ce794d5a85d143cfb3b56582e5899b8c9afd87cd"
+    },
+    {
+      "name": "tabs-extra-c53-s3.png",
+      "x": 16,
+      "y": 100,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "3f13cef32cb89763538680ba860bf20c893945367bc80fc34b53fef8e4661d89"
+    },
+    {
+      "name": "tabs-extra-c54-s3.png",
+      "x": 16,
+      "y": 128,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "31304ae871b2e2c51b5b67b7bf63d976d285b15c629dd66688a677ccf4729a05"
+    },
+    {
+      "name": "tabs-extra-c55-s3.png",
+      "x": 16,
+      "y": 156,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "53cfe5ca2657f91de3d5dd67b1057602ea5d9ac393dd8d4e769b710e4b1a89ef"
+    },
+    {
+      "name": "tabs-extra-c56-s3.png",
+      "x": 16,
+      "y": 184,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "76ce829b4c3e7296da86c4edea49196748c78c32254305f7a08425849fdda8bd"
+    },
+    {
+      "name": "tabs-extra-c57-s3.png",
+      "x": 16,
+      "y": 212,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "8e9a5431572104e70c6c4def8b816eef9160675bf81f291f6eb15d355faad1cf"
+    },
+    {
+      "name": "tabs-extra-c58-s3.png",
+      "x": 16,
+      "y": 240,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "focus",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "562e8dd0de7dd67402350c6db902698f864e8d5c94252f3aac39cd74ce94a242"
+    },
+    {
+      "name": "tabs-extra-c59-s3.png",
+      "x": 16,
+      "y": 268,
+      "page": 5,
+      "timeMs": 0,
+      "height": 24,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "disabledIndex": 2,
+      "state": "disabled",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "4a427413326d5688dc5fc30fcf064c53730b1ab9c193d129f12f321cd2bbedad"
+    },
+    {
+      "name": "tabs-extra-c60-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "a9e671b9fac751686b4bd7db2fc6c85d522d68c007205da362e0eea3803533b1"
+    },
+    {
+      "name": "tabs-extra-c61-s3.png",
+      "x": 16,
+      "y": 44,
+      "page": 6,
+      "timeMs": 1500,
+      "height": 24,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "417116c3b55a6e78eaa3c325b253868f859ef7661b8eac2d4b36d9ddefa79e5f"
+    },
+    {
+      "name": "tabs-extra-c62-s3.png",
+      "x": 16,
+      "y": 72,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "8f35965d352140eb37ca0982a87241af8b9eb2a1d349ae30e10b0d9d7aba2f5f"
+    },
+    {
+      "name": "tabs-extra-c63-s3.png",
+      "x": 16,
+      "y": 164,
+      "page": 6,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "8b42db1020362810b108471735d234f7354d4e772e35c5350cd8a6349d4a1b18"
+    },
+    {
+      "name": "tabs-extra-c64-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "70d04cf41f897782aca1f21fe0d63268ede47f984118faf29ce89e2c1dff6565"
+    },
+    {
+      "name": "tabs-extra-c65-s3.png",
+      "x": 16,
+      "y": 108,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 200,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 72,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        },
+        {
+          "x": 130,
+          "y": 0,
+          "width": 58,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "1f9ed586f5a773049e8fdfba5bbf6de8fc0d7f856dc750002a9d2cc1bd0e64c2"
+    },
+    {
+      "name": "tabs-extra-c66-s3.png",
+      "x": 16,
+      "y": 200,
+      "page": 7,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "fdfffbeb65bfbe56de470484cb354ad8962d763014b65407b6ffa5172ff19218"
+    },
+    {
+      "name": "tabs-extra-c67-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "90eebdb1e7bcc173285ccb9e389b92d90b795031408047206f6c090b92b12014"
+    },
+    {
+      "name": "tabs-extra-c68-s3.png",
+      "x": 16,
+      "y": 108,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "62aa3621983ad8f280b49d3fe492951bc2fc124fbd6d9ad66c2c932155f5156a"
+    },
+    {
+      "name": "tabs-extra-c69-s3.png",
+      "x": 16,
+      "y": 200,
+      "page": 8,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 400,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 138,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 262,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "269c15d63e8d150da5837a57a44c9f4289a6acdcf33b84433f23c214c0e664b8"
+    },
+    {
+      "name": "tabs-extra-c70-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "7b55a554e77ac7d39cb176758651ea2d4b7a962a531154ccab55d51896f3065d"
+    },
+    {
+      "name": "tabs-extra-c71-s3.png",
+      "x": 16,
+      "y": 108,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "d183a7556ad6bd8502423863e3ebedd617d726f7b17162f1bdb6b78ae4bfae4e"
+    },
+    {
+      "name": "tabs-extra-c72-s3.png",
+      "x": 16,
+      "y": 200,
+      "page": 9,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#202020",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "014111856313f8519a9b4cc9d6c5d224dee761ed77a47333061dd6e4fb1d075f"
+    },
+    {
+      "name": "tabs-extra-c73-s3.png",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "timeMs": 0,
+      "height": 88,
+      "element": "tabs",
+      "width": 450,
+      "labels": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "contentHeight": 64,
+      "selectedIndex": 2,
+      "targetIndex": 2,
+      "state": "normal",
+      "background": "#808080",
+      "renderedLines": [
+        "Game",
+        "World",
+        "More"
+      ],
+      "tabRects": [
+        {
+          "x": 40,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 164,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        },
+        {
+          "x": 288,
+          "y": 0,
+          "width": 124,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "bd5ff9351cdcb59a5c27f8574f8e1db3eee09961d86e124460317ffd4060ab90"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

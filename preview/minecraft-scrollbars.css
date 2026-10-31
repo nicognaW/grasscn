@@ -1,0 +1,34 @@
+/* Original Java 26.2 widget/scroller and widget/scroller_background PNGs.
+   The verified ScrollArea/Textarea painters retain their own native geometry. */
+:root {
+  --preview-scroll-track: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAgAQAAAAAZQjTOAAAAC0lEQVR42mOgEAAAAEAAAc8b6QEAAAAASUVORK5CYII=");
+  --preview-scroll-thumb: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAgCAAAAAAUUla/AAAAEklEQVR42mM4AAINDMOPagADAJNVhsGfiqMbAAAAAElFTkSuQmCC");
+}
+/* Chromium uses these texture-backed bars for the document, nested overflow,
+   horizontal strips and portals. Do not enable bars hidden by custom painters. */
+*::-webkit-scrollbar {
+  width: calc(6px * var(--mc-scale, var(--preview-scroll-scale, 2)));
+  height: calc(6px * var(--mc-scale, var(--preview-scroll-scale, 2)));
+}
+*::-webkit-scrollbar-track {
+  background: #000;
+  border: 0 solid transparent;
+  border-radius: 0;
+  border-image: var(--preview-scroll-track) 1 fill / calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
+  image-rendering: pixelated;
+}
+*::-webkit-scrollbar-thumb {
+  min-width: calc(32px * var(--mc-scale, var(--preview-scroll-scale, 2)));
+  min-height: calc(32px * var(--mc-scale, var(--preview-scroll-scale, 2)));
+  background: transparent;
+  border: 0 solid transparent;
+  border-radius: 0;
+  border-image: var(--preview-scroll-thumb) 1 fill / calc(1px * var(--mc-scale, var(--preview-scroll-scale, 2))) / 0 stretch;
+  image-rendering: pixelated;
+}
+*::-webkit-scrollbar-corner { background: #000; }
+*::-webkit-scrollbar-button { display: none; }
+/* A non-auto standard color overrides Chromium's textured pseudo-elements. */
+@supports selector(::-webkit-scrollbar) { * { scrollbar-color: auto; } }
+@supports not selector(::-webkit-scrollbar) { * { scrollbar-color: #c0c0c0 #000; scrollbar-width: thin; } }
+

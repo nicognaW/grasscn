@@ -1,0 +1,180 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "e6109be539b535ac27d56c01ff2225de168f4fa22c9066d939e61efd7a52bd47",
+  "caseDefinitionSha256": "5e5bf1c5f801d9efcf31b931707b87bb3edaa30c2e93cee6fe7fd7654f557367",
+  "glyphObservationEnabled": {
+    "runOne": false,
+    "runTwo": false
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "book-0-s1.png",
+      "runOnePngSha256": "2b976c0523d8509bfd9a6f14edd9e40792f6e10c691484a23ba73804cc0b60e1",
+      "runTwoPngSha256": "2b976c0523d8509bfd9a6f14edd9e40792f6e10c691484a23ba73804cc0b60e1",
+      "decodedRgbaSha256": "5306724d8073c1d5f69fccbc8d8350081710e930a74161fb27fce485159abb4a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-1-s1.png",
+      "runOnePngSha256": "f9acd71c6522364f5595d7a50cdc67654edc621e9538ea3f52927d2d3bc36205",
+      "runTwoPngSha256": "f9acd71c6522364f5595d7a50cdc67654edc621e9538ea3f52927d2d3bc36205",
+      "decodedRgbaSha256": "b2807beb48b17b1089d26a34f4700c54de86835ea496491529206df8a1e27919",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-2-s1.png",
+      "runOnePngSha256": "532634df9c667cc0873bb2b23068d74ad72aafa10ae4d45de04fac7b1f5c4ea8",
+      "runTwoPngSha256": "532634df9c667cc0873bb2b23068d74ad72aafa10ae4d45de04fac7b1f5c4ea8",
+      "decodedRgbaSha256": "7f290f85867cd365727ec4da310e26a83b1dd2e7d231c002a55aadde86d9f878",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-3-s1.png",
+      "runOnePngSha256": "f3cc6c929d38a40592af5c1176cbb6cd611636a1a24f587bdfd70783d948ac2c",
+      "runTwoPngSha256": "f3cc6c929d38a40592af5c1176cbb6cd611636a1a24f587bdfd70783d948ac2c",
+      "decodedRgbaSha256": "0f91ab24b059fc343c0250200a3a7535a0b0019a12357e15f9e8f8ddb1396e07",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-4-s1.png",
+      "runOnePngSha256": "da31109cf8b59968a4aa0a7dc37d82a184c69948e6571cdbea91c94e5cb2b955",
+      "runTwoPngSha256": "da31109cf8b59968a4aa0a7dc37d82a184c69948e6571cdbea91c94e5cb2b955",
+      "decodedRgbaSha256": "ebe59fdb69ee2d1fd94b772233cdd8c005afb088c4bfe124c00f05aed3d78ece",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-5-s1.png",
+      "runOnePngSha256": "3b962d293cd9937054cd8d3e25e3580557e0007a4ad4389718aaf3939c1b5d9d",
+      "runTwoPngSha256": "3b962d293cd9937054cd8d3e25e3580557e0007a4ad4389718aaf3939c1b5d9d",
+      "decodedRgbaSha256": "fbe8e9bcadd60ae159bb2c022f902b30a9e4e8ce404e3412c7391037d3e07e62",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-6-s1.png",
+      "runOnePngSha256": "f590f837a9db67f8ced6da926f8e27958775cfd0856b1dbd225704adbfef9f45",
+      "runTwoPngSha256": "f590f837a9db67f8ced6da926f8e27958775cfd0856b1dbd225704adbfef9f45",
+      "decodedRgbaSha256": "d152955fe45bf4d0d570955a43211569d59798787e6d88cd1037139aed3c74a4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-7-s1.png",
+      "runOnePngSha256": "eafda5d0f61bd2f6bf261ba75144a5b96655f6f3add508de6dbcd288dd1625b4",
+      "runTwoPngSha256": "eafda5d0f61bd2f6bf261ba75144a5b96655f6f3add508de6dbcd288dd1625b4",
+      "decodedRgbaSha256": "97b8248b3f8acf7560c1158c7d5e456b0df2d4057bece2a9de3eb782198d286f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-0-s2.png",
+      "runOnePngSha256": "c4a1f1475d6b0d7ec67e5bfd8e7d354d0a9189a6b5b8457bc7d00afbf51a5b9d",
+      "runTwoPngSha256": "c4a1f1475d6b0d7ec67e5bfd8e7d354d0a9189a6b5b8457bc7d00afbf51a5b9d",
+      "decodedRgbaSha256": "177e91f198ec589fa8dca1d8a73b665b7000fb5b37be82ab13a7a179e4280bc7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-1-s2.png",
+      "runOnePngSha256": "3f979690a99b0aca2901468339b965d60866fa9320bbf67753b028b813ed8098",
+      "runTwoPngSha256": "3f979690a99b0aca2901468339b965d60866fa9320bbf67753b028b813ed8098",
+      "decodedRgbaSha256": "1e850a83d77ba43327dd877c7f4268da20093f8a21c46b6c938fa72c3aa62306",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-2-s2.png",
+      "runOnePngSha256": "bdf5ac81573ec94e8b783d988b8a48dc73cad2bf3a70074b1e0e6c89016ac41f",
+      "runTwoPngSha256": "bdf5ac81573ec94e8b783d988b8a48dc73cad2bf3a70074b1e0e6c89016ac41f",
+      "decodedRgbaSha256": "04756daf8c867239101000975e550c778a36d797865ab1567553a124fdaf8e00",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-3-s2.png",
+      "runOnePngSha256": "7fad461ca6063e4b699206a3239b58d1df886ae8f36f283fcfadee54c7def8f8",
+      "runTwoPngSha256": "7fad461ca6063e4b699206a3239b58d1df886ae8f36f283fcfadee54c7def8f8",
+      "decodedRgbaSha256": "35895abd6c7b3fd104daff37d45b5edf5d1a16edf00b9ae8b300a4b66c6f41bf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-4-s2.png",
+      "runOnePngSha256": "b969b4e55e501f298adbf172551bad953db56c442974cfff4337f95327824c6b",
+      "runTwoPngSha256": "b969b4e55e501f298adbf172551bad953db56c442974cfff4337f95327824c6b",
+      "decodedRgbaSha256": "df0c80f5c5fc9e6af8df2af798c84415bad43dd487bd4ff8129c32303adf5fcc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-5-s2.png",
+      "runOnePngSha256": "93f884caf09903a27291e2bdeb4685bb1e3846d844714867e3a789665293f1a4",
+      "runTwoPngSha256": "93f884caf09903a27291e2bdeb4685bb1e3846d844714867e3a789665293f1a4",
+      "decodedRgbaSha256": "d1cb50550054c869b70b90b0e5ac30d1dbe3e57b6ec786418839667d8db15afc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-6-s2.png",
+      "runOnePngSha256": "30228e50c92407ee03a805ecff89593e382ebe8c97c13465d6180abefdce69d4",
+      "runTwoPngSha256": "30228e50c92407ee03a805ecff89593e382ebe8c97c13465d6180abefdce69d4",
+      "decodedRgbaSha256": "07d7d7908052e6baa0f579f4b34910c80a6a523229ff9f24a000522ae204f2dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-7-s2.png",
+      "runOnePngSha256": "ad9f1f8b2a87477e124fa2fa8274109cedd745db215136cee206d699c6b50ba2",
+      "runTwoPngSha256": "ad9f1f8b2a87477e124fa2fa8274109cedd745db215136cee206d699c6b50ba2",
+      "decodedRgbaSha256": "ee055efbd9192ef890b4b006f4dc13e3dd3962743ee421612608c9dac92baa46",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-0-s3.png",
+      "runOnePngSha256": "194f2d819030709c7a682cdd14ef7c0e97994c569b1d7d2c62c0938574d4021d",
+      "runTwoPngSha256": "194f2d819030709c7a682cdd14ef7c0e97994c569b1d7d2c62c0938574d4021d",
+      "decodedRgbaSha256": "91207427396658ddb8b890fdfc46f502e4d49177ef9b23c5d9b9d674409cf9c5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-1-s3.png",
+      "runOnePngSha256": "570283808ccf1fb5dbc0c0da63dc69d8a8c5ab7eb1538e406b047e289a3fb994",
+      "runTwoPngSha256": "570283808ccf1fb5dbc0c0da63dc69d8a8c5ab7eb1538e406b047e289a3fb994",
+      "decodedRgbaSha256": "c49c9c5cf16a4d3068d09e2b47b5207631724cc798bb6ecfe5c2995ccf4ba4a3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-2-s3.png",
+      "runOnePngSha256": "de69c0cebe6130b5fff7685313af3388f7d376abfd2f8a42296fcbd033013bbc",
+      "runTwoPngSha256": "de69c0cebe6130b5fff7685313af3388f7d376abfd2f8a42296fcbd033013bbc",
+      "decodedRgbaSha256": "b5057848c4426d7f01e75f5b496aa735f8f364ad0450b4a6464935c7c33d8b14",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-3-s3.png",
+      "runOnePngSha256": "c5a4b292f1d1c476d4575955f7beb21b83b0bf1a9b19c5f6aeaa5729e896f331",
+      "runTwoPngSha256": "c5a4b292f1d1c476d4575955f7beb21b83b0bf1a9b19c5f6aeaa5729e896f331",
+      "decodedRgbaSha256": "d1fb92cd01e440da8040499c84d4002a92af4ac0d386e7e4d366d40ba1002afc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-4-s3.png",
+      "runOnePngSha256": "e8fb5a3d7a05edb96a7c7831a4ebc95c8ecb0c5d428fab70f418ac4619568b02",
+      "runTwoPngSha256": "e8fb5a3d7a05edb96a7c7831a4ebc95c8ecb0c5d428fab70f418ac4619568b02",
+      "decodedRgbaSha256": "104dda2e93c91f0812ede90100a264382a8d37f4c0698a18c7bfaea8a8f55d53",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-5-s3.png",
+      "runOnePngSha256": "c46c1be8ada32903b150633798244cb4ceff7b49fe2891a9f7f6382ba2cb4a65",
+      "runTwoPngSha256": "c46c1be8ada32903b150633798244cb4ceff7b49fe2891a9f7f6382ba2cb4a65",
+      "decodedRgbaSha256": "a26b05842c611fe6b2f99280c4e8be8a93c9c654270ff2502cc61a61d57a7174",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-6-s3.png",
+      "runOnePngSha256": "c1b90cb13c29903d5cab4aabe43dba2926386ce4828c06b762a4b763d9a7dca6",
+      "runTwoPngSha256": "c1b90cb13c29903d5cab4aabe43dba2926386ce4828c06b762a4b763d9a7dca6",
+      "decodedRgbaSha256": "0ec3668ea1af88ee0a07f7511d3e33ab9b727303cf443b295ed045f08cb9498a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "book-7-s3.png",
+      "runOnePngSha256": "e5920411a8a1adefdedd81d1eff888d1f6bf42ec503051fdcd4e46aa3447b3c6",
+      "runTwoPngSha256": "e5920411a8a1adefdedd81d1eff888d1f6bf42ec503051fdcd4e46aa3447b3c6",
+      "decodedRgbaSha256": "57b38a792f0b5fb9c38cb8fbbcaccae4e5d579fd3de9df5d920c79d8f6b4db8d",
+      "mismatchedPixels": 0
+    }
+  ]
+}

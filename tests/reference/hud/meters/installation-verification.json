@@ -1,0 +1,375 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/hud.json --yes --overwrite",
+  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "hud.tsx",
+      "sourcePath": "registry/ui/hud.tsx",
+      "sourceSha256": "304980537dd8d4fdd7b13afe36e7c70103aeb595f63f740237a417c527efd6b7",
+      "installedSha256": "5e0be54c151d8c55556e9887d134ca0193dc9659ccfc5aff6830df6a281e51ce"
+    },
+    {
+      "path": "minecraft-hud.css",
+      "sourcePath": "registry/ui/minecraft-hud.css",
+      "sourceSha256": "3b4a6da919ca58b568eaf7e275de6ec1f2ce8ee6178dc0b075c4707e9740ae9b",
+      "installedSha256": "3b4a6da919ca58b568eaf7e275de6ec1f2ce8ee6178dc0b075c4707e9740ae9b"
+    },
+    {
+      "path": "minecraft-adventure-image.tsx",
+      "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
+      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
+      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+    },
+    {
+      "path": "minecraft-adventure-assets.ts",
+      "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
+      "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
+      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a"
+    }
+  ],
+  "cases": [
+    {
+      "name": "armor-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cf0201a0e27b49e348a56b756857f94ba364ed8829cc90d70eafb9b61b0102a5"
+    },
+    {
+      "name": "armor-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9af0dfffa25ef8b7bab7c3f772902be483dd6f58696da7975d969473037075b1"
+    },
+    {
+      "name": "armor-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "991b422848f0fa0825df864c940501c9d5a9be197f2fbb84f68a4d8a3b7fc48e"
+    },
+    {
+      "name": "armor-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "725f79ef5d5095b96729bea75f2b9de22bb80ec6dd166235957f29f9eb76850d"
+    },
+    {
+      "name": "armor-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "097d5ce614ab1263810f125477512f164c05ae208682489fc6c13e6a04f023d3"
+    },
+    {
+      "name": "hunger-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b44c4ccf997f45fbe03b952205b8cdbd7e041cf58ccca524ba48b1fcdefd91c3"
+    },
+    {
+      "name": "hunger-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4ca43f7e1a36b609b4ff463036ef64640fdcacfb8748408616c6d3eccce2119f"
+    },
+    {
+      "name": "hunger-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8e0acfef15601b4a7757dfb77babec48472883aff0188466f1c803d047e8231c"
+    },
+    {
+      "name": "hunger-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3935c277ba97cf1b3f3260385475b97fc17e85f435e8c634f94810fd0fb5a8b1"
+    },
+    {
+      "name": "hunger-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e35a472de0d5c3edca0e4448cb78c515a793682bca9bb009e372bc78812b3a38"
+    },
+    {
+      "name": "air-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "67cc16477ff8dad7f8ec5b5c2ff521eb693d245c7f2341dd4e2f13c1606e1833"
+    },
+    {
+      "name": "air-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e9204e5508b149277f819861a6079605a15f411b93a4698bc4ce2564ffebafe5"
+    },
+    {
+      "name": "air-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f3827f6f3d63dca421d784515facdad533bc5582382e39933dcbaa1817751a51"
+    },
+    {
+      "name": "air-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "65eeb931449278c2da06419981e867c26b4e09c1f68aba1b25c6c38dacca37fa"
+    },
+    {
+      "name": "air-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3be87684050915a8c3302dab99cfd07474c86a6146c168ec634044cdd0827706"
+    },
+    {
+      "name": "experience-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "490547d77b1c105b7d5c71b7cf052f061a378d8bafdbd260fded97587e5c2574"
+    },
+    {
+      "name": "experience-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a8202f9124e4eae19cff35020d6f374216f21f885e7d3bca62113da0f254a601"
+    },
+    {
+      "name": "experience-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "806ed7343ccf714b405a8692f9d1f8e3d476479089978a35a32cfac5d7df8d70"
+    },
+    {
+      "name": "experience-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "85932d1e0d3483d578bdef5ceded61147f352272e5cf9a31f1c63b3637a30fa6"
+    },
+    {
+      "name": "experience-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "158a97e64127ad2e34862bc5b51df4d14485a471ad3a525406060683f4cc864d"
+    },
+    {
+      "name": "experience-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e84b3ae04dbfc083554502851aa7e5755ea60f9b0ceaf4dc990f0504cb82748a"
+    },
+    {
+      "name": "armor-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2e00a2524cf50245010ef62d94aece046e64a81d0ea23a74f1ddeef6ff5867c7"
+    },
+    {
+      "name": "armor-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5923cd6a76b1123576d56cb8e0dbc87ac708c386aa396c28ce32f4385f313b5a"
+    },
+    {
+      "name": "armor-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "11f20f53d7b9bf6e49945afab01e3c26fc63de4d81b07d3bba34291aa45ba602"
+    },
+    {
+      "name": "armor-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "004bd1ea921cf98f478418135284a2506a14ecd21eac5caef854e273b3e23123"
+    },
+    {
+      "name": "armor-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d106c5d88690396bd7fa5964e899b998b56c465494b08dbf4bf220e61b715ac2"
+    },
+    {
+      "name": "hunger-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b4fdf601badb93936b6afd6cda6eeba59130ee71820b4e89500372d490e9974b"
+    },
+    {
+      "name": "hunger-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1ec49f7b38435047541b3e6a6c80f1d5e776389fcad2335159071f4c7bd0115a"
+    },
+    {
+      "name": "hunger-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "553d66636ae7ace1d1fea177e9ce27b7353caa4384bcfce4d02c5c08843914e7"
+    },
+    {
+      "name": "hunger-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8375965cf7250108c369b84a76b1363e1e8f71afbdde40f372a2465f3017db47"
+    },
+    {
+      "name": "hunger-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8c2565ec301f17670a0a50bbb499a04e1a21bb4bd7934fec45b15b09a590a59b"
+    },
+    {
+      "name": "air-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "94636cd46cfbf28adcd436878a140e48fb066e9cd7121285fc141a406a652dfc"
+    },
+    {
+      "name": "air-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d050f225458141a3bf541df30b407f0911e59c2d1507d3ddcb629ba27b95cd3f"
+    },
+    {
+      "name": "air-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6372a789fa746ed2badaad382a4943ff5c2ebd6dec67b32b879ae35b35d9b21a"
+    },
+    {
+      "name": "air-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "65898ac94c571a587f84e43843ab4aa44089c7c56b04f9485bb077c911a8568c"
+    },
+    {
+      "name": "air-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5a5aa09ab5602da223e66c702f35bc9fff6f20c3079cf50710943f3983ae98ac"
+    },
+    {
+      "name": "experience-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "19e114ff35c679875ec8e4a3e460cadb8d4411679d63da8aaf71aa554fb03e21"
+    },
+    {
+      "name": "experience-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2f620db5ac83302220399c92b64304643c33f78b1f510072dd926b1bf0f8ccb9"
+    },
+    {
+      "name": "experience-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "395f0190b3fe0b4ce8a3c679700681aa5134b1a0283470c8b56f7b2dc4de87b2"
+    },
+    {
+      "name": "experience-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "66885663cecde0bb75bbdc5fb7ecc4a66b52205a2671e77fe7111b28c9beb12f"
+    },
+    {
+      "name": "experience-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5613ac2a1a190ef051479f9e387e81c45cfd2dfcf4ad3e33b00028507258c649"
+    },
+    {
+      "name": "experience-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "385ba37a0a748269994ad19fbcf8e0a0079f9069ef468530cf093f9796ec54c8"
+    },
+    {
+      "name": "armor-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8a5e49dbcd4013691efa21f543a7e56578f6a1c64b1704fa010f8734fa3e6abe"
+    },
+    {
+      "name": "armor-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e0c451dcd85b92dd30e0a0b519f0808a453c1d88240530d1d312f8299fc914b5"
+    },
+    {
+      "name": "armor-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9963d43ffb07c142e3dbe95a61d9aa3329f03cc2b1688007d86735a60d8b9a6f"
+    },
+    {
+      "name": "armor-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9afb1a3def2ee25e91cc6708ac4f468db61b2f144c6b9b0fa74cc0de84df2b42"
+    },
+    {
+      "name": "armor-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b15882e05981a4cdca55a2ba842a9f6fb03f43375ced3240d801dcfea6dfa32b"
+    },
+    {
+      "name": "hunger-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a20da1b04e73e8c9898455f315dcfdc73e39aa5f4bd85ac05c695ac92b955cf2"
+    },
+    {
+      "name": "hunger-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4d509163241f63aabcb604d5a1cb711175b4cdf947f3a217457bc622cca2a206"
+    },
+    {
+      "name": "hunger-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "85cc232507866a792518aeb889ad5fabc1394a9cf3ca71c2fb48dc05050fdb95"
+    },
+    {
+      "name": "hunger-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "42f9608cc30bdcb97dc7e25fa58b1513ee4e81eba797e678228903306abe1fba"
+    },
+    {
+      "name": "hunger-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "90a6068c5a2aa436b2e132d79c93437c274bec50ba3c07626862adea7bd277e5"
+    },
+    {
+      "name": "air-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a952720140e6deead90b894ae7d1b6eb528f78daecff8f692df992aa7282203a"
+    },
+    {
+      "name": "air-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6fb155c929f3a3504ac3b65c6bce265768925a12b5f81fceb02e8549aba12cf1"
+    },
+    {
+      "name": "air-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2ed8bcbac8e63c27d9b41a8133e2df21aee1de7cede6586b8dee3eb41235ae01"
+    },
+    {
+      "name": "air-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "afefcf888d2411b3d2ff81c5abe8fffd91db13bb631e6bc4e95545c477b30142"
+    },
+    {
+      "name": "air-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "57b04efba8d9b33a39ff0f6aea3039b0a78702a5fdf236b56a99dd07aefe3490"
+    },
+    {
+      "name": "experience-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9f1bfa6f07db8d71fcff23a0dd15f1988148d29b222176dddb2228e49748aa9e"
+    },
+    {
+      "name": "experience-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8c26f119c0fbf647b78c58959d96f6365cafaefdae1b1f93f9b606348ba182f6"
+    },
+    {
+      "name": "experience-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f47ad931c8cc64cd0f911db3c64e486ddae5158cfc642b9dc26ec52ae8b46780"
+    },
+    {
+      "name": "experience-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "346bd860e6b12982205cd089cd8395b8e82ef33434a361ed0f0f3c65f7791e2f"
+    },
+    {
+      "name": "experience-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e00bc52ab28977352767f8a035a73af3380e67bb5f9855eb47b7ec328eceea4c"
+    },
+    {
+      "name": "experience-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "be4e573e465f23d13c18ec555f37a046bbaebbbc8ef851ae9b490450703bfb2a"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Controlled value props and meter accessibility semantics"
+    ]
+  },
+  "environment": {
+    "browser": "Microsoft Edge via Playwright",
+    "viewport": [
+      1536,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "scales": [
+      1,
+      2,
+      3
+    ]
+  },
+  "limitations": [
+    "Declared static values and status types only. Damage flashing, hardcore, hunger effects, mount rows, animated air popping and arbitrary maxima are outside this native matrix."
+  ]
+}

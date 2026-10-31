@@ -1,0 +1,54 @@
+{
+  "assetIndex": 32,
+  "locale": "en_us",
+  "sources": {
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+      "size": 3993
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+      "size": 1559654
+    },
+    "assets/minecraft/textures/gui/sprites/toast/system.png": {
+      "sha256": "025070341685b12420583b3711d02814936ab622208f896782626acae92e0e9b"
+    },
+    "assets/minecraft/textures/gui/sprites/toast/system.png.mcmeta": {
+      "sha256": "3e2b132b72a780ff6e5e14938552907b602c4db2c0305d507d5b7ebf6aeccd5a"
+    },
+    "net/minecraft/client/gui/components/toasts/SystemToast.class": {
+      "sha256": "930280241c9a3f1698a8f0076f6bf3e12ee8bf840def26af17bc3aac2c835284"
+    },
+    "net/minecraft/client/gui/components/toasts/ToastManager$ToastInstance.class": {
+      "sha256": "51d753d59c6fa8399ba68d5d3b8674af27af3fea84ee173cda99013206c68e48"
+    },
+    "net/minecraft/client/gui/components/toasts/Toast$Visibility.class": {
+      "sha256": "6ddb0f4d0651c3237cde4eb6f59e8994092fc975b9659e1d3f21e53793e2146b"
+    },
+    "net/minecraft/client/gui/font/FontManager.class": {
+      "sha256": "ff5544015090dedab3a29a160ae911add63befbbd2bba543c3d3f4f8876723ca"
+    },
+    "net/minecraft/client/gui/font/FontSet.class": {
+      "sha256": "2fe10a7ed8a4ee29532aae0a22c6d71fd5874cff56f6798aa17a37c4aca870f3"
+    },
+    "net/minecraft/client/gui/render/GuiRenderer.class": {
+      "sha256": "6431b2ab179ec60a50127763502693ad050abe6ba260e3acadfd820de7ec028c"
+    },
+    "assets/minecraft/shaders/core/position_tex_color.vsh": {
+      "sha256": "6c2a346ad6aebfeeadd8a69af14c43b0136100d4d19a0cf0920422b5991967b7"
+    }
+  },
+  "glyphCount": 112,
+  "glyphAtlasSha256": "1c659b71380b4bde3bb6627961e591ceac7ebf56d9e967e226712374c97dad3c",
+  "glyphProbeSource": "tests/reference/toast/source/ControlsReferenceMain.java",
+  "glyphProbeSourceSha256": "da20121d0c6f4fd05f72ac16d9f234e1bbac862e60ff9229b26e1da55fd2db0b",
+  "glyphObservationVerification": "repeatability.json",
+  "glyphAtlasContext": "Original FontManager.updateOptions(client.options) before ControlsScreen installation; original SystemToast bake order; observation only AFTER ALL screenshots.",
+  "fontContextSha256": "ae5d0b1b607923c3e0941d90c0629aee6112b5bacdd7a3ce0d3f9ba201ef3220",
+  "spriteAtlasObservationSha256": "cbd85304fcc7c57cf590a657361e9ab810fcf38ac09e2793d3f8a6a6087edd40",
+  "rendering": "Original opaque toast/system PNG, asymmetric nine-slice with clamp(min(border,floor(dimension/2))), tiled inner segments, original baked glyph UVs with no shadow. Original600ms squared entry/exit motion. Browser sprite leading pixel-center coverage preserves native GL samples in ANGLE; no baseline lookup.",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "minecraftVersion": "26.2"
+}

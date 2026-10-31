@@ -1,0 +1,29 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/tooltip/background.png": {
+      "sha256": "b3b7fdcec719bd1ad2dfc655d79d61aff57aaed7065874e1e8235b32039434a4",
+      "metadataSha256": "ad6e922929ebfddbbdf43c477239e47f9c73f410020d1cf168e356b69ae1ff16",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 100,
+        "height": 100,
+        "border": 9
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/tooltip/frame.png": {
+      "sha256": "8cd60f7b1dc3f43335a8c97ee50d24f937e958ea9ba36634aae492eccd871ad5",
+      "metadataSha256": "c2ed08b41d6411dcaeba24352837b13fad8158a4889b9f79a95aa1e48a09854c",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 100,
+        "height": 100,
+        "border": 10,
+        "stretch_inner": true
+      }
+    }
+  },
+  "atlasPlacementSha256": "56b53b26a1c5cd646b238bc1f314245a7c018acf55f982c7b4fda6a98249ffc4",
+  "atlasProbeSourceSha256": "221595191b63fa91078d97cb7ae330d724fca970f5c52d7d094798d0ca826d20",
+  "rendering": "Original background/frame with separate nine-slice metadata, native runtime atlas coordinates and source-alpha GPU blending; original ASCII glyph metrics and masks. Exact pixels depend on viewport and screen position. Solid CSS backdrops are composited; image/gradient backdrops retain original CSS surfaces without exact compositing proof."
+}

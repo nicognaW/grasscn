@@ -1,0 +1,26 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/header_separator.png": {
+      "sha256": "5f7074d9a35e6a06b3cbba879532ac92b2a66ef6a15888e59dae9c5ae0795931",
+      "width": 32,
+      "height": 2
+    },
+    "assets/minecraft/textures/gui/footer_separator.png": {
+      "sha256": "31d9ea715f2974218ae0a1ded741edb0889b4515933754c54912c9f275ba6ff3",
+      "width": 32,
+      "height": 2
+    },
+    "assets/minecraft/textures/gui/inworld_header_separator.png": {
+      "sha256": "5f7074d9a35e6a06b3cbba879532ac92b2a66ef6a15888e59dae9c5ae0795931",
+      "width": 32,
+      "height": 2
+    },
+    "assets/minecraft/textures/gui/inworld_footer_separator.png": {
+      "sha256": "31d9ea715f2974218ae0a1ded741edb0889b4515933754c54912c9f275ba6ff3",
+      "width": 32,
+      "height": 2
+    }
+  },
+  "rendering": "Original AbstractSelectionList.extractListSeparators: GUI_TEXTURED blit, u=v=0, texture32x2, drawn at native width and height2 with repeating U coordinates. Header at list.y-2; footer at list.bottom. Native runtime captures use the original method on an isolated empty list with no loaded world. In-world assets are byte-identical; world lifecycle is not exercised. Vertical orientation has no native reference and is omitted."
+}

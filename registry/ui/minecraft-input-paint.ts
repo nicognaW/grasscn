@@ -1,5 +1,7 @@
 import { minecraftInputAssets } from "./minecraft-input-assets"
 import { minecraftGlyphs } from "./minecraft-font"
+import { getUnihexGlyph, isCJKCodepoint, loadUnihex, paintUnihex } from "./minecraft-unifont"
+import { positionUnihex, disposeUnihex } from "./minecraft-unifont-gpu"
 
 type Images = { normal: HTMLImageElement; highlighted: HTMLImageElement; alpha: Uint8ClampedArray }
 let images: Promise<Images> | undefined
@@ -17,14 +19,15 @@ function loadImages() {
     return { normal, highlighted, alpha: context.getImageData(0, 0, 128, 128).data }
   })
 }
-const advance = (text: string) => Array.from(text).reduce((sum, char) => sum + (minecraftGlyphs[char.charCodeAt(0) - 32]?.[2] ?? 0), 0)
+const glyphAdvance = (char: string) => minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ?? getUnihexGlyph(char)?.advance ?? 0
+const advance = (text: string) => Math.ceil(Array.from(text).reduce((sum, char) => sum + glyphAdvance(char), 0))
 function trimToWidth(text: string, width: number, backwards = false) {
   let length = 0, used = 0
   const chars = backwards ? Array.from(text).reverse() : Array.from(text)
   for (const char of chars) {
-    const next = minecraftGlyphs[char.charCodeAt(0) - 32]?.[2] ?? 0
+    const next = glyphAdvance(char)
     if (used + next > width) break
-    used += next; length++
+    used += next; length += char.length
   }
   return backwards ? text.slice(text.length - length) : text.slice(0, length)
 }
@@ -54,7 +57,14 @@ function text(context: CanvasRenderingContext2D, alpha: Uint8ClampedArray, value
     const color = shadow ? Math.floor(ink / 4) : ink
     context.fillStyle = `rgb(${color},${color},${color})`
     for (const char of value) {
-      const [gx, gy, width] = minecraftGlyphs[char.charCodeAt(0) - 32]
+      const glyph = minecraftGlyphs[char.codePointAt(0)! - 32]
+      if (!glyph) {
+        const unihex = getUnihexGlyph(char)
+        if (unihex) paintUnihex(context, unihex, offset + (shadow ? .5 : 0), y + (shadow ? .5 : 0), scale)
+        offset += glyphAdvance(char)
+        continue
+      }
+      const [gx, gy, width] = glyph
       if (char !== " ") for (let py = 0; py < 8; py++) for (let px = 0; px < 8; px++) {
         if (alpha[((gy + py) * 128 + gx + px) * 4 + 3]) context.fillRect((offset + px + Number(shadow)) * scale, (y + py + Number(shadow)) * scale, scale, scale)
       }
@@ -69,23 +79,31 @@ export function attachMinecraftInput(input: HTMLInputElement, initialScale: numb
   const context = canvas.getContext("2d", { willReadFrequently: true })!
   let cancelled = false, frame = 0, signature = "", start = 0, wasFocused = document.activeElement === input, focusedAt = Date.now(), previousValue = ""
   let loaded: Images
+  let loadingUnihex = false
   const paint = () => {
     if (!loaded || cancelled) return
     const style = getComputedStyle(input)
     const scale = Number(style.getPropertyValue("--mc-scale")) || initialScale
     const width = input.clientWidth, height = input.clientHeight
+    const bounds = input.getBoundingClientRect()
+    positionUnihex(context, bounds)
     if (!width || !height) return
     const value = input.value
     const focused = document.activeElement === input
     if (focused && !wasFocused) focusedAt = Date.now()
     wasFocused = focused
     const blink = Math.floor((Date.now() - focusedAt) / 300) % 2 === 0
-    const supported = ["text", "search", "url", "tel"].includes(input.type) && /^[\x20-\x7e]*$/.test(value + input.placeholder) && style.direction !== "rtl"
+    const chars = Array.from(value + input.placeholder)
+    if (!loadingUnihex && chars.some(char => isCJKCodepoint(char.codePointAt(0)!))) {
+      loadingUnihex = true
+      loadUnihex().then(() => { signature = ""; paint() }).catch(error => console.error(error))
+    }
+    const supported = ["text", "search", "url", "tel"].includes(input.type) && chars.every(char => /^[\x20-\x7e]$/.test(char) || getUnihexGlyph(char)) && style.direction !== "rtl"
     if (input.dataset.mcBitmap !== String(supported)) input.dataset.mcBitmap = String(supported)
     const cursor = input.selectionDirection === "backward" ? input.selectionStart ?? value.length : input.selectionEnd ?? value.length
     const anchor = input.selectionDirection === "backward" ? input.selectionEnd ?? cursor : input.selectionStart ?? cursor
     if (previousValue !== value) { start = 0; previousValue = value }
-    const nextSignature = JSON.stringify([width, height, scale, value, cursor, anchor, focused, blink && focused, input.disabled, input.readOnly, input.placeholder, input.maxLength, supported])
+    const nextSignature = JSON.stringify([width, height, scale, value, cursor, anchor, focused, blink && focused, input.disabled, input.readOnly, input.placeholder, input.maxLength, supported, bounds.x, bounds.y, innerWidth, innerHeight])
     if (nextSignature === signature) return
     signature = nextSignature
     canvas.width = width; canvas.height = height
@@ -133,5 +151,5 @@ export function attachMinecraftInput(input: HTMLInputElement, initialScale: numb
   input.addEventListener("focus", focus)
   input.addEventListener("blur", blur)
   loadImages().then(result => { if (!cancelled) { loaded = result; tick() } }).catch(error => { if (!cancelled) { input.dataset.mcBitmap = "false"; console.error(error) } })
-  return () => { cancelled = true; cancelAnimationFrame(frame); input.removeEventListener("focus", focus); input.removeEventListener("blur", blur) }
+  return () => { cancelled = true; cancelAnimationFrame(frame); disposeUnihex(context); input.removeEventListener("focus", focus); input.removeEventListener("blur", blur) }
 }

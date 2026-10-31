@@ -1,0 +1,5 @@
+@layer theme,base,components,utilities;
+@layer components {
+ .mc-skeleton{--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;isolation:isolate;box-sizing:border-box;min-width:calc(12 * var(--mc-pixel));border:0;border-radius:0;background:transparent;image-rendering:pixelated}
+ .mc-skeleton>.mc-surface{z-index:-1}
+}

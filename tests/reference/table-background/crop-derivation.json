@@ -1,0 +1,131 @@
+{
+  "scope": "Original native menu-list background pixels only; no native Table widget asserted.",
+  "cases": [
+    {
+      "name": "table-list-background-dark-s1.png",
+      "sourceCase": "select-c144-s1.png",
+      "parentPngSha256": "373f2755246cc68db5f2efeb4c64d4f758000af9356289b6c36dc82bc554df24",
+      "parentRepeatPngSha256": "373f2755246cc68db5f2efeb4c64d4f758000af9356289b6c36dc82bc554df24",
+      "parentFullFrame": "native-controls-p13-s1.png",
+      "parentFullFrameSha256": "6b642fd25afebbc559619de284ff0d8fddf2f5eb99c22a747df1a53cf485e7fb",
+      "parentRepeatFullFrameSha256": "6b642fd25afebbc559619de284ff0d8fddf2f5eb99c22a747df1a53cf485e7fb",
+      "cropWithinParent": {
+        "x": 4,
+        "y": 4,
+        "width": 16,
+        "height": 16
+      },
+      "cropWithinFullFrame": {
+        "x": 20,
+        "y": 44,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "name": "table-list-background-light-s1.png",
+      "sourceCase": "select-c154-s1.png",
+      "parentPngSha256": "3914496eeace1667e56f3519f7d028f44a8d28b445e6ad61f1eee9f52d3ecbd0",
+      "parentRepeatPngSha256": "3914496eeace1667e56f3519f7d028f44a8d28b445e6ad61f1eee9f52d3ecbd0",
+      "parentFullFrame": "native-controls-p15-s1.png",
+      "parentFullFrameSha256": "6ade327d18c49185cf48b96e5ee287569530cd430757f6d598242509a71da3a8",
+      "parentRepeatFullFrameSha256": "6ade327d18c49185cf48b96e5ee287569530cd430757f6d598242509a71da3a8",
+      "cropWithinParent": {
+        "x": 4,
+        "y": 4,
+        "width": 16,
+        "height": 16
+      },
+      "cropWithinFullFrame": {
+        "x": 20,
+        "y": 218,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "name": "table-list-background-dark-s2.png",
+      "sourceCase": "select-c144-s2.png",
+      "parentPngSha256": "a825b7d5a6241277eed50c56f83ad1a4c4d3e2592576cbc584847c7c0a11af27",
+      "parentRepeatPngSha256": "a825b7d5a6241277eed50c56f83ad1a4c4d3e2592576cbc584847c7c0a11af27",
+      "parentFullFrame": "native-controls-p13-s2.png",
+      "parentFullFrameSha256": "e0c1ee65d6f2102bea930e01b0e94951a9dc4e9328a92d7a5ccdcd0dfb9ba266",
+      "parentRepeatFullFrameSha256": "e0c1ee65d6f2102bea930e01b0e94951a9dc4e9328a92d7a5ccdcd0dfb9ba266",
+      "cropWithinParent": {
+        "x": 8,
+        "y": 8,
+        "width": 32,
+        "height": 32
+      },
+      "cropWithinFullFrame": {
+        "x": 40,
+        "y": 88,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "name": "table-list-background-light-s2.png",
+      "sourceCase": "select-c154-s2.png",
+      "parentPngSha256": "ded59e1765960e993c4d4607d91f3c7e39f1b2351d324b1ce991df32e3b63f5a",
+      "parentRepeatPngSha256": "ded59e1765960e993c4d4607d91f3c7e39f1b2351d324b1ce991df32e3b63f5a",
+      "parentFullFrame": "native-controls-p15-s2.png",
+      "parentFullFrameSha256": "46b530b7e3951aadd26a0f387e180d62b95a9f5ffeec92f61f8fb4e6f51d4234",
+      "parentRepeatFullFrameSha256": "46b530b7e3951aadd26a0f387e180d62b95a9f5ffeec92f61f8fb4e6f51d4234",
+      "cropWithinParent": {
+        "x": 8,
+        "y": 8,
+        "width": 32,
+        "height": 32
+      },
+      "cropWithinFullFrame": {
+        "x": 40,
+        "y": 436,
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "name": "table-list-background-dark-s3.png",
+      "sourceCase": "select-c144-s3.png",
+      "parentPngSha256": "1b07c065b6c1b92c0e26bb12e221011553b6b6dbfa977a3c9f764e6228997b07",
+      "parentRepeatPngSha256": "1b07c065b6c1b92c0e26bb12e221011553b6b6dbfa977a3c9f764e6228997b07",
+      "parentFullFrame": "native-controls-p13-s3.png",
+      "parentFullFrameSha256": "261f801cf4dd26be7d931127a8e1bda93d827e2e08addd89fdc5a764e25407f5",
+      "parentRepeatFullFrameSha256": "261f801cf4dd26be7d931127a8e1bda93d827e2e08addd89fdc5a764e25407f5",
+      "cropWithinParent": {
+        "x": 12,
+        "y": 12,
+        "width": 48,
+        "height": 48
+      },
+      "cropWithinFullFrame": {
+        "x": 60,
+        "y": 132,
+        "width": 48,
+        "height": 48
+      }
+    },
+    {
+      "name": "table-list-background-light-s3.png",
+      "sourceCase": "select-c154-s3.png",
+      "parentPngSha256": "d2527ea6a44494232686e735254b926459e8182526176c85a24eceb5320449bd",
+      "parentRepeatPngSha256": "d2527ea6a44494232686e735254b926459e8182526176c85a24eceb5320449bd",
+      "parentFullFrame": "native-controls-p15-s3.png",
+      "parentFullFrameSha256": "dddbef97b5f351cc0753b09d263128e0cea3f33d68c465ca0fd692e2e6a71d96",
+      "parentRepeatFullFrameSha256": "dddbef97b5f351cc0753b09d263128e0cea3f33d68c465ca0fd692e2e6a71d96",
+      "cropWithinParent": {
+        "x": 12,
+        "y": 12,
+        "width": 48,
+        "height": 48
+      },
+      "cropWithinFullFrame": {
+        "x": 60,
+        "y": 654,
+        "width": 48,
+        "height": 48
+      }
+    }
+  ]
+}

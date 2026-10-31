@@ -1,0 +1,8 @@
+@layer components {
+.mc-field-set {border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mc-field-group {display:flex;flex-direction:column;gap:14px;container-type:inline-size}
+.mc-field {display:flex;gap:8px;min-width:0}.mc-field-vertical,.mc-field-responsive {flex-direction:column}.mc-field-horizontal {flex-direction:row;align-items:center}.mc-field-content {display:flex;flex:1;flex-direction:column;gap:4px;min-width:0}
+.mc-field-description,.mc-field-legend {margin:0}.mc-field-legend {margin-bottom:8px}.mc-field-error-list {margin:0;padding-inline-start:16px}
+.mc-field-separator {display:flex;position:relative;align-items:center;gap:8px;min-height:18px}.mc-field-divider {flex:1}.mc-field-divider-content {position:relative;flex:none}
+@container (min-width:448px){.mc-field-responsive {flex-direction:row;align-items:center}}
+}

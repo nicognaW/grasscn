@@ -1,0 +1,78 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/menu_list_background.png": {
+      "sha256": "3fda6347ee8ba0508ba2a83a0cb6c8f02a34403e91713d6881338b4399782110"
+    },
+    "assets/minecraft/textures/gui/header_separator.png": {
+      "sha256": "5f7074d9a35e6a06b3cbba879532ac92b2a66ef6a15888e59dae9c5ae0795931"
+    },
+    "assets/minecraft/textures/gui/footer_separator.png": {
+      "sha256": "31d9ea715f2974218ae0a1ded741edb0889b4515933754c54912c9f275ba6ff3"
+    },
+    "assets/minecraft/textures/gui/sprites/widget/button.png": {
+      "sha256": "0a2e159360200a39e0c7e9c0db0e6aa034ba4e1f8d99698c004084b5ba6e94cb",
+      "metadataSha256": "c8f6fe62c01c357a814223d4ab6a368e5122c195fa2671e585fa24988557a505",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 3
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/button_highlighted.png": {
+      "sha256": "1fcd15ad8971b1e846f848b2211d631f51b9b6533d99ca392a5799af7e9854f9",
+      "metadataSha256": "c8f6fe62c01c357a814223d4ab6a368e5122c195fa2671e585fa24988557a505",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 3
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/button_disabled.png": {
+      "sha256": "19866c723b986b57300a5248f6255ceb0e464faf673f73fdcf4158da1195c250",
+      "metadataSha256": "d7dd31a632fe41be64e07ef0676b726e50f0af053e638742ec1f6f9550a1b7e5",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 200,
+        "height": 20,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/scroller.png": {
+      "sha256": "597fe534e56c7028ff948a57d30ac6e9ca4073da8df1b0c51d002bdac8f24acc",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/scroller_background.png": {
+      "sha256": "0955e3a96511b678ac3e86b6c71fe5548b105c27ca1286ab05268c4789767be0",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    },
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be"
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7"
+    }
+  },
+  "rendering": "Original CycleButton.displayOnlyValue uses AbstractButton sprites and scrolling label with2-pixel margins. Popup supplies controlled labels and geometry to original LanguageSelectionList and Entry classes, through reflection only for constructor/private label access. Rows270x18, content padding2, label centered at row y+5; selection1-pixel outline white when the list has a focused entry, otherwise808080, inside black. Native menu-list background and2-pixel header/footer separators are retained. Scrollbar x=rowRight+8, width6; native integer thumb geometry. Web hover-to-focus, popup positioning, optional grouping and commit behavior are Radix composition. Native pure-hover cases use a public pointer-move override to hold selection/focus fixed. Original CycleButton opening click uses ui.button.click; original language-list entry selection and scrolling are silent.",
+  "glyphAtlasSha256": "7b8d8761dd9c7f3db6d507094ca85eaef8440befbbb63cfeb8f9b9ce738baa81",
+  "glyphProbeSource": "tests/reference/select-extra/source/ControlsReferenceMain.java",
+  "glyphProbeSourceSha256": "2881894d9896b7ce3e4248639460eb70bc7c18d35064772295616612de2f93b9",
+  "glyphObservationVerification": "repeatability.json",
+  "glyphAtlasContext": "Original default-font glyphs observed after stable native select frames. Every glyph is rendered in a fitting title before observation. Independent observer-disabled launch has identical decoded RGBA pixels. Popup uses the original language-selection list and entries; dropdown behavior is a web composition."
+}

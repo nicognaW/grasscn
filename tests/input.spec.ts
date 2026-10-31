@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
@@ -117,15 +117,15 @@ test("Input keeps HTML validation and maxlength", async ({ page }) => {
   await page.locator("#submit").click()
   await expect(page.getByLabel("Submissions", { exact: true })).toHaveText("1")
 })
-test("Input preserves password and Unicode browser rendering fallbacks", async ({ page }) => {
+test("Input preserves password and unsupported glyph browser rendering fallbacks", async ({ page }) => {
   await page.goto("/?component=input&text=secret&type=password")
   const input = page.locator("#subject")
   await expect(input).toHaveAttribute("type", "password")
   await expect(input).toHaveAttribute("data-mc-bitmap", "false")
   await expect(input).toHaveValue("secret")
   await page.goto("/?component=input&text=Hello")
-  await input.fill("Hello 世界")
-  await expect(input).toHaveValue("Hello 世界")
+  await input.fill("Hello 🙂")
+  await expect(input).toHaveValue("Hello 🙂")
   await expect(input).toHaveAttribute("data-mc-bitmap", "false")
   await input.fill("Hello")
   await expect(input).toHaveAttribute("data-mc-bitmap", "true")

@@ -1,0 +1,97 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/map.json --yes --overwrite",
+  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true,
+    "evidence": "work/grasscn-website/final2/map-world-consumer-types/stdout.log"
+  },
+  "files": [
+    {
+      "path": "minecraft-adventure-assets.ts",
+      "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
+      "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
+      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a"
+    },
+    {
+      "path": "minecraft-adventure-image.tsx",
+      "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
+      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
+      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+    },
+    {
+      "path": "minecraft-map-palette.ts",
+      "sourcePath": "registry/ui/minecraft-map-palette.ts",
+      "sourceSha256": "4e672af89db13fe5cb39206d46a1f6fabf0d167ecc49f7a91b65f9c24f8daf1a",
+      "installedSha256": "4e672af89db13fe5cb39206d46a1f6fabf0d167ecc49f7a91b65f9c24f8daf1a"
+    },
+    {
+      "path": "minecraft-map-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-map-atlas.ts",
+      "sourceSha256": "dc766ca904f1de1e062fffdd007a7f0715917d9950ad1701dd7508d7242bb7b4",
+      "installedSha256": "dc766ca904f1de1e062fffdd007a7f0715917d9950ad1701dd7508d7242bb7b4"
+    },
+    {
+      "path": "minecraft-map-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-map-gpu.ts",
+      "sourceSha256": "8139bfec27cf43cfb244ad4cc775c202b0cfeb154b38f732843646234e407858",
+      "installedSha256": "8139bfec27cf43cfb244ad4cc775c202b0cfeb154b38f732843646234e407858"
+    },
+    {
+      "path": "minecraft-map.css",
+      "sourcePath": "registry/ui/minecraft-map.css",
+      "sourceSha256": "30c7a32370cddb1776f4999c47904efd4f517b7dce8d1df2685e6510347c7f37",
+      "installedSha256": "30c7a32370cddb1776f4999c47904efd4f517b7dce8d1df2685e6510347c7f37"
+    },
+    {
+      "path": "map.tsx",
+      "sourcePath": "registry/ui/map.tsx",
+      "sourceSha256": "f45a8a6960baaa6f3bd716e721c5a4f2ac1dab081f8a16e7de5c76c29f827955",
+      "installedSha256": "d7f2bb98becc20e9690e84ae10ee58d2eb56440d7685f8ad14d7f84f56e58b73"
+    }
+  ],
+  "cases": [
+    {
+      "name": "map-world-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e2273d386571ba3f4664ecff60995b5deed7e604b1115308d1a58cce43446a41"
+    },
+    {
+      "name": "map-world-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "799470ace700dd303661f5e6a05d57416ce67e01b94bc0d5f282c0a602a244da"
+    },
+    {
+      "name": "map-world-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bb28d28d4df8858b4989555300616721beb0fcbd8bc062f1eec576e1c054599c"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Original7-file Map registry install resolves actual saved-world palette input without developer assets",
+      "All3 exact native MapRenderer comparisons at scales1-3",
+      "Existing map/locator pointer and keyboard interaction proofs remain in primary installation report"
+    ]
+  },
+  "limitations": [
+    "Three additional scales1-3 cases in Edge/DPR1 render the exact native-generated16384-byte map from real saved overworld chunks, center(1344,-704), mapscale1. Original MapItem.update over read-only block states and WORLD_SURFACE data generates colors; original MapRenderer generates reference pixels. These cases cover terrain only; interactive marker and locator appearance remains covered by the prior63-case matrix.",
+    "This is not a pre-existing saved map: no map palette data existed in the saved worlds. A read-only terrain adapter supplies original block states/properties/packed indices and heightmaps to original MapItem.update. Nine fixed exploration positions with16 updates each fully populate the map. Unsupported terrain/height/biome/block-entity requests throw rather than approximate."
+  ],
+  "demoData": {
+    "sourceModule": "preview/demos/map-world-data.ts",
+    "sourceSha256": "03e19cc0efa16d5dd4410e3e9d99f55c85e7836e167fdd769d3b2a7bb2389a1c",
+    "consumerModuleSha256": "03e19cc0efa16d5dd4410e3e9d99f55c85e7836e167fdd769d3b2a7bb2389a1c",
+    "paletteBytes": 16384,
+    "paletteSha256": "b4ff7ba48328027207d261685a9c34db5f1b4d6cc2c7270c7f1de8a89abdf789",
+    "generationProvenance": "tests/reference/map/demo-world/terrain-provenance.json",
+    "generationRepeatability": "tests/reference/map/demo-world/generation-repeatability.json"
+  },
+  "evidence": {
+    "browserTestLog": "work/grasscn-website/final2/map-world-installed-comparison/stdout.log",
+    "consumerTypecheckLog": "work/grasscn-website/final2/map-world-consumer-types/stdout.log"
+  }
+}

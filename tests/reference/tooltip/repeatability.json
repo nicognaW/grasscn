@@ -1,0 +1,1268 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "9cad4a5ea2830c6d5e53cbf0ebaa24df239aabcc8d678451528b161d394392bd",
+  "caseDefinitionSha256": "72a3bd9bb03dd86314c7e206591cda1831e80461fe035c7a7049d4ee9e09455b",
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "tooltip-c0-s1.png",
+      "runOnePngSha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5",
+      "runTwoPngSha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5",
+      "decodedRgbaSha256": "72eb9e81e201b9ea1825c6fc282ac1ed9ab00a776fb615a1c209bb973b40d381",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c1-s1.png",
+      "runOnePngSha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b",
+      "runTwoPngSha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b",
+      "decodedRgbaSha256": "6f8f001595b57bb8bc0ef67b420e1c328f647350f9a430f144e04bb7eaeaad21",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c2-s1.png",
+      "runOnePngSha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a",
+      "runTwoPngSha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a",
+      "decodedRgbaSha256": "0685e970f517ab15e1f079de4789982b1e9776ff34975feaa6b4a8b3d4b8e640",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c3-s1.png",
+      "runOnePngSha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5",
+      "runTwoPngSha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5",
+      "decodedRgbaSha256": "72eb9e81e201b9ea1825c6fc282ac1ed9ab00a776fb615a1c209bb973b40d381",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c4-s1.png",
+      "runOnePngSha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b",
+      "runTwoPngSha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b",
+      "decodedRgbaSha256": "6f8f001595b57bb8bc0ef67b420e1c328f647350f9a430f144e04bb7eaeaad21",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c5-s1.png",
+      "runOnePngSha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a",
+      "runTwoPngSha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a",
+      "decodedRgbaSha256": "0685e970f517ab15e1f079de4789982b1e9776ff34975feaa6b4a8b3d4b8e640",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c6-s1.png",
+      "runOnePngSha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421",
+      "runTwoPngSha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421",
+      "decodedRgbaSha256": "d5ec98b289d36cdfca44453c3dd8c5c2f4933d3ff28d3551663740dfea22bc82",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c7-s1.png",
+      "runOnePngSha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51",
+      "runTwoPngSha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51",
+      "decodedRgbaSha256": "f04f7c85d8aa57487f567f23127e30c1031ebea994ddcf7423a4f3e882a8e160",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c8-s1.png",
+      "runOnePngSha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc",
+      "runTwoPngSha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc",
+      "decodedRgbaSha256": "123424bfa662d93e307a6c91f91312696322abf9c0fe523743f8e559146e58a9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c9-s1.png",
+      "runOnePngSha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421",
+      "runTwoPngSha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421",
+      "decodedRgbaSha256": "d5ec98b289d36cdfca44453c3dd8c5c2f4933d3ff28d3551663740dfea22bc82",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c10-s1.png",
+      "runOnePngSha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51",
+      "runTwoPngSha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51",
+      "decodedRgbaSha256": "f04f7c85d8aa57487f567f23127e30c1031ebea994ddcf7423a4f3e882a8e160",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c11-s1.png",
+      "runOnePngSha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc",
+      "runTwoPngSha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc",
+      "decodedRgbaSha256": "123424bfa662d93e307a6c91f91312696322abf9c0fe523743f8e559146e58a9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c12-s1.png",
+      "runOnePngSha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79",
+      "runTwoPngSha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79",
+      "decodedRgbaSha256": "5098c4773ba26e07155bd0491df40e5ec7288a6d40b2fd929d04122cd85d6ce4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c13-s1.png",
+      "runOnePngSha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255",
+      "runTwoPngSha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255",
+      "decodedRgbaSha256": "e48039b61380185288ce4cdd9d322a2e12300ef79a6983fe1442978f1f269e64",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c14-s1.png",
+      "runOnePngSha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7",
+      "runTwoPngSha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7",
+      "decodedRgbaSha256": "7d074befd47cd3dc17c7792c5998cde3ceb1f28efdfa47d9e3a671ec2a573ef7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c15-s1.png",
+      "runOnePngSha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79",
+      "runTwoPngSha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79",
+      "decodedRgbaSha256": "5098c4773ba26e07155bd0491df40e5ec7288a6d40b2fd929d04122cd85d6ce4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c16-s1.png",
+      "runOnePngSha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255",
+      "runTwoPngSha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255",
+      "decodedRgbaSha256": "e48039b61380185288ce4cdd9d322a2e12300ef79a6983fe1442978f1f269e64",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c17-s1.png",
+      "runOnePngSha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7",
+      "runTwoPngSha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7",
+      "decodedRgbaSha256": "7d074befd47cd3dc17c7792c5998cde3ceb1f28efdfa47d9e3a671ec2a573ef7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c18-s1.png",
+      "runOnePngSha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434",
+      "runTwoPngSha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434",
+      "decodedRgbaSha256": "99fa98c344e27bcd66d81bd3fd831a57ede5787870ac3e9a4a3fdb9e33e976f3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c19-s1.png",
+      "runOnePngSha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c",
+      "runTwoPngSha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c",
+      "decodedRgbaSha256": "200a35a5131995f4ea8ca20d2f4b821bb98c8752104c167944f03d1f017af08b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c20-s1.png",
+      "runOnePngSha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1",
+      "runTwoPngSha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1",
+      "decodedRgbaSha256": "0a2cc25a568cfbfd320f7720ed9e6d930998bfa40fe7d0c07acecdd03dbb8396",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c21-s1.png",
+      "runOnePngSha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434",
+      "runTwoPngSha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434",
+      "decodedRgbaSha256": "99fa98c344e27bcd66d81bd3fd831a57ede5787870ac3e9a4a3fdb9e33e976f3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c22-s1.png",
+      "runOnePngSha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c",
+      "runTwoPngSha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c",
+      "decodedRgbaSha256": "200a35a5131995f4ea8ca20d2f4b821bb98c8752104c167944f03d1f017af08b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c23-s1.png",
+      "runOnePngSha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1",
+      "runTwoPngSha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1",
+      "decodedRgbaSha256": "0a2cc25a568cfbfd320f7720ed9e6d930998bfa40fe7d0c07acecdd03dbb8396",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c24-s1.png",
+      "runOnePngSha256": "a63dc63e9e4b2d2adf2ebe45f83f630060428991beee7687b6898933b49201ed",
+      "runTwoPngSha256": "a63dc63e9e4b2d2adf2ebe45f83f630060428991beee7687b6898933b49201ed",
+      "decodedRgbaSha256": "5f18939c2e9a27f01413a15d1a74a9b1a2313163e0d007dfd29bf2cc50d6e6e8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c25-s1.png",
+      "runOnePngSha256": "e8bd7fa1c8641b658c6eff2391920879a14307a1ee48d067e5cd5984e57320ad",
+      "runTwoPngSha256": "e8bd7fa1c8641b658c6eff2391920879a14307a1ee48d067e5cd5984e57320ad",
+      "decodedRgbaSha256": "c4f3b20c95924217c9609081eb79560b7baa3f541375ac83e66015e5276ccda7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c26-s1.png",
+      "runOnePngSha256": "6552a449779192d7635249596a6189bd141564bfd9fad3f761feee74c5c133e5",
+      "runTwoPngSha256": "6552a449779192d7635249596a6189bd141564bfd9fad3f761feee74c5c133e5",
+      "decodedRgbaSha256": "7d7d0e478163b889d30b5957e5d8713ce1d9c12b0b2cd8e628090b4f75cd3696",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c27-s1.png",
+      "runOnePngSha256": "03ba034a29d50f7d69f4a70319d9dd4389b8f41d9ce212f38b2ecb9564dfe0d7",
+      "runTwoPngSha256": "03ba034a29d50f7d69f4a70319d9dd4389b8f41d9ce212f38b2ecb9564dfe0d7",
+      "decodedRgbaSha256": "60d72d9517005edc7b8b2cc103119860e1926816c215043074f52cdae9132a73",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c28-s1.png",
+      "runOnePngSha256": "b7b6f9058afe780abe2eaec07ecc7a68ef2438f7c950376c2f843861118d4aa2",
+      "runTwoPngSha256": "b7b6f9058afe780abe2eaec07ecc7a68ef2438f7c950376c2f843861118d4aa2",
+      "decodedRgbaSha256": "37ad2f847f6c3c5417b0c78f4671b248487362f4ab238bc2b7622678c0a76105",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c29-s1.png",
+      "runOnePngSha256": "3c7c9693410ea6ce3520becbf4a6167bb9eab3e8af78660965834f044089a41a",
+      "runTwoPngSha256": "3c7c9693410ea6ce3520becbf4a6167bb9eab3e8af78660965834f044089a41a",
+      "decodedRgbaSha256": "d1d39cc7395eef45054d3f81f0d7eca8f2b94d7a22faf8a8759f99d54ee1626b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c30-s1.png",
+      "runOnePngSha256": "b32042a04bc975aab674153f3b95f573e3239b73a68aa3e48b3cef83490f8ac7",
+      "runTwoPngSha256": "b32042a04bc975aab674153f3b95f573e3239b73a68aa3e48b3cef83490f8ac7",
+      "decodedRgbaSha256": "e98eef6f2bd216c495a3753629a4015c420816d90de2ed665dd9fd4dfcdbc79b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c31-s1.png",
+      "runOnePngSha256": "284c726e1ebfcb2251dde510fec644b196f0972c9c173e18d02b67da0a266d7f",
+      "runTwoPngSha256": "284c726e1ebfcb2251dde510fec644b196f0972c9c173e18d02b67da0a266d7f",
+      "decodedRgbaSha256": "f8270a0068ab2d1a39e8ec35da9790d7530e04b7fc41b087f6b070f9eb56dae3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c32-s1.png",
+      "runOnePngSha256": "32719ca58c165763e7cf12e17741a269454db1420592e370f9e752d00a171a30",
+      "runTwoPngSha256": "32719ca58c165763e7cf12e17741a269454db1420592e370f9e752d00a171a30",
+      "decodedRgbaSha256": "eb8780ab5eb421a42e03db996f4e409293cdd80a2694aa9f5b2c3888d4c396e3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c33-s1.png",
+      "runOnePngSha256": "0e6a8f54f5afb065cb85877556447e9d20ec426c03c0c9919cf378aca014d0b3",
+      "runTwoPngSha256": "0e6a8f54f5afb065cb85877556447e9d20ec426c03c0c9919cf378aca014d0b3",
+      "decodedRgbaSha256": "ae2bfb66428b8c550f1072450f297871b1506a77acdc0dd5c3935b498de37001",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c34-s1.png",
+      "runOnePngSha256": "7670d7c8d4c51ff8e8a5d693db2ea37c81e8b2b531a62a10b4dccb62ed9b5bab",
+      "runTwoPngSha256": "7670d7c8d4c51ff8e8a5d693db2ea37c81e8b2b531a62a10b4dccb62ed9b5bab",
+      "decodedRgbaSha256": "44e3518194c5f9968cc6c0bbbdbd1fb44fa798ffe2e3226adf98db132ab354a0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c35-s1.png",
+      "runOnePngSha256": "6722bf02b0b0385eaaf5f16cb9fd3b743465548960760cbce580ce4ea08edaef",
+      "runTwoPngSha256": "6722bf02b0b0385eaaf5f16cb9fd3b743465548960760cbce580ce4ea08edaef",
+      "decodedRgbaSha256": "d473ca782a382f15c58d9e1ac2e25d031e40874f29abce66846ebdf8f5537d6f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c36-s1.png",
+      "runOnePngSha256": "35b52a620fe695d76717c0f05e45d27bb74c59aad97ba11b29e59c567f0d8f77",
+      "runTwoPngSha256": "35b52a620fe695d76717c0f05e45d27bb74c59aad97ba11b29e59c567f0d8f77",
+      "decodedRgbaSha256": "17c8517ca6c63d91ce19900e62548b909487761bae54d941f9f951ae018c8f7b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c37-s1.png",
+      "runOnePngSha256": "6196f20968bb64d6de5db33eb8f304aaf03db72c9dece2bff9d03ebe7b9be56c",
+      "runTwoPngSha256": "6196f20968bb64d6de5db33eb8f304aaf03db72c9dece2bff9d03ebe7b9be56c",
+      "decodedRgbaSha256": "cf74fb999bde6acf843ecaf5b78dc477c68d499d284555d92032b03a1d079892",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c38-s1.png",
+      "runOnePngSha256": "d2b91e005b35010c0a2b60be99f5272041248dfac7d1316cc2482c40657d95a1",
+      "runTwoPngSha256": "d2b91e005b35010c0a2b60be99f5272041248dfac7d1316cc2482c40657d95a1",
+      "decodedRgbaSha256": "79f6a9ddf24a784552894ff4fce52a9838326e1ad5bd3763e3aac9e203552b03",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c39-s1.png",
+      "runOnePngSha256": "26fa0d77c70c0ee954611725232e2671224057207e65737876a148591c80988b",
+      "runTwoPngSha256": "26fa0d77c70c0ee954611725232e2671224057207e65737876a148591c80988b",
+      "decodedRgbaSha256": "ffef2f26ce4fb56c7cb629d35fc2c23d20b73e811b66ab6f5596fc51c2d3e782",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c40-s1.png",
+      "runOnePngSha256": "9ee3c9029de536270a90e168cd5d97a4ac959987d8b75f7b2c5ab9f4fc25cadb",
+      "runTwoPngSha256": "9ee3c9029de536270a90e168cd5d97a4ac959987d8b75f7b2c5ab9f4fc25cadb",
+      "decodedRgbaSha256": "aa9ed00e9892e969957774c1692e92e2035b7937b555b39667363288dfa04c2e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c41-s1.png",
+      "runOnePngSha256": "f22eae248b3f78642da8d6d3267ff03f25b53e642f7382c41f47520cbfa146b8",
+      "runTwoPngSha256": "f22eae248b3f78642da8d6d3267ff03f25b53e642f7382c41f47520cbfa146b8",
+      "decodedRgbaSha256": "d9889a1a018290b54909dd7ae55f66649ae1b1b33a642073212ed8d884793aec",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c42-s1.png",
+      "runOnePngSha256": "75e07ff4bb181827a47341c8275f2ba723452749d8b261bfb55297832bcbc949",
+      "runTwoPngSha256": "75e07ff4bb181827a47341c8275f2ba723452749d8b261bfb55297832bcbc949",
+      "decodedRgbaSha256": "0ec8cb3b382400823b16ff54197704c765fa9996f869b154878f2e220fef4d85",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c43-s1.png",
+      "runOnePngSha256": "648786e3920c06d048cdb1e0fedc0c9b83650fd9ef07272f64e59c6d8f5f4b93",
+      "runTwoPngSha256": "648786e3920c06d048cdb1e0fedc0c9b83650fd9ef07272f64e59c6d8f5f4b93",
+      "decodedRgbaSha256": "10eabf0415e88423f38067aa4f255d690b2f99ca8f2b2f57826256d8d992daa5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c44-s1.png",
+      "runOnePngSha256": "90c22a288621561c10896dbb79458e3ed06ee3ece78eba23f116ffb136e14ca7",
+      "runTwoPngSha256": "90c22a288621561c10896dbb79458e3ed06ee3ece78eba23f116ffb136e14ca7",
+      "decodedRgbaSha256": "9d10e3f628e5067f215dc3e3d31e4bf8e1ffad0b0997d9c94d30e4532f14238f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c45-s1.png",
+      "runOnePngSha256": "3c832ea5a6221b9accae66a006d21c05e1a598b5a493bb5a9cf0db9e61b2a571",
+      "runTwoPngSha256": "3c832ea5a6221b9accae66a006d21c05e1a598b5a493bb5a9cf0db9e61b2a571",
+      "decodedRgbaSha256": "1e48e55be326c3743d9801a50e9e69c93ce7c74a7ad97bd0e699ab7182c854a6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c46-s1.png",
+      "runOnePngSha256": "c504bf22ff7b9fc41b609e004723e078121d029b13787a99ca4ad6835cc389b5",
+      "runTwoPngSha256": "c504bf22ff7b9fc41b609e004723e078121d029b13787a99ca4ad6835cc389b5",
+      "decodedRgbaSha256": "ba5a4f01b0bc0685b585028ca7c794c657e55af9ac44fc003401a030dbb85466",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c47-s1.png",
+      "runOnePngSha256": "1ad519adf6a054921247bb431136ce37fd3d4b8515ea85a8fde236392dd497cc",
+      "runTwoPngSha256": "1ad519adf6a054921247bb431136ce37fd3d4b8515ea85a8fde236392dd497cc",
+      "decodedRgbaSha256": "68d24368edd08c2f1bc94d9703603275ecf334c6a66448eaf1893fa58ac1d9b3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c48-s1.png",
+      "runOnePngSha256": "d20ecb2ad1d56a066e1958375744136d92c312e2ed53ec9b5d324c969f38a2a3",
+      "runTwoPngSha256": "d20ecb2ad1d56a066e1958375744136d92c312e2ed53ec9b5d324c969f38a2a3",
+      "decodedRgbaSha256": "7a4c1e0f777cf855be0f661c28da9205d13385c7bb552da85f7a639fd9aa9589",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c49-s1.png",
+      "runOnePngSha256": "d9a6bb9a6f78ae2c168b2afe8809271dd5be5018aae44344dc3d607aa869b9e8",
+      "runTwoPngSha256": "d9a6bb9a6f78ae2c168b2afe8809271dd5be5018aae44344dc3d607aa869b9e8",
+      "decodedRgbaSha256": "913ad771a2b87a31752f0214a5e36bf5b8d36fb84855b9152d1f72b436f77a65",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c50-s1.png",
+      "runOnePngSha256": "104ff0ab86f635c71fd3b9c26c23d4b036cf5ee73b8dc18d4438e64c47f57934",
+      "runTwoPngSha256": "104ff0ab86f635c71fd3b9c26c23d4b036cf5ee73b8dc18d4438e64c47f57934",
+      "decodedRgbaSha256": "e0998bd96168eaa468002f3efee820bd1def50aafa9f4790c077f0f60e619e11",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c51-s1.png",
+      "runOnePngSha256": "5b1a5540806fc0d35217dffa2060744491761775e697a0cf3483c8a5df120cb9",
+      "runTwoPngSha256": "5b1a5540806fc0d35217dffa2060744491761775e697a0cf3483c8a5df120cb9",
+      "decodedRgbaSha256": "55ebe96d515487c0a948b4ce6650771528d3ebdc0428d971dc345282b94332d5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c52-s1.png",
+      "runOnePngSha256": "d1981a104dc2dfb36c01b5ab3250d0840d6eb1ddd54371d7219899e23c2255a1",
+      "runTwoPngSha256": "d1981a104dc2dfb36c01b5ab3250d0840d6eb1ddd54371d7219899e23c2255a1",
+      "decodedRgbaSha256": "90ddcdf41514c1c3c27d225e06834df8f30217fead6f3872efde907f6e7a3bea",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c53-s1.png",
+      "runOnePngSha256": "f2480d3b55dbd048efb9b1ad700db97b0968897df6d9337f58e3e50e0b13a6d3",
+      "runTwoPngSha256": "f2480d3b55dbd048efb9b1ad700db97b0968897df6d9337f58e3e50e0b13a6d3",
+      "decodedRgbaSha256": "6a05fa7c64dbedbad3b5932b8ee16aebda921a1d5bca78605ea7b9333c319cad",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c54-s1.png",
+      "runOnePngSha256": "37c5ed4b087d119ceda6ebe21ec47e0e4a841417f7d42fc2b77dc41a8c55e666",
+      "runTwoPngSha256": "37c5ed4b087d119ceda6ebe21ec47e0e4a841417f7d42fc2b77dc41a8c55e666",
+      "decodedRgbaSha256": "f75ff1a87a2a7ce8f33fa503ea1c1746d1e1d96faf79f0927ace5c9a22eebe57",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c55-s1.png",
+      "runOnePngSha256": "c0cdc26a69e208523d4784faaf86d1be79f1ebd1b027d8a078fecaaf5b4979e2",
+      "runTwoPngSha256": "c0cdc26a69e208523d4784faaf86d1be79f1ebd1b027d8a078fecaaf5b4979e2",
+      "decodedRgbaSha256": "a271574d70b0325b8a52252259e642b8bc6b88b1a75d73c110a4004a4ac028fc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c56-s1.png",
+      "runOnePngSha256": "c63b5b85a75882f377597665c1a2f250cd2bc1906117dc18b5863c5edc821a90",
+      "runTwoPngSha256": "c63b5b85a75882f377597665c1a2f250cd2bc1906117dc18b5863c5edc821a90",
+      "decodedRgbaSha256": "12a0fa6466b837781845bfadb73eab930c27c8b28c061ca59a28d91ff2876944",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c57-s1.png",
+      "runOnePngSha256": "a37439947a9c2c0aadef27ca348deb4fc440f417db83b67e07bc9ca0423373e0",
+      "runTwoPngSha256": "a37439947a9c2c0aadef27ca348deb4fc440f417db83b67e07bc9ca0423373e0",
+      "decodedRgbaSha256": "5328d34dc42dd135bdedb97152b240e7353cad4c33d983e471ea63987cb2ab07",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c58-s1.png",
+      "runOnePngSha256": "13cb716fdda106c99f9072bb1672972cccd4aac59d2846a899d7ae7204738164",
+      "runTwoPngSha256": "13cb716fdda106c99f9072bb1672972cccd4aac59d2846a899d7ae7204738164",
+      "decodedRgbaSha256": "4e5db6daffb4a670116dcde5b99c9a81663d2d3ce6102855201de3427623364a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c59-s1.png",
+      "runOnePngSha256": "4411da9e5a257202b658a9cb8a3306e4f641e21ce4774f22292ba3639cd4dd52",
+      "runTwoPngSha256": "4411da9e5a257202b658a9cb8a3306e4f641e21ce4774f22292ba3639cd4dd52",
+      "decodedRgbaSha256": "38a7e7bf20554bc36d591ddda2f4384014ee60f25f019e1e41539e8fb91b2bb2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c0-s2.png",
+      "runOnePngSha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6",
+      "runTwoPngSha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6",
+      "decodedRgbaSha256": "48e100384c372091246c6ea6cdd5f38b229194b8b432c30801283070246d3e8d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c1-s2.png",
+      "runOnePngSha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb",
+      "runTwoPngSha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb",
+      "decodedRgbaSha256": "b1e1e2f95b8a143688efc21bd80580369d773ede6a83d9dac1c37f645ac4c097",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c2-s2.png",
+      "runOnePngSha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612",
+      "runTwoPngSha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612",
+      "decodedRgbaSha256": "60a7d182e334eec62c8427eae1e0a6a60142411ea16d252264b5d5bb1362d334",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c3-s2.png",
+      "runOnePngSha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6",
+      "runTwoPngSha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6",
+      "decodedRgbaSha256": "48e100384c372091246c6ea6cdd5f38b229194b8b432c30801283070246d3e8d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c4-s2.png",
+      "runOnePngSha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb",
+      "runTwoPngSha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb",
+      "decodedRgbaSha256": "b1e1e2f95b8a143688efc21bd80580369d773ede6a83d9dac1c37f645ac4c097",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c5-s2.png",
+      "runOnePngSha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612",
+      "runTwoPngSha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612",
+      "decodedRgbaSha256": "60a7d182e334eec62c8427eae1e0a6a60142411ea16d252264b5d5bb1362d334",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c6-s2.png",
+      "runOnePngSha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959",
+      "runTwoPngSha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959",
+      "decodedRgbaSha256": "27aa160a176fd9e3e6c280b4ef12548ab924845f4404b2acb22ab99d58982da3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c7-s2.png",
+      "runOnePngSha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0",
+      "runTwoPngSha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0",
+      "decodedRgbaSha256": "9acac5e483f6a722b4ef2befaf561092585971b9e66453156f53141981a7b4bb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c8-s2.png",
+      "runOnePngSha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37",
+      "runTwoPngSha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37",
+      "decodedRgbaSha256": "67f7e944eb660e5bc4a64ad7aeb3b405ed60545c900d3626b91ccbe6cdd5e724",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c9-s2.png",
+      "runOnePngSha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959",
+      "runTwoPngSha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959",
+      "decodedRgbaSha256": "27aa160a176fd9e3e6c280b4ef12548ab924845f4404b2acb22ab99d58982da3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c10-s2.png",
+      "runOnePngSha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0",
+      "runTwoPngSha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0",
+      "decodedRgbaSha256": "9acac5e483f6a722b4ef2befaf561092585971b9e66453156f53141981a7b4bb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c11-s2.png",
+      "runOnePngSha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37",
+      "runTwoPngSha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37",
+      "decodedRgbaSha256": "67f7e944eb660e5bc4a64ad7aeb3b405ed60545c900d3626b91ccbe6cdd5e724",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c12-s2.png",
+      "runOnePngSha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27",
+      "runTwoPngSha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27",
+      "decodedRgbaSha256": "28955e740b722567bb63c583c805d09e2d3f7f4a4f301a645b32d0d6d906222c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c13-s2.png",
+      "runOnePngSha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45",
+      "runTwoPngSha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45",
+      "decodedRgbaSha256": "02a092e888c0ec0cdae1e22705e918b9d8065a4a4be77f768140980b2c4b56bc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c14-s2.png",
+      "runOnePngSha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c",
+      "runTwoPngSha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c",
+      "decodedRgbaSha256": "bbb54e009d43fdb57ce729e688466930af9b7c150e13b515016f6b9968e6ad6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c15-s2.png",
+      "runOnePngSha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27",
+      "runTwoPngSha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27",
+      "decodedRgbaSha256": "28955e740b722567bb63c583c805d09e2d3f7f4a4f301a645b32d0d6d906222c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c16-s2.png",
+      "runOnePngSha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45",
+      "runTwoPngSha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45",
+      "decodedRgbaSha256": "02a092e888c0ec0cdae1e22705e918b9d8065a4a4be77f768140980b2c4b56bc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c17-s2.png",
+      "runOnePngSha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c",
+      "runTwoPngSha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c",
+      "decodedRgbaSha256": "bbb54e009d43fdb57ce729e688466930af9b7c150e13b515016f6b9968e6ad6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c18-s2.png",
+      "runOnePngSha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd",
+      "runTwoPngSha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd",
+      "decodedRgbaSha256": "704d8616062342fd09a991989d5bf35a98a5e8e123e9a079de9ad94b5c8fe897",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c19-s2.png",
+      "runOnePngSha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1",
+      "runTwoPngSha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1",
+      "decodedRgbaSha256": "3126b1dbccb14a291bed7b273b7b1fcff873eb0bd5cde0264929dd94402cae4e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c20-s2.png",
+      "runOnePngSha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95",
+      "runTwoPngSha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95",
+      "decodedRgbaSha256": "98b210de6eddb15b14b4b49c5413494961a16bf079fe56f31d2bb611ce6d1811",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c21-s2.png",
+      "runOnePngSha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd",
+      "runTwoPngSha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd",
+      "decodedRgbaSha256": "704d8616062342fd09a991989d5bf35a98a5e8e123e9a079de9ad94b5c8fe897",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c22-s2.png",
+      "runOnePngSha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1",
+      "runTwoPngSha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1",
+      "decodedRgbaSha256": "3126b1dbccb14a291bed7b273b7b1fcff873eb0bd5cde0264929dd94402cae4e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c23-s2.png",
+      "runOnePngSha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95",
+      "runTwoPngSha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95",
+      "decodedRgbaSha256": "98b210de6eddb15b14b4b49c5413494961a16bf079fe56f31d2bb611ce6d1811",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c24-s2.png",
+      "runOnePngSha256": "c8f9247507b0af2d700fa4d4aebfaf8243d1b845e2deac3a04dd968af1b6cba4",
+      "runTwoPngSha256": "c8f9247507b0af2d700fa4d4aebfaf8243d1b845e2deac3a04dd968af1b6cba4",
+      "decodedRgbaSha256": "84cc79509a9218f91aec6beb3813b819fa514bf54df0d148225682b4c419f804",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c25-s2.png",
+      "runOnePngSha256": "08800d2816597f423c2487304c8def51fba7a6044e4a30e8e33bc8e7d0410a10",
+      "runTwoPngSha256": "08800d2816597f423c2487304c8def51fba7a6044e4a30e8e33bc8e7d0410a10",
+      "decodedRgbaSha256": "21920741e6fc386020a80dcd9aa06f6d846dd92b98f3ffb8f77b575367318d6e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c26-s2.png",
+      "runOnePngSha256": "e63c9f40711af155b5709309f2b26c594dfafa517c7e1893e169bf8c1efcb907",
+      "runTwoPngSha256": "e63c9f40711af155b5709309f2b26c594dfafa517c7e1893e169bf8c1efcb907",
+      "decodedRgbaSha256": "deb1e6e5ea999762868f273ac740726cea09231a33a340a9d9c7a34efe0a70c2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c27-s2.png",
+      "runOnePngSha256": "2b3621f04d51ef6a5ece11f8c78db66fb649ba4a00074edbd737bedd29fc78c0",
+      "runTwoPngSha256": "2b3621f04d51ef6a5ece11f8c78db66fb649ba4a00074edbd737bedd29fc78c0",
+      "decodedRgbaSha256": "42b4564156920fe854e4828a5f1de17281370595e4f5895e929889eaad19cc8d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c28-s2.png",
+      "runOnePngSha256": "9ee82964ec4d62323a1f69f97a906b91a7ce39d90a7ae2a73bc4f439e69889e0",
+      "runTwoPngSha256": "9ee82964ec4d62323a1f69f97a906b91a7ce39d90a7ae2a73bc4f439e69889e0",
+      "decodedRgbaSha256": "5dd5413e891e316f77bb449e392c8951afcded83961775a4a04f296a246edba0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c29-s2.png",
+      "runOnePngSha256": "954fc0c13539b1605c6034a68707de7405600c6f6e9b657b6d58495f388f4c14",
+      "runTwoPngSha256": "954fc0c13539b1605c6034a68707de7405600c6f6e9b657b6d58495f388f4c14",
+      "decodedRgbaSha256": "f2a2aa0db8cefffbd91eca9521ae84a73fc5bbb23914f4a3c1440a7b68a234c8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c30-s2.png",
+      "runOnePngSha256": "81f2728f408a105a94b79a40650a17ed01608693e1d64df316dd2c751eaedc69",
+      "runTwoPngSha256": "81f2728f408a105a94b79a40650a17ed01608693e1d64df316dd2c751eaedc69",
+      "decodedRgbaSha256": "c28005ee7923f4458430e7e633487fd596594f430e26917ce28d0a199bbfe81e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c31-s2.png",
+      "runOnePngSha256": "75169af2fff99357ae624f84bdf6d5901429102e504c2931c29510975ce2ef5e",
+      "runTwoPngSha256": "75169af2fff99357ae624f84bdf6d5901429102e504c2931c29510975ce2ef5e",
+      "decodedRgbaSha256": "f61c012be0463bccb049c4c0310c5ef4f89f422e06ebb2b78f9fadbe3f1ecada",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c32-s2.png",
+      "runOnePngSha256": "4dd60f04219e471777fad479253220097a55a5976cb0835ec1954c4ca88fc05a",
+      "runTwoPngSha256": "4dd60f04219e471777fad479253220097a55a5976cb0835ec1954c4ca88fc05a",
+      "decodedRgbaSha256": "d527e401da6156e2887afe64762ffc5a4679864525ff61272278162ee5c545b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c33-s2.png",
+      "runOnePngSha256": "3d9be25b0a63a3e608fbc98fe745d275ac3fe99cb22af6fd68324e455c7320f3",
+      "runTwoPngSha256": "3d9be25b0a63a3e608fbc98fe745d275ac3fe99cb22af6fd68324e455c7320f3",
+      "decodedRgbaSha256": "fe04183a82aae03f28c59c2fe51941b6520a515c3cc82578f2f8117a797ebac5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c34-s2.png",
+      "runOnePngSha256": "b9cbe6a028f8f9c973220618581fb7d2e08b11f9ee2bf5e66acf517c4224b9fe",
+      "runTwoPngSha256": "b9cbe6a028f8f9c973220618581fb7d2e08b11f9ee2bf5e66acf517c4224b9fe",
+      "decodedRgbaSha256": "06b0452731d40f68827fefa0486c22000d5acc0e59985556fe2fb013a856ed43",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c35-s2.png",
+      "runOnePngSha256": "a4693845ebbfc74289d76457239116d0ea7421c2cf678d917aac149efec9e7e0",
+      "runTwoPngSha256": "a4693845ebbfc74289d76457239116d0ea7421c2cf678d917aac149efec9e7e0",
+      "decodedRgbaSha256": "551c4f55368d87c584330c117140ff3c1d75e4f60d56499562d8a45a92f38011",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c36-s2.png",
+      "runOnePngSha256": "e91bd63efc0307c1f2c85865ddad99f9984f92c9597d09035a2c0cf22d40924e",
+      "runTwoPngSha256": "e91bd63efc0307c1f2c85865ddad99f9984f92c9597d09035a2c0cf22d40924e",
+      "decodedRgbaSha256": "181283c82fb5edd1d9c2bf684d02b262f5d906a774353032108feeee8a5d7e6f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c37-s2.png",
+      "runOnePngSha256": "b63132c40ace1b1627aa64d5c3ea0ed9adddc3ccb6ad894d7b2bc7054aa58f0d",
+      "runTwoPngSha256": "b63132c40ace1b1627aa64d5c3ea0ed9adddc3ccb6ad894d7b2bc7054aa58f0d",
+      "decodedRgbaSha256": "c7451f43827d9474826b8e426b9efc4d837588de14f2631b34700698e79de8b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c38-s2.png",
+      "runOnePngSha256": "ad0c17b872dfda8c6ec273f08a3276cfb764d9eb714d07fb8261bc8320ad2195",
+      "runTwoPngSha256": "ad0c17b872dfda8c6ec273f08a3276cfb764d9eb714d07fb8261bc8320ad2195",
+      "decodedRgbaSha256": "5f2c5605254e5a783346209ab6c87b0e9c878f919124ef253a3bfe5659409e60",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c39-s2.png",
+      "runOnePngSha256": "9a0efbd0e03f983769d3234ed1459a03c980e136e73d899d8e3b2c3ef26d8b3d",
+      "runTwoPngSha256": "9a0efbd0e03f983769d3234ed1459a03c980e136e73d899d8e3b2c3ef26d8b3d",
+      "decodedRgbaSha256": "93a6778ef2bfd5c6b33a50450c2a572f4186a575aaa29508d0c3c3cc56fb3831",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c40-s2.png",
+      "runOnePngSha256": "368d3cf85403c048a18fd626ff4d41553d9fff451881f1fffc85a0f56ea5fec9",
+      "runTwoPngSha256": "368d3cf85403c048a18fd626ff4d41553d9fff451881f1fffc85a0f56ea5fec9",
+      "decodedRgbaSha256": "86b8f014e8fec78b2c959edfa1c8a799697f583c479cb9d340b13cee9f3bc579",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c41-s2.png",
+      "runOnePngSha256": "b20cc0b4950b0ed89bea4ef912668cf5f665b66b3944a80c7dcc1707b9aa8c72",
+      "runTwoPngSha256": "b20cc0b4950b0ed89bea4ef912668cf5f665b66b3944a80c7dcc1707b9aa8c72",
+      "decodedRgbaSha256": "398a0c00e5c349841d6c948fbc19549c534b0d5e5fb292b2df2838abac5b50dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c42-s2.png",
+      "runOnePngSha256": "596c455962bc0658af8ad21bb18ebe6f8a533d3f7f0280b5cb080bd402b2d76e",
+      "runTwoPngSha256": "596c455962bc0658af8ad21bb18ebe6f8a533d3f7f0280b5cb080bd402b2d76e",
+      "decodedRgbaSha256": "27430d75a4132b499cd91ec1af7d9bd4b4c6f4a66be32728e63f20f1e460ab8c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c43-s2.png",
+      "runOnePngSha256": "398365146b14ab0643a43625235f3305296e73f2f9bdf5f7edcad9e0e55f7dc4",
+      "runTwoPngSha256": "398365146b14ab0643a43625235f3305296e73f2f9bdf5f7edcad9e0e55f7dc4",
+      "decodedRgbaSha256": "c659d4d80ded2e84146a7b49f6de350eb533ef97070a2879af16d555ab86b3e0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c44-s2.png",
+      "runOnePngSha256": "1408f9e76764a03d7eaa9c658e074e4d00ffc418d4eba7e6209ec69bbe070b99",
+      "runTwoPngSha256": "1408f9e76764a03d7eaa9c658e074e4d00ffc418d4eba7e6209ec69bbe070b99",
+      "decodedRgbaSha256": "5f23a239a199e0e24b8f6e2701220e4b6b15ddaab6d048522dd5c8ac1cda94af",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c45-s2.png",
+      "runOnePngSha256": "4f2cf6a13b8b9022e78636cefc1c7ac648ca134fdbfb2213885aa415635ff96b",
+      "runTwoPngSha256": "4f2cf6a13b8b9022e78636cefc1c7ac648ca134fdbfb2213885aa415635ff96b",
+      "decodedRgbaSha256": "1eb4e8528077a7130fa2132af097f1b99b9f809682e995a528ca536ae21b81ca",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c46-s2.png",
+      "runOnePngSha256": "85df36825a8320c98d176332802714b40c530e03b13e02e92909c99a6ffd2035",
+      "runTwoPngSha256": "85df36825a8320c98d176332802714b40c530e03b13e02e92909c99a6ffd2035",
+      "decodedRgbaSha256": "e5dfa8c64d9bd8a7c598a0f6db67f58754e322e8a8c878e8d2e15d9f1626406c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c47-s2.png",
+      "runOnePngSha256": "dd29bb4c08edcc68cff1c0ced3b431a71d03fdf249db259e599a108ec46a5c40",
+      "runTwoPngSha256": "dd29bb4c08edcc68cff1c0ced3b431a71d03fdf249db259e599a108ec46a5c40",
+      "decodedRgbaSha256": "59b3853f08f6ebbebab78b9a4c2518e4e6fbf756bb54935ba39e7896da1e98fb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c48-s2.png",
+      "runOnePngSha256": "044980c11c1e062b820a3fec4509bded2182daf35ef61c989414ed86e43c02c2",
+      "runTwoPngSha256": "044980c11c1e062b820a3fec4509bded2182daf35ef61c989414ed86e43c02c2",
+      "decodedRgbaSha256": "805a8661c712b59519db19545c78ba629293e651606b11f84861b8ced9f4f7f9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c49-s2.png",
+      "runOnePngSha256": "77dd97dc329ca0de39f8fe6f1619b91acb0b06920d9b602c12aedebb3111ea31",
+      "runTwoPngSha256": "77dd97dc329ca0de39f8fe6f1619b91acb0b06920d9b602c12aedebb3111ea31",
+      "decodedRgbaSha256": "d08ecaf5531486db922340efb50588e7f40ce538837f3fd0d779492d560a244f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c50-s2.png",
+      "runOnePngSha256": "64d6330fb9bac3f14057feab28a7af677aa7b7560c2573abfc9da576d69f414d",
+      "runTwoPngSha256": "64d6330fb9bac3f14057feab28a7af677aa7b7560c2573abfc9da576d69f414d",
+      "decodedRgbaSha256": "ef9ebb49cad270097d622461d599e24fd9ee382257090f7f9ba2b8985799a4f5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c51-s2.png",
+      "runOnePngSha256": "e39fe30b4600cd8a5920c4898c5bb43cc93259f6d04861b112e154264fd44ef9",
+      "runTwoPngSha256": "e39fe30b4600cd8a5920c4898c5bb43cc93259f6d04861b112e154264fd44ef9",
+      "decodedRgbaSha256": "894021a221d99d5f517b15926d4eb0456b5168d842448fe10ee198e6b6e5a6ce",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c52-s2.png",
+      "runOnePngSha256": "1f6492800bfbaad88173c285c812ec76f53620e091283122e2f09b979a618c95",
+      "runTwoPngSha256": "1f6492800bfbaad88173c285c812ec76f53620e091283122e2f09b979a618c95",
+      "decodedRgbaSha256": "6216a2d2b67931a2f099ca4a536cccca2e45b3e0fbd60241b7349e927b885aeb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c53-s2.png",
+      "runOnePngSha256": "9c073a3aa4d699ede42a6d361845db38bd8df3e7eacb36d89ea17d4e95f0b698",
+      "runTwoPngSha256": "9c073a3aa4d699ede42a6d361845db38bd8df3e7eacb36d89ea17d4e95f0b698",
+      "decodedRgbaSha256": "a7bf129237e6966024f79bf3d59e626453b8a524df06a7ba20a1bd3f94bf1e83",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c54-s2.png",
+      "runOnePngSha256": "724c013c12e7de2a7488dfb65f5e50577bec50c778fb68862f0e57881ec30898",
+      "runTwoPngSha256": "724c013c12e7de2a7488dfb65f5e50577bec50c778fb68862f0e57881ec30898",
+      "decodedRgbaSha256": "f640ce999d21f237d945c34804baae11d000c3177d70db45e446bd65a64114c1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c55-s2.png",
+      "runOnePngSha256": "2352420263059df4d3502f3dd4844d9d7203c2cf34541d3fcb36049d3bf00db8",
+      "runTwoPngSha256": "2352420263059df4d3502f3dd4844d9d7203c2cf34541d3fcb36049d3bf00db8",
+      "decodedRgbaSha256": "70be3d77d8fb009981282c5e26a81f1b2b64db61245b3ae4a0172ed03756faa4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c56-s2.png",
+      "runOnePngSha256": "a1a78b2e72f7f26eb376886160003da276103eb486ff8bcb5246b54836ff533c",
+      "runTwoPngSha256": "a1a78b2e72f7f26eb376886160003da276103eb486ff8bcb5246b54836ff533c",
+      "decodedRgbaSha256": "70229e3198a1edac1437f03b4c53f5848802d6b623fe102c1a0c639836bc9c51",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c57-s2.png",
+      "runOnePngSha256": "d9c96b0cae525ddaf3d942d507e26aedc4a3f85df4b7b31311ffcf6a37f67ffe",
+      "runTwoPngSha256": "d9c96b0cae525ddaf3d942d507e26aedc4a3f85df4b7b31311ffcf6a37f67ffe",
+      "decodedRgbaSha256": "99312781aad2131d53ea129a8afb2796456f026a01bd0bf4db7cb21c666f3b6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c58-s2.png",
+      "runOnePngSha256": "8c999cc96304cc615cf401a5f9cbb28792ed64c8ff282388acd1860dfb0ee2e9",
+      "runTwoPngSha256": "8c999cc96304cc615cf401a5f9cbb28792ed64c8ff282388acd1860dfb0ee2e9",
+      "decodedRgbaSha256": "fc3df0c596b6df4ea7e539e290bafbd040cd6382f54e43a078f11f7657156aa7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c59-s2.png",
+      "runOnePngSha256": "1969b16e95b1c2fe20e8a18ce7dbfc182b5a54aa819cea06db87f248d536352c",
+      "runTwoPngSha256": "1969b16e95b1c2fe20e8a18ce7dbfc182b5a54aa819cea06db87f248d536352c",
+      "decodedRgbaSha256": "39500d3cfb00fab529314dc316ebe2473202cce32233cbea6c8b75f9285e9581",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c0-s3.png",
+      "runOnePngSha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51",
+      "runTwoPngSha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51",
+      "decodedRgbaSha256": "3a433e44a7b4352009a423eef74172906210dad263c458f382bb3e8ec34c1f6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c1-s3.png",
+      "runOnePngSha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc",
+      "runTwoPngSha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc",
+      "decodedRgbaSha256": "a503c022ae1ef55a4e5312fadf2b59e927d99c9f9bfb6fc7d4720aa7c7f82aed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c2-s3.png",
+      "runOnePngSha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc",
+      "runTwoPngSha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc",
+      "decodedRgbaSha256": "2d300d2fd6c5aa4d6898917cfee79582e934fc9183c2f3b55e636afb8de2a221",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c3-s3.png",
+      "runOnePngSha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51",
+      "runTwoPngSha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51",
+      "decodedRgbaSha256": "3a433e44a7b4352009a423eef74172906210dad263c458f382bb3e8ec34c1f6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c4-s3.png",
+      "runOnePngSha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc",
+      "runTwoPngSha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc",
+      "decodedRgbaSha256": "a503c022ae1ef55a4e5312fadf2b59e927d99c9f9bfb6fc7d4720aa7c7f82aed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c5-s3.png",
+      "runOnePngSha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc",
+      "runTwoPngSha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc",
+      "decodedRgbaSha256": "2d300d2fd6c5aa4d6898917cfee79582e934fc9183c2f3b55e636afb8de2a221",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c6-s3.png",
+      "runOnePngSha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d",
+      "runTwoPngSha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d",
+      "decodedRgbaSha256": "4bb115f83a9f1e6f120f02233f4c180620ed7fb2e8cd0454a6b93f2bbd55b887",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c7-s3.png",
+      "runOnePngSha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20",
+      "runTwoPngSha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20",
+      "decodedRgbaSha256": "8a392cb97ef7df36f4e792fb7743344084b83b982f2f2b7fbfb0895e5303b454",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c8-s3.png",
+      "runOnePngSha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b",
+      "runTwoPngSha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b",
+      "decodedRgbaSha256": "5f17f1dc4f82519c2af4dff25218f55f8731a03e968aae883efb5a68a411f24d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c9-s3.png",
+      "runOnePngSha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d",
+      "runTwoPngSha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d",
+      "decodedRgbaSha256": "4bb115f83a9f1e6f120f02233f4c180620ed7fb2e8cd0454a6b93f2bbd55b887",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c10-s3.png",
+      "runOnePngSha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20",
+      "runTwoPngSha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20",
+      "decodedRgbaSha256": "8a392cb97ef7df36f4e792fb7743344084b83b982f2f2b7fbfb0895e5303b454",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c11-s3.png",
+      "runOnePngSha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b",
+      "runTwoPngSha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b",
+      "decodedRgbaSha256": "5f17f1dc4f82519c2af4dff25218f55f8731a03e968aae883efb5a68a411f24d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c12-s3.png",
+      "runOnePngSha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4",
+      "runTwoPngSha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4",
+      "decodedRgbaSha256": "bc285e8f540eb60294187894d77efe3bb512a5ac011ea2ea3f1f183e9be05363",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c13-s3.png",
+      "runOnePngSha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134",
+      "runTwoPngSha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134",
+      "decodedRgbaSha256": "c5fffcd743fa88c454218cba8418fc453b4d11c4b8d69da52f54396e7dadbe78",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c14-s3.png",
+      "runOnePngSha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea",
+      "runTwoPngSha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea",
+      "decodedRgbaSha256": "e1ab276f52da0940b5bc2a6617491413d111fd3916db3efcf418975eefb7629e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c15-s3.png",
+      "runOnePngSha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4",
+      "runTwoPngSha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4",
+      "decodedRgbaSha256": "bc285e8f540eb60294187894d77efe3bb512a5ac011ea2ea3f1f183e9be05363",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c16-s3.png",
+      "runOnePngSha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134",
+      "runTwoPngSha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134",
+      "decodedRgbaSha256": "c5fffcd743fa88c454218cba8418fc453b4d11c4b8d69da52f54396e7dadbe78",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c17-s3.png",
+      "runOnePngSha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea",
+      "runTwoPngSha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea",
+      "decodedRgbaSha256": "e1ab276f52da0940b5bc2a6617491413d111fd3916db3efcf418975eefb7629e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c18-s3.png",
+      "runOnePngSha256": "34c54e9a3dc0ebfed16387f7e59047da7710eef4bcc21b5a9942c85c882135a4",
+      "runTwoPngSha256": "34c54e9a3dc0ebfed16387f7e59047da7710eef4bcc21b5a9942c85c882135a4",
+      "decodedRgbaSha256": "de6f48ea543d711de0d05009712251ed28a4003d3243b4a60fe7b82ece4747d0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c19-s3.png",
+      "runOnePngSha256": "9cff8b28fe3db7d0e28e77a153afd59f636513cd8e95ef0510f35eec05cfdf64",
+      "runTwoPngSha256": "9cff8b28fe3db7d0e28e77a153afd59f636513cd8e95ef0510f35eec05cfdf64",
+      "decodedRgbaSha256": "52cb977892fe37da3fb637064b48e36a73c5130a2d75ab832f1eb8a71d37909f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c20-s3.png",
+      "runOnePngSha256": "e8e7912356cb0f95c5300697f625bac87280d549137dec95e343ac46f6484437",
+      "runTwoPngSha256": "e8e7912356cb0f95c5300697f625bac87280d549137dec95e343ac46f6484437",
+      "decodedRgbaSha256": "9d7cdbc7ffdb4bd98cac6d29c71aff91863f7aff04a308082f3fde2fb6bab62b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c21-s3.png",
+      "runOnePngSha256": "f2267ab8f26d4e0889e9ac4b3221aa70846ed41fb5834bccc5a50823481c1962",
+      "runTwoPngSha256": "f2267ab8f26d4e0889e9ac4b3221aa70846ed41fb5834bccc5a50823481c1962",
+      "decodedRgbaSha256": "07e95330c0fbfe5cffd6cbe7b9d60985f1315d215a886e657a21cd9cdfd77350",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c22-s3.png",
+      "runOnePngSha256": "d4dfcb834788a5454578a75c49dce91b1053e417cc0804e9304baa75335126d2",
+      "runTwoPngSha256": "d4dfcb834788a5454578a75c49dce91b1053e417cc0804e9304baa75335126d2",
+      "decodedRgbaSha256": "c3e806072a0cbb2e3688fc43757a40cc0dfc1d9384368dbc61f40cfa7d683c4f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c23-s3.png",
+      "runOnePngSha256": "ed1b7d53947fa57f1c51ec5dcc0511c5dbec4f88cefcc422b2f1c7e49affaddc",
+      "runTwoPngSha256": "ed1b7d53947fa57f1c51ec5dcc0511c5dbec4f88cefcc422b2f1c7e49affaddc",
+      "decodedRgbaSha256": "399011794f9b43ff24e3750ec79bad08f46590fd7b688493ad3ae54374306f86",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c24-s3.png",
+      "runOnePngSha256": "2c18e4418845fc5f8e0030f0f9e0358b57a6b9cdea3031a71951bdc2c2165b6f",
+      "runTwoPngSha256": "2c18e4418845fc5f8e0030f0f9e0358b57a6b9cdea3031a71951bdc2c2165b6f",
+      "decodedRgbaSha256": "b3b8d957611ae15fb41b7f6fa0b911036c148980ea252338016308125243e3b6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c25-s3.png",
+      "runOnePngSha256": "567a5133f52b7b59b1a5f107f7830cf963d591a55aeb9cc760de60f7765e36d7",
+      "runTwoPngSha256": "567a5133f52b7b59b1a5f107f7830cf963d591a55aeb9cc760de60f7765e36d7",
+      "decodedRgbaSha256": "5b6c622dec10d0c38eb026544d19379fdfa78fd37491dd88178a1db643fdae7b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c26-s3.png",
+      "runOnePngSha256": "8a367042b408d0a318b5725b3789ec4c859597c3389607c2050d9e2ac188cd80",
+      "runTwoPngSha256": "8a367042b408d0a318b5725b3789ec4c859597c3389607c2050d9e2ac188cd80",
+      "decodedRgbaSha256": "3bcf0ff6c622a2a5953f1bb06764a8bcff279ca5288fba3ca554f20f55fb6260",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c27-s3.png",
+      "runOnePngSha256": "f3177b8182936891accb0f63487f9583436a73e0730a0a5f66bf4363a6f0e8e1",
+      "runTwoPngSha256": "f3177b8182936891accb0f63487f9583436a73e0730a0a5f66bf4363a6f0e8e1",
+      "decodedRgbaSha256": "751105777f743064406cf2612668cacb68620bada7e37665664385903d37805d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c28-s3.png",
+      "runOnePngSha256": "d82c238027e267fec01691c28fa9a011a094b3876b25b3e64049439741074ea9",
+      "runTwoPngSha256": "d82c238027e267fec01691c28fa9a011a094b3876b25b3e64049439741074ea9",
+      "decodedRgbaSha256": "e22aa20ff03b2b0132b9e16d215dcf3579ba765afc52007805fb8043ebff7890",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c29-s3.png",
+      "runOnePngSha256": "e28d3401fa6137e9d7f14442b3c91e58ebca895ca8817b22656ad82edc7e13d9",
+      "runTwoPngSha256": "e28d3401fa6137e9d7f14442b3c91e58ebca895ca8817b22656ad82edc7e13d9",
+      "decodedRgbaSha256": "fcba1b364c218575164b63318cfc396ca2f73158ba3c7c359982695ead347a36",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c30-s3.png",
+      "runOnePngSha256": "d322ee1cd14a41d0db26628cb4010d182e88a7f12cd26eca180e4f4f7bdf5365",
+      "runTwoPngSha256": "d322ee1cd14a41d0db26628cb4010d182e88a7f12cd26eca180e4f4f7bdf5365",
+      "decodedRgbaSha256": "ef4eacef867b8b941824fdd388be7248e03adf042001d6a2296a60e466618344",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c31-s3.png",
+      "runOnePngSha256": "0618e466bada6fbe2b074db5131f2d56abbcb1ada93df3b27dbc6dddaba1c037",
+      "runTwoPngSha256": "0618e466bada6fbe2b074db5131f2d56abbcb1ada93df3b27dbc6dddaba1c037",
+      "decodedRgbaSha256": "e4d6ab4d282f41c854a6c574aa801f0f4f6fc13bd517bf75e441c15c55e3d74f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c32-s3.png",
+      "runOnePngSha256": "de08bd593ac5fc5ac726be97adf2f7e39934e027fe8459a3b2decfbfa715d558",
+      "runTwoPngSha256": "de08bd593ac5fc5ac726be97adf2f7e39934e027fe8459a3b2decfbfa715d558",
+      "decodedRgbaSha256": "07d106d76df435d5293fbf375bfa55958abe6a16fb9e1b86c7f49244e60ee7b3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c33-s3.png",
+      "runOnePngSha256": "a61f4ef0cf759e6581f34175f1dd05930e2f8b7fe4119f697dcc6b714d1940e2",
+      "runTwoPngSha256": "a61f4ef0cf759e6581f34175f1dd05930e2f8b7fe4119f697dcc6b714d1940e2",
+      "decodedRgbaSha256": "3b73c67145a5d17166da8298c0507b95d121a91475a5988dae4add5cc1d9654b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c34-s3.png",
+      "runOnePngSha256": "78ec2c47dfd0df9a591b093455a37e816f7bf4fbca50a71aa92513d3bd840205",
+      "runTwoPngSha256": "78ec2c47dfd0df9a591b093455a37e816f7bf4fbca50a71aa92513d3bd840205",
+      "decodedRgbaSha256": "de055f1821db7d57259c1ed19f69310399286cb2368ac546c895920074fd246b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c35-s3.png",
+      "runOnePngSha256": "3890e2f343644b92226302f7f1c23413ee7faa091ce42cf80f111e5c1644bf03",
+      "runTwoPngSha256": "3890e2f343644b92226302f7f1c23413ee7faa091ce42cf80f111e5c1644bf03",
+      "decodedRgbaSha256": "c87effd01b0db2ab7d62f5c2552f4f195880f67f8c1638e8dc9c6d354856050b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c36-s3.png",
+      "runOnePngSha256": "74154179451271da71cde2912a3054efb330cf3ea448d3f49ebe04e9f1a74ae7",
+      "runTwoPngSha256": "74154179451271da71cde2912a3054efb330cf3ea448d3f49ebe04e9f1a74ae7",
+      "decodedRgbaSha256": "fddc8b97a8567b4c999c21be9724e0ed6ca11227fc13c87227700c63e8e2c5d5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c37-s3.png",
+      "runOnePngSha256": "4bd8d5a57eb9ae0ed47eb942f1ca68d68f96b9712ec7da1eee3df76fb408fc3e",
+      "runTwoPngSha256": "4bd8d5a57eb9ae0ed47eb942f1ca68d68f96b9712ec7da1eee3df76fb408fc3e",
+      "decodedRgbaSha256": "9029bb051871fc24a0b4473328be86730ce8092ead6bae670d958116d2858aae",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c38-s3.png",
+      "runOnePngSha256": "40855ed231f2861b41117106a4c901ce25d9c42735b01916bc40c3c0f2a0c7fe",
+      "runTwoPngSha256": "40855ed231f2861b41117106a4c901ce25d9c42735b01916bc40c3c0f2a0c7fe",
+      "decodedRgbaSha256": "84f54745b9f9867985e7f8caed903b28387068f787c7040166091c4ab637c231",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c39-s3.png",
+      "runOnePngSha256": "5a6dc6f5d0389b80acc842c0269d2cb208e11314daa4af0540cfd18ba6a099fd",
+      "runTwoPngSha256": "5a6dc6f5d0389b80acc842c0269d2cb208e11314daa4af0540cfd18ba6a099fd",
+      "decodedRgbaSha256": "0630fd3f341122c00a42d6509e7ca050fe2eaa7b9a67af7c370cdffcd24b2724",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c40-s3.png",
+      "runOnePngSha256": "3acdf575d2c2248b2a8772c360785cbf03cb854142371fac06df0b56eab7fd6e",
+      "runTwoPngSha256": "3acdf575d2c2248b2a8772c360785cbf03cb854142371fac06df0b56eab7fd6e",
+      "decodedRgbaSha256": "b953676b8ac77fb41164ade0f57c84399a0873a62766c6bbb92dfa69bcd7c250",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c41-s3.png",
+      "runOnePngSha256": "b481be5009f5964ce50bbf724dfd50314c1d79bdc79d887742cc74680bb550f5",
+      "runTwoPngSha256": "b481be5009f5964ce50bbf724dfd50314c1d79bdc79d887742cc74680bb550f5",
+      "decodedRgbaSha256": "2336b2e926552bb669a85fbc3007b85890b00fd0fa5885d2923bcaa0cb8f9947",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c42-s3.png",
+      "runOnePngSha256": "9056f2edc5d0cbd5e37f79a109823da1aabdddd032c8e39dafb4f96b8e46c5ad",
+      "runTwoPngSha256": "9056f2edc5d0cbd5e37f79a109823da1aabdddd032c8e39dafb4f96b8e46c5ad",
+      "decodedRgbaSha256": "cbba54d8ba3620720ac00ffdf4bcea8bd638b3d85b2003356c8086eae66295ce",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c43-s3.png",
+      "runOnePngSha256": "9b9b175d4142fd6a353341b97ad866e8475ce8b17db38897df90fe16c7ef067f",
+      "runTwoPngSha256": "9b9b175d4142fd6a353341b97ad866e8475ce8b17db38897df90fe16c7ef067f",
+      "decodedRgbaSha256": "da3c9d75a417877f3c0cc2880873fea00041c321b41e810c9ceadd03b3c0031b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c44-s3.png",
+      "runOnePngSha256": "5bf2e079082b63bd29be5fdef068a95ba4ec852773b4f798194283c51cdbc207",
+      "runTwoPngSha256": "5bf2e079082b63bd29be5fdef068a95ba4ec852773b4f798194283c51cdbc207",
+      "decodedRgbaSha256": "8073b807a9033283a85b5e98e9b6d225cb40b7af60759d73b088936d6d459e15",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c45-s3.png",
+      "runOnePngSha256": "243fb8397f9085a501d10f96ca19270681f279ef16bbd2484ca8bfddc41de11c",
+      "runTwoPngSha256": "243fb8397f9085a501d10f96ca19270681f279ef16bbd2484ca8bfddc41de11c",
+      "decodedRgbaSha256": "6dc7d044722eebbaf9e04f2db6ab496681e45e94a1dda9800174604ac4650997",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c46-s3.png",
+      "runOnePngSha256": "7b821ad6fe7bd76fbd2addf6114b9da0518cf7b698884d36bdffeed2178fab83",
+      "runTwoPngSha256": "7b821ad6fe7bd76fbd2addf6114b9da0518cf7b698884d36bdffeed2178fab83",
+      "decodedRgbaSha256": "8acaa8530b82a70bc9c835e09e8bbf7ce50bc7bc4db84b19760ef25f59699c20",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c47-s3.png",
+      "runOnePngSha256": "e81859e81f5a0a694f546d013e70dea7095adffbd89aa4a6c87cbe429df0ebfb",
+      "runTwoPngSha256": "e81859e81f5a0a694f546d013e70dea7095adffbd89aa4a6c87cbe429df0ebfb",
+      "decodedRgbaSha256": "ccbc7372a05072141d33e3f6dec9a159bfd677b89239540ddca750988ca162cf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c48-s3.png",
+      "runOnePngSha256": "ace18d5f6d2e84eccbdd615c75d154e1b1bcf0ea38a6e1d948f053ccf3b92427",
+      "runTwoPngSha256": "ace18d5f6d2e84eccbdd615c75d154e1b1bcf0ea38a6e1d948f053ccf3b92427",
+      "decodedRgbaSha256": "9e704437f51e3820e58a8cc133486f7b5b4b21e7418ba0e92114522194873918",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c49-s3.png",
+      "runOnePngSha256": "b0b65c1f981c2ab781869920cce48a2ad3379059baa65652d6faa0521ee26bc1",
+      "runTwoPngSha256": "b0b65c1f981c2ab781869920cce48a2ad3379059baa65652d6faa0521ee26bc1",
+      "decodedRgbaSha256": "0bd547a8c4ee2721fe784e8d7c9508028730024d4474decaf909945396b75d10",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c50-s3.png",
+      "runOnePngSha256": "fa40d2beae91dad65382e891c1fa50f2e867d2a88f59825601de16d51821fc42",
+      "runTwoPngSha256": "fa40d2beae91dad65382e891c1fa50f2e867d2a88f59825601de16d51821fc42",
+      "decodedRgbaSha256": "132c6d85448c616d4dffcb86e06962a04d94a7ec41fd587970060d40dbccd647",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c51-s3.png",
+      "runOnePngSha256": "a6920a5a721f4cba568abe8a48322a8c1f1c5fb82105fbc4998b0a57986a4577",
+      "runTwoPngSha256": "a6920a5a721f4cba568abe8a48322a8c1f1c5fb82105fbc4998b0a57986a4577",
+      "decodedRgbaSha256": "09ee00bdb8f273646948fabc87e52e39fc06126a2e4c498930028992817ac0f7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c52-s3.png",
+      "runOnePngSha256": "af5c7ec01da2658c243287e2a530fca84bd6d657f76ffb98da430a5d0b995ba8",
+      "runTwoPngSha256": "af5c7ec01da2658c243287e2a530fca84bd6d657f76ffb98da430a5d0b995ba8",
+      "decodedRgbaSha256": "f06cb999205ca01c011097d45f035454f87ae3bf8025978ab6462135406c747e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c53-s3.png",
+      "runOnePngSha256": "d0b05165bef50f179ddd3a2b57a9334d4eede4a697e19cce1a1cd0f170a3220e",
+      "runTwoPngSha256": "d0b05165bef50f179ddd3a2b57a9334d4eede4a697e19cce1a1cd0f170a3220e",
+      "decodedRgbaSha256": "46cc83dc5912f2b025db73a016502dcbd72d99eb1effb743961b1c5c8acf7fb5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c54-s3.png",
+      "runOnePngSha256": "d86205bc6947703ca9ce92ab3d9d82e8e48bd61b3f1d307399f81c316f045d3d",
+      "runTwoPngSha256": "d86205bc6947703ca9ce92ab3d9d82e8e48bd61b3f1d307399f81c316f045d3d",
+      "decodedRgbaSha256": "a4f622d8feeda08490ff0c4e8b5744312f59be39851e13ef44d75828d5e6bc91",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c55-s3.png",
+      "runOnePngSha256": "a4a8cc47c712f5a848de5e365f6ae74662ec01b281e19dc6e9fadde65ffb76ae",
+      "runTwoPngSha256": "a4a8cc47c712f5a848de5e365f6ae74662ec01b281e19dc6e9fadde65ffb76ae",
+      "decodedRgbaSha256": "ca812953cc38640828da4653182e4021575cf5fbfff9cf01bb328ce570d679d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c56-s3.png",
+      "runOnePngSha256": "17a341d965153ca01b002ea0c4dbdf58c527c4144886c38de8debb9636063277",
+      "runTwoPngSha256": "17a341d965153ca01b002ea0c4dbdf58c527c4144886c38de8debb9636063277",
+      "decodedRgbaSha256": "37a48d49d1a29376d976f43fd89457ed913abb37d97691917cefd4c09d4765ef",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c57-s3.png",
+      "runOnePngSha256": "c9a809357d28d66946eeff896174b8d1d2436c4f6704f60d5fbb83b23258f557",
+      "runTwoPngSha256": "c9a809357d28d66946eeff896174b8d1d2436c4f6704f60d5fbb83b23258f557",
+      "decodedRgbaSha256": "3591302778775d86ded3d9b89ebf7fb13f2abbdea13074de3f6606a8ea0cb3eb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c58-s3.png",
+      "runOnePngSha256": "750e5c4015b3c9414b933ff9b6d9f8580961c863a91c367be812a9e8d2231e19",
+      "runTwoPngSha256": "750e5c4015b3c9414b933ff9b6d9f8580961c863a91c367be812a9e8d2231e19",
+      "decodedRgbaSha256": "0dc60890e03368edc70a33d8d0672b451343e63101bd98c2407b5b7392d549ff",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "tooltip-c59-s3.png",
+      "runOnePngSha256": "859a35b497590955f75b91cdf0f3b51b3e1cc811e23e544027c346cf3631f018",
+      "runTwoPngSha256": "859a35b497590955f75b91cdf0f3b51b3e1cc811e23e544027c346cf3631f018",
+      "decodedRgbaSha256": "bc2ec020f1aede5e6688213c24e3015663635a2222ff249a0ea63ca7fd7d6c6f",
+      "mismatchedPixels": 0
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/player-preview.json --yes --overwrite",
+  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "minecraft-avatar-assets.ts",
+      "sourcePath": "registry/ui/minecraft-avatar-assets.ts",
+      "sourceSha256": "fd93027ca25a8ed525ca9c98c1fab754c5192725703ff33246f24d065c8b2250",
+      "installedSha256": "0640dbc22b32a607c27f4c329d5c23b0d2e8cb9d58164f882a67acee6e3a1aaa"
+    },
+    {
+      "path": "minecraft-player-mesh.ts",
+      "sourcePath": "registry/ui/minecraft-player-mesh.ts",
+      "sourceSha256": "c776c30b76561b67f8684850c34138950ce1d8ab12290589897defc96fd609e8",
+      "installedSha256": "c776c30b76561b67f8684850c34138950ce1d8ab12290589897defc96fd609e8"
+    },
+    {
+      "path": "minecraft-player-preview.css",
+      "sourcePath": "registry/ui/minecraft-player-preview.css",
+      "sourceSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03",
+      "installedSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03"
+    },
+    {
+      "path": "player-preview.tsx",
+      "sourcePath": "registry/ui/player-preview.tsx",
+      "sourceSha256": "3d22825b051b9a3325b44297aa03dbfb2b92e7ef494009353a8092caa8aedd46",
+      "installedSha256": "d25bac23c32202a22cf5807a12c472c49fd23cb70400eed8750270943f7f3ecb"
+    },
+    {
+      "path": "minecraft-player-skin.ts",
+      "sourcePath": "registry/ui/minecraft-player-skin.ts",
+      "sourceSha256": "c528efd99256df1186f02411c55ec42f2f665337105fe9ab3ab222186a238a5e",
+      "installedSha256": "13e0182078fec60d3bb4050cdf61bccc615fa7c2b914f3cb54b8c6be94843b07"
+    }
+  ],
+  "cases": [
+    {
+      "name": "player-back-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cdfce06cc8b8a578e0f0486510bf04133137850b5e5872ef28bb9fbb6cffcd72"
+    },
+    {
+      "name": "player-back-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a8175e1654899e4e48aa57b57a6ff64548a97cb3c7eb28c14ce75cb9dad8baa4"
+    },
+    {
+      "name": "player-back-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c66258d3cae5ca96b79491cae03a73672f9887095dfa4d3dfbdc7c667b3e9557"
+    },
+    {
+      "name": "player-back-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c27d362528bdae4ad1ffa43060a999ecab3d2b5e3cedef348005117aef841e40"
+    },
+    {
+      "name": "player-back-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a65b0ea4569e9c15f63cd2eac6633beead4f93e4595df9bd06304c0ad53c5ddf"
+    },
+    {
+      "name": "player-back-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "31be46ed4ae5b2ba442f510a136225809b93a52c11b36d8ef7c06133f37a5140"
+    },
+    {
+      "name": "player-back-6-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a65b0ea4569e9c15f63cd2eac6633beead4f93e4595df9bd06304c0ad53c5ddf"
+    },
+    {
+      "name": "player-back-7-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "31be46ed4ae5b2ba442f510a136225809b93a52c11b36d8ef7c06133f37a5140"
+    },
+    {
+      "name": "player-back-8-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7e26b5a0e3b256970e296dada1ce5812cc2002f8ce20d84efc89ae776c2b44a7"
+    },
+    {
+      "name": "player-back-9-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "63274f5e0654cc24036ca6ee40d686bbf7d2c1d712d25f249ac348fcd026094d"
+    },
+    {
+      "name": "player-back-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8096b0e140f5b70c194d3133c5c0844016295d913d1fb9dc788bd997fae81b95"
+    },
+    {
+      "name": "player-back-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2a60bb21674e9983cd3e95a8c861f872555b996fe1e4985f81fe1b56c67a03b7"
+    },
+    {
+      "name": "player-back-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ed7d0964bd4f9b690a24e84f78f34a61d13b8df2f015daea3260e9c010d4003f"
+    },
+    {
+      "name": "player-back-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9e35da9d65bddf4f17b70bea19ecb4953664585a462f25b110c8f024e8d8d0ac"
+    },
+    {
+      "name": "player-back-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "57ba67592580bd27b4870cc71846af71a0ab439b351b842944087b67ed777f10"
+    },
+    {
+      "name": "player-back-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ff1a5f55579d257d6e7cc9667a42d366a8facca0b327cb97afb5912b82c5dd99"
+    },
+    {
+      "name": "player-back-6-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "57ba67592580bd27b4870cc71846af71a0ab439b351b842944087b67ed777f10"
+    },
+    {
+      "name": "player-back-7-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ff1a5f55579d257d6e7cc9667a42d366a8facca0b327cb97afb5912b82c5dd99"
+    },
+    {
+      "name": "player-back-8-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "18ccc3a09b61221f2a1ce615aa7238350eaa211d191a4f6050d9ecb288890ce5"
+    },
+    {
+      "name": "player-back-9-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ae7c3cf7b13871c785ae05e365b69522c0f95ad819187f6ae06f6d0e5c77a81f"
+    },
+    {
+      "name": "player-back-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "524656f555de51fe03e411a860703f01b23fa677bc77219ee4dba0c6a5112833"
+    },
+    {
+      "name": "player-back-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7ffda38a1614fff960853283b4843b1b6dcd55e76aeee21248b5677ef0eab00f"
+    },
+    {
+      "name": "player-back-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "57c6f64faf9388d42c47df257c76d14c540f52fba9be7243f0d4e8ea5dd09375"
+    },
+    {
+      "name": "player-back-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "68d87787724dbb0b135db45265d51a95096a26b491572c017aea48f58dff49c4"
+    },
+    {
+      "name": "player-back-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1cd7f2f93cf4db6f3b8c9843bf7e1a3c7b22d0527c8e78016cbf19f8b34d0522"
+    },
+    {
+      "name": "player-back-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ba3c816ee8c0958be6359761710581387c9d90a3b2483c7acd32b72b809176d3"
+    },
+    {
+      "name": "player-back-6-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1cd7f2f93cf4db6f3b8c9843bf7e1a3c7b22d0527c8e78016cbf19f8b34d0522"
+    },
+    {
+      "name": "player-back-7-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ba3c816ee8c0958be6359761710581387c9d90a3b2483c7acd32b72b809176d3"
+    },
+    {
+      "name": "player-back-8-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9437e0a6905483f31aba6b09c739d8db554f3f2f57f1659385bac839d7a7e104"
+    },
+    {
+      "name": "player-back-9-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "794b858391d1aa6b6578bcb2f12366b78be5e6caafb8dbfe38928f4daf742a20"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Keyboard and pointer rotation, native pitch clamp and Home reset",
+      "Automatic slim Dream selection after Steve preset",
+      "Automatic classic skin selection after Alex preset",
+      "Website Load skin after both presets, with native-exact Dream back pixels",
+      "One-pixel comparator negative control"
+    ]
+  },
+  "environment": {
+    "browser": "Microsoft Edge via Playwright",
+    "viewport": [
+      1536,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "scales": [
+      1,
+      2,
+      3
+    ],
+    "renderer": "Hardware WebGL2, 32-bit floating depth target and native per-face lighting"
+  },
+  "limitations": [
+    "80x120 logical viewport, scales 1-3, Edge/DPR1 hardware WebGL2: original wide Steve/slim Alex default, front and side poses; frozen Dream slim front, back, angled-back and side; custom wide Steve back and angled-back; builtin Steve/Alex back and angled-back. Other skins, dimensions, poses and raster environments are outside the exact pixel matrix.",
+    "Automatic arm-model inference uses standard transparent unused UV regions in 64x64 PNGs. Nonstandard/ambiguous textures should specify model explicitly; no live Mojang metadata lookup is performed."
+  ],
+  "evidence": {
+    "installedTestLog": "../../work/grasscn-website/final2/custom-player-installed/stdout.log",
+    "regressionTestLog": "../../work/grasscn-website/final2/custom-skin-installed-final/stdout.log"
+  }
+}

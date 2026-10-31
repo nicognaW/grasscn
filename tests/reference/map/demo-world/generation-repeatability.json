@@ -1,0 +1,34 @@
+{
+  "method": "Separate native launches independently run original MapItem.update against the frozen original region blocks. Exact palette bytes and native MapRenderer screenshots repeat.",
+  "colorsSha256": "b4ff7ba48328027207d261685a9c34db5f1b4d6cc2c7270c7f1de8a89abdf789",
+  "colorsBytes": 16384,
+  "mismatchedPaletteBytes": 0,
+  "generationRunOne": {
+    "sourceRegionSha256": "3a88b0877ac6d7ff28fc60faef7f5c659121ed07b9346c77c40815ad5ea93414",
+    "inputSha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+    "centerX": 1344,
+    "centerZ": -704,
+    "mapScale": 1,
+    "nativeUpdateCalls": 144,
+    "nativeBlockQueries": 705061,
+    "nativeHeightQueries": 535716,
+    "levelFluidQueries": 0,
+    "unsupportedRequests": 0,
+    "unexploredPixels": 0,
+    "colorsSha256": "b4ff7ba48328027207d261685a9c34db5f1b4d6cc2c7270c7f1de8a89abdf789"
+  },
+  "generationRunTwo": {
+    "sourceRegionSha256": "3a88b0877ac6d7ff28fc60faef7f5c659121ed07b9346c77c40815ad5ea93414",
+    "inputSha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+    "centerX": 1344,
+    "centerZ": -704,
+    "mapScale": 1,
+    "nativeUpdateCalls": 144,
+    "nativeBlockQueries": 705061,
+    "nativeHeightQueries": 535716,
+    "levelFluidQueries": 0,
+    "unsupportedRequests": 0,
+    "unexploredPixels": 0,
+    "colorsSha256": "b4ff7ba48328027207d261685a9c34db5f1b4d6cc2c7270c7f1de8a89abdf789"
+  }
+}

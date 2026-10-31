@@ -1,0 +1,207 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/hotbar.json --yes --overwrite",
+  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
+  "consumerRsc": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "hotbar.tsx",
+      "sourcePath": "registry/ui/hotbar.tsx",
+      "sourceSha256": "a6874e603f0b556683c567016ae2606ce43ed44297feb99c8ac0d517fd737a26",
+      "installedSha256": "a6874e603f0b556683c567016ae2606ce43ed44297feb99c8ac0d517fd737a26",
+      "comparison": "Equal except CLI comments/use-client removal and line endings"
+    },
+    {
+      "path": "minecraft-adventure-assets.ts",
+      "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
+      "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
+      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
+      "comparison": "Equal except CLI comments/use-client removal and line endings"
+    },
+    {
+      "path": "minecraft-adventure-image.tsx",
+      "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
+      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
+      "installedSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
+      "comparison": "Equal except CLI comments/use-client removal and line endings"
+    },
+    {
+      "path": "minecraft-hotbar-rgba.ts",
+      "sourcePath": "registry/ui/minecraft-hotbar-rgba.ts",
+      "sourceSha256": "bab511629231db51610291f708ec36d88600e8e412fd692c86d507d5feeb5ed9",
+      "installedSha256": "bab511629231db51610291f708ec36d88600e8e412fd692c86d507d5feeb5ed9",
+      "comparison": "Equal except CLI comments/use-client removal and line endings"
+    },
+    {
+      "path": "minecraft-hotbar.css",
+      "sourcePath": "registry/ui/minecraft-hotbar.css",
+      "sourceSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4",
+      "installedSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4",
+      "comparison": "Equal except CLI comments/use-client removal and line endings"
+    }
+  ],
+  "cases": [
+    {
+      "name": "hotbar-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "80367c7071463f14cdc1aeec7faf5c612f68325f3577cd266dfbb648d369dd27"
+    },
+    {
+      "name": "hotbar-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1c4ea326978ac861ba34957056c76aacd106a9ab2166d1340fb1b6b97b370613"
+    },
+    {
+      "name": "hotbar-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "439a9b4539cad3893827bfc7bcd0c9c24261016aa2fc8b50e934663301917e0c"
+    },
+    {
+      "name": "hotbar-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "44a8e067c1d9517e674312206dad8c8443b2dcfc32e481fe7edc55db7a46db3a"
+    },
+    {
+      "name": "hotbar-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "06c3a5866aee4314c4050d6afe6edba454fadc4b6d792410bdb64d59b4c6c41e"
+    },
+    {
+      "name": "hotbar-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2c70d892c505edda06e9257db7eef7feb05948878b6c540f59660a92ed4535e7"
+    },
+    {
+      "name": "hotbar-6-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b7495d6f00157126087fa9fc028f4db2854311bbacf4e423762eda6aeb44fce6"
+    },
+    {
+      "name": "hotbar-7-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bd6d2f342168e37b27aa880e1f0fcd28b578da4d7bcc124a355221667845d7b0"
+    },
+    {
+      "name": "hotbar-8-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "07b6305a88db25d910bf4739a48278f2da84c500b9122c9262468805fff2d949"
+    },
+    {
+      "name": "hotbar-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "50d727e08e1699a6a030fe5c38864592c143bcb648924dec90bdc71936e24a2b"
+    },
+    {
+      "name": "hotbar-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bec1bbc3afda5c9a21259fbfc2a0a279931bedb8d4c7d334abbcda3ff5f2d49f"
+    },
+    {
+      "name": "hotbar-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ad6b9f4e6d55a0f21c77b6dc02a1e37f95ee8138ae7216811964d327f55bbd0c"
+    },
+    {
+      "name": "hotbar-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f2fdf5a4e8569e25844cb565dece31440aaf983a4aa67be188a9eab19f6444e9"
+    },
+    {
+      "name": "hotbar-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9f052269995ce20fb3a398b34d04695398038f8904e8e2adf32716246e67bab3"
+    },
+    {
+      "name": "hotbar-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0057eb6aa264824007ec451fb59175fcc32a328c429f96dad151bb495a6eda64"
+    },
+    {
+      "name": "hotbar-6-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "00fce8ac9735d6c050faa11e63bef937811e9be564ecee6ee5fe5f7c79ab0496"
+    },
+    {
+      "name": "hotbar-7-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ff70c869ef0785eabec8b57ebe2eba5abcef652162a6df1c45d5c7ed6ec9b5e7"
+    },
+    {
+      "name": "hotbar-8-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "44f5704c3ce9e25f451300f38ef1d4bfcdcedf33f152eafd91c3786ad637c538"
+    },
+    {
+      "name": "hotbar-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "42be4147a4b736779ae48a6f9f49f400c3f11c1ab6b2108c81f09bd4068a8eb0"
+    },
+    {
+      "name": "hotbar-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "42897b9e35d51f73f31a64ad1924355eb11a258a9f3bfaedd2135a21962a2dfc"
+    },
+    {
+      "name": "hotbar-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5348ec8ad1d56ca62e93c8960cf4a962c5c96ee5577bc81fc1a0c66086fc09a5"
+    },
+    {
+      "name": "hotbar-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ee76075f280545c653ce24e2f240aff72679e3784e110b0e6ee39c2320cac007"
+    },
+    {
+      "name": "hotbar-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "694e22038460765225d1671fbc4408a65192bd9a3cbf6c0434d53120130564ea"
+    },
+    {
+      "name": "hotbar-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4bd5ac3c717611a3d9658456a121a0ea44ce010e62f8590b243f6eb06721f1b4"
+    },
+    {
+      "name": "hotbar-6-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "208a62b1eb4a12c79bf11ccd1c43573bee2c1d41de501252aa572ff5b66f36af"
+    },
+    {
+      "name": "hotbar-7-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bc5705e31bdb85cf9be6dd366bfbe8332c1ce17260a78a85c3a2203ea5966e33"
+    },
+    {
+      "name": "hotbar-8-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "379a2a969164607bd9cc75157b079ae9da9c16ebb6b5d96b64e27939a520a1db"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "pointer, numeric keys, arrow keys and wheel selection"
+    ]
+  },
+  "negativeControlMismatchedPixels": 1,
+  "environment": {
+    "browser": "Microsoft Edge via Playwright",
+    "viewport": [
+      1536,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "scales": [
+      1,
+      2,
+      3
+    ]
+  },
+  "limitations": [
+    "Nine empty slots and each selected position, scales 1-3, explicit #202020 uniform compositing surface. Arbitrary icons, focus and transparent browser compositing are outside the pixel matrix."
+  ]
+}

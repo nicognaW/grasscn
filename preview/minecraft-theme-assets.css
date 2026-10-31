@@ -1,0 +1,6 @@
+/* Original Minecraft Java 26.2 menu textures: Mojang Studios. Embedded unchanged. */
+:root {
+  --preview-menu: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAEUlEQVR42mNgcCAARxWMJAUA5d9AAfvMfJcAAAAASUVORK5CYII=");
+  --preview-header: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACCAQAAACTFxZCAAAAEklEQVR42mP4b0wZZGDYTxkEAJuhPiGSOwI2AAAAAElFTkSuQmCC");
+  --preview-footer: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACCAQAAACTFxZCAAAAEUlEQVR42mNg2E8h/G9MGQQA9QU+IZ4PmDoAAAAASUVORK5CYII=");
+}

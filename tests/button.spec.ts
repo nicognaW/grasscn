@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "./verified-test"
 
 test("buttonVariants styles a standalone link with the Minecraft skin", async ({ page }) => {
   await page.goto("/")

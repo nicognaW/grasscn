@@ -1,0 +1,1204 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "c5baad64e0a71ae2721059940f12c63cf4e8f7f1cd61f8adaefc6c109e2f1234",
+  "caseDefinitionSha256": "ff2ce3957fdb644d9d3db1cdd35c59cc5e0152585e532d0990336619d8ca143f",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "67e7169613fa2f6234b41e6bb06d3235daef679b251ad48e58692fa123396fb8"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "e06fd5dc56e61071204b21b32ebd0547d0062d4fcb482d92a92f4b436ff43ebc"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "4821ddeb3debd7f939038d181d5147d06ff40c8d13a331f28460c99059a6c155"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "2f81da9893837a268c518436c380cc2c3bec599a9f57c6aa7d9276605c8be313"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "45ad94c9e78b1935cbe49ed4426b18deaa6ea6bf8970e0aa98d769594f2e5a5c"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "80deea6772898c9765e13ec0bad5b2f55f43ab9c1d2a92c5dd078c28a7d553ff"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "453860f513afe00bb21ed4ed06cafbccb4a2dbe52b8844db1f507914bca3c918"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "3a257f054896971f8e21f1d25a095c940771f13db30b0049e52af44ae1d8857c"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "698b5f438758b8b113ef8fadca774cbeaf4a0745d333f80b47a1bcdd0fc15962"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "3c1cfa0114dec4ace9bb2ffa6953eec3e662e8f77e3f50d6de7083a2054dc2ec"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "73771006da07cb7a66246de7009780a0d300ab628c8e5f4b0e2df4f237c8293d"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "051432367a027696c40957bc7277256a6447c8e253ec32ac400850594e6d1e09"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "7791e714bcafbe6e418ec09dddf952f5c39d55872f8df8043c7df80f291a8c28"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "f158faf1b9811fbc42d829fbb8eab995ab110a56d66dc90df2904a5553be6826"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "a3758bea99576239549a519c89b857083a6b12ba5540b264c974124c7d25670c"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "a952bc2e6ae1e848cc1e07cea6a8676351c121a158d3032aff335d48eb1d1b12"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "572554997d17cc9858d7a1a4fa34ee8502fa6dee81dc0701a484ad4fa8909cf4"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "2476d3969e8aa82f8163fdc9629330aa82541ce750594454a470ab256d45be71"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "6eaeeddceb7b88bb2389c80545de8dc2e4b11b4c2024d2d0d4bd21d97fa18187"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "08d50c284170c98055947e11099aaa94c40fae4a5528e3ba4bde7316063e78bb"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "5479a97bf40bf04281bdd169576b1ac932923a9fbfea5460ee2baf541b1cf262"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "f32423c22cfcdf227d465dcdf73f46e24faed6ffb90757add0343ceb48fe190d"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "67793725c94ab1f70ca60b456df44a9a30a0b4b0b32e3fbd01eb71e6ffca9264"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "28d3efea1079348f50127f4aa2ee29cff97b891ecda46ebed8383e0e95ede092"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "a0f808d2fc9470c6c5359e4b5e83027db3872a706351e536ca18f3112c674514"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "3bf0436040824539bd5c6764d7468dc2044baeb3f64a66089bddc85dc413f319"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "bb9d3627fa7fb63221486ab66f5a9ca4f9f9d0754a6d47f5536fae3dba758a79"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "28257f754f62cc68af243dacc04ffc75ece8559d4cc28028e43a7cc5eb27d9f6"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "c033eef40956492e84342c87319c4711d012df217642804d0a083f899549998b"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "5654f7a0648b3be83887fcc0c4b23ba5c6ee229049b3a0c9ce58a961682ed6db"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "0f8392eb1dd0511fdffb862a3e75b7c116f36c3ddad374662494b191e2fb7d50"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "26118ed61cb390c324d8e7f90270c8495dc14f22222b4aa4a7855c5c795186e7"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "36b455ffbfd0170865f2613bfffbabcd04c094530d3c2b66232c4fe9b07f3c5a"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "83d2596af71d5e8cb024c6179e7da7f3b06f364ea20de11bba40c77e3ce94012"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "6bbb981cb838920948b87db92a5fec569cc2e07b9b67094f9a2cc924436fdf71"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "27eebbc34f1ba642f8f058528ccdbf4a7521348f1b5118120aab3dff43233789"
+    },
+    {
+      "name": "native-controls-p12-s1.png",
+      "sha256": "97ee1547aa2f8a5da3a10702a0732fab645652639755d72c8d7fd496f1ab34a2"
+    },
+    {
+      "name": "native-controls-p12-s2.png",
+      "sha256": "5294fec8d28387bfd4a633d38b2ce41b52a74ec5a64a5b38bca4e527fc05137f"
+    },
+    {
+      "name": "native-controls-p12-s3.png",
+      "sha256": "3eee0f554cc911993f3e7760a246f2b7bda347ba0dd76b15cf86f29a5dc6418b"
+    },
+    {
+      "name": "native-controls-p13-s1.png",
+      "sha256": "a28c0731c03043663d516e10ff89c86e5322d3b33e9a84e8c97845991a5474c1"
+    },
+    {
+      "name": "native-controls-p13-s2.png",
+      "sha256": "7749326747164caad2496bda3ef4445e58d1061333362201bd6fd16605575333"
+    },
+    {
+      "name": "native-controls-p13-s3.png",
+      "sha256": "26124aeb6e88084f0660b1634de5f084edd433ece9f548ffd8e9ddc84debb71f"
+    },
+    {
+      "name": "native-controls-p14-s1.png",
+      "sha256": "6dd029f93c35995d4b18d60e32fea3f68697369ddeffb510758d33efa312049f"
+    },
+    {
+      "name": "native-controls-p14-s2.png",
+      "sha256": "d0efb13dddcd92124124260f366ee7c53949ce95eea5161976fce9707f81c963"
+    },
+    {
+      "name": "native-controls-p14-s3.png",
+      "sha256": "e2f1d32f854b97389d1c8771e8bbdc8d49188457c494f7dbd90f87078b2c2f57"
+    },
+    {
+      "name": "native-controls-p15-s1.png",
+      "sha256": "e644a4872f2bd9d039e09cb093855b9bf2b524275cb64a4ad88734399b33df68"
+    },
+    {
+      "name": "native-controls-p15-s2.png",
+      "sha256": "68515f171219e5162c74f9819fceb05f23178994ef1a8ebd1f070a4e9bc342c1"
+    },
+    {
+      "name": "native-controls-p15-s3.png",
+      "sha256": "f1b753f0890d9c32d059f2be32607e18acab60a27195b1846a387e779ee491cf"
+    },
+    {
+      "name": "native-controls-p16-s1.png",
+      "sha256": "d4cbaa40231ec0134b407782a891dc342de511a9e5de22af2b3c56361b96e516"
+    },
+    {
+      "name": "native-controls-p16-s2.png",
+      "sha256": "006132f06a5e38627dfe589b5b1fe03044ffabb44373fc5f26c8875a64c192e6"
+    },
+    {
+      "name": "native-controls-p16-s3.png",
+      "sha256": "464025c6f9feeb92c18f5225ea3f83e5a4aadeccd6c6c083180028b2fd3b16a4"
+    },
+    {
+      "name": "native-controls-p17-s1.png",
+      "sha256": "bac699d921b72fcf3f873909584d98d32618f0293e52c2bdb6c03d726cd03a65"
+    },
+    {
+      "name": "native-controls-p17-s2.png",
+      "sha256": "72b1d56322b23b81a9755d129df5ece3b1e6229c4ca17b71aea22e45eb73fc65"
+    },
+    {
+      "name": "native-controls-p17-s3.png",
+      "sha256": "0a0fd0501f2da9d7cb7d7f56a1b5eb332f9fe4e558e6866cbd11b9a38094029a"
+    },
+    {
+      "name": "native-controls-p18-s1.png",
+      "sha256": "eb046fb229444641d43d746da6349e2f083522a4619771e8671915d6068157f3"
+    },
+    {
+      "name": "native-controls-p18-s2.png",
+      "sha256": "38b4489d168f478e1969de894a76afb19fc72c7e18661bc931a12325476c85cb"
+    },
+    {
+      "name": "native-controls-p18-s3.png",
+      "sha256": "80ca82fba20e5c49e291d6e3f2f78620c0e99e996ca9d71827e41cb2e9ee67d8"
+    },
+    {
+      "name": "native-controls-p19-s1.png",
+      "sha256": "cd863d928083f1e7b33f384be1ab34910d16fa84b48d2966dca5c572d989e917"
+    },
+    {
+      "name": "native-controls-p19-s2.png",
+      "sha256": "76189d3c3befe0bf6f6d81b4be80c7632de11b22a99aa248485b812fdc05fdce"
+    },
+    {
+      "name": "native-controls-p19-s3.png",
+      "sha256": "48f9909cc4c6775da5331a0ca10de8aa422df90732abbef271258b242e4af211"
+    }
+  ],
+  "cases": [
+    {
+      "name": "card-c0-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "scale": 1,
+      "sha256": "bb871ad56c718af9d6496e9de8e753399311dc1f3ba3b6c3a225cd9c6aee8d6e"
+    },
+    {
+      "name": "card-c1-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "scale": 1,
+      "sha256": "46f8dc5ab2ab6547b7acf4653072c1b3f0923757d824f0eac03ab6c11851eb07"
+    },
+    {
+      "name": "card-c2-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "scale": 1,
+      "sha256": "718f9093c33ea04026ff397ed9c2da581324162658498390fca6717b56084e40"
+    },
+    {
+      "name": "card-c3-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "scale": 1,
+      "sha256": "4b43868af25ae8b1ee14ae400bf77343fd26989743e258abf4142d1fdaef8ef9"
+    },
+    {
+      "name": "card-c4-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "scale": 1,
+      "sha256": "d13f079ee912bc617f19629449dd17565cc2da9d0110e3adca1c727a0f745304"
+    },
+    {
+      "name": "card-c5-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "scale": 1,
+      "sha256": "7bec4957d7a5f9d411baa873239eb9eda16214d02dbd8de749f3a9fe311a5b08"
+    },
+    {
+      "name": "card-c6-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "scale": 1,
+      "sha256": "9c15721b4bfcea907a9ab5b437b7b7b939f6569e04bf292cbd97df95984b2c4f"
+    },
+    {
+      "name": "card-c7-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "scale": 1,
+      "sha256": "f0e7df61525e1a54fea1bba7066e163c748c92848de6dde89ad881548102d854"
+    },
+    {
+      "name": "card-c8-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "scale": 1,
+      "sha256": "bfa2756d16091e93e3215780ed803e145b86df7696b72750d19b26fb609b0a8c"
+    },
+    {
+      "name": "card-c9-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "scale": 1,
+      "sha256": "4c457c0d26f4287e3d6320464fa69253e4e10a75749a175a7f00cd2c448e52ea"
+    },
+    {
+      "name": "card-c10-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "scale": 1,
+      "sha256": "f14b8e1af5c6b9b95b2a28be8e3d0071326d0332d12ae2cc67f5a6275381115b"
+    },
+    {
+      "name": "card-c11-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "scale": 1,
+      "sha256": "27a93dc72764af640b295c2a4ffa868380f6c79e6957be3b885a544cb97a55c4"
+    },
+    {
+      "name": "card-c12-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "scale": 1,
+      "sha256": "9bc86053bd14a797eef23fd67eb8b1ecb022fb8374f56848dcc6b685f6034369"
+    },
+    {
+      "name": "card-c13-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "scale": 1,
+      "sha256": "2bd7c206a699499ddf565287a6b9863050845660d32ea4de300fb01b4841fa7b"
+    },
+    {
+      "name": "card-c14-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "scale": 1,
+      "sha256": "a6c5a1e63019e56b27506f769fbee16441db882c7767c40fea2d748a9663889a"
+    },
+    {
+      "name": "card-c15-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "scale": 1,
+      "sha256": "8a2e9a356d8c37a16330ca33d52b3c0753d135bbad77c415ca86a445ff05d461"
+    },
+    {
+      "name": "card-c16-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "scale": 1,
+      "sha256": "8273c15e6f5fe8c26d029550a3f63f064c953e6c778c866ae73d1877a883ee1e"
+    },
+    {
+      "name": "card-c17-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "scale": 1,
+      "sha256": "61fc0ac6ce9cdd853e6a1a18a1fecad710515a95eb8f0575402b1a4250cab0dd"
+    },
+    {
+      "name": "card-c18-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "scale": 1,
+      "sha256": "6cc1cc5de22e930e7f18867f337b7223d862ddd0c8a8506420af915784b7ef5f"
+    },
+    {
+      "name": "card-c19-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "scale": 1,
+      "sha256": "1cddc83d7f7a19e1f9f92c47c03f9061d96b130eb1bfc3d97eecc7987e8707cd"
+    },
+    {
+      "name": "card-c20-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "scale": 1,
+      "sha256": "5bc301de645ee3af96a4816f1c0d081e6ef4ce0c23959b76d5cb3d83c7a6f616"
+    },
+    {
+      "name": "card-c21-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "scale": 1,
+      "sha256": "9357d4e33a3f2678d454fe20f647c8facecc267f2e152e9aa63cb7899dc32c09"
+    },
+    {
+      "name": "card-c22-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "scale": 1,
+      "sha256": "5094bb7a9cab5fa26b73a8b109573f3ed3fedf22f4121450015d4895bef841a7"
+    },
+    {
+      "name": "card-c23-s1.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "scale": 1,
+      "sha256": "4bedf4fe6757050730b87bc3dad58ad969dfe1b8e625d3116c29b9f20191da3c"
+    },
+    {
+      "name": "card-c0-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "scale": 2,
+      "sha256": "a9a2758093e8a46b9247935c6409626d1cc8382605d3900726c8f9fc511e431f"
+    },
+    {
+      "name": "card-c1-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "scale": 2,
+      "sha256": "120d8178e8cb706765d6ecda850cde071b58035145f8bf65e01788d2f664bde9"
+    },
+    {
+      "name": "card-c2-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "scale": 2,
+      "sha256": "c6bc4274b5ef4c011fd487fd2496bd94a8a14cc8a727269444ef6262937fcb15"
+    },
+    {
+      "name": "card-c3-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "scale": 2,
+      "sha256": "f1ccbed7d68e5b7194c9eb4895b4766e820cd26fbd2c1c8b51984ce99fb91500"
+    },
+    {
+      "name": "card-c4-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "scale": 2,
+      "sha256": "61ad0028cfe8a034a9d7314c2cedb380e9ad5c9f92fab44311e504fe8ef8f921"
+    },
+    {
+      "name": "card-c5-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "scale": 2,
+      "sha256": "13ff59633ac0be9bf846a30f74bd4d0caa7fae7afb3a9402898bd59c809d70e7"
+    },
+    {
+      "name": "card-c6-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "scale": 2,
+      "sha256": "2f5cb0051115cecb363065f4fc69d16da8d4154abf09aa017b79fe78c7eccc9e"
+    },
+    {
+      "name": "card-c7-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "scale": 2,
+      "sha256": "d35891d81bf59917e0bf09470ada8bf1ad7e0ecd294ebdaf34c26acc4b93f860"
+    },
+    {
+      "name": "card-c8-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "scale": 2,
+      "sha256": "e9f070a0fcce0c2c4eda8fab6b5c7dd230e69a198e1399c0dac256f5ab4a8199"
+    },
+    {
+      "name": "card-c9-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "scale": 2,
+      "sha256": "76c75c9cb9b6b79a16ddfef685ae3d7e56d9b86ef8a4f05d400d1c9f91556ad8"
+    },
+    {
+      "name": "card-c10-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "scale": 2,
+      "sha256": "26ef270ac864f8af87579e661c6579c37ad273dcdbf2288262b94cd767eeb33d"
+    },
+    {
+      "name": "card-c11-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "scale": 2,
+      "sha256": "951be96d9c13bce3dda2f47e9e82df0c40dc85ea0b293edcfc8fb69c757b8ef5"
+    },
+    {
+      "name": "card-c12-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "scale": 2,
+      "sha256": "d1b020934931a994b7929561355bfa8374ff6ab33f3a7c76c4dd6e5bef5859f8"
+    },
+    {
+      "name": "card-c13-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "scale": 2,
+      "sha256": "b1f0a70c66196c43a5e9e0991e64e8135f6f4b57dc6ea0820b5a912914b89a3a"
+    },
+    {
+      "name": "card-c14-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "scale": 2,
+      "sha256": "e643704b76413ddb9bd89651f869fc48f4447c0e2efc29182d2912f4d17428fa"
+    },
+    {
+      "name": "card-c15-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "scale": 2,
+      "sha256": "ad822478093561eef6e0a23def501271d1ac0253a69856cac8a81608adf3c454"
+    },
+    {
+      "name": "card-c16-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "scale": 2,
+      "sha256": "a0e0e6462bd43ea5cfef3cbefda5294b614daf9dfbc72d2e170569845f3ced9b"
+    },
+    {
+      "name": "card-c17-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "scale": 2,
+      "sha256": "4c85f16eac4a8d843b31401152c72ffdbb63fc77d67f35f25099d231806f59b2"
+    },
+    {
+      "name": "card-c18-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "scale": 2,
+      "sha256": "f86941f8e3c6ec2aa6fb386a4e2fe5a812d9662a942ad74ef544c084a0b49ff4"
+    },
+    {
+      "name": "card-c19-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "scale": 2,
+      "sha256": "c7264d728b48e939fd7d1536ddfe3b5f8ef20e8eae0c003f4f2a63657b970763"
+    },
+    {
+      "name": "card-c20-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "scale": 2,
+      "sha256": "8dbf6e02e710ee7fdbc374ce7b2d5f0a3c564323d8ae3e5d6e0a376829d390df"
+    },
+    {
+      "name": "card-c21-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "scale": 2,
+      "sha256": "1a04fbc36c6275e9c375d1a9814daa7420db5d4993fc57f26ddd20cc27168ef8"
+    },
+    {
+      "name": "card-c22-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "scale": 2,
+      "sha256": "abcd8ac4d65adddeae2736159f1c0cf69b24789dc44a734e34ecc1308d031055"
+    },
+    {
+      "name": "card-c23-s2.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "scale": 2,
+      "sha256": "0da5631ee076fc16c70942a994a3ef9dbf4ffc1ee0dd41d3f98ba77de3e2cb41"
+    },
+    {
+      "name": "card-c0-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "scale": 3,
+      "sha256": "834502fc4317aa8d2735f1e0d4a350dc0c883f8682d63c34d1563430364e1f62"
+    },
+    {
+      "name": "card-c1-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "scale": 3,
+      "sha256": "d361312c3d4f245b68182b9908055200d8dfa812213fa0c0400488200ade0605"
+    },
+    {
+      "name": "card-c2-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "scale": 3,
+      "sha256": "210ced20e81f981b7cd3a5a96e0126ee08f36b327db0a44dbf3745822474e90e"
+    },
+    {
+      "name": "card-c3-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "scale": 3,
+      "sha256": "ad06b0c170eecd7f679135fe313e073b425bd3ce0919a83934627720b03045a9"
+    },
+    {
+      "name": "card-c4-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "scale": 3,
+      "sha256": "d1346fd91e6deae1c8122cbac9741194a526bb19d315311e3c7d6bc6b31d7d2c"
+    },
+    {
+      "name": "card-c5-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 103,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "scale": 3,
+      "sha256": "bff54395524b73df1208b16b851717fe5f118a4b62117f893088f1089345a77b"
+    },
+    {
+      "name": "card-c6-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "scale": 3,
+      "sha256": "01b8c466e40e9a57c174179537f489b73576b719c0eb2c3a2201288702fc631d"
+    },
+    {
+      "name": "card-c7-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "scale": 3,
+      "sha256": "a46487b60bb43ab3e5170f4a3900650ea42bd6517c4e693561bc8840d5ca8107"
+    },
+    {
+      "name": "card-c8-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "scale": 3,
+      "sha256": "9a350a5911ed5747850305b7bbbe489bc2d0738660e655b1d4d87fa4f903f88e"
+    },
+    {
+      "name": "card-c9-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "scale": 3,
+      "sha256": "dae0d5a3b9c224ba02c79e8f8a5b438d65f6aea152b99e1386465f128244b400"
+    },
+    {
+      "name": "card-c10-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "scale": 3,
+      "sha256": "fe6c482871f4056124dcd425701ccd53734f0994db1513bd7fc042a65899299a"
+    },
+    {
+      "name": "card-c11-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 200,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "scale": 3,
+      "sha256": "ad497e8fa486a836fe9d6e74ea90eccbfcfc3ce6c78d3642d4d9137b8c00fded"
+    },
+    {
+      "name": "card-c12-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "scale": 3,
+      "sha256": "c47ca0eed7efbb6ab271938deba2e74f5ff068acd9cdbee7833c4ecb4dcd0fbf"
+    },
+    {
+      "name": "card-c13-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "scale": 3,
+      "sha256": "c7f365a4ab92935d3fefc1f516ea7a0a3c3c9ae5f963e48b0b5221f7ef22e4ef"
+    },
+    {
+      "name": "card-c14-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "scale": 3,
+      "sha256": "310c696952cde95f1ab5713bec9f83806166d316150ad5113c9c553724e4eef3"
+    },
+    {
+      "name": "card-c15-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "scale": 3,
+      "sha256": "7caa1d606fd01602fb7e40fb99e9edf490c591c6be8e8c8c69a163267575cf67"
+    },
+    {
+      "name": "card-c16-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "scale": 3,
+      "sha256": "089b2262f884e5b1edfd792b4b05da02d8057a557b7d7047ff72f1374ddb27b5"
+    },
+    {
+      "name": "card-c17-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 236,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "scale": 3,
+      "sha256": "0afee48f5a0bbd3edbde8fee7049d02919445d9b8dfa38e29d92f39cfbf15f67"
+    },
+    {
+      "name": "card-c18-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "scale": 3,
+      "sha256": "a84c15303f54c5bdcd32f738ac3e1f30ffe828f687f545e8497b868d8d1cb350"
+    },
+    {
+      "name": "card-c19-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 34,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "scale": 3,
+      "sha256": "132d8f090fdbeafd69fadbab60ba96b2a0bf8c67512cb9119fd1e4c296e48a81"
+    },
+    {
+      "name": "card-c20-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "scale": 3,
+      "sha256": "e17bf4cb4b2c7aafff5e41e4fc0c06f77ef85caaedba73e055ae8a42fbe40909"
+    },
+    {
+      "name": "card-c21-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 80,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "scale": 3,
+      "sha256": "2fc8f198664eb73b260136f923b5ad83321923f22dfb65cb788e62b3f93dd4b9"
+    },
+    {
+      "name": "card-c22-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "scale": 3,
+      "sha256": "3c0d9aaa4aac1a375183b5816056a3a93da0aaab525a4d4fa2974e6a0a218223"
+    },
+    {
+      "name": "card-c23-s3.png",
+      "element": "card",
+      "state": "normal",
+      "width": 257,
+      "height": 120,
+      "background": "#808080",
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "scale": 3,
+      "sha256": "16a8ec82a8189e586ec82818ed1f8626eab513b5485a489a1d6aa389cb8cc0a2"
+    }
+  ],
+  "sourceDirectory": "source",
+  "sourceCaseSelection": {
+    "manifest": "../card/manifest.json",
+    "sha256": "d536b519a9a1dd5787c3447b7a1c8344ad565664ca0813fd34054dc1828f8c13",
+    "predicate": "text is absent: original empty popup surface only; no crop or pixel transformation"
+  }
+}

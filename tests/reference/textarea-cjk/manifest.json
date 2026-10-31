@@ -1,0 +1,999 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "ffef739b2ebffc911688bc38bfe113c385bd2640d04dbd264a49f53d291ca3c6",
+  "caseDefinitionSha256": "df06d1ca1e93bf95620c5ebab1c11b9aab0164efcb7ad7678dce112e9b24e7cc",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "11d7f3779487b06d7a963e1636464c499c5964495d83c357cd1dcefd81de3896"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "c4d0494644c04a2382722c73ecd13a5a3429d9c4d67ae36d91e581ac67704c74"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "a6c7470435a9a9dadb189be9a9f17ee01069f3b0c7c6dfafda7735185f1205f3"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "8bf9720dfecf6423e23b7f1966537f22b467bd18d92540733eeca3d71a0010bf"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "20e58bc0016ff57106edace1e1517343afeacbc8dd24af931d9811acb69db14f"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "7a045685d144b76f5fdc71a55b11d26a3bd806f902b5205f816ce0726e0a290c"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "19410ab8a21ca58dbf182ec579aae6285f475369823b78d634b533d1e74f34c4"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "8ae4aae118415e9a7e72d4347e7610f18e0c7da5d8a8ff1dde25bd4cbbf47240"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "5b1db19e9c302f7a18da3d248711f97559a04a9d432987a4e4e72c6b78129a21"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "2bb77c3b576e3003294a61b3b5dd97a1b9727fbc5b22ff85240b3184b685b683"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "b71ee0f9786d39dfa3a933ca713d024838a2e6992be272b578b10d241d0871c5"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "7a055e8594ef67781f75ed94a7d237186c9ce3bdcc5561836d4877d0da73a2e4"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "7920c3233ba4d910988901d9e569d6c3d1b1efb985e970f7193a49ef274e62f8"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "6e365a63d71b5f9a5288e5bd40f9aede539092317cb7e8928b71d65206e51bc1"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "d7fd1c0203bdbb26f76c5c076df7a5f9443ff9749514e29d332d9f4fb0600590"
+    }
+  ],
+  "cases": [
+    {
+      "name": "textarea-cjk-c0-s1.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "d5125c600462f35632c1d84a2442e56d4c6492fdec61444e40fd2a92853cc894"
+    },
+    {
+      "name": "textarea-cjk-c1-s1.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "c6476c73801e0399c151435856613b609ba38f0a2e16b025ab6d518903723d66"
+    },
+    {
+      "name": "textarea-cjk-c2-s1.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "d5125c600462f35632c1d84a2442e56d4c6492fdec61444e40fd2a92853cc894"
+    },
+    {
+      "name": "textarea-cjk-c3-s1.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "3b7cd2e5e9c5b3ae133b2777b0aab2e84a3e4f7b0d16b7b3e58b243153128c00"
+    },
+    {
+      "name": "textarea-cjk-c4-s1.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "c90b6ad92904f8e31cb11e2163f39482fd2bbd72c5da8785530fa6f34e77415b"
+    },
+    {
+      "name": "textarea-cjk-c5-s1.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "ffdb2ca60fe3e66f818b17fa6998b695d89ecdd2281992958c51d5a471e9af23"
+    },
+    {
+      "name": "textarea-cjk-c6-s1.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 103,
+      "scale": 1,
+      "sha256": "813effea453cce9c56003bb019a30458272782f3d79424ae32146ec6603cdaf7"
+    },
+    {
+      "name": "textarea-cjk-c7-s1.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "3285b225f3f3feb7fbc36f25e031b6c19d18ea44d51c96e8110e1bdddd4f8a30"
+    },
+    {
+      "name": "textarea-cjk-c8-s1.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "a4c61640174c9e1da12c29f262f8d7cf67789373ed8d55147c7e7c9cb41a2bbf"
+    },
+    {
+      "name": "textarea-cjk-c9-s1.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "3285b225f3f3feb7fbc36f25e031b6c19d18ea44d51c96e8110e1bdddd4f8a30"
+    },
+    {
+      "name": "textarea-cjk-c10-s1.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "e8d39b03da8aed156e14d80e7e8f22b073aa1851158d950a17a681d3748081ac"
+    },
+    {
+      "name": "textarea-cjk-c11-s1.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "6d8e53b5ba63046ff70d016077bf310179b0564c2042d2c1767ed24f79ae509b"
+    },
+    {
+      "name": "textarea-cjk-c12-s1.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "fa559e3d674d94dc708b45841c58d951ee76c9ef6e426792aafd9f6c63a817ea"
+    },
+    {
+      "name": "textarea-cjk-c13-s1.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 4,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 200,
+      "scale": 1,
+      "sha256": "c3442516fb02ce7a3e1d93175696b7afa225ac3f76ef3806af7ae44f45328941"
+    },
+    {
+      "name": "textarea-cjk-c0-s2.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "d144de144edfc757c4c895ed95ab14de93b4833bcf14dd7fca8087b4b8823442"
+    },
+    {
+      "name": "textarea-cjk-c1-s2.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "feef0eaf57c332518c12048d77a9daa37cb0f6027e6f483fb8ae5efc899502cf"
+    },
+    {
+      "name": "textarea-cjk-c2-s2.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "d144de144edfc757c4c895ed95ab14de93b4833bcf14dd7fca8087b4b8823442"
+    },
+    {
+      "name": "textarea-cjk-c3-s2.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "a129df2397f4cdac926a64ad659fc4d1001d16612505551a09e72f901117ed13"
+    },
+    {
+      "name": "textarea-cjk-c4-s2.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "299094ca349ff9ab90a78fa3634c9f1b4749c09da9c0a04b9fb729334405dd30"
+    },
+    {
+      "name": "textarea-cjk-c5-s2.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "b76cc97b7640721a880c9ed6a2c11ca8b1219ed7e3431a79c7a962bece2a83fb"
+    },
+    {
+      "name": "textarea-cjk-c6-s2.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 103,
+      "scale": 2,
+      "sha256": "89d5401bb816784b6156020bfa9994aee6e754e61360edb86e882470542f8e07"
+    },
+    {
+      "name": "textarea-cjk-c7-s2.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "92471247ad230f38d17e4a97efe06dd358f11d9f93a79b1b95bc8028f3913c7d"
+    },
+    {
+      "name": "textarea-cjk-c8-s2.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "bcd93895cfe92dde766208f74afd20bca25e15e44dd7ee0cc69b30ef8eae0e4d"
+    },
+    {
+      "name": "textarea-cjk-c9-s2.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "92471247ad230f38d17e4a97efe06dd358f11d9f93a79b1b95bc8028f3913c7d"
+    },
+    {
+      "name": "textarea-cjk-c10-s2.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "5a8dcbfe48a64b973863e4b9611259970e9d4e715f894112fd1b4ea44f6852f6"
+    },
+    {
+      "name": "textarea-cjk-c11-s2.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "0de50c9a23801e868c5016a435623d21160a51baab9536d691906b30719f6f43"
+    },
+    {
+      "name": "textarea-cjk-c12-s2.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "3f94729fb465ba4c2f893821933d2b0c7ca4e1fb6354ea7b4aac327ae9b6816d"
+    },
+    {
+      "name": "textarea-cjk-c13-s2.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 4,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 200,
+      "scale": 2,
+      "sha256": "d7de94d17586b5b4b9af857813e98c4bb7c05b0fbc878e7f8274442f197cd188"
+    },
+    {
+      "name": "textarea-cjk-c0-s3.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "428b0271ceaa00829514ec8e5991bb1fd9a993e087fc5d73444d2412c32a9e4e"
+    },
+    {
+      "name": "textarea-cjk-c1-s3.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "6d3150e929bc02830727a2ce8878f62973a1fa6adb545b62730fdfa7f0395a8c"
+    },
+    {
+      "name": "textarea-cjk-c2-s3.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "2a5fea0349d717ea21e002b95fb05bb37d3a068548c31b7ed23c6e9ac155aa2e"
+    },
+    {
+      "name": "textarea-cjk-c3-s3.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "42f3053930331ca1513d534629aa8c6b4d83e2393d89be4a3814a1949131d592"
+    },
+    {
+      "name": "textarea-cjk-c4-s3.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "9262207b5be410ea28797b0d96cc38d921efbdaf41774937a7b607ff7d2a5920"
+    },
+    {
+      "name": "textarea-cjk-c5-s3.png",
+      "element": "textarea",
+      "width": 109,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "c08f8bc4bfaab59fbc2618e1da0ba9c7b5dd837024633264786372d628c9b7bf"
+    },
+    {
+      "name": "textarea-cjk-c6-s3.png",
+      "element": "textarea",
+      "width": 103,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 103,
+      "scale": 3,
+      "sha256": "cd9a87330a7bc1339d5f0c071a311e1169cf6b6fabf1da6b9c5282deaded3b2c"
+    },
+    {
+      "name": "textarea-cjk-c7-s3.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "4ce96b3d361a345fec334117127b0db3f642a90808070f184f21687030f1d806"
+    },
+    {
+      "name": "textarea-cjk-c8-s3.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "26f39e0530651d2c59b7e006ae3e3ed5c17dcead674398c3b40f0273c801f4b6"
+    },
+    {
+      "name": "textarea-cjk-c9-s3.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "disabled",
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "e11b202a898fd91004ef108e43ba77ed04a654e79f325aae46a41ee176df5cbe"
+    },
+    {
+      "name": "textarea-cjk-c10-s3.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-select",
+      "cursor": 1,
+      "anchor": 28,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "49f17aba269d185a217f37d4b8f0e8a2edfa6884b17f3c37da1bd2a7f1bd6f26"
+    },
+    {
+      "name": "textarea-cjk-c11-s3.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "normal",
+      "value": 0,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "8355ca8156a4eed5b356c379f61587add5af1208ae13023fb7b6ce2441c73bad"
+    },
+    {
+      "name": "textarea-cjk-c12-s3.png",
+      "element": "textarea",
+      "width": 206,
+      "height": 40,
+      "caretMs": 100,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "text": "你好，世界\nこんにちは世界\n안녕하세요 세계\nHello 世界 123",
+      "state": "focus-scroll",
+      "value": 4,
+      "cursor": 20,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは世界",
+        "안녕하세요 세계",
+        "Hello 世界 123"
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "2a859d0872c47a831fff1fa42d693fd4d18bd60265328024fc78bb56bcd4d350"
+    },
+    {
+      "name": "textarea-cjk-c13-s3.png",
+      "element": "textarea",
+      "width": 200,
+      "height": 80,
+      "caretMs": 100,
+      "x": 16,
+      "y": 112,
+      "page": 4,
+      "text": "",
+      "placeholder": "你好，世界",
+      "state": "normal",
+      "renderedLines": [
+        ""
+      ],
+      "widgetWidth": 200,
+      "scale": 3,
+      "sha256": "d304c1f698a1f9ca863ad394bb57d5c29e71a4a38333ade8869bb98b81dcce1c"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

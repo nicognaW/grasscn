@@ -1,0 +1,1 @@
+@layer components { .mc-form-item { display:grid;gap:8px; } .mc-form-description,.mc-form-message { margin:0; } }

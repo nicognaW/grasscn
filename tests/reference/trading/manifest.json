@@ -1,0 +1,213 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "da38a24a5cdf2e2d7d90010c2cc427c2d63fa59a3183f6eba47d41eed6fb9873",
+  "caseDefinitionSha256": "ea42f3c362f755a1d4a93a2021c885bd56151ffb0ff95552743afc72f4e8fa1d",
+  "glyphObservationEnabled": false,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "227e2bc6ba245cd48b705dec10ae7723437190f7644752b02f44c7819c0f4afd"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "f2a879fc5c81e33cd4d53cb8858267b00e24702c51d1fc3f345d07ae1905e5c1"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "f930004384599f6b25d688dde545424228340dc14ffeadfce8dc99339fb06a23"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "89368a388a181ae7e22a00cddc9a786f3564736c28db7f495543950e88bb4f8a"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "adaa01e068275462d1209669ee8734e5165e7d4d93e1c66b7611f85e779eeb04"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "7cb1da88fe8732fc977e218f66a61b97b6e3e39ec9e4c03d3d0992b8548813b5"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "747ca5ec89d44d29b1005cffe1d5b540420e03cd571a5ef4dccdc8e7013a8198"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "7d1c52289dfdbeeab44b862d8236d147893f0d9f097904e510455cfba382b6d6"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "2e955eecfe5da372b4eb50adf79d86fed3c91b2f62188f07b9047f95ba446bf5"
+    }
+  ],
+  "cases": [
+    {
+      "name": "trading-0-s1.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 0,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "a40f3094b4ff85d40120445566257701627855c58e64fe69a9aee4216ef53036"
+    },
+    {
+      "name": "trading-1-s1.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 3,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 1,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "ca10356359327d361bf8213c8cb0f728eada16e00995a3cde80de934bfdc8fc3"
+    },
+    {
+      "name": "trading-2-s1.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 8,
+      "cursor": 2,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 2,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "b92880de6355af1907f3858e5e501854e985c6cda528026c8bef9d9bd601911c"
+    },
+    {
+      "name": "trading-0-s2.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 0,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "a563de0d79bb9d5bef359d832689ff4413197f73c3281634f45474faeec711c7"
+    },
+    {
+      "name": "trading-1-s2.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 3,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 1,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "6b37580668686388c88d0e0ec21a7783233ae71399fff03d704097e3dcf200c3"
+    },
+    {
+      "name": "trading-2-s2.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 8,
+      "cursor": 2,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 2,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "303719dd83961b15fba85161592eca3200e7360d33484f1460763eca6e304bef"
+    },
+    {
+      "name": "trading-0-s3.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 0,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "e3c7302ec77e3b92e6e1def5bb2fadc949c65c2b96affa7b505466b396327a45"
+    },
+    {
+      "name": "trading-1-s3.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 3,
+      "cursor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 1,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "0ab589d27c01f943b5255cdb5934c254687fcd504d8504c25f1878337244632b"
+    },
+    {
+      "name": "trading-2-s3.png",
+      "element": "trading",
+      "state": "normal",
+      "checked": false,
+      "value": 8,
+      "cursor": 2,
+      "x": 24,
+      "y": 16,
+      "width": 276,
+      "height": 166,
+      "page": 2,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "33098da5673d56316e40aab424b4142fce8c585e6abb88e3f6829b4f8218a2b9"
+    }
+  ],
+  "sourceDirectory": "source"
+}

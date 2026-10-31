@@ -1,0 +1,82 @@
+[
+  {
+    "name": "alert-smoke-c0",
+    "element": "alert-dialog",
+    "viewport": true,
+    "checked": true,
+    "state": "normal",
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 0,
+    "value": 0,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "alert-smoke-c1",
+    "element": "alert-dialog",
+    "viewport": true,
+    "checked": true,
+    "state": "normal",
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 1,
+    "value": 0,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "alert-smoke-c2",
+    "element": "alert-dialog",
+    "viewport": true,
+    "checked": true,
+    "state": "normal",
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 2,
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "alert-smoke-c3",
+    "element": "alert-dialog",
+    "viewport": true,
+    "checked": true,
+    "state": "normal",
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 3,
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080"
+  }
+]

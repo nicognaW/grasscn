@@ -1,0 +1,355 @@
+Compiled from "AbstractTextAreaWidget.java"
+public abstract class net.minecraft.client.gui.components.AbstractTextAreaWidget extends net.minecraft.client.gui.components.AbstractScrollArea {
+  private static final net.minecraft.client.gui.components.WidgetSprites BACKGROUND_SPRITES;
+
+  private static final int INNER_PADDING;
+
+  public static final int DEFAULT_TOTAL_PADDING;
+
+  private boolean showBackground;
+
+  private boolean showDecorations;
+
+  public net.minecraft.client.gui.components.AbstractTextAreaWidget(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.components.AbstractScrollArea$ScrollbarSettings);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: iload_3
+       4: iload         4
+       6: aload         5
+       8: aload         6
+      10: invokespecial #3                  // Method net/minecraft/client/gui/components/AbstractScrollArea."<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V
+      13: aload_0
+      14: iconst_1
+      15: putfield      #9                  // Field showBackground:Z
+      18: aload_0
+      19: iconst_1
+      20: putfield      #13                 // Field showDecorations:Z
+      23: return
+
+  public net.minecraft.client.gui.components.AbstractTextAreaWidget(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.components.AbstractScrollArea$ScrollbarSettings, boolean, boolean);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: iload_3
+       4: iload         4
+       6: aload         5
+       8: aload         6
+      10: invokespecial #16                 // Method "<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V
+      13: aload_0
+      14: iload         7
+      16: putfield      #9                  // Field showBackground:Z
+      19: aload_0
+      20: iload         8
+      22: putfield      #13                 // Field showDecorations:Z
+      25: return
+
+  public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #17                 // Method updateScrolling:(Lnet/minecraft/client/input/MouseButtonEvent;)Z
+       5: istore_3
+       6: aload_0
+       7: aload_1
+       8: iload_2
+       9: invokespecial #21                 // Method net/minecraft/client/gui/components/AbstractScrollArea.mouseClicked:(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z
+      12: ifne          19
+      15: iload_3
+      16: ifeq          23
+      19: iconst_1
+      20: goto          24
+      23: iconst_0
+      24: ireturn
+
+  public boolean keyPressed(net.minecraft.client.input.KeyEvent);
+    Code:
+       0: aload_1
+       1: invokevirtual #25                 // Method net/minecraft/client/input/KeyEvent.isUp:()Z
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #31                 // Method net/minecraft/client/input/KeyEvent.isDown:()Z
+       9: istore_3
+      10: iload_2
+      11: ifne          18
+      14: iload_3
+      15: ifeq          60
+      18: aload_0
+      19: invokevirtual #34                 // Method scrollAmount:()D
+      22: dstore        4
+      24: aload_0
+      25: aload_0
+      26: invokevirtual #34                 // Method scrollAmount:()D
+      29: iload_2
+      30: ifeq          37
+      33: iconst_m1
+      34: goto          38
+      37: iconst_1
+      38: i2d
+      39: aload_0
+      40: invokevirtual #38                 // Method scrollRate:()D
+      43: dmul
+      44: dadd
+      45: invokevirtual #41                 // Method setScrollAmount:(D)V
+      48: dload         4
+      50: aload_0
+      51: invokevirtual #34                 // Method scrollAmount:()D
+      54: dcmpl
+      55: ifeq          60
+      58: iconst_1
+      59: ireturn
+      60: aload_0
+      61: aload_1
+      62: invokespecial #45                 // Method net/minecraft/client/gui/components/AbstractScrollArea.keyPressed:(Lnet/minecraft/client/input/KeyEvent;)Z
+      65: ireturn
+
+  public void extractWidgetRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+    Code:
+       0: aload_0
+       1: getfield      #49                 // Field visible:Z
+       4: ifne          8
+       7: return
+       8: aload_0
+       9: getfield      #9                  // Field showBackground:Z
+      12: ifeq          20
+      15: aload_0
+      16: aload_1
+      17: invokevirtual #52                 // Method extractBackground:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V
+      20: aload_1
+      21: aload_0
+      22: invokevirtual #56                 // Method getX:()I
+      25: iconst_1
+      26: iadd
+      27: aload_0
+      28: invokevirtual #60                 // Method getY:()I
+      31: iconst_1
+      32: iadd
+      33: aload_0
+      34: invokevirtual #56                 // Method getX:()I
+      37: aload_0
+      38: getfield      #63                 // Field width:I
+      41: iadd
+      42: iconst_1
+      43: isub
+      44: aload_0
+      45: invokevirtual #60                 // Method getY:()I
+      48: aload_0
+      49: getfield      #67                 // Field height:I
+      52: iadd
+      53: iconst_1
+      54: isub
+      55: invokevirtual #70                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.enableScissor:(IIII)V
+      58: aload_1
+      59: invokevirtual #76                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.pose:()Lorg/joml/Matrix3x2fStack;
+      62: invokevirtual #80                 // Method org/joml/Matrix3x2fStack.pushMatrix:()Lorg/joml/Matrix3x2fStack;
+      65: pop
+      66: aload_1
+      67: invokevirtual #76                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.pose:()Lorg/joml/Matrix3x2fStack;
+      70: fconst_0
+      71: aload_0
+      72: invokevirtual #34                 // Method scrollAmount:()D
+      75: dneg
+      76: d2f
+      77: invokevirtual #85                 // Method org/joml/Matrix3x2fStack.translate:(FF)Lorg/joml/Matrix3x2f;
+      80: pop
+      81: aload_0
+      82: aload_1
+      83: iload_2
+      84: iload_3
+      85: fload         4
+      87: invokevirtual #89                 // Method extractContents:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V
+      90: aload_1
+      91: invokevirtual #76                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.pose:()Lorg/joml/Matrix3x2fStack;
+      94: invokevirtual #93                 // Method org/joml/Matrix3x2fStack.popMatrix:()Lorg/joml/Matrix3x2fStack;
+      97: pop
+      98: aload_1
+      99: invokevirtual #96                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.disableScissor:()V
+     102: aload_0
+     103: aload_1
+     104: iload_2
+     105: iload_3
+     106: invokevirtual #100                // Method extractScrollbar:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V
+     109: aload_0
+     110: getfield      #13                 // Field showDecorations:Z
+     113: ifeq          121
+     116: aload_0
+     117: aload_1
+     118: invokevirtual #104                // Method extractDecorations:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V
+     121: return
+
+  protected void extractDecorations(net.minecraft.client.gui.GuiGraphicsExtractor);
+    Code:
+       0: return
+
+  protected int innerPadding();
+    Code:
+       0: iconst_4
+       1: ireturn
+
+  protected int totalInnerPadding();
+    Code:
+       0: aload_0
+       1: invokevirtual #107                // Method innerPadding:()I
+       4: iconst_2
+       5: imul
+       6: ireturn
+
+  public boolean isMouseOver(double, double);
+    Code:
+       0: aload_0
+       1: getfield      #110                // Field active:Z
+       4: ifeq          63
+       7: aload_0
+       8: getfield      #49                 // Field visible:Z
+      11: ifeq          63
+      14: dload_1
+      15: aload_0
+      16: invokevirtual #56                 // Method getX:()I
+      19: i2d
+      20: dcmpl
+      21: iflt          63
+      24: dload_3
+      25: aload_0
+      26: invokevirtual #60                 // Method getY:()I
+      29: i2d
+      30: dcmpl
+      31: iflt          63
+      34: dload_1
+      35: aload_0
+      36: invokevirtual #113                // Method getRight:()I
+      39: aload_0
+      40: invokevirtual #116                // Method scrollbarWidth:()I
+      43: iadd
+      44: i2d
+      45: dcmpg
+      46: ifge          63
+      49: dload_3
+      50: aload_0
+      51: invokevirtual #119                // Method getBottom:()I
+      54: i2d
+      55: dcmpg
+      56: ifge          63
+      59: iconst_1
+      60: goto          64
+      63: iconst_0
+      64: ireturn
+
+  protected int scrollBarX();
+    Code:
+       0: aload_0
+       1: invokevirtual #113                // Method getRight:()I
+       4: ireturn
+
+  protected int contentHeight();
+    Code:
+       0: aload_0
+       1: invokevirtual #122                // Method getInnerHeight:()I
+       4: aload_0
+       5: invokevirtual #125                // Method totalInnerPadding:()I
+       8: iadd
+       9: ireturn
+
+  protected void extractBackground(net.minecraft.client.gui.GuiGraphicsExtractor);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_0
+       3: invokevirtual #56                 // Method getX:()I
+       6: aload_0
+       7: invokevirtual #60                 // Method getY:()I
+      10: aload_0
+      11: invokevirtual #128                // Method getWidth:()I
+      14: aload_0
+      15: invokevirtual #131                // Method getHeight:()I
+      18: invokevirtual #134                // Method extractBorder:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIII)V
+      21: return
+
+  protected void extractBorder(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int);
+    Code:
+       0: getstatic     #138                // Field BACKGROUND_SPRITES:Lnet/minecraft/client/gui/components/WidgetSprites;
+       3: aload_0
+       4: invokevirtual #142                // Method isActive:()Z
+       7: aload_0
+       8: invokevirtual #145                // Method isFocused:()Z
+      11: invokevirtual #148                // Method net/minecraft/client/gui/components/WidgetSprites.get:(ZZ)Lnet/minecraft/resources/Identifier;
+      14: astore        6
+      16: aload_1
+      17: getstatic     #154                // Field net/minecraft/client/renderer/RenderPipelines.GUI_TEXTURED:Lcom/mojang/blaze3d/pipeline/RenderPipeline;
+      20: aload         6
+      22: iload_2
+      23: iload_3
+      24: iload         4
+      26: iload         5
+      28: invokevirtual #160                // Method net/minecraft/client/gui/GuiGraphicsExtractor.blitSprite:(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V
+      31: return
+
+  protected boolean withinContentAreaTopBottom(int, int);
+    Code:
+       0: iload_2
+       1: i2d
+       2: aload_0
+       3: invokevirtual #34                 // Method scrollAmount:()D
+       6: dsub
+       7: aload_0
+       8: invokevirtual #60                 // Method getY:()I
+      11: i2d
+      12: dcmpl
+      13: iflt          41
+      16: iload_1
+      17: i2d
+      18: aload_0
+      19: invokevirtual #34                 // Method scrollAmount:()D
+      22: dsub
+      23: aload_0
+      24: invokevirtual #60                 // Method getY:()I
+      27: aload_0
+      28: getfield      #67                 // Field height:I
+      31: iadd
+      32: i2d
+      33: dcmpg
+      34: ifgt          41
+      37: iconst_1
+      38: goto          42
+      41: iconst_0
+      42: ireturn
+
+  protected abstract int getInnerHeight();
+
+  protected abstract void extractContents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+
+  protected int getInnerLeft();
+    Code:
+       0: aload_0
+       1: invokevirtual #56                 // Method getX:()I
+       4: aload_0
+       5: invokevirtual #107                // Method innerPadding:()I
+       8: iadd
+       9: ireturn
+
+  protected int getInnerTop();
+    Code:
+       0: aload_0
+       1: invokevirtual #60                 // Method getY:()I
+       4: aload_0
+       5: invokevirtual #107                // Method innerPadding:()I
+       8: iadd
+       9: ireturn
+
+  public void playDownSound(net.minecraft.client.sounds.SoundManager);
+    Code:
+       0: return
+
+  static {};
+    Code:
+       0: new           #149                // class net/minecraft/client/gui/components/WidgetSprites
+       3: dup
+       4: ldc           #164                // String widget/text_field
+       6: invokestatic  #166                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+       9: ldc           #172                // String widget/text_field_highlighted
+      11: invokestatic  #166                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+      14: invokespecial #174                // Method net/minecraft/client/gui/components/WidgetSprites."<init>":(Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;)V
+      17: putstatic     #138                // Field BACKGROUND_SPRITES:Lnet/minecraft/client/gui/components/WidgetSprites;
+      20: return
+}

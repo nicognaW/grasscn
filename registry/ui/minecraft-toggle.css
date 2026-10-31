@@ -1,0 +1,39 @@
+@layer components {
+  .mc-toggle {
+    --mc-scale: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    gap: calc(4px * var(--mc-scale));
+    min-width: calc(26px * var(--mc-scale));
+    min-height: calc(16px * var(--mc-scale));
+    box-sizing: border-box;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    opacity: 1;
+    cursor: pointer;
+    image-rendering: pixelated;
+  }
+  .mc-toggle::before {
+    content: "";
+    display: block;
+    flex: 0 0 calc(26px * var(--mc-scale));
+    width: calc(26px * var(--mc-scale));
+    height: calc(16px * var(--mc-scale));
+    background: var(--mc-toggle-off) center / 100% 100% no-repeat;
+    image-rendering: pixelated;
+  }
+  .mc-toggle[data-state="on"]::before { background-image: var(--mc-toggle-on); }
+  .mc-toggle:is(:hover, :focus-visible)::before { background-image: var(--mc-toggle-off-highlighted); }
+  .mc-toggle[data-state="on"]:is(:hover, :focus-visible)::before { background-image: var(--mc-toggle-on-highlighted); }
+  .mc-toggle:is(:disabled, [data-disabled], [aria-disabled="true"]) { cursor: default; }
+}

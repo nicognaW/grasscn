@@ -1,0 +1,1719 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "c8d13e3f9808014b181834e6097803f0a27642d193f30043734b2268dc56d34e",
+  "caseDefinitionSha256": "6a9a4748528414998ea6acfd169358ecfa8287a5562350c48b1d117d3e085b15",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "dc0c25dad3933d96fb970f9f16142b2ae71ba75cb3bc013b1d9b18742e8f6c66"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "010e9539977635e9a3d5f96461f296364b9ccbbbacb10a778c26b51cc2c42589"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "e01d7fc1377cfec9c5ee3c110a22d4c4f7c1ce02db6ff6981c2b4cf52fb0ca79"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "54d312ce17972955e78e99685abab6fe986794547a6f9bbfe7329a3bc3d8c7cd"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "10db50c0e02d53a15f5cc1f3c16e8188ead7fa8beee050c7ed8ebac8e9c6918f"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "705190125c3c8b18290642c19960f0fbb8b9d11276e69b0ce9d3b1418b6a6f7e"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "f80a0f5d05d298e8c31abc6ee75dd745ff67c1fe1b8d9e0ff0c92a085b29a1f1"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "d9d8938797f1a16438fff5b78ce1f7691cf82fddda068c8a93941ca6a50d2b54"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "340ab3ffeea2b0e4aca66cd11946de4f41a57922098f819ce56ce1c1accbeecb"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "f95ca39a3220b1b3dbe7a016b38661e9e3e2c479d3f2236948e2d1ae94af5bb8"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "557ae33a3f78d9fbcdf718911c21e5da58dd9919b45a10eb687e1a326e653dfe"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "606261d186508bb8fa86c8d57835a3b88e8b761d947a240e324820ad39ccd8a2"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "b3cbee61653b63dc0f8304e6c7ccb6f5ffd73406171a8460b1bc5bba7f111546"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "ab964c0469efc54675169fe39ec65be17e2d0c38189321d0d552eda098604370"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "7919c35510221c3df0fe614ca540e32d6cadf91dbda4b084033e663d8b0869a1"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "0e5b25d55f7d1cb70cd7b102ad6877341e2a01243569f79ff33d43f178cc5a38"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "0a5d24b7934af4493a2f6cd4144216a885c61bf5213c278c4b47d0fb8b5d21ea"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "354b5d59d634bf6044ecb4f0392d4ba22dda5d613225cf31b3d45d224d6ea2ee"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "eee5076b8b96fc67b8434459e19a04cd9e4b7699d74eaf858f6d8005b8946390"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "4c3c6abe7f07394ff902ad97b3fb2dd68a3e242bc84a397ccdcb1db1f5522500"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "79a0961d997f89e1ce2621f83229ca755fc9176e7343ecebc38442ae36f3f227"
+    }
+  ],
+  "cases": [
+    {
+      "name": "label-c0-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 1,
+      "sha256": "1a97c978bb957f0e035d6027989f5e0e15f634f5180db11cca5ba4d82d8e3661"
+    },
+    {
+      "name": "label-c1-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "e1a3d3683165d92754d24950c80952bda17004f746776d1550c6c4fa90807272"
+    },
+    {
+      "name": "label-c2-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "610a0744ff3d3284159b446e7cd84af3bcacf85b52dc4c96e0cde3ceff972966"
+    },
+    {
+      "name": "label-c3-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "96576d28c07ab85b2c95d93537d898943cab27bf231fa234b2a42cad07862b23"
+    },
+    {
+      "name": "label-c4-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "3c47a298f18873a0c09cb754fcdf5ab70685f5cd89688012166b2d6e490b9a5c"
+    },
+    {
+      "name": "label-c5-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 1,
+      "sha256": "040a55c434b7a7c1179aa68b466172ea093127aaadffeb08f0951094e1e5b22c"
+    },
+    {
+      "name": "label-c6-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 1,
+      "sha256": "ee47ca6504d0dcbde1e95c9f6102d2254cbf95c86986e65698835ac7fce12e13"
+    },
+    {
+      "name": "label-c7-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 1,
+      "sha256": "055b5d959710d3f60875b932df3db4aa55f71f45f1de27537b13170f61557ae7"
+    },
+    {
+      "name": "label-c8-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 1,
+      "sha256": "53556ddd80ddd205c2f3dfb343b95477be4517bb986402f40a930d96974927cb"
+    },
+    {
+      "name": "label-c9-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 1,
+      "sha256": "3c82804d6c5683113d04d4074ee151f323275db656380e17cb57d5ee53546e0d"
+    },
+    {
+      "name": "label-c10-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "0cc9aa1656027d4a9cd04f559cf4bf0332810d80946bb170fd52e23be24cbc10"
+    },
+    {
+      "name": "label-c11-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 1,
+      "sha256": "174db82e30c4953dee4e814df120bbc1d483f5f12c6a27d11ca0f6a4f3bf4689"
+    },
+    {
+      "name": "label-c12-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 1,
+      "sha256": "1cc0284bd4d98781bad9452e3d2230283ddb893905c3f6e9a96cd304cd2fbe3f"
+    },
+    {
+      "name": "label-c13-s1.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "85b10e343e754b070768d817a725fe9c3e739f00072c54fca9ff57100304c6b4"
+    },
+    {
+      "name": "label-c14-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 1,
+      "sha256": "1a97c978bb957f0e035d6027989f5e0e15f634f5180db11cca5ba4d82d8e3661"
+    },
+    {
+      "name": "label-c15-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "e1a3d3683165d92754d24950c80952bda17004f746776d1550c6c4fa90807272"
+    },
+    {
+      "name": "label-c16-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "610a0744ff3d3284159b446e7cd84af3bcacf85b52dc4c96e0cde3ceff972966"
+    },
+    {
+      "name": "label-c17-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "96576d28c07ab85b2c95d93537d898943cab27bf231fa234b2a42cad07862b23"
+    },
+    {
+      "name": "label-c18-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "3c47a298f18873a0c09cb754fcdf5ab70685f5cd89688012166b2d6e490b9a5c"
+    },
+    {
+      "name": "label-c19-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 1,
+      "sha256": "040a55c434b7a7c1179aa68b466172ea093127aaadffeb08f0951094e1e5b22c"
+    },
+    {
+      "name": "label-c20-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 1,
+      "sha256": "ee47ca6504d0dcbde1e95c9f6102d2254cbf95c86986e65698835ac7fce12e13"
+    },
+    {
+      "name": "label-c21-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 1,
+      "sha256": "055b5d959710d3f60875b932df3db4aa55f71f45f1de27537b13170f61557ae7"
+    },
+    {
+      "name": "label-c22-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 1,
+      "sha256": "53556ddd80ddd205c2f3dfb343b95477be4517bb986402f40a930d96974927cb"
+    },
+    {
+      "name": "label-c23-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 1,
+      "sha256": "3c82804d6c5683113d04d4074ee151f323275db656380e17cb57d5ee53546e0d"
+    },
+    {
+      "name": "label-c24-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "0cc9aa1656027d4a9cd04f559cf4bf0332810d80946bb170fd52e23be24cbc10"
+    },
+    {
+      "name": "label-c25-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 1,
+      "sha256": "174db82e30c4953dee4e814df120bbc1d483f5f12c6a27d11ca0f6a4f3bf4689"
+    },
+    {
+      "name": "label-c26-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 1,
+      "sha256": "1cc0284bd4d98781bad9452e3d2230283ddb893905c3f6e9a96cd304cd2fbe3f"
+    },
+    {
+      "name": "label-c27-s1.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "85b10e343e754b070768d817a725fe9c3e739f00072c54fca9ff57100304c6b4"
+    },
+    {
+      "name": "label-c0-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 2,
+      "sha256": "703602e479e51f8aab0f19814cd7cbaf4676b5240b4ca1d3aa81302a9c6b9c32"
+    },
+    {
+      "name": "label-c1-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "cc790bcff1f4f9c6caac6a652163525e19105a696b052480bc1914903ce96fac"
+    },
+    {
+      "name": "label-c2-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "0e226f81c4324b12edec9a274d456a2c47e77bc45d0e6a14d7c0b34ad4d1909d"
+    },
+    {
+      "name": "label-c3-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "2b9ac516abad6b53896578fd0d14aab8732af15e98ff8acbc8212c0e7960e1cd"
+    },
+    {
+      "name": "label-c4-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "338e1a5c4e3e8d6ffdd3fdc3112d3b7554f411aa359eb26f418579f915e0c5d2"
+    },
+    {
+      "name": "label-c5-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 2,
+      "sha256": "4801b4e6548850003a89df5c800f0e07f2e085bab53b644f10f34540924710e8"
+    },
+    {
+      "name": "label-c6-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 2,
+      "sha256": "1023d241cd3d053ae3335cb10639d6ec38b83afbb3acd5b3194c0cc8b8c67e3c"
+    },
+    {
+      "name": "label-c7-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 2,
+      "sha256": "eaa35cd865de49dee20ebaad45c9a37d1641e4958b074767a8c2aae54426fd4c"
+    },
+    {
+      "name": "label-c8-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 2,
+      "sha256": "c85fefe085aa42dd06726206042138372ed4b8518299ed64a7906513eb407e6a"
+    },
+    {
+      "name": "label-c9-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 2,
+      "sha256": "1f8d15b13ca2309cd98ef3ce409e5d8e5c00a54af28fbbd72c16520a2249dad7"
+    },
+    {
+      "name": "label-c10-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "ce5cb849ecf2414eb748654767b532b89b1cd5f1bc10d15289db982fc1822188"
+    },
+    {
+      "name": "label-c11-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 2,
+      "sha256": "6027b7d2be04454ece3967a2ae31a919702f01e1a3d7c2c16e180962c97d5a9f"
+    },
+    {
+      "name": "label-c12-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 2,
+      "sha256": "a053a387103ec4d14ee8cd179091cbae145f4dde2fe922afac919bab6146eef7"
+    },
+    {
+      "name": "label-c13-s2.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "56e115a8e4daa575f4f25f768a50f8b11157d3e4c0399f3897e6921ae4ffce72"
+    },
+    {
+      "name": "label-c14-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 2,
+      "sha256": "703602e479e51f8aab0f19814cd7cbaf4676b5240b4ca1d3aa81302a9c6b9c32"
+    },
+    {
+      "name": "label-c15-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "cc790bcff1f4f9c6caac6a652163525e19105a696b052480bc1914903ce96fac"
+    },
+    {
+      "name": "label-c16-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "0e226f81c4324b12edec9a274d456a2c47e77bc45d0e6a14d7c0b34ad4d1909d"
+    },
+    {
+      "name": "label-c17-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "2b9ac516abad6b53896578fd0d14aab8732af15e98ff8acbc8212c0e7960e1cd"
+    },
+    {
+      "name": "label-c18-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "338e1a5c4e3e8d6ffdd3fdc3112d3b7554f411aa359eb26f418579f915e0c5d2"
+    },
+    {
+      "name": "label-c19-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 2,
+      "sha256": "4801b4e6548850003a89df5c800f0e07f2e085bab53b644f10f34540924710e8"
+    },
+    {
+      "name": "label-c20-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 2,
+      "sha256": "1023d241cd3d053ae3335cb10639d6ec38b83afbb3acd5b3194c0cc8b8c67e3c"
+    },
+    {
+      "name": "label-c21-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 2,
+      "sha256": "eaa35cd865de49dee20ebaad45c9a37d1641e4958b074767a8c2aae54426fd4c"
+    },
+    {
+      "name": "label-c22-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 2,
+      "sha256": "c85fefe085aa42dd06726206042138372ed4b8518299ed64a7906513eb407e6a"
+    },
+    {
+      "name": "label-c23-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 2,
+      "sha256": "1f8d15b13ca2309cd98ef3ce409e5d8e5c00a54af28fbbd72c16520a2249dad7"
+    },
+    {
+      "name": "label-c24-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "ce5cb849ecf2414eb748654767b532b89b1cd5f1bc10d15289db982fc1822188"
+    },
+    {
+      "name": "label-c25-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 2,
+      "sha256": "6027b7d2be04454ece3967a2ae31a919702f01e1a3d7c2c16e180962c97d5a9f"
+    },
+    {
+      "name": "label-c26-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 2,
+      "sha256": "a053a387103ec4d14ee8cd179091cbae145f4dde2fe922afac919bab6146eef7"
+    },
+    {
+      "name": "label-c27-s2.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "56e115a8e4daa575f4f25f768a50f8b11157d3e4c0399f3897e6921ae4ffce72"
+    },
+    {
+      "name": "label-c0-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 3,
+      "sha256": "2f60f784925df807e7e4587ad8ef7e41f92704d405bb7298099822ea123242fc"
+    },
+    {
+      "name": "label-c1-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "825e04c60cf28d17d65a43923d285d56f34d9e33b798a7c4d74f77fa2f81b4c5"
+    },
+    {
+      "name": "label-c2-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "7da850cbb82a8fe1b91606766fd898a92aa32cce9ad642925efe148943edf5c7"
+    },
+    {
+      "name": "label-c3-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "1073b26668163573a04b2aabec85f9bd3f92341ed8c01f702b788b5666cc8101"
+    },
+    {
+      "name": "label-c4-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "b813c18bd0d697959872bcd0c400adea5323ee4890f4289bbc8a1805216f5f3c"
+    },
+    {
+      "name": "label-c5-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 3,
+      "sha256": "e4c3b4abaa9f90d66f24ae2badf0684f349ecbe5e6fbe42da7fc60e507107c4c"
+    },
+    {
+      "name": "label-c6-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 3,
+      "sha256": "28e5b3a2fd8c8e64dac31eba884532239f4fbfa2d1c77ed05f2127973c906dc7"
+    },
+    {
+      "name": "label-c7-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 3,
+      "sha256": "36ec9d38a5e3d4c89374dc91824d6399f7ccc4a532f5544a27d5e359a7cbf7b8"
+    },
+    {
+      "name": "label-c8-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 3,
+      "sha256": "312cf8fbfd7be3d39f33dc607546fbc0260665669a40d6c33d437282e5778b03"
+    },
+    {
+      "name": "label-c9-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 3,
+      "sha256": "605510ceb214780967c2b9715690323f44d88d53f96095cf3dee303a0dcaea2e"
+    },
+    {
+      "name": "label-c10-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "a2fbc13e21e70ba0a6ec747ae30ada0e21bdce3964a93ed0ed3a7aee12dc869c"
+    },
+    {
+      "name": "label-c11-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 3,
+      "sha256": "9374d577e040bf0122a92e0a0e95ee6ff1079670ff0710ed30b47d8a712d9f41"
+    },
+    {
+      "name": "label-c12-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 3,
+      "sha256": "a08fcc18ae688234a9e3c836586766274873db2e7e8cec231bfa17d361c260fb"
+    },
+    {
+      "name": "label-c13-s3.png",
+      "element": "label",
+      "state": "normal",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "48e670b9d46d5705dde06f0b9d8b0335e6000f87cf46cb9a93dd7259af8e54a7"
+    },
+    {
+      "name": "label-c14-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "World Name",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "renderedLines": [
+        "World Name"
+      ],
+      "scale": 3,
+      "sha256": "2f60f784925df807e7e4587ad8ef7e41f92704d405bb7298099822ea123242fc"
+    },
+    {
+      "name": "label-c15-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "!\"#$%&'()*+,-./0123456789:;<=>?",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "renderedLines": [
+        "!\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "825e04c60cf28d17d65a43923d285d56f34d9e33b798a7c4d74f77fa2f81b4c5"
+    },
+    {
+      "name": "label-c16-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "7da850cbb82a8fe1b91606766fd898a92aa32cce9ad642925efe148943edf5c7"
+    },
+    {
+      "name": "label-c17-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "1073b26668163573a04b2aabec85f9bd3f92341ed8c01f702b788b5666cc8101"
+    },
+    {
+      "name": "label-c18-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "b813c18bd0d697959872bcd0c400adea5323ee4890f4289bbc8a1805216f5f3c"
+    },
+    {
+      "name": "label-c19-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "こんにちは世界",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "renderedLines": [
+        "こんにちは世界"
+      ],
+      "scale": 3,
+      "sha256": "e4c3b4abaa9f90d66f24ae2badf0684f349ecbe5e6fbe42da7fc60e507107c4c"
+    },
+    {
+      "name": "label-c20-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "안녕하세요 세계",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "안녕하세요 세계"
+      ],
+      "scale": 3,
+      "sha256": "28e5b3a2fd8c8e64dac31eba884532239f4fbfa2d1c77ed05f2127973c906dc7"
+    },
+    {
+      "name": "label-c21-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123",
+      "width": 200,
+      "height": 9,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "renderedLines": [
+        "Hello 世界 123"
+      ],
+      "scale": 3,
+      "sha256": "36ec9d38a5e3d4c89374dc91824d6399f7ccc4a532f5544a27d5e359a7cbf7b8"
+    },
+    {
+      "name": "label-c22-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 3,
+      "sha256": "312cf8fbfd7be3d39f33dc607546fbc0260665669a40d6c33d437282e5778b03"
+    },
+    {
+      "name": "label-c23-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "left",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 3,
+      "sha256": "605510ceb214780967c2b9715690323f44d88d53f96095cf3dee303a0dcaea2e"
+    },
+    {
+      "name": "label-c24-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "left",
+      "background": "#202020",
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "a2fbc13e21e70ba0a6ec747ae30ada0e21bdce3964a93ed0ed3a7aee12dc869c"
+    },
+    {
+      "name": "label-c25-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Create a new world with friends",
+      "width": 100,
+      "height": 36,
+      "wrapWidth": 100,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "renderedLines": [
+        "Create a new world",
+        "with friends"
+      ],
+      "scale": 3,
+      "sha256": "9374d577e040bf0122a92e0a0e95ee6ff1079670ff0710ed30b47d8a712d9f41"
+    },
+    {
+      "name": "label-c26-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Line one\nLine two\nLine three",
+      "width": 120,
+      "height": 36,
+      "wrapWidth": 120,
+      "alignment": "center",
+      "background": "#202020",
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "renderedLines": [
+        "Line one",
+        "Line two",
+        "Line three"
+      ],
+      "scale": 3,
+      "sha256": "a08fcc18ae688234a9e3c836586766274873db2e7e8cec231bfa17d361c260fb"
+    },
+    {
+      "name": "label-c27-s3.png",
+      "element": "label",
+      "state": "disabled",
+      "label": "Hello 世界 123 你好，世界",
+      "width": 72,
+      "height": 36,
+      "wrapWidth": 72,
+      "alignment": "center",
+      "background": "#808080",
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "renderedLines": [
+        "Hello 世界 123",
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "48e670b9d46d5705dde06f0b9d8b0335e6000f87cf46cb9a93dd7259af8e54a7"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

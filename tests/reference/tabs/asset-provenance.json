@@ -1,0 +1,72 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/widget/tab.png": {
+      "sha256": "d3e61e68a6849d1d9fa00de0338346f8f9e91f1ea54c8198a9eeafd7833f9688",
+      "metadataSha256": "bb6923221c7e93cd8fc9cbabe4bdd77d581274904a89108bd985d4d6d2ac2c8b",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 130,
+        "height": 24,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 0
+        }
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/tab_highlighted.png": {
+      "sha256": "a261ba6d5ab7124410698722476a83fb041655d1da77332b34e7c7ecbcda9ae9",
+      "metadataSha256": "bb6923221c7e93cd8fc9cbabe4bdd77d581274904a89108bd985d4d6d2ac2c8b",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 130,
+        "height": 24,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 0
+        }
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/tab_selected.png": {
+      "sha256": "179f4f8e69f7cf56bf3fafb4c5fd053fc45b26d8829451a7f2648687309a7a7e",
+      "metadataSha256": "bb6923221c7e93cd8fc9cbabe4bdd77d581274904a89108bd985d4d6d2ac2c8b",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 130,
+        "height": 24,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 0
+        }
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/tab_selected_highlighted.png": {
+      "sha256": "8890dbbce7f85e9e8c344dad8f3c4c0882911635543c6f4686f43595819e71c9",
+      "metadataSha256": "bb6923221c7e93cd8fc9cbabe4bdd77d581274904a89108bd985d4d6d2ac2c8b",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 130,
+        "height": 24,
+        "border": {
+          "left": 2,
+          "top": 2,
+          "right": 2,
+          "bottom": 0
+        }
+      }
+    },
+    "assets/minecraft/textures/gui/menu_background.png": {
+      "sha256": "515f7821d6bea28de86e607f6a53011e658d00a121179bb980719f39ac62df51"
+    },
+    "assets/minecraft/textures/gui/header_separator.png": {
+      "sha256": "5f7074d9a35e6a06b3cbba879532ac92b2a66ef6a15888e59dae9c5ae0795931"
+    }
+  },
+  "rendering": "MenuTabBar.MenuTabButton: selected/unselected crossed with hover-or-focus picks four original sprites. Native130x24 nine-slice has borders2/2/2/0 and tiled interior. Selected fill uses original menu_background at x+2,y+2 to right-2,bottom, texture period32. Selected underline min(font.width,label pane width-4), x=floor((width-lineWidth)/2), y=22. Text y8 selected/y10 unselected, white or disabledA0 with native shadow. Native scrolling helper is sampled under a temporarily pinned/restored original time source. List width min(400,outer)-28, per-tab even rounding after integer division, left margin rounded to even. Original sound is emitted by TabManager only when selection changes."
+}

@@ -1,0 +1,7 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "member": "assets/minecraft/textures/block/dirt.png",
+  "asset": "assets/dirt.png",
+  "sha256": "67197d5371efc3ca1638217c38349665dbd5a977b47bfb20075c858dff87d510",
+  "transformation": "None. Original PNG bytes; CSS uses integer nearest-neighbor tiling and a dark tint."
+}

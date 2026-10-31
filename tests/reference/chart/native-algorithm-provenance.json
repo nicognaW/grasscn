@@ -1,0 +1,28 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "net/minecraft/client/gui/components/debugchart/FpsDebugChart.class": {
+      "sha256": "c2e74b5ede95bf820cbf0bc6a46039c6e610ebce8ce26c3cf1da84d3099daf28"
+    },
+    "net/minecraft/client/gui/components/debugchart/AbstractDebugChart.class": {
+      "sha256": "6f0f16572760feeffcb24a0f7f8e3c71bc26c39d363ab7986791f09417f1941b"
+    },
+    "net/minecraft/client/gui/components/debugchart/ProfilerPieChart.class": {
+      "sha256": "c8e23de10113c376e057c6e9a121f4a3df56d864ee5705dadf706138b8d063b1"
+    },
+    "net/minecraft/client/gui/render/pip/GuiProfilerChartRenderer.class": {
+      "sha256": "4ddd228090d49b456d8900f28b757ef7a4b4c7f8237767d0a5dffa987ae41fd5"
+    },
+    "net/minecraft/util/profiling/ResultField.class": {
+      "sha256": "1993b29447ead59fd2f9d11f5e43cf6b8ba14e8b414eac3f72fa6fe50f1bc660"
+    },
+    "net/minecraft/util/Mth.class": {
+      "sha256": "4bf51de7ebd9315a20cad8bbffeba1f5ee0da98ffe0d4181d7f4528ce024aaef"
+    },
+    "net/minecraft/util/ARGB.class": {
+      "sha256": "97006dc566ef6315c3e4b4e8db5cd9ef1ad2161f9dcc0d364b2337b3e05087fe"
+    }
+  },
+  "fps": "Original fixed capacity240, width-limited sample slice, uncapped spike heights, nanosecond summaries, native shade blending, 30/60FPS references and optional cap line.",
+  "profiler": "Original Mth float32 sine lookup, reverse triangle fans, floor(percentage/4)+1 tessellation, front side quads, hash colors and half-bright side colors; WebGL rasterized, no captured plot imagery in implementation."
+}

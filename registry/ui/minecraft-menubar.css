@@ -1,0 +1,16 @@
+@layer components {
+  .mc-menubar { --mc-pixel: calc(1px * var(--mc-scale, 2)); display: inline-flex; flex-wrap: wrap; align-items: flex-start; gap: calc(2 * var(--mc-pixel)); max-width: 100%; padding: 0; border: 0; margin: 0; }
+  .mc-menubar-trigger { width: calc(103 * var(--mc-pixel, 2px)); }
+  .mc-menubar-trigger[data-state="open"]:not(:disabled, [aria-disabled="true"]) {
+    --mc-image: var(--mc-highlighted-image);
+    --mc-piece-0: var(--mc-highlighted-0);
+    --mc-piece-1: var(--mc-highlighted-1);
+    --mc-piece-2: var(--mc-highlighted-2);
+    --mc-piece-3: var(--mc-highlighted-3);
+    --mc-piece-4: var(--mc-highlighted-4);
+    --mc-piece-5: var(--mc-highlighted-5);
+    --mc-piece-6: var(--mc-highlighted-6);
+    --mc-piece-7: var(--mc-highlighted-7);
+    --mc-piece-8: var(--mc-highlighted-8);
+  }
+}

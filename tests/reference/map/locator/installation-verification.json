@@ -1,0 +1,293 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/map.json --yes --overwrite",
+  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "minecraft-adventure-assets.ts",
+      "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
+      "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
+      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a"
+    },
+    {
+      "path": "minecraft-adventure-image.tsx",
+      "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
+      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
+      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+    },
+    {
+      "path": "minecraft-map-palette.ts",
+      "sourcePath": "registry/ui/minecraft-map-palette.ts",
+      "sourceSha256": "4e672af89db13fe5cb39206d46a1f6fabf0d167ecc49f7a91b65f9c24f8daf1a",
+      "installedSha256": "4e672af89db13fe5cb39206d46a1f6fabf0d167ecc49f7a91b65f9c24f8daf1a"
+    },
+    {
+      "path": "minecraft-map-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-map-atlas.ts",
+      "sourceSha256": "dc766ca904f1de1e062fffdd007a7f0715917d9950ad1701dd7508d7242bb7b4",
+      "installedSha256": "dc766ca904f1de1e062fffdd007a7f0715917d9950ad1701dd7508d7242bb7b4"
+    },
+    {
+      "path": "minecraft-map-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-map-gpu.ts",
+      "sourceSha256": "8139bfec27cf43cfb244ad4cc775c202b0cfeb154b38f732843646234e407858",
+      "installedSha256": "8139bfec27cf43cfb244ad4cc775c202b0cfeb154b38f732843646234e407858"
+    },
+    {
+      "path": "minecraft-map.css",
+      "sourcePath": "registry/ui/minecraft-map.css",
+      "sourceSha256": "30c7a32370cddb1776f4999c47904efd4f517b7dce8d1df2685e6510347c7f37",
+      "installedSha256": "30c7a32370cddb1776f4999c47904efd4f517b7dce8d1df2685e6510347c7f37"
+    },
+    {
+      "path": "map.tsx",
+      "sourcePath": "registry/ui/map.tsx",
+      "sourceSha256": "f45a8a6960baaa6f3bd716e721c5a4f2ac1dab081f8a16e7de5c76c29f827955",
+      "installedSha256": "d7f2bb98becc20e9690e84ae10ee58d2eb56440d7685f8ad14d7f84f56e58b73"
+    }
+  ],
+  "cases": [
+    {
+      "name": "locator-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a920cb2afabbf70181286099e43ee7dabf9f208c83b0884ad581ede2773e340c"
+    },
+    {
+      "name": "locator-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "34f4955173bf59c56a5dc3354c62575b92ea58cdd0047926592395db6cab6531"
+    },
+    {
+      "name": "locator-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6a949f9fd23020025fd6c98ea059a1066e68a5d98d6579790427054aa615aa2d"
+    },
+    {
+      "name": "locator-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2643bb3f9cdfc00857b438d058dc7eb68c737fe23b24e65261281401cc6f2624"
+    },
+    {
+      "name": "locator-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b2782c006be469aa734b56c72c783b45e40049e6a61e5c1211aa47e6e01fe816"
+    },
+    {
+      "name": "locator-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8975a5d800c8ec2733ddf11488e1feab99e27cac75012f44bb9c07954a81c3e3"
+    },
+    {
+      "name": "locator-6-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a920cb2afabbf70181286099e43ee7dabf9f208c83b0884ad581ede2773e340c"
+    },
+    {
+      "name": "locator-7-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a920cb2afabbf70181286099e43ee7dabf9f208c83b0884ad581ede2773e340c"
+    },
+    {
+      "name": "locator-8-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "96b0a54ac5fe94163ee62913eb97b99722efc9c39a03d6d2da35cbea9a4b8403"
+    },
+    {
+      "name": "locator-9-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "09aa4f448aad9cd6837eda55757673e9342877b2f9f809f52386dce31d2ac6fc"
+    },
+    {
+      "name": "locator-10-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "39a65c352b34c0cf0c21b529c201cfdf3acfea73048f0142ca78d2fd469698a4"
+    },
+    {
+      "name": "locator-11-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "80c99cf8c2e702d52d2751fece79a29d6a17b02a0e17172f429919881b9b6d37"
+    },
+    {
+      "name": "locator-12-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d66165e23cffb6ac0c2d44264afe5c2c5bab8686c6a85d091544b29227cfbd37"
+    },
+    {
+      "name": "locator-13-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a920cb2afabbf70181286099e43ee7dabf9f208c83b0884ad581ede2773e340c"
+    },
+    {
+      "name": "locator-empty-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a920cb2afabbf70181286099e43ee7dabf9f208c83b0884ad581ede2773e340c"
+    },
+    {
+      "name": "locator-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ed0a0b3bc21fc5a0d66b57a1826e32046a7a641551400a8cda5dcb2cab0f10"
+    },
+    {
+      "name": "locator-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "42e0c3c6ef085084bb7529ad2aef6ffe45def4622bd4a058ec5a41ca46633fbf"
+    },
+    {
+      "name": "locator-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "423a10095c3e594f7e133984e5e4774ec1edad1d7f2876971ee94ef090e45f6d"
+    },
+    {
+      "name": "locator-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "194effecfcbdc71e39147db8ba9adffc2133a0ffe1eff4cc3e5562fcf762287f"
+    },
+    {
+      "name": "locator-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e71c1d50fc9a09e371c2dbd9726dfeada27153768249fc94e4c53e7db09bb7b5"
+    },
+    {
+      "name": "locator-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "cbf982b185c932d991cd539ed56415529f5905047aa5ca3e12f72bc8f18efd61"
+    },
+    {
+      "name": "locator-6-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ed0a0b3bc21fc5a0d66b57a1826e32046a7a641551400a8cda5dcb2cab0f10"
+    },
+    {
+      "name": "locator-7-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ed0a0b3bc21fc5a0d66b57a1826e32046a7a641551400a8cda5dcb2cab0f10"
+    },
+    {
+      "name": "locator-8-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bef878a4fb29c720229d48ca034cad47e624a915cc5c1deb8bf576639009315d"
+    },
+    {
+      "name": "locator-9-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4a3075f721850314cb110b9634381fbd8285021736e777c2391214e78a24c59f"
+    },
+    {
+      "name": "locator-10-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "79b2febe3dae481ab0001ea55515173eb451456a9be111dbebcd55c5ad4637c0"
+    },
+    {
+      "name": "locator-11-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7ecce8e8a38644aa1b31012e58ffc1c3daf1bc385e4ff43c29a5846537844a59"
+    },
+    {
+      "name": "locator-12-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9c1c1e758983561ef2f1fe764f7547fa253d5169a82485cb952a259e8342d9ff"
+    },
+    {
+      "name": "locator-13-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ed0a0b3bc21fc5a0d66b57a1826e32046a7a641551400a8cda5dcb2cab0f10"
+    },
+    {
+      "name": "locator-empty-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6ed0a0b3bc21fc5a0d66b57a1826e32046a7a641551400a8cda5dcb2cab0f10"
+    },
+    {
+      "name": "locator-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "833a506de75622e02492072af15221f3d168b1c07e4825943a6586ab42e0e868"
+    },
+    {
+      "name": "locator-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fc4d7483754ec81e452b5d7e77bda4efd44446e295177a2a1fa486e016487549"
+    },
+    {
+      "name": "locator-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4143b0da4149983654866549af37dce1685c78de5a24d7c91b3f181cc51838ff"
+    },
+    {
+      "name": "locator-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ea02afdad388b74731ee3297b992b99322ddaa006ab13d71fa05e20383fe69d8"
+    },
+    {
+      "name": "locator-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7a379d75ec69b8006f65536fd407d904af19d8f80096687de6856dde3d12514a"
+    },
+    {
+      "name": "locator-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d7324e66f3d6265e93c3cb9320800a359bb2f876dbb0b0581c36f3b7882aa2d7"
+    },
+    {
+      "name": "locator-6-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "833a506de75622e02492072af15221f3d168b1c07e4825943a6586ab42e0e868"
+    },
+    {
+      "name": "locator-7-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "833a506de75622e02492072af15221f3d168b1c07e4825943a6586ab42e0e868"
+    },
+    {
+      "name": "locator-8-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c8d35527d3490827f44a725914ae478050069aa9c81986ef409b64fb5b4fd113"
+    },
+    {
+      "name": "locator-9-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "601c36a9938b6a191e32506b3ef6ea2f950ccba57a216a336c51ef7deb3bc8b5"
+    },
+    {
+      "name": "locator-10-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ae4581252aac049c3be73b9746f30788879d13fae6e52b331757fee7b4ca7bf1"
+    },
+    {
+      "name": "locator-11-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a6732875245202ef26668ae24124f581e9863591a29969c2cc8069b3a920c4e6"
+    },
+    {
+      "name": "locator-12-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "150fb577374ccfed6575db6a3c3262e26d24e98d3042057bbec9cd9054eedfd3"
+    },
+    {
+      "name": "locator-13-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "833a506de75622e02492072af15221f3d168b1c07e4825943a6586ab42e0e868"
+    },
+    {
+      "name": "locator-empty-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "833a506de75622e02492072af15221f3d168b1c07e4825943a6586ab42e0e868"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Map click resolves logical coordinates",
+      "Markers activate by pointer and keyboard without triggering terrain click",
+      "Locator viewport bearing clipping and keyboard waypoint activation",
+      "One-pixel comparator negative control"
+    ]
+  },
+  "limitations": [
+    "63 declared cases at scales 1-3 in Edge/DPR1: terrain, all 256 palette indices, transparent map, frame/village decorations at rotations 0/4/7; white/green locator dots at seven bearings and empty locator. Other marker types, altitude arrows, distance shapes, viewports and raster environments are outside this exact matrix."
+  ]
+}

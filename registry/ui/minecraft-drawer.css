@@ -1,0 +1,29 @@
+@layer components {
+ .mc-drawer-overlay {position:fixed;inset:0;z-index:50;background:linear-gradient(to bottom,rgba(16,16,16,.7529411764705882),rgba(16,16,16,.8156862745098039));}
+ .mc-drawer-overlay[data-mc-backdrop-ready="true"] {background:transparent;}
+ .mc-drawer-content {position:fixed;z-index:51;outline:0;overflow:auto;max-width:100vw;max-height:100dvh;}
+ .mc-drawer-content > * {flex-shrink:0;}
+ .mc-drawer-content[data-side="left"] {left:0;top:0;bottom:0;width:calc(250px * var(--mc-scale,2));}
+ .mc-drawer-content[data-side="right"] {right:0;top:0;bottom:0;width:calc(250px * var(--mc-scale,2));}
+ .mc-drawer-content[data-side="top"] {left:0;right:0;top:0;}
+ .mc-drawer-content[data-side="bottom"] {left:0;right:0;bottom:0;}
+ .mc-drawer-content[data-state="closed"],.mc-drawer-overlay[data-state="closed"] {display:none;}
+ .mc-drawer-header {display:flex;flex-direction:column;align-items:flex-start;gap:calc(12px * var(--mc-scale,2));}
+ .mc-drawer-footer>.mc-button {width:100%;}
+ .mc-drawer-footer {display:flex;flex-direction:column;align-items:stretch;gap:calc(6px * var(--mc-scale,2));margin-top:auto;}
+ .mc-drawer-default-close {margin-top:auto;width:100%;}
+}
+
+@layer components { .mc-drawer-overlay[data-mc-backdrop-ready="true"] {background:transparent;}
+ .mc-drawer-content {touch-action:none;} }
+
+/* Vaul overscroll fill extends the scrollable native panel by two extra heights. */
+.mc-drawer-content[data-vaul-drawer]::after {display:none;}
+
+/* Opacity on an ancestor isolates backdrop-filter bands from the page. Keep the
+   overlay fully painted from mount while Vaul animates only the panel. */
+.mc-drawer-overlay[data-vaul-overlay][data-state="open"] {
+ animation:none!important;
+ opacity:1!important;
+ transition:none!important;
+}

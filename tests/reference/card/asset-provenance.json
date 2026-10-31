@@ -1,0 +1,14 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "member": "assets/minecraft/textures/gui/sprites/popup/background.png",
+  "sha256": "380160151f20a64ae14c13e7e26f496d7c28f105fa958950fe6c3c1434727ed9",
+  "metadataSha256": "b552ee01037bf7870b689fb27fbb3d6edc1386006bad7ff318ea20c7be376762",
+  "scaling": {
+    "type": "nine_slice",
+    "width": 236,
+    "height": 34,
+    "border": 6
+  },
+  "sourceMethod": "PopupScreen.extractBackground; GuiGraphicsExtractor.blitSprite",
+  "scope": "Native popup panel surface only. Card section layout is a web composition, not an independent vanilla screen."
+}

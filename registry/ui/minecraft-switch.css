@@ -1,0 +1,6 @@
+@layer components {
+  .mc-switch { position: relative; box-sizing: border-box; display: inline-block; width: calc(150 * var(--mc-pixel)); outline: none; }
+  .mc-switch .mc-switch-on, .mc-switch .mc-switch-off { display: inline-flex; }
+  .mc-switch[data-state="checked"] .mc-switch-off, .mc-switch[data-state="unchecked"] .mc-switch-on, .mc-switch .mc-switch-thumb { display: none; }
+  .mc-switch:focus:not(:disabled,[aria-disabled="true"]) { --mc-piece-0: var(--mc-highlighted-0); --mc-piece-1: var(--mc-highlighted-1); --mc-piece-2: var(--mc-highlighted-2); --mc-piece-3: var(--mc-highlighted-3); --mc-piece-4: var(--mc-highlighted-4); --mc-piece-5: var(--mc-highlighted-5); --mc-piece-6: var(--mc-highlighted-6); --mc-piece-7: var(--mc-highlighted-7); --mc-piece-8: var(--mc-highlighted-8); }
+}

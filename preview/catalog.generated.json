@@ -1,42 +1,878 @@
 {
-  "total": 68,
+  "total": 67,
+  "completedCount": 67,
   "components": [
     {
       "name": "button",
       "title": "Button",
       "category": "Actions",
-      "referenceCases": 66,
-      "scope": "Default variant only; see native manifest and tests. No new test result claimed by this map.",
+      "componentNames": [
+        "button"
+      ],
+      "referenceCases": 162,
+      "scope": "162 native Button cases: 66 ASCII cases plus 96 fixed Chinese/Japanese/Korean/mixed-label cases, widths 103/200 and normal/hover/focus/disabled states, at scales 1–3. Default visual variant and size only. CJK cases pin 16 observed glyph UVs, en_us font options, viewport 1536x900 and native screen positions; Edge/DPR 1 with WebGL. Other glyphs, long scrolling labels, fractional scales and rich children are unverified.",
+      "verificationKind": "native-cases",
       "minecraftVersion": "26.2",
-      "sourceRevision": "6dbe8f5e5608d526f0642ed923cf58f73e0072214dba61734afb4b3600087c5f"
+      "sourceRevision": "375e491717358875ea2442fb4407f9d4b0bbbcd684caa4fb148b790ff7c6ad14"
     },
     {
       "name": "checkbox",
       "title": "Checkbox",
       "category": "Selection",
+      "componentNames": [
+        "checkbox"
+      ],
       "referenceCases": 24,
       "scope": "Checkbox root only; checked/unchecked × normal/hover/focus/disabled × scales 1–3. Mixed state is a web composition without native pixel proof. Edge/DPR 1.",
+      "verificationKind": "native-cases",
       "minecraftVersion": "26.2",
-      "sourceRevision": "058c1f03fd0316a34de27dcafe536f5263b400a9349fe2a3c014f079b16b6a18"
+      "sourceRevision": "cc28398557622abbbb76e108a11c754b4e00795c460f0bf958c66865fb548556"
     },
     {
       "name": "slider",
       "title": "Slider",
       "category": "Selection",
+      "componentNames": [
+        "slider"
+      ],
       "referenceCases": 225,
       "scope": "225 explicit horizontal single-thumb cases. Range, RTL, inverted and vertical have web behavior tests; no native pixel guarantee for those extensions.",
+      "verificationKind": "native-cases",
       "minecraftVersion": "26.2",
-      "sourceRevision": "34a48e1b2771b224169b5787f49ed9a463f3b52e83e16e3125a095bd9d7cde55"
+      "sourceRevision": "897777e9a0911740d255c18e26854f395320b80c000bade3390c2352a332ee75"
     },
     {
       "name": "input",
       "title": "Input",
       "category": "Text entry",
-      "referenceCases": 306,
-      "scope": "306 explicit ASCII text-input cases at integer scales 1–3, including caret/selection/scrolling. Password, Unicode, RTL and specialized types use browser rendering; their pixels are not native-verified.",
+      "componentNames": [
+        "input"
+      ],
+      "referenceCases": 378,
+      "scope": "378 native cases: 306 ASCII text-input cases including caret/selection/scrolling, plus 72 fixed Chinese/Japanese/Korean/mixed-text cases covering 16 CJK glyphs, at integer scales 1–3. CJK pixels pin en_us font options, observed glyph UVs, 1536x900 viewport and native screen positions. Edge/DPR 1 with WebGL. Other CJK glyphs retain original Unihex pixels but their sampling is unverified; password, unsupported glyphs, RTL and specialized types use browser rendering.",
+      "verificationKind": "native-cases",
       "minecraftVersion": "26.2",
-      "sourceRevision": "edf001dea3f57d16eeedc85ee0bd0a2591c0bd511c1edc57d9a27d5fd0e450e9"
+      "sourceRevision": "0ffce0ec13cd0d0525a3bb205c4ff122274c958fe30940e688f958cdd30c15d4"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "category": "Information",
+      "componentNames": [
+        "tooltip"
+      ],
+      "referenceCases": 180,
+      "scope": "180 ASCII tooltip cases: single/multiline, wrapping, all printable ASCII, three solid backdrops and scales 1–3. Screen position and 1536x900 viewport match native captures; Edge/DPR 1 with WebGL nearest sampling. Radix focus/collision behavior is tested separately. Image/gradient backdrops and other GPU/browser environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "5f3af99e72f37ce1b0346b28a8c7c043c44e47d31db0442c45c6886d0f6a7402"
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "category": "Panels",
+      "componentNames": [
+        "card"
+      ],
+      "referenceCases": 96,
+      "scope": "96 controlled cases: native popup panel at widths 103/200/236/257 and heights 34/80/120 on two solid backdrops; bold title, wrapped message and footer Button compositions at widths 103/236. Scales 1–3, Edge/DPR 1. Popup texture and original widgets are native constituents; arbitrary Card section layouts, rich children and non-ASCII text are unverified web compositions.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "8d460aed1de4790a2e99f5249783d2c24057ef253c39bc4caf3d0d7d3cd52734"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "category": "Text entry",
+      "componentNames": [
+        "textarea"
+      ],
+      "referenceCases": 114,
+      "scope": "114 native cases: 72 ASCII and 42 fixed Chinese/Japanese/Korean/mixed multiline cases covering empty/placeholder, focus/caret phases, selection, wrapping, disabled and scrolling at scales 1–3. Real textarea and original 6-pixel scrollbar surface. Edge/DPR 1; CJK pins en_us font options, observed glyph UVs, native screen positions and viewport1536x900. Other glyphs, RTL, character-limit decorations and additional raster environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "f639bee03724a6c0e7ec49db00924523bd26a1f3a088b01e43b82ae3e094b8cf"
+    },
+    {
+      "name": "label",
+      "title": "Label",
+      "category": "Text entry",
+      "componentNames": [
+        "label"
+      ],
+      "referenceCases": 84,
+      "scope": "84 native cases covering printable ASCII, fixed Chinese/Japanese/Korean/mixed text, enabled/disabled, two backgrounds, wrapping, explicit line breaks and left/center layout at GUI scales 1–3; Edge/DPR1, viewport1536x900 and exact native positions. Rich children, overflow ellipsis/scrolling, arbitrary glyphs and other raster environments remain unverified. Label uses its observed native atlas-loading context; pixels outside these fixed glyphs and loading context are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "bbb3d0762d7de10515f31bb2fbde1e60157106e1e8a0234956b20805cdfb8548"
+    },
+    {
+      "name": "separator",
+      "title": "Separator",
+      "category": "Layout",
+      "componentNames": [
+        "separator"
+      ],
+      "referenceCases": 108,
+      "scope": "108 native cases: header/footer, nine integer widths1–385, two backgrounds and GUI scales1–3. Both default div and asChild hr match each reference exactly (216 web comparisons). Edge/DPR1. Original in-world textures are byte-identical; loaded-world lifecycle, vertical orientation and other raster environments are not exercised.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "06657e272f14d988c9548f0a2c5e9749bd3e4df5fa626a2bfdab6cd1c8ef25f8"
+    },
+    {
+      "name": "scroll-area",
+      "title": "Scroll Area",
+      "category": "Layout",
+      "componentNames": [
+        "scroll-area"
+      ],
+      "referenceCases": 297,
+      "scope": "297 native cases: original borderless viewport clipping with zero-padding test layout and original Button rows, vertical scrollbar, empty/fitting/overflow, top/middle/bottom integer logical offsets, dimensions including inverted minimum-thumb bounds, hover/focus/disabled, GUI scales1–3. Edge/DPR1. Radix browser viewport and native integer thumb geometry; horizontal scrollbars, alternate visibility modes, fractional offsets, RTL and other raster environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "dd09610a689762b45a353f6b05612088779262c09c520daff1b357f81c91d8c6"
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "category": "Status",
+      "componentNames": [
+        "progress"
+      ],
+      "referenceCases": 1284,
+      "scope": "1284 steady-state native BossHealthOverlay bar cases: seven colors, five overlays, six values, two backgrounds and extra float/discrete-fill boundaries, at native182x5 dimensions and GUI scales1–3. Edge/DPR1 with WebGL for original unpremultiplied RGBA notch blending. Unknown web semantics reuse the verified native empty surface. Animated interpolation, arbitrary resizing, WebGL fallback and other raster environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ec6bff1d5c5d7e01bc05e017c113c5d780ca6cf850e7da65e3a77e1fc6e131ab"
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "category": "Navigation",
+      "componentNames": [
+        "tabs"
+      ],
+      "referenceCases": 822,
+      "scope": "822 native cases: four original MenuTabBar tab sprites, selected underline and menu panel texture; selected/unselected, hover/focus/disabled, widths46-450, 2/3/5 tabs, timed long titles, 16 observed Chinese/Japanese/Korean/mixed glyphs, two backgrounds, GUI scales1-3. Edge/DPR1, viewport1536x900 and native screen positions. Horizontal/default variant only. Arbitrary rich panel content, additional glyphs, RTL raster and other environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "b8d7fa17e41ce86dff95cebb6555b556d31561c87a1fe6b7a05b04889277aaf3"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "category": "Selection",
+      "componentNames": [
+        "select"
+      ],
+      "referenceCases": 942,
+      "scope": "942 native surface cases: original CycleButton sprites and timed scrolling labels; original LanguageSelectionList rows270x18, focus/selection outline, disabled text color, empty/fitting/overflow and integer scrolling, original menu-list background/separators and scrollbar. Two backgrounds, widths16-385, GUI scales1-3. Fixed Chinese/Japanese/Korean/mixed labels pin16 observed glyph UVs and native screen positions in Edge/DPR1, viewport1536x900. Dropdown, pointer-to-focus, optional grouping and placement are web composition. Native pure-hover cases hold focus through a public pointer-move override. Additional glyphs, rich content, RTL raster, fractional scales and other environments remain unverified. Default pointer and keyboard focus additionally match native focused-row captures at all three scales.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "2cf48f8ff4ee60f81a48f6ff14a660aabc68f406f6edea80fbe47da6b0a9adb9"
+    },
+    {
+      "name": "radio-group",
+      "title": "Radio Group",
+      "category": "Selection",
+      "componentNames": [
+        "radio-group"
+      ],
+      "referenceCases": 48,
+      "scope": "48 original Checkbox item cases: unchecked/checked crossed with normal/hover/focus/disabled, two backgrounds and GUI scales1-3. Full native21x17 empty-label widget bounds preserve the17x17 graphic plus4-pixel label gap. Edge/DPR1. Exclusive-selection behavior, group layout, horizontal/RTL arrangements, labels and rich children are web composition. Other scales and raster environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "d42207b784075a180ee59bf42bf1dfbb0e9e32d16623f6b2d9f2d76b2c0c6c00"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "category": "Selection",
+      "componentNames": [
+        "switch"
+      ],
+      "referenceCases": 192,
+      "scope": "192 original CycleButton.onOffBuilder appearance cases: ON/OFF, normal/hover/focus/disabled, widths40/80/150/200, two backgrounds and GUI scales1-3. Native factory default150x20, en_us uppercase labels and original Button sprites. Edge/DPR1, viewport1536x900 and native positions. Web switch semantics, external labels and rich/asChild content are composition. Other locales, fractional scales and raster environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "b54003474e494cf7399b3aa5d9603536db42ffcea4bd9df4733e1befa1912625"
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "category": "Panels",
+      "componentNames": [
+        "dialog"
+      ],
+      "referenceCases": 186,
+      "scope": "186 original PopupScreen full-viewport cases: title/body layout, empty/absent/multiple messages, wrapping, 1/2/3 footer buttons, hover/focus/disabled actions, two backgrounds, colored spectrum and original Button underlay, fixed Chinese/Japanese/Korean/mixed bold titles and multiline body, GUI scales1-3. Edge/DPR1, viewport1536x900. Fifteen observed Unihex glyph UVs and original bold expansion. Responsive overflow, rich content and additional glyphs are web composition or unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "2659d796891aa3cbe50206614caea81661c5912e1eeaec9ed02b0ad5af0e1d51"
+    },
+    {
+      "name": "alert-dialog",
+      "title": "Alert Dialog",
+      "category": "Panels",
+      "componentNames": [
+        "alert-dialog"
+      ],
+      "referenceCases": 150,
+      "scope": "150 original ConfirmScreen full-viewport cases: default/empty/ASCII/CJK title and message, wrapping, trailing newlines, 15-row ellipsis, hover/focus/disabled actions, fixed CJK action labels, two backgrounds, colored spectrum and original Button underlay, menu blur0/5, scales1-3. Edge155/DPR1, viewport1536x900, original observed UVs for22 glyphs. Blur uses original shader arithmetic over a local DOM snapshot. Other glyphs, raster environments and arbitrary vector/video/cross-origin underlays are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "d642138174543dfd02a32ec3611508cfe0d8c2a87820e26bc052af62c45fc0d5"
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "category": "Panels",
+      "componentNames": [
+        "popover"
+      ],
+      "referenceCases": 156,
+      "scope": "156 native appearances: 96 original popup surface/ASCII layouts and 60 original bold title/normal multiline body cases including empty, Chinese/Japanese/Korean/mixed labels, wrapping, printable ASCII and two backgrounds at scales1-3. Original baked geometry and 109 observed glyph coordinates. Edge/DPR1, viewport1536x900, en_us. Anchoring, collision, forms and rich children are web behavior. Other glyphs/environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "2d8eb2df73b80fb401380581c818065febc099578ce0fe222b544ce3747c454c"
+    },
+    {
+      "name": "dropdown-menu",
+      "title": "Dropdown Menu",
+      "category": "Navigation",
+      "componentNames": [
+        "dropdown-menu"
+      ],
+      "referenceCases": 441,
+      "scope": "441 repeated native references: original suggestion rows, selected/hovered text, clipped-row indicators, popup-panel compositions and original checkbox captions/textures, labels, inactive-button-message palette, header separators and font submenu indicators. 108 checkbox references also checked through radio appearance reuse. Original 17-pixel checkbox sampling uses 20-pixel textures, native atlas UVs and actual viewport/position. Scales 1-3, Edge/DPR1, 1536x900, en_us and fixed ASCII/CJK labels. Menus/submenus and mixed state are designed web compositions; no general vanilla dropdown menu is claimed. Other layouts, glyphs and environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ff55f4e671cd6dfd97da9ff75336de0405c22f0aa8a17a6448a232a354eeada1"
+    },
+    {
+      "name": "context-menu",
+      "title": "Context Menu",
+      "category": "Navigation",
+      "componentNames": [
+        "context-menu"
+      ],
+      "referenceCases": 441,
+      "scope": "441 repeated native references: original suggestion rows, selected/hovered text, clipped-row indicators, popup-panel compositions and original checkbox captions/textures, labels, inactive-button-message palette, header separators and font submenu indicators. 108 checkbox references also checked through radio appearance reuse. Original 17-pixel checkbox sampling uses 20-pixel textures, native atlas UVs and actual viewport/position. Scales 1-3, Edge/DPR1, 1536x900, en_us and fixed ASCII/CJK labels. Menus/submenus and mixed state are designed web compositions; no general vanilla dropdown menu is claimed. Other layouts, glyphs and environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "29345430859af3612c416c4f9c3f3c7348e8fcc4fdc2fcfb2a8bffee0a8e36bf"
+    },
+    {
+      "name": "menubar",
+      "title": "Menubar",
+      "category": "Navigation",
+      "componentNames": [
+        "menubar"
+      ],
+      "referenceCases": 603,
+      "scope": "603 repeated native references: 228 suggestion/popup appearances, 213 original menu constituent appearances and 162 native Button references. 108 checkbox references additionally checked as radio items; 36 highlighted Button references also checked through actual open-menu trigger state, giving 747 public appearance comparisons. Original textures, normal/selected/inactive-message palettes, separators, native atlas UVs and glyphs. GUI scales 1-3, Edge/DPR1, 1536x900, fixed ASCII/Chinese/Japanese/Korean/mixed labels and native screen positions. Menubar geometry, open-trigger highlighting, nesting and mixed states are designed web compositions; no vanilla desktop menubar is claimed. Other layouts, glyphs and environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "908b7519f1e2775737e247739dc1940273670abe1ec8a6a61bd81996735fc1a5"
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "category": "Layout",
+      "componentNames": [
+        "collapsible"
+      ],
+      "referenceCases": 246,
+      "scope": "246 repeated native references: 162 original Button appearances tested through collapsed and expanded headers plus 84 native text appearances, for 408 public comparisons. Original button textures, glyph metrics, CJK atlas coordinates, wrapping, alignment, text shadows and click audio. Scales 1-3, Edge/DPR1, 1536x900, fixed ASCII/CJK content and positions. No native collapsible counterpart is claimed; section geometry and expanded/collapsed composition are web behavior. Other glyphs, layouts, rich child rasterization and environments are unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "d214643a6b6eba6f9edc44e41ff420d02d541b654f75c03d65bae63213ca3479"
+    },
+    {
+      "name": "toggle",
+      "title": "Toggle",
+      "category": "Selection",
+      "componentNames": [
+        "toggle"
+      ],
+      "referenceCases": 60,
+      "scope": "60 native recipe-book filter cases: pressed/unpressed; normal, hover, keyboard focus, disabled and disabled-hover; two backgrounds; GUI scales1–3. Original 26×16 opaque artwork; Edge at DPR1 and viewport1536×900. Children are a web composition outside the native icon-only claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "a0574fde4bebaeed17ddc9c65f0294ac94479191c9b7e7db527dafd0ad2b9ee7"
+    },
+    {
+      "name": "toggle-group",
+      "title": "Toggle Group",
+      "category": "Selection",
+      "componentNames": [
+        "toggle-group"
+      ],
+      "referenceCases": 60,
+      "scope": "Original26×16 recipe-book filter texture across60 native cases rendered through both single and multiple group items (120 comparisons). Scales1–3, normal/hover/focus/disabled/disabled-hover, two backgrounds, EdgeDPR1 viewport1536×900. Group layout/navigation/mutual exclusion and child content are web compositions.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "eac042c680ca2b29029975f1246c1b9682ca0e4e49e6a31eae55b324e7d4e3c5"
+    },
+    {
+      "name": "aspect-ratio",
+      "title": "Aspect Ratio",
+      "category": "Layout",
+      "componentNames": [
+        "aspect-ratio"
+      ],
+      "referenceCases": 0,
+      "scope": "Unskinned web layout/context behavior only; no Minecraft pixel counterpart is claimed. Child skins retain their independent native-fidelity scope.",
+      "verificationKind": "web-utility",
+      "minecraftVersion": null,
+      "sourceRevision": "3815bd949555915437c3aba420996b667cdf2165ff499a0b3d2992577d0ffafb"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "category": "Text and layout",
+      "componentNames": [
+        "badge"
+      ],
+      "referenceCases": 18,
+      "scope": "18 exact original Minecraft Java26.2 AdvancementWidget.extractHover cases: challenge/goal/task, obtained/unobtained, original diamond item and ASCII title Diamonds!, GUI scales1–3, native117x26 logical geometry, Edge/DPR1 viewport1536x900 on #202020. Two separate isolated original client launches retain full frames and original source/asset hashes. Default content-sized widths, long/CJK title wrapping, responsive layouts, arbitrary icon composition and link focus are web adaptations tested separately; they are not asserted to be native advancement geometry. Prior Tooltip180 Badge corpus is historical and does not verify this new appearance.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "46ae1d5c30596bc835aef0a464f86c99ac18096c9e13e4962bc049c8753d2e03"
+    },
+    {
+      "name": "typography",
+      "title": "Typography",
+      "category": "Text and layout",
+      "componentNames": [
+        "typography"
+      ],
+      "referenceCases": 84,
+      "scope": "Original StringWidget and MultiLineTextWidget glyphs, shadow,9pixel lineheight, wrapping andalignment atGuiScale1–3 across semanticHTMLheadings andprose. HTMLhierarchy andlayout are websemantics; nativeheading scale isnotinvented. Edge156.0.4314.50,1536×900,DPR1; original native references repeated in separate launches. Optional richer layouts outside these matrices remain compositions.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "e399130248000b4f759bb1887bf4743e1cc8a94fbfc95599cb2ab5ae0c5972a7"
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "category": "Text and layout",
+      "componentNames": [
+        "breadcrumb"
+      ],
+      "referenceCases": 84,
+      "scope": "Original nativeLabel glyphs in accessible anchors andcurrentpage spans. Orderedpath, separator,ellipsis andkeyboardfocusring arewebcomposition; no nativebreadcrumb isclaimed. Edge156.0.4314.50,1536×900,DPR1; original native references repeated in separate launches. Optional richer layouts outside these matrices remain compositions.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "a7a0a592460b810a6de8aa3b9031f86c1ff23b456402037389b0c9bd27696d49"
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "category": "Text and layout",
+      "componentNames": [
+        "kbd"
+      ],
+      "referenceCases": 162,
+      "scope": "Original Button surface andglyphs reused aspassive keyboard-key labels. Semantic kbd has noactivationhandlers orclickaudio; chordgrouping iswebcomposition. Nativehover/focus/disabled appearance followsoriginalbutton skin. Edge156.0.4314.50,1536×900,DPR1; original native references repeated in separate launches. Optional richer layouts outside these matrices remain compositions.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "8fac3c98956c66448a1b1d7da9e26aeaa9654970816361084f08177cc4512ccb"
+    },
+    {
+      "name": "sheet",
+      "title": "Sheet",
+      "category": "OVERLAYS",
+      "componentNames": [
+        "sheet"
+      ],
+      "referenceCases": 180,
+      "scope": "96 original PopupScreen panel constituents:72 bare surfaces +24 ASCII title/body/wrapping/button cases, scales1–3 and two backgrounds. Additional84 native Label cases each tested through Title and Description (168 appearances), including CJK, wrapping, alignment and disabled label colors. Sheet arrangement/semantics are a designed web composition. Edge placement, overlay, drag, snaps and motion are web composition; no original Minecraft edge drawer/sheet is claimed. Edge/DPR1; fixed reference sizes, backgrounds and native font loading context. Other contents and environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "c43d62dd0afa2d5c5cbeeb2fa845c1c625d4ea6020909d6a9d2322e5be9f83ef"
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "category": "OVERLAYS",
+      "componentNames": [
+        "drawer"
+      ],
+      "referenceCases": 180,
+      "scope": "96 original PopupScreen panel constituents:72 bare surfaces +24 ASCII title/body/wrapping/button cases, scales1–3 and two backgrounds. Additional84 native Label cases each tested through Title and Description (168 appearances), including CJK, wrapping, alignment and disabled label colors. Drawer arrangement/semantics are a designed web composition. Edge placement, overlay, drag, snaps and motion are web composition; no original Minecraft edge drawer/sheet is claimed. Edge/DPR1; fixed reference sizes, backgrounds and native font loading context. Other contents and environments remain unverified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "56130ddf561adcbe3eba96ccc0a400a4c37e1491817bae63b31834de824cdd54"
+    },
+    {
+      "name": "button-group",
+      "title": "Button Group",
+      "category": "Layout",
+      "componentNames": [
+        "button-group"
+      ],
+      "referenceCases": 354,
+      "scope": "516 exact native constituent comparisons from354 repeatable Java26.2 references:66ASCII Buttons and96CJK Buttons each in horizontal/vertical groups,84scalarLabel appearances and108horizontalSeparator appearances. GUI scales1–3, Edge/DPR1, viewport1536×900, pinned native positions. Web grouping geometry and rotated vertical separators are designed compositions outside the native pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ae8a7a9b78433590ed782a2cba148393dc18fcc04be1fbb094cd4bd0eb49b392"
+    },
+    {
+      "name": "empty",
+      "title": "Empty",
+      "category": "Text and layout",
+      "componentNames": [
+        "empty"
+      ],
+      "referenceCases": 180,
+      "scope": "96 native ASCII empty-row cases: four labels including blank/overflow, widths101/200, heights20/41, two backgrounds and GUI scales1–3. Additional84 originalLabelcases are compared through each Title/Description slot, including CJK, wrapping and alignment. Whole composed empty-state screens and arbitrary rich children do not have a native equality claim. Verified on Edge,1536×900,DPR1; original JAR unchanged, no resource packs or mods.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "b7a52c3376dbd5c2b834b19ba5eef3a8820e4b7baf1b615a9d6bab8e7340d0f8"
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination",
+      "category": "Navigation",
+      "componentNames": [
+        "pagination"
+      ],
+      "referenceCases": 222,
+      "scope": "294 exact native constituent comparisons from222 repeatable Java26.2 references:60 recipe-book12×17 ImageButton arrows covering both directions, normal/hover/keyboardfocus/disabled/disabled-hover, two gray backdrops and GUI scales1–3;66ASCII+96CJK native Button appearances for numeric link skins, plus72 current-page highlighted aliases. Edge/DPR1, viewport1536×900 and pinned native positions. Numeric40-pixel default arrangement, ellipsis and custom content are web compositions outside the fixed-case pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "cfbdbaa05737404394e78c84414e3bb0a55503073e2efd519bee9bf8df6f52dc"
+    },
+    {
+      "name": "resizable",
+      "title": "Resizable",
+      "category": "Layout",
+      "componentNames": [
+        "resizable"
+      ],
+      "referenceCases": 60,
+      "scope": "60 exact original Minecraft Java26.2 recipe-book ImageButton arrow constituents: backward/forward, normal/hover/focus/disabled/disabled-hover, #202020/#808080, GUI scales1–3. Original page-arrow PNG bytes, integer-aligned rendering, Edge/DPR1. This is a web resizable split-pane composition: overall divider/track, opposing-arrow arrangement, enlarged drag hitbox, layout percentages, constraints, keyboard/focus controls and90degree rotation for vertical panel groups have no native resizable-widget counterpart. Original scrollbar-grip3 corpus is historical and does not verify the new arrow grip.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "9e33f10e1f04e31a1a121acc925fbe76023478df25adc8b1a7cb4d1e83e69177"
+    },
+    {
+      "name": "sidebar",
+      "title": "Sidebar",
+      "category": "Navigation",
+      "componentNames": [
+        "sidebar"
+      ],
+      "referenceCases": 1125,
+      "scope": "1587 exact native constituent comparisons from1125 repeatable Java26.2 references:162 Button references through both menu/submenu link slots plus144 active-page aliases and72 trigger/group-action/menu-action cases,378 ASCII/CJK Input states,96 native Popup panels,84 Label appearances through both group label/badge slots,108 Separator cases and297 ScrollArea cases. GUI scales1–3, Edge/DPR1 viewport1536×900, pinned native positions/locale/font-atlas context. Sidebar layout/responsiveness/icon mode/placeholders are designed web compositions outside the native full-widget pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "3aae1dedd70af7abe9824f473b40aaf52f4b9370d3cdc9d93a8b456a28ef0e83"
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "category": "Data display",
+      "componentNames": [
+        "table"
+      ],
+      "referenceCases": 198,
+      "scope": "",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "592aad35b905bceccf6d5a3369f2a788458e8ec4d87a74f7c672545d27b4ed20"
+    },
+    {
+      "name": "item",
+      "title": "Item",
+      "category": "Data display",
+      "componentNames": [
+        "item"
+      ],
+      "referenceCases": 372,
+      "scope": "180 compatible-world row cases: six ASCII/Chinese/Japanese/Korean/mixed/overflow contents, normal/body-hover/icon-hover/selected/focused states, two backgrounds and GUI scales1–3. Whole-row links and buttons match all180 cases; passive div aliases match the108 non-hover cases. Additional84 Label cases through standalone ItemTitle and108 Separator cases through ItemSeparator. Arbitrary content, custom media, locked/incompatible world states, rich composed layouts, other glyphs and raster environments remain outside this exact matrix. Edge,1536×900,DPR1; original FontManager normalization and post-capture observation are recorded and proven non-perturbing.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "43c3ce33820bd759700f8457024edeea12edb448090708f75097a19c36905aa1"
+    },
+    {
+      "name": "sonner",
+      "title": "Sonner",
+      "category": "NOTIFICATIONS",
+      "componentNames": [
+        "sonner"
+      ],
+      "referenceCases": 528,
+      "scope": "528 original Java26.2 SystemToast frames:8 title/body/ASCII/CJK/wrapping/three-toast patterns ×11 fixed shown/enter/exit phases ×2 backgrounds ×GUIscales1–3. Original opaque160×64 PNG, asymmetric tiled nine-slice, no-shadow yellow title/white body, original600ms squared motion. Native font context normalized via original FontManager.updateOptions before test-screen installation; glyph observation only after every screenshot. Edge/DPR1/1536×900, localeen_us and original indexed font resources. Actions, dismiss buttons, arbitrary rich ReactNode layouts and alternate web placement are compositions; other glyph/loading contexts and arbitrary times are not universally verified.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "62f5dda60cc48e1506b9aa07d8f83de26928757cf7e80e3158b66a43aec08a00"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "category": "PLAYERS",
+      "componentNames": [
+        "avatar"
+      ],
+      "referenceCases": 1380,
+      "scope": "1380 exact original constituent comparisons:1296 original PlayerFaceExtractor faces (18skins ×3 logical sizes ×hat on/off ×upright/inverted ×2backdrops ×GUIscales1–3), plus84 original Label appearances through actual AvatarFallback. Full native frames and two independent launches retained; original64×64skin bytes, RGBA and actual class-member hashes pinned. Edge/DPR1/1536×900. Arbitrary images, rich fallbacks, badge/group arrangement and other sizes/environments are compositions outside fixed-case native pixel equality.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "c7e2b3930b0c56e5725378e7929e28b5bacefadcbebe51524f6ea93fd8cb25c6"
+    },
+    {
+      "name": "message",
+      "title": "Message",
+      "category": "Communication",
+      "componentNames": [
+        "message"
+      ],
+      "referenceCases": 168,
+      "scope": "168 original ChatComponent foreground row cases: ASCII/Chinese/Japanese/Korean/mixed text and explicit multiline, text widths160/240 (surface widths172/252), two backgrounds, all16 Minecraft text colors, GUI scales1–3. Default scalar MessageContent matches every case. Conversation arrangement, avatars, reactions, custom rich content, fading, interactive message tags, other glyphs and raster environments remain compositions or outside this exact matrix. Edge,DPR1,1536x900; original FontManager normalization and post-capture glyph observation proven non-perturbing.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "f4ddaed8c97c9f5ca93e26ae2561c6532a16cd5b889366f470feac75577b4ebf"
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "category": "DATE AND TIME",
+      "componentNames": [
+        "calendar"
+      ],
+      "referenceCases": 984,
+      "scope": "1914 exact native constituent comparisons:744 original20x20 Button date cells (31labels×4states×2backgrounds×GUIscales1–3),930 selected/today/range highlighted aliases,96 original Card surfaces/content,84 original Label captions and60 original12x17 recipe-book navigation arrows. Actual public Calendar/DatePicker APIs exercised. Two native launches, full frames, class/asset hashes and original font contexts retained. Full calendar/date-picker layout, month/year Select compositions, arbitrary date formatting, other sizes/glyphs/browsers are outside this constituent pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "0b6b844899bc84a9fc0a1fdafd918dbc4e957d5df5e28d8f7b89d4790e6af727"
+    },
+    {
+      "name": "date-picker",
+      "title": "Date Picker",
+      "category": "DATE AND TIME",
+      "componentNames": [
+        "date-picker"
+      ],
+      "referenceCases": 1146,
+      "scope": "2076 exact native constituent comparisons:744 original20x20 Button date cells (31labels×4states×2backgrounds×GUIscales1–3),930 selected/today/range highlighted aliases,96 original Card surfaces/content,84 original Label captions and60 original12x17 recipe-book navigation arrows, plus66 ASCII and96 CJK native Button trigger appearances. Actual public Calendar/DatePicker APIs exercised. Two native launches, full frames, class/asset hashes and original font contexts retained. Full calendar/date-picker layout, month/year Select compositions, arbitrary date formatting, other sizes/glyphs/browsers are outside this constituent pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ceee7b201f11f8b19741c61b8d85b569e78d61819ff0152e7f39810f1806f92b"
+    },
+    {
+      "name": "data-table",
+      "title": "Data Table",
+      "category": "Data display",
+      "componentNames": [
+        "data-table"
+      ],
+      "referenceCases": 84,
+      "scope": "",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "6bbe77fb6c4ccb122f53c4c90f025e8af57bc07b8b9e977d7adca4f82627d582"
+    },
+    {
+      "name": "command",
+      "title": "Command",
+      "category": "Text entry",
+      "componentNames": [
+        "command"
+      ],
+      "referenceCases": 606,
+      "scope": "606 original CommandSuggestions/menu and EditBox constituent cases with zero differing decoded RGBA pixels in actual independently installed consumer. Integer scales1–3, Edge/DPR1, captured geometry/background/locale/time. Group arrangement, shortcuts and combined web layout are compositions; no nonexistent native whole-widget equivalence.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "c810a7f056d5347c580783cfbfa3e2c0a71b91cd5f88bbf1cb8bf1eced00f46d"
+    },
+    {
+      "name": "input-group",
+      "title": "Input Group",
+      "category": "Text entry",
+      "componentNames": [
+        "input-group"
+      ],
+      "referenceCases": 738,
+      "scope": "738 original EditBox, MultiLineEditBox, Label and Button constituent cases with zero differing decoded RGBA pixels in actual independently installed consumer. Integer scales1–3, Edge/DPR1, captured geometry/background/locale/time. Group arrangement, shortcuts and combined web layout are compositions; no nonexistent native whole-widget equivalence.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "f8c7de992c68a875ddc5e2eb0a9c1c0959f7deadcf9d70de3398a27b500b951b"
+    },
+    {
+      "name": "carousel",
+      "title": "Carousel",
+      "category": "Navigation",
+      "componentNames": [
+        "carousel"
+      ],
+      "referenceCases": 60,
+      "scope": "",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "5a8fd802212148ea7d496226a1941b689674c35c535ce916c6f5062920c70edb"
+    },
+    {
+      "name": "form",
+      "title": "Form",
+      "category": "Forms",
+      "componentNames": [
+        "form"
+      ],
+      "referenceCases": 84,
+      "scope": "252 exact native Label appearances through all declared public text aliases at integer scales1–3. Full layout, rich content, validation, error lists and responsive orientation are web compositions, tested independently in the installed consumer.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "cf0c89e616550241118cc45072505ba449ff398e9c5c0d78378af044267d95a2"
+    },
+    {
+      "name": "code-block",
+      "title": "Code Block",
+      "category": "Text",
+      "componentNames": [
+        "code-block"
+      ],
+      "referenceCases": 168,
+      "scope": "168 original ChatComponent foreground text/palette cases through the public CodeBlockContent with explicitly matching supplied chat-envelope geometry: ASCII/CJK, explicit newlines, all16 native colors, two widths/backgrounds, GUI1–3. File/header/footer/line-number/diff/wrap layout and syntax classification are web compositions, not a native code-editor claim. Real DOM text preserves multiline selection; full current streaming highlighter hook/lib and eight exports retained. Edge1536x900,DPR1; original font context pinned.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ff03b78ff5edd09927d8a30d74f373703db7107014f2c6605f867026cd7c5465"
+    },
+    {
+      "name": "trace",
+      "title": "Trace",
+      "category": "Text and status",
+      "componentNames": [
+        "trace"
+      ],
+      "referenceCases": 168,
+      "scope": "168 original native ChatComponent text/palette cases through public TraceLine/TraceTitle at explicitly supplied matching native row geometry: ASCII/CJK, multiline, all16 original named colors, two widths/backgrounds, GUI1–3. Running/error/pending use native white/red/dark-gray; trace viewer, indentation, disclosure and timing are web compositions. All8 exports, refs/HTML events, controlled callback contract and content-inner className semantics retained. Edge1536x900,DPR1; original native source and resources retained.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "b8875bb555f23d62be15793a0aed7c01baa55ebcb25a230283022f3f11d6614e"
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "category": "Text and status",
+      "componentNames": [
+        "spinner"
+      ],
+      "referenceCases": 108,
+      "scope": "108 original LoadingDotsWidget dots-row cases: full original O o o / o O o / o o O / o O o sequence,300ms boundaries at0/299/300/599/600/899/900/1199/1200,logical widths26/34,two backgrounds,GUI1–3. Default SVG preserves native gray/shadow pixels through exact original ASCII alpha masks; full SVG props/refs/status semantics retained. Arbitrary SVG rescaling/viewBox overrides and other raster environments remain outside this exact matrix; web reduced motion pauses the sequence. Edge1536x900,DPR1; original native source and resources retained.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "9ab29952974f4b125484c3d6f918e202e8f78342df7feed1dcf831b2229f2d33"
+    },
+    {
+      "name": "native-select",
+      "title": "Native Select",
+      "category": "Selection",
+      "componentNames": [
+        "native-select"
+      ],
+      "referenceCases": 540,
+      "scope": "540 exact closed-control cases:432 original CycleButton ASCII/state/width/timed-scroll appearances and108 original CJK appearances, GUIscales1–3 and two backdrops. Actual public NativeSelect renders the closed skin while a real HTMLSelectElement provides semantics, events, refs and forms; decorative art is inert/aria-hidden. Existing independent native captures, full frames and font contexts retained via explicit source pointers. Edge/DPR1/1536×900. OS-native popup, multiple listbox, arbitraryglyphs, RTL raster and other environments remain outside fixed-case pixel equality; opening/keyboard selection, CJK updates, validation/reset and native forms are behavior-tested.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "4a73425efac51fc47938cd3db1fa4caf17aa5616360d32b25c8ce4908e0e1243"
+    },
+    {
+      "name": "chart",
+      "title": "Chart",
+      "category": "Data display",
+      "componentNames": [
+        "chart"
+      ],
+      "referenceCases": 54,
+      "scope": "Exact native pixel claims cover only declared FPS and profiler plot inputs at scales1–3, two backgrounds, fixed text/geometry and DPR1. Generic Recharts bar/line/area/radar layouts, responsive interaction, tooltip/legend composition and arbitrary labels are web extensions. Native FPS spike bars intentionally extend outside the69logical-pixel plot envelope; declared comparisons crop that envelope. Eight additional website-analytics chart layouts (grouped bar, stacked bar, line, area, pie, donut, radar, radial) are web compositions using integer logical-pixel geometry, original bitmap glyphs and Minecraft formatting colors. Integer-scale pixel-block uniformity, real data updates and web interactions are tested separately; these layouts are not claimed to be vanilla chart widgets.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "c721cc8360b1257cea637b4a8bdc534d405c24a94fcbc365793d13b3e6f75de8"
+    },
+    {
+      "name": "input-otp",
+      "title": "Input OTP",
+      "category": "Text entry",
+      "componentNames": [
+        "input-otp"
+      ],
+      "referenceCases": 180,
+      "scope": "180 original EditBox single-character cell cases: empty,!,1,A,世,界; normal,focus-caret-on,focus-caret-off,readonly,disabled;20x20 logical cells,two backgrounds,GUI1–3,ten horizontal positions per page. Actual public InputOTPSlot uses original normal/highlighted text-field PNG bytes and independently observed native glyph sampling. Segmented groups, separators, completion/paste/pattern/form behavior are shadcn compositions; Minecraft has no OTP widget. Other glyphs/layouts/raster environments remain outside this exact matrix. Edge1536x900,DPR1; immutable installed consumer, original FontManager reset, observer-on/off repeat0; clock pinned to native caret phase.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "30630ae19c460ebc3ac7941138094a1d09b1b6d7cf31da598b24caf8f97f3be5"
+    },
+    {
+      "name": "marker",
+      "title": "Marker",
+      "category": "INFORMATION",
+      "componentNames": [
+        "marker"
+      ],
+      "referenceCases": 192,
+      "scope": "192 exact original constituent comparisons through actual public Marker/MarkerContent:84 native Label cases covering printable ASCII, fixed Chinese/Japanese/Korean, wrapping and centering;108 original header/footer separator texture cases across widths/backgrounds/GUIscales1–3. Edge/DPR1/1536×900. Default-label and border-line fixed geometry are verified; full marker arrangements, rich content, links, icons and separator placement are compositions outside a native full-widget claim. Exported markerVariants and all three layout choices remain usable with original line textures.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "9b599eed4e77c2e10ae46608260a7642a80d3cd4870af55a32737fccf8bfbcac"
+    },
+    {
+      "name": "attachment",
+      "title": "Attachment",
+      "category": "FILES",
+      "componentNames": [
+        "attachment"
+      ],
+      "referenceCases": 342,
+      "scope": "342 exact original constituent comparisons through actual public Attachment APIs:180 native WorldListEntry row appearances including original thumbnail, gray/white play arrows, selected/focused frames, native ellipsis, white titles and gray multiline ASCII/CJK descriptions;66 ASCII and96 CJK native Button action appearances. GUIscales1–3, original fixed backgrounds/positions, Edge/DPR1/1536×900. Fresh CLI rendering and every payload file verified against final pooled RGB helper. Arbitrary file/image content, upload states, grouping, vertical arrangements and interactions are web compositions; no full vanilla attachment widget is claimed.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "70f5f9cd4f6b1ac9919251fc1830cfe09ab5ead0043277e4cb1c3277a05c604d"
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "category": "Input",
+      "componentNames": [
+        "combobox"
+      ],
+      "referenceCases": 606,
+      "scope": "606 exact original native constituents:228 CommandSuggestions/menu appearances and378 EditBox ASCII/CJK appearances through actual Base UI Combobox primitives at the captured positions, integer scales1–3 and Edge/DPR1. Combined popup positioning, grouping, chips, multiple values and clear actions are web compositions; no native Minecraft combobox widget is asserted.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "9d7d075b1d5d2ca536bcf4e5ab90b34e293cd5d4fbb213a3f53e94a82752dda4"
+    },
+    {
+      "name": "questionnaire",
+      "title": "Questionnaire",
+      "category": "QUESTIONS",
+      "componentNames": [
+        "questionnaire"
+      ],
+      "referenceCases": 576,
+      "scope": "1338 exact native constituent comparisons through actual public Questionnaire APIs:84 Label cases in each of four text parts (336),24 Checkbox cases in both multiple/checkbox and single/radio modes (48),306 original EditBox cases including caret timing/selection/readonly/disabled/CJK, and162 original ASCII/CJK Button cases in each Previous/Skip/Next/Submit wrapper (648). Six behavior tests cover actual official headless forms, validation, previous/next, optional skip, multiple and freeform answers, CJK values, numbered shortcuts, controlled item/render callbacks, refs and one original click voice. All26 installable files match source; @shadcn/react0.3.1 installed in the separate consumer. Full arrangement, auto compact action widths, arbitrary rich/rendered content, other HTML input types and other environments are outside the fixed native pixel claim.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "dd85370851500db7749b8e51b504f7d2fd705f600de6e422315a3814a9f12d58"
+    },
+    {
+      "name": "advancement-tree",
+      "title": "Advancement Tree",
+      "category": "Minecraft",
+      "componentNames": [
+        "advancement-tree"
+      ],
+      "referenceCases": 12,
+      "scope": "12 independently repeated native graph captures; zero RGBA differences in installed consumer.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "dd82cafdbd3c08cf379ce192566ab6c5567c37d03f57c81808b32cc8a070f226"
+    },
+    {
+      "name": "book",
+      "title": "Book",
+      "category": "Minecraft",
+      "componentNames": [
+        "book"
+      ],
+      "referenceCases": 24,
+      "scope": "Book reader with fixed ASCII pages, eight paging/background cases, scales 1-3. Editing and arbitrary glyph layout are outside the pixel matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "651707f13f87895db801c21eef46ba7c1d3a3e9f01c9e3fc05612a1c3443956a"
+    },
+    {
+      "name": "hotbar",
+      "title": "Hotbar",
+      "category": "Minecraft",
+      "componentNames": [
+        "hotbar"
+      ],
+      "referenceCases": 27,
+      "scope": "Nine empty slots and each selected position, scales 1-3, explicit #202020 uniform compositing surface. Arbitrary icons, focus and transparent browser compositing are outside the pixel matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ce7e1f0dc7ca5362c88236f6767c9073243586a939667c296f20334e4271a884"
+    },
+    {
+      "name": "hud",
+      "title": "HUD Meters",
+      "category": "Minecraft",
+      "componentNames": [
+        "hud"
+      ],
+      "referenceCases": 84,
+      "scope": "84 zero-difference installed-consumer cases, each repeated in two native launches.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "cf06fa8045362fb0c21a3cfc67bdceb663b4c6cff51029ea0fbc520bc169eb24"
+    },
+    {
+      "name": "sign",
+      "title": "Signs",
+      "category": "Minecraft",
+      "componentNames": [
+        "sign"
+      ],
+      "referenceCases": 144,
+      "scope": "Standing/hanging sign display, all 12 woods, black regular/glowing ASCII text, scales 1-3, fixed viewport1536x900 and integer positions. Other glyphs, colours and raster environments are outside the pixel matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "edc99c36631db8730c73ec7fba7f5f027532722ff2e43bc7d69d370831fc1de6"
+    },
+    {
+      "name": "player-preview",
+      "title": "Player Preview",
+      "category": "Minecraft",
+      "componentNames": [
+        "player-preview"
+      ],
+      "referenceCases": 48,
+      "scope": "80x120 logical viewport, scales 1-3, Edge/DPR1 hardware WebGL2: original wide Steve/slim Alex default, front and side poses; frozen Dream slim front, back, angled-back and side; custom wide Steve back and angled-back; builtin Steve/Alex back and angled-back. Other skins, dimensions, poses and raster environments are outside the exact pixel matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "8b27fec85ef684560303eb92ace20fa99a74692b5b1c089b9d091b13289478b8"
+    },
+    {
+      "name": "map",
+      "title": "Map",
+      "category": "Minecraft",
+      "componentNames": [
+        "map"
+      ],
+      "referenceCases": 66,
+      "scope": "63 declared cases at scales 1-3 in Edge/DPR1: terrain, all 256 palette indices, transparent map, frame/village decorations at rotations 0/4/7; white/green locator dots at seven bearings and empty locator. Other marker types, altitude arrows, distance shapes, viewports and raster environments are outside this exact matrix. Three additional scales1-3 cases in Edge/DPR1 render the exact native-generated16384-byte map from real saved overworld chunks, center(1344,-704), mapscale1. Original MapItem.update over read-only block states and WORLD_SURFACE data generates colors; original MapRenderer generates reference pixels. These cases cover terrain only; interactive marker and locator appearance remains covered by the prior63-case matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "0abff08c7002e658cc51fe35416308e24346edb245bad8d5f29d41a737155f40"
+    },
+    {
+      "name": "trading",
+      "title": "Trading",
+      "category": "Minecraft",
+      "componentNames": [
+        "trading"
+      ],
+      "referenceCases": 66,
+      "scope": "Nine declared MerchantScreen cases: nine diamond offers, selected offers 1/4/9, stock/out-of-stock and scroll offsets 0/2, empty player inventory, scales1-3, Edge/DPR1. Other item icons/counts, second inputs, discounts, merchant level/XP and raster environments are outside this exact pixel matrix. Additional57 original scrollbar crops across0/1/7/8/9/14/25/80 offers and456 native mouse-event comparisons; see scrollbar/scroll-rules.json for browser unit normalization.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "cd53f4c90dbdcf072c4428681dad6847d6bb63047cac4846d8db0b1d1fe190e7"
+    },
+    {
+      "name": "player-list",
+      "title": "Player List",
+      "category": "Minecraft",
+      "componentNames": [
+        "player-list"
+      ],
+      "referenceCases": 30,
+      "scope": "Thirty declared cases: player rosters with3/7/22/41/80 entries, no score and integer scores, builtin Alex/Steve/Kai heads, eight latency thresholds, single-line header/footer; scoreboards with0/3/18 input entries and top15, scales1-3, Edge/DPR1. Spectators, teams, hearts, custom skins, multiline headers/footers, arbitrary glyphs and raster environments are outside this exact pixel matrix.",
+      "verificationKind": "native-cases",
+      "minecraftVersion": "26.2",
+      "sourceRevision": "ed95290301306261b350611e14617ce15295d6a6999707b036816d4f0c729f48"
     }
   ],
-  "updatedAt": "2026-10-28T14:53:07.683Z"
+  "updatedAt": "2026-10-31T09:34:36.692Z"
 }

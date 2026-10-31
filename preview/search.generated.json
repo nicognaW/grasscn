@@ -1,0 +1,1512 @@
+[
+  {
+    "name": "button",
+    "title": "Button",
+    "category": "Actions",
+    "exports": [
+      "Button"
+    ],
+    "exportSources": {
+      "Button": "button"
+    },
+    "aliases": [],
+    "demo": "button"
+  },
+  {
+    "name": "checkbox",
+    "title": "Checkbox",
+    "category": "Selection",
+    "exports": [
+      "Checkbox"
+    ],
+    "exportSources": {
+      "Checkbox": "checkbox"
+    },
+    "aliases": [],
+    "demo": "checkbox"
+  },
+  {
+    "name": "slider",
+    "title": "Slider",
+    "category": "Selection",
+    "exports": [
+      "Slider"
+    ],
+    "exportSources": {
+      "Slider": "slider"
+    },
+    "aliases": [],
+    "demo": "slider"
+  },
+  {
+    "name": "input",
+    "title": "Input",
+    "category": "Text entry",
+    "exports": [
+      "Input"
+    ],
+    "exportSources": {
+      "Input": "input"
+    },
+    "aliases": [],
+    "demo": "input"
+  },
+  {
+    "name": "tooltip",
+    "title": "Tooltip",
+    "category": "Information",
+    "exports": [
+      "Tooltip",
+      "TooltipTrigger",
+      "TooltipContent",
+      "TooltipProvider"
+    ],
+    "exportSources": {
+      "Tooltip": "tooltip",
+      "TooltipTrigger": "tooltip",
+      "TooltipContent": "tooltip",
+      "TooltipProvider": "tooltip"
+    },
+    "aliases": [],
+    "demo": "tooltip"
+  },
+  {
+    "name": "card",
+    "title": "Card",
+    "category": "Panels",
+    "exports": [
+      "Card",
+      "CardHeader",
+      "CardTitle",
+      "CardDescription",
+      "CardAction",
+      "CardContent",
+      "CardFooter"
+    ],
+    "exportSources": {
+      "Card": "card",
+      "CardHeader": "card",
+      "CardTitle": "card",
+      "CardDescription": "card",
+      "CardAction": "card",
+      "CardContent": "card",
+      "CardFooter": "card"
+    },
+    "aliases": [],
+    "demo": "card"
+  },
+  {
+    "name": "textarea",
+    "title": "Textarea",
+    "category": "Text entry",
+    "exports": [
+      "Textarea"
+    ],
+    "exportSources": {
+      "Textarea": "textarea"
+    },
+    "aliases": [],
+    "demo": "textarea"
+  },
+  {
+    "name": "label",
+    "title": "Label",
+    "category": "Text entry",
+    "exports": [
+      "Label"
+    ],
+    "exportSources": {
+      "Label": "label"
+    },
+    "aliases": [],
+    "demo": "label"
+  },
+  {
+    "name": "separator",
+    "title": "Separator",
+    "category": "Layout",
+    "exports": [
+      "Separator"
+    ],
+    "exportSources": {
+      "Separator": "separator"
+    },
+    "aliases": [],
+    "demo": "separator"
+  },
+  {
+    "name": "scroll-area",
+    "title": "Scroll Area",
+    "category": "Layout",
+    "exports": [
+      "ScrollArea",
+      "ScrollBar"
+    ],
+    "exportSources": {
+      "ScrollArea": "scroll-area",
+      "ScrollBar": "scroll-area"
+    },
+    "aliases": [],
+    "demo": "scroll-area"
+  },
+  {
+    "name": "progress",
+    "title": "Progress",
+    "category": "Status",
+    "exports": [
+      "Progress"
+    ],
+    "exportSources": {
+      "Progress": "progress"
+    },
+    "aliases": [],
+    "demo": "progress"
+  },
+  {
+    "name": "tabs",
+    "title": "Tabs",
+    "category": "Navigation",
+    "exports": [
+      "Tabs",
+      "TabsList",
+      "TabsTrigger",
+      "TabsContent"
+    ],
+    "exportSources": {
+      "Tabs": "tabs",
+      "TabsList": "tabs",
+      "TabsTrigger": "tabs",
+      "TabsContent": "tabs"
+    },
+    "aliases": [],
+    "demo": "tabs"
+  },
+  {
+    "name": "select",
+    "title": "Select",
+    "category": "Selection",
+    "exports": [
+      "Select",
+      "SelectGroup",
+      "SelectValue",
+      "SelectTrigger",
+      "SelectContent",
+      "SelectItem",
+      "SelectLabel",
+      "SelectSeparator",
+      "SelectScrollUpButton",
+      "SelectScrollDownButton"
+    ],
+    "exportSources": {
+      "Select": "select",
+      "SelectGroup": "select",
+      "SelectValue": "select",
+      "SelectTrigger": "select",
+      "SelectContent": "select",
+      "SelectItem": "select",
+      "SelectLabel": "select",
+      "SelectSeparator": "select",
+      "SelectScrollUpButton": "select",
+      "SelectScrollDownButton": "select"
+    },
+    "aliases": [],
+    "demo": "select"
+  },
+  {
+    "name": "radio-group",
+    "title": "Radio Group",
+    "category": "Selection",
+    "exports": [
+      "RadioGroup",
+      "RadioGroupItem"
+    ],
+    "exportSources": {
+      "RadioGroup": "radio-group",
+      "RadioGroupItem": "radio-group"
+    },
+    "aliases": [],
+    "demo": "radio-group"
+  },
+  {
+    "name": "switch",
+    "title": "Switch",
+    "category": "Selection",
+    "exports": [
+      "Switch"
+    ],
+    "exportSources": {
+      "Switch": "switch"
+    },
+    "aliases": [],
+    "demo": "switch"
+  },
+  {
+    "name": "dialog",
+    "title": "Dialog",
+    "category": "Panels",
+    "exports": [
+      "Dialog",
+      "DialogTrigger",
+      "DialogPortal",
+      "DialogClose",
+      "DialogOverlay",
+      "DialogContent",
+      "DialogHeader",
+      "DialogFooter",
+      "DialogTitle",
+      "DialogDescription"
+    ],
+    "exportSources": {
+      "Dialog": "dialog",
+      "DialogTrigger": "dialog",
+      "DialogPortal": "dialog",
+      "DialogClose": "dialog",
+      "DialogOverlay": "dialog",
+      "DialogContent": "dialog",
+      "DialogHeader": "dialog",
+      "DialogFooter": "dialog",
+      "DialogTitle": "dialog",
+      "DialogDescription": "dialog"
+    },
+    "aliases": [],
+    "demo": "dialog"
+  },
+  {
+    "name": "alert-dialog",
+    "title": "Alert Dialog",
+    "category": "Panels",
+    "exports": [
+      "AlertDialog",
+      "AlertDialogTrigger",
+      "AlertDialogPortal",
+      "AlertDialogOverlay",
+      "AlertDialogContent",
+      "AlertDialogHeader",
+      "AlertDialogMedia",
+      "AlertDialogFooter",
+      "AlertDialogTitle",
+      "AlertDialogDescription",
+      "AlertDialogAction",
+      "AlertDialogCancel"
+    ],
+    "exportSources": {
+      "AlertDialog": "alert-dialog",
+      "AlertDialogTrigger": "alert-dialog",
+      "AlertDialogPortal": "alert-dialog",
+      "AlertDialogOverlay": "alert-dialog",
+      "AlertDialogContent": "alert-dialog",
+      "AlertDialogHeader": "alert-dialog",
+      "AlertDialogMedia": "alert-dialog",
+      "AlertDialogFooter": "alert-dialog",
+      "AlertDialogTitle": "alert-dialog",
+      "AlertDialogDescription": "alert-dialog",
+      "AlertDialogAction": "alert-dialog",
+      "AlertDialogCancel": "alert-dialog"
+    },
+    "aliases": [],
+    "demo": "alert-dialog"
+  },
+  {
+    "name": "popover",
+    "title": "Popover",
+    "category": "Panels",
+    "exports": [
+      "Popover",
+      "PopoverTrigger",
+      "PopoverContent",
+      "PopoverAnchor",
+      "PopoverHeader",
+      "PopoverTitle",
+      "PopoverDescription"
+    ],
+    "exportSources": {
+      "Popover": "popover",
+      "PopoverTrigger": "popover",
+      "PopoverContent": "popover",
+      "PopoverAnchor": "popover",
+      "PopoverHeader": "popover",
+      "PopoverTitle": "popover",
+      "PopoverDescription": "popover"
+    },
+    "aliases": [],
+    "demo": "popover"
+  },
+  {
+    "name": "dropdown-menu",
+    "title": "Dropdown Menu",
+    "category": "Navigation",
+    "exports": [
+      "DropdownMenu",
+      "DropdownMenuPortal",
+      "DropdownMenuTrigger",
+      "DropdownMenuContent",
+      "DropdownMenuGroup",
+      "DropdownMenuLabel",
+      "DropdownMenuItem",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuSub",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuSubContent"
+    ],
+    "exportSources": {
+      "DropdownMenu": "dropdown-menu",
+      "DropdownMenuPortal": "dropdown-menu",
+      "DropdownMenuTrigger": "dropdown-menu",
+      "DropdownMenuContent": "dropdown-menu",
+      "DropdownMenuGroup": "dropdown-menu",
+      "DropdownMenuLabel": "dropdown-menu",
+      "DropdownMenuItem": "dropdown-menu",
+      "DropdownMenuCheckboxItem": "dropdown-menu",
+      "DropdownMenuRadioGroup": "dropdown-menu",
+      "DropdownMenuRadioItem": "dropdown-menu",
+      "DropdownMenuSeparator": "dropdown-menu",
+      "DropdownMenuShortcut": "dropdown-menu",
+      "DropdownMenuSub": "dropdown-menu",
+      "DropdownMenuSubTrigger": "dropdown-menu",
+      "DropdownMenuSubContent": "dropdown-menu"
+    },
+    "aliases": [],
+    "demo": "dropdown-menu"
+  },
+  {
+    "name": "context-menu",
+    "title": "Context Menu",
+    "category": "Navigation",
+    "exports": [
+      "ContextMenu",
+      "ContextMenuPortal",
+      "ContextMenuTrigger",
+      "ContextMenuContent",
+      "ContextMenuGroup",
+      "ContextMenuLabel",
+      "ContextMenuItem",
+      "ContextMenuCheckboxItem",
+      "ContextMenuRadioGroup",
+      "ContextMenuRadioItem",
+      "ContextMenuSeparator",
+      "ContextMenuShortcut",
+      "ContextMenuSub",
+      "ContextMenuSubTrigger",
+      "ContextMenuSubContent"
+    ],
+    "exportSources": {
+      "ContextMenu": "context-menu",
+      "ContextMenuPortal": "context-menu",
+      "ContextMenuTrigger": "context-menu",
+      "ContextMenuContent": "context-menu",
+      "ContextMenuGroup": "context-menu",
+      "ContextMenuLabel": "context-menu",
+      "ContextMenuItem": "context-menu",
+      "ContextMenuCheckboxItem": "context-menu",
+      "ContextMenuRadioGroup": "context-menu",
+      "ContextMenuRadioItem": "context-menu",
+      "ContextMenuSeparator": "context-menu",
+      "ContextMenuShortcut": "context-menu",
+      "ContextMenuSub": "context-menu",
+      "ContextMenuSubTrigger": "context-menu",
+      "ContextMenuSubContent": "context-menu"
+    },
+    "aliases": [],
+    "demo": "context-menu"
+  },
+  {
+    "name": "menubar",
+    "title": "Menubar",
+    "category": "Navigation",
+    "exports": [
+      "Menubar",
+      "MenubarMenu",
+      "MenubarPortal",
+      "MenubarTrigger",
+      "MenubarContent",
+      "MenubarGroup",
+      "MenubarLabel",
+      "MenubarItem",
+      "MenubarCheckboxItem",
+      "MenubarRadioGroup",
+      "MenubarRadioItem",
+      "MenubarSeparator",
+      "MenubarShortcut",
+      "MenubarSub",
+      "MenubarSubTrigger",
+      "MenubarSubContent"
+    ],
+    "exportSources": {
+      "Menubar": "menubar",
+      "MenubarMenu": "menubar",
+      "MenubarPortal": "menubar",
+      "MenubarTrigger": "menubar",
+      "MenubarContent": "menubar",
+      "MenubarGroup": "menubar",
+      "MenubarLabel": "menubar",
+      "MenubarItem": "menubar",
+      "MenubarCheckboxItem": "menubar",
+      "MenubarRadioGroup": "menubar",
+      "MenubarRadioItem": "menubar",
+      "MenubarSeparator": "menubar",
+      "MenubarShortcut": "menubar",
+      "MenubarSub": "menubar",
+      "MenubarSubTrigger": "menubar",
+      "MenubarSubContent": "menubar"
+    },
+    "aliases": [],
+    "demo": "menubar"
+  },
+  {
+    "name": "collapsible",
+    "title": "Collapsible",
+    "category": "Layout",
+    "exports": [
+      "Collapsible",
+      "CollapsibleTrigger",
+      "CollapsibleContent"
+    ],
+    "exportSources": {
+      "Collapsible": "collapsible",
+      "CollapsibleTrigger": "collapsible",
+      "CollapsibleContent": "collapsible"
+    },
+    "aliases": [],
+    "demo": "collapsible"
+  },
+  {
+    "name": "toggle",
+    "title": "Toggle",
+    "category": "Selection",
+    "exports": [
+      "Toggle"
+    ],
+    "exportSources": {
+      "Toggle": "toggle"
+    },
+    "aliases": [],
+    "demo": "toggle"
+  },
+  {
+    "name": "toggle-group",
+    "title": "Toggle Group",
+    "category": "Selection",
+    "exports": [
+      "ToggleGroup",
+      "ToggleGroupItem"
+    ],
+    "exportSources": {
+      "ToggleGroup": "toggle-group",
+      "ToggleGroupItem": "toggle-group"
+    },
+    "aliases": [],
+    "demo": "toggle-group"
+  },
+  {
+    "name": "aspect-ratio",
+    "title": "Aspect Ratio",
+    "category": "Layout",
+    "exports": [
+      "AspectRatio"
+    ],
+    "exportSources": {
+      "AspectRatio": "aspect-ratio"
+    },
+    "aliases": [],
+    "demo": "aspect-ratio"
+  },
+  {
+    "name": "button-group",
+    "title": "Button Group",
+    "category": "Layout",
+    "exports": [
+      "ButtonGroup",
+      "ButtonGroupText",
+      "ButtonGroupSeparator"
+    ],
+    "exportSources": {
+      "ButtonGroup": "button-group",
+      "ButtonGroupText": "button-group",
+      "ButtonGroupSeparator": "button-group"
+    },
+    "aliases": [],
+    "demo": "button-group"
+  },
+  {
+    "name": "pagination",
+    "title": "Pagination",
+    "category": "Navigation",
+    "exports": [
+      "Pagination",
+      "PaginationContent",
+      "PaginationItem",
+      "PaginationLink",
+      "PaginationPrevious",
+      "PaginationNext",
+      "PaginationEllipsis"
+    ],
+    "exportSources": {
+      "Pagination": "pagination",
+      "PaginationContent": "pagination",
+      "PaginationItem": "pagination",
+      "PaginationLink": "pagination",
+      "PaginationPrevious": "pagination",
+      "PaginationNext": "pagination",
+      "PaginationEllipsis": "pagination"
+    },
+    "aliases": [],
+    "demo": "pagination"
+  },
+  {
+    "name": "badge",
+    "title": "Badge",
+    "category": "Text and layout",
+    "exports": [
+      "Badge"
+    ],
+    "exportSources": {
+      "Badge": "badge"
+    },
+    "aliases": [],
+    "demo": "badge"
+  },
+  {
+    "name": "typography",
+    "title": "Typography",
+    "category": "Text and layout",
+    "exports": [
+      "Typography",
+      "TypographyH1",
+      "TypographyH2",
+      "TypographyH3",
+      "TypographyH4",
+      "TypographyP",
+      "TypographyBlockquote",
+      "TypographyInlineCode",
+      "TypographyLead",
+      "TypographyLarge",
+      "TypographySmall",
+      "TypographyMuted",
+      "TypographyList",
+      "TypographyTable"
+    ],
+    "exportSources": {
+      "Typography": "typography",
+      "TypographyH1": "typography",
+      "TypographyH2": "typography",
+      "TypographyH3": "typography",
+      "TypographyH4": "typography",
+      "TypographyP": "typography",
+      "TypographyBlockquote": "typography",
+      "TypographyInlineCode": "typography",
+      "TypographyLead": "typography",
+      "TypographyLarge": "typography",
+      "TypographySmall": "typography",
+      "TypographyMuted": "typography",
+      "TypographyList": "typography",
+      "TypographyTable": "typography"
+    },
+    "aliases": [],
+    "demo": "typography"
+  },
+  {
+    "name": "breadcrumb",
+    "title": "Breadcrumb",
+    "category": "Text and layout",
+    "exports": [
+      "Breadcrumb",
+      "BreadcrumbList",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator",
+      "BreadcrumbEllipsis"
+    ],
+    "exportSources": {
+      "Breadcrumb": "breadcrumb",
+      "BreadcrumbList": "breadcrumb",
+      "BreadcrumbItem": "breadcrumb",
+      "BreadcrumbLink": "breadcrumb",
+      "BreadcrumbPage": "breadcrumb",
+      "BreadcrumbSeparator": "breadcrumb",
+      "BreadcrumbEllipsis": "breadcrumb"
+    },
+    "aliases": [],
+    "demo": "breadcrumb"
+  },
+  {
+    "name": "kbd",
+    "title": "Kbd",
+    "category": "Text and layout",
+    "exports": [
+      "Kbd",
+      "KbdGroup"
+    ],
+    "exportSources": {
+      "Kbd": "kbd",
+      "KbdGroup": "kbd"
+    },
+    "aliases": [],
+    "demo": "kbd"
+  },
+  {
+    "name": "sheet",
+    "title": "Sheet",
+    "category": "OVERLAYS",
+    "exports": [
+      "Sheet",
+      "SheetTrigger",
+      "SheetClose",
+      "SheetContent",
+      "SheetHeader",
+      "SheetFooter",
+      "SheetTitle",
+      "SheetDescription",
+      "SheetPortal",
+      "SheetOverlay"
+    ],
+    "exportSources": {
+      "Sheet": "sheet",
+      "SheetTrigger": "sheet",
+      "SheetClose": "sheet",
+      "SheetContent": "sheet",
+      "SheetHeader": "sheet",
+      "SheetFooter": "sheet",
+      "SheetTitle": "sheet",
+      "SheetDescription": "sheet",
+      "SheetPortal": "sheet",
+      "SheetOverlay": "sheet"
+    },
+    "aliases": [],
+    "demo": "sheet"
+  },
+  {
+    "name": "drawer",
+    "title": "Drawer",
+    "category": "OVERLAYS",
+    "exports": [
+      "Drawer",
+      "DrawerTrigger",
+      "DrawerClose",
+      "DrawerContent",
+      "DrawerHeader",
+      "DrawerFooter",
+      "DrawerTitle",
+      "DrawerDescription",
+      "DrawerPortal",
+      "DrawerOverlay"
+    ],
+    "exportSources": {
+      "Drawer": "drawer",
+      "DrawerTrigger": "drawer",
+      "DrawerClose": "drawer",
+      "DrawerContent": "drawer",
+      "DrawerHeader": "drawer",
+      "DrawerFooter": "drawer",
+      "DrawerTitle": "drawer",
+      "DrawerDescription": "drawer",
+      "DrawerPortal": "drawer",
+      "DrawerOverlay": "drawer"
+    },
+    "aliases": [],
+    "demo": "drawer"
+  },
+  {
+    "name": "empty",
+    "title": "Empty",
+    "category": "Text and layout",
+    "exports": [
+      "Empty",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle",
+      "EmptyDescription",
+      "EmptyContent"
+    ],
+    "exportSources": {
+      "Empty": "empty",
+      "EmptyHeader": "empty",
+      "EmptyMedia": "empty",
+      "EmptyTitle": "empty",
+      "EmptyDescription": "empty",
+      "EmptyContent": "empty"
+    },
+    "aliases": [],
+    "demo": "empty"
+  },
+  {
+    "name": "resizable",
+    "title": "Resizable",
+    "category": "Layout",
+    "exports": [
+      "ResizablePanelGroup",
+      "ResizablePanel",
+      "ResizableHandle"
+    ],
+    "exportSources": {
+      "ResizablePanelGroup": "resizable",
+      "ResizablePanel": "resizable",
+      "ResizableHandle": "resizable"
+    },
+    "aliases": [],
+    "demo": "resizable"
+  },
+  {
+    "name": "command",
+    "title": "Command",
+    "category": "Text entry",
+    "exports": [
+      "Command",
+      "CommandDialog",
+      "CommandInput",
+      "CommandList",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandItem",
+      "CommandShortcut",
+      "CommandSeparator"
+    ],
+    "exportSources": {
+      "Command": "command",
+      "CommandDialog": "command",
+      "CommandInput": "command",
+      "CommandList": "command",
+      "CommandEmpty": "command",
+      "CommandGroup": "command",
+      "CommandItem": "command",
+      "CommandShortcut": "command",
+      "CommandSeparator": "command"
+    },
+    "aliases": [],
+    "demo": "command"
+  },
+  {
+    "name": "sidebar",
+    "title": "Sidebar",
+    "category": "Navigation",
+    "exports": [
+      "Sidebar",
+      "SidebarContent",
+      "SidebarFooter",
+      "SidebarGroup",
+      "SidebarGroupAction",
+      "SidebarGroupContent",
+      "SidebarGroupLabel",
+      "SidebarHeader",
+      "SidebarInput",
+      "SidebarInset",
+      "SidebarMenu",
+      "SidebarMenuAction",
+      "SidebarMenuBadge",
+      "SidebarMenuButton",
+      "SidebarMenuItem",
+      "SidebarMenuSub",
+      "SidebarMenuSubButton",
+      "SidebarMenuSubItem",
+      "SidebarProvider",
+      "SidebarRail",
+      "SidebarSeparator",
+      "SidebarTrigger"
+    ],
+    "exportSources": {
+      "Sidebar": "sidebar",
+      "SidebarContent": "sidebar",
+      "SidebarFooter": "sidebar",
+      "SidebarGroup": "sidebar",
+      "SidebarGroupAction": "sidebar",
+      "SidebarGroupContent": "sidebar",
+      "SidebarGroupLabel": "sidebar",
+      "SidebarHeader": "sidebar",
+      "SidebarInput": "sidebar",
+      "SidebarInset": "sidebar",
+      "SidebarMenu": "sidebar",
+      "SidebarMenuAction": "sidebar",
+      "SidebarMenuBadge": "sidebar",
+      "SidebarMenuButton": "sidebar",
+      "SidebarMenuItem": "sidebar",
+      "SidebarMenuSub": "sidebar",
+      "SidebarMenuSubButton": "sidebar",
+      "SidebarMenuSubItem": "sidebar",
+      "SidebarProvider": "sidebar",
+      "SidebarRail": "sidebar",
+      "SidebarSeparator": "sidebar",
+      "SidebarTrigger": "sidebar"
+    },
+    "aliases": [],
+    "demo": "sidebar"
+  },
+  {
+    "name": "sonner",
+    "title": "Sonner",
+    "category": "NOTIFICATIONS",
+    "exports": [
+      "Toaster"
+    ],
+    "exportSources": {
+      "Toaster": "sonner"
+    },
+    "aliases": [],
+    "demo": "sonner"
+  },
+  {
+    "name": "avatar",
+    "title": "Avatar",
+    "category": "PLAYERS",
+    "exports": [
+      "Avatar",
+      "AvatarImage",
+      "AvatarFallback",
+      "AvatarBadge",
+      "AvatarGroup",
+      "AvatarGroupCount"
+    ],
+    "exportSources": {
+      "Avatar": "avatar",
+      "AvatarImage": "avatar",
+      "AvatarFallback": "avatar",
+      "AvatarBadge": "avatar",
+      "AvatarGroup": "avatar",
+      "AvatarGroupCount": "avatar"
+    },
+    "aliases": [],
+    "demo": "avatar"
+  },
+  {
+    "name": "input-group",
+    "title": "Input Group",
+    "category": "Text entry",
+    "exports": [
+      "InputGroup",
+      "InputGroupAddon",
+      "InputGroupButton",
+      "InputGroupText",
+      "InputGroupInput",
+      "InputGroupTextarea"
+    ],
+    "exportSources": {
+      "InputGroup": "input-group",
+      "InputGroupAddon": "input-group",
+      "InputGroupButton": "input-group",
+      "InputGroupText": "input-group",
+      "InputGroupInput": "input-group",
+      "InputGroupTextarea": "input-group"
+    },
+    "aliases": [],
+    "demo": "input-group"
+  },
+  {
+    "name": "table",
+    "title": "Table",
+    "category": "Data display",
+    "exports": [
+      "Table",
+      "TableHeader",
+      "TableBody",
+      "TableFooter",
+      "TableRow",
+      "TableHead",
+      "TableCell",
+      "TableCaption"
+    ],
+    "exportSources": {
+      "Table": "table",
+      "TableHeader": "table",
+      "TableBody": "table",
+      "TableFooter": "table",
+      "TableRow": "table",
+      "TableHead": "table",
+      "TableCell": "table",
+      "TableCaption": "table"
+    },
+    "aliases": [],
+    "demo": "table"
+  },
+  {
+    "name": "calendar",
+    "title": "Calendar",
+    "category": "DATE AND TIME",
+    "exports": [
+      "Calendar",
+      "CalendarDayButton"
+    ],
+    "exportSources": {
+      "Calendar": "calendar",
+      "CalendarDayButton": "calendar"
+    },
+    "aliases": [],
+    "demo": "calendar"
+  },
+  {
+    "name": "date-picker",
+    "title": "Date Picker",
+    "category": "DATE AND TIME",
+    "exports": [
+      "DatePicker"
+    ],
+    "exportSources": {
+      "DatePicker": "date-picker"
+    },
+    "aliases": [],
+    "demo": "date-picker"
+  },
+  {
+    "name": "item",
+    "title": "Item",
+    "category": "Data display",
+    "exports": [
+      "Item",
+      "ItemGroup",
+      "ItemSeparator",
+      "ItemMedia",
+      "ItemContent",
+      "ItemTitle",
+      "ItemDescription",
+      "ItemActions",
+      "ItemHeader",
+      "ItemFooter"
+    ],
+    "exportSources": {
+      "Item": "item",
+      "ItemGroup": "item",
+      "ItemSeparator": "item",
+      "ItemMedia": "item",
+      "ItemContent": "item",
+      "ItemTitle": "item",
+      "ItemDescription": "item",
+      "ItemActions": "item",
+      "ItemHeader": "item",
+      "ItemFooter": "item"
+    },
+    "aliases": [],
+    "demo": "item"
+  },
+  {
+    "name": "data-table",
+    "title": "Data Table",
+    "category": "Data display",
+    "exports": [
+      "DataTable"
+    ],
+    "exportSources": {
+      "DataTable": "data-table"
+    },
+    "aliases": [],
+    "demo": "data-table"
+  },
+  {
+    "name": "carousel",
+    "title": "Carousel",
+    "category": "Navigation",
+    "exports": [
+      "Carousel",
+      "CarouselContent",
+      "CarouselItem",
+      "CarouselPrevious",
+      "CarouselNext"
+    ],
+    "exportSources": {
+      "Carousel": "carousel",
+      "CarouselContent": "carousel",
+      "CarouselItem": "carousel",
+      "CarouselPrevious": "carousel",
+      "CarouselNext": "carousel"
+    },
+    "aliases": [],
+    "demo": "carousel"
+  },
+  {
+    "name": "message",
+    "title": "Message",
+    "category": "Communication",
+    "exports": [
+      "MessageGroup",
+      "Message",
+      "MessageAvatar",
+      "MessageContent",
+      "MessageHeader",
+      "MessageFooter",
+      "MessageScale",
+      "MessageAuthor",
+      "ChatChildren",
+      "BubbleGroup",
+      "Bubble",
+      "BubbleContent",
+      "BubbleReactions",
+      "MessageScrollerProvider",
+      "MessageScroller",
+      "MessageScrollerViewport",
+      "MessageScrollerContent",
+      "MessageScrollerItem",
+      "MessageScrollerButton"
+    ],
+    "exportSources": {
+      "MessageGroup": "message",
+      "Message": "message",
+      "MessageAvatar": "message",
+      "MessageContent": "message",
+      "MessageHeader": "message",
+      "MessageFooter": "message",
+      "MessageScale": "message",
+      "MessageAuthor": "message",
+      "ChatChildren": "message",
+      "BubbleGroup": "bubble",
+      "Bubble": "bubble",
+      "BubbleContent": "bubble",
+      "BubbleReactions": "bubble",
+      "MessageScrollerProvider": "message-scroller",
+      "MessageScroller": "message-scroller",
+      "MessageScrollerViewport": "message-scroller",
+      "MessageScrollerContent": "message-scroller",
+      "MessageScrollerItem": "message-scroller",
+      "MessageScrollerButton": "message-scroller"
+    },
+    "aliases": [
+      "bubble",
+      "message-scroller"
+    ],
+    "demo": "message"
+  },
+  {
+    "name": "form",
+    "title": "Form",
+    "category": "Forms",
+    "exports": [
+      "Form",
+      "FormItem",
+      "FormLabel",
+      "FormControl",
+      "FormDescription",
+      "FormMessage",
+      "FormField",
+      "Field",
+      "FieldLabel",
+      "FieldDescription",
+      "FieldError",
+      "FieldGroup",
+      "FieldLegend",
+      "FieldSeparator",
+      "FieldSet",
+      "FieldContent",
+      "FieldTitle"
+    ],
+    "exportSources": {
+      "Form": "form",
+      "FormItem": "form",
+      "FormLabel": "form",
+      "FormControl": "form",
+      "FormDescription": "form",
+      "FormMessage": "form",
+      "FormField": "form",
+      "Field": "field",
+      "FieldLabel": "field",
+      "FieldDescription": "field",
+      "FieldError": "field",
+      "FieldGroup": "field",
+      "FieldLegend": "field",
+      "FieldSeparator": "field",
+      "FieldSet": "field",
+      "FieldContent": "field",
+      "FieldTitle": "field"
+    },
+    "aliases": [
+      "field"
+    ],
+    "demo": "form"
+  },
+  {
+    "name": "code-block",
+    "title": "Code Block",
+    "category": "Text",
+    "exports": [
+      "CodeBlock",
+      "CodeBlockHeader",
+      "CodeBlockTitle",
+      "CodeBlockActions",
+      "CodeBlockCopyButton",
+      "CodeBlockContent",
+      "CodeBlockLine",
+      "CodeBlockFooter"
+    ],
+    "exportSources": {
+      "CodeBlock": "code-block",
+      "CodeBlockHeader": "code-block",
+      "CodeBlockTitle": "code-block",
+      "CodeBlockActions": "code-block",
+      "CodeBlockCopyButton": "code-block",
+      "CodeBlockContent": "code-block",
+      "CodeBlockLine": "code-block",
+      "CodeBlockFooter": "code-block"
+    },
+    "aliases": [],
+    "demo": "code-block"
+  },
+  {
+    "name": "chart",
+    "title": "Chart",
+    "category": "Data display",
+    "exports": [
+      "MinecraftFpsChart",
+      "MinecraftMetricChart",
+      "MinecraftProfilerChart",
+      "ChartContainer",
+      "ChartTooltip",
+      "ChartTooltipContent",
+      "ChartLegend",
+      "ChartLegendContent",
+      "ChartStyle",
+      "MinecraftChart"
+    ],
+    "exportSources": {
+      "MinecraftFpsChart": "chart",
+      "MinecraftMetricChart": "chart",
+      "MinecraftProfilerChart": "chart",
+      "ChartContainer": "chart",
+      "ChartTooltip": "chart",
+      "ChartTooltipContent": "chart",
+      "ChartLegend": "chart",
+      "ChartLegendContent": "chart",
+      "ChartStyle": "chart",
+      "MinecraftChart": "chart"
+    },
+    "aliases": [],
+    "demo": "chart"
+  },
+  {
+    "name": "trace",
+    "title": "Trace",
+    "category": "Text and status",
+    "exports": [
+      "Trace",
+      "TraceLine",
+      "TraceIcon",
+      "TraceTitle",
+      "TraceDescription",
+      "TraceCollapsible",
+      "TraceCollapsibleTrigger",
+      "TraceCollapsibleContent"
+    ],
+    "exportSources": {
+      "Trace": "trace",
+      "TraceLine": "trace",
+      "TraceIcon": "trace",
+      "TraceTitle": "trace",
+      "TraceDescription": "trace",
+      "TraceCollapsible": "trace",
+      "TraceCollapsibleTrigger": "trace",
+      "TraceCollapsibleContent": "trace"
+    },
+    "aliases": [],
+    "demo": "trace"
+  },
+  {
+    "name": "spinner",
+    "title": "Spinner",
+    "category": "Text and status",
+    "exports": [
+      "Spinner"
+    ],
+    "exportSources": {
+      "Spinner": "spinner"
+    },
+    "aliases": [],
+    "demo": "spinner"
+  },
+  {
+    "name": "native-select",
+    "title": "Native Select",
+    "category": "Selection",
+    "exports": [
+      "NativeSelect",
+      "NativeSelectOption",
+      "NativeSelectOptGroup"
+    ],
+    "exportSources": {
+      "NativeSelect": "native-select",
+      "NativeSelectOption": "native-select",
+      "NativeSelectOptGroup": "native-select"
+    },
+    "aliases": [],
+    "demo": "native-select"
+  },
+  {
+    "name": "marker",
+    "title": "Marker",
+    "category": "INFORMATION",
+    "exports": [
+      "Marker",
+      "MarkerIcon",
+      "MarkerContent"
+    ],
+    "exportSources": {
+      "Marker": "marker",
+      "MarkerIcon": "marker",
+      "MarkerContent": "marker"
+    },
+    "aliases": [],
+    "demo": "marker"
+  },
+  {
+    "name": "input-otp",
+    "title": "Input OTP",
+    "category": "Text entry",
+    "exports": [
+      "InputOTP",
+      "InputOTPGroup",
+      "InputOTPSlot",
+      "InputOTPSeparator"
+    ],
+    "exportSources": {
+      "InputOTP": "input-otp",
+      "InputOTPGroup": "input-otp",
+      "InputOTPSlot": "input-otp",
+      "InputOTPSeparator": "input-otp"
+    },
+    "aliases": [],
+    "demo": "input-otp"
+  },
+  {
+    "name": "questionnaire",
+    "title": "Questionnaire",
+    "category": "QUESTIONS",
+    "exports": [
+      "Questionnaire",
+      "QuestionnaireActions",
+      "QuestionnaireChoice",
+      "QuestionnaireChoiceDescription",
+      "QuestionnaireChoices",
+      "QuestionnaireDescription",
+      "QuestionnaireError",
+      "QuestionnaireInput",
+      "QuestionnaireItem",
+      "QuestionnaireNext",
+      "QuestionnairePrevious",
+      "QuestionnaireProgress",
+      "QuestionnaireSkip",
+      "QuestionnaireSubmit",
+      "QuestionnaireTitle"
+    ],
+    "exportSources": {
+      "Questionnaire": "questionnaire",
+      "QuestionnaireActions": "questionnaire",
+      "QuestionnaireChoice": "questionnaire",
+      "QuestionnaireChoiceDescription": "questionnaire",
+      "QuestionnaireChoices": "questionnaire",
+      "QuestionnaireDescription": "questionnaire",
+      "QuestionnaireError": "questionnaire",
+      "QuestionnaireInput": "questionnaire",
+      "QuestionnaireItem": "questionnaire",
+      "QuestionnaireNext": "questionnaire",
+      "QuestionnairePrevious": "questionnaire",
+      "QuestionnaireProgress": "questionnaire",
+      "QuestionnaireSkip": "questionnaire",
+      "QuestionnaireSubmit": "questionnaire",
+      "QuestionnaireTitle": "questionnaire"
+    },
+    "aliases": [],
+    "demo": "questionnaire"
+  },
+  {
+    "name": "attachment",
+    "title": "Attachment",
+    "category": "FILES",
+    "exports": [
+      "Attachment",
+      "AttachmentGroup",
+      "AttachmentMedia",
+      "AttachmentContent",
+      "AttachmentTitle",
+      "AttachmentDescription",
+      "AttachmentActions",
+      "AttachmentAction",
+      "AttachmentTrigger"
+    ],
+    "exportSources": {
+      "Attachment": "attachment",
+      "AttachmentGroup": "attachment",
+      "AttachmentMedia": "attachment",
+      "AttachmentContent": "attachment",
+      "AttachmentTitle": "attachment",
+      "AttachmentDescription": "attachment",
+      "AttachmentActions": "attachment",
+      "AttachmentAction": "attachment",
+      "AttachmentTrigger": "attachment"
+    },
+    "aliases": [],
+    "demo": "attachment"
+  },
+  {
+    "name": "combobox",
+    "title": "Combobox",
+    "category": "Input",
+    "exports": [
+      "Combobox",
+      "ComboboxInput",
+      "ComboboxContent",
+      "ComboboxList",
+      "ComboboxItem",
+      "ComboboxGroup",
+      "ComboboxLabel",
+      "ComboboxCollection",
+      "ComboboxEmpty",
+      "ComboboxSeparator",
+      "ComboboxChips",
+      "ComboboxChip",
+      "ComboboxChipsInput",
+      "ComboboxTrigger",
+      "ComboboxValue",
+      "ComboboxClear",
+      "ComboboxChipRemove"
+    ],
+    "exportSources": {
+      "Combobox": "combobox",
+      "ComboboxInput": "combobox",
+      "ComboboxContent": "combobox",
+      "ComboboxList": "combobox",
+      "ComboboxItem": "combobox",
+      "ComboboxGroup": "combobox",
+      "ComboboxLabel": "combobox",
+      "ComboboxCollection": "combobox",
+      "ComboboxEmpty": "combobox",
+      "ComboboxSeparator": "combobox",
+      "ComboboxChips": "combobox",
+      "ComboboxChip": "combobox",
+      "ComboboxChipsInput": "combobox",
+      "ComboboxTrigger": "combobox",
+      "ComboboxValue": "combobox",
+      "ComboboxClear": "combobox",
+      "ComboboxChipRemove": "combobox"
+    },
+    "aliases": [],
+    "demo": "combobox"
+  },
+  {
+    "name": "advancement-tree",
+    "title": "Advancement Tree",
+    "category": "Minecraft",
+    "exports": [
+      "AdvancementTree"
+    ],
+    "exportSources": {
+      "AdvancementTree": "advancement-tree"
+    },
+    "aliases": [],
+    "demo": "advancement-tree"
+  },
+  {
+    "name": "book",
+    "title": "Book",
+    "category": "Minecraft",
+    "exports": [
+      "Book"
+    ],
+    "exportSources": {
+      "Book": "book"
+    },
+    "aliases": [],
+    "demo": "book"
+  },
+  {
+    "name": "hotbar",
+    "title": "Hotbar",
+    "category": "Minecraft",
+    "exports": [
+      "Hotbar"
+    ],
+    "exportSources": {
+      "Hotbar": "hotbar"
+    },
+    "aliases": [],
+    "demo": "hotbar"
+  },
+  {
+    "name": "hud",
+    "title": "HUD Meters",
+    "category": "Minecraft",
+    "exports": [
+      "HealthMeter",
+      "ArmorMeter",
+      "HungerMeter",
+      "AirMeter",
+      "ExperienceBar"
+    ],
+    "exportSources": {
+      "HealthMeter": "hud",
+      "ArmorMeter": "hud",
+      "HungerMeter": "hud",
+      "AirMeter": "hud",
+      "ExperienceBar": "hud"
+    },
+    "aliases": [],
+    "demo": "hud"
+  },
+  {
+    "name": "sign",
+    "title": "Signs",
+    "category": "Minecraft",
+    "exports": [
+      "Sign",
+      "HangingSign"
+    ],
+    "exportSources": {
+      "Sign": "sign",
+      "HangingSign": "sign"
+    },
+    "aliases": [],
+    "demo": "sign"
+  },
+  {
+    "name": "player-preview",
+    "title": "Player Preview",
+    "category": "Minecraft",
+    "exports": [
+      "PlayerPreview"
+    ],
+    "exportSources": {
+      "PlayerPreview": "player-preview"
+    },
+    "aliases": [],
+    "demo": "player-preview"
+  },
+  {
+    "name": "map",
+    "title": "Map",
+    "category": "Minecraft",
+    "exports": [
+      "MinecraftMap",
+      "LocatorBar"
+    ],
+    "exportSources": {
+      "MinecraftMap": "map",
+      "LocatorBar": "map"
+    },
+    "aliases": [],
+    "demo": "map"
+  },
+  {
+    "name": "trading",
+    "title": "Trading",
+    "category": "Minecraft",
+    "exports": [
+      "Trading"
+    ],
+    "exportSources": {
+      "Trading": "trading"
+    },
+    "aliases": [],
+    "demo": "trading"
+  },
+  {
+    "name": "player-list",
+    "title": "Player List",
+    "category": "Minecraft",
+    "exports": [
+      "PlayerList",
+      "Scoreboard"
+    ],
+    "exportSources": {
+      "PlayerList": "player-list",
+      "Scoreboard": "player-list"
+    },
+    "aliases": [],
+    "demo": "player-list"
+  }
+]

@@ -10,7 +10,7 @@ function Input({ className, type = "text", scale = 2, style, ref, ...props }:
   const node = React.useRef<HTMLInputElement>(null)
   React.useImperativeHandle(ref, () => node.current!, [])
   React.useEffect(() => node.current ? attachMinecraftInput(node.current, scale) : undefined, [scale])
-  return <input ref={node} type={type} data-slot="input" className={cn("mc-input", className)}
+  return <input ref={node} type={type} data-slot="input" spellCheck={false} autoCorrect="off" className={cn("mc-input", className)}
     style={{ "--mc-scale": scale, ...style } as React.CSSProperties} {...props} />
 }
 export { Input }

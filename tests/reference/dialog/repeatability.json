@@ -1,0 +1,1104 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "c439930d9022db7f2fb64d517c854e839e82a5f1feb03e5155a419779173b763",
+  "caseDefinitionSha256": "e504bb459e512a901c34eae6931c3bb0188e037b378354e6d78a465bc7dff665",
+  "glyphObservationEnabled": {
+    "runOne": true,
+    "runTwo": false
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "dialog-c0-s1.png",
+      "runOnePngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "runTwoPngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "decodedRgbaSha256": "f2e4f1bc027bd1c2e6727b73037c1d2eb7a73430fe685405be1a9a0aca3ff5a4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c1-s1.png",
+      "runOnePngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "runTwoPngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "decodedRgbaSha256": "43c641ad0720ac87f48bc4b6f3b635142af31b017d52ae952cd77734d6ee77df",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c2-s1.png",
+      "runOnePngSha256": "56b3e82e259cec56191c8eb078450cabad62bab84b371a04339622132cb9cee4",
+      "runTwoPngSha256": "56b3e82e259cec56191c8eb078450cabad62bab84b371a04339622132cb9cee4",
+      "decodedRgbaSha256": "4c60df955ba9cb7f85b9784b00355fdabd64461a643f9074e049715ba47c13e2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c3-s1.png",
+      "runOnePngSha256": "48f59b043805586e4a1a6441af60429d0c7695f27ee01624389937a459789365",
+      "runTwoPngSha256": "48f59b043805586e4a1a6441af60429d0c7695f27ee01624389937a459789365",
+      "decodedRgbaSha256": "b0b79e7dc7b424656afffe9c4ad97baa98413fb7f1362cd9512648733cc28347",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c4-s1.png",
+      "runOnePngSha256": "429a265320616523930f3562615cca663df80bea4fdcd2727c3c7a320165a4c8",
+      "runTwoPngSha256": "429a265320616523930f3562615cca663df80bea4fdcd2727c3c7a320165a4c8",
+      "decodedRgbaSha256": "50a4625dea7d473ad29eee286ccfceb4e564b45d89e6bbabcd19c2241f1b440f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c5-s1.png",
+      "runOnePngSha256": "7ac4a6c80618adcd83e566ff570082053511a103cb1d0ef265b6dbc490b6a955",
+      "runTwoPngSha256": "7ac4a6c80618adcd83e566ff570082053511a103cb1d0ef265b6dbc490b6a955",
+      "decodedRgbaSha256": "08348880efc33aa36339057600e07d9848e70b963be7b808463cd29f2ff044e9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c6-s1.png",
+      "runOnePngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "runTwoPngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "decodedRgbaSha256": "f2e4f1bc027bd1c2e6727b73037c1d2eb7a73430fe685405be1a9a0aca3ff5a4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c7-s1.png",
+      "runOnePngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "runTwoPngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "decodedRgbaSha256": "43c641ad0720ac87f48bc4b6f3b635142af31b017d52ae952cd77734d6ee77df",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c8-s1.png",
+      "runOnePngSha256": "370ddd4dc0ff24a0072c0fc78e72cb201d0015767b7f3f2aea9e7b7ba6742fea",
+      "runTwoPngSha256": "370ddd4dc0ff24a0072c0fc78e72cb201d0015767b7f3f2aea9e7b7ba6742fea",
+      "decodedRgbaSha256": "c0073e9c7202e8162aa9c4e01a5814a8c41c8bae5129b5520a237c7a39d95d4d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c9-s1.png",
+      "runOnePngSha256": "21f83f1d2e1fe6bee21d7ed05bdde4449e0af51e76ef777c2de5dbf07ff2278f",
+      "runTwoPngSha256": "21f83f1d2e1fe6bee21d7ed05bdde4449e0af51e76ef777c2de5dbf07ff2278f",
+      "decodedRgbaSha256": "2a287240364fe0dce107ace1b01aa5133225cf18f2d8e4d616ba737cdeb604d1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c10-s1.png",
+      "runOnePngSha256": "9b5b7a7b1f6214cac6002e8c1b3ccb69455f30eb387abbe987d71fc3ed1ed942",
+      "runTwoPngSha256": "9b5b7a7b1f6214cac6002e8c1b3ccb69455f30eb387abbe987d71fc3ed1ed942",
+      "decodedRgbaSha256": "5bffbcc645da00626c6ddf1c364dbc050faeb32bbd27f85dcd8a953fbda09948",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c11-s1.png",
+      "runOnePngSha256": "1703f24b4afe0a52c68013f81ed1af4933b8a88937a55a5ba9b5a3bdebecf84b",
+      "runTwoPngSha256": "1703f24b4afe0a52c68013f81ed1af4933b8a88937a55a5ba9b5a3bdebecf84b",
+      "decodedRgbaSha256": "9d5e274e8ec016a780c229ff9fa9ced7620b23fe56c0b36187b23315a02fcc43",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c12-s1.png",
+      "runOnePngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "runTwoPngSha256": "0b419946a1159f96eba3b6db7d6e24f0dcf41e6603e201733c131dc99c92dc69",
+      "decodedRgbaSha256": "f2e4f1bc027bd1c2e6727b73037c1d2eb7a73430fe685405be1a9a0aca3ff5a4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c13-s1.png",
+      "runOnePngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "runTwoPngSha256": "776a4790e5479114df1c348fda3644457c8a34fe20a92205b285bb3ca40084bb",
+      "decodedRgbaSha256": "43c641ad0720ac87f48bc4b6f3b635142af31b017d52ae952cd77734d6ee77df",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c14-s1.png",
+      "runOnePngSha256": "c3976131a1c57afdc8eb9ba84d4e67584fb92fdda472b715e491ba728fbe88b8",
+      "runTwoPngSha256": "c3976131a1c57afdc8eb9ba84d4e67584fb92fdda472b715e491ba728fbe88b8",
+      "decodedRgbaSha256": "d1cff7b22647bdcf27662c39183b5858c467c7058d6c0e371b8066490585800c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c15-s1.png",
+      "runOnePngSha256": "70ce151cdd69a5a88a4716b13e21ae30153eedf9712c6b1890d69d7cb56b1f95",
+      "runTwoPngSha256": "70ce151cdd69a5a88a4716b13e21ae30153eedf9712c6b1890d69d7cb56b1f95",
+      "decodedRgbaSha256": "008f4bb834ea6f3a74fe78a62b702f0dd41680c0a21ed5853d3eb95dfae8cd82",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c16-s1.png",
+      "runOnePngSha256": "7d1796affce7186fb22686523baf9c1c6a13ace22716fd8fb3be4f8ddabdcf7a",
+      "runTwoPngSha256": "7d1796affce7186fb22686523baf9c1c6a13ace22716fd8fb3be4f8ddabdcf7a",
+      "decodedRgbaSha256": "9068eb7b8fa9eef0913e9d88641c6ed90ddb8f85964edeefe3b39ef9c66a9747",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c17-s1.png",
+      "runOnePngSha256": "c79748ecfd86090f36d23b03675a91dfe22c5aa15e6d1f2517a2c9d3f74f4527",
+      "runTwoPngSha256": "c79748ecfd86090f36d23b03675a91dfe22c5aa15e6d1f2517a2c9d3f74f4527",
+      "decodedRgbaSha256": "75e023bbfca800e3ffd6b7ee4b2b8bed7b7ecf223b6f0dd7671ab9902803d005",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c18-s1.png",
+      "runOnePngSha256": "783d5ae3b97a160638c68fadb04ca3bd289744449697cb7eb23691fb9950b26a",
+      "runTwoPngSha256": "783d5ae3b97a160638c68fadb04ca3bd289744449697cb7eb23691fb9950b26a",
+      "decodedRgbaSha256": "5fe752b1e25ba985f873b773a1e716fe2bef4dada3837ee3fd621c4413b91307",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c19-s1.png",
+      "runOnePngSha256": "473647325e0c03b02b8ff478a43b7503c72444e832630d74649e452578a044db",
+      "runTwoPngSha256": "473647325e0c03b02b8ff478a43b7503c72444e832630d74649e452578a044db",
+      "decodedRgbaSha256": "d061578edb3580acc1b5fbdd3ea39f340766f40203f79673938dbe32f570ea52",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c20-s1.png",
+      "runOnePngSha256": "862b6f37eb67b4fc1ae5cc67d2a9f1ccdcc4fa271d940a302bd535a49b35f031",
+      "runTwoPngSha256": "862b6f37eb67b4fc1ae5cc67d2a9f1ccdcc4fa271d940a302bd535a49b35f031",
+      "decodedRgbaSha256": "fa49331f87380389243e6e7ce2c6aa97befe9d5bd9de5d8aca935cda933d3263",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c21-s1.png",
+      "runOnePngSha256": "e57b62aca25d1db1dc57c3a74ef886e28225f2efdd4d8bda67e8b96d38d4e0e0",
+      "runTwoPngSha256": "e57b62aca25d1db1dc57c3a74ef886e28225f2efdd4d8bda67e8b96d38d4e0e0",
+      "decodedRgbaSha256": "8a37b016cd0e8ec84b4a2146afefa9e5171e8c5c6d628bfbcc32fd1526ce2af7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c22-s1.png",
+      "runOnePngSha256": "569628cb8b850d05724b1ae68cede3c8cf549d3faf3457817a1aff73525cf0d6",
+      "runTwoPngSha256": "569628cb8b850d05724b1ae68cede3c8cf549d3faf3457817a1aff73525cf0d6",
+      "decodedRgbaSha256": "7fb3919acfa1c41764f3882dc413262ef9e4d6b86d4b5c24ecc54918b2d5e28a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c23-s1.png",
+      "runOnePngSha256": "263e87940dd97a3a7c9f043a50d7e2bc25e123e0f6e00c490330c42eef466cc8",
+      "runTwoPngSha256": "263e87940dd97a3a7c9f043a50d7e2bc25e123e0f6e00c490330c42eef466cc8",
+      "decodedRgbaSha256": "081afdb114bf2c1eaf198708dda76808da21319cfec64905cff93c6bc70cf195",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c24-s1.png",
+      "runOnePngSha256": "0dd9915a56d1f3a91a3b645885605da9d1f1fade3c87934a62707570dbfa0ae7",
+      "runTwoPngSha256": "0dd9915a56d1f3a91a3b645885605da9d1f1fade3c87934a62707570dbfa0ae7",
+      "decodedRgbaSha256": "33785015592326d888977c17642abdad83cce2fa1d2d38dfa90366560f9a6bcc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c25-s1.png",
+      "runOnePngSha256": "d27f01d5042ee6a0cf27ce21478dd8a5b551d0975d23d5f4065b5175937d8db8",
+      "runTwoPngSha256": "d27f01d5042ee6a0cf27ce21478dd8a5b551d0975d23d5f4065b5175937d8db8",
+      "decodedRgbaSha256": "9384dcc9fe6b1559f30b6670339f3f201e4f581a97b44bb02949868b3bc66fa0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c26-s1.png",
+      "runOnePngSha256": "82b51edadfd95fb313d82944b4d72700d843dc3621094e7b61db4dac78a92c2b",
+      "runTwoPngSha256": "82b51edadfd95fb313d82944b4d72700d843dc3621094e7b61db4dac78a92c2b",
+      "decodedRgbaSha256": "a2e7273e323c041db9f20c6798a49f9d63280da187c5da405ad37768ea85ef14",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c27-s1.png",
+      "runOnePngSha256": "91ce50f7e161d02a4d86ef61e322c3b7c5d2ecb3ada964957a9fd16c949d8eb1",
+      "runTwoPngSha256": "91ce50f7e161d02a4d86ef61e322c3b7c5d2ecb3ada964957a9fd16c949d8eb1",
+      "decodedRgbaSha256": "a9ec303b8d5eca360261c250293c0365033915ce4c5fbfa2efb2529a7910a044",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c28-s1.png",
+      "runOnePngSha256": "858bfb0e73b2143e79b0d4fd1fcbb14c7d639d9bddb1224f65acba5a7c8b519f",
+      "runTwoPngSha256": "858bfb0e73b2143e79b0d4fd1fcbb14c7d639d9bddb1224f65acba5a7c8b519f",
+      "decodedRgbaSha256": "ed5b880572f070637c0c972514dddc7a211cc289236b1aa39dbff565f1751f56",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c29-s1.png",
+      "runOnePngSha256": "cc5e311c07d67691c898f39f3dc0ad714a7b660faafb99275af2b924f25780e1",
+      "runTwoPngSha256": "cc5e311c07d67691c898f39f3dc0ad714a7b660faafb99275af2b924f25780e1",
+      "decodedRgbaSha256": "367ecd9b0380718ab41fc0c7d92511bc8f9de00378dd11d42ca21bc7782062b6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c30-s1.png",
+      "runOnePngSha256": "41418a88ea0a340ef4c3e78d771d74738c2158ffbb373393d345c906801b7029",
+      "runTwoPngSha256": "41418a88ea0a340ef4c3e78d771d74738c2158ffbb373393d345c906801b7029",
+      "decodedRgbaSha256": "3ac3989386d13a5d6a2c1b2a6692d50460a06ffa5f434726a3619b3569b86223",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c31-s1.png",
+      "runOnePngSha256": "8e8c2117ce90f132b06714c26ef6a30978bb05e3599bf9e6f8f57947bca789b3",
+      "runTwoPngSha256": "8e8c2117ce90f132b06714c26ef6a30978bb05e3599bf9e6f8f57947bca789b3",
+      "decodedRgbaSha256": "6f8835c0a9c3c8319b05eb12c4c6d3afdf135c1d9bb9c7d982b8bc492b22a32d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c32-s1.png",
+      "runOnePngSha256": "31e9c79b25a76872d23c9e691661f226b2e66ce818201048c85cf9fa89a65733",
+      "runTwoPngSha256": "31e9c79b25a76872d23c9e691661f226b2e66ce818201048c85cf9fa89a65733",
+      "decodedRgbaSha256": "36c8a7256cd61f969d115a81a62d538246531f9566ce94c73892361b973874e3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c33-s1.png",
+      "runOnePngSha256": "e618869649860d161e661b2bd61ff247126c624f9da2c837a5f02deadfe75b61",
+      "runTwoPngSha256": "e618869649860d161e661b2bd61ff247126c624f9da2c837a5f02deadfe75b61",
+      "decodedRgbaSha256": "84a31744437dda2517788df0c639213f4cf574725e8cade82d08956ba0fe41fd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c34-s1.png",
+      "runOnePngSha256": "45b199c6c961210bb6d50ee4f06b6cc99a970c622c7ed9e1f37c7b8922a140bd",
+      "runTwoPngSha256": "45b199c6c961210bb6d50ee4f06b6cc99a970c622c7ed9e1f37c7b8922a140bd",
+      "decodedRgbaSha256": "0c222bb95c5beddb4926a56a5995bb6fca33f9e68c1840695014950e3ce5f90f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c35-s1.png",
+      "runOnePngSha256": "351ab4344d8870962b6de93c512b1f689cf749522ec55037b38142921f0148b5",
+      "runTwoPngSha256": "351ab4344d8870962b6de93c512b1f689cf749522ec55037b38142921f0148b5",
+      "decodedRgbaSha256": "00a5faa7a21efaec2256ee23eae0cc9e2d2b4328095d951aebc01183a0044a28",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c36-s1.png",
+      "runOnePngSha256": "1163c81f1d248852f7af2c1b762e13c0e728ca778a241d06390fc5bb0cc997d0",
+      "runTwoPngSha256": "1163c81f1d248852f7af2c1b762e13c0e728ca778a241d06390fc5bb0cc997d0",
+      "decodedRgbaSha256": "1bd4127b75bb937d9763c091b7604ba28e13f2a5954cd7bd91b32de135f875af",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c37-s1.png",
+      "runOnePngSha256": "e2ce7e58c75353c0bcf4a48013afb72cb50c0afe0ee0e4d5804533ecc25ddc47",
+      "runTwoPngSha256": "e2ce7e58c75353c0bcf4a48013afb72cb50c0afe0ee0e4d5804533ecc25ddc47",
+      "decodedRgbaSha256": "ac8443bc32537b391b0d6b0363b8054a5fd9ee5be511bd216973e7eab2c5868c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c38-s1.png",
+      "runOnePngSha256": "b253ebca8dfca1b8d01405e2b4c03305151dcaa12843ae49da13b0d9836130de",
+      "runTwoPngSha256": "b253ebca8dfca1b8d01405e2b4c03305151dcaa12843ae49da13b0d9836130de",
+      "decodedRgbaSha256": "0e0ffc2326185a06f2574c720f24ae0c6d5e90e55c07b66a31220cef46f71baf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c39-s1.png",
+      "runOnePngSha256": "c29d80ea18dcb3ea8828d5f3207ae495b01b3b59dd3382a8b0caf85a3d69a00b",
+      "runTwoPngSha256": "c29d80ea18dcb3ea8828d5f3207ae495b01b3b59dd3382a8b0caf85a3d69a00b",
+      "decodedRgbaSha256": "5f5034adef49141486d057ac091834fb37cf6d105eda0a79d9c71a69d5a83c34",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c40-s1.png",
+      "runOnePngSha256": "a6734ed2003d4ed8b0b461bcb2b33d5667096515ed4cb0ef46653e36417e456f",
+      "runTwoPngSha256": "a6734ed2003d4ed8b0b461bcb2b33d5667096515ed4cb0ef46653e36417e456f",
+      "decodedRgbaSha256": "739c3bf92b241aaf8c8cb95a8b9b4487667956e8f301ebbac053c47c49fa3805",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c41-s1.png",
+      "runOnePngSha256": "2768974e91bb927b432144568a97de9b6009f60121c3d7f31a0e072c66342ae9",
+      "runTwoPngSha256": "2768974e91bb927b432144568a97de9b6009f60121c3d7f31a0e072c66342ae9",
+      "decodedRgbaSha256": "7707ca2332d13dd824c5a322d58c8ebe39b7df4651994635ede0ad30cb67cd0b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c42-s1.png",
+      "runOnePngSha256": "b253ebca8dfca1b8d01405e2b4c03305151dcaa12843ae49da13b0d9836130de",
+      "runTwoPngSha256": "b253ebca8dfca1b8d01405e2b4c03305151dcaa12843ae49da13b0d9836130de",
+      "decodedRgbaSha256": "0e0ffc2326185a06f2574c720f24ae0c6d5e90e55c07b66a31220cef46f71baf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c43-s1.png",
+      "runOnePngSha256": "c29d80ea18dcb3ea8828d5f3207ae495b01b3b59dd3382a8b0caf85a3d69a00b",
+      "runTwoPngSha256": "c29d80ea18dcb3ea8828d5f3207ae495b01b3b59dd3382a8b0caf85a3d69a00b",
+      "decodedRgbaSha256": "5f5034adef49141486d057ac091834fb37cf6d105eda0a79d9c71a69d5a83c34",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c44-s1.png",
+      "runOnePngSha256": "a6734ed2003d4ed8b0b461bcb2b33d5667096515ed4cb0ef46653e36417e456f",
+      "runTwoPngSha256": "a6734ed2003d4ed8b0b461bcb2b33d5667096515ed4cb0ef46653e36417e456f",
+      "decodedRgbaSha256": "739c3bf92b241aaf8c8cb95a8b9b4487667956e8f301ebbac053c47c49fa3805",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c45-s1.png",
+      "runOnePngSha256": "2768974e91bb927b432144568a97de9b6009f60121c3d7f31a0e072c66342ae9",
+      "runTwoPngSha256": "2768974e91bb927b432144568a97de9b6009f60121c3d7f31a0e072c66342ae9",
+      "decodedRgbaSha256": "7707ca2332d13dd824c5a322d58c8ebe39b7df4651994635ede0ad30cb67cd0b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c46-s1.png",
+      "runOnePngSha256": "5fd225467089e4a06c2e3e494dca631c64d89f970d6ee8a08c3276cb209197a9",
+      "runTwoPngSha256": "5fd225467089e4a06c2e3e494dca631c64d89f970d6ee8a08c3276cb209197a9",
+      "decodedRgbaSha256": "9d578f94ab8ee146e41704fb7ecc6e69ad0461bf6bdc874f4be204e82232fca0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c47-s1.png",
+      "runOnePngSha256": "82e7207f95b04983be5fbdda5336cdebc06ffc9f30c807df32b439f2e25a038a",
+      "runTwoPngSha256": "82e7207f95b04983be5fbdda5336cdebc06ffc9f30c807df32b439f2e25a038a",
+      "decodedRgbaSha256": "6f65339f08df555f0c5077215a27b5fd2193d20214dc346cca97e002fce2585c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c48-s1.png",
+      "runOnePngSha256": "09e0b5d2484ae5a408602c3625588a24337553a275abd961ef37ed5433ae2eb7",
+      "runTwoPngSha256": "09e0b5d2484ae5a408602c3625588a24337553a275abd961ef37ed5433ae2eb7",
+      "decodedRgbaSha256": "79bc32167d670d258202d7dcdab9eaa88aa5de4b94ce53b9a492e73730cdf5dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c49-s1.png",
+      "runOnePngSha256": "33b29ca9d204b498a97d88c0b4d0d08ee0f0184513d6f7bcc9c62a11b0565b14",
+      "runTwoPngSha256": "33b29ca9d204b498a97d88c0b4d0d08ee0f0184513d6f7bcc9c62a11b0565b14",
+      "decodedRgbaSha256": "3dbc7b0b3bd940e638eb7f5ecd5340c42e67bdb1f48f53fcb02cb799fcb3881a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c50-s1.png",
+      "runOnePngSha256": "5fc7dc3e64adc3d78cfe98a40e21af05081ee15981148dffc40565a60ab3f1dc",
+      "runTwoPngSha256": "5fc7dc3e64adc3d78cfe98a40e21af05081ee15981148dffc40565a60ab3f1dc",
+      "decodedRgbaSha256": "8d2a7b5375cd6757a694673d5016606eff181ebcedc298cfad9a3fb7a04b3f06",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c51-s1.png",
+      "runOnePngSha256": "bba3e5ae2e0f939e037e7f1f85cb7d66e8d2e44382ecc3892bdfc21ecf1bd87e",
+      "runTwoPngSha256": "bba3e5ae2e0f939e037e7f1f85cb7d66e8d2e44382ecc3892bdfc21ecf1bd87e",
+      "decodedRgbaSha256": "190f84ba4d03aff84a99f2a8c28384f437b2b02c62875ef8f29723331fbde3af",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c0-s2.png",
+      "runOnePngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "runTwoPngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "decodedRgbaSha256": "d9bee126aa46f2887bb1a258e691b055ac6f6b8390dcebe09dd95adecfcaecba",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c1-s2.png",
+      "runOnePngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "runTwoPngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "decodedRgbaSha256": "ff7dea068578ef365064c74d89ada6c9fb60dad491ccedec5cd96dd6c28a2d30",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c2-s2.png",
+      "runOnePngSha256": "abee3a7dcbc1e119dff7eb8a03f432b814cd08df2da4da65bd9f5cae8465a31a",
+      "runTwoPngSha256": "abee3a7dcbc1e119dff7eb8a03f432b814cd08df2da4da65bd9f5cae8465a31a",
+      "decodedRgbaSha256": "990fac6c5b13ac90d1ffe91737a52b43a7e3c451980163830d378f72eafed3e5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c3-s2.png",
+      "runOnePngSha256": "42645a06fabdf7683bf1be27a8d10fc54ea68965747ee43f0eec37c0109fe353",
+      "runTwoPngSha256": "42645a06fabdf7683bf1be27a8d10fc54ea68965747ee43f0eec37c0109fe353",
+      "decodedRgbaSha256": "76127a95f2c9c828b80344c428d50862f3f4cf00d862f987e5972c1e780cd2ec",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c4-s2.png",
+      "runOnePngSha256": "ccade27c73cf04891e8e352445a8ebac29c1295cfc5c863578592f8c8401c29e",
+      "runTwoPngSha256": "ccade27c73cf04891e8e352445a8ebac29c1295cfc5c863578592f8c8401c29e",
+      "decodedRgbaSha256": "eb7643bc288043b7ce873592b4ce00381de79e5c7d26b5265ca331765d638761",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c5-s2.png",
+      "runOnePngSha256": "5ee896a503df738a129e324e11061b85c6bd5ffd40917c4125276f96170a246a",
+      "runTwoPngSha256": "5ee896a503df738a129e324e11061b85c6bd5ffd40917c4125276f96170a246a",
+      "decodedRgbaSha256": "5b1993ceaa5955f04578868c2c74cf2a538d915a3302addb26b196f667becc69",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c6-s2.png",
+      "runOnePngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "runTwoPngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "decodedRgbaSha256": "d9bee126aa46f2887bb1a258e691b055ac6f6b8390dcebe09dd95adecfcaecba",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c7-s2.png",
+      "runOnePngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "runTwoPngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "decodedRgbaSha256": "ff7dea068578ef365064c74d89ada6c9fb60dad491ccedec5cd96dd6c28a2d30",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c8-s2.png",
+      "runOnePngSha256": "5af3276f11e5de15004ecddf7f63597f724776738389f61e46da182d052582b9",
+      "runTwoPngSha256": "5af3276f11e5de15004ecddf7f63597f724776738389f61e46da182d052582b9",
+      "decodedRgbaSha256": "8dbc7f6f37c5a9b19861fb006c59dbc27d4db1c5594d343f189425abf45e2463",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c9-s2.png",
+      "runOnePngSha256": "7f65b930af271d470b07b5fd96f09b4908a1f79f8dab75fd6d96597a1d1e8270",
+      "runTwoPngSha256": "7f65b930af271d470b07b5fd96f09b4908a1f79f8dab75fd6d96597a1d1e8270",
+      "decodedRgbaSha256": "633ca81ca5f48a75d04c43aa72524a6ce752873e860ab3adb84d3571afa36a5b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c10-s2.png",
+      "runOnePngSha256": "9397fb611b4b528ced3b015ec70ff76b53843c69471d76209925a2ddfd7d2a87",
+      "runTwoPngSha256": "9397fb611b4b528ced3b015ec70ff76b53843c69471d76209925a2ddfd7d2a87",
+      "decodedRgbaSha256": "1afb4bbf04f67711790f917766ef9c2617f7e73af66ad241958df5644afd0d97",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c11-s2.png",
+      "runOnePngSha256": "e9ce3a6bc7c1f648a997bef6934cfc9f1c694afba0b3ababbf67875fcb5a5f1a",
+      "runTwoPngSha256": "e9ce3a6bc7c1f648a997bef6934cfc9f1c694afba0b3ababbf67875fcb5a5f1a",
+      "decodedRgbaSha256": "81ace5462537eef272865b7823ff3aa16e5f49e5030f98fae844c1cb368c143c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c12-s2.png",
+      "runOnePngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "runTwoPngSha256": "7fd253d264f96ee7ad6864311f8f9c83548a7643ba16ca6c90a29f647beb1708",
+      "decodedRgbaSha256": "d9bee126aa46f2887bb1a258e691b055ac6f6b8390dcebe09dd95adecfcaecba",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c13-s2.png",
+      "runOnePngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "runTwoPngSha256": "52f1ab58802af833f7bbf9e33a6f52016624b0e007a25bd798af2638e4cc4001",
+      "decodedRgbaSha256": "ff7dea068578ef365064c74d89ada6c9fb60dad491ccedec5cd96dd6c28a2d30",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c14-s2.png",
+      "runOnePngSha256": "4078466e2e9184e096fd4d3e89b2eb5e4039dc31edc58d175c70693f38a9f0e2",
+      "runTwoPngSha256": "4078466e2e9184e096fd4d3e89b2eb5e4039dc31edc58d175c70693f38a9f0e2",
+      "decodedRgbaSha256": "cf029f55824862ac1229a25c5103bd1ea04374c572df15ae75bd5a8957347f5f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c15-s2.png",
+      "runOnePngSha256": "314012782fe7c141d34148f6757337f65b07752787eee7ce05071a6fde6e4a45",
+      "runTwoPngSha256": "314012782fe7c141d34148f6757337f65b07752787eee7ce05071a6fde6e4a45",
+      "decodedRgbaSha256": "60f350cc5e1353866235ef52ad9d0e2ccb65bda94a10202ba2c8a86b819e0883",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c16-s2.png",
+      "runOnePngSha256": "1412be17d0f53842b9948f5e63309bb3c9e5d75fd872cf1f0f040cdeb2c01ea1",
+      "runTwoPngSha256": "1412be17d0f53842b9948f5e63309bb3c9e5d75fd872cf1f0f040cdeb2c01ea1",
+      "decodedRgbaSha256": "eb9cb1ef976e555db7c03af78746e27efd0bc5b3aecfdbc43dfc95d712b814e1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c17-s2.png",
+      "runOnePngSha256": "5b0ee5c176611e2dceffe381504645e13ebf6392b9404f4c3ae5c1430470fb29",
+      "runTwoPngSha256": "5b0ee5c176611e2dceffe381504645e13ebf6392b9404f4c3ae5c1430470fb29",
+      "decodedRgbaSha256": "7ddb05be3fed8e795685409ebee3a5d76e544f31aff4e2219e3ccb5913b75f70",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c18-s2.png",
+      "runOnePngSha256": "bd60c776fa5a4d493f4228bbfe494c3a06250802739cd766dfd7ee266c497362",
+      "runTwoPngSha256": "bd60c776fa5a4d493f4228bbfe494c3a06250802739cd766dfd7ee266c497362",
+      "decodedRgbaSha256": "4e1cfd87599a8be1201fd182ef2b792751dd03556309ef8053b0ddf558c69157",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c19-s2.png",
+      "runOnePngSha256": "6391bb91253947d1cc8c9fbafff5ff78792fce4f5460a8f80a7dd3907d53dc45",
+      "runTwoPngSha256": "6391bb91253947d1cc8c9fbafff5ff78792fce4f5460a8f80a7dd3907d53dc45",
+      "decodedRgbaSha256": "d86cfe0cd4b26045e9228d2e40b0041f27bb926bd3ffc90e616b78cd7c94c02f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c20-s2.png",
+      "runOnePngSha256": "9d4265acff267e020d6f00f5eb9fb5bb5a53c50fddb558107eb3cdf47d026605",
+      "runTwoPngSha256": "9d4265acff267e020d6f00f5eb9fb5bb5a53c50fddb558107eb3cdf47d026605",
+      "decodedRgbaSha256": "768ddf375180e8007e2144f31a3204e2500fa47f67e19c5a747138cf8958d174",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c21-s2.png",
+      "runOnePngSha256": "4174a6859277c660c3901c21b024299046dddae13f22a901baa191578676fb64",
+      "runTwoPngSha256": "4174a6859277c660c3901c21b024299046dddae13f22a901baa191578676fb64",
+      "decodedRgbaSha256": "5c330ad96572512a73b6470619714875383d09cf05cf58d23821815a376f1158",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c22-s2.png",
+      "runOnePngSha256": "33855d102cbf0cb463857a9e1584c2b4cf8fec82ab1dbd7744d93970706821e7",
+      "runTwoPngSha256": "33855d102cbf0cb463857a9e1584c2b4cf8fec82ab1dbd7744d93970706821e7",
+      "decodedRgbaSha256": "5cfd00736d8905ca223966b8b2bb0cc1e89b26a89f9ded0f613bce47f4fc3afa",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c23-s2.png",
+      "runOnePngSha256": "474fd1ed865a830aa93c0c7a862c4c6f34bbe8b5d38b32aa0d55e07721a8d039",
+      "runTwoPngSha256": "474fd1ed865a830aa93c0c7a862c4c6f34bbe8b5d38b32aa0d55e07721a8d039",
+      "decodedRgbaSha256": "1b7b2c6fb9f98236cd98ada3822ccc725fe5ffffa04b58444ba8f84948a9ba6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c24-s2.png",
+      "runOnePngSha256": "0d54053068ce4ddb13c3a4eae5f05709b05e5b8d267e2fab2443c72cd5e8caee",
+      "runTwoPngSha256": "0d54053068ce4ddb13c3a4eae5f05709b05e5b8d267e2fab2443c72cd5e8caee",
+      "decodedRgbaSha256": "d1494e467c2186592ae6c4d776049ae259cb62a689114a2eb26def37116596c1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c25-s2.png",
+      "runOnePngSha256": "9225c6abc6b8dbb61bd555156901afac9d3aa7457d6b2be2b27a7425a4970fab",
+      "runTwoPngSha256": "9225c6abc6b8dbb61bd555156901afac9d3aa7457d6b2be2b27a7425a4970fab",
+      "decodedRgbaSha256": "6c1a52dae9e92f454a3cb8f4f8ea3e299ca2825b282f2fcb186870c64bf67725",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c26-s2.png",
+      "runOnePngSha256": "a0dd6e36eef977b10e5e54707e7c6cb8774b113c184c1589f723054f53e32c97",
+      "runTwoPngSha256": "a0dd6e36eef977b10e5e54707e7c6cb8774b113c184c1589f723054f53e32c97",
+      "decodedRgbaSha256": "099ae342fa0d7f89ac625edaffe0d93b756ec15ae33983dd1b20c4ecc225d2cb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c27-s2.png",
+      "runOnePngSha256": "816c134f75242fbd6e844484b4bbb522f6984c9eaf1c637bcf94a148bc304225",
+      "runTwoPngSha256": "816c134f75242fbd6e844484b4bbb522f6984c9eaf1c637bcf94a148bc304225",
+      "decodedRgbaSha256": "d391398d2781d764f8d7efa11b60bea40b3275815a222ed9ef86b718ffc1997c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c28-s2.png",
+      "runOnePngSha256": "e04955b497e8015ab8d30024362cf03427d4809934d10cb812f83ec31df5bd35",
+      "runTwoPngSha256": "e04955b497e8015ab8d30024362cf03427d4809934d10cb812f83ec31df5bd35",
+      "decodedRgbaSha256": "47e359d3f5b83233e0cdbaefe73aaf086cc3756e4522dc00643f996e69663fe1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c29-s2.png",
+      "runOnePngSha256": "f83be7b9d71d56ad430fef24dbb93c96cb6da99de81e2a229876f3c93761dddc",
+      "runTwoPngSha256": "f83be7b9d71d56ad430fef24dbb93c96cb6da99de81e2a229876f3c93761dddc",
+      "decodedRgbaSha256": "aa5eebb73fbeb7ad8122912b430cd8f17c25f2c462f7ed96eae9ddf716cec8f4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c30-s2.png",
+      "runOnePngSha256": "730877a899e6b3a5ff6b9e4ce0a4d6933a85b4b73ce285fc9e5c71052e6d65a3",
+      "runTwoPngSha256": "730877a899e6b3a5ff6b9e4ce0a4d6933a85b4b73ce285fc9e5c71052e6d65a3",
+      "decodedRgbaSha256": "eea9229105a93284c952d6b1f861a2fc2290f68a135bf43cb2b5ee7457eccd63",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c31-s2.png",
+      "runOnePngSha256": "4ff4ceb8860fc089bc2241f6cbb610a43f62c274257467369fe0ab8688e1f5bd",
+      "runTwoPngSha256": "4ff4ceb8860fc089bc2241f6cbb610a43f62c274257467369fe0ab8688e1f5bd",
+      "decodedRgbaSha256": "8246b923436322a0aa6b23357242c41890ed4ecfd523779fb0938f6214043f9f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c32-s2.png",
+      "runOnePngSha256": "170d788c9184123e83b23f00edcf2e91cb68455e8dc28ac7e373be994b3f6e78",
+      "runTwoPngSha256": "170d788c9184123e83b23f00edcf2e91cb68455e8dc28ac7e373be994b3f6e78",
+      "decodedRgbaSha256": "222ef18dbb13d18a65ed138bef0e145ac169187f42aa184fcc2b4d806b6ea334",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c33-s2.png",
+      "runOnePngSha256": "28f4d4cfa48fd1cbbf57b973de1d262efe2d7290b9f090e13b16927f3ebfc4a6",
+      "runTwoPngSha256": "28f4d4cfa48fd1cbbf57b973de1d262efe2d7290b9f090e13b16927f3ebfc4a6",
+      "decodedRgbaSha256": "a9683ce6d70f9d0feff6a019116ea410865eed7aaee3df88b8b7a2e40cbb7f61",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c34-s2.png",
+      "runOnePngSha256": "59a31648f578d210dd67c6df1b05e5fb9e5083e8216377bd3d82f60c18d544ea",
+      "runTwoPngSha256": "59a31648f578d210dd67c6df1b05e5fb9e5083e8216377bd3d82f60c18d544ea",
+      "decodedRgbaSha256": "1915fccebf7026fcdeeb6c35f6328ec179b40350811cca5e4c503a77a35b6a36",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c35-s2.png",
+      "runOnePngSha256": "0cf1d7f56a22014ac21ba97b4f31be52bd085a84ff9f7e732bdb0089bd22b9a7",
+      "runTwoPngSha256": "0cf1d7f56a22014ac21ba97b4f31be52bd085a84ff9f7e732bdb0089bd22b9a7",
+      "decodedRgbaSha256": "e34d853eb5d77f9871b5486d0062c777999487d2ea1ea5d0bf84561eabcb2d50",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c36-s2.png",
+      "runOnePngSha256": "a46e9142820e863ca780064eececb7cd8e4b1700f919a430aab1ed26cbb139c3",
+      "runTwoPngSha256": "a46e9142820e863ca780064eececb7cd8e4b1700f919a430aab1ed26cbb139c3",
+      "decodedRgbaSha256": "11b210015f478922f00bc0adf3da8450534a9aa93106f2bfbe49914a51369eb6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c37-s2.png",
+      "runOnePngSha256": "aac34fc4c0272f142a9dafd413bdff0fe37175da5ee9ecfa6daaa181e8f34aee",
+      "runTwoPngSha256": "aac34fc4c0272f142a9dafd413bdff0fe37175da5ee9ecfa6daaa181e8f34aee",
+      "decodedRgbaSha256": "88b86adc565b3745f77d09aac9e9fdfb31804bfe44624b7842541633da511c5e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c38-s2.png",
+      "runOnePngSha256": "e75616263151390c66f9bbb7e33402ad1e1534d78672356b01692dedfc7d4880",
+      "runTwoPngSha256": "e75616263151390c66f9bbb7e33402ad1e1534d78672356b01692dedfc7d4880",
+      "decodedRgbaSha256": "64dbce05c6e3429c88a71b26a7fb097d016833e10c9d0dda87d6ce34d27234ec",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c39-s2.png",
+      "runOnePngSha256": "e9f176b57e20d714de35b2a03d755b2de120c886ac231760f822555cd68cb8a8",
+      "runTwoPngSha256": "e9f176b57e20d714de35b2a03d755b2de120c886ac231760f822555cd68cb8a8",
+      "decodedRgbaSha256": "d98fb5579859dd9f599fc424c31e3b05796b4ca7a46e8528cf32aa825d5bec37",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c40-s2.png",
+      "runOnePngSha256": "0cfc688b60ec956c2dc596e465931955b386d1a9d1880ff0191e6ca1942e52f1",
+      "runTwoPngSha256": "0cfc688b60ec956c2dc596e465931955b386d1a9d1880ff0191e6ca1942e52f1",
+      "decodedRgbaSha256": "477d40be223c74ad1bd09e3ea733405bb8f93c9adfb0a9f1e4757246e7722594",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c41-s2.png",
+      "runOnePngSha256": "80022ae0616c61486b8173242b4a69657ebf48d526e073ecee0bad56fc5a8a37",
+      "runTwoPngSha256": "80022ae0616c61486b8173242b4a69657ebf48d526e073ecee0bad56fc5a8a37",
+      "decodedRgbaSha256": "f0cbd9915aa6bf750e94b137cc569b7a58443348d031fced865a583980741ca0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c42-s2.png",
+      "runOnePngSha256": "e75616263151390c66f9bbb7e33402ad1e1534d78672356b01692dedfc7d4880",
+      "runTwoPngSha256": "e75616263151390c66f9bbb7e33402ad1e1534d78672356b01692dedfc7d4880",
+      "decodedRgbaSha256": "64dbce05c6e3429c88a71b26a7fb097d016833e10c9d0dda87d6ce34d27234ec",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c43-s2.png",
+      "runOnePngSha256": "e9f176b57e20d714de35b2a03d755b2de120c886ac231760f822555cd68cb8a8",
+      "runTwoPngSha256": "e9f176b57e20d714de35b2a03d755b2de120c886ac231760f822555cd68cb8a8",
+      "decodedRgbaSha256": "d98fb5579859dd9f599fc424c31e3b05796b4ca7a46e8528cf32aa825d5bec37",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c44-s2.png",
+      "runOnePngSha256": "0cfc688b60ec956c2dc596e465931955b386d1a9d1880ff0191e6ca1942e52f1",
+      "runTwoPngSha256": "0cfc688b60ec956c2dc596e465931955b386d1a9d1880ff0191e6ca1942e52f1",
+      "decodedRgbaSha256": "477d40be223c74ad1bd09e3ea733405bb8f93c9adfb0a9f1e4757246e7722594",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c45-s2.png",
+      "runOnePngSha256": "80022ae0616c61486b8173242b4a69657ebf48d526e073ecee0bad56fc5a8a37",
+      "runTwoPngSha256": "80022ae0616c61486b8173242b4a69657ebf48d526e073ecee0bad56fc5a8a37",
+      "decodedRgbaSha256": "f0cbd9915aa6bf750e94b137cc569b7a58443348d031fced865a583980741ca0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c46-s2.png",
+      "runOnePngSha256": "6d86b7d2a57a66d674e5ff7bca7c4f3f1d54890d5793e898b220d7bb04520230",
+      "runTwoPngSha256": "6d86b7d2a57a66d674e5ff7bca7c4f3f1d54890d5793e898b220d7bb04520230",
+      "decodedRgbaSha256": "80ba5794d2c392b509711c92cf769ca883d551686e56226fd57d2f1f3b53507e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c47-s2.png",
+      "runOnePngSha256": "c4943b6cf20a9b3e5cb02243619be8ee1a77f16a831e401e9ba4c313d0b644d6",
+      "runTwoPngSha256": "c4943b6cf20a9b3e5cb02243619be8ee1a77f16a831e401e9ba4c313d0b644d6",
+      "decodedRgbaSha256": "024e75c7d67cd0c425441cdeddfd41877579b7decaa63b459c7851f082724670",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c48-s2.png",
+      "runOnePngSha256": "3d0e8eb9dbd8eb2b08e0ddb12fff102e41fc9c034df670da6e2f4a46c67efd81",
+      "runTwoPngSha256": "3d0e8eb9dbd8eb2b08e0ddb12fff102e41fc9c034df670da6e2f4a46c67efd81",
+      "decodedRgbaSha256": "7c441b6c40dd33978d80015fd07261f2948504a32c3b5865c55fe23bba181da9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c49-s2.png",
+      "runOnePngSha256": "755891e8e2edc5465cae8395f7c60ebf9714e029bfa06725232987b9be4bb3af",
+      "runTwoPngSha256": "755891e8e2edc5465cae8395f7c60ebf9714e029bfa06725232987b9be4bb3af",
+      "decodedRgbaSha256": "9033bd545e982203da2e7cbac625014efb3e5b5f738f77bcfbc656406887b3fe",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c50-s2.png",
+      "runOnePngSha256": "5ca658623f66aeed0ca70cbd6b26df70cee9792d59363c4e31db14a7df9022e4",
+      "runTwoPngSha256": "5ca658623f66aeed0ca70cbd6b26df70cee9792d59363c4e31db14a7df9022e4",
+      "decodedRgbaSha256": "e01c313080c56b878a9e3aca072493c8dee5b039227914ef5a66fe350f84976f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c51-s2.png",
+      "runOnePngSha256": "3f81fcd10f4fe09b5b6c1ec7b69b3dc5f1e78c7af879ceba3bf9698636c037ff",
+      "runTwoPngSha256": "3f81fcd10f4fe09b5b6c1ec7b69b3dc5f1e78c7af879ceba3bf9698636c037ff",
+      "decodedRgbaSha256": "c9933c977e6955e90411451c04332489d311f67ac3a49b0e40a725e902153d77",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c0-s3.png",
+      "runOnePngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "runTwoPngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "decodedRgbaSha256": "a70e89b3a7e837d7adb3a6fb2cbeefd6d704dec16ed7fea9c8bc0f30048c4a9a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c1-s3.png",
+      "runOnePngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "runTwoPngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "decodedRgbaSha256": "a862ea5a10c0722161142a96422f509dfeab54418b2e03e69ad649e4aacc3b80",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c2-s3.png",
+      "runOnePngSha256": "818b9bdc3bb532001b41d5f835a3475dfe5e2c7638402bfe7425c006a1345b28",
+      "runTwoPngSha256": "818b9bdc3bb532001b41d5f835a3475dfe5e2c7638402bfe7425c006a1345b28",
+      "decodedRgbaSha256": "a304c7c4a68778ff726d679c02f9a8f7ea92ea4cea15da74e96fdd086daaa137",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c3-s3.png",
+      "runOnePngSha256": "7cec21376f584b2fd92c2c6ac151cff539da4d705367909580d92bfe48507920",
+      "runTwoPngSha256": "7cec21376f584b2fd92c2c6ac151cff539da4d705367909580d92bfe48507920",
+      "decodedRgbaSha256": "e8522a0373dbaf2158412de5f0e9248065c05080e5c72488defc12fac738d34e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c4-s3.png",
+      "runOnePngSha256": "d2d4db6914e7e2458a1038fb5d13265ed03e71d3919c243dbdbbb97ec9af2d40",
+      "runTwoPngSha256": "d2d4db6914e7e2458a1038fb5d13265ed03e71d3919c243dbdbbb97ec9af2d40",
+      "decodedRgbaSha256": "8a96023bc6b610faec98f916914e40f6e4cd285e7d333d011141104750d71e32",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c5-s3.png",
+      "runOnePngSha256": "e90019fd7931f9566a488dcbb9e993fb32b27683e6ad6673b8624e6386c28472",
+      "runTwoPngSha256": "e90019fd7931f9566a488dcbb9e993fb32b27683e6ad6673b8624e6386c28472",
+      "decodedRgbaSha256": "4894df80f90f1d7c1871e0a8ef9453289ad2259cc3738b1f89624cc832a3e6ed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c6-s3.png",
+      "runOnePngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "runTwoPngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "decodedRgbaSha256": "a70e89b3a7e837d7adb3a6fb2cbeefd6d704dec16ed7fea9c8bc0f30048c4a9a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c7-s3.png",
+      "runOnePngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "runTwoPngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "decodedRgbaSha256": "a862ea5a10c0722161142a96422f509dfeab54418b2e03e69ad649e4aacc3b80",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c8-s3.png",
+      "runOnePngSha256": "69b174067de2105359b4337bf6208060a4dafaf74c5f2f160c5452dcf3d16b2d",
+      "runTwoPngSha256": "69b174067de2105359b4337bf6208060a4dafaf74c5f2f160c5452dcf3d16b2d",
+      "decodedRgbaSha256": "0792afe3fff75f0cd63ea47236b7e0487cc8c313cde59e193bcf51465cc6348c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c9-s3.png",
+      "runOnePngSha256": "c2019e2caebd9bdb149e383d60ff3f994041a5a1f21f55ff4689f466bd64b330",
+      "runTwoPngSha256": "c2019e2caebd9bdb149e383d60ff3f994041a5a1f21f55ff4689f466bd64b330",
+      "decodedRgbaSha256": "aba5bf7a38dfa822000684cf89ae5dc6af272595fb727f3178c022faf1a7e6b9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c10-s3.png",
+      "runOnePngSha256": "e5ace71891fc4342a961f25d31677e5a2ae36b3f3458ee6ceba717d0f467862b",
+      "runTwoPngSha256": "e5ace71891fc4342a961f25d31677e5a2ae36b3f3458ee6ceba717d0f467862b",
+      "decodedRgbaSha256": "2593ab627b1d625e983cd96b59b37eeb3931b9c87cef03354a7cb76a9cf60e2e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c11-s3.png",
+      "runOnePngSha256": "30843f6d9228b93b810c36c3591acbe4e1ff1aa85f9f77938c357db289695fb5",
+      "runTwoPngSha256": "30843f6d9228b93b810c36c3591acbe4e1ff1aa85f9f77938c357db289695fb5",
+      "decodedRgbaSha256": "7fd10c8c69e45520c684ace2b91f5b626bc2dba62b39767c12be612673b7e963",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c12-s3.png",
+      "runOnePngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "runTwoPngSha256": "9fee188cd3230320220cc6db02cd89b477809f8cbc02b31606b50ea7d97c8800",
+      "decodedRgbaSha256": "a70e89b3a7e837d7adb3a6fb2cbeefd6d704dec16ed7fea9c8bc0f30048c4a9a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c13-s3.png",
+      "runOnePngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "runTwoPngSha256": "387fa3798a839318c0fb52e7d1c79781e0eea5c77ba5f5980589ad64a4e89be1",
+      "decodedRgbaSha256": "a862ea5a10c0722161142a96422f509dfeab54418b2e03e69ad649e4aacc3b80",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c14-s3.png",
+      "runOnePngSha256": "e9f507173903a21fe1e4eb2173852daecf3c5e34589d1bf3d02f2c3006304049",
+      "runTwoPngSha256": "e9f507173903a21fe1e4eb2173852daecf3c5e34589d1bf3d02f2c3006304049",
+      "decodedRgbaSha256": "e6c76774a9a642739d2d0fffedcf500d701887831b0bc801e81b3ea39905b594",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c15-s3.png",
+      "runOnePngSha256": "3c10851d0a26f89efcb14482c49a9103f4a08c5fbc412391b3f77bdfea5df5ef",
+      "runTwoPngSha256": "3c10851d0a26f89efcb14482c49a9103f4a08c5fbc412391b3f77bdfea5df5ef",
+      "decodedRgbaSha256": "fdba17b359d56fef3d210c4228b5a48da12cbc4e2d699595d5cd3a2ff036981b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c16-s3.png",
+      "runOnePngSha256": "f83942d7b311ebcf7041f400d482850ef2d57ebd8b1b339561ab72b4a6fb3759",
+      "runTwoPngSha256": "f83942d7b311ebcf7041f400d482850ef2d57ebd8b1b339561ab72b4a6fb3759",
+      "decodedRgbaSha256": "764d06b83a8d87ca9429d2cbe793c9921b6a575a56d8e1cadd297ff08b419dee",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c17-s3.png",
+      "runOnePngSha256": "cdba1c1a6f619311e0f8461724d70b4e45bee3f4228f3a5082f64121c71851d4",
+      "runTwoPngSha256": "cdba1c1a6f619311e0f8461724d70b4e45bee3f4228f3a5082f64121c71851d4",
+      "decodedRgbaSha256": "2aea9aeb4e3d1421e997e3356e98903fa351b98dc3b2cb88f5cdc5a903cd32bd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c18-s3.png",
+      "runOnePngSha256": "9ba2959817a5f9e8ae850d944b94853e520d185eba2e256397dafb94fcd1a8dc",
+      "runTwoPngSha256": "9ba2959817a5f9e8ae850d944b94853e520d185eba2e256397dafb94fcd1a8dc",
+      "decodedRgbaSha256": "73e9eba92447eabdb8d102d9961e779b99aac46bdde88664df95e730d4c69f0e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c19-s3.png",
+      "runOnePngSha256": "874d74b23e018bcd329b713bb06f182009ce576d43d64b83ce5580abc698a6b0",
+      "runTwoPngSha256": "874d74b23e018bcd329b713bb06f182009ce576d43d64b83ce5580abc698a6b0",
+      "decodedRgbaSha256": "a40496b1e2017fa492c37d88adf97277cfbbc6cf2ef35a6ef015bb8cc95eb226",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c20-s3.png",
+      "runOnePngSha256": "e72f6370cefc4eb88c5fc183979e8b47dd71f05c58c19b76193c2ba7d0b270b8",
+      "runTwoPngSha256": "e72f6370cefc4eb88c5fc183979e8b47dd71f05c58c19b76193c2ba7d0b270b8",
+      "decodedRgbaSha256": "7e4a8104c67b00314490abd427f3a7b4d27e93658a7f2a71449ebdaa64d68418",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c21-s3.png",
+      "runOnePngSha256": "3ca41625dba65e2a577052566b84020a39bc2b6ba0230dfc7abf6094c17d86e5",
+      "runTwoPngSha256": "3ca41625dba65e2a577052566b84020a39bc2b6ba0230dfc7abf6094c17d86e5",
+      "decodedRgbaSha256": "b31a565f50bcf1c80c7f389e5bc1098160fecd5bc5c0e92aeef13cd007ad6a1d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c22-s3.png",
+      "runOnePngSha256": "b4d2b0db0ba4d3c0f04576e523bef56d4229ca1621f1617c54c6e0ab9acafd0c",
+      "runTwoPngSha256": "b4d2b0db0ba4d3c0f04576e523bef56d4229ca1621f1617c54c6e0ab9acafd0c",
+      "decodedRgbaSha256": "193e1d24152f19f4ebb571d3a6903e9d3d6aa19e8909bebcdbb9bd71c08c6622",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c23-s3.png",
+      "runOnePngSha256": "94b685b42d154e7b9a24a9bc2b1debd49fdc612bd0d946f9bbc88c9f2bcdadb8",
+      "runTwoPngSha256": "94b685b42d154e7b9a24a9bc2b1debd49fdc612bd0d946f9bbc88c9f2bcdadb8",
+      "decodedRgbaSha256": "78a6a933b1538736ef91e8b400cfb8789a978065332e5fbab265ea6d94c9a24a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c24-s3.png",
+      "runOnePngSha256": "22c2f39e432b7cd33c3d1a89158d5b2cb257c1457de670a4df101ae917eb9249",
+      "runTwoPngSha256": "22c2f39e432b7cd33c3d1a89158d5b2cb257c1457de670a4df101ae917eb9249",
+      "decodedRgbaSha256": "7e44b2daf8c399320ba7ab5d200173358f91e33928d7112efccc9aded8bc53f3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c25-s3.png",
+      "runOnePngSha256": "7f21b75564a74b29d41afbdb019e168cf43db412a45c227401fbacc0cdc5a3eb",
+      "runTwoPngSha256": "7f21b75564a74b29d41afbdb019e168cf43db412a45c227401fbacc0cdc5a3eb",
+      "decodedRgbaSha256": "844493105a336886decf70b68b2f29b8b0503e516539eb00cd014ee811e09119",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c26-s3.png",
+      "runOnePngSha256": "c159f43721fa466e64f1bb45db239e41b3b548de3fccbe017eaac2cbbff85fa0",
+      "runTwoPngSha256": "c159f43721fa466e64f1bb45db239e41b3b548de3fccbe017eaac2cbbff85fa0",
+      "decodedRgbaSha256": "5714b0d6620c211bd185f9adf7f5ed276dc2550676a78b35c163157cb8830ccf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c27-s3.png",
+      "runOnePngSha256": "d3123afcc0194ac29e16173e3641cc12c679b511aeff12cb68ffc1d6d8fe2c54",
+      "runTwoPngSha256": "d3123afcc0194ac29e16173e3641cc12c679b511aeff12cb68ffc1d6d8fe2c54",
+      "decodedRgbaSha256": "5732253a9c05a7fef68d0846354616345b8a18e3397989a63c5f3036e453e1fe",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c28-s3.png",
+      "runOnePngSha256": "3ef89ddab2a15b9cba0d47cb655c93083033e4f4bc5d2da7ab397be5b30e6570",
+      "runTwoPngSha256": "3ef89ddab2a15b9cba0d47cb655c93083033e4f4bc5d2da7ab397be5b30e6570",
+      "decodedRgbaSha256": "41dfa8887210f7b53c26135fc1ed08c391af0a6c736988a886991818f290bc0b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c29-s3.png",
+      "runOnePngSha256": "20ff7c93d9a63bbe6514226e08691f9880035ea0293dfb30ea9ff372bcbff091",
+      "runTwoPngSha256": "20ff7c93d9a63bbe6514226e08691f9880035ea0293dfb30ea9ff372bcbff091",
+      "decodedRgbaSha256": "cd766db40b28e4a9f8df08d09590c35d4960829fb16cceb158bd154d565d37f8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c30-s3.png",
+      "runOnePngSha256": "517c2291ca832987cca8c286a897aaad526228a2e990c7eb80878ad62279f732",
+      "runTwoPngSha256": "517c2291ca832987cca8c286a897aaad526228a2e990c7eb80878ad62279f732",
+      "decodedRgbaSha256": "0182ebec0c9adf1bd8ee92d8ea62055dc8d0b09727e968ac5d636a2acbe33d0e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c31-s3.png",
+      "runOnePngSha256": "927b2223237b7e8552352d90562567202840abb0df57013e82db09c22b5ed771",
+      "runTwoPngSha256": "927b2223237b7e8552352d90562567202840abb0df57013e82db09c22b5ed771",
+      "decodedRgbaSha256": "7ffc0b97fd347bd90006ac475a5518a303945d73c7d77ea29f3259ee39b7e61c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c32-s3.png",
+      "runOnePngSha256": "5e15454b13fb05180f7de9b4c495a4dd04e6fffe0843353b29eed7245c6365c0",
+      "runTwoPngSha256": "5e15454b13fb05180f7de9b4c495a4dd04e6fffe0843353b29eed7245c6365c0",
+      "decodedRgbaSha256": "707d33b9212da03b8369fc3465826f7fbf6811af1e19c22b5e0f60c2a6954955",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c33-s3.png",
+      "runOnePngSha256": "fa0d115720d525f3847f8a330d23bd9ea29128eef4a55ca2d97541a982a1aaf1",
+      "runTwoPngSha256": "fa0d115720d525f3847f8a330d23bd9ea29128eef4a55ca2d97541a982a1aaf1",
+      "decodedRgbaSha256": "363faec92797380ea22d160d4e5e0b7a8e145b6a6616f1893491108608d4aa88",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c34-s3.png",
+      "runOnePngSha256": "1d6b48c40c5135aff43f3f7b805c48ac4d9eaba1945473536030d1b132d7a56e",
+      "runTwoPngSha256": "1d6b48c40c5135aff43f3f7b805c48ac4d9eaba1945473536030d1b132d7a56e",
+      "decodedRgbaSha256": "32ab995c3433752ee363527fa28297b0fccee3b6acf6c06e9ff921c89fc093f4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c35-s3.png",
+      "runOnePngSha256": "1a9095a75b9ed323e65114188331b0d331b715d508ebcc3dbdc675fc6b89be05",
+      "runTwoPngSha256": "1a9095a75b9ed323e65114188331b0d331b715d508ebcc3dbdc675fc6b89be05",
+      "decodedRgbaSha256": "7e886d348bbdf6a6a2ad6c9751b94fdeb2efbab62222dcd77434f92936456c63",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c36-s3.png",
+      "runOnePngSha256": "8509f3933bae76a1e30397daed786542f49464641ef4df3b7acf2f1974bc9226",
+      "runTwoPngSha256": "8509f3933bae76a1e30397daed786542f49464641ef4df3b7acf2f1974bc9226",
+      "decodedRgbaSha256": "21fdc1e0d371f768c5e42b9624872c3abb2c0913c12bb4cec34af89f1b336ae8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c37-s3.png",
+      "runOnePngSha256": "a819919ec923fae449d726ef75f05a694311be6021dc0657719477c37bfc7a30",
+      "runTwoPngSha256": "a819919ec923fae449d726ef75f05a694311be6021dc0657719477c37bfc7a30",
+      "decodedRgbaSha256": "0576297eabab7602746311eb4fb5cb7b3bfe45bbffb7e42a4928f564dd19e8c2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c38-s3.png",
+      "runOnePngSha256": "c8491495efd399f5f4e3f6323b673129fc587eb11749e7d6a2a87550ff9f5bf9",
+      "runTwoPngSha256": "c8491495efd399f5f4e3f6323b673129fc587eb11749e7d6a2a87550ff9f5bf9",
+      "decodedRgbaSha256": "21a18ca936428aa355e0aa88046e8e9ca2a724563a31365857d9a75dcd0babf1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c39-s3.png",
+      "runOnePngSha256": "e0795c9588f5676e9d164f9df828520854dd3d04ffc9f982f8b9ed07c5e0b6ed",
+      "runTwoPngSha256": "e0795c9588f5676e9d164f9df828520854dd3d04ffc9f982f8b9ed07c5e0b6ed",
+      "decodedRgbaSha256": "b4bac03b4876d7277cbd835b5283e0b4d673ebfca912d848735b391c9eae73eb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c40-s3.png",
+      "runOnePngSha256": "8c3e79450e926759268b3e162073497c9ce41b00ca11d12bb31086624dc03a65",
+      "runTwoPngSha256": "8c3e79450e926759268b3e162073497c9ce41b00ca11d12bb31086624dc03a65",
+      "decodedRgbaSha256": "398a94f39b5ecc0eef89d70d3a3f7a74e4b14467f7595585e4b78e583b6fec87",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c41-s3.png",
+      "runOnePngSha256": "8ad1e93d335f397de94ee5f8e2f8901515e7c5ffbcf274b4befb32a4053ae590",
+      "runTwoPngSha256": "8ad1e93d335f397de94ee5f8e2f8901515e7c5ffbcf274b4befb32a4053ae590",
+      "decodedRgbaSha256": "949f211445f0b9602a00ecc56b3aa8a7ef5298e8bdf502b2edb191c59c6cd4bd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c42-s3.png",
+      "runOnePngSha256": "c8491495efd399f5f4e3f6323b673129fc587eb11749e7d6a2a87550ff9f5bf9",
+      "runTwoPngSha256": "c8491495efd399f5f4e3f6323b673129fc587eb11749e7d6a2a87550ff9f5bf9",
+      "decodedRgbaSha256": "21a18ca936428aa355e0aa88046e8e9ca2a724563a31365857d9a75dcd0babf1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c43-s3.png",
+      "runOnePngSha256": "e0795c9588f5676e9d164f9df828520854dd3d04ffc9f982f8b9ed07c5e0b6ed",
+      "runTwoPngSha256": "e0795c9588f5676e9d164f9df828520854dd3d04ffc9f982f8b9ed07c5e0b6ed",
+      "decodedRgbaSha256": "b4bac03b4876d7277cbd835b5283e0b4d673ebfca912d848735b391c9eae73eb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c44-s3.png",
+      "runOnePngSha256": "8c3e79450e926759268b3e162073497c9ce41b00ca11d12bb31086624dc03a65",
+      "runTwoPngSha256": "8c3e79450e926759268b3e162073497c9ce41b00ca11d12bb31086624dc03a65",
+      "decodedRgbaSha256": "398a94f39b5ecc0eef89d70d3a3f7a74e4b14467f7595585e4b78e583b6fec87",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c45-s3.png",
+      "runOnePngSha256": "8ad1e93d335f397de94ee5f8e2f8901515e7c5ffbcf274b4befb32a4053ae590",
+      "runTwoPngSha256": "8ad1e93d335f397de94ee5f8e2f8901515e7c5ffbcf274b4befb32a4053ae590",
+      "decodedRgbaSha256": "949f211445f0b9602a00ecc56b3aa8a7ef5298e8bdf502b2edb191c59c6cd4bd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c46-s3.png",
+      "runOnePngSha256": "33a6c86ac6c52230936cf6d34f471727ce356a8dcfde71e829181a5749992693",
+      "runTwoPngSha256": "33a6c86ac6c52230936cf6d34f471727ce356a8dcfde71e829181a5749992693",
+      "decodedRgbaSha256": "88ac20a4e86f3bc1421e6231b6d3ebe035bfb4deb128fa452a5cf3c6e0a7adec",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c47-s3.png",
+      "runOnePngSha256": "b0bc7f27fb4062f2b5704e294cc7b30f639c977ce855b4a15865efd54c4f8e9c",
+      "runTwoPngSha256": "b0bc7f27fb4062f2b5704e294cc7b30f639c977ce855b4a15865efd54c4f8e9c",
+      "decodedRgbaSha256": "e4157daf71086b277e5f2c7b787feaae5a5cc8b56923a5b68bf3240769369f12",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c48-s3.png",
+      "runOnePngSha256": "dfc92404517df0ece7cb77c9196432aa5275742e25ce70b14efb6e2e3d6cd5f0",
+      "runTwoPngSha256": "dfc92404517df0ece7cb77c9196432aa5275742e25ce70b14efb6e2e3d6cd5f0",
+      "decodedRgbaSha256": "3b7bc1ac9953d6be20017d09c052b64559b13e4718185d77532a9f5eb1034308",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c49-s3.png",
+      "runOnePngSha256": "f188c12c20d5ee498b9f0b5d7413282f0a79e255be1d25a39cb5eb5c8214de8c",
+      "runTwoPngSha256": "f188c12c20d5ee498b9f0b5d7413282f0a79e255be1d25a39cb5eb5c8214de8c",
+      "decodedRgbaSha256": "87ffd976005180a9b8c30862427214a8f94d4a44d623afdaf1b726666f197c56",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c50-s3.png",
+      "runOnePngSha256": "ff5c370fb43da8c9a20056e8ce314943fc64f4962dd9746e16beb304b1fed4bf",
+      "runTwoPngSha256": "ff5c370fb43da8c9a20056e8ce314943fc64f4962dd9746e16beb304b1fed4bf",
+      "decodedRgbaSha256": "d44ebe01cb58693855c66a2084784ad59c774054dfd04a779c5ef71ec9a965a0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "dialog-c51-s3.png",
+      "runOnePngSha256": "6665917d7cd4438ae2dc1d95fbae2a2dae88be987b4dd8036158d020de0aea04",
+      "runTwoPngSha256": "6665917d7cd4438ae2dc1d95fbae2a2dae88be987b4dd8036158d020de0aea04",
+      "decodedRgbaSha256": "16c52966234b70e19f56b908df79a681b01f09bf371680ea125e1204bd7f53d7",
+      "mismatchedPixels": 0
+    }
+  ]
+}

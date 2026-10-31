@@ -1,0 +1,7 @@
+@layer components {
+.mc-player-list,.mc-scoreboard{font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8px * var(--mc-scale,2));line-height:calc(9px * var(--mc-scale,2));color:#fff;image-rendering:pixelated;flex:none;position:relative}
+.mc-player-list{background:#00000080}.mc-roster-grid{position:absolute;display:grid;grid-auto-flow:column;column-gap:calc(5px * var(--mc-scale))}.mc-roster-heading{position:absolute;left:0;right:0;text-align:center;white-space:nowrap}
+.mc-roster-row{position:relative;height:calc(8px * var(--mc-scale));background:#ffffff20;min-width:0}.mc-roster-row>button{position:absolute;inset:0;display:block;font:inherit;color:inherit;padding:0;border:0;background:none;text-align:left;cursor:pointer}.mc-roster-row>button:focus-visible{outline:calc(1px * var(--mc-scale)) solid white}
+.mc-roster-name{position:absolute;white-space:nowrap;overflow:hidden}.mc-roster-score{position:absolute;--mc-ink:#ffff55;--mc-shadow:#3f3f15}.mc-roster-ping{position:absolute;display:block;image-rendering:pixelated}
+.mc-scoreboard-title{position:absolute;left:0;right:0;top:0;background:#00000066}.mc-scoreboard-body{background:#0000004c}
+}

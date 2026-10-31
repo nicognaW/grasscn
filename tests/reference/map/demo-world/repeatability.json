@@ -1,0 +1,33 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "704bc139436d1ce402f5e9d44ff0a078eae71f165e114fba867a25518544d940",
+  "caseDefinitionSha256": "d3896ccdac079e2a4d1775acd603d07d11315c9869e118fc403512f8f19c4a29",
+  "glyphObservationEnabled": {
+    "runOne": false,
+    "runTwo": false
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "map-world-s1.png",
+      "runOnePngSha256": "00027804a9b234383dc2a1ceaca08a48286a30e129927e4fd79ea93b6bec4845",
+      "runTwoPngSha256": "00027804a9b234383dc2a1ceaca08a48286a30e129927e4fd79ea93b6bec4845",
+      "decodedRgbaSha256": "e2273d386571ba3f4664ecff60995b5deed7e604b1115308d1a58cce43446a41",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "map-world-s2.png",
+      "runOnePngSha256": "77e340d43b5b0316fc8229630105e9ae79fbc3db42f16d0d987b58238d2d9c08",
+      "runTwoPngSha256": "77e340d43b5b0316fc8229630105e9ae79fbc3db42f16d0d987b58238d2d9c08",
+      "decodedRgbaSha256": "799470ace700dd303661f5e6a05d57416ce67e01b94bc0d5f282c0a602a244da",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "map-world-s3.png",
+      "runOnePngSha256": "e759ccb9f2cff4377672c357be6c666f0fc336e0fc74c678f0b0ba880652b349",
+      "runTwoPngSha256": "e759ccb9f2cff4377672c357be6c666f0fc336e0fc74c678f0b0ba880652b349",
+      "decodedRgbaSha256": "bb28d28d4df8858b4989555300616721beb0fcbd8bc062f1eec576e1c054599c",
+      "mismatchedPixels": 0
+    }
+  ]
+}

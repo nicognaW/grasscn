@@ -1,0 +1,938 @@
+{
+  "component": "chart",
+  "manifest": "tests/reference/chart-pie/manifest.json",
+  "targetReport": "tests/reference/chart/chart-pie-installation-verification.json",
+  "dryRun": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "consumerRsc": false,
+  "cliInvocation": {
+    "command": "C:\\Program Files\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
+      "add",
+      "http://127.0.0.1:5173/r/button.json",
+      "http://127.0.0.1:5173/r/checkbox.json",
+      "http://127.0.0.1:5173/r/slider.json",
+      "http://127.0.0.1:5173/r/input.json",
+      "http://127.0.0.1:5173/r/tooltip.json",
+      "http://127.0.0.1:5173/r/card.json",
+      "http://127.0.0.1:5173/r/textarea.json",
+      "http://127.0.0.1:5173/r/label.json",
+      "http://127.0.0.1:5173/r/separator.json",
+      "http://127.0.0.1:5173/r/scroll-area.json",
+      "http://127.0.0.1:5173/r/progress.json",
+      "http://127.0.0.1:5173/r/tabs.json",
+      "http://127.0.0.1:5173/r/select.json",
+      "http://127.0.0.1:5173/r/radio-group.json",
+      "http://127.0.0.1:5173/r/switch.json",
+      "http://127.0.0.1:5173/r/dialog.json",
+      "http://127.0.0.1:5173/r/alert-dialog.json",
+      "http://127.0.0.1:5173/r/popover.json",
+      "http://127.0.0.1:5173/r/dropdown-menu.json",
+      "http://127.0.0.1:5173/r/context-menu.json",
+      "http://127.0.0.1:5173/r/menubar.json",
+      "http://127.0.0.1:5173/r/collapsible.json",
+      "http://127.0.0.1:5173/r/toggle.json",
+      "http://127.0.0.1:5173/r/toggle-group.json",
+      "http://127.0.0.1:5173/r/aspect-ratio.json",
+      "http://127.0.0.1:5173/r/button-group.json",
+      "http://127.0.0.1:5173/r/pagination.json",
+      "http://127.0.0.1:5173/r/badge.json",
+      "http://127.0.0.1:5173/r/typography.json",
+      "http://127.0.0.1:5173/r/breadcrumb.json",
+      "http://127.0.0.1:5173/r/kbd.json",
+      "http://127.0.0.1:5173/r/sheet.json",
+      "http://127.0.0.1:5173/r/drawer.json",
+      "http://127.0.0.1:5173/r/empty.json",
+      "http://127.0.0.1:5173/r/resizable.json",
+      "http://127.0.0.1:5173/r/command.json",
+      "http://127.0.0.1:5173/r/sidebar.json",
+      "http://127.0.0.1:5173/r/sonner.json",
+      "http://127.0.0.1:5173/r/avatar.json",
+      "http://127.0.0.1:5173/r/input-group.json",
+      "http://127.0.0.1:5173/r/table.json",
+      "http://127.0.0.1:5173/r/calendar.json",
+      "http://127.0.0.1:5173/r/date-picker.json",
+      "http://127.0.0.1:5173/r/item.json",
+      "http://127.0.0.1:5173/r/data-table.json",
+      "http://127.0.0.1:5173/r/carousel.json",
+      "http://127.0.0.1:5173/r/message.json",
+      "http://127.0.0.1:5173/r/bubble.json",
+      "http://127.0.0.1:5173/r/form.json",
+      "http://127.0.0.1:5173/r/field.json",
+      "http://127.0.0.1:5173/r/code-block.json",
+      "http://127.0.0.1:5173/r/chart.json",
+      "http://127.0.0.1:5173/r/trace.json",
+      "http://127.0.0.1:5173/r/message-scroller.json",
+      "http://127.0.0.1:5173/r/skeleton.json",
+      "http://127.0.0.1:5173/r/spinner.json",
+      "http://127.0.0.1:5173/r/native-select.json",
+      "http://127.0.0.1:5173/r/marker.json",
+      "http://127.0.0.1:5173/r/input-otp.json",
+      "http://127.0.0.1:5173/r/questionnaire.json",
+      "http://127.0.0.1:5173/r/attachment.json",
+      "http://127.0.0.1:5173/r/combobox.json",
+      "--yes",
+      "--overwrite"
+    ],
+    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+    "startedAt": "2026-10-30T05:39:50.242Z",
+    "exitCode": 0,
+    "finishedAt": "2026-10-30T05:39:57.589Z"
+  },
+  "frozenBundle": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
+    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+  },
+  "files": [
+    {
+      "path": "minecraft-font.ts",
+      "sourcePath": "registry/ui/minecraft-font.ts",
+      "installedPath": "src/components/ui/minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-assets.css",
+      "sourcePath": "registry/ui/minecraft-assets.css",
+      "installedPath": "src/components/ui/minecraft-assets.css",
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
+      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
+      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
+      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourcePath": "registry/ui/minecraft-input-assets.ts",
+      "installedPath": "src/components/ui/minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourcePath": "registry/ui/minecraft-unifont.ts",
+      "installedPath": "src/components/ui/minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "sourcePath": "registry/ui/minecraft-surface.tsx",
+      "installedPath": "src/components/ui/minecraft-surface.tsx",
+      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-surface.css",
+      "sourcePath": "registry/ui/minecraft-surface.css",
+      "installedPath": "src/components/ui/minecraft-surface.css",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourcePath": "registry/ui/minecraft-text.tsx",
+      "installedPath": "src/components/ui/minecraft-text.tsx",
+      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourcePath": "registry/ui/minecraft-text.css",
+      "installedPath": "src/components/ui/minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourcePath": "registry/ui/minecraft-text-assets.css",
+      "installedPath": "src/components/ui/minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-tooltip-sprites.ts",
+      "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
+      "installedPath": "src/components/ui/minecraft-tooltip-sprites.ts",
+      "sourceSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
+      "installedSha256": "7d78b75a9e71103af7e4b70d8db6ee1d43ec520b1b361c10410fa5785096c39f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-label.css",
+      "sourcePath": "registry/ui/minecraft-label.css",
+      "installedPath": "src/components/ui/minecraft-label.css",
+      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-label-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-label-atlas.ts",
+      "installedPath": "src/components/ui/minecraft-label-atlas.ts",
+      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-disclosure-text.tsx",
+      "sourcePath": "registry/ui/minecraft-disclosure-text.tsx",
+      "installedPath": "src/components/ui/minecraft-disclosure-text.tsx",
+      "sourceSha256": "a05ced822af99f27653173cb1204af9988e7cd93c0a0f916790b9a67217627ba",
+      "installedSha256": "e3287d58ef09c643da21db600faed7954a3ebf3f9b556cd60325a566b0cd70a5",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-color-unicode.tsx",
+      "sourcePath": "registry/ui/minecraft-color-unicode.tsx",
+      "installedPath": "src/components/ui/minecraft-color-unicode.tsx",
+      "sourceSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+      "installedSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-color-unicode-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-color-unicode-gpu.ts",
+      "installedPath": "src/components/ui/minecraft-color-unicode-gpu.ts",
+      "sourceSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+      "installedSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "chart.tsx",
+      "sourcePath": "registry/ui/chart.tsx",
+      "installedPath": "src/components/ui/chart.tsx",
+      "sourceSha256": "1ab52f389da8a55bc141e32a596a219eff347bbef5bb5a2fa994d64be3bae742",
+      "installedSha256": "1ab52f389da8a55bc141e32a596a219eff347bbef5bb5a2fa994d64be3bae742",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-chart.css",
+      "sourcePath": "registry/ui/minecraft-chart.css",
+      "installedPath": "src/components/ui/minecraft-chart.css",
+      "sourceSha256": "827a6e03519383a5bebb60dd4fea64539e1a0ef29802041002f86dc2c93521fe",
+      "installedSha256": "827a6e03519383a5bebb60dd4fea64539e1a0ef29802041002f86dc2c93521fe",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-chart-native.tsx",
+      "sourcePath": "registry/ui/minecraft-chart-native.tsx",
+      "installedPath": "src/components/ui/minecraft-chart-native.tsx",
+      "sourceSha256": "93789970b604047a3664bdfe0ee93b90db71899b574f6efaaf34a9324035e75f",
+      "installedSha256": "93789970b604047a3664bdfe0ee93b90db71899b574f6efaaf34a9324035e75f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    }
+  ],
+  "typecheck": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "pageErrorEvidence": {
+    "status": "separate-pinned-gallery-audit",
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
+    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
+    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
+    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+    "pageErrors": [],
+    "browser": "156.0.4314.50"
+  },
+  "cases": [
+    {
+      "name": "chart-pie-c0-0-s1.png",
+      "decodedRgbaSha256": "7ba445e4d1e404f33b1665da7a15bb93f6044479c9c3629970e7accad40c2b70",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-0-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-0-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":3,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"efc4f6f78b2e56c9086d2e82d2fadf5e38fa9e76e7aec46773e9d3a5fdddf6a7\"}"
+        },
+        "testId": "81f4a870e2845c490fed-e43863a12b2a0c750756",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-0-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%22efc4f6f78b2e56c9086d2e82d2fadf5e38fa9e76e7aec46773e9d3a5fdddf6a7%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-0-s1.png",
+        "width": 270,
+        "height": 157,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7ba445e4d1e404f33b1665da7a15bb93f6044479c9c3629970e7accad40c2b70",
+        "pngSha256": "0bc50f9b12871545fe6deeed83e4daa1723ddebea4f36e3783c8d4b6878633eb",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c0-1-s1.png",
+      "decodedRgbaSha256": "34b627634e763a3305df9649b2aa252801b933e2b15fad7b17337b30e2415292",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-1-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-1-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":4,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"65eaf5bd18c8684057f382a9e042da23aeb436b7b68253518c29c520a5a04e5c\"}"
+        },
+        "testId": "81f4a870e2845c490fed-d4a5f0772f8640f0a6bc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-1-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%2265eaf5bd18c8684057f382a9e042da23aeb436b7b68253518c29c520a5a04e5c%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-1-s1.png",
+        "width": 270,
+        "height": 157,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "34b627634e763a3305df9649b2aa252801b933e2b15fad7b17337b30e2415292",
+        "pngSha256": "54e08a8873a398600b55a6119f8aea69f9aca252ef17b2a3ad64e1562d81a697",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-0-s1.png",
+      "decodedRgbaSha256": "f4c687debc98d64742dada1bd21d572a2abab20a4135c04772a230f012a43739",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-0-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-0-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":5,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"ce9275b8d66bccc3c59114f8f9cb632f27f7b9a3f068894b45620d9a8760f4c5\"}"
+        },
+        "testId": "81f4a870e2845c490fed-c31256fec2407081977d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-0-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%22ce9275b8d66bccc3c59114f8f9cb632f27f7b9a3f068894b45620d9a8760f4c5%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-0-s1.png",
+        "width": 270,
+        "height": 175,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f4c687debc98d64742dada1bd21d572a2abab20a4135c04772a230f012a43739",
+        "pngSha256": "8e0c0143377f19a2efdfa967980c644cd410083c4bf8bdfc86ac5d8b80a185de",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-1-s1.png",
+      "decodedRgbaSha256": "32ed6603cf07d1476fc49a65783a2f2d39b881ebc684cf4e04e8d9505f30fc44",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-1-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-1-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":6,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"08b32524a67df15321f5ee008d01fb699e8cfe5cb5c3ff4ccdb110f9bd4e1cdd\"}"
+        },
+        "testId": "81f4a870e2845c490fed-689efd040d61ebdd15bc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-1-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A6%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%2208b32524a67df15321f5ee008d01fb699e8cfe5cb5c3ff4ccdb110f9bd4e1cdd%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-1-s1.png",
+        "width": 270,
+        "height": 175,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "32ed6603cf07d1476fc49a65783a2f2d39b881ebc684cf4e04e8d9505f30fc44",
+        "pngSha256": "1466abcd9719585eeabf85c4eb63311ecc7a3a11e19b8fc157fde1a0015b8976",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-0-s1.png",
+      "decodedRgbaSha256": "fcc566a734f49b4c748918a828b8ca71f12b8a119c61fefb4e7848b2551571cf",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-0-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-0-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":7,\"background\":\"#202020\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"058a0bfda2bbae48107e83b59a4aa5d4d3a09d4fcea7167ced45c7ca16b74753\"}"
+        },
+        "testId": "81f4a870e2845c490fed-01df304da82b2d4598f1",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-0-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A7%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%22058a0bfda2bbae48107e83b59a4aa5d4d3a09d4fcea7167ced45c7ca16b74753%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-0-s1.png",
+        "width": 270,
+        "height": 157,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fcc566a734f49b4c748918a828b8ca71f12b8a119c61fefb4e7848b2551571cf",
+        "pngSha256": "8db8c061c3e02c1f8ccf312d72a4590afa39565317eeb4a52bec314da4fe7515",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-1-s1.png",
+      "decodedRgbaSha256": "95c3ff39d7b54af3a024926a157f11b34205af85c49f6f18871cb873d529ea3f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-1-s1.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-1-s1.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":8,\"background\":\"#808080\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":1,\"sha256\":\"201d9ba6cb6273f322d77593e5f2f046c0cc96061b04369150ac06d4ee6e0331\"}"
+        },
+        "testId": "81f4a870e2845c490fed-63b701a2dc570a6228d9",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-1-s1.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A8%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A1%2C%22sha256%22%3A%22201d9ba6cb6273f322d77593e5f2f046c0cc96061b04369150ac06d4ee6e0331%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-1-s1.png",
+        "width": 270,
+        "height": 157,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "95c3ff39d7b54af3a024926a157f11b34205af85c49f6f18871cb873d529ea3f",
+        "pngSha256": "34907ecda637314d36f3cd29a928344aaa1edb2506ad22fd1ba996cad99710b7",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c0-0-s2.png",
+      "decodedRgbaSha256": "878090b59b218dd8ba20df977f00f94054f8561e3e5a85af689058e7d101526b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-0-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-0-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":3,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"bc6bbf0cfb816bab0d3db034514ae7c07e76ca453c1382e0ed112923e186dd3d\"}"
+        },
+        "testId": "81f4a870e2845c490fed-7f6953c08a4d07cc0225",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-0-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%22bc6bbf0cfb816bab0d3db034514ae7c07e76ca453c1382e0ed112923e186dd3d%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-0-s2.png",
+        "width": 540,
+        "height": 314,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "878090b59b218dd8ba20df977f00f94054f8561e3e5a85af689058e7d101526b",
+        "pngSha256": "976c94478b33707d57904369ac3878b92a80eff6b8c8a8cd2f9c0da8363065a8",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c0-1-s2.png",
+      "decodedRgbaSha256": "b943ec49fa36d781b8bdbc3cd57eff9ecd5ed70d4388b606492e95d12107e61f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-1-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-1-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":4,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"9d20cea6a5b59aec6f219a79ca62883259794210cc93f961665cbf3c5e7fce67\"}"
+        },
+        "testId": "81f4a870e2845c490fed-2ddb15f0353322fc4825",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-1-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%229d20cea6a5b59aec6f219a79ca62883259794210cc93f961665cbf3c5e7fce67%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-1-s2.png",
+        "width": 540,
+        "height": 314,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b943ec49fa36d781b8bdbc3cd57eff9ecd5ed70d4388b606492e95d12107e61f",
+        "pngSha256": "b2efdb0b162a3274e35ab14bad61a087661c71831cccf65d38c40be1431230b3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-0-s2.png",
+      "decodedRgbaSha256": "c21bcdd605f564d88259890a8d8f568f6216ffabb51bb35cc45a8c3d0232465d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-0-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-0-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":5,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"0b9efabdcfc222061a3f51a187a626cf5c9dc2e12e2bd906c6b19ddb07589c2b\"}"
+        },
+        "testId": "81f4a870e2845c490fed-2f62ba22f211b76255de",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-0-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%220b9efabdcfc222061a3f51a187a626cf5c9dc2e12e2bd906c6b19ddb07589c2b%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-0-s2.png",
+        "width": 540,
+        "height": 350,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c21bcdd605f564d88259890a8d8f568f6216ffabb51bb35cc45a8c3d0232465d",
+        "pngSha256": "d1e717d83c6f73d545988c17260263d53e81569edc5aa132db9ab27d601bc6fc",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-1-s2.png",
+      "decodedRgbaSha256": "14d554156b7028fcda73ba64007174965956d556c0ff6db6a657ea0d45488f35",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-1-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-1-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":6,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"732029df6c77db06a16187e230b63fbafed703e1f45c95c0630609196e8ed8ad\"}"
+        },
+        "testId": "81f4a870e2845c490fed-5ddf014baa2dcce526f5",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-1-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A6%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%22732029df6c77db06a16187e230b63fbafed703e1f45c95c0630609196e8ed8ad%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-1-s2.png",
+        "width": 540,
+        "height": 350,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "14d554156b7028fcda73ba64007174965956d556c0ff6db6a657ea0d45488f35",
+        "pngSha256": "181c14612903b69616e31a1e92cd36c51835e8801b3f4807720a4eddff10b16e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-0-s2.png",
+      "decodedRgbaSha256": "37d0928e88444339f1d187f7864f4b3d733ba5f336d2a9830ef7d0d0bc54d60d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-0-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-0-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":7,\"background\":\"#202020\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"d4e8c4f2a0af28157ef3c5c824f809d42f6ce1dbd26554991a7cb45fbf294db2\"}"
+        },
+        "testId": "81f4a870e2845c490fed-f79fd0a0fcda7a50070c",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-0-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A7%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%22d4e8c4f2a0af28157ef3c5c824f809d42f6ce1dbd26554991a7cb45fbf294db2%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-0-s2.png",
+        "width": 540,
+        "height": 314,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "37d0928e88444339f1d187f7864f4b3d733ba5f336d2a9830ef7d0d0bc54d60d",
+        "pngSha256": "357090d3233d12a7c6dbe0347b8f6879a45514f22f6cb7b0c55a80d26f401d61",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-1-s2.png",
+      "decodedRgbaSha256": "981b97967bcf649bff7b1806fb1494d2b7176c578343b8516c5422e2fbdea307",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-1-s2.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-1-s2.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":8,\"background\":\"#808080\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":2,\"sha256\":\"673af2b01035870e007ada5a8aea32a51b036d1a6e6c1f392e75bb784581e374\"}"
+        },
+        "testId": "81f4a870e2845c490fed-9e28ec3e2799d5ea6a52",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-1-s2.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A8%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A2%2C%22sha256%22%3A%22673af2b01035870e007ada5a8aea32a51b036d1a6e6c1f392e75bb784581e374%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-1-s2.png",
+        "width": 540,
+        "height": 314,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "981b97967bcf649bff7b1806fb1494d2b7176c578343b8516c5422e2fbdea307",
+        "pngSha256": "8352a337727bcc6372d19ed8b4ec7deadc45c1f9060c66d6df160ce9a743b21a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c0-0-s3.png",
+      "decodedRgbaSha256": "aa39c12b8c505d688eb5bea9a0525210736acad63fb1d7c42a91fa3b9ec83254",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-0-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-0-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":3,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"e0e7044f148cacc63e5773dc54281456a9267bd28cc67475f2bd635e24ab71a1\"}"
+        },
+        "testId": "81f4a870e2845c490fed-5957f126e377a7343368",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-0-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%22e0e7044f148cacc63e5773dc54281456a9267bd28cc67475f2bd635e24ab71a1%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-0-s3.png",
+        "width": 810,
+        "height": 471,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "aa39c12b8c505d688eb5bea9a0525210736acad63fb1d7c42a91fa3b9ec83254",
+        "pngSha256": "fc86167a5577f22c3a4d86a4bf85631b9a0bbb6b88c36d4cdb839c83380e6e24",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c0-1-s3.png",
+      "decodedRgbaSha256": "320932fc603ce44302af7be77a4b43d152d0668544a432778290b2112b8949f0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c0-1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c0-1-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c0-1-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":4,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\"],\"percentages\":[50,50],\"globalPercentages\":[50,50],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"3e73b5a14df78a65c5cd141cea90beb1b7710a7807f666cddc61922c340e4f61\"}"
+        },
+        "testId": "81f4a870e2845c490fed-8ee83965f65817f67274",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c0-1-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%5D%2C%22percentages%22%3A%5B50%2C50%5D%2C%22globalPercentages%22%3A%5B50%2C50%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%223e73b5a14df78a65c5cd141cea90beb1b7710a7807f666cddc61922c340e4f61%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c0-1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c0-1-s3.png",
+        "width": 810,
+        "height": 471,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "320932fc603ce44302af7be77a4b43d152d0668544a432778290b2112b8949f0",
+        "pngSha256": "ba6218012a1e89cd3bf0e063ae7eb64ff2baec03fed56c654125b1202071a29b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-0-s3.png",
+      "decodedRgbaSha256": "c0ec4d104c4efea16cce624180228f1fcc4becb22f08a06ed09617c33ca68d30",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-0-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-0-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":5,\"background\":\"#202020\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"3cf83ab94ecee9897aafa478342cd6f462637c089ec9b7d406010b3f40702456\"}"
+        },
+        "testId": "81f4a870e2845c490fed-c4883bb99c700f3932d5",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-0-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%223cf83ab94ecee9897aafa478342cd6f462637c089ec9b7d406010b3f40702456%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-0-s3.png",
+        "width": 810,
+        "height": 525,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c0ec4d104c4efea16cce624180228f1fcc4becb22f08a06ed09617c33ca68d30",
+        "pngSha256": "c911f592c617a731efa980a7c35e62241fea5142b2db93bdea99ead8731f1641",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c1-1-s3.png",
+      "decodedRgbaSha256": "fb92b813ed35d4c312fa66da518215636832f6e0d0ca60212b164aea5c20ebd0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c1-1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c1-1-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c1-1-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":175,\"x\":16,\"y\":16,\"page\":6,\"background\":\"#808080\",\"labels\":[\"render\",\"tick\",\"sound\",\"unspecified\"],\"percentages\":[10,20,30,40],\"globalPercentages\":[10,20,30,40],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"d6b6ab60a0dac6e1c96dc1a5949753107a26b8e7a8a8d43b6adc73e0c40728df\"}"
+        },
+        "testId": "81f4a870e2845c490fed-ab700a8abaa364e142a6",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c1-1-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A175%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A6%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22render%22%2C%22tick%22%2C%22sound%22%2C%22unspecified%22%5D%2C%22percentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22globalPercentages%22%3A%5B10%2C20%2C30%2C40%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%22d6b6ab60a0dac6e1c96dc1a5949753107a26b8e7a8a8d43b6adc73e0c40728df%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c1-1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c1-1-s3.png",
+        "width": 810,
+        "height": 525,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fb92b813ed35d4c312fa66da518215636832f6e0d0ca60212b164aea5c20ebd0",
+        "pngSha256": "cf729c386d2c1a17e9490a8bc6dca2ead128ab40ff4a6fd89ee45b75dce7ed37",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-0-s3.png",
+      "decodedRgbaSha256": "084ee395e633fd211115f97f4229cc682a1e9bcc3fbc155b22ff5d3e3796ee72",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-0-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-0-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":7,\"background\":\"#202020\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"5ac04f551b493eaa24ce60b5d4b14344a0fdfad5a599a57445181e56021d190a\"}"
+        },
+        "testId": "81f4a870e2845c490fed-1256edf004c2503a3b22",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-0-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A7%2C%22background%22%3A%22%23202020%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%225ac04f551b493eaa24ce60b5d4b14344a0fdfad5a599a57445181e56021d190a%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-0-s3.png",
+        "width": 810,
+        "height": 471,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "084ee395e633fd211115f97f4229cc682a1e9bcc3fbc155b22ff5d3e3796ee72",
+        "pngSha256": "ec3f19d461ed9403b575c8c3d10b97851e11697c0056c493921c5dfd2fb0a4f2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "chart-pie-c2-1-s3.png",
+      "decodedRgbaSha256": "7df960d85ad450a1849000c112310a30fee65983e50f1ddcf64f5af16be9ea69",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "chart",
+        "manifest": "tests/reference/chart-pie/manifest.json",
+        "case": "chart-pie-c2-1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "chart-pie-c2-1-s3.png",
+          "kind": "pie",
+          "mismatchedPixels": 0,
+          "component": "chart"
+        },
+        "query": {
+          "component": "chart",
+          "case": "{\"name\":\"chart-pie-c2-1-s3.png\",\"element\":\"chart-pie\",\"state\":\"normal\",\"width\":270,\"height\":157,\"x\":16,\"y\":16,\"page\":8,\"background\":\"#808080\",\"labels\":[\"logic\",\"world\"],\"percentages\":[33.333333,66.666667],\"globalPercentages\":[33.333333,66.666667],\"rootName\":\"root\",\"scale\":3,\"sha256\":\"3da31f8be5c12827b438ae26dca44acdec1330763724718a6db783d0fd52f151\"}"
+        },
+        "testId": "81f4a870e2845c490fed-95a8ebb163e0cca6e24a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-pie-c2-1-s3.png%22%2C%22element%22%3A%22chart-pie%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A270%2C%22height%22%3A157%2C%22x%22%3A16%2C%22y%22%3A16%2C%22page%22%3A8%2C%22background%22%3A%22%23808080%22%2C%22labels%22%3A%5B%22logic%22%2C%22world%22%5D%2C%22percentages%22%3A%5B33.333333%2C66.666667%5D%2C%22globalPercentages%22%3A%5B33.333333%2C66.666667%5D%2C%22rootName%22%3A%22root%22%2C%22scale%22%3A3%2C%22sha256%22%3A%223da31f8be5c12827b438ae26dca44acdec1330763724718a6db783d0fd52f151%22%7D",
+        "subjectSlot": "minecraft-profiler-chart",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-pie-chart-pie-c2-1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-pie\\captures\\chart-pie-c2-1-s3.png",
+        "width": 810,
+        "height": 471,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7df960d85ad450a1849000c112310a30fee65983e50f1ddcf64f5af16be9ea69",
+        "pngSha256": "f7331a0476b1aa1c691294b124c5c16ddab33483f8b1329532d1cc276c3ef6b5",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    }
+  ],
+  "appliedAt": "2026-10-30T06:30:04.246Z",
+  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
+  "pageErrors": [],
+  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+  "browser": "156.0.4314.50"
+}

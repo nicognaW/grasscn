@@ -1,0 +1,1 @@
+public class MapPalette {public static void main(String[] args){System.out.print("[");for(int i=0;i<256;i++){if(i>0)System.out.print(",");System.out.print(Integer.toUnsignedString(net.minecraft.world.level.material.MapColor.getColorFromPackedId(i)));}System.out.print("]");}}

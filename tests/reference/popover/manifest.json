@@ -1,0 +1,1180 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "71cc3e50eaa2a54e5790e01d4749f59522e63cff7e9bf9a07c63c05cbed2ac53",
+  "caseDefinitionSha256": "343471e67029c17daba2abc21b828246eb0045d065c866fee6a2a23db8fb52a4",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "221081543ea4fa72707f3b7df08537f7a22ef9f8976b2f84adae1be1b99256be"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "d5fb0758dda4bea520e8b0d43bdbc817bc6d707901d641da227753970ec8dea4"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "5115462fc2cc6ea4e28e6bd40a9cd7ae209847f565f6950c589a117e2adebfa3"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "3caccd7cc0f6a9164a97bbb85bde8e21c56f548e3e7157438ec7b2603a153236"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "e3faa5fbf123bab21b687197f5b16b0d6dd860787c79c6890a0ddba6d902fe71"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "81e0c8cacaa41b2ee06ef1096b5a9378ff61485ed22f668cf492d917884333fe"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "413e4bb8f88a32551ecf244409fdd0860f5e3c5edd2e7dfbd5ee7ee43af54e33"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "a7efcf864ac6c4dc4294ba6d19444b4750955f088edfd80ab042ac35233acbb9"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "dee8ff18ce4c273f220a7e50c3581865795058fe34e45b6034f423cca4be020b"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "5c7999bb14919fb0c1c902721f74ded2a55ee5f3c4a3ef27c8593e287bdfee17"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "a0dcc474af8b62961aa89b62d42d006faf5cfb4a69239f2c65efc08b15993991"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "b489dfa37f29c162818dec3b92abd6a2df9301ff67b637541835821a914e3e30"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "5d0dffcb123f5aced6b06894c160652007a69f5064c4520a2c67c74a38b0ecab"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "6116051a6248a4fc1cb00989ee0ee9501473119449aa9f7a4aff63f96116f6b6"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "52174a824a27568d00fc503856be572713134e3c3dfcce93f7712a347a57698a"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "edc1f70c9eb205d5cfd9c7589e3d1a5264ee39a524d6bd44f189d3e6b243240d"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "e0603fdeacae83b407e8b98c7080a75c962a310405a57a6759923b3442097a27"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "62d828281c513bb8f6ff9809ce0162ab69aa600e9fcd262082fa3e8907285a1e"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "2e2e617d6d07e19f00f799b57965bbce237c17fc47159b7ab8a3a70a710f0f56"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "91d45d39f94651240c5812d8e2bcf8f1b7d3b3247336b44ad241ceace96c8770"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "30d7562d1ecc9c43627108b8af401e5691d7fd4782513d875171bc7958379096"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "b662e5e32a16b485579a40bd936d7ce3bc21e9ce15ad45152f38a39c69e1a69f"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "a9b5cd3b013bf84a97b9f252f5e8778c022095f3aad03906576d185f361676c0"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "3fa56c2cf1727124333c78b3d383cd2bcb58320e519b540aafa1da628226440e"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "fa58d38ac190a574f336cb4645eabe376829a3a908d3e89e7beab25d3bb531f5"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "f110def881b8ebc9be1d1ba310de79aa32bc6d3f6dd3cafae135325c09f6c4d4"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "8e10077da45784589b42578e4a38f3afb893903833fd48074160fdb5d2339491"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "52c8a7659a258eb331a452fa2e2ea71b632d1bc4a32c996f1a38d3492bd1e32e"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "a8ad3149001ba5b95f42ec2112d37f736deeda2859522610291fda71be7aaa30"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "90e253d684a573ef2836d1a30a89e7b39993b8f3e0238720dfdedd6375a6263a"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "6889f9dec3cee33c62baffae1810207f9ec3f51f6e27ef21eed996adae7c13ec"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "c7a0c468525a0f9613b03c202e187914c86004335dfc0dd8165120ac6d449075"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "21130906f4fd726468c022abef44456c9b4e154773a6cc8e34f357ae1b1b3e67"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "f859860bc6c1b0623911c31c446a60e9b5dbd0b888234a7a879913c265ed2f14"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "eb3f685a3632269768d1039705f8380aed195d0b1e3585d9b8aad036951296c5"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "9b01548c693a5c41d17271584c55c4f148f2ee84a3cfa0f3397582da9271ae55"
+    },
+    {
+      "name": "native-controls-p12-s1.png",
+      "sha256": "33eded00732171b01ad3fbb7d6539fb6cf2e01e08c7576e0766ae1b3079f7654"
+    },
+    {
+      "name": "native-controls-p12-s2.png",
+      "sha256": "f59045e17d43c282ac4954b62bc323583b1cff8caa60e50b0e3d76bbe6bbc401"
+    },
+    {
+      "name": "native-controls-p12-s3.png",
+      "sha256": "883e7f09c64bd1ccfd7199946efcc268bd5097564d76e02101b3c0f24eabe5e0"
+    },
+    {
+      "name": "native-controls-p13-s1.png",
+      "sha256": "33b5577a276c66edecac2bc9afbe88b379f6f41a9f66976026ced2573ce45651"
+    },
+    {
+      "name": "native-controls-p13-s2.png",
+      "sha256": "35b7efb01096ff29f3cc2801eaf288e93ddc62a7db68fdff2cc118fd2103411d"
+    },
+    {
+      "name": "native-controls-p13-s3.png",
+      "sha256": "51d2bdeaa64daf55abf8fe95b741bdb44c04728344d20ba266c155da76c917b8"
+    },
+    {
+      "name": "native-controls-p14-s1.png",
+      "sha256": "0cadc4f33590680d1a9868473a26de9b0611d560b286c109392e5cf04597a593"
+    },
+    {
+      "name": "native-controls-p14-s2.png",
+      "sha256": "638b6c0459879964937f0ce400804ba6f585dac82b06f47bc8d80da9a6247f0c"
+    },
+    {
+      "name": "native-controls-p14-s3.png",
+      "sha256": "4aed218a964e8244db0c1889bbb4ee558487bcbef299779c8119195734e9deea"
+    },
+    {
+      "name": "native-controls-p15-s1.png",
+      "sha256": "013a96c57bb7d581e3c2298d1ebcc1150dd746d3ec8d8881807e9dd44c5f25a8"
+    },
+    {
+      "name": "native-controls-p15-s2.png",
+      "sha256": "4141df2048f7a0b5d1031cd569b44e206ba937493a24a307445421a03881cf01"
+    },
+    {
+      "name": "native-controls-p15-s3.png",
+      "sha256": "8d6d158446a801f6a693d4d2da559535b1e53e006c5f83b61679afc47c07ccee"
+    },
+    {
+      "name": "native-controls-p16-s1.png",
+      "sha256": "777928ce8819d6049a0265830910fe0bf0b4f5f38fe3e81961c2c111dbc9c4e6"
+    },
+    {
+      "name": "native-controls-p16-s2.png",
+      "sha256": "f1c18ae3cece064df789815575cb6f54c1f8834d832a0f6dc8f73936193b90f2"
+    },
+    {
+      "name": "native-controls-p16-s3.png",
+      "sha256": "f2744ab436f9ac763e322a2ce9485b2b9ef0cbae53de8a599c814acb7a659cef"
+    },
+    {
+      "name": "native-controls-p17-s1.png",
+      "sha256": "53c217187aabb57c19939cd81cba4c56d001fe60851b1a2e53b0aff319b04d50"
+    },
+    {
+      "name": "native-controls-p17-s2.png",
+      "sha256": "5146f2a898a2be277985a6f3a8a075ac5db7fbd9068fe200fc34a86bc9478788"
+    },
+    {
+      "name": "native-controls-p17-s3.png",
+      "sha256": "3114fd76af520751cc0c35582d0b71a2f0251e1b67404bcefd6cd4385c29a7ef"
+    },
+    {
+      "name": "native-controls-p18-s1.png",
+      "sha256": "ec3738422e81592051720fe90365666543cf87988799b62d3a43abbb19fd25e2"
+    },
+    {
+      "name": "native-controls-p18-s2.png",
+      "sha256": "733d9b40b409ac324257a78f7689dc6b2fd81ac8a0b2a1369b0da8ae68788b34"
+    },
+    {
+      "name": "native-controls-p18-s3.png",
+      "sha256": "70a0c9c0d1f4883b8c152d3c23512bc4ea95ab0ee49119f50870e2b27f38f572"
+    },
+    {
+      "name": "native-controls-p19-s1.png",
+      "sha256": "643635297c0888b12510f431cd007803896abc6370b91c9d8d69686aa3499470"
+    },
+    {
+      "name": "native-controls-p19-s2.png",
+      "sha256": "8fdaa24461ed1c03a2a853e57c7081bc58f8317553a212c6939a20b51952b501"
+    },
+    {
+      "name": "native-controls-p19-s3.png",
+      "sha256": "2acd53ed813cdafbadde52340acad4bd5cdee17e58d18c10f417f581328e4bc8"
+    }
+  ],
+  "cases": [
+    {
+      "name": "popover-c0-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f0f96b6938fe7d6deb99743f3772685bd50f52529f8faff29105f298061126c3"
+    },
+    {
+      "name": "popover-c1-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "b9be363bb9cc2b3394ecbf7b339bb857b3021513094017ab1b89aef783a13ae8"
+    },
+    {
+      "name": "popover-c2-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "66827e70027ab7288dee51b159da40053920a27fa94c5eddfccbc0b6783c4b47"
+    },
+    {
+      "name": "popover-c3-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "6627d5e1f037a7b4647b361a29c721eb86edd3ddef7411aab589f674e4820175"
+    },
+    {
+      "name": "popover-c4-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f177678a4a375ca4be5d5d5243ae420f55953c567ad93a8dfaf13977dda0a50d"
+    },
+    {
+      "name": "popover-c5-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "3339dccd7d025e2bdf3c9a53724bd6ffa78627db9885a7dd9af14afa63f1e9c2"
+    },
+    {
+      "name": "popover-c6-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f85abddcd3fc9636eb776ed00e9915e42226d2657e3e95b821e9476652dcb1a2"
+    },
+    {
+      "name": "popover-c7-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "9c28d13f4477a4ed0460a194c71375bb16f5308a2cc15a807b377d7dbf6a07d9"
+    },
+    {
+      "name": "popover-c8-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "02f94826cf20bd898fcc5ef290a17a1e4cee7f34445bfdbbebc104b5c13fd68b"
+    },
+    {
+      "name": "popover-c9-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "65edbdd266f8d942a4b50397b79ff9853f6bfd933ffff64ae04e55ef5a169ad4"
+    },
+    {
+      "name": "popover-c10-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "731dce29ec0c7a5e74de569e387f4ec4592948c5429176551803b77f23bc1481"
+    },
+    {
+      "name": "popover-c11-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "0c4610c9d54372ed813f477350771100519a8784ad132b953341ffebb16e589f"
+    },
+    {
+      "name": "popover-c12-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "1783361a0238b66a8ba7ad5778a85f6d73878cb55b86774f3332535cdcef2fea"
+    },
+    {
+      "name": "popover-c13-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "63acbe0fc572b21c99b4c90524b73395f74eff9f94bfb15220e26e0e418ed102"
+    },
+    {
+      "name": "popover-c14-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "label": "",
+      "text": "",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "2c224001e1c4c5c3ab6e25a3fd93881887cf2a1ad1466aff2961c1c79eee34be"
+    },
+    {
+      "name": "popover-c15-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "label": "",
+      "text": "",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "0f0dc9ffd6f00870ea1790e6e02ab195d905e2c23e5af5f01539dd92298988aa"
+    },
+    {
+      "name": "popover-c16-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "c8a64df67e0fefc5ac8dfd5d1c7cc669cde9ddbd947c1fc47b49e26549ae8e2a"
+    },
+    {
+      "name": "popover-c17-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "5e4ab589319c5fb1ce7a9d5b80f023a96f12f60e06600100b578c5036a274694"
+    },
+    {
+      "name": "popover-c18-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "09bf03219a8d144d22ca8d627cd2558d987c408ee59c801c866c2ce974563d46"
+    },
+    {
+      "name": "popover-c19-s1.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#808080",
+      "scale": 1,
+      "sha256": "c47b11dcec75efa723d8ddfd8a836ed50e401037effa80a568e5f10dbe43a75d"
+    },
+    {
+      "name": "popover-c0-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "6e317e95b46b9f7bf17cefd4ba632fbb370e95b9583451bdc85839fedf386fb5"
+    },
+    {
+      "name": "popover-c1-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "bd52be3f76c32f56c2284e8e9d8802034006def9babd2a71db59b75c43b90c3e"
+    },
+    {
+      "name": "popover-c2-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "c0c62471e1a99cefd373f9232f007ad3a36f37a8df6ed244605e01e7ea233f48"
+    },
+    {
+      "name": "popover-c3-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "7f902069bb45994aa2a409e95afac4806fa271176284f392e93fb9fe5457a95f"
+    },
+    {
+      "name": "popover-c4-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "c5f18519bf0c553cf4f871bda6335b21308160e8edb0f6a4e1df985a7f523ee4"
+    },
+    {
+      "name": "popover-c5-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "3d81fdf2bac41d528d0c73bfbd860ae2adfadcfcb24ed3445fcfd9b2d9a65f3b"
+    },
+    {
+      "name": "popover-c6-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9efb0567e58cc5569ee0dcd266edfb18c930aced3a0079042d18f04c4d7e9604"
+    },
+    {
+      "name": "popover-c7-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "0dbc70c00e81d26a5a1dd6c6c711b0bd7e0027f67bf025b0cb94d8646914c576"
+    },
+    {
+      "name": "popover-c8-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "bf7c728d3ef3452b3a953b36fbc7b2178c41c5689ff6d18ee7fbd66b60e22602"
+    },
+    {
+      "name": "popover-c9-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "44bb20ee8147d8c82759b9c6639519b424874b1a6fe526d270c25135c144b6dc"
+    },
+    {
+      "name": "popover-c10-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "867e28f00eb309f30ac30c26b7cb7eea1605991734cbb37f3bf5585c78c73c7a"
+    },
+    {
+      "name": "popover-c11-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "18943cd938e66b1d72222bf4a5f4770e75741006c722593721a6324a8df44513"
+    },
+    {
+      "name": "popover-c12-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e2df6e1ccfb4c17cf37e86f86cf8f09728fbd9d53c70d8bcb84a7c78fa7ed77c"
+    },
+    {
+      "name": "popover-c13-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "9e6e67b72a1223110f7b8bcabcc694b866e029e7600fe6f70370f992f4d35e81"
+    },
+    {
+      "name": "popover-c14-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "label": "",
+      "text": "",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "3d3cad004d8625e77190785b64c71ada0b79eb9a9418894e7245779e1fa05075"
+    },
+    {
+      "name": "popover-c15-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "label": "",
+      "text": "",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "03fa5de04281a7c1939f0c1573044edbc6541e916a96fdd24ab51a22ea065647"
+    },
+    {
+      "name": "popover-c16-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "d8f8b14f505db528021c47ba6f220f59136d810b06e0e2a663fde0f2adc926ce"
+    },
+    {
+      "name": "popover-c17-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "9074210a806d69cacfcd64b2a29d7e022318b358edd762f9d97f1beebe4c21b0"
+    },
+    {
+      "name": "popover-c18-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "5a2a46ad99229e7fbff499c5da758029f752238c7e2a5f55a15a05e363384f42"
+    },
+    {
+      "name": "popover-c19-s2.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#808080",
+      "scale": 2,
+      "sha256": "4d182619a89e86040bf6ea38d8aee4cb85dd5b261370a2d1aa05e54b418638d3"
+    },
+    {
+      "name": "popover-c0-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "4c1a943315e2962bacea54e553a5630909db5cc344231994b8293cade05a6d0b"
+    },
+    {
+      "name": "popover-c1-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 236,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "75dca749ad68f500b63cdff7ffc8275db6f0201e86a888a9757d2843e43ecf21"
+    },
+    {
+      "name": "popover-c2-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "4a0a65081cb0075eb0f6f3fbac4156ed6a60f72133ed83c411f6eefefa0f14bc"
+    },
+    {
+      "name": "popover-c3-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "你好，世界",
+      "text": "你好，世界",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "7a606d400c5aae0930fbf939fcf58dd52bac32d02e4fd39d5d543c2ce8e2ff31"
+    },
+    {
+      "name": "popover-c4-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "297f659deada06a1bfb766f3865b3ea7074fa9fd135a2afce74d0c67f8c9990f"
+    },
+    {
+      "name": "popover-c5-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "こんにちは",
+      "text": "こんにちは",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "4e45259dd1ec1a6f731a5c4f331c9c9e8392e9985d026aee6c50b5d0ac83b475"
+    },
+    {
+      "name": "popover-c6-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "0e311b1433935769beddd56769f9db12baaa4bf2412ecfc6cd1dd357cb2b7dad"
+    },
+    {
+      "name": "popover-c7-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "안녕하세요",
+      "text": "안녕하세요",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "1190a21d2455dad7ad7bb5698e51e00dcbe22b6e0638d4789242d9a073f72170"
+    },
+    {
+      "name": "popover-c8-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "e530f1d80febbf151021e58c4b5e4b8f06edb6300395e778b9de20d420f9ff4a"
+    },
+    {
+      "name": "popover-c9-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "label": "Hello 世界",
+      "text": "Hello 世界",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "368be71775ac0aa5c059f1aaf45f2b2bb43d68e7c7b1626f7f9e5cb69cc3041d"
+    },
+    {
+      "name": "popover-c10-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "017b22b3d6a35da79a297d191fb319a6cc60ae8bded61997245d3101c4b0ba37"
+    },
+    {
+      "name": "popover-c11-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "label": "你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "9ef2789aaf4aa48ee72c953ba0167c1fe54a74d4b2ccf526000d650f3292f658"
+    },
+    {
+      "name": "popover-c12-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "acad21e5e62966ea0cf38a49940ef1d335077c19df4e7246c6d2e6d94d0e0c1c"
+    },
+    {
+      "name": "popover-c13-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "label": "Hello 世界",
+      "text": "Hello 世界\n你好，世界\nこんにちは",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "8dc5845010d527de33632cf7eb112f324fc0dd37258bb402d76268bdd05d5659"
+    },
+    {
+      "name": "popover-c14-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "label": "",
+      "text": "",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "74335311f1cbc52c13904965c52f5ba9152398100faaec4de1c69a3502efb75f"
+    },
+    {
+      "name": "popover-c15-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "label": "",
+      "text": "",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "d4291e848ef2edf2a03d9f7c02e47a8e99573c55daf39a8566796f64f14d7350"
+    },
+    {
+      "name": "popover-c16-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "59dedc0ecec045de61ade6d4288c5a78b3f7a5d3dba3cfed748545b5c1d1b510"
+    },
+    {
+      "name": "popover-c17-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "label": "안녕하세요 Hello",
+      "text": "안녕하세요 Hello\n世 Hello",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "58b6f3d4f77e1680c4ac5335b2e8b852f091cb0f32cf1e3d9e4260abf81c404c"
+    },
+    {
+      "name": "popover-c18-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "a250dd828d48edca63821a63e8b1e89ab25605ed5dc77e057f81b5e7d387b420"
+    },
+    {
+      "name": "popover-c19-s3.png",
+      "element": "popover",
+      "state": "normal",
+      "width": 200,
+      "height": 200,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "label": "世 Hello",
+      "text": "안녕하세요 Hello",
+      "background": "#808080",
+      "scale": 3,
+      "sha256": "5a6ac9c639a5d5660210178734c10b31127a05a91abf9284064fd8fe825e0a96"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

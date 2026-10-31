@@ -1,0 +1,107 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "nativeMethod": "PlayerFaceExtractor.extractRenderState(GuiGraphicsExtractor,Identifier,int,int,int,boolean,boolean,int)",
+  "assets": [
+    {
+      "path": "net/minecraft/client/gui/components/PlayerFaceExtractor.class",
+      "sha256": "3834534d9bee796a31f1f093139ccf3df45f8612cb3af1abcfb7701724920322"
+    },
+    {
+      "path": "net/minecraft/client/gui/components/PlayerFaceWidget.class",
+      "sha256": "ebe1d238d8392513765c07be46d36092942399fe601f556118cb27ac7cbdb2cf"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/alex.png",
+      "sha256": "99391ed9dff9581ec88daf23b9b028adc9ac91f52889edcff1c982d0923c0cff"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/ari.png",
+      "sha256": "448bda6817fa3894632cc11751f3f080dde917b2ad1679ed106f107984289560"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/efe.png",
+      "sha256": "fa3569f027caadcc17efbb1b46f8d0f2830c408cafc774e1f3bf573f4bb7c419"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/kai.png",
+      "sha256": "00b90f287beba1068032ee973f8b890394a6999f9f1b6ce5db7e58ca47384760"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/makena.png",
+      "sha256": "197307bf92fb9d3adb5808593c88e48ab152335cc4276db4127ccb82d010ca68"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/noor.png",
+      "sha256": "09f9306ed924b1adbb97837d4ca8d09d7057731a26cdecd2076bc8601f752589"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/steve.png",
+      "sha256": "1ff866cb8418b18d0052089cff27dfb90f8fc9727a8cea83e0e876819b58ce19"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/sunny.png",
+      "sha256": "32ff3be1394115bbbbcb3b6aea20f0cd496338d31a5341ef73cf1df6bc963dbe"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/slim/zuri.png",
+      "sha256": "4f9333c958c31268fc813db3b424fb1354d81085ba0be6b112c809390847e350"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/alex.png",
+      "sha256": "c8d78144f653a903d5b4118b94bd808c5522edc300bca3b674a2ffbb3a388dfd"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/ari.png",
+      "sha256": "b77bfca4ff607c1d72ad26867549fb7f0a9317c0811424a189d72cd0d47ca32a"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/efe.png",
+      "sha256": "6e2e2d07136d057997b62ed5a256a577a7678d6f0ef05a7a402cb5096a11143d"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/kai.png",
+      "sha256": "f5b3af3440257759f074ae07b630a65195d7222241dc7af1189b954cf7fc3f76"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/makena.png",
+      "sha256": "e58a664738d0073c348265052ab60a0ebf15f271a1b6aaeec0e47c027bc7cd0e"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/noor.png",
+      "sha256": "66343b7a4d6a63af1abed71437728794a9c5d5fc666a10a3cce666e5759ac3ff"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/steve.png",
+      "sha256": "06628f9cef88520da742ab280a01677ce17c99717f964ed89ed791673121094c"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/sunny.png",
+      "sha256": "c1cf854c5c244a9f07e84b2faba067c20d3cb1156899ca43f85f0efc9a954270"
+    },
+    {
+      "path": "assets/minecraft/textures/entity/player/wide/zuri.png",
+      "sha256": "adc7f1b62cdf791096493d14c3edc8b36fd940e4bf10093fc48f461b0f0a3dba"
+    }
+  ],
+  "rules": {
+    "faceUV": [
+      8,
+      8,
+      8,
+      8
+    ],
+    "hatUV": [
+      40,
+      8,
+      8,
+      8
+    ],
+    "textureDimensions": [
+      64,
+      64
+    ],
+    "upsideDown": "source V16 and source height -8",
+    "nativeWidgetSound": "PlayerFaceWidget.playDownSound is empty; no avatar sounds"
+  },
+  "scope": "18 original default skins, hat on/off, upright/inverted, logical sizes12/16/20, GUIscale1/2/3, two backgrounds. Rich fallback/badge/group/customsrc are web compositions."
+}

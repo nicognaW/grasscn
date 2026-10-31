@@ -1,0 +1,20 @@
+@layer theme,base,components,utilities;
+@layer components {
+ .mc-trace{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;width:100%;min-width:0;flex-direction:column;gap:calc(2 * var(--mc-pixel));color:#aaa}
+ .mc-trace-line{display:inline-flex;min-width:0;max-width:100%;align-items:center;gap:calc(2 * var(--mc-pixel));color:#aaa}
+ .mc-trace-line[data-status=error]{color:#f55}
+ .mc-trace-line[data-status=pending]{color:#555}
+ .mc-trace-line[data-status=running]{color:#fff}
+ .mc-trace-icon{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;image-rendering:pixelated}
+ .mc-trace-title{min-width:0;overflow:hidden;white-space:nowrap}
+ .mc-trace-description{flex-shrink:0;color:inherit}
+ .mc-trace-title>.mc-label,.mc-trace-description>.mc-label{color:inherit}
+ .mc-trace-collapsible{display:flex;min-width:0;width:100%;flex-direction:column}
+ .mc-trace-collapsible-trigger{display:flex;align-items:center;gap:calc(2 * var(--mc-pixel));text-align:start}
+ .mc-trace-chevron{margin-inline-start:calc(2 * var(--mc-pixel))}
+ .mc-trace-open{display:none}
+ .mc-trace-collapsible-trigger[aria-expanded=true] .mc-trace-closed{display:none}
+ .mc-trace-collapsible-trigger[aria-expanded=true] .mc-trace-open{display:inline-flex}
+ .mc-trace-collapsible-content{min-width:0;overflow:hidden}
+ .mc-trace-collapsible-content-inner{margin-top:calc(2 * var(--mc-pixel));margin-bottom:var(--mc-pixel);margin-left:calc(2 * var(--mc-pixel));padding-left:calc(4 * var(--mc-pixel));border-left:var(--mc-pixel) solid #555;overflow-wrap:anywhere}
+}

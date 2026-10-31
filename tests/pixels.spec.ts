@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "./verified-test"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import path from "node:path"

@@ -1,0 +1,534 @@
+{
+  "command": "shadcn add http://127.0.0.1:5173/r/empty.json --yes --overwrite",
+  "consumer": "Separate initialized shadcn Vite/React consumer with independent npm dependencies",
+  "consumerRsc": false,
+  "browser": "156.0.4314.50",
+  "viewport": [
+    1536,
+    900
+  ],
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "caseIsolation": "Two workers; fresh page every50 cases; browser restarted every128 cases and closed finally",
+  "typecheck": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "comparatorNegativeControl": "One changed RGBA pixel detected in each native case",
+  "files": [
+    {
+      "path": "minecraft-label.css",
+      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
+      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourceSha256": "b38f4ad0b5447bc5c6abdc8a688818a0722b437305955fd909959a60f5d968d4",
+      "installedSha256": "b38f4ad0b5447bc5c6abdc8a688818a0722b437305955fd909959a60f5d968d4",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-label-atlas.ts",
+      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-prose.tsx",
+      "sourceSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3",
+      "installedSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "empty.tsx",
+      "sourceSha256": "c108ded777f9174e5c4c53f36401f4abe5f3cfa88952e54581c6073d6b3f392b",
+      "installedSha256": "aa348ce0e0e084301487bd11b5b0c592a0aa83e6053421ad3a67b6324d1e85d1",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    },
+    {
+      "path": "minecraft-empty.css",
+      "sourceSha256": "8bc866fe3f4dba0b6091b785efae9c2a846518d05c432fe623b8cfc069f3f931",
+      "installedSha256": "8bc866fe3f4dba0b6091b785efae9c2a846518d05c432fe623b8cfc069f3f931",
+      "comparison": "Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"
+    }
+  ],
+  "cases": [
+    {
+      "name": "label-c0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4e4869a519f80cd120b75726dd57589d2277b66fa2850771443a3f0472bf7a6e"
+    },
+    {
+      "name": "label-c1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e87f5f4dd158ea0883f5acb86b4b4b21e7227bdb9f5f23f4f752e68877f21270"
+    },
+    {
+      "name": "label-c2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "287e26d67b4c7dd1308404abf88959bbdd06fc891f1c46f9bf21e019757d2859"
+    },
+    {
+      "name": "label-c3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "66d5687f8718abea0bc5b4b6c24952b7b4ea195e1c817e8c8fc9692e0efb4063"
+    },
+    {
+      "name": "label-c4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6992bd4305ef90a7e04c8321885b823b4435d8cbfda786a68b97a88d0d9c80ba"
+    },
+    {
+      "name": "label-c5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "93461cd25a33e00aa776b0f4b65a7b43b6a2c0999e2517a15ef13096d8380977"
+    },
+    {
+      "name": "label-c6-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0f31fbf44157c8b40fea2af71ed5e7cde858b8e32947af8726028784227cc2e8"
+    },
+    {
+      "name": "label-c7-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e54eaec141e3f399f67986c0c9ce47b8d748d6ea140d527c363530d0cd5a0b55"
+    },
+    {
+      "name": "label-c8-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dbe07c9b36ba8d4f9c2ad67027cd7c98803527b66bc7d4f5507078f8b559fedb"
+    },
+    {
+      "name": "label-c9-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6a4cf1b82d9bb147552f7e63d27c834b43a5fcb8f80e509078666322f208d5d2"
+    },
+    {
+      "name": "label-c10-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "461bc9c55d50c379b2ea8e45194b5f5d6c514c13c440c73c3c8d9c2828fc9ac3"
+    },
+    {
+      "name": "label-c11-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "957df0948c6201ddc262047169f0a562785d63a9ba5beafcfd86f0a96cf952ae"
+    },
+    {
+      "name": "label-c12-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9d33a7d7f1b5c45593d3ba2604721efbac64af047cd3201a0f2ce8b185c5fe9d"
+    },
+    {
+      "name": "label-c13-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3f5f04987290dfed12e0c09fb52cc2a9d580f0567ed04627ce3bd4ea104eb22b"
+    },
+    {
+      "name": "label-c14-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4e4869a519f80cd120b75726dd57589d2277b66fa2850771443a3f0472bf7a6e"
+    },
+    {
+      "name": "label-c15-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e87f5f4dd158ea0883f5acb86b4b4b21e7227bdb9f5f23f4f752e68877f21270"
+    },
+    {
+      "name": "label-c16-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "287e26d67b4c7dd1308404abf88959bbdd06fc891f1c46f9bf21e019757d2859"
+    },
+    {
+      "name": "label-c17-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "66d5687f8718abea0bc5b4b6c24952b7b4ea195e1c817e8c8fc9692e0efb4063"
+    },
+    {
+      "name": "label-c18-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6992bd4305ef90a7e04c8321885b823b4435d8cbfda786a68b97a88d0d9c80ba"
+    },
+    {
+      "name": "label-c19-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "93461cd25a33e00aa776b0f4b65a7b43b6a2c0999e2517a15ef13096d8380977"
+    },
+    {
+      "name": "label-c20-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0f31fbf44157c8b40fea2af71ed5e7cde858b8e32947af8726028784227cc2e8"
+    },
+    {
+      "name": "label-c21-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e54eaec141e3f399f67986c0c9ce47b8d748d6ea140d527c363530d0cd5a0b55"
+    },
+    {
+      "name": "label-c22-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dbe07c9b36ba8d4f9c2ad67027cd7c98803527b66bc7d4f5507078f8b559fedb"
+    },
+    {
+      "name": "label-c23-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6a4cf1b82d9bb147552f7e63d27c834b43a5fcb8f80e509078666322f208d5d2"
+    },
+    {
+      "name": "label-c24-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "461bc9c55d50c379b2ea8e45194b5f5d6c514c13c440c73c3c8d9c2828fc9ac3"
+    },
+    {
+      "name": "label-c25-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "957df0948c6201ddc262047169f0a562785d63a9ba5beafcfd86f0a96cf952ae"
+    },
+    {
+      "name": "label-c26-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9d33a7d7f1b5c45593d3ba2604721efbac64af047cd3201a0f2ce8b185c5fe9d"
+    },
+    {
+      "name": "label-c27-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3f5f04987290dfed12e0c09fb52cc2a9d580f0567ed04627ce3bd4ea104eb22b"
+    },
+    {
+      "name": "label-c0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fb188f340517f3846f72976be940ea2cba694fef9bf27c8cddc760f88f27b767"
+    },
+    {
+      "name": "label-c1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ccc544b3e1feb4c3615462d93c50ab49be1e2299ca08538fcee2b1ad9e8b8caa"
+    },
+    {
+      "name": "label-c2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4bca0f2cdb1987e46b5afe95b64b4919b35814e00be4ef0be134c4020be22884"
+    },
+    {
+      "name": "label-c3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2345bc6e4997206738ff550c5c692937f86ff0eb088f16db86d105778c3b9051"
+    },
+    {
+      "name": "label-c4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e1832afaf93e16bc91cc7b513d33f48c2a174af04f0c47092b9bba8d906b75b7"
+    },
+    {
+      "name": "label-c5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5d2fb82cfffe092ccf6b908b654f22660c6719ccc89fb686813bd5a081b7d04e"
+    },
+    {
+      "name": "label-c6-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1d19d1c3e4b139f6fcf6ea8feef9771d3650ced7ff3f6a397ad5acd395e4164c"
+    },
+    {
+      "name": "label-c7-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f9e7d0bd9ede4349248be446fba53a1422b389a1ec450720889d0e004e4cecc9"
+    },
+    {
+      "name": "label-c8-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "04187501f57449d6f79f957d524e36c2c23c1a19109b0d92ce335ecd490e3a78"
+    },
+    {
+      "name": "label-c9-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "15cc8c3f0c6c7353e02e7d9d6cef87fb66d9424f96157026e97db5369ddc5ae2"
+    },
+    {
+      "name": "label-c10-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "88031fee37603281a96f9b05a83a7e8876ab8fe37edafe244ca396a3f3ea74e4"
+    },
+    {
+      "name": "label-c11-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bc06dc2335d59ce6256cbb97c638b19a35b3518340e24195e5a82c2f5691b9c6"
+    },
+    {
+      "name": "label-c12-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f971acb819d7df572d952c834d80fbe4402ce8ca4734bb21f701e86d1abe53e7"
+    },
+    {
+      "name": "label-c13-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c6e94c536bc7375fa1e04c042bdc5ac36c3e5b9b179e3cbe087320d5730d5cdf"
+    },
+    {
+      "name": "label-c14-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "fb188f340517f3846f72976be940ea2cba694fef9bf27c8cddc760f88f27b767"
+    },
+    {
+      "name": "label-c15-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ccc544b3e1feb4c3615462d93c50ab49be1e2299ca08538fcee2b1ad9e8b8caa"
+    },
+    {
+      "name": "label-c16-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4bca0f2cdb1987e46b5afe95b64b4919b35814e00be4ef0be134c4020be22884"
+    },
+    {
+      "name": "label-c17-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2345bc6e4997206738ff550c5c692937f86ff0eb088f16db86d105778c3b9051"
+    },
+    {
+      "name": "label-c18-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "e1832afaf93e16bc91cc7b513d33f48c2a174af04f0c47092b9bba8d906b75b7"
+    },
+    {
+      "name": "label-c19-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5d2fb82cfffe092ccf6b908b654f22660c6719ccc89fb686813bd5a081b7d04e"
+    },
+    {
+      "name": "label-c20-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "1d19d1c3e4b139f6fcf6ea8feef9771d3650ced7ff3f6a397ad5acd395e4164c"
+    },
+    {
+      "name": "label-c21-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f9e7d0bd9ede4349248be446fba53a1422b389a1ec450720889d0e004e4cecc9"
+    },
+    {
+      "name": "label-c22-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "04187501f57449d6f79f957d524e36c2c23c1a19109b0d92ce335ecd490e3a78"
+    },
+    {
+      "name": "label-c23-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "15cc8c3f0c6c7353e02e7d9d6cef87fb66d9424f96157026e97db5369ddc5ae2"
+    },
+    {
+      "name": "label-c24-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "88031fee37603281a96f9b05a83a7e8876ab8fe37edafe244ca396a3f3ea74e4"
+    },
+    {
+      "name": "label-c25-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bc06dc2335d59ce6256cbb97c638b19a35b3518340e24195e5a82c2f5691b9c6"
+    },
+    {
+      "name": "label-c26-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "f971acb819d7df572d952c834d80fbe4402ce8ca4734bb21f701e86d1abe53e7"
+    },
+    {
+      "name": "label-c27-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c6e94c536bc7375fa1e04c042bdc5ac36c3e5b9b179e3cbe087320d5730d5cdf"
+    },
+    {
+      "name": "label-c0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c93a90b2cc7e3f1ce731b06518af2045dd1b465ffd8201b648b62a2d2c550705"
+    },
+    {
+      "name": "label-c1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d8b07fdfe619b574b742b7f5d6ed38ecb428dfca389ee5e62c4f29320f448a94"
+    },
+    {
+      "name": "label-c2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8d2733f2b486ddb063c4bc173fe8b6e590da296ccd559681a43b26143e61030e"
+    },
+    {
+      "name": "label-c3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6d35c58ebc17c79a82699cae9ebccbfa50c179b04018ef8e692b38b8b4913293"
+    },
+    {
+      "name": "label-c4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "185a65d0cd6f6cbf7785bd7fe6fd846e58e9b71628312b4076334ec8504d344f"
+    },
+    {
+      "name": "label-c5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "65724ead00d01c691179430e8f7728d56f82cc179e18515e08a3e61ac9074957"
+    },
+    {
+      "name": "label-c6-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3c5ce4225e13b197642db1325cce254af3662da7fb6d3f02d2069d1af6d5b731"
+    },
+    {
+      "name": "label-c7-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2d37e84ea3c15b13a1e95a9d1f9702136eda1c4bd707c049368d0f37991d5fe6"
+    },
+    {
+      "name": "label-c8-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a5c5f05fe67e6006c08cc33de3e51f6a8bcd478e4070c5a54add0321de7b6c25"
+    },
+    {
+      "name": "label-c9-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da71cb4964e253f91fca4bc00519510366c81dd1ba1989e290ba1576753fd941"
+    },
+    {
+      "name": "label-c10-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5281bd7e4db4f4c83c6ed14f662e97e6258667d17d841d9277a3f3105786b883"
+    },
+    {
+      "name": "label-c11-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bfba436360f4740a6f92cda6efce88ba4637a02d99184b713ace7c0fc1ae1ce9"
+    },
+    {
+      "name": "label-c12-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "afe5c688c31418299272644abb20fac5f0946ef4cb9dd3ce767e7700e6893aeb"
+    },
+    {
+      "name": "label-c13-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "963e0da0d4cdacb675e99940a095c649547c80d62f72d2d648e08c037e889641"
+    },
+    {
+      "name": "label-c14-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c93a90b2cc7e3f1ce731b06518af2045dd1b465ffd8201b648b62a2d2c550705"
+    },
+    {
+      "name": "label-c15-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "d8b07fdfe619b574b742b7f5d6ed38ecb428dfca389ee5e62c4f29320f448a94"
+    },
+    {
+      "name": "label-c16-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "8d2733f2b486ddb063c4bc173fe8b6e590da296ccd559681a43b26143e61030e"
+    },
+    {
+      "name": "label-c17-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6d35c58ebc17c79a82699cae9ebccbfa50c179b04018ef8e692b38b8b4913293"
+    },
+    {
+      "name": "label-c18-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "185a65d0cd6f6cbf7785bd7fe6fd846e58e9b71628312b4076334ec8504d344f"
+    },
+    {
+      "name": "label-c19-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "65724ead00d01c691179430e8f7728d56f82cc179e18515e08a3e61ac9074957"
+    },
+    {
+      "name": "label-c20-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "3c5ce4225e13b197642db1325cce254af3662da7fb6d3f02d2069d1af6d5b731"
+    },
+    {
+      "name": "label-c21-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2d37e84ea3c15b13a1e95a9d1f9702136eda1c4bd707c049368d0f37991d5fe6"
+    },
+    {
+      "name": "label-c22-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a5c5f05fe67e6006c08cc33de3e51f6a8bcd478e4070c5a54add0321de7b6c25"
+    },
+    {
+      "name": "label-c23-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "da71cb4964e253f91fca4bc00519510366c81dd1ba1989e290ba1576753fd941"
+    },
+    {
+      "name": "label-c24-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5281bd7e4db4f4c83c6ed14f662e97e6258667d17d841d9277a3f3105786b883"
+    },
+    {
+      "name": "label-c25-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bfba436360f4740a6f92cda6efce88ba4637a02d99184b713ace7c0fc1ae1ce9"
+    },
+    {
+      "name": "label-c26-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "afe5c688c31418299272644abb20fac5f0946ef4cb9dd3ce767e7700e6893aeb"
+    },
+    {
+      "name": "label-c27-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "963e0da0d4cdacb675e99940a095c649547c80d62f72d2d648e08c037e889641"
+    }
+  ],
+  "pageErrors": [],
+  "partialPart": "description"
+}

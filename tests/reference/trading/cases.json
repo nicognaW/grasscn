@@ -1,0 +1,47 @@
+[
+  {
+    "name": "trading-0",
+    "element": "trading",
+    "state": "normal",
+    "checked": false,
+    "value": 0,
+    "cursor": 0,
+    "x": 24,
+    "y": 16,
+    "width": 276,
+    "height": 166,
+    "page": 0,
+    "label": "",
+    "text": ""
+  },
+  {
+    "name": "trading-1",
+    "element": "trading",
+    "state": "normal",
+    "checked": false,
+    "value": 3,
+    "cursor": 0,
+    "x": 24,
+    "y": 16,
+    "width": 276,
+    "height": 166,
+    "page": 1,
+    "label": "",
+    "text": ""
+  },
+  {
+    "name": "trading-2",
+    "element": "trading",
+    "state": "normal",
+    "checked": false,
+    "value": 8,
+    "cursor": 2,
+    "x": 24,
+    "y": 16,
+    "width": 276,
+    "height": 166,
+    "page": 2,
+    "label": "",
+    "text": ""
+  }
+]

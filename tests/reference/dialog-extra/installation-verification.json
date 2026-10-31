@@ -1,0 +1,1559 @@
+{
+  "component": "dialog",
+  "manifest": "tests/reference/dialog-extra/manifest.json",
+  "targetReport": null,
+  "dryRun": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "consumerRsc": false,
+  "cliInvocation": {
+    "command": "C:\\Program Files\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
+      "add",
+      "http://127.0.0.1:5173/r/button.json",
+      "http://127.0.0.1:5173/r/checkbox.json",
+      "http://127.0.0.1:5173/r/slider.json",
+      "http://127.0.0.1:5173/r/input.json",
+      "http://127.0.0.1:5173/r/tooltip.json",
+      "http://127.0.0.1:5173/r/card.json",
+      "http://127.0.0.1:5173/r/textarea.json",
+      "http://127.0.0.1:5173/r/label.json",
+      "http://127.0.0.1:5173/r/separator.json",
+      "http://127.0.0.1:5173/r/scroll-area.json",
+      "http://127.0.0.1:5173/r/progress.json",
+      "http://127.0.0.1:5173/r/tabs.json",
+      "http://127.0.0.1:5173/r/select.json",
+      "http://127.0.0.1:5173/r/radio-group.json",
+      "http://127.0.0.1:5173/r/switch.json",
+      "http://127.0.0.1:5173/r/dialog.json",
+      "http://127.0.0.1:5173/r/alert-dialog.json",
+      "http://127.0.0.1:5173/r/popover.json",
+      "http://127.0.0.1:5173/r/dropdown-menu.json",
+      "http://127.0.0.1:5173/r/context-menu.json",
+      "http://127.0.0.1:5173/r/menubar.json",
+      "http://127.0.0.1:5173/r/collapsible.json",
+      "http://127.0.0.1:5173/r/toggle.json",
+      "http://127.0.0.1:5173/r/toggle-group.json",
+      "http://127.0.0.1:5173/r/aspect-ratio.json",
+      "http://127.0.0.1:5173/r/button-group.json",
+      "http://127.0.0.1:5173/r/pagination.json",
+      "http://127.0.0.1:5173/r/badge.json",
+      "http://127.0.0.1:5173/r/typography.json",
+      "http://127.0.0.1:5173/r/breadcrumb.json",
+      "http://127.0.0.1:5173/r/kbd.json",
+      "http://127.0.0.1:5173/r/sheet.json",
+      "http://127.0.0.1:5173/r/drawer.json",
+      "http://127.0.0.1:5173/r/empty.json",
+      "http://127.0.0.1:5173/r/resizable.json",
+      "http://127.0.0.1:5173/r/command.json",
+      "http://127.0.0.1:5173/r/sidebar.json",
+      "http://127.0.0.1:5173/r/sonner.json",
+      "http://127.0.0.1:5173/r/avatar.json",
+      "http://127.0.0.1:5173/r/input-group.json",
+      "http://127.0.0.1:5173/r/table.json",
+      "http://127.0.0.1:5173/r/calendar.json",
+      "http://127.0.0.1:5173/r/date-picker.json",
+      "http://127.0.0.1:5173/r/item.json",
+      "http://127.0.0.1:5173/r/data-table.json",
+      "http://127.0.0.1:5173/r/carousel.json",
+      "http://127.0.0.1:5173/r/message.json",
+      "http://127.0.0.1:5173/r/bubble.json",
+      "http://127.0.0.1:5173/r/form.json",
+      "http://127.0.0.1:5173/r/field.json",
+      "http://127.0.0.1:5173/r/code-block.json",
+      "http://127.0.0.1:5173/r/chart.json",
+      "http://127.0.0.1:5173/r/trace.json",
+      "http://127.0.0.1:5173/r/message-scroller.json",
+      "http://127.0.0.1:5173/r/skeleton.json",
+      "http://127.0.0.1:5173/r/spinner.json",
+      "http://127.0.0.1:5173/r/native-select.json",
+      "http://127.0.0.1:5173/r/marker.json",
+      "http://127.0.0.1:5173/r/input-otp.json",
+      "http://127.0.0.1:5173/r/questionnaire.json",
+      "http://127.0.0.1:5173/r/attachment.json",
+      "http://127.0.0.1:5173/r/combobox.json",
+      "--yes",
+      "--overwrite"
+    ],
+    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+    "startedAt": "2026-10-30T05:39:50.242Z",
+    "exitCode": 0,
+    "finishedAt": "2026-10-30T05:39:57.589Z"
+  },
+  "frozenBundle": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
+    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+  },
+  "files": [
+    {
+      "path": "button.tsx",
+      "sourcePath": "registry/ui/button.tsx",
+      "installedPath": "src/components/ui/button.tsx",
+      "sourceSha256": "a886121239a46a1470f7568693cded46741f6a13798aa4d1ada885aba1e0a51b",
+      "installedSha256": "e0dc491172d421f4f713cadb39d10ef69016b3fe77124c245b1219be0bae5b1f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-font.ts",
+      "sourcePath": "registry/ui/minecraft-font.ts",
+      "installedPath": "src/components/ui/minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-button.css",
+      "sourcePath": "registry/ui/minecraft-button.css",
+      "installedPath": "src/components/ui/minecraft-button.css",
+      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-assets.css",
+      "sourcePath": "registry/ui/minecraft-assets.css",
+      "installedPath": "src/components/ui/minecraft-assets.css",
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "sourcePath": "registry/ui/minecraft-sound.ts",
+      "installedPath": "src/components/ui/minecraft-sound.ts",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
+      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
+      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
+      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
+      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourcePath": "registry/ui/minecraft-input-assets.ts",
+      "installedPath": "src/components/ui/minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourcePath": "registry/ui/minecraft-unifont.ts",
+      "installedPath": "src/components/ui/minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
+      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "sourcePath": "registry/ui/minecraft-surface.tsx",
+      "installedPath": "src/components/ui/minecraft-surface.tsx",
+      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-surface.css",
+      "sourcePath": "registry/ui/minecraft-surface.css",
+      "installedPath": "src/components/ui/minecraft-surface.css",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourcePath": "registry/ui/minecraft-text.tsx",
+      "installedPath": "src/components/ui/minecraft-text.tsx",
+      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourcePath": "registry/ui/minecraft-text.css",
+      "installedPath": "src/components/ui/minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourcePath": "registry/ui/minecraft-text-assets.css",
+      "installedPath": "src/components/ui/minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-card.css",
+      "sourcePath": "registry/ui/minecraft-card.css",
+      "installedPath": "src/components/ui/minecraft-card.css",
+      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-card-sprite.ts",
+      "sourcePath": "registry/ui/minecraft-card-sprite.ts",
+      "installedPath": "src/components/ui/minecraft-card-sprite.ts",
+      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
+      "installedPath": "src/components/ui/minecraft-textarea-assets.ts",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "dialog.tsx",
+      "sourcePath": "registry/ui/dialog.tsx",
+      "installedPath": "src/components/ui/dialog.tsx",
+      "sourceSha256": "b6f8f30a8e46529f6c5f95bf00bcbd75b36d8958ff6ec99a64afb8bf927a6962",
+      "installedSha256": "0c47ca894d496f4c3361b5a4714c8374bc0f99b4c3a9ea76bf5a282d9cf14fe7",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-dialog-atlas.ts",
+      "installedPath": "src/components/ui/minecraft-dialog-atlas.ts",
+      "sourceSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "installedSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog-backdrop.tsx",
+      "sourcePath": "registry/ui/minecraft-dialog-backdrop.tsx",
+      "installedPath": "src/components/ui/minecraft-dialog-backdrop.tsx",
+      "sourceSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "installedSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-dialog-gpu.ts",
+      "installedPath": "src/components/ui/minecraft-dialog-gpu.ts",
+      "sourceSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "installedSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog-text.tsx",
+      "sourcePath": "registry/ui/minecraft-dialog-text.tsx",
+      "installedPath": "src/components/ui/minecraft-dialog-text.tsx",
+      "sourceSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "installedSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog-unicode.tsx",
+      "sourcePath": "registry/ui/minecraft-dialog-unicode.tsx",
+      "installedPath": "src/components/ui/minecraft-dialog-unicode.tsx",
+      "sourceSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "installedSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-dialog.css",
+      "sourcePath": "registry/ui/minecraft-dialog.css",
+      "installedPath": "src/components/ui/minecraft-dialog.css",
+      "sourceSha256": "898ad36d06b49552f63203bd3b493f5c0f45c2b6f02798b731728f785655058c",
+      "installedSha256": "898ad36d06b49552f63203bd3b493f5c0f45c2b6f02798b731728f785655058c",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    }
+  ],
+  "typecheck": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "pageErrorEvidence": {
+    "status": "separate-pinned-gallery-audit",
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
+    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
+    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
+    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+    "pageErrors": [],
+    "browser": "156.0.4314.50"
+  },
+  "cases": [
+    {
+      "name": "dialog-extra-c0-s1.png",
+      "decodedRgbaSha256": "81a9f36280af6379c4ae45b93058a894202a6147d8d0f3a8957dc8a5dcd93979",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c0-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-c12723db1b03aeea7075",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-4c525-xels-dialog-extra-c0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c0-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "81a9f36280af6379c4ae45b93058a894202a6147d8d0f3a8957dc8a5dcd93979",
+        "pngSha256": "f1be64938944849745fd813fa6b195b1aa6e2473be02d9bff699acf34c5958c0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c1-s1.png",
+      "decodedRgbaSha256": "5c1506bb7f095c709b2f01c25f31cee3a08d9fa61f04c9bcecfb564e27ab0b02",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c1-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-5a1be82dbb1e4fa9e007",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-96dae-xels-dialog-extra-c1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c1-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "5c1506bb7f095c709b2f01c25f31cee3a08d9fa61f04c9bcecfb564e27ab0b02",
+        "pngSha256": "b5f50aaef3158ae59dca8dbf11faba755eed6adbe3376c24bb60ef6be27173d3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c2-s1.png",
+      "decodedRgbaSha256": "9b66280b683860098fb456f8d50783e650939a46ba8d211b2bddbc72cb953cde",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c2-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c2-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-c113b47f1c2591441fd7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-c80f5-xels-dialog-extra-c2-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c2-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "9b66280b683860098fb456f8d50783e650939a46ba8d211b2bddbc72cb953cde",
+        "pngSha256": "0aae9893d576da87dd9a6a996d538fd22b14c0add9629623523fe72a2299cdb0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c3-s1.png",
+      "decodedRgbaSha256": "bd95165f603794a6da1aa5eb4d2aa67bea2521ee53704fa3b2a7198f062fd8c0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c3-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c3-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-5c1de440ef286e077bec",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-c5f3b-xels-dialog-extra-c3-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c3-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "bd95165f603794a6da1aa5eb4d2aa67bea2521ee53704fa3b2a7198f062fd8c0",
+        "pngSha256": "24922c0988f1ddbd16b5367f93f6578152190f16c61ed688f1b589dd1fc6b73d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c4-s1.png",
+      "decodedRgbaSha256": "cf83cfced242a3437c0df4b56d643961c330a437ca850cc4fea80bb9f4c399b4",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c4-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c4-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-2166422b6ff5767f45af",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-8838a-xels-dialog-extra-c4-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c4-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "cf83cfced242a3437c0df4b56d643961c330a437ca850cc4fea80bb9f4c399b4",
+        "pngSha256": "dcc73287fc7cbc3358f7f0124529a4f754f85b7157e2525bc0575b82aa2c1368",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c5-s1.png",
+      "decodedRgbaSha256": "ca899be2cf6f95cdb8f8be831089bdda6a20912551143e524dec62d373ec49ce",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c5-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c5-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-c668e894014f33e8488a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-94a81-xels-dialog-extra-c5-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c5-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ca899be2cf6f95cdb8f8be831089bdda6a20912551143e524dec62d373ec49ce",
+        "pngSha256": "0d06b96e317501a57235c45af63f7a8ea617fcce28d1e66ec7086a3829a975e2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c6-s1.png",
+      "decodedRgbaSha256": "a50e769e35073422e0da9ad9812a350bc4b47d27f1d7ad3c540e75b61ef11d0b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c6-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c6-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-34dacb081dacf652e5a8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-9e62f-xels-dialog-extra-c6-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c6-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a50e769e35073422e0da9ad9812a350bc4b47d27f1d7ad3c540e75b61ef11d0b",
+        "pngSha256": "80e0bc6641f1dfe8602d6b1245521d3bcf3293ed904d7b04836ebaaaa05b2cec",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c7-s1.png",
+      "decodedRgbaSha256": "d978cedc9a79833d49a0a7a8f209c89436e8cdae9521793427c226ddbd39b714",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c7-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c7-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-9922b74ecb8e0ffea106",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-454e1-xels-dialog-extra-c7-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c7-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d978cedc9a79833d49a0a7a8f209c89436e8cdae9521793427c226ddbd39b714",
+        "pngSha256": "c5bd87f7ea4d43ba12fa848e991cf88e3d7f597912d97aaf0d39c5aa18b07f4d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c8-s1.png",
+      "decodedRgbaSha256": "7442944fc472c002645c8508c574b087a5e7aa80455f0a74ea37e4e9d90fe1dd",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c8-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c8-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-a06d76d1c3617d69b790",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-79745-xels-dialog-extra-c8-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c8-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7442944fc472c002645c8508c574b087a5e7aa80455f0a74ea37e4e9d90fe1dd",
+        "pngSha256": "011e80d3418124c7e13fbf80ed632f62b55d303d1fc930e19bad8aa8d87c89a8",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c9-s1.png",
+      "decodedRgbaSha256": "0280c3e8df810649b465f9315b37d5e382046911b49318ad0b251b6402f5317d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c9-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c9-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "1",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-c2b3270080dcc7a64147",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=1&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-ed54a-xels-dialog-extra-c9-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c9-s1.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "0280c3e8df810649b465f9315b37d5e382046911b49318ad0b251b6402f5317d",
+        "pngSha256": "3dfb2bd8c6ccfc45642c032247f88dfb4fa9864832df5f7f604119144e51cf60",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c0-s2.png",
+      "decodedRgbaSha256": "3185c49435d63a99b781363e046ecf6c8d5e0c22ebfc38ba77ec197d7c97fda9",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c0-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-0de7be2a629ec90d6251",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-3551f-xels-dialog-extra-c0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c0-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "3185c49435d63a99b781363e046ecf6c8d5e0c22ebfc38ba77ec197d7c97fda9",
+        "pngSha256": "70ffecba4cb8a6c564b0e9c78ab4062bf32c0455c791973c0c50afbc745976dc",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c1-s2.png",
+      "decodedRgbaSha256": "e18b48c2c91a6a0dd040574cc7a1021942c4c66a674b3d99f56bbeaf9c889295",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c1-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-e101e0199de790075bc4",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-a5f60-xels-dialog-extra-c1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c1-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e18b48c2c91a6a0dd040574cc7a1021942c4c66a674b3d99f56bbeaf9c889295",
+        "pngSha256": "ef5acdee9c3fc574219f9bd25cab280abf33b77b926eb33f82a13ee03d856ddd",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c2-s2.png",
+      "decodedRgbaSha256": "0abf442e7ce35f2926eb6d91b2f29b93bdb1e1db5b50034ce35b0170856cc522",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c2-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c2-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-70a54e148ace4a9d1436",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-ac59f-xels-dialog-extra-c2-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c2-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "0abf442e7ce35f2926eb6d91b2f29b93bdb1e1db5b50034ce35b0170856cc522",
+        "pngSha256": "654f268304b3b0a52474118f4a91be0bbb880e5a0225ef1ba20ac95052918ed3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c3-s2.png",
+      "decodedRgbaSha256": "ea4d0e2a54dbf9be81909571d32faf9997f66ff4b302cf86505c4465452cb62f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c3-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c3-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-a795b882977dc0e88664",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-854b1-xels-dialog-extra-c3-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c3-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ea4d0e2a54dbf9be81909571d32faf9997f66ff4b302cf86505c4465452cb62f",
+        "pngSha256": "fd52e124ed26421e727f697a20c8fad3484de5bb8fe104b41a03069816890550",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c4-s2.png",
+      "decodedRgbaSha256": "dea8dd2493801318a3cf85a4e934d8a5819a041b86c23b205ad03b08f87c3c5c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c4-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c4-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-39881718b53142eefd66",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-0bfdd-xels-dialog-extra-c4-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c4-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dea8dd2493801318a3cf85a4e934d8a5819a041b86c23b205ad03b08f87c3c5c",
+        "pngSha256": "54de4001d3d8de7bdcd78d3d151376b1740d22fe5d3771ec67060b65553e4e0b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c5-s2.png",
+      "decodedRgbaSha256": "4eda74694ee9db90d62eba1d1b76023e8283882b412c287a788e0f37763935dc",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c5-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c5-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-48f3fb5fa9173d1eb689",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-a307e-xels-dialog-extra-c5-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c5-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4eda74694ee9db90d62eba1d1b76023e8283882b412c287a788e0f37763935dc",
+        "pngSha256": "f07909a5ef2a065b00272691ae98d60113af5067f5e6e4c2a3e91f8c014c953a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c6-s2.png",
+      "decodedRgbaSha256": "29fb9a8027e3f21b598e9695be7bf507678f7c8561db5bc89c3caa35131950d9",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c6-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c6-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-3e5d80d43979a7cc96f7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-2b795-xels-dialog-extra-c6-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c6-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "29fb9a8027e3f21b598e9695be7bf507678f7c8561db5bc89c3caa35131950d9",
+        "pngSha256": "94f5956d108329ff158aaede6f5448284315b231a302fa22704f20d8c131425c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c7-s2.png",
+      "decodedRgbaSha256": "26c3083c38b31ecb85a7c938dcd76fb311282168d3e3d6e7983a3f9aa3368917",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c7-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c7-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-dae10a2d7fe2b1cec45e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-f8579-xels-dialog-extra-c7-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c7-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "26c3083c38b31ecb85a7c938dcd76fb311282168d3e3d6e7983a3f9aa3368917",
+        "pngSha256": "7682f5323b0e7ee67b5c2d473e26f945122129215a3041b47a2ef6c79fe6beee",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c8-s2.png",
+      "decodedRgbaSha256": "1889eef54afc31b681048df49bc4fb609b94190f8f6f6193f2a4bd46f4aaac14",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c8-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c8-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-0d510cfa0c21871ec51b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-ab885-xels-dialog-extra-c8-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c8-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1889eef54afc31b681048df49bc4fb609b94190f8f6f6193f2a4bd46f4aaac14",
+        "pngSha256": "f9beb28e9856b054777b41e23e9bea1fc3d3759ed0a469c99808b09316caffc1",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c9-s2.png",
+      "decodedRgbaSha256": "170703d87a3f59592b8f461e6542fc30b9d9a456fcd092fa692fc755f3de8489",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c9-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c9-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "2",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-b4fb7acfe3fdcaca8ae0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=2&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-1e5df-xels-dialog-extra-c9-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c9-s2.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "170703d87a3f59592b8f461e6542fc30b9d9a456fcd092fa692fc755f3de8489",
+        "pngSha256": "f2c9da7837bc0cceb8a2cc042ede84725a18654fad7e5f91d136cb63788f7ae0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c0-s3.png",
+      "decodedRgbaSha256": "de449f684f5fda31ad8c8bb2fbf2a06f686738d399e6ca33d26ca3a265195bef",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c0-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-838b8ecd15b54a9eca38",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-c5b4d-xels-dialog-extra-c0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c0-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "de449f684f5fda31ad8c8bb2fbf2a06f686738d399e6ca33d26ca3a265195bef",
+        "pngSha256": "7860472af2e337ce9df768eac73a4d9623454f7ebeb106444fa16049f46b27f4",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c1-s3.png",
+      "decodedRgbaSha256": "dddf6a46e811c45e76aa391754fa4dd9381f8326044dc8a712ef87dc28f1f303",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c1-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "World settings",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "A helpful description.",
+          "patterned": "1"
+        },
+        "testId": "c88648056942dba76546-63e25ab065805196b123",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=World+settings&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=A+helpful+description.&patterned=1",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-92dd8-xels-dialog-extra-c1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c1-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dddf6a46e811c45e76aa391754fa4dd9381f8326044dc8a712ef87dc28f1f303",
+        "pngSha256": "d626099fe3813dc60d72a49506a0e79939337d7fbe7cbd399f661501041df45c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c2-s3.png",
+      "decodedRgbaSha256": "78db89367f6e2fcba6fd819403165e8c40f5f1848a2221bf9e71ad4048dca2f9",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c2-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c2-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-16f3a64d0ae7b1e5e497",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-6a98d-xels-dialog-extra-c2-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c2-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "78db89367f6e2fcba6fd819403165e8c40f5f1848a2221bf9e71ad4048dca2f9",
+        "pngSha256": "ce5d8d577d0d33846a93089a364c8e207f43be485b661900d9f19c76911fe025",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c3-s3.png",
+      "decodedRgbaSha256": "a8a05167a923dcb3b00eda1ec3bc87a9dbd839863e4ae904a43c2f7f7f15b4de",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c3-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c3-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "你好，世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "你好，世界\n你好，世界"
+        },
+        "testId": "c88648056942dba76546-f903b5759e7724adabef",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-289d2-xels-dialog-extra-c3-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c3-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a8a05167a923dcb3b00eda1ec3bc87a9dbd839863e4ae904a43c2f7f7f15b4de",
+        "pngSha256": "f6de77b181f32e1131f857d0171e18e129423ef7216a762ba68ef95bce1eb518",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c4-s3.png",
+      "decodedRgbaSha256": "ae4a33d3c79f53b33a988961c2b0615c7384c775fcf2f998bc047bf9b16f3ab6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c4-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c4-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-04ba303be83cc295892f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-f2837-xels-dialog-extra-c4-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c4-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ae4a33d3c79f53b33a988961c2b0615c7384c775fcf2f998bc047bf9b16f3ab6",
+        "pngSha256": "6721ffc2d98371caeae80585853e2fdfe825a7cc6ba5ed6c3e0a5b2656b7cdea",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c5-s3.png",
+      "decodedRgbaSha256": "5e9029dc9831e037e98a21f09b2a09fe45093cddc6e39108a8449d968ee907ba",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c5-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c5-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "こんにちは",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "こんにちは\nこんにちは"
+        },
+        "testId": "c88648056942dba76546-351719a38b8a65bbebf7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-47ed8-xels-dialog-extra-c5-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c5-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "5e9029dc9831e037e98a21f09b2a09fe45093cddc6e39108a8449d968ee907ba",
+        "pngSha256": "ee2358f65138e2d62109a6abfe4043d5953d68af82fd8fe41d1d889fda7d3367",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c6-s3.png",
+      "decodedRgbaSha256": "70e24cded0f4939352f23e2b61afae7efda1dfacb3892f8b2821cd6187117dd6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c6-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c6-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-8373276f38b59d020201",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-18df8-xels-dialog-extra-c6-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c6-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "70e24cded0f4939352f23e2b61afae7efda1dfacb3892f8b2821cd6187117dd6",
+        "pngSha256": "89a9aadccf938f3b690ea6c9cdd24ce31d956e11197e470abfc69d6387986fd3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c7-s3.png",
+      "decodedRgbaSha256": "8ea7046469b3502721ffe19c6b23b6e94faa69977dad3798d6104937ade6c8c6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c7-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c7-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "안녕하세요",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "안녕하세요\n안녕하세요"
+        },
+        "testId": "c88648056942dba76546-181efb8de42e562ad56e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%0A%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-8759e-xels-dialog-extra-c7-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c7-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "8ea7046469b3502721ffe19c6b23b6e94faa69977dad3798d6104937ade6c8c6",
+        "pngSha256": "097afd431db36c3afb8290db992b61bbe726d609239a376b45e57a415ab323f7",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c8-s3.png",
+      "decodedRgbaSha256": "4223dbde19ff7d2d1a80484051ae5bbbf17c2ff5d9b69fab60d71253180d5506",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c8-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c8-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-b7249b331eea3e95f12f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-5cf62-xels-dialog-extra-c8-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c8-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4223dbde19ff7d2d1a80484051ae5bbbf17c2ff5d9b69fab60d71253180d5506",
+        "pngSha256": "17c778fe6e5b6fcbf70a064a5c798bf74bf65dd530ff744189569707a0ff0a9d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "dialog-extra-c9-s3.png",
+      "decodedRgbaSha256": "ef519dc4843935c5e9ca690a07bb087db0259a9c7e2144f1f9309b0640c0546c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "dialog",
+        "manifest": "tests/reference/dialog-extra/manifest.json",
+        "case": "dialog-extra-c9-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "dialog-extra-c9-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1382400,
+          "tolerance": 0,
+          "component": "dialog"
+        },
+        "query": {
+          "component": "dialog",
+          "native": "1",
+          "scale": "3",
+          "label": "Hello 世界",
+          "wrapWidth": "250",
+          "labels": "[\"Cancel\",\"Continue\"]",
+          "state": "normal",
+          "text": "Hello 世界\nHello 世界"
+        },
+        "testId": "c88648056942dba76546-451a9e911e6ae306b3a8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=dialog&native=1&scale=3&label=Hello+%E4%B8%96%E7%95%8C&wrapWidth=250&labels=%5B%22Cancel%22%2C%22Continue%22%5D&state=normal&text=Hello+%E4%B8%96%E7%95%8C%0AHello+%E4%B8%96%E7%95%8C",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\dialog-Dialog-native-viewp-a6a15-xels-dialog-extra-c9-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\dialog-extra\\captures\\dialog-extra-c9-s3.png",
+        "width": 1536,
+        "height": 900,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ef519dc4843935c5e9ca690a07bb087db0259a9c7e2144f1f9309b0640c0546c",
+        "pngSha256": "c7bb4a45ab62c2b8d077380e00e7d3ce1bbd96cbf83df92c292580ecc9afa483",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    }
+  ],
+  "appliedAt": "2026-10-30T06:30:04.362Z",
+  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
+  "pageErrors": [],
+  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+  "browser": "156.0.4314.50"
+}

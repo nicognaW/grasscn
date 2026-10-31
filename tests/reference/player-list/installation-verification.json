@@ -1,0 +1,326 @@
+{
+  "command": "shadcn add http://127.0.0.1:5355/r/player-list.json --yes --overwrite",
+  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumerRsc": false,
+  "typecheck": {
+    "passed": true
+  },
+  "files": [
+    {
+      "path": "avatar.tsx",
+      "sourcePath": "registry/ui/avatar.tsx",
+      "sourceSha256": "6186345b7dfad298744c315d188fa03cf4a76f5d623103c5fa5d2ebf8a2dfce5",
+      "installedSha256": "dd915cd4686a4c9083d4ea4df5c0dd9458d62b89ac6b520456a9b3c9a314ec74"
+    },
+    {
+      "path": "label.tsx",
+      "sourcePath": "registry/ui/label.tsx",
+      "sourceSha256": "593ee40f92ae09780497e3fc8ac7023591cb72a2ef3a5939c592497abd799354",
+      "installedSha256": "593ee40f92ae09780497e3fc8ac7023591cb72a2ef3a5939c592497abd799354"
+    },
+    {
+      "path": "minecraft-avatar-assets.ts",
+      "sourcePath": "registry/ui/minecraft-avatar-assets.ts",
+      "sourceSha256": "fd93027ca25a8ed525ca9c98c1fab754c5192725703ff33246f24d065c8b2250",
+      "installedSha256": "0640dbc22b32a607c27f4c329d5c23b0d2e8cb9d58164f882a67acee6e3a1aaa"
+    },
+    {
+      "path": "minecraft-avatar-paint.ts",
+      "sourcePath": "registry/ui/minecraft-avatar-paint.ts",
+      "sourceSha256": "cec671f3a9fe94f6458cf4c8f2e5da2fc0753b5f3c82dede60e4509071858b9d",
+      "installedSha256": "cec671f3a9fe94f6458cf4c8f2e5da2fc0753b5f3c82dede60e4509071858b9d"
+    },
+    {
+      "path": "minecraft-avatar.css",
+      "sourcePath": "registry/ui/minecraft-avatar.css",
+      "sourceSha256": "2228e22f504c05485006ed9902f32b77de6729116b1373bd2f1767c910cef2e0",
+      "installedSha256": "2228e22f504c05485006ed9902f32b77de6729116b1373bd2f1767c910cef2e0"
+    },
+    {
+      "path": "minecraft-document-text.tsx",
+      "sourcePath": "registry/ui/minecraft-document-text.tsx",
+      "sourceSha256": "fd6742972656ad32702986c9942ef660e4c42a910139f1e825cb457bf81cf8de",
+      "installedSha256": "7faef4791c5518b3d64fc8c8389d29a876a5f228f17f539638b28f8bbccdd0e3"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "sourcePath": "registry/ui/minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourcePath": "registry/ui/minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06"
+    },
+    {
+      "path": "minecraft-label-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-label-atlas.ts",
+      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f"
+    },
+    {
+      "path": "minecraft-label.css",
+      "sourcePath": "registry/ui/minecraft-label.css",
+      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2"
+    },
+    {
+      "path": "minecraft-menu-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-menu-atlas.ts",
+      "sourceSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
+      "installedSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d"
+    },
+    {
+      "path": "minecraft-menu-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-menu-gpu.ts",
+      "sourceSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "installedSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab"
+    },
+    {
+      "path": "minecraft-menu-text.tsx",
+      "sourcePath": "registry/ui/minecraft-menu-text.tsx",
+      "sourceSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
+      "installedSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29"
+    },
+    {
+      "path": "minecraft-menu-unicode.tsx",
+      "sourcePath": "registry/ui/minecraft-menu-unicode.tsx",
+      "sourceSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
+      "installedSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29"
+    },
+    {
+      "path": "minecraft-player-list-assets.ts",
+      "sourcePath": "registry/ui/minecraft-player-list-assets.ts",
+      "sourceSha256": "e26afba7a23da910092f96b5c14ad50f16741ced32e7c2a9fcbe96b1ccb227a6",
+      "installedSha256": "e26afba7a23da910092f96b5c14ad50f16741ced32e7c2a9fcbe96b1ccb227a6"
+    },
+    {
+      "path": "minecraft-player-list.css",
+      "sourcePath": "registry/ui/minecraft-player-list.css",
+      "sourceSha256": "91115256194789559ebdb73801ce935cff741a78ff1ee1a65ef1b956dba56d5c",
+      "installedSha256": "91115256194789559ebdb73801ce935cff741a78ff1ee1a65ef1b956dba56d5c"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourcePath": "registry/ui/minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6"
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourcePath": "registry/ui/minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourcePath": "registry/ui/minecraft-text.tsx",
+      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
+      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
+      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
+      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourcePath": "registry/ui/minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d"
+    },
+    {
+      "path": "player-list.tsx",
+      "sourcePath": "registry/ui/player-list.tsx",
+      "sourceSha256": "d2aae651ec4235d27a87e1239d825681e55102008ea4208732324af3de9156f2",
+      "installedSha256": "d2aae651ec4235d27a87e1239d825681e55102008ea4208732324af3de9156f2"
+    }
+  ],
+  "cases": [
+    {
+      "name": "player-list-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b6799b28c4556cc6f93543897ce13176bd8b9188d81a5ca8a093e551642bb28e"
+    },
+    {
+      "name": "player-list-1-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9ad0965514087eb4d498cd1f0c72c339d8fae23b24e0201755af87cf7fa1e3fe"
+    },
+    {
+      "name": "player-list-2-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0ed7edbf033bb970aa7a6b028b012362bceabb0eca060412e6492516c6131a7e"
+    },
+    {
+      "name": "player-list-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bad7e676c94225ed5bed9893a690aeaf1cfb9bdb0adb9f60729a7204e8610ac0"
+    },
+    {
+      "name": "player-list-4-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "5e58e501eb81e79a66c08da638aed3c26de94ea10e283889876d8b061eb3a21b"
+    },
+    {
+      "name": "player-list-5-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "944dc969b33e48114e491ef7a82c6a13b3a6f7f39016296745301e113cad5d5f"
+    },
+    {
+      "name": "player-list-6-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c4e6e5ed49cf5e2326c047a8c93dbf5470aa9017c6543356416538c34824648e"
+    },
+    {
+      "name": "scoreboard-0-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ff273550ad472a54eb8f47a2592ef0787cbdef4887c4be852769e3369247f6f7"
+    },
+    {
+      "name": "scoreboard-3-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "dc449384b1f7f1db6f4164f2e9b3c2160c5e4442ac6d608568bcec6030f60304"
+    },
+    {
+      "name": "scoreboard-18-s1.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "9308c1a645007f2bfa88c28ddf1db8e50851596724cae624fb94599fcf96e43e"
+    },
+    {
+      "name": "player-list-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "32d99fa2637f9db5a78e35cf87d56dced30c921fafe69bce44c02889565a9978"
+    },
+    {
+      "name": "player-list-1-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2185c74a4b93d3b07df985c3e1a51dd257e8a312192fcf151bc7c1d1e30edd72"
+    },
+    {
+      "name": "player-list-2-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b12631c8c6c20ac0b56126f37e694e05e1fb08e6f72fff73c982df5c578212c5"
+    },
+    {
+      "name": "player-list-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6f3774cf7bd2a87aea4c7078e5a8084e554762a6c535ce56bb2dd8dbbabb1f83"
+    },
+    {
+      "name": "player-list-4-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "84b5b540e3a111946accec5682cb19574e8d0b2c874eabe4b87e826cd4e721e0"
+    },
+    {
+      "name": "player-list-5-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "7ecb86f35f1f619f7d9f8df3b7402691a76c8f9d1d24141bc75ca6ee4ab331a3"
+    },
+    {
+      "name": "player-list-6-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "468df21ab13a2257278c1eec8596ca58f0ca250cb7d585b6dc2d97663c3ba54a"
+    },
+    {
+      "name": "scoreboard-0-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "0c78c1271674b88f6c416b0d96d457d478863df2ac3c3e8c3adf43b0e1f5b72e"
+    },
+    {
+      "name": "scoreboard-3-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "b5ec43ccea2beaa23dbc26c9abb215167a1a5bfda03d53d578ffa3a4aa7ec1c8"
+    },
+    {
+      "name": "scoreboard-18-s2.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "a8670628a4053d5c2cdd3f8eb13f0f057128bfcf89ff5916574937d47a95d523"
+    },
+    {
+      "name": "player-list-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "db63e793aab2a5f125abf25e380793cb34f2edcaf4bfaf4ac656dcbc0e653777"
+    },
+    {
+      "name": "player-list-1-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "89df431375a8ef67ed7847af37b0e6786acccee3bcb6aed3bae0d2fb3dd7429e"
+    },
+    {
+      "name": "player-list-2-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "4c5ea15b559fa9ae27156237916d870a315c07037e588d7f550e9adac0e047f6"
+    },
+    {
+      "name": "player-list-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "35452ea6a81f79a6d2cc1b292d1a2e3e31aec286d2156e3be92a34ba9a15cde2"
+    },
+    {
+      "name": "player-list-4-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "c77f9bfd5c8e1114fce94e2b586a4c5cafbf2d2c9fb03f40b40f069f2cb5630d"
+    },
+    {
+      "name": "player-list-5-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "2e53ac8a8f2a3a6509a0c362c118ff2fcc5d5774d5be2d30110279ed64c64303"
+    },
+    {
+      "name": "player-list-6-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "ba9dcfc1daf3c88abb74c2e78de366b67f3cd2b76696a0222a72bac5b91f1607"
+    },
+    {
+      "name": "scoreboard-0-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "bf99a9ab32befcb9d7a6c49057d960b21cf56b0ccc4e63db8320390626acb11b"
+    },
+    {
+      "name": "scoreboard-3-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "688ec9df2e45b0e39ce47198488c0f3ccb7aaa75fecfdb04baa5d19aedab1bd2"
+    },
+    {
+      "name": "scoreboard-18-s3.png",
+      "mismatchedPixels": 0,
+      "decodedRgbaSha256": "6dfd733608707d76f8fbd74a14c1183a3f60e03686d9fc5210ffe5122c724f1c"
+    }
+  ],
+  "pageErrors": [],
+  "behavior": {
+    "passed": true,
+    "tests": [
+      "Pointer and keyboard player selection without sound",
+      "Maximum80 players and20 rows per column",
+      "Scoreboard descending ranking, internal-name filtering and top15 limit",
+      "One-pixel comparator negative control"
+    ]
+  },
+  "limitations": [
+    "Thirty declared cases: player rosters with3/7/22/41/80 entries, no score and integer scores, builtin Alex/Steve/Kai heads, eight latency thresholds, single-line header/footer; scoreboards with0/3/18 input entries and top15, scales1-3, Edge/DPR1. Spectators, teams, hearts, custom skins, multiline headers/footers, arbitrary glyphs and raster environments are outside this exact pixel matrix."
+  ]
+}

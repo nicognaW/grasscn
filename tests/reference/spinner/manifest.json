@@ -1,0 +1,2076 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "56510733e82331e660cd54d6358e1090d2f2c40836437aa0906e43cb67f0509c",
+  "caseDefinitionSha256": "19b6c373ea8dddf2910ec497c1cc9d7e83f040e99972bd9a3c5708390e622ea9",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "0697d5d2fcb934733ce9f6c9472f966a7c3e66b1519d249807e5bc72079255e6"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "836b4a56551347ee99fa6ccda69fcd49025038fb82dc3dfa2ba5b0343b432b43"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "0c1412ff91e8cf1b9773424d6834de419f748213647d4d67173a622c2f525385"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "0697d5d2fcb934733ce9f6c9472f966a7c3e66b1519d249807e5bc72079255e6"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "836b4a56551347ee99fa6ccda69fcd49025038fb82dc3dfa2ba5b0343b432b43"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "0c1412ff91e8cf1b9773424d6834de419f748213647d4d67173a622c2f525385"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "ae6dab996d85543b9ac0f9423d04f3386feaa77295f3ec2c5354bfe9a646b4e2"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "7833fca94707f9abc6fce02a07fe3dd1430eff4ee307cbf78043f4e528fd39f4"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "570bfc501db24ceed464855e8445a9ed89425883e4bea0b947c0e458d369e8b7"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "ae6dab996d85543b9ac0f9423d04f3386feaa77295f3ec2c5354bfe9a646b4e2"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "7833fca94707f9abc6fce02a07fe3dd1430eff4ee307cbf78043f4e528fd39f4"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "570bfc501db24ceed464855e8445a9ed89425883e4bea0b947c0e458d369e8b7"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "d103b5e7c45f5999ba55d49667c92dd2978648e35e4cfc7ea68a122f97304644"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "556e7bd0dda3194e391f06da2dd6b0e3ae3a949618a0148e5da10db8774179b7"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "8ed5841e87c318cf266a3bb91f86b9640eb151be29299f11fd5cea1aac4f4791"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "d103b5e7c45f5999ba55d49667c92dd2978648e35e4cfc7ea68a122f97304644"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "556e7bd0dda3194e391f06da2dd6b0e3ae3a949618a0148e5da10db8774179b7"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "8ed5841e87c318cf266a3bb91f86b9640eb151be29299f11fd5cea1aac4f4791"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "ae6dab996d85543b9ac0f9423d04f3386feaa77295f3ec2c5354bfe9a646b4e2"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "7833fca94707f9abc6fce02a07fe3dd1430eff4ee307cbf78043f4e528fd39f4"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "570bfc501db24ceed464855e8445a9ed89425883e4bea0b947c0e458d369e8b7"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "ae6dab996d85543b9ac0f9423d04f3386feaa77295f3ec2c5354bfe9a646b4e2"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "7833fca94707f9abc6fce02a07fe3dd1430eff4ee307cbf78043f4e528fd39f4"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "570bfc501db24ceed464855e8445a9ed89425883e4bea0b947c0e458d369e8b7"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "0697d5d2fcb934733ce9f6c9472f966a7c3e66b1519d249807e5bc72079255e6"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "836b4a56551347ee99fa6ccda69fcd49025038fb82dc3dfa2ba5b0343b432b43"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "0c1412ff91e8cf1b9773424d6834de419f748213647d4d67173a622c2f525385"
+    }
+  ],
+  "cases": [
+    {
+      "name": "spinner-c0-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "1b78cacd2f84aadd357cf1e1542a5c591130b5b72fa5c8bed0b4f57c13121ec3"
+    },
+    {
+      "name": "spinner-c1-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "748ea2ecddc71b52d1c0426b82c5dfe384cf7b254aa4a04098319801b288d155"
+    },
+    {
+      "name": "spinner-c2-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "a7932976a6d6727222cfdc6a6bd7fe08ab3e8d5aae24402b668127cb05b8e659"
+    },
+    {
+      "name": "spinner-c3-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "909c545e140694e84b0f72450c35416451aed2abcee017eb64083ff458a1afcc"
+    },
+    {
+      "name": "spinner-c4-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "1b78cacd2f84aadd357cf1e1542a5c591130b5b72fa5c8bed0b4f57c13121ec3"
+    },
+    {
+      "name": "spinner-c5-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "748ea2ecddc71b52d1c0426b82c5dfe384cf7b254aa4a04098319801b288d155"
+    },
+    {
+      "name": "spinner-c6-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "a7932976a6d6727222cfdc6a6bd7fe08ab3e8d5aae24402b668127cb05b8e659"
+    },
+    {
+      "name": "spinner-c7-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "909c545e140694e84b0f72450c35416451aed2abcee017eb64083ff458a1afcc"
+    },
+    {
+      "name": "spinner-c8-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "570a7aa99062a2d6ac12b7aadc19eb993974cbfa18780616f0aa59e06aa64a97"
+    },
+    {
+      "name": "spinner-c9-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "a12430c67e421fa9d40ba600a262e9a075d3373d63264f3ba48fc50526241b2b"
+    },
+    {
+      "name": "spinner-c10-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "4da9b108751d8a7046f56ee91b4ed30d0b60f061086c6527c25843e729205d66"
+    },
+    {
+      "name": "spinner-c11-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "861f5a9245e54c8fd3ea61b20f46c5973cd64f2e82a4bc108a8677eda12dcbac"
+    },
+    {
+      "name": "spinner-c12-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "570a7aa99062a2d6ac12b7aadc19eb993974cbfa18780616f0aa59e06aa64a97"
+    },
+    {
+      "name": "spinner-c13-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "a12430c67e421fa9d40ba600a262e9a075d3373d63264f3ba48fc50526241b2b"
+    },
+    {
+      "name": "spinner-c14-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "4da9b108751d8a7046f56ee91b4ed30d0b60f061086c6527c25843e729205d66"
+    },
+    {
+      "name": "spinner-c15-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "861f5a9245e54c8fd3ea61b20f46c5973cd64f2e82a4bc108a8677eda12dcbac"
+    },
+    {
+      "name": "spinner-c16-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "ba6bcb2b6d5da688f055355ede71f6026559c2d4ea34a0f8e344c3eab2727eec"
+    },
+    {
+      "name": "spinner-c17-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "48f49766f3576b211747e201fbd163a9cdff92f18f4598218b4a3993f68741e1"
+    },
+    {
+      "name": "spinner-c18-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "614e2eaad74d92573aeda2de287939f2b55681dda6831699c28b722ee48439b8"
+    },
+    {
+      "name": "spinner-c19-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "8de7482ab02b470e32d5f0b4c5360a236b4d8f18ec4012f695dd9ae4e6a3c1ba"
+    },
+    {
+      "name": "spinner-c20-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "ba6bcb2b6d5da688f055355ede71f6026559c2d4ea34a0f8e344c3eab2727eec"
+    },
+    {
+      "name": "spinner-c21-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "48f49766f3576b211747e201fbd163a9cdff92f18f4598218b4a3993f68741e1"
+    },
+    {
+      "name": "spinner-c22-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "614e2eaad74d92573aeda2de287939f2b55681dda6831699c28b722ee48439b8"
+    },
+    {
+      "name": "spinner-c23-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 1,
+      "sha256": "8de7482ab02b470e32d5f0b4c5360a236b4d8f18ec4012f695dd9ae4e6a3c1ba"
+    },
+    {
+      "name": "spinner-c24-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "570a7aa99062a2d6ac12b7aadc19eb993974cbfa18780616f0aa59e06aa64a97"
+    },
+    {
+      "name": "spinner-c25-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "a12430c67e421fa9d40ba600a262e9a075d3373d63264f3ba48fc50526241b2b"
+    },
+    {
+      "name": "spinner-c26-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "4da9b108751d8a7046f56ee91b4ed30d0b60f061086c6527c25843e729205d66"
+    },
+    {
+      "name": "spinner-c27-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "861f5a9245e54c8fd3ea61b20f46c5973cd64f2e82a4bc108a8677eda12dcbac"
+    },
+    {
+      "name": "spinner-c28-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "570a7aa99062a2d6ac12b7aadc19eb993974cbfa18780616f0aa59e06aa64a97"
+    },
+    {
+      "name": "spinner-c29-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "a12430c67e421fa9d40ba600a262e9a075d3373d63264f3ba48fc50526241b2b"
+    },
+    {
+      "name": "spinner-c30-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "4da9b108751d8a7046f56ee91b4ed30d0b60f061086c6527c25843e729205d66"
+    },
+    {
+      "name": "spinner-c31-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 1,
+      "sha256": "861f5a9245e54c8fd3ea61b20f46c5973cd64f2e82a4bc108a8677eda12dcbac"
+    },
+    {
+      "name": "spinner-c32-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "1b78cacd2f84aadd357cf1e1542a5c591130b5b72fa5c8bed0b4f57c13121ec3"
+    },
+    {
+      "name": "spinner-c33-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "748ea2ecddc71b52d1c0426b82c5dfe384cf7b254aa4a04098319801b288d155"
+    },
+    {
+      "name": "spinner-c34-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "a7932976a6d6727222cfdc6a6bd7fe08ab3e8d5aae24402b668127cb05b8e659"
+    },
+    {
+      "name": "spinner-c35-s1.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 1,
+      "sha256": "909c545e140694e84b0f72450c35416451aed2abcee017eb64083ff458a1afcc"
+    },
+    {
+      "name": "spinner-c0-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "4d4c276c4a15e09002aab349545399c6bca9bf1697f74b624374f315cc5b4923"
+    },
+    {
+      "name": "spinner-c1-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "d8293fead96e65e293cf2fb4fd4b58b89eee571648835cc890cba68d1d1dfc98"
+    },
+    {
+      "name": "spinner-c2-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "345014ce0f1049023c773e1b4304cd1e0dbe80593284aaad045fed1d2092af57"
+    },
+    {
+      "name": "spinner-c3-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "358868f19ee715408bc0b6feba9a41ca7cb3ce91c25a3ac8b8090dd4b840ee43"
+    },
+    {
+      "name": "spinner-c4-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "4d4c276c4a15e09002aab349545399c6bca9bf1697f74b624374f315cc5b4923"
+    },
+    {
+      "name": "spinner-c5-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "d8293fead96e65e293cf2fb4fd4b58b89eee571648835cc890cba68d1d1dfc98"
+    },
+    {
+      "name": "spinner-c6-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "345014ce0f1049023c773e1b4304cd1e0dbe80593284aaad045fed1d2092af57"
+    },
+    {
+      "name": "spinner-c7-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "358868f19ee715408bc0b6feba9a41ca7cb3ce91c25a3ac8b8090dd4b840ee43"
+    },
+    {
+      "name": "spinner-c8-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "9d74f0f54db0dd072dc2da830563bc9a3a5f736d9a229a1a637063c8df706e55"
+    },
+    {
+      "name": "spinner-c9-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "a32053ff379973a016c090a8d71d7a5783218960d3226e85b4e9af4bec467ec2"
+    },
+    {
+      "name": "spinner-c10-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "f5ac09225024e143741df5899b63fcbdc369d526d307f999b02b3f630faa7af7"
+    },
+    {
+      "name": "spinner-c11-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "898f1872b7e6972d829973c9c9b47648044835542889c798a95fa352cbbbdc8c"
+    },
+    {
+      "name": "spinner-c12-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "9d74f0f54db0dd072dc2da830563bc9a3a5f736d9a229a1a637063c8df706e55"
+    },
+    {
+      "name": "spinner-c13-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "a32053ff379973a016c090a8d71d7a5783218960d3226e85b4e9af4bec467ec2"
+    },
+    {
+      "name": "spinner-c14-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "f5ac09225024e143741df5899b63fcbdc369d526d307f999b02b3f630faa7af7"
+    },
+    {
+      "name": "spinner-c15-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "898f1872b7e6972d829973c9c9b47648044835542889c798a95fa352cbbbdc8c"
+    },
+    {
+      "name": "spinner-c16-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "043351f3af5adb3555c71bf578c3059a3d75812fa52e3d42b3a45e8672fb4865"
+    },
+    {
+      "name": "spinner-c17-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "921ba282e8922226e2672bf72cdf6fd08cfd54162742ba84e864f4d8fddb419c"
+    },
+    {
+      "name": "spinner-c18-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "195669568f07b00e7bf14721f9e6ef7e7f777e4ab1cca484fcb90059849c5bf8"
+    },
+    {
+      "name": "spinner-c19-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "79445b5808c72b2ef88eed1c815b74b86573667e003d58f5492c9fc0b64627bb"
+    },
+    {
+      "name": "spinner-c20-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "043351f3af5adb3555c71bf578c3059a3d75812fa52e3d42b3a45e8672fb4865"
+    },
+    {
+      "name": "spinner-c21-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "921ba282e8922226e2672bf72cdf6fd08cfd54162742ba84e864f4d8fddb419c"
+    },
+    {
+      "name": "spinner-c22-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "195669568f07b00e7bf14721f9e6ef7e7f777e4ab1cca484fcb90059849c5bf8"
+    },
+    {
+      "name": "spinner-c23-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 2,
+      "sha256": "79445b5808c72b2ef88eed1c815b74b86573667e003d58f5492c9fc0b64627bb"
+    },
+    {
+      "name": "spinner-c24-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "9d74f0f54db0dd072dc2da830563bc9a3a5f736d9a229a1a637063c8df706e55"
+    },
+    {
+      "name": "spinner-c25-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "a32053ff379973a016c090a8d71d7a5783218960d3226e85b4e9af4bec467ec2"
+    },
+    {
+      "name": "spinner-c26-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "f5ac09225024e143741df5899b63fcbdc369d526d307f999b02b3f630faa7af7"
+    },
+    {
+      "name": "spinner-c27-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "898f1872b7e6972d829973c9c9b47648044835542889c798a95fa352cbbbdc8c"
+    },
+    {
+      "name": "spinner-c28-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "9d74f0f54db0dd072dc2da830563bc9a3a5f736d9a229a1a637063c8df706e55"
+    },
+    {
+      "name": "spinner-c29-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "a32053ff379973a016c090a8d71d7a5783218960d3226e85b4e9af4bec467ec2"
+    },
+    {
+      "name": "spinner-c30-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "f5ac09225024e143741df5899b63fcbdc369d526d307f999b02b3f630faa7af7"
+    },
+    {
+      "name": "spinner-c31-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 2,
+      "sha256": "898f1872b7e6972d829973c9c9b47648044835542889c798a95fa352cbbbdc8c"
+    },
+    {
+      "name": "spinner-c32-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "4d4c276c4a15e09002aab349545399c6bca9bf1697f74b624374f315cc5b4923"
+    },
+    {
+      "name": "spinner-c33-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "d8293fead96e65e293cf2fb4fd4b58b89eee571648835cc890cba68d1d1dfc98"
+    },
+    {
+      "name": "spinner-c34-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "345014ce0f1049023c773e1b4304cd1e0dbe80593284aaad045fed1d2092af57"
+    },
+    {
+      "name": "spinner-c35-s2.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 2,
+      "sha256": "358868f19ee715408bc0b6feba9a41ca7cb3ce91c25a3ac8b8090dd4b840ee43"
+    },
+    {
+      "name": "spinner-c0-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "b8ccb57822f75a57ab83959e243b842e558846860deca4471a47d742b150c6a0"
+    },
+    {
+      "name": "spinner-c1-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "1f4fe5e8225d4dfa47e09e20c4c4a2b53e91af28d4de34366d608e0cca57dd85"
+    },
+    {
+      "name": "spinner-c2-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "d3457cffa34b2100340d2dd0cb3cd15e49f857b4dc6be150567699a2261fe79f"
+    },
+    {
+      "name": "spinner-c3-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 0,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "37bce5e833fdb142b60f16236af3e7680d4649b63bd5c949a17d5ae2a6a59064"
+    },
+    {
+      "name": "spinner-c4-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "b8ccb57822f75a57ab83959e243b842e558846860deca4471a47d742b150c6a0"
+    },
+    {
+      "name": "spinner-c5-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "1f4fe5e8225d4dfa47e09e20c4c4a2b53e91af28d4de34366d608e0cca57dd85"
+    },
+    {
+      "name": "spinner-c6-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "d3457cffa34b2100340d2dd0cb3cd15e49f857b4dc6be150567699a2261fe79f"
+    },
+    {
+      "name": "spinner-c7-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 299,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "37bce5e833fdb142b60f16236af3e7680d4649b63bd5c949a17d5ae2a6a59064"
+    },
+    {
+      "name": "spinner-c8-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "afb7ca46abfca6008178569e3534c395550ea1422d406078b41095cc9529270f"
+    },
+    {
+      "name": "spinner-c9-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "32c580fd58f3208e2552cb6eaf938c16e429124277fe6b7e9af3c3496d44719b"
+    },
+    {
+      "name": "spinner-c10-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "367041128cebfc8517f2ff51d0512ae3bb3eae8163501737dca42d9927feed6b"
+    },
+    {
+      "name": "spinner-c11-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 300,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "38a769d8339810b84cd95f13578f9a1d82bc954a97b00a7a801f202d9bc69f7a"
+    },
+    {
+      "name": "spinner-c12-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "afb7ca46abfca6008178569e3534c395550ea1422d406078b41095cc9529270f"
+    },
+    {
+      "name": "spinner-c13-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "32c580fd58f3208e2552cb6eaf938c16e429124277fe6b7e9af3c3496d44719b"
+    },
+    {
+      "name": "spinner-c14-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 3,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "367041128cebfc8517f2ff51d0512ae3bb3eae8163501737dca42d9927feed6b"
+    },
+    {
+      "name": "spinner-c15-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 3,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 599,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "38a769d8339810b84cd95f13578f9a1d82bc954a97b00a7a801f202d9bc69f7a"
+    },
+    {
+      "name": "spinner-c16-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "58f75b9f22c26991cfa41d1e70311faebc0b33aeb875ac6e33d15f37242fc47d"
+    },
+    {
+      "name": "spinner-c17-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "b795e3261ecc086f7178be74bc1cb567c98fab4646badcc12a763eea66ff945b"
+    },
+    {
+      "name": "spinner-c18-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 4,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "338c7a3cff93a7cca333fbb92f97cbe889cf19acd72e74d8af9e93de01f5aac6"
+    },
+    {
+      "name": "spinner-c19-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 4,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 600,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "faf0ff60e43315d65a1622f7289165b141bb214f5a3e836a1610b18e297e7d12"
+    },
+    {
+      "name": "spinner-c20-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "58f75b9f22c26991cfa41d1e70311faebc0b33aeb875ac6e33d15f37242fc47d"
+    },
+    {
+      "name": "spinner-c21-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "b795e3261ecc086f7178be74bc1cb567c98fab4646badcc12a763eea66ff945b"
+    },
+    {
+      "name": "spinner-c22-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 5,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "338c7a3cff93a7cca333fbb92f97cbe889cf19acd72e74d8af9e93de01f5aac6"
+    },
+    {
+      "name": "spinner-c23-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 5,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 899,
+      "renderedLines": [
+        "o o O"
+      ],
+      "scale": 3,
+      "sha256": "faf0ff60e43315d65a1622f7289165b141bb214f5a3e836a1610b18e297e7d12"
+    },
+    {
+      "name": "spinner-c24-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "afb7ca46abfca6008178569e3534c395550ea1422d406078b41095cc9529270f"
+    },
+    {
+      "name": "spinner-c25-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "32c580fd58f3208e2552cb6eaf938c16e429124277fe6b7e9af3c3496d44719b"
+    },
+    {
+      "name": "spinner-c26-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 6,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "367041128cebfc8517f2ff51d0512ae3bb3eae8163501737dca42d9927feed6b"
+    },
+    {
+      "name": "spinner-c27-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 6,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 900,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "38a769d8339810b84cd95f13578f9a1d82bc954a97b00a7a801f202d9bc69f7a"
+    },
+    {
+      "name": "spinner-c28-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "afb7ca46abfca6008178569e3534c395550ea1422d406078b41095cc9529270f"
+    },
+    {
+      "name": "spinner-c29-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "32c580fd58f3208e2552cb6eaf938c16e429124277fe6b7e9af3c3496d44719b"
+    },
+    {
+      "name": "spinner-c30-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 7,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "367041128cebfc8517f2ff51d0512ae3bb3eae8163501737dca42d9927feed6b"
+    },
+    {
+      "name": "spinner-c31-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 7,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1199,
+      "renderedLines": [
+        "o O o"
+      ],
+      "scale": 3,
+      "sha256": "38a769d8339810b84cd95f13578f9a1d82bc954a97b00a7a801f202d9bc69f7a"
+    },
+    {
+      "name": "spinner-c32-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "b8ccb57822f75a57ab83959e243b842e558846860deca4471a47d742b150c6a0"
+    },
+    {
+      "name": "spinner-c33-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 26,
+      "height": 9,
+      "x": 16,
+      "y": 80,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "1f4fe5e8225d4dfa47e09e20c4c4a2b53e91af28d4de34366d608e0cca57dd85"
+    },
+    {
+      "name": "spinner-c34-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 144,
+      "page": 8,
+      "label": "",
+      "background": "#202020",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "d3457cffa34b2100340d2dd0cb3cd15e49f857b4dc6be150567699a2261fe79f"
+    },
+    {
+      "name": "spinner-c35-s3.png",
+      "element": "spinner",
+      "state": "normal",
+      "width": 34,
+      "height": 9,
+      "x": 16,
+      "y": 208,
+      "page": 8,
+      "label": "",
+      "background": "#596c80",
+      "timeMs": 1200,
+      "renderedLines": [
+        "O o o"
+      ],
+      "scale": 3,
+      "sha256": "37bce5e833fdb142b60f16236af3e7680d4649b63bd5c949a17d5ae2a6a59064"
+    }
+  ],
+  "sourceDirectory": "source"
+}

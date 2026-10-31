@@ -1,0 +1,10 @@
+@layer components {
+ .mc-input-group {display:inline-flex;align-items:center;gap:calc(4px * var(--mc-scale,2));max-width:100%;box-sizing:border-box;}
+ .mc-input-group-control {flex:1 1 auto;min-width:0;}
+ .mc-input-group-addon {display:flex;align-items:center;gap:calc(4px * var(--mc-scale,2));cursor:text;}
+ .mc-input-group-addon[data-align="inline-start"],.mc-input-group-addon[data-align="block-start"] {order:-1;}
+ .mc-input-group-addon[data-align="inline-end"],.mc-input-group-addon[data-align="block-end"] {order:1;}
+ .mc-input-group-addon:is([data-align="block-start"],[data-align="block-end"]) {width:100%;}
+ .mc-input-group:has(>.mc-input-group-addon:is([data-align="block-start"],[data-align="block-end"])) {flex-direction:column;align-items:stretch;}
+ .mc-input-group-text {flex:none;}
+}

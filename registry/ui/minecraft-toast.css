@@ -1,0 +1,21 @@
+@layer components {
+ .mc-toast-viewport {position:fixed;top:0;right:0;display:flex;flex-direction:column;gap:0;max-width:100vw;margin:0;padding:0;list-style:none;outline:0;z-index:100;overflow:hidden;}
+ .mc-system-toast {position:relative;box-sizing:border-box;flex-shrink:0;overflow:hidden;list-style:none;padding:0;border:0;border-radius:0;outline:0;background:transparent;color:white;font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8px * var(--mc-scale,2));line-height:calc(12px * var(--mc-scale,2));}
+ .mc-toast-art {position:absolute;left:0;top:0;width:100%;pointer-events:none;}
+ .mc-toast-title {color:#ffff00;}
+ .mc-toast-title,.mc-toast-description {white-space:pre-wrap;margin:0;padding:0;}
+ .mc-system-toast:has([data-mc-toast-ready="true"]) [data-slot="toast-title"],.mc-system-toast:has([data-mc-toast-ready="true"]) [data-slot="toast-description"] {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+ .mc-system-toast>[data-slot="toast-action"],.mc-system-toast>[data-slot="toast-close"] {position:absolute;top:calc((var(--mc-toast-height) + 6) * var(--mc-scale,2) * 1px);}
+ .mc-system-toast>[data-slot="toast-action"] {left:calc(18px * var(--mc-scale,2));}
+ .mc-system-toast>[data-slot="toast-close"] {right:calc(12px * var(--mc-scale,2));}
+ .mc-system-toast[data-swipe="move"] {transform:translate(var(--radix-toast-swipe-move-x),var(--radix-toast-swipe-move-y));}
+ .mc-system-toast[data-swipe="cancel"] {transform:translate(0,0);}
+ .mc-system-toast[data-mc-toast-rich="true"] {min-height:calc(32px * var(--mc-scale,2));padding:calc(7px * var(--mc-scale,2)) calc(12px * var(--mc-scale,2)) calc(12px * var(--mc-scale,2)) calc(18px * var(--mc-scale,2));}
+ .mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-action"],.mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-close"] {position:relative;top:auto;left:auto;right:auto;margin-top:calc(6px * var(--mc-scale,2));}
+}
+@layer utilities {
+ /* Button's public helper includes the relative utility; the toast footer owns
+    these controls' positioning while ordinary consumer inline styles still win. */
+ .mc-system-toast>[data-slot="toast-action"],.mc-system-toast>[data-slot="toast-close"] {position:absolute;}
+ .mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-action"],.mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-close"] {position:relative;}
+}

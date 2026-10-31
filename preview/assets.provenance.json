@@ -1,0 +1,17 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/menu_background.png": {
+      "sha256": "515f7821d6bea28de86e607f6a53011e658d00a121179bb980719f39ac62df51",
+      "embeddedBytes": "unchanged"
+    },
+    "assets/minecraft/textures/gui/header_separator.png": {
+      "sha256": "5f7074d9a35e6a06b3cbba879532ac92b2a66ef6a15888e59dae9c5ae0795931",
+      "embeddedBytes": "unchanged"
+    },
+    "assets/minecraft/textures/gui/footer_separator.png": {
+      "sha256": "31d9ea715f2974218ae0a1ded741edb0889b4515933754c54912c9f275ba6ff3",
+      "embeddedBytes": "unchanged"
+    }
+  }
+}

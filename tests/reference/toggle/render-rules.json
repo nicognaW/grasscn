@@ -1,0 +1,25 @@
+{
+  "artifactVersion": "Minecraft Java26.2",
+  "nativeClass": "CycleButton<Boolean>",
+  "factory": "RecipeBookComponent.initVisuals; CraftingRecipeBookComponent.getFilterButtonTextures",
+  "logicalDimensions": {
+    "width": 26,
+    "height": 16
+  },
+  "displayState": "HIDE",
+  "sprites": {
+    "false": "recipe_book/filter_disabled",
+    "true": "recipe_book/filter_enabled",
+    "highlighted": "WidgetSprites.get(value,button.isHoveredOrFocused())"
+  },
+  "statePrecedence": "Native hover/focus highlighting applies even when active=false; captured disabled-hover cases establish this. Texture names enabled/disabled indicate filtering state, not interactivity.",
+  "sampling": "Opaque original26\u00d716 texture at integer GUI scale1\u20133; nearest sampling.",
+  "audio": {
+    "event": "ui.button.click",
+    "trigger": "AbstractWidget mouseClicked / AbstractButton keyPressed; CycleButton inherits button activation",
+    "assetEvidence": "tests/reference/sound-provenance.json",
+    "pitch": 1,
+    "gain": 0.25
+  },
+  "composition": "Original filter icon persists beside optional consumer children. Custom children/layout have no claimed native match. Browser focus uses focus-visible; hover matches original isHoveredOrFocused."
+}

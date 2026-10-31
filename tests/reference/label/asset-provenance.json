@@ -1,0 +1,23 @@
+{
+  "assetIndex": "32",
+  "locale": "en_us / Japanese glyph filter disabled",
+  "sources": {
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be"
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7"
+    }
+  },
+  "glyphCount": 48143,
+  "glyphAtlasSha256": "38fb601a6d0c4a9437c3b7594bb902c266bb928c26ef5d5d6d845f58bd5de4e7",
+  "glyphProbeSourceSha256": "c8d13e3f9808014b181834e6097803f0a27642d193f30043734b2268dc56d34e",
+  "rendering": "Original indexed Unihex pixels and size overrides; oversample2, shadow offset0.5, native 0.01-texel inset and observed default-font UVs for the tested glyphs. GPU projection uses the actual input screen position and viewport. Advance-only font preserves native DOM hit-testing. Other CJK glyphs retain original pixels but their atlas sampling is unverified.",
+  "glyphProbeSource": "tests/reference/label/glyph-probe/source/ControlsReferenceMain.java",
+  "glyphAtlasCaptureManifest": "glyph-probe/manifest.json",
+  "glyphAtlasCaptureManifestSha256": "34237105ef4bace0d851ec1a49baefdf5013989398ca3e48337af403277d7211",
+  "glyphAtlasContext": "All printable ASCII precedes the first CJK glyph in this native run. Glyphs observed after original StringWidget/MultiLineTextWidget rendering. The 84 instrumented native captures have identical decoded pixels to the independent reference matrix.",
+  "glyphAtlasObservationFile": "glyph-probe/glyphs-p1.json"
+}

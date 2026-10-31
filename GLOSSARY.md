@@ -1,4 +1,4 @@
-# Minecraft UI Registry
+# grasscn
 
 A shadcn components registry with the visual appearance of Minecraft Java's vanilla interface.
 

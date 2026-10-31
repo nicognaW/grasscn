@@ -1,0 +1,1988 @@
+{
+  "component": "radio-group",
+  "manifest": "tests/reference/radio-group/manifest.json",
+  "targetReport": "tests/reference/radio-group/installation-verification.json",
+  "dryRun": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "consumerRsc": false,
+  "cliInvocation": {
+    "command": "C:\\Program Files\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
+      "add",
+      "http://127.0.0.1:5173/r/button.json",
+      "http://127.0.0.1:5173/r/checkbox.json",
+      "http://127.0.0.1:5173/r/slider.json",
+      "http://127.0.0.1:5173/r/input.json",
+      "http://127.0.0.1:5173/r/tooltip.json",
+      "http://127.0.0.1:5173/r/card.json",
+      "http://127.0.0.1:5173/r/textarea.json",
+      "http://127.0.0.1:5173/r/label.json",
+      "http://127.0.0.1:5173/r/separator.json",
+      "http://127.0.0.1:5173/r/scroll-area.json",
+      "http://127.0.0.1:5173/r/progress.json",
+      "http://127.0.0.1:5173/r/tabs.json",
+      "http://127.0.0.1:5173/r/select.json",
+      "http://127.0.0.1:5173/r/radio-group.json",
+      "http://127.0.0.1:5173/r/switch.json",
+      "http://127.0.0.1:5173/r/dialog.json",
+      "http://127.0.0.1:5173/r/alert-dialog.json",
+      "http://127.0.0.1:5173/r/popover.json",
+      "http://127.0.0.1:5173/r/dropdown-menu.json",
+      "http://127.0.0.1:5173/r/context-menu.json",
+      "http://127.0.0.1:5173/r/menubar.json",
+      "http://127.0.0.1:5173/r/collapsible.json",
+      "http://127.0.0.1:5173/r/toggle.json",
+      "http://127.0.0.1:5173/r/toggle-group.json",
+      "http://127.0.0.1:5173/r/aspect-ratio.json",
+      "http://127.0.0.1:5173/r/button-group.json",
+      "http://127.0.0.1:5173/r/pagination.json",
+      "http://127.0.0.1:5173/r/badge.json",
+      "http://127.0.0.1:5173/r/typography.json",
+      "http://127.0.0.1:5173/r/breadcrumb.json",
+      "http://127.0.0.1:5173/r/kbd.json",
+      "http://127.0.0.1:5173/r/sheet.json",
+      "http://127.0.0.1:5173/r/drawer.json",
+      "http://127.0.0.1:5173/r/empty.json",
+      "http://127.0.0.1:5173/r/resizable.json",
+      "http://127.0.0.1:5173/r/command.json",
+      "http://127.0.0.1:5173/r/sidebar.json",
+      "http://127.0.0.1:5173/r/sonner.json",
+      "http://127.0.0.1:5173/r/avatar.json",
+      "http://127.0.0.1:5173/r/input-group.json",
+      "http://127.0.0.1:5173/r/table.json",
+      "http://127.0.0.1:5173/r/calendar.json",
+      "http://127.0.0.1:5173/r/date-picker.json",
+      "http://127.0.0.1:5173/r/item.json",
+      "http://127.0.0.1:5173/r/data-table.json",
+      "http://127.0.0.1:5173/r/carousel.json",
+      "http://127.0.0.1:5173/r/message.json",
+      "http://127.0.0.1:5173/r/bubble.json",
+      "http://127.0.0.1:5173/r/form.json",
+      "http://127.0.0.1:5173/r/field.json",
+      "http://127.0.0.1:5173/r/code-block.json",
+      "http://127.0.0.1:5173/r/chart.json",
+      "http://127.0.0.1:5173/r/trace.json",
+      "http://127.0.0.1:5173/r/message-scroller.json",
+      "http://127.0.0.1:5173/r/skeleton.json",
+      "http://127.0.0.1:5173/r/spinner.json",
+      "http://127.0.0.1:5173/r/native-select.json",
+      "http://127.0.0.1:5173/r/marker.json",
+      "http://127.0.0.1:5173/r/input-otp.json",
+      "http://127.0.0.1:5173/r/questionnaire.json",
+      "http://127.0.0.1:5173/r/attachment.json",
+      "http://127.0.0.1:5173/r/combobox.json",
+      "--yes",
+      "--overwrite"
+    ],
+    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+    "startedAt": "2026-10-30T05:39:50.242Z",
+    "exitCode": 0,
+    "finishedAt": "2026-10-30T05:39:57.589Z"
+  },
+  "frozenBundle": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
+    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+  },
+  "files": [
+    {
+      "path": "minecraft-sound.ts",
+      "sourcePath": "registry/ui/minecraft-sound.ts",
+      "installedPath": "src/components/ui/minecraft-sound.ts",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
+      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-checkbox.css",
+      "sourcePath": "registry/ui/minecraft-checkbox.css",
+      "installedPath": "src/components/ui/minecraft-checkbox.css",
+      "sourceSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
+      "installedSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-control-assets.css",
+      "sourcePath": "registry/ui/minecraft-control-assets.css",
+      "installedPath": "src/components/ui/minecraft-control-assets.css",
+      "sourceSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
+      "installedSha256": "63a88789ebb8baef5eb3dd08b7d6822a2a3c557bf40862d8f44035d96278fc1b",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "radio-group.tsx",
+      "sourcePath": "registry/ui/radio-group.tsx",
+      "installedPath": "src/components/ui/radio-group.tsx",
+      "sourceSha256": "248cc9dd4715fd48f8b803e4ea30846d94d3a55a1fd2789a72c8670d0c4ba3cf",
+      "installedSha256": "eb22847a7df07b3f251dc7423560964710afa5095ddeb0bbb075b62c4131f7fd",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-radio-group.css",
+      "sourcePath": "registry/ui/minecraft-radio-group.css",
+      "installedPath": "src/components/ui/minecraft-radio-group.css",
+      "sourceSha256": "76f138acf53cb94ad94db881ce22080cffa714931070bfa53d7e0cac20dbf278",
+      "installedSha256": "76f138acf53cb94ad94db881ce22080cffa714931070bfa53d7e0cac20dbf278",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    }
+  ],
+  "typecheck": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "pageErrorEvidence": {
+    "status": "separate-pinned-gallery-audit",
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
+    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
+    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
+    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+    "pageErrors": [],
+    "browser": "156.0.4314.50"
+  },
+  "cases": [
+    {
+      "name": "radio-group-c0-s1.png",
+      "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c0-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-f7f545c6f79565040cd9",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c0-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+        "pngSha256": "61b5b46c7caed37aa92c5dffe61fcaf966aa2a24a06163ad73c1cd5548b605d1",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c1-s1.png",
+      "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c1-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-bbc726dfab85c6a4bbd7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c1-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+        "pngSha256": "105dd376ffeef26eaab0c34a6b05ff839a21d1f0d16437a7acee1e7cfe14ee9f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c2-s1.png",
+      "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c2-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c2-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-93c721328cc876c43eb6",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c2-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c2-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+        "pngSha256": "61b5b46c7caed37aa92c5dffe61fcaf966aa2a24a06163ad73c1cd5548b605d1",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c3-s1.png",
+      "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c3-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c3-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-096d6c40c05c8e9a29ac",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c3-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c3-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+        "pngSha256": "105dd376ffeef26eaab0c34a6b05ff839a21d1f0d16437a7acee1e7cfe14ee9f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c4-s1.png",
+      "decodedRgbaSha256": "7a5a25e283d5f02bbb0df77111d30e312b9514cdb7da1dd29cf7385b9253545a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c4-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c4-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-8f515aa35cf1582f18ff",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c4-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c4-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7a5a25e283d5f02bbb0df77111d30e312b9514cdb7da1dd29cf7385b9253545a",
+        "pngSha256": "6431eae8e9ca6e06a9859b887013736159c012b2e7278c40811074e809c09967",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c5-s1.png",
+      "decodedRgbaSha256": "9fe34edde2c2c104dc0d1e9eb71b6bf4974f7b42ef2fffc0e45da52f105cb5e4",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c5-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c5-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-e6f8dcde48ddab195ca8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c5-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c5-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "9fe34edde2c2c104dc0d1e9eb71b6bf4974f7b42ef2fffc0e45da52f105cb5e4",
+        "pngSha256": "a0fd6c22efd657cb21d5d40cd9feed94d705d826224d95792d833fef2714ce8d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c6-s1.png",
+      "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c6-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c6-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-5a0f9bfe950fcb88695c",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c6-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c6-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "df55085f37439de9bca6c36f81c0737bf7ffc865771f60fe027ec5eccd9c3144",
+        "pngSha256": "61b5b46c7caed37aa92c5dffe61fcaf966aa2a24a06163ad73c1cd5548b605d1",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c7-s1.png",
+      "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c7-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c7-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-1d2825e216f4174469d0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c7-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c7-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2dc831940410bc6347500ee25d06cd26a222dc4951e819ace0ca404fed29255a",
+        "pngSha256": "105dd376ffeef26eaab0c34a6b05ff839a21d1f0d16437a7acee1e7cfe14ee9f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c8-s1.png",
+      "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c8-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c8-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-92bccc1ce2f9b2e079e7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c8-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c8-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+        "pngSha256": "af20268880ad0be161b53943cd5a8232508dd27541182a90fbe4f87255db9e53",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c9-s1.png",
+      "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c9-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c9-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-a8006141bb76287c180d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c9-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c9-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+        "pngSha256": "c6d35001fa25712bd0b6fbfe69642f706e94467f247764f03f4f75dae6bee936",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c10-s1.png",
+      "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c10-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c10-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-0599df1aba08b76a08e6",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c10-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c10-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+        "pngSha256": "af20268880ad0be161b53943cd5a8232508dd27541182a90fbe4f87255db9e53",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c11-s1.png",
+      "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c11-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c11-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-8a3ab4d9030023eb80c7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c11-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c11-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+        "pngSha256": "c6d35001fa25712bd0b6fbfe69642f706e94467f247764f03f4f75dae6bee936",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c12-s1.png",
+      "decodedRgbaSha256": "f972154403f4a523389345f7ddbfafc8b97d71900be8e0739219352445c975c5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c12-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c12-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-ba911860f8fd1700b695",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c12-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c12-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f972154403f4a523389345f7ddbfafc8b97d71900be8e0739219352445c975c5",
+        "pngSha256": "81c5a6a087a59b069428ec49af9722020ed8c7bed4b7f144c4b6fec17c5b4cb8",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c13-s1.png",
+      "decodedRgbaSha256": "329eb61d871493975d59a775d47607ea464c438a1b47a86e812cdfe1d695ba81",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c13-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c13-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-09ffb87a9b46ae23f5dc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c13-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c13-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "329eb61d871493975d59a775d47607ea464c438a1b47a86e812cdfe1d695ba81",
+        "pngSha256": "eab8580df73a261a5055b5f0617e6e77531a9845476ee04f78749a1245fe161a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c14-s1.png",
+      "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c14-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c14-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-7f677a52615f576cee73",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c14-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c14-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "80b3b37c17f1a29e715802cf7ece6c60a2ed39a939080076a40cb80233fbe94b",
+        "pngSha256": "af20268880ad0be161b53943cd5a8232508dd27541182a90fbe4f87255db9e53",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c15-s1.png",
+      "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c15-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c15-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 357,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "1"
+        },
+        "testId": "9bdccec3c9387acffe40-9538c90529f34c30e939",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=1",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c15-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c15-s1.png",
+        "width": 21,
+        "height": 17,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f91a51ea663366e173a455befddbd193674f16148e3f64bc7b9b88d01a9cc33f",
+        "pngSha256": "c6d35001fa25712bd0b6fbfe69642f706e94467f247764f03f4f75dae6bee936",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c0-s2.png",
+      "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c0-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-6532874d630a94aa5487",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c0-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+        "pngSha256": "c9f02a87ab095423f1acc621b1722e200fa29d0b796a3e593703a348441edcaa",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c1-s2.png",
+      "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c1-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-3ab2f2b0321cfb843d21",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c1-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+        "pngSha256": "dc184f9ee19d8a68def25a411d8a651e29baa5fbc2c7085ac0f52efe588dfc94",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c2-s2.png",
+      "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c2-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c2-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-64e9c4d2e7b0c04183d0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c2-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c2-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+        "pngSha256": "c9f02a87ab095423f1acc621b1722e200fa29d0b796a3e593703a348441edcaa",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c3-s2.png",
+      "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c3-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c3-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-2f8e9024a58e32840b6c",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c3-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c3-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+        "pngSha256": "dc184f9ee19d8a68def25a411d8a651e29baa5fbc2c7085ac0f52efe588dfc94",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c4-s2.png",
+      "decodedRgbaSha256": "456493260146247a4921935e042736bfadb9d068e5eaaa606b70b420ece2b98c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c4-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c4-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-a91abf2b907884172c82",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c4-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c4-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "456493260146247a4921935e042736bfadb9d068e5eaaa606b70b420ece2b98c",
+        "pngSha256": "d43d9edd2e3048c5014149d6b893d4c4d10f00f17c76d78657b8bf294f48edf9",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c5-s2.png",
+      "decodedRgbaSha256": "7505ceb590200771357221c6a7fee3fa14a95c1951e91f3447683254f2278e24",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c5-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c5-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-bf731abb94f174633ef1",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c5-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c5-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7505ceb590200771357221c6a7fee3fa14a95c1951e91f3447683254f2278e24",
+        "pngSha256": "d1063ff983dbe0e07e809b4634b0610089a1e4e266c4f6c3e01df2bf39ee5d79",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c6-s2.png",
+      "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c6-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c6-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-3b926b445c34ec6ded5d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c6-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c6-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d54dbd70e65d2c23ce04d057b8b55b185e7dc067ca6e0661ad617dd952447083",
+        "pngSha256": "c9f02a87ab095423f1acc621b1722e200fa29d0b796a3e593703a348441edcaa",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c7-s2.png",
+      "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c7-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c7-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-24be7a3dfb84f7eb3b97",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c7-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c7-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fe90d950c81c532c187d47361b55c49155e02e8c320ca9fa12c1b43f2349df4a",
+        "pngSha256": "dc184f9ee19d8a68def25a411d8a651e29baa5fbc2c7085ac0f52efe588dfc94",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c8-s2.png",
+      "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c8-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c8-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-8ab24e02cb419e48634f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c8-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c8-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+        "pngSha256": "f6d995724e4a0195ff7862bde3969c01bbdb54b3180a2b3f46a73eae3418fcf0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c9-s2.png",
+      "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c9-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c9-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-2e22bc8f79f23c0356f0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c9-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c9-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+        "pngSha256": "a9423d8a766bb81f431dcafc9b22c5cde107c0a4300b4b513468ff8704e3f09a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c10-s2.png",
+      "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c10-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c10-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-9d49de129febb6aba2ac",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c10-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c10-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+        "pngSha256": "f6d995724e4a0195ff7862bde3969c01bbdb54b3180a2b3f46a73eae3418fcf0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c11-s2.png",
+      "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c11-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c11-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-3e17ec42fa069a460b88",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c11-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c11-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+        "pngSha256": "a9423d8a766bb81f431dcafc9b22c5cde107c0a4300b4b513468ff8704e3f09a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c12-s2.png",
+      "decodedRgbaSha256": "18860a2410fd35bdeaba7c7e3a05dd7bd117d680a7a65deddfe420e5ce37b378",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c12-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c12-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-eb920a9db2b832641520",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c12-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c12-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "18860a2410fd35bdeaba7c7e3a05dd7bd117d680a7a65deddfe420e5ce37b378",
+        "pngSha256": "aa5a7c0fe50b14cde081f0030a839b410f15da9d52817c4c6216bcff04fb290c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c13-s2.png",
+      "decodedRgbaSha256": "9f2feac85b47448781a6b07dced6e87fc66975eb7d594f45bbdf6be816d76cc1",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c13-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c13-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-fee6aeb51619d277e17e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c13-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c13-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "9f2feac85b47448781a6b07dced6e87fc66975eb7d594f45bbdf6be816d76cc1",
+        "pngSha256": "fb745a18128242c205479b68b7a4000e06a3ff2b4cdc76b1d872469de0aebf8f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c14-s2.png",
+      "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c14-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c14-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-9fc6281063f5da95717f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c14-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c14-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4d29fa476121f5bfdd2d7e4bcd07483eabd5000212ebff414b2a60080b09bd74",
+        "pngSha256": "f6d995724e4a0195ff7862bde3969c01bbdb54b3180a2b3f46a73eae3418fcf0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c15-s2.png",
+      "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c15-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c15-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1428,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "2"
+        },
+        "testId": "9bdccec3c9387acffe40-869887e489ec753d7289",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=2",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c15-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c15-s2.png",
+        "width": 42,
+        "height": 34,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "6b3e2d5e9a6b267ed5186057a83ee30284a8d35b2ae213be1795f4f290dd8cb5",
+        "pngSha256": "a9423d8a766bb81f431dcafc9b22c5cde107c0a4300b4b513468ff8704e3f09a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c0-s3.png",
+      "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c0-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-7f7c66d5312e41aace55",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c0-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+        "pngSha256": "743e6e00dfb3bd274d5b8e3ecde7dfb1c14d56dfa43f5fe29dfae96c4c8a0069",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c1-s3.png",
+      "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c1-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "normal",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-66c5fd7c09e5de74ab24",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=normal&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c1-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+        "pngSha256": "5475a5483ffbe3f1479fee5bc97cf0bd861305d273d0ef0b165f3dd32708b1bf",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c2-s3.png",
+      "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c2-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c2-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-80158095cab30b0ccb92",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c2-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c2-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+        "pngSha256": "743e6e00dfb3bd274d5b8e3ecde7dfb1c14d56dfa43f5fe29dfae96c4c8a0069",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c3-s3.png",
+      "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c3-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c3-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "hover",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-4124ceb5466640d45e72",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=hover&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c3-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c3-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+        "pngSha256": "5475a5483ffbe3f1479fee5bc97cf0bd861305d273d0ef0b165f3dd32708b1bf",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c4-s3.png",
+      "decodedRgbaSha256": "c5fba31a4945ec830937a365677528e4bd38256da1015493b89aaf865bd1135b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c4-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c4-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-80e177dbaf49676216ce",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c4-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c4-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c5fba31a4945ec830937a365677528e4bd38256da1015493b89aaf865bd1135b",
+        "pngSha256": "1ec1c9e2222c530e99420f2d91723e0eca9916b393e7deb5e3100ade0d44f589",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c5-s3.png",
+      "decodedRgbaSha256": "7b373eec43f2f90d4a671b36fd5db6ac7b7973eec259039d8b0469e400f3add3",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c5-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c5-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "focus",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-e9b68f201ea25ee24145",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=focus&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c5-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c5-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7b373eec43f2f90d4a671b36fd5db6ac7b7973eec259039d8b0469e400f3add3",
+        "pngSha256": "3b09c7a587bdbcf7372492c29f2483644ce82586283b533e111ae2c0913fefdb",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c6-s3.png",
+      "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c6-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c6-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-2b5572a14d7858f646a1",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c6-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c6-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2cb3e9040133d5b9cfc0a3fcd5b426811d3e3653d590bc59b295d64ffa0f6d72",
+        "pngSha256": "743e6e00dfb3bd274d5b8e3ecde7dfb1c14d56dfa43f5fe29dfae96c4c8a0069",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c7-s3.png",
+      "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c7-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c7-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "false",
+          "state": "disabled",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-aa5152858cf97804a5dc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=false&state=disabled&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c7-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c7-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dd0d5a43076a1dd734a922f8b9254aa333abb68d45c0ab2a86ef1eb07b8aa6cf",
+        "pngSha256": "5475a5483ffbe3f1479fee5bc97cf0bd861305d273d0ef0b165f3dd32708b1bf",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c8-s3.png",
+      "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c8-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c8-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-c41680a649a1783890e3",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c8-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c8-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+        "pngSha256": "6adbadae7e550fcf4d0c90037af86158b9ecd9a3d480b0f987ab4c075baec596",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c9-s3.png",
+      "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c9-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c9-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "normal",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-c4d224c8be97e96d46bd",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=normal&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c9-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c9-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+        "pngSha256": "42ceda10633cbe1d1e5ea28fa04aa8df1a7932e45fecb395a3d064e599c365d2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c10-s3.png",
+      "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c10-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c10-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-3ec9d0f1c8ca01b9a7ef",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c10-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c10-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+        "pngSha256": "6adbadae7e550fcf4d0c90037af86158b9ecd9a3d480b0f987ab4c075baec596",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c11-s3.png",
+      "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c11-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c11-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "hover",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-f38a8dc7c3ea5966d035",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=hover&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c11-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c11-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+        "pngSha256": "42ceda10633cbe1d1e5ea28fa04aa8df1a7932e45fecb395a3d064e599c365d2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c12-s3.png",
+      "decodedRgbaSha256": "03b4f65f4f60b4ecb2ae785dcb3dbf3a3f83bd531bc0c074a4459c8004179d76",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c12-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c12-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-1ffe482c7b6fe51011c8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c12-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c12-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "03b4f65f4f60b4ecb2ae785dcb3dbf3a3f83bd531bc0c074a4459c8004179d76",
+        "pngSha256": "01786c83b6d81150d6bee4ba37153b9adf06b8df789a51ccb3cabe4e82d0701e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c13-s3.png",
+      "decodedRgbaSha256": "a09a13d61817f2656bbd98601fe6edb0ece6c6b05cf1e92ba443203e75c553a6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c13-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c13-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "focus",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-cd464251a57a8fb3b7c2",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=focus&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c13-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c13-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a09a13d61817f2656bbd98601fe6edb0ece6c6b05cf1e92ba443203e75c553a6",
+        "pngSha256": "9c986b5671db13263b34f855a6c7ed244536f3af4fdb96ef4005f26d529aa68f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c14-s3.png",
+      "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c14-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c14-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-1e662609ababdde3b2ca",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c14-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c14-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e0aad9de0c50639d2bde7fa3cfa5a5868c88b7abab2c0c2679061ba0071606e8",
+        "pngSha256": "6adbadae7e550fcf4d0c90037af86158b9ecd9a3d480b0f987ab4c075baec596",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "radio-group-c15-s3.png",
+      "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "radio-group",
+        "manifest": "tests/reference/radio-group/manifest.json",
+        "case": "radio-group-c15-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "radio-group-c15-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3213,
+          "tolerance": 0,
+          "component": "radio-group"
+        },
+        "query": {
+          "component": "radio-group-item",
+          "checked": "true",
+          "state": "disabled",
+          "scale": "3"
+        },
+        "testId": "9bdccec3c9387acffe40-d107618bb8fc775c062d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=radio-group-item&checked=true&state=disabled&scale=3",
+        "subjectSlot": "radio-group-item",
+        "subjectElement": "BUTTON",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\radio-group-Radio-Group-native-pixels-radio-group-c15-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\radio-group\\captures\\radio-group-c15-s3.png",
+        "width": 63,
+        "height": 51,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7740bb89ae746346ec2dc36c7991b1afc446912c18bb45c5b30b78e51bbd5ef7",
+        "pngSha256": "42ceda10633cbe1d1e5ea28fa04aa8df1a7932e45fecb395a3d064e599c365d2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    }
+  ],
+  "appliedAt": "2026-10-30T06:30:04.577Z",
+  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
+  "pageErrors": [],
+  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+  "browser": "156.0.4314.50"
+}

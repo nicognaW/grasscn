@@ -1,0 +1,4241 @@
+{
+  "component": "separator",
+  "manifest": "tests/reference/separator/manifest.json",
+  "targetReport": "tests/reference/separator/installation-verification.json",
+  "dryRun": false,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "consumerRsc": false,
+  "cliInvocation": {
+    "command": "C:\\Program Files\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
+      "add",
+      "http://127.0.0.1:5173/r/button.json",
+      "http://127.0.0.1:5173/r/checkbox.json",
+      "http://127.0.0.1:5173/r/slider.json",
+      "http://127.0.0.1:5173/r/input.json",
+      "http://127.0.0.1:5173/r/tooltip.json",
+      "http://127.0.0.1:5173/r/card.json",
+      "http://127.0.0.1:5173/r/textarea.json",
+      "http://127.0.0.1:5173/r/label.json",
+      "http://127.0.0.1:5173/r/separator.json",
+      "http://127.0.0.1:5173/r/scroll-area.json",
+      "http://127.0.0.1:5173/r/progress.json",
+      "http://127.0.0.1:5173/r/tabs.json",
+      "http://127.0.0.1:5173/r/select.json",
+      "http://127.0.0.1:5173/r/radio-group.json",
+      "http://127.0.0.1:5173/r/switch.json",
+      "http://127.0.0.1:5173/r/dialog.json",
+      "http://127.0.0.1:5173/r/alert-dialog.json",
+      "http://127.0.0.1:5173/r/popover.json",
+      "http://127.0.0.1:5173/r/dropdown-menu.json",
+      "http://127.0.0.1:5173/r/context-menu.json",
+      "http://127.0.0.1:5173/r/menubar.json",
+      "http://127.0.0.1:5173/r/collapsible.json",
+      "http://127.0.0.1:5173/r/toggle.json",
+      "http://127.0.0.1:5173/r/toggle-group.json",
+      "http://127.0.0.1:5173/r/aspect-ratio.json",
+      "http://127.0.0.1:5173/r/button-group.json",
+      "http://127.0.0.1:5173/r/pagination.json",
+      "http://127.0.0.1:5173/r/badge.json",
+      "http://127.0.0.1:5173/r/typography.json",
+      "http://127.0.0.1:5173/r/breadcrumb.json",
+      "http://127.0.0.1:5173/r/kbd.json",
+      "http://127.0.0.1:5173/r/sheet.json",
+      "http://127.0.0.1:5173/r/drawer.json",
+      "http://127.0.0.1:5173/r/empty.json",
+      "http://127.0.0.1:5173/r/resizable.json",
+      "http://127.0.0.1:5173/r/command.json",
+      "http://127.0.0.1:5173/r/sidebar.json",
+      "http://127.0.0.1:5173/r/sonner.json",
+      "http://127.0.0.1:5173/r/avatar.json",
+      "http://127.0.0.1:5173/r/input-group.json",
+      "http://127.0.0.1:5173/r/table.json",
+      "http://127.0.0.1:5173/r/calendar.json",
+      "http://127.0.0.1:5173/r/date-picker.json",
+      "http://127.0.0.1:5173/r/item.json",
+      "http://127.0.0.1:5173/r/data-table.json",
+      "http://127.0.0.1:5173/r/carousel.json",
+      "http://127.0.0.1:5173/r/message.json",
+      "http://127.0.0.1:5173/r/bubble.json",
+      "http://127.0.0.1:5173/r/form.json",
+      "http://127.0.0.1:5173/r/field.json",
+      "http://127.0.0.1:5173/r/code-block.json",
+      "http://127.0.0.1:5173/r/chart.json",
+      "http://127.0.0.1:5173/r/trace.json",
+      "http://127.0.0.1:5173/r/message-scroller.json",
+      "http://127.0.0.1:5173/r/skeleton.json",
+      "http://127.0.0.1:5173/r/spinner.json",
+      "http://127.0.0.1:5173/r/native-select.json",
+      "http://127.0.0.1:5173/r/marker.json",
+      "http://127.0.0.1:5173/r/input-otp.json",
+      "http://127.0.0.1:5173/r/questionnaire.json",
+      "http://127.0.0.1:5173/r/attachment.json",
+      "http://127.0.0.1:5173/r/combobox.json",
+      "--yes",
+      "--overwrite"
+    ],
+    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+    "startedAt": "2026-10-30T05:39:50.242Z",
+    "exitCode": 0,
+    "finishedAt": "2026-10-30T05:39:57.589Z"
+  },
+  "frozenBundle": {
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
+    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+  },
+  "files": [
+    {
+      "path": "separator.tsx",
+      "sourcePath": "registry/ui/separator.tsx",
+      "installedPath": "src/components/ui/separator.tsx",
+      "sourceSha256": "a89fbce9cdbc85b53e3beb2b31bfdccefcdfd8df51dd02e352c272806efa1441",
+      "installedSha256": "abe44a297f5a60ec409d66f022730dc8f00505e3c7815acdb027bd19ea374882",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-separator.css",
+      "sourcePath": "registry/ui/minecraft-separator.css",
+      "installedPath": "src/components/ui/minecraft-separator.css",
+      "sourceSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "installedSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    },
+    {
+      "path": "minecraft-separator-assets.ts",
+      "sourcePath": "registry/ui/minecraft-separator-assets.ts",
+      "installedPath": "src/components/ui/minecraft-separator-assets.ts",
+      "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
+      "installedSha256": "295c0a522e9adf21e9deafcaeda75b81d0ff4d28ae733d1c8d67e3c119d3347f",
+      "canonicalEqual": true,
+      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+    }
+  ],
+  "typecheck": {
+    "passed": true,
+    "exitCode": 0
+  },
+  "pageErrorEvidence": {
+    "status": "separate-pinned-gallery-audit",
+    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
+    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
+    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
+    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+    "pageErrors": [],
+    "browser": "156.0.4314.50"
+  },
+  "cases": [
+    {
+      "name": "separator-c0-s1.png",
+      "decodedRgbaSha256": "d8dfd5c03bbcceceb7af26e985ce99863c76eb951e63e8a2775b0038287e6b63",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c0-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c0-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-82bc3ab237abd0992db0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c0-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c0-s1.png",
+        "width": 1,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d8dfd5c03bbcceceb7af26e985ce99863c76eb951e63e8a2775b0038287e6b63",
+        "pngSha256": "8ccb289b1649d0d6e9519a886b698d10377476058e676c3f743b19dab9fb80b2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c1-s1.png",
+      "decodedRgbaSha256": "b49b7f56e928af0234d98e10e56f50d64c14605e47ff9f187f67877bac0c3ae6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c1-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c1-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-88e84b1591e15cf8eb9f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c1-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c1-s1.png",
+        "width": 2,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b49b7f56e928af0234d98e10e56f50d64c14605e47ff9f187f67877bac0c3ae6",
+        "pngSha256": "2172e473343177d00257bb166bcdadf8fa6d39c0daf09767fe3bc841304be20e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c2-s1.png",
+      "decodedRgbaSha256": "46399dbd846729237c879a672b3fba1ac0f6174cdefbcaaa3d1492e0e567a72c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c2-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c2-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 62,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-252aa768487a532425ac",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c2-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c2-s1.png",
+        "width": 31,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "46399dbd846729237c879a672b3fba1ac0f6174cdefbcaaa3d1492e0e567a72c",
+        "pngSha256": "7bece2e334f387ed52cfc02294ea971e3116ebc5fd8b4abc0d117467c6964d1c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c3-s1.png",
+      "decodedRgbaSha256": "ec32904a3cde8901e81e2a487c42c7ddb18d98920bc304cad3a8daa3c33bf7db",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c3-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c3-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 64,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-69873c3645d7884affcb",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c3-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c3-s1.png",
+        "width": 32,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ec32904a3cde8901e81e2a487c42c7ddb18d98920bc304cad3a8daa3c33bf7db",
+        "pngSha256": "02bc26b2264e41d9e1acd878ac06b4db41dd8d8bdc784c3305deaeaf32cfed67",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c4-s1.png",
+      "decodedRgbaSha256": "fd49fe0288b3dc8d52d90f738c303377faa756d6e7d312ca330ee9a8a2dc3be2",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c4-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c4-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 66,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-80e39cb2f2e0daba598f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c4-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c4-s1.png",
+        "width": 33,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "fd49fe0288b3dc8d52d90f738c303377faa756d6e7d312ca330ee9a8a2dc3be2",
+        "pngSha256": "4ccb5404e4113487dc0673be0caf654b9dde57c7dcd01f212e37f6547abc9f2e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c5-s1.png",
+      "decodedRgbaSha256": "b7e19b2ff77bfa5bbcfd79427fda5d3195c1639ac802ab7f222d847e0a3acb13",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c5-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c5-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 206,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-b8480f075d5cbf89f97e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c5-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c5-s1.png",
+        "width": 103,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b7e19b2ff77bfa5bbcfd79427fda5d3195c1639ac802ab7f222d847e0a3acb13",
+        "pngSha256": "bdc4c1c45e42d5fff7e9023ae0bf5f8f32ab8a488a542478334e2c588decbb1c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c6-s1.png",
+      "decodedRgbaSha256": "932fdc1f204839485ac978ee3bfaf65b5fa866bad9f7594e5c31e33a16cb620d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c6-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c6-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 400,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-1d47194c52144b2d0d2b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c6-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c6-s1.png",
+        "width": 200,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "932fdc1f204839485ac978ee3bfaf65b5fa866bad9f7594e5c31e33a16cb620d",
+        "pngSha256": "ea5ed024c0d1b87441b656a3169918fb14eab5cdd8c86de58a889fcb9433f875",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c7-s1.png",
+      "decodedRgbaSha256": "820cbd5c0102c5079277e3d1b3b0f448a53cda49bf1059199f4cab2d031f9f2d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c7-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c7-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 514,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-866e8e35929052800023",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c7-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c7-s1.png",
+        "width": 257,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "820cbd5c0102c5079277e3d1b3b0f448a53cda49bf1059199f4cab2d031f9f2d",
+        "pngSha256": "196b02e20c71f69ad6e0f1bd53d34544c893ff9809f42cdde516660b63702c32",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c8-s1.png",
+      "decodedRgbaSha256": "781b048d45f8154c49aee5e16cdc35f1d88c043db54386f5b627cef9eefd31d9",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c8-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c8-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 770,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-94dcc5f43bccf76e7a08",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c8-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c8-s1.png",
+        "width": 385,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "781b048d45f8154c49aee5e16cdc35f1d88c043db54386f5b627cef9eefd31d9",
+        "pngSha256": "83986efd43cf919447e3847f5690cb71996735838d32dbe349228da405453626",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c9-s1.png",
+      "decodedRgbaSha256": "4b239f646c72cba5b26a721a693b125a0378b2de2fc6ed6dc991bcf2ff3b817c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c9-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c9-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-269b45bffae1d7d49809",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c9-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c9-s1.png",
+        "width": 1,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4b239f646c72cba5b26a721a693b125a0378b2de2fc6ed6dc991bcf2ff3b817c",
+        "pngSha256": "828d610dcf46404a5f17a8e066d8aa990b435f2671d9bd165cc4560ca9c627c6",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c10-s1.png",
+      "decodedRgbaSha256": "05d1430e433332352d9d3a2ddeb9f4482840db588e27fa758e44e7c5ce787f16",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c10-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c10-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-f96d357568d8c7c23799",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c10-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c10-s1.png",
+        "width": 2,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "05d1430e433332352d9d3a2ddeb9f4482840db588e27fa758e44e7c5ce787f16",
+        "pngSha256": "68ccf5840aec9f6fb929956d59fe7fce276af7ca8744cdb39d8869a5114ae686",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c11-s1.png",
+      "decodedRgbaSha256": "52bb0e59368d0e74414de401500084cfcbe17b83a44f789ce3fcde62966a70b6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c11-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c11-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 62,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-43a71dd35d9773137d33",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c11-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c11-s1.png",
+        "width": 31,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "52bb0e59368d0e74414de401500084cfcbe17b83a44f789ce3fcde62966a70b6",
+        "pngSha256": "0911626d0d59060f92a28f69b8b6e7679a90b78dfcd2cbd603ac1d1243d4c02e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c12-s1.png",
+      "decodedRgbaSha256": "bad7b7d28c10ecb05b74dae23d0cef86cd4b6c94e6551bea086157836a6026fc",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c12-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c12-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 64,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e02c5611a29d4b5f83f6",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c12-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c12-s1.png",
+        "width": 32,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "bad7b7d28c10ecb05b74dae23d0cef86cd4b6c94e6551bea086157836a6026fc",
+        "pngSha256": "8559779883aafb902214da57af804cba17ea1b479c27e062eec1c61d03863c50",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c13-s1.png",
+      "decodedRgbaSha256": "e7ff84c4b3771c5aa01f1bc215dd0e1b2e6cc2b10840617b78e9cb3d360800c2",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c13-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c13-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 66,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-f45d17368195db53da96",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c13-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c13-s1.png",
+        "width": 33,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e7ff84c4b3771c5aa01f1bc215dd0e1b2e6cc2b10840617b78e9cb3d360800c2",
+        "pngSha256": "59ecf57bb5120af27b73b148ded6583174213bca141dabbb1ce1ec0058bc2459",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c14-s1.png",
+      "decodedRgbaSha256": "99fd94930654530f0c397f81d8a27dedfa21db2d4b7a0e0e2e5d36975e5e3ff7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c14-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c14-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 206,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-b2d36f3a2fd932936e43",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c14-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c14-s1.png",
+        "width": 103,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "99fd94930654530f0c397f81d8a27dedfa21db2d4b7a0e0e2e5d36975e5e3ff7",
+        "pngSha256": "497c6a72f2f7f884f44698890b8f089b665152ad314d63adf56ff0a3727f54e6",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c15-s1.png",
+      "decodedRgbaSha256": "d9d46327da8b94b4e8580163469d4c505c1b6406e8a4c80cbe89a3ad686e13b1",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c15-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c15-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 400,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-3f4b1446cbbfc918321d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c15-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c15-s1.png",
+        "width": 200,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d9d46327da8b94b4e8580163469d4c505c1b6406e8a4c80cbe89a3ad686e13b1",
+        "pngSha256": "6f11302bb520d4d318dea5a2843076c43c056231fb9b51d994be98998bd7ba51",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c16-s1.png",
+      "decodedRgbaSha256": "e58cda97268a6c8b0c6735c92fb65d20d0cf7732fe94017ab4d5c90f641fd1b0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c16-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c16-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 514,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6677ed000c3b5485c88a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c16-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c16-s1.png",
+        "width": 257,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e58cda97268a6c8b0c6735c92fb65d20d0cf7732fe94017ab4d5c90f641fd1b0",
+        "pngSha256": "e2233c12f82c1a648ceb1067331c0edd5bdefa5ec8fb416bf7d13d2bc6479312",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c17-s1.png",
+      "decodedRgbaSha256": "1b5c5dc07c8e19ffd7592e3ced085b6abfb81e2c908f866aa3e7e7db47df525d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c17-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c17-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 770,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "1",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6b8c8aaa87ccf8fb2f79",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=1&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c17-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c17-s1.png",
+        "width": 385,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1b5c5dc07c8e19ffd7592e3ced085b6abfb81e2c908f866aa3e7e7db47df525d",
+        "pngSha256": "603becd49e7e6867a21d65ad7340acc72f03cfa6db2a52101bc4328ae9a5aca8",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c18-s1.png",
+      "decodedRgbaSha256": "b09188f4356c6099201b0c290a8b3559978e7d996a22a28afa35dabec1485856",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c18-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c18-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-dad539683683bfb19ed4",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c18-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c18-s1.png",
+        "width": 1,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b09188f4356c6099201b0c290a8b3559978e7d996a22a28afa35dabec1485856",
+        "pngSha256": "7e60696795549014934ce89922826804672dfd9e0e4468eee30ab054fafccb8e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c19-s1.png",
+      "decodedRgbaSha256": "a45572cd15d4d9a8544856420c238ecd4789fcb800e2805d6ca416721e923111",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c19-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c19-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-430b44fe2e62e0f74b53",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c19-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c19-s1.png",
+        "width": 2,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a45572cd15d4d9a8544856420c238ecd4789fcb800e2805d6ca416721e923111",
+        "pngSha256": "c22c46fc8b527e97406981f180f50ac10b3eb9446b93727ae776bc27dcf52414",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c20-s1.png",
+      "decodedRgbaSha256": "15ea225aa19bbad68a4e7f12fa149684100dfbea39a7c30b6c86a24c73e7ea23",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c20-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c20-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 62,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-f31889e09ffcce0e1b6e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c20-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c20-s1.png",
+        "width": 31,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "15ea225aa19bbad68a4e7f12fa149684100dfbea39a7c30b6c86a24c73e7ea23",
+        "pngSha256": "c3efa749ce7014fd41b1fad0cfb6c6d51e5efec7426a5dc86133ae720cbc0fe0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c21-s1.png",
+      "decodedRgbaSha256": "347fe72865e0e279fa4419258960c23de062e94ff9896685f2718ae8ffc6a954",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c21-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c21-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 64,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-0f8dbd55836506113f61",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c21-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c21-s1.png",
+        "width": 32,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "347fe72865e0e279fa4419258960c23de062e94ff9896685f2718ae8ffc6a954",
+        "pngSha256": "925d53b1a377ad71c640a91496de9d5c2ddca32933f1d8b47860fb293c3573dd",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c22-s1.png",
+      "decodedRgbaSha256": "2cb968144da91e852837b5dc74de8f2442d2a5cebd8b07b14d15cb4c3f96e389",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c22-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c22-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 66,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-8103afcd91411532026a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c22-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c22-s1.png",
+        "width": 33,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2cb968144da91e852837b5dc74de8f2442d2a5cebd8b07b14d15cb4c3f96e389",
+        "pngSha256": "499a2dd7f294168c3adc1fae5cb4ec7286d77ff92bf5a92aff65a6ee17601d5c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c23-s1.png",
+      "decodedRgbaSha256": "ba5609ab68f3969c2c39e4195d21adcd39530053739650ed3fe8c5d8cbf27138",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c23-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c23-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 206,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-83ea36a583521f4e2979",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c23-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c23-s1.png",
+        "width": 103,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ba5609ab68f3969c2c39e4195d21adcd39530053739650ed3fe8c5d8cbf27138",
+        "pngSha256": "e0fdc0af6a2475ad657af9127151a1eafaf4a5f9b3f832eaef58f5633f59c770",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c24-s1.png",
+      "decodedRgbaSha256": "65a6422636ee829f5c28194405aa92a8f51cbd583a053f60d9d8ed21807b95a4",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c24-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c24-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 400,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e6a3838e6e2529084785",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c24-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c24-s1.png",
+        "width": 200,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "65a6422636ee829f5c28194405aa92a8f51cbd583a053f60d9d8ed21807b95a4",
+        "pngSha256": "12981463e8214f3b4c9740fa4eff057b0115bb41ac1fe0a2c687aabc3336ed98",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c25-s1.png",
+      "decodedRgbaSha256": "60189e12ad757ea730d7263b91f1f4a0bfa400d8fd7dbe4e19ca1b97b23b5422",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c25-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c25-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 514,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-95500333b537c0896e14",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c25-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c25-s1.png",
+        "width": 257,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "60189e12ad757ea730d7263b91f1f4a0bfa400d8fd7dbe4e19ca1b97b23b5422",
+        "pngSha256": "9376333ab8623e1151ff9230243ec2f57539da8c42825de7731f36b3b6225524",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c26-s1.png",
+      "decodedRgbaSha256": "c497d7d6f252ffe0165c05dfde70ba248896d77bc6410e092e701d16046d1b46",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c26-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c26-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 770,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-8ccfbb171fe3520d593a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c26-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c26-s1.png",
+        "width": 385,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c497d7d6f252ffe0165c05dfde70ba248896d77bc6410e092e701d16046d1b46",
+        "pngSha256": "07bed41adba160f2a84a55bd5399910b66795ead59a58a9ae48c805a3cb9acba",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c27-s1.png",
+      "decodedRgbaSha256": "cf46b649a3cb8597f6060ca921705c2be663056af6900973a8ff8ba8d7ef23a6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c27-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c27-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-4ac6fe2b2f53c5d8cd67",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c27-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c27-s1.png",
+        "width": 1,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "cf46b649a3cb8597f6060ca921705c2be663056af6900973a8ff8ba8d7ef23a6",
+        "pngSha256": "9fc186a68cd4e54317d62deb6354d2f3ff6574ebc019b394bf7af1c76ddc9903",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c28-s1.png",
+      "decodedRgbaSha256": "192fbf310c7bdba7407f2c404aaad077f9b0c2365586f351b2f3f08a5b67982f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c28-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c28-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-0a02b56d8dc7360436ea",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c28-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c28-s1.png",
+        "width": 2,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "192fbf310c7bdba7407f2c404aaad077f9b0c2365586f351b2f3f08a5b67982f",
+        "pngSha256": "9f5da3f44072302b4766cf0f3197d2d53ff53f2d58ef395c76f8ca0176e2a50e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c29-s1.png",
+      "decodedRgbaSha256": "0bce2eef87f4be5a3e9bca18480c1eb0491b5ca86e979282c0b862500399c505",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c29-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c29-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 62,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-fa025d796acddc02014f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c29-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c29-s1.png",
+        "width": 31,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "0bce2eef87f4be5a3e9bca18480c1eb0491b5ca86e979282c0b862500399c505",
+        "pngSha256": "786f97933c5f08e62102fb5fce755add7a69878e05decd9c92275b24a7f2b5f5",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c30-s1.png",
+      "decodedRgbaSha256": "05b196f19c005b69701c6f29abe18f026cf31ae6294f4d6bf3557972fcde1637",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c30-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c30-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 64,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-40306f97475c10049cf6",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c30-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c30-s1.png",
+        "width": 32,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "05b196f19c005b69701c6f29abe18f026cf31ae6294f4d6bf3557972fcde1637",
+        "pngSha256": "77a372da3a14dbb2ad40f3a520241c556f77eece6d2b974b5a01e7a7843f4e22",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c31-s1.png",
+      "decodedRgbaSha256": "16285b9f774191ee804cbb6386bf0fe131c97f618a001e3f4ff1ed92774c24f6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c31-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c31-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 66,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-699f4d2fe7601555dcfd",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c31-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c31-s1.png",
+        "width": 33,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "16285b9f774191ee804cbb6386bf0fe131c97f618a001e3f4ff1ed92774c24f6",
+        "pngSha256": "90a6085dee2dd7e056eb99051918057054ed01b07021acaba1ec950f095d15b3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c32-s1.png",
+      "decodedRgbaSha256": "78ae1f924ea7948d2c1e33005168a406a65171be8a9aaa1dc64fe9b45aca8eb2",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c32-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c32-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 206,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-ce47cbafbd9c3812ec86",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c32-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c32-s1.png",
+        "width": 103,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "78ae1f924ea7948d2c1e33005168a406a65171be8a9aaa1dc64fe9b45aca8eb2",
+        "pngSha256": "01d03cb8805731da57a48ba8e2cb0be78d5c753c49b2dd35601c8e1d17e47ee3",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c33-s1.png",
+      "decodedRgbaSha256": "084947bebcc62d25669f8e0327b3da025b412ca9db887591362f6b7089590dad",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c33-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c33-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 400,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-61f71fe1e4e2310f5cca",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c33-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c33-s1.png",
+        "width": 200,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "084947bebcc62d25669f8e0327b3da025b412ca9db887591362f6b7089590dad",
+        "pngSha256": "bde667299d87837731f34341df0836f849e00effebb5db416cc3ea7fab1257f2",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c34-s1.png",
+      "decodedRgbaSha256": "5951b6d8880253fb24a88c299c33d3244bf1783d195b4df1bb08f4e86440979a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c34-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c34-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 514,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-cc6f2f220642178da9b5",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c34-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c34-s1.png",
+        "width": 257,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "5951b6d8880253fb24a88c299c33d3244bf1783d195b4df1bb08f4e86440979a",
+        "pngSha256": "494d14b7a71481a8da76cc974d7f7ba2f695d4ea6b3f0a47348e16922a82e8fc",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c35-s1.png",
+      "decodedRgbaSha256": "cb5e7729cd91021034d8cbcd2c2e289cdd3553028901b22c088909d011463c6f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c35-s1.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c35-s1.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 770,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "1",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e586938eae9c7f8a6c7d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=1&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c35-s1-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c35-s1.png",
+        "width": 385,
+        "height": 2,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "cb5e7729cd91021034d8cbcd2c2e289cdd3553028901b22c088909d011463c6f",
+        "pngSha256": "738d89f6fac54a528206ee997a69e3ce2da7373f3a1d1dc21502effb8c35e21b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c0-s2.png",
+      "decodedRgbaSha256": "64d20575472d3b1f190463cdd6f77cef27d6218b362fa3e166f176db67d78372",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c0-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c0-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 8,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-abbe4d8dcf093a7011a7",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c0-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c0-s2.png",
+        "width": 2,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "64d20575472d3b1f190463cdd6f77cef27d6218b362fa3e166f176db67d78372",
+        "pngSha256": "9a003bab1974730aacb258ab2baaf45a069c7e2c9ced2144f2b46a8260ecaf0d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c1-s2.png",
+      "decodedRgbaSha256": "4cdc38acf9f514bc0a055b0ca831f4b43e8e34199680f6b99dde2a4f6debfd44",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c1-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c1-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 16,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-41613ffee740efff493f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c1-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c1-s2.png",
+        "width": 4,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "4cdc38acf9f514bc0a055b0ca831f4b43e8e34199680f6b99dde2a4f6debfd44",
+        "pngSha256": "dd570f6df6f49f95457cf357a0905de0cff4d7dcb3bb78dadc6445765f5f1bef",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c2-s2.png",
+      "decodedRgbaSha256": "c4a9ef1bcf16ece2fda6d3fe663f43fa067cf12d27b694f67a488d53d998f05d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c2-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c2-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 248,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6c9c5640672fed61bb41",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c2-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c2-s2.png",
+        "width": 62,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c4a9ef1bcf16ece2fda6d3fe663f43fa067cf12d27b694f67a488d53d998f05d",
+        "pngSha256": "0189d57e7bf0b181a1318db8d8182d7ebf0c712ccff7df4ea2d3e48bd5d9c9b7",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c3-s2.png",
+      "decodedRgbaSha256": "c8c972c96c378a873338c10047b88be62f3980735c84ccaeaaf48d28206fbeb1",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c3-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c3-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 256,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-0ee7b78167f16d032e2c",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c3-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c3-s2.png",
+        "width": 64,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c8c972c96c378a873338c10047b88be62f3980735c84ccaeaaf48d28206fbeb1",
+        "pngSha256": "d7716184bf5d2f81353b657b559b5380bb57abcca131353e274901a35cb4b9e0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c4-s2.png",
+      "decodedRgbaSha256": "3987f316969695850f19f214d8cb0c36af96d730169d23887c60c70b5fe95b8d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c4-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c4-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 264,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-a3b2e7f6736da25baad8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c4-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c4-s2.png",
+        "width": 66,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "3987f316969695850f19f214d8cb0c36af96d730169d23887c60c70b5fe95b8d",
+        "pngSha256": "4a7d8477d4b2540efe342b15807462107f600967f89d4008c912905caadd8816",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c5-s2.png",
+      "decodedRgbaSha256": "e39c20fd230f6453f7b1a3563f4231a3cd6f49ed5de6c2b997bc7c5dd04805e5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c5-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c5-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 824,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-5d83665bd244c92b9997",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c5-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c5-s2.png",
+        "width": 206,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e39c20fd230f6453f7b1a3563f4231a3cd6f49ed5de6c2b997bc7c5dd04805e5",
+        "pngSha256": "c2981cbb26b57bf783ecfd32dd6943e45b5df754dc60c44ed2badcc692b390cb",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c6-s2.png",
+      "decodedRgbaSha256": "01cc0af7cdc6f7a8e134262b2d14033ed2759c4d651294380cb65c5d2372a21a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c6-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c6-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-394e6acce0317f26c674",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c6-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c6-s2.png",
+        "width": 400,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "01cc0af7cdc6f7a8e134262b2d14033ed2759c4d651294380cb65c5d2372a21a",
+        "pngSha256": "40772ca1083d902ba81b3b1c76676422807fa84a9a35adefe9fd4c1bf1ba3083",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c7-s2.png",
+      "decodedRgbaSha256": "c1eb2842ae58e635daa662ff613dd4d5fca1dc62dbcb8133fdba716510022b3c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c7-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c7-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2056,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-0d4f23fdb60d3426a535",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c7-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c7-s2.png",
+        "width": 514,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "c1eb2842ae58e635daa662ff613dd4d5fca1dc62dbcb8133fdba716510022b3c",
+        "pngSha256": "b55b35e152c79766c18f235bfef3d7aaf24098c7590e970d2059a837e81d0815",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c8-s2.png",
+      "decodedRgbaSha256": "3c566de75ff86b01e41f0ecac531c70fd7a836db84931c35c7bbcd816ee5e786",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c8-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c8-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3080,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-f541442b379e4077fa53",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c8-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c8-s2.png",
+        "width": 770,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "3c566de75ff86b01e41f0ecac531c70fd7a836db84931c35c7bbcd816ee5e786",
+        "pngSha256": "67856220f7014336643301e9bba604c6c4c7dbdae6e338a228c2630419a4e662",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c9-s2.png",
+      "decodedRgbaSha256": "a1c2551c03935fc20502eca16c58be89e3001f46b296417c15dc67947db4163a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c9-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c9-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 8,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e693f15ca912a8f5abf1",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c9-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c9-s2.png",
+        "width": 2,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a1c2551c03935fc20502eca16c58be89e3001f46b296417c15dc67947db4163a",
+        "pngSha256": "110b5b64069012c17256d70dc6a03534f1a2f106e18c8b7515622b7e4aaa6504",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c10-s2.png",
+      "decodedRgbaSha256": "e5b12cdd64e54bdb3c5fc4c20417b06d1be2d399211318cb7aaf07d14a8de443",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c10-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c10-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 16,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-06a77b151f60310a41c9",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c10-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c10-s2.png",
+        "width": 4,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e5b12cdd64e54bdb3c5fc4c20417b06d1be2d399211318cb7aaf07d14a8de443",
+        "pngSha256": "05d4f640614480425353b5b79604fccd8b3c8c33699925c9ee3b3efcb5a42fba",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c11-s2.png",
+      "decodedRgbaSha256": "1979827f3c3623923f191080ef1df7f5d113db48b465631b02df0bd75f07ed0c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c11-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c11-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 248,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-47f1e65f85df87728d93",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c11-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c11-s2.png",
+        "width": 62,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1979827f3c3623923f191080ef1df7f5d113db48b465631b02df0bd75f07ed0c",
+        "pngSha256": "0a2a330ae631b75d4b1acd041817a7ff4a812452510a2251382751ce2a0542a5",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c12-s2.png",
+      "decodedRgbaSha256": "bb362d82567f5d7b511cb3cf83f8b185631a5b5634198fa40ff940144c9a7946",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c12-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c12-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 256,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-61d42bafb7d518eaee9a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c12-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c12-s2.png",
+        "width": 64,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "bb362d82567f5d7b511cb3cf83f8b185631a5b5634198fa40ff940144c9a7946",
+        "pngSha256": "68573bac080eb6752a69ea899fff5048ae63ad2e31f6d072eaa4dc4c165c396b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c13-s2.png",
+      "decodedRgbaSha256": "6e7382f1c618f4456500a1da308cea2b45560ec4ea4494a56ac3d14cf0d16c66",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c13-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c13-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 264,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-46ec0432df4275dbf261",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c13-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c13-s2.png",
+        "width": 66,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "6e7382f1c618f4456500a1da308cea2b45560ec4ea4494a56ac3d14cf0d16c66",
+        "pngSha256": "792a63dc8a04cf15e1bcc41d4607b9022db9a7d5160ff5b480c1af10c8f11aee",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c14-s2.png",
+      "decodedRgbaSha256": "dda71793024d63ad6ee0dcfadfaddfe6f761c8d5c6ef25249918bce7f43d367c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c14-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c14-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 824,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-57705a8ee5bf44844773",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c14-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c14-s2.png",
+        "width": 206,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "dda71793024d63ad6ee0dcfadfaddfe6f761c8d5c6ef25249918bce7f43d367c",
+        "pngSha256": "e7a87d3da3565e99b00c52a03baa191acb43968c248bcd5f8abb268c0ee5d8c1",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c15-s2.png",
+      "decodedRgbaSha256": "94d5e5d71342741bd9a19a1deff7016afb843911db52faa725342137abe69a3b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c15-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c15-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-0f5f051e3dd3e68b05ab",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c15-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c15-s2.png",
+        "width": 400,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "94d5e5d71342741bd9a19a1deff7016afb843911db52faa725342137abe69a3b",
+        "pngSha256": "6de1cbddb60b8b5138c452d785abdcb0c25195f59b798f82a96f6bd63e66926a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c16-s2.png",
+      "decodedRgbaSha256": "e84c9f49fcc2372001be00619873a73630f270d1fcbc3d59b42aacc704d8a1d6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c16-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c16-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2056,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-585669a1761a696e4157",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c16-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c16-s2.png",
+        "width": 514,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e84c9f49fcc2372001be00619873a73630f270d1fcbc3d59b42aacc704d8a1d6",
+        "pngSha256": "1100946d963896960d184fa02105465eac61dc2ee5d8678e89b28be1e02d1dde",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c17-s2.png",
+      "decodedRgbaSha256": "07eb6c5c2e7cdd16d79aea304ed15996dba624c4b60def805c6cc740fa725f03",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c17-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c17-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3080,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "2",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-1b4fdcb6f815a1b797f4",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=2&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c17-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c17-s2.png",
+        "width": 770,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "07eb6c5c2e7cdd16d79aea304ed15996dba624c4b60def805c6cc740fa725f03",
+        "pngSha256": "b6e7f8ea3e592d6e60e9d9c89ae77cdab8af3e39993a7464703511e0c7122be6",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c18-s2.png",
+      "decodedRgbaSha256": "607e6d5a60d61e39791d9c88ac9516db57f188227c1f849be67ae1ee62341574",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c18-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c18-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 8,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-3f2d674cc48a2d6bbd4f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c18-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c18-s2.png",
+        "width": 2,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "607e6d5a60d61e39791d9c88ac9516db57f188227c1f849be67ae1ee62341574",
+        "pngSha256": "8d08f8a14919a3f26a597bd1664a0f2925f1f201ba370db109aacdd0f9db8f0c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c19-s2.png",
+      "decodedRgbaSha256": "b3c27b25cc69ce907a03ac9e2e03f4c6b5a223082e06e757279bfbf96c8b3b2e",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c19-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c19-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 16,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-4b5cff38b1195bd15946",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c19-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c19-s2.png",
+        "width": 4,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b3c27b25cc69ce907a03ac9e2e03f4c6b5a223082e06e757279bfbf96c8b3b2e",
+        "pngSha256": "049cb6fcf7bfdbaa8819272f3b2d4d7135c554bd6899b37eb04a086bd0d4c77c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c20-s2.png",
+      "decodedRgbaSha256": "1901b7a4b1faac5ae73286ee2028ce7f5e9d9eda8fccf32182da660bb6452fbc",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c20-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c20-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 248,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-14cae5a7c074083afdbb",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c20-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c20-s2.png",
+        "width": 62,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1901b7a4b1faac5ae73286ee2028ce7f5e9d9eda8fccf32182da660bb6452fbc",
+        "pngSha256": "eee9abec7ed074a5add0dc9060d28a2c77d8575ea1e25e8264511e7bf9a4582e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c21-s2.png",
+      "decodedRgbaSha256": "ead8c0e41cde682aeb90047457e47a93f9c5854b8b3aaae75328a98afabc99e0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c21-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c21-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 256,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-bf0e43e08c484b94e237",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c21-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c21-s2.png",
+        "width": 64,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ead8c0e41cde682aeb90047457e47a93f9c5854b8b3aaae75328a98afabc99e0",
+        "pngSha256": "d42df12c0b7b359a09af3463a0b398be86bd9d12e52804367661cac494a7c152",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c22-s2.png",
+      "decodedRgbaSha256": "45f8cf5f81404255bee95e6dc392bd86d3300ef28a196e5b78fb1ec9467f2c49",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c22-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c22-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 264,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-f30da60a4aade0c5029f",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c22-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c22-s2.png",
+        "width": 66,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "45f8cf5f81404255bee95e6dc392bd86d3300ef28a196e5b78fb1ec9467f2c49",
+        "pngSha256": "906ead5f4e45f69663ea4b4e4cb8746dd91c27f8af167b4aa766f943f1942ba0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c23-s2.png",
+      "decodedRgbaSha256": "1363ce32a59fbeebddbf0ad2d82f722ef206e8a35c6c86d3737707e8a75c3b2f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c23-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c23-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 824,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-1d8538c2a7086ddd0c8c",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c23-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c23-s2.png",
+        "width": 206,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1363ce32a59fbeebddbf0ad2d82f722ef206e8a35c6c86d3737707e8a75c3b2f",
+        "pngSha256": "558b13bf9c40ab7f7eb4498f1ca5ba61565b957fbb6393c0912d77032acbd49f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c24-s2.png",
+      "decodedRgbaSha256": "240759f92c63b5a64802a52e03cccbf1b9779bd21fbdb1ffb0929278776ae57c",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c24-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c24-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-7b8c8d22d5aa4c4ec393",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c24-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c24-s2.png",
+        "width": 400,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "240759f92c63b5a64802a52e03cccbf1b9779bd21fbdb1ffb0929278776ae57c",
+        "pngSha256": "df966bf72aa093e992860ad32c9da6effa61ba6864f926fcea017f9cb2fe30ad",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c25-s2.png",
+      "decodedRgbaSha256": "406cfe147628399d65615a299dfc3d8c6c21969db0d430c20d26f5ca00959792",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c25-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c25-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2056,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6c5a5fb48ed89d295a60",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c25-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c25-s2.png",
+        "width": 514,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "406cfe147628399d65615a299dfc3d8c6c21969db0d430c20d26f5ca00959792",
+        "pngSha256": "4b87f396a1aaf49446993f610c6ccbb2c93a08ef52240497995f709b1c21c2f7",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c26-s2.png",
+      "decodedRgbaSha256": "3b76b98629dfac2179e7d73b15897c5a8d3b84be1606e0a1d64099b23a4be636",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c26-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c26-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3080,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-ac8b7023212cf78e35e0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c26-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c26-s2.png",
+        "width": 770,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "3b76b98629dfac2179e7d73b15897c5a8d3b84be1606e0a1d64099b23a4be636",
+        "pngSha256": "0f165b1a9cd12948f12f298772f220ed6d9eae0b86c033ef4ae2bf2b44699c4b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c27-s2.png",
+      "decodedRgbaSha256": "34e12818f1e1b9ab67f5a35256551b55f66a61cea372820c73f49c58ed2e42b8",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c27-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c27-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 8,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6607dc9dfbf41abaca82",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c27-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c27-s2.png",
+        "width": 2,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "34e12818f1e1b9ab67f5a35256551b55f66a61cea372820c73f49c58ed2e42b8",
+        "pngSha256": "6a096829ac14e55b817ad8cbaf5544bffef0704039ba413d5f2fba21c53881b0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c28-s2.png",
+      "decodedRgbaSha256": "a62ed5e69fb6160c5ed32a623345a863e3e7d6d3092b70efdbe70d09430633df",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c28-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c28-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 16,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e10ad783a5467250a554",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c28-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c28-s2.png",
+        "width": 4,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a62ed5e69fb6160c5ed32a623345a863e3e7d6d3092b70efdbe70d09430633df",
+        "pngSha256": "e78584db7bed6af7d2462d7f2164deaa47111844e12d532ee57a5c5548a9b3ca",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c29-s2.png",
+      "decodedRgbaSha256": "7f2109fd059bd334fc309fc8b144d93df8b03f0e3924410d6800a55409b87e33",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c29-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c29-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 248,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-af48ccb186618121456e",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c29-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c29-s2.png",
+        "width": 62,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7f2109fd059bd334fc309fc8b144d93df8b03f0e3924410d6800a55409b87e33",
+        "pngSha256": "2b061c048cdce06019aa1fd3135aebcdc11d4d69a53c4a74fea024dfe526818a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c30-s2.png",
+      "decodedRgbaSha256": "9307da281722e4155679effef46ed6d61ab4ee7ad0a6c76bd61cd5e7425e0844",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c30-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c30-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 256,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-7f0f6da1be14433fb067",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c30-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c30-s2.png",
+        "width": 64,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "9307da281722e4155679effef46ed6d61ab4ee7ad0a6c76bd61cd5e7425e0844",
+        "pngSha256": "3a6d842ac6e3a98d55db14d9b99c7806774e8175b21e8d41225ebf81fcb58e38",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c31-s2.png",
+      "decodedRgbaSha256": "62e26553b5b605e748fd44a83024ae9124c75337359248dd887708678c4c554f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c31-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c31-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 264,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-06ee2fc904b2ac46b4dd",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c31-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c31-s2.png",
+        "width": 66,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "62e26553b5b605e748fd44a83024ae9124c75337359248dd887708678c4c554f",
+        "pngSha256": "2c757191aa1871f9dd197eb00956c2692c07678cc9ac318aeb3c7c136e9ed2dc",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c32-s2.png",
+      "decodedRgbaSha256": "40ad314ca245ba90ba6a7bb98ca983ad6b6ff13333253fa453bde8a0a75edd7e",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c32-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c32-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 824,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-27744ac18ab7239f8116",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c32-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c32-s2.png",
+        "width": 206,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "40ad314ca245ba90ba6a7bb98ca983ad6b6ff13333253fa453bde8a0a75edd7e",
+        "pngSha256": "a8488feb4406df7bee80a26f8311e8f38241561b8706351f4d1ec7d970cddba9",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c33-s2.png",
+      "decodedRgbaSha256": "417f83b2941eb75956ddd0a42493580eebe7239e56230ffa11294c3ea4ce88cf",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c33-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c33-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-9fabfa41f50a11382a74",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c33-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c33-s2.png",
+        "width": 400,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "417f83b2941eb75956ddd0a42493580eebe7239e56230ffa11294c3ea4ce88cf",
+        "pngSha256": "6069744946544cb271e8bb91fb90268d5a05bf78513aa4bebfc7df2cf1cdd211",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c34-s2.png",
+      "decodedRgbaSha256": "65e640606e3d18a66530c3dcb5ce983b5af25896395fcf549f2fd69df033b3e5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c34-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c34-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 2056,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e19b8ff60bb6cedf9e26",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c34-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c34-s2.png",
+        "width": 514,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "65e640606e3d18a66530c3dcb5ce983b5af25896395fcf549f2fd69df033b3e5",
+        "pngSha256": "b9eb48e271cfea326281ffea134694c43ab9e4297512d632d481973813cc4d84",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c35-s2.png",
+      "decodedRgbaSha256": "e47da3c54a4194e602c8adacae55e31c62349f1f827e20f270d361f0db25fb9a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c35-s2.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c35-s2.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3080,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "2",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-5d01d0a5c14e204248e5",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=2&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c35-s2-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c35-s2.png",
+        "width": 770,
+        "height": 4,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e47da3c54a4194e602c8adacae55e31c62349f1f827e20f270d361f0db25fb9a",
+        "pngSha256": "0bffb651ce8f708d5cb41104638f326d27e2fb5d0cab2ab59feb079d19ce204b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c0-s3.png",
+      "decodedRgbaSha256": "46dc888ec2e53ac4fff2e8e41621cfde94f087ca6e6224655d1b917909239384",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c0-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c0-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 18,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-62761ad991c87268b998",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c0-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c0-s3.png",
+        "width": 3,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "46dc888ec2e53ac4fff2e8e41621cfde94f087ca6e6224655d1b917909239384",
+        "pngSha256": "b01c0096fbdf514696888c5c1eecdef04efd1e3d51fb28d627cdb3113d896120",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c1-s3.png",
+      "decodedRgbaSha256": "cb18ccf889e98188c0c871f65335ba58abbdc90b9d1d70fab5755fae926113dc",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c1-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c1-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 36,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-708095261490ccc06252",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c1-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c1-s3.png",
+        "width": 6,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "cb18ccf889e98188c0c871f65335ba58abbdc90b9d1d70fab5755fae926113dc",
+        "pngSha256": "078854e9293a7ee946ad99a5db13ed0def94feee78e8d33e7123bb08f89a829b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c2-s3.png",
+      "decodedRgbaSha256": "749939d1ca6d84a8e36f8d1373ed9d02d337588444b8d145e9df3c84221f886a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c2-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c2-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 558,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-fabf5fe2253c9b79c2db",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c2-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c2-s3.png",
+        "width": 93,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "749939d1ca6d84a8e36f8d1373ed9d02d337588444b8d145e9df3c84221f886a",
+        "pngSha256": "f335993728c9f64dcc8de39d8b3985b5f48905ae65469a24a359428e32a509cc",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c3-s3.png",
+      "decodedRgbaSha256": "2a7dc113f98e5347f6bc5011ae9d3484511ad565cf58114999d95efc108e6047",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c3-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c3-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 576,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-3399863297c5f93cc70b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c3-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c3-s3.png",
+        "width": 96,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "2a7dc113f98e5347f6bc5011ae9d3484511ad565cf58114999d95efc108e6047",
+        "pngSha256": "f7a6e39305e73752f8b73a038f1ac6ed87a46c44d820b69e82ff9b5a549daf6b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c4-s3.png",
+      "decodedRgbaSha256": "1fa7157f590b1c21f8661a2af3e8de0b8e66a93968dc9380492d1ea5d96f272b",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c4-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c4-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 594,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-3e113c958df9e9c10fcc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c4-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c4-s3.png",
+        "width": 99,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1fa7157f590b1c21f8661a2af3e8de0b8e66a93968dc9380492d1ea5d96f272b",
+        "pngSha256": "5b2b34b0ee843a59d3fd2d7d9d8d09cf3284a85ac16ae7312d6817465d68437f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c5-s3.png",
+      "decodedRgbaSha256": "1f397b77805b60b43e260e9ec16f9bd6ff6717a353843c78041590efaefabbb1",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c5-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c5-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1854,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-c41d13d8afd2dbf733dc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c5-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c5-s3.png",
+        "width": 309,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1f397b77805b60b43e260e9ec16f9bd6ff6717a353843c78041590efaefabbb1",
+        "pngSha256": "f53c6765619b6b2f6883914d97e9cb475f2d18334eba281fd5ba293bbb3907d0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c6-s3.png",
+      "decodedRgbaSha256": "04fd4eee4d16ad384b0f6b255642cea0e731a43f7eedf34dc3baf2bb91b44d77",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c6-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c6-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-76e89b8a354e44a9d2b9",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c6-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c6-s3.png",
+        "width": 600,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "04fd4eee4d16ad384b0f6b255642cea0e731a43f7eedf34dc3baf2bb91b44d77",
+        "pngSha256": "c2753f5f2f4a8c2b40ec00780456911b1dc92d663ed1562ed0654eb09d2c26ba",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c7-s3.png",
+      "decodedRgbaSha256": "a6795db3480dd478a82981eecc54a1c5a940a6efa9c0d85fb72f2c072f37335e",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c7-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c7-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4626,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-049ac494aaffaf399625",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c7-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c7-s3.png",
+        "width": 771,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a6795db3480dd478a82981eecc54a1c5a940a6efa9c0d85fb72f2c072f37335e",
+        "pngSha256": "2388ffa01584114ce76807b455f09881428e6440cc649594fd5b6e64bfe9f037",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c8-s3.png",
+      "decodedRgbaSha256": "ff398248cee61be2ced6915b48a8f24c6b778543550060e1444760cf723c5a46",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c8-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c8-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 6930,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-41f8f52525e1f044b249",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c8-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c8-s3.png",
+        "width": 1155,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ff398248cee61be2ced6915b48a8f24c6b778543550060e1444760cf723c5a46",
+        "pngSha256": "f945f7071fb043202f1bc21f5ffb659151e76fc0409a1b3f9905739fd028fa6d",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c9-s3.png",
+      "decodedRgbaSha256": "1f484cf8c1dd6c4139a624cb0779430145e10bf782acb05f4d0eba8b224486c6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c9-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c9-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 18,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6d33da615adfa3e9fa16",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c9-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c9-s3.png",
+        "width": 3,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "1f484cf8c1dd6c4139a624cb0779430145e10bf782acb05f4d0eba8b224486c6",
+        "pngSha256": "4ca9ec4fab334a1b5457e612197cb3c9caed9553192f936fa848201f56e99724",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c10-s3.png",
+      "decodedRgbaSha256": "da86d230a3e21cf6ae9a561ce4428f41dd1114a3346500ac3e185ea0c915e5d0",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c10-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c10-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 36,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-4b1b4a008a55c9f176fb",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c10-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c10-s3.png",
+        "width": 6,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "da86d230a3e21cf6ae9a561ce4428f41dd1114a3346500ac3e185ea0c915e5d0",
+        "pngSha256": "b65b6c1c18d980b5a8c90ba2e1d37f81675f4d6a4aa6dc507d41ab32e40b4d5e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c11-s3.png",
+      "decodedRgbaSha256": "f2059f02e1274db2afbaa9fd0888c7e352e5bcb96c6b33816f30f9dfe583b9d7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c11-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c11-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 558,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e11613e64cdcf98395b5",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c11-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c11-s3.png",
+        "width": 93,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f2059f02e1274db2afbaa9fd0888c7e352e5bcb96c6b33816f30f9dfe583b9d7",
+        "pngSha256": "7d01e94be0d9d60450e5ec5c3da6ad0dd3f2b0e4558eac13ffd43f520591e7b0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c12-s3.png",
+      "decodedRgbaSha256": "98524bb6f04fe36a600240b8df0be81d46d083e47650c9a8e3945831eedb3488",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c12-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c12-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 576,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e18b2866ed3f407a7cd4",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c12-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c12-s3.png",
+        "width": 96,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "98524bb6f04fe36a600240b8df0be81d46d083e47650c9a8e3945831eedb3488",
+        "pngSha256": "d2d8eee888acb0d8c6c364eb079f46cb5e1405b11e09f30d3761ac2dc6d3818b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c13-s3.png",
+      "decodedRgbaSha256": "cbac0e1f333a82050dd8892d785e78ab31e328b4085f21971b605d353d8856bc",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c13-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c13-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 594,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-ff97b17911269a13c87b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c13-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c13-s3.png",
+        "width": 99,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "cbac0e1f333a82050dd8892d785e78ab31e328b4085f21971b605d353d8856bc",
+        "pngSha256": "ccee3a4f6df1da6e3c195c705fd112959a5755e2f9aedeb83ec5b6020df13e15",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c14-s3.png",
+      "decodedRgbaSha256": "7729437c6b264fa5bbb0d26b825e796d45d41fc999edea6f3f24946ebe8b1938",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c14-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c14-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1854,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-bc059c79ac43dbc7ec75",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c14-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c14-s3.png",
+        "width": 309,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7729437c6b264fa5bbb0d26b825e796d45d41fc999edea6f3f24946ebe8b1938",
+        "pngSha256": "9cd6e263a450f200bdd307cc0046e0500615cd2fa3c2a41591fc4ab4e86b823a",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c15-s3.png",
+      "decodedRgbaSha256": "871d1838b8653023ebf21ccda139788b4d28d3b4891bb682134192cbc79c8812",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c15-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c15-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-eb588d622a75f3fca751",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c15-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c15-s3.png",
+        "width": 600,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "871d1838b8653023ebf21ccda139788b4d28d3b4891bb682134192cbc79c8812",
+        "pngSha256": "ad8ea10c0e4d37f5f8eb83dc6977c7dbbeab625c9dd6172a7bbbdb043e8b5142",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c16-s3.png",
+      "decodedRgbaSha256": "d7d4919801fb09b49bbef9c3c5b552943824806c77f7b43d8746fe5f52cb8f27",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c16-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c16-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4626,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-50db272ef0543355f74b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c16-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c16-s3.png",
+        "width": 771,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "d7d4919801fb09b49bbef9c3c5b552943824806c77f7b43d8746fe5f52cb8f27",
+        "pngSha256": "b9a4bda47017f988e623ed689f26b3a0dd0a4414d47f9754ff62481a944e0211",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c17-s3.png",
+      "decodedRgbaSha256": "50fd6f74078bf8271aa9879eec9c0456449b36b3e2b511667a4b3b316d9c378f",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c17-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c17-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 6930,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "3",
+          "state": "header"
+        },
+        "testId": "8a810cf16f4f6e5366cc-48efeea02866d9720772",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=3&state=header",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c17-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c17-s3.png",
+        "width": 1155,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "50fd6f74078bf8271aa9879eec9c0456449b36b3e2b511667a4b3b316d9c378f",
+        "pngSha256": "3e503f5356da5292a516897208396d6488ab2499e55b65debb75da3b0388db41",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c18-s3.png",
+      "decodedRgbaSha256": "421765fae3715dfd48d2fc7e28923f3a636da6493d6e03f1de8c98b3ed7968eb",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c18-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c18-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 18,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-47f473843bdb9c5f8d6b",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c18-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c18-s3.png",
+        "width": 3,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "421765fae3715dfd48d2fc7e28923f3a636da6493d6e03f1de8c98b3ed7968eb",
+        "pngSha256": "dc359970e379640df241c52824d811387c2df50dfc9efb6ba4482f9afa61fbc0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c19-s3.png",
+      "decodedRgbaSha256": "0ed8e6eb06e2d64345e12495d5febe8e4c957fdf3019c050ed28d7b52eb7e9b6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c19-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c19-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 36,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-7bfce67920205d723aec",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c19-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c19-s3.png",
+        "width": 6,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "0ed8e6eb06e2d64345e12495d5febe8e4c957fdf3019c050ed28d7b52eb7e9b6",
+        "pngSha256": "06c0d6c18b00308df3d15984eccbce834152f9e246d4af5a8db62badbf31ba81",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c20-s3.png",
+      "decodedRgbaSha256": "ef282f7f99f18bdb2ed1ecf3f49e338cba6b2ace998f9cc5d9a5ccf58394f7b5",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c20-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c20-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 558,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-43d27f12ea8aaeb33cc0",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c20-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c20-s3.png",
+        "width": 93,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ef282f7f99f18bdb2ed1ecf3f49e338cba6b2ace998f9cc5d9a5ccf58394f7b5",
+        "pngSha256": "29429281298b2851737d26d2392c8bade85f41c6ea104243d2aa9339f9dd2d72",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c21-s3.png",
+      "decodedRgbaSha256": "a2b91910dab443c749c7450270bcb922526fb84be8db0470211b40fc73206887",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c21-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c21-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 576,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-b84090fc8ea9d20af79d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c21-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c21-s3.png",
+        "width": 96,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "a2b91910dab443c749c7450270bcb922526fb84be8db0470211b40fc73206887",
+        "pngSha256": "375e4359e39f031526b0cfee8656822f0e7de0b97d0790757f078707b7bd6e6e",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c22-s3.png",
+      "decodedRgbaSha256": "5835cb44a4bcb716cc1082957cafa3274ce2b599393cb4af801fcea4e35c5476",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c22-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c22-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 594,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-e84c4022b90f7ae83f68",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c22-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c22-s3.png",
+        "width": 99,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "5835cb44a4bcb716cc1082957cafa3274ce2b599393cb4af801fcea4e35c5476",
+        "pngSha256": "d9c420ca4f2540dc13b64ccdd542228ac755dd5dc2d464733073c0bdfaa39734",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c23-s3.png",
+      "decodedRgbaSha256": "e605079e61a6c25a6ca379529fb5a47c2645522232a2cba6c7bcee45ee807398",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c23-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c23-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1854,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-c3a89c5dc29abeea4abd",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c23-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c23-s3.png",
+        "width": 309,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "e605079e61a6c25a6ca379529fb5a47c2645522232a2cba6c7bcee45ee807398",
+        "pngSha256": "0844e19aa7d2f4a95a956516cc8e14f960a995b41a0c20af21b5759b42842b36",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c24-s3.png",
+      "decodedRgbaSha256": "deacb17454989780cfeef00674591e1ccb6b9d989aa0021782158c3bdccdcb4a",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c24-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c24-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-8aa31bd4145dec6d7cc8",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c24-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c24-s3.png",
+        "width": 600,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "deacb17454989780cfeef00674591e1ccb6b9d989aa0021782158c3bdccdcb4a",
+        "pngSha256": "70960905a870701de966eb6370bac748dac1bb057923cedfae6fbb44f3f65e67",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c25-s3.png",
+      "decodedRgbaSha256": "0b383cf4da8db52db96f210ac87c1b480a3e9f5a1b0649f8b3d80c015957d9c6",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c25-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c25-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4626,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-d12242bf7f7f9f9b3a08",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c25-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c25-s3.png",
+        "width": 771,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "0b383cf4da8db52db96f210ac87c1b480a3e9f5a1b0649f8b3d80c015957d9c6",
+        "pngSha256": "0d7228c4c27b48d58088818ddf03d53f327f0c38586c83834c462024eaa36042",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c26-s3.png",
+      "decodedRgbaSha256": "9004d84b3d25210646af3d8a69f807da66de52e6795de4739ef7a407ebc972e7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c26-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c26-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 6930,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-1f8caf7b3a51e5a29bcf",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c26-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c26-s3.png",
+        "width": 1155,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "9004d84b3d25210646af3d8a69f807da66de52e6795de4739ef7a407ebc972e7",
+        "pngSha256": "daee70f075bff6961a4d771c25528a034e388b8e20cf65ac123d32ee0a37eb71",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c27-s3.png",
+      "decodedRgbaSha256": "7f2e829a19782075955df2ad2f988470aa5cc3431c72608ad61e7e30f80b9791",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c27-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c27-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 18,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "1",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-be3b1d878aacba8ef6e3",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=1&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c27-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c27-s3.png",
+        "width": 3,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7f2e829a19782075955df2ad2f988470aa5cc3431c72608ad61e7e30f80b9791",
+        "pngSha256": "e7b74735f215b422836b11fd32b3c3646dfa98c3d19f68c6d455d5ea9ffca71f",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c28-s3.png",
+      "decodedRgbaSha256": "65d03860ca95343264e87658442761dbf72a31a9265aff042b5b09b147617e23",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c28-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c28-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 36,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "2",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-a238fd19a810a485ddbd",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=2&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c28-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c28-s3.png",
+        "width": 6,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "65d03860ca95343264e87658442761dbf72a31a9265aff042b5b09b147617e23",
+        "pngSha256": "d8e759740bfbad0a18ef00141b6a1a7798e02462f21c6ac526a1d06609fe5f94",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c29-s3.png",
+      "decodedRgbaSha256": "beb09abbb3d43d58eecae2250ac169e62db3d791e826a042cc70b0ea6c3502c7",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c29-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c29-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 558,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "31",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-9864e5d45d07f082ca1a",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=31&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c29-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c29-s3.png",
+        "width": 93,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "beb09abbb3d43d58eecae2250ac169e62db3d791e826a042cc70b0ea6c3502c7",
+        "pngSha256": "def169ec45588f66951f71807ddee3f6a96dd2daab972f107403b4d8e4e38abb",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c30-s3.png",
+      "decodedRgbaSha256": "7ce5f8b0a0d23310cb5599eba55e178ef12b64aa78cd54e285e3a69f4cc30947",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c30-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c30-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 576,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "32",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-6305b559f314268ba821",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=32&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c30-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c30-s3.png",
+        "width": 96,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "7ce5f8b0a0d23310cb5599eba55e178ef12b64aa78cd54e285e3a69f4cc30947",
+        "pngSha256": "c29ce034d3b9c6d74a57d2279cd22a46f6dabe39ef762f26343190005f9d85ba",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c31-s3.png",
+      "decodedRgbaSha256": "f53a78229c8adf8e9031d3bdda026577986441d13c84f729b19448cb075b7f8d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c31-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c31-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 594,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "33",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-b0fd6a0f1361a894cfcc",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=33&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c31-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c31-s3.png",
+        "width": 99,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "f53a78229c8adf8e9031d3bdda026577986441d13c84f729b19448cb075b7f8d",
+        "pngSha256": "d02afd146ffb6394a6a0f3ff05e4ccea5d2560a99347b8e8d5227cc296307b0c",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c32-s3.png",
+      "decodedRgbaSha256": "ec43de707e6ad7d94bc79540bb9671f9f355c4bf4b5ea91dd9b90ffe2b7444b4",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c32-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c32-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 1854,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "103",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-713ba9b8831e672839a3",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=103&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c32-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c32-s3.png",
+        "width": 309,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "ec43de707e6ad7d94bc79540bb9671f9f355c4bf4b5ea91dd9b90ffe2b7444b4",
+        "pngSha256": "d6ef5ba3912ea417a89b28623800b1e998352579aae1733ffab6d2105af7245b",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c33-s3.png",
+      "decodedRgbaSha256": "3a02c88adb9186164d405b245eed0a71ed579f13d728871aae5c018b0ed7f347",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c33-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c33-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 3600,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "200",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-701a855cfc8cf2e56d0d",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=200&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c33-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c33-s3.png",
+        "width": 600,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "3a02c88adb9186164d405b245eed0a71ed579f13d728871aae5c018b0ed7f347",
+        "pngSha256": "33372fad74cbf8a26743fa215f97d30fba2433be41f9f2acff1dc751b0a0b307",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c34-s3.png",
+      "decodedRgbaSha256": "be18dccc9bca9990dcf3bffd3c91431d7a4d0593a54553c7e4d2ae47cf12d937",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c34-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c34-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 4626,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "257",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-42beaa9835703bc2c004",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=257&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c34-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c34-s3.png",
+        "width": 771,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "be18dccc9bca9990dcf3bffd3c91431d7a4d0593a54553c7e4d2ae47cf12d937",
+        "pngSha256": "dff4bf11d0db2db3c715480cb84b108b46c09a92323a2a8139fa2372258051f0",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    },
+    {
+      "name": "separator-c35-s3.png",
+      "decodedRgbaSha256": "b768ef625a72a34ef29aee38a187219613b03630fe673489c20842b40316a47d",
+      "mismatchedPixels": 0,
+      "evidence": {
+        "component": "separator",
+        "manifest": "tests/reference/separator/manifest.json",
+        "case": "separator-c35-s3.png",
+        "part": null,
+        "alias": "base",
+        "variants": {
+          "case": "separator-c35-s3.png",
+          "mismatchedPixels": 0,
+          "totalPixels": 6930,
+          "tolerance": 0,
+          "component": "separator"
+        },
+        "query": {
+          "component": "separator",
+          "width": "385",
+          "scale": "3",
+          "state": "footer"
+        },
+        "testId": "8a810cf16f4f6e5366cc-434062c235098726c424",
+        "runtimeUrl": "http://127.0.0.1:5342/?component=separator&width=385&scale=3&state=footer",
+        "subjectSlot": "separator",
+        "subjectElement": "DIV",
+        "joinBasis": "runtime-component-and-unique-registered-case",
+        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\separator-Separator-native-pixels-div-separator-c35-s3-png\\actual.png",
+        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\separator\\captures\\separator-c35-s3.png",
+        "width": 1155,
+        "height": 6,
+        "mismatchedPixels": 0,
+        "decodedRgbaSha256": "b768ef625a72a34ef29aee38a187219613b03630fe673489c20842b40316a47d",
+        "pngSha256": "e9bf87aa04efd883edc5351852c5d08be9f8fa2c85d2652eddbb3721c7546c59",
+        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
+      }
+    }
+  ],
+  "appliedAt": "2026-10-30T06:30:04.596Z",
+  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
+  "pageErrors": [],
+  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
+  "browser": "156.0.4314.50"
+}

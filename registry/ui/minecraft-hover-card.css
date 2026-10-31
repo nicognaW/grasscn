@@ -1,0 +1,8 @@
+@layer components {
+  .mc-hover-card { max-width: min(var(--radix-hover-card-content-available-width, 100vw), calc((var(--mc-tooltip-max, 170) + 24) * var(--mc-pixel))); }
+  .mc-hover-card-trigger { --mc-pixel: calc(1px * var(--mc-scale, 2)); display: inline-flex; color: #fff; font-family: "Minecraft Pilot 26.2", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); text-decoration: underline; text-underline-offset: var(--mc-pixel); }
+  .mc-hover-card-pixels { pointer-events: none; user-select: none; }
+  .mc-hover-card-selectable { position: absolute; inset: calc(12 * var(--mc-pixel)); color: transparent; text-shadow: none; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; cursor: text; }
+  .mc-hover-card-selectable::selection { background: #fff; color: #0000ff; text-shadow: none; }
+  .mc-hover-card-rich { position: relative; white-space: normal; overflow-wrap: anywhere; }
+}

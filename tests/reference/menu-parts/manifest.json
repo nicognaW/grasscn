@@ -1,0 +1,4798 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197",
+  "caseDefinitionSha256": "a7c137884ee027da9b2b957d8e0a2c04d490e93a5d56906995fd94304dd89e3b",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "3cdd8019d42c30e09b8ff59d3927eff0a3644d8e4612762f2695b6e7f6d4e063"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "82d186caf406309a030bd8cf652af8100624cf40860764fbbdc83e8e16c700b3"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "94ae65ca2ccb67d87317f5879b7e0cf758db1e9c9c24dfe39b56566b8677462b"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "e303ce06d133ebebcf37800721205b91902ca286e836b275138525dd6713321c"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "a60506662f3eee52f9d9201fe1b56c185fa5834cd385e3693940ef9f9c03dcc9"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "9b2220971b51c168a0fdfec0cd3799c21b669a8ead94796187684660411dc3bf"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "811443ff5268741e291c541afaaab22f095fb4276ebdd4f9aa58390c94448f17"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "2fc2ef48f4f46ae6d8b4f575de127cceef9428d789f9bcfea4dd91759ebdc15c"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "3daffc91b1057250f84d14902e3ea3dc8cfb29f0f59973ea4d59e23e73d509ea"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "91266dd2d97413d990bddaf6d4617bdd75750c702406fb3826a8224498b9beca"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "1549fbe49ec441040450dbc2560fb64484b6599b5ab96842b997b841dd81b7da"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "071dab55ecec4ce6fa298e71805f7a1212275f241bca4dfdb0695a871190b371"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "5226908cb550bbbc7b44465ecf7135c77d91e92cc5194040a85fd2baf06d7686"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "d514828d83b3599009e23278bc04fa7e0e41a0f3b5d83fd4777adf5917c8ae37"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "9ee62ab10547673f61819bc974b002072a5a86945d818e59152c014751aaf367"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "4e72870f40bbff9452fc235d3b4a9116fbd7e0ce0137e6e620f95385abd78eec"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "422c5934802635e14f664455818e4abc585013fd30358fc91d9530be6d6859c7"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "6d4644edacc24377a70d2cfc3c4b1ae254bd08c90d63ae5839440895c8a4f859"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "9d095a5408a913f6484e8262203520e7561db21d464a99e63846a530a5c438ea"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "f473201d6ec2586246d0aa221d8b9af0df74f62fe55380133fab25d20952e71a"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "ad5edcf453373493db0519d8125d154bab384dd35e555776dd529e53a4e9c844"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "91266dd2d97413d990bddaf6d4617bdd75750c702406fb3826a8224498b9beca"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "1549fbe49ec441040450dbc2560fb64484b6599b5ab96842b997b841dd81b7da"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "071dab55ecec4ce6fa298e71805f7a1212275f241bca4dfdb0695a871190b371"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "5226908cb550bbbc7b44465ecf7135c77d91e92cc5194040a85fd2baf06d7686"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "d514828d83b3599009e23278bc04fa7e0e41a0f3b5d83fd4777adf5917c8ae37"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "9ee62ab10547673f61819bc974b002072a5a86945d818e59152c014751aaf367"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "501aac0af4802452b5d5ac326dc82c90a85c0765567af96a4363d97e96efd616"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "12184d8fe659fd4011891913e16a124594cac63c50b14be17ed89c7c8d6821e5"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "e10672c2e4af3747e4fd42753cabb159db5fadad5e00dcc676570a262c0e35e1"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "eaaa3780a363a5f6e9f6fdaa1b4b55152edf1f81cee8c47d1b89cf67f99f6f7b"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "33d14521a3d8b83c91e7d07ed598d8ab5c7f47b785ad0477f5a814f12f92d1e4"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "b10e2d30f2ce6cb6df930f770802d1326daaf095082c54678211c7d9b50969ae"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "ac6a1ed2115eeea538522f1f13c0bae73095097867935e04dc24d2dd687199e6"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "5e561c1a4a9a22515578e609090df987055107e29d891635418cb91951bd3dcf"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "c01cb0b4f009795772a33e540ced0a170d818558c781aaad927818f33d529939"
+    },
+    {
+      "name": "native-controls-p12-s1.png",
+      "sha256": "e061615046442a45eb5bff9aaeb3734d17cc59a1050bf4173dfbf341d1b28f34"
+    },
+    {
+      "name": "native-controls-p12-s2.png",
+      "sha256": "4120da8d08c2fd75795ddc57150d32683006c7673c2e55e9a481bcf4439d2805"
+    },
+    {
+      "name": "native-controls-p12-s3.png",
+      "sha256": "d91c9790c9010d4487bb75554f79f12de9a4f147a70f4159382cea1a4ede7d42"
+    },
+    {
+      "name": "native-controls-p13-s1.png",
+      "sha256": "501aac0af4802452b5d5ac326dc82c90a85c0765567af96a4363d97e96efd616"
+    },
+    {
+      "name": "native-controls-p13-s2.png",
+      "sha256": "12184d8fe659fd4011891913e16a124594cac63c50b14be17ed89c7c8d6821e5"
+    },
+    {
+      "name": "native-controls-p13-s3.png",
+      "sha256": "e10672c2e4af3747e4fd42753cabb159db5fadad5e00dcc676570a262c0e35e1"
+    },
+    {
+      "name": "native-controls-p14-s1.png",
+      "sha256": "eaaa3780a363a5f6e9f6fdaa1b4b55152edf1f81cee8c47d1b89cf67f99f6f7b"
+    },
+    {
+      "name": "native-controls-p14-s2.png",
+      "sha256": "33d14521a3d8b83c91e7d07ed598d8ab5c7f47b785ad0477f5a814f12f92d1e4"
+    },
+    {
+      "name": "native-controls-p14-s3.png",
+      "sha256": "b10e2d30f2ce6cb6df930f770802d1326daaf095082c54678211c7d9b50969ae"
+    },
+    {
+      "name": "native-controls-p15-s1.png",
+      "sha256": "3ae4da05c8eab3e3305973221c3b11a5438418841dbd8c501c0015962f9411c0"
+    },
+    {
+      "name": "native-controls-p15-s2.png",
+      "sha256": "f1d9b09e879d91ee7f7467389ef02b3ff4c09ad45f5160d4833e3e0f2f07a2b1"
+    },
+    {
+      "name": "native-controls-p15-s3.png",
+      "sha256": "789f75402807d8ef7378e68ef1267a2b77f74652808c89d43a8f11e51fe45006"
+    },
+    {
+      "name": "native-controls-p16-s1.png",
+      "sha256": "605b2644c87f06c98aec868cfd3ce784d5343580a09d47afdf5c6a238d36e6f5"
+    },
+    {
+      "name": "native-controls-p16-s2.png",
+      "sha256": "5fcdd1054f4d93891a4b7996dd2a60bb2f4bf0f039bb81ddf7a28959511c95f5"
+    },
+    {
+      "name": "native-controls-p16-s3.png",
+      "sha256": "c1c37afa74c765482664353e542bb5ac2558dcb1dc2b37fcb9a6fc7212dc0392"
+    },
+    {
+      "name": "native-controls-p17-s1.png",
+      "sha256": "2c6968c057f562fe98f8224a6e8aaad0d53ab5d927ea87dadc3d5a5bb682e8d0"
+    },
+    {
+      "name": "native-controls-p17-s2.png",
+      "sha256": "478b9924753e7d3444461905a836c8e66410b4267eb122495453e81a5a60cece"
+    },
+    {
+      "name": "native-controls-p17-s3.png",
+      "sha256": "265990962645e1df4f423e79d268850622c1ff1983734c83edbacb8a2af4982c"
+    },
+    {
+      "name": "native-controls-p18-s1.png",
+      "sha256": "aa9f993ec8f48534bbb1a37aa9ae22f278c28dc8c25cab10b6b1b7a490b3f6a3"
+    },
+    {
+      "name": "native-controls-p18-s2.png",
+      "sha256": "c0c6ea38084fe47573d09a124fe1cec76ca69d20d64602d80ca6cca90bc39b40"
+    },
+    {
+      "name": "native-controls-p18-s3.png",
+      "sha256": "8fb9e1d6715147357f07a5323a618332fb78ff25c75150fa3a6444811636344b"
+    },
+    {
+      "name": "native-controls-p19-s1.png",
+      "sha256": "3ae4da05c8eab3e3305973221c3b11a5438418841dbd8c501c0015962f9411c0"
+    },
+    {
+      "name": "native-controls-p19-s2.png",
+      "sha256": "f1d9b09e879d91ee7f7467389ef02b3ff4c09ad45f5160d4833e3e0f2f07a2b1"
+    },
+    {
+      "name": "native-controls-p19-s3.png",
+      "sha256": "789f75402807d8ef7378e68ef1267a2b77f74652808c89d43a8f11e51fe45006"
+    },
+    {
+      "name": "native-controls-p20-s1.png",
+      "sha256": "605b2644c87f06c98aec868cfd3ce784d5343580a09d47afdf5c6a238d36e6f5"
+    },
+    {
+      "name": "native-controls-p20-s2.png",
+      "sha256": "5fcdd1054f4d93891a4b7996dd2a60bb2f4bf0f039bb81ddf7a28959511c95f5"
+    },
+    {
+      "name": "native-controls-p20-s3.png",
+      "sha256": "c1c37afa74c765482664353e542bb5ac2558dcb1dc2b37fcb9a6fc7212dc0392"
+    },
+    {
+      "name": "native-controls-p21-s1.png",
+      "sha256": "3cb72cde02d1fdd128e4f08d913b38e27c3e2e0d3a2f65fbae00c92283e8ad1f"
+    },
+    {
+      "name": "native-controls-p21-s2.png",
+      "sha256": "a4235c39b2a23406ef246ae468b6d54556500b8e2c7141db4ae4ec4fa8c4b450"
+    },
+    {
+      "name": "native-controls-p21-s3.png",
+      "sha256": "63ad9509b2d90c56da69c48e12def391b178920261de3e629c3d9eba05a972ed"
+    },
+    {
+      "name": "native-controls-p22-s1.png",
+      "sha256": "dd8eccfa45348b412f2892f8d4c430ea98287aad2cec8aec429f7c7e05d1ec15"
+    },
+    {
+      "name": "native-controls-p22-s2.png",
+      "sha256": "3b915ec641104a5dbd8444adcd8ce0a4886759830bb2843e175dd670ed2b221b"
+    },
+    {
+      "name": "native-controls-p22-s3.png",
+      "sha256": "1dd2c93b23efd87dc1d7949142a4f4ba4726b07079d302c04c0ce10ce24ec1dc"
+    },
+    {
+      "name": "native-controls-p23-s1.png",
+      "sha256": "08ab34d0063a24d1d9123136c6bd4b85a041ee887779fb5449a18f2cfa6a4ade"
+    },
+    {
+      "name": "native-controls-p23-s2.png",
+      "sha256": "5011758080eb20cd697d12d86392784eafcd4576b5b2aeea390e9eaefd64bd80"
+    },
+    {
+      "name": "native-controls-p23-s3.png",
+      "sha256": "bc93130a9650a1c0c05a9a0bee063a26c9370fa93d27f6458c6170b23c67ea81"
+    },
+    {
+      "name": "native-controls-p24-s1.png",
+      "sha256": "d0f9219b68473e5d4fc95dd47c27057ea089072ad7b8a0b0ecbccce9691695b7"
+    },
+    {
+      "name": "native-controls-p24-s2.png",
+      "sha256": "6a8daf6f6d912847665a31e1eddbdd51c80768125221843d64a22581902f35b1"
+    },
+    {
+      "name": "native-controls-p24-s3.png",
+      "sha256": "ea15efc425117bd68067d233f56a14cafa203382e686ed90ccad0555f1f834b3"
+    },
+    {
+      "name": "native-controls-p25-s1.png",
+      "sha256": "3cb72cde02d1fdd128e4f08d913b38e27c3e2e0d3a2f65fbae00c92283e8ad1f"
+    },
+    {
+      "name": "native-controls-p25-s2.png",
+      "sha256": "a4235c39b2a23406ef246ae468b6d54556500b8e2c7141db4ae4ec4fa8c4b450"
+    },
+    {
+      "name": "native-controls-p25-s3.png",
+      "sha256": "63ad9509b2d90c56da69c48e12def391b178920261de3e629c3d9eba05a972ed"
+    },
+    {
+      "name": "native-controls-p26-s1.png",
+      "sha256": "dd8eccfa45348b412f2892f8d4c430ea98287aad2cec8aec429f7c7e05d1ec15"
+    },
+    {
+      "name": "native-controls-p26-s2.png",
+      "sha256": "3b915ec641104a5dbd8444adcd8ce0a4886759830bb2843e175dd670ed2b221b"
+    },
+    {
+      "name": "native-controls-p26-s3.png",
+      "sha256": "1dd2c93b23efd87dc1d7949142a4f4ba4726b07079d302c04c0ce10ce24ec1dc"
+    },
+    {
+      "name": "native-controls-p27-s1.png",
+      "sha256": "315def656b4d4a1cfb2f025e7052b82e2bcfaf5c88e198b1474b3f2eac71eb5f"
+    },
+    {
+      "name": "native-controls-p27-s2.png",
+      "sha256": "42a87f7df29c39fd142550f5b5200dc9ddb4c47b341d6d28c90af6596b7e06a1"
+    },
+    {
+      "name": "native-controls-p27-s3.png",
+      "sha256": "ab065b27075ac85eb1ec7fac4029cf569bd45ed6f94daea56bc22a3ab7a07151"
+    },
+    {
+      "name": "native-controls-p28-s1.png",
+      "sha256": "7d85de6e47457e2bbcc3994c77490fe66d1c841fc1c5584712ba1429d04cf9d6"
+    },
+    {
+      "name": "native-controls-p28-s2.png",
+      "sha256": "8ebe17c596eaae1d84389d4f29e5e5797350cd95580e0dd303d12a0508ff8a22"
+    },
+    {
+      "name": "native-controls-p28-s3.png",
+      "sha256": "9f59ecbff2d716f345fe1626c34c18adae173a74eac54573b25464a331f877fd"
+    },
+    {
+      "name": "native-controls-p29-s1.png",
+      "sha256": "2edb73c58af2a19786292481a19242d87260dea8722675ae360ace9215be09be"
+    },
+    {
+      "name": "native-controls-p29-s2.png",
+      "sha256": "8cb3e033ba9626df3ef96a1eed78197543f54f25abf3a12841e60f2554eb5104"
+    },
+    {
+      "name": "native-controls-p29-s3.png",
+      "sha256": "6f3be06ad6a654f1ca75f2c7764790d036ef5c6c3d0d52b9e86263447e53e7d6"
+    },
+    {
+      "name": "native-controls-p30-s1.png",
+      "sha256": "18be506d4a5de2d5533b4653bd9acd654938dede687c4226b283e085d00c48d6"
+    },
+    {
+      "name": "native-controls-p30-s2.png",
+      "sha256": "1849fbf67ea43775056ce7ae644aa273cc51a651c4a336f8c39154b26b4eeb97"
+    },
+    {
+      "name": "native-controls-p30-s3.png",
+      "sha256": "40e1c93919e490bb74ef5250e2abafbab60ed104cdfe6663cf0521e8002fc8bc"
+    },
+    {
+      "name": "native-controls-p31-s1.png",
+      "sha256": "315def656b4d4a1cfb2f025e7052b82e2bcfaf5c88e198b1474b3f2eac71eb5f"
+    },
+    {
+      "name": "native-controls-p31-s2.png",
+      "sha256": "42a87f7df29c39fd142550f5b5200dc9ddb4c47b341d6d28c90af6596b7e06a1"
+    },
+    {
+      "name": "native-controls-p31-s3.png",
+      "sha256": "ab065b27075ac85eb1ec7fac4029cf569bd45ed6f94daea56bc22a3ab7a07151"
+    },
+    {
+      "name": "native-controls-p32-s1.png",
+      "sha256": "7d85de6e47457e2bbcc3994c77490fe66d1c841fc1c5584712ba1429d04cf9d6"
+    },
+    {
+      "name": "native-controls-p32-s2.png",
+      "sha256": "8ebe17c596eaae1d84389d4f29e5e5797350cd95580e0dd303d12a0508ff8a22"
+    },
+    {
+      "name": "native-controls-p32-s3.png",
+      "sha256": "9f59ecbff2d716f345fe1626c34c18adae173a74eac54573b25464a331f877fd"
+    },
+    {
+      "name": "native-controls-p33-s1.png",
+      "sha256": "445232f198fdfee19f825e4507af469a5c6b656ca9f8c7979a83ce0406c44408"
+    },
+    {
+      "name": "native-controls-p33-s2.png",
+      "sha256": "237765f5337db9a52880646a0c27542f19eb9d3361fc667bcd85e00a7761a48a"
+    },
+    {
+      "name": "native-controls-p33-s3.png",
+      "sha256": "3808571bbce7c8a977de1c84f4a1a0306798059731a86424f3bf935bae5bc677"
+    },
+    {
+      "name": "native-controls-p34-s1.png",
+      "sha256": "7af1648dc005e33ca89cd172e804ace247811db405ac753e829086368074debb"
+    },
+    {
+      "name": "native-controls-p34-s2.png",
+      "sha256": "1293f45d1e781bdfbb965ea7b7fc1203f3e4ff664a08d6c0b0e45b29a100fbac"
+    },
+    {
+      "name": "native-controls-p34-s3.png",
+      "sha256": "7a7c219a40e54e2e9347534c7fc8f6aa36654fd5a9bb6c405c42bd0203e5fd98"
+    },
+    {
+      "name": "native-controls-p35-s1.png",
+      "sha256": "b80972acc5e58bfea40c6a2abc897ff72d1a8a84cd47fc28a7b0fd7d04ecff51"
+    },
+    {
+      "name": "native-controls-p35-s2.png",
+      "sha256": "f2910c082c57042dbb9a7a31501607434bcb86806cc3728559de1b108bbfbbc9"
+    },
+    {
+      "name": "native-controls-p35-s3.png",
+      "sha256": "a198f94e06e0230a9d7b0120bb477d2151ba265fb24b6ade194fa514d4d91089"
+    },
+    {
+      "name": "native-controls-p36-s1.png",
+      "sha256": "2c649e9f8d5d3e53b7766fdd09e83a66cfbbf0017b224f110aa6db5e993fdd32"
+    },
+    {
+      "name": "native-controls-p36-s2.png",
+      "sha256": "9877293c9e949cdcb2057914cf0c14e0169ec28be99367cef66790edcba74654"
+    },
+    {
+      "name": "native-controls-p36-s3.png",
+      "sha256": "a0ecdd29f0ecfa3dc2bf1b99046a16cdc50d5272cb54c1bb5574659cff9f5c0d"
+    },
+    {
+      "name": "native-controls-p37-s1.png",
+      "sha256": "445232f198fdfee19f825e4507af469a5c6b656ca9f8c7979a83ce0406c44408"
+    },
+    {
+      "name": "native-controls-p37-s2.png",
+      "sha256": "237765f5337db9a52880646a0c27542f19eb9d3361fc667bcd85e00a7761a48a"
+    },
+    {
+      "name": "native-controls-p37-s3.png",
+      "sha256": "3808571bbce7c8a977de1c84f4a1a0306798059731a86424f3bf935bae5bc677"
+    },
+    {
+      "name": "native-controls-p38-s1.png",
+      "sha256": "7af1648dc005e33ca89cd172e804ace247811db405ac753e829086368074debb"
+    },
+    {
+      "name": "native-controls-p38-s2.png",
+      "sha256": "1293f45d1e781bdfbb965ea7b7fc1203f3e4ff664a08d6c0b0e45b29a100fbac"
+    },
+    {
+      "name": "native-controls-p38-s3.png",
+      "sha256": "7a7c219a40e54e2e9347534c7fc8f6aa36654fd5a9bb6c405c42bd0203e5fd98"
+    },
+    {
+      "name": "native-controls-p39-s1.png",
+      "sha256": "b3605d11fd32c4ddbe4d9b740d56822ad6e29a2f92bece05dbb6359939814d50"
+    },
+    {
+      "name": "native-controls-p39-s2.png",
+      "sha256": "e2a44b10fa757c9213a8c4df346392d6d1687471a99a319a93a3988155452ca7"
+    },
+    {
+      "name": "native-controls-p39-s3.png",
+      "sha256": "93d6e2a6675055bfa26b6bcd57b8723d6fd954f83cfb94e126d5fbbe224ed2c5"
+    },
+    {
+      "name": "native-controls-p40-s1.png",
+      "sha256": "3a5094f9cc6ef2e6a7f03410986319940fabc3d8632d642821ccd75dcd93fc9a"
+    },
+    {
+      "name": "native-controls-p40-s2.png",
+      "sha256": "49337c8f781c22af48d74ba9df04c07b3e07bdf0cd38f4295d5033c77f8b741d"
+    },
+    {
+      "name": "native-controls-p40-s3.png",
+      "sha256": "23a7996222a9d2cd49e41e2e605dee3ac0a40709211bad4a57879eb3c666d448"
+    },
+    {
+      "name": "native-controls-p41-s1.png",
+      "sha256": "063f6bc46c6293267c4db11a74f8fc2ddf3444af54b0b97e0c92bbf9ff6c50ed"
+    },
+    {
+      "name": "native-controls-p41-s2.png",
+      "sha256": "f06f69220a14252c3299c02dccd4790056e086e75fc354a40ed86aef7f780564"
+    },
+    {
+      "name": "native-controls-p41-s3.png",
+      "sha256": "ca2a3135cfb2ac63b63f52c09bc7abfba8512a4c767f5ff63abc751bebf8977e"
+    },
+    {
+      "name": "native-controls-p42-s1.png",
+      "sha256": "747ee2484f9b26544dfac9c5551392397c762fdf9eebebff5fc53db96a4ebb92"
+    },
+    {
+      "name": "native-controls-p42-s2.png",
+      "sha256": "469736dffe7ee0a6f1963b959c4c2156b1d1d0c5baa81caa5e6ed40807619085"
+    },
+    {
+      "name": "native-controls-p42-s3.png",
+      "sha256": "dce7da78c868fc0bd0fc76e0d70c25bea1271284ecf4c67bdca6ff56a9744e35"
+    },
+    {
+      "name": "native-controls-p43-s1.png",
+      "sha256": "add83f339d2bd5916a2b145d9a331c8fe7a06121023c90d2d3698092595c54d2"
+    },
+    {
+      "name": "native-controls-p43-s2.png",
+      "sha256": "dd157ee25955aa3fad08237ad1b29842a2aeb5645944aee4c1d5a6f8cb85bf91"
+    },
+    {
+      "name": "native-controls-p43-s3.png",
+      "sha256": "38f8b8954983043d6cb324d72d727916a2ec83126020c8b9de65d7a326cf6bfa"
+    },
+    {
+      "name": "native-controls-p44-s1.png",
+      "sha256": "51b80bd999a962f0d3d9b22bf017e392740ccd89db38c2be302184de4ec8e808"
+    },
+    {
+      "name": "native-controls-p44-s2.png",
+      "sha256": "6b051dda363e29d9bf764b792e078db3a541679dbe66688a808f4505959fd3c0"
+    },
+    {
+      "name": "native-controls-p44-s3.png",
+      "sha256": "ffc66395754227c1551f1b05918750575f89100071f1c81dce71024760e905e2"
+    },
+    {
+      "name": "native-controls-p45-s1.png",
+      "sha256": "6dfc7d6d58639f194d5d0d692a9d4eaa5c3625ca1de9b743990c79ed2dcd3b71"
+    },
+    {
+      "name": "native-controls-p45-s2.png",
+      "sha256": "c86e3d935668973ffc16f886394f6e5750dcc22636af80daad0f68c038734b3b"
+    },
+    {
+      "name": "native-controls-p45-s3.png",
+      "sha256": "f17e1dce019fd9093ee697b77b88b0fe486995377d220661c351c25b9246c1df"
+    },
+    {
+      "name": "native-controls-p46-s1.png",
+      "sha256": "69b1d9a245904cea943a52e177e51e6754fb67aa77201b5cde1640f01a6385f0"
+    },
+    {
+      "name": "native-controls-p46-s2.png",
+      "sha256": "20dc0d3bb19238fea853cd51fd37ac6af251ea6d5d34f7034e7c9aa8ceef1c76"
+    },
+    {
+      "name": "native-controls-p46-s3.png",
+      "sha256": "5e2ad1308c1434770db8c6c9b3fa88bc7ee81e838fe29487ea4ce1660f4cbf2e"
+    },
+    {
+      "name": "native-controls-p47-s1.png",
+      "sha256": "7d93e72b22506eb04ffd2270a324d3b4b1b802c402ec48adf4df287d2b26b353"
+    },
+    {
+      "name": "native-controls-p47-s2.png",
+      "sha256": "c70b402da22e520a69314f926ef3326fd078616e9052ac3c4fc89d1914f7a95f"
+    },
+    {
+      "name": "native-controls-p47-s3.png",
+      "sha256": "c488a9fce6857272c82fe1b0206bbd8fb34bf0cbfe6af8574517130ef6d40614"
+    },
+    {
+      "name": "native-controls-p48-s1.png",
+      "sha256": "45bae91c73c517fe21dc16d0201b794151659246adb30859ba1e2e127f035177"
+    },
+    {
+      "name": "native-controls-p48-s2.png",
+      "sha256": "59d074552d2a5795dca30df29311dcd17aececb53bc6b55c7f60a3249471ce5b"
+    },
+    {
+      "name": "native-controls-p48-s3.png",
+      "sha256": "c8c35fed5534e29bed96de7301e6c6ad6ac9731cd7d72a4d6474e6dbbb03e108"
+    },
+    {
+      "name": "native-controls-p49-s1.png",
+      "sha256": "9f5d24b1923b5506002a529f1c4d0e8e645a765b546bec245e5cc1a0ecf53139"
+    },
+    {
+      "name": "native-controls-p49-s2.png",
+      "sha256": "94f229d2ba8fa4d078a009322817600ea74cdf3a85abfbb2aff3076236414ab0"
+    },
+    {
+      "name": "native-controls-p49-s3.png",
+      "sha256": "c02a90aa65143a0848a7554bd8e4e4c33665bf9f5b299b5afbb1d90072ab8a40"
+    },
+    {
+      "name": "native-controls-p50-s1.png",
+      "sha256": "3f5c564b707f38313232b16fa28269bb8421c93b74bf3405eb24c9323b581145"
+    },
+    {
+      "name": "native-controls-p50-s2.png",
+      "sha256": "52cff85d33357d4a69a6f46ec9d309f2f97a2c8351a396ab41fbf92cc239a4fd"
+    },
+    {
+      "name": "native-controls-p50-s3.png",
+      "sha256": "5f3788a6bec535e4e24d09ba584f105c4a094d5bb0403df8317066ea94dc0d92"
+    },
+    {
+      "name": "native-controls-p51-s1.png",
+      "sha256": "ccaeaa75de32bb73833895ed509628a482a24cf7fb77da260848781ff47ae473"
+    },
+    {
+      "name": "native-controls-p51-s2.png",
+      "sha256": "93bb55eea8e4fbb232a544ed3201de162e8ab6668a5e85abf5e91143ac77ed9e"
+    },
+    {
+      "name": "native-controls-p51-s3.png",
+      "sha256": "3a1e50d188dc7b73c31f9d820f244cb90b56bee64ff89d37d6cb6be1af11fc0c"
+    },
+    {
+      "name": "native-controls-p52-s1.png",
+      "sha256": "07163cd44e6c369f812b145762b00fcfc28838386e54d8b6ddc69b9a463f36f3"
+    },
+    {
+      "name": "native-controls-p52-s2.png",
+      "sha256": "e4ea6c25e1753ad3070287ea3e6e81a3f1648d6bd4509d87009add4449b9acc4"
+    },
+    {
+      "name": "native-controls-p52-s3.png",
+      "sha256": "5ed4b677acc21621d11122431c5e57fc26fb985a9d18e2e178700b48d36ffe49"
+    },
+    {
+      "name": "native-controls-p53-s1.png",
+      "sha256": "6a7989bc029ffd9b11462d0f1a3d9f3bf73474f9ab039bb775115bac9be4217c"
+    },
+    {
+      "name": "native-controls-p53-s2.png",
+      "sha256": "d85789d115724764845eb1f5a84a4c61fe27a03b157954219f8fcd6872c56bf5"
+    },
+    {
+      "name": "native-controls-p53-s3.png",
+      "sha256": "7b5eb9220d16e1d8e0cb3d65b8343623931179dc5c65748fbbb66bfb13058118"
+    },
+    {
+      "name": "native-controls-p54-s1.png",
+      "sha256": "c708aa3f49529481eaef995ffcc9aeb6c03b5e35d711859271a7e008e5851084"
+    },
+    {
+      "name": "native-controls-p54-s2.png",
+      "sha256": "0b04d061c5a7c6767e2f2a95347fc1728819e62a5816c95d23ab5ba706a53051"
+    },
+    {
+      "name": "native-controls-p54-s3.png",
+      "sha256": "c29f63726dfa1c99d80dc9e2e8bff7599448ddae1c29607225a5b3c4989808c5"
+    },
+    {
+      "name": "native-controls-p55-s1.png",
+      "sha256": "bc23f270c7a3347f6d924326619e356e3f4707d65ae9f79818b50372511eedbc"
+    },
+    {
+      "name": "native-controls-p55-s2.png",
+      "sha256": "eed86d1b350e52168d5b06ecf0e2103b79efaa7b7e08371648b2fd4c278c8107"
+    },
+    {
+      "name": "native-controls-p55-s3.png",
+      "sha256": "92386837a0fc2addd94bc47d114ea9979e762f1912fc0ef280eb531b59cd6a93"
+    },
+    {
+      "name": "native-controls-p56-s1.png",
+      "sha256": "5f10417152823e9f37eca4609cb2901a227fb93a25734afb0ffcf5ddd411087a"
+    },
+    {
+      "name": "native-controls-p56-s2.png",
+      "sha256": "5889786ea85b569793347b6bc614794100db0ed605fba64797aed54a7d4274a2"
+    },
+    {
+      "name": "native-controls-p56-s3.png",
+      "sha256": "0e4e2ec5c12440bf6207a58fa25960786adaa9db0fd0c1d5f663ed2e81510e06"
+    },
+    {
+      "name": "native-controls-p57-s1.png",
+      "sha256": "a44a91e87a2434893b16c3490469f8a3c80389cca6e66abf423c057dc166c7a8"
+    },
+    {
+      "name": "native-controls-p57-s2.png",
+      "sha256": "5fd3af3baa4fe8dc84e08a06f60812de967a88b92eb0b3253b7eef52dae67a54"
+    },
+    {
+      "name": "native-controls-p57-s3.png",
+      "sha256": "7f9c0e00b8acf7a7f28fccae662b40c551ec2f9aeab91e633624cb3476c7f388"
+    },
+    {
+      "name": "native-controls-p58-s1.png",
+      "sha256": "90c514927f620710efea08fc8a1e698c903781b1e1c8637b5ea4b4ce872b689a"
+    },
+    {
+      "name": "native-controls-p58-s2.png",
+      "sha256": "f8ae6a50c22d9902da83bace31d80d804ec615f0f2fbeb6966e356c48cb6e89b"
+    },
+    {
+      "name": "native-controls-p58-s3.png",
+      "sha256": "c9ce73f50bed6b3613f40909411f800acf52140ab35e4d607328fb40647a171a"
+    },
+    {
+      "name": "native-controls-p59-s1.png",
+      "sha256": "0e35c7fa1df063473b52add4c305ed0a72e0e1b39ba149cd36fbf2ad3e88c287"
+    },
+    {
+      "name": "native-controls-p59-s2.png",
+      "sha256": "4fb0bd6a8697c023693cae2c86faf5e9bfc0f156974339cd8dade659372c8fad"
+    },
+    {
+      "name": "native-controls-p59-s3.png",
+      "sha256": "5d2a63353a481d282edac22ab225d6aa7b23cf6876ade044273f5a09d524873b"
+    },
+    {
+      "name": "native-controls-p60-s1.png",
+      "sha256": "2b7ff0ef859455aa1d9c3a9058c9baedf53a56d46e2528cdf14126d20aab4039"
+    },
+    {
+      "name": "native-controls-p60-s2.png",
+      "sha256": "c9a090be6129e743e28824050ab728980e679a298d5a6ce727319ff4500f3547"
+    },
+    {
+      "name": "native-controls-p60-s3.png",
+      "sha256": "b4b65b48666b0cf797c3616cd0eb82ed5a9761f552fa4077651a97a360763ab5"
+    },
+    {
+      "name": "native-controls-p61-s1.png",
+      "sha256": "4cc42118ab79ee4923e0742f4be5bf03dc35701374027f851ff170a083cbdbca"
+    },
+    {
+      "name": "native-controls-p61-s2.png",
+      "sha256": "8ce9419209d89ea9d3829853d07529d9060dad4f41865843a9b4fed41a17b5d8"
+    },
+    {
+      "name": "native-controls-p61-s3.png",
+      "sha256": "792f4d0d716f84fd4a5bf2703cb01004b6ebc79fc996bb6897435e86bb6483b6"
+    },
+    {
+      "name": "native-controls-p62-s1.png",
+      "sha256": "779bd7aee82ce0cd46bc03ab1a09330eebd7542b2788e16e629c7087f060d03d"
+    },
+    {
+      "name": "native-controls-p62-s2.png",
+      "sha256": "b340e865ad5552d4093bb74e1c23e28aa01f0ff2dfd57c24785426117eec3f3a"
+    },
+    {
+      "name": "native-controls-p62-s3.png",
+      "sha256": "9444068765bd6d8534a7d5e2f93a41ed9dfb3cd1dbc036e078677c497c64195f"
+    },
+    {
+      "name": "native-controls-p63-s1.png",
+      "sha256": "8a45804d9867fa574d42760720ca4f15dbc35c0ab3e668b531f4082a51b9e51c"
+    },
+    {
+      "name": "native-controls-p63-s2.png",
+      "sha256": "3cd6d097c4542804756f3a9c4ef157be790955b92f1a43a82c25b254c8c3869c"
+    },
+    {
+      "name": "native-controls-p63-s3.png",
+      "sha256": "45e2a09910530bb47f1689618b9f46e69a43e6a7dec551f042c25f9dcfb1275d"
+    },
+    {
+      "name": "native-controls-p64-s1.png",
+      "sha256": "e86ef74de1aef6fddbb1e58c73b9d335769c3335e2780e2399c4edefee2bf102"
+    },
+    {
+      "name": "native-controls-p64-s2.png",
+      "sha256": "30cea14b615638df120a0c037a6ca55194ca2237f48b21306bd676cc7a613366"
+    },
+    {
+      "name": "native-controls-p64-s3.png",
+      "sha256": "a95b09b9013a229699796f4c5263f348b16ac6970394692eb74481911e099491"
+    },
+    {
+      "name": "native-controls-p65-s1.png",
+      "sha256": "52c4a45e2cc29ccffbefd562fbbf28cc755ca684281e06b7f5ca6dd504a552c0"
+    },
+    {
+      "name": "native-controls-p65-s2.png",
+      "sha256": "d35470bddc3133cd3a318fcab2e93933ff16366583d0b68bc468d13cad3b48c5"
+    },
+    {
+      "name": "native-controls-p65-s3.png",
+      "sha256": "45e7f307f4605aca7da814a962c1b858fcda86b6bda63da1f257ec93bffe2df8"
+    },
+    {
+      "name": "native-controls-p66-s1.png",
+      "sha256": "9fecb51b820040b581ec0c831fe1562194e1666451fe2d36d1da132a8b861723"
+    },
+    {
+      "name": "native-controls-p66-s2.png",
+      "sha256": "6d551b502c76c49cea3d00ad2b8fde504709a473a8392967a6f04444f33d0f46"
+    },
+    {
+      "name": "native-controls-p66-s3.png",
+      "sha256": "26d1933269f60fd9d1d20c1cb52861e5cea7b457fa745140f0171acedd2065d9"
+    },
+    {
+      "name": "native-controls-p67-s1.png",
+      "sha256": "c9798eb4614f2209e8cdc323265554a01e0d968adbec5d94c941b98bf9b584fa"
+    },
+    {
+      "name": "native-controls-p67-s2.png",
+      "sha256": "da9e4a62f46297a079d9f744f4c63190b302956a3a713daccd79bd2667d825cc"
+    },
+    {
+      "name": "native-controls-p67-s3.png",
+      "sha256": "2436bffc271580643b2b605dddcf5ffeee3b365fb8408f6543991c086f0e547d"
+    },
+    {
+      "name": "native-controls-p68-s1.png",
+      "sha256": "b6b7f6e149619b4c719b7793ca1e27b26b89f79a60534c3d99808354a987fc90"
+    },
+    {
+      "name": "native-controls-p68-s2.png",
+      "sha256": "b0bdbabd86cad215abbb5216f41053696f0dc5c0fcfce2fc312cee5993f7c831"
+    },
+    {
+      "name": "native-controls-p68-s3.png",
+      "sha256": "482b582659a5987deb30c5609e15ec3b73188eeac3554b68c066567eb11f2776"
+    },
+    {
+      "name": "native-controls-p69-s1.png",
+      "sha256": "be351ef2dd1663be240da93bccaaa66c85a891ef7a459cc33f1e12c89cb5ac4d"
+    },
+    {
+      "name": "native-controls-p69-s2.png",
+      "sha256": "3624057049bb9444e714d3e5a6e84fd9985688ecf9e4bb28858650727777978b"
+    },
+    {
+      "name": "native-controls-p69-s3.png",
+      "sha256": "c45ca152fc35453e12cca7bfc8e42247dc229e244474bef6f4a0b334dc599d5f"
+    },
+    {
+      "name": "native-controls-p70-s1.png",
+      "sha256": "78013514db1bb008ad9d9ffbc65d7bd52b061179fe7eb3f7fb0660ff5efbc6fd"
+    },
+    {
+      "name": "native-controls-p70-s2.png",
+      "sha256": "3611d317fe0f8a72d9ed64a6394a82484ddae446c939e7039c6431d60eef93cf"
+    },
+    {
+      "name": "native-controls-p70-s3.png",
+      "sha256": "b79673f5bacff434f7c957d88e6706fae38af0b7d6b74b74ef84f396e0e5e087"
+    }
+  ],
+  "cases": [
+    {
+      "name": "menu-parts-c0-s1.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "db3236960403bf143fa0241cb9cd78d9e7b4b07b850bb5c717f885ae85db86c8"
+    },
+    {
+      "name": "menu-parts-c1-s1.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "selectedIndex": -1,
+      "background": "#808080",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "d329e04070aa29ce286c3907d900d7ca371961468314f7ab0ac2b6838911cf08"
+    },
+    {
+      "name": "menu-parts-c2-s1.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "width": 103,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "4b393e2f6589dfb139c805f528174d2e9358010bf1978130c21774f6f2638b88"
+    },
+    {
+      "name": "menu-parts-c3-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "a36acbbdbf98380527f4fd6c0320c70054c3c86a63a8f8e1378b033f23918e67"
+    },
+    {
+      "name": "menu-parts-c4-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "6869f4c3fa59ac1a0b2edc5797488a125a9f7a168f3471648a6c2356572a4baf"
+    },
+    {
+      "name": "menu-parts-c5-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "3d0223504ad76fe49d541703661b270dbdba7fc9727cef405791ee497265f678"
+    },
+    {
+      "name": "menu-parts-c6-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "e874dfb0a62a07d94eda132c20f5b0f89d4c139241e0a965a7c8c4c1f603502d"
+    },
+    {
+      "name": "menu-parts-c7-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "a36acbbdbf98380527f4fd6c0320c70054c3c86a63a8f8e1378b033f23918e67"
+    },
+    {
+      "name": "menu-parts-c8-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "6869f4c3fa59ac1a0b2edc5797488a125a9f7a168f3471648a6c2356572a4baf"
+    },
+    {
+      "name": "menu-parts-c9-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "3ff085264b9a57570a0290f6e002c0ed7671497e38981bb9a0ab6914df26717b"
+    },
+    {
+      "name": "menu-parts-c10-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "dcc41649dc5b9c22da48916fab79a4f7ee05b5a4fbd9e48b9d36bae1de9443de"
+    },
+    {
+      "name": "menu-parts-c11-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "c87a54aa3592b78811851a9a465359d30732d919e5d724b33279bec870b3b0c0"
+    },
+    {
+      "name": "menu-parts-c12-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "dc4d433534d6f4f32f10f337b6f98f48dbd89a85b5eba6d28f21a894f707370a"
+    },
+    {
+      "name": "menu-parts-c13-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "3ff085264b9a57570a0290f6e002c0ed7671497e38981bb9a0ab6914df26717b"
+    },
+    {
+      "name": "menu-parts-c14-s1.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 1,
+      "sha256": "dcc41649dc5b9c22da48916fab79a4f7ee05b5a4fbd9e48b9d36bae1de9443de"
+    },
+    {
+      "name": "menu-parts-c15-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "4259e5940ad93823c2975d684c8a769028944a5378b1f1a46209569e10df81b8"
+    },
+    {
+      "name": "menu-parts-c16-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "5fbf6b5e7848029075b80554ceaba0dcfbce9a4a8d4f96bdbacd49d808d7476d"
+    },
+    {
+      "name": "menu-parts-c17-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "90885ca6999933bd869a3c21dc4989372a08140e0f6fd027d5c5910f0ef17e7a"
+    },
+    {
+      "name": "menu-parts-c18-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "8148a569f049ceaeb2b1e31ed2be7a135308a7a0b4ab4b9de5748f4a9a995c2f"
+    },
+    {
+      "name": "menu-parts-c19-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "4259e5940ad93823c2975d684c8a769028944a5378b1f1a46209569e10df81b8"
+    },
+    {
+      "name": "menu-parts-c20-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "5fbf6b5e7848029075b80554ceaba0dcfbce9a4a8d4f96bdbacd49d808d7476d"
+    },
+    {
+      "name": "menu-parts-c21-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "39e3628cdcbb5ea7e581d84f24ca74d5f0ac9297195182493e6f83786ec07f7f"
+    },
+    {
+      "name": "menu-parts-c22-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "738e102e28b0968c50472894f99d24654d5aa1957ec1971c78cf83113081078d"
+    },
+    {
+      "name": "menu-parts-c23-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "f407e5f7181e6bed820af1627061199ab581939ab6c3313e5c2f2868bc4c080b"
+    },
+    {
+      "name": "menu-parts-c24-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "9bcb3212cc02ae1b903e6dbe3f3e3229a1b203c784874ab4b12319f0101849d4"
+    },
+    {
+      "name": "menu-parts-c25-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "39e3628cdcbb5ea7e581d84f24ca74d5f0ac9297195182493e6f83786ec07f7f"
+    },
+    {
+      "name": "menu-parts-c26-s1.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "738e102e28b0968c50472894f99d24654d5aa1957ec1971c78cf83113081078d"
+    },
+    {
+      "name": "menu-parts-c27-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "1381153cc5029cca05b1f5c1ea12d2180f533431e4ec72cac7c5b7713497da79"
+    },
+    {
+      "name": "menu-parts-c28-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "fd3e4aac1f500453d0a3c8913462b2740f091ef917e560aad9a8d80bce67b760"
+    },
+    {
+      "name": "menu-parts-c29-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "9e1aca09360f6856b875ad7dae992f73d374e670b4031dbc4c17d60315885055"
+    },
+    {
+      "name": "menu-parts-c30-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "cae0170df32ae0a465c06554c09f04a3340fbe128f5440059891a47857aa8c26"
+    },
+    {
+      "name": "menu-parts-c31-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "1381153cc5029cca05b1f5c1ea12d2180f533431e4ec72cac7c5b7713497da79"
+    },
+    {
+      "name": "menu-parts-c32-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 32,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "fd3e4aac1f500453d0a3c8913462b2740f091ef917e560aad9a8d80bce67b760"
+    },
+    {
+      "name": "menu-parts-c33-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 33,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "bc489619513b462f1b1146542923f980b6594467e0ad168908a911a89fbf7d80"
+    },
+    {
+      "name": "menu-parts-c34-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 34,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "3178c63c35cc88c1543c786d6facf12f4c2fc5641454bc5c2c78e8f0091dae4d"
+    },
+    {
+      "name": "menu-parts-c35-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 35,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "88d6cd0ffa2d4c08c34bc76b8d08903efb03b9dae8b4e1a1e7fb376b5bc5b87d"
+    },
+    {
+      "name": "menu-parts-c36-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 36,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "88b2d512a0442ee9ff610f18919e4095355b466e109495bf9320d15af8722c67"
+    },
+    {
+      "name": "menu-parts-c37-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 37,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "bc489619513b462f1b1146542923f980b6594467e0ad168908a911a89fbf7d80"
+    },
+    {
+      "name": "menu-parts-c38-s1.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 38,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "3178c63c35cc88c1543c786d6facf12f4c2fc5641454bc5c2c78e8f0091dae4d"
+    },
+    {
+      "name": "menu-parts-c39-s1.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 39,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "73f6c1d02d21cff8bd2b35f62dc6c706c3820297b95b19bf8a3bfa27f9c172c9"
+    },
+    {
+      "name": "menu-parts-c40-s1.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 40,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "f89f1eaa8c48bd25ed36c1c9e2f308f07a279f221a6010ffe85c36c62406b8b1"
+    },
+    {
+      "name": "menu-parts-c41-s1.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 41,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "76e2bcf9a35b90505ea13049198be3a2f048c416cc040654708a8a7784488a1b"
+    },
+    {
+      "name": "menu-parts-c42-s1.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 42,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "9211f43456b1d95d41b36a64ff560d5537e8db7f9b95467a92deba7659c197c8"
+    },
+    {
+      "name": "menu-parts-c43-s1.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 43,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "cb47ed4d3e768834c20c1945754cc79082e2b28f6448ec57c2fa8af61693b035"
+    },
+    {
+      "name": "menu-parts-c44-s1.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 44,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "ef62d19a7afa1f753df95c6f3e2cd7d5f0775ae3b68f3450f0bda5b0389eed53"
+    },
+    {
+      "name": "menu-parts-c45-s1.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 45,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "43c3fa9790894085c9ebd7098e4712ae9cc442d9b263b8b06d7350f1bc767dc4"
+    },
+    {
+      "name": "menu-parts-c46-s1.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 46,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "772bb100fc84325e24c7e3dea8be93169e94b4560a7375f2958165f5480222b5"
+    },
+    {
+      "name": "menu-parts-c47-s1.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 47,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "039ffb35035533e0a673b37ab2da2ddb473eeaa10adb0f24a8060d30d47c3f24"
+    },
+    {
+      "name": "menu-parts-c48-s1.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 48,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 1,
+      "sha256": "d12ef381a4a472022c003361849dfca9cfeeb16d76acf08b9f9460346eb7acde"
+    },
+    {
+      "name": "menu-parts-c49-s1.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 49,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "3438bcbba6960b0049c686237c40a0a833a5b56093fb0921e8bcaeea8a663077"
+    },
+    {
+      "name": "menu-parts-c50-s1.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 50,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 1,
+      "sha256": "f937cb401c2bb608fc4d03367b435cab13adbbdf7cff597e0e33b7a364d69903"
+    },
+    {
+      "name": "menu-parts-c51-s1.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 51,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 1,
+      "sha256": "6aa78b0c165a1848aa77b6bd570924f0e2b794f9db4734b6d5c896dacf21b96a"
+    },
+    {
+      "name": "menu-parts-c52-s1.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 52,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 1,
+      "sha256": "3bfec9515f663275d09f650c61119f93455aea24a80d12ba7913362cfafa59e7"
+    },
+    {
+      "name": "menu-parts-c53-s1.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 53,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 1,
+      "sha256": "2e6d37044279805ed93f817336d06a537d2e05526864da828d18a607dd909e27"
+    },
+    {
+      "name": "menu-parts-c54-s1.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 54,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 1,
+      "sha256": "75652589378b157225dec9b6fd197824ecee1487c657464e364ab72fb32cf7e5"
+    },
+    {
+      "name": "menu-parts-c55-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 55,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "9d27103526e1488bc0ecc7aace656f66473873b704287238a2f0a4333f5c2b38"
+    },
+    {
+      "name": "menu-parts-c56-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 56,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "44c4e4f8664b30847eaf39b3351e7c4f46c9d4af46535867de5f17d431297b2e"
+    },
+    {
+      "name": "menu-parts-c57-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 57,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "4f57f8ddeb38a727186032ae55af14c4b957d0510de48dcffa366096db583a9f"
+    },
+    {
+      "name": "menu-parts-c58-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 58,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "d0e3a5df301176932a6640c3619e8015afb2fa739283ba8d7b7b64cb97dc9e5c"
+    },
+    {
+      "name": "menu-parts-c59-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 59,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "8be83994f939a74891fb5e6ad043cf0aed2050818607dfdbe30a043a678b181a"
+    },
+    {
+      "name": "menu-parts-c60-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 60,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "2d494a7ccd926b297c490eb4625f4f656df2b3b4ed5f44963097b75d9fcd9a41"
+    },
+    {
+      "name": "menu-parts-c61-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 61,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "3bf82bb273961e110cada528bda84d0a80cf60cf0a4adc2970634bbe7249c40f"
+    },
+    {
+      "name": "menu-parts-c62-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 62,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 1,
+      "sha256": "de8d21a3bfc913d6158e18d44e5e6ee5c74e2e220737f1018fd7bba15f3c7b3a"
+    },
+    {
+      "name": "menu-parts-c63-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 63,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "d6114b6a778460ac2004944d0f5b8ed274dd5473f9ba2f009f04a67b2a51ff11"
+    },
+    {
+      "name": "menu-parts-c64-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 64,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "d5a1f87092683d513da73387d51d5d7f745a15c70d96392dc5bdb74e7255de32"
+    },
+    {
+      "name": "menu-parts-c65-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 65,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "a8ec319f458af8c74f912faf21f63863e125d08d641dbfd13e44313ea3e8a2a8"
+    },
+    {
+      "name": "menu-parts-c66-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 66,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "6c9e63f2f14e674b0a58e6491fff4421a13ead684218f62bbc4c32c3bd3fc072"
+    },
+    {
+      "name": "menu-parts-c67-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 67,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "4c75fb43ad11509d93487dab53b3875d01d32d9e7c3ed9231f06b4ce3100ec11"
+    },
+    {
+      "name": "menu-parts-c68-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 68,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "ea18481619153d895ae6b8919965529b1db231927087ee5d55ef0a6bcd68dc05"
+    },
+    {
+      "name": "menu-parts-c69-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 69,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "e04469571261dbd016a78991737a915a679ec10b69fa78791b789e39efe6fec6"
+    },
+    {
+      "name": "menu-parts-c70-s1.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 70,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 1,
+      "sha256": "c0b0ad482d9210dd48f6e86d22d79d4e9aa1292832e3e83257ab75e3ebe0e8bf"
+    },
+    {
+      "name": "menu-parts-c0-s2.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "589ac9d8686d4bff4114bb1fde65b700964db879c31be4b5d6d99cccaadc37c7"
+    },
+    {
+      "name": "menu-parts-c1-s2.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "selectedIndex": -1,
+      "background": "#808080",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "411fda0d93b64ef3c3efe2b855a847fd004476c23e871e94c85e99591859e67e"
+    },
+    {
+      "name": "menu-parts-c2-s2.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "width": 103,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "fa9061df763abe6f044d7b6b43660cc432711f4c37c6e7c08c2d617df9343bbf"
+    },
+    {
+      "name": "menu-parts-c3-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "abc7dc99743cc40823b05d05c5092f79f9d99f77d7c3e0baa762e6844273e958"
+    },
+    {
+      "name": "menu-parts-c4-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "3a34a27cf540753a2510e63f10f1613fc8cb1fc824e06094c26210124f77599e"
+    },
+    {
+      "name": "menu-parts-c5-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "3306b11d4526c622c1886aece2781d79233ac3f6399a17b578857d4fb5344f38"
+    },
+    {
+      "name": "menu-parts-c6-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "292942bd1742efc06779bbd1fb3a1f53692e53fe64b8d9c3a890169ede39d982"
+    },
+    {
+      "name": "menu-parts-c7-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "abc7dc99743cc40823b05d05c5092f79f9d99f77d7c3e0baa762e6844273e958"
+    },
+    {
+      "name": "menu-parts-c8-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "3a34a27cf540753a2510e63f10f1613fc8cb1fc824e06094c26210124f77599e"
+    },
+    {
+      "name": "menu-parts-c9-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "3a1248b20c85778f3d5d74851bc9977b87ba8272f105e896774389c3caf797e8"
+    },
+    {
+      "name": "menu-parts-c10-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "049b46420549bd8a8dd87a378d07568973c85f910bc16308fa77532ff9d1eea0"
+    },
+    {
+      "name": "menu-parts-c11-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "cf8a309b5ebd3b244b9d1361b574bffa915ddb84899202c8e1250a1d60693d91"
+    },
+    {
+      "name": "menu-parts-c12-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "08bebd2c225cefebbc7023d7f653232c4ee0f46b3fcfcd4e276c0becc981c766"
+    },
+    {
+      "name": "menu-parts-c13-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "3a1248b20c85778f3d5d74851bc9977b87ba8272f105e896774389c3caf797e8"
+    },
+    {
+      "name": "menu-parts-c14-s2.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 2,
+      "sha256": "049b46420549bd8a8dd87a378d07568973c85f910bc16308fa77532ff9d1eea0"
+    },
+    {
+      "name": "menu-parts-c15-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "f2e599578feb65e863c7dbeaed51de058178302138a42edad456c7596827ba78"
+    },
+    {
+      "name": "menu-parts-c16-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "83e234092cf067c06017f1126832541019b721ba7171823d30e602aa108dd400"
+    },
+    {
+      "name": "menu-parts-c17-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "8ce0b8454238b22785e28d58aadb3226a6d856eea4e75c9dd945ce87429ad0c4"
+    },
+    {
+      "name": "menu-parts-c18-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "204fe90b9420c93771058ea4cd9358a0930dd4302945a9dbf6b99c01d2179876"
+    },
+    {
+      "name": "menu-parts-c19-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "f2e599578feb65e863c7dbeaed51de058178302138a42edad456c7596827ba78"
+    },
+    {
+      "name": "menu-parts-c20-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "83e234092cf067c06017f1126832541019b721ba7171823d30e602aa108dd400"
+    },
+    {
+      "name": "menu-parts-c21-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "d10190834a54d81462cf51d35e574cd0d28ebdafaad7ace8b172e837dd0b1565"
+    },
+    {
+      "name": "menu-parts-c22-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "82ed68ce4426b97c1ee3cf469eb53043b6f9f6e23475e999a19fa2ad9f6500f5"
+    },
+    {
+      "name": "menu-parts-c23-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "43d7c022d72d48a5b8c0f84c62899b1c06b29c3a58fc90941e4bad6f1c4093b6"
+    },
+    {
+      "name": "menu-parts-c24-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "dea7a54b370066aae13b10abf482da0f70eb42d98de2b14f7baba8f63ac75101"
+    },
+    {
+      "name": "menu-parts-c25-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "d10190834a54d81462cf51d35e574cd0d28ebdafaad7ace8b172e837dd0b1565"
+    },
+    {
+      "name": "menu-parts-c26-s2.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "82ed68ce4426b97c1ee3cf469eb53043b6f9f6e23475e999a19fa2ad9f6500f5"
+    },
+    {
+      "name": "menu-parts-c27-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "774746c98f67f692050aa5eb7938fffbd1da2af6f445387f821c00b26ec03ad3"
+    },
+    {
+      "name": "menu-parts-c28-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "8d046fd9b1eacfef47b4d26eb5ff654bcf5c051c4698fd9f94f0f8724d59ac23"
+    },
+    {
+      "name": "menu-parts-c29-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "bee099ae67014cc16263cab28b0051ca345b7ef9107b23d9e488d800bf77760c"
+    },
+    {
+      "name": "menu-parts-c30-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "9c058d45da4ab8bf702974cd8b791c26f257d38b4f295663abb79280abca4b40"
+    },
+    {
+      "name": "menu-parts-c31-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "774746c98f67f692050aa5eb7938fffbd1da2af6f445387f821c00b26ec03ad3"
+    },
+    {
+      "name": "menu-parts-c32-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 32,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "8d046fd9b1eacfef47b4d26eb5ff654bcf5c051c4698fd9f94f0f8724d59ac23"
+    },
+    {
+      "name": "menu-parts-c33-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 33,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "31d32ccb33bd469c8c70c77cb982d8dab07122e475ec087d976d0247bfd7a2f1"
+    },
+    {
+      "name": "menu-parts-c34-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 34,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "c8283ebf2ff5e53fbb00b8f472723c9a5dd60d3ac698eedbdab8e3f6545e93e2"
+    },
+    {
+      "name": "menu-parts-c35-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 35,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "8878205c1ea6f0ee8046c1692241b39ab91a34c019492aeae40cc7528b7b8ae0"
+    },
+    {
+      "name": "menu-parts-c36-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 36,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "244ca60980e5c0140f294e2ebd0d2c63ce7b62999e71e60d48af71d7371da361"
+    },
+    {
+      "name": "menu-parts-c37-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 37,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "31d32ccb33bd469c8c70c77cb982d8dab07122e475ec087d976d0247bfd7a2f1"
+    },
+    {
+      "name": "menu-parts-c38-s2.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 38,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "c8283ebf2ff5e53fbb00b8f472723c9a5dd60d3ac698eedbdab8e3f6545e93e2"
+    },
+    {
+      "name": "menu-parts-c39-s2.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 39,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "d5cb0638825205f4cb1d604c92597e5a7235564c3b3975cdc41857e714e2fd3b"
+    },
+    {
+      "name": "menu-parts-c40-s2.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 40,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "60efd5aa0cb7f4e045a27e419473847aaf2d67406f185b740078e7f8bd51f403"
+    },
+    {
+      "name": "menu-parts-c41-s2.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 41,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "97a0cf07c7c06a13d6256ea28ef6afa32180de3d51bd2557f87a23064678e26c"
+    },
+    {
+      "name": "menu-parts-c42-s2.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 42,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "347cdd7f028191830d841d7d4d98d89716a4c259b87e0cfa61b39c096283af41"
+    },
+    {
+      "name": "menu-parts-c43-s2.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 43,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "d65d3ae0e456a916df94097e7cd1453cb2b1da3c081d45f7b7a69b44e9c7ad78"
+    },
+    {
+      "name": "menu-parts-c44-s2.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 44,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "7af4fcd5033a17bd2bedfdcae3311daa008664fcffcaa0fc7be9f92bbac59a45"
+    },
+    {
+      "name": "menu-parts-c45-s2.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 45,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "a1ccda98ea64f3c58d6be6c522663ca6be773623a385a94ee1c9564bd1682267"
+    },
+    {
+      "name": "menu-parts-c46-s2.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 46,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "6523ccd6724a04372e6a9de428f683608670f674a17a5724483f3d7df97e1578"
+    },
+    {
+      "name": "menu-parts-c47-s2.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 47,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "917f35d1512b48cdc6d299d71640d94001429d3f2f409dd899fa9a0e3d564895"
+    },
+    {
+      "name": "menu-parts-c48-s2.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 48,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 2,
+      "sha256": "950d16c692117a4a2f6ab28d32b8e8a4a07d8a55d277371ac74e61849d9f51c4"
+    },
+    {
+      "name": "menu-parts-c49-s2.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 49,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "e4bbaf7701412c347a0c36e6bdb7b4d72ea261e506f65d71ef973cd9816fdd9a"
+    },
+    {
+      "name": "menu-parts-c50-s2.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 50,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 2,
+      "sha256": "5a64e3d0bb00f85399c7a974d7bd91ceeb2811467f3a679dd0397b22d210ae81"
+    },
+    {
+      "name": "menu-parts-c51-s2.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 51,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 2,
+      "sha256": "c0dd8271750b882aac701940795be88cefbae2978b89b07fa3236701ba08f6f9"
+    },
+    {
+      "name": "menu-parts-c52-s2.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 52,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 2,
+      "sha256": "fdafdd76aceea16b5728008e34d055761cd022a964cc9d908dc96f18fd65de6b"
+    },
+    {
+      "name": "menu-parts-c53-s2.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 53,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 2,
+      "sha256": "4cf805ac8be3860b2cac2053fb3c1c0eb32f2233f50c758054dd537e5e3d1be1"
+    },
+    {
+      "name": "menu-parts-c54-s2.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 54,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 2,
+      "sha256": "64da348700c410cff0f7d22915208a84648dd01f1aecc07ce4df2ee2d494f4bd"
+    },
+    {
+      "name": "menu-parts-c55-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 55,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "f8a00087753812391b39738cd3ec8caf8817cf2a2b2a217d8f6a909b669a0109"
+    },
+    {
+      "name": "menu-parts-c56-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 56,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "76ce65876c1c7cff71bc219ccc65cabcddd0dbfbd787b18630cd2248888763ef"
+    },
+    {
+      "name": "menu-parts-c57-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 57,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "52a2276f2f4681a4f432ed50db2046a51fe588bf3319ca36f4d4f5e96a50e629"
+    },
+    {
+      "name": "menu-parts-c58-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 58,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "bea27a83272cafb50ba10a0ec956f606e860b18d9736acbf88ad5bc081989012"
+    },
+    {
+      "name": "menu-parts-c59-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 59,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "38487cdf1acb16b5ffa342ebe576e4a5c6ba93e61f043aa24cbc6bc316bf15fd"
+    },
+    {
+      "name": "menu-parts-c60-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 60,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "0f896f29097d250115bed3ad68c0f0d5a70e10bcdc74d0ae7870c4d857cc338b"
+    },
+    {
+      "name": "menu-parts-c61-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 61,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "0a6189ac307d02183342d7d16de63b64d36cd9e38a988558fc2e0c42b957af89"
+    },
+    {
+      "name": "menu-parts-c62-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 62,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 2,
+      "sha256": "3c38a3585a4f8b8f564eb60fc25cc119d93dc99657b8fe8fb9a7c85c99e6d30a"
+    },
+    {
+      "name": "menu-parts-c63-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 63,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "f93f33e56f6eb98891030d1f54bdeb35573ef7cb68e132a04944ee0687416f5f"
+    },
+    {
+      "name": "menu-parts-c64-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 64,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "d32ced751c6a53d0c573c3dfd1dc8c697ba28283537a611bf2bef3649da876ee"
+    },
+    {
+      "name": "menu-parts-c65-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 65,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "812c14e3fe878a6d7f006bec8cfda363b643d18a4f852f302168d78f48b12a23"
+    },
+    {
+      "name": "menu-parts-c66-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 66,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "ff593b38da0f92270f8e90c407f1caaf7b652b295b7b08774b927d73248935a7"
+    },
+    {
+      "name": "menu-parts-c67-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 67,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "21197105105d64704c2c16bdb8f1d7b3fbfd908ee1db7c3f71277800c8c25028"
+    },
+    {
+      "name": "menu-parts-c68-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 68,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "8ba8be41a65e3f013cd8f848a072484450e459b7732bad3ff7c214731742cb47"
+    },
+    {
+      "name": "menu-parts-c69-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 69,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "4f7d4ce2d7e7e9f824d1169a0ba88d82439895bc6a316a100870a4ce84795648"
+    },
+    {
+      "name": "menu-parts-c70-s2.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 70,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 2,
+      "sha256": "8f6108e36bae5973867084cdb3b52a53718c1cfbe2d0b12f3cc647ca72d3aed3"
+    },
+    {
+      "name": "menu-parts-c0-s3.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "db7310d34d4e0659cf351cb8b35cf043a65a9f397acb89185834e223f0b60af7"
+    },
+    {
+      "name": "menu-parts-c1-s3.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "width": 236,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "selectedIndex": -1,
+      "background": "#808080",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?",
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "240b8c96192fd94fa0cf9b39b858522e1d05353f8d90d90699afc0dcc3c4f8ab"
+    },
+    {
+      "name": "menu-parts-c2-s3.png",
+      "element": "suggestion-list",
+      "state": "normal",
+      "labels": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "width": 103,
+      "height": 36,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "selectedIndex": -1,
+      "background": "#202020",
+      "value": 0,
+      "lineLimit": 3,
+      "renderedLines": [
+        "你好，世界",
+        "こんにちは",
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "2211e20d18c882bf4591ed46bafae608348361e563d0815602246ddb8c675364"
+    },
+    {
+      "name": "menu-parts-c3-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "dab8ad3b2b0d42236c8e72a7cee0791a8bacd78943e154210e29d52842ec317c"
+    },
+    {
+      "name": "menu-parts-c4-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "d1e6292ebc7f0fe25fbfc7428420ea0bedea780bd3a361df798ba3fd3d9d9fc2"
+    },
+    {
+      "name": "menu-parts-c5-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "619769e816e6840f1617242848943ccc23a74e3ab0fde142e407bb33efc7a590"
+    },
+    {
+      "name": "menu-parts-c6-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "ce7c86145fd9aa4118ed7bf7b7b72a19ec499d005d38b3095917a41e20d14cb8"
+    },
+    {
+      "name": "menu-parts-c7-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "dab8ad3b2b0d42236c8e72a7cee0791a8bacd78943e154210e29d52842ec317c"
+    },
+    {
+      "name": "menu-parts-c8-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "d1e6292ebc7f0fe25fbfc7428420ea0bedea780bd3a361df798ba3fd3d9d9fc2"
+    },
+    {
+      "name": "menu-parts-c9-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "a82ebd390a3119ce2b87b5946c2b6f8f4d934b31b881310a9f2dde83b733f1fc"
+    },
+    {
+      "name": "menu-parts-c10-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "942bcb1dc420a4f450e73f17e6d0f762f30e9d874434747a47323bdbca804365"
+    },
+    {
+      "name": "menu-parts-c11-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "e07476a52588fd20ed60358cc84e9736b4371debb8cd352d601fe74bc1a26ca8"
+    },
+    {
+      "name": "menu-parts-c12-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "45caf4a6a17a18baed9d3e8846072be63eb02099eea88d4ffe813ae6bd5b80de"
+    },
+    {
+      "name": "menu-parts-c13-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "a82ebd390a3119ce2b87b5946c2b6f8f4d934b31b881310a9f2dde83b733f1fc"
+    },
+    {
+      "name": "menu-parts-c14-s3.png",
+      "element": "menu-checkbox",
+      "label": "Show coordinates",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "Show coordinates"
+      ],
+      "scale": 3,
+      "sha256": "942bcb1dc420a4f450e73f17e6d0f762f30e9d874434747a47323bdbca804365"
+    },
+    {
+      "name": "menu-parts-c15-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 15,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "ef7e75821474babb63b0a74c2ddd2deb354c102b09cb3abd44be1ae8caaa8a6f"
+    },
+    {
+      "name": "menu-parts-c16-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 16,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "9f91375da40d601ad757e015bf1c2c1d7eb43bd0320816020b77911dd63e5177"
+    },
+    {
+      "name": "menu-parts-c17-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 17,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "8b9f8a7609de38340ac8df634f6bf0100a7f7712b79a8f642f84e1c6b0642e09"
+    },
+    {
+      "name": "menu-parts-c18-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 18,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "790477448c2459bc7a47426ce65dcc81d73ece79458f901ef50d03b5e827d71a"
+    },
+    {
+      "name": "menu-parts-c19-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 19,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "ef7e75821474babb63b0a74c2ddd2deb354c102b09cb3abd44be1ae8caaa8a6f"
+    },
+    {
+      "name": "menu-parts-c20-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 20,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "9f91375da40d601ad757e015bf1c2c1d7eb43bd0320816020b77911dd63e5177"
+    },
+    {
+      "name": "menu-parts-c21-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 21,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "b697af282e9a009df98caa16b20980c547291341865e6b0cad01682f55842a9a"
+    },
+    {
+      "name": "menu-parts-c22-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 22,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "c5af75bb32da5b3fdbad7dffeee212730b347188bcee7f4b401b82bfeb5827e6"
+    },
+    {
+      "name": "menu-parts-c23-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 23,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "6bc8834a710a62151119233e641a1ed5e34a1c3ad93c08f7287320c603742eba"
+    },
+    {
+      "name": "menu-parts-c24-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 24,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "091a3377d0127ba61461c435bdb4d77cae7a79fa43fd0efca6363e32ddc12120"
+    },
+    {
+      "name": "menu-parts-c25-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 25,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "b697af282e9a009df98caa16b20980c547291341865e6b0cad01682f55842a9a"
+    },
+    {
+      "name": "menu-parts-c26-s3.png",
+      "element": "menu-checkbox",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 26,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "c5af75bb32da5b3fdbad7dffeee212730b347188bcee7f4b401b82bfeb5827e6"
+    },
+    {
+      "name": "menu-parts-c27-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 27,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "377982b5ec5c76b68ccc28e77e07bf9a7cc6b501434a3cae81d611d11ab8b0bf"
+    },
+    {
+      "name": "menu-parts-c28-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 28,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "434acaa2cb87c17c773abad0a72b8e58f958ed0701af2d05ab138e8e5aed0e59"
+    },
+    {
+      "name": "menu-parts-c29-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 29,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "99afcf81446e664af639e434e9b155049a9f994ff53c5caa8a824b832779a082"
+    },
+    {
+      "name": "menu-parts-c30-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 30,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "f7f2936ab011a796383ba8a6d02c9f3505c04c1d7c694872b8bb21225d6e5f22"
+    },
+    {
+      "name": "menu-parts-c31-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 31,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "377982b5ec5c76b68ccc28e77e07bf9a7cc6b501434a3cae81d611d11ab8b0bf"
+    },
+    {
+      "name": "menu-parts-c32-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 32,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "434acaa2cb87c17c773abad0a72b8e58f958ed0701af2d05ab138e8e5aed0e59"
+    },
+    {
+      "name": "menu-parts-c33-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 33,
+      "background": "#202020",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "2923c4cca6b1b529d251bd765378cce1a43a3bc599010c589fefc80a297980ac"
+    },
+    {
+      "name": "menu-parts-c34-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 34,
+      "background": "#808080",
+      "state": "normal",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "95f3661040c5a2c6acb63eeba62ce6ceff07d1da20ef6b0c2b086bb85c830513"
+    },
+    {
+      "name": "menu-parts-c35-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 35,
+      "background": "#202020",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "60fda3b14b640bd91aee120f83f73ee7108ddbaefb896bdac4dd9211a087af0b"
+    },
+    {
+      "name": "menu-parts-c36-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 36,
+      "background": "#808080",
+      "state": "focus",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "ac86341505832d746ee603362d488c262290436ab902c6d1d3684c2153e29d7f"
+    },
+    {
+      "name": "menu-parts-c37-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 37,
+      "background": "#202020",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "2923c4cca6b1b529d251bd765378cce1a43a3bc599010c589fefc80a297980ac"
+    },
+    {
+      "name": "menu-parts-c38-s3.png",
+      "element": "menu-checkbox",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 38,
+      "background": "#808080",
+      "state": "disabled",
+      "checked": true,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "95f3661040c5a2c6acb63eeba62ce6ceff07d1da20ef6b0c2b086bb85c830513"
+    },
+    {
+      "name": "menu-parts-c39-s3.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 39,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "7844356ad57e778a2f4d6cc1b6178c9a9b9753c3e3c970793a47fbff1367585b"
+    },
+    {
+      "name": "menu-parts-c40-s3.png",
+      "element": "menu-label",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 40,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "25a1f50c78e90ec2dbebfea28456b5bc0a5cf302bb5970ed3359e5748138723f"
+    },
+    {
+      "name": "menu-parts-c41-s3.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 41,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "9e3b23117d801532a7d290b827d40bcb1ec3bdd8ae115120dcd65f8494afad92"
+    },
+    {
+      "name": "menu-parts-c42-s3.png",
+      "element": "menu-label",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 42,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "493cf178b44cfb595d158bdaf9369863f6081b1d856ff367f1b214d8f2352aed"
+    },
+    {
+      "name": "menu-parts-c43-s3.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 43,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "79e879cd536bceb9baff7ef893d151348b08c7fac40022f0da2716ee93bd71ff"
+    },
+    {
+      "name": "menu-parts-c44-s3.png",
+      "element": "menu-disabled",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 44,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "de6e08fb7b5fe44074a7e8beba09033b00afe34a4da6821b83aac506f4cb8db2"
+    },
+    {
+      "name": "menu-parts-c45-s3.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 45,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "4a0ded70a8dff731b7f10d293558c2ae01f5701c0bb8c41371b192cea7cc1c69"
+    },
+    {
+      "name": "menu-parts-c46-s3.png",
+      "element": "menu-disabled",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 46,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "aa76b179c2ef161868fb6e737be3283d687fc44f2fe4c27727801a6478dd5d18"
+    },
+    {
+      "name": "menu-parts-c47-s3.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 47,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "b8e9ec3a6c54cda965b0dc8c7a6f13f4fa0c6d82c43f5a9b702550ff360458dc"
+    },
+    {
+      "name": "menu-parts-c48-s3.png",
+      "element": "menu-label-inset",
+      "label": "World Settings",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 48,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "World Settings"
+      ],
+      "scale": 3,
+      "sha256": "2949ce2cd8aabcac946475ffc605bebd3f9e4469a8d09860932c6cf2dd5b07c0"
+    },
+    {
+      "name": "menu-parts-c49-s3.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 49,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "6bf76adb7509dc5c74b81fc193c029783ec0dece758e444a8876d4637e67081b"
+    },
+    {
+      "name": "menu-parts-c50-s3.png",
+      "element": "menu-label-inset",
+      "label": "안녕하세요 Hello",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 50,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "안녕하세요 Hello"
+      ],
+      "scale": 3,
+      "sha256": "63127056edbf1a3ba9f56ce6e41e8a84d7c7a947be39a749073a1f6dee88aca6"
+    },
+    {
+      "name": "menu-parts-c51-s3.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 51,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 3,
+      "sha256": "919c81d8560f0ec76ad41e786cc8a1de27335008d1f973cfabd7e441297cbf96"
+    },
+    {
+      "name": "menu-parts-c52-s3.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 103,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 52,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 3,
+      "sha256": "c9a8775034d46e70d09c74227669c6070cd394efc2df1ae1208f1bdda6a71005"
+    },
+    {
+      "name": "menu-parts-c53-s3.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 53,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 3,
+      "sha256": "40bd0b66da2033a8fa39fe9462704ef794c31d106d41d14e218282a5086f27cf"
+    },
+    {
+      "name": "menu-parts-c54-s3.png",
+      "element": "menu-separator",
+      "label": "",
+      "width": 200,
+      "height": 18,
+      "x": 16,
+      "y": 16,
+      "page": 54,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        ""
+      ],
+      "scale": 3,
+      "sha256": "178300082b4944304ddc0b32c168c17350e4140f4cb9c1ed5711ac6d6a0800b2"
+    },
+    {
+      "name": "menu-parts-c55-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 55,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "9dbf736bfff5fb686c47b8b1e748326557a16cfb5ffc5a07e418d9826969193b"
+    },
+    {
+      "name": "menu-parts-c56-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 56,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "01dfafa028ee07675ae2c9a91c168841a09d8b4c245cfb413faec0c8f9f11c91"
+    },
+    {
+      "name": "menu-parts-c57-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 57,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "478d2f72ffe8983f61d9ef3bafb0a8c8cee842ea73457e24286619288b0cfd3e"
+    },
+    {
+      "name": "menu-parts-c58-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 58,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "dc3c55d6a9f534339f66d15330fd3e3fdd89f895afd0b8356d8659a7fa66d5a6"
+    },
+    {
+      "name": "menu-parts-c59-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 59,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "4f47f32f1be2e046308ba3729f9ffb1c022c932cf10091ba95cb73accd5860bb"
+    },
+    {
+      "name": "menu-parts-c60-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 60,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "c546bc20c561540f28fee0883764521feb84ce04418231c73ceeeb1190269bec"
+    },
+    {
+      "name": "menu-parts-c61-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 61,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "0989b90f5f53fcdebbda91990b2b81fd514d4aceacba3708a5a08c8c1d0c0ad8"
+    },
+    {
+      "name": "menu-parts-c62-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "More",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 62,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "More"
+      ],
+      "scale": 3,
+      "sha256": "a22ac1eea7881a53b7afab1fb59a775289cbe975ef41f96c848580d81572a308"
+    },
+    {
+      "name": "menu-parts-c63-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 63,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "f75de8cbf81c98592cf179aaeaf17d59f923ef705b6def7e7f2137786aaea6d8"
+    },
+    {
+      "name": "menu-parts-c64-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 64,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "c42a9d1a1c916c2b52e05d196edf364153f51812df06cb99e27bb3a8b962bbda"
+    },
+    {
+      "name": "menu-parts-c65-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 65,
+      "background": "#202020",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "c960ffde45657cc44e1f00f4415668c44ab1e300c25f214b6eaf966305a3a202"
+    },
+    {
+      "name": "menu-parts-c66-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 66,
+      "background": "#808080",
+      "state": "normal",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "58d6767ac65e0091beea69af0513a63fdd6a82d0eae16349d29dca685468874b"
+    },
+    {
+      "name": "menu-parts-c67-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 67,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "da6882a159ce230ac6e2691264d5990e69cd760db7992c15ee00aa714580eee8"
+    },
+    {
+      "name": "menu-parts-c68-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 103,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 68,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "fafd5d3354966b437eece37926a3176d8e6486c1aaed9f7e2246f591615a6d01"
+    },
+    {
+      "name": "menu-parts-c69-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 69,
+      "background": "#202020",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "cf0a5ce6a76d565a0bf6aaad5f615b5f561014f4e9f4791af6fa6415d1c4633d"
+    },
+    {
+      "name": "menu-parts-c70-s3.png",
+      "element": "menu-sub-trigger",
+      "label": "你好，世界",
+      "width": 200,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 70,
+      "background": "#808080",
+      "state": "focus",
+      "checked": false,
+      "renderedLines": [
+        "你好，世界"
+      ],
+      "scale": 3,
+      "sha256": "19ee0a471cea8f8337bdb4bf9c4b6572266d15b8779819c33ab130f82223122b"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

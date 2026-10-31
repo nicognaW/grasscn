@@ -1,0 +1,20 @@
+{
+  "minecraftVersion": "26.2",
+  "assetIndex": 32,
+  "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+  "soundDefinitionsSha1": "9ac006d5537ed0fa4a7bcd1eccfc505155847686",
+  "soundDefinitionsSha256": "84fe52cea79f67441ac00df61836e15d5c9ae98c406cebba557213b80f59c3b5",
+  "event": "ui.button.click",
+  "resource": "minecraft/sounds/random/click_stereo.ogg",
+  "sha1": "f0ca66561f832bf2f60b393837297c2692367cd5",
+  "sha256": "91bc25153ad4a697335477f5ebeb9515e83fdbcafd16b1e45fb63de514391d9f",
+  "size": 7188,
+  "pitch": 1,
+  "volume": 0.25,
+  "sources": [
+    "AbstractWidget.playDownSound",
+    "SimpleSoundInstance.forUI",
+    "AbstractSliderButton.onRelease",
+    "EditBox.playDownSound"
+  ]
+}

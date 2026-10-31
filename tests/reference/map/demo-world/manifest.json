@@ -1,0 +1,100 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "704bc139436d1ce402f5e9d44ff0a078eae71f165e114fba867a25518544d940",
+  "caseDefinitionSha256": "d3896ccdac079e2a4d1775acd603d07d11315c9869e118fc403512f8f19c4a29",
+  "glyphObservationEnabled": false,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "0f470f993ebc13fd8bd4340d5258ba9b6013c75e19b9873fb02ca1d10d291a19"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "d626bd97ea50eab402187c6de8ca802393b538cf498116645fc67c3e980d6a66"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "a2f8efe153a127f3baa4087af3a888b63498fbe070bf8ea66bb5c63c78cc7faa"
+    }
+  ],
+  "cases": [
+    {
+      "name": "map-world-s1.png",
+      "element": "map",
+      "state": "saved-world",
+      "checked": false,
+      "value": 0,
+      "anchor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 128,
+      "height": 128,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "textureFile": "map-world-input.json.gz",
+      "textureSha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+      "scale": 1,
+      "sha256": "00027804a9b234383dc2a1ceaca08a48286a30e129927e4fd79ea93b6bec4845"
+    },
+    {
+      "name": "map-world-s2.png",
+      "element": "map",
+      "state": "saved-world",
+      "checked": false,
+      "value": 0,
+      "anchor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 128,
+      "height": 128,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "textureFile": "map-world-input.json.gz",
+      "textureSha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+      "scale": 2,
+      "sha256": "77e340d43b5b0316fc8229630105e9ae79fbc3db42f16d0d987b58238d2d9c08"
+    },
+    {
+      "name": "map-world-s3.png",
+      "element": "map",
+      "state": "saved-world",
+      "checked": false,
+      "value": 0,
+      "anchor": 0,
+      "x": 24,
+      "y": 16,
+      "width": 128,
+      "height": 128,
+      "page": 0,
+      "label": "",
+      "text": "",
+      "textureFile": "map-world-input.json.gz",
+      "textureSha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+      "scale": 3,
+      "sha256": "e759ccb9f2cff4377672c357be6c666f0fc336e0fc74c678f0b0ba880652b349"
+    }
+  ],
+  "sourceDirectory": "source",
+  "inputResources": {
+    "map-world-input.json.gz": {
+      "sha256": "ba7046dd1c6bbc949cde156f2a6b8703cee8fad2a0d92cb2c1dc32ffe1c11b2e",
+      "size": 3684710,
+      "path": "inputs/map-world-input.json.gz"
+    }
+  }
+}

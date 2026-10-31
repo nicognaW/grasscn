@@ -1,0 +1,260 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "abcbb3b92a631ef54ad433cf55a0db38593918c3001223fbc3bce2c34fbf4b87",
+  "caseDefinitionSha256": "e72d26233ac87edd21ae9a0e4aa690c897d08cfcc6da935f4832e62ae02405ff",
+  "method": "Two independent offline Java client launches; exact decoded RGBA comparison, all retained fullframes also identical.",
+  "cases": [
+    {
+      "name": "chart-fps-c0-s1.png",
+      "runOnePngSha256": "f546046f4c464d70742b7f7f15b94a25bb642bf6d6fca3c1cd1d2e2744fcc504",
+      "runTwoPngSha256": "f546046f4c464d70742b7f7f15b94a25bb642bf6d6fca3c1cd1d2e2744fcc504",
+      "decodedRgbaSha256": "c7268967d0f75ee7ff83d267fa701c718c0e638acf123e1473c7c51382f4ed0a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c1-s1.png",
+      "runOnePngSha256": "383be90a466a19c33f460243ac0316577fd2d22b53154e6dc07ab08e6677738c",
+      "runTwoPngSha256": "383be90a466a19c33f460243ac0316577fd2d22b53154e6dc07ab08e6677738c",
+      "decodedRgbaSha256": "87b8f76219d113c0baa5ca11c72dcd1566af8062ab6440bff4386b434ad60906",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c2-s1.png",
+      "runOnePngSha256": "9a8d121ead00517686b154462285641ba24761e1aee02f11da3cc16ee495e001",
+      "runTwoPngSha256": "9a8d121ead00517686b154462285641ba24761e1aee02f11da3cc16ee495e001",
+      "decodedRgbaSha256": "550a92d063243cb832c5abf4dd5500ea39928c25eb3a291e64eec4b0ddf5f2a5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c3-s1.png",
+      "runOnePngSha256": "8df2033585a76da20333eca54b61a35e1e507a87798d3534b380a37d3819509e",
+      "runTwoPngSha256": "8df2033585a76da20333eca54b61a35e1e507a87798d3534b380a37d3819509e",
+      "decodedRgbaSha256": "d5d35b0dc99f44458f6878b2e1bd7efd52347da979882ff4c1641fb1a94c09ff",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c4-s1.png",
+      "runOnePngSha256": "117cc845a179495d7a12a3fc2d77686dcf25f9fcecbbbe35011f5ffd8e245d85",
+      "runTwoPngSha256": "117cc845a179495d7a12a3fc2d77686dcf25f9fcecbbbe35011f5ffd8e245d85",
+      "decodedRgbaSha256": "516dd11caf9b2ded62ada10a6f84e63e028012c991a9224495fae77e8ea9a5df",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c5-s1.png",
+      "runOnePngSha256": "6ddaf57797cdd89f98c5e5f9cfaca8553da1046f59bd1b4a39c36b53eab180c6",
+      "runTwoPngSha256": "6ddaf57797cdd89f98c5e5f9cfaca8553da1046f59bd1b4a39c36b53eab180c6",
+      "decodedRgbaSha256": "e5c7be465450782a4189a4c70c1ac52094502e8277d3d4d78c66ae8c6a544f34",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c6-s1.png",
+      "runOnePngSha256": "c646194f7241e9bb700c28d092ad80f9968fc444781d116d9e98449899384a6d",
+      "runTwoPngSha256": "c646194f7241e9bb700c28d092ad80f9968fc444781d116d9e98449899384a6d",
+      "decodedRgbaSha256": "28d37ebf85e48fd30693a6f6958af88f9d5617bd04b10d287377e3236cfb0ea5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c7-s1.png",
+      "runOnePngSha256": "6393ac086aa2ec85e134603df9118385c08492fc7df43684d94de6b7532972f8",
+      "runTwoPngSha256": "6393ac086aa2ec85e134603df9118385c08492fc7df43684d94de6b7532972f8",
+      "decodedRgbaSha256": "3394cf9ca0afabc8fe6aadf24e9a895dde0513dbfae33056bca17df8086b586a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c8-s1.png",
+      "runOnePngSha256": "01308742e5e1653c0505f72684160f9daed4039af4ee03e521bedb85c3313d07",
+      "runTwoPngSha256": "01308742e5e1653c0505f72684160f9daed4039af4ee03e521bedb85c3313d07",
+      "decodedRgbaSha256": "e37830f0b2337c51eb734d94f3969b31631da52060fceef90357698ce0217285",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c9-s1.png",
+      "runOnePngSha256": "de8733c056175cc81bbbc66dafa3399340fcc6ab9b4f2283fdc20773d6c64b22",
+      "runTwoPngSha256": "de8733c056175cc81bbbc66dafa3399340fcc6ab9b4f2283fdc20773d6c64b22",
+      "decodedRgbaSha256": "403c3dc5f02c4b60f4bfcca536fe83dd58c19984c605aaa94ba34b9225b92f64",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c10-s1.png",
+      "runOnePngSha256": "b5ddc1246a09a568df7d0c6cd811f6b54eb440c47fcc1108eba14bc1b743e6cf",
+      "runTwoPngSha256": "b5ddc1246a09a568df7d0c6cd811f6b54eb440c47fcc1108eba14bc1b743e6cf",
+      "decodedRgbaSha256": "3b5ed3e4d50923286174d5bd04c1bd67f1e4f8643b0c84a3b352f33106d47847",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c11-s1.png",
+      "runOnePngSha256": "3106b0d7b0046bb4dd245aafd9a7bf4e0ac97b2d4f8131c9669c137b9c8f0368",
+      "runTwoPngSha256": "3106b0d7b0046bb4dd245aafd9a7bf4e0ac97b2d4f8131c9669c137b9c8f0368",
+      "decodedRgbaSha256": "e308936ac7ac68200e3de9562575eec4a162d2e37c57969e0fa5f08ca5de5581",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c0-s2.png",
+      "runOnePngSha256": "f78a8aeb1bd61549c1e3516bd04ffc669eeb7607e7b7018385ee22a1edc7e2cf",
+      "runTwoPngSha256": "f78a8aeb1bd61549c1e3516bd04ffc669eeb7607e7b7018385ee22a1edc7e2cf",
+      "decodedRgbaSha256": "dea611b5d69ad8d3dfecd574c0521698aebac26d3d354b00d89e8f4f8e5800f2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c1-s2.png",
+      "runOnePngSha256": "f4c850ecbcc38306480b2a4d4d626eca74e76a07338586f5d5a9cfb5ce5167e9",
+      "runTwoPngSha256": "f4c850ecbcc38306480b2a4d4d626eca74e76a07338586f5d5a9cfb5ce5167e9",
+      "decodedRgbaSha256": "1ed396e6041503b96433a8db7319b82f1402a3d7adf288623f9d5073dc4c6e5a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c2-s2.png",
+      "runOnePngSha256": "23ddcbaa1ef625bd48282f70a5bd2426d48dc96d9ca9b844da10faf15913f6b6",
+      "runTwoPngSha256": "23ddcbaa1ef625bd48282f70a5bd2426d48dc96d9ca9b844da10faf15913f6b6",
+      "decodedRgbaSha256": "bd19250ad6e54f95d281157de476a1add203bdc4b50400907603e41859d294ed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c3-s2.png",
+      "runOnePngSha256": "dfac84c743e5f430c5b86f5effee581aef9cba55d1834dfe0b8b9b7b8ffeb2d2",
+      "runTwoPngSha256": "dfac84c743e5f430c5b86f5effee581aef9cba55d1834dfe0b8b9b7b8ffeb2d2",
+      "decodedRgbaSha256": "e81bebb1e679d6e3270f8921e2d4c4ca8c90aac334d6050be2ee869837900016",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c4-s2.png",
+      "runOnePngSha256": "9061b1ef002e9dddd687358ab77467c8c3a60fe2d36308fcfe631fe80e312aea",
+      "runTwoPngSha256": "9061b1ef002e9dddd687358ab77467c8c3a60fe2d36308fcfe631fe80e312aea",
+      "decodedRgbaSha256": "907859a191c818ecd7d711808bd8ca55a81a7ce5fe59723036a179a19cca1599",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c5-s2.png",
+      "runOnePngSha256": "f314e5b1bd15fdc96ca5f36a3454aeeb2083b9bdaee448b989a0ea4ae5a0acbb",
+      "runTwoPngSha256": "f314e5b1bd15fdc96ca5f36a3454aeeb2083b9bdaee448b989a0ea4ae5a0acbb",
+      "decodedRgbaSha256": "924906b58fbc3d1d88a37bb9a5bb45b83a5837669dddac12c558e14e80adbd96",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c6-s2.png",
+      "runOnePngSha256": "c289e965cc8e8757d80df2f0e8a2aef576825059781587f5fccac8968fd4b625",
+      "runTwoPngSha256": "c289e965cc8e8757d80df2f0e8a2aef576825059781587f5fccac8968fd4b625",
+      "decodedRgbaSha256": "ce6602dc6cf17f5220044819fe7ad0b819d85bd3d41c794df170f9eed29394e1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c7-s2.png",
+      "runOnePngSha256": "76cdca6fae37ab10c8b316d56a1b7b7c09f0dd60484f34dff02052e636822626",
+      "runTwoPngSha256": "76cdca6fae37ab10c8b316d56a1b7b7c09f0dd60484f34dff02052e636822626",
+      "decodedRgbaSha256": "88af517c86d09874636031528dac0bf15c95dfdebdbfff87ad487166db8e002b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c8-s2.png",
+      "runOnePngSha256": "6aaaaa5c0c2d0586eb630e9700a0fe82da9249f3822251b98c37670961f7905b",
+      "runTwoPngSha256": "6aaaaa5c0c2d0586eb630e9700a0fe82da9249f3822251b98c37670961f7905b",
+      "decodedRgbaSha256": "feca39c2b8ba379db5a1b7717e0a44de0598392bfd198bfe047578ea2d75ced0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c9-s2.png",
+      "runOnePngSha256": "0bc0146b8552ac95c43d8c691de48d098b7916a41757cbc63c15d66885df2635",
+      "runTwoPngSha256": "0bc0146b8552ac95c43d8c691de48d098b7916a41757cbc63c15d66885df2635",
+      "decodedRgbaSha256": "25f5378f61b704068624ddcccabac1cda8d4083e55c403e3f07040c08c90acc4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c10-s2.png",
+      "runOnePngSha256": "c90a62913c2c0f7546196d2ebe1a5b2289baa470476b4e09877eca45a17dd415",
+      "runTwoPngSha256": "c90a62913c2c0f7546196d2ebe1a5b2289baa470476b4e09877eca45a17dd415",
+      "decodedRgbaSha256": "71290a3d86be0c377970ae73a811d6558dd3afa0bf92335c6ddb65492b9400f6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c11-s2.png",
+      "runOnePngSha256": "f994653ac574686493074124e1b0e2f3272709db15f5371fffa9eccd2777d906",
+      "runTwoPngSha256": "f994653ac574686493074124e1b0e2f3272709db15f5371fffa9eccd2777d906",
+      "decodedRgbaSha256": "bc63e879d90b4bf9c111e438c2d9231ae5ef15f999c1fb59181c47ec2632f4ca",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c0-s3.png",
+      "runOnePngSha256": "0447e8d8b990da78a7a1937f1b4d1533a96729906b0ff902e6ca03ad0248c71b",
+      "runTwoPngSha256": "0447e8d8b990da78a7a1937f1b4d1533a96729906b0ff902e6ca03ad0248c71b",
+      "decodedRgbaSha256": "44c2b5c26d0e71f0297c0dc4b7d0fff1a799f1763df778dd02fb296ca0379501",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c1-s3.png",
+      "runOnePngSha256": "2aa168b369392c71259213d2d13b3045a628c27af081affd558e63c25b77fa45",
+      "runTwoPngSha256": "2aa168b369392c71259213d2d13b3045a628c27af081affd558e63c25b77fa45",
+      "decodedRgbaSha256": "01da3db08f7b47923df7ba2462ad8ce4f95c2cf87971ed5ef1ffaef620621e3c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c2-s3.png",
+      "runOnePngSha256": "aa46241e992de9edb981e9f384fc789b381027f17da48e5907b0fda8007e8391",
+      "runTwoPngSha256": "aa46241e992de9edb981e9f384fc789b381027f17da48e5907b0fda8007e8391",
+      "decodedRgbaSha256": "d74d31b44a31a87bf4266ce27585ac9aa3dfef15af38407d93d0e6c2a7cb9317",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c3-s3.png",
+      "runOnePngSha256": "f610b63bbf4f6c6ee3084d5f5a1737bf92e7a619731a06a6fd79125ce47748be",
+      "runTwoPngSha256": "f610b63bbf4f6c6ee3084d5f5a1737bf92e7a619731a06a6fd79125ce47748be",
+      "decodedRgbaSha256": "276d00b8bbdf38358470f6bd29b33c36bb204e1287d86159d0dd7672694b2861",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c4-s3.png",
+      "runOnePngSha256": "86dde9a18b5338b671d76ca6e44a9ab72504c3f73415d1ccbf7763ea52bfbac0",
+      "runTwoPngSha256": "86dde9a18b5338b671d76ca6e44a9ab72504c3f73415d1ccbf7763ea52bfbac0",
+      "decodedRgbaSha256": "acab1a05437e9199997336468637543f401cb42dd8c24f90a3775122cabde18a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c5-s3.png",
+      "runOnePngSha256": "b582b6dd2f375ae0c2836c4646f71381c4736aac7d4ca170fdc6c6a527fba108",
+      "runTwoPngSha256": "b582b6dd2f375ae0c2836c4646f71381c4736aac7d4ca170fdc6c6a527fba108",
+      "decodedRgbaSha256": "fbd5c9e9e5a6b811bb7006763ac1a76b767063a99f2b8fec03d87387909920b4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c6-s3.png",
+      "runOnePngSha256": "ee2a5d622bbe3d526f7a6226c770eae593cc44833818e8ef0de4d8387b1d690c",
+      "runTwoPngSha256": "ee2a5d622bbe3d526f7a6226c770eae593cc44833818e8ef0de4d8387b1d690c",
+      "decodedRgbaSha256": "a6fc34ea6ad8f89e3673928f6e51783ee94c5749c777fced7f69f64c85eff228",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c7-s3.png",
+      "runOnePngSha256": "5629022d5ecbcaca2f888fc8d9354d222319d4a7e4a8f531e0f775e920984886",
+      "runTwoPngSha256": "5629022d5ecbcaca2f888fc8d9354d222319d4a7e4a8f531e0f775e920984886",
+      "decodedRgbaSha256": "b267ff785518339154b66de61adac9dccfc696609a39dd6e931f9b880eabb1d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c8-s3.png",
+      "runOnePngSha256": "50707351172de68d0ba18aa2e70563d67238da5c46a38fa32fba0e74aee1db5f",
+      "runTwoPngSha256": "50707351172de68d0ba18aa2e70563d67238da5c46a38fa32fba0e74aee1db5f",
+      "decodedRgbaSha256": "c68f485fabdc34870703ba5efe8e4b097ad1c4cb35ba29801d6bc001c5d6b4d1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c9-s3.png",
+      "runOnePngSha256": "9193830605e72419a4ada7371ef9c4e8cacb9172f6b3066d7c918709b2d92870",
+      "runTwoPngSha256": "9193830605e72419a4ada7371ef9c4e8cacb9172f6b3066d7c918709b2d92870",
+      "decodedRgbaSha256": "6861c969cb906646c37a15f0b7e872002a8b308386f5d3d662abf941f24325d8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c10-s3.png",
+      "runOnePngSha256": "ddc48635c92b70b47e54c678e059d806f9d6905ea7fe11ec2c1ea28180b807fb",
+      "runTwoPngSha256": "ddc48635c92b70b47e54c678e059d806f9d6905ea7fe11ec2c1ea28180b807fb",
+      "decodedRgbaSha256": "799998cdd293a7ee872004e16305c59e10d74392c10b0364012383164fe6e94a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chart-fps-c11-s3.png",
+      "runOnePngSha256": "b10066d9b8bbafd4e5ab202739c65156a6dc8fd1f4999cc7e5af0b82371e4189",
+      "runTwoPngSha256": "b10066d9b8bbafd4e5ab202739c65156a6dc8fd1f4999cc7e5af0b82371e4189",
+      "decodedRgbaSha256": "d35a8a84dbf3f37989cf83ac58b62f12a21ad1455130601755b1b47e15185ccc",
+      "mismatchedPixels": 0
+    }
+  ]
+}

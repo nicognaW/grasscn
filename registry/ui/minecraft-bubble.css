@@ -1,0 +1,14 @@
+@layer theme,base,components,utilities;
+@layer components {
+ .mc-bubble-group{display:flex;min-width:0;flex-direction:column;gap:0}
+ .mc-bubble{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;flex-direction:column;position:relative;width:100%;max-width:100%;min-width:0;gap:0;color:#fff}
+ .mc-bubble-content{--mc-pixel:calc(1px * var(--mc-scale,2));box-sizing:border-box;display:block;width:100%;min-width:0;max-width:100%;padding:var(--mc-pixel) calc(8 * var(--mc-pixel)) 0 calc(4 * var(--mc-pixel));background:rgba(0,0,0,.4980392156862745);text-align:start;outline:none}
+ .mc-bubble-content>.mc-label{display:flex;margin-bottom:calc(-1 * var(--mc-pixel))}
+ .mc-bubble-content:is(a,button):focus-visible{outline:var(--mc-pixel) solid #fff;outline-offset:var(--mc-pixel)}
+ .mc-bubble-reactions{display:flex;width:fit-content;max-width:100%;flex-wrap:wrap;gap:calc(2 * var(--mc-pixel));padding:0}
+ .mc-bubble-reactions[data-side=top]{order:-1}
+ .mc-bubble-reactions[data-side=bottom]{order:1}
+ .mc-bubble-reactions[data-align=start]{align-self:flex-start}
+ .mc-bubble-reactions[data-align=end]{align-self:flex-end}
+
+}

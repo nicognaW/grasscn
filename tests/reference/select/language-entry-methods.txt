@@ -1,0 +1,112 @@
+Compiled from "LanguageSelectScreen.java"
+public class net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry extends net.minecraft.client.gui.components.ObjectSelectionList$Entry<net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry> {
+  private final java.lang.String code;
+
+  private final net.minecraft.network.chat.Component language;
+
+  final net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList this$1;
+
+  public net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry(net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList, java.lang.String, net.minecraft.client.resources.language.LanguageInfo);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: dup
+       3: invokestatic  #1                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+       6: pop
+       7: putfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+      10: aload_0
+      11: invokespecial #13                 // Method net/minecraft/client/gui/components/ObjectSelectionList$Entry."<init>":()V
+      14: aload_0
+      15: aload_2
+      16: putfield      #19                 // Field code:Ljava/lang/String;
+      19: aload_0
+      20: aload_3
+      21: invokevirtual #23                 // Method net/minecraft/client/resources/language/LanguageInfo.toComponent:()Lnet/minecraft/network/chat/Component;
+      24: putfield      #29                 // Field language:Lnet/minecraft/network/chat/Component;
+      27: return
+
+  public void extractContent(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, boolean, float);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+       5: getfield      #33                 // Field net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.this$0:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;
+       8: invokestatic  #39                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen.access$000:(Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;)Lnet/minecraft/client/gui/Font;
+      11: aload_0
+      12: getfield      #29                 // Field language:Lnet/minecraft/network/chat/Component;
+      15: aload_0
+      16: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+      19: invokestatic  #45                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.access$100:(Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;)I
+      22: iconst_2
+      23: idiv
+      24: aload_0
+      25: invokevirtual #49                 // Method getContentYMiddle:()I
+      28: aload_0
+      29: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+      32: getfield      #33                 // Field net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.this$0:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;
+      35: invokestatic  #53                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen.access$200:(Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;)Lnet/minecraft/client/gui/Font;
+      38: invokestatic  #1                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      41: pop
+      42: bipush        9
+      44: iconst_2
+      45: idiv
+      46: isub
+      47: iconst_m1
+      48: invokevirtual #58                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.centeredText:(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V
+      51: return
+
+  public boolean keyPressed(net.minecraft.client.input.KeyEvent);
+    Code:
+       0: aload_1
+       1: invokevirtual #64                 // Method net/minecraft/client/input/KeyEvent.isSelection:()Z
+       4: ifeq          23
+       7: aload_0
+       8: invokevirtual #70                 // Method select:()V
+      11: aload_0
+      12: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+      15: getfield      #33                 // Field net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.this$0:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;
+      18: invokevirtual #73                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen.onDone:()V
+      21: iconst_1
+      22: ireturn
+      23: aload_0
+      24: aload_1
+      25: invokespecial #76                 // Method net/minecraft/client/gui/components/ObjectSelectionList$Entry.keyPressed:(Lnet/minecraft/client/input/KeyEvent;)Z
+      28: ireturn
+
+  public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: aload_0
+       1: invokevirtual #70                 // Method select:()V
+       4: iload_2
+       5: ifeq          18
+       8: aload_0
+       9: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+      12: getfield      #33                 // Field net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.this$0:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen;
+      15: invokevirtual #73                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen.onDone:()V
+      18: aload_0
+      19: aload_1
+      20: iload_2
+      21: invokespecial #80                 // Method net/minecraft/client/gui/components/ObjectSelectionList$Entry.mouseClicked:(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z
+      24: ireturn
+
+  private void select();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field this$1:Lnet/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList;
+       4: aload_0
+       5: invokevirtual #84                 // Method net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.setSelected:(Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;)V
+       8: return
+
+  public net.minecraft.network.chat.Component getNarration();
+    Code:
+       0: ldc           #88                 // String narrator.select
+       2: iconst_1
+       3: anewarray     #90                 // class java/lang/Object
+       6: dup
+       7: iconst_0
+       8: aload_0
+       9: getfield      #29                 // Field language:Lnet/minecraft/network/chat/Component;
+      12: aastore
+      13: invokestatic  #92                 // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;[Ljava/lang/Object;)Lnet/minecraft/network/chat/MutableComponent;
+      16: areturn
+}

@@ -1,0 +1,11 @@
+import {test,expect} from "./verified-test"
+import {readFileSync,writeFileSync} from "node:fs"
+import {createHash} from "node:crypto"
+import {PNG} from "pngjs"
+import {compare} from "./text-components-test-utils"
+test.describe.configure({mode:"parallel"})
+const dir="tests/reference/input-otp",manifest=JSON.parse(readFileSync(dir+"/manifest.json","utf8"))
+for(const c of manifest.cases)test(`InputOTP actual native EditBox slot ${c.name}`,async({page},info)=>{
+ await page.setViewportSize({width:1536,height:900});await page.clock.install({time:new Date("2026-10-28T00:00:00Z")});await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));const q=new URLSearchParams({component:"input-otp",native:"1",scale:String(c.scale),text:c.text,state:c.state,x:String(c.x),y:String(c.y),width:String(c.width),height:String(c.height),background:c.background});await page.goto(`/?${q}`);const subject=page.locator('#subject'),mirror=subject.locator('input'),input=page.getByRole('textbox',{name:'One-time code'});await expect(mirror).toHaveAttribute('data-mc-ready','true');if(/[^\x00-\x7f]/.test(c.text))await expect(mirror).toHaveAttribute('data-mc-bitmap','true');if(c.state.startsWith('focus'))await input.focus();await page.mouse.move(0,0);await page.clock.runFor(c.caretMs);await expect(subject).toHaveAttribute('data-active',String(c.state.startsWith('focus')));await expect(mirror).toHaveAttribute('data-mc-ready','true');const bytes=readFileSync(`${dir}/captures/${c.name}`);expect(createHash('sha256').update(bytes).digest('hex')).toBe(c.sha256);const actualBytes=await subject.screenshot(),{mismatchedPixels,diff}=compare(PNG.sync.read(bytes),PNG.sync.read(actualBytes));writeFileSync(info.outputPath('actual.png'),actualBytes);writeFileSync(info.outputPath('diff.png'),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({component:"input-otp",manifest:dir+"/manifest.json",part:"slot",alias:"base",case:c.name,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)
+})
+test("InputOTP comparator rejects one changed native pixel",()=>{const e=PNG.sync.read(readFileSync(`${dir}/captures/${manifest.cases[0].name}`)),a=PNG.sync.read(PNG.sync.write(e));a.data[0]^=1;expect(compare(e,a).mismatchedPixels).toBe(1)})

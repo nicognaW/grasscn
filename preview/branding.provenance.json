@@ -1,0 +1,417 @@
+{
+  "project": "grasscn",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sourceMethod": "GuiGraphicsExtractor.item(original GRASS_BLOCK holder with explicit minecraft:grass_block ITEM_MODEL, 16, 16)",
+  "initialization": "Minimal isolated ItemStack supplies the shipped model component because 26.2 title-screen default components are unbound; all model, tint, textures, GUI transform and lighting come from the vanilla renderer. No world is created.",
+  "captureSourceSha256": "587402ae9e021df94109c3db697d7e52eba13c63a9f5f42abc83eca9c77dde25",
+  "scales": [
+    1,
+    3
+  ],
+  "backgrounds": [
+    "#000000",
+    "#ffffff"
+  ],
+  "viewport": [
+    1536,
+    900
+  ],
+  "mods": [],
+  "resourcePacks": [],
+  "cases": [
+    {
+      "filename": "grass-block-black-s1.png",
+      "scale": 1,
+      "background": "black",
+      "firstPngSha256": "ab4856e915da783ca0631b6416d2ba9d04bc974f2df7c73936d3ed8da79832b6",
+      "secondPngSha256": "ab4856e915da783ca0631b6416d2ba9d04bc974f2df7c73936d3ed8da79832b6",
+      "decodedRgbaSha256": "077e3987b68db577154a87986e7d712f9cc4a70a9f4de501ecae2c5de0e3f8bd",
+      "mismatchedPixels": 0
+    },
+    {
+      "filename": "grass-block-white-s1.png",
+      "scale": 1,
+      "background": "white",
+      "firstPngSha256": "2dfd62b45d52f24920b24d79a82e8e08ebd3dc200d9b8e1b7b8ab3b0ca1e0315",
+      "secondPngSha256": "2dfd62b45d52f24920b24d79a82e8e08ebd3dc200d9b8e1b7b8ab3b0ca1e0315",
+      "decodedRgbaSha256": "044f240b503e9fda520329ae819275064a184d9a05ed1573b37795c7c7fb06ae",
+      "mismatchedPixels": 0
+    },
+    {
+      "filename": "grass-block-black-s3.png",
+      "scale": 3,
+      "background": "black",
+      "firstPngSha256": "3bd86b8581b8faa57f7414070abb5d00137b133163a996cf2032179f539b0c87",
+      "secondPngSha256": "3bd86b8581b8faa57f7414070abb5d00137b133163a996cf2032179f539b0c87",
+      "decodedRgbaSha256": "45928da72f8b225df370e72757c45f0e129c43053335e59f9025903f08ebefbc",
+      "mismatchedPixels": 0
+    },
+    {
+      "filename": "grass-block-white-s3.png",
+      "scale": 3,
+      "background": "white",
+      "firstPngSha256": "8154860c7f8f61566d3357f5f4042ccf6ffb96d4dfc0f3f66b398351d6058c90",
+      "secondPngSha256": "8154860c7f8f61566d3357f5f4042ccf6ffb96d4dfc0f3f66b398351d6058c90",
+      "decodedRgbaSha256": "b9841238c8a967629a4d3bef719b6fb89b16248b909512084bd434428d5ded13",
+      "mismatchedPixels": 0
+    }
+  ],
+  "sourceAssets": {
+    "block": {
+      "assets/minecraft/items/grass_block.json": {
+        "sha256": "90f0396883aac33237938af6063cbead9df853db87558d8d27c00568f96822fc",
+        "size": 219,
+        "definition": {
+          "model": {
+            "type": "minecraft:model",
+            "model": "minecraft:block/grass_block",
+            "tints": [
+              {
+                "type": "minecraft:grass",
+                "downfall": 1,
+                "temperature": 0.5
+              }
+            ]
+          }
+        }
+      },
+      "assets/minecraft/models/block/grass_block.json": {
+        "sha256": "fdea6afda5fa7d47241f181b56879e6807efc2b18a119133e3a871c411bf661a",
+        "size": 1543,
+        "definition": {
+          "parent": "block/block",
+          "textures": {
+            "particle": "block/dirt",
+            "bottom": "block/dirt",
+            "top": "block/grass_block_top",
+            "side": "block/grass_block_side",
+            "overlay": "block/grass_block_side_overlay"
+          },
+          "elements": [
+            {
+              "from": [
+                0,
+                0,
+                0
+              ],
+              "to": [
+                16,
+                16,
+                16
+              ],
+              "faces": {
+                "down": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#bottom",
+                  "cullface": "down"
+                },
+                "up": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#top",
+                  "cullface": "up",
+                  "tintindex": 0
+                },
+                "north": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#side",
+                  "cullface": "north"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#side",
+                  "cullface": "south"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#side",
+                  "cullface": "west"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#side",
+                  "cullface": "east"
+                }
+              }
+            },
+            {
+              "from": [
+                0,
+                0,
+                0
+              ],
+              "to": [
+                16,
+                16,
+                16
+              ],
+              "faces": {
+                "north": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#overlay",
+                  "tintindex": 0,
+                  "cullface": "north"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#overlay",
+                  "tintindex": 0,
+                  "cullface": "south"
+                },
+                "west": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#overlay",
+                  "tintindex": 0,
+                  "cullface": "west"
+                },
+                "east": {
+                  "uv": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "texture": "#overlay",
+                  "tintindex": 0,
+                  "cullface": "east"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "assets/minecraft/models/block/block.json": {
+        "sha256": "212df16c5aa3e6aef3f4d3e080532d28a86cf9b2071618e4ca587ee9ef3c6d09",
+        "size": 1136,
+        "definition": {
+          "gui_light": "side",
+          "display": {
+            "gui": {
+              "rotation": [
+                30,
+                225,
+                0
+              ],
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                0.625,
+                0.625,
+                0.625
+              ]
+            },
+            "ground": {
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "translation": [
+                0,
+                3,
+                0
+              ],
+              "scale": [
+                0.25,
+                0.25,
+                0.25
+              ]
+            },
+            "fixed": {
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                0.5,
+                0.5,
+                0.5
+              ]
+            },
+            "on_shelf": {
+              "rotation": [
+                0,
+                180,
+                0
+              ],
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                1,
+                1,
+                1
+              ]
+            },
+            "thirdperson_righthand": {
+              "rotation": [
+                75,
+                45,
+                0
+              ],
+              "translation": [
+                0,
+                2.5,
+                0
+              ],
+              "scale": [
+                0.375,
+                0.375,
+                0.375
+              ]
+            },
+            "firstperson_righthand": {
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                0.4,
+                0.4,
+                0.4
+              ]
+            },
+            "firstperson_lefthand": {
+              "rotation": [
+                0,
+                225,
+                0
+              ],
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "scale": [
+                0.4,
+                0.4,
+                0.4
+              ]
+            }
+          }
+        }
+      },
+      "assets/minecraft/textures/block/grass_block_top.png": {
+        "sha256": "52f44b64ce884a13dfe35e4b4da2e35898b790dd4d7a5ea536f1b0c0d56d29b4",
+        "size": 298
+      },
+      "assets/minecraft/textures/block/grass_block_side.png": {
+        "sha256": "76a677640eb91d6a9aed844bc66e329b1894f89e241a0071333b6678c0854580",
+        "size": 329
+      },
+      "assets/minecraft/textures/block/grass_block_side_overlay.png": {
+        "sha256": "872056682c3b059c04aba88f8b4e706f2526b907e1acef12626a9f912f573a85",
+        "size": 135
+      },
+      "assets/minecraft/textures/block/dirt.png": {
+        "sha256": "67197d5371efc3ca1638217c38349665dbd5a977b47bfb20075c858dff87d510",
+        "size": 197
+      },
+      "assets/minecraft/textures/colormap/grass.png": {
+        "sha256": "6a7da1db5e76cdd74ba5c837afffc1f4ffa32442d7d087f3e1b414e590eb7486",
+        "size": 5930
+      }
+    },
+    "popup": {
+      "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+      "member": "assets/minecraft/textures/gui/sprites/popup/background.png",
+      "sha256": "380160151f20a64ae14c13e7e26f496d7c28f105fa958950fe6c3c1434727ed9",
+      "metadataSha256": "b552ee01037bf7870b689fb27fbb3d6edc1386006bad7ff318ea20c7be376762",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 236,
+        "height": 34,
+        "border": 6
+      },
+      "sourceMethod": "PopupScreen.extractBackground; GuiGraphicsExtractor.blitSprite",
+      "scope": "Native popup panel surface only. Card section layout is a web composition, not an independent vanilla screen."
+    },
+    "asciiGlyphMetricsSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+    "asciiRasterSha256": "e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a"
+  },
+  "generated": {
+    "grass-block-16.png": {
+      "width": 16,
+      "height": 16,
+      "sha256": "e24ec7cb8b5b1912cad38f8b1bdfd85c7af1d9e8627c9544340e8378b2f00531",
+      "opaquePixels": 176,
+      "alphaRecovery": "Exact per-pixel black/white contrast identifies binary coverage; original item RGB copied without recoloring or resizing"
+    },
+    "grass-block-48.png": {
+      "width": 48,
+      "height": 48,
+      "sha256": "e8e8f639407df452dee97a1fdf0026f6f9488be7ea4ba317bfc6627aa71920eb",
+      "opaquePixels": 1532,
+      "alphaRecovery": "Exact per-pixel black/white contrast identifies binary coverage; original item RGB copied without recoloring or resizing"
+    },
+    "grasscn-logo.svg": {
+      "width": 176,
+      "height": 64,
+      "sha256": "78576f26114a3f83b72d81e698979e140d2331d2946ae4f6411adc2ed8e78888",
+      "text": "grass cn",
+      "composition": "Native GUI-scale-3 grass item plus original popup nine-slice artwork and original ASCII bitmap glyphs; layout is an original project badge"
+    }
+  }
+}

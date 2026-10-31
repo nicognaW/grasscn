@@ -18,5 +18,320 @@
     "name": "input",
     "title": "Input",
     "category": "Text entry"
+  },
+  {
+    "name": "tooltip",
+    "title": "Tooltip",
+    "category": "Information"
+  },
+  {
+    "name": "card",
+    "title": "Card",
+    "category": "Panels"
+  },
+  {
+    "name": "textarea",
+    "title": "Textarea",
+    "category": "Text entry"
+  },
+  {
+    "name": "label",
+    "title": "Label",
+    "category": "Text entry"
+  },
+  {
+    "name": "separator",
+    "title": "Separator",
+    "category": "Layout"
+  },
+  {
+    "name": "scroll-area",
+    "title": "Scroll Area",
+    "category": "Layout"
+  },
+  {
+    "name": "progress",
+    "title": "Progress",
+    "category": "Status"
+  },
+  {
+    "name": "tabs",
+    "title": "Tabs",
+    "category": "Navigation"
+  },
+  {
+    "name": "select",
+    "title": "Select",
+    "category": "Selection"
+  },
+  {
+    "name": "radio-group",
+    "title": "Radio Group",
+    "category": "Selection"
+  },
+  {
+    "name": "switch",
+    "title": "Switch",
+    "category": "Selection"
+  },
+  {
+    "name": "dialog",
+    "title": "Dialog",
+    "category": "Panels"
+  },
+  {
+    "name": "alert-dialog",
+    "title": "Alert Dialog",
+    "category": "Panels"
+  },
+  {
+    "name": "popover",
+    "title": "Popover",
+    "category": "Panels"
+  },
+  {
+    "name": "dropdown-menu",
+    "title": "Dropdown Menu",
+    "category": "Navigation"
+  },
+  {
+    "name": "context-menu",
+    "title": "Context Menu",
+    "category": "Navigation"
+  },
+  {
+    "name": "menubar",
+    "title": "Menubar",
+    "category": "Navigation"
+  },
+  {
+    "name": "collapsible",
+    "title": "Collapsible",
+    "category": "Layout"
+  },
+  {
+    "name": "toggle",
+    "title": "Toggle",
+    "category": "Selection"
+  },
+  {
+    "name": "toggle-group",
+    "title": "Toggle Group",
+    "category": "Selection"
+  },
+  {
+    "name": "aspect-ratio",
+    "title": "Aspect Ratio",
+    "category": "Layout"
+  },
+  {
+    "name": "badge",
+    "title": "Badge",
+    "category": "Text and layout"
+  },
+  {
+    "name": "typography",
+    "title": "Typography",
+    "category": "Text and layout"
+  },
+  {
+    "name": "breadcrumb",
+    "title": "Breadcrumb",
+    "category": "Text and layout"
+  },
+  {
+    "name": "kbd",
+    "title": "Kbd",
+    "category": "Text and layout"
+  },
+  {
+    "name": "sheet",
+    "title": "Sheet",
+    "category": "OVERLAYS"
+  },
+  {
+    "name": "drawer",
+    "title": "Drawer",
+    "category": "OVERLAYS"
+  },
+  {
+    "name": "button-group",
+    "title": "Button Group",
+    "category": "Layout"
+  },
+  {
+    "name": "empty",
+    "title": "Empty",
+    "category": "Text and layout"
+  },
+  {
+    "name": "pagination",
+    "title": "Pagination",
+    "category": "Navigation"
+  },
+  {
+    "name": "resizable",
+    "title": "Resizable",
+    "category": "Layout"
+  },
+  {
+    "name": "sidebar",
+    "title": "Sidebar",
+    "category": "Navigation"
+  },
+  {
+    "name": "table",
+    "title": "Table",
+    "category": "Data display"
+  },
+  {
+    "name": "item",
+    "title": "Item",
+    "category": "Data display"
+  },
+  {
+    "name": "sonner",
+    "title": "Sonner",
+    "category": "NOTIFICATIONS"
+  },
+  {
+    "name": "avatar",
+    "title": "Avatar",
+    "category": "PLAYERS"
+  },
+  {
+    "name": "message",
+    "title": "Message",
+    "category": "Communication"
+  },
+  {
+    "name": "calendar",
+    "title": "Calendar",
+    "category": "DATE AND TIME"
+  },
+  {
+    "name": "date-picker",
+    "title": "Date Picker",
+    "category": "DATE AND TIME"
+  },
+  {
+    "name": "data-table",
+    "title": "Data Table",
+    "category": "Data display"
+  },
+  {
+    "name": "command",
+    "title": "Command",
+    "category": "Text entry"
+  },
+  {
+    "name": "input-group",
+    "title": "Input Group",
+    "category": "Text entry"
+  },
+  {
+    "name": "carousel",
+    "title": "Carousel",
+    "category": "Navigation"
+  },
+  {
+    "name": "form",
+    "title": "Form",
+    "category": "Forms"
+  },
+  {
+    "name": "code-block",
+    "title": "Code Block",
+    "category": "Text"
+  },
+  {
+    "name": "trace",
+    "title": "Trace",
+    "category": "Text and status"
+  },
+  {
+    "name": "spinner",
+    "title": "Spinner",
+    "category": "Text and status"
+  },
+  {
+    "name": "native-select",
+    "title": "Native Select",
+    "category": "Selection"
+  },
+  {
+    "name": "chart",
+    "title": "Chart",
+    "category": "Data display"
+  },
+  {
+    "name": "input-otp",
+    "title": "Input OTP",
+    "category": "Text entry"
+  },
+  {
+    "name": "marker",
+    "title": "Marker",
+    "category": "INFORMATION"
+  },
+  {
+    "name": "attachment",
+    "title": "Attachment",
+    "category": "FILES"
+  },
+  {
+    "name": "combobox",
+    "title": "Combobox",
+    "category": "Input"
+  },
+  {
+    "name": "questionnaire",
+    "title": "Questionnaire",
+    "category": "QUESTIONS"
+  },
+  {
+    "name": "advancement-tree",
+    "title": "Advancement Tree",
+    "category": "Minecraft"
+  },
+  {
+    "name": "book",
+    "title": "Book",
+    "category": "Minecraft"
+  },
+  {
+    "name": "hotbar",
+    "title": "Hotbar",
+    "category": "Minecraft"
+  },
+  {
+    "name": "hud",
+    "title": "HUD Meters",
+    "category": "Minecraft"
+  },
+  {
+    "name": "sign",
+    "title": "Signs",
+    "category": "Minecraft"
+  },
+  {
+    "name": "player-preview",
+    "title": "Player Preview",
+    "category": "Minecraft"
+  },
+  {
+    "name": "map",
+    "title": "Map",
+    "category": "Minecraft"
+  },
+  {
+    "name": "trading",
+    "title": "Trading",
+    "category": "Minecraft"
+  },
+  {
+    "name": "player-list",
+    "title": "Player List",
+    "category": "Minecraft"
   }
 ]

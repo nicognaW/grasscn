@@ -1,0 +1,68 @@
+{
+  "composition": "Grass-topped grasscn block wordmark; original branded artwork, not a native pixel oracle",
+  "word": "GRASSCN",
+  "dimensions": [
+    260,
+    64
+  ],
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "textures": [
+    {
+      "member": "assets/minecraft/textures/block/dirt.png",
+      "sha256": "67197d5371efc3ca1638217c38349665dbd5a977b47bfb20075c858dff87d510"
+    },
+    {
+      "member": "assets/minecraft/textures/block/grass_block_side.png",
+      "sha256": "76a677640eb91d6a9aed844bc66e329b1894f89e241a0071333b6678c0854580"
+    },
+    {
+      "member": "assets/minecraft/textures/block/grass_block_side_overlay.png",
+      "sha256": "872056682c3b059c04aba88f8b4e706f2526b907e1acef12626a9f912f573a85"
+    }
+  ],
+  "grassTint": [
+    124,
+    189,
+    107
+  ],
+  "textureScale": 2,
+  "glyphAtlasSha256": "e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a",
+  "svgSha256": "abaca2aab8865f737c076fa82870f36ee5c4c10c8bfe8492b816acefc0c460e1",
+  "splash": {
+    "source": "net.minecraft.client.gui.components.SplashRenderer.extractRenderState",
+    "angleRadians": -0.34906584,
+    "sineCycleMs": 1000,
+    "pulseIntervalMs": 500,
+    "pulsesPerSecond": 2,
+    "motionVerification": {
+      "clock": "performance.now(), truncated to integer milliseconds",
+      "sine": "Mth 65536-entry float LUT index and value",
+      "arithmetic": "Math.fround after each Java float operation",
+      "rotation": "JOML 1.10.8 default float rotation and scale",
+      "origin": "-(textWidth / 2) with Java integer truncation, y=-8",
+      "cases": 1000,
+      "comparedFields": [
+        "pulse",
+        "scale",
+        "m00",
+        "m01",
+        "m10",
+        "m11"
+      ],
+      "mismatches": 0,
+      "kind": "Arithmetic and transform verification, not native screenshot verification"
+    },
+    "pulse": "1.8 - abs(sin((time % 1000) / 1000 * 2 * PI) * 0.1)",
+    "fit": "100 / (native text width + 32)",
+    "placement": "Near the lower-right of the logo, adapted inward at narrow widths",
+    "text": "Now with components!",
+    "copy": "Original project copy"
+  },
+  "evidence": {
+    "bytecodeDisassemblySha256": "f563f87e38687c7c64b7f392959b05d740be99ff72c9ff92a5b38ee2175f997d",
+    "reader": "JDK javap (read-only, no Minecraft execution)",
+    "logoClass": "net.minecraft.client.gui.components.LogoRenderer",
+    "splashClass": "net.minecraft.client.gui.components.SplashRenderer",
+    "nativeRuntimeCapture": "Not performed in this task; title is original branded artwork, not a native pixel oracle"
+  }
+}

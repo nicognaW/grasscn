@@ -1,0 +1,1966 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "d6a0e5704231c6a87c67093699eafdc85cd7e10495be4440d2a6aa6a84f17deb",
+  "caseDefinitionSha256": "cbef5470b8cd0b6658972f1a88bde0bd32e08772ef7b556fcd83ba8f6ad3bf9b",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "f1ead016ceb6c2d25b1a5e56658f187936d3e283573624ccb97d740c4eef99d7"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "3204ad3170c437e8084db326fc6d8bb49f12fba64bec9ea28330a4ea43d93d18"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "86ec29cb9496b5cb9175e29fc0741f0e41f0f2f6636a63d94d52e2c0fc744e6f"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "e8896f4373bcff160bcf931991a8fb4bca32c4a0b93625263a7018149848a394"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "5639ae9095cf11a00424f3a186bcacfeb1e92ded9011252eea6925585b8736d1"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "6eb19d1e064f1fea4a812b29a06a19dc535ee11ad15e40477d47747597c895c4"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "8391522ce3a000687cd5003ae5e851bf276080f16857eff4520d2ddc1e5dd34b"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "067a6483dd8f06dd70ea16d4e32105fbdf9b45b6186f08a50f3bcf723645b841"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "21c2830bc6acd21ee5d7116d7ffb62676f1e23a37a4afe3383aa2dcccb4ce627"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "600cf2d9a223f4958e7e2e4a934b5382b1d624c9557e406027408648fe1385c6"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "80cb4d10bb5bad7967eef672b041dab59148cf8e9397e4ca02b22af80288f1b5"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "5772ab0786e53e2b778ed6ee1380e9133098c6e61e36a367e32f165958ed21d9"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "d131486615d5b32aadcb945f3e3209c332eaaa0fffda94e28b0d9a53ff19d8f6"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "9ddb2f2b6ded773011b1a5e7cccdaa1276c87f6ee7d4e8bb3c31376adca3204e"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "7850f168503e6866b684cdeb034dcad978c43c9a7d7cf727ddd8abec04d7ef74"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "d45b1c823eb4ae2ec686e9b675fb5751f9548fa8b0b4156e41cd7e322afe6e2a"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "97639ce3cec53e6eb94e0c6d884d7af81574ea640d7306096d7c8b304fcbf4a6"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "835106c48358e074380f0f49e118d685bd1b0f960c7c99684a5f4c404b969952"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "d3c489689a117b89e9c0cbbdffa03b0ccebaeb24af5fed6ffe81e0fa8a8e8738"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "869c96d914252454be1a38545d8f3ba55bc135489642ce3732281e55414a04f7"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "bb6211ebcfb4d86a21134e1bca5fa2e432b17d0670c7b20b188b54c93e3c0e75"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "8922809918719c978a2a8c173e972d25d04d1b26dc76b67e95aa26914391af66"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "c0b88bbfe7e0703e299682e6f4bf9e0a168c0fcb1c5aba4658ba409b04c0b3ba"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "506887d3be588cd755a5ffa83a6a2cc47c85a8899220c0b68f6b9a35bc67bac1"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "1529c49a64e5f7f0189c882e7178f2a5d023ddced411d943118191851898d667"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "446baa257bcd6cc0c813a7f88a1d129381f1b2fa54901374e7dd5709514d35cb"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "ef177895848a0efa6f0f10a174b060b06acc4f129f51c1ec2f7453b5131393f1"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "72ae0ba051669af7f3495abbcb8bed927936b01b1e7bb8eb0f0a9b601133e1d2"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "fbc95609f2659062c55a686210dd621d7373dc15569b313223c918552aade98f"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "0bc657300a31601b429cf828e038cdb1b38cdc4834022ecf52efeff9540adefc"
+    }
+  ],
+  "cases": [
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c0-s1.png",
+      "page": 0,
+      "background": "#202020",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 401,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 725,
+          "y": 419,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 714,
+          "y": 440,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 661,
+          "y": 461,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 461,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "5ac5c62ea0664c68293bc4233cc8cd4d0e7c744e8dedfabc2d0a546eac2edcc1"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c1-s1.png",
+      "page": 1,
+      "background": "#808080",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 401,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 725,
+          "y": 419,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 714,
+          "y": 440,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 661,
+          "y": 461,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 461,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "ab56b10f0dee3569da578151cfae4ec650d29a708c6660a8f377e0fdf465ad32"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c2-s1.png",
+      "page": 2,
+      "background": "#202020",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 744,
+          "y": 414,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "d29f1ecfc6b4a8422d191d7ca07419f1d4c8929f3b9f8855b0d0ecda3e665f36"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c3-s1.png",
+      "page": 3,
+      "background": "#808080",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 744,
+          "y": 414,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "f0a8b29e01d90c8e901cb89aa9735924ca8ae67b93595d58a4fb851ca064c052"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c4-s1.png",
+      "page": 4,
+      "background": "#202020",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 744,
+          "y": 414,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "7e1f5af0157efb48ce2aff1a3ce49c232e37f56b5d5ec9f704faf47b7f2c0190"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c5-s1.png",
+      "page": 5,
+      "background": "#808080",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 744,
+          "y": 414,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "ad57863ad50794a8e271cc40a308f00547a6b1bb8f629073302ced3d3ead5811"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c6-s1.png",
+      "page": 6,
+      "background": "#202020",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 745,
+          "y": 414,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 746,
+          "y": 435,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "e8dcc4c8b7008db8100f9c4454eeb5997eb2d16063a46b3ffc4d988215fbdb9e"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c7-s1.png",
+      "page": 7,
+      "background": "#808080",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 745,
+          "y": 414,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 746,
+          "y": 435,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "0556f531480be85f3fb9c7aae50792c8e612324b45426cb0872df61ce2e464e4"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c8-s1.png",
+      "page": 8,
+      "background": "#202020",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 741,
+          "y": 414,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "283af0bf3510e1997814cf5d5e24c7c0272e03287930efd355f192ce29417a9f"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c9-s1.png",
+      "page": 9,
+      "background": "#808080",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 643,
+          "y": 396,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 741,
+          "y": 414,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 745,
+          "y": 435,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 661,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 771,
+          "y": 465,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "439a6970d009d05c636ec679f91c499b435af62c41bb8f259ae3d2b236a09260"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c0-s2.png",
+      "page": 0,
+      "background": "#202020",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 176,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 341,
+          "y": 194,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 330,
+          "y": 215,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 277,
+          "y": 236,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 236,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "a23c2f19e25a484ff82f8f188c471c77000db0bc9883bed0aa90b2e66cc51dcb"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c1-s2.png",
+      "page": 1,
+      "background": "#808080",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 176,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 341,
+          "y": 194,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 330,
+          "y": 215,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 277,
+          "y": 236,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 236,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "911cf1986cf19ce03e93bcf0521976b11b5fd35cb7caa883418287475c93faba"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c2-s2.png",
+      "page": 2,
+      "background": "#202020",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 360,
+          "y": 189,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "c04f9e2d1727db2200d39d24ef071dff2db70e4ec0ad3f844417cda115ac9fe2"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c3-s2.png",
+      "page": 3,
+      "background": "#808080",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 360,
+          "y": 189,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "b0a0b34d28f4f1bcdcba2eb5e1793386cc7f91180eeac653712780a2d0210abc"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c4-s2.png",
+      "page": 4,
+      "background": "#202020",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 360,
+          "y": 189,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "96fb444489ecebc0ffc7fbde4d9a9028f9e03df34c9cfe657eac36b8625d06a1"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c5-s2.png",
+      "page": 5,
+      "background": "#808080",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 360,
+          "y": 189,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "c4a66d59abeecfe561f6f14393114a9878ddf8f96bf2b6f4d1276bb8836c1b20"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c6-s2.png",
+      "page": 6,
+      "background": "#202020",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 361,
+          "y": 189,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 362,
+          "y": 210,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "4307467c1a4719178dadae0a8fb5fbb09d350ba1fedbd5df044a189f027dbe67"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c7-s2.png",
+      "page": 7,
+      "background": "#808080",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 361,
+          "y": 189,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 362,
+          "y": 210,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "2a0a94af869528b21f82904270649b676f1c523e75ccc5a34a8d2b100648c3bc"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c8-s2.png",
+      "page": 8,
+      "background": "#202020",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 357,
+          "y": 189,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "dc34ee4c0d7c28681b5b357e6d3c675399084562b8f4378f55149506923d54f6"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c9-s2.png",
+      "page": 9,
+      "background": "#808080",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 259,
+          "y": 171,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 357,
+          "y": 189,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 361,
+          "y": 210,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 277,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 387,
+          "y": 240,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "f966048f61b8aa286e1f450371552409d5ef35ec5c2403e85e45ee2c523958e9"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c0-s3.png",
+      "page": 0,
+      "background": "#202020",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 101,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 213,
+          "y": 119,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 202,
+          "y": 140,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 149,
+          "y": 161,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 161,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "e42ea75b09be83e8e6649a2cf59d8c4d42031df052d606780898c634e414c83c"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c1-s3.png",
+      "page": 1,
+      "background": "#808080",
+      "checked": true,
+      "label": "World settings",
+      "text": "A helpful description.",
+      "renderedLines": [
+        "panel",
+        "World settings",
+        "A helpful description.",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 101,
+          "width": 250,
+          "height": 98
+        },
+        {
+          "x": 213,
+          "y": 119,
+          "width": 85,
+          "height": 9
+        },
+        {
+          "x": 202,
+          "y": 140,
+          "width": 107,
+          "height": 9
+        },
+        {
+          "x": 149,
+          "y": 161,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 161,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "ed698726fd4cf1c16c7421fda336e3888f7740797724c046e38311b75a84a648"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c2-s3.png",
+      "page": 2,
+      "background": "#202020",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 232,
+          "y": 114,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "c16d9cd3aa7eaa3638e4fe40b389b89f78c727e634d39025da40ecbe554ba56b"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c3-s3.png",
+      "page": 3,
+      "background": "#808080",
+      "label": "你好，世界",
+      "text": "你好，世界\n你好，世界",
+      "renderedLines": [
+        "panel",
+        "你好，世界",
+        "你好，世界\n你好，世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 232,
+          "y": 114,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "9b16e6337e52bd38c93c4aa683f3f6c45813ea81e96831bfd4407fc92271d9ae"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c4-s3.png",
+      "page": 4,
+      "background": "#202020",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 232,
+          "y": 114,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "d54da4b2d5f550fb6155cf14a9769e1e46b364e288b2cdc4d55b6832978aa8cd"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c5-s3.png",
+      "page": 5,
+      "background": "#808080",
+      "label": "こんにちは",
+      "text": "こんにちは\nこんにちは",
+      "renderedLines": [
+        "panel",
+        "こんにちは",
+        "こんにちは\nこんにちは",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 232,
+          "y": 114,
+          "width": 48,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 45,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "fbd1e7953c01874d8194ac4f5bc1bf08341627166a05d401bc25f45dbf11edb9"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c6-s3.png",
+      "page": 6,
+      "background": "#202020",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 233,
+          "y": 114,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 234,
+          "y": 135,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "48ca103c281d8a6aa0129ce1341266c4bed94bbabed9f1475d0f38ffda973eb3"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c7-s3.png",
+      "page": 7,
+      "background": "#808080",
+      "label": "안녕하세요",
+      "text": "안녕하세요\n안녕하세요",
+      "renderedLines": [
+        "panel",
+        "안녕하세요",
+        "안녕하세요\n안녕하세요",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 233,
+          "y": 114,
+          "width": 45,
+          "height": 9
+        },
+        {
+          "x": 234,
+          "y": 135,
+          "width": 43,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "3beaccbff3d42bd0e50c181f2740d0b6a3905bef909739d51154786b8020d6b3"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c8-s3.png",
+      "page": 8,
+      "background": "#202020",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 229,
+          "y": 114,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "ae5a742b9bd74a260f0307c5e424e6e9b4f05f9a2bc225c5a7725b2da1715ef4"
+    },
+    {
+      "element": "dialog",
+      "viewport": true,
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "state": "normal",
+      "wrapWidth": 250,
+      "labels": [
+        "Cancel",
+        "Continue"
+      ],
+      "name": "dialog-extra-c9-s3.png",
+      "page": 9,
+      "background": "#808080",
+      "label": "Hello 世界",
+      "text": "Hello 世界\nHello 世界",
+      "renderedLines": [
+        "panel",
+        "Hello 世界",
+        "Hello 世界\nHello 世界",
+        "Cancel",
+        "Continue"
+      ],
+      "tabRects": [
+        {
+          "x": 131,
+          "y": 96,
+          "width": 250,
+          "height": 107
+        },
+        {
+          "x": 229,
+          "y": 114,
+          "width": 53,
+          "height": 9
+        },
+        {
+          "x": 233,
+          "y": 135,
+          "width": 46,
+          "height": 18
+        },
+        {
+          "x": 149,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        },
+        {
+          "x": 259,
+          "y": 165,
+          "width": 104,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "a0bad002ee31ccc931d3088346358a3512e4837d590679062be8a1bee01345c6"
+    }
+  ],
+  "effectiveAssets": {
+    "assetIndex": "32",
+    "assetIndexSha256": "957fc71aae47d44099285bfd32ea9f2896bfff1b1ff7b3f6a74abdbe0ffb8973",
+    "resources": {
+      "minecraft/font/include/unifont.json": {
+        "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+        "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+        "size": 3993
+      },
+      "minecraft/font/unifont.zip": {
+        "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+        "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+        "size": 1559654
+      }
+    }
+  },
+  "sourceDirectory": "source"
+}

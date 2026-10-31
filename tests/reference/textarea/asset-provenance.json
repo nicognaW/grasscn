@@ -1,0 +1,36 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/widget/scroller.png": {
+      "sha256": "597fe534e56c7028ff948a57d30ac6e9ca4073da8df1b0c51d002bdac8f24acc",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    },
+    "assets/minecraft/textures/gui/sprites/widget/scroller_background.png": {
+      "sha256": "0955e3a96511b678ac3e86b6c71fe5548b105c27ca1286ab05268c4789767be0",
+      "metadataSha256": "c1323eb90dd50e0f029f94e5757205a92a5de4b24b35613411b3562e5ec9b1b2",
+      "scaling": {
+        "type": "nine_slice",
+        "width": 6,
+        "height": 32,
+        "border": 1
+      }
+    },
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be"
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7"
+    }
+  },
+  "glyphAtlasSha256": "5477db4a5c5c85c30d465c864542a9be099b36a735ce3bb601291873193a3ba0",
+  "glyphProbeSourceSha256": "4beeb5601327768d2737234d5d1d4b84a3d06eff0cc210bd5bec01720e712eb0",
+  "rendering": "Original text_field normal/highlighted textures are shared with Input. Original scroller/background use their own 6x32 border-1 nine-slice metadata. Native inner padding4, line height9, text E0E0E0 with shadow, cursor D0D0D0. CJK cases use original indexed Unihex pixels and observed native glyph UVs; other glyph sampling is unverified."
+}

@@ -1,0 +1,26 @@
+@layer components {
+  .mc-tabs { --mc-pixel: calc(1px * var(--mc-scale, 2)); width: calc(400 * var(--mc-pixel)); display: flex; flex-direction: column; gap: 0; color: #fff; font-family: "Minecraft Pilot 26.2", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); image-rendering: pixelated; }
+  .mc-tabs-list { --mc-pixel: calc(1px * var(--mc-scale, 2)); position: relative; box-sizing: border-box; display: flex; flex-shrink: 0; align-items: flex-start; justify-content: flex-start; gap: 0; width: 100%; height: calc(24 * var(--mc-pixel)); padding: 0 0 0 var(--mc-tabs-left, calc(14 * var(--mc-pixel))); margin: 0; border: 0; background: transparent; overflow: hidden; }
+  .mc-tabs-list::before, .mc-tabs-list::after { content: ""; position: absolute; bottom: 0; height: calc(2 * var(--mc-pixel)); background-image: var(--mc-tab-header); background-size: calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); background-repeat: repeat-x; pointer-events: none; }
+  .mc-tabs-list::before { left: 0; width: var(--mc-tabs-left); }
+  .mc-tabs-list::after { left: var(--mc-tabs-end); right: 0; }
+  .mc-tabs-trigger { --mc-pixel: calc(1px * var(--mc-scale, 2)); --mc-ink: #fff; --mc-shadow: #3f3f3f; position: relative; box-sizing: border-box; display: block; flex: 0 0 auto; width: var(--mc-tab-width, calc(124 * var(--mc-pixel))); height: calc(24 * var(--mc-pixel)); padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; color: #fff; font: inherit; text-decoration: none; text-shadow: none; outline: none; appearance: none; cursor: pointer; image-rendering: pixelated; }
+  .mc-tabs-trigger:disabled { --mc-ink: #a0a0a0; --mc-shadow: #282828; color: #a0a0a0; cursor: not-allowed; }
+  .mc-tab-surface { position: absolute; inset: 0; display: none; grid-template-columns: calc(2 * var(--mc-pixel)) minmax(0, 1fr) calc(2 * var(--mc-pixel)); grid-template-rows: calc(2 * var(--mc-pixel)) minmax(0, 1fr); pointer-events: none; }
+  .mc-tab-surface > i { display: block; min-width: 0; min-height: 0; background-repeat: repeat; image-rendering: pixelated; background-size: calc(2 * var(--mc-pixel)) calc(22 * var(--mc-pixel)); }
+  .mc-tab-surface > i:nth-child(2) { background-size: calc(126 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); }
+  .mc-tab-surface > i:nth-child(1), .mc-tab-surface > i:nth-child(3) { background-size: calc(2 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); }
+  .mc-tab-surface > i:nth-child(5) { background-size: calc(126 * var(--mc-pixel)) calc(22 * var(--mc-pixel)); }
+  .mc-tabs-trigger[data-state="inactive"] > [data-sprite="tab"], .mc-tabs-trigger[data-state="active"] > [data-sprite="tab_selected"] { display: grid; }
+  .mc-tabs-trigger:is(:hover,:focus)[data-state="inactive"] > [data-sprite="tab"], .mc-tabs-trigger:is(:hover,:focus)[data-state="active"] > [data-sprite="tab_selected"] { display: none; }
+  .mc-tabs-trigger:is(:hover,:focus)[data-state="inactive"] > [data-sprite="tab_highlighted"], .mc-tabs-trigger:is(:hover,:focus)[data-state="active"] > [data-sprite="tab_selected_highlighted"] { display: grid; }
+  .mc-tab-menu { display: none; position: absolute; top: calc(2 * var(--mc-pixel)); left: calc(2 * var(--mc-pixel)); right: calc(2 * var(--mc-pixel)); bottom: 0; background-size: calc(32 * var(--mc-pixel)) calc(32 * var(--mc-pixel)); pointer-events: none; }
+  .mc-tab-underline { display: none; position: absolute; left: var(--mc-tab-underline-x); width: var(--mc-tab-underline-width); bottom: var(--mc-pixel); height: var(--mc-pixel); background: var(--mc-ink); pointer-events: none; }
+  .mc-tabs-trigger[data-state="active"] > .mc-tab-menu, .mc-tabs-trigger[data-state="active"] > .mc-tab-underline { display: block; }
+  .mc-tab-label-window { position: absolute; inset: 0 var(--mc-pixel); overflow: hidden; pointer-events: none; }
+  .mc-tab-label { position: absolute; display: block; white-space: nowrap; left: var(--mc-tab-label-x, 0); top: calc(10 * var(--mc-pixel)); line-height: calc(8 * var(--mc-pixel)); }
+  .mc-tabs-trigger[data-state="active"] .mc-tab-label { top: calc(8 * var(--mc-pixel)); }
+  .mc-tabs-trigger .mc-text-accessible { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .mc-tabs-content { min-width: 0; outline: none; background-size: calc(32 * var(--mc-pixel)) calc(32 * var(--mc-pixel)); }
+  .mc-tabs-content[hidden] { display: none; }
+}

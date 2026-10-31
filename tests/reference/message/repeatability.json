@@ -1,0 +1,1188 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "501aac5eb95d4c5a0c948333e050986b21d6cb42a9bbe3105c7188e7cc857a52",
+  "caseDefinitionSha256": "4e0ae56014c9be37bbca5100e1019e9353efcc9aa81e5b855dd48137faa7bde8",
+  "glyphObservationEnabled": {
+    "runOne": true,
+    "runTwo": false
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "chat-c0-s1.png",
+      "runOnePngSha256": "9a1eb436c76c6d92c65c2e52378cbadb15a28ad9d28fb0319b4146ceb1d41c04",
+      "runTwoPngSha256": "9a1eb436c76c6d92c65c2e52378cbadb15a28ad9d28fb0319b4146ceb1d41c04",
+      "decodedRgbaSha256": "d4cfbf6c62c336be0af86eda3ebee9d7a4237bd257c4486e3af765490f0ed88d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c1-s1.png",
+      "runOnePngSha256": "178564aaa040dbb033681958bf591c27d81e2ebb317a05bc3c67964f207a16ca",
+      "runTwoPngSha256": "178564aaa040dbb033681958bf591c27d81e2ebb317a05bc3c67964f207a16ca",
+      "decodedRgbaSha256": "5e54c4476a9f5a85f25ff7807bf49a1e1ff0d9807ab943295585fbdad37bcb85",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c2-s1.png",
+      "runOnePngSha256": "0d955fbd150c8a9b1259a51ad46dcaa1227c6956b3e77ff73f3279a5148730bd",
+      "runTwoPngSha256": "0d955fbd150c8a9b1259a51ad46dcaa1227c6956b3e77ff73f3279a5148730bd",
+      "decodedRgbaSha256": "26d4eba3cb89d4f0f5c43ecbc94d25733a685c85ad443d4fe0cea2ef3218c03f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c3-s1.png",
+      "runOnePngSha256": "8b0f5227017a08568e11fc73be924260c22bb9af02fca347fdf8d43d6efd0cb4",
+      "runTwoPngSha256": "8b0f5227017a08568e11fc73be924260c22bb9af02fca347fdf8d43d6efd0cb4",
+      "decodedRgbaSha256": "c4bbc332f3c2fd5e304da8a088486d069f8d7baf05ebcb2cb4ffe4d53b11d38a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c4-s1.png",
+      "runOnePngSha256": "132b07299140efc9fee0c24c4c0ac59be91a9c79419c798d8dbe0835198f4fa2",
+      "runTwoPngSha256": "132b07299140efc9fee0c24c4c0ac59be91a9c79419c798d8dbe0835198f4fa2",
+      "decodedRgbaSha256": "32232368eb845f4a5fa28d25c50284d4c7b4f03f4ad6c243c12355e0085a6112",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c5-s1.png",
+      "runOnePngSha256": "66a279b20f7e1d966292b33da74375824776166218b209193a78892bc7037849",
+      "runTwoPngSha256": "66a279b20f7e1d966292b33da74375824776166218b209193a78892bc7037849",
+      "decodedRgbaSha256": "ce937dbc5a1ab079f2e0a6413d668f19dd12b9dd51535c32d46d9d74665a9a48",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c6-s1.png",
+      "runOnePngSha256": "c5927f725664dc1aab95a74bce82bc92ecf9a1803a8d2a4bc05fbe9b62e2ce2d",
+      "runTwoPngSha256": "c5927f725664dc1aab95a74bce82bc92ecf9a1803a8d2a4bc05fbe9b62e2ce2d",
+      "decodedRgbaSha256": "04f65af3e1d5d358cef92843c7446be0e556ab38dd0c0e89c5ead91944fe5f50",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c7-s1.png",
+      "runOnePngSha256": "2381156ca2c0d197353773495e3d6b29dc61119ee12f3389e3cdd7d5fcca08ee",
+      "runTwoPngSha256": "2381156ca2c0d197353773495e3d6b29dc61119ee12f3389e3cdd7d5fcca08ee",
+      "decodedRgbaSha256": "31486345babadb158a898c4fd9e48c60ba12ff944c613ac88facc1724fc282e4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c8-s1.png",
+      "runOnePngSha256": "8a7a62a10f21186b8d3645671f5d7c37ea5116946d991baa1374631d0f31c8a6",
+      "runTwoPngSha256": "8a7a62a10f21186b8d3645671f5d7c37ea5116946d991baa1374631d0f31c8a6",
+      "decodedRgbaSha256": "c21006befa0b7a6304ffa812d6456d91708527c532ffb1cb33c1746d699a1d8e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c9-s1.png",
+      "runOnePngSha256": "000ed687f181810e5500fd8f195bd1aeedf184f850a21eca46938cbbf7652ceb",
+      "runTwoPngSha256": "000ed687f181810e5500fd8f195bd1aeedf184f850a21eca46938cbbf7652ceb",
+      "decodedRgbaSha256": "cd591ddf4189c718b08476fb3ffaee2753c42fff895d469274e431b38b9c6282",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c10-s1.png",
+      "runOnePngSha256": "f2b939367bdf369d289f2c49d71fda6415a0c86b10358ddaf82475d2266393fe",
+      "runTwoPngSha256": "f2b939367bdf369d289f2c49d71fda6415a0c86b10358ddaf82475d2266393fe",
+      "decodedRgbaSha256": "e2f4c2ad6f83eb3aad84d8349b293db2bace480c75efe0be2a46fb8e763a94c8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c11-s1.png",
+      "runOnePngSha256": "2bfbeaca75f2e2885226fd0abfa7707b54b8aa48213e7887f46c000a586277b0",
+      "runTwoPngSha256": "2bfbeaca75f2e2885226fd0abfa7707b54b8aa48213e7887f46c000a586277b0",
+      "decodedRgbaSha256": "0c0f1104238979fb90f374f11c308974f3b36d490bc6355d6fab3568f75aa764",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c12-s1.png",
+      "runOnePngSha256": "c2b6931958438a312ed5dd56a05edfea62dadb31be52bca05a5fef50bee8c10f",
+      "runTwoPngSha256": "c2b6931958438a312ed5dd56a05edfea62dadb31be52bca05a5fef50bee8c10f",
+      "decodedRgbaSha256": "8eb5d2229345a32af7e9f7664525c71ac851446219e3a9a069267589e0342646",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c13-s1.png",
+      "runOnePngSha256": "3b8b2881abab3a55d375c7c7751a0866c82787219558bfbf6c4e70206c841047",
+      "runTwoPngSha256": "3b8b2881abab3a55d375c7c7751a0866c82787219558bfbf6c4e70206c841047",
+      "decodedRgbaSha256": "06d886eff1b04066f6377540020b9430cc4cbc473f0a4bf83e98e459a1ddcb56",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c14-s1.png",
+      "runOnePngSha256": "17480692748c749df4971705b88108c86353f0f7d4ae5d13762d3c3fb0f1fc9b",
+      "runTwoPngSha256": "17480692748c749df4971705b88108c86353f0f7d4ae5d13762d3c3fb0f1fc9b",
+      "decodedRgbaSha256": "e2ee7797f3a7641ad336b64edd08fa1e86d9882d397ff8d0f4d9189acba85c1b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c15-s1.png",
+      "runOnePngSha256": "5ba2e46364739690db60c0dd3d04ad1032d9b1fcb6c6a0e39e32bde3325ad9c1",
+      "runTwoPngSha256": "5ba2e46364739690db60c0dd3d04ad1032d9b1fcb6c6a0e39e32bde3325ad9c1",
+      "decodedRgbaSha256": "14d9db33cf99d0d356e9c025f76c9c9fbfa77a6475aacc7487b8dce610c94001",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c16-s1.png",
+      "runOnePngSha256": "8805d062e44800c59f105098fdd87260bd7114e07f6a6e426ca79e0f51ff0dcd",
+      "runTwoPngSha256": "8805d062e44800c59f105098fdd87260bd7114e07f6a6e426ca79e0f51ff0dcd",
+      "decodedRgbaSha256": "7ba7b2d4343c0826b68400757bab135b1a75e3e2aad924b59d10e93ee6954d06",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c17-s1.png",
+      "runOnePngSha256": "da7bed780d1af95acaee4af80fe31837c5bf3c02a7286905c3b84a086d07819d",
+      "runTwoPngSha256": "da7bed780d1af95acaee4af80fe31837c5bf3c02a7286905c3b84a086d07819d",
+      "decodedRgbaSha256": "5be2c5a85f7c79a7a29793f517accd8c689e71d836d2aebce18a9650d5bcf756",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c18-s1.png",
+      "runOnePngSha256": "c6784f0fd3ce325060c68b7fc95a95ba4c94d5190c6427f5d6e876d10304555b",
+      "runTwoPngSha256": "c6784f0fd3ce325060c68b7fc95a95ba4c94d5190c6427f5d6e876d10304555b",
+      "decodedRgbaSha256": "63a59b31d1767d2a809e6ed4f180194e65bf96fdb7a68266e092a48a93dc0633",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c19-s1.png",
+      "runOnePngSha256": "b91a5bd261a9997d28ebe1378b323578f26a2159b614cde29f8152eef044f5ce",
+      "runTwoPngSha256": "b91a5bd261a9997d28ebe1378b323578f26a2159b614cde29f8152eef044f5ce",
+      "decodedRgbaSha256": "ad72065f99e3953be0f30311cf8efd7ee828cdbc429bcb87d6d5302576483f70",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c20-s1.png",
+      "runOnePngSha256": "399fb61ebcf7fd74a06fc46bf7eb819635e5fa54e22743ae2323761247e49e3c",
+      "runTwoPngSha256": "399fb61ebcf7fd74a06fc46bf7eb819635e5fa54e22743ae2323761247e49e3c",
+      "decodedRgbaSha256": "b220886ca55a3c4cbcc7f5e3eaf60d22039bf2d33f8efa2bf5f376125b59f875",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c21-s1.png",
+      "runOnePngSha256": "aa0cb2a7a86e4871a8b23353e302cbc022144cfb9c76d35db9b3562a00a64a05",
+      "runTwoPngSha256": "aa0cb2a7a86e4871a8b23353e302cbc022144cfb9c76d35db9b3562a00a64a05",
+      "decodedRgbaSha256": "396a304bf49847e8cfa6d9f59a2c9ea1ffe893af25fe8eb9a712a04b3191778a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c22-s1.png",
+      "runOnePngSha256": "e671b63e99a6f21f0d520ef27c7bff582a1c5041cd9debd46c7055ad4eb01ad7",
+      "runTwoPngSha256": "e671b63e99a6f21f0d520ef27c7bff582a1c5041cd9debd46c7055ad4eb01ad7",
+      "decodedRgbaSha256": "ae5a33a2ea824afacbcfee26121aae7224f443d98945dc3a5ad23b351dd67e74",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c23-s1.png",
+      "runOnePngSha256": "7ac55e5d49022e2af8cefa690c98f602cac3e622c916b41b5f97cbd5d0a011ac",
+      "runTwoPngSha256": "7ac55e5d49022e2af8cefa690c98f602cac3e622c916b41b5f97cbd5d0a011ac",
+      "decodedRgbaSha256": "8fbf007e12433ff5c187bfe9bba7e01cb8eeea7719c4ab2cae1f63ba4ab0dc51",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c24-s1.png",
+      "runOnePngSha256": "40b4cf664ca128b37fb7ab448d89010c26aea583c19904231094e07e359ccc7f",
+      "runTwoPngSha256": "40b4cf664ca128b37fb7ab448d89010c26aea583c19904231094e07e359ccc7f",
+      "decodedRgbaSha256": "8df52f45b199afcf8ef532a7f705ea79f74dfea47ad757c1b8ef75176049772e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c25-s1.png",
+      "runOnePngSha256": "f23ae41f0d43600f7fc9616b5b8d21463b577919bd4e9f4512a91c3a578bed96",
+      "runTwoPngSha256": "f23ae41f0d43600f7fc9616b5b8d21463b577919bd4e9f4512a91c3a578bed96",
+      "decodedRgbaSha256": "163a4e6e21d10c5df0c215ca076ba917205bca30d2daf698a82b816fd1f87bd0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c26-s1.png",
+      "runOnePngSha256": "4b86b062eabb36519e534767ce3fc5c275be796df440f4cb5942cc691b630906",
+      "runTwoPngSha256": "4b86b062eabb36519e534767ce3fc5c275be796df440f4cb5942cc691b630906",
+      "decodedRgbaSha256": "1c2b6e075e13284c758f6fb55d97eb6aeadb32278002155e876e3a82aee4b61b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c27-s1.png",
+      "runOnePngSha256": "5056741931b2e215115410d8fa274291b2c6438e4fcbc7a3299ca0e732eab6c6",
+      "runTwoPngSha256": "5056741931b2e215115410d8fa274291b2c6438e4fcbc7a3299ca0e732eab6c6",
+      "decodedRgbaSha256": "1c7524d8af929d04fedf327bf671e930ec627ae8985d67ba41d415b2882091ef",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c28-s1.png",
+      "runOnePngSha256": "f0329cf5653ce4011bae17cde450b25bdc707f9895f499fb8d95497d9ab3d3e0",
+      "runTwoPngSha256": "f0329cf5653ce4011bae17cde450b25bdc707f9895f499fb8d95497d9ab3d3e0",
+      "decodedRgbaSha256": "399d62659ec4fa4149a22e0599ea54d68fd1150624274a997f4ce1d6207a0443",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c29-s1.png",
+      "runOnePngSha256": "64382ed734621e194eb7b0caf119b1b19b54bf391de5a7d1c10ce3fd24daf997",
+      "runTwoPngSha256": "64382ed734621e194eb7b0caf119b1b19b54bf391de5a7d1c10ce3fd24daf997",
+      "decodedRgbaSha256": "8de8f06e9134353de7dedca4fcc3c7ed37f2c01406cb8f9ca785c9a5c5678ccc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c30-s1.png",
+      "runOnePngSha256": "9f353c6e46f046c0fc4a10c078a8e1d88a7e9b902eca65e9ae433405eedb6d8a",
+      "runTwoPngSha256": "9f353c6e46f046c0fc4a10c078a8e1d88a7e9b902eca65e9ae433405eedb6d8a",
+      "decodedRgbaSha256": "b54024929f5f72a3d2c868deef1be34422687bc8e245f925c89e5c11b25e12f8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c31-s1.png",
+      "runOnePngSha256": "f2e2aba482b2e8d5ef301a584e8389ff7574839dab9e96fe1f76ee927870a311",
+      "runTwoPngSha256": "f2e2aba482b2e8d5ef301a584e8389ff7574839dab9e96fe1f76ee927870a311",
+      "decodedRgbaSha256": "3420a70d7ea65c15fa735be056d19c130170e34fd7adee6551b7041543847615",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c32-s1.png",
+      "runOnePngSha256": "fa9de82dc960bc9abdfcee7e9e991a01c621d85323a68baf96434ef6b7a51a31",
+      "runTwoPngSha256": "fa9de82dc960bc9abdfcee7e9e991a01c621d85323a68baf96434ef6b7a51a31",
+      "decodedRgbaSha256": "6f0a36c2eab440c6a9dd1c9f0edbf9a6584d40150f06b7dd7c6180902ae34692",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c33-s1.png",
+      "runOnePngSha256": "0d9168c3f138f0f6703f426732eee3f6a9dd6cf486f12d3bce43f26d4269a763",
+      "runTwoPngSha256": "0d9168c3f138f0f6703f426732eee3f6a9dd6cf486f12d3bce43f26d4269a763",
+      "decodedRgbaSha256": "cac0186cfc784c37ab282b6878617e6de44d745c218d75ecc4cdcc647845206c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c34-s1.png",
+      "runOnePngSha256": "0b17c0afc8f0ccf8271da449a12a6ef4d1b5bc2a742aa559dbd726c36701697e",
+      "runTwoPngSha256": "0b17c0afc8f0ccf8271da449a12a6ef4d1b5bc2a742aa559dbd726c36701697e",
+      "decodedRgbaSha256": "d192d84855c2794cca933b4c63fc06f7f53b86a6124429efd86e52bf59fc9579",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c35-s1.png",
+      "runOnePngSha256": "928493fa5e42dc060f3e0d8c21566b0c7e56d024ef842b48bbb0a5049c954a2f",
+      "runTwoPngSha256": "928493fa5e42dc060f3e0d8c21566b0c7e56d024ef842b48bbb0a5049c954a2f",
+      "decodedRgbaSha256": "ac895bdb42fd6147dd3ac085c28eaf9613f99f87702371e19ca8883a5b792b9c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c36-s1.png",
+      "runOnePngSha256": "4980567eb8320f8b28a3faa83d2742ca45e42ab31cd12b4f1608bb37fac4c1d8",
+      "runTwoPngSha256": "4980567eb8320f8b28a3faa83d2742ca45e42ab31cd12b4f1608bb37fac4c1d8",
+      "decodedRgbaSha256": "f914ee2b2057a9339184fe0a70204b103dbe001ee39648700eab02bbe2aa0944",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c37-s1.png",
+      "runOnePngSha256": "7441c44c631f87c3f74a4d90cec04927d0ba122d61e78de5104cdf9984967be3",
+      "runTwoPngSha256": "7441c44c631f87c3f74a4d90cec04927d0ba122d61e78de5104cdf9984967be3",
+      "decodedRgbaSha256": "d07be2138b268c684ceee0112aa1f824291b9a080d8739d3b7b8460f57a2ed20",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c38-s1.png",
+      "runOnePngSha256": "017faa26ec6f242fcf109f45be8a6aa5973e1feda57629dc685ec517a65f2e73",
+      "runTwoPngSha256": "017faa26ec6f242fcf109f45be8a6aa5973e1feda57629dc685ec517a65f2e73",
+      "decodedRgbaSha256": "6b392b5784e97989550e077cc7ecaf4ab5fbab37163cbd2e84a6ee3107ba7a77",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c39-s1.png",
+      "runOnePngSha256": "e33f0ce3af070c57ddf3ff6272db7cb170c9b52cf51b47c72d594bdc96fc7a50",
+      "runTwoPngSha256": "e33f0ce3af070c57ddf3ff6272db7cb170c9b52cf51b47c72d594bdc96fc7a50",
+      "decodedRgbaSha256": "011a1bb63c249a71c7e91633b792bc861a7d4207b0b1a3b1bfcee0d3f02af760",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c40-s1.png",
+      "runOnePngSha256": "d0cfa8b94fb0f93e98e6f613cad4c4f2c7d917e0a0089e5cd6dd505ba55c429d",
+      "runTwoPngSha256": "d0cfa8b94fb0f93e98e6f613cad4c4f2c7d917e0a0089e5cd6dd505ba55c429d",
+      "decodedRgbaSha256": "1a947fc612a00685358faa4ba0b3886908be2bb5a7d70f60e28afa0ed3e0c0dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c41-s1.png",
+      "runOnePngSha256": "ef4d6f04a8996816ad28d9875895bb6c783a079d1f66ca03c1d88e76baffd2ee",
+      "runTwoPngSha256": "ef4d6f04a8996816ad28d9875895bb6c783a079d1f66ca03c1d88e76baffd2ee",
+      "decodedRgbaSha256": "4724940510e3621ec1eb934718ea347a149d3cd5f864ad9bfd13a8c7ab22c08e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c42-s1.png",
+      "runOnePngSha256": "4267f8a10d56e35be0037642fcd12ea487f1cda1d85650b80266a1f9c0952a88",
+      "runTwoPngSha256": "4267f8a10d56e35be0037642fcd12ea487f1cda1d85650b80266a1f9c0952a88",
+      "decodedRgbaSha256": "f327e269a1c051bda6eecaa761bc72a541df78a9aca9260e9d0b09232acb34bf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c43-s1.png",
+      "runOnePngSha256": "3c54cff92d553963f51aa2c3ce4c547a2de625be6c331a0656497a210976915d",
+      "runTwoPngSha256": "3c54cff92d553963f51aa2c3ce4c547a2de625be6c331a0656497a210976915d",
+      "decodedRgbaSha256": "881db0bcf0e72b1a4af1cbc9746a09d5efe7ed210c9e4422021928fc7e82ce1c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c44-s1.png",
+      "runOnePngSha256": "92dada22e8127709ea1d565ef033147a666be8b9059db16e23dd990850ba43c2",
+      "runTwoPngSha256": "92dada22e8127709ea1d565ef033147a666be8b9059db16e23dd990850ba43c2",
+      "decodedRgbaSha256": "6f2932e59edc49559e32324877d41e5be60d502bfaf772cebdbbfe33eaedb5e8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c45-s1.png",
+      "runOnePngSha256": "bc65472c9c4e8411a7389594817d86496fe8aac54337a602babf4783c82ffcf8",
+      "runTwoPngSha256": "bc65472c9c4e8411a7389594817d86496fe8aac54337a602babf4783c82ffcf8",
+      "decodedRgbaSha256": "dad1f7b4b9aead2d2736e99bb5f4a9ddf52ba3517f3cdbb31236f679afac378c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c46-s1.png",
+      "runOnePngSha256": "d55b22bf0e87f99b1b3d25d35576cbc787247d389327fcae5e4a907bed3f9231",
+      "runTwoPngSha256": "d55b22bf0e87f99b1b3d25d35576cbc787247d389327fcae5e4a907bed3f9231",
+      "decodedRgbaSha256": "e6ae5eef39975da4dc7006aff00d18fad478fb057277586aa54cd307d6e9bfea",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c47-s1.png",
+      "runOnePngSha256": "84c95790de0fc4ce87d5f852b727470207fc4f94b98f80a1de466511c7b174b8",
+      "runTwoPngSha256": "84c95790de0fc4ce87d5f852b727470207fc4f94b98f80a1de466511c7b174b8",
+      "decodedRgbaSha256": "bdbf1547f0356edca1607560dcfec3c0623ab482031dda6b1daf1d41b064b13a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c48-s1.png",
+      "runOnePngSha256": "0ce20f429d26a41a6cdd70f4ace5c6ae411e7c7e055f36ca4aba2e044b277503",
+      "runTwoPngSha256": "0ce20f429d26a41a6cdd70f4ace5c6ae411e7c7e055f36ca4aba2e044b277503",
+      "decodedRgbaSha256": "e40adfd01e7768dfa5ba1ade37c08acffbf792077a073f3eadf29a7f4edaf9ac",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c49-s1.png",
+      "runOnePngSha256": "92cf66d304cb77ad33c2d52a7e4e28154b801859179ced7c979495ecee88eb06",
+      "runTwoPngSha256": "92cf66d304cb77ad33c2d52a7e4e28154b801859179ced7c979495ecee88eb06",
+      "decodedRgbaSha256": "29bd45eab2d0c4f033c0c6be43e9708ca58fb86fa15a1af50884b9fb177afd11",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c50-s1.png",
+      "runOnePngSha256": "9ffbe01453c91c19d04c186ecd67d09b4c8e074a7b1323383d7a88b9ef842dc1",
+      "runTwoPngSha256": "9ffbe01453c91c19d04c186ecd67d09b4c8e074a7b1323383d7a88b9ef842dc1",
+      "decodedRgbaSha256": "441db26ebfc754a132a7314b2314b21a5708330671b411b21ebc4d64774a9fbf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c51-s1.png",
+      "runOnePngSha256": "99c3b19f857d2cc0194fd7ac3de2afb23e56b01ab88c89e4248cf755f87bc7d1",
+      "runTwoPngSha256": "99c3b19f857d2cc0194fd7ac3de2afb23e56b01ab88c89e4248cf755f87bc7d1",
+      "decodedRgbaSha256": "52124cad4e3ea7308284a2ad6c530acd95beedeb9590954f383085197ff6622b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c52-s1.png",
+      "runOnePngSha256": "b0991b08799ac539145e3a13cee15f8c78dbdf891b0c02cde6c947ac18993ebc",
+      "runTwoPngSha256": "b0991b08799ac539145e3a13cee15f8c78dbdf891b0c02cde6c947ac18993ebc",
+      "decodedRgbaSha256": "8c0e5cba30aea03f244d3ed501c71d7afa70100402bd9ccd5234e038795b467c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c53-s1.png",
+      "runOnePngSha256": "2ccc4096069bc8ca9304cb591381e5b6ecb8b683d5cb68865203317166f5d3cd",
+      "runTwoPngSha256": "2ccc4096069bc8ca9304cb591381e5b6ecb8b683d5cb68865203317166f5d3cd",
+      "decodedRgbaSha256": "93fd3d410b1e09fd1cc15e3e93c96410ad73d1f13442eddc609f8f8b6025769f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c54-s1.png",
+      "runOnePngSha256": "8464abea0dbb58daba6e5db79685e8af0773506468984afbd0560b9eb1223f86",
+      "runTwoPngSha256": "8464abea0dbb58daba6e5db79685e8af0773506468984afbd0560b9eb1223f86",
+      "decodedRgbaSha256": "83aaeb2ebf54928a9513b0175eeb3777062f86dc1818a7d6c75c3747b07988b5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c55-s1.png",
+      "runOnePngSha256": "75a8c460b8f0ff8cc359a01058e4204d74e2f937e48460977e914133cbc4d080",
+      "runTwoPngSha256": "75a8c460b8f0ff8cc359a01058e4204d74e2f937e48460977e914133cbc4d080",
+      "decodedRgbaSha256": "2c1bd3a8ddf9d4d979ccff344a9ee009c0425c30a5d6610ba12ff881c5d047ca",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c0-s2.png",
+      "runOnePngSha256": "247d3ac07ce8d73169f1fb0732659d3c0bbb5a18f87346cc30f25170c90d7642",
+      "runTwoPngSha256": "247d3ac07ce8d73169f1fb0732659d3c0bbb5a18f87346cc30f25170c90d7642",
+      "decodedRgbaSha256": "3afe8d2eb5072de53065b2029f6e405642d491cfea6e183bda1309b8c1e71fbd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c1-s2.png",
+      "runOnePngSha256": "9133c2a1df67079d8b71428ccb450084f386b9be85bd2a62f4ca8af5d901b751",
+      "runTwoPngSha256": "9133c2a1df67079d8b71428ccb450084f386b9be85bd2a62f4ca8af5d901b751",
+      "decodedRgbaSha256": "d5da29d485e90ec643bf7f61889198a50abaa4aee13f037bdc41a4b11fa29eb6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c2-s2.png",
+      "runOnePngSha256": "ac12e1dec8c918d1f0b5a14ae5b75b210dbde6f697362f7fb105354d9c45c1f6",
+      "runTwoPngSha256": "ac12e1dec8c918d1f0b5a14ae5b75b210dbde6f697362f7fb105354d9c45c1f6",
+      "decodedRgbaSha256": "2fa3dd8adbf6419d5beb14b2751db65abf2d42317287387a1d174e5bc9f65a8e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c3-s2.png",
+      "runOnePngSha256": "51d25ed3539a7a632d5133e863308c774a8fe8b23631dc0517305b491e010c89",
+      "runTwoPngSha256": "51d25ed3539a7a632d5133e863308c774a8fe8b23631dc0517305b491e010c89",
+      "decodedRgbaSha256": "fd3ca6c075e3ed0dc695f1e28ab4dd0a65f3944456d41373fa18675c381a968a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c4-s2.png",
+      "runOnePngSha256": "7e9241bf184f98e9b707065d5a86d6ba952213fad8f1f126a9f3388391af424d",
+      "runTwoPngSha256": "7e9241bf184f98e9b707065d5a86d6ba952213fad8f1f126a9f3388391af424d",
+      "decodedRgbaSha256": "de46ecde906a405c658e4452363dcf76c5d7bf88eb47e7a579bf6882446b3c7a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c5-s2.png",
+      "runOnePngSha256": "5808d475dba9039b053df53ea46376093f099446f096a9460d1c0b2f33ca6335",
+      "runTwoPngSha256": "5808d475dba9039b053df53ea46376093f099446f096a9460d1c0b2f33ca6335",
+      "decodedRgbaSha256": "f8da2e474e7ada863d1a4b435a5edee8ba4e2d593e09d60fec1204ce458d65a4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c6-s2.png",
+      "runOnePngSha256": "c6cd65a8e5e7235dbacb1a79d10aa908936506920c3110e7a7ed8ed456246289",
+      "runTwoPngSha256": "c6cd65a8e5e7235dbacb1a79d10aa908936506920c3110e7a7ed8ed456246289",
+      "decodedRgbaSha256": "0245c18754ad8824269d14e8775da14680a831be4ad5f9b0de9493adcd795f3d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c7-s2.png",
+      "runOnePngSha256": "caeba84c1b52caaca29ce801409f556c31ce21574ef03513fcd044783785c366",
+      "runTwoPngSha256": "caeba84c1b52caaca29ce801409f556c31ce21574ef03513fcd044783785c366",
+      "decodedRgbaSha256": "35fe52dfb6be114b009a7fbedc99fa3cd0ec9ec0c3c47cd34f491422c9165da3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c8-s2.png",
+      "runOnePngSha256": "2fede03677bf731a49cc2534698640421448c964655e8eb11210e7eb091aa075",
+      "runTwoPngSha256": "2fede03677bf731a49cc2534698640421448c964655e8eb11210e7eb091aa075",
+      "decodedRgbaSha256": "6ad65f25294088d80e623ddc82c86a919111d109250976701bf176b5c41ce140",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c9-s2.png",
+      "runOnePngSha256": "543e3816bba42a2412fdcfc07efcb9d3ac0d32622485f7a0060e81966d94eb85",
+      "runTwoPngSha256": "543e3816bba42a2412fdcfc07efcb9d3ac0d32622485f7a0060e81966d94eb85",
+      "decodedRgbaSha256": "191eb3d7f26cf236df766dfe9a453b7c08f699712e9adfb13ab6c7ba090d53e2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c10-s2.png",
+      "runOnePngSha256": "62d60ee3dbca28980ac4d1fbdcbb12234660582bac0a3fefb1d1cb68972b7d99",
+      "runTwoPngSha256": "62d60ee3dbca28980ac4d1fbdcbb12234660582bac0a3fefb1d1cb68972b7d99",
+      "decodedRgbaSha256": "4e417ced6fafff8adb91e8badcb75ff328c17bb1516f9d191972046ecc2b16ff",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c11-s2.png",
+      "runOnePngSha256": "fac869df52b95e85195153a9471da28d843092f0414740a7906b4c70e2f053c3",
+      "runTwoPngSha256": "fac869df52b95e85195153a9471da28d843092f0414740a7906b4c70e2f053c3",
+      "decodedRgbaSha256": "b4f4b9bb86be801fbf5515c8d08af223a2dda8e57d2edf42b09d72c9220c87ce",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c12-s2.png",
+      "runOnePngSha256": "3c50c3a14c4cb3ab4d7106c9cbba392ac9b906a96e0a22afa47292dfa053a5ce",
+      "runTwoPngSha256": "3c50c3a14c4cb3ab4d7106c9cbba392ac9b906a96e0a22afa47292dfa053a5ce",
+      "decodedRgbaSha256": "7bab727fffae7fbfefd339382d21927780d21335f6a3309de931b3d87cd4efd5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c13-s2.png",
+      "runOnePngSha256": "8bd9e415298ea39ae9bc480cbfd6d18c15371091e7a76e60933e0019f2dc548c",
+      "runTwoPngSha256": "8bd9e415298ea39ae9bc480cbfd6d18c15371091e7a76e60933e0019f2dc548c",
+      "decodedRgbaSha256": "f3185e4d45e2cad31cc9b4a26736673e2db1660a5bf6732beeb806d3d8db833c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c14-s2.png",
+      "runOnePngSha256": "31acf713702e6d106112be0afcb086121b10d9a2fd4f1f53d3e262316ca00eb5",
+      "runTwoPngSha256": "31acf713702e6d106112be0afcb086121b10d9a2fd4f1f53d3e262316ca00eb5",
+      "decodedRgbaSha256": "c81e8d43f0bdf61f77c0de56ced7255122936a461163a3f1b8cea338595e0769",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c15-s2.png",
+      "runOnePngSha256": "0beedab2d088c5fb414b5b99e3c5590d1f9fd466f21d8b23534719c5ae58737f",
+      "runTwoPngSha256": "0beedab2d088c5fb414b5b99e3c5590d1f9fd466f21d8b23534719c5ae58737f",
+      "decodedRgbaSha256": "16cd27455ac9a8b63861a5a7617dd912922cabbade14d89e77d431629c25d8a2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c16-s2.png",
+      "runOnePngSha256": "b088c0b6bbf46a4822d07de31fac600eea7809d4b450d0927cf9981c600cf9c9",
+      "runTwoPngSha256": "b088c0b6bbf46a4822d07de31fac600eea7809d4b450d0927cf9981c600cf9c9",
+      "decodedRgbaSha256": "178fab94b6493aee7d89767660bbadede41c4d0e98103cedb5b85047db467b58",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c17-s2.png",
+      "runOnePngSha256": "ac0069b3bfcdc32e87239402d8f06cf5b3a764fd81074e70dafaaea663d33629",
+      "runTwoPngSha256": "ac0069b3bfcdc32e87239402d8f06cf5b3a764fd81074e70dafaaea663d33629",
+      "decodedRgbaSha256": "eeecef8e99bdff2cd0eee1f2397c2cf11cdcb600899a7df2142ef134d111386f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c18-s2.png",
+      "runOnePngSha256": "848bfce3de8364cd000d094510402efb2907258e0a0aebb0c52b4379528aa8a1",
+      "runTwoPngSha256": "848bfce3de8364cd000d094510402efb2907258e0a0aebb0c52b4379528aa8a1",
+      "decodedRgbaSha256": "0d4875f17be3be1ec21870ccd7d5128a40c5e55af6e53f1063586e2fd5a1b206",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c19-s2.png",
+      "runOnePngSha256": "46750b07a4338558fbf5b2fec484eaf908b03bfa3497e4f6b8d564be701ccbe1",
+      "runTwoPngSha256": "46750b07a4338558fbf5b2fec484eaf908b03bfa3497e4f6b8d564be701ccbe1",
+      "decodedRgbaSha256": "c38b6863f81bb0ff0e212fdda63ac0b85179fd41c15fdc8f6a0a20d6bdf3065e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c20-s2.png",
+      "runOnePngSha256": "de6a71dae9885020a1129424254752c645103fda1465443e2c97f048247e1188",
+      "runTwoPngSha256": "de6a71dae9885020a1129424254752c645103fda1465443e2c97f048247e1188",
+      "decodedRgbaSha256": "4e11157b4927eb51bafbc95ba9846a01e7cde7ba77899f07fa68079439b3577c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c21-s2.png",
+      "runOnePngSha256": "89a3ce7c941910110413e986dac351b27e9f784efded4c3ac4d1e007d43e90b4",
+      "runTwoPngSha256": "89a3ce7c941910110413e986dac351b27e9f784efded4c3ac4d1e007d43e90b4",
+      "decodedRgbaSha256": "1a3b8c4c31117e9d3417928ad3a9cb11af15098975a4b49e96a23c80d074237c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c22-s2.png",
+      "runOnePngSha256": "75df1c8f757c5770ae45135178d5226f89012aa83dc7311b376b77053141b99f",
+      "runTwoPngSha256": "75df1c8f757c5770ae45135178d5226f89012aa83dc7311b376b77053141b99f",
+      "decodedRgbaSha256": "fbdee68d4c9945d6d2258bff23f14ada06852ac9181690977e90300924539415",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c23-s2.png",
+      "runOnePngSha256": "ca569ff215a256a44ce786edb9ad6294aa3be635d584bfda575bff5b432c8448",
+      "runTwoPngSha256": "ca569ff215a256a44ce786edb9ad6294aa3be635d584bfda575bff5b432c8448",
+      "decodedRgbaSha256": "473234141846631914b45102d737d0c6fc1dedcde0d98c83f32f22178c9796d2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c24-s2.png",
+      "runOnePngSha256": "82508978f7c895d23c97cd3f6395e3ec5c33f10bd56c83d9d122b1fbe8b490b4",
+      "runTwoPngSha256": "82508978f7c895d23c97cd3f6395e3ec5c33f10bd56c83d9d122b1fbe8b490b4",
+      "decodedRgbaSha256": "a157ac8d71ac6d477b6f72a5878e3ec2dddedd0d591cbd639201118fd995d40c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c25-s2.png",
+      "runOnePngSha256": "432f7b75e019012754a81432c673110c732c1f2d2fccab0c436efeedfa5abc89",
+      "runTwoPngSha256": "432f7b75e019012754a81432c673110c732c1f2d2fccab0c436efeedfa5abc89",
+      "decodedRgbaSha256": "47bfb2df811d096920a934fd05e8f40804813cc839e23c7593592a6e4f3c972e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c26-s2.png",
+      "runOnePngSha256": "e7291d0e1c4d3a00e3c4173775b3d645636459c4208992538720ddc57b6366eb",
+      "runTwoPngSha256": "e7291d0e1c4d3a00e3c4173775b3d645636459c4208992538720ddc57b6366eb",
+      "decodedRgbaSha256": "a06656b21dc31c4c23663803f9ddc449dda66d6c032e1c0c60dc75156dcd7731",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c27-s2.png",
+      "runOnePngSha256": "17c8ecf8a49dfb77b119f7e9dd65e19418e4467a63e571c1a2a2af31f27a9c9f",
+      "runTwoPngSha256": "17c8ecf8a49dfb77b119f7e9dd65e19418e4467a63e571c1a2a2af31f27a9c9f",
+      "decodedRgbaSha256": "86d8265fa5671b3dde7896b4d0f5c5f0f856d158312abb19838bc9eb41e6bbff",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c28-s2.png",
+      "runOnePngSha256": "23dc56321be7ae6aa58a632875d09a51fc2602cb94353c245e43905edde3025f",
+      "runTwoPngSha256": "23dc56321be7ae6aa58a632875d09a51fc2602cb94353c245e43905edde3025f",
+      "decodedRgbaSha256": "71ead07540a15974e27c58cae8041df3b80b9a97919636486f246005a10b4423",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c29-s2.png",
+      "runOnePngSha256": "322dfe7b16e6112ffd356ce84bbde7e332b659895a1543517c399b69a8c02ea7",
+      "runTwoPngSha256": "322dfe7b16e6112ffd356ce84bbde7e332b659895a1543517c399b69a8c02ea7",
+      "decodedRgbaSha256": "6343871f27db9fe62a7504a336873357f3072b876c5cc40c31f24a1d21402094",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c30-s2.png",
+      "runOnePngSha256": "1eb9f4c8ed69a3ef4e516d350e0f0683ac30cb2e118e5b5c6c4221a256d29f6d",
+      "runTwoPngSha256": "1eb9f4c8ed69a3ef4e516d350e0f0683ac30cb2e118e5b5c6c4221a256d29f6d",
+      "decodedRgbaSha256": "9efe412eb9b9061239d777cb950f39b82f3a5a5f23d2a6f2d82a00b1440c92ff",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c31-s2.png",
+      "runOnePngSha256": "5e61be571fd0a2d1bdc8435fab1a79fa786c4ea13677bb0c6d75abefa6ccd8bd",
+      "runTwoPngSha256": "5e61be571fd0a2d1bdc8435fab1a79fa786c4ea13677bb0c6d75abefa6ccd8bd",
+      "decodedRgbaSha256": "216b486516393eed6e386cf4c970de998f2374465074df767b13726f63373d9a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c32-s2.png",
+      "runOnePngSha256": "8d0802b069189d136983ca9481fbdd45ea5f0bfe7daefb8f35bc3e712e207293",
+      "runTwoPngSha256": "8d0802b069189d136983ca9481fbdd45ea5f0bfe7daefb8f35bc3e712e207293",
+      "decodedRgbaSha256": "0e76c6efaecb7299b40124cd029374c1d7ad8873f095378386fdfe0ae98df962",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c33-s2.png",
+      "runOnePngSha256": "8844f31aec89c79a4c70cc4bb6426b2cd17b66a3e3e31972701f19180fc535d1",
+      "runTwoPngSha256": "8844f31aec89c79a4c70cc4bb6426b2cd17b66a3e3e31972701f19180fc535d1",
+      "decodedRgbaSha256": "73f49583554c63b8d6ff0f0554224880f45dceab06f89056c1164167d2733917",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c34-s2.png",
+      "runOnePngSha256": "a91f6527199a881af9ec7cdca5b3d51f5805adf95a71c718288b92fa660731cd",
+      "runTwoPngSha256": "a91f6527199a881af9ec7cdca5b3d51f5805adf95a71c718288b92fa660731cd",
+      "decodedRgbaSha256": "c70e49eb297405f678d4e1557d30c74c44e9e43fe59e4b7eb39b9bd037eeee21",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c35-s2.png",
+      "runOnePngSha256": "66085f3461c1684c12afa59b67975738359359f5d3f9776d264ceac1e4ac5c04",
+      "runTwoPngSha256": "66085f3461c1684c12afa59b67975738359359f5d3f9776d264ceac1e4ac5c04",
+      "decodedRgbaSha256": "3020b0c2263032ea9ae7f864109b56aa9ff528d6427020bc31a16ca0181d58fc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c36-s2.png",
+      "runOnePngSha256": "8d7c8872e13b503806b2ec5d6ef869b6b3b7bcdaa257247ff52b3b46b4729e55",
+      "runTwoPngSha256": "8d7c8872e13b503806b2ec5d6ef869b6b3b7bcdaa257247ff52b3b46b4729e55",
+      "decodedRgbaSha256": "08156ba686f2a065b199487d685b7558dbd30389c492cbb145292b2e06dd58dd",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c37-s2.png",
+      "runOnePngSha256": "1e44797315331a25a85b1512e2fa1bcc57177a16344597f4a6886814153b4bd5",
+      "runTwoPngSha256": "1e44797315331a25a85b1512e2fa1bcc57177a16344597f4a6886814153b4bd5",
+      "decodedRgbaSha256": "dcc157597b80f7522764803d6f61546b02850388246305aa002b2046ec83513b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c38-s2.png",
+      "runOnePngSha256": "f1125c85e3fa15c1df030b5e71c009978682f95f3299c52f44df00c47f4fb619",
+      "runTwoPngSha256": "f1125c85e3fa15c1df030b5e71c009978682f95f3299c52f44df00c47f4fb619",
+      "decodedRgbaSha256": "043b6b7a6d1c9c3dceecad84e4fa2628bc779d9980e56715cb8a7e6c47754482",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c39-s2.png",
+      "runOnePngSha256": "84794f455d6a56a452a600f5cf1f7710603439ef92c8cdce7935b841ac5c8846",
+      "runTwoPngSha256": "84794f455d6a56a452a600f5cf1f7710603439ef92c8cdce7935b841ac5c8846",
+      "decodedRgbaSha256": "402a969f75497d951497853f29c441d3c05e2da84162cbfe27251e9c80d7dc16",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c40-s2.png",
+      "runOnePngSha256": "f99def9d759c8d8704ca39fc12f54de5708714bc68fae2c5da5c80063ecf0506",
+      "runTwoPngSha256": "f99def9d759c8d8704ca39fc12f54de5708714bc68fae2c5da5c80063ecf0506",
+      "decodedRgbaSha256": "b2ce7dde34c0802109e78a645ebe34fff3a7e28329bd7a375364e9c8ed962e42",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c41-s2.png",
+      "runOnePngSha256": "5a44938f59048ec885b641deb738986582f37243f8be48e82dfa42d4c81635ca",
+      "runTwoPngSha256": "5a44938f59048ec885b641deb738986582f37243f8be48e82dfa42d4c81635ca",
+      "decodedRgbaSha256": "07e6d4279f8c4d062ddbb2e03bd0b22e8ce100176ea95a168861bb4ac1601249",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c42-s2.png",
+      "runOnePngSha256": "fb854046e94ba0320867caeca81ff52106a119dc7933b446c30c6ff158441da8",
+      "runTwoPngSha256": "fb854046e94ba0320867caeca81ff52106a119dc7933b446c30c6ff158441da8",
+      "decodedRgbaSha256": "9e456eaf1d07e43acccb60787b0d4d83bccebaaf34f4a0b607154bd563c16278",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c43-s2.png",
+      "runOnePngSha256": "1c56a4994d6811711b0fb520bf8b117516ab08baf07bbf79904832d641576635",
+      "runTwoPngSha256": "1c56a4994d6811711b0fb520bf8b117516ab08baf07bbf79904832d641576635",
+      "decodedRgbaSha256": "04faf8c2330fd1c44509cf6ab87ee4a7d78d817815a7ae69a32e17aa82df09fe",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c44-s2.png",
+      "runOnePngSha256": "ab17dedc3b63ccb123ec79e9192e871c304d681cf68d0712f6b26a3594ee449e",
+      "runTwoPngSha256": "ab17dedc3b63ccb123ec79e9192e871c304d681cf68d0712f6b26a3594ee449e",
+      "decodedRgbaSha256": "7d45b5654f54e10bbe026ede8f32798714c59440c65de4e397aa63afc6ab92b5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c45-s2.png",
+      "runOnePngSha256": "9b2c6576acf83d6cbcafb017d2f503061325049a9b0c778d040afcef511cf936",
+      "runTwoPngSha256": "9b2c6576acf83d6cbcafb017d2f503061325049a9b0c778d040afcef511cf936",
+      "decodedRgbaSha256": "f186f7dd8eac1610393c0cbf4c08f57f999d928c459c87050f92c2c323d61054",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c46-s2.png",
+      "runOnePngSha256": "8e1442bc633ceb8a8b306b425d69bd3f1a59f95910eea8c148cb95249b3133f5",
+      "runTwoPngSha256": "8e1442bc633ceb8a8b306b425d69bd3f1a59f95910eea8c148cb95249b3133f5",
+      "decodedRgbaSha256": "2b3eb4ace77f7b3f90809af06aadb0055dbb9712bda828e16f41bc3434799f3b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c47-s2.png",
+      "runOnePngSha256": "8a05fe330e06e32cdb94461b7428f384558eceadcbf28f46f9070e39884c0ecd",
+      "runTwoPngSha256": "8a05fe330e06e32cdb94461b7428f384558eceadcbf28f46f9070e39884c0ecd",
+      "decodedRgbaSha256": "2442b703ca2d5238d79cbb6903a3c65e8719a3908af8ae79a7090526db7fe1b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c48-s2.png",
+      "runOnePngSha256": "a213d180e3b8828fb93878c2f7909cff9332a673297ca2b575b4bb522d7823ea",
+      "runTwoPngSha256": "a213d180e3b8828fb93878c2f7909cff9332a673297ca2b575b4bb522d7823ea",
+      "decodedRgbaSha256": "d244ce75a8e5cb941a73c2164fadf83185bb94eccbd355bed71085f44f8255c6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c49-s2.png",
+      "runOnePngSha256": "e262924222e0f1bdf41d353a46045df111d127da6be5fca46a222067330e419c",
+      "runTwoPngSha256": "e262924222e0f1bdf41d353a46045df111d127da6be5fca46a222067330e419c",
+      "decodedRgbaSha256": "70f2f773f4ec33dd77c758461ea9c4028cd803d8a7cd27fe8c09e06c9922ddaf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c50-s2.png",
+      "runOnePngSha256": "a1d2503042905dfbec2f6a77d1baf621bfd87707f8c8a320f86999909b33af89",
+      "runTwoPngSha256": "a1d2503042905dfbec2f6a77d1baf621bfd87707f8c8a320f86999909b33af89",
+      "decodedRgbaSha256": "c3f3bb79de8bd6b78d94a19505b0953cd6017cddbf72672e57a28f5a8f915017",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c51-s2.png",
+      "runOnePngSha256": "e16960b0a5cc72324c92af088bb2b5acfcafe9f7b0cafb2fd6536e24146de283",
+      "runTwoPngSha256": "e16960b0a5cc72324c92af088bb2b5acfcafe9f7b0cafb2fd6536e24146de283",
+      "decodedRgbaSha256": "a6ed442c4a1be226b11d96215fe9ae78e38aaabc7a3bf19e5defd39a1029e98d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c52-s2.png",
+      "runOnePngSha256": "030ef0cbddba954b40b63d8c5bf3ca1cdb5a055169b82a1903f96c5120f2de38",
+      "runTwoPngSha256": "030ef0cbddba954b40b63d8c5bf3ca1cdb5a055169b82a1903f96c5120f2de38",
+      "decodedRgbaSha256": "cf7487a6539d586bf33ca0f872b52b309cfc24dc380e841281924092e234af63",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c53-s2.png",
+      "runOnePngSha256": "7eb9b0c8001d695278c615fded0cc6b944bb37b1ec995b6db3f0925d4ecb0b05",
+      "runTwoPngSha256": "7eb9b0c8001d695278c615fded0cc6b944bb37b1ec995b6db3f0925d4ecb0b05",
+      "decodedRgbaSha256": "ab6df1710d7bdff9289ade93ab830020798aada13306e783559315f68f2d6029",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c54-s2.png",
+      "runOnePngSha256": "59aa090d1695635772469d530ed0c7aef09cb34d418a075ffd427b397a66a327",
+      "runTwoPngSha256": "59aa090d1695635772469d530ed0c7aef09cb34d418a075ffd427b397a66a327",
+      "decodedRgbaSha256": "f58983d8194bff795f3105d29e13cc330d7409680eeaf7c8ae3acc6828b2208b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c55-s2.png",
+      "runOnePngSha256": "cccb68786443a8a0e1f6aae6d04f8905f7162ee0913f0598046e036374a2af83",
+      "runTwoPngSha256": "cccb68786443a8a0e1f6aae6d04f8905f7162ee0913f0598046e036374a2af83",
+      "decodedRgbaSha256": "caf3b8bf41b83781b34f78ab762afb9b7d473e6be74b90e809ff5f34a58a1900",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c0-s3.png",
+      "runOnePngSha256": "dfe31fa2e838bbc20920693cc769b264256ca6876f702a76acf3da9a766ecb19",
+      "runTwoPngSha256": "dfe31fa2e838bbc20920693cc769b264256ca6876f702a76acf3da9a766ecb19",
+      "decodedRgbaSha256": "f86e3669fd0f876628dd7e18f6fbfc212625f584c6202714e01df6f0b7e877a7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c1-s3.png",
+      "runOnePngSha256": "c57e3a848e44d110d78ba2411f8d644dec39464a761b0b541bd3c55ac23d08cc",
+      "runTwoPngSha256": "c57e3a848e44d110d78ba2411f8d644dec39464a761b0b541bd3c55ac23d08cc",
+      "decodedRgbaSha256": "5fb2af8a8fe577e996c07852e7789e78264cdc503e13fabeed52cfdc0ea551f6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c2-s3.png",
+      "runOnePngSha256": "5c64d3872cac90d603090457a99faa3cbebd0c256f61d832f09094e0e29079d9",
+      "runTwoPngSha256": "5c64d3872cac90d603090457a99faa3cbebd0c256f61d832f09094e0e29079d9",
+      "decodedRgbaSha256": "90f371caecb53da417278468fc23c29f63ede4c6c2ac2a8404962f379b0e3292",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c3-s3.png",
+      "runOnePngSha256": "570ee4dd9746d43d93b4912494f4d114d3af1fcfd97bb4f3d5aa82085603c694",
+      "runTwoPngSha256": "570ee4dd9746d43d93b4912494f4d114d3af1fcfd97bb4f3d5aa82085603c694",
+      "decodedRgbaSha256": "10b5e48d04f8e2203dd061c3fdbcd4051c38b51063f35dfab2883e4d892b5bb7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c4-s3.png",
+      "runOnePngSha256": "e391a716b86b37d1a3751916240c6a95467a7a9201ef212165e039059542ea98",
+      "runTwoPngSha256": "e391a716b86b37d1a3751916240c6a95467a7a9201ef212165e039059542ea98",
+      "decodedRgbaSha256": "1bda735cc20944e2eed2ef07675a78b7932246009a0dcb5a0f53c83c9bba9ca1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c5-s3.png",
+      "runOnePngSha256": "b2208a353600a2c83eaca5d9783abd56474da1fd1988f397a06d2d0d8215f320",
+      "runTwoPngSha256": "b2208a353600a2c83eaca5d9783abd56474da1fd1988f397a06d2d0d8215f320",
+      "decodedRgbaSha256": "06e9941269302d188c624dbf3c60d0b6325b68632eca720c9acb6098d42f2f4e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c6-s3.png",
+      "runOnePngSha256": "a5c39205636cf577677b14721c3c40b4d63239498be4da721d84ba33f64bd48d",
+      "runTwoPngSha256": "a5c39205636cf577677b14721c3c40b4d63239498be4da721d84ba33f64bd48d",
+      "decodedRgbaSha256": "a95b974019f343a0ee0491f9a4b58637ba5d517dafb8c336e2f37e42dd2833a6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c7-s3.png",
+      "runOnePngSha256": "9036ff7386a7bb49891734dee60e5893a275a4989849ee376a587bd7bcb24ead",
+      "runTwoPngSha256": "9036ff7386a7bb49891734dee60e5893a275a4989849ee376a587bd7bcb24ead",
+      "decodedRgbaSha256": "bf4c0602d2924db154780ce1ea2f6c1044b9fd2937dc2298565cea1604fbb735",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c8-s3.png",
+      "runOnePngSha256": "89921fba736ed9fb9032fdcd178ac24b3e473d2634f67fdccd50cd569366458b",
+      "runTwoPngSha256": "89921fba736ed9fb9032fdcd178ac24b3e473d2634f67fdccd50cd569366458b",
+      "decodedRgbaSha256": "6987e3c2e5d17b899d429007dea893276de9b45469f63a22fb9687073c9c7c17",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c9-s3.png",
+      "runOnePngSha256": "a88918f1ff0c1093e9d3d44528e8cfe3c1f76c58569ca5880ec14ed8076248ca",
+      "runTwoPngSha256": "a88918f1ff0c1093e9d3d44528e8cfe3c1f76c58569ca5880ec14ed8076248ca",
+      "decodedRgbaSha256": "faa9d0e66562cee038bde46fe410c80063967d7ed88af40dd12bd5716ab96f1b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c10-s3.png",
+      "runOnePngSha256": "c9be63d521dec29b00f138183b37f6ab1798107affbf35a931874c9067b181bc",
+      "runTwoPngSha256": "c9be63d521dec29b00f138183b37f6ab1798107affbf35a931874c9067b181bc",
+      "decodedRgbaSha256": "93fa833ca2d712d89535763ce289cf2a78d77a058b8593f2b93e4244611fe676",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c11-s3.png",
+      "runOnePngSha256": "059376a8b039f9bb44ef1eaf183f9ed910c851be4d0d9eadf697b06530ed1fa1",
+      "runTwoPngSha256": "059376a8b039f9bb44ef1eaf183f9ed910c851be4d0d9eadf697b06530ed1fa1",
+      "decodedRgbaSha256": "99431cb5e302476d67bc2391f2da05825bf9e56db3f7043a4f9bda110872a6f2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c12-s3.png",
+      "runOnePngSha256": "9127d807c2d3e0ae9acd2d36902e1fea557940c87998a13b0c3e462f26443908",
+      "runTwoPngSha256": "9127d807c2d3e0ae9acd2d36902e1fea557940c87998a13b0c3e462f26443908",
+      "decodedRgbaSha256": "584e59a5e9a3fee51de63dd3d529c17d0f1c23a8c5137b2f9faf6c0d0455450f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c13-s3.png",
+      "runOnePngSha256": "212d84132bec956692fe9fbbd0412ebe68f3a461e98980b79c379a01805d8ea4",
+      "runTwoPngSha256": "212d84132bec956692fe9fbbd0412ebe68f3a461e98980b79c379a01805d8ea4",
+      "decodedRgbaSha256": "6f4e969ea9f6d1d84892ad7727371992d717aa3f102c3a6dbe6085469a1dbdc2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c14-s3.png",
+      "runOnePngSha256": "9c595502d8bdb04532a3564b6850513985327e7b27b2d71a1b6eb088247e7f1a",
+      "runTwoPngSha256": "9c595502d8bdb04532a3564b6850513985327e7b27b2d71a1b6eb088247e7f1a",
+      "decodedRgbaSha256": "0ccd9da908f4ec11def3f0468b563ff8e302cc7416778ecf78b65780ba3b6ab1",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c15-s3.png",
+      "runOnePngSha256": "7095fab2897b559c4bbb3b201867c878010bbbaacdc7c8c878deeb80be7716a0",
+      "runTwoPngSha256": "7095fab2897b559c4bbb3b201867c878010bbbaacdc7c8c878deeb80be7716a0",
+      "decodedRgbaSha256": "6c54a2180a1b1b668223abe6086b793735eb62ec3f65c3f566b3b345a6d4e793",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c16-s3.png",
+      "runOnePngSha256": "b1bb895acdad8ddcfcaa0ba5f634f261cd4c600790f9cdd35008638e22d0b4dc",
+      "runTwoPngSha256": "b1bb895acdad8ddcfcaa0ba5f634f261cd4c600790f9cdd35008638e22d0b4dc",
+      "decodedRgbaSha256": "eb7f85d5ba1cc58d2b043f61d2824dccef3254b9c4bdcb691bc401b217d8d5d8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c17-s3.png",
+      "runOnePngSha256": "8530782870eeda6a0305b3cdd729bafbf2220b69e076dac5110d67f9af3d1c8e",
+      "runTwoPngSha256": "8530782870eeda6a0305b3cdd729bafbf2220b69e076dac5110d67f9af3d1c8e",
+      "decodedRgbaSha256": "e9fe5d9b51de612512de72170412f4f8ee702d87135e363f1d2e19d1afb2ab15",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c18-s3.png",
+      "runOnePngSha256": "0fe81ea5dd1b32500401014ab6d412011c4f70bf1802c864da64208834264106",
+      "runTwoPngSha256": "0fe81ea5dd1b32500401014ab6d412011c4f70bf1802c864da64208834264106",
+      "decodedRgbaSha256": "fea8ee18930ce8d0669d99a111df5604d5b4e9e62840ba71c69e5adfb68dd688",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c19-s3.png",
+      "runOnePngSha256": "348ed306013bbdcd79ccf0f10366225565e93c19990136d5d0127b8efa6a3569",
+      "runTwoPngSha256": "348ed306013bbdcd79ccf0f10366225565e93c19990136d5d0127b8efa6a3569",
+      "decodedRgbaSha256": "35e0433623ef187aca224a4b978424dc218f131d07f915ec555feb691072e354",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c20-s3.png",
+      "runOnePngSha256": "1bc846c52e197a6e3d88bf91ef2ea22ebef74bf3c3ee7d59f0b02840ef134c17",
+      "runTwoPngSha256": "1bc846c52e197a6e3d88bf91ef2ea22ebef74bf3c3ee7d59f0b02840ef134c17",
+      "decodedRgbaSha256": "3e9518c1a833ed6bff6898b19640a07efc9c95bda5f31a9f2c683dfd886acf37",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c21-s3.png",
+      "runOnePngSha256": "7ab53fbf824afffeaf242992eabf5f93f85905c873a490c244893b9f9b6c4d9e",
+      "runTwoPngSha256": "7ab53fbf824afffeaf242992eabf5f93f85905c873a490c244893b9f9b6c4d9e",
+      "decodedRgbaSha256": "799f2f492461233330598f2275d22f251cbe9088d086931be17bb6b7f83edc4f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c22-s3.png",
+      "runOnePngSha256": "8293bd9a0c27e62aced1160d71ca76c03cd4601b1fe087ce9dc38304adf0131b",
+      "runTwoPngSha256": "8293bd9a0c27e62aced1160d71ca76c03cd4601b1fe087ce9dc38304adf0131b",
+      "decodedRgbaSha256": "daee89e52e52114883473a7041ad5a17343d419ae55672881aa3ef70fc03b52d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c23-s3.png",
+      "runOnePngSha256": "cd6b631c06366d0f35d7dad1784109b055539a6575ed5acec338e7c433db3853",
+      "runTwoPngSha256": "cd6b631c06366d0f35d7dad1784109b055539a6575ed5acec338e7c433db3853",
+      "decodedRgbaSha256": "b4fb8353b44d1224e1077a515383cf0dc389b9bcc7a5f9f5acb534b7c0708cdc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c24-s3.png",
+      "runOnePngSha256": "80a01e6fc9b691a60a1c6e3c1d78cb37b5b57a93adf1c085c1ff7333e234c7ed",
+      "runTwoPngSha256": "80a01e6fc9b691a60a1c6e3c1d78cb37b5b57a93adf1c085c1ff7333e234c7ed",
+      "decodedRgbaSha256": "54f7685a308cff23500e78ad681be5382e85a0af097990ca95b69bb83f4a5942",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c25-s3.png",
+      "runOnePngSha256": "80a3314e17d4c2cb8b88342b54809fec50d45dd39bc77711a462ed77c5cc9162",
+      "runTwoPngSha256": "80a3314e17d4c2cb8b88342b54809fec50d45dd39bc77711a462ed77c5cc9162",
+      "decodedRgbaSha256": "ba8d9901956e1078bf2d4f6dabbac1032d07e034bfe7a3bead954a3b6dd334d4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c26-s3.png",
+      "runOnePngSha256": "2354e59d3cf134190a1a6b5fb3b7e57d892832acaffeb60ac16e593823903076",
+      "runTwoPngSha256": "2354e59d3cf134190a1a6b5fb3b7e57d892832acaffeb60ac16e593823903076",
+      "decodedRgbaSha256": "a64353ce03c2d4851d67ba51709b8513352f65775ceea01e640064eeefb25194",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c27-s3.png",
+      "runOnePngSha256": "7d592eae5389c6deefcb69bf97300ee7751b4792ee89cffacf03f34b6357eeb5",
+      "runTwoPngSha256": "7d592eae5389c6deefcb69bf97300ee7751b4792ee89cffacf03f34b6357eeb5",
+      "decodedRgbaSha256": "9977cb66a7a4de3433a6d3e1bd29a9719a4d1f6b3f86b8817640ebf4fd55af1c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c28-s3.png",
+      "runOnePngSha256": "b481fe465fd6b9447423779938910b5084a6b7f5c99253364a544fd0453e2175",
+      "runTwoPngSha256": "b481fe465fd6b9447423779938910b5084a6b7f5c99253364a544fd0453e2175",
+      "decodedRgbaSha256": "bb9efcf6e8e34943c60613abfe664e2e6b96d5f8c254bee5e09cfa0ba675b4d5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c29-s3.png",
+      "runOnePngSha256": "09b1cdd10f976abe6a7d234869552177c7807aeda20d352ec0f9085d88b67cee",
+      "runTwoPngSha256": "09b1cdd10f976abe6a7d234869552177c7807aeda20d352ec0f9085d88b67cee",
+      "decodedRgbaSha256": "c1e6b391f62e598af7e16597a95b6fbf420a84646562ed355a774f753297d77b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c30-s3.png",
+      "runOnePngSha256": "76038943f36714ae51afea10cf0a2c9e1618ee8758d2e136821be82e4d5b98a3",
+      "runTwoPngSha256": "76038943f36714ae51afea10cf0a2c9e1618ee8758d2e136821be82e4d5b98a3",
+      "decodedRgbaSha256": "656c65fd69ac3c49bc22d4afc02c2daccad53ef824dc6b402aaad6b336e5c9a7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c31-s3.png",
+      "runOnePngSha256": "784e9e8ffdc5f7121d1dca515843ecebd76de6b0be3b25dddbc0bca8806b48da",
+      "runTwoPngSha256": "784e9e8ffdc5f7121d1dca515843ecebd76de6b0be3b25dddbc0bca8806b48da",
+      "decodedRgbaSha256": "b6fbdc6d51c9a0c5f0dba55d5764de14948f59b78b78d28e3b427eeb249b4c27",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c32-s3.png",
+      "runOnePngSha256": "20512f099b7166dadb2a1e4c64b34f46bc3adf4f6ab9b74e537e37e0eb9b38c2",
+      "runTwoPngSha256": "20512f099b7166dadb2a1e4c64b34f46bc3adf4f6ab9b74e537e37e0eb9b38c2",
+      "decodedRgbaSha256": "624b958aee08e165ff2a30f7fbfbea4b1f6fb1536c7d58122b93c30a78e7cf58",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c33-s3.png",
+      "runOnePngSha256": "880717bea39e6a70b14de193ec5d325c7e1494d0ba6793bf5ef3c0fecb0dab53",
+      "runTwoPngSha256": "880717bea39e6a70b14de193ec5d325c7e1494d0ba6793bf5ef3c0fecb0dab53",
+      "decodedRgbaSha256": "c04af134f08b701ca39b026fbcc2ba1ba1acc5e4bba4ffa154e0cae5c8be4ab0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c34-s3.png",
+      "runOnePngSha256": "7007c26ffe37bd906389007a9c22545921ba15154f8cf52260d42b5bd5c1f21a",
+      "runTwoPngSha256": "7007c26ffe37bd906389007a9c22545921ba15154f8cf52260d42b5bd5c1f21a",
+      "decodedRgbaSha256": "86420c711f9a775fe0dc62a9f320ef89da532daaba3153379c469ab3d0664527",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c35-s3.png",
+      "runOnePngSha256": "6fb1d73b26731ef09ad167bd9c673c2b53ba539564167472e76264aceb69d641",
+      "runTwoPngSha256": "6fb1d73b26731ef09ad167bd9c673c2b53ba539564167472e76264aceb69d641",
+      "decodedRgbaSha256": "b92e15a2d2092a172e97b642d09624492cc10ef8ef5d6c0879e0cbbcd94d9b08",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c36-s3.png",
+      "runOnePngSha256": "d35a3dc4ac52cdc22d50b93812fb1c8262b2c4eb89e12b135f4d2b34fd716341",
+      "runTwoPngSha256": "d35a3dc4ac52cdc22d50b93812fb1c8262b2c4eb89e12b135f4d2b34fd716341",
+      "decodedRgbaSha256": "fcd00f1a577b94974d628e18a30d0cf8e0c0b5f05a9dcd11c9c9ed588ec7b6d3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c37-s3.png",
+      "runOnePngSha256": "bcc7062efeb63356c8151a6725036b6467d1b970ddf48cce1bccd4444c803643",
+      "runTwoPngSha256": "bcc7062efeb63356c8151a6725036b6467d1b970ddf48cce1bccd4444c803643",
+      "decodedRgbaSha256": "df0d21077a6c5528a84e9416890b6471bf934e46f24ce7221e737891a7f88684",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c38-s3.png",
+      "runOnePngSha256": "ee3092235b674f124d3adb9fa7b044904fc7bf0e8845d39f0b49a7c6b6f1bbdf",
+      "runTwoPngSha256": "ee3092235b674f124d3adb9fa7b044904fc7bf0e8845d39f0b49a7c6b6f1bbdf",
+      "decodedRgbaSha256": "862ccb7ce30eb719ba93585f2914fcef101e733f4e6e1c5a532871e306f8c46b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c39-s3.png",
+      "runOnePngSha256": "386218daaf93e80bb41e7e5d0e409880760bd7f813dcec8b083aec0df1fd2bb6",
+      "runTwoPngSha256": "386218daaf93e80bb41e7e5d0e409880760bd7f813dcec8b083aec0df1fd2bb6",
+      "decodedRgbaSha256": "7d6bddebac93dc49e748ec5f74ba6df8155f3e8d8855a76dcb131c97e36c8f26",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c40-s3.png",
+      "runOnePngSha256": "5f605e74ec2dfd3bf7591651dcfe7140f5ec782ac403b6d1f290ba84035acc29",
+      "runTwoPngSha256": "5f605e74ec2dfd3bf7591651dcfe7140f5ec782ac403b6d1f290ba84035acc29",
+      "decodedRgbaSha256": "811575842e5e1c0642564b99a79365a933a5441c758c471ebef712d6aaa7a013",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c41-s3.png",
+      "runOnePngSha256": "b49d2c0e39f32edfcb3f655285f8fce90ee831c46e5dcb7060156ad3d525647b",
+      "runTwoPngSha256": "b49d2c0e39f32edfcb3f655285f8fce90ee831c46e5dcb7060156ad3d525647b",
+      "decodedRgbaSha256": "7b10c92a1d6f77c6d3e644df2b07f016f5198bdf71aca326e4948c4b4ae78b7c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c42-s3.png",
+      "runOnePngSha256": "afb0c15d25ac8b64670100a965eebdba8207c3ce1d762e29d58828f47d3f8f62",
+      "runTwoPngSha256": "afb0c15d25ac8b64670100a965eebdba8207c3ce1d762e29d58828f47d3f8f62",
+      "decodedRgbaSha256": "e7f8cc68e3e1b271ca878907869b002779ed394af7c6990cf005bf42f1b71a53",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c43-s3.png",
+      "runOnePngSha256": "28638b66c709c694882182e23321b38dd5c616e282b934107a3cb793fd80a563",
+      "runTwoPngSha256": "28638b66c709c694882182e23321b38dd5c616e282b934107a3cb793fd80a563",
+      "decodedRgbaSha256": "76f9ef203539e54b6b7912a5178ccd3da218df04cdeebeb11f55ca2693269496",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c44-s3.png",
+      "runOnePngSha256": "8b4afd256167b9007eb5394e33532ea653d12bf08bb7702709331699ec223297",
+      "runTwoPngSha256": "8b4afd256167b9007eb5394e33532ea653d12bf08bb7702709331699ec223297",
+      "decodedRgbaSha256": "9349348b6d8dd9021e3b41b4edd670bfc9c2624aac8213a9fe4d52425c5f1250",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c45-s3.png",
+      "runOnePngSha256": "ca3066c564a929e93233d3c7b8e7d5b5d38e785ddecf85e9c082e9fbf2baed70",
+      "runTwoPngSha256": "ca3066c564a929e93233d3c7b8e7d5b5d38e785ddecf85e9c082e9fbf2baed70",
+      "decodedRgbaSha256": "222daad09c0afa6cac06ee7feffec6aca2ce4abc43c5266c71920a704a22e528",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c46-s3.png",
+      "runOnePngSha256": "cfd921a11f42096d82f3aafc8c4d0ed73339a80db429c07f998a4b5accc89881",
+      "runTwoPngSha256": "cfd921a11f42096d82f3aafc8c4d0ed73339a80db429c07f998a4b5accc89881",
+      "decodedRgbaSha256": "f2b050518e82dc9b48f552f43c1d1a8b7711565afe6ccfd49cde4a9000469764",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c47-s3.png",
+      "runOnePngSha256": "8e21480d11bba867164b399e10ddd397f63e69ac8b1b56c537a860d919f1b03c",
+      "runTwoPngSha256": "8e21480d11bba867164b399e10ddd397f63e69ac8b1b56c537a860d919f1b03c",
+      "decodedRgbaSha256": "88b109f48fd2050dde0a4072a2380f4398c649f6428897f19eccc63eeab8d0b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c48-s3.png",
+      "runOnePngSha256": "2e10dc153964e182127b93015faa76ae92c3276e8280ea786ee0ba3b3fe6b959",
+      "runTwoPngSha256": "2e10dc153964e182127b93015faa76ae92c3276e8280ea786ee0ba3b3fe6b959",
+      "decodedRgbaSha256": "25ef257a07d01f5c6ed3165e9e41c3222a465dbbe54aca1f69e2c8b0dff448e0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c49-s3.png",
+      "runOnePngSha256": "504404c82a73c8790a8172ed496b9ae03d73671f86cc0e5c64ceba6124e50410",
+      "runTwoPngSha256": "504404c82a73c8790a8172ed496b9ae03d73671f86cc0e5c64ceba6124e50410",
+      "decodedRgbaSha256": "77c6cc33060338d1084de6d3f697c63fe7f9438a789df6193e0acabf0573b888",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c50-s3.png",
+      "runOnePngSha256": "386abb2c75a2ece1526398658147574c28a79d7edf90acf943494dbe54300135",
+      "runTwoPngSha256": "386abb2c75a2ece1526398658147574c28a79d7edf90acf943494dbe54300135",
+      "decodedRgbaSha256": "99063747fddeb34b72030b68c387d4f55e71f2aa23ec612959585efb49a3fc39",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c51-s3.png",
+      "runOnePngSha256": "0f503c0e5d74f126160f818e89e4d23da540a430df77d83255a38fa7e07f9e55",
+      "runTwoPngSha256": "0f503c0e5d74f126160f818e89e4d23da540a430df77d83255a38fa7e07f9e55",
+      "decodedRgbaSha256": "01b2bf78313530867769ba9e98859720d0d1d4ff654ba5fd6223c1040a023828",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c52-s3.png",
+      "runOnePngSha256": "332389b1ee111e694cdc84d9f1b2c095aedd36534d35a903a853f0c58c1057c3",
+      "runTwoPngSha256": "332389b1ee111e694cdc84d9f1b2c095aedd36534d35a903a853f0c58c1057c3",
+      "decodedRgbaSha256": "5cb3afaf22c7d4c941394ae90f20fcb4a998a6b6eee44544687f62a5fab48894",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c53-s3.png",
+      "runOnePngSha256": "a0ffa5aa39c1b9b481a4b17a21439fe318ff5dbe419da21eff8fafaefe7318ab",
+      "runTwoPngSha256": "a0ffa5aa39c1b9b481a4b17a21439fe318ff5dbe419da21eff8fafaefe7318ab",
+      "decodedRgbaSha256": "3741ec60a22ca2501885d12a2899fb839d0595aca4e9c67b8eb6174e48b38f13",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c54-s3.png",
+      "runOnePngSha256": "281ee5ebcf599f3540dc1d32abff27b30cd3346e42d4d1ba0270dcad10f6bafd",
+      "runTwoPngSha256": "281ee5ebcf599f3540dc1d32abff27b30cd3346e42d4d1ba0270dcad10f6bafd",
+      "decodedRgbaSha256": "668d7b0a2a01d6f40a60d0e4c176818c08a314146eca59b5ad099065726449e7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "chat-c55-s3.png",
+      "runOnePngSha256": "931a14ea3a1b49e6d5d7d4712638093a05de771e8cf97d9e6e34ff2f1ccbdc46",
+      "runTwoPngSha256": "931a14ea3a1b49e6d5d7d4712638093a05de771e8cf97d9e6e34ff2f1ccbdc46",
+      "decodedRgbaSha256": "df295b8a19920fe7830e2f8c7f547fcc9820d5eb65105abb2624888382197b83",
+      "mismatchedPixels": 0
+    }
+  ]
+}

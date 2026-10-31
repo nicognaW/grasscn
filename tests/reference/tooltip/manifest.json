@@ -1,0 +1,3587 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "9cad4a5ea2830c6d5e53cbf0ebaa24df239aabcc8d678451528b161d394392bd",
+  "caseDefinitionSha256": "72a3bd9bb03dd86314c7e206591cda1831e80461fe035c7a7049d4ee9e09455b",
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "04b0b65dbe1323289507b1287c28762c0af93ca0a3f85873da5d5051c444e283"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "30c05d720f6c78d66938216444e47109469ecd45f03a7ba360f330921beb82fb"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "e913010e34bc3ffbd438c1cabf5481aef6282c231b42b328a0634c2581026ca4"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "33ef974ce1d2aa803cb802b605724e82fa553b65a1736548bb1d1b926fb5061f"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "095a14cfa43500f6a6ed3d2090a971fcffbb59c4c0cc644252409e22799030cb"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "e3e9620d2bb15ca475ba3c1acdbb5e5b337f97cf946d7709f4fb9e24ae80df25"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "c64f9a19e642f4e0b62351ee8e0b2843e1b14376e85d1d26f6f1f357a68cbc34"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "0ffad17a5992645d2f6327dbe9e34cbbf99ff865843fe1a9a61247718f07b626"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "ece9b1e41e1fcf47734703e96c124f8623046ee6f9ec85dc7467c5f74e5a4e1c"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "391d08c627bb6cc8ed077a862d9753970781dfffff612be2ab9668b8aafa54f4"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "a979676019d2a63f81b2145400bd0641bceb4ec542bb2deaa973470960aec7b8"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "65ab31032a11c7e7444c72e15280b182a482f3ebf35a1012ed944b0d2e2ddb7e"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "2247b25800209cbfebab486fb666487a3408034675fe432d75b75bf797381c47"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "3f220e9bacf0968b3c3f071a7b144a7a4535a11c3b44e1595893514fb5a76030"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "2e14195dcf8e703845cb88ea4fb56ef87618feea709019f0728e738ae5e3f7be"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "3c3507b7754181f1f3f10c88d7f768cc9358003ee33ccf7fe04bacaf4546b9d1"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "4cb26d80607870b4e3405a4811be8e200afca720b686d1d098030235b0bae93f"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "ca2736ebaaa7b97ddc34d4db7f853450b7d29987fb2fe4e953530bbbc19ea48d"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "74d7397121a539cfd77325dbcc83168c0b07725c03db121ec996b5801338466b"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "da887dee96abbe07d59911e833da4a713dcd9856e2bcb2bbaaa9c98ab1345a33"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "990bb9c011a6ac32399e311b733bd77860212c952a23b537124ff54379a66073"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "236cc2914a92d06782c4397ed1e11fc6d517d720fc04285c86b06de50ffa6bbd"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "377adad150789efe953d63568550cbebb99f8693c2504ac187cb9248f86e412a"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "100dd1ffa0f7188c15b87842ce45f168df55f16b676f4394e615c9db886deb75"
+    },
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "c0ddc01c17f3efec6054337eeea4661fd44956211ddf955e91c24d0ee7f114d1"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "38166fc91425e99ed0b4c8952e999e241843bb072f0a7da6571559ad7869261d"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "a70829af8478fc69cd68c7b22c7d8e2bea8767ecb1ba27c3e37f94f5cce3df48"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "2a91defdd1b9e406ba249a623d159f08a6a8e592bf51f854015e038f4ae890a6"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "93acefc54982e841b5330a59ab67c36e002c54cc5e9f7f48923db3c0e37963bf"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "135cc8788670a8ab4f2b08647e2d60a6e67ce8d8eb4a8ad7ebc7e4bfe692b93b"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "fd1b10dff54f7703b0d29c90e695c64ec958222d5e057898a580f107fdf48483"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "b0b9e7b839fefdc0f711ba5eff7e917626c8626d655dddefe3bd1adc5b98f7a6"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "7d02085ba0cadad43168d53045a4e831cc58bd46901639f71cf07617651a6e89"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "d44cb59840b5c7f99068dc26e3de7d230168c2939b9a0842a98cd6afa87517f6"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "a2b4ce6032505ebd42170aa567022423f7c0e167354820118b342238f049cdbf"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "8ae912d5df7fa287295583876f6da57bdc2fc257ee5bc4cb777ef2d0296ef5d2"
+    },
+    {
+      "name": "native-controls-p12-s1.png",
+      "sha256": "04ed48c038d428af54951a3df5508c320c703a97dba5d781c19dea2f22ce0f31"
+    },
+    {
+      "name": "native-controls-p12-s2.png",
+      "sha256": "45246e7d455b822e25ecd4b7bab9e3e9802fdf3efff8592fdf1ccc9de3d4d498"
+    },
+    {
+      "name": "native-controls-p12-s3.png",
+      "sha256": "d49ee1bcfe0db025da1373317e1a19ac79c2db50261f129f49ce164130fe1142"
+    },
+    {
+      "name": "native-controls-p13-s1.png",
+      "sha256": "eb0143e6276cbb5383ba8f71b4c6cd17cdbecc2044c3df668fea918af0989609"
+    },
+    {
+      "name": "native-controls-p13-s2.png",
+      "sha256": "b40680613b9ed88e4eb869d457c90e9c52cf4d06b2eaab3a634ae9c07f4c5af0"
+    },
+    {
+      "name": "native-controls-p13-s3.png",
+      "sha256": "6992eb9eedbc9fbdbf37de186358ade6bf79180c1342ce11f32042eb92ddbe57"
+    },
+    {
+      "name": "native-controls-p14-s1.png",
+      "sha256": "763fa505a527bc3a9e0d436e6b570f182c53d8fec6e735c6320f87599dcf193b"
+    },
+    {
+      "name": "native-controls-p14-s2.png",
+      "sha256": "e2adb1e502866851693b321fa9ddb7891c1b75708df23f17046ce657f3df5a35"
+    },
+    {
+      "name": "native-controls-p14-s3.png",
+      "sha256": "905eb9711f29e8724b72233cb5289e94574306a3db4a66ac968bdb68416bc6f5"
+    }
+  ],
+  "cases": [
+    {
+      "name": "tooltip-c0-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5"
+    },
+    {
+      "name": "tooltip-c1-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b"
+    },
+    {
+      "name": "tooltip-c2-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a"
+    },
+    {
+      "name": "tooltip-c3-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "351edc757918ba634fcf692197f4e316ee1e3cba9e598df3e784922fe3870ec5"
+    },
+    {
+      "name": "tooltip-c4-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "9bfafb728f42bc994ac1b16c97a56a208afff0762d2695cd5d6af1e05fb4cf7b"
+    },
+    {
+      "name": "tooltip-c5-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 1,
+      "sha256": "ff63a372316ddfd269ac618cd1edde7acd1a8e8a6d082dd62bd88d2682ee507a"
+    },
+    {
+      "name": "tooltip-c6-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421"
+    },
+    {
+      "name": "tooltip-c7-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51"
+    },
+    {
+      "name": "tooltip-c8-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc"
+    },
+    {
+      "name": "tooltip-c9-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "8126c9f40e2a7b5a81fc2a973d0a148d52abbafe42bfac4e8191db20b008e421"
+    },
+    {
+      "name": "tooltip-c10-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "2f8ea956fcc03887003784733a2686b1120907df06cc6f92a723787e0c1cde51"
+    },
+    {
+      "name": "tooltip-c11-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 1,
+      "sha256": "57a10b147bd68e2c96940de0c38233273b3ad2ba968f5d5264b98286b63b99fc"
+    },
+    {
+      "name": "tooltip-c12-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79"
+    },
+    {
+      "name": "tooltip-c13-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255"
+    },
+    {
+      "name": "tooltip-c14-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7"
+    },
+    {
+      "name": "tooltip-c15-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "21d4063d96bd1891cb4148a649fd1f08a5651ad92191870a96d15546eaeb4a79"
+    },
+    {
+      "name": "tooltip-c16-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "b122576fe5cd114bf5ee2fe497ada7d1cda3adbcf562cc26d18d8b5c39767255"
+    },
+    {
+      "name": "tooltip-c17-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 1,
+      "sha256": "761e772a8e078c31dc981571bc186907fdc7ae9db7b412b0e59f1769551cedd7"
+    },
+    {
+      "name": "tooltip-c18-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434"
+    },
+    {
+      "name": "tooltip-c19-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c"
+    },
+    {
+      "name": "tooltip-c20-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1"
+    },
+    {
+      "name": "tooltip-c21-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "104ae2f47243e2878ab53c9b068248804a57ba1de4a7200695ea30d573a3f434"
+    },
+    {
+      "name": "tooltip-c22-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "ad21a99231eac0079d0535f8dc97403c7bfba87c7a2257678b8884aa9d5ab89c"
+    },
+    {
+      "name": "tooltip-c23-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 1,
+      "sha256": "11ca823a535031228e69e78f27533fa3a594894ce97294120ea549c5f06d17a1"
+    },
+    {
+      "name": "tooltip-c24-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 1,
+      "sha256": "a63dc63e9e4b2d2adf2ebe45f83f630060428991beee7687b6898933b49201ed"
+    },
+    {
+      "name": "tooltip-c25-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 1,
+      "sha256": "e8bd7fa1c8641b658c6eff2391920879a14307a1ee48d067e5cd5984e57320ad"
+    },
+    {
+      "name": "tooltip-c26-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 1,
+      "sha256": "6552a449779192d7635249596a6189bd141564bfd9fad3f761feee74c5c133e5"
+    },
+    {
+      "name": "tooltip-c27-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 6,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 1,
+      "sha256": "03ba034a29d50f7d69f4a70319d9dd4389b8f41d9ce212f38b2ecb9564dfe0d7"
+    },
+    {
+      "name": "tooltip-c28-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 1,
+      "sha256": "b7b6f9058afe780abe2eaec07ecc7a68ef2438f7c950376c2f843861118d4aa2"
+    },
+    {
+      "name": "tooltip-c29-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 1,
+      "sha256": "3c7c9693410ea6ce3520becbf4a6167bb9eab3e8af78660965834f044089a41a"
+    },
+    {
+      "name": "tooltip-c30-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 1,
+      "sha256": "b32042a04bc975aab674153f3b95f573e3239b73a68aa3e48b3cef83490f8ac7"
+    },
+    {
+      "name": "tooltip-c31-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 232,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 1,
+      "sha256": "284c726e1ebfcb2251dde510fec644b196f0972c9c173e18d02b67da0a266d7f"
+    },
+    {
+      "name": "tooltip-c32-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 1,
+      "sha256": "32719ca58c165763e7cf12e17741a269454db1420592e370f9e752d00a171a30"
+    },
+    {
+      "name": "tooltip-c33-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 1,
+      "sha256": "0e6a8f54f5afb065cb85877556447e9d20ec426c03c0c9919cf378aca014d0b3"
+    },
+    {
+      "name": "tooltip-c34-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 1,
+      "sha256": "7670d7c8d4c51ff8e8a5d693db2ea37c81e8b2b531a62a10b4dccb62ed9b5bab"
+    },
+    {
+      "name": "tooltip-c35-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 1,
+      "sha256": "6722bf02b0b0385eaaf5f16cb9fd3b743465548960760cbce580ce4ea08edaef"
+    },
+    {
+      "name": "tooltip-c36-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "35b52a620fe695d76717c0f05e45d27bb74c59aad97ba11b29e59c567f0d8f77"
+    },
+    {
+      "name": "tooltip-c37-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "6196f20968bb64d6de5db33eb8f304aaf03db72c9dece2bff9d03ebe7b9be56c"
+    },
+    {
+      "name": "tooltip-c38-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "d2b91e005b35010c0a2b60be99f5272041248dfac7d1316cc2482c40657d95a1"
+    },
+    {
+      "name": "tooltip-c39-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 9,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "26fa0d77c70c0ee954611725232e2671224057207e65737876a148591c80988b"
+    },
+    {
+      "name": "tooltip-c40-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "9ee3c9029de536270a90e168cd5d97a4ac959987d8b75f7b2c5ab9f4fc25cadb"
+    },
+    {
+      "name": "tooltip-c41-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 1,
+      "sha256": "f22eae248b3f78642da8d6d3267ff03f25b53e642f7382c41f47520cbfa146b8"
+    },
+    {
+      "name": "tooltip-c42-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "75e07ff4bb181827a47341c8275f2ba723452749d8b261bfb55297832bcbc949"
+    },
+    {
+      "name": "tooltip-c43-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "648786e3920c06d048cdb1e0fedc0c9b83650fd9ef07272f64e59c6d8f5f4b93"
+    },
+    {
+      "name": "tooltip-c44-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "90c22a288621561c10896dbb79458e3ed06ee3ece78eba23f116ffb136e14ca7"
+    },
+    {
+      "name": "tooltip-c45-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "3c832ea5a6221b9accae66a006d21c05e1a598b5a493bb5a9cf0db9e61b2a571"
+    },
+    {
+      "name": "tooltip-c46-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "c504bf22ff7b9fc41b609e004723e078121d029b13787a99ca4ad6835cc389b5"
+    },
+    {
+      "name": "tooltip-c47-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 1,
+      "sha256": "1ad519adf6a054921247bb431136ce37fd3d4b8515ea85a8fde236392dd497cc"
+    },
+    {
+      "name": "tooltip-c48-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "d20ecb2ad1d56a066e1958375744136d92c312e2ed53ec9b5d324c969f38a2a3"
+    },
+    {
+      "name": "tooltip-c49-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "d9a6bb9a6f78ae2c168b2afe8809271dd5be5018aae44344dc3d607aa869b9e8"
+    },
+    {
+      "name": "tooltip-c50-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "104ff0ab86f635c71fd3b9c26c23d4b036cf5ee73b8dc18d4438e64c47f57934"
+    },
+    {
+      "name": "tooltip-c51-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "5b1a5540806fc0d35217dffa2060744491761775e697a0cf3483c8a5df120cb9"
+    },
+    {
+      "name": "tooltip-c52-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "d1981a104dc2dfb36c01b5ab3250d0840d6eb1ddd54371d7219899e23c2255a1"
+    },
+    {
+      "name": "tooltip-c53-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 1,
+      "sha256": "f2480d3b55dbd048efb9b1ad700db97b0968897df6d9337f58e3e50e0b13a6d3"
+    },
+    {
+      "name": "tooltip-c54-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "37c5ed4b087d119ceda6ebe21ec47e0e4a841417f7d42fc2b77dc41a8c55e666"
+    },
+    {
+      "name": "tooltip-c55-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "c0cdc26a69e208523d4784faaf86d1be79f1ebd1b027d8a078fecaaf5b4979e2"
+    },
+    {
+      "name": "tooltip-c56-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "c63b5b85a75882f377597665c1a2f250cd2bc1906117dc18b5863c5edc821a90"
+    },
+    {
+      "name": "tooltip-c57-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "a37439947a9c2c0aadef27ca348deb4fc440f417db83b67e07bc9ca0423373e0"
+    },
+    {
+      "name": "tooltip-c58-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "13cb716fdda106c99f9072bb1672972cccd4aac59d2846a899d7ae7204738164"
+    },
+    {
+      "name": "tooltip-c59-s1.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 1,
+      "sha256": "4411da9e5a257202b658a9cb8a3306e4f641e21ce4774f22292ba3639cd4dd52"
+    },
+    {
+      "name": "tooltip-c0-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6"
+    },
+    {
+      "name": "tooltip-c1-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb"
+    },
+    {
+      "name": "tooltip-c2-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612"
+    },
+    {
+      "name": "tooltip-c3-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "ad1171b25df33e515d44828368550592670ee3da97e2dda1c06d7a8a5d8d1ad6"
+    },
+    {
+      "name": "tooltip-c4-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "ea4a1e20f7341da4931ef24cfe86af64de888bed1e700f0a3f502d937edd5ffb"
+    },
+    {
+      "name": "tooltip-c5-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 2,
+      "sha256": "567e964c2f51405459ad65eaf991f8b767fbd2e8ce2ba735afe56d380b1bc612"
+    },
+    {
+      "name": "tooltip-c6-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959"
+    },
+    {
+      "name": "tooltip-c7-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0"
+    },
+    {
+      "name": "tooltip-c8-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37"
+    },
+    {
+      "name": "tooltip-c9-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "b83b4c4b3c847cfa393c3607f1ec8a1cb4e19dee3d44db715b4cb180a1081959"
+    },
+    {
+      "name": "tooltip-c10-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "48f998457b7427135a23a8e979e02a7b0651843002ccb00937486624a9cf89c0"
+    },
+    {
+      "name": "tooltip-c11-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 2,
+      "sha256": "7b61e922f3afdb9ee8fd13015ac43bc0c1d39f22447b3b15398295549445be37"
+    },
+    {
+      "name": "tooltip-c12-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27"
+    },
+    {
+      "name": "tooltip-c13-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45"
+    },
+    {
+      "name": "tooltip-c14-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c"
+    },
+    {
+      "name": "tooltip-c15-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "f2aae335396a26601ef0552e44b64e5d6a8d0b49f8b43c5f041f5b94a4dc3a27"
+    },
+    {
+      "name": "tooltip-c16-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "d026dd3e5a8cbb8b1fc591b9fbe1b58512eed72707c78be0a1adc4274793bf45"
+    },
+    {
+      "name": "tooltip-c17-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 2,
+      "sha256": "2c5c6671cc8758d5647afa9f60f90ad695c6398ef03342f22eb6fc203a92593c"
+    },
+    {
+      "name": "tooltip-c18-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd"
+    },
+    {
+      "name": "tooltip-c19-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1"
+    },
+    {
+      "name": "tooltip-c20-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95"
+    },
+    {
+      "name": "tooltip-c21-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "50d3406591e0c6f44f742c8c137fccb5e29668bcab5daa48c9ebe0a8ca2c5dbd"
+    },
+    {
+      "name": "tooltip-c22-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "b1e421e898ee28af008a2dd8e7fcd42898e503178a12d2bd0b41c02fa0f056e1"
+    },
+    {
+      "name": "tooltip-c23-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 2,
+      "sha256": "2f5a31a5de4ca021f77dd5d38f338e1b43381c379a8e6a4a675128e3c58fbd95"
+    },
+    {
+      "name": "tooltip-c24-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 2,
+      "sha256": "c8f9247507b0af2d700fa4d4aebfaf8243d1b845e2deac3a04dd968af1b6cba4"
+    },
+    {
+      "name": "tooltip-c25-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 2,
+      "sha256": "08800d2816597f423c2487304c8def51fba7a6044e4a30e8e33bc8e7d0410a10"
+    },
+    {
+      "name": "tooltip-c26-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 2,
+      "sha256": "e63c9f40711af155b5709309f2b26c594dfafa517c7e1893e169bf8c1efcb907"
+    },
+    {
+      "name": "tooltip-c27-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 6,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 2,
+      "sha256": "2b3621f04d51ef6a5ece11f8c78db66fb649ba4a00074edbd737bedd29fc78c0"
+    },
+    {
+      "name": "tooltip-c28-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 2,
+      "sha256": "9ee82964ec4d62323a1f69f97a906b91a7ce39d90a7ae2a73bc4f439e69889e0"
+    },
+    {
+      "name": "tooltip-c29-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 2,
+      "sha256": "954fc0c13539b1605c6034a68707de7405600c6f6e9b657b6d58495f388f4c14"
+    },
+    {
+      "name": "tooltip-c30-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 2,
+      "sha256": "81f2728f408a105a94b79a40650a17ed01608693e1d64df316dd2c751eaedc69"
+    },
+    {
+      "name": "tooltip-c31-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 232,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 2,
+      "sha256": "75169af2fff99357ae624f84bdf6d5901429102e504c2931c29510975ce2ef5e"
+    },
+    {
+      "name": "tooltip-c32-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 2,
+      "sha256": "4dd60f04219e471777fad479253220097a55a5976cb0835ec1954c4ca88fc05a"
+    },
+    {
+      "name": "tooltip-c33-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 2,
+      "sha256": "3d9be25b0a63a3e608fbc98fe745d275ac3fe99cb22af6fd68324e455c7320f3"
+    },
+    {
+      "name": "tooltip-c34-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 2,
+      "sha256": "b9cbe6a028f8f9c973220618581fb7d2e08b11f9ee2bf5e66acf517c4224b9fe"
+    },
+    {
+      "name": "tooltip-c35-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 2,
+      "sha256": "a4693845ebbfc74289d76457239116d0ea7421c2cf678d917aac149efec9e7e0"
+    },
+    {
+      "name": "tooltip-c36-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "e91bd63efc0307c1f2c85865ddad99f9984f92c9597d09035a2c0cf22d40924e"
+    },
+    {
+      "name": "tooltip-c37-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "b63132c40ace1b1627aa64d5c3ea0ed9adddc3ccb6ad894d7b2bc7054aa58f0d"
+    },
+    {
+      "name": "tooltip-c38-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "ad0c17b872dfda8c6ec273f08a3276cfb764d9eb714d07fb8261bc8320ad2195"
+    },
+    {
+      "name": "tooltip-c39-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 9,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "9a0efbd0e03f983769d3234ed1459a03c980e136e73d899d8e3b2c3ef26d8b3d"
+    },
+    {
+      "name": "tooltip-c40-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "368d3cf85403c048a18fd626ff4d41553d9fff451881f1fffc85a0f56ea5fec9"
+    },
+    {
+      "name": "tooltip-c41-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 2,
+      "sha256": "b20cc0b4950b0ed89bea4ef912668cf5f665b66b3944a80c7dcc1707b9aa8c72"
+    },
+    {
+      "name": "tooltip-c42-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "596c455962bc0658af8ad21bb18ebe6f8a533d3f7f0280b5cb080bd402b2d76e"
+    },
+    {
+      "name": "tooltip-c43-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "398365146b14ab0643a43625235f3305296e73f2f9bdf5f7edcad9e0e55f7dc4"
+    },
+    {
+      "name": "tooltip-c44-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "1408f9e76764a03d7eaa9c658e074e4d00ffc418d4eba7e6209ec69bbe070b99"
+    },
+    {
+      "name": "tooltip-c45-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "4f2cf6a13b8b9022e78636cefc1c7ac648ca134fdbfb2213885aa415635ff96b"
+    },
+    {
+      "name": "tooltip-c46-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "85df36825a8320c98d176332802714b40c530e03b13e02e92909c99a6ffd2035"
+    },
+    {
+      "name": "tooltip-c47-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 2,
+      "sha256": "dd29bb4c08edcc68cff1c0ced3b431a71d03fdf249db259e599a108ec46a5c40"
+    },
+    {
+      "name": "tooltip-c48-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "044980c11c1e062b820a3fec4509bded2182daf35ef61c989414ed86e43c02c2"
+    },
+    {
+      "name": "tooltip-c49-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "77dd97dc329ca0de39f8fe6f1619b91acb0b06920d9b602c12aedebb3111ea31"
+    },
+    {
+      "name": "tooltip-c50-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "64d6330fb9bac3f14057feab28a7af677aa7b7560c2573abfc9da576d69f414d"
+    },
+    {
+      "name": "tooltip-c51-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "e39fe30b4600cd8a5920c4898c5bb43cc93259f6d04861b112e154264fd44ef9"
+    },
+    {
+      "name": "tooltip-c52-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "1f6492800bfbaad88173c285c812ec76f53620e091283122e2f09b979a618c95"
+    },
+    {
+      "name": "tooltip-c53-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 2,
+      "sha256": "9c073a3aa4d699ede42a6d361845db38bd8df3e7eacb36d89ea17d4e95f0b698"
+    },
+    {
+      "name": "tooltip-c54-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "724c013c12e7de2a7488dfb65f5e50577bec50c778fb68862f0e57881ec30898"
+    },
+    {
+      "name": "tooltip-c55-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "2352420263059df4d3502f3dd4844d9d7203c2cf34541d3fcb36049d3bf00db8"
+    },
+    {
+      "name": "tooltip-c56-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "a1a78b2e72f7f26eb376886160003da276103eb486ff8bcb5246b54836ff533c"
+    },
+    {
+      "name": "tooltip-c57-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "d9c96b0cae525ddaf3d942d507e26aedc4a3f85df4b7b31311ffcf6a37f67ffe"
+    },
+    {
+      "name": "tooltip-c58-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "8c999cc96304cc615cf401a5f9cbb28792ed64c8ff282388acd1860dfb0ee2e9"
+    },
+    {
+      "name": "tooltip-c59-s2.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 2,
+      "sha256": "1969b16e95b1c2fe20e8a18ce7dbfc182b5a54aa819cea06db87f248d536352c"
+    },
+    {
+      "name": "tooltip-c0-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51"
+    },
+    {
+      "name": "tooltip-c1-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc"
+    },
+    {
+      "name": "tooltip-c2-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc"
+    },
+    {
+      "name": "tooltip-c3-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 0,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "cfc258640ab4c5c1eb2a4d6ba91ae6a3401af48a2512e4993d6cd1f44151bb51"
+    },
+    {
+      "name": "tooltip-c4-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "75012f30f07074c0d0429287c6d0f40ddc08f4ef301a2f29f3fced22a09209dc"
+    },
+    {
+      "name": "tooltip-c5-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Tooltip",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 57,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 1,
+      "renderedLines": [
+        "Tooltip"
+      ],
+      "scale": 3,
+      "sha256": "93b274e27039446a1bf81245217ded581ecffaf86053c55ca3a671d7e5aa22bc"
+    },
+    {
+      "name": "tooltip-c6-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d"
+    },
+    {
+      "name": "tooltip-c7-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 1,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20"
+    },
+    {
+      "name": "tooltip-c8-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b"
+    },
+    {
+      "name": "tooltip-c9-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "bd7ca138b45ea4961dbc62d1efe5a68e98fbd4d9f3382f0bc9da95bf249f699d"
+    },
+    {
+      "name": "tooltip-c10-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "8b856d26cc12ba51a0ad2992fa42d31e93a042c61e794fb1c540c37fffbf6b20"
+    },
+    {
+      "name": "tooltip-c11-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Done",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 48,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 2,
+      "renderedLines": [
+        "Done"
+      ],
+      "scale": 3,
+      "sha256": "9aa13919a859f414859376527cc2bf3cb6d59686f6481f1de5883c650360891b"
+    },
+    {
+      "name": "tooltip-c12-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4"
+    },
+    {
+      "name": "tooltip-c13-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134"
+    },
+    {
+      "name": "tooltip-c14-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea"
+    },
+    {
+      "name": "tooltip-c15-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 3,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "756e3dd9351b23e9e6072a21999b82c419a9b17330957b2fda4bd96b959c34c4"
+    },
+    {
+      "name": "tooltip-c16-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "814fd476a3599c10cf8235b492eb231b932c0def62acb1a0929c0215ad755134"
+    },
+    {
+      "name": "tooltip-c17-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "iIl! MW@09",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 70,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 4,
+      "renderedLines": [
+        "iIl! MW@09"
+      ],
+      "scale": 3,
+      "sha256": "f4d0cdda13fb55cbc3d6a61d1998ab14f09d7e3f877b8b31a688f1639ef6c6ea"
+    },
+    {
+      "name": "tooltip-c18-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "34c54e9a3dc0ebfed16387f7e59047da7710eef4bcc21b5a9942c85c882135a4"
+    },
+    {
+      "name": "tooltip-c19-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 4,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "9cff8b28fe3db7d0e28e77a153afd59f636513cd8e95ef0510f35eec05cfdf64"
+    },
+    {
+      "name": "tooltip-c20-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "e8e7912356cb0f95c5300697f625bac87280d549137dec95e343ac46f6484437"
+    },
+    {
+      "name": "tooltip-c21-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "f2267ab8f26d4e0889e9ac4b3221aa70846ed41fb5834bccc5a50823481c1962"
+    },
+    {
+      "name": "tooltip-c22-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "d4dfcb834788a5454578a75c49dce91b1053e417cc0804e9304baa75335126d2"
+    },
+    {
+      "name": "tooltip-c23-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Line one\nLine two",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 66,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 5,
+      "renderedLines": [
+        "Line one",
+        "Line two"
+      ],
+      "scale": 3,
+      "sha256": "ed1b7d53947fa57f1c51ec5dcc0511c5dbec4f88cefcc422b2f1c7e49affaddc"
+    },
+    {
+      "name": "tooltip-c24-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 3,
+      "sha256": "2c18e4418845fc5f8e0030f0f9e0358b57a6b9cdea3031a71951bdc2c2165b6f"
+    },
+    {
+      "name": "tooltip-c25-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 3,
+      "sha256": "567a5133f52b7b59b1a5f107f7830cf963d591a55aeb9cc760de60f7765e36d7"
+    },
+    {
+      "name": "tooltip-c26-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 6,
+      "renderedLines": [
+        "Use this component",
+        "to show a helpful",
+        "description."
+      ],
+      "scale": 3,
+      "sha256": "8a367042b408d0a318b5725b3789ec4c859597c3389607c2050d9e2ac188cd80"
+    },
+    {
+      "name": "tooltip-c27-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 6,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 3,
+      "sha256": "f3177b8182936891accb0f63487f9583436a73e0730a0a5f66bf4363a6f0e8e1"
+    },
+    {
+      "name": "tooltip-c28-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 3,
+      "sha256": "d82c238027e267fec01691c28fa9a011a094b3876b25b3e64049439741074ea9"
+    },
+    {
+      "name": "tooltip-c29-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "Use this component to show a helpful description.",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 172,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 7,
+      "renderedLines": [
+        "Use this component to show a",
+        "helpful description."
+      ],
+      "scale": 3,
+      "sha256": "e28d3401fa6137e9d7f14442b3c91e58ebca895ca8817b22656ad82edc7e13d9"
+    },
+    {
+      "name": "tooltip-c30-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 160,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 3,
+      "sha256": "d322ee1cd14a41d0db26628cb4010d182e88a7f12cd26eca180e4f4f7bdf5365"
+    },
+    {
+      "name": "tooltip-c31-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 232,
+      "page": 7,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 3,
+      "sha256": "0618e466bada6fbe2b074db5131f2d56abbcb1ada93df3b27dbc6dddaba1c037"
+    },
+    {
+      "name": "tooltip-c32-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 64,
+      "x": 16,
+      "y": 16,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWW"
+      ],
+      "scale": 3,
+      "sha256": "de08bd593ac5fc5ac726be97adf2f7e39934e027fe8459a3b2decfbfa715d558"
+    },
+    {
+      "name": "tooltip-c33-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 88,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 3,
+      "sha256": "a61f4ef0cf759e6581f34175f1dd05930e2f8b7fe4119f697dcc6b714d1940e2"
+    },
+    {
+      "name": "tooltip-c34-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 3,
+      "sha256": "78ec2c47dfd0df9a591b093455a37e816f7bf4fbca50a71aa92513d3bd840205"
+    },
+    {
+      "name": "tooltip-c35-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 192,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 8,
+      "renderedLines": [
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        "WWWW"
+      ],
+      "scale": 3,
+      "sha256": "3890e2f343644b92226302f7f1c23413ee7faa091ce42cf80f111e5c1644bf03"
+    },
+    {
+      "name": "tooltip-c36-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "74154179451271da71cde2912a3054efb330cf3ea448d3f49ebe04e9f1a74ae7"
+    },
+    {
+      "name": "tooltip-c37-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "4bd8d5a57eb9ae0ed47eb942f1ca68d68f96b9712ec7da1eee3df76fb408fc3e"
+    },
+    {
+      "name": "tooltip-c38-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 105,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 9,
+      "renderedLines": [
+        "  leading and ",
+        "double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "40855ed231f2861b41117106a4c901ce25d9c42735b01916bc40c3c0f2a0c7fe"
+    },
+    {
+      "name": "tooltip-c39-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 9,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "5a6dc6f5d0389b80acc842c0269d2cb208e11314daa4af0540cfd18ba6a099fd"
+    },
+    {
+      "name": "tooltip-c40-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 16,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "3acdf575d2c2248b2a8772c360785cbf03cb854142371fac06df0b56eab7fd6e"
+    },
+    {
+      "name": "tooltip-c41-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "  leading and  double spaces  ",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 178,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 10,
+      "renderedLines": [
+        "  leading and  double spaces  "
+      ],
+      "scale": 3,
+      "sha256": "b481be5009f5964ce50bbf724dfd50314c1d79bdc79d887742cc74680bb550f5"
+    },
+    {
+      "name": "tooltip-c42-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 160,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "9056f2edc5d0cbd5e37f79a109823da1aabdddd032c8e39dafb4f96b8e46c5ad"
+    },
+    {
+      "name": "tooltip-c43-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 232,
+      "page": 10,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "9b9b175d4142fd6a353341b97ad866e8475ce8b17db38897df90fe16c7ef067f"
+    },
+    {
+      "name": "tooltip-c44-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 54,
+      "x": 16,
+      "y": 16,
+      "page": 11,
+      "renderedLines": [
+        "",
+        "!\"#$%&'()*+,-./01234",
+        "56789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "5bf2e079082b63bd29be5fdef068a95ba4ec852773b4f798194283c51cdbc207"
+    },
+    {
+      "name": "tooltip-c45-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "243fb8397f9085a501d10f96ca19270681f279ef16bbd2484ca8bfddc41de11c"
+    },
+    {
+      "name": "tooltip-c46-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "7b821ad6fe7bd76fbd2addf6114b9da0518cf7b698884d36bdffeed2178fab83"
+    },
+    {
+      "name": "tooltip-c47-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": " !\"#$%&'()*+,-./0123456789:;<=>?",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 180,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 11,
+      "renderedLines": [
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+      ],
+      "scale": 3,
+      "sha256": "e81859e81f5a0a694f546d013e70dea7095adffbd89aa4a6c87cbe429df0ebfb"
+    },
+    {
+      "name": "tooltip-c48-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "ace18d5f6d2e84eccbdd615c75d154e1b1bcf0ea38a6e1d948f053ccf3b92427"
+    },
+    {
+      "name": "tooltip-c49-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "b0b65c1f981c2ab781869920cce48a2ad3379059baa65652d6faa0521ee26bc1"
+    },
+    {
+      "name": "tooltip-c50-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 119,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNO",
+        "PQRSTUVWXYZ[\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "fa40d2beae91dad65382e891c1fa50f2e867d2a88f59825601de16d51821fc42"
+    },
+    {
+      "name": "tooltip-c51-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 12,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "a6920a5a721f4cba568abe8a48322a8c1f1c5fb82105fbc4998b0a57986a4577"
+    },
+    {
+      "name": "tooltip-c52-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "af5c7ec01da2658c243287e2a530fca84bd6d657f76ffb98da430a5d0b995ba8"
+    },
+    {
+      "name": "tooltip-c53-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 44,
+      "x": 16,
+      "y": 88,
+      "page": 13,
+      "renderedLines": [
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[",
+        "\\]^_"
+      ],
+      "scale": 3,
+      "sha256": "d0b05165bef50f179ddd3a2b57a9334d4eede4a697e19cce1a1cd0f170a3220e"
+    },
+    {
+      "name": "tooltip-c54-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#202020",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 160,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "d86205bc6947703ca9ce92ab3d9d82e8e48bd61b3f1d307399f81c316f045d3d"
+    },
+    {
+      "name": "tooltip-c55-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#000000",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 232,
+      "page": 13,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "a4a8cc47c712f5a848de5e365f6ae74662ec01b281e19dc6e9fadde65ffb76ae"
+    },
+    {
+      "name": "tooltip-c56-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 96,
+      "background": "#808080",
+      "width": 120,
+      "height": 44,
+      "x": 16,
+      "y": 16,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopq",
+        "rstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "17a341d965153ca01b002ea0c4dbdf58c527c4144886c38de8debb9636063277"
+    },
+    {
+      "name": "tooltip-c57-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#202020",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 88,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "c9a809357d28d66946eeff896174b8d1d2436c4f6704f60d5fbb83b23258f557"
+    },
+    {
+      "name": "tooltip-c58-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#000000",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 160,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "750e5c4015b3c9414b933ff9b6d9f8580961c863a91c367be812a9e8d2231e19"
+    },
+    {
+      "name": "tooltip-c59-s3.png",
+      "element": "tooltip",
+      "state": "normal",
+      "text": "`abcdefghijklmnopqrstuvwxyz{|}~",
+      "wrapWidth": 170,
+      "background": "#808080",
+      "width": 189,
+      "height": 32,
+      "x": 16,
+      "y": 232,
+      "page": 14,
+      "renderedLines": [
+        "`abcdefghijklmnopqrstuvwxyz{|}~"
+      ],
+      "scale": 3,
+      "sha256": "859a35b497590955f75b91cdf0f3b51b3e1cc811e23e544027c346cf3631f018"
+    }
+  ],
+  "sourceDirectory": "source"
+}

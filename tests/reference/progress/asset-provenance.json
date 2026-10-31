@@ -1,0 +1,138 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/boss_bar/blue_background.png": {
+      "sha256": "f82ea601c68aefcf9c4b0c043ecc7d11bfb7852e18617232d56b772337da1d5a",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "a70b0a99cd8f69216b47ab51dff7f0535ad76e927ec31e52928f10b8a6aa9339"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/blue_progress.png": {
+      "sha256": "591d8a435860f20fde1f5199ff687e8475e2369ea0cfe3ca0f3317b8f3c80fec",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "3f8738c12d0652496f50e14bb00a9dacfe4d38120b06de343ea7c7a3e2194a44"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/green_background.png": {
+      "sha256": "72cfe48fedd59f90cb0359472422eb19ad1d217122ce71681b2e4fadd717399f",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "7936446c6df75fe490ea9b635edf9fa84f27341f0113e8e9abda19f24b5f8d28"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/green_progress.png": {
+      "sha256": "6ede411c17c758826091a58030a377d7e4f630d43050addc1665d2f23ab418f8",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "abea9e5c57101ae0d5adf6fefa9fcc25b11571d121c0a6cd7fd2d7cf10aa2b27"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_10_background.png": {
+      "sha256": "956a05421a316c0c4d9b4e59e47116f478b42451fd1c0c415a1332763099e965",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "52d31f61ad34c484a6255ca76546a982fb8c45f0e50da5d3c341740caa8f7136"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_10_progress.png": {
+      "sha256": "956a05421a316c0c4d9b4e59e47116f478b42451fd1c0c415a1332763099e965",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "52d31f61ad34c484a6255ca76546a982fb8c45f0e50da5d3c341740caa8f7136"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_12_background.png": {
+      "sha256": "772493b4e270c7d99db4b82f468673b28196efb33c7b9f23eab1497423e7ea98",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "68f9a97738c9e73040fa54d9136dc0736f32ff219d0f51442cb8298f8021b7f5"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_12_progress.png": {
+      "sha256": "772493b4e270c7d99db4b82f468673b28196efb33c7b9f23eab1497423e7ea98",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "68f9a97738c9e73040fa54d9136dc0736f32ff219d0f51442cb8298f8021b7f5"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_20_background.png": {
+      "sha256": "4b6dd7fc8b820b22987113acef448c091a4349f4e1c3768926073eea8feb437e",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "e5a6e1c448ece4b32ca333d0b8bf3c9846e8e4e3b27aef713b8073a2c94476b7"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_20_progress.png": {
+      "sha256": "4b6dd7fc8b820b22987113acef448c091a4349f4e1c3768926073eea8feb437e",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "e5a6e1c448ece4b32ca333d0b8bf3c9846e8e4e3b27aef713b8073a2c94476b7"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_6_background.png": {
+      "sha256": "a60ab5e58397854717da087a92d5430945ca94317ef4a9af2c3fbae9370fd0a5",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "651a81c15b761b84b2f5bdb11d829ceda35eb7e0dacfe178496474d84147f87b"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/notched_6_progress.png": {
+      "sha256": "a60ab5e58397854717da087a92d5430945ca94317ef4a9af2c3fbae9370fd0a5",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "651a81c15b761b84b2f5bdb11d829ceda35eb7e0dacfe178496474d84147f87b"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/pink_background.png": {
+      "sha256": "d4f51975e90a998c81bc428378a96a806796c5cdec123413aa9110a00c33ade2",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "bb79517d0d37b15c6d9f87c32b3959ff471ebfb024642163a8ce0f80015e0aa3"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/pink_progress.png": {
+      "sha256": "3e4d825a846081df21d1a56b39e4cf3e39927635a19ccd49905e387238647523",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "76181b9760b3fc95a4bad124a998688abef8eb235cdd9eb434a35edc1923b663"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/purple_background.png": {
+      "sha256": "413e5a6cdcd421bcfe76ba37b8e5b987bf8dd6e6dc4651a0d61dd57ff849a701",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "47b020f5ce84f91f9052967d5120082e164da3c888b2c6e99d7eeae32918ccc6"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/purple_progress.png": {
+      "sha256": "c144dfd1e8df19de8948f389eacd0514759be83af311f7dcb541ea51c9544f03",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "c085e0321df0dea8e2c95b0a331d259c24ce4e7adcdbfa2a4985236414553f87"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/red_background.png": {
+      "sha256": "7eb8f6ca76fb453a49f654598d03aeadd92e63eb112a87398c4246633eb960f3",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "562575095297e398cb30e03cde9c7e586e2a8f2c5d31e063a3467697d3cd957f"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/red_progress.png": {
+      "sha256": "44aa24023569d830ae0727d0d5b6984164409562f4e3f9712f4d2687b929d8c5",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "4e992a8775e50947af809407f50848d705e9cc36651f4d9aff1afc908a535707"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/white_background.png": {
+      "sha256": "77f9e2aea3c5c83a24d3575709e895447828c74f366d0b28ebb0636bf779f2ef",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "04c5f67e2644ff3efeb2ec3c04e08595179876fbed28b8e2e188341db198ba12"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/white_progress.png": {
+      "sha256": "a4277608051d611add9d6a5be4a6a699cb8a6432b9ab7b7969163b46291ce073",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "70bcaf160536fae96162dc4cedf9b987ae9019fce9d954911ef4d5469568c411"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/yellow_background.png": {
+      "sha256": "4d14d00c1b05f6897a564d2a9027eeb852d933948fe257fb79a831572c157f0b",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "1ec95ae247763647cf9d57f4d31bfb9a6c1c32df3fb2de0f3f2e9f93fcdd66b0"
+    },
+    "assets/minecraft/textures/gui/sprites/boss_bar/yellow_progress.png": {
+      "sha256": "46c9280d5fa25daa7c052ea0b9811b9444271586fe535cff9653f53e4b0b530c",
+      "width": 182,
+      "height": 5,
+      "decodedRgbaSha256": "9774b52deaff4c41ec0c10892ce5050e6ac15d6770625e6ef34df4c06d644ab3"
+    }
+  },
+  "rendering": "Original BossHealthOverlay.extractBar with fixed LerpingBossEvent initial/current/target progress; no time-varying interpolation. Native182x5 dimensions. Paint color background then notch background, then cropped color progress and cropped notch progress. All22 original PNGs and losslessly decoded RGBA retained. Translucent notch pixels are uploaded as original unpremultiplied RGBA and composited with native source-alpha blending in a shared offscreen WebGL painter. Output preserves transparent original corners without flattening an external backdrop. Fill is Mth.lerpDiscrete(floatProgress,0,182): floor(float(floatProgress*181)) plus1 for positive progress. Web maximum/value semantics remain Radix; unknown progress uses the native empty surface without animation. Arbitrary resizing and other raster environments remain unverified."
+}

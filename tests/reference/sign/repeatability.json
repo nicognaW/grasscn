@@ -1,0 +1,1020 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "af9f463b9c0d07a249ae5d8e6670a6f48df492febefeef34f548f4c1889a10fa",
+  "caseDefinitionSha256": "31cd68bd6567f2a5a33ac7ff84676572e1b9cde72616e81604eb50c89938ee61",
+  "glyphObservationEnabled": {
+    "runOne": false,
+    "runTwo": false
+  },
+  "method": "Two separate isolated vanilla launches; decoded RGBA compared exactly per case",
+  "cases": [
+    {
+      "name": "sign-oak-0-s1.png",
+      "runOnePngSha256": "cb3253d2a7f33461cdcb3fbef0da28ce756d0b9dccd16aa760f5fa31907c98be",
+      "runTwoPngSha256": "cb3253d2a7f33461cdcb3fbef0da28ce756d0b9dccd16aa760f5fa31907c98be",
+      "decodedRgbaSha256": "9953ab163a7a0d81190f88db0a1a2ecafa806cfc490e0bcf35ec70ec8bb0a991",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-oak-1-s1.png",
+      "runOnePngSha256": "cb3253d2a7f33461cdcb3fbef0da28ce756d0b9dccd16aa760f5fa31907c98be",
+      "runTwoPngSha256": "cb3253d2a7f33461cdcb3fbef0da28ce756d0b9dccd16aa760f5fa31907c98be",
+      "decodedRgbaSha256": "9953ab163a7a0d81190f88db0a1a2ecafa806cfc490e0bcf35ec70ec8bb0a991",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-0-s1.png",
+      "runOnePngSha256": "e9630e8086247354432b10090b5b0449e0ba1e76a53f3294e934d33e9b978fc8",
+      "runTwoPngSha256": "e9630e8086247354432b10090b5b0449e0ba1e76a53f3294e934d33e9b978fc8",
+      "decodedRgbaSha256": "341e1f4a3412ba333dd141746d3236583662c8cd3a77b364aa96313e8a02cf90",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-1-s1.png",
+      "runOnePngSha256": "e9630e8086247354432b10090b5b0449e0ba1e76a53f3294e934d33e9b978fc8",
+      "runTwoPngSha256": "e9630e8086247354432b10090b5b0449e0ba1e76a53f3294e934d33e9b978fc8",
+      "decodedRgbaSha256": "341e1f4a3412ba333dd141746d3236583662c8cd3a77b364aa96313e8a02cf90",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-0-s1.png",
+      "runOnePngSha256": "0f43d11c9b669da1ab80ec6c728034b54f394485cd3e97c6e78ab87f01e8ff55",
+      "runTwoPngSha256": "0f43d11c9b669da1ab80ec6c728034b54f394485cd3e97c6e78ab87f01e8ff55",
+      "decodedRgbaSha256": "c4fda785533f2ed704d010d1a1192af98c7a604b5edc9a83c2811122024debe6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-1-s1.png",
+      "runOnePngSha256": "0f43d11c9b669da1ab80ec6c728034b54f394485cd3e97c6e78ab87f01e8ff55",
+      "runTwoPngSha256": "0f43d11c9b669da1ab80ec6c728034b54f394485cd3e97c6e78ab87f01e8ff55",
+      "decodedRgbaSha256": "c4fda785533f2ed704d010d1a1192af98c7a604b5edc9a83c2811122024debe6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-0-s1.png",
+      "runOnePngSha256": "5f7ed9daa5f387d28356c3dc92977cef6e1e92b3d2da56d945cbe8d8ee6cce78",
+      "runTwoPngSha256": "5f7ed9daa5f387d28356c3dc92977cef6e1e92b3d2da56d945cbe8d8ee6cce78",
+      "decodedRgbaSha256": "f2c1ec4a4f2a216bc5bc3b6628979311107eef006f351b05f182b4715af59c32",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-1-s1.png",
+      "runOnePngSha256": "5f7ed9daa5f387d28356c3dc92977cef6e1e92b3d2da56d945cbe8d8ee6cce78",
+      "runTwoPngSha256": "5f7ed9daa5f387d28356c3dc92977cef6e1e92b3d2da56d945cbe8d8ee6cce78",
+      "decodedRgbaSha256": "f2c1ec4a4f2a216bc5bc3b6628979311107eef006f351b05f182b4715af59c32",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-0-s1.png",
+      "runOnePngSha256": "fd0c185063c46f3c07ce3b1c757938ec06f0afac04f04df9095bed34ed298e6b",
+      "runTwoPngSha256": "fd0c185063c46f3c07ce3b1c757938ec06f0afac04f04df9095bed34ed298e6b",
+      "decodedRgbaSha256": "44e43d342cd08fc334af30cebaec44120db68893e520ed439d3b139532857fd0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-1-s1.png",
+      "runOnePngSha256": "fd0c185063c46f3c07ce3b1c757938ec06f0afac04f04df9095bed34ed298e6b",
+      "runTwoPngSha256": "fd0c185063c46f3c07ce3b1c757938ec06f0afac04f04df9095bed34ed298e6b",
+      "decodedRgbaSha256": "44e43d342cd08fc334af30cebaec44120db68893e520ed439d3b139532857fd0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-0-s1.png",
+      "runOnePngSha256": "2570918e00b9f01459c6d61b6342c4639117adbfc0a2136b9409952a12115bce",
+      "runTwoPngSha256": "2570918e00b9f01459c6d61b6342c4639117adbfc0a2136b9409952a12115bce",
+      "decodedRgbaSha256": "75b3cabb927b9e26445c6c0d0be5445bab41be1c3121c6a580587b89fcabafdb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-1-s1.png",
+      "runOnePngSha256": "2570918e00b9f01459c6d61b6342c4639117adbfc0a2136b9409952a12115bce",
+      "runTwoPngSha256": "2570918e00b9f01459c6d61b6342c4639117adbfc0a2136b9409952a12115bce",
+      "decodedRgbaSha256": "75b3cabb927b9e26445c6c0d0be5445bab41be1c3121c6a580587b89fcabafdb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-0-s1.png",
+      "runOnePngSha256": "c5aefe0d5cb606622c0610f1730fcefd8b60de680c0cccf430de3b4a901797f9",
+      "runTwoPngSha256": "c5aefe0d5cb606622c0610f1730fcefd8b60de680c0cccf430de3b4a901797f9",
+      "decodedRgbaSha256": "ea6f0342dee29c4378fdca96711bcfce9841e55e9611f47d7b3ed95cd26855ce",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-1-s1.png",
+      "runOnePngSha256": "c5aefe0d5cb606622c0610f1730fcefd8b60de680c0cccf430de3b4a901797f9",
+      "runTwoPngSha256": "c5aefe0d5cb606622c0610f1730fcefd8b60de680c0cccf430de3b4a901797f9",
+      "decodedRgbaSha256": "ea6f0342dee29c4378fdca96711bcfce9841e55e9611f47d7b3ed95cd26855ce",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-0-s1.png",
+      "runOnePngSha256": "b5e6f2cdbd70d538cd1ef4e38b604fb26725550adf13a241a4fd9fb1b0a9beb5",
+      "runTwoPngSha256": "b5e6f2cdbd70d538cd1ef4e38b604fb26725550adf13a241a4fd9fb1b0a9beb5",
+      "decodedRgbaSha256": "a92325c51736e5a1c66713389f305e91f6e7ddff6de9c361fc232974accd3462",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-1-s1.png",
+      "runOnePngSha256": "b5e6f2cdbd70d538cd1ef4e38b604fb26725550adf13a241a4fd9fb1b0a9beb5",
+      "runTwoPngSha256": "b5e6f2cdbd70d538cd1ef4e38b604fb26725550adf13a241a4fd9fb1b0a9beb5",
+      "decodedRgbaSha256": "a92325c51736e5a1c66713389f305e91f6e7ddff6de9c361fc232974accd3462",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-0-s1.png",
+      "runOnePngSha256": "46d2505ced49d0c4eb55b1a7b3497d14183eb71538c9f188085e3c7e9920d59e",
+      "runTwoPngSha256": "46d2505ced49d0c4eb55b1a7b3497d14183eb71538c9f188085e3c7e9920d59e",
+      "decodedRgbaSha256": "2cd76a723c25bc2b21dc7558003ab139915505eeb2620fa6af6705ec54f99d89",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-1-s1.png",
+      "runOnePngSha256": "46d2505ced49d0c4eb55b1a7b3497d14183eb71538c9f188085e3c7e9920d59e",
+      "runTwoPngSha256": "46d2505ced49d0c4eb55b1a7b3497d14183eb71538c9f188085e3c7e9920d59e",
+      "decodedRgbaSha256": "2cd76a723c25bc2b21dc7558003ab139915505eeb2620fa6af6705ec54f99d89",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-0-s1.png",
+      "runOnePngSha256": "87538419d33c023d5881ab17c857f1388177a421dfe3d778649ad63c224bcb22",
+      "runTwoPngSha256": "87538419d33c023d5881ab17c857f1388177a421dfe3d778649ad63c224bcb22",
+      "decodedRgbaSha256": "cdf056a0f3c3047b90426b24960b46f2976aa4b0529e540edecb44da58a401d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-1-s1.png",
+      "runOnePngSha256": "87538419d33c023d5881ab17c857f1388177a421dfe3d778649ad63c224bcb22",
+      "runTwoPngSha256": "87538419d33c023d5881ab17c857f1388177a421dfe3d778649ad63c224bcb22",
+      "decodedRgbaSha256": "cdf056a0f3c3047b90426b24960b46f2976aa4b0529e540edecb44da58a401d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-0-s1.png",
+      "runOnePngSha256": "b4ebdda170820a0f15be0cf3503c0ee3845529d48ea39b28a691439dce20c3aa",
+      "runTwoPngSha256": "b4ebdda170820a0f15be0cf3503c0ee3845529d48ea39b28a691439dce20c3aa",
+      "decodedRgbaSha256": "6c386694db32623598ce90c496f24e371ccef053f9c39a4e8b8e01478a847d17",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-1-s1.png",
+      "runOnePngSha256": "b4ebdda170820a0f15be0cf3503c0ee3845529d48ea39b28a691439dce20c3aa",
+      "runTwoPngSha256": "b4ebdda170820a0f15be0cf3503c0ee3845529d48ea39b28a691439dce20c3aa",
+      "decodedRgbaSha256": "6c386694db32623598ce90c496f24e371ccef053f9c39a4e8b8e01478a847d17",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-0-s1.png",
+      "runOnePngSha256": "0938e691ec43e4cf67dc4ffbd01e953374292e933694ab94ae2f1b80f7b8e220",
+      "runTwoPngSha256": "0938e691ec43e4cf67dc4ffbd01e953374292e933694ab94ae2f1b80f7b8e220",
+      "decodedRgbaSha256": "6f2b99e9786e6bc5277971401ce148f1725c9f5d6112f1fabcf63cf9681b4b5a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-1-s1.png",
+      "runOnePngSha256": "0938e691ec43e4cf67dc4ffbd01e953374292e933694ab94ae2f1b80f7b8e220",
+      "runTwoPngSha256": "0938e691ec43e4cf67dc4ffbd01e953374292e933694ab94ae2f1b80f7b8e220",
+      "decodedRgbaSha256": "6f2b99e9786e6bc5277971401ce148f1725c9f5d6112f1fabcf63cf9681b4b5a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-0-s1.png",
+      "runOnePngSha256": "233c09647547009ba8266a54fb02f9c59ef249335c6b6f664c23f732b3af5886",
+      "runTwoPngSha256": "233c09647547009ba8266a54fb02f9c59ef249335c6b6f664c23f732b3af5886",
+      "decodedRgbaSha256": "f067ba7506ab50d5b05b1d2ed1de576a87c407b499c8e56b1ac9105a4dfd9645",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-1-s1.png",
+      "runOnePngSha256": "233c09647547009ba8266a54fb02f9c59ef249335c6b6f664c23f732b3af5886",
+      "runTwoPngSha256": "233c09647547009ba8266a54fb02f9c59ef249335c6b6f664c23f732b3af5886",
+      "decodedRgbaSha256": "f067ba7506ab50d5b05b1d2ed1de576a87c407b499c8e56b1ac9105a4dfd9645",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-0-s1.png",
+      "runOnePngSha256": "d5a18654f5c83ec5086d8548ba2de8dc286ca41f7b15b6d5ed7d131a5938f943",
+      "runTwoPngSha256": "d5a18654f5c83ec5086d8548ba2de8dc286ca41f7b15b6d5ed7d131a5938f943",
+      "decodedRgbaSha256": "e16dbeeef5948fd1f64677b00e7f7b0ec6586db9e94d4a68cd2bcc0cf2ac51e5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-1-s1.png",
+      "runOnePngSha256": "d5a18654f5c83ec5086d8548ba2de8dc286ca41f7b15b6d5ed7d131a5938f943",
+      "runTwoPngSha256": "d5a18654f5c83ec5086d8548ba2de8dc286ca41f7b15b6d5ed7d131a5938f943",
+      "decodedRgbaSha256": "e16dbeeef5948fd1f64677b00e7f7b0ec6586db9e94d4a68cd2bcc0cf2ac51e5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-0-s1.png",
+      "runOnePngSha256": "d3d0c5344f29a546b514e1a18b520b2cce6072eb9385f04c17382df35d5d0ab9",
+      "runTwoPngSha256": "d3d0c5344f29a546b514e1a18b520b2cce6072eb9385f04c17382df35d5d0ab9",
+      "decodedRgbaSha256": "ea1d2a6cea9618c3a16125669a02d9e5c5f01eeb94a088511370b02a94498601",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-1-s1.png",
+      "runOnePngSha256": "d3d0c5344f29a546b514e1a18b520b2cce6072eb9385f04c17382df35d5d0ab9",
+      "runTwoPngSha256": "d3d0c5344f29a546b514e1a18b520b2cce6072eb9385f04c17382df35d5d0ab9",
+      "decodedRgbaSha256": "ea1d2a6cea9618c3a16125669a02d9e5c5f01eeb94a088511370b02a94498601",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-0-s1.png",
+      "runOnePngSha256": "a89223078bfba9ff69d46c856c8e34800fbec1743688dd900c4b1395e4b6eabb",
+      "runTwoPngSha256": "a89223078bfba9ff69d46c856c8e34800fbec1743688dd900c4b1395e4b6eabb",
+      "decodedRgbaSha256": "dc03ac5a374914aaef041e99d5214d7f05a1707a2775b67822c12c746ab3e2d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-1-s1.png",
+      "runOnePngSha256": "a89223078bfba9ff69d46c856c8e34800fbec1743688dd900c4b1395e4b6eabb",
+      "runTwoPngSha256": "a89223078bfba9ff69d46c856c8e34800fbec1743688dd900c4b1395e4b6eabb",
+      "decodedRgbaSha256": "dc03ac5a374914aaef041e99d5214d7f05a1707a2775b67822c12c746ab3e2d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-0-s1.png",
+      "runOnePngSha256": "2442f0e357be40e8ae3b46711cd444daa38cb772a6c992dbd40ca1de3626b55c",
+      "runTwoPngSha256": "2442f0e357be40e8ae3b46711cd444daa38cb772a6c992dbd40ca1de3626b55c",
+      "decodedRgbaSha256": "fc052428900edf43e641f262ea969984ab0cdc8c3e5b99bec401cf0e1702886f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-1-s1.png",
+      "runOnePngSha256": "2442f0e357be40e8ae3b46711cd444daa38cb772a6c992dbd40ca1de3626b55c",
+      "runTwoPngSha256": "2442f0e357be40e8ae3b46711cd444daa38cb772a6c992dbd40ca1de3626b55c",
+      "decodedRgbaSha256": "fc052428900edf43e641f262ea969984ab0cdc8c3e5b99bec401cf0e1702886f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-0-s1.png",
+      "runOnePngSha256": "6e406de35a206170c1eb51c046d0ab0c7a30315a2bfe5c0c807a5f8dc9d66ac2",
+      "runTwoPngSha256": "6e406de35a206170c1eb51c046d0ab0c7a30315a2bfe5c0c807a5f8dc9d66ac2",
+      "decodedRgbaSha256": "9d59d3b5daada37af2a17a5683059343e922c333dbc1d8696712b266ded5f817",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-1-s1.png",
+      "runOnePngSha256": "6e406de35a206170c1eb51c046d0ab0c7a30315a2bfe5c0c807a5f8dc9d66ac2",
+      "runTwoPngSha256": "6e406de35a206170c1eb51c046d0ab0c7a30315a2bfe5c0c807a5f8dc9d66ac2",
+      "decodedRgbaSha256": "9d59d3b5daada37af2a17a5683059343e922c333dbc1d8696712b266ded5f817",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-0-s1.png",
+      "runOnePngSha256": "1e7a20e303d505c7b6a78a2edf5e0408cbf6d4d61bc6ef83d6fa782808398e9e",
+      "runTwoPngSha256": "1e7a20e303d505c7b6a78a2edf5e0408cbf6d4d61bc6ef83d6fa782808398e9e",
+      "decodedRgbaSha256": "0cecaecf576a820f62357d4068e59af1cd6953a4af5b1290822d2133cc883e88",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-1-s1.png",
+      "runOnePngSha256": "1e7a20e303d505c7b6a78a2edf5e0408cbf6d4d61bc6ef83d6fa782808398e9e",
+      "runTwoPngSha256": "1e7a20e303d505c7b6a78a2edf5e0408cbf6d4d61bc6ef83d6fa782808398e9e",
+      "decodedRgbaSha256": "0cecaecf576a820f62357d4068e59af1cd6953a4af5b1290822d2133cc883e88",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-0-s1.png",
+      "runOnePngSha256": "bc1fa531b6d640986b1f131750fe9087b15c647bbf1490c3583066886d60e00a",
+      "runTwoPngSha256": "bc1fa531b6d640986b1f131750fe9087b15c647bbf1490c3583066886d60e00a",
+      "decodedRgbaSha256": "89137e8dfdbcdd54ff86a51ae195a73c00515331fdf2a2449183594a02742308",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-1-s1.png",
+      "runOnePngSha256": "bc1fa531b6d640986b1f131750fe9087b15c647bbf1490c3583066886d60e00a",
+      "runTwoPngSha256": "bc1fa531b6d640986b1f131750fe9087b15c647bbf1490c3583066886d60e00a",
+      "decodedRgbaSha256": "89137e8dfdbcdd54ff86a51ae195a73c00515331fdf2a2449183594a02742308",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-0-s1.png",
+      "runOnePngSha256": "ce75d7114bbb03a9a6b4de4c9b9f11c206a09e352c30aac9e55bd54ff56be627",
+      "runTwoPngSha256": "ce75d7114bbb03a9a6b4de4c9b9f11c206a09e352c30aac9e55bd54ff56be627",
+      "decodedRgbaSha256": "80ed36068d9aa408359cc40642eccb36e29b0582ed9d71c2902e606ca94096b2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-1-s1.png",
+      "runOnePngSha256": "ce75d7114bbb03a9a6b4de4c9b9f11c206a09e352c30aac9e55bd54ff56be627",
+      "runTwoPngSha256": "ce75d7114bbb03a9a6b4de4c9b9f11c206a09e352c30aac9e55bd54ff56be627",
+      "decodedRgbaSha256": "80ed36068d9aa408359cc40642eccb36e29b0582ed9d71c2902e606ca94096b2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-0-s1.png",
+      "runOnePngSha256": "ec9a64b03a03c54204a110639ea08902c8bb6ec524e1788c062e66f82236cf19",
+      "runTwoPngSha256": "ec9a64b03a03c54204a110639ea08902c8bb6ec524e1788c062e66f82236cf19",
+      "decodedRgbaSha256": "9033f2f2438780995287eec8902e87e2c5cd2b952ffed83cd5883e7d59b44351",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-1-s1.png",
+      "runOnePngSha256": "ec9a64b03a03c54204a110639ea08902c8bb6ec524e1788c062e66f82236cf19",
+      "runTwoPngSha256": "ec9a64b03a03c54204a110639ea08902c8bb6ec524e1788c062e66f82236cf19",
+      "decodedRgbaSha256": "9033f2f2438780995287eec8902e87e2c5cd2b952ffed83cd5883e7d59b44351",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-0-s1.png",
+      "runOnePngSha256": "26e7f82ef6bb85418b3f4fa7d4d14746c4964be7bcd1b9993b27510346d9387a",
+      "runTwoPngSha256": "26e7f82ef6bb85418b3f4fa7d4d14746c4964be7bcd1b9993b27510346d9387a",
+      "decodedRgbaSha256": "cb1f24ea8c00d257ff6caa21effeebe1c78de54e0a3af62147c63fb05aae74ed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-1-s1.png",
+      "runOnePngSha256": "26e7f82ef6bb85418b3f4fa7d4d14746c4964be7bcd1b9993b27510346d9387a",
+      "runTwoPngSha256": "26e7f82ef6bb85418b3f4fa7d4d14746c4964be7bcd1b9993b27510346d9387a",
+      "decodedRgbaSha256": "cb1f24ea8c00d257ff6caa21effeebe1c78de54e0a3af62147c63fb05aae74ed",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-0-s1.png",
+      "runOnePngSha256": "edcd1b6867f0f0e00d44a6f7278987988895236f62924d5ec2572e81e0c5af67",
+      "runTwoPngSha256": "edcd1b6867f0f0e00d44a6f7278987988895236f62924d5ec2572e81e0c5af67",
+      "decodedRgbaSha256": "894a7a12ab8adb9e747ecd2f798429d96bdf23823225475799b9a81cd5b927e2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-1-s1.png",
+      "runOnePngSha256": "edcd1b6867f0f0e00d44a6f7278987988895236f62924d5ec2572e81e0c5af67",
+      "runTwoPngSha256": "edcd1b6867f0f0e00d44a6f7278987988895236f62924d5ec2572e81e0c5af67",
+      "decodedRgbaSha256": "894a7a12ab8adb9e747ecd2f798429d96bdf23823225475799b9a81cd5b927e2",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-oak-0-s2.png",
+      "runOnePngSha256": "29acba79701ed8e498935e4f5ce6c904f2c9b66e8f46cf5598124fc7a1f2f702",
+      "runTwoPngSha256": "29acba79701ed8e498935e4f5ce6c904f2c9b66e8f46cf5598124fc7a1f2f702",
+      "decodedRgbaSha256": "1f54bd45a8b553f0bd24f7059db691229515f0956a42de60ddb84a21dc2fe3f4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-oak-1-s2.png",
+      "runOnePngSha256": "29acba79701ed8e498935e4f5ce6c904f2c9b66e8f46cf5598124fc7a1f2f702",
+      "runTwoPngSha256": "29acba79701ed8e498935e4f5ce6c904f2c9b66e8f46cf5598124fc7a1f2f702",
+      "decodedRgbaSha256": "1f54bd45a8b553f0bd24f7059db691229515f0956a42de60ddb84a21dc2fe3f4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-0-s2.png",
+      "runOnePngSha256": "a3bcf2496f8e19cf2bedc7bc54fe9a6da1484259b01775a8cba7c45be8a7ca44",
+      "runTwoPngSha256": "a3bcf2496f8e19cf2bedc7bc54fe9a6da1484259b01775a8cba7c45be8a7ca44",
+      "decodedRgbaSha256": "ff1c13734b0b539aa750648f914cd548c86551a48b1a9496b70d5b6868f373af",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-1-s2.png",
+      "runOnePngSha256": "a3bcf2496f8e19cf2bedc7bc54fe9a6da1484259b01775a8cba7c45be8a7ca44",
+      "runTwoPngSha256": "a3bcf2496f8e19cf2bedc7bc54fe9a6da1484259b01775a8cba7c45be8a7ca44",
+      "decodedRgbaSha256": "ff1c13734b0b539aa750648f914cd548c86551a48b1a9496b70d5b6868f373af",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-0-s2.png",
+      "runOnePngSha256": "5040dabf22095bab7852f964b25f3b2a6d0e6a7855a718addf82b38cf41abe54",
+      "runTwoPngSha256": "5040dabf22095bab7852f964b25f3b2a6d0e6a7855a718addf82b38cf41abe54",
+      "decodedRgbaSha256": "2c516e081a0fd5320da4195af18d2454b5084544015793a66adb15b49b902396",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-1-s2.png",
+      "runOnePngSha256": "5040dabf22095bab7852f964b25f3b2a6d0e6a7855a718addf82b38cf41abe54",
+      "runTwoPngSha256": "5040dabf22095bab7852f964b25f3b2a6d0e6a7855a718addf82b38cf41abe54",
+      "decodedRgbaSha256": "2c516e081a0fd5320da4195af18d2454b5084544015793a66adb15b49b902396",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-0-s2.png",
+      "runOnePngSha256": "bef51bc3ed1a7b159ae439308b5a6b6bf813be93d555dc1497ab95e48a22585f",
+      "runTwoPngSha256": "bef51bc3ed1a7b159ae439308b5a6b6bf813be93d555dc1497ab95e48a22585f",
+      "decodedRgbaSha256": "4491848eaacbf67d164e1c0ae57700fec1c51c4dda602139a388f81f117fa626",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-1-s2.png",
+      "runOnePngSha256": "bef51bc3ed1a7b159ae439308b5a6b6bf813be93d555dc1497ab95e48a22585f",
+      "runTwoPngSha256": "bef51bc3ed1a7b159ae439308b5a6b6bf813be93d555dc1497ab95e48a22585f",
+      "decodedRgbaSha256": "4491848eaacbf67d164e1c0ae57700fec1c51c4dda602139a388f81f117fa626",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-0-s2.png",
+      "runOnePngSha256": "6e5ec368cddbde61c496661a100e850d19502b2ee684ce4871f8218781559c15",
+      "runTwoPngSha256": "6e5ec368cddbde61c496661a100e850d19502b2ee684ce4871f8218781559c15",
+      "decodedRgbaSha256": "ee3a8077302f00b7e295706672df7dec4506fec0e3b3546dcfa3cb3f5a754b44",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-1-s2.png",
+      "runOnePngSha256": "6e5ec368cddbde61c496661a100e850d19502b2ee684ce4871f8218781559c15",
+      "runTwoPngSha256": "6e5ec368cddbde61c496661a100e850d19502b2ee684ce4871f8218781559c15",
+      "decodedRgbaSha256": "ee3a8077302f00b7e295706672df7dec4506fec0e3b3546dcfa3cb3f5a754b44",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-0-s2.png",
+      "runOnePngSha256": "e1c874d63675e0e431908de5ec0d55676b5b930ec410e638239f6e26e95a5834",
+      "runTwoPngSha256": "e1c874d63675e0e431908de5ec0d55676b5b930ec410e638239f6e26e95a5834",
+      "decodedRgbaSha256": "dbbcbfb1595f043df8088c874411740b62d8a0b1dc9a00ee5b09063714514446",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-1-s2.png",
+      "runOnePngSha256": "e1c874d63675e0e431908de5ec0d55676b5b930ec410e638239f6e26e95a5834",
+      "runTwoPngSha256": "e1c874d63675e0e431908de5ec0d55676b5b930ec410e638239f6e26e95a5834",
+      "decodedRgbaSha256": "dbbcbfb1595f043df8088c874411740b62d8a0b1dc9a00ee5b09063714514446",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-0-s2.png",
+      "runOnePngSha256": "e7cf349a5673caf9bbe2d4c254c7ecd4217996c9bce6908cfa145ae1a41c91f6",
+      "runTwoPngSha256": "e7cf349a5673caf9bbe2d4c254c7ecd4217996c9bce6908cfa145ae1a41c91f6",
+      "decodedRgbaSha256": "07e8c19a516435326b445df817cc0c0dd4b201dae2e2c83541a7f8f7c4a655b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-1-s2.png",
+      "runOnePngSha256": "e7cf349a5673caf9bbe2d4c254c7ecd4217996c9bce6908cfa145ae1a41c91f6",
+      "runTwoPngSha256": "e7cf349a5673caf9bbe2d4c254c7ecd4217996c9bce6908cfa145ae1a41c91f6",
+      "decodedRgbaSha256": "07e8c19a516435326b445df817cc0c0dd4b201dae2e2c83541a7f8f7c4a655b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-0-s2.png",
+      "runOnePngSha256": "bc0f0b56a14f672c3687da665065d52e7a668f640508b1cbab85b88b94ed3db0",
+      "runTwoPngSha256": "bc0f0b56a14f672c3687da665065d52e7a668f640508b1cbab85b88b94ed3db0",
+      "decodedRgbaSha256": "5b846cdd72ab74aa6a735746971df51b20449ab5a99dd951ad47d044147aac4a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-1-s2.png",
+      "runOnePngSha256": "bc0f0b56a14f672c3687da665065d52e7a668f640508b1cbab85b88b94ed3db0",
+      "runTwoPngSha256": "bc0f0b56a14f672c3687da665065d52e7a668f640508b1cbab85b88b94ed3db0",
+      "decodedRgbaSha256": "5b846cdd72ab74aa6a735746971df51b20449ab5a99dd951ad47d044147aac4a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-0-s2.png",
+      "runOnePngSha256": "06a503915d01dd4beb64f95fed8f74d3e098cded6e5a79f1aaf04627af2e6cc6",
+      "runTwoPngSha256": "06a503915d01dd4beb64f95fed8f74d3e098cded6e5a79f1aaf04627af2e6cc6",
+      "decodedRgbaSha256": "0c81afdaa04222c43ba373de55bb08ee97485bf41ea30b406cf3abcbf0828b71",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-1-s2.png",
+      "runOnePngSha256": "06a503915d01dd4beb64f95fed8f74d3e098cded6e5a79f1aaf04627af2e6cc6",
+      "runTwoPngSha256": "06a503915d01dd4beb64f95fed8f74d3e098cded6e5a79f1aaf04627af2e6cc6",
+      "decodedRgbaSha256": "0c81afdaa04222c43ba373de55bb08ee97485bf41ea30b406cf3abcbf0828b71",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-0-s2.png",
+      "runOnePngSha256": "62ccd72916dbeac05e391dd16043ca254bb7f25712a43f7927fc7ba913d81695",
+      "runTwoPngSha256": "62ccd72916dbeac05e391dd16043ca254bb7f25712a43f7927fc7ba913d81695",
+      "decodedRgbaSha256": "109a7bb5cfb479b33e1f9bb1f2952ea47f4c7870b40e7a24379dfdf5c0ee41b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-1-s2.png",
+      "runOnePngSha256": "62ccd72916dbeac05e391dd16043ca254bb7f25712a43f7927fc7ba913d81695",
+      "runTwoPngSha256": "62ccd72916dbeac05e391dd16043ca254bb7f25712a43f7927fc7ba913d81695",
+      "decodedRgbaSha256": "109a7bb5cfb479b33e1f9bb1f2952ea47f4c7870b40e7a24379dfdf5c0ee41b8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-0-s2.png",
+      "runOnePngSha256": "43b067c22869514cff473977516b9ee2791413299f9c53738c65934fb1b7937e",
+      "runTwoPngSha256": "43b067c22869514cff473977516b9ee2791413299f9c53738c65934fb1b7937e",
+      "decodedRgbaSha256": "3558f75d2a17052d0bc59b5a5d9cba039f7697a4afc9bbb3b07500589ec6860d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-1-s2.png",
+      "runOnePngSha256": "43b067c22869514cff473977516b9ee2791413299f9c53738c65934fb1b7937e",
+      "runTwoPngSha256": "43b067c22869514cff473977516b9ee2791413299f9c53738c65934fb1b7937e",
+      "decodedRgbaSha256": "3558f75d2a17052d0bc59b5a5d9cba039f7697a4afc9bbb3b07500589ec6860d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-0-s2.png",
+      "runOnePngSha256": "a6aac71e4694b8e8845b66185cfe53ea5871fcdf24da80fcca02b17a375f674b",
+      "runTwoPngSha256": "a6aac71e4694b8e8845b66185cfe53ea5871fcdf24da80fcca02b17a375f674b",
+      "decodedRgbaSha256": "a217977895f191ca3648d7b6fc0959925ec14bae8a1f708b40db7e071d05742f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-1-s2.png",
+      "runOnePngSha256": "a6aac71e4694b8e8845b66185cfe53ea5871fcdf24da80fcca02b17a375f674b",
+      "runTwoPngSha256": "a6aac71e4694b8e8845b66185cfe53ea5871fcdf24da80fcca02b17a375f674b",
+      "decodedRgbaSha256": "a217977895f191ca3648d7b6fc0959925ec14bae8a1f708b40db7e071d05742f",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-0-s2.png",
+      "runOnePngSha256": "0412cadae500bdcdb978725c4d55e46e1222b1d0ebddd3780f7ccc1a47662e53",
+      "runTwoPngSha256": "0412cadae500bdcdb978725c4d55e46e1222b1d0ebddd3780f7ccc1a47662e53",
+      "decodedRgbaSha256": "33a691da20a3f57fc492d6553cf8abcf5857c5d416ea36c46ebed2efe7bf3a34",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-1-s2.png",
+      "runOnePngSha256": "0412cadae500bdcdb978725c4d55e46e1222b1d0ebddd3780f7ccc1a47662e53",
+      "runTwoPngSha256": "0412cadae500bdcdb978725c4d55e46e1222b1d0ebddd3780f7ccc1a47662e53",
+      "decodedRgbaSha256": "33a691da20a3f57fc492d6553cf8abcf5857c5d416ea36c46ebed2efe7bf3a34",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-0-s2.png",
+      "runOnePngSha256": "efe69596ad8dc8f1f980a3f277c87f5dd058d91ed206fe3698b1aa142973a444",
+      "runTwoPngSha256": "efe69596ad8dc8f1f980a3f277c87f5dd058d91ed206fe3698b1aa142973a444",
+      "decodedRgbaSha256": "d3090423c5bcd56c739e1d01e2bff9b268cc84c4770b987d944d52faf7601857",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-1-s2.png",
+      "runOnePngSha256": "efe69596ad8dc8f1f980a3f277c87f5dd058d91ed206fe3698b1aa142973a444",
+      "runTwoPngSha256": "efe69596ad8dc8f1f980a3f277c87f5dd058d91ed206fe3698b1aa142973a444",
+      "decodedRgbaSha256": "d3090423c5bcd56c739e1d01e2bff9b268cc84c4770b987d944d52faf7601857",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-0-s2.png",
+      "runOnePngSha256": "bf92223a73e7833b644081aa4593fe4c4ff569f8bc8ae60560ef2a4438144ca6",
+      "runTwoPngSha256": "bf92223a73e7833b644081aa4593fe4c4ff569f8bc8ae60560ef2a4438144ca6",
+      "decodedRgbaSha256": "26933907822f07b987c0a416305878c15664a4b06f78b45b6ff0f2e8a1528e81",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-1-s2.png",
+      "runOnePngSha256": "bf92223a73e7833b644081aa4593fe4c4ff569f8bc8ae60560ef2a4438144ca6",
+      "runTwoPngSha256": "bf92223a73e7833b644081aa4593fe4c4ff569f8bc8ae60560ef2a4438144ca6",
+      "decodedRgbaSha256": "26933907822f07b987c0a416305878c15664a4b06f78b45b6ff0f2e8a1528e81",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-0-s2.png",
+      "runOnePngSha256": "19c17ed41397ecddf7f2954fc91ccfd2b9362d0cf776717f4994ac809f5d2b1b",
+      "runTwoPngSha256": "19c17ed41397ecddf7f2954fc91ccfd2b9362d0cf776717f4994ac809f5d2b1b",
+      "decodedRgbaSha256": "c073fdf910394f85e2d0f68a418205c44ee0cccdb8b3d399a6fb74b66a354ae4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-1-s2.png",
+      "runOnePngSha256": "19c17ed41397ecddf7f2954fc91ccfd2b9362d0cf776717f4994ac809f5d2b1b",
+      "runTwoPngSha256": "19c17ed41397ecddf7f2954fc91ccfd2b9362d0cf776717f4994ac809f5d2b1b",
+      "decodedRgbaSha256": "c073fdf910394f85e2d0f68a418205c44ee0cccdb8b3d399a6fb74b66a354ae4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-0-s2.png",
+      "runOnePngSha256": "3e985afdf19e7f2a9fb5c3e464e36a66c7fc77a5e1957d8f6838d350bacee79d",
+      "runTwoPngSha256": "3e985afdf19e7f2a9fb5c3e464e36a66c7fc77a5e1957d8f6838d350bacee79d",
+      "decodedRgbaSha256": "af3b1852b516119970a153a6efaadfb7a498752e898ea017ece13b09186c9e6a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-1-s2.png",
+      "runOnePngSha256": "3e985afdf19e7f2a9fb5c3e464e36a66c7fc77a5e1957d8f6838d350bacee79d",
+      "runTwoPngSha256": "3e985afdf19e7f2a9fb5c3e464e36a66c7fc77a5e1957d8f6838d350bacee79d",
+      "decodedRgbaSha256": "af3b1852b516119970a153a6efaadfb7a498752e898ea017ece13b09186c9e6a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-0-s2.png",
+      "runOnePngSha256": "3b2225129022d5ef691720691078166a3f32e52367ef89341e050a223c69ceba",
+      "runTwoPngSha256": "3b2225129022d5ef691720691078166a3f32e52367ef89341e050a223c69ceba",
+      "decodedRgbaSha256": "327bb06ce4a44024ee1d9dc29d2365fad8cf111308a2d073153b6116ad2644dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-1-s2.png",
+      "runOnePngSha256": "3b2225129022d5ef691720691078166a3f32e52367ef89341e050a223c69ceba",
+      "runTwoPngSha256": "3b2225129022d5ef691720691078166a3f32e52367ef89341e050a223c69ceba",
+      "decodedRgbaSha256": "327bb06ce4a44024ee1d9dc29d2365fad8cf111308a2d073153b6116ad2644dc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-0-s2.png",
+      "runOnePngSha256": "c73ba5be63ac73e3dddd172091f3353e1837c52828bcfbb03e46d715948ac773",
+      "runTwoPngSha256": "c73ba5be63ac73e3dddd172091f3353e1837c52828bcfbb03e46d715948ac773",
+      "decodedRgbaSha256": "9ee275cb607fa6bd46c4e1a403ad61903b5887f980df7efcea9c476fce1b8559",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-1-s2.png",
+      "runOnePngSha256": "c73ba5be63ac73e3dddd172091f3353e1837c52828bcfbb03e46d715948ac773",
+      "runTwoPngSha256": "c73ba5be63ac73e3dddd172091f3353e1837c52828bcfbb03e46d715948ac773",
+      "decodedRgbaSha256": "9ee275cb607fa6bd46c4e1a403ad61903b5887f980df7efcea9c476fce1b8559",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-0-s2.png",
+      "runOnePngSha256": "eca57a21e69ef7f288c76f65e8127ab1d9053b5a2b5465a3006b320ada33df4c",
+      "runTwoPngSha256": "eca57a21e69ef7f288c76f65e8127ab1d9053b5a2b5465a3006b320ada33df4c",
+      "decodedRgbaSha256": "e445bb6bbdb50ede2bd61f939e5395965cb9e65b8086046d229fe252d575fcc3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-1-s2.png",
+      "runOnePngSha256": "eca57a21e69ef7f288c76f65e8127ab1d9053b5a2b5465a3006b320ada33df4c",
+      "runTwoPngSha256": "eca57a21e69ef7f288c76f65e8127ab1d9053b5a2b5465a3006b320ada33df4c",
+      "decodedRgbaSha256": "e445bb6bbdb50ede2bd61f939e5395965cb9e65b8086046d229fe252d575fcc3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-0-s2.png",
+      "runOnePngSha256": "1dd4ffff20e1b94a63047640d028d0cfaac8a577b47757f52a9a77310ed21ebb",
+      "runTwoPngSha256": "1dd4ffff20e1b94a63047640d028d0cfaac8a577b47757f52a9a77310ed21ebb",
+      "decodedRgbaSha256": "b9da45013c8366866351e7fdd2aedca5eb26160c0bc3aae38571bf23cae2a21e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-1-s2.png",
+      "runOnePngSha256": "1dd4ffff20e1b94a63047640d028d0cfaac8a577b47757f52a9a77310ed21ebb",
+      "runTwoPngSha256": "1dd4ffff20e1b94a63047640d028d0cfaac8a577b47757f52a9a77310ed21ebb",
+      "decodedRgbaSha256": "b9da45013c8366866351e7fdd2aedca5eb26160c0bc3aae38571bf23cae2a21e",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-0-s2.png",
+      "runOnePngSha256": "91631b1c6f4834befeb41c224b1ac84a5ed4041809ec39b3cb209a49f542673d",
+      "runTwoPngSha256": "91631b1c6f4834befeb41c224b1ac84a5ed4041809ec39b3cb209a49f542673d",
+      "decodedRgbaSha256": "7ba3a84086da21753d55585393465b35f162450d53d00f8bc26f0335f2ee09f3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-1-s2.png",
+      "runOnePngSha256": "91631b1c6f4834befeb41c224b1ac84a5ed4041809ec39b3cb209a49f542673d",
+      "runTwoPngSha256": "91631b1c6f4834befeb41c224b1ac84a5ed4041809ec39b3cb209a49f542673d",
+      "decodedRgbaSha256": "7ba3a84086da21753d55585393465b35f162450d53d00f8bc26f0335f2ee09f3",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-0-s2.png",
+      "runOnePngSha256": "df51e4f274ab9eac88baa685b3fd2dc8558578226ba5344e5efe2ab5bacce76e",
+      "runTwoPngSha256": "df51e4f274ab9eac88baa685b3fd2dc8558578226ba5344e5efe2ab5bacce76e",
+      "decodedRgbaSha256": "8f96b401eb09dd822e25799be625fe5b2ee76cccb9f17683500fd75209b79273",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-1-s2.png",
+      "runOnePngSha256": "df51e4f274ab9eac88baa685b3fd2dc8558578226ba5344e5efe2ab5bacce76e",
+      "runTwoPngSha256": "df51e4f274ab9eac88baa685b3fd2dc8558578226ba5344e5efe2ab5bacce76e",
+      "decodedRgbaSha256": "8f96b401eb09dd822e25799be625fe5b2ee76cccb9f17683500fd75209b79273",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-0-s2.png",
+      "runOnePngSha256": "26522f46239a983910cd4b8127cc1ed77d9a72d6aec6483bf907a788eabd7c87",
+      "runTwoPngSha256": "26522f46239a983910cd4b8127cc1ed77d9a72d6aec6483bf907a788eabd7c87",
+      "decodedRgbaSha256": "6b53529c2d4cc09524c72b117213f7d439eb0997ea0741ab08507a97ae057f35",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-1-s2.png",
+      "runOnePngSha256": "26522f46239a983910cd4b8127cc1ed77d9a72d6aec6483bf907a788eabd7c87",
+      "runTwoPngSha256": "26522f46239a983910cd4b8127cc1ed77d9a72d6aec6483bf907a788eabd7c87",
+      "decodedRgbaSha256": "6b53529c2d4cc09524c72b117213f7d439eb0997ea0741ab08507a97ae057f35",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-oak-0-s3.png",
+      "runOnePngSha256": "fd17b4891fbd9c4b5e96a98cc422b5d3734b96a135ed56c3ce9dc191436d8949",
+      "runTwoPngSha256": "fd17b4891fbd9c4b5e96a98cc422b5d3734b96a135ed56c3ce9dc191436d8949",
+      "decodedRgbaSha256": "646f162ab119c24d0924b7da0f6a49cc6cfa838ee676fa6705d1c0368e4f27a8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-oak-1-s3.png",
+      "runOnePngSha256": "fd17b4891fbd9c4b5e96a98cc422b5d3734b96a135ed56c3ce9dc191436d8949",
+      "runTwoPngSha256": "fd17b4891fbd9c4b5e96a98cc422b5d3734b96a135ed56c3ce9dc191436d8949",
+      "decodedRgbaSha256": "646f162ab119c24d0924b7da0f6a49cc6cfa838ee676fa6705d1c0368e4f27a8",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-0-s3.png",
+      "runOnePngSha256": "aa6858c415beb099f257f2618a7514b421fcd4c72a9aad03dcff959f5453d93f",
+      "runTwoPngSha256": "aa6858c415beb099f257f2618a7514b421fcd4c72a9aad03dcff959f5453d93f",
+      "decodedRgbaSha256": "83a2386d197dbf72c17412083824f625dcb2899c183c5146e38252e5bf1f7067",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-spruce-1-s3.png",
+      "runOnePngSha256": "aa6858c415beb099f257f2618a7514b421fcd4c72a9aad03dcff959f5453d93f",
+      "runTwoPngSha256": "aa6858c415beb099f257f2618a7514b421fcd4c72a9aad03dcff959f5453d93f",
+      "decodedRgbaSha256": "83a2386d197dbf72c17412083824f625dcb2899c183c5146e38252e5bf1f7067",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-0-s3.png",
+      "runOnePngSha256": "7c16b35bb7a25b51494d836e09a7483e270f098d91d5ba847fa54450871a3444",
+      "runTwoPngSha256": "7c16b35bb7a25b51494d836e09a7483e270f098d91d5ba847fa54450871a3444",
+      "decodedRgbaSha256": "90a8ff83da2932d296c8b5656054bf446dca7501cec7cee8890ba28e6f3e06cb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-birch-1-s3.png",
+      "runOnePngSha256": "7c16b35bb7a25b51494d836e09a7483e270f098d91d5ba847fa54450871a3444",
+      "runTwoPngSha256": "7c16b35bb7a25b51494d836e09a7483e270f098d91d5ba847fa54450871a3444",
+      "decodedRgbaSha256": "90a8ff83da2932d296c8b5656054bf446dca7501cec7cee8890ba28e6f3e06cb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-0-s3.png",
+      "runOnePngSha256": "40c85e6898341641f7261930e07af08d6ebfbb428c952b6518b9c86034611031",
+      "runTwoPngSha256": "40c85e6898341641f7261930e07af08d6ebfbb428c952b6518b9c86034611031",
+      "decodedRgbaSha256": "cae65eb2a1898858458f7e8fc1fbb89b077a855aa078521d8fa939fb75214e7c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-jungle-1-s3.png",
+      "runOnePngSha256": "40c85e6898341641f7261930e07af08d6ebfbb428c952b6518b9c86034611031",
+      "runTwoPngSha256": "40c85e6898341641f7261930e07af08d6ebfbb428c952b6518b9c86034611031",
+      "decodedRgbaSha256": "cae65eb2a1898858458f7e8fc1fbb89b077a855aa078521d8fa939fb75214e7c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-0-s3.png",
+      "runOnePngSha256": "d9c1feb3ac67a69aa6cc39eab46400b4831c4df482432bd70964b6b38245593f",
+      "runTwoPngSha256": "d9c1feb3ac67a69aa6cc39eab46400b4831c4df482432bd70964b6b38245593f",
+      "decodedRgbaSha256": "9abaf9a1c8756d011b1d13b388358cd3825339fa0d4708e308da2529c969642a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-acacia-1-s3.png",
+      "runOnePngSha256": "d9c1feb3ac67a69aa6cc39eab46400b4831c4df482432bd70964b6b38245593f",
+      "runTwoPngSha256": "d9c1feb3ac67a69aa6cc39eab46400b4831c4df482432bd70964b6b38245593f",
+      "decodedRgbaSha256": "9abaf9a1c8756d011b1d13b388358cd3825339fa0d4708e308da2529c969642a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-0-s3.png",
+      "runOnePngSha256": "08c04f2e0347d576a5f8593416f847c6f07a8d2e22967e7669ac389a752832b6",
+      "runTwoPngSha256": "08c04f2e0347d576a5f8593416f847c6f07a8d2e22967e7669ac389a752832b6",
+      "decodedRgbaSha256": "2c0f80d027e2a8d968713add0fc12d96dfc0eb5957c8cdc170c2511c7962bb6a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-dark-oak-1-s3.png",
+      "runOnePngSha256": "08c04f2e0347d576a5f8593416f847c6f07a8d2e22967e7669ac389a752832b6",
+      "runTwoPngSha256": "08c04f2e0347d576a5f8593416f847c6f07a8d2e22967e7669ac389a752832b6",
+      "decodedRgbaSha256": "2c0f80d027e2a8d968713add0fc12d96dfc0eb5957c8cdc170c2511c7962bb6a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-0-s3.png",
+      "runOnePngSha256": "3fd7b06563f5530931c4fbf49afa8e2b9311b0bb712a1620e9e1a72766d8dd32",
+      "runTwoPngSha256": "3fd7b06563f5530931c4fbf49afa8e2b9311b0bb712a1620e9e1a72766d8dd32",
+      "decodedRgbaSha256": "ecf7ce894f352d3d18839912e1cfba29f6371a1a41d9c5edc42244302084f2d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-mangrove-1-s3.png",
+      "runOnePngSha256": "3fd7b06563f5530931c4fbf49afa8e2b9311b0bb712a1620e9e1a72766d8dd32",
+      "runTwoPngSha256": "3fd7b06563f5530931c4fbf49afa8e2b9311b0bb712a1620e9e1a72766d8dd32",
+      "decodedRgbaSha256": "ecf7ce894f352d3d18839912e1cfba29f6371a1a41d9c5edc42244302084f2d9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-0-s3.png",
+      "runOnePngSha256": "3382bb56c27f7383b970df14204d884d2cc1480bb99a88cef2a4736679914568",
+      "runTwoPngSha256": "3382bb56c27f7383b970df14204d884d2cc1480bb99a88cef2a4736679914568",
+      "decodedRgbaSha256": "ade48533b378c5468efeadae74492c215d995b765877ce485b1386ede6c9b5a7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-cherry-1-s3.png",
+      "runOnePngSha256": "3382bb56c27f7383b970df14204d884d2cc1480bb99a88cef2a4736679914568",
+      "runTwoPngSha256": "3382bb56c27f7383b970df14204d884d2cc1480bb99a88cef2a4736679914568",
+      "decodedRgbaSha256": "ade48533b378c5468efeadae74492c215d995b765877ce485b1386ede6c9b5a7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-0-s3.png",
+      "runOnePngSha256": "cc0af634636a64de82b53f949e55a6cc7a45b5806b6a6f3bff08b9637f65ec12",
+      "runTwoPngSha256": "cc0af634636a64de82b53f949e55a6cc7a45b5806b6a6f3bff08b9637f65ec12",
+      "decodedRgbaSha256": "e2a52ed07cd7cb89b6b3caf6f68df43aa77c5cb7fce7a1c407c351877e139256",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-bamboo-1-s3.png",
+      "runOnePngSha256": "cc0af634636a64de82b53f949e55a6cc7a45b5806b6a6f3bff08b9637f65ec12",
+      "runTwoPngSha256": "cc0af634636a64de82b53f949e55a6cc7a45b5806b6a6f3bff08b9637f65ec12",
+      "decodedRgbaSha256": "e2a52ed07cd7cb89b6b3caf6f68df43aa77c5cb7fce7a1c407c351877e139256",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-0-s3.png",
+      "runOnePngSha256": "b69223e069b83b1d4a402d26e59d4d1f2245283d0bcbccd09d70018f8409c6a5",
+      "runTwoPngSha256": "b69223e069b83b1d4a402d26e59d4d1f2245283d0bcbccd09d70018f8409c6a5",
+      "decodedRgbaSha256": "67c0a9646375d422c40832a599cb6750c91144362f095c1492b60bcbf75e54e7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-crimson-1-s3.png",
+      "runOnePngSha256": "b69223e069b83b1d4a402d26e59d4d1f2245283d0bcbccd09d70018f8409c6a5",
+      "runTwoPngSha256": "b69223e069b83b1d4a402d26e59d4d1f2245283d0bcbccd09d70018f8409c6a5",
+      "decodedRgbaSha256": "67c0a9646375d422c40832a599cb6750c91144362f095c1492b60bcbf75e54e7",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-0-s3.png",
+      "runOnePngSha256": "05390e5025fd2a012603bc8d46fbb30d54180a43ac838c020d406ab4b0f600c8",
+      "runTwoPngSha256": "05390e5025fd2a012603bc8d46fbb30d54180a43ac838c020d406ab4b0f600c8",
+      "decodedRgbaSha256": "67972205a280960d28e5d5a3596bbf1cd216d09c68a524f26d0f50d41ff46444",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-warped-1-s3.png",
+      "runOnePngSha256": "05390e5025fd2a012603bc8d46fbb30d54180a43ac838c020d406ab4b0f600c8",
+      "runTwoPngSha256": "05390e5025fd2a012603bc8d46fbb30d54180a43ac838c020d406ab4b0f600c8",
+      "decodedRgbaSha256": "67972205a280960d28e5d5a3596bbf1cd216d09c68a524f26d0f50d41ff46444",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-0-s3.png",
+      "runOnePngSha256": "b534fac13460b3a92fba947d295d0e884d9e129a0270d15738049f3f5c1baeb6",
+      "runTwoPngSha256": "b534fac13460b3a92fba947d295d0e884d9e129a0270d15738049f3f5c1baeb6",
+      "decodedRgbaSha256": "a949ebde23d64864b7260729debbfd7f6a9057321f913818fd29435c7d9951f6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "sign-pale-oak-1-s3.png",
+      "runOnePngSha256": "b534fac13460b3a92fba947d295d0e884d9e129a0270d15738049f3f5c1baeb6",
+      "runTwoPngSha256": "b534fac13460b3a92fba947d295d0e884d9e129a0270d15738049f3f5c1baeb6",
+      "decodedRgbaSha256": "a949ebde23d64864b7260729debbfd7f6a9057321f913818fd29435c7d9951f6",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-0-s3.png",
+      "runOnePngSha256": "5617d2edd203fae90406073fb5024e0506ad09435cc4e79f721b7db40e7be663",
+      "runTwoPngSha256": "5617d2edd203fae90406073fb5024e0506ad09435cc4e79f721b7db40e7be663",
+      "decodedRgbaSha256": "013c0439dee92cff621536834d1b9e6ef4cbc74d06f046d6410d1467cfe17af9",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-oak-1-s3.png",
+      "runOnePngSha256": "e16cb4021cff888241e4007d2d2e02c49569f6d9f179ea1921184a8f2ae8ab0c",
+      "runTwoPngSha256": "e16cb4021cff888241e4007d2d2e02c49569f6d9f179ea1921184a8f2ae8ab0c",
+      "decodedRgbaSha256": "8c76527e5438476144cf3e3635e546250b2f8b9778729c32ea8b893e8e054fb4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-0-s3.png",
+      "runOnePngSha256": "f4fe3dc83d611aa9a456a527d09d8c08d1e33779a92c51fc714a4091604c3327",
+      "runTwoPngSha256": "f4fe3dc83d611aa9a456a527d09d8c08d1e33779a92c51fc714a4091604c3327",
+      "decodedRgbaSha256": "35c71aaa61711127c1cbde7c569d549add24ab4fab610251898d4b6171315b59",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-spruce-1-s3.png",
+      "runOnePngSha256": "48a5bc93bff7017cf6815b5306eb95f72aeef212f17286c705052c0f1fb5142e",
+      "runTwoPngSha256": "48a5bc93bff7017cf6815b5306eb95f72aeef212f17286c705052c0f1fb5142e",
+      "decodedRgbaSha256": "b46d0c6c4642145b02a4323dd8a7eb233e648b8ff91e1be89d21593571bb4718",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-0-s3.png",
+      "runOnePngSha256": "9758620bd1ed0f63414e7df86865341891e3cb3dd126ea82de25ac5ce9021de7",
+      "runTwoPngSha256": "9758620bd1ed0f63414e7df86865341891e3cb3dd126ea82de25ac5ce9021de7",
+      "decodedRgbaSha256": "45372eebe168dd5b93ea14bfe95636290fb79b174514ed4bd1104e4711df4467",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-birch-1-s3.png",
+      "runOnePngSha256": "47c8d61ba402bbd7f32d1374716bc240631c6ab04598948a40de3a97c1df0907",
+      "runTwoPngSha256": "47c8d61ba402bbd7f32d1374716bc240631c6ab04598948a40de3a97c1df0907",
+      "decodedRgbaSha256": "2c3d30045052f0b25e45869a5fe35d5101268e6cf353e67f1eb4a8cae3649858",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-0-s3.png",
+      "runOnePngSha256": "bdf1eb67f939fe4801f560457711afd56b60be82d1f1e169ae22f9a5ef291ad4",
+      "runTwoPngSha256": "bdf1eb67f939fe4801f560457711afd56b60be82d1f1e169ae22f9a5ef291ad4",
+      "decodedRgbaSha256": "f5e5c62e90391f7baf374d6cffb3e3a2217911f6653e035070300b0d0f47ee13",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-jungle-1-s3.png",
+      "runOnePngSha256": "a0417d5602ea6fb70cd88f7809c1c3eb48b5a02831ab9b6c409d2165c697e73f",
+      "runTwoPngSha256": "a0417d5602ea6fb70cd88f7809c1c3eb48b5a02831ab9b6c409d2165c697e73f",
+      "decodedRgbaSha256": "05ab4d87b6985f741a838adaea7dea9053aa05b3e837f8b35ab272a07a1c38c0",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-0-s3.png",
+      "runOnePngSha256": "e64a716f81661c5eb4d443fac22b0056bf12655d55190e3206b2a55baf3f3e19",
+      "runTwoPngSha256": "e64a716f81661c5eb4d443fac22b0056bf12655d55190e3206b2a55baf3f3e19",
+      "decodedRgbaSha256": "34c23650f3c4fe66195bf8dff2e097ddec940b0f0acf2c96e380e0343ab8a8c5",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-acacia-1-s3.png",
+      "runOnePngSha256": "d7cb9e0c75c520affa2734fa446ca1d3e5d7889f88bd36283a60b2e08a57bd70",
+      "runTwoPngSha256": "d7cb9e0c75c520affa2734fa446ca1d3e5d7889f88bd36283a60b2e08a57bd70",
+      "decodedRgbaSha256": "f9dc9580d3814aa5beb7b642e16626200c781090a0ea7eeeb5b7ffa54f67bc6c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-0-s3.png",
+      "runOnePngSha256": "e9798156f817cb6ffedcd78072a67f3a0a3181b33c8213038be42e44efb15f48",
+      "runTwoPngSha256": "e9798156f817cb6ffedcd78072a67f3a0a3181b33c8213038be42e44efb15f48",
+      "decodedRgbaSha256": "923f325eb18fd3b204ca62d26d8b1f8a6672af68ec1bf9eb0b28c660020a1d74",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-dark-oak-1-s3.png",
+      "runOnePngSha256": "722a84ba480ddc9e8527d55f2ed6fd13196a0c849b714d8ef8c7c3a9ba52989d",
+      "runTwoPngSha256": "722a84ba480ddc9e8527d55f2ed6fd13196a0c849b714d8ef8c7c3a9ba52989d",
+      "decodedRgbaSha256": "7dac2e90182a6e3519e6724e42093cda22a7efa81bcd47fb8930803d3f1f40ba",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-0-s3.png",
+      "runOnePngSha256": "5d717c1e2e79c56586353bda9e0020a3ebb2bbc68d7091f98ca498c9e24b9b59",
+      "runTwoPngSha256": "5d717c1e2e79c56586353bda9e0020a3ebb2bbc68d7091f98ca498c9e24b9b59",
+      "decodedRgbaSha256": "b1b7581353827f3111c401f076f4c66f2702049ecef3c673c42f3c38fee81554",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-mangrove-1-s3.png",
+      "runOnePngSha256": "f7e1be15cc29d4d38e11652ab25a36fd98f4cdbaaba9e9f4d95ef995d556fd3b",
+      "runTwoPngSha256": "f7e1be15cc29d4d38e11652ab25a36fd98f4cdbaaba9e9f4d95ef995d556fd3b",
+      "decodedRgbaSha256": "b764b618b0619fe500beba882b9e6f578c854a9334759491030a796a26f5b4e4",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-0-s3.png",
+      "runOnePngSha256": "7f33f798bc3b3d49ff436dd4729e328a1d685659ec6b84c67bdf2d1683dea2b6",
+      "runTwoPngSha256": "7f33f798bc3b3d49ff436dd4729e328a1d685659ec6b84c67bdf2d1683dea2b6",
+      "decodedRgbaSha256": "6a51a6d7e691ee733a10021e7ec082791a6b3199587c7533dbd86dd236980d8d",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-cherry-1-s3.png",
+      "runOnePngSha256": "0c45e5237f59d559ed402c51e6018b94ff66858d5ba5378fd5a2032a2753ba6b",
+      "runTwoPngSha256": "0c45e5237f59d559ed402c51e6018b94ff66858d5ba5378fd5a2032a2753ba6b",
+      "decodedRgbaSha256": "82fd8b5341a60565347ebb9b4429f521a400c3d4a5be2234184847a612357177",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-0-s3.png",
+      "runOnePngSha256": "8441934522f18e5ffd4d7a5e0c92071be185b534b23cc5857d6890e206eceb40",
+      "runTwoPngSha256": "8441934522f18e5ffd4d7a5e0c92071be185b534b23cc5857d6890e206eceb40",
+      "decodedRgbaSha256": "d2fab097c5e68c4cf171f3eca60c61b21da509134fefe65beb9127ce8d7974fb",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-bamboo-1-s3.png",
+      "runOnePngSha256": "3683124fbd73f6b25d8f94f4e5373510794e8fb8d87d8d94108e10e141a5da42",
+      "runTwoPngSha256": "3683124fbd73f6b25d8f94f4e5373510794e8fb8d87d8d94108e10e141a5da42",
+      "decodedRgbaSha256": "78ce0511effcf6956c504901bff785fdb02b66d9edae8f8e9dc286606d1d9394",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-0-s3.png",
+      "runOnePngSha256": "41e15b5579be91f3dc36ea259da2de6700ea06935eeb06a65f39cf507259b1f3",
+      "runTwoPngSha256": "41e15b5579be91f3dc36ea259da2de6700ea06935eeb06a65f39cf507259b1f3",
+      "decodedRgbaSha256": "de7ecbe7465eadddee85c99065d5706993d19863494487cde1160f1396a82bdf",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-crimson-1-s3.png",
+      "runOnePngSha256": "64cd5e28699a91f3a8e5c80cb7971b9bf8206be26a0f25197852815fabfd1159",
+      "runTwoPngSha256": "64cd5e28699a91f3a8e5c80cb7971b9bf8206be26a0f25197852815fabfd1159",
+      "decodedRgbaSha256": "b8132ecbce382544f6223425578a034a39d091eebf14e208e21db73216730bbc",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-0-s3.png",
+      "runOnePngSha256": "9dd4a782290230334b9c949d3188ab330fbb5c8e9c7a89134ffe8665110654ab",
+      "runTwoPngSha256": "9dd4a782290230334b9c949d3188ab330fbb5c8e9c7a89134ffe8665110654ab",
+      "decodedRgbaSha256": "2f506cdde828bcca73a47a1d5895b88d173b776b1c301909b5e418242079ec3a",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-warped-1-s3.png",
+      "runOnePngSha256": "2e0356a9fef48306c1c881fc232b309b6a86566316d67aee7d2bdf75e2fab147",
+      "runTwoPngSha256": "2e0356a9fef48306c1c881fc232b309b6a86566316d67aee7d2bdf75e2fab147",
+      "decodedRgbaSha256": "a11a6187f4d06173cd216ab138da0391904ef76badede8dbefec1e42eb86228b",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-0-s3.png",
+      "runOnePngSha256": "9c2eef8295a59962a4f31d1dd1a85186a07f8a9c17ed42f37551749dd9acc9d3",
+      "runTwoPngSha256": "9c2eef8295a59962a4f31d1dd1a85186a07f8a9c17ed42f37551749dd9acc9d3",
+      "decodedRgbaSha256": "d3263edd590e8bd6fc9f936a1f6ed920ca31c1414d220f72096b5b162eb2d89c",
+      "mismatchedPixels": 0
+    },
+    {
+      "name": "hanging-sign-pale-oak-1-s3.png",
+      "runOnePngSha256": "fef5e550055e50aa25bc835adfde71c57ce8f8c184cc70c7ec747424eb5dea3d",
+      "runTwoPngSha256": "fef5e550055e50aa25bc835adfde71c57ce8f8c184cc70c7ec747424eb5dea3d",
+      "decodedRgbaSha256": "940a9f6d936c3565612e965e47e48a247ce83b6b9d8b8c6ab4825fbf4258274e",
+      "mismatchedPixels": 0
+    }
+  ]
+}

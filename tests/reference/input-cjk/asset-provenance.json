@@ -1,0 +1,18 @@
+{
+  "assetIndex": "32",
+  "locale": "en_us / Japanese glyph filter disabled",
+  "sources": {
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be"
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7"
+    }
+  },
+  "glyphCount": 48143,
+  "glyphAtlasSha256": "5477db4a5c5c85c30d465c864542a9be099b36a735ce3bb601291873193a3ba0",
+  "glyphProbeSourceSha256": "4beeb5601327768d2737234d5d1d4b84a3d06eff0cc210bd5bec01720e712eb0",
+  "rendering": "Original indexed Unihex pixels and size overrides; oversample2, shadow offset0.5, native 0.01-texel inset and observed default-font UVs for the tested glyphs. GPU projection uses the actual input screen position and viewport. Advance-only font preserves native DOM hit-testing. Other CJK glyphs retain original pixels but their atlas sampling is unverified."
+}

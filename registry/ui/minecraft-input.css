@@ -1,5 +1,6 @@
 @layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
+@import "./minecraft-unifont-metrics.css";
 @layer components {
   .mc-input {
     --mc-pixel: calc(1px * var(--mc-scale, 2));
@@ -30,7 +31,7 @@
   }
   .mc-input:disabled, .mc-input:read-only { color: #707070; caret-color: #707070; }
   .mc-input:disabled { cursor: not-allowed; }
-  .mc-input[data-mc-bitmap="true"] { color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent; }
+  .mc-input[data-mc-bitmap="true"] { font-family: "Minecraft Pilot 26.2", "Minecraft Unihex Metrics 26.2", monospace; color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input[data-mc-bitmap="true"]::placeholder { color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input[data-mc-bitmap="true"]::selection { background: transparent; color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input::placeholder { opacity: 1; color: #555; }

@@ -7,10 +7,12 @@ import { MinecraftSurface } from "./minecraft-surface"
 import { MinecraftText } from "./minecraft-text"
 import { minecraftSliderSprites as sprites } from "./minecraft-slider-sprites"
 import "./minecraft-slider.css"
+import { playMinecraftClick } from "./minecraft-sound"
 
 function Slider({ className, defaultValue, value, min = 0, max = 100, scale = 2,
   label, style, disabled, orientation = "horizontal", dir: direction, inverted = false,
-  onValueChange, onFocusCapture, onBlurCapture, onKeyDown, onMouseEnter, onMouseLeave, ...props }:
+  onValueChange, onFocusCapture, onBlurCapture, onKeyDown, onMouseEnter, onMouseLeave,
+  onPointerDownCapture, onPointerUpCapture, onPointerCancelCapture, ...props }:
   React.ComponentProps<typeof SliderPrimitive.Root> & { scale?: 1 | 2 | 3; label?: string }) {
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? [min, max])
   const dir = Direction.useDirection(direction)
@@ -18,6 +20,7 @@ function Slider({ className, defaultValue, value, min = 0, max = 100, scale = 2,
   const [editing, setEditing] = React.useState(false)
   const [focused, setFocused] = React.useState(false)
   const [hovered, setHovered] = React.useState(false)
+  const pressed = React.useRef(false)
   const highlightTrack = !disabled && focused && !editing
   const highlightHandle = !disabled && (hovered || (focused && editing))
   return <SliderPrimitive.Root
@@ -32,6 +35,13 @@ function Slider({ className, defaultValue, value, min = 0, max = 100, scale = 2,
     onMouseEnter={event => { onMouseEnter?.(event); if (!event.defaultPrevented) setHovered(true) }}
     onMouseLeave={event => { onMouseLeave?.(event); if (!event.defaultPrevented) setHovered(false) }}
     {...props}
+    onPointerDownCapture={event => { onPointerDownCapture?.(event); pressed.current = !disabled && !event.defaultPrevented && event.button === 0 }}
+    onPointerUpCapture={event => {
+      onPointerUpCapture?.(event)
+      if (pressed.current && !disabled && !event.defaultPrevented) playMinecraftClick()
+      pressed.current = false
+    }}
+    onPointerCancelCapture={event => { pressed.current = false; onPointerCancelCapture?.(event) }}
   >
     <SliderPrimitive.Track data-slot="slider-track" className="mc-slider-track">
       <MinecraftSurface sprite={highlightTrack ? sprites.slider_highlighted : sprites.slider} />

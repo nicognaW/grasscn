@@ -2107,65 +2107,17 @@
     "assets/minecraft/textures/gui/sprites/hud/locator_bar_arrow_down.png": {
       "sha256": "4cfd69e1d30ffe6ffb4302823aa31b37d42e6dc25d37c300cdc58278bbf1901b",
       "width": 7,
-      "height": 10,
-      "metadata": {
-        "animation": {
-          "frames": [
-            {
-              "index": 0,
-              "time": 10
-            },
-            {
-              "index": 1,
-              "time": 4
-            }
-          ],
-          "height": 5
-        }
-      },
-      "metadataSha256": "21378b8d6cda05567dbb33d82b94b6d3f7b2190c107d4fa28d9c209d17e9e546"
+      "height": 10
     },
     "assets/minecraft/textures/gui/sprites/hud/locator_bar_arrow_up.png": {
       "sha256": "cf533804a926eabbec1fc9d53f3bbcc9416c6cc44c6c61ac1474a57bf8ea5fe4",
       "width": 7,
-      "height": 10,
-      "metadata": {
-        "animation": {
-          "frames": [
-            {
-              "index": 0,
-              "time": 10
-            },
-            {
-              "index": 1,
-              "time": 4
-            }
-          ],
-          "height": 5
-        }
-      },
-      "metadataSha256": "21378b8d6cda05567dbb33d82b94b6d3f7b2190c107d4fa28d9c209d17e9e546"
+      "height": 10
     },
     "assets/minecraft/textures/gui/sprites/hud/locator_bar_background.png": {
       "sha256": "b4754dd4f781468409d9a4f8b817439a802d81ddcf34df34f317899a7211d885",
       "width": 12,
-      "height": 5,
-      "metadata": {
-        "gui": {
-          "scaling": {
-            "type": "nine_slice",
-            "width": 12,
-            "height": 5,
-            "border": {
-              "left": 5,
-              "right": 5,
-              "top": 1,
-              "bottom": 1
-            }
-          }
-        }
-      },
-      "metadataSha256": "b5132e2d32ac8311e15d7aa3964106553229f06d1ab42c4404f2e43f7d61ce7f"
+      "height": 5
     },
     "assets/minecraft/textures/gui/sprites/hud/locator_bar_dot/bowtie.png": {
       "sha256": "0b6529251a02ec0e5e968abd1c42244ce300a3cc68ac645e895fbe5d758fea47",
@@ -3480,6 +3432,191 @@
       "sha256": "3e44abea010ab0a4c344c638e4688001cdda3bd7f9c6b847797327108b69603c",
       "width": 512,
       "height": 256
+    },
+    "assets/minecraft/textures/block/stone.png": {
+      "sha256": "b5e10adc72442bfb257ce7ba0b9bbe36475a0c8cdfec89b80dc9517203ff3e9f",
+      "width": 16,
+      "height": 16
+    },
+    "assets/minecraft/textures/map/decorations/black_banner.png": {
+      "sha256": "16040950ace65a68ca7b2c2b7d6384f706f7884079a964b5ba03ebc61cd370ee",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/blue_banner.png": {
+      "sha256": "efe9ca192c73c9ce717ea0edae72f51dda134d4c81dfecae54747808d08c30f6",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/blue_marker.png": {
+      "sha256": "faae9541318f01250b1ebd4fde3663972a6f3893b90799e431ecf33a4f76ea21",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/brown_banner.png": {
+      "sha256": "eabcdb42e5e56426b8dc952fe025c8cee12617ca5e12e017c440b12cd98cc1c2",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/cyan_banner.png": {
+      "sha256": "dcdad84cf91f233f6da589605a91ad5b759b77c90d6c12baf06ce4a451ace08d",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/desert_village.png": {
+      "sha256": "17908e830f68e28a104c419351ea4a65fa6c7e55e52e60a6ed741ae73ebc30f1",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/frame.png": {
+      "sha256": "a8142aa043f580c34b026a1951fb08f293cda375ae673cd3620236320b2f8f88",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/gray_banner.png": {
+      "sha256": "31da89ded608e2b6667a03a459f5dc7c68821875ed9bfab70a798f2f9a33e318",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/green_banner.png": {
+      "sha256": "8b1935d164d9feab586a99ec0fae34980c6554eb8aafab3e8d38791dcdeade14",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/jungle_temple.png": {
+      "sha256": "5129e30e950697521396e8aa09f72c4807e024914c15cf3c58c4ac74a774c936",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/light_blue_banner.png": {
+      "sha256": "78f99072f95a8aebd31035eb6c106277ac81c9c09e26eb2fd1c06cf03aab5f6b",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/light_gray_banner.png": {
+      "sha256": "f297275e8019b3896e8d858afe81c59a28ae1effad7797aa3bb73c4821462208",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/lime_banner.png": {
+      "sha256": "de41cf64539d50a57c42c0b825e4e287d6b0599c7e752f959acf57852c7c0648",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/magenta_banner.png": {
+      "sha256": "778d4f14ee2179bbf72421388fe76a2171aacbe1b6af411c0628674eeb414840",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/ocean_monument.png": {
+      "sha256": "9243905f0d2cda86e7ad6d7558478981cc058125ea22b367593b89db7f62cf3c",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/orange_banner.png": {
+      "sha256": "9f47c3b0e746c2d07c06f54f453a2d9688ce5c31bffdd7c613ba1d4b7f81048f",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/pink_banner.png": {
+      "sha256": "8849625e9cbce147d1078e7780b66d7415dfe928e94303da87bfc4606d371ad0",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/plains_village.png": {
+      "sha256": "328b0ab3150a798de59bc6f6b5c3ec0adf3309025736399e9a0a35260cc932ff",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/player.png": {
+      "sha256": "6cef16c9f7ecfc6e9d66cc1035c402f7883d6db697598a399fd5ea45ba0f776c",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/player_off_limits.png": {
+      "sha256": "a6f5b6ebd9b42647a319c81be543e1c4882ba076cec7050f1237af696708e3da",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/player_off_map.png": {
+      "sha256": "af9e853ca0e34cf8845333f92e952b7b886f40927e1796ad3c2fb4a3abacf3b0",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/purple_banner.png": {
+      "sha256": "b61313af7d1cff1480adbca998694fb755a9bd5d99efe0483ad24dbaef77f6f4",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/red_banner.png": {
+      "sha256": "3858c5be5016c6a05d43eaa02189e8ba6e02f1d3807076d14e3d72c02192a56e",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/red_marker.png": {
+      "sha256": "b3113c1cca6dd335393a80e467d163b96cdb03cbe3a3f7436fc44928beb2279c",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/red_x.png": {
+      "sha256": "6d97bdd5f37786dc079462747746b0ae0a75031b1e61ca6716a436ec64cbd108",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/savanna_village.png": {
+      "sha256": "1dd37738ad3b20d2ab3db20f3230d78683b715b3174a68b64b8d047997ed56c7",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/snowy_village.png": {
+      "sha256": "093286d5aa7d651bbfdd910d7e90f31554cde013059bc9c2eba0405176adbeda",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/swamp_hut.png": {
+      "sha256": "6f5f9e7529519bdb5ed04308104cd5a552c8b4605649755dc2eec41ce6670ded",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/taiga_village.png": {
+      "sha256": "483caafc0279957b709c7ececdbab1064c7ea19a64016a43c9b20cfbbf1cd33a",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/target_point.png": {
+      "sha256": "a8f0b67433bcb892e953a7c905a7f49dc0e955f4d9534c6b56bc8f4e6de06f86",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/target_x.png": {
+      "sha256": "deaa52358d84ec12c5cf7f5fbfb20116443de7681f79b9fe4696e3994260c2f1",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/trial_chambers.png": {
+      "sha256": "a9001ae6f4e9552308ad9fac5ca0f9cff0ef73d499c1df7d8ecb9bacfa9f5107",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/white_banner.png": {
+      "sha256": "e8c7a9e1bdc9e352c7d0e4d1f442bdfdd3b4915a501f53bf083364d7d7d15b9a",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/woodland_mansion.png": {
+      "sha256": "43b59399949f1686b3e1a5e6acbae418c205e224ddc6077a08d2cbe1a8bc2350",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/map/decorations/yellow_banner.png": {
+      "sha256": "dc247bf722cbe30097f34e397ac88609c34a32cc3526d5885a3200141f126567",
+      "width": 8,
+      "height": 8
+    },
+    "assets/minecraft/textures/item/diamond.png": {
+      "sha256": "fd11635ec666c3febb9e6dd6d3ec49cdfb4d16a2a1d595ebd10e56b302417d08",
+      "width": 16,
+      "height": 16
     }
   },
   "classes": {
@@ -4223,49 +4360,8 @@
       "resourceConstants": []
     },
     "net.minecraft.client.gui.components.PlayerTabOverlay": {
-      "member": "net/minecraft/client/gui/components/PlayerTabOverlay.class",
       "sha256": "55afe236780776dac52d6c0d889d786ca0ba2b982b3a062213cb2465c1126e23",
-      "disassemblySha256": "6bd8f993b87cc3221ebc98b93313bcecb79deb81c52b64d79d68a8377eb86337",
-      "methods": [
-        "public net.minecraft.client.gui.components.PlayerTabOverlay(net.minecraft.client.Minecraft, net.minecraft.client.gui.Hud);",
-        "public net.minecraft.network.chat.Component getNameForDisplay(net.minecraft.client.multiplayer.PlayerInfo);",
-        "private net.minecraft.network.chat.Component decorateName(net.minecraft.client.multiplayer.PlayerInfo, net.minecraft.network.chat.MutableComponent);",
-        "public void setVisible(boolean);",
-        "private java.util.List<net.minecraft.client.multiplayer.PlayerInfo> getPlayerInfos();",
-        "public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, net.minecraft.world.scores.Scoreboard, net.minecraft.world.scores.Objective);",
-        "protected void extractPingIcon(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, net.minecraft.client.multiplayer.PlayerInfo);",
-        "private void extractTablistScore(net.minecraft.world.scores.Objective, int, net.minecraft.client.gui.components.PlayerTabOverlay$ScoreDisplayEntry, int, int, java.util.UUID, net.minecraft.client.gui.GuiGraphicsExtractor);",
-        "private void extractTablistHearts(int, int, int, java.util.UUID, net.minecraft.client.gui.GuiGraphicsExtractor, int);",
-        "public void setFooter(net.minecraft.network.chat.Component);",
-        "public void setHeader(net.minecraft.network.chat.Component);",
-        "public void reset();",
-        "private static net.minecraft.client.gui.components.PlayerTabOverlay$HealthState lambda$extractTablistHearts$0(int, java.util.UUID);",
-        "private static boolean lambda$extractRenderState$1(java.util.Set, java.util.UUID);",
-        "private static java.util.UUID lambda$extractRenderState$0(net.minecraft.client.multiplayer.PlayerInfo);",
-        "private static java.lang.String lambda$static$3(net.minecraft.client.multiplayer.PlayerInfo);",
-        "private static java.lang.String lambda$static$2(net.minecraft.client.multiplayer.PlayerInfo);",
-        "private static int lambda$static$1(net.minecraft.client.multiplayer.PlayerInfo);",
-        "private static int lambda$static$0(net.minecraft.client.multiplayer.PlayerInfo);"
-      ],
-      "resourceConstants": [
-        ",",
-        "multiplayer.player.list.narration",
-        "multiplayer.player.list.hp",
-        "icon/ping_unknown",
-        "icon/ping_1",
-        "icon/ping_2",
-        "icon/ping_3",
-        "icon/ping_4",
-        "icon/ping_5",
-        "hud/heart/container_blinking",
-        "hud/heart/container",
-        "hud/heart/full_blinking",
-        "hud/heart/half_blinking",
-        "hud/heart/absorbing_full_blinking",
-        "hud/heart/full",
-        "hud/heart/absorbing_half_blinking",
-        "hud/heart/half"
-      ]
+      "disassemblySha256": "6bd8f993b87cc3221ebc98b93313bcecb79deb81c52b64d79d68a8377eb86337"
     },
     "net.minecraft.client.gui.components.PopupScreen": {
       "member": "net/minecraft/client/gui/components/PopupScreen.class",
@@ -4702,65 +4798,12 @@
       ]
     },
     "net.minecraft.client.gui.screens.inventory.BookViewScreen": {
-      "member": "net/minecraft/client/gui/screens/inventory/BookViewScreen.class",
       "sha256": "827dcd0acf4f1141bd78e658ad267ce83842d9fb79591a736ec6e1fafa2e8698",
-      "disassemblySha256": "984c4a907f18620994ee8204c15b7db36fe63aa4c2b63d51c9ab1c3177d48b59",
-      "methods": [
-        "public net.minecraft.client.gui.screens.inventory.BookViewScreen(net.minecraft.client.gui.screens.inventory.BookViewScreen$BookAccess);",
-        "public net.minecraft.client.gui.screens.inventory.BookViewScreen();",
-        "private net.minecraft.client.gui.screens.inventory.BookViewScreen(net.minecraft.client.gui.screens.inventory.BookViewScreen$BookAccess, boolean);",
-        "public void setBookAccess(net.minecraft.client.gui.screens.inventory.BookViewScreen$BookAccess);",
-        "public boolean setPage(int);",
-        "protected boolean forcePage(int);",
-        "protected void init();",
-        "public net.minecraft.network.chat.Component getNarrationMessage();",
-        "private net.minecraft.network.chat.Component getPageNumberMessage();",
-        "protected void createMenuControls();",
-        "protected void createPageControlButtons();",
-        "private int getNumPages();",
-        "protected void pageBack();",
-        "protected void pageForward();",
-        "private void updateButtonVisibility();",
-        "public boolean keyPressed(net.minecraft.client.input.KeyEvent);",
-        "public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);",
-        "private void visitText(net.minecraft.client.gui.ActiveTextCollector, boolean);",
-        "public void extractBackground(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);",
-        "private int backgroundLeft();",
-        "private int backgroundTop();",
-        "protected int menuControlsTop();",
-        "public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);",
-        "protected boolean handleClickEvent(net.minecraft.network.chat.ClickEvent);",
-        "protected void closeContainerOnServer();",
-        "public boolean isInGameUi();",
-        "private void lambda$createPageControlButtons$1(net.minecraft.client.gui.components.Button);",
-        "private void lambda$createPageControlButtons$0(net.minecraft.client.gui.components.Button);",
-        "private void lambda$createMenuControls$0(net.minecraft.client.gui.components.Button);"
-      ],
-      "resourceConstants": [
-        "book.pageIndicator",
-        "Player not available",
-        "book.view.title",
-        "textures/gui/book.png"
-      ]
+      "disassemblySha256": "984c4a907f18620994ee8204c15b7db36fe63aa4c2b63d51c9ab1c3177d48b59"
     },
     "net.minecraft.client.gui.screens.inventory.PageButton": {
-      "member": "net/minecraft/client/gui/screens/inventory/PageButton.class",
       "sha256": "eea444bcb75e36ea54927289c2da6ac55bc05d3aacde1517ee68bf71ba6f5feb",
-      "disassemblySha256": "714c331f6b3e4becb43b1740f8869c2272970f97139944338a428d8f17a68fe7",
-      "methods": [
-        "public net.minecraft.client.gui.screens.inventory.PageButton(int, int, boolean, net.minecraft.client.gui.components.Button$OnPress, boolean);",
-        "public void extractContents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);",
-        "public void playDownSound(net.minecraft.client.sounds.SoundManager);",
-        "public boolean shouldTakeFocusAfterInteraction();"
-      ],
-      "resourceConstants": [
-        "widget/page_forward_highlighted",
-        "widget/page_forward",
-        "widget/page_backward_highlighted",
-        "widget/page_backward",
-        "book.page_button.next",
-        "book.page_button.previous"
-      ]
+      "disassemblySha256": "714c331f6b3e4becb43b1740f8869c2272970f97139944338a428d8f17a68fe7"
     },
     "net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil": {
       "member": "net/minecraft/client/gui/screens/inventory/tooltip/TooltipRenderUtil.class",
@@ -5251,6 +5294,267 @@
         "core/animate_sprite_interpolate",
         "pipeline/animate_sprite_interpolate"
       ]
+    },
+    "net.minecraft.client.gui.components.tabs.MenuTabBar$MenuTabButton": {
+      "member": "net/minecraft/client/gui/components/tabs/MenuTabBar$MenuTabButton.class",
+      "sha256": "e621a198ffb901bc6fbd0e85387aa53ebb3000426c8b1569d0aa08eb5615ade7",
+      "disassemblySha256": "b211655e1b7438977030da13d5feea8144c8c4ecac835689f6f99d0d8d47ca9e",
+      "methods": [
+        "public net.minecraft.client.gui.components.tabs.MenuTabBar$MenuTabButton(net.minecraft.client.gui.components.tabs.TabManager, net.minecraft.client.gui.components.tabs.Tab, int, int);",
+        "protected void extractWidgetRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);",
+        "protected void renderMenuBackground(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int);",
+        "private void renderLabel(net.minecraft.client.gui.ActiveTextCollector);",
+        "private void renderFocusUnderline(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.gui.Font, int);"
+      ],
+      "resourceConstants": [
+        "widget/tab_selected",
+        "widget/tab",
+        "widget/tab_selected_highlighted",
+        "widget/tab_highlighted"
+      ]
+    },
+    "net.minecraft.client.gui.components.AbstractContainerWidget": {
+      "member": "net/minecraft/client/gui/components/AbstractContainerWidget.class",
+      "sha256": "9710dcc656fb174ff63f24fab7a92d60fbe2545e4a0f940a2540b5347d7885df",
+      "disassemblySha256": "fc69abab588ec1f8f320fc290cfdc5dcecb6c67f9e6d0aa5677d62b8ccf085c2",
+      "methods": [
+        "public net.minecraft.client.gui.components.AbstractContainerWidget(int, int, int, int, net.minecraft.network.chat.Component);",
+        "public net.minecraft.client.gui.components.AbstractContainerWidget(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.components.AbstractScrollArea$ScrollbarSettings);",
+        "public final boolean isDragging();",
+        "public final void setDragging(boolean);",
+        "public net.minecraft.client.gui.components.events.GuiEventListener getFocused();",
+        "public void setFocused(net.minecraft.client.gui.components.events.GuiEventListener);",
+        "public net.minecraft.client.gui.ComponentPath nextFocusPath(net.minecraft.client.gui.navigation.FocusNavigationEvent);",
+        "public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);",
+        "public boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent);",
+        "public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent, double, double);",
+        "public boolean isFocused();",
+        "public void setFocused(boolean);"
+      ],
+      "resourceConstants": []
+    },
+    "net.minecraft.client.gui.components.AbstractSelectionList$Entry": {
+      "member": "net/minecraft/client/gui/components/AbstractSelectionList$Entry.class",
+      "sha256": "ec33f0bb35d19d5b73d016f3eff0ba988b9a899720f52936b11cda09a54a1e21",
+      "disassemblySha256": "05ff5e947c78a6ef429e82a8dedcc2509e2db1c0d33759164e4a9360daf2862e",
+      "methods": [
+        "protected net.minecraft.client.gui.components.AbstractSelectionList$Entry();",
+        "public void setFocused(boolean);",
+        "public boolean isFocused();",
+        "public abstract void extractContent(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, boolean, float);",
+        "public boolean isMouseOver(double, double);",
+        "public void setX(int);",
+        "public void setY(int);",
+        "public void setWidth(int);",
+        "public void setHeight(int);",
+        "public int getContentX();",
+        "public int getContentY();",
+        "public int getContentHeight();",
+        "public int getContentYMiddle();",
+        "public int getContentBottom();",
+        "public int getContentWidth();",
+        "public int getContentXMiddle();",
+        "public int getContentRight();",
+        "public int getX();",
+        "public int getY();",
+        "public int getWidth();",
+        "public int getHeight();",
+        "public void visitWidgets(java.util.function.Consumer<net.minecraft.client.gui.components.AbstractWidget>);",
+        "public net.minecraft.client.gui.navigation.ScreenRectangle getRectangle();"
+      ],
+      "resourceConstants": []
+    },
+    "net.minecraft.client.gui.components.ObjectSelectionList": {
+      "member": "net/minecraft/client/gui/components/ObjectSelectionList.class",
+      "sha256": "d14c3278c646bff57491003c7845b464ee976e67ff5420061012991974c50bbf",
+      "disassemblySha256": "424ced3064a94329431e70286804200516a1cc855ffdecbf53b3fa12c6a51b3a",
+      "methods": [
+        "public net.minecraft.client.gui.components.ObjectSelectionList(net.minecraft.client.Minecraft, int, int, int, int);",
+        "public net.minecraft.client.gui.ComponentPath nextFocusPath(net.minecraft.client.gui.navigation.FocusNavigationEvent);",
+        "public void updateWidgetNarration(net.minecraft.client.gui.narration.NarrationElementOutput);"
+      ],
+      "resourceConstants": [
+        "narration.selection.usage"
+      ]
+    },
+    "net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry": {
+      "member": "net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList$Entry.class",
+      "sha256": "84c5e634ac795e82a19c36c230adda4731275642eea629ba3c47508a6211361a",
+      "disassemblySha256": "dde7b322c6f54239287cda5853ce5e31e5ba133c7342392495013e69a8df9e29",
+      "methods": [
+        "public net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry(net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList, java.lang.String, net.minecraft.client.resources.language.LanguageInfo);",
+        "public void extractContent(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, boolean, float);",
+        "public boolean keyPressed(net.minecraft.client.input.KeyEvent);",
+        "public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);",
+        "private void select();",
+        "public net.minecraft.network.chat.Component getNarration();"
+      ],
+      "resourceConstants": [
+        "narrator.select"
+      ]
+    },
+    "net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList": {
+      "member": "net/minecraft/client/gui/screens/options/LanguageSelectScreen$LanguageSelectionList.class",
+      "sha256": "380358116caff2092b97a6e68160b02416737b40ea8c97daf5b7f82ea4df39fa",
+      "disassemblySha256": "1c017b681e5bbdc7b09187e4fe7c93c4eae58c5964b886a68cdccf865372b43b",
+      "methods": [
+        "public net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList(net.minecraft.client.gui.screens.options.LanguageSelectScreen, net.minecraft.client.Minecraft);",
+        "private void filterEntries(java.lang.String);",
+        "public int getRowWidth();",
+        "static int access$100(net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList);",
+        "private net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList$Entry lambda$filterEntries$1(java.util.Map$Entry);",
+        "private static boolean lambda$filterEntries$0(java.lang.String, java.util.Map$Entry);",
+        "private void lambda$new$0(java.lang.String, java.lang.String, net.minecraft.client.resources.language.LanguageInfo);"
+      ],
+      "resourceConstants": []
+    },
+    "net.minecraft.client.gui.components.ObjectSelectionList$Entry": {
+      "member": "net/minecraft/client/gui/components/ObjectSelectionList$Entry.class",
+      "sha256": "090b95d0a2a556972c0d64aaf4e07175365d5badabad657d7f9135e7c5b321ec",
+      "disassemblySha256": "cdb494539b632c3f0eda03b0e989f4b8b10bd1b73042d161981cdd82d955e424",
+      "methods": [
+        "public net.minecraft.client.gui.components.ObjectSelectionList$Entry();",
+        "public abstract net.minecraft.network.chat.Component getNarration();",
+        "public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);",
+        "public void updateNarration(net.minecraft.client.gui.narration.NarrationElementOutput);",
+        "public net.minecraft.client.gui.navigation.ScreenRectangle getRectangle();",
+        "public void visitWidgets(java.util.function.Consumer);",
+        "public int getHeight();",
+        "public int getWidth();",
+        "public int getY();",
+        "public int getX();",
+        "public int getContentRight();",
+        "public int getContentXMiddle();",
+        "public int getContentWidth();",
+        "public int getContentBottom();",
+        "public int getContentYMiddle();",
+        "public int getContentHeight();",
+        "public int getContentY();",
+        "public int getContentX();",
+        "public void setHeight(int);",
+        "public void setWidth(int);",
+        "public void setY(int);",
+        "public void setX(int);",
+        "public boolean isMouseOver(double, double);",
+        "public boolean isFocused();",
+        "public void setFocused(boolean);"
+      ],
+      "resourceConstants": []
+    },
+    "net.minecraft.client.gui.components.CycleButton$Builder": {
+      "member": "net/minecraft/client/gui/components/CycleButton$Builder.class",
+      "sha256": "8fa71472b5e56caac308c8708c51322a8c718832cc7608c1c655b84c0daa959e",
+      "disassemblySha256": "39bf32839e14c095eadd692b07911cfbf1330bf9d47fe2f12da6e743c978a526",
+      "methods": [
+        "public net.minecraft.client.gui.components.CycleButton$Builder(java.util.function.Function<T, net.minecraft.network.chat.Component>, java.util.function.Supplier<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withValues(java.util.Collection<T>);",
+        "public final net.minecraft.client.gui.components.CycleButton$Builder<T> withValues(T...);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withValues(java.util.List<T>, java.util.List<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withValues(java.util.function.BooleanSupplier, java.util.List<T>, java.util.List<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withValues(net.minecraft.client.gui.components.CycleButton$ValueListSupplier<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withTooltip(net.minecraft.client.OptionInstance$TooltipSupplier<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withCustomNarration(java.util.function.Function<net.minecraft.client.gui.components.CycleButton<T>, net.minecraft.network.chat.MutableComponent>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> withSprite(net.minecraft.client.gui.components.CycleButton$SpriteSupplier<T>);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> displayState(net.minecraft.client.gui.components.CycleButton$DisplayState);",
+        "public net.minecraft.client.gui.components.CycleButton$Builder<T> displayOnlyValue();",
+        "public net.minecraft.client.gui.components.CycleButton<T> create(net.minecraft.network.chat.Component, net.minecraft.client.gui.components.CycleButton$OnValueChange<T>);",
+        "public net.minecraft.client.gui.components.CycleButton<T> create(int, int, int, int, net.minecraft.network.chat.Component);",
+        "public net.minecraft.client.gui.components.CycleButton<T> create(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.components.CycleButton$OnValueChange<T>);",
+        "private static void lambda$create$0(net.minecraft.client.gui.components.CycleButton, java.lang.Object);",
+        "private static net.minecraft.resources.Identifier lambda$new$1(net.minecraft.client.gui.components.CycleButton, java.lang.Object);",
+        "private static net.minecraft.client.gui.components.Tooltip lambda$new$0(java.lang.Object);"
+      ],
+      "resourceConstants": [
+        "No values for cycle button"
+      ]
+    },
+    "net.minecraft.client.gui.screens.advancements.AdvancementTab": {
+      "sha256": "99491b6cb5f4e7dc520787bc51efd96cceb8b0f92c6f4163a666d842bc9fa3c6",
+      "disassemblySha256": "628a1d478f1cfbcac635fa9a4c18fcd51d6c693db6848086f94edfc0e05797a4"
+    },
+    "net.minecraft.client.gui.screens.advancements.AdvancementWidget": {
+      "sha256": "bc01140c39d64acbce33075e12dbd0352e842f3a6e3421329b74a84b40c5876b",
+      "disassemblySha256": "a7de9305148baca8ae2d6e776ba3ad46fc01b8c8968596cf99d6736f7b94c8e7"
+    },
+    "net.minecraft.client.gui.screens.advancements.AdvancementTabType": {
+      "sha256": "e1ab8af65e6735ec0d010aff9a4d2ac724aee6408d0b234bd830c25c46dfdafc",
+      "disassemblySha256": "4655f6ac300876117226e452109b1797e00917ffe79af344f5f02cdabe28d76b"
+    },
+    "net.minecraft.client.gui.screens.advancements.AdvancementsScreen": {
+      "sha256": "17833b49a40f9deab739cfe71992feac1c931688e0fc25b21fe8a1470a9e1091",
+      "disassemblySha256": "f83cecf00933d3b29163547d8db27bd3206c3d7a0806887c982b0d1eff024e46"
+    },
+    "net.minecraft.client.gui.Hud": {
+      "sha256": "84956c01232288bea7c4cb36da0d140af9d250b0a8f79995dfcabddfb72041f0",
+      "disassemblySha256": "979ce675295b9f11879be92e3bc595153383042e30c9daf97f0f4f9c93276483"
+    },
+    "net.minecraft.client.gui.contextualbar.ExperienceBar": {
+      "sha256": "a0c1dd1df1f85dbab67e6f4d5072501f4328ccb10943ff1b321d229d1844e8b8",
+      "disassemblySha256": "cd73ce83353a69e8ce6c7118dc5a957038d93e0f5e356485144ffea94c09eb96"
+    },
+    "net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen": {
+      "sha256": "861295af8b3bc7053a409ca3bd080d7ab5d5dad751789905dc2db66a3148d3fa",
+      "disassemblySha256": "3bc5cb21c1e6e824808c6988370ecfebce44764629eb7d8b5b58837fe4160609"
+    },
+    "net.minecraft.client.gui.screens.inventory.SignEditScreen": {
+      "sha256": "ea1ac5a80d0834b0946a75107cc858c0e5d842b96393976959a2c88478fc1f61",
+      "disassemblySha256": "c9deb1452faac650cd58096e43f4e28bd8b4608eb17525b568b22470095a4557"
+    },
+    "net.minecraft.client.gui.screens.inventory.HangingSignEditScreen": {
+      "sha256": "4dfe4689c8bf61528ac5995590f9873d813bf1392780beee095c776f043db023",
+      "disassemblySha256": "0c6acfbe9d5a3d1077ef9dde728d89f9518bd717be511e248e156c3f628d0bd9"
+    },
+    "net.minecraft.client.gui.components.PlayerSkinWidget": {
+      "sha256": "b383cfbdafcf481c9b4da608a569432af121e5209018cf6439810a95c4912363",
+      "disassemblySha256": "e663af4eabac2ed1613e5b7f88a93eaef90418de93b0925897fd55801516e8cb"
+    },
+    "net.minecraft.client.gui.render.pip.GuiSkinRenderer": {
+      "sha256": "08b7dbfbcf37b29405210cef6a6f662717418fe5687e7195d970eef4e85836ad",
+      "disassemblySha256": "5961f2d8284eba32582f30cec773ae658518d9a67b39ded3f05da44c44eea082"
+    },
+    "net.minecraft.client.gui.render.pip.PictureInPictureRenderer": {
+      "sha256": "0c632e40802f7796d7723cdcfe54a28a9bda99fe06c658e913a0ca6ddbc71bd9",
+      "disassemblySha256": "ff58e6dc04182c694fc0e9b77c57242c0bcd6edc95560eca8eba2c85ec29b647"
+    },
+    "com.mojang.blaze3d.platform.Lighting": {
+      "sha256": "c0942eaa0f4c05a56c7ee85b4ef0f62193b159255dae1ab74c9c1f267be2b3d4",
+      "disassemblySha256": "1eaf86dbd9623d2006a5baf04239376424d02f86a3565e9ea1a69867693534c8"
+    },
+    "net.minecraft.client.model.player.PlayerModel": {
+      "sha256": "2b079f3f2f1ec200bfd080b5eac968c057f67b955374ec5c567a8765fed83981",
+      "disassemblySha256": "c3c963712f63b9f393d00f5295a5d195d74fd8e417aa41e5bd52d6acc0d6e9e3"
+    },
+    "net.minecraft.client.model.geom.ModelPart": {
+      "sha256": "47160a7b73edbdf9206f1bc87ebb732ae162d1c2ff8eb8fafeb25af823fc88dc",
+      "disassemblySha256": "28d32cdda718c8a4c397cee8485e52066d7e993900ddce878b16b30ac3b35670"
+    },
+    "net.minecraft.client.renderer.MapRenderer": {
+      "sha256": "66139b55ec71aec259008902c1f557d87fcf5e144388a06e49ea70a1cd74c364",
+      "disassemblySha256": "5a0d75dc140a55ed14b999d988f80016b328c4532f50243601f03e99b56eafe2"
+    },
+    "net.minecraft.world.level.material.MapColor": {
+      "sha256": "768142eb2ad15f1dc13fed956035636f074dec0f0994a150bd385b3593aa7158",
+      "disassemblySha256": "ffc74324e739d674ff9b7368b7ec04a0a8fecc9dfc78f50499bdb48ea6d8a377"
+    },
+    "net.minecraft.client.gui.contextualbar.LocatorBar": {
+      "sha256": "0d10578045c88a403fdc533f72f52d88454a6d165461314988dd2c74e7d3d7e2",
+      "disassemblySha256": "153cf1b0cdcccfd95b588649d83d99ae63a67d6b132a27765652cbc23ee32f49"
+    },
+    "net.minecraft.client.gui.screens.inventory.MerchantScreen": {
+      "sha256": "f3b5cff87ac7e09abfb469e9853073d3468133a81a196d63e2e6b842a3c9f25c",
+      "disassemblySha256": "361ffb028c00c755b281e9b325dfb7c112ce04575e0d9f3829d099d0f38db5d2"
+    },
+    "net.minecraft.world.inventory.MerchantMenu": {
+      "sha256": "c07a89eea6246c45f1c09a8e2461f4edfd9b517283c4856a76ab2b8f96158dbf",
+      "disassemblySha256": "f93fe63e89487e4ebd0e551931ce81e559b580f4587f6aabd4ea968fbc983540"
+    },
+    "net.minecraft.world.inventory.MerchantContainer": {
+      "sha256": "2597a55a2cc99dd4bc09ad529b4e862d8fb3873dd4b40f4ce9e218ee91cefe5f",
+      "disassemblySha256": "ee0ce33d89610d53f7c300d014d3282a3c003cd6a215bc21e48945fba64aa946"
+    },
+    "net.minecraft.client.multiplayer.PlayerInfo": {
+      "sha256": "19bcea383afa44a6f1032e289b18c4bcab9959a4cba3d635ef33b5f051780b0a",
+      "disassemblySha256": "02979fb1646ce728a432d69acfeccfa6af2982c9a5f3f8694c7f226880620d90"
     }
   },
   "resources": {

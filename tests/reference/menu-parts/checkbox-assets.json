@@ -1,0 +1,28 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "assets/minecraft/textures/gui/sprites/widget/checkbox.png": {
+      "sha256": "122aa9b71056547c555ebf80797dcc5bfe98573e467be227475faac54c03555c",
+      "width": 20,
+      "height": 20
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_highlighted.png": {
+      "sha256": "a2d73ca5171d598cd7247f511a53e87a5d237cd1828103b25b8c3683a64bc025",
+      "width": 20,
+      "height": 20
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_selected.png": {
+      "sha256": "1c02f4aa8887cba07e27bc935837fb47b3d61503d448326d520c86588ac1261b",
+      "width": 20,
+      "height": 20
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_selected_highlighted.png": {
+      "sha256": "90c7112d3618e00a774fcbb80c67910ecc767d64f0861a37f91c67a74f2c6269",
+      "width": 20,
+      "height": 20
+    }
+  },
+  "atlasPlacementSha256": "559fcefeeb218be4a00675982b22ef62546397423636e0905bbb85359d6549ba",
+  "targetLogicalSize": 17,
+  "renderer": "Native atlas UVs, original RGBA, nearest GPU sampling at the actual viewport/screen position"
+}

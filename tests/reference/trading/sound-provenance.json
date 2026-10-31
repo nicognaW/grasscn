@@ -1,0 +1,28 @@
+{
+  "event": "entity.villager.yes",
+  "trigger": "Successful trade result action; MerchantMenu.playTradeSound uses the merchant notification event, volume1/pitch1.",
+  "sourceDefinitionsSha256": "84fe52cea79f67441ac00df61836e15d5c9ae98c406cebba557213b80f59c3b5",
+  "clips": [
+    {
+      "member": "minecraft/sounds/mob/villager/yes1.ogg",
+      "sha1": "284933d50341876997cbc95b64864b6abab113af",
+      "sha256": "654076aa0e31ddc9c225d4c4e904aa16532609738f1595bdf3ae5bf229afb9b2",
+      "volume": 1,
+      "pitch": 1
+    },
+    {
+      "member": "minecraft/sounds/mob/villager/yes2.ogg",
+      "sha1": "efa1a5748620e66ca12e12c8ed9ae99a0dc10221",
+      "sha256": "5dc912095c9283d7da2c36d66fe8b193640e63107dad21651dde29d01e08eb63",
+      "volume": 1,
+      "pitch": 1
+    },
+    {
+      "member": "minecraft/sounds/mob/villager/yes3.ogg",
+      "sha1": "23f3506cc009ae94eee3bb87b318abeec9d44fc7",
+      "sha256": "307aed0d22cd75817035f9fcd2ccbc7587cd885ed6c4138b8c4a5f8b63fec22d",
+      "volume": 1,
+      "pitch": 1
+    }
+  ]
+}

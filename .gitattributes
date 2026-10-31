@@ -1,2 +1,6 @@
 * text=auto eol=lf
 *.png binary
+
+# Native evidence and installation receipts pin exact file bytes.
+registry/** -text
+tests/reference/** -text

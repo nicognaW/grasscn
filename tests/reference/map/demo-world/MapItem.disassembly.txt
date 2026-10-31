@@ -1,0 +1,982 @@
+Compiled from "MapItem.java"
+public class net.minecraft.world.item.MapItem extends net.minecraft.world.item.Item {
+  public static final int IMAGE_WIDTH;
+
+  public static final int IMAGE_HEIGHT;
+
+  public net.minecraft.world.item.MapItem(net.minecraft.world.item.Item$Properties);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #1                  // Method net/minecraft/world/item/Item."<init>":(Lnet/minecraft/world/item/Item$Properties;)V
+       5: return
+
+  public static net.minecraft.world.item.ItemStack create(net.minecraft.server.level.ServerLevel, int, int, byte, boolean, boolean);
+    Code:
+       0: new           #7                  // class net/minecraft/world/item/ItemStack
+       3: dup
+       4: getstatic     #9                  // Field net/minecraft/world/item/Items.FILLED_MAP:Lnet/minecraft/world/item/Item;
+       7: invokespecial #15                 // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+      10: astore        6
+      12: aload_0
+      13: iload_1
+      14: iload_2
+      15: iload_3
+      16: iload         4
+      18: iload         5
+      20: aload_0
+      21: invokevirtual #18                 // Method net/minecraft/server/level/ServerLevel.dimension:()Lnet/minecraft/resources/ResourceKey;
+      24: invokestatic  #24                 // Method createNewSavedData:(Lnet/minecraft/server/level/ServerLevel;IIIZZLnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/saveddata/maps/MapId;
+      27: astore        7
+      29: aload         6
+      31: getstatic     #30                 // Field net/minecraft/core/component/DataComponents.MAP_ID:Lnet/minecraft/core/component/DataComponentType;
+      34: aload         7
+      36: invokevirtual #36                 // Method net/minecraft/world/item/ItemStack.set:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+      39: pop
+      40: aload         6
+      42: areturn
+
+  public static net.minecraft.world.level.saveddata.maps.MapItemSavedData getSavedData(net.minecraft.world.level.saveddata.maps.MapId, net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: ifnonnull     8
+       4: aconst_null
+       5: goto          13
+       8: aload_1
+       9: aload_0
+      10: invokevirtual #40                 // Method net/minecraft/world/level/Level.getMapData:(Lnet/minecraft/world/level/saveddata/maps/MapId;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      13: areturn
+
+  public static net.minecraft.world.level.saveddata.maps.MapItemSavedData getSavedData(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: getstatic     #30                 // Field net/minecraft/core/component/DataComponents.MAP_ID:Lnet/minecraft/core/component/DataComponentType;
+       4: invokevirtual #46                 // Method net/minecraft/world/item/ItemStack.get:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;
+       7: checkcast     #50                 // class net/minecraft/world/level/saveddata/maps/MapId
+      10: astore_2
+      11: aload_2
+      12: aload_1
+      13: invokestatic  #52                 // Method getSavedData:(Lnet/minecraft/world/level/saveddata/maps/MapId;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      16: areturn
+
+  private static net.minecraft.world.level.saveddata.maps.MapId createNewSavedData(net.minecraft.server.level.ServerLevel, int, int, int, boolean, boolean, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+    Code:
+       0: iload_1
+       1: i2d
+       2: iload_2
+       3: i2d
+       4: iload_3
+       5: i2b
+       6: iload         4
+       8: iload         5
+      10: aload         6
+      12: invokestatic  #56                 // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.createFresh:(DDBZZLnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      15: astore        7
+      17: aload_0
+      18: invokevirtual #62                 // Method net/minecraft/server/level/ServerLevel.getFreeMapId:()Lnet/minecraft/world/level/saveddata/maps/MapId;
+      21: astore        8
+      23: aload_0
+      24: aload         8
+      26: aload         7
+      28: invokevirtual #66                 // Method net/minecraft/server/level/ServerLevel.setMapData:(Lnet/minecraft/world/level/saveddata/maps/MapId;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V
+      31: aload         8
+      33: areturn
+
+  public void update(net.minecraft.world.level.Level, net.minecraft.world.entity.Entity, net.minecraft.world.level.saveddata.maps.MapItemSavedData);
+    Code:
+       0: aload_1
+       1: invokevirtual #70                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+       4: aload_3
+       5: getfield      #71                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.dimension:Lnet/minecraft/resources/ResourceKey;
+       8: if_acmpne     27
+      11: aload_2
+      12: instanceof    #74                 // class net/minecraft/world/entity/player/Player
+      15: ifeq          27
+      18: aload_2
+      19: checkcast     #74                 // class net/minecraft/world/entity/player/Player
+      22: astore        4
+      24: goto          28
+      27: return
+      28: iconst_1
+      29: aload_3
+      30: getfield      #76                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.scale:B
+      33: ishl
+      34: istore        5
+      36: aload_3
+      37: getfield      #80                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.centerX:I
+      40: istore        6
+      42: aload_3
+      43: getfield      #84                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.centerZ:I
+      46: istore        7
+      48: aload_2
+      49: invokevirtual #87                 // Method net/minecraft/world/entity/Entity.getX:()D
+      52: iload         6
+      54: i2d
+      55: dsub
+      56: invokestatic  #93                 // Method net/minecraft/util/Mth.floor:(D)I
+      59: iload         5
+      61: idiv
+      62: bipush        64
+      64: iadd
+      65: istore        8
+      67: aload_2
+      68: invokevirtual #99                 // Method net/minecraft/world/entity/Entity.getZ:()D
+      71: iload         7
+      73: i2d
+      74: dsub
+      75: invokestatic  #93                 // Method net/minecraft/util/Mth.floor:(D)I
+      78: iload         5
+      80: idiv
+      81: bipush        64
+      83: iadd
+      84: istore        9
+      86: sipush        128
+      89: iload         5
+      91: idiv
+      92: istore        10
+      94: aload_1
+      95: invokevirtual #102                // Method net/minecraft/world/level/Level.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+      98: invokevirtual #106                // Method net/minecraft/world/level/dimension/DimensionType.hasCeiling:()Z
+     101: ifeq          110
+     104: iload         10
+     106: iconst_2
+     107: idiv
+     108: istore        10
+     110: aload_3
+     111: aload         4
+     113: invokevirtual #112                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.getHoldingPlayer:(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer;
+     116: astore        11
+     118: aload         11
+     120: dup
+     121: getfield      #116                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.step:I
+     124: iconst_1
+     125: iadd
+     126: putfield      #116                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.step:I
+     129: new           #121                // class net/minecraft/core/BlockPos$MutableBlockPos
+     132: dup
+     133: invokespecial #123                // Method net/minecraft/core/BlockPos$MutableBlockPos."<init>":()V
+     136: astore        12
+     138: new           #121                // class net/minecraft/core/BlockPos$MutableBlockPos
+     141: dup
+     142: invokespecial #123                // Method net/minecraft/core/BlockPos$MutableBlockPos."<init>":()V
+     145: astore        13
+     147: iconst_0
+     148: istore        14
+     150: iload         8
+     152: iload         10
+     154: isub
+     155: iconst_1
+     156: iadd
+     157: istore        15
+     159: iload         15
+     161: iload         8
+     163: iload         10
+     165: iadd
+     166: if_icmpge     975
+     169: iload         15
+     171: bipush        15
+     173: iand
+     174: aload         11
+     176: getfield      #116                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.step:I
+     179: bipush        15
+     181: iand
+     182: if_icmpeq     193
+     185: iload         14
+     187: ifne          193
+     190: goto          969
+     193: iconst_0
+     194: istore        14
+     196: dconst_0
+     197: dstore        16
+     199: iload         9
+     201: iload         10
+     203: isub
+     204: iconst_1
+     205: isub
+     206: istore        18
+     208: iload         18
+     210: iload         9
+     212: iload         10
+     214: iadd
+     215: if_icmpge     969
+     218: iload         15
+     220: iflt          963
+     223: iload         18
+     225: iconst_m1
+     226: if_icmplt     963
+     229: iload         15
+     231: sipush        128
+     234: if_icmpge     963
+     237: iload         18
+     239: sipush        128
+     242: if_icmplt     248
+     245: goto          963
+     248: iload         15
+     250: iload         8
+     252: isub
+     253: invokestatic  #126                // Method net/minecraft/util/Mth.square:(I)I
+     256: iload         18
+     258: iload         9
+     260: isub
+     261: invokestatic  #126                // Method net/minecraft/util/Mth.square:(I)I
+     264: iadd
+     265: istore        19
+     267: iload         19
+     269: iload         10
+     271: iconst_2
+     272: isub
+     273: iload         10
+     275: iconst_2
+     276: isub
+     277: imul
+     278: if_icmple     285
+     281: iconst_1
+     282: goto          286
+     285: iconst_0
+     286: istore        20
+     288: iload         6
+     290: iload         5
+     292: idiv
+     293: iload         15
+     295: iadd
+     296: bipush        64
+     298: isub
+     299: iload         5
+     301: imul
+     302: istore        21
+     304: iload         7
+     306: iload         5
+     308: idiv
+     309: iload         18
+     311: iadd
+     312: bipush        64
+     314: isub
+     315: iload         5
+     317: imul
+     318: istore        22
+     320: invokestatic  #130                // Method com/google/common/collect/LinkedHashMultiset.create:()Lcom/google/common/collect/LinkedHashMultiset;
+     323: astore        23
+     325: aload_1
+     326: iload         21
+     328: invokestatic  #136                // Method net/minecraft/core/SectionPos.blockToSectionCoord:(I)I
+     331: iload         22
+     333: invokestatic  #136                // Method net/minecraft/core/SectionPos.blockToSectionCoord:(I)I
+     336: invokevirtual #141                // Method net/minecraft/world/level/Level.getChunk:(II)Lnet/minecraft/world/level/chunk/LevelChunk;
+     339: astore        24
+     341: aload         24
+     343: invokevirtual #145                // Method net/minecraft/world/level/chunk/LevelChunk.isEmpty:()Z
+     346: ifeq          352
+     349: goto          963
+     352: iconst_0
+     353: istore        25
+     355: dconst_0
+     356: dstore        26
+     358: aload_1
+     359: invokevirtual #102                // Method net/minecraft/world/level/Level.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+     362: invokevirtual #106                // Method net/minecraft/world/level/dimension/DimensionType.hasCeiling:()Z
+     365: ifeq          461
+     368: iload         21
+     370: iload         22
+     372: ldc           #150                // int 231871
+     374: imul
+     375: iadd
+     376: istore        28
+     378: iload         28
+     380: iload         28
+     382: imul
+     383: ldc           #151                // int 31287121
+     385: imul
+     386: iload         28
+     388: bipush        11
+     390: imul
+     391: iadd
+     392: istore        28
+     394: iload         28
+     396: bipush        20
+     398: ishr
+     399: iconst_1
+     400: iand
+     401: ifne          430
+     404: aload         23
+     406: getstatic     #152                // Field net/minecraft/world/level/block/Blocks.DIRT:Lnet/minecraft/world/level/block/Block;
+     409: invokevirtual #158                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+     412: aload_1
+     413: getstatic     #164                // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;
+     416: invokevirtual #170                // Method net/minecraft/world/level/block/state/BlockState.getMapColor:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/MapColor;
+     419: bipush        10
+     421: invokeinterface #176,  3          // InterfaceMethod com/google/common/collect/Multiset.add:(Ljava/lang/Object;I)I
+     426: pop
+     427: goto          453
+     430: aload         23
+     432: getstatic     #182                // Field net/minecraft/world/level/block/Blocks.STONE:Lnet/minecraft/world/level/block/Block;
+     435: invokevirtual #158                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+     438: aload_1
+     439: getstatic     #164                // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;
+     442: invokevirtual #170                // Method net/minecraft/world/level/block/state/BlockState.getMapColor:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/MapColor;
+     445: bipush        100
+     447: invokeinterface #176,  3          // InterfaceMethod com/google/common/collect/Multiset.add:(Ljava/lang/Object;I)I
+     452: pop
+     453: ldc2_w        #185                // double 100.0d
+     456: dstore        26
+     458: goto          729
+     461: iconst_0
+     462: istore        28
+     464: iload         28
+     466: iload         5
+     468: if_icmpge     729
+     471: iconst_0
+     472: istore        29
+     474: iload         29
+     476: iload         5
+     478: if_icmpge     723
+     481: aload         12
+     483: iload         21
+     485: iload         28
+     487: iadd
+     488: iconst_0
+     489: iload         22
+     491: iload         29
+     493: iadd
+     494: invokevirtual #187                // Method net/minecraft/core/BlockPos$MutableBlockPos.set:(III)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+     497: pop
+     498: aload         24
+     500: getstatic     #190                // Field net/minecraft/world/level/levelgen/Heightmap$Types.WORLD_SURFACE:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+     503: aload         12
+     505: invokevirtual #196                // Method net/minecraft/core/BlockPos$MutableBlockPos.getX:()I
+     508: aload         12
+     510: invokevirtual #199                // Method net/minecraft/core/BlockPos$MutableBlockPos.getZ:()I
+     513: invokevirtual #201                // Method net/minecraft/world/level/chunk/LevelChunk.getHeight:(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I
+     516: iconst_1
+     517: iadd
+     518: istore        30
+     520: iload         30
+     522: aload_1
+     523: invokevirtual #205                // Method net/minecraft/world/level/Level.getMinY:()I
+     526: if_icmple     663
+     529: iinc          30, -1
+     532: aload         12
+     534: iload         30
+     536: invokevirtual #208                // Method net/minecraft/core/BlockPos$MutableBlockPos.setY:(I)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+     539: pop
+     540: aload         24
+     542: aload         12
+     544: invokevirtual #212                // Method net/minecraft/world/level/chunk/LevelChunk.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     547: astore        31
+     549: aload         31
+     551: aload_1
+     552: aload         12
+     554: invokevirtual #170                // Method net/minecraft/world/level/block/state/BlockState.getMapColor:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/MapColor;
+     557: getstatic     #216                // Field net/minecraft/world/level/material/MapColor.NONE:Lnet/minecraft/world/level/material/MapColor;
+     560: if_acmpne     572
+     563: iload         30
+     565: aload_1
+     566: invokevirtual #205                // Method net/minecraft/world/level/Level.getMinY:()I
+     569: if_icmpgt     529
+     572: iload         30
+     574: aload_1
+     575: invokevirtual #205                // Method net/minecraft/world/level/Level.getMinY:()I
+     578: if_icmple     671
+     581: aload         31
+     583: invokevirtual #222                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+     586: invokevirtual #226                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z
+     589: ifne          671
+     592: iload         30
+     594: iconst_1
+     595: isub
+     596: istore        32
+     598: aload         13
+     600: aload         12
+     602: invokevirtual #229                // Method net/minecraft/core/BlockPos$MutableBlockPos.set:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+     605: pop
+     606: aload         13
+     608: iload         32
+     610: iinc          32, -1
+     613: invokevirtual #208                // Method net/minecraft/core/BlockPos$MutableBlockPos.setY:(I)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+     616: pop
+     617: aload         24
+     619: aload         13
+     621: invokevirtual #212                // Method net/minecraft/world/level/chunk/LevelChunk.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     624: astore        33
+     626: iinc          25, 1
+     629: iload         32
+     631: aload_1
+     632: invokevirtual #205                // Method net/minecraft/world/level/Level.getMinY:()I
+     635: if_icmple     649
+     638: aload         33
+     640: invokevirtual #222                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+     643: invokevirtual #226                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z
+     646: ifeq          606
+     649: aload_0
+     650: aload_1
+     651: aload         31
+     653: aload         12
+     655: invokevirtual #232                // Method getCorrectStateForFluidBlock:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     658: astore        31
+     660: goto          671
+     663: getstatic     #236                // Field net/minecraft/world/level/block/Blocks.BEDROCK:Lnet/minecraft/world/level/block/Block;
+     666: invokevirtual #158                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+     669: astore        31
+     671: aload_3
+     672: aload_1
+     673: aload         12
+     675: invokevirtual #196                // Method net/minecraft/core/BlockPos$MutableBlockPos.getX:()I
+     678: aload         12
+     680: invokevirtual #199                // Method net/minecraft/core/BlockPos$MutableBlockPos.getZ:()I
+     683: invokevirtual #239                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.checkBanners:(Lnet/minecraft/world/level/BlockGetter;II)V
+     686: dload         26
+     688: iload         30
+     690: i2d
+     691: iload         5
+     693: iload         5
+     695: imul
+     696: i2d
+     697: ddiv
+     698: dadd
+     699: dstore        26
+     701: aload         23
+     703: aload         31
+     705: aload_1
+     706: aload         12
+     708: invokevirtual #170                // Method net/minecraft/world/level/block/state/BlockState.getMapColor:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/MapColor;
+     711: invokeinterface #243,  2          // InterfaceMethod com/google/common/collect/Multiset.add:(Ljava/lang/Object;)Z
+     716: pop
+     717: iinc          29, 1
+     720: goto          474
+     723: iinc          28, 1
+     726: goto          464
+     729: iload         25
+     731: iload         5
+     733: iload         5
+     735: imul
+     736: idiv
+     737: istore        25
+     739: aload         23
+     741: invokestatic  #246                // Method com/google/common/collect/Multisets.copyHighestCountFirst:(Lcom/google/common/collect/Multiset;)Lcom/google/common/collect/ImmutableMultiset;
+     744: getstatic     #216                // Field net/minecraft/world/level/material/MapColor.NONE:Lnet/minecraft/world/level/material/MapColor;
+     747: invokestatic  #252                // Method com/google/common/collect/Iterables.getFirst:(Ljava/lang/Iterable;Ljava/lang/Object;)Ljava/lang/Object;
+     750: checkcast     #217                // class net/minecraft/world/level/material/MapColor
+     753: astore        28
+     755: aload         28
+     757: getstatic     #258                // Field net/minecraft/world/level/material/MapColor.WATER:Lnet/minecraft/world/level/material/MapColor;
+     760: if_acmpne     827
+     763: iload         25
+     765: i2d
+     766: ldc2_w        #261                // double 0.1d
+     769: dmul
+     770: iload         15
+     772: iload         18
+     774: iadd
+     775: iconst_1
+     776: iand
+     777: i2d
+     778: ldc2_w        #263                // double 0.2d
+     781: dmul
+     782: dadd
+     783: dstore        30
+     785: dload         30
+     787: ldc2_w        #265                // double 0.5d
+     790: dcmpg
+     791: ifge          802
+     794: getstatic     #267                // Field net/minecraft/world/level/material/MapColor$Brightness.HIGH:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     797: astore        29
+     799: goto          824
+     802: dload         30
+     804: ldc2_w        #273                // double 0.9d
+     807: dcmpl
+     808: ifle          819
+     811: getstatic     #275                // Field net/minecraft/world/level/material/MapColor$Brightness.LOW:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     814: astore        29
+     816: goto          824
+     819: getstatic     #278                // Field net/minecraft/world/level/material/MapColor$Brightness.NORMAL:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     822: astore        29
+     824: goto          900
+     827: dload         26
+     829: dload         16
+     831: dsub
+     832: ldc2_w        #281                // double 4.0d
+     835: dmul
+     836: iload         5
+     838: iconst_4
+     839: iadd
+     840: i2d
+     841: ddiv
+     842: iload         15
+     844: iload         18
+     846: iadd
+     847: iconst_1
+     848: iand
+     849: i2d
+     850: ldc2_w        #265                // double 0.5d
+     853: dsub
+     854: ldc2_w        #283                // double 0.4d
+     857: dmul
+     858: dadd
+     859: dstore        30
+     861: dload         30
+     863: ldc2_w        #285                // double 0.6d
+     866: dcmpl
+     867: ifle          878
+     870: getstatic     #267                // Field net/minecraft/world/level/material/MapColor$Brightness.HIGH:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     873: astore        29
+     875: goto          900
+     878: dload         30
+     880: ldc2_w        #287                // double -0.6d
+     883: dcmpg
+     884: ifge          895
+     887: getstatic     #275                // Field net/minecraft/world/level/material/MapColor$Brightness.LOW:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     890: astore        29
+     892: goto          900
+     895: getstatic     #278                // Field net/minecraft/world/level/material/MapColor$Brightness.NORMAL:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     898: astore        29
+     900: dload         26
+     902: dstore        16
+     904: iload         18
+     906: ifge          912
+     909: goto          963
+     912: iload         19
+     914: iload         10
+     916: iload         10
+     918: imul
+     919: if_icmplt     925
+     922: goto          963
+     925: iload         20
+     927: ifeq          943
+     930: iload         15
+     932: iload         18
+     934: iadd
+     935: iconst_1
+     936: iand
+     937: ifne          943
+     940: goto          963
+     943: iload         14
+     945: aload_3
+     946: iload         15
+     948: iload         18
+     950: aload         28
+     952: aload         29
+     954: invokevirtual #289                // Method net/minecraft/world/level/material/MapColor.getPackedId:(Lnet/minecraft/world/level/material/MapColor$Brightness;)B
+     957: invokevirtual #293                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.updateColor:(IIB)Z
+     960: ior
+     961: istore        14
+     963: iinc          18, 1
+     966: goto          208
+     969: iinc          15, 1
+     972: goto          159
+     975: return
+
+  private net.minecraft.world.level.block.state.BlockState getCorrectStateForFluidBlock(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_2
+       1: invokevirtual #222                // Method net/minecraft/world/level/block/state/BlockState.getFluidState:()Lnet/minecraft/world/level/material/FluidState;
+       4: astore        4
+       6: aload         4
+       8: invokevirtual #226                // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z
+      11: ifne          32
+      14: aload_2
+      15: aload_1
+      16: aload_3
+      17: getstatic     #297                // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+      20: invokevirtual #303                // Method net/minecraft/world/level/block/state/BlockState.isFaceSturdy:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z
+      23: ifne          32
+      26: aload         4
+      28: invokevirtual #307                // Method net/minecraft/world/level/material/FluidState.createLegacyBlock:()Lnet/minecraft/world/level/block/state/BlockState;
+      31: areturn
+      32: aload_2
+      33: areturn
+
+  private static boolean isBiomeWatery(boolean[], int, int);
+    Code:
+       0: aload_0
+       1: iload_2
+       2: sipush        128
+       5: imul
+       6: iload_1
+       7: iadd
+       8: baload
+       9: ireturn
+
+  public static void renderBiomePreviewMap(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokestatic  #310                // Method getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+       5: astore_2
+       6: aload_2
+       7: ifnonnull     11
+      10: return
+      11: aload_0
+      12: invokevirtual #18                 // Method net/minecraft/server/level/ServerLevel.dimension:()Lnet/minecraft/resources/ResourceKey;
+      15: aload_2
+      16: getfield      #71                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.dimension:Lnet/minecraft/resources/ResourceKey;
+      19: if_acmpeq     23
+      22: return
+      23: iconst_1
+      24: aload_2
+      25: getfield      #76                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.scale:B
+      28: ishl
+      29: istore_3
+      30: aload_2
+      31: getfield      #80                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.centerX:I
+      34: istore        4
+      36: aload_2
+      37: getfield      #84                 // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.centerZ:I
+      40: istore        5
+      42: sipush        16384
+      45: newarray       boolean
+      47: astore        6
+      49: iload         4
+      51: iload_3
+      52: idiv
+      53: bipush        64
+      55: isub
+      56: istore        7
+      58: iload         5
+      60: iload_3
+      61: idiv
+      62: bipush        64
+      64: isub
+      65: istore        8
+      67: new           #121                // class net/minecraft/core/BlockPos$MutableBlockPos
+      70: dup
+      71: invokespecial #123                // Method net/minecraft/core/BlockPos$MutableBlockPos."<init>":()V
+      74: astore        9
+      76: iconst_0
+      77: istore        10
+      79: iload         10
+      81: sipush        128
+      84: if_icmpge     158
+      87: iconst_0
+      88: istore        11
+      90: iload         11
+      92: sipush        128
+      95: if_icmpge     152
+      98: aload_0
+      99: aload         9
+     101: iload         7
+     103: iload         11
+     105: iadd
+     106: iload_3
+     107: imul
+     108: iconst_0
+     109: iload         8
+     111: iload         10
+     113: iadd
+     114: iload_3
+     115: imul
+     116: invokevirtual #187                // Method net/minecraft/core/BlockPos$MutableBlockPos.set:(III)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+     119: invokevirtual #313                // Method net/minecraft/server/level/ServerLevel.getBiome:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;
+     122: astore        12
+     124: aload         6
+     126: iload         10
+     128: sipush        128
+     131: imul
+     132: iload         11
+     134: iadd
+     135: aload         12
+     137: getstatic     #317                // Field net/minecraft/tags/BiomeTags.WATER_ON_MAP_OUTLINES:Lnet/minecraft/tags/TagKey;
+     140: invokeinterface #323,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/tags/TagKey;)Z
+     145: bastore
+     146: iinc          11, 1
+     149: goto          90
+     152: iinc          10, 1
+     155: goto          79
+     158: iconst_1
+     159: istore        10
+     161: iload         10
+     163: bipush        127
+     165: if_icmpge     485
+     168: iconst_1
+     169: istore        11
+     171: iload         11
+     173: bipush        127
+     175: if_icmpge     479
+     178: iconst_0
+     179: istore        12
+     181: iconst_m1
+     182: istore        13
+     184: iload         13
+     186: iconst_2
+     187: if_icmpge     242
+     190: iconst_m1
+     191: istore        14
+     193: iload         14
+     195: iconst_2
+     196: if_icmpge     236
+     199: iload         13
+     201: ifne          209
+     204: iload         14
+     206: ifeq          230
+     209: aload         6
+     211: iload         10
+     213: iload         13
+     215: iadd
+     216: iload         11
+     218: iload         14
+     220: iadd
+     221: invokestatic  #329                // Method isBiomeWatery:([ZII)Z
+     224: ifeq          230
+     227: iinc          12, 1
+     230: iinc          14, 1
+     233: goto          193
+     236: iinc          13, 1
+     239: goto          184
+     242: getstatic     #333                // Field net/minecraft/world/level/material/MapColor$Brightness.LOWEST:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     245: astore        13
+     247: getstatic     #216                // Field net/minecraft/world/level/material/MapColor.NONE:Lnet/minecraft/world/level/material/MapColor;
+     250: astore        14
+     252: aload         6
+     254: iload         10
+     256: iload         11
+     258: invokestatic  #329                // Method isBiomeWatery:([ZII)Z
+     261: ifeq          421
+     264: getstatic     #336                // Field net/minecraft/world/level/material/MapColor.COLOR_ORANGE:Lnet/minecraft/world/level/material/MapColor;
+     267: astore        14
+     269: iload         12
+     271: bipush        7
+     273: if_icmple     364
+     276: iload         11
+     278: iconst_2
+     279: irem
+     280: ifne          364
+     283: iload         10
+     285: iload         11
+     287: i2f
+     288: fconst_0
+     289: fadd
+     290: f2d
+     291: invokestatic  #339                // Method net/minecraft/util/Mth.sin:(D)F
+     294: ldc_w         #343                // float 7.0f
+     297: fmul
+     298: f2i
+     299: iadd
+     300: bipush        8
+     302: idiv
+     303: iconst_5
+     304: irem
+     305: tableswitch   { // 0 to 4
+                     0: 340
+                     1: 348
+                     2: 356
+                     3: 348
+                     4: 340
+               default: 361
+          }
+     340: getstatic     #275                // Field net/minecraft/world/level/material/MapColor$Brightness.LOW:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     343: astore        13
+     345: goto          361
+     348: getstatic     #278                // Field net/minecraft/world/level/material/MapColor$Brightness.NORMAL:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     351: astore        13
+     353: goto          361
+     356: getstatic     #267                // Field net/minecraft/world/level/material/MapColor$Brightness.HIGH:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     359: astore        13
+     361: goto          450
+     364: iload         12
+     366: bipush        7
+     368: if_icmple     379
+     371: getstatic     #216                // Field net/minecraft/world/level/material/MapColor.NONE:Lnet/minecraft/world/level/material/MapColor;
+     374: astore        14
+     376: goto          450
+     379: iload         12
+     381: iconst_5
+     382: if_icmple     393
+     385: getstatic     #278                // Field net/minecraft/world/level/material/MapColor$Brightness.NORMAL:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     388: astore        13
+     390: goto          450
+     393: iload         12
+     395: iconst_3
+     396: if_icmple     407
+     399: getstatic     #275                // Field net/minecraft/world/level/material/MapColor$Brightness.LOW:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     402: astore        13
+     404: goto          450
+     407: iload         12
+     409: iconst_1
+     410: if_icmple     450
+     413: getstatic     #275                // Field net/minecraft/world/level/material/MapColor$Brightness.LOW:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     416: astore        13
+     418: goto          450
+     421: iload         12
+     423: ifle          450
+     426: getstatic     #344                // Field net/minecraft/world/level/material/MapColor.COLOR_BROWN:Lnet/minecraft/world/level/material/MapColor;
+     429: astore        14
+     431: iload         12
+     433: iconst_3
+     434: if_icmple     445
+     437: getstatic     #278                // Field net/minecraft/world/level/material/MapColor$Brightness.NORMAL:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     440: astore        13
+     442: goto          450
+     445: getstatic     #333                // Field net/minecraft/world/level/material/MapColor$Brightness.LOWEST:Lnet/minecraft/world/level/material/MapColor$Brightness;
+     448: astore        13
+     450: aload         14
+     452: getstatic     #216                // Field net/minecraft/world/level/material/MapColor.NONE:Lnet/minecraft/world/level/material/MapColor;
+     455: if_acmpeq     473
+     458: aload_2
+     459: iload         10
+     461: iload         11
+     463: aload         14
+     465: aload         13
+     467: invokevirtual #289                // Method net/minecraft/world/level/material/MapColor.getPackedId:(Lnet/minecraft/world/level/material/MapColor$Brightness;)B
+     470: invokevirtual #347                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.setColor:(IIB)V
+     473: iinc          11, 1
+     476: goto          171
+     479: iinc          10, 1
+     482: goto          161
+     485: return
+
+  public void inventoryTick(net.minecraft.world.item.ItemStack, net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Entity, net.minecraft.world.entity.EquipmentSlot);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: invokestatic  #310                // Method getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+       5: astore        5
+       7: aload         5
+       9: ifnonnull     13
+      12: return
+      13: aload_3
+      14: instanceof    #74                 // class net/minecraft/world/entity/player/Player
+      17: ifeq          35
+      20: aload_3
+      21: checkcast     #74                 // class net/minecraft/world/entity/player/Player
+      24: astore        6
+      26: aload         5
+      28: aload         6
+      30: aload_1
+      31: aconst_null
+      32: invokevirtual #351                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.tickCarriedBy:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/decoration/ItemFrame;)V
+      35: aload         5
+      37: getfield      #355                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData.locked:Z
+      40: ifne          67
+      43: aload         4
+      45: ifnull        67
+      48: aload         4
+      50: invokevirtual #359                // Method net/minecraft/world/entity/EquipmentSlot.getType:()Lnet/minecraft/world/entity/EquipmentSlot$Type;
+      53: getstatic     #365                // Field net/minecraft/world/entity/EquipmentSlot$Type.HAND:Lnet/minecraft/world/entity/EquipmentSlot$Type;
+      56: if_acmpne     67
+      59: aload_0
+      60: aload_2
+      61: aload_3
+      62: aload         5
+      64: invokevirtual #371                // Method update:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V
+      67: return
+
+  public void onCraftedPostProcess(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level);
+    Code:
+       0: aload_1
+       1: getstatic     #375                // Field net/minecraft/core/component/DataComponents.MAP_POST_PROCESSING:Lnet/minecraft/core/component/DataComponentType;
+       4: invokevirtual #378                // Method net/minecraft/world/item/ItemStack.remove:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;
+       7: checkcast     #381                // class net/minecraft/world/item/component/MapPostProcessing
+      10: astore_3
+      11: aload_3
+      12: ifnonnull     16
+      15: return
+      16: aload_2
+      17: instanceof    #19                 // class net/minecraft/server/level/ServerLevel
+      20: ifeq          79
+      23: aload_2
+      24: checkcast     #19                 // class net/minecraft/server/level/ServerLevel
+      27: astore        4
+      29: getstatic     #383                // Field net/minecraft/world/item/MapItem$1.$SwitchMap$net$minecraft$world$item$component$MapPostProcessing:[I
+      32: aload_3
+      33: invokevirtual #389                // Method net/minecraft/world/item/component/MapPostProcessing.ordinal:()I
+      36: iaload
+      37: lookupswitch  { // 2
+                     1: 64
+                     2: 73
+               default: 79
+          }
+      64: aload_1
+      65: aload         4
+      67: invokestatic  #392                // Method lockMap:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/server/level/ServerLevel;)V
+      70: goto          79
+      73: aload_1
+      74: aload         4
+      76: invokestatic  #396                // Method scaleMap:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/server/level/ServerLevel;)V
+      79: return
+
+  private static void scaleMap(net.minecraft.world.item.ItemStack, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #310                // Method getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+       5: astore_2
+       6: aload_2
+       7: ifnull        33
+      10: aload_1
+      11: invokevirtual #62                 // Method net/minecraft/server/level/ServerLevel.getFreeMapId:()Lnet/minecraft/world/level/saveddata/maps/MapId;
+      14: astore_3
+      15: aload_1
+      16: aload_3
+      17: aload_2
+      18: invokevirtual #399                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.scaled:()Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      21: invokevirtual #66                 // Method net/minecraft/server/level/ServerLevel.setMapData:(Lnet/minecraft/world/level/saveddata/maps/MapId;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V
+      24: aload_0
+      25: getstatic     #30                 // Field net/minecraft/core/component/DataComponents.MAP_ID:Lnet/minecraft/core/component/DataComponentType;
+      28: aload_3
+      29: invokevirtual #36                 // Method net/minecraft/world/item/ItemStack.set:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+      32: pop
+      33: return
+
+  private static void lockMap(net.minecraft.world.item.ItemStack, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #310                // Method getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+       5: astore_2
+       6: aload_2
+       7: ifnull        37
+      10: aload_1
+      11: invokevirtual #62                 // Method net/minecraft/server/level/ServerLevel.getFreeMapId:()Lnet/minecraft/world/level/saveddata/maps/MapId;
+      14: astore_3
+      15: aload_2
+      16: invokevirtual #403                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.locked:()Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      19: astore        4
+      21: aload_1
+      22: aload_3
+      23: aload         4
+      25: invokevirtual #66                 // Method net/minecraft/server/level/ServerLevel.setMapData:(Lnet/minecraft/world/level/saveddata/maps/MapId;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V
+      28: aload_0
+      29: getstatic     #30                 // Field net/minecraft/core/component/DataComponents.MAP_ID:Lnet/minecraft/core/component/DataComponentType;
+      32: aload_3
+      33: invokevirtual #36                 // Method net/minecraft/world/item/ItemStack.set:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+      36: pop
+      37: return
+
+  public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext);
+    Code:
+       0: aload_1
+       1: invokevirtual #405                // Method net/minecraft/world/item/context/UseOnContext.getLevel:()Lnet/minecraft/world/level/Level;
+       4: aload_1
+       5: invokevirtual #411                // Method net/minecraft/world/item/context/UseOnContext.getClickedPos:()Lnet/minecraft/core/BlockPos;
+       8: invokevirtual #415                // Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      11: astore_2
+      12: aload_2
+      13: getstatic     #416                // Field net/minecraft/tags/BlockTags.BANNERS:Lnet/minecraft/tags/TagKey;
+      16: invokevirtual #421                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
+      19: ifeq          71
+      22: aload_1
+      23: invokevirtual #405                // Method net/minecraft/world/item/context/UseOnContext.getLevel:()Lnet/minecraft/world/level/Level;
+      26: invokevirtual #422                // Method net/minecraft/world/level/Level.isClientSide:()Z
+      29: ifne          67
+      32: aload_1
+      33: invokevirtual #425                // Method net/minecraft/world/item/context/UseOnContext.getItemInHand:()Lnet/minecraft/world/item/ItemStack;
+      36: aload_1
+      37: invokevirtual #405                // Method net/minecraft/world/item/context/UseOnContext.getLevel:()Lnet/minecraft/world/level/Level;
+      40: invokestatic  #310                // Method getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+      43: astore_3
+      44: aload_3
+      45: ifnull        67
+      48: aload_3
+      49: aload_1
+      50: invokevirtual #405                // Method net/minecraft/world/item/context/UseOnContext.getLevel:()Lnet/minecraft/world/level/Level;
+      53: aload_1
+      54: invokevirtual #411                // Method net/minecraft/world/item/context/UseOnContext.getClickedPos:()Lnet/minecraft/core/BlockPos;
+      57: invokevirtual #429                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.toggleBanner:(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z
+      60: ifne          67
+      63: getstatic     #433                // Field net/minecraft/world/InteractionResult.FAIL:Lnet/minecraft/world/InteractionResult$Fail;
+      66: areturn
+      67: getstatic     #439                // Field net/minecraft/world/InteractionResult.SUCCESS:Lnet/minecraft/world/InteractionResult$Success;
+      70: areturn
+      71: aload_0
+      72: aload_1
+      73: invokespecial #443                // Method net/minecraft/world/item/Item.useOn:(Lnet/minecraft/world/item/context/UseOnContext;)Lnet/minecraft/world/InteractionResult;
+      76: areturn
+}

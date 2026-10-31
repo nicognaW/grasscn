@@ -1,0 +1,95 @@
+@layer components {
+  .mc-combobox-input-group {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    max-width: 100%;
+    gap: calc(2px * var(--mc-scale, 2));
+  }
+  .mc-combobox-input {
+    min-width: 0;
+  }
+  .mc-combobox-positioner {
+    isolation: isolate;
+    z-index: 50;
+    max-width: var(--available-width);
+  }
+  .mc-combobox-content {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    width: var(--anchor-width);
+    max-width: var(--available-width);
+    max-height: var(--available-height);
+    outline: none;
+  }
+  .mc-combobox-list {
+    width: 100%;
+    max-width: 100%;
+    max-height: var(--available-height, calc(120 * var(--mc-pixel)));
+  }
+  .mc-combobox-group {
+    margin: 0;
+    padding: 0;
+  }
+  .mc-combobox-label,
+  .mc-combobox-empty {
+    padding: calc(2 * var(--mc-pixel)) var(--mc-pixel);
+    background: #000000d0;
+    color: #fff;
+    --mc-shadow: #3f3f3f;
+  }
+  .mc-combobox-empty:empty {
+    padding: 0;
+    background: transparent;
+  }
+  .mc-combobox-item-indicator {
+    display: none;
+  }
+  .mc-combobox-separator {
+    margin: calc(2 * var(--mc-pixel)) 0;
+  }
+  .mc-combobox-chips {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(2 * var(--mc-pixel));
+    align-items: center;
+    min-height: calc(20 * var(--mc-pixel));
+    padding: var(--mc-pixel);
+    background: black;
+    border: var(--mc-pixel) solid #a0a0a0;
+  }
+  .mc-combobox-chips:focus-within {
+    border-color: #fff;
+  }
+  .mc-combobox-chip {
+    display: flex;
+    align-items: center;
+    gap: calc(2 * var(--mc-pixel));
+    padding-left: calc(2 * var(--mc-pixel));
+    color: #fff;
+    --mc-ink: #fff;
+    --mc-shadow: #3f3f3f;
+    background: #202020;
+    outline: none;
+  }
+  .mc-combobox-chip:focus {
+    outline: var(--mc-pixel) solid #fff;
+  }
+  .mc-combobox-chip[data-disabled] {
+    color: #a0a0a0;
+  }
+  .mc-combobox-chip-input {
+    min-width: calc(30 * var(--mc-pixel));
+    flex: 1 1 auto;
+  }
+  .mc-combobox-chip .mc-menu-text {
+    pointer-events: none;
+  }
+}
+@layer components {
+  .mc-combobox-list:not(:has([data-highlighted]))
+    .mc-combobox-item[data-selected] {
+    color: #ff0;
+    --mc-shadow: #3f3f00;
+  }
+}

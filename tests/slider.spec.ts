@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
@@ -64,7 +64,9 @@ test("Range slider keeps separate thumbs and named form values", async ({ page }
 test("Slider preserves uncontrolled form reset and forwarded ref", async ({ page }) => {
   await page.goto("/?component=slider&uncontrolled=1&value=500")
   const thumb = page.getByRole("slider")
+  await expect(thumb).toBeVisible()
   await page.keyboard.press("Tab")
+  await expect(thumb).toBeFocused()
   await page.keyboard.press("ArrowRight")
   await expect(thumb).toHaveAttribute("aria-valuenow", "501")
   await page.locator("#reset").click()

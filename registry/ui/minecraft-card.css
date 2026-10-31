@@ -1,0 +1,22 @@
+@layer theme, base, components, utilities;
+@import "./minecraft-text-assets.css";
+@layer components {
+  .mc-card { --mc-pixel: calc(1px * var(--mc-scale, 2)); position: relative; isolation: isolate; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(12 * var(--mc-pixel)); padding: calc(18 * var(--mc-pixel)); min-width: calc(12 * var(--mc-pixel)); color: #fff; font-family: "Minecraft Pilot 26.2", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); font-synthesis: none; border: 0; border-radius: 0; background: transparent; }
+  .mc-card > .mc-surface { z-index: -1; }
+  .mc-card-header { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(12 * var(--mc-pixel)); text-align: center; min-width: 0; }
+  .mc-card-header:has(> [data-slot="card-action"]) { grid-template-columns: minmax(0, 1fr) auto; }
+  .mc-card-action { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  .mc-card-title, .mc-card-description { min-width: 0; }
+  .mc-card-content { min-width: 0; }
+  .mc-card-footer { display: flex; align-items: center; justify-content: center; gap: calc(6 * var(--mc-pixel)); }
+  .mc-card-footer > .mc-button { flex: 1; min-width: 0; }
+  .mc-card-text { display: block; width: 100%; }
+  .mc-card-text-line { display: block; height: calc(9 * var(--mc-pixel)); white-space: pre; text-align: left; }
+  .mc-card-text-line > .mc-bitmap, .mc-card-bold { vertical-align: top; }
+  .mc-card-bold, .mc-card-bold-pixels { display: inline-flex; }
+  .mc-card-bold-pixels { filter: drop-shadow(var(--mc-pixel) var(--mc-pixel) 0 #3f3f3f); }
+  .mc-card-bold-glyph { position: relative; display: block; flex-shrink: 0; width: calc(var(--mc-advance) * var(--mc-pixel)); height: calc(8 * var(--mc-pixel)); }
+  .mc-card-bold-glyph > i { position: absolute; top: 0; left: 0; width: calc(8 * var(--mc-pixel)); height: calc(8 * var(--mc-pixel)); background: #fff; mask-image: var(--mc-ascii-atlas); mask-size: calc(128 * var(--mc-pixel)) calc(128 * var(--mc-pixel)); mask-position: calc(-1 * var(--mc-glyph-x) * var(--mc-pixel)) calc(-1 * var(--mc-glyph-y) * var(--mc-pixel)); mask-repeat: no-repeat; }
+  .mc-card-bold-glyph > i + i { left: var(--mc-pixel); }
+  .mc-card-accessible { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}

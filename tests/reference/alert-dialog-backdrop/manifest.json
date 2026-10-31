@@ -1,0 +1,804 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "64efa9f1ebbdaabd1996d2025ce5f2d826287fae625615a38611ca9d0f3844a5",
+  "caseDefinitionSha256": "c1503712280831fcd346df90b96731252412f32833eac68b92dce57af856f717",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "b1c09efd0082bf807952c6dd49d8555efe61fa1b7f0c56731df4c2ec9d278f6f"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "ac438cde19330c708ec974acec44ed4e54bd39e48198c9cd24d893e4260739da"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "a7a85e8c954daaaf6abbde2241d3629b4ec38d067d9ad31464f059f5f4c1d083"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "737778863c69be854a7afb153028ea983289f41f704a51d09cefb1326c1bc802"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "49bbcac1f490c086cc34f13809e6c719b314ee98b36a4cdc2dd2535ace6f35e3"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "a44ca178b5671023cfe6a6b100f2d0a990db8e93f7b72e58cd296dffb4dae436"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "db473898c6f00cae5ac487370ee97bfec68fa99b818968ae10bc98febb8e3321"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "50cd89a84792c5d5294c0c03a7004616aa8253d2c2cf8e326780621b0179c7da"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "0d652efb64d242fcfe508db4f3b6cf500ea9b4e7bfa57ab47d7c8e538f44a919"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "62c35c1844bcd1703fc0b6aefe254dd30f369f927d3581346a044635735f0669"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "720f2e2d755e04f024bc087bf6639860769354545b2210886e4427a1fde16778"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "a9db3bdc45adaed1b2931ed928a8de62388805679f95b327c224ec0f41a3a96b"
+    }
+  ],
+  "cases": [
+    {
+      "name": "alert-smoke-c0-s1.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "page": 0,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 616,
+          "y": 415,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 731,
+          "y": 415,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 693,
+          "y": 432,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 616,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 770,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "9a486c9f5463a2c59a90da2a6d31472a8f6a09840cde423fcdc79e93cfab2780"
+    },
+    {
+      "name": "alert-smoke-c1-s1.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "page": 1,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 616,
+          "y": 415,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 731,
+          "y": 415,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 693,
+          "y": 432,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 616,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 770,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "bd0a5591b5f27b18070d88791e627d2ed1fbdeee9eea736078f26ff03de3202e"
+    },
+    {
+      "name": "alert-smoke-c2-s1.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "page": 2,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 616,
+          "y": 415,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 731,
+          "y": 415,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 693,
+          "y": 432,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 616,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 770,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "9b0b918a01a9f8ed343c44beee8798f3e908e9ae3085d3263fc64d2abed404c8"
+    },
+    {
+      "name": "alert-smoke-c3-s1.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 1536,
+      "height": 900,
+      "x": 0,
+      "y": 0,
+      "page": 3,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 616,
+          "y": 415,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 731,
+          "y": 415,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 693,
+          "y": 432,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 616,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 770,
+          "y": 465,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 1,
+      "sha256": "6b8a0f81984ff1f942627f30b03b88d8b1f05061e12d685d494c148c64fb3ac7"
+    },
+    {
+      "name": "alert-smoke-c0-s2.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "page": 0,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 232,
+          "y": 190,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 347,
+          "y": 190,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 309,
+          "y": 207,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 232,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 386,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "02776d560f724b4650480a9a18d6ee7c9318269e1405eb4b8b7a42c343efb9de"
+    },
+    {
+      "name": "alert-smoke-c1-s2.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "page": 1,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 232,
+          "y": 190,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 347,
+          "y": 190,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 309,
+          "y": 207,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 232,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 386,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "bd1798b0e3df82c1c06a2f3fe21d0cacc7642224dd6b9bcecf18aee5eb07fe78"
+    },
+    {
+      "name": "alert-smoke-c2-s2.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "page": 2,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 232,
+          "y": 190,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 347,
+          "y": 190,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 309,
+          "y": 207,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 232,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 386,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "315b8768505d87c61b3ce16d414f46c626120ea923cbe38701b84a5d9362070b"
+    },
+    {
+      "name": "alert-smoke-c3-s2.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 768,
+      "height": 450,
+      "x": 0,
+      "y": 0,
+      "page": 3,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 232,
+          "y": 190,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 347,
+          "y": 190,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 309,
+          "y": 207,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 232,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 386,
+          "y": 240,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 2,
+      "sha256": "1e1998840dcd436de745cc121bdd23c31eb4bbb842a55ed5a35a25042a97953b"
+    },
+    {
+      "name": "alert-smoke-c0-s3.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "page": 0,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 104,
+          "y": 115,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 219,
+          "y": 115,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 181,
+          "y": 132,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 104,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 258,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "05b20ba22c3c6ea0f18d405517d70631648d711c882476273cf8dd6278418d3c"
+    },
+    {
+      "name": "alert-smoke-c1-s3.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "page": 1,
+      "value": 0,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 104,
+          "y": 115,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 219,
+          "y": 115,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 181,
+          "y": 132,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 104,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 258,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "07c2ede95b7ec83791a68c7f0f975fd344c264b2b4e0fc79486b4c3c46ce2e13"
+    },
+    {
+      "name": "alert-smoke-c2-s3.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "page": 2,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#202020",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 104,
+          "y": 115,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 219,
+          "y": 115,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 181,
+          "y": 132,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 104,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 258,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "9286f7663ae8049d6d14749464ce6e1cb672c91ff1e3d460c89f4500701d04fc"
+    },
+    {
+      "name": "alert-smoke-c3-s3.png",
+      "element": "alert-dialog",
+      "viewport": true,
+      "checked": true,
+      "state": "normal",
+      "width": 512,
+      "height": 300,
+      "x": 0,
+      "y": 0,
+      "page": 3,
+      "value": 5,
+      "label": "Are you sure?",
+      "text": "This action cannot be undone.",
+      "labels": [
+        "Yes",
+        "No"
+      ],
+      "background": "#808080",
+      "renderedLines": [
+        "confirmation layout",
+        "Are you sure?",
+        "This action cannot be undone.",
+        "Yes",
+        "No"
+      ],
+      "tabRects": [
+        {
+          "x": 104,
+          "y": 115,
+          "width": 304,
+          "height": 70
+        },
+        {
+          "x": 219,
+          "y": 115,
+          "width": 74,
+          "height": 9
+        },
+        {
+          "x": 181,
+          "y": 132,
+          "width": 150,
+          "height": 9
+        },
+        {
+          "x": 104,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        },
+        {
+          "x": 258,
+          "y": 165,
+          "width": 150,
+          "height": 20
+        }
+      ],
+      "scale": 3,
+      "sha256": "8b074b1e1186b293bdb3bfefce31a1fb33383daf2685e19dfd8f4b73fecf86f3"
+    }
+  ],
+  "sourceDirectory": "source"
+}

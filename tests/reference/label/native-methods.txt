@@ -1,0 +1,548 @@
+Compiled from "StringWidget.java"
+public class net.minecraft.client.gui.components.StringWidget extends net.minecraft.client.gui.components.AbstractStringWidget {
+  private static final int TEXT_MARGIN;
+
+  private int maxWidth;
+
+  private int cachedWidth;
+
+  private boolean cachedWidthDirty;
+
+  private net.minecraft.client.gui.components.StringWidget$TextOverflow textOverflow;
+
+  public net.minecraft.client.gui.components.StringWidget(net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: iconst_0
+       3: aload_2
+       4: aload_1
+       5: invokeinterface #1,  1            // InterfaceMethod net/minecraft/network/chat/Component.getVisualOrderText:()Lnet/minecraft/util/FormattedCharSequence;
+      10: invokevirtual #7                  // Method net/minecraft/client/gui/Font.width:(Lnet/minecraft/util/FormattedCharSequence;)I
+      13: aload_2
+      14: invokestatic  #13                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: pop
+      18: bipush        9
+      20: aload_1
+      21: aload_2
+      22: invokespecial #19                 // Method "<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;)V
+      25: return
+
+  public net.minecraft.client.gui.components.StringWidget(int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: iconst_0
+       3: iload_1
+       4: iload_2
+       5: aload_3
+       6: aload         4
+       8: invokespecial #19                 // Method "<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;)V
+      11: return
+
+  public net.minecraft.client.gui.components.StringWidget(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: iload_3
+       4: iload         4
+       6: aload         5
+       8: aload         6
+      10: invokespecial #25                 // Method net/minecraft/client/gui/components/AbstractStringWidget."<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;)V
+      13: aload_0
+      14: iconst_0
+      15: putfield      #28                 // Field maxWidth:I
+      18: aload_0
+      19: iconst_0
+      20: putfield      #32                 // Field cachedWidth:I
+      23: aload_0
+      24: iconst_1
+      25: putfield      #35                 // Field cachedWidthDirty:Z
+      28: aload_0
+      29: getstatic     #39                 // Field net/minecraft/client/gui/components/StringWidget$TextOverflow.CLAMPED:Lnet/minecraft/client/gui/components/StringWidget$TextOverflow;
+      32: putfield      #45                 // Field textOverflow:Lnet/minecraft/client/gui/components/StringWidget$TextOverflow;
+      35: aload_0
+      36: iconst_0
+      37: putfield      #48                 // Field active:Z
+      40: return
+
+  public void setMessage(net.minecraft.network.chat.Component);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #51                 // Method net/minecraft/client/gui/components/AbstractStringWidget.setMessage:(Lnet/minecraft/network/chat/Component;)V
+       5: aload_0
+       6: iconst_1
+       7: putfield      #35                 // Field cachedWidthDirty:Z
+      10: return
+
+  public net.minecraft.client.gui.components.StringWidget setMaxWidth(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: getstatic     #39                 // Field net/minecraft/client/gui/components/StringWidget$TextOverflow.CLAMPED:Lnet/minecraft/client/gui/components/StringWidget$TextOverflow;
+       5: invokevirtual #55                 // Method setMaxWidth:(ILnet/minecraft/client/gui/components/StringWidget$TextOverflow;)Lnet/minecraft/client/gui/components/StringWidget;
+       8: areturn
+
+  public net.minecraft.client.gui.components.StringWidget setMaxWidth(int, net.minecraft.client.gui.components.StringWidget$TextOverflow);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #28                 // Field maxWidth:I
+       5: aload_0
+       6: aload_2
+       7: putfield      #45                 // Field textOverflow:Lnet/minecraft/client/gui/components/StringWidget$TextOverflow;
+      10: aload_0
+      11: areturn
+
+  public int getWidth();
+    Code:
+       0: aload_0
+       1: getfield      #28                 // Field maxWidth:I
+       4: ifle          51
+       7: aload_0
+       8: getfield      #35                 // Field cachedWidthDirty:Z
+      11: ifeq          46
+      14: aload_0
+      15: aload_0
+      16: getfield      #28                 // Field maxWidth:I
+      19: aload_0
+      20: invokevirtual #59                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+      23: aload_0
+      24: invokevirtual #63                 // Method getMessage:()Lnet/minecraft/network/chat/Component;
+      27: invokeinterface #1,  1            // InterfaceMethod net/minecraft/network/chat/Component.getVisualOrderText:()Lnet/minecraft/util/FormattedCharSequence;
+      32: invokevirtual #7                  // Method net/minecraft/client/gui/Font.width:(Lnet/minecraft/util/FormattedCharSequence;)I
+      35: invokestatic  #67                 // Method java/lang/Math.min:(II)I
+      38: putfield      #32                 // Field cachedWidth:I
+      41: aload_0
+      42: iconst_0
+      43: putfield      #35                 // Field cachedWidthDirty:Z
+      46: aload_0
+      47: getfield      #32                 // Field cachedWidth:I
+      50: ireturn
+      51: aload_0
+      52: invokespecial #73                 // Method net/minecraft/client/gui/components/AbstractStringWidget.getWidth:()I
+      55: ireturn
+
+  public void visitLines(net.minecraft.client.gui.ActiveTextCollector);
+    Code:
+       0: aload_0
+       1: invokevirtual #63                 // Method getMessage:()Lnet/minecraft/network/chat/Component;
+       4: astore_2
+       5: aload_0
+       6: invokevirtual #59                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+       9: astore_3
+      10: aload_0
+      11: getfield      #28                 // Field maxWidth:I
+      14: ifle          24
+      17: aload_0
+      18: getfield      #28                 // Field maxWidth:I
+      21: goto          28
+      24: aload_0
+      25: invokevirtual #77                 // Method getWidth:()I
+      28: istore        4
+      30: aload_3
+      31: aload_2
+      32: invokevirtual #78                 // Method net/minecraft/client/gui/Font.width:(Lnet/minecraft/network/chat/FormattedText;)I
+      35: istore        5
+      37: aload_0
+      38: invokevirtual #81                 // Method getX:()I
+      41: istore        6
+      43: aload_0
+      44: invokevirtual #84                 // Method getY:()I
+      47: aload_0
+      48: invokevirtual #87                 // Method getHeight:()I
+      51: aload_3
+      52: invokestatic  #13                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      55: pop
+      56: bipush        9
+      58: isub
+      59: iconst_2
+      60: idiv
+      61: iadd
+      62: istore        7
+      64: iload         5
+      66: iload         4
+      68: if_icmple     75
+      71: iconst_1
+      72: goto          76
+      75: iconst_0
+      76: istore        8
+      78: iload         8
+      80: ifeq          146
+      83: aload_0
+      84: getfield      #45                 // Field textOverflow:Lnet/minecraft/client/gui/components/StringWidget$TextOverflow;
+      87: invokevirtual #90                 // Method net/minecraft/client/gui/components/StringWidget$TextOverflow.ordinal:()I
+      90: lookupswitch  { // 2
+                     0: 116
+                     1: 136
+               default: 143
+          }
+     116: aload_1
+     117: iload         6
+     119: iload         7
+     121: aload_2
+     122: aload_3
+     123: iload         4
+     125: invokestatic  #93                 // Method net/minecraft/client/gui/components/ComponentRenderUtils.clipText:(Lnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;I)Lnet/minecraft/util/FormattedCharSequence;
+     128: invokeinterface #99,  4           // InterfaceMethod net/minecraft/client/gui/ActiveTextCollector.accept:(IILnet/minecraft/util/FormattedCharSequence;)V
+     133: goto          143
+     136: aload_0
+     137: aload_1
+     138: aload_2
+     139: iconst_2
+     140: invokevirtual #105                // Method extractScrollingStringOverContents:(Lnet/minecraft/client/gui/ActiveTextCollector;Lnet/minecraft/network/chat/Component;I)V
+     143: goto          162
+     146: aload_1
+     147: iload         6
+     149: iload         7
+     151: aload_2
+     152: invokeinterface #1,  1            // InterfaceMethod net/minecraft/network/chat/Component.getVisualOrderText:()Lnet/minecraft/util/FormattedCharSequence;
+     157: invokeinterface #99,  4           // InterfaceMethod net/minecraft/client/gui/ActiveTextCollector.accept:(IILnet/minecraft/util/FormattedCharSequence;)V
+     162: return
+}
+Compiled from "MultiLineTextWidget.java"
+public class net.minecraft.client.gui.components.MultiLineTextWidget extends net.minecraft.client.gui.components.AbstractStringWidget {
+  private java.util.OptionalInt maxWidth;
+
+  private java.util.OptionalInt maxRows;
+
+  private final net.minecraft.util.SingleKeyCache<net.minecraft.client.gui.components.MultiLineTextWidget$CacheKey, net.minecraft.client.gui.components.MultiLineLabel> cache;
+
+  private boolean centered;
+
+  public net.minecraft.client.gui.components.MultiLineTextWidget(net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: iconst_0
+       3: aload_1
+       4: aload_2
+       5: invokespecial #1                  // Method "<init>":(IILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;)V
+       8: return
+
+  public net.minecraft.client.gui.components.MultiLineTextWidget(int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: iconst_0
+       4: iconst_0
+       5: aload_3
+       6: aload         4
+       8: invokespecial #7                  // Method net/minecraft/client/gui/components/AbstractStringWidget."<init>":(IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/Font;)V
+      11: aload_0
+      12: invokestatic  #12                 // Method java/util/OptionalInt.empty:()Ljava/util/OptionalInt;
+      15: putfield      #18                 // Field maxWidth:Ljava/util/OptionalInt;
+      18: aload_0
+      19: invokestatic  #12                 // Method java/util/OptionalInt.empty:()Ljava/util/OptionalInt;
+      22: putfield      #22                 // Field maxRows:Ljava/util/OptionalInt;
+      25: aload_0
+      26: iconst_0
+      27: putfield      #25                 // Field centered:Z
+      30: aload_0
+      31: aload         4
+      33: invokedynamic #29,  0             // InvokeDynamic #0:apply:(Lnet/minecraft/client/gui/Font;)Ljava/util/function/Function;
+      38: invokestatic  #33                 // Method net/minecraft/util/Util.singleKeyCache:(Ljava/util/function/Function;)Lnet/minecraft/util/SingleKeyCache;
+      41: putfield      #39                 // Field cache:Lnet/minecraft/util/SingleKeyCache;
+      44: aload_0
+      45: iconst_0
+      46: putfield      #43                 // Field active:Z
+      49: return
+
+  public net.minecraft.client.gui.components.MultiLineTextWidget setMaxWidth(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #46                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       5: putfield      #18                 // Field maxWidth:Ljava/util/OptionalInt;
+       8: aload_0
+       9: areturn
+
+  public net.minecraft.client.gui.components.MultiLineTextWidget setMaxRows(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #46                 // Method java/util/OptionalInt.of:(I)Ljava/util/OptionalInt;
+       5: putfield      #22                 // Field maxRows:Ljava/util/OptionalInt;
+       8: aload_0
+       9: areturn
+
+  public net.minecraft.client.gui.components.MultiLineTextWidget setCentered(boolean);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: putfield      #25                 // Field centered:Z
+       5: aload_0
+       6: areturn
+
+  public int getWidth();
+    Code:
+       0: aload_0
+       1: getfield      #39                 // Field cache:Lnet/minecraft/util/SingleKeyCache;
+       4: aload_0
+       5: invokevirtual #50                 // Method getFreshCacheKey:()Lnet/minecraft/client/gui/components/MultiLineTextWidget$CacheKey;
+       8: invokevirtual #54                 // Method net/minecraft/util/SingleKeyCache.getValue:(Ljava/lang/Object;)Ljava/lang/Object;
+      11: checkcast     #60                 // class net/minecraft/client/gui/components/MultiLineLabel
+      14: invokeinterface #62,  1           // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.getWidth:()I
+      19: ireturn
+
+  public int getHeight();
+    Code:
+       0: aload_0
+       1: getfield      #39                 // Field cache:Lnet/minecraft/util/SingleKeyCache;
+       4: aload_0
+       5: invokevirtual #50                 // Method getFreshCacheKey:()Lnet/minecraft/client/gui/components/MultiLineTextWidget$CacheKey;
+       8: invokevirtual #54                 // Method net/minecraft/util/SingleKeyCache.getValue:(Ljava/lang/Object;)Ljava/lang/Object;
+      11: checkcast     #60                 // class net/minecraft/client/gui/components/MultiLineLabel
+      14: invokeinterface #66,  1           // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.getLineCount:()I
+      19: aload_0
+      20: invokevirtual #69                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+      23: invokestatic  #73                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      26: pop
+      27: bipush        9
+      29: imul
+      30: ireturn
+
+  public void visitLines(net.minecraft.client.gui.ActiveTextCollector);
+    Code:
+       0: aload_0
+       1: getfield      #39                 // Field cache:Lnet/minecraft/util/SingleKeyCache;
+       4: aload_0
+       5: invokevirtual #50                 // Method getFreshCacheKey:()Lnet/minecraft/client/gui/components/MultiLineTextWidget$CacheKey;
+       8: invokevirtual #54                 // Method net/minecraft/util/SingleKeyCache.getValue:(Ljava/lang/Object;)Ljava/lang/Object;
+      11: checkcast     #60                 // class net/minecraft/client/gui/components/MultiLineLabel
+      14: astore_2
+      15: aload_0
+      16: invokevirtual #78                 // Method getTextX:()I
+      19: istore_3
+      20: aload_0
+      21: invokevirtual #81                 // Method getTextY:()I
+      24: istore        4
+      26: aload_0
+      27: invokevirtual #69                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+      30: invokestatic  #73                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      33: pop
+      34: bipush        9
+      36: istore        5
+      38: aload_0
+      39: getfield      #25                 // Field centered:Z
+      42: ifeq          78
+      45: aload_0
+      46: invokevirtual #84                 // Method getX:()I
+      49: aload_0
+      50: invokevirtual #87                 // Method getWidth:()I
+      53: iconst_2
+      54: idiv
+      55: iadd
+      56: istore        6
+      58: aload_2
+      59: getstatic     #88                 // Field net/minecraft/client/gui/TextAlignment.CENTER:Lnet/minecraft/client/gui/TextAlignment;
+      62: iload         6
+      64: iload         4
+      66: iload         5
+      68: aload_1
+      69: invokeinterface #94,  6           // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.visitLines:(Lnet/minecraft/client/gui/TextAlignment;IIILnet/minecraft/client/gui/ActiveTextCollector;)I
+      74: pop
+      75: goto          94
+      78: aload_2
+      79: getstatic     #98                 // Field net/minecraft/client/gui/TextAlignment.LEFT:Lnet/minecraft/client/gui/TextAlignment;
+      82: iload_3
+      83: iload         4
+      85: iload         5
+      87: aload_1
+      88: invokeinterface #94,  6           // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.visitLines:(Lnet/minecraft/client/gui/TextAlignment;IIILnet/minecraft/client/gui/ActiveTextCollector;)I
+      93: pop
+      94: return
+
+  protected int getTextX();
+    Code:
+       0: aload_0
+       1: invokevirtual #84                 // Method getX:()I
+       4: ireturn
+
+  protected int getTextY();
+    Code:
+       0: aload_0
+       1: invokevirtual #101                // Method getY:()I
+       4: ireturn
+
+  private net.minecraft.client.gui.components.MultiLineTextWidget$CacheKey getFreshCacheKey();
+    Code:
+       0: new           #104                // class net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey
+       3: dup
+       4: aload_0
+       5: invokevirtual #106                // Method getMessage:()Lnet/minecraft/network/chat/Component;
+       8: aload_0
+       9: getfield      #18                 // Field maxWidth:Ljava/util/OptionalInt;
+      12: ldc           #112                // int 2147483647
+      14: invokevirtual #113                // Method java/util/OptionalInt.orElse:(I)I
+      17: aload_0
+      18: getfield      #22                 // Field maxRows:Ljava/util/OptionalInt;
+      21: invokespecial #117                // Method net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey."<init>":(Lnet/minecraft/network/chat/Component;ILjava/util/OptionalInt;)V
+      24: areturn
+
+  private static net.minecraft.client.gui.components.MultiLineLabel lambda$new$0(net.minecraft.client.gui.Font, net.minecraft.client.gui.components.MultiLineTextWidget$CacheKey);
+    Code:
+       0: aload_1
+       1: getfield      #120                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.maxRows:Ljava/util/OptionalInt;
+       4: invokevirtual #121                // Method java/util/OptionalInt.isPresent:()Z
+       7: ifeq          37
+      10: aload_0
+      11: aload_1
+      12: getfield      #125                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.maxWidth:I
+      15: aload_1
+      16: getfield      #120                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.maxRows:Ljava/util/OptionalInt;
+      19: invokevirtual #128                // Method java/util/OptionalInt.getAsInt:()I
+      22: iconst_1
+      23: anewarray     #131                // class net/minecraft/network/chat/Component
+      26: dup
+      27: iconst_0
+      28: aload_1
+      29: getfield      #133                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.message:Lnet/minecraft/network/chat/Component;
+      32: aastore
+      33: invokestatic  #137                // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.create:(Lnet/minecraft/client/gui/Font;II[Lnet/minecraft/network/chat/Component;)Lnet/minecraft/client/gui/components/MultiLineLabel;
+      36: areturn
+      37: aload_0
+      38: aload_1
+      39: getfield      #133                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.message:Lnet/minecraft/network/chat/Component;
+      42: aload_1
+      43: getfield      #125                // Field net/minecraft/client/gui/components/MultiLineTextWidget$CacheKey.maxWidth:I
+      46: invokestatic  #141                // InterfaceMethod net/minecraft/client/gui/components/MultiLineLabel.create:(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;I)Lnet/minecraft/client/gui/components/MultiLineLabel;
+      49: areturn
+}
+Compiled from "AbstractStringWidget.java"
+public abstract class net.minecraft.client.gui.components.AbstractStringWidget extends net.minecraft.client.gui.components.AbstractWidget {
+  private java.util.function.Consumer<net.minecraft.network.chat.Style> componentClickHandler;
+
+  private final net.minecraft.client.gui.Font font;
+
+  public net.minecraft.client.gui.components.AbstractStringWidget(int, int, int, int, net.minecraft.network.chat.Component, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: iload_3
+       4: iload         4
+       6: aload         5
+       8: invokespecial #1                  // Method net/minecraft/client/gui/components/AbstractWidget."<init>":(IIIILnet/minecraft/network/chat/Component;)V
+      11: aload_0
+      12: aconst_null
+      13: putfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+      16: aload_0
+      17: aload         6
+      19: putfield      #13                 // Field font:Lnet/minecraft/client/gui/Font;
+      22: return
+
+  public abstract void visitLines(net.minecraft.client.gui.ActiveTextCollector);
+
+  public void extractWidgetRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+    Code:
+       0: aload_0
+       1: invokevirtual #17                 // Method isHovered:()Z
+       4: ifeq          30
+       7: aload_0
+       8: getfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+      11: ifnull        22
+      14: getstatic     #21                 // Field net/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects.TOOLTIP_AND_CURSOR:Lnet/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects;
+      17: astore        5
+      19: goto          35
+      22: getstatic     #27                 // Field net/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects.TOOLTIP_ONLY:Lnet/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects;
+      25: astore        5
+      27: goto          35
+      30: getstatic     #30                 // Field net/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects.NONE:Lnet/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects;
+      33: astore        5
+      35: aload_0
+      36: aload_1
+      37: aload_0
+      38: aload         5
+      40: invokevirtual #33                 // Method net/minecraft/client/gui/GuiGraphicsExtractor.textRendererForWidget:(Lnet/minecraft/client/gui/components/AbstractWidget;Lnet/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects;)Lnet/minecraft/client/gui/ActiveTextCollector;
+      43: invokevirtual #39                 // Method visitLines:(Lnet/minecraft/client/gui/ActiveTextCollector;)V
+      46: return
+
+  public void onClick(net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+       4: ifnull        57
+       7: new           #43                 // class net/minecraft/client/gui/ActiveTextCollector$ClickableStyleFinder
+      10: dup
+      11: aload_0
+      12: invokevirtual #45                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+      15: aload_1
+      16: invokevirtual #49                 // Method net/minecraft/client/input/MouseButtonEvent.x:()D
+      19: d2i
+      20: aload_1
+      21: invokevirtual #55                 // Method net/minecraft/client/input/MouseButtonEvent.y:()D
+      24: d2i
+      25: invokespecial #58                 // Method net/minecraft/client/gui/ActiveTextCollector$ClickableStyleFinder."<init>":(Lnet/minecraft/client/gui/Font;II)V
+      28: astore_3
+      29: aload_0
+      30: aload_3
+      31: invokevirtual #39                 // Method visitLines:(Lnet/minecraft/client/gui/ActiveTextCollector;)V
+      34: aload_3
+      35: invokevirtual #61                 // Method net/minecraft/client/gui/ActiveTextCollector$ClickableStyleFinder.result:()Lnet/minecraft/network/chat/Style;
+      38: astore        4
+      40: aload         4
+      42: ifnull        57
+      45: aload_0
+      46: getfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+      49: aload         4
+      51: invokeinterface #65,  2           // InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V
+      56: return
+      57: aload_0
+      58: aload_1
+      59: iload_2
+      60: invokespecial #71                 // Method net/minecraft/client/gui/components/AbstractWidget.onClick:(Lnet/minecraft/client/input/MouseButtonEvent;Z)V
+      63: return
+
+  protected void updateWidgetNarration(net.minecraft.client.gui.narration.NarrationElementOutput);
+    Code:
+       0: return
+
+  protected final net.minecraft.client.gui.Font getFont();
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field font:Lnet/minecraft/client/gui/Font;
+       4: areturn
+
+  public void setMessage(net.minecraft.network.chat.Component);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #75                 // Method net/minecraft/client/gui/components/AbstractWidget.setMessage:(Lnet/minecraft/network/chat/Component;)V
+       5: aload_0
+       6: aload_0
+       7: invokevirtual #45                 // Method getFont:()Lnet/minecraft/client/gui/Font;
+      10: aload_1
+      11: invokeinterface #79,  1           // InterfaceMethod net/minecraft/network/chat/Component.getVisualOrderText:()Lnet/minecraft/util/FormattedCharSequence;
+      16: invokevirtual #85                 // Method net/minecraft/client/gui/Font.width:(Lnet/minecraft/util/FormattedCharSequence;)I
+      19: invokevirtual #91                 // Method setWidth:(I)V
+      22: return
+
+  public net.minecraft.client.gui.components.AbstractStringWidget setComponentClickHandler(java.util.function.Consumer<net.minecraft.network.chat.Style>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+       5: aload_0
+       6: areturn
+
+  protected boolean handleStyleClick(net.minecraft.network.chat.Style);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+       4: ifnull        26
+       7: aload_1
+       8: invokevirtual #95                 // Method net/minecraft/network/chat/Style.getClickEvent:()Lnet/minecraft/network/chat/ClickEvent;
+      11: ifnull        26
+      14: aload_0
+      15: getfield      #7                  // Field componentClickHandler:Ljava/util/function/Consumer;
+      18: aload_1
+      19: invokeinterface #65,  2           // InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V
+      24: iconst_1
+      25: ireturn
+      26: iconst_0
+      27: ireturn
+}

@@ -23,7 +23,7 @@
     top: 0;
   }
   .mc-slider-thumb { display: block; width: calc(8 * var(--mc-pixel)); height: calc(20 * var(--mc-pixel)); outline: none; pointer-events: auto; }
-  .mc-slider-handle { display: block; position: absolute; inset: 0; }
+  .mc-slider-handle { display: block; position: absolute; inset: 0; pointer-events: none; }
   .mc-slider-label {
     position: absolute;
     pointer-events: none;
