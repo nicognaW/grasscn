@@ -20,7 +20,7 @@ for(const c of manifest.cases)test(`advancement tree native pixels ${c.name}`,as
 test('advancement tree selection, keyboard, details and panning',async({page})=>{
  await page.goto((process.env.GRASSCN_TREE_INSTALLED_URL??'http://127.0.0.1:5174/adventure.html')+'?scale=2&mask=1')
  const tree=page.getByRole('group',{name:'Advancement tree'}),first=page.getByRole('button',{name:'Milestone 0, completed',exact:true})
- await first.hover();await expect(page.getByRole('tooltip')).toContainText('Milestone 0')
+ await first.hover();await expect(page.locator('[data-slot="tooltip-content"]')).toContainText('Milestone 0')
  await first.click();await expect(first).toHaveAttribute('aria-pressed','true')
  await first.press('ArrowRight');await expect(page.getByRole('button',{name:'Milestone 1',exact:true})).toBeFocused()
  await page.keyboard.press('Enter');await expect(page.getByRole('button',{name:'Milestone 1',exact:true})).toHaveAttribute('aria-pressed','true')
