@@ -26,3 +26,18 @@ test('dragging from a node pans without selecting and does not block keyboard se
  await node.click();await expect(node).toHaveAttribute('aria-pressed','true')
  expect(warnings.filter(message=>/controlled|pointer capture/i.test(message))).toEqual([])
 })
+
+test('cancelled drag permits the next click and keyboard selection',async({page})=>{
+ await page.goto(fixture+'?scale=2&mask=1')
+ const tree=page.getByRole('group',{name:'Advancement tree'}),node=page.getByRole('button',{name:'Milestone 1',exact:true})
+ const box=(await node.boundingBox())!,plane=page.locator('.mc-advancement-plane')
+ await node.hover();await expect(page.getByRole('tooltip')).toBeVisible()
+ await page.mouse.down();await page.mouse.move(box.x+box.width/2+30,box.y+box.height/2+10,{steps:4})
+ await expect(page.getByRole('tooltip')).toHaveCount(0)
+ await tree.dispatchEvent('pointercancel',{pointerId:1,isPrimary:true})
+ await page.mouse.up();const pan=await plane.getAttribute('style')
+ await page.mouse.move(1000,800);expect(await plane.getAttribute('style')).toBe(pan)
+ await node.click();await expect(node).toHaveAttribute('aria-pressed','true')
+ const next=page.getByRole('button',{name:'Milestone 2',exact:true})
+ await next.focus();await next.press('Enter');await expect(next).toHaveAttribute('aria-pressed','true')
+})

@@ -23,3 +23,15 @@ test('burst wheel events preserve consecutive native offsets',async({page})=>{
  await page.locator('[data-slot="trading"]').evaluate(element=>{element.dispatchEvent(new WheelEvent('wheel',{deltaY:100,bubbles:true,cancelable:true}));element.dispatchEvent(new WheelEvent('wheel',{deltaY:100,bubbles:true,cancelable:true}))})
  await expect(page.getByRole('spinbutton',{name:'Scroll offset'})).toHaveValue('2');await expect(page.getByRole('scrollbar',{name:'Trade offers scroll'})).toHaveAttribute('aria-valuenow','2')}
 })
+
+for(const uncontrolled of [false,true])test(`wheel normalization and boundaries (${uncontrolled?'uncontrolled':'controlled'})`,async({page})=>{
+ await page.goto(`${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify({element:'trading',offerCount:25,cursor:0,uncontrolled}))}`)
+ const root=page.locator('[data-slot="trading"]'),rail=page.getByRole('scrollbar',{name:'Trade offers scroll'})
+ for(const [deltaY,deltaMode,result]of [[100,0,1],[1,1,2],[1,2,9],[-.5,1,8],[1000,2,18],[-1000,2,0]]as const){
+  await root.dispatchEvent('wheel',{deltaY,deltaMode});await expect(rail).toHaveAttribute('aria-valuenow',String(result))
+ }
+ await root.evaluate(element=>{for(let i=0;i<5;i++)element.dispatchEvent(new WheelEvent('wheel',{deltaY:100,bubbles:true,cancelable:true}))})
+ await expect(rail).toHaveAttribute('aria-valuenow','5')
+ await rail.focus();await rail.press('End');await expect(rail).toHaveAttribute('aria-valuenow','18')
+ await rail.press('Home');await expect(rail).toHaveAttribute('aria-valuenow','0')
+})

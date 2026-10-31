@@ -26,3 +26,18 @@ test('website loads Dream with slim arms after both presets',async({page},info)=
  expect([a.width,a.height]).toEqual([b.width,b.height]);expect(a.data.equals(b.data)).toBe(true)
  await page.screenshot({path:info.outputPath('dream-back-website.png')});expect(errors).toEqual([])
 })
+
+test('custom skin can fail, recover, and replace another model without remounting',async({page})=>{
+ await page.route('https://mc-heads.net/skin/*',route=>{
+  const name=decodeURIComponent(new URL(route.request().url()).pathname.split('/').pop()!)
+  if(name==='Missing')return route.fulfill({status:404,body:''})
+  return route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(`tests/fixture/${name==='Dream'?'dream':'steve'}-skin.png`)})
+ })
+ await page.goto('http://127.0.0.1:5176/components/player-preview')
+ const player=page.getByRole('group',{name:'Player preview',exact:true}),input=page.getByRole('textbox',{name:'Player name',exact:true})
+ for(const [name,model]of [['Dream','slim'],['Missing',null],['Classic','wide'],['Dream','slim']]as const){
+  await input.fill(name);await page.getByRole('button',{name:'Load skin',exact:true}).click()
+  if(model===null){await expect(player.getByRole('status')).toHaveText('3D preview unavailable');await expect(player).toHaveAttribute('data-ready','false')}
+  else {await expect(player).toHaveAttribute('data-ready','true');await expect(player).toHaveAttribute('data-model',model)}
+ }
+})

@@ -23,9 +23,14 @@
     "preview": "node scripts/prepare-preview.mjs && vite --config vite.preview.config.ts",
     "preview:check": "npm run map:check && node scripts/prepare-preview.mjs",
     "preview:build": "npm run preview:check && vite build --config vite.preview.config.ts",
-    "test:preview": "playwright test preview.spec.ts",
+    "test:preview": "node scripts/prepare-preview.mjs && playwright test preview.spec.ts",
     "test:input": "playwright test input.spec.ts",
-    "registry:check": "node scripts/check-registry-closure.mjs"
+    "registry:check": "node scripts/check-registry-closure.mjs",
+    "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite regressions",
+    "porting:pixels": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite pixels",
+    "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite all",
+    "pretypecheck": "node scripts/prepare-preview.mjs",
+    "pretest": "node scripts/prepare-preview.mjs"
   },
   "devDependencies": {
     "@base-ui/react": "^1.9.0",
