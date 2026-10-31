@@ -19,7 +19,6 @@
   .mc-slider-position > [data-slot="slider-thumb"] {
     left: calc(round(down, (100% - 8 * var(--mc-pixel)) * var(--mc-thumb-fraction), var(--mc-pixel)) + 4 * var(--mc-pixel)) !important;
     right: auto !important;
-    translate: none !important;
     transform: translateX(-50%) !important;
     top: 0 !important;
   }

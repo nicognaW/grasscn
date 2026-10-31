@@ -9,75 +9,75 @@
   "files": [
     {
       "path": "slider.tsx",
-      "installedSha256": "fa404ce00e89f4b6060c9d13344f86bc024ff0dc475fc21d0475361d57606e0e",
-      "sourceSha256": "fa404ce00e89f4b6060c9d13344f86bc024ff0dc475fc21d0475361d57606e0e",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "installedSha256": "2e4a5db729353aa070b8d2ea605396702ddf7d765fa14b1550db21ed4aad7b0e",
+      "sourceSha256": "2e4a5db729353aa070b8d2ea605396702ddf7d765fa14b1550db21ed4aad7b0e",
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-slider.css",
-      "installedSha256": "f22530232505ea537c14538a04f88778d9c239d4ab7ca189f144fd5f0ce4fb7a",
-      "sourceSha256": "f22530232505ea537c14538a04f88778d9c239d4ab7ca189f144fd5f0ce4fb7a",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "installedSha256": "75d67578bf12ca8b32e2ef6a823bee384073b0861178eaded7de3fd3cde06a1a",
+      "sourceSha256": "75d67578bf12ca8b32e2ef6a823bee384073b0861178eaded7de3fd3cde06a1a",
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-slider-sprites.ts",
       "installedSha256": "939622a1422c59c4188a1b8beed1b51743c87e38cdfe542c71c5cc01126c8ffc",
       "sourceSha256": "b3f3142daf80f927b3ac155cef2bc353785b4cc8b36b258118477bf878dbdc5b",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-surface.tsx",
       "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
       "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-surface.css",
       "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
       "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text.tsx",
       "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
       "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text.css",
       "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
       "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text-assets.css",
       "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
       "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-font.ts",
       "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
       "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-sound.ts",
       "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
       "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-sound-assets.ts",
       "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
       "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-render.tsx",
       "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
       "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     }
   ],
   "cases": [

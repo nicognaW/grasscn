@@ -82,7 +82,7 @@ function Slider({ className, defaultValue, value, ref, min = 0, max = 100, scale
             const fraction = max === min ? 0 : Math.min(1, Math.max(0, (current - min) / (max - min)));
             const reverse = orientation === "horizontal" ? dir === "rtl" : true;
             return <span key={index} className="mc-slider-position" style={{ "--mc-thumb-fraction": reverse ? 1 - fraction : fraction } as React.CSSProperties}>
-        <SliderPrimitive.Thumb data-slot="slider-thumb" className="mc-slider-thumb" aria-label={values.length === 1 ? props["aria-label"] : undefined} aria-labelledby={values.length === 1 ? props["aria-labelledby"] : undefined}>
+        <SliderPrimitive.Thumb data-slot="slider-thumb" className="mc-slider-thumb" style={{ translate: "none" }} aria-label={values.length === 1 ? props["aria-label"] : undefined} aria-labelledby={values.length === 1 ? props["aria-labelledby"] : undefined}>
           <span className="mc-slider-handle"><MinecraftSurface sprite={highlightHandle ? sprites.slider_handle_highlighted : sprites.slider_handle}/></span>
         </SliderPrimitive.Thumb>
       </span>;
