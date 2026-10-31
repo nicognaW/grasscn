@@ -15,8 +15,8 @@
     },
     {
       "path": "minecraft-select.css",
-      "installedSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478",
-      "sourceSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478",
+      "installedSha256": "c2319bcf9af4dee734063bc27511a16f00afd3d815f33b2bf8bcbcb55f992208",
+      "sourceSha256": "c2319bcf9af4dee734063bc27511a16f00afd3d815f33b2bf8bcbcb55f992208",
       "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {

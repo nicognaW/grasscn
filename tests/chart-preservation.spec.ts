@@ -1,8 +1,7 @@
 import { test, expect } from "./verified-test";
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for(const scale of [2] as const) for(const mobile of [false,true]) {
- test(`Original F3 charts stay visible and analytics selector stays anchored at GUI${scale} ${mobile?"mobile":"desktop"}`,async({page})=>{
-  const width=mobile?390:1440,height=mobile?844:955;
+for(const scale of [2] as const) for(const [device,width,height] of [["desktop",1440,955],["mobile",390,844],["short mobile",390,300]] as const) {
+ test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`,async({page})=>{
   await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,"")}/#/components/chart`);
 
   const native=page.locator('[data-chart-native-examples]'),fps=native.locator('[data-native-chart=fps]'),profiler=native.locator('[data-native-chart=profiler]');
@@ -19,10 +18,23 @@ for(const scale of [2] as const) for(const mobile of [false,true]) {
   await trigger.evaluate(n=>scrollBy(0,n.getBoundingClientRect().top-80));await trigger.click();
   const popup=page.locator('[data-slot=select-content]');await expect(popup).toBeVisible();
   const before=(await popup.boundingBox())!;expect(before.x).toBeGreaterThanOrEqual(0);expect(before.x+before.width).toBeLessThanOrEqual(width);expect(before.y).toBeGreaterThanOrEqual(0);expect(before.y+before.height).toBeLessThanOrEqual(height);
-  const viewport=popup.locator('[data-slot=select-viewport]');await viewport.hover();await page.mouse.wheel(0,150);
-  await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).toBeGreaterThan(0);
+  const viewport=popup.locator('[data-slot=select-viewport]');
+  const scroll=await viewport.evaluate(n=>({top:n.scrollTop,maximum:n.scrollHeight-n.clientHeight}));
+  if(height===300) expect(scroll.maximum).toBeGreaterThan(0);
+  await viewport.hover();await page.mouse.wheel(0,scroll.top>0?-150:150);
+  if(scroll.maximum>0) {
+   await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).not.toBe(scroll.top);
+  } else {
+   // Base UI may show the entire list when item alignment has enough room.
+   for(const option of await popup.getByRole('option').all()) {
+    const bounds=(await option.boundingBox())!;
+    expect(bounds.y).toBeGreaterThanOrEqual(before.y);
+    expect(bounds.y+bounds.height).toBeLessThanOrEqual(before.y+before.height);
+   }
+  }
   await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
-  const after=(await popup.boundingBox())!;expect(Math.abs(after.y-before.y)).toBeLessThanOrEqual(scale);expect(after.y+after.height).toBeLessThanOrEqual(height);
+  // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
+  const after=(await popup.boundingBox())!;expect(after.y).toBeGreaterThanOrEqual(0);expect(after.y+after.height).toBeLessThanOrEqual(height);
   await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toHaveAttribute('data-highlighted','');await page.keyboard.press('Enter');await expect(page.locator('[data-slot=pixel-chart]')).toHaveAttribute('data-chart-type','radial');
  });
 }

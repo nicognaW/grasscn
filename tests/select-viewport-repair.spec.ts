@@ -10,10 +10,20 @@ for(const scale of[2]as const)for(const position of['default','popper']as const)
  const before=(await popup.boundingBox())!,anchor=(await trigger.boundingBox())!;
  expect(before.x).toBeGreaterThanOrEqual(0);expect(before.x+before.width).toBeLessThanOrEqual(width);expect(before.y).toBeGreaterThanOrEqual(0);expect(before.y+before.height).toBeLessThanOrEqual(height);
  expect(before.width%scale).toBe(0);expect(before.height%scale).toBe(0);
- const viewport=popup.locator('[data-slot=select-viewport]');await viewport.hover();await page.mouse.wheel(0,1000);await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).toBeGreaterThan(0);
+ const viewport=popup.locator('[data-slot=select-viewport]');
+ const scroll=await viewport.evaluate(n=>({top:n.scrollTop,maximum:n.scrollHeight-n.clientHeight}));
+ if(short) expect(scroll.maximum).toBeGreaterThan(0);
+ await viewport.hover();await page.mouse.wheel(0,scroll.top>0?-1000:1000);
+ if(scroll.maximum>0) await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).not.toBe(scroll.top);
+ else await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).toBe(0);
  await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
- const after=(await popup.boundingBox())!;expect(Math.abs(after.y-before.y)).toBeLessThanOrEqual(scale);expect(Math.abs(after.x-before.x)).toBeLessThanOrEqual(scale);
+ const after=(await popup.boundingBox())!;
+ if(await popup.getAttribute('data-align-trigger')!=='true') expect(Math.abs(after.y-before.y)).toBeLessThanOrEqual(scale);
+ expect(Math.abs(after.x-before.x)).toBeLessThanOrEqual(scale);
+ expect(after.y).toBeGreaterThanOrEqual(0);expect(after.y+after.height).toBeLessThanOrEqual(height);
  expect(Math.max(after.y-anchor.y-anchor.height,anchor.y-after.y-after.height,0)).toBeLessThanOrEqual(10*scale);
- const row=await popup.locator('[data-slot=select-item]').last().boundingBox(),bar=await popup.locator('.mc-select-scrollbar').boundingBox();expect(row!.width).toBe(Math.min(270,before.width/scale-30)*scale);expect(bar!.x+bar!.width).toBeLessThanOrEqual(before.x+before.width);
+ const row=await popup.locator('[data-slot=select-item]').last().boundingBox(),bar=popup.locator('.mc-select-scrollbar');expect(row!.width).toBe(Math.min(270,before.width/scale-30)*scale);
+ if(scroll.maximum>0) {const bounds=(await bar.boundingBox())!;expect(bounds.x+bounds.width).toBeLessThanOrEqual(after.x+after.width);}
+ else await expect(bar).toBeHidden();
  await page.keyboard.press('Escape');await expect(trigger).toBeFocused();
 });

@@ -27,6 +27,6 @@
 }
 
 @layer components {
- .mc-select-content[data-align-trigger="true"] {height:auto;padding-block:calc(2 * var(--mc-pixel));}
- .mc-select-content[data-align-trigger="true"] > .mc-select-viewport {position:relative!important;top:auto;left:auto;height:auto;max-height:100%;}
+ .mc-select-content[data-align-trigger="true"] {display:flex;flex-direction:column;height:auto;padding-block:calc(2 * var(--mc-pixel));}
+ .mc-select-content[data-align-trigger="true"] > .mc-select-viewport {position:relative!important;top:auto;left:auto;flex:1 1 auto;min-height:0;height:auto;max-height:none;}
 }

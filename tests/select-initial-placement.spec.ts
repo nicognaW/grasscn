@@ -9,8 +9,26 @@ for(const scale of[2]as const)for(const mobile of[false,true])for(const route of
  await trigger.evaluate(n=>scrollBy(0,n.getBoundingClientRect().top-160));await trigger.click();const popup=page.locator('[data-slot=select-content][data-open]');await expect(popup).toBeVisible();
  const anchor=(await trigger.boundingBox())!;
  await expect.poll(async()=>{const p=(await popup.boundingBox())!;return Math.max(p.y-anchor.y-anchor.height,anchor.y-p.y-p.height,0)}).toBeLessThanOrEqual(8*scale);
- const p=(await popup.boundingBox())!;expect(p.y>=anchor.y+anchor.height-1||p.y+p.height<=anchor.y+1).toBe(true);const expectedX=Math.min(Math.max(anchor.x,10),width-p.width-10);
- expect(Math.abs(p.x-expectedX)).toBeLessThanOrEqual(1);expect(p.x).toBeGreaterThanOrEqual(0);expect(p.y).toBeGreaterThanOrEqual(0);expect(p.x+p.width).toBeLessThanOrEqual(width);expect(p.y+p.height).toBeLessThanOrEqual(height);
+ const itemAligned=await popup.getAttribute('data-align-trigger')==='true';
+ if(itemAligned) {
+  const selected=popup.locator('[data-selected]');
+  await expect.poll(async()=>{const row=(await selected.boundingBox())!;return Math.abs(row.y+row.height/2-anchor.y-anchor.height/2)}).toBeLessThanOrEqual(scale);
+ } else {
+  const bounds=(await popup.boundingBox())!;expect(bounds.y>=anchor.y+anchor.height-1||bounds.y+bounds.height<=anchor.y+1).toBe(true);
+ }
+ const p=(await popup.boundingBox())!;
+ let expectedX=Math.min(Math.max(anchor.x,10),width-p.width-10);
+ let horizontalRange=1;
+ if(itemAligned) {
+  // Base UI aligns the selected text with the value, clamping at its 5px screen inset.
+  const value=(await trigger.locator('[data-slot=select-value]').boundingBox())!;
+  const text=(await popup.locator('[data-selected] .mc-select-item-label').boundingBox())!;
+  expectedX=Math.min(Math.max(p.x+value.x-text.x,5),width-p.width-5);
+  // The overflowing Minecraft trigger label keeps moving after Base UI snapshots its position.
+  // Its full travel is the measured text overflow inside the two-pixel side insets.
+  horizontalRange=Math.max(1,value.width-(anchor.width-4*scale));
+ }
+ expect(Math.abs(p.x-expectedX)).toBeLessThanOrEqual(horizontalRange);expect(p.x).toBeGreaterThanOrEqual(0);expect(p.y).toBeGreaterThanOrEqual(0);expect(p.x+p.width).toBeLessThanOrEqual(width);expect(p.y+p.height).toBeLessThanOrEqual(height);
  await page.keyboard.press('Escape');await expect(trigger).toBeFocused();
  }
 });
