@@ -8,7 +8,9 @@ for(const width of [320,390,768,1024,1565])test(`homepage examples render withou
  await expect(page.getByRole('img',{name:'API response time example',exact:true})).toBeVisible()
  await expect(page.getByRole('img',{name:'Sam Rivera',exact:true})).toBeVisible()
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
- const escaped=await page.locator('.grass-panel').evaluateAll(panels=>panels.flatMap(panel=>Array.from(panel.querySelectorAll('input:not([type=hidden]),textarea,button[data-slot]')).filter(el=>{
+ const escaped=await page.locator('.grass-panel').evaluateAll(panels=>panels.flatMap(panel=>Array.from(panel.querySelectorAll('input:not([type=hidden]):not([aria-hidden=true]),textarea,button[data-slot]')).filter(el=>{
+  // Base UI form proxy inputs are visually hidden; measure the visible controls.
+  if(el.tagName==="INPUT"&&getComputedStyle(el).opacity==="0")return false;
   const box=el.getBoundingClientRect(),outer=panel.getBoundingClientRect();return box.width>0&&(box.left<outer.left-1||box.right>outer.right+1)
  }).map(el=>el.getAttribute('aria-label')??el.textContent)))
  expect(escaped).toEqual([]);expect(errors).toEqual([])

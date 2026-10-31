@@ -1,3 +1,4 @@
+// The CLI may convert LF/CRLF on Windows; raw source and installed hashes remain recorded.
 import assert from "node:assert/strict"
 import { createHash } from "node:crypto"
 import { readFile, writeFile } from "node:fs/promises"
@@ -22,7 +23,7 @@ const manifest = await json(manifestFile)
 const sha = bytes => createHash("sha256").update(bytes).digest("hex")
 const consumerSettings = JSON.parse(await readFile(path.resolve(consumerDir, "components.json"), "utf8"))
 const canonical = bytes => {
-  let text = bytes.toString().replace(/\/\*[\s\S]*?\*\//g, "").trim()
+  let text = bytes.toString().replace(/\r\n/g,"\n").replace(/\/\*[\s\S]*?\*\//g, "").trim()
   if (consumerSettings.rsc === false) text = text.replace(/^["']use client["'];?\s*/, "")
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "")
 }
@@ -32,7 +33,7 @@ for (const entry of item.files) {
   const installed = await readFile(path.resolve(consumerDir, uiDirectory, filename))
   const source = await readFile(path.join(repo, entry.path))
   assert.ok(canonical(installed) === canonical(source), `${filename} changed beyond permitted CLI transforms`)
-  files.push({ path: filename, installedSha256: sha(installed), sourceSha256: sha(source), comparison: "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged" })
+  files.push({ path: filename, installedSha256: sha(installed), sourceSha256: sha(source), comparison: "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged" })
 }
 let browser = await chromium.launch({ channel: "msedge" })
 const browserVersion = await browser.version()

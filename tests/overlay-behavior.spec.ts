@@ -90,10 +90,11 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
     const bounds = (await panel.boundingBox())!;
     await page.mouse.move(bounds.x + 8, bounds.y + 8);
     await page.mouse.down();
-    await page.mouse.move(bounds.x + 8, bounds.y + 120, { steps: 12 });
+    await page.mouse.move(bounds.x + 8, bounds.y + bounds.height * .8, { steps: 12 });
     await page.mouse.up();
     await expect.poll(async () => Number(await page.locator("#drags").textContent())).toBeGreaterThan(0);
     await expect.poll(async () => Number(await page.locator("#releases").textContent())).toBeGreaterThan(0);
+    await expect(panel).toHaveCount(0);
 });
 test("Drawer supports controlled Base UI snap points", async ({ page }) => {
     await page.goto("/?component=drawer&side=bottom&open=1&snap=1");

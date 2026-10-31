@@ -37,7 +37,8 @@ try{
      await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))
      const expectedBytes=fs.readFileSync(path.join(folder,"captures",c.name));if(hash(expectedBytes)!==c.sha256)throw Error(`reference hash ${c.name}`)
      const actualBytes=await target.screenshot({animations:"disabled"}),actual=PNG.sync.read(actualBytes),expected=PNG.sync.read(expectedBytes),result=compare(expected,actual)
-     const out=path.resolve(consumer,"verification-results",name,`${part}-${c.name}`);fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,"metrics.json"),JSON.stringify({case:c.name,part,mismatchedPixels:result.mismatchedPixels,totalPixels:actual.width*actual.height,tolerance:0}));
+     // Keep capture artifacts outside the consumer's Vite/Tailwind watch root.
+     const out=path.resolve(repo,".native-reference","installed-verification",path.basename(consumer),name,`${part}-${c.name}`);fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,"metrics.json"),JSON.stringify({case:c.name,part,mismatchedPixels:result.mismatchedPixels,totalPixels:actual.width*actual.height,tolerance:0}));
      if(result.mismatchedPixels){fs.writeFileSync(path.join(out,"actual.png"),actualBytes);fs.writeFileSync(path.join(out,"diff.png"),PNG.sync.write(result.diff));throw Error(`${name} ${dir} ${part} ${c.name}: ${result.mismatchedPixels} pixels`)}
      record[part==="description"?"descriptionDecodedRgbaSha256":"decodedRgbaSha256"]=hash(actual.data);record.mismatchedPixels=0
     }

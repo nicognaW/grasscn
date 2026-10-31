@@ -7,7 +7,7 @@ test('search index covers every published item and its named exports',()=>{
  const registry=JSON.parse(readFileSync('registry.json','utf8'))
  expect(index.map(i=>i.name).sort()).toEqual(registry.items.map((i:{name:string})=>i.name).sort())
  expect(index.find(i=>i.name==='card')?.exports).toContain('CardHeader')
- expect(index.find(i=>i.name==='field')?.exports).toContain('FieldLabel')
+ expect(index.find(i=>i.name==='form')?.exports).toContain('FieldLabel')
  expect(index.find(i=>i.name==='chart')?.exports).toContain('MinecraftProfilerChart')
  expect(index.map(i=>i.name)).not.toContain('toast')
 })

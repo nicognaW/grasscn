@@ -1,5 +1,26 @@
 import { test, expect } from "./verified-test";
 import { minecraftClickSound } from "../registry/ui/minecraft-sound-assets";
+
+test("Select respects cancelled opening and closing in uncontrolled mode", async ({ page }) => {
+    await page.addInitScript(() => {
+        (window as any).__selectVoices = 0;
+        HTMLMediaElement.prototype.play = function () { (window as any).__selectVoices++; return Promise.resolve(); };
+    });
+    await page.goto("/?component=select&cancelOpen=1");
+    const trigger = page.getByRole("combobox");
+    await trigger.click();
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await trigger.press("ArrowDown");
+    await expect(page.getByRole("listbox")).toHaveCount(0);
+    expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(0);
+    await page.goto("/?component=select&cancelClose=1");
+    await trigger.click();
+    await expect(page.getByRole("listbox")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("listbox")).toBeVisible();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(1);
+});
 test("Select keyboard navigation visits disabled options without committing them", async ({ page }) => {
     await page.goto("/?component=select&disabledIndex=1");
     const trigger = page.getByRole("combobox", { name: "Game mode", exact: true });

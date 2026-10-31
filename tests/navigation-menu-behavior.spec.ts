@@ -28,7 +28,7 @@ test("Navigation Menu manual activation ignores hover",async({page})=>{
 for(const query of ["manual=1","manual=1&noViewport=1"]){
  test(`Navigation Menu keyboard entry and focus return: ${query}`,async({page})=>{
   await openNavigation(page,query)
-  await game(page).press("ArrowDown")
+  await game(page).press("ArrowDown");await page.keyboard.press("Tab")
   await expect(page.getByRole("link",{name:"World guide",exact:true})).toBeFocused()
   await page.keyboard.press("ArrowDown")
   await expect(page.getByRole("link",{name:"你好，世界",exact:true})).toBeFocused()
@@ -98,13 +98,13 @@ test("Navigation Menu respects Escape and outside-event cancellation",async({pag
 test("Navigation Menu preserves composed elements and explicit viewport/indicator refs",async({page})=>{
  await openNavigation(page,"manual=1&triggerAsChild=1&contentAsChild=1&explicitViewport=1&preventOutside=1")
  await expect(content(page)).toHaveJSProperty("tagName","SECTION")
- await expect(page.locator('[data-slot="navigation-menu"]')).toHaveAttribute("data-mc-navigation-viewport","true")
+ await expect(page.locator('[data-slot="navigation-menu-positioner"]')).toHaveCount(1)
  await page.locator("#navigation-outside").click()
- await expect(page.getByLabel("Navigation refs",{exact:true})).toHaveText("NAV,UL,BUTTON,SECTION,DIV,DIV")
+ await expect(page.getByLabel("Navigation refs",{exact:true})).toHaveText("NAV,UL,BUTTON,SECTION,DIV,SPAN")
  await page.getByRole("link",{name:"Composed link",exact:true}).click()
  await expect(page.getByLabel("Navigation actions",{exact:true})).toHaveText("1")
  await page.locator("#navigation-outside").click()
- await expect(page.getByLabel("Navigation refs",{exact:true})).toHaveText("NAV,UL,BUTTON,,,")
+ await expect(page.getByLabel("Navigation refs",{exact:true})).toHaveText("NAV,UL,BUTTON,,,SPAN")
 })
 
 test("Navigation Menu CJK links finish their native glyph rendering",async({page})=>{
@@ -134,7 +134,7 @@ test("Navigation Menu follows RTL trigger navigation",async({page})=>{
  await game(page).focus();await page.keyboard.press("ArrowLeft")
  const world=page.getByRole("button",{name:"World",exact:true})
  await expect(world).toBeFocused();await world.press("Enter")
- await world.press("ArrowDown");await expect(page.getByRole("link",{name:"World guide",exact:true})).toBeFocused()
+ await world.press("ArrowDown");await page.keyboard.press("Tab");await expect(page.getByRole("link",{name:"World guide",exact:true})).toBeFocused()
  await page.keyboard.press("Escape");await expect(world).toBeFocused()
 })
 
@@ -143,7 +143,7 @@ test("Navigation Menu vertical orientation retains directional entry behavior",a
  await game(page).focus();await page.keyboard.press("ArrowDown")
  const world=page.getByRole("button",{name:"World",exact:true})
  await expect(world).toBeFocused();await world.press("Enter")
- await world.press("ArrowRight");await expect(page.getByRole("link",{name:"World guide",exact:true})).toBeFocused()
+ await world.press("ArrowRight");await page.keyboard.press("Tab");await expect(page.getByRole("link",{name:"World guide",exact:true})).toBeFocused()
 })
 
 test("Navigation Menu resizes its viewport for a narrow browser",async({page})=>{

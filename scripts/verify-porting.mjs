@@ -54,7 +54,7 @@ const steps = [
   ['registry-closure', ['scripts/check-registry-closure.mjs']],
   ['evidence', ['scripts/check-map.mjs']],
   ['porting-evidence', ['scripts/check-porting-evidence.mjs']],
-  ['evidence-negative-controls', ['--test','tests/porting-evidence.test.mjs','tests/primitives.test.mjs','tests/browser-checkpoints.test.mjs','tests/guarded-entry.test.mjs']],
+  ['evidence-negative-controls', ['--test','tests/porting-evidence.test.mjs','tests/primitives.test.mjs','tests/browser-checkpoints.test.mjs','tests/guarded-entry.test.mjs','tests/installed-case-cache.test.mjs']],
 ]
 if (suite === 'all') steps.push(['registry-build',['node_modules/shadcn/dist/index.js','build']], ['built-primitives',['scripts/check-primitives.mjs','--built']], ['preview-build',['node_modules/vite/bin/vite.js','build','--config','vite.preview.config.ts']])
 const browserFiles=suite==='all'?(await readdir(path.join(root,'tests'))).filter(name=>/\.spec\.(ts|js)$/.test(name)).sort():suite==='pixels'?['adventure.spec.ts','native-expansion.spec.ts']:regressionFiles

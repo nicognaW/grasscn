@@ -9,123 +9,123 @@
   "files": [
     {
       "path": "select.tsx",
-      "installedSha256": "f56fd0c157cdeb874d34642384896456b25da6a425b3b3e1c1f482448a260cfa",
-      "sourceSha256": "f56fd0c157cdeb874d34642384896456b25da6a425b3b3e1c1f482448a260cfa",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "installedSha256": "84ee08526c524c4c9cd0b7ba1499fa0d994bc3a0a8105a87dd5984b7ed516027",
+      "sourceSha256": "a9111d6f712d795fd7a9ab27d2c763d13cf13fc11e7c414ee3380da6b99c55b9",
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-select.css",
-      "installedSha256": "e043b6b2e8269db53b9e77f2c3827b8d25742d142a515d744399b55a94154606",
-      "sourceSha256": "e043b6b2e8269db53b9e77f2c3827b8d25742d142a515d744399b55a94154606",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "installedSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478",
+      "sourceSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478",
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-select-assets.ts",
       "installedSha256": "2ee10ac2b58855970e62189969695adb50b795e87d21b6d2e1e79c16e3906fa4",
       "sourceSha256": "097445bd17dda213c9c706880f8fc1e47f86c12cae3a58b7a641c67aa53074d9",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-select-atlas.ts",
       "installedSha256": "1bfa764734b83521752468eb68fc74e203f208781f881bef3550ddfe616f7f4d",
       "sourceSha256": "61362c66cc4a02d93f71f2f47ba4eb7d3db6f5bd8dc29a0af57acd8a23172911",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-button.css",
       "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
       "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-assets.css",
       "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
       "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text.tsx",
       "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
       "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text.css",
       "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
       "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-text-assets.css",
       "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
       "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-font.ts",
       "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
       "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-unicode-label.tsx",
       "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
       "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-input-assets.ts",
       "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
       "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-unifont.ts",
       "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
       "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-unifont-data.ts",
       "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
       "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-unifont-atlas.ts",
       "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
       "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-unifont-gpu.ts",
       "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
       "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-textarea-assets.ts",
       "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
       "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-sound.ts",
       "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
       "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-sound-assets.ts",
       "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
       "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-render.tsx",
       "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
       "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
-      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+      "comparison": "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged"
     }
   ],
   "cases": [

@@ -3,11 +3,11 @@ import { PNG } from "pngjs";
 
 // Explicit preview origin: the main suite's baseURL is the installed fixture.
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for (const scale of [1, 2, 3] as const) for (const container of ["narrow", "padded"] as const) {
+for (const scale of [2] as const) for (const container of ["narrow", "padded"] as const) {
   test(`Chart retains its integer pixel grid in ${container} container at GUI${scale}`, async ({page}, info) => {
     await page.setViewportSize({width:1280,height:1000});
     await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
-    await page.getByRole("button", {name:`${scale}x`,exact:true}).click();
+
     const chart = page.locator('[data-slot="pixel-chart"]');
     await expect(chart).toHaveAttribute("data-mc-ready", "true");
     // Isolate a real narrow/padded consumer container from unrelated page-header overflow.

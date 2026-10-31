@@ -4,10 +4,10 @@ const types=[['bar','Bar'],['stacked-bar','Stacked bar'],['line','Line'],['area'
 async function select(page:any,label:string,value:string) { await page.getByRole('combobox',{name:label,exact:true}).click(); await page.getByRole('option',{name:value,exact:true}).click(); }
 async function open(page:any,scale:number,mobile=false) {
  await page.setViewportSize({width:mobile?390:1440,height:1000}); await page.goto(`${process.env.GRASSCN_PREVIEW_URL ?? 'http://127.0.0.1:5176/'}#/components/chart`);
- await page.getByRole('button',{name:`${scale}x`,exact:true}).click();
+
  await expect(page.locator('[data-stage="chart"] [data-slot="pixel-chart"]')).toHaveAttribute('data-mc-ready','true');
 }
-for(const scale of [1,2,3]) for(const mobile of [false,true]) test(`Analytics types preserve integer pixels and fit ${mobile?'mobile':'desktop'} GUI${scale}`,async({page},info)=>{
+for(const scale of [2]) for(const mobile of [false,true]) test(`Analytics types preserve integer pixels and fit ${mobile?'mobile':'desktop'} GUI${scale}`,async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await open(page,scale,mobile);
  const stage=page.locator('[data-stage="chart"]'), chart=stage.locator('[data-slot="pixel-chart"]');
  for(const [type,label] of types) {

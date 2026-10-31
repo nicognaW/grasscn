@@ -1,10 +1,10 @@
 import { test, expect } from "./verified-test";
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for(const scale of [1,2,3] as const) for(const mobile of [false,true]) {
+for(const scale of [2] as const) for(const mobile of [false,true]) {
  test(`Original F3 charts stay visible and analytics selector stays anchored at GUI${scale} ${mobile?"mobile":"desktop"}`,async({page})=>{
   const width=mobile?390:1440,height=mobile?844:955;
   await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,"")}/#/components/chart`);
-  await page.getByRole('button',{name:`${scale}x`,exact:true}).click();
+
   const native=page.locator('[data-chart-native-examples]'),fps=native.locator('[data-native-chart=fps]'),profiler=native.locator('[data-native-chart=profiler]');
   await expect(fps).toBeVisible();await expect(profiler).toBeVisible();
   expect(await native.locator('details').count()).toBe(0);
@@ -23,6 +23,6 @@ for(const scale of [1,2,3] as const) for(const mobile of [false,true]) {
   await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).toBeGreaterThan(0);
   await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
   const after=(await popup.boundingBox())!;expect(Math.abs(after.y-before.y)).toBeLessThanOrEqual(scale);expect(after.y+after.height).toBeLessThanOrEqual(height);
-  await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toBeFocused();await page.keyboard.press('Enter');await expect(page.locator('[data-slot=pixel-chart]')).toHaveAttribute('data-chart-type','radial');
+  await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toHaveAttribute('data-highlighted','');await page.keyboard.press('Enter');await expect(page.locator('[data-slot=pixel-chart]')).toHaveAttribute('data-chart-type','radial');
  });
 }

@@ -68,8 +68,8 @@
     },
     {
       "path": "minecraft-drawer.css",
-      "sourceSha256": "9da9f61a8a05730d95abc202e47bf9385157efe4ea3c8198337128cd5c957a65",
-      "installedSha256": "4cf309c73a94c0feee1925607cb9e9a8268982b0a103b3280f492d486b189b41",
+      "sourceSha256": "0fa978e2bda8c3d044fb75fa8dc38473ebabcf5a0889c43a642a7d007f97b888",
+      "installedSha256": "0fa978e2bda8c3d044fb75fa8dc38473ebabcf5a0889c43a642a7d007f97b888",
       "comparison": "Identical except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {

@@ -52,10 +52,14 @@ function Select<Value = string, Multiple extends boolean = false>({ scale = 2, o
         requested.current = false;
     }, [actualOpen]);
     return <ScaleContext.Provider value={scale}><AnchorContext.Provider value={anchorId}><SelectPrimitive.Root<Value, Multiple> open={actualOpen} onOpenChange={(next, details) => {
+            onOpenChange?.(next, details);
+            if (details.isCanceled) {
+                requested.current = false;
+                return;
+            }
             requested.current = next;
             if (open === undefined)
                 setLocalOpen(next);
-            onOpenChange?.(next, details);
         }} {...props}/></AnchorContext.Provider></ScaleContext.Provider>;
 }
 function SelectGroup(props: MinecraftProps<typeof SelectPrimitive.Group>) { return <SelectPrimitive.Group data-slot="select-group" {...props}/>; }
@@ -142,14 +146,14 @@ function SelectContent({ children, className, style, align = "start", sideOffset
     }, [element, viewport, scale, alignItemWithTrigger, anchorId]);
     const child = null;
     const contents = <><SelectPrimitive.List data-slot="select-viewport" ref={setViewport} className="mc-select-viewport" onScroll={event => {
-            // Keep native fixed-height scrolling; Base UI otherwise expands and bottom-aligns its item-aligned wrapper.
-            event.preventDefault();
+            // Fixed-height Minecraft lists retain their viewport; item alignment uses Base UI expansion.
+            if (!alignItemWithTrigger) event.preventDefault();
             const node = event.currentTarget;
             const integer = Math.floor(node.scrollTop / scale) * scale;
             if (node.scrollTop !== integer)
                 node.scrollTop = integer;
         }}>{children}</SelectPrimitive.List><SelectScrollbar /></>;
-    return <SelectPrimitive.Portal><ListContext.Provider value={{ scale, viewport }}><SelectPrimitive.Positioner data-mc-positioner="" style={{ zIndex: 50 }} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset} collisionPadding={collisionPadding} collisionBoundary={collisionBoundary} collisionAvoidance={collisionAvoidance} alignItemWithTrigger={alignItemWithTrigger}><SelectPrimitive.Popup render={render} data-slot="select-content" ref={forwarded} className={cn(`mc-select-content ${""}`, className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, "--mc-select-background": assets.menu_list_background, "--mc-select-header": assets.header_separator, "--mc-select-footer": assets.footer_separator, "--mc-select-track": `url("${scrollbar.scroller_background}")`, "--mc-select-thumb": `url("${scrollbar.scroller}")`, ...__style } as React.CSSProperties))} {...props}>
+    return <SelectPrimitive.Portal><ListContext.Provider value={{ scale, viewport }}><SelectPrimitive.Positioner data-mc-positioner="" style={{ zIndex: 50 }} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset} collisionPadding={collisionPadding} collisionBoundary={collisionBoundary} collisionAvoidance={collisionAvoidance} alignItemWithTrigger={alignItemWithTrigger}><SelectPrimitive.Popup render={render} data-slot="select-content" data-align-trigger={alignItemWithTrigger} ref={forwarded} className={cn(`mc-select-content ${""}`, className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, "--mc-select-background": assets.menu_list_background, "--mc-select-header": assets.header_separator, "--mc-select-footer": assets.footer_separator, "--mc-select-track": `url("${scrollbar.scroller_background}")`, "--mc-select-thumb": `url("${scrollbar.scroller}")`, ...__style } as React.CSSProperties))} {...props}>
     {contents}
   </SelectPrimitive.Popup></SelectPrimitive.Positioner></ListContext.Provider></SelectPrimitive.Portal>;
 }

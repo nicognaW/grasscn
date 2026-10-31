@@ -34,7 +34,7 @@
  .mc-navigation-content[data-surface="suggestions"]{padding:0;gap:0;background:transparent;}
  .mc-navigation-background {position:fixed;inset:0;z-index:-1;pointer-events:none;}
  .mc-navigation-viewport {position:absolute;top:100%;left:0;z-index:50;margin-top:calc(2 * var(--mc-pixel));width:var(--popup-width);height:var(--popup-height);max-width:calc(100vw - 16px);overflow:hidden;}
- .mc-navigation-viewport:not(:is([data-open],[data-popup-open],[data-active])){display:none;}
+
  .mc-navigation-menu[data-mc-navigation-viewport="false"] .mc-navigation-content {position:absolute;top:100%;left:0;margin-top:calc(2 * var(--mc-pixel));}
  .mc-navigation-indicator {bottom:var(--mc-pixel);height:var(--mc-pixel);pointer-events:none;z-index:2;}
  .mc-navigation-indicator > span {position:absolute;left:var(--mc-indicator-left,0);width:var(--mc-indicator-width,0);height:100%;background:#fff;}
@@ -71,4 +71,16 @@
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is([data-open],[data-popup-open],[data-active]){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARklEQVR42u3QMRHAQAwDQXEy/xE0pwmDL713DDapk+7c/kfI4SBAgAABAgQIECBAgAABAgQIECBAgPCGsHMdYSdpmss1/QBhElD4UGBDWwAAAABJRU5ErkJggg==");}
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is(:hover,:focus){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARUlEQVR42u3YMRGAQAADwXjC/0QIYkJDQ0f/e3GwZSJJn2pJd3gvQu5zBwECBAgQIECAAAECBAgQIPzf5k/YlmaXudeaPk6VAe87go/vAAAAAElFTkSuQmCC");}
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is([data-open],[data-popup-open],[data-active]):is(:hover,:focus){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARUlEQVR42u3QMREAMAzDQHMq/zO0dCmDjnmJwSd10lneQ8jiIECAAAECBAgQIECAAAECBAgQIECA8IcwZzvCnKRpNtf0Avje2HBXG7vAAAAAAElFTkSuQmCC");}
+}
+
+@layer components {
+ .mc-navigation-popup {position:relative;width:var(--popup-width);height:var(--popup-height);}
+ .mc-navigation-viewport {position:relative;inset:auto;margin:0;width:100%;height:100%;max-height:none;}
+}
+
+@layer components {.mc-navigation-tab {pointer-events:auto;}}
+
+@layer components {
+ .mc-navigation-indicator {position:absolute;left:0;bottom:var(--mc-pixel);height:var(--mc-pixel);}
+ .mc-navigation-indicator:not([data-popup-open]) {display:none;}
 }

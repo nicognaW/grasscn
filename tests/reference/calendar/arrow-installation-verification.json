@@ -74,8 +74,8 @@
     },
     {
       "path": "select.tsx",
-      "sourceSha256": "f56fd0c157cdeb874d34642384896456b25da6a425b3b3e1c1f482448a260cfa",
-      "installedSha256": "f56fd0c157cdeb874d34642384896456b25da6a425b3b3e1c1f482448a260cfa"
+      "sourceSha256": "a9111d6f712d795fd7a9ab27d2c763d13cf13fc11e7c414ee3380da6b99c55b9",
+      "installedSha256": "84ee08526c524c4c9cd0b7ba1499fa0d994bc3a0a8105a87dd5984b7ed516027"
     },
     {
       "path": "minecraft-text.tsx",
@@ -109,8 +109,8 @@
     },
     {
       "path": "minecraft-select.css",
-      "sourceSha256": "e043b6b2e8269db53b9e77f2c3827b8d25742d142a515d744399b55a94154606",
-      "installedSha256": "e043b6b2e8269db53b9e77f2c3827b8d25742d142a515d744399b55a94154606"
+      "sourceSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478",
+      "installedSha256": "510c275513949f424aa028af94d9eeb25674febfca120123787d7c624a7bd478"
     },
     {
       "path": "card.tsx",
@@ -485,6 +485,7 @@
       "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     }
   ],
+  "retainedCases": 0,
   "pageErrors": [],
   "negativeControlMismatchedPixels": 1,
   "renderVerificationUrl": "http://127.0.0.1:5180/dynamic.html"

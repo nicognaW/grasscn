@@ -10,7 +10,7 @@
     "registry:serve": "npm run registry:build && node scripts/serve.mjs",
     "typecheck": "node scripts/prepare-preview.mjs && tsc --noEmit",
     "test": "node scripts/prepare-preview.mjs && playwright test",
-    "check": "npm run typecheck && node scripts/check-primitives.mjs && node scripts/check-registry-closure.mjs && node scripts/check-map.mjs && node scripts/check-porting-evidence.mjs && node --test tests/porting-evidence.test.mjs tests/primitives.test.mjs tests/browser-checkpoints.test.mjs tests/guarded-entry.test.mjs",
+    "check": "npm run typecheck && node scripts/check-primitives.mjs && node scripts/check-registry-closure.mjs && node scripts/check-map.mjs && node scripts/check-porting-evidence.mjs && node --test tests/porting-evidence.test.mjs tests/primitives.test.mjs tests/browser-checkpoints.test.mjs tests/guarded-entry.test.mjs tests/installed-case-cache.test.mjs",
     "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite regressions",
     "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite all"
   },

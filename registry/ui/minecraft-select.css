@@ -25,3 +25,8 @@
   .mc-select-separator { height: calc(2 * var(--mc-pixel)); background-size: calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); }
   .mc-select-scroll-button { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; height: calc(20 * var(--mc-pixel)); cursor: pointer; }
 }
+
+@layer components {
+ .mc-select-content[data-align-trigger="true"] {height:auto;padding-block:calc(2 * var(--mc-pixel));}
+ .mc-select-content[data-align-trigger="true"] > .mc-select-viewport {position:relative!important;top:auto;left:auto;height:auto;max-height:100%;}
+}

@@ -37,13 +37,14 @@ for (const [key, value] of [["Home", "0"], ["End", "100"]] as const) test(`Click
   await volume.focus()
   await page.keyboard.press(key)
   await expect(volume).toHaveAttribute("aria-valuenow", value)
-  await volume.click()
+  await page.locator('[data-slot="slider-thumb"]').filter({has:volume}).click()
   await expect(volume).toHaveAttribute("aria-valuenow", value)
 })
 
 test("Preview Volume controls button, checkbox and slider sounds across pages",async({page})=>{
  await page.goto(`${origin}#slider`)
- const navigate=async(name:string)=>page.getByRole('navigation',{name:'Components',exact:true}).getByRole('link',{name,exact:true}).click()
+ // Isolate demo control audio from the navigation buttons.
+ const navigate=async(name:string)=>{const previous=await voices(page);await page.getByRole('navigation',{name:'Components',exact:true}).getByRole('link',{name,exact:true}).click();await page.evaluate(previous=>{(window as any).__previewVoices=previous},previous)}
  const volume=page.getByRole('slider',{name:'Volume',exact:true})
  const button=page.locator('#component-button [data-stage="button"] [data-slot="button"]').first()
  const checkbox=page.getByRole('checkbox',{name:'Enable shadows',exact:true})
@@ -52,9 +53,9 @@ test("Preview Volume controls button, checkbox and slider sounds across pages",a
  expect(await voices(page)).toEqual([{source:minecraftClickSound,volume:.125,rate:1}])
  await clearVoices(page);await navigate('Slider');await volume.focus();await page.keyboard.press('Home')
  await expect(volume).toHaveAttribute('aria-valuenow','0')
- await navigate('Button');await button.click();await navigate('Checkbox');await checkbox.check();await navigate('Slider');await volume.click()
+ await navigate('Button');await button.click();await navigate('Checkbox');await checkbox.check();await navigate('Slider');await page.locator('[data-slot="slider-thumb"]').filter({has:volume}).click()
  expect(await voices(page)).toEqual([])
- await volume.focus();await page.keyboard.press('End');await expect(volume).toHaveAttribute('aria-valuenow','100');await volume.click()
+ await volume.focus();await page.keyboard.press('End');await expect(volume).toHaveAttribute('aria-valuenow','100');await page.locator('[data-slot="slider-thumb"]').filter({has:volume}).click()
  await navigate('Button');await button.click();await navigate('Checkbox');await checkbox.check()
  const audible=await voices(page);expect(audible).toHaveLength(3)
  for(const voice of audible)expect(voice).toEqual({source:minecraftClickSound,volume:.25,rate:1})

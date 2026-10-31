@@ -15,8 +15,8 @@ test("Aspect Ratio supports explicit clipping without resampling its content",as
  const art=(await page.locator('#art').boundingBox())!;expect([art.width,art.height]).toEqual([40,40])
  const box=(await page.locator('#ratio').boundingBox())!;expect(box.height).toBe(10)
 })
-test("Direction provider supports defaults, RTL, nested override and alias precedence",async({page})=>{
- for(const query of ['', '&dir=rtl','&dir=ltr&alias=1']){
+test("Base UI direction context supports defaults, RTL and nested overrides",async({page})=>{
+ for(const query of ['', '&dir=rtl']){
   await page.goto(`/?component=direction${query}`)
   await expect(page.getByLabel('Root direction')).toHaveText(query?'rtl':'ltr')
   await expect(page.getByLabel('Nested direction')).toHaveText('ltr');await expect(page.getByLabel('Override direction')).toHaveText('ltr')

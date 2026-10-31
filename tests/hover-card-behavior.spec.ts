@@ -24,7 +24,7 @@ test("Hover Card opens on keyboard focus without moving focus and dismisses on E
     await trigger.focus();
     await expect(page.locator(content)).toBeVisible();
     await expect(trigger).toBeFocused();
-    await expect(page.getByRole("link", { name: "Read world guide", exact: true })).toHaveAttribute("tabindex", "-1");
+    await expect(page.getByRole("link", { name: "Read world guide", exact: true })).not.toHaveAttribute("tabindex");
     await page.keyboard.press("Escape");
     await expect(page.locator(content)).toHaveCount(0);
     await expect(trigger).toBeFocused();
@@ -63,7 +63,7 @@ test("Hover Card asChild preserves anchors, articles, refs, links and CJK forms"
     await expect(page.getByLabel("Hover actions", { exact: true })).toHaveText("1");
     await expect(panel).toHaveCount(0);
 });
-test("Hover Card retains selectable source text and stays open while selection is held", async ({ page }) => {
+test("Hover Card retains selectable source text and follows Base UI pointer-leave dismissal", async ({ page }) => {
     const text = "Select this Minecraft text.";
     await page.goto(`/?${new URLSearchParams({ component: "hover-card", text, closeDelay: "100" })}`);
     await page.getByRole("link", { name: "World info", exact: true }).hover();
@@ -82,9 +82,9 @@ test("Hover Card retains selectable source text and stays open while selection i
     await page.mouse.up();
     await expect.poll(() => page.evaluate(() => window.getSelection()?.toString())).toBe(text);
     expect(await plane.evaluate(node => ({ color: getComputedStyle(node, "::selection").color, background: getComputedStyle(node, "::selection").backgroundColor }))).toEqual({ color: "rgb(0, 0, 255)", background: "rgb(255, 255, 255)" });
-    await page.mouse.move(1200, 800);
-    await page.waitForTimeout(300);
     await expect(page.locator(content)).toBeVisible();
+    await page.mouse.move(1200, 800);
+    await expect(page.locator(content)).toHaveCount(0);
 });
 test("Hover Card hover, focus and dismissal stay silent; its native button clicks once", async ({ page }) => {
     await page.addInitScript(() => {

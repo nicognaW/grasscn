@@ -242,7 +242,7 @@ function NavigationMenuContent({ children, render, className, ref, scale: explic
     const provided = <ScaleContext.Provider value={scale}><MenuScaleContext.Provider value={scale}><CardScaleContext.Provider value={scale}><PopoverTextContext.Provider value={{ scale, width }}><PanelContext.Provider value>{body}</PanelContext.Provider></PopoverTextContext.Provider></CardScaleContext.Provider></MenuScaleContext.Provider></ScaleContext.Provider>;
     return <Primitive.Content render={render} ref={frameRef} data-slot="navigation-menu-content" data-surface={surface} className={cn("mc-card mc-menu-content mc-navigation-content", className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} {...props}>{provided}</Primitive.Content>;
 }
-function NavigationMenuPositioner({ className, align = "start", ...props }: MinecraftProps<typeof Primitive.Positioner>) { return <Primitive.Portal><Primitive.Positioner data-slot="navigation-menu-positioner" align={align} side="bottom" style={{ zIndex: 50 }} {...props}><Primitive.Popup><Primitive.Viewport data-slot="navigation-menu-viewport" className={cn("mc-navigation-viewport", className)}/></Primitive.Popup></Primitive.Positioner></Primitive.Portal>; }
+function NavigationMenuPositioner({ className, align = "start", ...props }: MinecraftProps<typeof Primitive.Positioner>) { return <Primitive.Portal><Primitive.Positioner data-slot="navigation-menu-positioner" align={align} side="bottom" collisionPadding={8} style={{ zIndex: 50 }} {...props}><Primitive.Popup className="mc-navigation-popup"><Primitive.Viewport data-slot="navigation-menu-viewport" className={cn("mc-navigation-viewport", className)}/></Primitive.Popup></Primitive.Positioner></Primitive.Portal>; }
 function NavigationMenuIndicator({ className, ref, children, ...props }: MinecraftProps<typeof Primitive.Icon>) {
     const [, forwarded, element] = useLocalRef(ref);
     React.useLayoutEffect(() => {
@@ -250,10 +250,12 @@ function NavigationMenuIndicator({ className, ref, children, ...props }: Minecra
             return;
         let frame = 0;
         const tick = () => {
-            const root = element.closest('[data-slot="navigation-menu"]'), trigger = root?.querySelector<HTMLElement>('[data-slot="navigation-menu-trigger"]:is([data-open],[data-popup-open])');
+            const root = element.closest('[data-slot="navigation-menu"]'), trigger = element.closest('[data-slot="navigation-menu-item"]')?.querySelector<HTMLElement>('[data-slot="navigation-menu-trigger"]');
             if (trigger) {
                 const style = getComputedStyle(trigger);
-                element.style.setProperty("--mc-indicator-left", style.getPropertyValue("--mc-tab-underline-x"));
+                const list = root?.querySelector('[data-slot="navigation-menu-list"]');
+                const offset = list ? trigger.getBoundingClientRect().left - list.getBoundingClientRect().left : 0;
+                element.style.setProperty("--mc-indicator-left", `${offset + parseFloat(style.getPropertyValue("--mc-tab-underline-x") || "0")}px`);
                 element.style.setProperty("--mc-indicator-width", style.getPropertyValue("--mc-tab-underline-width"));
                 element.style.setProperty("--mc-indicator-ink", style.getPropertyValue("--mc-ink") || style.color);
             }

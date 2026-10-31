@@ -41,7 +41,8 @@ test("Tooltip supports hover, keyboard focus, Escape and trigger activation", as
     await expect(content).toHaveCount(0);
     await trigger.hover();
     await expect(content).toBeVisible();
-    await expect(trigger).toHaveAccessibleDescription("Tooltip");
+    await expect(trigger).not.toHaveAttribute("aria-describedby");
+    await expect(content).toContainText("Tooltip");
     await page.keyboard.press("Escape");
     await expect(content).toHaveCount(0);
     await page.mouse.move(0, 0);

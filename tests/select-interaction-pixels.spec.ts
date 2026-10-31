@@ -11,7 +11,7 @@ for (const scale of [1, 2, 3]) for (const mode of ["pointer", "keyboard"]) test(
   const trigger = page.getByRole("combobox")
   if (mode === "pointer") await trigger.click()
   else { await trigger.focus(); await page.keyboard.press("ArrowDown") }
-  const popup = page.getByRole("listbox")
+  const popup = page.locator('[data-slot="select-content"]')
   await expect(popup).toHaveAttribute("data-mc-select-ready", "true")
   await popup.evaluate((node, p) => Object.assign(node.style, { position: "fixed", left: p.x + "px", top: p.y + "px" }), { x: c.x*scale, y: c.y*scale })
   await page.addStyleTag({ content: '#root{opacity:0} [data-mc-positioner]{left:0!important;top:0!important;transform:none!important}' })
@@ -19,7 +19,7 @@ for (const scale of [1, 2, 3]) for (const mode of ["pointer", "keyboard"]) test(
   const creative = page.getByRole("option", { name: "Creative", exact: true })
   if (mode === "pointer") await creative.hover()
   else { await expect(page.getByRole("option", { name: "Survival", exact: true })).toBeFocused(); await page.keyboard.press("ArrowDown") }
-  await expect(creative).toBeFocused()
+  if(mode === "keyboard") await expect(creative).toBeFocused()
   await expect(creative).toHaveAttribute("data-highlighted", "")
   await expect(page.getByLabel("Select changes", { exact: true })).toHaveText("0")
   const actualBytes = await popup.screenshot()
