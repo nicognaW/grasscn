@@ -32,7 +32,7 @@ for (const reference of manifest.cases) {
     const bytes = await readFile(`tests/reference/controls/captures/${reference.name}`)
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(reference.sha256)
     await page.goto(`/?${new URLSearchParams({ component: reference.element, scale: String(reference.scale), state: reference.state, checked: String(reference.checked) })}`)
-    const subject = page.locator("#subject")
+    const subject = page.locator("[data-subject]")
     await expect(subject).toBeVisible()
     await page.mouse.move(0, 0)
     if (reference.state === "hover") await subject.hover()

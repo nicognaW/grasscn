@@ -7,7 +7,7 @@ function compare(expected:PNG,actual:PNG){expect([actual.width,actual.height]).t
 test('Pagination arrow comparator rejects one changed pixel',()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 test.describe('Pagination native recipe-book page arrows',()=>{test.describe.configure({mode:'parallel'});for(const c of manifest.cases)test(`Pagination arrow pixels: ${c.name}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900});const params=new URLSearchParams({component:'pagination',native:'1',part:'arrow',scale:String(c.scale),checked:String(c.checked),state:c.state,x:String(c.x),y:String(c.y),background:c.background})
- await page.goto(`/?${params}`);const subject=page.locator('#subject');await expect(subject).toHaveAttribute('data-slot',c.checked?'pagination-next':'pagination-previous');await page.mouse.move(0,0)
+ await page.goto(`/?${params}`);const subject=page.locator('[data-subject]');await expect(subject).toHaveAttribute('data-slot',c.checked?'pagination-next':'pagination-previous');await page.mouse.move(0,0)
  if(c.state.endsWith('hover'))await subject.hover();if(c.state==='focus'){await subject.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');await expect(subject).toBeFocused()}
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
  const expectedBytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash('sha256').update(expectedBytes).digest('hex')).toBe(c.sha256)

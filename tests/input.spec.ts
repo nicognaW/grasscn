@@ -119,7 +119,7 @@ test("Input keeps HTML validation and maxlength", async ({ page }) => {
 })
 test("Input preserves password and unsupported glyph browser rendering fallbacks", async ({ page }) => {
   await page.goto("/?component=input&text=secret&type=password")
-  const input = page.locator("#subject")
+  const input = page.locator("[data-subject]")
   await expect(input).toHaveAttribute("type", "password")
   await expect(input).toHaveAttribute("data-mc-bitmap", "false")
   await expect(input).toHaveValue("secret")

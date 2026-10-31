@@ -13,7 +13,7 @@ export function useConfirmationSnapshot(canvas:React.RefObject<HTMLCanvasElement
     const belongs=(target:Node)=>{const element=target instanceof Element ? target : target.parentElement;return element?.closest('[data-mc-confirmation-id]')?.getAttribute('data-mc-confirmation-id')===identity}
     const sandbox=(target:Node)=>target instanceof HTMLIFrameElement && target.id.startsWith("__SANDBOX__") && target.width==="0" && target.height==="0" && target.style.visibility==="hidden"
     const capture=async()=>{
-      if(disposed || host.dataset.state!=="open")return
+      if(disposed || !host.hasAttribute("data-open"))return
       if(busy){queued=true;return}
       busy=true;queued=false
       const capturedVersion=version
@@ -21,7 +21,7 @@ export function useConfirmationSnapshot(canvas:React.RefObject<HTMLCanvasElement
       try {
         const {domToCanvas}=await import("modern-screenshot")
         await document.fonts.ready
-        if(disposed || host.dataset.state!=="open")return
+        if(disposed || !host.hasAttribute("data-open"))return
         const rootColor=getComputedStyle(document.documentElement).backgroundColor,bodyColor=getComputedStyle(document.body).backgroundColor
         const opaque=(value:string)=>value!=="transparent" && !/rgba\([^)]*,\s*0\s*\)/.test(value)
         const offsetX=scrollX,offsetY=scrollY,ratio=devicePixelRatio,bodyStyle=getComputedStyle(document.body)
@@ -86,18 +86,18 @@ export function useConfirmationSnapshot(canvas:React.RefObject<HTMLCanvasElement
           },
           onCreateForeignObjectSvg:svg=>{const viewport=svg.querySelector("foreignObject");viewport?.setAttribute("x",String(-offsetX));viewport?.setAttribute("y",String(-offsetY));viewport?.setAttribute("height",String(Math.max(innerHeight,document.documentElement.scrollHeight,document.body.scrollHeight)))},
         })
-        if(disposed || host.dataset.state!=="open")return
+        if(disposed || !host.hasAttribute("data-open"))return
         painter.paint(source,radius);host.dataset.mcConfirmationFrame=String(++frames);host.dataset.mcConfirmationGpuReady=String(capturedVersion===version);delete host.dataset.mcConfirmationGpuError;setReady(true)
       }catch(error){if(!disposed)host.dataset.mcConfirmationGpuError=error instanceof Error ? error.message : String(error)}
       finally{for(const item of fixed){if(item.element.getAttribute("data-mc-snapshot-fixed")!==item.key)continue;if(item.previous==null)item.element.removeAttribute("data-mc-snapshot-fixed");else item.element.setAttribute("data-mc-snapshot-fixed",item.previous)}busy=false;if(queued && !disposed)schedule()}
     }
-    const schedule=()=>{clearTimeout(timer);if(host.dataset.state!=="open")return;version++;host.dataset.mcConfirmationGpuReady="false";timer=window.setTimeout(()=>{void capture()},100)}
+    const schedule=()=>{clearTimeout(timer);if(!host.hasAttribute("data-open"))return;version++;host.dataset.mcConfirmationGpuReady="false";timer=window.setTimeout(()=>{void capture()},100)}
     const mutations=new MutationObserver(records=>{if(records.some(record=>{if(belongs(record.target)||sandbox(record.target))return false;const nodes=[...record.addedNodes,...record.removedNodes];return record.type!=="childList"||!nodes.length||!nodes.every(sandbox)}))schedule()})
     mutations.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["class","style","src","width","height","value","checked","disabled"]})
     mutations.observe(document.head,{subtree:true,childList:true,characterData:true})
     mutations.observe(document.documentElement,{attributes:true,attributeFilter:["class","style"]})
-    const visibility=new MutationObserver(()=>{if(host.dataset.state==="open")schedule();else{version++;queued=false;clearTimeout(timer);setReady(false);host.dataset.mcConfirmationGpuReady="false"}})
-    visibility.observe(host,{attributes:true,attributeFilter:["data-state"]})
+    const visibility=new MutationObserver(()=>{if(host.hasAttribute("data-open"))schedule();else{version++;queued=false;clearTimeout(timer);setReady(false);host.dataset.mcConfirmationGpuReady="false"}})
+    visibility.observe(host,{attributes:true,attributeFilter:["data-open"]})
     window.addEventListener("resize",schedule);window.addEventListener("scroll",schedule,true)
     document.fonts.addEventListener("loadingdone",schedule)
     // Let modal autofocus and hover leave the underlying controls first.

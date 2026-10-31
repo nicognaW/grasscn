@@ -22,8 +22,8 @@ for(const directory of ["tests/reference/card","tests/reference/popover"]){
  for(const c of manifest.cases)for(const inline of [false,true])test(`Navigation panel: ${c.name} inline:${inline}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
  const params=new URLSearchParams({component:"navigation-menu",panel:"1",mode:c.text==null ? "card":"text",label:c.label??"",text:c.text??"",width:String(c.width),height:String(c.height),scale:String(c.scale),x:String(c.x),y:String(c.y)});if(inline)params.set("noViewport","1")
- await page.goto(`/?${params}`);const subject=page.locator("#subject");await expect(subject).toHaveAttribute("data-mc-navigation-content-ready","true")
- await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}#subject{visibility:visible}`})
+ await page.goto(`/?${params}`);const subject=page.locator("[data-subject]");await expect(subject).toHaveAttribute("data-mc-navigation-content-ready","true")
+ await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}[data-subject]{visibility:visible}`})
  await expect(subject.locator('[data-mc-popover-text-ready="false"]')).toHaveCount(0)
  for(const label of await subject.locator('[data-mc-popover-unicode-ready]').all())await expect(label).toHaveAttribute("data-mc-popover-unicode-ready","true")
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))

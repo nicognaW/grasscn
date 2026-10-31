@@ -26,37 +26,37 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
  for(const orientation of ['horizontal','vertical']){
   await page.goto(`/?component=button-group&orientation=${orientation}`)
   const group=page.getByRole('group',{name:'Game actions'});await expect(group).toHaveAttribute('data-orientation',orientation)
-  const first=(await page.locator('#subject').boundingBox())!,last=(await group.getByRole('button',{name:'Next',exact:true}).boundingBox())!
+  const first=(await page.locator('[data-subject]').boundingBox())!,last=(await group.getByRole('button',{name:'Next',exact:true}).boundingBox())!
   expect(orientation==='horizontal'?last.x>first.x:last.y>first.y).toBe(true)
-  await page.locator('#subject').click();await group.getByRole('button',{name:'Next',exact:true}).click();await expect(page.locator('#events')).toHaveText('2')
+  await page.locator('[data-subject]').click();await group.getByRole('button',{name:'Next',exact:true}).click();await expect(page.locator('#events')).toHaveText('2')
   await expect(group.getByRole('separator')).toHaveAttribute('aria-orientation','vertical')
   await expect(page.locator('#slotted')).toHaveAttribute('data-slot','button-group-text');await expect(page.locator('#variant')).toHaveClass(/mc-button-group-vertical/)
  }
 })
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent",async({page})=>{
- await page.goto('/?component=button-group&state=disabled');await expect(page.locator('#subject')).toBeDisabled()
- await page.locator('#subject').dispatchEvent('click');await expect(page.locator('#events')).toHaveText('0')
+ await page.goto('/?component=button-group&state=disabled');await expect(page.locator('[data-subject]')).toBeDisabled()
+ await page.locator('[data-subject]').dispatchEvent('click');await expect(page.locator('#events')).toHaveText('0')
  await page.keyboard.press('Tab');await expect(page.getByRole('button',{name:'Next',exact:true})).toBeFocused()
  await page.keyboard.press('Space');await expect(page.locator('#events')).toHaveText('1')
 })
 test("Pagination preserves navigation, anchors, refs, active state and keyboard activation",async({page})=>{
  await page.goto('/?component=pagination&active=1')
- await expect(page.getByRole('navigation',{name:'World pages'})).toBeVisible();await expect(page.locator('#subject')).toHaveAttribute('aria-current','page')
+ await expect(page.getByRole('navigation',{name:'World pages'})).toBeVisible();await expect(page.locator('[data-subject]')).toHaveAttribute('aria-current','page')
  await expect(page.getByRole('link',{name:'Go to previous page'})).toHaveAttribute('href','#previous');await expect(page.getByRole('link',{name:'Go to next page'})).toHaveAttribute('href','#next')
- await page.locator('#subject').focus();await page.keyboard.press('Enter');await expect(page.locator('#events')).toHaveText('1');await expect(page.locator('#page')).toHaveText('2')
+ await page.locator('[data-subject]').focus();await page.keyboard.press('Enter');await expect(page.locator('#events')).toHaveText('1');await expect(page.locator('#page')).toHaveText('2')
  await page.locator('#read-ref').click();await expect(page.locator('#tag')).toHaveText('A')
  await expect(page.locator('[data-slot="pagination-ellipsis"]')).toHaveAttribute('aria-hidden','true')
 })
 test("Pagination cancellation and disabled links prevent activation and navigation",async({page})=>{
  for(const suffix of ['cancel=1','state=disabled']){
-  await page.goto(`/?component=pagination&${suffix}`);await page.locator('#subject').dispatchEvent('click');await expect(page.locator('#events')).toHaveText('0');expect(new URL(page.url()).hash).toBe('')
+  await page.goto(`/?component=pagination&${suffix}`);await page.locator('[data-subject]').dispatchEvent('click');await expect(page.locator('#events')).toHaveText('0');expect(new URL(page.url()).hash).toBe('')
  }
 })
 test("Pagination uses original audio once per accepted action and stays silent when canceled",async({page})=>{
  await page.addInitScript(()=>{(window as any).sounds=[];HTMLMediaElement.prototype.play=function(){(window as any).sounds.push({source:this.src,volume:this.volume,pitch:this.playbackRate});return Promise.resolve()}})
- await page.goto('/?component=pagination');await page.locator('#subject').hover();await page.locator('#subject').focus();expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])
- await page.locator('#subject').click();expect(await page.evaluate(()=>(window as any).sounds)).toEqual([{source:minecraftClickSound,volume:.25,pitch:1}])
- for(const suffix of ['cancel=1','state=disabled']){await page.goto(`/?component=pagination&${suffix}`);await page.locator('#subject').dispatchEvent('click');expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])}
+ await page.goto('/?component=pagination');await page.locator('[data-subject]').hover();await page.locator('[data-subject]').focus();expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])
+ await page.locator('[data-subject]').click();expect(await page.evaluate(()=>(window as any).sounds)).toEqual([{source:minecraftClickSound,volume:.25,pitch:1}])
+ for(const suffix of ['cancel=1','state=disabled']){await page.goto(`/?component=pagination&${suffix}`);await page.locator('[data-subject]').dispatchEvent('click');expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])}
 })
 test("Pagination original arrows retain native links and keyboard activation with original click audio",async({page})=>{
  await page.addInitScript(()=>{(window as any).sounds=[];HTMLMediaElement.prototype.play=function(){(window as any).sounds.push({source:this.src,volume:this.volume,pitch:this.playbackRate});return Promise.resolve()}})
@@ -70,6 +70,6 @@ test("Pagination original arrows retain native links and keyboard activation wit
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions",async({page})=>{
  await page.addInitScript(()=>{(window as any).sounds=[];HTMLMediaElement.prototype.play=function(){(window as any).sounds.push(this.src);return Promise.resolve()}})
  for(const suffix of ['cancel=1','state=disabled']){
-  await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);const arrow=page.locator('#subject');await expect(arrow).toContainText('World');await arrow.dispatchEvent('click');expect(new URL(page.url()).hash).toBe('');expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])
+  await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);const arrow=page.locator('[data-subject]');await expect(arrow).toContainText('World');await arrow.dispatchEvent('click');expect(new URL(page.url()).hash).toBe('');expect(await page.evaluate(()=>(window as any).sounds)).toEqual([])
  }
 })

@@ -1,200 +1,176 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/advancement-tree.json --yes --overwrite",
-  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/advancement-tree.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "tooltip.tsx",
       "sourcePath": "registry/ui/tooltip.tsx",
-      "sourceSha256": "115fc12f36ffe71c608cb22f465729226a89e87bd92de0fdbf6c541b13832bde",
-      "installedSha256": "0132bcdccea7a3cc1cd530729fe67f228cd1e9d1c985459deb7eb8256d273f55",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "b3f2c7a863d163845493171588a3614aa8a9e1867e41fb55b5e2b03a1e1db256",
+      "installedSha256": "b3f2c7a863d163845493171588a3614aa8a9e1867e41fb55b5e2b03a1e1db256"
     },
     {
       "path": "minecraft-tooltip.css",
       "sourcePath": "registry/ui/minecraft-tooltip.css",
-      "sourceSha256": "b069c970b3f421e798298f571f66ae4e5063fa0dd5b361300719ea84d198b2cd",
-      "installedSha256": "b069c970b3f421e798298f571f66ae4e5063fa0dd5b361300719ea84d198b2cd",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4",
+      "installedSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4"
     },
     {
       "path": "minecraft-tooltip-layout.ts",
       "sourcePath": "registry/ui/minecraft-tooltip-layout.ts",
       "sourceSha256": "1bd4fe8f1d9505bf5a28b777dd4ff1694947327b680279754a53ce6c464c9924",
-      "installedSha256": "1bd4fe8f1d9505bf5a28b777dd4ff1694947327b680279754a53ce6c464c9924",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "1bd4fe8f1d9505bf5a28b777dd4ff1694947327b680279754a53ce6c464c9924"
     },
     {
       "path": "minecraft-tooltip-sprites.ts",
       "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
       "sourceSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
-      "installedSha256": "7d78b75a9e71103af7e4b70d8db6ee1d43ec520b1b361c10410fa5785096c39f",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "7d78b75a9e71103af7e4b70d8db6ee1d43ec520b1b361c10410fa5785096c39f"
     },
     {
       "path": "minecraft-tooltip-paint.tsx",
       "sourcePath": "registry/ui/minecraft-tooltip-paint.tsx",
-      "sourceSha256": "a21c7694d6f4d48b003be79c0c99b4e77ae7fe9e2d018d53a6efb8b4779d9fb6",
-      "installedSha256": "a21c7694d6f4d48b003be79c0c99b4e77ae7fe9e2d018d53a6efb8b4779d9fb6",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "1506c46197022204a537c18b0fa686fc6348b9774f48707dfae8d1694f675e63",
+      "installedSha256": "1506c46197022204a537c18b0fa686fc6348b9774f48707dfae8d1694f675e63"
     },
     {
       "path": "minecraft-tooltip-gpu.ts",
       "sourcePath": "registry/ui/minecraft-tooltip-gpu.ts",
       "sourceSha256": "151e5b574c2ccb69280f0858ddd06482913fa873b1f63c3b2e6f3a2972169ac8",
-      "installedSha256": "151e5b574c2ccb69280f0858ddd06482913fa873b1f63c3b2e6f3a2972169ac8",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "151e5b574c2ccb69280f0858ddd06482913fa873b1f63c3b2e6f3a2972169ac8"
     },
     {
       "path": "minecraft-surface.tsx",
       "sourcePath": "registry/ui/minecraft-surface.tsx",
-      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a"
     },
     {
       "path": "minecraft-surface.css",
       "sourcePath": "registry/ui/minecraft-surface.css",
       "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab"
     },
     {
       "path": "minecraft-text.tsx",
       "sourcePath": "registry/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074"
     },
     {
       "path": "minecraft-text.css",
       "sourcePath": "registry/ui/minecraft-text.css",
       "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f"
     },
     {
       "path": "minecraft-text-assets.css",
       "sourcePath": "registry/ui/minecraft-text-assets.css",
       "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6"
     },
     {
       "path": "minecraft-font.ts",
       "sourcePath": "registry/ui/minecraft-font.ts",
       "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe"
     },
     {
       "path": "minecraft-label.css",
       "sourcePath": "registry/ui/minecraft-label.css",
       "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2"
     },
     {
       "path": "minecraft-unicode-label.tsx",
       "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995"
     },
     {
       "path": "minecraft-input-assets.ts",
       "sourcePath": "registry/ui/minecraft-input-assets.ts",
       "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06"
     },
     {
       "path": "minecraft-unifont.ts",
       "sourcePath": "registry/ui/minecraft-unifont.ts",
       "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d"
     },
     {
       "path": "minecraft-unifont-data.ts",
       "sourcePath": "registry/ui/minecraft-unifont-data.ts",
       "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57"
     },
     {
       "path": "minecraft-unifont-atlas.ts",
       "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
       "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a"
     },
     {
       "path": "minecraft-unifont-gpu.ts",
       "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
       "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6"
     },
     {
       "path": "minecraft-label-atlas.ts",
       "sourcePath": "registry/ui/minecraft-label-atlas.ts",
       "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
-      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f"
     },
     {
       "path": "minecraft-prose.tsx",
       "sourcePath": "registry/ui/minecraft-prose.tsx",
-      "sourceSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3",
-      "installedSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c",
+      "installedSha256": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c"
     },
     {
       "path": "badge.tsx",
       "sourcePath": "registry/ui/badge.tsx",
-      "sourceSha256": "130b353a632edd4e986d5037488869cb11ac1f5f4605279b574fb88a359d3096",
-      "installedSha256": "de3876bb298043690a1747eff8b2df893709677a4e41ce1abe7441b48f919026",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "6bbd3cd40040bdcfb8f9b5ae980db90b0a9d2733cfa2053860b5f77cc667dad5",
+      "installedSha256": "6bbd3cd40040bdcfb8f9b5ae980db90b0a9d2733cfa2053860b5f77cc667dad5"
     },
     {
       "path": "minecraft-badge.css",
       "sourcePath": "registry/ui/minecraft-badge.css",
       "sourceSha256": "3dde9bae2a2e05a7db38bf3f38e0e50166b513806630c973e8e00a4c58f419c3",
-      "installedSha256": "3dde9bae2a2e05a7db38bf3f38e0e50166b513806630c973e8e00a4c58f419c3",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "3dde9bae2a2e05a7db38bf3f38e0e50166b513806630c973e8e00a4c58f419c3"
     },
     {
       "path": "minecraft-badge-assets.ts",
       "sourcePath": "registry/ui/minecraft-badge-assets.ts",
       "sourceSha256": "efe6c0009f1bbe369f4540b7a84f03638994154152ba02ced24adef13b51c6f3",
-      "installedSha256": "efe6c0009f1bbe369f4540b7a84f03638994154152ba02ced24adef13b51c6f3",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "efe6c0009f1bbe369f4540b7a84f03638994154152ba02ced24adef13b51c6f3"
     },
     {
       "path": "advancement-tree.tsx",
       "sourcePath": "registry/ui/advancement-tree.tsx",
-      "sourceSha256": "af3ea9f5d717a4d8656e02c1976e199a002d44820b119083cc831919481b7c16",
-      "installedSha256": "1a2184f37934fb43ad4ff654f4d08793d296dd742a0aad7bd5aab993ae69173d",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "sourceSha256": "2e6ecdd07566b0fef0b114c54b2bfe212ce1f6ed1c2958ffaf612ae76d3a395a",
+      "installedSha256": "2e6ecdd07566b0fef0b114c54b2bfe212ce1f6ed1c2958ffaf612ae76d3a395a"
     },
     {
       "path": "minecraft-advancement-tree.css",
       "sourcePath": "registry/ui/minecraft-advancement-tree.css",
       "sourceSha256": "798db8f8b6f5cec33c0f95b33d115bc7ce5ec341beba049e964b325090861e8d",
-      "installedSha256": "798db8f8b6f5cec33c0f95b33d115bc7ce5ec341beba049e964b325090861e8d",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "798db8f8b6f5cec33c0f95b33d115bc7ce5ec341beba049e964b325090861e8d"
     },
     {
       "path": "minecraft-advancement-assets.ts",
       "sourcePath": "registry/ui/minecraft-advancement-assets.ts",
       "sourceSha256": "437f87348a721f471f980212217f1e232028f2ba7a6b08c80039f37ac2299d5e",
-      "installedSha256": "437f87348a721f471f980212217f1e232028f2ba7a6b08c80039f37ac2299d5e",
-      "comparison": "Equal except permitted CLI comments/use-client removal and line endings"
+      "installedSha256": "437f87348a721f471f980212217f1e232028f2ba7a6b08c80039f37ac2299d5e"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -260,37 +236,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "tests": [
-      "selection",
-      "keyboard traversal and activation",
-      "hover details",
-      "keyboard pan and reset",
-      "pointer pan",
-      "5px pointer jitter selects without panning",
-      "Node dragging pans without selecting",
-      "Keyboard selection works immediately after dragging",
-      "Full navigation labels at 1440/1024/390px",
-      "No controlled/uncontrolled tooltip warnings while dragging"
-    ],
+  "typecheck": {
     "passed": true
   },
   "negativeControlMismatchedPixels": 1,
-  "environment": {
-    "browser": "Microsoft Edge via Playwright",
-    "viewport": [
-      1536,
-      900
-    ],
-    "devicePixelRatio": 1,
-    "scales": [
-      1,
-      2,
-      3
-    ]
-  },
-  "limitations": [
-    "12 static graph cases only; hover panels, focus outlines and arbitrary icons/text are web adaptations outside this pixel matrix."
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
   ],
-  "verificationRun": "18 installed-consumer and local-site checks passed; 12 native pixel comparisons, gesture regressions, existing behavior and one-pixel negative control."
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

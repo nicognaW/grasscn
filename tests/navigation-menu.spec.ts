@@ -24,9 +24,9 @@ for(const c of manifest.cases)for(const kind of c.element==="tabs" ? ["trigger",
  const params=new URLSearchParams({component:"navigation-menu",native:"1",part:c.element,width:String(c.width),height:String(c.height),scale:String(c.scale),state:c.state,timeMs:String(c.timeMs),x:String(c.x),y:String(c.y)})
  for(const key of ["label","selected","selectedIndex","targetIndex","disabledIndex","contentHeight"])if(c[key]!=null)params.set(key,String(c[key]))
  if(c.labels)params.set("labels",JSON.stringify(c.labels));if(kind==="link")params.set("links","1");if(kind==="indicator")params.set("indicator","1")
- await page.goto(`/?${params}`);const subject=page.locator("#subject");await expect(subject).toBeVisible()
+ await page.goto(`/?${params}`);const subject=page.locator("[data-subject]");await expect(subject).toBeVisible()
  await subject.evaluate((node,p)=>Object.assign(node.style,{position:"fixed",left:p.x+"px",top:p.y+"px",width:p.width+"px",visibility:"visible"}),{x:c.x*c.scale,y:c.y*c.scale,width:c.width*c.scale})
- await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}#subject{visibility:visible}`});await page.mouse.move(0,0)
+ await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}[data-subject]{visibility:visible}`});await page.mouse.move(0,0)
  if(c.element==="tabs-trigger"){await expect(subject).toHaveAttribute("data-mc-tab-ready","true");if(c.state.endsWith("hover"))await subject.hover();if(c.state==="focus")await subject.focus()}
  else{const list=subject.locator('[data-slot="navigation-menu-list"]');await expect(list).toHaveAttribute("data-mc-tabs-ready","true");const target=list.locator(kind==="link"?'[data-slot="navigation-menu-link"]':'[data-slot="navigation-menu-trigger"]').nth(c.targetIndex??0);if(c.state==="hover")await target.hover();if(c.state==="focus")await target.focus()}
  for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute("data-mc-label-ready","true")

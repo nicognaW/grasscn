@@ -3,12 +3,12 @@ import {readFileSync} from "node:fs"
 import {PNG} from "pngjs"
 import {minecraftClickSound} from "../registry/ui/minecraft-sound-assets"
 
-test("AlertDialog focuses cancel, traps focus, dismisses on Escape and restores its trigger",async({page})=>{
+test("AlertDialog follows Base UI initial focus, traps focus, dismisses on Escape and restores its trigger",async({page})=>{
   await page.goto("/?component=alert-dialog")
   const trigger=page.getByRole("button",{name:"Open confirmation",exact:true}),dialog=page.getByRole("alertdialog",{name:"Are you sure?",exact:true})
   await trigger.click();await expect(dialog).toBeVisible();await expect(dialog).toHaveAccessibleDescription("This action cannot be undone.")
   const cancel=dialog.getByRole("button",{name:"No",exact:true}),action=dialog.getByRole("button",{name:"Yes",exact:true})
-  await expect(cancel).toBeFocused();await page.keyboard.press("Tab");await expect(action).toBeFocused();await page.keyboard.press("Shift+Tab");await expect(cancel).toBeFocused()
+  await expect(action).toBeFocused();await page.keyboard.press("Tab");await expect(cancel).toBeFocused();await page.keyboard.press("Tab");await expect(action).toBeFocused()
   await page.keyboard.press("Escape");await expect(dialog).toHaveCount(0);await expect(trigger).toBeFocused()
 })
 test("AlertDialog outside clicks retain the modal and cancel does not confirm",async({page})=>{
@@ -41,9 +41,9 @@ test("AlertDialog composes elements, preserves forms and forwards DOM refs witho
   await expect(dialog).toHaveAccessibleDescription("Composed description");expect(await dialog.evaluate(node=>node.tagName)).toBe("SECTION")
   await dialog.getByRole("button",{name:"Inspect confirmation refs",exact:true}).click();await expect(page.getByLabel("Confirmation refs")).toHaveText("BUTTON,SECTION,A,BUTTON")
   await dialog.getByRole("textbox",{name:"Confirmation form input",exact:true}).fill("World");await page.keyboard.press("Enter");await expect(page.getByLabel("Confirmation submissions")).toHaveText("1");await expect(dialog).toBeVisible()
-  const link=dialog.getByRole("link",{name:"Confirm link",exact:true}),cancel=dialog.getByRole("button",{name:"Cancel composed",exact:true})
+  const link=dialog.getByRole("button",{name:"Confirm link",exact:true}),cancel=dialog.getByRole("button",{name:"Cancel composed",exact:true})
   await expect(link).toHaveCSS("height","40px");await expect(link.locator(".mc-button-surface")).toHaveCount(1);await expect(cancel.locator(".mc-button-surface")).toHaveCount(1)
-  await cancel.click();await expect(dialog).toHaveCount(0);await expect(trigger).toBeFocused();await trigger.click();await link.click();await expect(dialog).toHaveCount(0);expect(errors).toEqual([])
+  await cancel.click();await expect(dialog).toHaveCount(0);await expect(trigger).toBeFocused();await trigger.click();await link.click();await expect(dialog).toBeVisible();await cancel.click();await expect(dialog).toHaveCount(0);expect(errors).toEqual([])
 })
 test("AlertDialog uses one original click per button activation and keeps hover and Escape silent",async({page})=>{
   await page.addInitScript(()=>{(window as any).__confirmationSounds=[];HTMLMediaElement.prototype.play=function(){(window as any).__confirmationSounds.push({source:this.src,volume:this.volume,rate:this.playbackRate});return Promise.resolve()}})

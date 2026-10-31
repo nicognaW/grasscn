@@ -1,32 +1,106 @@
-"use client"
-import * as React from "react"
-import {AdventureImage} from "./minecraft-adventure-image"
-import {MinecraftDocumentText} from "./minecraft-document-text"
-import {MinecraftText} from "./minecraft-text"
-import {Button} from "./button"
-import {TooltipProvider,Tooltip,TooltipTrigger,TooltipContent} from "./tooltip"
-import {playTradingSound} from "./minecraft-trading-sound"
-import "./minecraft-trading.css"
-type TradeItem={label:string;icon:React.ReactNode;count?:number}
-type TradeOffer={id:string;label:string;cost:TradeItem;secondCost?:TradeItem;result:TradeItem;inStock?:boolean}
-type TradingProps=React.ComponentProps<'div'>&{offers:readonly TradeOffer[];selectedId?:string;defaultSelectedId?:string;onSelectedIdChange?:(id:string)=>void;onTrade?:(id:string)=>void;scrollOffset?:number;defaultScrollOffset?:number;onScrollOffsetChange?:(offset:number)=>void;title?:string;scale?:1|2|3;inventory?:React.ReactNode}
-function TradeItemGraphic({item,scale}:{item:TradeItem;scale:number}){return <span className="mc-trade-item" aria-label={`${item.count??1} ${item.label}`} style={{width:16*scale,height:16*scale}}>{item.icon}{(item.count??1)>1&&<span className="mc-trade-count"><MinecraftText>{item.count}</MinecraftText></span>}</span>}
-function Trading({offers,selectedId,defaultSelectedId,onSelectedIdChange,onTrade,scrollOffset,defaultScrollOffset=0,onScrollOffsetChange,title='Trading',scale=2,inventory,className,style,ref:forwardedRef,...props}:TradingProps){
- const[current,setCurrent]=React.useState(defaultSelectedId??offers[0]?.id),[internalOffset,setInternalOffset]=React.useState(defaultScrollOffset),root=React.useRef<HTMLDivElement>(null),rail=React.useRef<HTMLDivElement>(null),listId=React.useId(),maxOffset=Math.max(0,offers.length-7),offset=Math.max(0,Math.min(maxOffset,Math.trunc(scrollOffset??internalOffset))),selected=selectedId??current,offer=offers.find(o=>o.id===selected)??offers[0]
- const latestOffset=React.useRef(offset);latestOffset.current=offset
- React.useImperativeHandle(forwardedRef,()=>root.current!,[])
- const choose=(id:string)=>{if(selectedId===undefined)setCurrent(id);onSelectedIdChange?.(id)},changeOffset=React.useCallback((next:number)=>{const value=Math.max(0,Math.min(maxOffset,Math.trunc(next)));latestOffset.current=value;if(scrollOffset===undefined)setInternalOffset(value);onScrollOffsetChange?.(value)},[maxOffset,scrollOffset,onScrollOffsetChange])
- React.useEffect(()=>{const node=root.current!,wheel=(event:WheelEvent)=>{if(event.deltaY){event.preventDefault();const amount=event.deltaMode===1?event.deltaY:event.deltaMode===2?event.deltaY*7:event.deltaY/100;changeOffset(Math.trunc(latestOffset.current+amount))}};node.addEventListener('wheel',wheel,{passive:false});return()=>node.removeEventListener('wheel',wheel)},[changeOffset])
- const steps=maxOffset+1,delta=139-(27+Math.trunc((steps-1)*139/steps)),step=1+Math.trunc(delta/steps)+Math.trunc(139/steps),thumbY=offset===maxOffset&&maxOffset?113:Math.min(113,offset*step)
- const dragThumb=(event:React.PointerEvent<HTMLDivElement>)=>{if(!maxOffset)return;const bounds=rail.current!.getBoundingClientRect();const f=Math.fround,y=f((event.clientY-bounds.top)/scale+18),fraction=f(f(f(y-18)-13.5)/112);changeOffset(Math.trunc(f(f(fraction*maxOffset)+.5)))}
- return <TooltipProvider><div {...props} ref={root} data-slot="trading" role={props.role??'group'} aria-label={props['aria-label']??title} className={`mc-trading ${className??''}`} style={{'--mc-scale':scale,width:276*scale,height:166*scale,...style} as React.CSSProperties}>
- <AdventureImage texture="gui/container/villager" scale={scale} style={{position:'absolute',left:0,top:0,maxWidth:'none'}}/>
- <MinecraftDocumentText text="Trades" width={96} scale={scale} align="center" color="#404040" style={{position:'absolute',left:5*scale,top:6*scale}}/><MinecraftDocumentText text={title} width={162} scale={scale} align="center" color="#404040" style={{position:'absolute',left:106*scale,top:6*scale}}/><MinecraftDocumentText text="Inventory" width={162} scale={scale} color="#404040" style={{position:'absolute',left:107*scale,top:72*scale}}/>
- <div id={listId} className="mc-trade-offers" role="group" aria-label="Trade offers" style={{left:5*scale,top:18*scale,width:88*scale,height:140*scale}}>{offers.slice(offset,offset+7).map(item=><Tooltip key={item.id}><TooltipTrigger asChild><Button type="button" scale={scale} aria-label={item.label} aria-pressed={offer?.id===item.id} onClick={()=>choose(item.id)} className="mc-trade-offer" style={{display:'block',width:88*scale,height:20*scale}}><span className="mc-trade-offer-content"><span style={{left:5*scale,top:scale}}><TradeItemGraphic item={item.cost} scale={scale}/></span>{item.secondCost&&<span style={{left:35*scale,top:scale}}><TradeItemGraphic item={item.secondCost} scale={scale}/></span>}<AdventureImage texture={`gui/sprites/container/villager/trade_arrow${item.inStock===false?'_out_of_stock':''}`} scale={scale} style={{position:'absolute',left:55*scale,top:4*scale}}/><span style={{left:68*scale,top:scale}}><TradeItemGraphic item={item.result} scale={scale}/></span></span></Button></TooltipTrigger><TooltipContent scale={scale}>{item.label}{item.inStock===false?' — Out of stock':''}</TooltipContent></Tooltip>)}</div>
- <div ref={rail} role="scrollbar" aria-label="Trade offers scroll" aria-controls={listId} aria-orientation="vertical" aria-valuemin={0} aria-valuemax={maxOffset} aria-valuenow={offset} aria-disabled={!maxOffset} tabIndex={maxOffset?0:-1} className="mc-trade-scroll" style={{left:94*scale,top:18*scale,width:6*scale,height:140*scale}} onKeyDown={event=>{const next=({ArrowDown:offset+1,ArrowUp:offset-1,PageDown:offset+7,PageUp:offset-7,Home:0,End:maxOffset} as Record<string,number>)[event.key];if(next!==undefined){event.preventDefault();changeOffset(next)}}} onContextMenu={event=>event.preventDefault()} onPointerDown={event=>{if(!maxOffset)return;const bounds=event.currentTarget.getBoundingClientRect();if(event.clientX<=bounds.left||event.clientX>=bounds.right||event.clientY<=bounds.top||event.clientY>bounds.bottom)return;event.preventDefault();event.currentTarget.setPointerCapture(event.pointerId)}} onPointerMove={event=>{if(event.currentTarget.hasPointerCapture(event.pointerId))dragThumb(event)}} onPointerUp={event=>{if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId)}}><AdventureImage texture={`gui/sprites/container/villager/scroller${maxOffset?'':'_disabled'}`} scale={scale} style={{position:'absolute',top:thumbY*scale,left:0}}/></div>
- {offer&&<><span className="mc-trade-payment" style={{left:136*scale,top:37*scale}}><TradeItemGraphic item={offer.cost} scale={scale}/></span>{offer.secondCost&&<span className="mc-trade-payment" style={{left:162*scale,top:37*scale}}><TradeItemGraphic item={offer.secondCost} scale={scale}/></span>}<Tooltip><TooltipTrigger asChild><button type="button" className="mc-trade-result" aria-label={`Trade for ${offer.result.label}`} disabled={offer.inStock===false} onClick={()=>{onTrade?.(offer.id);playTradingSound()}} style={{left:220*scale,top:37*scale,width:16*scale,height:16*scale}}>{offer.inStock!==false&&<TradeItemGraphic item={offer.result} scale={scale}/>}</button></TooltipTrigger><TooltipContent scale={scale}>{offer.inStock===false?'Out of stock':offer.result.label}</TooltipContent></Tooltip>{offer.inStock===false&&<AdventureImage texture="gui/sprites/container/villager/out_of_stock" scale={scale} style={{position:'absolute',left:182*scale,top:35*scale}}/>}</>}
- <div className="mc-trade-inventory" style={{left:107*scale,top:83*scale,width:162*scale,height:76*scale}}>{inventory}</div>
- </div></TooltipProvider>
+"use client";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import * as React from "react";
+import { AdventureImage } from "./minecraft-adventure-image";
+import { MinecraftDocumentText } from "./minecraft-document-text";
+import { MinecraftText } from "./minecraft-text";
+import { Button } from "./button";
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "./tooltip";
+import { playTradingSound } from "./minecraft-trading-sound";
+import "./minecraft-trading.css";
+type TradeItem = {
+    label: string;
+    icon: React.ReactNode;
+    count?: number;
+};
+type TradeOffer = {
+    id: string;
+    label: string;
+    cost: TradeItem;
+    secondCost?: TradeItem;
+    result: TradeItem;
+    inStock?: boolean;
+};
+type TradingProps = React.ComponentProps<'div'> & {
+    offers: readonly TradeOffer[];
+    selectedId?: string;
+    defaultSelectedId?: string;
+    onSelectedIdChange?: (id: string) => void;
+    onTrade?: (id: string) => void;
+    scrollOffset?: number;
+    defaultScrollOffset?: number;
+    onScrollOffsetChange?: (offset: number) => void;
+    title?: string;
+    scale?: 1 | 2 | 3;
+    inventory?: React.ReactNode;
+};
+function TradeItemGraphic({ item, scale }: {
+    item: TradeItem;
+    scale: number;
+}) { return <span className="mc-trade-item" aria-label={`${item.count ?? 1} ${item.label}`} style={{ width: 16 * scale, height: 16 * scale }}>{item.icon}{(item.count ?? 1) > 1 && <span className="mc-trade-count"><MinecraftText>{item.count}</MinecraftText></span>}</span>; }
+function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, onTrade, scrollOffset, defaultScrollOffset = 0, onScrollOffsetChange, title = 'Trading', scale = 2, inventory, className, style, ref: forwardedRef, ...props }: TradingProps) {
+    const [current, setCurrent] = React.useState(defaultSelectedId ?? offers[0]?.id), [internalOffset, setInternalOffset] = React.useState(defaultScrollOffset), root = React.useRef<HTMLDivElement>(null), rail = React.useRef<HTMLDivElement>(null), listId = React.useId(), maxOffset = Math.max(0, offers.length - 7), offset = Math.max(0, Math.min(maxOffset, Math.trunc(scrollOffset ?? internalOffset))), selected = selectedId ?? current, offer = offers.find(o => o.id === selected) ?? offers[0];
+    const latestOffset = React.useRef(offset);
+    latestOffset.current = offset;
+    React.useImperativeHandle(forwardedRef, () => root.current!, []);
+    const choose = (id: string) => {
+        if (selectedId === undefined)
+            setCurrent(id);
+        onSelectedIdChange?.(id);
+    }, changeOffset = React.useCallback((next: number) => {
+        const value = Math.max(0, Math.min(maxOffset, Math.trunc(next)));
+        latestOffset.current = value;
+        if (scrollOffset === undefined)
+            setInternalOffset(value);
+        onScrollOffsetChange?.(value);
+    }, [maxOffset, scrollOffset, onScrollOffsetChange]);
+    React.useEffect(() => {
+        const node = root.current!, wheel = (event: WheelEvent) => {
+            if (event.deltaY) {
+                event.preventDefault();
+                const amount = event.deltaMode === 1 ? event.deltaY : event.deltaMode === 2 ? event.deltaY * 7 : event.deltaY / 100;
+                changeOffset(Math.trunc(latestOffset.current + amount));
+            }
+        };
+        node.addEventListener('wheel', wheel, { passive: false });
+        return () => node.removeEventListener('wheel', wheel);
+    }, [changeOffset]);
+    const steps = maxOffset + 1, delta = 139 - (27 + Math.trunc((steps - 1) * 139 / steps)), step = 1 + Math.trunc(delta / steps) + Math.trunc(139 / steps), thumbY = offset === maxOffset && maxOffset ? 113 : Math.min(113, offset * step);
+    const dragThumb = (event: React.PointerEvent<HTMLDivElement>) => {
+        if (!maxOffset)
+            return;
+        const bounds = rail.current!.getBoundingClientRect();
+        const f = Math.fround, y = f((event.clientY - bounds.top) / scale + 18), fraction = f(f(f(y - 18) - 13.5) / 112);
+        changeOffset(Math.trunc(f(f(fraction * maxOffset) + .5)));
+    };
+    return <TooltipProvider><div {...props} ref={root} data-slot="trading" role={props.role ?? 'group'} aria-label={props['aria-label'] ?? title} className={cn(`mc-trading ${""}`, className)} style={minecraftStyle(style, __style => ({ '--mc-scale': scale, width: 276 * scale, height: 166 * scale, ...__style } as React.CSSProperties))}>
+ <AdventureImage texture="gui/container/villager" scale={scale} style={{ position: 'absolute', left: 0, top: 0, maxWidth: 'none' }}/>
+ <MinecraftDocumentText text="Trades" width={96} scale={scale} align="center" color="#404040" style={{ position: 'absolute', left: 5 * scale, top: 6 * scale }}/><MinecraftDocumentText text={title} width={162} scale={scale} align="center" color="#404040" style={{ position: 'absolute', left: 106 * scale, top: 6 * scale }}/><MinecraftDocumentText text="Inventory" width={162} scale={scale} color="#404040" style={{ position: 'absolute', left: 107 * scale, top: 72 * scale }}/>
+ <div id={listId} className="mc-trade-offers" role="group" aria-label="Trade offers" style={{ left: 5 * scale, top: 18 * scale, width: 88 * scale, height: 140 * scale }}>{offers.slice(offset, offset + 7).map(item => <Tooltip key={item.id}><TooltipTrigger render={<Button type="button" scale={scale} aria-label={item.label} aria-pressed={offer?.id === item.id} onClick={() => choose(item.id)} className="mc-trade-offer" style={{ display: 'block', width: 88 * scale, height: 20 * scale }}/>}><span className="mc-trade-offer-content"><span style={{ left: 5 * scale, top: scale }}><TradeItemGraphic item={item.cost} scale={scale}/></span>{item.secondCost && <span style={{ left: 35 * scale, top: scale }}><TradeItemGraphic item={item.secondCost} scale={scale}/></span>}<AdventureImage texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? '_out_of_stock' : ''}`} scale={scale} style={{ position: 'absolute', left: 55 * scale, top: 4 * scale }}/><span style={{ left: 68 * scale, top: scale }}><TradeItemGraphic item={item.result} scale={scale}/></span></span></TooltipTrigger><TooltipContent scale={scale}>{item.label}{item.inStock === false ? ' — Out of stock' : ''}</TooltipContent></Tooltip>)}</div>
+ <div ref={rail} role="scrollbar" aria-label="Trade offers scroll" aria-controls={listId} aria-orientation="vertical" aria-valuemin={0} aria-valuemax={maxOffset} aria-valuenow={offset} aria-disabled={!maxOffset} tabIndex={maxOffset ? 0 : -1} className="mc-trade-scroll" style={{ left: 94 * scale, top: 18 * scale, width: 6 * scale, height: 140 * scale }} onKeyDown={event => {
+            const next = ({ ArrowDown: offset + 1, ArrowUp: offset - 1, PageDown: offset + 7, PageUp: offset - 7, Home: 0, End: maxOffset } as Record<string, number>)[event.key];
+            if (next !== undefined) {
+                event.preventDefault();
+                changeOffset(next);
+            }
+        }} onContextMenu={event => event.preventDefault()} onPointerDown={event => {
+            if (!maxOffset)
+                return;
+            const bounds = event.currentTarget.getBoundingClientRect();
+            if (event.clientX <= bounds.left || event.clientX >= bounds.right || event.clientY <= bounds.top || event.clientY > bounds.bottom)
+                return;
+            event.preventDefault();
+            event.currentTarget.setPointerCapture(event.pointerId);
+        }} onPointerMove={event => {
+            if (event.currentTarget.hasPointerCapture(event.pointerId))
+                dragThumb(event);
+        }} onPointerUp={event => {
+            if (event.currentTarget.hasPointerCapture(event.pointerId))
+                event.currentTarget.releasePointerCapture(event.pointerId);
+        }}><AdventureImage texture={`gui/sprites/container/villager/scroller${maxOffset ? '' : '_disabled'}`} scale={scale} style={{ position: 'absolute', top: thumbY * scale, left: 0 }}/></div>
+ {offer && <><span className="mc-trade-payment" style={{ left: 136 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.cost} scale={scale}/></span>{offer.secondCost && <span className="mc-trade-payment" style={{ left: 162 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.secondCost} scale={scale}/></span>}<Tooltip><TooltipTrigger render={<button type="button" className="mc-trade-result" aria-label={`Trade for ${offer.result.label}`} disabled={offer.inStock === false} onClick={() => { onTrade?.(offer.id); playTradingSound(); }} style={{ left: 220 * scale, top: 37 * scale, width: 16 * scale, height: 16 * scale }}/>}>{offer.inStock !== false && <TradeItemGraphic item={offer.result} scale={scale}/>}</TooltipTrigger><TooltipContent scale={scale}>{offer.inStock === false ? 'Out of stock' : offer.result.label}</TooltipContent></Tooltip>{offer.inStock === false && <AdventureImage texture="gui/sprites/container/villager/out_of_stock" scale={scale} style={{ position: 'absolute', left: 182 * scale, top: 35 * scale }}/>}</>}
+ <div className="mc-trade-inventory" style={{ left: 107 * scale, top: 83 * scale, width: 162 * scale, height: 76 * scale }}>{inventory}</div>
+ </div></TooltipProvider>;
 }
-export {Trading}
-export type {TradeItem,TradeOffer,TradingProps}
+export { Trading };
+export type { TradeItem, TradeOffer, TradingProps };

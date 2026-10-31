@@ -14,7 +14,7 @@ for (const scale of [1, 2, 3]) for (const mode of ["pointer", "keyboard"]) test(
   const popup = page.getByRole("listbox")
   await expect(popup).toHaveAttribute("data-mc-select-ready", "true")
   await popup.evaluate((node, p) => Object.assign(node.style, { position: "fixed", left: p.x + "px", top: p.y + "px" }), { x: c.x*scale, y: c.y*scale })
-  await page.addStyleTag({ content: '#root{opacity:0} [data-radix-popper-content-wrapper]{left:0!important;top:0!important;transform:none!important}' })
+  await page.addStyleTag({ content: '#root{opacity:0} [data-mc-positioner]{left:0!important;top:0!important;transform:none!important}' })
   await page.mouse.move(0, 0)
   const creative = page.getByRole("option", { name: "Creative", exact: true })
   if (mode === "pointer") await creative.hover()

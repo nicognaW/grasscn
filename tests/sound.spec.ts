@@ -32,7 +32,7 @@ test("Click sound contains the exact original OGG and decodes in the browser", a
 })
 for (const component of ["button", "checkbox"]) test(`${component} plays once per activation, with native pitch and volume`, async ({ page }) => {
   await page.goto(`/?component=${component}`)
-  const control = page.locator("#subject")
+  const control = page.locator("[data-subject]")
   await control.hover()
   expect(await voices(page)).toHaveLength(0)
   await control.click()
@@ -40,12 +40,12 @@ for (const component of ["button", "checkbox"]) test(`${component} plays once pe
   await page.keyboard.press("Space")
   expect(await voices(page)).toHaveLength(2)
   await page.goto(`/?component=${component}&state=disabled`)
-  await page.locator("#subject").dispatchEvent("click")
+  await page.locator("[data-subject]").dispatchEvent("click")
   expect(await voices(page)).toHaveLength(0)
 })
 test("Slider plays on pointer release, with no press, drag or keyboard tick sound", async ({ page }) => {
   await page.goto("/?component=slider")
-  const bounds = (await page.locator("#subject").boundingBox())!
+  const bounds = (await page.locator("[data-subject]").boundingBox())!
   await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2)
   await page.mouse.down()
   await page.mouse.move(bounds.x + bounds.width * .75, bounds.y + bounds.height / 2)
@@ -58,7 +58,7 @@ test("Slider plays on pointer release, with no press, drag or keyboard tick soun
 })
 test("Input focus, selection and typing remain silent", async ({ page }) => {
   await page.goto("/?component=input")
-  await page.locator("#subject").fill("Silent")
+  await page.locator("[data-subject]").fill("Silent")
   await page.keyboard.press("Control+A")
   expect(await voices(page)).toHaveLength(0)
 })

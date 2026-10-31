@@ -18,12 +18,12 @@
     image-rendering: pixelated;
     cursor: pointer;
   }
-  .mc-checkbox[data-state="checked"] { background-image: var(--mc-checkbox-checked); }
+  .mc-checkbox[data-checked] { background-image: var(--mc-checkbox-checked); }
   .mc-checkbox:focus { background-image: var(--mc-checkbox-focused); }
-  .mc-checkbox[data-state="checked"]:focus { background-image: var(--mc-checkbox-checked-focused); }
-  .mc-checkbox:disabled { cursor: default; }
+  .mc-checkbox[data-checked]:focus { background-image: var(--mc-checkbox-checked-focused); }
+  .mc-checkbox:is(:disabled,[data-disabled]) { cursor: default; }
   /* Mixed state is a web composition; vanilla Checkbox only has boolean states. */
-  .mc-checkbox[data-state="indeterminate"] > .mc-checkbox-indicator {
+  .mc-checkbox[data-indeterminate] > .mc-checkbox-indicator {
     position: absolute;
     left: calc(5 * var(--mc-pixel));
     top: calc(8 * var(--mc-pixel));

@@ -361,7 +361,7 @@
       ],
       "observations": [
         "Selection-list classes exist.",
-        "Select uses original LanguageSelectionList and original Entry rendering: row width270, row height18, viewport padding2, selected fill black and outline1 white when the list has a focused entry or808080 when unfocused; original menu-list background and header/footer separator textures. Disabled web options supply the native text component colorA0A0A0. Hover-to-focus remains Radix behavior."
+        "Select uses original LanguageSelectionList and original Entry rendering: row width270, row height18, viewport padding2, selected fill black and outline1 white when the list has a focused entry or808080 when unfocused; original menu-list background and header/footer separator textures. Disabled web options supply the native text component colorA0A0A0. Hover-to-focus remains Base UI behavior."
       ],
       "remainingNativeProbes": [
         "Capture row height, selected/hover outline, truncation, empty list and scroll offsets."
@@ -910,7 +910,7 @@
           "native Button action normal/hover/focus/disabled",
           "ASCII and fixedCJK",
           "two backgrounds and GUIscales1\u20133",
-          "preview/remove/disabled/asChild/ref semantics"
+          "preview/remove/disabled/render/ref semantics"
         ],
         "nativeReferenceCount": 342,
         "settings": "Original normalized Item180 and Button66/96 corpora retain full native source/frames/font observations. Final fresh consumer uses the pooled RGB renderer with its exact current canonical source hash."
@@ -984,7 +984,7 @@
         },
         "scope": "1380 exact original constituent comparisons:1296 original PlayerFaceExtractor faces (18skins \u00d73 logical sizes \u00d7hat on/off \u00d7upright/inverted \u00d72backdrops \u00d7GUIscales1\u20133), plus84 original Label appearances through actual AvatarFallback. Full native frames and two independent launches retained; original64\u00d764skin bytes, RGBA and actual class-member hashes pinned. Edge/DPR1/1536\u00d7900. Arbitrary images, rich fallbacks, badge/group arrangement and other sizes/environments are compositions outside fixed-case native pixel equality."
       },
-      "nextStep": "Maintain original image assets, all declared native cases, Radix image/fallback semantics, fresh installation proofs and local demo."
+      "nextStep": "Maintain original image assets, all declared native cases, Base UI image/fallback semantics, fresh installation proofs and local demo."
     },
     {
       "name": "badge",
@@ -2466,7 +2466,7 @@
           "header/footer lines",
           "two backgrounds",
           "GUIscales1\u20133",
-          "asChild/ref/link/keyboard/rich-content semantics"
+          "render/ref/link/keyboard/rich-content semantics"
         ],
         "nativeReferenceCount": 192,
         "settings": "Original Label84 and Separator108 native matrices retain their independent captures, glyph observations, full frames and original font contexts."
@@ -2794,7 +2794,7 @@
           "progress"
         ],
         "authority": "analyst-selected-native-reference",
-        "limitation": "Native182x5 bar only. Radix unknown semantics reuse the native empty surface without adding an animated visual variant. Steady-state captures do not establish native lerping transitions or arbitrary resizing."
+        "limitation": "Native182x5 bar only. Base UI unknown semantics reuse the native empty surface without adding an animated visual variant. Steady-state captures do not establish native lerping transitions or arbitrary resizing."
       },
       "referenceCases": {
         "status": "captured-repeatable",
@@ -2926,7 +2926,7 @@
             "reportField": "submitDecodedRgbaSha256"
           }
         ],
-        "scope": "1338 exact native constituent comparisons through actual public Questionnaire APIs:84 Label cases in each of four text parts (336),24 Checkbox cases in both multiple/checkbox and single/radio modes (48),306 original EditBox cases including caret timing/selection/readonly/disabled/CJK, and162 original ASCII/CJK Button cases in each Previous/Skip/Next/Submit wrapper (648). Six behavior tests cover actual official headless forms, validation, previous/next, optional skip, multiple and freeform answers, CJK values, numbered shortcuts, controlled item/render callbacks, refs and one original click voice. All26 installable files match source; @shadcn/react0.3.1 installed in the separate consumer. Full arrangement, auto compact action widths, arbitrary rich/rendered content, other HTML input types and other environments are outside the fixed native pixel claim."
+        "scope": "1338 exact native constituent comparisons through actual public Questionnaire APIs:84 Label cases in each of four text parts (336),24 Checkbox cases in both multiple/checkbox and single/radio modes (48),306 original EditBox cases including caret timing/selection/readonly/disabled/CJK, and162 original ASCII/CJK Button cases in each Previous/Skip/Next/Submit wrapper (648). Six behavior tests cover actual official headless forms, validation, previous/next, optional skip, multiple and freeform answers, CJK values, numbered shortcuts, controlled item/render callbacks, refs and one original click voice. All installable files match source; @shadcn/react0.3.1 installed in the separate consumer. Full arrangement, auto compact action widths, arbitrary rich/rendered content, other HTML input types and other environments are outside the fixed native pixel claim."
       },
       "nextStep": "Maintain the genuine headless primitive API, default spellcheck suppression, all declared native constituents and aliases, original click timing/gain, fresh CLI proofs and the local preview."
     },
@@ -3054,7 +3054,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/scroll-area/manifest.json",
-        "scope": "297 native cases: original borderless viewport clipping with zero-padding test layout and original Button rows, vertical scrollbar, empty/fitting/overflow, top/middle/bottom integer logical offsets, dimensions including inverted minimum-thumb bounds, hover/focus/disabled, GUI scales1\u20133. Edge/DPR1. Radix browser viewport and native integer thumb geometry; horizontal scrollbars, alternate visibility modes, fractional offsets, RTL and other raster environments remain unverified.",
+        "scope": "297 native cases: original borderless viewport clipping with zero-padding test layout and original Button rows, vertical scrollbar, empty/fitting/overflow, top/middle/bottom integer logical offsets, dimensions including inverted minimum-thumb bounds, hover/focus/disabled, GUI scales1\u20133. Edge/DPR1. Base UI browser viewport and native integer thumb geometry; horizontal scrollbars, alternate visibility modes, fractional offsets, RTL and other raster environments remain unverified.",
         "installationReport": "tests/reference/scroll-area/installation-verification.json",
         "repeatabilityReport": "tests/reference/scroll-area/repeatability.json"
       },
@@ -3121,7 +3121,7 @@
           "menu"
         ],
         "authority": "analyst-selected-native-reference",
-        "limitation": "Horizontal only. In-world PNGs are byte-identical to menu textures; captures exercise original separators without a loaded world. Web semantic/decorative association and asChild composition are Radix behavior."
+        "limitation": "Horizontal only. In-world PNGs are byte-identical to menu textures; captures exercise original separators without a loaded world. Web semantic/decorative association and render composition are Base UI behavior."
       },
       "referenceCases": {
         "status": "captured-repeatable",
@@ -3140,7 +3140,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/separator/manifest.json",
-        "scope": "108 native cases: header/footer, nine integer widths1\u2013385, two backgrounds and GUI scales1\u20133. Both default div and asChild hr match each reference exactly (216 web comparisons). Edge/DPR1. Original in-world textures are byte-identical; loaded-world lifecycle, vertical orientation and other raster environments are not exercised.",
+        "scope": "108 native cases: header/footer, nine integer widths1\u2013385, two backgrounds and GUI scales1\u20133. Both default div and render hr match each reference exactly (216 web comparisons). Edge/DPR1. Original in-world textures are byte-identical; loaded-world lifecycle, vertical orientation and other raster environments are not exercised.",
         "installationReport": "tests/reference/separator/installation-verification.json",
         "repeatabilityReport": "tests/reference/separator/repeatability.json"
       },
@@ -3548,7 +3548,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/switch/manifest.json",
-        "scope": "192 original CycleButton.onOffBuilder appearance cases: ON/OFF, normal/hover/focus/disabled, widths40/80/150/200, two backgrounds and GUI scales1-3. Native factory default150x20, en_us uppercase labels and original Button sprites. Edge/DPR1, viewport1536x900 and native positions. Web switch semantics, external labels and rich/asChild content are composition. Other locales, fractional scales and raster environments remain unverified.",
+        "scope": "192 original CycleButton.onOffBuilder appearance cases: ON/OFF, normal/hover/focus/disabled, widths40/80/150/200, two backgrounds and GUI scales1-3. Native factory default150x20, en_us uppercase labels and original Button sprites. Edge/DPR1, viewport1536x900 and native positions. Web switch semantics, external labels and rich/render content are composition. Other locales, fractional scales and raster environments remain unverified.",
         "installationReport": "tests/reference/switch/installation-verification.json",
         "repeatabilityReport": "tests/reference/switch/repeatability.json"
       },
@@ -3823,7 +3823,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/tooltip/manifest.json",
-        "scope": "180 ASCII tooltip cases: single/multiline, wrapping, all printable ASCII, three solid backdrops and scales 1\u20133. Screen position and 1536x900 viewport match native captures; Edge/DPR 1 with WebGL nearest sampling. Radix focus/collision behavior is tested separately. Image/gradient backdrops and other GPU/browser environments are unverified.",
+        "scope": "180 ASCII tooltip cases: single/multiline, wrapping, all printable ASCII, three solid backdrops and scales 1\u20133. Screen position and 1536x900 viewport match native captures; Edge/DPR 1 with WebGL nearest sampling. Base UI focus/collision behavior is tested separately. Image/gradient backdrops and other GPU/browser environments are unverified.",
         "repeatabilityReport": "tests/reference/tooltip/repeatability.json",
         "installationReport": "tests/reference/tooltip/installation-verification.json"
       },

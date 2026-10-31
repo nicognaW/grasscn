@@ -22,10 +22,10 @@ test("Radio Group comparator catches a changed pixel", () => {
 })
 for (const c of manifest.cases) test(`Radio Group native pixels: ${c.name}`, async ({ page }, testInfo) => {
   await page.goto(`/?component=radio-group-item&checked=${c.checked}&state=${c.state}&scale=${c.scale}`)
-  const subject = page.locator("#subject")
+  const subject = page.locator("[data-subject]")
   await expect(subject).toBeVisible()
   await subject.evaluate((node,c)=>Object.assign(node.style,{position:"fixed",left:`${c.x*c.scale}px`,top:`${c.y*c.scale}px`}),c)
-  await page.addStyleTag({content:`html,body{background:${c.background}} #root{visibility:hidden} #subject{visibility:visible}`})
+  await page.addStyleTag({content:`html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}`})
   await page.mouse.move(0,0)
   if(c.state === "focus") await subject.focus()
   if(c.state === "hover") await subject.hover()

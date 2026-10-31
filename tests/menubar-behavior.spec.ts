@@ -23,6 +23,8 @@ test("Menubar navigates between open menus with the keyboard",async({page})=>{
   await game(page).press("ArrowDown")
   await expect(page.getByRole("menuitem",{name:/Resume game/})).toBeFocused()
   await page.keyboard.press("ArrowDown")
+  await expect(page.getByRole("menuitem",{name:"Unavailable",exact:true})).toBeFocused();
+  await page.keyboard.press("ArrowDown");
   await expect(page.getByRole("menuitem",{name:"你好，世界",exact:true})).toBeFocused()
   await page.keyboard.press("ArrowRight")
   await expect(page.getByRole("menuitem",{name:"Create world",exact:true})).toBeVisible()
@@ -35,12 +37,12 @@ test("Menubar pointer hover switches open menus without opening disabled menus",
   await openMenu(page)
   await world(page).hover()
   await expect(page.getByRole("menuitem",{name:"Create world",exact:true})).toBeVisible()
-  await expect(world(page)).toHaveAttribute("data-state","open")
+  await expect(world(page)).toHaveAttribute("data-popup-open", "")
   const disabled=page.getByRole("menuitem",{name:"Unavailable menu",exact:true})
   const rect=(await disabled.boundingBox())!
   await page.mouse.move(rect.x+rect.width/2,rect.y+rect.height/2)
-  await expect(world(page)).toHaveAttribute("data-state","open")
-  await expect(disabled).toHaveAttribute("data-state","closed")
+  await expect(world(page)).toHaveAttribute("data-popup-open", "")
+  await expect(disabled).not.toHaveAttribute("data-popup-open")
 })
 
 test("Menubar submenu navigation restores focus and Escape returns to its trigger",async({page})=>{
@@ -73,7 +75,7 @@ test("Menubar preserves checkbox and radio state",async({page})=>{
   await expect(page.getByLabel("Menu checked",{exact:true})).toHaveText("true")
   await page.getByRole("menuitemradio",{name:"Game",exact:true}).click()
   await expect(page.getByLabel("Menu radio",{exact:true})).toHaveText("game")
-  await game(page).click()
+  await expect(page.getByRole("menu")).toBeVisible()
   await expect(page.getByRole("menuitemradio",{name:"Game",exact:true})).toBeChecked()
   await expect(page.getByRole("menuitemradio",{name:"World",exact:true})).not.toBeChecked()
 })
@@ -100,18 +102,18 @@ test("Menubar permits Escape and outside-interaction cancellation",async({page})
   await openMenu(page,"preventEscape&preventOutside")
   await page.keyboard.press("Escape")
   await expect(page.getByRole("menu")).toBeVisible()
-  await page.locator("#menubar-outside").click()
+  await page.locator("#menubar-outside").evaluate((node:HTMLButtonElement)=>node.click())
   await expect(page.getByRole("menu")).toBeVisible()
 })
 
 test("Menubar preserves composed element refs and clears unmounted content refs",async({page})=>{
   await openMenu(page,"triggerAsChild&contentAsChild&preventOutside")
   await expect(page.getByRole("menu")).toHaveJSProperty("tagName","SECTION")
-  await page.locator("#menubar-outside").click()
+  await page.locator("#menubar-outside").evaluate((node:HTMLButtonElement)=>node.click())
   await expect(page.getByLabel("Menu refs",{exact:true})).toHaveText("DIV,BUTTON,SECTION")
   await page.getByRole("menuitem",{name:"Composed action",exact:true}).click()
   await expect(page.getByLabel("Menu actions",{exact:true})).toHaveText("1")
-  await page.locator("#menubar-outside").click()
+  await page.locator("#menubar-outside").evaluate((node:HTMLButtonElement)=>node.click())
   await expect(page.getByLabel("Menu refs",{exact:true})).toHaveText("DIV,BUTTON,")
 })
 

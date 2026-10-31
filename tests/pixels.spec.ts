@@ -17,7 +17,7 @@ for (const reference of manifest.cases) {
       scale: String(reference.scale), width: String(reference.width),
       label: reference.label, state: reference.state,
     })}`)
-    const button = page.locator("#subject")
+    const button = page.locator("[data-subject]")
     await expect(button).toBeVisible()
     await page.mouse.move(0, 0)
     if (reference.state === "hover") await button.hover()

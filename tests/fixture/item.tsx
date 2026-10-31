@@ -1,14 +1,31 @@
-import * as React from "react"
-import {Item,ItemContent,ItemTitle,ItemDescription,ItemMedia,ItemActions,ItemHeader,ItemFooter,ItemGroup,ItemSeparator} from "../../registry/ui/item"
-import {playMinecraftClick,setMinecraftSoundVolume} from "../../registry/ui/minecraft-sound"
-const q=new URLSearchParams(location.search),scale=Number(q.get("scale")??2) as 1|2|3,state=q.get("state")??"normal",title=q.get("label")??"New World",id=q.get("text")??"world-1",description=q.get("description")??"Survival Mode"
-if(q.has("volume"))setMinecraftSoundVolume(Number(q.get("volume")))
-function CustomAction({onClick,...props}:React.ComponentProps<"button">){return <button type="button" {...props} onClick={event=>{onClick?.(event);if(!event.defaultPrevented)playMinecraftClick()}}/>}
-function ItemFixture(){React.useLayoutEffect(()=>{document.documentElement.style.background=q.get("background")??"#202020";document.body.style.background=q.get("background")??"#202020"},[]);const [events,setEvents]=React.useState(0),[actions,setActions]=React.useState(0),[tag,setTag]=React.useState(""),[width,setWidth]=React.useState(Number(q.get("width")??270)),ref=React.useRef<any>(null),part=q.get("part"),rich=q.has("rich"),children=<>{rich?<ItemHeader>Available worlds</ItemHeader>:null}<ItemMedia>{q.has("customMedia")?<span data-testid="custom-media">Icon</span>:undefined}</ItemMedia><ItemContent><ItemTitle>{q.has("richTitle")?<strong data-testid="rich-title">{title}</strong>:title}</ItemTitle><ItemDescription>{`${id}\n${description}`}</ItemDescription></ItemContent>{rich?<><ItemActions><button onClick={()=>setActions(n=>n+1)}>Item action</button></ItemActions><ItemFooter>World information</ItemFooter></>:null}</>
- const commonStyle={position:"fixed",left:Number(q.get("x")??16)*scale,top:Number(q.get("y")??16)*scale,width:width*scale,height:Number(q.get("height")??36)*scale} as React.CSSProperties
- const subject=part==="title"?<ItemTitle id="subject" ref={ref} scale={scale} maxWidth={q.has("wrapWidth")?Number(q.get("wrapWidth")):undefined} align={q.get("align")==="center"?"center":"left"} style={commonStyle}>{title}</ItemTitle>:part==="separator"?<ItemSeparator id="subject" ref={ref} scale={scale} edge={state==="footer"?"footer":"header"} decorative={!q.has("semantic")} style={commonStyle}/>:part==="media"?<ItemMedia id="subject" ref={ref}/>:<Item id="subject" ref={ref} scale={scale} selected={q.get("selected")==="true"} asChild={!q.has("plain")} style={{...commonStyle,height:rich?undefined:commonStyle.height}} tabIndex={state==="focus"?0:undefined} onClick={event=>{setEvents(n=>n+1);if(q.has("cancel"))event.preventDefault()}} aria-disabled={q.has("disabled")?true:undefined}>
- {q.has("plain")?children:q.has("customAction")?<CustomAction>{children}</CustomAction>:q.has("button")?<button type="button">{children}</button>:<a href="#world" onClick={event=>{if(q.has("childCancel"))event.preventDefault()}}>{children}</a>}
- </Item>
- return <>{subject}<button id="read-ref" style={{position:"absolute",top:1500}} onClick={()=>setTag(ref.current?.tagName??"")}>Read ref</button><button id="resize" style={{position:"absolute",top:1460}} onClick={()=>setWidth(340)}>Resize</button><output id="tag" style={{position:"absolute",top:1540}}>{tag}</output><output id="events" style={{position:"absolute",top:1580}}>{events}</output><output id="actions" style={{position:"absolute",top:1620}}>{actions}</output><div style={{display:"none"}}><ItemGroup><Item/><ItemSeparator/></ItemGroup></div></>
+import * as React from "react";
+import { Item, ItemContent, ItemTitle, ItemDescription, ItemMedia, ItemActions, ItemHeader, ItemFooter, ItemGroup, ItemSeparator } from "../../registry/ui/item";
+import { playMinecraftClick, setMinecraftSoundVolume } from "../../registry/ui/minecraft-sound";
+const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, state = q.get("state") ?? "normal", title = q.get("label") ?? "New World", id = q.get("text") ?? "world-1", description = q.get("description") ?? "Survival Mode";
+if (q.has("volume"))
+    setMinecraftSoundVolume(Number(q.get("volume")));
+function CustomAction({ onClick, ...props }: React.ComponentProps<"button">) {
+    return <button type="button" {...props} onClick={event => {
+            onClick?.(event);
+            if (!event.defaultPrevented)
+                playMinecraftClick();
+        }}/>;
 }
-export {ItemFixture}
+function ItemFixture() {
+    React.useLayoutEffect(() => { document.documentElement.style.background = q.get("background") ?? "#202020"; document.body.style.background = q.get("background") ?? "#202020"; }, []);
+    const [events, setEvents] = React.useState(0), [actions, setActions] = React.useState(0), [tag, setTag] = React.useState(""), [width, setWidth] = React.useState(Number(q.get("width") ?? 270)), ref = React.useRef<any>(null), part = q.get("part"), rich = q.has("rich"), children = <>{rich ? <ItemHeader>Available worlds</ItemHeader> : null}<ItemMedia>{q.has("customMedia") ? <span data-testid="custom-media">Icon</span> : undefined}</ItemMedia><ItemContent><ItemTitle>{q.has("richTitle") ? <strong data-testid="rich-title">{title}</strong> : title}</ItemTitle><ItemDescription>{`${id}\n${description}`}</ItemDescription></ItemContent>{rich ? <><ItemActions><button onClick={() => setActions(n => n + 1)}>Item action</button></ItemActions><ItemFooter>World information</ItemFooter></> : null}</>;
+    const commonStyle = { position: "fixed", left: Number(q.get("x") ?? 16) * scale, top: Number(q.get("y") ?? 16) * scale, width: width * scale, height: Number(q.get("height") ?? 36) * scale } as React.CSSProperties;
+    const subject = part === "title" ? <ItemTitle id="subject" ref={ref} scale={scale} maxWidth={q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined} align={q.get("align") === "center" ? "center" : "left"} style={commonStyle} data-subject="true">{title}</ItemTitle> : part === "separator" ? <ItemSeparator id="subject" ref={ref} scale={scale} edge={state === "footer" ? "footer" : "header"} role={q.has("semantic") ? "separator" : "none"} style={commonStyle} data-subject="true"/> : part === "media" ? <ItemMedia id="subject" ref={ref} data-subject="true"/> : <Item render={!q.has("plain") ? q.has("plain") ? undefined : q.has("customAction") ? <CustomAction /> : q.has("button") ? <button type="button"/> : <a href="#world" onClick={event => {
+                if (q.has("childCancel"))
+                    event.preventDefault();
+            }}/> : undefined} id="subject" ref={ref} scale={scale} selected={q.get("selected") === "true"} style={{ ...commonStyle, height: rich ? undefined : commonStyle.height }} tabIndex={state === "focus" ? 0 : undefined} onClick={event => {
+            setEvents(n => n + 1);
+            if (q.has("cancel"))
+                event.preventDefault();
+        }} aria-disabled={q.has("disabled") ? true : undefined} data-subject="true">{!q.has("plain") ? children : q.has("plain") ? children : q.has("customAction") ? <CustomAction>{children}</CustomAction> : q.has("button") ? <button type="button">{children}</button> : <a href="#world" onClick={event => {
+                if (q.has("childCancel"))
+                    event.preventDefault();
+            }}>{children}</a>}</Item>;
+    return <>{subject}<button id="read-ref" style={{ position: "absolute", top: 1500 }} onClick={() => setTag(ref.current?.tagName ?? "")}>Read ref</button><button id="resize" style={{ position: "absolute", top: 1460 }} onClick={() => setWidth(340)}>Resize</button><output id="tag" style={{ position: "absolute", top: 1540 }}>{tag}</output><output id="events" style={{ position: "absolute", top: 1580 }}>{events}</output><output id="actions" style={{ position: "absolute", top: 1620 }}>{actions}</output><div style={{ display: "none" }}><ItemGroup><Item /><ItemSeparator /></ItemGroup></div></>;
+}
+export { ItemFixture };

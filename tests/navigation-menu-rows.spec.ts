@@ -21,8 +21,8 @@ test.describe.configure({mode:"parallel"})
 for(const c of manifest.cases)for(const inline of [false,true])test(`Navigation rows: ${c.name} inline:${inline}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
  const params=new URLSearchParams({component:"navigation-menu",panel:"1",mode:"rows",labels:JSON.stringify(c.labels),surface:c.element==="menu-panel"?"popup":"suggestions",width:String(c.width),height:String(c.height),scale:String(c.scale),x:String(c.x),y:String(c.y)});if(inline)params.set("noViewport","1")
- await page.goto(`/?${params}`);const subject=page.locator("#subject");await expect(subject).toHaveAttribute("data-mc-menu-ready","true")
- await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}#subject{visibility:visible}`});await page.mouse.move(0,0);await subject.focus()
+ await page.goto(`/?${params}`);const subject=page.locator("[data-subject]");await expect(subject).toHaveAttribute("data-mc-menu-ready","true")
+ await page.addStyleTag({content:`html,body{background:${c.background}}#root{visibility:hidden}[data-subject]{visibility:visible}`});await page.mouse.move(0,0);await subject.focus()
  if(c.selectedIndex>=0)await subject.getByRole("link").nth(c.selectedIndex).focus()
  if(c.state.endsWith("hover")){await subject.focus();await subject.getByRole("link").nth(c.targetIndex).hover()}
  await subject.evaluate((node,value)=>{node.scrollTop=value},(c.value??0)*12*c.scale)

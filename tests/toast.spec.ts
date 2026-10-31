@@ -8,7 +8,7 @@ function compare(expected:PNG,actual:PNG){
  for(let i=0;i<expected.data.length;i+=4){const mismatch=!actual.data.subarray(i,i+4).equals(expected.data.subarray(i,i+4));mismatchedPixels+=Number(mismatch);diff.data.set(mismatch?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
  return {mismatchedPixels,diff}
 }
-for(const component of ["toast","sonner"]){
+for(const component of ["sonner"]){
  test(`${component} pixel comparator catches a changed pixel`,()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
  test.describe(`${component} native SystemToast frames`,()=>{
   test.describe.configure({mode:"parallel"})
@@ -17,8 +17,8 @@ for(const component of ["toast","sonner"]){
    const q=new URLSearchParams({component,native:"1",label:c.label,width:String(c.width),height:String(c.height),scale:String(c.scale),background:c.background,x:String(c.x),y:String(c.y),count:String(c.selectedIndex??1)})
    if(c.text!=null)q.set("text",c.text)
    await page.goto(`/?${q}`);if(component==="sonner")await expect(page.locator("#created")).toHaveText(String(c.selectedIndex??1));await page.clock.fastForward(0)
-   await page.addStyleTag({content:'#root{visibility:hidden}#subject,[data-sonner-toast],.mc-sonner-ghost{visibility:visible}'})
-   const subject=page.locator("#subject");await expect(subject).toBeVisible();await expect(page.locator(component==="sonner"?'[data-sonner-toast]':'[data-slot="toast"]')).toHaveCount(c.selectedIndex??1)
+   await page.addStyleTag({content:'#root{visibility:hidden}[data-subject],[data-sonner-toast],.mc-sonner-ghost{visibility:visible}'})
+   const subject=page.locator("[data-subject]");await expect(subject).toBeVisible();await expect(page.locator(component==="sonner"?'[data-sonner-toast]':'[data-slot="toast"]')).toHaveCount(c.selectedIndex??1)
    await expect(page.locator('[data-mc-toast-ready]')).toHaveCount(c.selectedIndex??1);for(const canvas of await page.locator('[data-mc-toast-ready]').all())await expect(canvas).toHaveAttribute('data-mc-toast-ready','true')
    if(c.state==="exiting"){
     await page.clock.fastForward(600);await page.locator("#close").evaluate(node=>(node as HTMLElement).click());await page.clock.fastForward(component==="sonner"?16:0)

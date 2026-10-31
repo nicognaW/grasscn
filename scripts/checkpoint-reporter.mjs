@@ -7,8 +7,8 @@ export default class CheckpointReporter {
  onBegin(config,suite){
   if(!this.directory)return
   mkdirSync(this.directory,{recursive:true})
-  const tests=suite.allTests().map(test=>{const file=test.location.file;if(!this.sources.has(file))this.sources.set(file,this.hash(file));return {id:test.id,title:test.titlePath(),file:path.relative(process.cwd(),file),line:test.location.line,sourceSha256:this.sources.get(file)}})
-  writeFileSync(path.join(this.directory,"expected.json"),JSON.stringify({startedAt:new Date().toISOString(),workers:config.workers,tests},null,2)+"\n")
+  const tests=suite.allTests().map(test=>{const file=test.location.file;if(!this.sources.has(file))this.sources.set(file,this.hash(file));return {id:test.id,title:test.titlePath().slice(1),file:path.relative(process.cwd(),file),line:test.location.line,sourceSha256:this.sources.get(file)}})
+  writeFileSync(path.join(this.directory,"expected.json"),JSON.stringify({schemaVersion:2,startedAt:new Date().toISOString(),rootDir:config.rootDir,workers:config.workers,tests},null,2)+"\n")
   writeFileSync(path.join(this.directory,"results.jsonl"),"")
  }
  hash(file){return createHash("sha256").update(readFileSync(file)).digest("hex")}
@@ -18,7 +18,7 @@ export default class CheckpointReporter {
   this.counts[result.status]=(this.counts[result.status]??0)+1
   const attachment=result.attachments.find(item=>item.name==="grasscn-verification-artifacts")
   const verification=attachment?JSON.parse(attachment.body?.toString()??readFileSync(attachment.path,"utf8")):undefined
-  appendFileSync(path.join(this.directory,"results.jsonl"),JSON.stringify({id:test.id,file:path.relative(process.cwd(),test.location.file),title:test.titlePath(),status:result.status,expectedStatus:test.expectedStatus,retry:result.retry,durationMs:result.duration,sourceChanged:changed,verification,errors:result.errors.map(error=>error.message?.slice(0,1000))})+"\n")
+  appendFileSync(path.join(this.directory,"results.jsonl"),JSON.stringify({id:test.id,file:path.relative(process.cwd(),test.location.file),title:test.titlePath().slice(1),status:result.status,expectedStatus:test.expectedStatus,retry:result.retry,durationMs:result.duration,sourceChanged:changed,verification,errors:result.errors.map(error=>error.message?.slice(0,1000))})+"\n")
  }
  onEnd(result){if(this.directory)writeFileSync(path.join(this.directory,"summary.json"),JSON.stringify({status:result.status,finishedAt:new Date().toISOString(),counts:this.counts,changedSources:[...this.changed]},null,2)+"\n")}
 }

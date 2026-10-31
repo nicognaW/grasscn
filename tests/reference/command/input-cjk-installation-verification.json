@@ -1,3647 +1,636 @@
 {
-  "component": "command",
-  "manifest": "tests/reference/input-cjk/manifest.json",
-  "targetReport": "tests/reference/command/input-cjk-installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://127.0.0.1:5173/r/command.json --yes --overwrite",
+  "consumer": "Separate initialized shadcn consumer with independent node_modules",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "button.tsx",
-      "sourcePath": "registry/ui/button.tsx",
-      "installedPath": "src/components/ui/button.tsx",
-      "sourceSha256": "a886121239a46a1470f7568693cded46741f6a13798aa4d1ada885aba1e0a51b",
-      "installedSha256": "e0dc491172d421f4f713cadb39d10ef69016b3fe77124c245b1219be0bae5b1f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-font.ts",
-      "sourcePath": "registry/ui/minecraft-font.ts",
-      "installedPath": "src/components/ui/minecraft-font.ts",
-      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-button.css",
-      "sourcePath": "registry/ui/minecraft-button.css",
-      "installedPath": "src/components/ui/minecraft-button.css",
-      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-assets.css",
-      "sourcePath": "registry/ui/minecraft-assets.css",
-      "installedPath": "src/components/ui/minecraft-assets.css",
-      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
-      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-sound.ts",
-      "sourcePath": "registry/ui/minecraft-sound.ts",
-      "installedPath": "src/components/ui/minecraft-sound.ts",
-      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-sound-assets.ts",
-      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
-      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
-      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unicode-label.tsx",
-      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input-assets.ts",
-      "sourcePath": "registry/ui/minecraft-input-assets.ts",
-      "installedPath": "src/components/ui/minecraft-input-assets.ts",
-      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont.ts",
-      "sourcePath": "registry/ui/minecraft-unifont.ts",
-      "installedPath": "src/components/ui/minecraft-unifont.ts",
-      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-data.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
-      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
-      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
-      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.tsx",
-      "sourcePath": "registry/ui/minecraft-surface.tsx",
-      "installedPath": "src/components/ui/minecraft-surface.tsx",
-      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.css",
-      "sourcePath": "registry/ui/minecraft-surface.css",
-      "installedPath": "src/components/ui/minecraft-surface.css",
-      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.tsx",
-      "sourcePath": "registry/ui/minecraft-text.tsx",
-      "installedPath": "src/components/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.css",
-      "sourcePath": "registry/ui/minecraft-text.css",
-      "installedPath": "src/components/ui/minecraft-text.css",
-      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text-assets.css",
-      "sourcePath": "registry/ui/minecraft-text-assets.css",
-      "installedPath": "src/components/ui/minecraft-text-assets.css",
-      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "input.tsx",
-      "sourcePath": "registry/ui/input.tsx",
-      "installedPath": "src/components/ui/input.tsx",
-      "sourceSha256": "c0da823c6a9803c866bb676ab6ece282512a1f75748e7da8c94d7693d98df521",
-      "installedSha256": "770ee903d25b20f810e3e1db198379122c110772152ad62b8996f84569abf234",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input.css",
-      "sourcePath": "registry/ui/minecraft-input.css",
-      "installedPath": "src/components/ui/minecraft-input.css",
-      "sourceSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
-      "installedSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input-paint.ts",
-      "sourcePath": "registry/ui/minecraft-input-paint.ts",
-      "installedPath": "src/components/ui/minecraft-input-paint.ts",
-      "sourceSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
-      "installedSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-metrics.css",
-      "sourcePath": "registry/ui/minecraft-unifont-metrics.css",
-      "installedPath": "src/components/ui/minecraft-unifont-metrics.css",
-      "sourceSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
-      "installedSha256": "0f3b416997c0d0f9d8a10af97f9e9a7edceea3d3cf898e5bcea7661a014ce711",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-card.css",
-      "sourcePath": "registry/ui/minecraft-card.css",
-      "installedPath": "src/components/ui/minecraft-card.css",
-      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
-      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-card-sprite.ts",
-      "sourcePath": "registry/ui/minecraft-card-sprite.ts",
-      "installedPath": "src/components/ui/minecraft-card-sprite.ts",
-      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
-      "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-textarea-assets.ts",
-      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
-      "installedPath": "src/components/ui/minecraft-textarea-assets.ts",
-      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
-      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "separator.tsx",
-      "sourcePath": "registry/ui/separator.tsx",
-      "installedPath": "src/components/ui/separator.tsx",
-      "sourceSha256": "a89fbce9cdbc85b53e3beb2b31bfdccefcdfd8df51dd02e352c272806efa1441",
-      "installedSha256": "abe44a297f5a60ec409d66f022730dc8f00505e3c7815acdb027bd19ea374882",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-separator.css",
-      "sourcePath": "registry/ui/minecraft-separator.css",
-      "installedPath": "src/components/ui/minecraft-separator.css",
-      "sourceSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
-      "installedSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-separator-assets.ts",
-      "sourcePath": "registry/ui/minecraft-separator-assets.ts",
-      "installedPath": "src/components/ui/minecraft-separator-assets.ts",
-      "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
-      "installedSha256": "295c0a522e9adf21e9deafcaeda75b81d0ff4d28ae733d1c8d67e3c119d3347f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "dialog.tsx",
-      "sourcePath": "registry/ui/dialog.tsx",
-      "installedPath": "src/components/ui/dialog.tsx",
-      "sourceSha256": "b6f8f30a8e46529f6c5f95bf00bcbd75b36d8958ff6ec99a64afb8bf927a6962",
-      "installedSha256": "0c47ca894d496f4c3361b5a4714c8374bc0f99b4c3a9ea76bf5a282d9cf14fe7",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-dialog-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-dialog-atlas.ts",
-      "sourceSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
-      "installedSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog-backdrop.tsx",
-      "sourcePath": "registry/ui/minecraft-dialog-backdrop.tsx",
-      "installedPath": "src/components/ui/minecraft-dialog-backdrop.tsx",
-      "sourceSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
-      "installedSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-dialog-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-dialog-gpu.ts",
-      "sourceSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
-      "installedSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog-text.tsx",
-      "sourcePath": "registry/ui/minecraft-dialog-text.tsx",
-      "installedPath": "src/components/ui/minecraft-dialog-text.tsx",
-      "sourceSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
-      "installedSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog-unicode.tsx",
-      "sourcePath": "registry/ui/minecraft-dialog-unicode.tsx",
-      "installedPath": "src/components/ui/minecraft-dialog-unicode.tsx",
-      "sourceSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
-      "installedSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-dialog.css",
-      "sourcePath": "registry/ui/minecraft-dialog.css",
-      "installedPath": "src/components/ui/minecraft-dialog.css",
-      "sourceSha256": "898ad36d06b49552f63203bd3b493f5c0f45c2b6f02798b731728f785655058c",
-      "installedSha256": "898ad36d06b49552f63203bd3b493f5c0f45c2b6f02798b731728f785655058c",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-menu-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-menu-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-menu-atlas.ts",
-      "sourceSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
-      "installedSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-menu-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-menu-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-menu-gpu.ts",
-      "sourceSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
-      "installedSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-menu-text.tsx",
-      "sourcePath": "registry/ui/minecraft-menu-text.tsx",
-      "installedPath": "src/components/ui/minecraft-menu-text.tsx",
-      "sourceSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
-      "installedSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-menu-unicode.tsx",
-      "sourcePath": "registry/ui/minecraft-menu-unicode.tsx",
-      "installedPath": "src/components/ui/minecraft-menu-unicode.tsx",
-      "sourceSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
-      "installedSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-menu.css",
-      "sourcePath": "registry/ui/minecraft-menu.css",
-      "installedPath": "src/components/ui/minecraft-menu.css",
-      "sourceSha256": "1ddc593e478ab5e0e68e167f1f67e9ab93b4b76a151e7f8d4067606a793b46c9",
-      "installedSha256": "1ddc593e478ab5e0e68e167f1f67e9ab93b4b76a151e7f8d4067606a793b46c9",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "command.tsx",
-      "sourcePath": "registry/ui/command.tsx",
-      "installedPath": "src/components/ui/command.tsx",
-      "sourceSha256": "8a863af89c815bfc29b96b366d9374e1a0b5ecbc2986249ec0195faf1e02a13a",
-      "installedSha256": "ce383549bebdf43b3c76b95a4e3ef5622b9c6854632a12d30cfdcd5e7252235b",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "8b431645312a88de059051071d15872fad82410d7463a217d5e90e8421a45e16",
+      "installedSha256": "8b431645312a88de059051071d15872fad82410d7463a217d5e90e8421a45e16",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "dialog.tsx",
+      "sourceSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
+      "installedSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "input.tsx",
+      "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "installedSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-assets.css",
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-button.css",
+      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-card-sprite.ts",
+      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-card.css",
+      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-command.css",
-      "sourcePath": "registry/ui/minecraft-command.css",
-      "installedPath": "src/components/ui/minecraft-command.css",
-      "sourceSha256": "52dfb79faec2d5841d61f417f151dec41069cd1357177b8b3a259ecc94eb7d72",
-      "installedSha256": "52dfb79faec2d5841d61f417f151dec41069cd1357177b8b3a259ecc94eb7d72",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "c9adf1dc5d406fd45c7e23a802bf170d8286014f7114d580433f5f5511387d19",
+      "installedSha256": "c9adf1dc5d406fd45c7e23a802bf170d8286014f7114d580433f5f5511387d19",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-atlas.ts",
+      "sourceSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "installedSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-backdrop.tsx",
+      "sourceSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "installedSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-gpu.ts",
+      "sourceSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "installedSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-text.tsx",
+      "sourceSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "installedSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-unicode.tsx",
+      "sourceSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "installedSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog.css",
+      "sourceSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "installedSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input-paint.ts",
+      "sourceSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+      "installedSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input.css",
+      "sourceSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "installedSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-menu-atlas.ts",
+      "sourceSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
+      "installedSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-menu-gpu.ts",
+      "sourceSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "installedSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-menu-text.tsx",
+      "sourceSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
+      "installedSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-menu-unicode.tsx",
+      "sourceSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
+      "installedSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-menu.css",
+      "sourceSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "installedSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-separator-assets.ts",
+      "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
+      "installedSha256": "295c0a522e9adf21e9deafcaeda75b81d0ff4d28ae733d1c8d67e3c119d3347f",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-separator.css",
+      "sourceSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "installedSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.css",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-metrics.css",
+      "sourceSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
+      "installedSha256": "0f3b416997c0d0f9d8a10af97f9e9a7edceea3d3cf898e5bcea7661a014ce711",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "separator.tsx",
+      "sourceSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "installedSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-base-command.tsx",
+      "sourceSha256": "c82287e030bfbc7982799928c73be913ad10cd06f7f5c08fd96444604eeb224f",
+      "installedSha256": "c82287e030bfbc7982799928c73be913ad10cd06f7f5c08fd96444604eeb224f",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "input-cjk-c0-s1.png",
-      "decodedRgbaSha256": "4c55a8734be6779e7b2ad48e3ba57a8f3b37791afce1c5269acbd948c5688590",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c0-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c0-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-0f1b54d22d3c8e966ccb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=103&height=20&x=16&y=16&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c0-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c0-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4c55a8734be6779e7b2ad48e3ba57a8f3b37791afce1c5269acbd948c5688590",
-        "pngSha256": "66a5dd87dc09e51c243302a2cb1ce657273a895b5af9987ea08e136fd6a544d8",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4c55a8734be6779e7b2ad48e3ba57a8f3b37791afce1c5269acbd948c5688590"
     },
     {
       "name": "input-cjk-c1-s1.png",
-      "decodedRgbaSha256": "15947f147dab83eb9bca16ff61372026be43a745033c0d61ef40800d723a533a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c1-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c1-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-4a23d9edc20f7cc6930a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=103&height=20&x=16&y=48&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c1-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c1-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "15947f147dab83eb9bca16ff61372026be43a745033c0d61ef40800d723a533a",
-        "pngSha256": "50c6fb1e8a8d60a0a4ba82c6351dd42013ab5424be116effbda8e3ed35d8a481",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "15947f147dab83eb9bca16ff61372026be43a745033c0d61ef40800d723a533a"
     },
     {
       "name": "input-cjk-c2-s1.png",
-      "decodedRgbaSha256": "4b5006d9eb247f745cba76c8ce0cc99acaedd01d733daff644de7f886974ba95",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c2-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c2-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-5ba203a79249f8c060a9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=103&height=20&x=16&y=80&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c2-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c2-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4b5006d9eb247f745cba76c8ce0cc99acaedd01d733daff644de7f886974ba95",
-        "pngSha256": "cd19147ce773d79f8981cf36a53100e9a14ebf381eb70bec6a23a92826c5c557",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4b5006d9eb247f745cba76c8ce0cc99acaedd01d733daff644de7f886974ba95"
     },
     {
       "name": "input-cjk-c3-s1.png",
-      "decodedRgbaSha256": "6c9710993165a35c1994a7d62e7289074c969d909171e917037ad9d44c124d40",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c3-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c3-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-ba33b4f5d86eed8457cb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=200&height=20&x=16&y=112&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c3-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c3-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6c9710993165a35c1994a7d62e7289074c969d909171e917037ad9d44c124d40",
-        "pngSha256": "66d679499dda8a259478095c109dba0e2343fb4ddab44e197b2ddf410560ab9e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6c9710993165a35c1994a7d62e7289074c969d909171e917037ad9d44c124d40"
     },
     {
       "name": "input-cjk-c4-s1.png",
-      "decodedRgbaSha256": "ab819b1c1129d2e778776864fd37d2abdcd4ee93646d69891e9b7336afc4d19c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c4-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c4-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9ad785fd5098be98d4c6",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=200&height=20&x=16&y=144&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c4-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c4-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ab819b1c1129d2e778776864fd37d2abdcd4ee93646d69891e9b7336afc4d19c",
-        "pngSha256": "a57015f3fdf33c88006f462dde640e0222dae46733831823d7ed6c1acb17cc0d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ab819b1c1129d2e778776864fd37d2abdcd4ee93646d69891e9b7336afc4d19c"
     },
     {
       "name": "input-cjk-c5-s1.png",
-      "decodedRgbaSha256": "eef8e161b160cc5e480cb5f5506eda88180c0a41c69f7a63da95376934dbcb92",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c5-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c5-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-88b02edbf3f5750d2099",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=200&height=20&x=16&y=176&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c5-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c5-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "eef8e161b160cc5e480cb5f5506eda88180c0a41c69f7a63da95376934dbcb92",
-        "pngSha256": "835a49d4ed3b4ff4e55a7805caab34a710de081f30aa433b9f2fd3e96f6a87af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "eef8e161b160cc5e480cb5f5506eda88180c0a41c69f7a63da95376934dbcb92"
     },
     {
       "name": "input-cjk-c6-s1.png",
-      "decodedRgbaSha256": "46c9356179e49539a11c458edd9cd240e935b1361fd49948dcbd08d0f058cf39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c6-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c6-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-53d695521cc589b2b0b3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=103&height=20&x=16&y=208&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c6-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c6-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "46c9356179e49539a11c458edd9cd240e935b1361fd49948dcbd08d0f058cf39",
-        "pngSha256": "bc44b75f6200da389adedc657b39e0eb203b227f7b4bc04536dcb16942f21467",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "46c9356179e49539a11c458edd9cd240e935b1361fd49948dcbd08d0f058cf39"
     },
     {
       "name": "input-cjk-c7-s1.png",
-      "decodedRgbaSha256": "5c4edc0898e1f6d4579f79c9593ff3f2b1d51bafe202c18ba3fcd3565edb94c0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c7-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c7-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-cf28867a677c7d84db98",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=103&height=20&x=16&y=240&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c7-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c7-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5c4edc0898e1f6d4579f79c9593ff3f2b1d51bafe202c18ba3fcd3565edb94c0",
-        "pngSha256": "5d5982331997c1a0725439716e52fb51314bfad8d6711a2806cb8bada03c125c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5c4edc0898e1f6d4579f79c9593ff3f2b1d51bafe202c18ba3fcd3565edb94c0"
     },
     {
       "name": "input-cjk-c8-s1.png",
-      "decodedRgbaSha256": "fe7a5894355d88d9d5cdd24779e0857970f4ed49c840d2d754a9ba5806c74aaa",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c8-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c8-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-5a947ce63cfbb658bdfd",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=103&height=20&x=16&y=16&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c8-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c8-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "fe7a5894355d88d9d5cdd24779e0857970f4ed49c840d2d754a9ba5806c74aaa",
-        "pngSha256": "b7c88d378918db57a298be2549c1e8d77c386a6b145fa4a6e55c5320abc999b9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "fe7a5894355d88d9d5cdd24779e0857970f4ed49c840d2d754a9ba5806c74aaa"
     },
     {
       "name": "input-cjk-c9-s1.png",
-      "decodedRgbaSha256": "f7c993df36ea60a6d2daea7fafb8452d0f5779bcff38509a89814bf12daae7ac",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c9-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c9-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-61c204173ee929187af4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=200&height=20&x=16&y=48&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c9-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c9-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "f7c993df36ea60a6d2daea7fafb8452d0f5779bcff38509a89814bf12daae7ac",
-        "pngSha256": "6cf175dc623b45585b0196ce792b9f8e46e40d3cbda45d7424c487b9a02666ca",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "f7c993df36ea60a6d2daea7fafb8452d0f5779bcff38509a89814bf12daae7ac"
     },
     {
       "name": "input-cjk-c10-s1.png",
-      "decodedRgbaSha256": "252f3722d716878e2a51c0bda6b2e752ef85f6c4ea340e4b73374f05f0bd41e2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c10-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c10-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9e669614a04ae0652292",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=200&height=20&x=16&y=80&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c10-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c10-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "252f3722d716878e2a51c0bda6b2e752ef85f6c4ea340e4b73374f05f0bd41e2",
-        "pngSha256": "c24064258137874c7003e8cb5d5781ee8ade75538b072175a8889df903db126b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "252f3722d716878e2a51c0bda6b2e752ef85f6c4ea340e4b73374f05f0bd41e2"
     },
     {
       "name": "input-cjk-c11-s1.png",
-      "decodedRgbaSha256": "f3e8cdd4460f8053a8cb68e59e33b02e77d7ad6f41a6da1e849a8877b274c4cc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c11-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c11-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9c3cd3a8284eb422a8d2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=200&height=20&x=16&y=112&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c11-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c11-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "f3e8cdd4460f8053a8cb68e59e33b02e77d7ad6f41a6da1e849a8877b274c4cc",
-        "pngSha256": "8fd2026e01f7022ee345e0a0ab6ed1b5ba13e7338ae8b152e3c9176b30924418",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "f3e8cdd4460f8053a8cb68e59e33b02e77d7ad6f41a6da1e849a8877b274c4cc"
     },
     {
       "name": "input-cjk-c12-s1.png",
-      "decodedRgbaSha256": "05e79737c7ab6513cce715fb22573df010d13a43ec10643430e8e181259ce10d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c12-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c12-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-238670456fd519c92f51",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=103&height=20&x=16&y=144&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c12-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c12-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "05e79737c7ab6513cce715fb22573df010d13a43ec10643430e8e181259ce10d",
-        "pngSha256": "6b199883edd82db69982c582f148d94ff18dd183111ae9c89decf50c45e51e57",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "05e79737c7ab6513cce715fb22573df010d13a43ec10643430e8e181259ce10d"
     },
     {
       "name": "input-cjk-c13-s1.png",
-      "decodedRgbaSha256": "69fcbbc4d8a82ff288149fd1c5d1389e6526d7dd377d611f4932a933fd7a5d5e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c13-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c13-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-52660cda799b5513f475",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=103&height=20&x=16&y=176&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c13-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c13-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "69fcbbc4d8a82ff288149fd1c5d1389e6526d7dd377d611f4932a933fd7a5d5e",
-        "pngSha256": "f9f48fa42a77a5edeb04bf859b043d02acd698c0a69b632e5d71d962e7ca44e3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "69fcbbc4d8a82ff288149fd1c5d1389e6526d7dd377d611f4932a933fd7a5d5e"
     },
     {
       "name": "input-cjk-c14-s1.png",
-      "decodedRgbaSha256": "f553ca9157f1fc634dd0f994d5f2a645baeebafd2be4e8e74f10bda4441b2c31",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c14-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c14-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-d60a062b2f6236a41508",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=103&height=20&x=16&y=208&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c14-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c14-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "f553ca9157f1fc634dd0f994d5f2a645baeebafd2be4e8e74f10bda4441b2c31",
-        "pngSha256": "55b5ebcfca136a4d43ce120160f2e38493e7a4f2872b41753cf2554de18265fe",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "f553ca9157f1fc634dd0f994d5f2a645baeebafd2be4e8e74f10bda4441b2c31"
     },
     {
       "name": "input-cjk-c15-s1.png",
-      "decodedRgbaSha256": "d0132cfb858b23a80ece6f447c127eeb9855207958310dc6d96a5ab20bd220d1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c15-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c15-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-2ed0271aab56896c6d00",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=200&height=20&x=16&y=240&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c15-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c15-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d0132cfb858b23a80ece6f447c127eeb9855207958310dc6d96a5ab20bd220d1",
-        "pngSha256": "3bebc71a49c212c989c97ff91a78d41c5aff791450c21d4f64fc3e66a8807ad7",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d0132cfb858b23a80ece6f447c127eeb9855207958310dc6d96a5ab20bd220d1"
     },
     {
       "name": "input-cjk-c16-s1.png",
-      "decodedRgbaSha256": "41231da2df5dd236b2af2141d5ae08ef386205ae2c7f1538a761fc44e6679b10",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c16-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c16-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-920ff42bc46cfdfc0454",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=200&height=20&x=16&y=16&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c16-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c16-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "41231da2df5dd236b2af2141d5ae08ef386205ae2c7f1538a761fc44e6679b10",
-        "pngSha256": "b881246c4cc3458b27706117109331f16de92e1404be10f0ae3c4a0d82604381",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "41231da2df5dd236b2af2141d5ae08ef386205ae2c7f1538a761fc44e6679b10"
     },
     {
       "name": "input-cjk-c17-s1.png",
-      "decodedRgbaSha256": "b47554b7d1d983f92c570a616838412c5f2d5812ef2aba7956fcfc6b019c2524",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c17-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c17-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-12c63fd7d3e6bd8cd956",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=200&height=20&x=16&y=48&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c17-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c17-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b47554b7d1d983f92c570a616838412c5f2d5812ef2aba7956fcfc6b019c2524",
-        "pngSha256": "451349af650f0171d4b644a2f4c4d7f25f8773ad05b96c640cc9db18921ee343",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b47554b7d1d983f92c570a616838412c5f2d5812ef2aba7956fcfc6b019c2524"
     },
     {
       "name": "input-cjk-c18-s1.png",
-      "decodedRgbaSha256": "ee0818405923af81ea79bbd50133d8d8a2ee6c80632ff8d05ea4d3f6f68e17b8",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c18-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c18-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-4c80dc24561ee8f1d2e6",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=103&height=20&x=16&y=80&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c18-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c18-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ee0818405923af81ea79bbd50133d8d8a2ee6c80632ff8d05ea4d3f6f68e17b8",
-        "pngSha256": "608206b8cc4c1cda05eaf2b733fed013c273cad9e428cd3648f26a1918eeee15",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ee0818405923af81ea79bbd50133d8d8a2ee6c80632ff8d05ea4d3f6f68e17b8"
     },
     {
       "name": "input-cjk-c19-s1.png",
-      "decodedRgbaSha256": "6eb5f78c45bb0b48292ac261894e3c8bcf5c98cb23f5a7c40076ebeeac9a0fd9",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c19-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c19-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-4621b109c8f81795596a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=103&height=20&x=16&y=112&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c19-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c19-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6eb5f78c45bb0b48292ac261894e3c8bcf5c98cb23f5a7c40076ebeeac9a0fd9",
-        "pngSha256": "dbdc3e71b5405055a18342bb256daa9f3ad24fe7ee410e67a00e11462ea16505",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6eb5f78c45bb0b48292ac261894e3c8bcf5c98cb23f5a7c40076ebeeac9a0fd9"
     },
     {
       "name": "input-cjk-c20-s1.png",
-      "decodedRgbaSha256": "7e5da14f3c950d9eda309da2b88751bab2cfa2cc0990cf33621507238791fbcb",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c20-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c20-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-dcb04263cf3e0a6a725b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=103&height=20&x=16&y=144&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c20-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c20-s1.png",
-        "width": 103,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7e5da14f3c950d9eda309da2b88751bab2cfa2cc0990cf33621507238791fbcb",
-        "pngSha256": "1357050b4da44d0b8df7e7bf720dba08fe91b2721088856afa74a9afdd75445f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7e5da14f3c950d9eda309da2b88751bab2cfa2cc0990cf33621507238791fbcb"
     },
     {
       "name": "input-cjk-c21-s1.png",
-      "decodedRgbaSha256": "4a5aa996a617ae546290f0eac7908dc08f0596d03b278e267c4625fe8beae8d8",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c21-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c21-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-7fa7d52a38812a5d4673",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=normal&width=200&height=20&x=16&y=176&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c21-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c21-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4a5aa996a617ae546290f0eac7908dc08f0596d03b278e267c4625fe8beae8d8",
-        "pngSha256": "3cb086ea0215f341368b82da5fa09055cd422a5d00259cd06086a95cfd7e74a2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4a5aa996a617ae546290f0eac7908dc08f0596d03b278e267c4625fe8beae8d8"
     },
     {
       "name": "input-cjk-c22-s1.png",
-      "decodedRgbaSha256": "7410b3e7748e4326bc08a31ea6bcbd3f36ddc789aeead882e728067313fa9a4d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c22-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c22-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-bbc0e0568e6c4bc74d3b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=focus&width=200&height=20&x=16&y=208&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c22-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c22-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7410b3e7748e4326bc08a31ea6bcbd3f36ddc789aeead882e728067313fa9a4d",
-        "pngSha256": "3f24eda9fd4fdf333127e14f95cf4be2de383fdd99b10d2bf4ecb6d1e271e638",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7410b3e7748e4326bc08a31ea6bcbd3f36ddc789aeead882e728067313fa9a4d"
     },
     {
       "name": "input-cjk-c23-s1.png",
-      "decodedRgbaSha256": "8c55b72df52b84ae9e2df82ebcdd6eda169cf988ca4387c52a6a508306b6ac9c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c23-s1.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c23-s1.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "1",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9ba515e4a487330c063d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=1&state=disabled&width=200&height=20&x=16&y=240&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c23-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c23-s1.png",
-        "width": 200,
-        "height": 20,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "8c55b72df52b84ae9e2df82ebcdd6eda169cf988ca4387c52a6a508306b6ac9c",
-        "pngSha256": "c0d95d433f00b1cbfbdbba0f076c43f8e1a3d17178ec45de4d5d61a870625766",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "8c55b72df52b84ae9e2df82ebcdd6eda169cf988ca4387c52a6a508306b6ac9c"
     },
     {
       "name": "input-cjk-c0-s2.png",
-      "decodedRgbaSha256": "50acf163065d2a0b5dcdcfe3de45d9af8f7b49ad50cc67f342e4b3871f5147e9",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c0-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c0-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-f5c5ba34caa00e0d9571",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=103&height=20&x=16&y=16&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c0-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c0-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "50acf163065d2a0b5dcdcfe3de45d9af8f7b49ad50cc67f342e4b3871f5147e9",
-        "pngSha256": "e501b8e1a61c8b0d11db3cc87807e7f71caebb466725285f33b3c068fcd9d62a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "50acf163065d2a0b5dcdcfe3de45d9af8f7b49ad50cc67f342e4b3871f5147e9"
     },
     {
       "name": "input-cjk-c1-s2.png",
-      "decodedRgbaSha256": "177ea02a12f749375413d583ecc63b9ac51380eadde4d909acb022c148ae2077",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c1-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c1-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-261577d4aaca6937a146",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=103&height=20&x=16&y=48&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c1-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c1-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "177ea02a12f749375413d583ecc63b9ac51380eadde4d909acb022c148ae2077",
-        "pngSha256": "e902267577496cb50f8e4cee52e53add43bdc25e1da740621687f2546169c8b0",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "177ea02a12f749375413d583ecc63b9ac51380eadde4d909acb022c148ae2077"
     },
     {
       "name": "input-cjk-c2-s2.png",
-      "decodedRgbaSha256": "dec85a8866a6a295f89f97d52913d2460a5982bf242eb8a0be17e6d198bc1582",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c2-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c2-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-f6487f49605503e69b70",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=103&height=20&x=16&y=80&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c2-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c2-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dec85a8866a6a295f89f97d52913d2460a5982bf242eb8a0be17e6d198bc1582",
-        "pngSha256": "ba578aa45d76808021bf9136136f915736dd20e84f231c871b9fbe654f7089fe",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dec85a8866a6a295f89f97d52913d2460a5982bf242eb8a0be17e6d198bc1582"
     },
     {
       "name": "input-cjk-c3-s2.png",
-      "decodedRgbaSha256": "12822d380ed0d6baaee0b7de88d4211a2cd4636841e4d0e1c6e97e0574aef174",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c3-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c3-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-25e43b0afc7d793dbb3e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=200&height=20&x=16&y=112&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c3-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c3-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "12822d380ed0d6baaee0b7de88d4211a2cd4636841e4d0e1c6e97e0574aef174",
-        "pngSha256": "bdb6eb3bbacb6c71af0c59ab498d2aee81bb637594fd1c11cb196009f0bbb1b9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "12822d380ed0d6baaee0b7de88d4211a2cd4636841e4d0e1c6e97e0574aef174"
     },
     {
       "name": "input-cjk-c4-s2.png",
-      "decodedRgbaSha256": "73eff821525a4f5667cb196058e36cc32943a5df1c498d949a8ff4c1f091c82d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c4-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c4-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-bbbd60fcbd59099f5d10",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=200&height=20&x=16&y=144&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c4-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c4-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "73eff821525a4f5667cb196058e36cc32943a5df1c498d949a8ff4c1f091c82d",
-        "pngSha256": "9711ed1d9d627a26156bca3e3b954d51877638b68e93ba133c2f81bedf15abbf",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "73eff821525a4f5667cb196058e36cc32943a5df1c498d949a8ff4c1f091c82d"
     },
     {
       "name": "input-cjk-c5-s2.png",
-      "decodedRgbaSha256": "fa29ffb448cceafa7eab1e34d7f12e6d76a03bf02fdc37d8b45125c29ede910e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c5-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c5-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-774c94381dd5a086b05f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=200&height=20&x=16&y=176&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c5-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c5-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "fa29ffb448cceafa7eab1e34d7f12e6d76a03bf02fdc37d8b45125c29ede910e",
-        "pngSha256": "31744e34f896327dce5f8680826e64deb6ecbe11a33fda455fa0706c12effbdc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "fa29ffb448cceafa7eab1e34d7f12e6d76a03bf02fdc37d8b45125c29ede910e"
     },
     {
       "name": "input-cjk-c6-s2.png",
-      "decodedRgbaSha256": "b094068a0dc3180fcf4d5394683bf47d69a34a127ba5cdd314aadcd6e3a15ff8",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c6-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c6-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-78e9eba26353808c1ca7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=103&height=20&x=16&y=208&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c6-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c6-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b094068a0dc3180fcf4d5394683bf47d69a34a127ba5cdd314aadcd6e3a15ff8",
-        "pngSha256": "273df9cb2d8bd366da5fe9f43092812244e989762df0ec3c887f62c5dbd8517b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b094068a0dc3180fcf4d5394683bf47d69a34a127ba5cdd314aadcd6e3a15ff8"
     },
     {
       "name": "input-cjk-c7-s2.png",
-      "decodedRgbaSha256": "fd3046685b832fe71f4e02ccd5b2ecafedda37e3820bad11bc50089ac728ed4c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c7-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c7-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-8ba80a6fdb335e36fd92",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=103&height=20&x=16&y=240&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c7-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c7-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "fd3046685b832fe71f4e02ccd5b2ecafedda37e3820bad11bc50089ac728ed4c",
-        "pngSha256": "fbd402e58a83c743216b7982919541b827874e59aa18ac91bb3059de8babd12d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "fd3046685b832fe71f4e02ccd5b2ecafedda37e3820bad11bc50089ac728ed4c"
     },
     {
       "name": "input-cjk-c8-s2.png",
-      "decodedRgbaSha256": "bf4499090045acaf9a4f95de1e9e6ea17ffabd2748b86bea7dcf97e324e4ba49",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c8-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c8-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-849ce9725885fe7d0f6f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=103&height=20&x=16&y=16&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c8-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c8-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bf4499090045acaf9a4f95de1e9e6ea17ffabd2748b86bea7dcf97e324e4ba49",
-        "pngSha256": "726fccd96764fd9aff0a26799296c2edaa7d3a0711f7a9736d0a2c652ceeb9e5",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bf4499090045acaf9a4f95de1e9e6ea17ffabd2748b86bea7dcf97e324e4ba49"
     },
     {
       "name": "input-cjk-c9-s2.png",
-      "decodedRgbaSha256": "c0dea9f59fc6ce29248f93c17cb5188e4645e59c500a43acf832229a3ea6d281",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c9-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c9-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-93e878ac4fc67e234de2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=200&height=20&x=16&y=48&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c9-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c9-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dea9f59fc6ce29248f93c17cb5188e4645e59c500a43acf832229a3ea6d281",
-        "pngSha256": "4a361031bea02b582053cd803cbd3945ba5a65b2654679d01915dcd2985666e9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dea9f59fc6ce29248f93c17cb5188e4645e59c500a43acf832229a3ea6d281"
     },
     {
       "name": "input-cjk-c10-s2.png",
-      "decodedRgbaSha256": "a6cba95b202f4f0c2eaa9978fa62602ab21395b478259c7d123c6c0b9d7ea034",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c10-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c10-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-6ab53389b1a5c94cc3b1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=200&height=20&x=16&y=80&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c10-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c10-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6cba95b202f4f0c2eaa9978fa62602ab21395b478259c7d123c6c0b9d7ea034",
-        "pngSha256": "3a51a85c1d1b3afbf5c937b2a5e7a7ebf9dcbc501ded418736facac603b98202",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6cba95b202f4f0c2eaa9978fa62602ab21395b478259c7d123c6c0b9d7ea034"
     },
     {
       "name": "input-cjk-c11-s2.png",
-      "decodedRgbaSha256": "56f464d9e55aec46999be39703ae2912a661e3adc7c40809b82728bfe8148470",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c11-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c11-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-e60ab46666abc2ab5170",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=200&height=20&x=16&y=112&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c11-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c11-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "56f464d9e55aec46999be39703ae2912a661e3adc7c40809b82728bfe8148470",
-        "pngSha256": "f7ef4269c4edad7a4fc5cb7f0b54ed815625ac0a3962bd917a5790f905a35810",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "56f464d9e55aec46999be39703ae2912a661e3adc7c40809b82728bfe8148470"
     },
     {
       "name": "input-cjk-c12-s2.png",
-      "decodedRgbaSha256": "9bb364a1af0afd64968ba72fdda9a322f09b2abe1e9d9de3c0e398ee75f91632",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c12-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c12-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9dc98acd18a7266a12ae",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=103&height=20&x=16&y=144&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c12-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c12-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9bb364a1af0afd64968ba72fdda9a322f09b2abe1e9d9de3c0e398ee75f91632",
-        "pngSha256": "11be0fe07485d7a728b5d5e14f7000039ed00517a7021674d68bc58e01331c91",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9bb364a1af0afd64968ba72fdda9a322f09b2abe1e9d9de3c0e398ee75f91632"
     },
     {
       "name": "input-cjk-c13-s2.png",
-      "decodedRgbaSha256": "12d913ae0b45be8d4b0b935a14e1be242c3ac5b06ba5bb53363bfa176388a036",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c13-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c13-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-e0e174b0bce90ef13e04",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=103&height=20&x=16&y=176&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c13-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c13-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "12d913ae0b45be8d4b0b935a14e1be242c3ac5b06ba5bb53363bfa176388a036",
-        "pngSha256": "b6647f797423b27d8ab44c604e141371c68e10365d81f8344ac99ba510b2b96f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "12d913ae0b45be8d4b0b935a14e1be242c3ac5b06ba5bb53363bfa176388a036"
     },
     {
       "name": "input-cjk-c14-s2.png",
-      "decodedRgbaSha256": "c81597b9c791ff01b5f59069f8dfa84a3f87dd779bd12f8899b22c2539642f05",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c14-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c14-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-77844592efed829b9d17",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=103&height=20&x=16&y=208&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c14-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c14-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c81597b9c791ff01b5f59069f8dfa84a3f87dd779bd12f8899b22c2539642f05",
-        "pngSha256": "a91139fa5720841979c9dd8e44e7cafb137065e4c5ee4aa9b1907a83648fa167",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c81597b9c791ff01b5f59069f8dfa84a3f87dd779bd12f8899b22c2539642f05"
     },
     {
       "name": "input-cjk-c15-s2.png",
-      "decodedRgbaSha256": "595764a85e2d9d676f4e4ba41ce9a5519bea052ba794bd6d1e099789f4235174",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c15-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c15-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-14d8a326edbc87c49865",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=200&height=20&x=16&y=240&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c15-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c15-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "595764a85e2d9d676f4e4ba41ce9a5519bea052ba794bd6d1e099789f4235174",
-        "pngSha256": "36c41b2c30eea8e19b5a728f615a083a1caa9b02ce12fcf53048fdaa87f3af49",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "595764a85e2d9d676f4e4ba41ce9a5519bea052ba794bd6d1e099789f4235174"
     },
     {
       "name": "input-cjk-c16-s2.png",
-      "decodedRgbaSha256": "e8382ac26b030a933949616a0d7d22b7810fefe5380eb17d6b47d0c70f368813",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c16-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c16-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-29de3b5233ff9590430e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=200&height=20&x=16&y=16&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c16-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c16-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e8382ac26b030a933949616a0d7d22b7810fefe5380eb17d6b47d0c70f368813",
-        "pngSha256": "af14e9766264d8569b90f53636c508d91c6d1fbd0c4a6aba056d9fbc26dedc84",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e8382ac26b030a933949616a0d7d22b7810fefe5380eb17d6b47d0c70f368813"
     },
     {
       "name": "input-cjk-c17-s2.png",
-      "decodedRgbaSha256": "95ab68091bf864fc5ca6d5d2d3edebfe8e57c1cc7099a78d9aa1213b05d12e4e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c17-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c17-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-bfe17764e1d5584d8710",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=200&height=20&x=16&y=48&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c17-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c17-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "95ab68091bf864fc5ca6d5d2d3edebfe8e57c1cc7099a78d9aa1213b05d12e4e",
-        "pngSha256": "4b9ea7ac434b8199f6e990347f5fd5eeb474b5fc887d713f12ceb1db434bdf3d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "95ab68091bf864fc5ca6d5d2d3edebfe8e57c1cc7099a78d9aa1213b05d12e4e"
     },
     {
       "name": "input-cjk-c18-s2.png",
-      "decodedRgbaSha256": "42156ab7e82a60445e8350512f62079cd1ec1b20e357748637be602c2d72d4e6",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c18-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c18-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-38e8e762aa1ba0f27d1c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=103&height=20&x=16&y=80&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c18-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c18-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "42156ab7e82a60445e8350512f62079cd1ec1b20e357748637be602c2d72d4e6",
-        "pngSha256": "dede1abbaffd57a7db145219ebc560a93365c3b5902d762fb216f8ab61274141",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "42156ab7e82a60445e8350512f62079cd1ec1b20e357748637be602c2d72d4e6"
     },
     {
       "name": "input-cjk-c19-s2.png",
-      "decodedRgbaSha256": "3eff29553dd9ee766c192c0731d484afa841025519236e8e5abe11ac552ce198",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c19-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c19-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-46575352747685b546eb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=103&height=20&x=16&y=112&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c19-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c19-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3eff29553dd9ee766c192c0731d484afa841025519236e8e5abe11ac552ce198",
-        "pngSha256": "6d55ab17591354e779511de336616d2e3fce039577ebd301c6a885762cd7a20f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3eff29553dd9ee766c192c0731d484afa841025519236e8e5abe11ac552ce198"
     },
     {
       "name": "input-cjk-c20-s2.png",
-      "decodedRgbaSha256": "e3ff7e08498eac5d92faf8bf31c08a3e1b244c2ea45ce182a622d969d2782521",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c20-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c20-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-0569e3866d382901f4e4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=103&height=20&x=16&y=144&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c20-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c20-s2.png",
-        "width": 206,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e3ff7e08498eac5d92faf8bf31c08a3e1b244c2ea45ce182a622d969d2782521",
-        "pngSha256": "d3d84c03c2d9b39b8f7e0ed4fb5b0ff11b3c08a2dbcab49ce903cb00315b2860",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e3ff7e08498eac5d92faf8bf31c08a3e1b244c2ea45ce182a622d969d2782521"
     },
     {
       "name": "input-cjk-c21-s2.png",
-      "decodedRgbaSha256": "bce755a631551f4a64fd22a0a42fc00af06340e6cd1ca3bdefe12c3f72b79ebc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c21-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c21-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-88e44aed23654f48efe4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=normal&width=200&height=20&x=16&y=176&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c21-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c21-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bce755a631551f4a64fd22a0a42fc00af06340e6cd1ca3bdefe12c3f72b79ebc",
-        "pngSha256": "4d15aa0c5acf9add1764483edbab60cb19a325eca3380437c97639e39accf0d1",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bce755a631551f4a64fd22a0a42fc00af06340e6cd1ca3bdefe12c3f72b79ebc"
     },
     {
       "name": "input-cjk-c22-s2.png",
-      "decodedRgbaSha256": "c5576f1fc59ca04d73f27e13cf2523984199506d18b85e1120cfd91d161d7655",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c22-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c22-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-6c3d8bd5094d6b6f0c9c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=focus&width=200&height=20&x=16&y=208&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c22-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c22-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5576f1fc59ca04d73f27e13cf2523984199506d18b85e1120cfd91d161d7655",
-        "pngSha256": "d00f92131ce8c95f8aa9932ab9ae4ab76720d293548418fd80bd0a580e570ad5",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5576f1fc59ca04d73f27e13cf2523984199506d18b85e1120cfd91d161d7655"
     },
     {
       "name": "input-cjk-c23-s2.png",
-      "decodedRgbaSha256": "29ef31e92e336da7d344e773ec712440e77f569a29c61904ebf210e88ab33bfe",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c23-s2.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c23-s2.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "2",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-66224e6b6037efffc60f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=2&state=disabled&width=200&height=20&x=16&y=240&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c23-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c23-s2.png",
-        "width": 400,
-        "height": 40,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "29ef31e92e336da7d344e773ec712440e77f569a29c61904ebf210e88ab33bfe",
-        "pngSha256": "4fb26efb3a140125a2f7c65b0d2049c50ee3b8ad77c11d7ea6a88931bd47f0a1",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "29ef31e92e336da7d344e773ec712440e77f569a29c61904ebf210e88ab33bfe"
     },
     {
       "name": "input-cjk-c0-s3.png",
-      "decodedRgbaSha256": "e4ee96587c5599ff668efd0a589e30bf349cda74e758c3c360ed1ef7ec957c97",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c0-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c0-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-5f16195145330febec8f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=103&height=20&x=16&y=16&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c0-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c0-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e4ee96587c5599ff668efd0a589e30bf349cda74e758c3c360ed1ef7ec957c97",
-        "pngSha256": "2e2916d7f3a8914f08fe7aff8e9a3485b9b2a2255eca69a55980fc7d9b49fcdf",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e4ee96587c5599ff668efd0a589e30bf349cda74e758c3c360ed1ef7ec957c97"
     },
     {
       "name": "input-cjk-c1-s3.png",
-      "decodedRgbaSha256": "0109bf2552ca459ac72b8997697186a96a05bd3840508bf33e75e7e140eadbad",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c1-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c1-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-746ca51f1c50ad2bd8bf",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=103&height=20&x=16&y=48&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c1-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c1-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0109bf2552ca459ac72b8997697186a96a05bd3840508bf33e75e7e140eadbad",
-        "pngSha256": "beb6606ad49c0b4b5e39cda52c354c6478506b27fa00eb8167457599c849189f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0109bf2552ca459ac72b8997697186a96a05bd3840508bf33e75e7e140eadbad"
     },
     {
       "name": "input-cjk-c2-s3.png",
-      "decodedRgbaSha256": "40329cbcb55d174e1f3442b9554202a7fd95f566bb82b6d655bd21e7e8965c5d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c2-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c2-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-7a5d704db874a14db10e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=103&height=20&x=16&y=80&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c2-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c2-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "40329cbcb55d174e1f3442b9554202a7fd95f566bb82b6d655bd21e7e8965c5d",
-        "pngSha256": "69a6ad1ff6092ae9373ab6a4c3c58c5b73b53141c1545af1bc7bf5672de57699",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "40329cbcb55d174e1f3442b9554202a7fd95f566bb82b6d655bd21e7e8965c5d"
     },
     {
       "name": "input-cjk-c3-s3.png",
-      "decodedRgbaSha256": "219a0c5e85cc9538335c7960e881135e964639acd2adcc399d2e8e1fb30fff1c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c3-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c3-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-7a46c7db9c36969693de",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=200&height=20&x=16&y=112&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c3-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c3-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "219a0c5e85cc9538335c7960e881135e964639acd2adcc399d2e8e1fb30fff1c",
-        "pngSha256": "30ff6a5b7e3797853c20e5c6899effa486a2c7e5bcda87f297526014c49d00da",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "219a0c5e85cc9538335c7960e881135e964639acd2adcc399d2e8e1fb30fff1c"
     },
     {
       "name": "input-cjk-c4-s3.png",
-      "decodedRgbaSha256": "5b23ebb93e53537aacc2b78daf25331463c87938d2055e1a6c2e647ad59fafde",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c4-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c4-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-e8cccc7bf03704fd6c0d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=200&height=20&x=16&y=144&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c4-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c4-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b23ebb93e53537aacc2b78daf25331463c87938d2055e1a6c2e647ad59fafde",
-        "pngSha256": "fd4e25fc4ceceb74d2713a43ede022b645d05132d6f9471da0be970feb8b3b1c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b23ebb93e53537aacc2b78daf25331463c87938d2055e1a6c2e647ad59fafde"
     },
     {
       "name": "input-cjk-c5-s3.png",
-      "decodedRgbaSha256": "ce8bc83de35d17fbe2341e758dbe8d875241e15066445f296d06c6d925916398",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c5-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c5-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "你好，世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-3e3e9f9ee3b710011317",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=200&height=20&x=16&y=176&background=%23202020&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c5-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c5-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ce8bc83de35d17fbe2341e758dbe8d875241e15066445f296d06c6d925916398",
-        "pngSha256": "7e45008f55228c81fd21135d3333a1c419eb33f0b1640e7c7127f0386666b054",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ce8bc83de35d17fbe2341e758dbe8d875241e15066445f296d06c6d925916398"
     },
     {
       "name": "input-cjk-c6-s3.png",
-      "decodedRgbaSha256": "049fa784a656b93145fcffd8beb37e1b2bb9b3e6db5934683d375efd5d077cad",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c6-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c6-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-fc7c09dd795d06f2df35",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=103&height=20&x=16&y=208&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c6-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c6-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "049fa784a656b93145fcffd8beb37e1b2bb9b3e6db5934683d375efd5d077cad",
-        "pngSha256": "ce693d7cb1788c0cfd292307720e4ccb2ed3dee2df41125fc2b84f24206ea359",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "049fa784a656b93145fcffd8beb37e1b2bb9b3e6db5934683d375efd5d077cad"
     },
     {
       "name": "input-cjk-c7-s3.png",
-      "decodedRgbaSha256": "4168f3561854d5226f12ddb5dfb6ef4f359fe4d4da3dc229b59d85daae1971b0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c7-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c7-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-04ed4c2ecfbf779e0653",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=103&height=20&x=16&y=240&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c7-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c7-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4168f3561854d5226f12ddb5dfb6ef4f359fe4d4da3dc229b59d85daae1971b0",
-        "pngSha256": "d35bdfff994c33382b58447744dc53f64e8286e408bbb10467966510aabc747d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4168f3561854d5226f12ddb5dfb6ef4f359fe4d4da3dc229b59d85daae1971b0"
     },
     {
       "name": "input-cjk-c8-s3.png",
-      "decodedRgbaSha256": "cbc09b5e12fc8fcc1acff51ad2c3c7825192b64ba3c6e06f231c28022c3c0b25",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c8-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c8-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-f9b8aab0940577ec93e0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=103&height=20&x=16&y=16&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c8-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c8-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cbc09b5e12fc8fcc1acff51ad2c3c7825192b64ba3c6e06f231c28022c3c0b25",
-        "pngSha256": "0490b780fbab2de5fb260c0871fcb111d97f64454e699a486eae5d2fb7465aff",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cbc09b5e12fc8fcc1acff51ad2c3c7825192b64ba3c6e06f231c28022c3c0b25"
     },
     {
       "name": "input-cjk-c9-s3.png",
-      "decodedRgbaSha256": "b8bd4ff48c5e602a951fe203ead32416527b0cc1a9472d560c7c5ed6efbc4306",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c9-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c9-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-efe74f2f24ede2fe57f2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=200&height=20&x=16&y=48&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c9-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c9-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b8bd4ff48c5e602a951fe203ead32416527b0cc1a9472d560c7c5ed6efbc4306",
-        "pngSha256": "31c71dca6ccbaf856603841d86bee4c2562e9e42ea995c5f5e2f7125cb904bf5",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b8bd4ff48c5e602a951fe203ead32416527b0cc1a9472d560c7c5ed6efbc4306"
     },
     {
       "name": "input-cjk-c10-s3.png",
-      "decodedRgbaSha256": "acfd36b6eac6d85520e6248bd7bd458b8968b6f2d51d1676d12e59bfab9837c5",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c10-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c10-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-641bf4e30f9afe55a346",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=200&height=20&x=16&y=80&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c10-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c10-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "acfd36b6eac6d85520e6248bd7bd458b8968b6f2d51d1676d12e59bfab9837c5",
-        "pngSha256": "05289abe10bc6955b1b7b6e55c0c0592b7cf672b4bb61d26a8a2ea7bf669acbf",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "acfd36b6eac6d85520e6248bd7bd458b8968b6f2d51d1676d12e59bfab9837c5"
     },
     {
       "name": "input-cjk-c11-s3.png",
-      "decodedRgbaSha256": "4de3e076be5dde40829f95f8cdac0ce2db53742208eb484ce4c4b5fd5438c49f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c11-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c11-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "こんにちは世界",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-65e65adbb91af6712d66",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=200&height=20&x=16&y=112&background=%23202020&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%E4%B8%96%E7%95%8C&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c11-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c11-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4de3e076be5dde40829f95f8cdac0ce2db53742208eb484ce4c4b5fd5438c49f",
-        "pngSha256": "96a0b8a6db951e3b4ee80ca6610dafe58cd696f2586bc4e51c2f25afe074e317",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4de3e076be5dde40829f95f8cdac0ce2db53742208eb484ce4c4b5fd5438c49f"
     },
     {
       "name": "input-cjk-c12-s3.png",
-      "decodedRgbaSha256": "7a02a57339eac97877523629ec295055924a7567b5de6d665142ca57aadc1f33",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c12-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c12-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9489ba9d61302876bfe9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=103&height=20&x=16&y=144&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c12-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c12-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7a02a57339eac97877523629ec295055924a7567b5de6d665142ca57aadc1f33",
-        "pngSha256": "6eab72dd90dd1a33c293fdd3315897a376c96440475875cd2621ee18adc4e9d9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7a02a57339eac97877523629ec295055924a7567b5de6d665142ca57aadc1f33"
     },
     {
       "name": "input-cjk-c13-s3.png",
-      "decodedRgbaSha256": "594fa5b8a257c132f3434f6bb7438a8d1ab7131470f96f58a2f810b325456a10",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c13-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c13-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-9154686daadf5aaf6b6f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=103&height=20&x=16&y=176&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c13-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c13-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "594fa5b8a257c132f3434f6bb7438a8d1ab7131470f96f58a2f810b325456a10",
-        "pngSha256": "a687f243960307674b269d98de30c2fd5103a8070125c827722b97dcd969c25d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "594fa5b8a257c132f3434f6bb7438a8d1ab7131470f96f58a2f810b325456a10"
     },
     {
       "name": "input-cjk-c14-s3.png",
-      "decodedRgbaSha256": "a14afe6f27456c716c734048229e6ce41561d18bb60ceed116c231fe1a9a300f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c14-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c14-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-2a1da45585db9f90bd9a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=103&height=20&x=16&y=208&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c14-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c14-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a14afe6f27456c716c734048229e6ce41561d18bb60ceed116c231fe1a9a300f",
-        "pngSha256": "0552456958183ac9c6baf0f00f3fc223b6a6c9c5b626147e5a64f138ebe0d8cc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a14afe6f27456c716c734048229e6ce41561d18bb60ceed116c231fe1a9a300f"
     },
     {
       "name": "input-cjk-c15-s3.png",
-      "decodedRgbaSha256": "4d07657c9dc71a48ef0b4b05194b3e4df7b8c0d2db4334d53c0cb61c7c3e6ae7",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c15-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c15-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-821eda2a179c6dfffca3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=200&height=20&x=16&y=240&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c15-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c15-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4d07657c9dc71a48ef0b4b05194b3e4df7b8c0d2db4334d53c0cb61c7c3e6ae7",
-        "pngSha256": "509417ac49f9d238c8a96abc97af6d7315344f8c1ddaafbf74dcb676533d69a4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4d07657c9dc71a48ef0b4b05194b3e4df7b8c0d2db4334d53c0cb61c7c3e6ae7"
     },
     {
       "name": "input-cjk-c16-s3.png",
-      "decodedRgbaSha256": "b122805bc44ee3ca831bfc258ebb09c43a4eef49ce7de1a555945b1c89e933bc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c16-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c16-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "16",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-06725dcbab9d55c2632e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=200&height=20&x=16&y=16&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c16-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c16-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b122805bc44ee3ca831bfc258ebb09c43a4eef49ce7de1a555945b1c89e933bc",
-        "pngSha256": "154c2a1344da501928149e5b7782459197f00607ccbd5aaa2f9bc6d25aaa6583",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b122805bc44ee3ca831bfc258ebb09c43a4eef49ce7de1a555945b1c89e933bc"
     },
     {
       "name": "input-cjk-c17-s3.png",
-      "decodedRgbaSha256": "bcc7b63266a49f3ed81bbb22c58fab0e90fa37f4ebf0354a749fdb8fa6322136",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c17-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c17-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "48",
-          "background": "#202020",
-          "text": "안녕하세요 세계",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-f46652fe1ac4836fbe60",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=200&height=20&x=16&y=48&background=%23202020&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+%EC%84%B8%EA%B3%84&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c17-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c17-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bcc7b63266a49f3ed81bbb22c58fab0e90fa37f4ebf0354a749fdb8fa6322136",
-        "pngSha256": "712a502af1ac944fc5c09124aca48e1089f120cab3a2b633a28096cf673b1edf",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bcc7b63266a49f3ed81bbb22c58fab0e90fa37f4ebf0354a749fdb8fa6322136"
     },
     {
       "name": "input-cjk-c18-s3.png",
-      "decodedRgbaSha256": "b008fd08a2b073f38681ef755a9fcc399882e72fadfd90fc35b20984cae06ef0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c18-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c18-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "80",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-03198c278effa05cd840",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=103&height=20&x=16&y=80&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c18-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c18-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b008fd08a2b073f38681ef755a9fcc399882e72fadfd90fc35b20984cae06ef0",
-        "pngSha256": "52d20845ceac5bb26673c7449ab7a54e157ac8c2c258454023118d5440c7db9f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b008fd08a2b073f38681ef755a9fcc399882e72fadfd90fc35b20984cae06ef0"
     },
     {
       "name": "input-cjk-c19-s3.png",
-      "decodedRgbaSha256": "19231125178de5a326c53a50327a928cfa505db223da726f81f5c89230101646",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c19-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c19-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "112",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-cea3571a2e2fd3e56bff",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=103&height=20&x=16&y=112&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c19-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c19-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "19231125178de5a326c53a50327a928cfa505db223da726f81f5c89230101646",
-        "pngSha256": "a39e6a76934e29134d6c08abb7395f2408ed5b5bb723ea71c2d60a02fa5b2886",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "19231125178de5a326c53a50327a928cfa505db223da726f81f5c89230101646"
     },
     {
       "name": "input-cjk-c20-s3.png",
-      "decodedRgbaSha256": "cbf92bdb13d9c90451c390b4c7d9ea7dcb9b994763536ca08abf601dbb2693c3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c20-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c20-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "103",
-          "height": "20",
-          "x": "16",
-          "y": "144",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-b7ac37cee7cb1b9b1bf0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=103&height=20&x=16&y=144&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c20-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c20-s3.png",
-        "width": 309,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cbf92bdb13d9c90451c390b4c7d9ea7dcb9b994763536ca08abf601dbb2693c3",
-        "pngSha256": "f66273a881360e4be681191b88c472a65cbbafda69183e3f0200d502ad52e461",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cbf92bdb13d9c90451c390b4c7d9ea7dcb9b994763536ca08abf601dbb2693c3"
     },
     {
       "name": "input-cjk-c21-s3.png",
-      "decodedRgbaSha256": "4dd598137ed26453affd2e11f0f55c7de85d626c24e448fc5906911f9c231b86",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c21-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c21-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "normal",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "176",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-92136a2d581c562fd9c1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=normal&width=200&height=20&x=16&y=176&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c21-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c21-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4dd598137ed26453affd2e11f0f55c7de85d626c24e448fc5906911f9c231b86",
-        "pngSha256": "18206b77636e1d70ceb0bbd35aaaa3c64fbce058eb11ef8a60b81f42830131ee",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4dd598137ed26453affd2e11f0f55c7de85d626c24e448fc5906911f9c231b86"
     },
     {
       "name": "input-cjk-c22-s3.png",
-      "decodedRgbaSha256": "2c8ff53f623b7ceb8371216c4593aa3639f52897248250b46d670d6ea6f1e4bd",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c22-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c22-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "focus",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "208",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-f26d4cd8b70633c5fef9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=focus&width=200&height=20&x=16&y=208&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c22-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c22-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "2c8ff53f623b7ceb8371216c4593aa3639f52897248250b46d670d6ea6f1e4bd",
-        "pngSha256": "447c33c735bda18570a935c31b06fc459510406e08a3b015146e2abd2a3631ef",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "2c8ff53f623b7ceb8371216c4593aa3639f52897248250b46d670d6ea6f1e4bd"
     },
     {
       "name": "input-cjk-c23-s3.png",
-      "decodedRgbaSha256": "e335774157af81eadff9e5450a133f2d5dfc81004f9c49c01d57dd136a466b59",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "command",
-        "manifest": "tests/reference/input-cjk/manifest.json",
-        "case": "input-cjk-c23-s3.png",
-        "part": "input",
-        "alias": "base",
-        "variants": {
-          "component": "command",
-          "manifest": "tests/reference/input-cjk/manifest.json",
-          "case": "input-cjk-c23-s3.png",
-          "part": "input",
-          "alias": "base"
-        },
-        "query": {
-          "component": "command",
-          "native": "1",
-          "part": "input",
-          "scale": "3",
-          "state": "disabled",
-          "width": "200",
-          "height": "20",
-          "x": "16",
-          "y": "240",
-          "background": "#202020",
-          "text": "Hello 世界 123",
-          "placeholder": ""
-        },
-        "testId": "8ce7db8bfc8689122e77-92ab630780d242d4d3ef",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=command&native=1&part=input&scale=3&state=disabled&width=200&height=20&x=16&y=240&background=%23202020&text=Hello+%E4%B8%96%E7%95%8C+123&placeholder=",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\command-command-input-cjk-input-cjk-c23-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\input-cjk\\captures\\input-cjk-c23-s3.png",
-        "width": 600,
-        "height": 60,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e335774157af81eadff9e5450a133f2d5dfc81004f9c49c01d57dd136a466b59",
-        "pngSha256": "a9b13f3dc990645ed6f4eae01e06e6bdd8563f4546c5c2b19d2329c03b9c5258",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e335774157af81eadff9e5450a133f2d5dfc81004f9c49c01d57dd136a466b59"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.300Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
   "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "typecheck": {
+    "command": "tsc --noEmit",
+    "passed": true
+  },
+  "comparatorMutationDetected": true
 }

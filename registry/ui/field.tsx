@@ -1,199 +1,76 @@
-"use client"
-
-import { useMemo } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
-import { MinecraftProse, type MinecraftProseProps } from "./minecraft-prose"
-import "./minecraft-field.css"
-
-import { Label } from "./label"
-import { Separator } from "./separator"
-
+"use client";
+import { minecraftClasses as cn } from "./minecraft-render";
+import { useMemo } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { MinecraftProse, type MinecraftProseProps } from "./minecraft-prose";
+import "./minecraft-field.css";
+import { Label } from "./label";
+import { Separator } from "./separator";
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
-  return (
-    <fieldset
-      data-slot="field-set"
-      className={cn("mc-field-set", className)}
-      {...props}
-    />
-  )
+    return (<fieldset data-slot="field-set" className={cn("mc-field-set", className)} {...props}/>);
 }
-
-function FieldLegend({
-  className,
-  variant = "legend",
-  ...props
-}: MinecraftProseProps & { variant?: "legend" | "label" }) {
-  return (
-    <MinecraftProse as="legend"
-      data-slot="field-legend"
-      data-variant={variant}
-      className={cn("mc-field-legend", className)}
-      {...props}
-    />
-  )
+function FieldLegend({ className, variant = "legend", ...props }: MinecraftProseProps & {
+    variant?: "legend" | "label";
+}) {
+    return (<MinecraftProse as="legend" data-slot="field-legend" data-variant={variant} className={cn("mc-field-legend", className)} {...props}/>);
 }
-
 function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="field-group"
-      className={cn("mc-field-group", className)}
-      {...props}
-    />
-  )
+    return (<div data-slot="field-group" className={cn("mc-field-group", className)} {...props}/>);
 }
-
-const fieldVariants = cva("mc-field", {variants:{orientation:{vertical:"mc-field-vertical",horizontal:"mc-field-horizontal",responsive:"mc-field-responsive"}},defaultVariants:{orientation:"vertical"}})
-
-function Field({
-  className,
-  orientation = "vertical",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
-  return (
-    <div
-      role="group"
-      data-slot="field"
-      data-orientation={orientation}
-      className={cn(fieldVariants({orientation}), className)}
-      {...props}
-    />
-  )
+const fieldVariants = cva("mc-field", { variants: { orientation: { vertical: "mc-field-vertical", horizontal: "mc-field-horizontal", responsive: "mc-field-responsive" } }, defaultVariants: { orientation: "vertical" } });
+function Field({ className, orientation = "vertical", ...props }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+    return (<div role="group" data-slot="field" data-orientation={orientation} className={cn(fieldVariants({ orientation }), className)} {...props}/>);
 }
-
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="field-content"
-      className={cn("mc-field-content", className)}
-      {...props}
-    />
-  )
+    return (<div data-slot="field-content" className={cn("mc-field-content", className)} {...props}/>);
 }
-
-function FieldLabel({
-  className,
-  ...props
-}: React.ComponentProps<typeof Label>) {
-  return (
-    <Label
-      data-slot="field-label"
-      className={cn("mc-field-label", className)}
-      {...props}
-    />
-  )
+function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+    return (<Label data-slot="field-label" className={cn("mc-field-label", className)} {...props}/>);
 }
-
 function FieldTitle({ className, ...props }: MinecraftProseProps) {
-  return (
-    <MinecraftProse as="div"
-      data-slot="field-label"
-      className={cn("mc-field-label", className)}
-      {...props}
-    />
-  )
+    return (<MinecraftProse as="div" data-slot="field-label" className={cn("mc-field-label", className)} {...props}/>);
 }
-
 function FieldDescription({ className, ...props }: MinecraftProseProps) {
-  return (
-    <MinecraftProse as="p"
-      data-slot="field-description"
-      className={cn("mc-field-description", className)}
-      {...props}
-    />
-  )
+    return (<MinecraftProse as="p" data-slot="field-description" className={cn("mc-field-description", className)} {...props}/>);
 }
-
-function FieldSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  children?: React.ReactNode
+function FieldSeparator({ children, className, ...props }: React.ComponentProps<"div"> & {
+    children?: React.ReactNode;
 }) {
-  return (
-    <div
-      data-slot="field-separator"
-      data-content={!!children}
-      className={cn("mc-field-separator", className)}
-      {...props}
-    >
-      <Separator className="mc-field-divider" />
-      {children && (
-        <span
-          className="mc-field-divider-content"
-          data-slot="field-separator-content"
-        >
+    return (<div data-slot="field-separator" data-content={!!children} className={cn("mc-field-separator", className)} {...props}>
+      <Separator className="mc-field-divider"/>
+      {children && (<span className="mc-field-divider-content" data-slot="field-separator-content">
           <MinecraftProse>{children}</MinecraftProse>
-        </span>
-      )}
-    </div>
-  )
+        </span>)}
+    </div>);
 }
-
-function FieldError({
-  className,
-  children,
-  errors,
-  scale=2,
-  ...props
-}: React.ComponentProps<"div"> & {
-  scale?: 1|2|3
-  errors?: Array<{ message?: string } | undefined>
+function FieldError({ className, children, errors, scale = 2, ...props }: React.ComponentProps<"div"> & {
+    scale?: 1 | 2 | 3;
+    errors?: Array<{
+        message?: string;
+    } | undefined>;
 }) {
-  const content = useMemo(() => {
-    if (children) {
-      return children
+    const content = useMemo(() => {
+        if (children) {
+            return children;
+        }
+        if (!errors?.length) {
+            return null;
+        }
+        const uniqueErrors = [
+            ...new Map(errors.map((error) => [error?.message, error])).values(),
+        ];
+        if (uniqueErrors?.length == 1) {
+            return uniqueErrors[0]?.message;
+        }
+        return (<ul className="mc-field-error-list">
+        {uniqueErrors.map((error, index) => error?.message && <li key={index}><MinecraftProse scale={scale}>{error.message}</MinecraftProse></li>)}
+      </ul>);
+    }, [children, errors]);
+    if (!content) {
+        return null;
     }
-
-    if (!errors?.length) {
-      return null
-    }
-
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ]
-
-    if (uniqueErrors?.length == 1) {
-      return uniqueErrors[0]?.message
-    }
-
-    return (
-      <ul className="mc-field-error-list">
-        {uniqueErrors.map(
-          (error, index) =>
-            error?.message && <li key={index}><MinecraftProse scale={scale}>{error.message}</MinecraftProse></li>
-        )}
-      </ul>
-    )
-  }, [children, errors])
-
-  if (!content) {
-    return null
-  }
-
-  return (
-    <div
-      role="alert"
-      data-slot="field-error"
-      className={cn("mc-field-error", className)}
-      {...props}
-    >
+    return (<div role="alert" data-slot="field-error" className={cn("mc-field-error", className)} {...props}>
       {typeof content === "string" || typeof content === "number" ? <MinecraftProse scale={scale}>{content}</MinecraftProse> : content}
-    </div>
-  )
+    </div>);
 }
-
-export {
-  Field,
-  FieldLabel,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldContent,
-  FieldTitle,
-}
+export { Field, FieldLabel, FieldDescription, FieldError, FieldGroup, FieldLegend, FieldSeparator, FieldSet, FieldContent, FieldTitle, };

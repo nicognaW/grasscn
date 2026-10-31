@@ -63,7 +63,9 @@ For generated terrain or profile-driven visuals, read [dynamic data](references/
 
 ## 4. Implement the shadcn component
 
-Keep the public primitive's expected props, controlled/uncontrolled state where applicable, refs, event handling, composition, and accessible semantics. Use the component's upstream shadcn web primitive; Minecraft supplies the appearance. Keep exported styling helpers usable when the primitive normally exposes them, and distinguish their guarantees from the component's guarantees.
+Keep the public primitive's expected props, controlled/uncontrolled state where applicable, refs, event handling, composition, and accessible semantics. Start from shadcn's Base UI implementation; Minecraft supplies the appearance. Preserve its part structure, `render` composition, positioning, value shapes and change-event cancellation. Check the current upstream source rather than retaining Radix-shaped compatibility wrappers or changing tests to preserve Radix behavior. Keep exported styling helpers usable when the primitive normally exposes them, and distinguish their guarantees from the component's guarantees.
+
+Inspect the whole dependency graph: Radix must not return through another package. Upstream Command uses `cmdk`, which carries Radix; Grasscn instead composes Base UI Autocomplete. Retain upstream specialist libraries that do not carry Radix, such as Recharts, React Day Picker and Sonner. `scripts/check-primitives.mjs` checks source, registry metadata and the lockfile; its `--built` mode also checks generated registry payloads. These checks establish the primitive foundation, not pixel-perfect matches.
 
 Render using the recovered rules. Use integer coordinate arithmetic and nearest-neighbor sampling where the native renderer does. Browser text rasterization is a measured compatibility question, even with a matching font. When bitmap glyphs are needed, preserve their advances and shadows and retain real text for accessible names. Define the supported glyph set and fallback honestly.
 

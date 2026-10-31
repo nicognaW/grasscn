@@ -8,8 +8,6 @@
  .mc-system-toast>[data-slot="toast-action"],.mc-system-toast>[data-slot="toast-close"] {position:absolute;top:calc((var(--mc-toast-height) + 6) * var(--mc-scale,2) * 1px);}
  .mc-system-toast>[data-slot="toast-action"] {left:calc(18px * var(--mc-scale,2));}
  .mc-system-toast>[data-slot="toast-close"] {right:calc(12px * var(--mc-scale,2));}
- .mc-system-toast[data-swipe="move"] {transform:translate(var(--radix-toast-swipe-move-x),var(--radix-toast-swipe-move-y));}
- .mc-system-toast[data-swipe="cancel"] {transform:translate(0,0);}
  .mc-system-toast[data-mc-toast-rich="true"] {min-height:calc(32px * var(--mc-scale,2));padding:calc(7px * var(--mc-scale,2)) calc(12px * var(--mc-scale,2)) calc(12px * var(--mc-scale,2)) calc(18px * var(--mc-scale,2));}
  .mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-action"],.mc-system-toast[data-mc-toast-rich="true"]>[data-slot="toast-close"] {position:relative;top:auto;left:auto;right:auto;margin-top:calc(6px * var(--mc-scale,2));}
 }

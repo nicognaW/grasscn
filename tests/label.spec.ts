@@ -36,7 +36,7 @@ for (const c of manifest.cases) test(`Label native pixels: ${c.name}`, async ({ 
   const query = new URLSearchParams({ component: "label", width: String(c.width), height: String(c.height), scale: String(c.scale), label: c.label, state: c.state, alignment: c.alignment ?? "left" })
   if (c.wrapWidth != null) query.set("wrapWidth", String(c.wrapWidth))
   await page.goto(`/?${query}`)
-  await page.addStyleTag({ content: `html,body { background: ${c.background}; } #root > :not(#subject) { visibility: hidden; } #subject { position: fixed; left: ${c.x*c.scale}px; top: ${c.y*c.scale}px; }` })
+  await page.addStyleTag({ content: `html,body { background: ${c.background}; } #root > :not([data-subject]) { visibility: hidden; } [data-subject] { position: fixed; left: ${c.x*c.scale}px; top: ${c.y*c.scale}px; }` })
   await page.mouse.move(0, 0)
   const card = page.locator('[data-slot="label"]')
   await expect(card).toHaveAttribute("data-mc-label-layout-ready", "true")
@@ -54,7 +54,7 @@ for (const c of manifest.cases) test(`Label native pixels: ${c.name}`, async ({ 
 
 test("Label associates its input, forwards its ref and preserves events", async ({ page }) => {
   await page.goto("/?component=label&label=World%20name")
-  await page.locator("#subject").click()
+  await page.locator("[data-subject]").click()
   await expect(page.getByRole("textbox", { name: "World name" })).toBeFocused()
   await expect(page.getByLabel("Activations", { exact: true })).toHaveText("1")
   await page.locator("#read-ref").click()
@@ -62,7 +62,7 @@ test("Label associates its input, forwards its ref and preserves events", async 
 })
 test("Label keeps disabled association and rich children", async ({ page }) => {
   await page.goto("/?component=label&label=World%20name&state=disabled")
-  const bounds = await page.locator("#subject").boundingBox()
+  const bounds = await page.locator("[data-subject]").boundingBox()
   await page.mouse.click(bounds!.x + 5, bounds!.y + 5)
   await expect(page.getByRole("textbox", { name: "World name" })).toBeDisabled()
   await expect(page.getByRole("textbox", { name: "World name" })).not.toBeFocused()
@@ -76,6 +76,6 @@ test("Label preserves the complete accessible name across wrapped lines", async 
   const label = "Create a new world with friends"
   await page.goto(`/?component=label&wrapWidth=100&label=${encodeURIComponent(label)}`)
   await expect(page.getByRole("textbox", { name: label, exact: true })).toBeVisible()
-  await page.locator("#subject").click()
+  await page.locator("[data-subject]").click()
   await expect(page.getByRole("textbox", { name: label, exact: true })).toBeFocused()
 })

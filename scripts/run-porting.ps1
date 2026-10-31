@@ -1,5 +1,4 @@
-param([ValidateSet('regressions','pixels','all')][string]$Suite='regressions')
-$Workers=1
+param([ValidateSet('regressions','pixels','all')][string]$Suite='regressions',[ValidateRange(1,4)][int]$Workers=1,[ValidateRange(1,20)][int]$CpuPercent=5)
 $grasscnHeavyMutex=[Threading.Mutex]::new($false,'Local\GrasscnHeavyVerification');if(-not $grasscnHeavyMutex.WaitOne(0)){ $grasscnHeavyMutex.Dispose();throw 'Another guarded verification batch is active.' };try {
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
@@ -25,6 +24,7 @@ public static class GrasscnBudget {
  [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] static extern bool SetExtended(IntPtr job,int info,ref Extended value,uint size);
  [DllImport("kernel32.dll",EntryPoint="QueryInformationJobObject",SetLastError=true)] public static extern bool ReadCpu(IntPtr job,int info,out Cpu value,uint size,IntPtr length);
  [DllImport("kernel32.dll",SetLastError=true)] public static extern bool AssignProcessToJobObject(IntPtr job,IntPtr process);
+ [DllImport("kernel32.dll",SetLastError=true)] public static extern bool GetExitCodeProcess(IntPtr process,out uint exitCode);
  [DllImport("kernel32.dll",SetLastError=true)] public static extern bool TerminateJobObject(IntPtr job,uint code);
  [DllImport("kernel32.dll")] public static extern bool CloseHandle(IntPtr handle);
  [DllImport("kernel32.dll")] public static extern bool GlobalMemoryStatusEx([In,Out] Memory memory);
@@ -35,7 +35,7 @@ public static class GrasscnBudget {
   var job=CreateJobObject(IntPtr.Zero,null);if(job==IntPtr.Zero)throw new Exception("CreateJobObject "+Marshal.GetLastWin32Error());
   var cpu=new Cpu{Flags=5,Rate=cpuPercent*100};
   if(!SetCpu(job,15,ref cpu,(uint)Marshal.SizeOf(cpu)))throw new Exception("CPU cap "+Marshal.GetLastWin32Error());
-  var limits=new Extended();limits.Basic.Flags=0x200|0x2000;limits.JobMemory=(UIntPtr)memoryBytes;
+  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(4,Environment.ProcessorCount))-1);limits.JobMemory=(UIntPtr)memoryBytes;
   if(!SetExtended(job,9,ref limits,(uint)Marshal.SizeOf(limits)))throw new Exception("Memory cap "+Marshal.GetLastWin32Error());
   return job;
  }
@@ -48,7 +48,7 @@ if($baseline.Load -ge 86 -or $headroom -lt .4GB){throw 'Insufficient headroom to
 $memoryBudget=[uint64]$headroom
 
 $cpuBefore=[GrasscnBudget]::Times();Start-Sleep -Seconds 1;$cpuAfter=[GrasscnBudget]::Times();$cpuDelta=($cpuAfter[1]-$cpuBefore[1])+($cpuAfter[2]-$cpuBefore[2]);$baselineCpu=100.*(1-($cpuAfter[0]-$cpuBefore[0])/$cpuDelta)
-$cpuBudget=[uint32][Math]::Max(1,[Math]::Min(5,[Math]::Floor(70-$baselineCpu)))
+$cpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor(70-$baselineCpu)))
 
 if($baselineCpu -gt 45){throw 'CPU preflight exceeds the verification headroom budget.'}
 $job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget)
@@ -58,16 +58,20 @@ if($limits.Flags -ne 5 -or $limits.Rate -ne $cpuBudget*100){throw 'CPU cap readb
 
 
 $samples=Join-Path $runDirectory 'resource-samples.jsonl'
+$sampleWriter=[IO.StreamWriter]::new([IO.FileStream]::new($samples,[IO.FileMode]::Append,[IO.FileAccess]::Write,[IO.FileShare]::ReadWrite));$sampleWriter.AutoFlush=$true
 $result=Join-Path $runDirectory 'resource-summary.json'
 $node=(Get-Command node).Source
-$argsList=@('scripts/verify-porting.mjs',$Suite,('"'+$runDirectory+'"'))
+$budgetGate=Join-Path $runDirectory ('budget-ready-'+[Guid]::NewGuid().ToString('N')+'.json')
+$argsList=@('scripts/guarded-entry.mjs',('"'+$budgetGate+'"'),'scripts/verify-porting.mjs',$Suite,('"'+$runDirectory+'"'),$Workers.ToString())
 $env:NODE_OPTIONS='--max-old-space-size=1024'
 $env:GOMAXPROCS='1'
 $env:RAYON_NUM_THREADS='1'
 $process=$null;$reason='completed' ;$peakCpu=0.;$peakRam=0.;$count=0
 try {
  $process=Start-Process -FilePath $node -ArgumentList $argsList -WorkingDirectory $repo -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $runDirectory 'stdout.log') -RedirectStandardError (Join-Path $runDirectory 'stderr.log')
- if(-not [GrasscnBudget]::AssignProcessToJobObject($job,$process.Handle)){Stop-Process -Id $process.Id;throw 'Could not enforce job limits; stopped test launcher.'}
+ $processHandle=$process.Handle
+ if(-not [GrasscnBudget]::AssignProcessToJobObject($job,$processHandle)){Stop-Process -Id $process.Id;throw 'Could not enforce job limits; stopped test launcher.'}
+ [IO.File]::WriteAllText($budgetGate,([pscustomobject]@{pid=$process.Id;enforced=$true}|ConvertTo-Json -Compress),[Text.UTF8Encoding]::new($false))
  $process.PriorityClass='BelowNormal'
  [pscustomobject]@{RootPid=$process.Id;CpuHardCapPercent=$cpuBudget;MemoryCapGiB=[Math]::Round($memoryBudget/1GB,3);SystemCpuStopThresholdPercent=73;SystemRamStopThresholdPercent=88;Workers=$Workers;BaselineRamPercent=$baseline.Load;CpuReadback=$limits.Rate} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $runDirectory 'resource-policy.json')
  $before=[GrasscnBudget]::Times()
@@ -77,14 +81,16 @@ try {
   $cpu=if($total -gt 0){100.*($total-$idle)/$total}else{0.};$before=$after
   $ram=[GrasscnBudget]::Ram();$ramPercent=100.*($ram.Total-$ram.Available)/$ram.Total
   $peakCpu=[Math]::Max($peakCpu,$cpu);$peakRam=[Math]::Max($peakRam,$ramPercent);$count++
-  [pscustomobject]@{At=[DateTime]::UtcNow.ToString('o');SystemCpuPercent=[Math]::Round($cpu,2);SystemRamPercent=[Math]::Round($ramPercent,2)} | ConvertTo-Json -Compress | Add-Content -LiteralPath $samples
+  $sampleWriter.WriteLine(([pscustomobject]@{At=[DateTime]::UtcNow.ToString('o');SystemCpuPercent=[Math]::Round($cpu,2);SystemRamPercent=[Math]::Round($ramPercent,2)} | ConvertTo-Json -Compress))
   if($cpu -ge 73 -or $ramPercent -ge 88){$reason='system-headroom-guard';[GrasscnBudget]::TerminateJobObject($job,78)|Out-Null;break}
   $process.Refresh()
  }
  $process.WaitForExit()
- [pscustomobject]@{Reason=$reason;ExitCode=$process.ExitCode;Samples=$count;PeakSystemCpuPercent=[Math]::Round($peakCpu,2);PeakSystemRamPercent=[Math]::Round($peakRam,2);CpuHardCapPercent=$cpuBudget;MemoryCapGiB=[Math]::Round($memoryBudget/1GB,3)} | ConvertTo-Json | Set-Content -LiteralPath $result
+ $exitCode=[uint32]0
+ if(-not [GrasscnBudget]::GetExitCodeProcess($processHandle,[ref]$exitCode) -or $exitCode -eq 259){throw 'Could not read a terminal verification exit code'}
+ [pscustomobject]@{Reason=$reason;ExitCode=$exitCode;Samples=$count;PeakSystemCpuPercent=[Math]::Round($peakCpu,2);PeakSystemRamPercent=[Math]::Round($peakRam,2);CpuHardCapPercent=$cpuBudget;MemoryCapGiB=[Math]::Round($memoryBudget/1GB,3)} | ConvertTo-Json | Set-Content -LiteralPath $result
  Get-Content -LiteralPath $result
- if($reason -ne 'completed' -or $process.ExitCode -ne 0){exit 1}
-} finally {[GrasscnBudget]::CloseHandle($job)|Out-Null}
+ if($reason -ne 'completed' -or $exitCode -ne 0){exit 1}
+} finally {$sampleWriter.Dispose();[GrasscnBudget]::CloseHandle($job)|Out-Null}
 
 } finally {$grasscnHeavyMutex.ReleaseMutex();$grasscnHeavyMutex.Dispose()}

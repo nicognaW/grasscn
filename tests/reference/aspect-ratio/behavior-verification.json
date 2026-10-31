@@ -1,38 +1,58 @@
 {
   "kind": "unskinned-web-utility",
-  "nativeReferenceNotApplicable": true,
-  "scope": "Passed source-pinned browser behavior tests: nine box width/ratio combinations, unchanged child dimensions, ref and div attributes; explicit clipping without resampling. No native pixel fidelity is claimed. Only the final URL is recorded for each multi-step test; the complete assertion sequence is bound by the unchanged test source hash.",
-  "cases": [
-    {
-      "testId": "d1cbf3aea9b142c56588-f7ef0411bd878636f7b1",
-      "file": "tests\\structural-behavior.spec.ts",
-      "title": "Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9",
-      "sourceSha256": "cf6a1ad744a392d599ce04534785e37dfe99b938a1cc3db70e725b37123be0eb",
-      "renderedUrl": "http://127.0.0.1:5342/?component=aspect-ratio&ratio=1.7777777777777777&containerWidth=640",
-      "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-      "durationMs": 1882,
-      "passed": true
-    },
-    {
-      "testId": "d1cbf3aea9b142c56588-9415d8a4620a00cd2c09",
-      "file": "tests\\structural-behavior.spec.ts",
-      "title": "Aspect Ratio supports explicit clipping without resampling its content",
-      "sourceSha256": "cf6a1ad744a392d599ce04534785e37dfe99b938a1cc3db70e725b37123be0eb",
-      "renderedUrl": "http://127.0.0.1:5342/?component=aspect-ratio&ratio=16&containerWidth=160&clip=1",
-      "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-      "durationMs": 504,
-      "passed": true
-    }
-  ],
+  "nativeReferenceNotApplicable": "aspect-ratio is a web layout/context primitive with no visible Minecraft analogue or artwork. Native fidelity belongs to independently verified children.",
+  "scope": "Nine ratio/width combinations, child size preservation, clipping, refs and native props.",
   "files": [
     {
       "path": "aspect-ratio.tsx",
-      "sourcePath": "registry/ui/aspect-ratio.tsx",
-      "installedPath": "src/components/ui/aspect-ratio.tsx",
-      "sourceSha256": "f1c0fc820c1007322a55d298080160f1cf13093b2279ae5b518d3a053961a118",
-      "installedSha256": "9c6875c12cb39c426331b809a75a6ab7d7d2756b1b0aaccc53bb08764099fef8",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "4a40bfeb5e7ed9c29cfc97236921cddd08f13cb3a841eadd15700753ff701ef9"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83"
     }
-  ]
+  ],
+  "cases": [
+    {
+      "name": "ratio:1,width:160",
+      "passed": true
+    },
+    {
+      "name": "ratio:1,width:320",
+      "passed": true
+    },
+    {
+      "name": "ratio:1,width:640",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.3333333333333333,width:160",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.3333333333333333,width:320",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.3333333333333333,width:640",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.7777777777777777,width:160",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.7777777777777777,width:320",
+      "passed": true
+    },
+    {
+      "name": "ratio:1.7777777777777777,width:640",
+      "passed": true
+    },
+    {
+      "name": "clipping preserves40x40artwork in160x10box",
+      "passed": true
+    }
+  ],
+  "installationReport": "tests/reference/aspect-ratio/installation-verification.json"
 }

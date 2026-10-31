@@ -13,13 +13,13 @@
   "files": [
     {
       "path": "questionnaire.tsx",
-      "sourceSha256": "35bbd0cf1736dca9e8b7538f68eea86ce1315a94776fd0fe4c7582aae981a056",
-      "installedSha256": "853c54dc0d90db3ae680dd9542d122dd1448644ee4b35351fc62a3e4247587b9"
+      "sourceSha256": "6eaf5e66acc27a1903754a36df4b494fca6e2df90fbf65e0532fdeff747242ab",
+      "installedSha256": "6eaf5e66acc27a1903754a36df4b494fca6e2df90fbf65e0532fdeff747242ab"
     },
     {
       "path": "minecraft-prose.tsx",
-      "sourceSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3",
-      "installedSha256": "80a004bfb5ae51543f0f874fdffe1c51fe3b550230cce931ce463bba6325bfa3"
+      "sourceSha256": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c",
+      "installedSha256": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c"
     },
     {
       "path": "minecraft-font.ts",
@@ -28,8 +28,8 @@
     },
     {
       "path": "minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a"
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074"
     },
     {
       "path": "minecraft-text.css",
@@ -43,8 +43,8 @@
     },
     {
       "path": "minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee"
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995"
     },
     {
       "path": "minecraft-input-assets.ts",
@@ -58,8 +58,8 @@
     },
     {
       "path": "minecraft-unifont-gpu.ts",
-      "sourceSha256": "b38f4ad0b5447bc5c6abdc8a688818a0722b437305955fd909959a60f5d968d4",
-      "installedSha256": "b38f4ad0b5447bc5c6abdc8a688818a0722b437305955fd909959a60f5d968d4"
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6"
     },
     {
       "path": "minecraft-unifont-atlas.ts",
@@ -83,8 +83,8 @@
     },
     {
       "path": "button.tsx",
-      "sourceSha256": "a886121239a46a1470f7568693cded46741f6a13798aa4d1ada885aba1e0a51b",
-      "installedSha256": "e0dc491172d421f4f713cadb39d10ef69016b3fe77124c245b1219be0bae5b1f"
+      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756"
     },
     {
       "path": "minecraft-button.css",
@@ -108,8 +108,8 @@
     },
     {
       "path": "input.tsx",
-      "sourceSha256": "c0da823c6a9803c866bb676ab6ece282512a1f75748e7da8c94d7693d98df521",
-      "installedSha256": "770ee903d25b20f810e3e1db198379122c110772152ad62b8996f84569abf234"
+      "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "installedSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
     },
     {
       "path": "minecraft-input-paint.ts",
@@ -128,8 +128,8 @@
     },
     {
       "path": "minecraft-checkbox.css",
-      "sourceSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
-      "installedSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c"
+      "sourceSha256": "dd9ca05f5bf3f9aabf00c0c9120d2cb1ec52f362bdec3a4a5f3dee927f0de3d7",
+      "installedSha256": "dd9ca05f5bf3f9aabf00c0c9120d2cb1ec52f362bdec3a4a5f3dee927f0de3d7"
     },
     {
       "path": "minecraft-control-assets.css",
@@ -138,8 +138,13 @@
     },
     {
       "path": "minecraft-questionnaire.css",
-      "sourceSha256": "5add41cb63bcb2e2f2db0163191ddb6e19fed81d848b9d25e9f9f90bd9623b75",
-      "installedSha256": "5add41cb63bcb2e2f2db0163191ddb6e19fed81d848b9d25e9f9f90bd9623b75"
+      "sourceSha256": "2e788b82e48db055202530b8a7e2480468fa2bf823132a9a469845bd27159121",
+      "installedSha256": "2e788b82e48db055202530b8a7e2480468fa2bf823132a9a469845bd27159121"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -566,5 +571,5 @@
   ],
   "pageErrors": [],
   "negativeControlMismatchedPixels": 1,
-  "renderVerificationUrl": "http://127.0.0.1:5213/questionnaire.html"
+  "renderVerificationUrl": "http://127.0.0.1:5180/dynamic.html"
 }

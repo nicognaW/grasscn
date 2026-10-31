@@ -18,8 +18,8 @@ test.describe('Structural native constituents',()=>{
     await page.setViewportSize({width:1536,height:900})
     const params=new URLSearchParams({component,native:'1',part,orientation,label:c.label??'',scale:String(c.scale),width:String(c.width),height:String(c.height??20),state:c.state,edge:c.state,x:String(c.x??16),y:String(c.y??16),background:c.background??manifest.background??'#202020',alignment:c.alignment??'left'})
     if(c.wrapWidth!=null)params.set('wrapWidth',String(c.wrapWidth));if(active)params.set('active','1')
-    await page.goto(`/?${params}`);const subject=page.locator('#subject');await expect(subject).toBeVisible();await expect(subject).toHaveAttribute('data-slot',component==='pagination'?'pagination-link':part==='button'?'button':`button-group-${part}`)
-    await page.addStyleTag({content:"#root{visibility:hidden}#subject{visibility:visible}"});await page.mouse.move(0,0)
+    await page.goto(`/?${params}`);const subject=page.locator('[data-subject]');await expect(subject).toBeVisible();await expect(subject).toHaveAttribute('data-slot',component==='pagination'?'pagination-link':part==='button'?'button':`button-group-${part}`)
+    await page.addStyleTag({content:"#root{visibility:hidden}[data-subject]{visibility:visible}"});await page.mouse.move(0,0)
     if(!active&&part==='button'){if(c.state==='hover')await subject.hover();if(c.state==='focus'){await subject.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');await expect(subject).toBeFocused()}}
     if(part==='text')await expect(subject).toHaveAttribute('data-mc-label-layout-ready','true')
     for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute('data-mc-label-ready','true')

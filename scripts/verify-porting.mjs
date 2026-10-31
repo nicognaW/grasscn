@@ -3,9 +3,12 @@ import {createHash} from 'node:crypto'
 import {mkdir, readFile, writeFile, readdir, stat} from 'node:fs/promises'
 import path from 'node:path'
 import {fileURLToPath} from 'node:url'
+import {reusableBrowserTests,browserFilePattern} from './browser-checkpoints.mjs'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
-const [suite, output] = process.argv.slice(2)
+const [suite, output, workerArgument='1'] = process.argv.slice(2)
+const workers=Number(workerArgument)
+if(!Number.isInteger(workers)||workers<1||workers>4)throw Error('Use 1-4 browser workers')
 if (!['regressions', 'pixels', 'all'].includes(suite) || !output) throw Error('Use the guarded package commands')
 await mkdir(output, {recursive:true})
 const git = args => execFileSync('git', args, {cwd:root, encoding:'utf8', maxBuffer:16*1024*1024}).trim()
@@ -20,19 +23,26 @@ async function identity() {
   return {commit:git(['rev-parse','HEAD']), treeSha256:hash.digest('hex'), status:git(['status','--porcelain=v1'])}
 }
 const before = await identity()
-const environment = {node:process.version, platform:process.platform, arch:process.arch, webgl:process.env.GRASSCN_WEBGL_BACKEND??null, fixture:process.env.GRASSCN_FIXTURE_URL??null, preview:process.env.GRASSCN_PREVIEW_URL??null}
+const environment = {workers,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,locale:Intl.DateTimeFormat().resolvedOptions().locale,ci:process.env.CI??null,fixtureOverrides:Object.fromEntries(['GRASSCN_EXPANSION_URL','GRASSCN_EXPANSION_REFERENCE','GRASSCN_TREE_INSTALLED_URL','GRASSCN_INSTALLED_BUNDLE_SHA256'].map(key=>[key,process.env[key]??null])),node:process.version, platform:process.platform, arch:process.arch, webgl:process.env.GRASSCN_WEBGL_BACKEND??null, fixture:process.env.GRASSCN_FIXTURE_URL??null, preview:process.env.GRASSCN_PREVIEW_URL??null}
 for(const executable of ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe','C:/Program Files/Microsoft/Edge/Application/msedge.exe']) {
   try { const info=await stat(executable); environment.edge={executable,size:info.size,modified:info.mtimeMs}; break } catch(error) { if(error.code!=='ENOENT')throw error }
 }
+async function installedDependencyState() {
+  const file=path.join(root,'node_modules/.package-lock.json')
+  try { const [bytes,info]=await Promise.all([readFile(file),stat(file)]);return {sha256:createHash('sha256').update(bytes).digest('hex'),modified:info.mtimeMs} }
+  catch(error) { if(error.code!=='ENOENT')throw error;return null }
+}
+environment.installedDependencies=await installedDependencyState()
 const report = {suite, startedAt:new Date().toISOString(), source:before, environment, checks:[], passed:false,
   scope:'Local suite only. No fresh native launch or shadcn CLI installation; no merge performed.'}
 const receipt = path.join(output,'verification.json')
 const save = () => writeFile(receipt, JSON.stringify(report,null,2)+'\n')
+const cacheAllowed=environment.installedDependencies!==null&&!process.env.GRASSCN_EXPANSION_REFERENCE&&!process.env.GRASSCN_EXPANSION_URL&&!process.env.GRASSCN_TREE_INSTALLED_URL&&(!process.env.GRASSCN_FIXTURE_URL||/^http:\/\/127\.0\.0\.1:5174\/?$/.test(process.env.GRASSCN_FIXTURE_URL))
 const previous = []
 for(const folder of await readdir(path.dirname(output))) {
   try {
     const filename=path.join(path.dirname(output),folder,'verification.json'), candidate=JSON.parse(await readFile(filename,'utf8'))
-    if(candidate.source?.treeSha256===before.treeSha256 && candidate.source?.commit===before.commit && JSON.stringify(candidate.environment)===JSON.stringify(environment)) previous.push({filename,report:candidate})
+    if(cacheAllowed&&candidate.source?.treeSha256===before.treeSha256 && candidate.source?.commit===before.commit && JSON.stringify(candidate.environment)===JSON.stringify(environment)) previous.push({filename,report:candidate})
   } catch(error) { if(error.code!=='ENOENT' && !(error instanceof SyntaxError))throw error }
 }
 await save()
@@ -40,31 +50,41 @@ const regressionFiles = ['advancement-gestures','player-custom-skin','trading-sc
 const steps = [
   ['prepare-preview', ['scripts/prepare-preview.mjs']],
   ['types', ['node_modules/typescript/bin/tsc','--noEmit']],
+  ['primitives', ['scripts/check-primitives.mjs']],
+  ['registry-closure', ['scripts/check-registry-closure.mjs']],
   ['evidence', ['scripts/check-map.mjs']],
   ['porting-evidence', ['scripts/check-porting-evidence.mjs']],
-  ['evidence-negative-controls', ['--test','tests/porting-evidence.test.mjs']],
+  ['evidence-negative-controls', ['--test','tests/porting-evidence.test.mjs','tests/primitives.test.mjs','tests/browser-checkpoints.test.mjs','tests/guarded-entry.test.mjs']],
 ]
-if (suite === 'all') steps.push(['registry-build',['node_modules/shadcn/dist/index.js','build']], ['preview-build',['node_modules/vite/bin/vite.js','build','--config','vite.preview.config.ts']])
+if (suite === 'all') steps.push(['registry-build',['node_modules/shadcn/dist/index.js','build']], ['built-primitives',['scripts/check-primitives.mjs','--built']], ['preview-build',['node_modules/vite/bin/vite.js','build','--config','vite.preview.config.ts']])
 const browserFiles=suite==='all'?(await readdir(path.join(root,'tests'))).filter(name=>/\.spec\.(ts|js)$/.test(name)).sort():suite==='pixels'?['adventure.spec.ts','native-expansion.spec.ts']:regressionFiles
-for(const file of browserFiles) steps.push([`browser:${file}`, ['node_modules/@playwright/test/cli.js','test',file,'--workers=1',`--output=${path.join(output,'browser',file)}`]])
+for(const file of browserFiles) steps.push([`browser:${file}`, ['node_modules/@playwright/test/cli.js','test',browserFilePattern(file),`--workers=${workers}`,...(workers>1?['--fully-parallel']:[]),`--output=${path.join(output,'browser',file)}`]])
 try {
   for (const [name,args] of steps) {
-    // Only terminal successful steps are reusable; a killed child never records one.
-    const retained=previous.find(candidate=>candidate.report.suite===suite && candidate.report.checks?.some(check=>check.name===name && check.exitCode===0))
-    if(retained && name!=='prepare-preview') {
-      report.checks.push({name,exitCode:0,reusedFrom:retained.filename}); await save()
-      console.log(`Reused unchanged-source check: ${name}`); continue
-    }
+    // Rebuild generated outputs and rerun prechecks. Browser passes are reused
+    // individually below, with current test status and artifact hashes checked.
     console.log(`\nLocal verification: ${name}`)
+    let browserEnvironment={}
+    let reusedTests=[]
+    if(name.startsWith('browser:')){
+      const file=name.slice('browser:'.length),directory=path.join(output,'checkpoints',file)
+      reusedTests=await reusableBrowserTests(previous.filter(candidate=>candidate.report.suite===suite),file,root)
+      await mkdir(directory,{recursive:true})
+      if(reusedTests.length){const list=path.join(directory,'retained-tests.txt');await writeFile(list,reusedTests.map(test=>test.line).join('\n')+'\n');args.push('--test-list-invert',list,'--pass-with-no-tests');console.log(`Retaining ${reusedTests.length} successful tests from matching source/environment`)}
+      args.push('--reporter=list,./scripts/checkpoint-reporter.mjs')
+      browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR=directory
+    }
     const code = await new Promise((resolve,reject)=>{
-      const child = spawn(process.execPath,args,{cwd:root,stdio:'inherit',env:{...process.env,GOMAXPROCS:'1',RAYON_NUM_THREADS:'1'}})
+      const child = spawn(process.execPath,args,{cwd:root,stdio:'inherit',env:{...process.env,GOMAXPROCS:'1',RAYON_NUM_THREADS:'1',...browserEnvironment}})
       child.on('error',reject); child.on('exit',(code,signal)=>resolve(code??(signal?1:0)))
     })
-    report.checks.push({name,exitCode:code}); await save()
+    report.checks.push({name,exitCode:code,...(reusedTests.length?{reusedTests}: {})}); await save()
     if(code!==0) throw Error(`${name} failed (${code})`)
   }
   report.sourceAfter = await identity()
   if(report.sourceAfter.treeSha256 !== before.treeSha256 || report.sourceAfter.commit !== before.commit) throw Error('Source changed during verification; rerun against the final tree')
+  report.dependenciesAfter=await installedDependencyState()
+  if(JSON.stringify(report.dependenciesAfter)!==JSON.stringify(environment.installedDependencies))throw Error('Installed dependencies changed during verification; rerun against the final environment')
   report.passed = true
 } catch(error) {
   report.error = error.message; process.exitCode = 1

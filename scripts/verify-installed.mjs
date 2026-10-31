@@ -58,7 +58,7 @@ try {
       const params=new URLSearchParams({component:name,scale:String(c.scale),state:c.state,checked:String(c.checked),x:String(c.x),y:String(c.y),background:c.background})
       if(name === "toggle-group"){params.set("native","1");params.set("type",type)}
       await page.goto(`${url}?${params}`)
-      const subject=page.locator('#subject')
+      const subject=page.locator('[data-subject]')
       await expect(subject).toHaveAttribute('data-slot',name === "toggle-group" ? "toggle-group-item" : "toggle")
       await page.mouse.move(0,0)
       if(c.state.endsWith('hover')) await subject.hover()
@@ -75,6 +75,7 @@ try {
       continue
     }
     if (cases.length > 0 && cases.length % 64 === 0) {
+      console.log(`Installed ${name}: ${cases.length}/${manifest.cases.length} exact reference cases verified`)
       await page.close()
       if (cases.length % 256 === 0) {
         await browser.close()
@@ -104,11 +105,10 @@ try {
         }
         await page.addStyleTag({content:`html,body{background:${c.background}} #root{visibility:hidden}`})
         const subject=page.locator(`[data-slot="${name}-content"]`)
-        await expect(subject).toHaveAttribute("data-mc-menu-ready","true");await subject.evaluate(node=>node.focus())
+        await expect(subject).toHaveAttribute("data-mc-menu-ready","true");await page.mouse.move(0,0);await subject.evaluate(node=>node.focus())
         if(c.selectedIndex>=0)await subject.getByRole("menuitem").nth(c.selectedIndex).focus()
         if(c.state==="focus")await subject.locator('[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]').first().focus()
         if(c.state.endsWith("hover"))await subject.getByRole("menuitem").nth(c.targetIndex).hover()
-        else await page.mouse.move(0,0)
         await subject.evaluate((node,value)=>{node.scrollTop=value},(c.value??0)*12*c.scale)
         await expect(subject.locator('[data-mc-menu-text-ready="false"]')).toHaveCount(0)
         for(const line of await subject.locator('[data-mc-menu-unicode-ready]').all())await expect(line).toHaveAttribute("data-mc-menu-unicode-ready","true")
@@ -190,7 +190,7 @@ try {
     }
     if(name === "dialog" || name === "alert-dialog") {
       const confirmation=name==="alert-dialog"
-      const params=new URLSearchParams({component:name,scale:String(c.scale),label:c.label,labels:JSON.stringify(c.labels)})
+      const params=new URLSearchParams({component:name,native:"1",state:c.state,scale:String(c.scale),label:c.label,labels:JSON.stringify(c.labels)})
       if(confirmation){params.set("native","1");params.set("blur",String(c.value))}else params.set("wrapWidth",String(c.wrapWidth))
       if(c.text!=null)params.set("text",c.text)
       if(c.disabledIndex!=null)params.set("disabledIndex",String(c.disabledIndex))
@@ -262,7 +262,7 @@ try {
       if (c.labels) params.set("labels", JSON.stringify(c.labels))
     }
     await page.goto(`${url}?${params}`)
-    const subject = page.locator("#subject")
+    const subject = page.locator("[data-subject]")
     await subject.waitFor()
     if (c.element === "progress" && c.overlay !== "progress") await expect(subject.locator("canvas")).toHaveAttribute("data-mc-progress-painted", "true")
     if (c.element === "scroll-area") {
@@ -273,6 +273,7 @@ try {
     if (c.element === "label") {
       await subject.evaluate((node, position) => { Object.assign(node.style, { position: "fixed", left: `${position.x}px`, top: `${position.y}px` }) }, { x: c.x * c.scale, y: c.y * c.scale })
       await page.addStyleTag({ content: `html,body { background: ${c.background}; }` })
+      await page.addStyleTag({content:"#root > :not([data-subject]) { visibility: hidden; }"})
       await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true")
       for (const line of await subject.locator('[data-mc-label-ready]').all()) await expect(line).toHaveAttribute("data-mc-label-ready", "true")
     }
@@ -281,12 +282,13 @@ try {
       await expect(subject).toHaveAttribute("data-mc-bitmap", "true")
     }
     if (name === "button" && manifest.effectiveAssets) {
+      await page.addStyleTag({content:"#root > :not([data-subject]) { visibility: hidden; }"})
       await subject.evaluate((node, position) => { Object.assign(node.style, { position: "fixed", left: `${position.x}px`, top: `${position.y}px` }) }, { x: c.x * c.scale, y: c.y * c.scale })
       await expect(subject.locator('[data-mc-label-ready]')).toHaveAttribute("data-mc-label-ready", "true")
     }
     if (["card", "separator", "scroll-area", "progress"].includes(c.element)) await page.addStyleTag({ content: `html,body { background: ${c.background}; }` })
     if (c.element === "tooltip") {
-      await page.addStyleTag({ content: `html,body { background: ${c.background}; } #root { visibility: hidden; } [data-radix-popper-content-wrapper] { transform: translate(${c.x * c.scale}px, ${c.y * c.scale}px) !important; }` })
+      await page.addStyleTag({ content: `html,body { background: ${c.background}; } #root { visibility: hidden; } [data-mc-positioner] { transform: translate(${c.x * c.scale}px, ${c.y * c.scale}px) !important; }` })
       await expect(subject.locator("canvas")).toHaveAttribute("data-mc-tooltip-painted", "true")
       await expect(subject.locator("canvas")).toHaveAttribute("data-mc-backdrop", [1, 3, 5].map(start => parseInt(c.background.slice(start, start + 2), 16)).join(","))
       await expect(subject.locator("canvas")).toHaveAttribute("data-mc-location", [c.x * c.scale, c.y * c.scale].join(","))
@@ -295,7 +297,7 @@ try {
     await page.mouse.move(0, 0)
     if (name === "tabs") {
       await subject.evaluate((node, p) => Object.assign(node.style, { position: "fixed", left: p.x+"px", top: p.y+"px", width: p.width+"px", visibility: "visible" }), { x: c.x*c.scale, y: c.y*c.scale, width: c.width*c.scale })
-      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden} #subject{visibility:visible}` })
+      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}` })
       if (c.element === "tabs-trigger") {
         await expect(subject).toHaveAttribute("data-mc-tab-ready", "true")
         if (c.state.endsWith("hover")) await subject.hover()
@@ -311,18 +313,20 @@ try {
     }
     if (name === "select") {
       await subject.evaluate((node, p) => Object.assign(node.style, { position: "fixed", left: p.x+"px", top: p.y+"px", width: p.width+"px", height: p.height+"px" }), { x:c.x*c.scale, y:c.y*c.scale, width:c.width*c.scale, height:c.height*c.scale })
-      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden;${c.element === "select-list" ? "opacity:0;" : ""}} #subject{visibility:visible} [data-radix-popper-content-wrapper]{left:0!important;top:0!important;transform:none!important}` })
+      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden;${c.element === "select-list" ? "opacity:0;" : ""}} [data-subject]{visibility:visible} [data-mc-positioner]{left:0!important;top:0!important;transform:none!important}` })
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true")
       if (c.state === "focus") await subject.focus()
       else await page.evaluate(() => document.activeElement?.blur())
       if (c.state.endsWith("hover")) await (c.element === "select-list" ? subject.getByRole("option").nth(c.targetIndex ?? 0) : subject).hover()
+      // Retain the captured list focus state after Base UI hover navigation.
+      if (c.element === "select-list" && c.state !== "focus") await page.evaluate(() => document.activeElement?.blur())
       if (c.element === "select-list") await subject.locator('[data-slot="select-viewport"]').evaluate((node, value) => { node.scrollTop = value }, (c.value ?? 0)*c.scale)
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
       for (const label of await subject.locator('[data-mc-label-ready]').all()) await expect(label).toHaveAttribute("data-mc-label-ready", "true")
     }
     if (["radio-group", "switch"].includes(name)) {
       await subject.evaluate((node, c) => Object.assign(node.style, { position: "fixed", left: `${c.x*c.scale}px`, top: `${c.y*c.scale}px` }), c)
-      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden} #subject{visibility:visible}` })
+      await page.addStyleTag({ content: `html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}` })
       if (c.state === "focus") await subject.focus()
       if (c.state === "hover") await subject.hover()
     }

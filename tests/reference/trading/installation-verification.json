@@ -1,17 +1,14 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/trading.json --yes --overwrite",
-  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/trading.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "button.tsx",
       "sourcePath": "registry/ui/button.tsx",
-      "sourceSha256": "a886121239a46a1470f7568693cded46741f6a13798aa4d1ada885aba1e0a51b",
-      "installedSha256": "e0dc491172d421f4f713cadb39d10ef69016b3fe77124c245b1219be0bae5b1f"
+      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756"
     },
     {
       "path": "minecraft-font.ts",
@@ -46,8 +43,8 @@
     {
       "path": "minecraft-unicode-label.tsx",
       "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee"
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995"
     },
     {
       "path": "minecraft-input-assets.ts",
@@ -82,14 +79,14 @@
     {
       "path": "tooltip.tsx",
       "sourcePath": "registry/ui/tooltip.tsx",
-      "sourceSha256": "115fc12f36ffe71c608cb22f465729226a89e87bd92de0fdbf6c541b13832bde",
-      "installedSha256": "115fc12f36ffe71c608cb22f465729226a89e87bd92de0fdbf6c541b13832bde"
+      "sourceSha256": "b3f2c7a863d163845493171588a3614aa8a9e1867e41fb55b5e2b03a1e1db256",
+      "installedSha256": "b3f2c7a863d163845493171588a3614aa8a9e1867e41fb55b5e2b03a1e1db256"
     },
     {
       "path": "minecraft-tooltip.css",
       "sourcePath": "registry/ui/minecraft-tooltip.css",
-      "sourceSha256": "b069c970b3f421e798298f571f66ae4e5063fa0dd5b361300719ea84d198b2cd",
-      "installedSha256": "b069c970b3f421e798298f571f66ae4e5063fa0dd5b361300719ea84d198b2cd"
+      "sourceSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4",
+      "installedSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4"
     },
     {
       "path": "minecraft-tooltip-layout.ts",
@@ -106,8 +103,8 @@
     {
       "path": "minecraft-tooltip-paint.tsx",
       "sourcePath": "registry/ui/minecraft-tooltip-paint.tsx",
-      "sourceSha256": "a21c7694d6f4d48b003be79c0c99b4e77ae7fe9e2d018d53a6efb8b4779d9fb6",
-      "installedSha256": "a21c7694d6f4d48b003be79c0c99b4e77ae7fe9e2d018d53a6efb8b4779d9fb6"
+      "sourceSha256": "1506c46197022204a537c18b0fa686fc6348b9774f48707dfae8d1694f675e63",
+      "installedSha256": "1506c46197022204a537c18b0fa686fc6348b9774f48707dfae8d1694f675e63"
     },
     {
       "path": "minecraft-tooltip-gpu.ts",
@@ -118,8 +115,8 @@
     {
       "path": "minecraft-surface.tsx",
       "sourcePath": "registry/ui/minecraft-surface.tsx",
-      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe"
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a"
     },
     {
       "path": "minecraft-surface.css",
@@ -130,8 +127,8 @@
     {
       "path": "minecraft-text.tsx",
       "sourcePath": "registry/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a"
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074"
     },
     {
       "path": "minecraft-text.css",
@@ -154,14 +151,14 @@
     {
       "path": "minecraft-adventure-image.tsx",
       "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
-      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
-      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+      "sourceSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d",
+      "installedSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d"
     },
     {
       "path": "minecraft-document-text.tsx",
       "sourcePath": "registry/ui/minecraft-document-text.tsx",
-      "sourceSha256": "fd6742972656ad32702986c9942ef660e4c42a910139f1e825cb457bf81cf8de",
-      "installedSha256": "fd6742972656ad32702986c9942ef660e4c42a910139f1e825cb457bf81cf8de"
+      "sourceSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd",
+      "installedSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd"
     },
     {
       "path": "minecraft-trading-sound-assets.ts",
@@ -184,8 +181,14 @@
     {
       "path": "trading.tsx",
       "sourcePath": "registry/ui/trading.tsx",
-      "sourceSha256": "40e721868533c8916a57a15ac74e71473615619bee3bddfc08090826c97652fb",
-      "installedSha256": "1373f4b0087d4cf2cc77d3792431b819e9ee22627c1fdbc9679b25ef90f8d464"
+      "sourceSha256": "bb442c3cc668acfab182fffef40b3c2fd0706cb11442578d1ecc53ff4a53fa0b",
+      "installedSha256": "bb442c3cc668acfab182fffef40b3c2fd0706cb11442578d1ecc53ff4a53fa0b"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -236,18 +239,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Offer selection, result callback and disabled out-of-stock result",
-      "Native scrollbar wheel, keyboard and pointer control",
-      "Original villager yes sound bytes, browser decoding, gain1/pitch1",
-      "Exactly one result sound per trade, separate native row button click gain.25",
-      "No playback while muted or on disabled/hover interactions",
-      "One-pixel comparator negative control"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "limitations": [
-    "Nine declared MerchantScreen cases: nine diamond offers, selected offers 1/4/9, stock/out-of-stock and scroll offsets 0/2, empty player inventory, scales1-3, Edge/DPR1. Other item icons/counts, second inputs, discounts, merchant level/XP and raster environments are outside this exact pixel matrix."
-  ]
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

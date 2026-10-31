@@ -3,7 +3,7 @@ const fixture=process.env.GRASSCN_EXPANSION_URL??'http://127.0.0.1:5174/adventur
 const url=(sample:object)=>`${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`
 test('map terrain coordinates and keyboard markers',async({page})=>{
  await page.goto(url({element:'map',state:'terrain',checked:true,value:0,x:24,y:16}))
- const subject=page.locator('#subject'),bounds=(await subject.boundingBox())!
+ const subject=page.locator('[data-subject]'),bounds=(await subject.boundingBox())!
  await subject.click({position:{x:20,y:40}});await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.mapClick)).toBe(JSON.stringify({x:10,y:20}))
  const home=page.getByRole('button',{name:'Home',exact:true});await home.focus();await home.press('Enter');await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.marker)).toBe('home')
  await page.getByRole('button',{name:'Village',exact:true}).click();await expect.poll(()=>page.evaluate(()=>document.documentElement.dataset.marker)).toBe('village')

@@ -1,1568 +1,341 @@
 {
-  "component": "chart",
-  "manifest": "tests/reference/chart-fps/manifest.json",
-  "targetReport": "tests/reference/chart/chart-fps-installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://127.0.0.1:5173/r/chart.json --yes --overwrite",
+  "consumer": "fresh initialized Vite/React consumer with independent node_modules",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
-      "path": "minecraft-font.ts",
-      "sourcePath": "registry/ui/minecraft-font.ts",
-      "installedPath": "src/components/ui/minecraft-font.ts",
-      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-assets.css",
-      "sourcePath": "registry/ui/minecraft-assets.css",
-      "installedPath": "src/components/ui/minecraft-assets.css",
-      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
-      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unicode-label.tsx",
-      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input-assets.ts",
-      "sourcePath": "registry/ui/minecraft-input-assets.ts",
-      "installedPath": "src/components/ui/minecraft-input-assets.ts",
-      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont.ts",
-      "sourcePath": "registry/ui/minecraft-unifont.ts",
-      "installedPath": "src/components/ui/minecraft-unifont.ts",
-      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-data.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
-      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
-      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
-      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.tsx",
-      "sourcePath": "registry/ui/minecraft-surface.tsx",
-      "installedPath": "src/components/ui/minecraft-surface.tsx",
-      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.css",
-      "sourcePath": "registry/ui/minecraft-surface.css",
-      "installedPath": "src/components/ui/minecraft-surface.css",
-      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.tsx",
-      "sourcePath": "registry/ui/minecraft-text.tsx",
-      "installedPath": "src/components/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.css",
-      "sourcePath": "registry/ui/minecraft-text.css",
-      "installedPath": "src/components/ui/minecraft-text.css",
-      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text-assets.css",
-      "sourcePath": "registry/ui/minecraft-text-assets.css",
-      "installedPath": "src/components/ui/minecraft-text-assets.css",
-      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-tooltip-sprites.ts",
-      "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
-      "installedPath": "src/components/ui/minecraft-tooltip-sprites.ts",
-      "sourceSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
-      "installedSha256": "7d78b75a9e71103af7e4b70d8db6ee1d43ec520b1b361c10410fa5785096c39f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-label.css",
-      "sourcePath": "registry/ui/minecraft-label.css",
-      "installedPath": "src/components/ui/minecraft-label.css",
-      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-label-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-label-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-label-atlas.ts",
-      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
-      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "chart.tsx",
+      "sourceSha256": "fc42396ec99ae10997ddc10a7057c31eb11d6abbda829a23e4d353fd62fc1c69",
+      "installedSha256": "fc42396ec99ae10997ddc10a7057c31eb11d6abbda829a23e4d353fd62fc1c69",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-disclosure-text.tsx",
-      "sourcePath": "registry/ui/minecraft-disclosure-text.tsx",
-      "installedPath": "src/components/ui/minecraft-disclosure-text.tsx",
-      "sourceSha256": "a05ced822af99f27653173cb1204af9988e7cd93c0a0f916790b9a67217627ba",
-      "installedSha256": "e3287d58ef09c643da21db600faed7954a3ebf3f9b556cd60325a566b0cd70a5",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+      "installedSha256": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-color-unicode.tsx",
-      "sourcePath": "registry/ui/minecraft-color-unicode.tsx",
-      "installedPath": "src/components/ui/minecraft-color-unicode.tsx",
-      "sourceSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
-      "installedSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-color-unicode-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-color-unicode-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-color-unicode-gpu.ts",
-      "sourceSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
-      "installedSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "minecraft-text.tsx",
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "chart.tsx",
-      "sourcePath": "registry/ui/chart.tsx",
-      "installedPath": "src/components/ui/chart.tsx",
-      "sourceSha256": "1ab52f389da8a55bc141e32a596a219eff347bbef5bb5a2fa994d64be3bae742",
-      "installedSha256": "1ab52f389da8a55bc141e32a596a219eff347bbef5bb5a2fa994d64be3bae742",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-label-atlas.ts",
+      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-label.css",
+      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.css",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-tooltip-sprites.ts",
+      "sourceSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
+      "installedSha256": "7d78b75a9e71103af7e4b70d8db6ee1d43ec520b1b361c10410fa5785096c39f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-chart.css",
-      "sourcePath": "registry/ui/minecraft-chart.css",
-      "installedPath": "src/components/ui/minecraft-chart.css",
       "sourceSha256": "827a6e03519383a5bebb60dd4fea64539e1a0ef29802041002f86dc2c93521fe",
       "installedSha256": "827a6e03519383a5bebb60dd4fea64539e1a0ef29802041002f86dc2c93521fe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-assets.css",
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-chart-native.tsx",
-      "sourcePath": "registry/ui/minecraft-chart-native.tsx",
-      "installedPath": "src/components/ui/minecraft-chart-native.tsx",
-      "sourceSha256": "93789970b604047a3664bdfe0ee93b90db71899b574f6efaaf34a9324035e75f",
-      "installedSha256": "93789970b604047a3664bdfe0ee93b90db71899b574f6efaaf34a9324035e75f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "998742cf4f19567472f7d4dafad02edf614a73282df4d896092aa7e8e223491f",
+      "installedSha256": "998742cf4f19567472f7d4dafad02edf614a73282df4d896092aa7e8e223491f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-color-unicode.tsx",
+      "sourceSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+      "installedSha256": "96501edffa75e6a34b9fc0923abc3fd58b49582d44a38644b3d382aed71163ab",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-color-unicode-gpu.ts",
+      "sourceSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+      "installedSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "chart-fps-c0-s1.png",
-      "decodedRgbaSha256": "c7268967d0f75ee7ff83d267fa701c718c0e638acf123e1473c7c51382f4ed0a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c0-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c0-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c0-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":0,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"f546046f4c464d70742b7f7f15b94a25bb642bf6d6fca3c1cd1d2e2744fcc504\"}"
-        },
-        "testId": "81f4a870e2845c490fed-28b041adf1c5b2f35dcf",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c0-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22f546046f4c464d70742b7f7f15b94a25bb642bf6d6fca3c1cd1d2e2744fcc504%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c0-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c0-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c7268967d0f75ee7ff83d267fa701c718c0e638acf123e1473c7c51382f4ed0a",
-        "pngSha256": "0f240e842a57006b4bd7fc6752e249b94d8c6108c70375b61344f6d3b1919ed9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c7268967d0f75ee7ff83d267fa701c718c0e638acf123e1473c7c51382f4ed0a"
     },
     {
       "name": "chart-fps-c1-s1.png",
-      "decodedRgbaSha256": "87b8f76219d113c0baa5ca11c72dcd1566af8062ab6440bff4386b434ad60906",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c1-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c1-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c1-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":0,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"383be90a466a19c33f460243ac0316577fd2d22b53154e6dc07ab08e6677738c\"}"
-        },
-        "testId": "81f4a870e2845c490fed-510924c9f18946e68e0d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c1-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22383be90a466a19c33f460243ac0316577fd2d22b53154e6dc07ab08e6677738c%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c1-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c1-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "87b8f76219d113c0baa5ca11c72dcd1566af8062ab6440bff4386b434ad60906",
-        "pngSha256": "3aa40274dcb861b4d5634226dcfe7c17dccdb427335c87d9971ace32541205a9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "87b8f76219d113c0baa5ca11c72dcd1566af8062ab6440bff4386b434ad60906"
     },
     {
       "name": "chart-fps-c2-s1.png",
-      "decodedRgbaSha256": "550a92d063243cb832c5abf4dd5500ea39928c25eb3a291e64eec4b0ddf5f2a5",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c2-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c2-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c2-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":1,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"9a8d121ead00517686b154462285641ba24761e1aee02f11da3cc16ee495e001\"}"
-        },
-        "testId": "81f4a870e2845c490fed-068d56e45c51dfac1d85",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c2-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%229a8d121ead00517686b154462285641ba24761e1aee02f11da3cc16ee495e001%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c2-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c2-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "550a92d063243cb832c5abf4dd5500ea39928c25eb3a291e64eec4b0ddf5f2a5",
-        "pngSha256": "f65177969a78d1ec67b1632889f7ab8e895892536e681b168981d5f18904840b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "550a92d063243cb832c5abf4dd5500ea39928c25eb3a291e64eec4b0ddf5f2a5"
     },
     {
       "name": "chart-fps-c3-s1.png",
-      "decodedRgbaSha256": "d5d35b0dc99f44458f6878b2e1bd7efd52347da979882ff4c1641fb1a94c09ff",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c3-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c3-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c3-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":1,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"8df2033585a76da20333eca54b61a35e1e507a87798d3534b380a37d3819509e\"}"
-        },
-        "testId": "81f4a870e2845c490fed-61cc7612c712ca609eba",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c3-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%228df2033585a76da20333eca54b61a35e1e507a87798d3534b380a37d3819509e%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c3-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c3-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d5d35b0dc99f44458f6878b2e1bd7efd52347da979882ff4c1641fb1a94c09ff",
-        "pngSha256": "895c3d29676377fc5641400650ceae9516ac96153af9ebb21f2e0798b8051047",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d5d35b0dc99f44458f6878b2e1bd7efd52347da979882ff4c1641fb1a94c09ff"
     },
     {
       "name": "chart-fps-c4-s1.png",
-      "decodedRgbaSha256": "516dd11caf9b2ded62ada10a6f84e63e028012c991a9224495fae77e8ea9a5df",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c4-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c4-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c4-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":2,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"117cc845a179495d7a12a3fc2d77686dcf25f9fcecbbbe35011f5ffd8e245d85\"}"
-        },
-        "testId": "81f4a870e2845c490fed-e4024474284b2bd3c8ad",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c4-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22117cc845a179495d7a12a3fc2d77686dcf25f9fcecbbbe35011f5ffd8e245d85%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c4-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c4-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "516dd11caf9b2ded62ada10a6f84e63e028012c991a9224495fae77e8ea9a5df",
-        "pngSha256": "69229c6edd0a95a8a71bc22fdd2d255032a031d28d6b1b44dfe9968ac52a1812",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "516dd11caf9b2ded62ada10a6f84e63e028012c991a9224495fae77e8ea9a5df"
     },
     {
       "name": "chart-fps-c5-s1.png",
-      "decodedRgbaSha256": "e5c7be465450782a4189a4c70c1ac52094502e8277d3d4d78c66ae8c6a544f34",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c5-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c5-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c5-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":2,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"6ddaf57797cdd89f98c5e5f9cfaca8553da1046f59bd1b4a39c36b53eab180c6\"}"
-        },
-        "testId": "81f4a870e2845c490fed-89cb24e9083aa5f77433",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c5-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%226ddaf57797cdd89f98c5e5f9cfaca8553da1046f59bd1b4a39c36b53eab180c6%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c5-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c5-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e5c7be465450782a4189a4c70c1ac52094502e8277d3d4d78c66ae8c6a544f34",
-        "pngSha256": "ac4b08c2798f72dc49bb394913b54ee7647fc1537ac1f92b88a44e92f4625628",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e5c7be465450782a4189a4c70c1ac52094502e8277d3d4d78c66ae8c6a544f34"
     },
     {
       "name": "chart-fps-c6-s1.png",
-      "decodedRgbaSha256": "28d37ebf85e48fd30693a6f6958af88f9d5617bd04b10d287377e3236cfb0ea5",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c6-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c6-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c6-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":3,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"c646194f7241e9bb700c28d092ad80f9968fc444781d116d9e98449899384a6d\"}"
-        },
-        "testId": "81f4a870e2845c490fed-2a673db3c10112b92076",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c6-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22c646194f7241e9bb700c28d092ad80f9968fc444781d116d9e98449899384a6d%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c6-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c6-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "28d37ebf85e48fd30693a6f6958af88f9d5617bd04b10d287377e3236cfb0ea5",
-        "pngSha256": "a8d09dab7be0704df340f1cc200c663e4f1b225e0ec85e012c3559d9ee23519f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "28d37ebf85e48fd30693a6f6958af88f9d5617bd04b10d287377e3236cfb0ea5"
     },
     {
       "name": "chart-fps-c7-s1.png",
-      "decodedRgbaSha256": "3394cf9ca0afabc8fe6aadf24e9a895dde0513dbfae33056bca17df8086b586a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c7-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c7-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c7-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":3,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"6393ac086aa2ec85e134603df9118385c08492fc7df43684d94de6b7532972f8\"}"
-        },
-        "testId": "81f4a870e2845c490fed-4cf6297905680c891b9d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c7-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%226393ac086aa2ec85e134603df9118385c08492fc7df43684d94de6b7532972f8%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c7-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c7-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3394cf9ca0afabc8fe6aadf24e9a895dde0513dbfae33056bca17df8086b586a",
-        "pngSha256": "3f54861f0d168347d2d8e759a1ea7755a7489231e8b97eebc2df69de40fc28b7",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3394cf9ca0afabc8fe6aadf24e9a895dde0513dbfae33056bca17df8086b586a"
     },
     {
       "name": "chart-fps-c8-s1.png",
-      "decodedRgbaSha256": "e37830f0b2337c51eb734d94f3969b31631da52060fceef90357698ce0217285",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c8-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c8-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c8-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":4,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"01308742e5e1653c0505f72684160f9daed4039af4ee03e521bedb85c3313d07\"}"
-        },
-        "testId": "81f4a870e2845c490fed-233e29812f39e62884ff",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c8-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%2201308742e5e1653c0505f72684160f9daed4039af4ee03e521bedb85c3313d07%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c8-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c8-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e37830f0b2337c51eb734d94f3969b31631da52060fceef90357698ce0217285",
-        "pngSha256": "d11ea7603b75187d6f13a312f185bb8af75a44596bcbe3bef3c2a419993e0473",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e37830f0b2337c51eb734d94f3969b31631da52060fceef90357698ce0217285"
     },
     {
       "name": "chart-fps-c9-s1.png",
-      "decodedRgbaSha256": "403c3dc5f02c4b60f4bfcca536fe83dd58c19984c605aaa94ba34b9225b92f64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c9-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c9-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c9-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":4,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"de8733c056175cc81bbbc66dafa3399340fcc6ab9b4f2283fdc20773d6c64b22\"}"
-        },
-        "testId": "81f4a870e2845c490fed-16340cd5f2cabdcfabf7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c9-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22de8733c056175cc81bbbc66dafa3399340fcc6ab9b4f2283fdc20773d6c64b22%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c9-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c9-s1.png",
-        "width": 120,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "403c3dc5f02c4b60f4bfcca536fe83dd58c19984c605aaa94ba34b9225b92f64",
-        "pngSha256": "10fc2fc23693cddb27dd8f77fa787dd1ec315e5639ee0cf73e5919614f87b675",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "403c3dc5f02c4b60f4bfcca536fe83dd58c19984c605aaa94ba34b9225b92f64"
     },
     {
       "name": "chart-fps-c10-s1.png",
-      "decodedRgbaSha256": "3b5ed3e4d50923286174d5bd04c1bd67f1e4f8643b0c84a3b352f33106d47847",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c10-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c10-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c10-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":5,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"b5ddc1246a09a568df7d0c6cd811f6b54eb440c47fcc1108eba14bc1b743e6cf\"}"
-        },
-        "testId": "81f4a870e2845c490fed-077803be45b6a23d4697",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c10-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%22b5ddc1246a09a568df7d0c6cd811f6b54eb440c47fcc1108eba14bc1b743e6cf%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c10-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c10-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3b5ed3e4d50923286174d5bd04c1bd67f1e4f8643b0c84a3b352f33106d47847",
-        "pngSha256": "bc9a28ab03b6f6832edd2ec84a029787c39f2e3e6488ff17156f6d58c06d448d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3b5ed3e4d50923286174d5bd04c1bd67f1e4f8643b0c84a3b352f33106d47847"
     },
     {
       "name": "chart-fps-c11-s1.png",
-      "decodedRgbaSha256": "e308936ac7ac68200e3de9562575eec4a162d2e37c57969e0fa5f08ca5de5581",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c11-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c11-s1.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c11-s1.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":5,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":1,\"sha256\":\"3106b0d7b0046bb4dd245aafd9a7bf4e0ac97b2d4f8131c9669c137b9c8f0368\"}"
-        },
-        "testId": "81f4a870e2845c490fed-04a1e687189ea24618dc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c11-s1.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A1%2C%22sha256%22%3A%223106b0d7b0046bb4dd245aafd9a7bf4e0ac97b2d4f8131c9669c137b9c8f0368%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c11-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c11-s1.png",
-        "width": 242,
-        "height": 69,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e308936ac7ac68200e3de9562575eec4a162d2e37c57969e0fa5f08ca5de5581",
-        "pngSha256": "12937a038e72d20a125838170e2bff0dad7f54bcce328dc745a85a8c62f747c8",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e308936ac7ac68200e3de9562575eec4a162d2e37c57969e0fa5f08ca5de5581"
     },
     {
       "name": "chart-fps-c0-s2.png",
-      "decodedRgbaSha256": "dea611b5d69ad8d3dfecd574c0521698aebac26d3d354b00d89e8f4f8e5800f2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c0-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c0-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c0-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":0,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"f78a8aeb1bd61549c1e3516bd04ffc669eeb7607e7b7018385ee22a1edc7e2cf\"}"
-        },
-        "testId": "81f4a870e2845c490fed-ebe17469d79005efe9ff",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c0-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22f78a8aeb1bd61549c1e3516bd04ffc669eeb7607e7b7018385ee22a1edc7e2cf%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c0-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c0-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dea611b5d69ad8d3dfecd574c0521698aebac26d3d354b00d89e8f4f8e5800f2",
-        "pngSha256": "6094fcd3a94ee7ffc60c5a63627645805c3646fea6e226cb07adddb7364aba9c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dea611b5d69ad8d3dfecd574c0521698aebac26d3d354b00d89e8f4f8e5800f2"
     },
     {
       "name": "chart-fps-c1-s2.png",
-      "decodedRgbaSha256": "1ed396e6041503b96433a8db7319b82f1402a3d7adf288623f9d5073dc4c6e5a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c1-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c1-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c1-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":0,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"f4c850ecbcc38306480b2a4d4d626eca74e76a07338586f5d5a9cfb5ce5167e9\"}"
-        },
-        "testId": "81f4a870e2845c490fed-b6c708856858a1fa6862",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c1-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22f4c850ecbcc38306480b2a4d4d626eca74e76a07338586f5d5a9cfb5ce5167e9%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c1-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c1-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "1ed396e6041503b96433a8db7319b82f1402a3d7adf288623f9d5073dc4c6e5a",
-        "pngSha256": "168ea4969d18c5eacf857edcaa244f61ff22ccf820849a01503909b01c9ac541",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "1ed396e6041503b96433a8db7319b82f1402a3d7adf288623f9d5073dc4c6e5a"
     },
     {
       "name": "chart-fps-c2-s2.png",
-      "decodedRgbaSha256": "bd19250ad6e54f95d281157de476a1add203bdc4b50400907603e41859d294ed",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c2-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c2-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c2-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":1,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"23ddcbaa1ef625bd48282f70a5bd2426d48dc96d9ca9b844da10faf15913f6b6\"}"
-        },
-        "testId": "81f4a870e2845c490fed-8c2d91f0a30570060b18",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c2-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%2223ddcbaa1ef625bd48282f70a5bd2426d48dc96d9ca9b844da10faf15913f6b6%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c2-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c2-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bd19250ad6e54f95d281157de476a1add203bdc4b50400907603e41859d294ed",
-        "pngSha256": "f56620d9f071b315b7c1dd4a8acb6ccbc8aabee198e4c4a3af74dd11d673863a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bd19250ad6e54f95d281157de476a1add203bdc4b50400907603e41859d294ed"
     },
     {
       "name": "chart-fps-c3-s2.png",
-      "decodedRgbaSha256": "e81bebb1e679d6e3270f8921e2d4c4ca8c90aac334d6050be2ee869837900016",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c3-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c3-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c3-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":1,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"dfac84c743e5f430c5b86f5effee581aef9cba55d1834dfe0b8b9b7b8ffeb2d2\"}"
-        },
-        "testId": "81f4a870e2845c490fed-55083fe7be768cc29432",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c3-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22dfac84c743e5f430c5b86f5effee581aef9cba55d1834dfe0b8b9b7b8ffeb2d2%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c3-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c3-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e81bebb1e679d6e3270f8921e2d4c4ca8c90aac334d6050be2ee869837900016",
-        "pngSha256": "eed717a7152c7ae0cdb5a9d7a474e8f7f4a68fb8657ae0b1aeeae2f55e47c92b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e81bebb1e679d6e3270f8921e2d4c4ca8c90aac334d6050be2ee869837900016"
     },
     {
       "name": "chart-fps-c4-s2.png",
-      "decodedRgbaSha256": "907859a191c818ecd7d711808bd8ca55a81a7ce5fe59723036a179a19cca1599",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c4-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c4-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c4-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":2,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"9061b1ef002e9dddd687358ab77467c8c3a60fe2d36308fcfe631fe80e312aea\"}"
-        },
-        "testId": "81f4a870e2845c490fed-86ad9ead8fc6e265d9ce",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c4-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%229061b1ef002e9dddd687358ab77467c8c3a60fe2d36308fcfe631fe80e312aea%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c4-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c4-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "907859a191c818ecd7d711808bd8ca55a81a7ce5fe59723036a179a19cca1599",
-        "pngSha256": "cbcef569ffa9bb7622469c562260b213c49efe8ead014a8506b65d4e52cd6de8",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "907859a191c818ecd7d711808bd8ca55a81a7ce5fe59723036a179a19cca1599"
     },
     {
       "name": "chart-fps-c5-s2.png",
-      "decodedRgbaSha256": "924906b58fbc3d1d88a37bb9a5bb45b83a5837669dddac12c558e14e80adbd96",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c5-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c5-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c5-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":2,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"f314e5b1bd15fdc96ca5f36a3454aeeb2083b9bdaee448b989a0ea4ae5a0acbb\"}"
-        },
-        "testId": "81f4a870e2845c490fed-bf7857f6a86df7bd2c29",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c5-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22f314e5b1bd15fdc96ca5f36a3454aeeb2083b9bdaee448b989a0ea4ae5a0acbb%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c5-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c5-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "924906b58fbc3d1d88a37bb9a5bb45b83a5837669dddac12c558e14e80adbd96",
-        "pngSha256": "6dd59e28b0846effc5bff16404ce1691936295a494ed78d4744e0100d80c2544",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "924906b58fbc3d1d88a37bb9a5bb45b83a5837669dddac12c558e14e80adbd96"
     },
     {
       "name": "chart-fps-c6-s2.png",
-      "decodedRgbaSha256": "ce6602dc6cf17f5220044819fe7ad0b819d85bd3d41c794df170f9eed29394e1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c6-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c6-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c6-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":3,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"c289e965cc8e8757d80df2f0e8a2aef576825059781587f5fccac8968fd4b625\"}"
-        },
-        "testId": "81f4a870e2845c490fed-a58a4f27c44ab1c63af4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c6-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22c289e965cc8e8757d80df2f0e8a2aef576825059781587f5fccac8968fd4b625%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c6-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c6-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ce6602dc6cf17f5220044819fe7ad0b819d85bd3d41c794df170f9eed29394e1",
-        "pngSha256": "4e798b4bb3066aeacacfea1e2939f5a884cff8839813c7fc3ed985736e24b063",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ce6602dc6cf17f5220044819fe7ad0b819d85bd3d41c794df170f9eed29394e1"
     },
     {
       "name": "chart-fps-c7-s2.png",
-      "decodedRgbaSha256": "88af517c86d09874636031528dac0bf15c95dfdebdbfff87ad487166db8e002b",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c7-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c7-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c7-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":3,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"76cdca6fae37ab10c8b316d56a1b7b7c09f0dd60484f34dff02052e636822626\"}"
-        },
-        "testId": "81f4a870e2845c490fed-0346b2fc570e491654e7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c7-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%2276cdca6fae37ab10c8b316d56a1b7b7c09f0dd60484f34dff02052e636822626%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c7-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c7-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "88af517c86d09874636031528dac0bf15c95dfdebdbfff87ad487166db8e002b",
-        "pngSha256": "cdc00c8db647b1b0ba30aac5fbd7551867e2f262349125d8c484a34687e22cb9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "88af517c86d09874636031528dac0bf15c95dfdebdbfff87ad487166db8e002b"
     },
     {
       "name": "chart-fps-c8-s2.png",
-      "decodedRgbaSha256": "feca39c2b8ba379db5a1b7717e0a44de0598392bfd198bfe047578ea2d75ced0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c8-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c8-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c8-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":4,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"6aaaaa5c0c2d0586eb630e9700a0fe82da9249f3822251b98c37670961f7905b\"}"
-        },
-        "testId": "81f4a870e2845c490fed-06a8b38a1dc8ebc9618b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c8-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%226aaaaa5c0c2d0586eb630e9700a0fe82da9249f3822251b98c37670961f7905b%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c8-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c8-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "feca39c2b8ba379db5a1b7717e0a44de0598392bfd198bfe047578ea2d75ced0",
-        "pngSha256": "2dfd948ce4986b30dd326721899ec96f910c087f6052eec5ce0cadd5dd0108f6",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "feca39c2b8ba379db5a1b7717e0a44de0598392bfd198bfe047578ea2d75ced0"
     },
     {
       "name": "chart-fps-c9-s2.png",
-      "decodedRgbaSha256": "25f5378f61b704068624ddcccabac1cda8d4083e55c403e3f07040c08c90acc4",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c9-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c9-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c9-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":4,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"0bc0146b8552ac95c43d8c691de48d098b7916a41757cbc63c15d66885df2635\"}"
-        },
-        "testId": "81f4a870e2845c490fed-044d769bac5c866b145d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c9-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%220bc0146b8552ac95c43d8c691de48d098b7916a41757cbc63c15d66885df2635%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c9-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c9-s2.png",
-        "width": 240,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "25f5378f61b704068624ddcccabac1cda8d4083e55c403e3f07040c08c90acc4",
-        "pngSha256": "21a5a4560f61c154e3a45d0c3967f62c2168ee3af4b28c652aa600023b177f8c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "25f5378f61b704068624ddcccabac1cda8d4083e55c403e3f07040c08c90acc4"
     },
     {
       "name": "chart-fps-c10-s2.png",
-      "decodedRgbaSha256": "71290a3d86be0c377970ae73a811d6558dd3afa0bf92335c6ddb65492b9400f6",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c10-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c10-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c10-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":5,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"c90a62913c2c0f7546196d2ebe1a5b2289baa470476b4e09877eca45a17dd415\"}"
-        },
-        "testId": "81f4a870e2845c490fed-6de15e71bbfa1cc6110d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c10-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22c90a62913c2c0f7546196d2ebe1a5b2289baa470476b4e09877eca45a17dd415%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c10-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c10-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71290a3d86be0c377970ae73a811d6558dd3afa0bf92335c6ddb65492b9400f6",
-        "pngSha256": "3c5831dfbf4000fb0cfe96de910927328af84c47f26633681b23d1821b75c25e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71290a3d86be0c377970ae73a811d6558dd3afa0bf92335c6ddb65492b9400f6"
     },
     {
       "name": "chart-fps-c11-s2.png",
-      "decodedRgbaSha256": "bc63e879d90b4bf9c111e438c2d9231ae5ef15f999c1fb59181c47ec2632f4ca",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c11-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c11-s2.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c11-s2.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":5,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":2,\"sha256\":\"f994653ac574686493074124e1b0e2f3272709db15f5371fffa9eccd2777d906\"}"
-        },
-        "testId": "81f4a870e2845c490fed-ba99f7b700de3a153eb5",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c11-s2.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A2%2C%22sha256%22%3A%22f994653ac574686493074124e1b0e2f3272709db15f5371fffa9eccd2777d906%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c11-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c11-s2.png",
-        "width": 484,
-        "height": 138,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bc63e879d90b4bf9c111e438c2d9231ae5ef15f999c1fb59181c47ec2632f4ca",
-        "pngSha256": "186d2976b61930014405f427b4d5cfea358989d10871a45d380786032f98c624",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bc63e879d90b4bf9c111e438c2d9231ae5ef15f999c1fb59181c47ec2632f4ca"
     },
     {
       "name": "chart-fps-c0-s3.png",
-      "decodedRgbaSha256": "44c2b5c26d0e71f0297c0dc4b7d0fff1a799f1763df778dd02fb296ca0379501",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c0-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c0-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c0-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":0,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"0447e8d8b990da78a7a1937f1b4d1533a96729906b0ff902e6ca03ad0248c71b\"}"
-        },
-        "testId": "81f4a870e2845c490fed-3a4c0e98ae5e94cffe38",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c0-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%220447e8d8b990da78a7a1937f1b4d1533a96729906b0ff902e6ca03ad0248c71b%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c0-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c0-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "44c2b5c26d0e71f0297c0dc4b7d0fff1a799f1763df778dd02fb296ca0379501",
-        "pngSha256": "8aa8f949bc48856e67521a631d75b2b409b492ddf6042278eff534e8ff658e69",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "44c2b5c26d0e71f0297c0dc4b7d0fff1a799f1763df778dd02fb296ca0379501"
     },
     {
       "name": "chart-fps-c1-s3.png",
-      "decodedRgbaSha256": "01da3db08f7b47923df7ba2462ad8ce4f95c2cf87971ed5ef1ffaef620621e3c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c1-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c1-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c1-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":0,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"2aa168b369392c71259213d2d13b3045a628c27af081affd558e63c25b77fa45\"}"
-        },
-        "testId": "81f4a870e2845c490fed-139abda719592d9ef7d5",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c1-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A0%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%222aa168b369392c71259213d2d13b3045a628c27af081affd558e63c25b77fa45%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c1-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c1-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "01da3db08f7b47923df7ba2462ad8ce4f95c2cf87971ed5ef1ffaef620621e3c",
-        "pngSha256": "6d3b06e9cdb8c372e194868fdcc46bf7ace5c76682fc47f61d1fed11a1ad9e9a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "01da3db08f7b47923df7ba2462ad8ce4f95c2cf87971ed5ef1ffaef620621e3c"
     },
     {
       "name": "chart-fps-c2-s3.png",
-      "decodedRgbaSha256": "d74d31b44a31a87bf4266ce27585ac9aa3dfef15af38407d93d0e6c2a7cb9317",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c2-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c2-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c2-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":1,\"background\":\"#202020\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"aa46241e992de9edb981e9f384fc789b381027f17da48e5907b0fda8007e8391\"}"
-        },
-        "testId": "81f4a870e2845c490fed-7d4f4bf1a09b3bd986a7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c2-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22aa46241e992de9edb981e9f384fc789b381027f17da48e5907b0fda8007e8391%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c2-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c2-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d74d31b44a31a87bf4266ce27585ac9aa3dfef15af38407d93d0e6c2a7cb9317",
-        "pngSha256": "55681e6f6f4ca7fc55e2912b644e9c60f3ce63f68d605ffab84666a9e401f664",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d74d31b44a31a87bf4266ce27585ac9aa3dfef15af38407d93d0e6c2a7cb9317"
     },
     {
       "name": "chart-fps-c3-s3.png",
-      "decodedRgbaSha256": "276d00b8bbdf38358470f6bd29b33c36bb204e1287d86159d0dd7672694b2861",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c3-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c3-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c3-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":1,\"background\":\"#808080\",\"value\":260,\"samples\":[8000000,16000000,24000000,33333333],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"f610b63bbf4f6c6ee3084d5f5a1737bf92e7a619731a06a6fd79125ce47748be\"}"
-        },
-        "testId": "81f4a870e2845c490fed-078b0224f5df1d8f11ef",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c3-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A1%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A260%2C%22samples%22%3A%5B8000000%2C16000000%2C24000000%2C33333333%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22f610b63bbf4f6c6ee3084d5f5a1737bf92e7a619731a06a6fd79125ce47748be%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c3-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c3-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "276d00b8bbdf38358470f6bd29b33c36bb204e1287d86159d0dd7672694b2861",
-        "pngSha256": "28cf134cb176cb56035a8ccf61959b450a64c238e8843e2b15eeecb1c98f6e3d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "276d00b8bbdf38358470f6bd29b33c36bb204e1287d86159d0dd7672694b2861"
     },
     {
       "name": "chart-fps-c4-s3.png",
-      "decodedRgbaSha256": "acab1a05437e9199997336468637543f401cb42dd8c24f90a3775122cabde18a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c4-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c4-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c4-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":2,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"86dde9a18b5338b671d76ca6e44a9ab72504c3f73415d1ccbf7763ea52bfbac0\"}"
-        },
-        "testId": "81f4a870e2845c490fed-de46a6e46e93b4df5774",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c4-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%2286dde9a18b5338b671d76ca6e44a9ab72504c3f73415d1ccbf7763ea52bfbac0%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c4-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c4-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "acab1a05437e9199997336468637543f401cb42dd8c24f90a3775122cabde18a",
-        "pngSha256": "b9f2c1da2c657080e014c168e75abb62422e41cd5289d4865d1d28b6f4210bfb",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "acab1a05437e9199997336468637543f401cb42dd8c24f90a3775122cabde18a"
     },
     {
       "name": "chart-fps-c5-s3.png",
-      "decodedRgbaSha256": "fbd5c9e9e5a6b811bb7006763ac1a76b767063a99f2b8fec03d87387909920b4",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c5-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c5-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c5-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":2,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"b582b6dd2f375ae0c2836c4646f71381c4736aac7d4ca170fdc6c6a527fba108\"}"
-        },
-        "testId": "81f4a870e2845c490fed-72a051ebdef48e50ade8",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c5-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A2%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22b582b6dd2f375ae0c2836c4646f71381c4736aac7d4ca170fdc6c6a527fba108%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c5-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c5-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "fbd5c9e9e5a6b811bb7006763ac1a76b767063a99f2b8fec03d87387909920b4",
-        "pngSha256": "23fbdceda5c3c159acd659cfe826c70f9f3fc1699dc294826c6a7afeec9a5cc6",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "fbd5c9e9e5a6b811bb7006763ac1a76b767063a99f2b8fec03d87387909920b4"
     },
     {
       "name": "chart-fps-c6-s3.png",
-      "decodedRgbaSha256": "a6fc34ea6ad8f89e3673928f6e51783ee94c5749c777fced7f69f64c85eff228",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c6-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c6-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c6-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":3,\"background\":\"#202020\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"ee2a5d622bbe3d526f7a6226c770eae593cc44833818e8ef0de4d8387b1d690c\"}"
-        },
-        "testId": "81f4a870e2845c490fed-16e35b4560da2aa4c279",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c6-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22ee2a5d622bbe3d526f7a6226c770eae593cc44833818e8ef0de4d8387b1d690c%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c6-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c6-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6fc34ea6ad8f89e3673928f6e51783ee94c5749c777fced7f69f64c85eff228",
-        "pngSha256": "05ff6e0b6ae6e387d4081f67b9ae6d5b7fc9b744eee23ea24222781ac79d40a6",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6fc34ea6ad8f89e3673928f6e51783ee94c5749c777fced7f69f64c85eff228"
     },
     {
       "name": "chart-fps-c7-s3.png",
-      "decodedRgbaSha256": "b267ff785518339154b66de61adac9dccfc696609a39dd6e931f9b880eabb1d9",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c7-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c7-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c7-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":3,\"background\":\"#808080\",\"value\":120,\"samples\":[1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000,1000000,2000000,3000000,4000000,5000000,6000000,7000000,8000000,9000000,10000000,11000000,12000000,13000000,14000000,15000000,16000000,17000000,18000000,19000000,20000000,21000000,22000000,23000000,24000000,25000000,26000000,27000000,28000000,29000000,30000000,31000000,32000000,33000000,34000000,35000000,36000000,37000000,38000000,39000000,40000000,41000000,42000000,43000000,44000000,45000000,46000000,47000000,48000000,49000000,50000000,51000000,52000000,53000000,54000000,55000000,56000000,57000000,58000000,59000000,60000000],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"5629022d5ecbcaca2f888fc8d9354d222319d4a7e4a8f531e0f775e920984886\"}"
-        },
-        "testId": "81f4a870e2845c490fed-ccb394e0bd8b9942ff91",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c7-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A3%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A120%2C%22samples%22%3A%5B1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%2C1000000%2C2000000%2C3000000%2C4000000%2C5000000%2C6000000%2C7000000%2C8000000%2C9000000%2C10000000%2C11000000%2C12000000%2C13000000%2C14000000%2C15000000%2C16000000%2C17000000%2C18000000%2C19000000%2C20000000%2C21000000%2C22000000%2C23000000%2C24000000%2C25000000%2C26000000%2C27000000%2C28000000%2C29000000%2C30000000%2C31000000%2C32000000%2C33000000%2C34000000%2C35000000%2C36000000%2C37000000%2C38000000%2C39000000%2C40000000%2C41000000%2C42000000%2C43000000%2C44000000%2C45000000%2C46000000%2C47000000%2C48000000%2C49000000%2C50000000%2C51000000%2C52000000%2C53000000%2C54000000%2C55000000%2C56000000%2C57000000%2C58000000%2C59000000%2C60000000%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%225629022d5ecbcaca2f888fc8d9354d222319d4a7e4a8f531e0f775e920984886%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c7-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c7-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b267ff785518339154b66de61adac9dccfc696609a39dd6e931f9b880eabb1d9",
-        "pngSha256": "1251d34046c2a56657da23d0956af8222056f3431de33faa641f73f5e04e4847",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b267ff785518339154b66de61adac9dccfc696609a39dd6e931f9b880eabb1d9"
     },
     {
       "name": "chart-fps-c8-s3.png",
-      "decodedRgbaSha256": "c68f485fabdc34870703ba5efe8e4b097ad1c4cb35ba29801d6bc001c5d6b4d1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c8-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c8-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c8-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":16,\"y\":100,\"page\":4,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"50707351172de68d0ba18aa2e70563d67238da5c46a38fa32fba0e74aee1db5f\"}"
-        },
-        "testId": "81f4a870e2845c490fed-78d214e6b27bae637082",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c8-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%2250707351172de68d0ba18aa2e70563d67238da5c46a38fa32fba0e74aee1db5f%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c8-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c8-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c68f485fabdc34870703ba5efe8e4b097ad1c4cb35ba29801d6bc001c5d6b4d1",
-        "pngSha256": "ab9726d21036a67e601a6c66dd8e2830daabef75d44c818e4755eb67d679be68",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c68f485fabdc34870703ba5efe8e4b097ad1c4cb35ba29801d6bc001c5d6b4d1"
     },
     {
       "name": "chart-fps-c9-s3.png",
-      "decodedRgbaSha256": "6861c969cb906646c37a15f0b7e872002a8b308386f5d3d662abf941f24325d8",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c9-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c9-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c9-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":120,\"height\":69,\"x\":270,\"y\":100,\"page\":4,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"9193830605e72419a4ada7371ef9c4e8cacb9172f6b3066d7c918709b2d92870\"}"
-        },
-        "testId": "81f4a870e2845c490fed-f6341507a261c3cb76ad",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c9-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A120%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A4%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%229193830605e72419a4ada7371ef9c4e8cacb9172f6b3066d7c918709b2d92870%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c9-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c9-s3.png",
-        "width": 360,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6861c969cb906646c37a15f0b7e872002a8b308386f5d3d662abf941f24325d8",
-        "pngSha256": "b02336990b952a945e966d10bbcdbdbeff3cd0583155b44e4d8f7ee27075cdc9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6861c969cb906646c37a15f0b7e872002a8b308386f5d3d662abf941f24325d8"
     },
     {
       "name": "chart-fps-c10-s3.png",
-      "decodedRgbaSha256": "799998cdd293a7ee872004e16305c59e10d74392c10b0364012383164fe6e94a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c10-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c10-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c10-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":16,\"y\":100,\"page\":5,\"background\":\"#202020\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"ddc48635c92b70b47e54c678e059d806f9d6905ea7fe11ec2c1ea28180b807fb\"}"
-        },
-        "testId": "81f4a870e2845c490fed-4ec996db9e28d5f1b696",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c10-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A16%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23202020%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22ddc48635c92b70b47e54c678e059d806f9d6905ea7fe11ec2c1ea28180b807fb%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c10-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c10-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "799998cdd293a7ee872004e16305c59e10d74392c10b0364012383164fe6e94a",
-        "pngSha256": "1a55e943fb075ce38dd1fbc6f10455fb0b631fdd582f7a84ef6c52ee090dc322",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "799998cdd293a7ee872004e16305c59e10d74392c10b0364012383164fe6e94a"
     },
     {
       "name": "chart-fps-c11-s3.png",
-      "decodedRgbaSha256": "d35a8a84dbf3f37989cf83ac58b62f12a21ad1455130601755b1b47e15185ccc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "chart",
-        "manifest": "tests/reference/chart-fps/manifest.json",
-        "case": "chart-fps-c11-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "chart-fps-c11-s3.png",
-          "kind": "fps",
-          "mismatchedPixels": 0,
-          "component": "chart"
-        },
-        "query": {
-          "component": "chart",
-          "case": "{\"name\":\"chart-fps-c11-s3.png\",\"element\":\"chart-fps\",\"state\":\"normal\",\"width\":242,\"height\":69,\"x\":270,\"y\":100,\"page\":5,\"background\":\"#808080\",\"value\":60,\"samples\":[56000000,80000000,1000000,16666667],\"labels\":[\"30 FPS\",\"60 FPS\",\"0 ms min\",\"0 ms avg\",\"0 ms max\"],\"scale\":3,\"sha256\":\"b10066d9b8bbafd4e5ab202739c65156a6dc8fd1f4999cc7e5af0b82371e4189\"}"
-        },
-        "testId": "81f4a870e2845c490fed-558ad958a66ee9b88541",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=chart&case=%7B%22name%22%3A%22chart-fps-c11-s3.png%22%2C%22element%22%3A%22chart-fps%22%2C%22state%22%3A%22normal%22%2C%22width%22%3A242%2C%22height%22%3A69%2C%22x%22%3A270%2C%22y%22%3A100%2C%22page%22%3A5%2C%22background%22%3A%22%23808080%22%2C%22value%22%3A60%2C%22samples%22%3A%5B56000000%2C80000000%2C1000000%2C16666667%5D%2C%22labels%22%3A%5B%2230%20FPS%22%2C%2260%20FPS%22%2C%220%20ms%20min%22%2C%220%20ms%20avg%22%2C%220%20ms%20max%22%5D%2C%22scale%22%3A3%2C%22sha256%22%3A%22b10066d9b8bbafd4e5ab202739c65156a6dc8fd1f4999cc7e5af0b82371e4189%22%7D",
-        "subjectSlot": "minecraft-fps-chart",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\chart-native-Native-fps-chart-fps-c11-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\chart-fps\\captures\\chart-fps-c11-s3.png",
-        "width": 726,
-        "height": 207,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d35a8a84dbf3f37989cf83ac58b62f12a21ad1455130601755b1b47e15185ccc",
-        "pngSha256": "71209215866f0e4f9ef0ca9b8a18c65472695de8a4a4150760ee0db5a3b9e2e0",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d35a8a84dbf3f37989cf83ac58b62f12a21ad1455130601755b1b47e15185ccc"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.242Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
   "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "typecheck": {
+    "command": "npm run typecheck",
+    "passed": true
+  },
+  "behavior": {
+    "passed": 6,
+    "failed": 0
+  },
+  "runtimeErrorAudit": "Explicit pageerror listener and assertion for all61 fresh-consumer checks.",
+  "scope": "Original native constituent slots only; Generic Recharts charts/config/tooltip/legend are web extensions; exact native FPS/profiler subsets only are web compositions."
 }

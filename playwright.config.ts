@@ -2,6 +2,7 @@ import { defineConfig } from "@playwright/test"
 
 export default defineConfig({
   testDir: "./tests",
+  outputDir: "./test-results/browser",
   testMatch: ["*.spec.ts", "*.spec.js"],
   fullyParallel: false,
   workers: 8,
@@ -14,6 +15,6 @@ export default defineConfig({
   },
   webServer: process.env.GRASSCN_FIXTURE_URL ? undefined : [
     { command: "node node_modules/vite/bin/vite.js", url: "http://127.0.0.1:5174", reuseExistingServer: !process.env.CI },
-    { command: "npm run preview", url: "http://127.0.0.1:5176", reuseExistingServer: !process.env.CI },
+    { command: "npm run dev", url: "http://127.0.0.1:5176", reuseExistingServer: !process.env.CI },
   ],
 })

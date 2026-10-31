@@ -16,15 +16,17 @@
   .mc-slider-track, .mc-slider-position { position: absolute; inset: 0; }
   .mc-slider-position { pointer-events: none; }
   .mc-slider-range { display: none; }
-  .mc-slider-position > span:first-child {
+  .mc-slider-position > [data-slot="slider-thumb"] {
     left: calc(round(down, (100% - 8 * var(--mc-pixel)) * var(--mc-thumb-fraction), var(--mc-pixel)) + 4 * var(--mc-pixel)) !important;
     right: auto !important;
+    translate: none !important;
     transform: translateX(-50%) !important;
-    top: 0;
+    top: 0 !important;
   }
   .mc-slider-thumb { display: block; width: calc(8 * var(--mc-pixel)); height: calc(20 * var(--mc-pixel)); outline: none; pointer-events: auto; }
   .mc-slider-handle { display: block; position: absolute; inset: 0; pointer-events: none; }
   .mc-slider-label {
+    z-index: 3;
     position: absolute;
     pointer-events: none;
     left: round(down, 50%, var(--mc-pixel));
@@ -32,7 +34,7 @@
     transform: translateX(round(up, -50%, var(--mc-pixel)));
   }
   .mc-slider[data-orientation="vertical"] { width: calc(20 * var(--mc-pixel)); height: calc(200 * var(--mc-pixel)); }
-  .mc-slider[data-orientation="vertical"] .mc-slider-position > span:first-child {
+  .mc-slider[data-orientation="vertical"] .mc-slider-position > [data-slot="slider-thumb"] {
     left: 0 !important;
     top: calc(round(down, (100% - 8 * var(--mc-pixel)) * var(--mc-thumb-fraction), var(--mc-pixel)) + 4 * var(--mc-pixel)) !important;
     bottom: auto !important;

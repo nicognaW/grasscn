@@ -26,8 +26,8 @@ test("CJK Button comparator catches one changed pixel", async () => {
 for (const c of manifest.cases) test(`CJK Button native pixels: ${c.name}`, async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1536, height: 900 })
   await page.goto(`/?${new URLSearchParams({ component: "button", label: c.label, width: String(c.width), scale: String(c.scale), state: c.state })}`)
-  await page.addStyleTag({ content: "#root > :not(#subject) { visibility: hidden; }" })
-  const button = page.locator("#subject")
+  await page.addStyleTag({ content: "#root > :not([data-subject]) { visibility: hidden; }" })
+  const button = page.locator("[data-subject]")
   await button.evaluate((node, position) => { Object.assign((node as HTMLElement).style, { position: "fixed", left: `${position.x}px`, top: `${position.y}px` }) }, { x: c.x * c.scale, y: c.y * c.scale })
   await page.mouse.move(0, 0)
   if (c.state === "hover") await button.hover()

@@ -9,7 +9,7 @@
     box-sizing: border-box;
     width: calc(var(--mc-tooltip-width) * var(--mc-pixel));
     height: calc(var(--mc-tooltip-height) * var(--mc-pixel));
-    max-width: min(var(--radix-tooltip-content-available-width, 100vw), calc((var(--mc-tooltip-max, 170) + 24) * var(--mc-pixel)));
+    max-width: min(var(--available-width, 100vw), calc((var(--mc-tooltip-max, 170) + 24) * var(--mc-pixel)));
     padding: calc(12 * var(--mc-pixel));
     background: transparent;
     border: 0;

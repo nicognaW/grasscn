@@ -1,46 +1,44 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/hotbar.json --yes --overwrite",
-  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
+  "command": "shadcn add http://127.0.0.1:5173/r/hotbar.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
   "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "typecheck": {
-    "passed": true
-  },
   "files": [
     {
       "path": "hotbar.tsx",
       "sourcePath": "registry/ui/hotbar.tsx",
-      "sourceSha256": "a6874e603f0b556683c567016ae2606ce43ed44297feb99c8ac0d517fd737a26",
-      "installedSha256": "a6874e603f0b556683c567016ae2606ce43ed44297feb99c8ac0d517fd737a26",
-      "comparison": "Equal except CLI comments/use-client removal and line endings"
+      "sourceSha256": "aec80f83a3318c6183f374de1b318970cafc66719aba8aafa9adb6e0e245c9d7",
+      "installedSha256": "aec80f83a3318c6183f374de1b318970cafc66719aba8aafa9adb6e0e245c9d7"
     },
     {
       "path": "minecraft-adventure-assets.ts",
       "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
       "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
-      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
-      "comparison": "Equal except CLI comments/use-client removal and line endings"
+      "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a"
     },
     {
       "path": "minecraft-adventure-image.tsx",
       "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
-      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
-      "installedSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
-      "comparison": "Equal except CLI comments/use-client removal and line endings"
+      "sourceSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d",
+      "installedSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d"
     },
     {
       "path": "minecraft-hotbar-rgba.ts",
       "sourcePath": "registry/ui/minecraft-hotbar-rgba.ts",
       "sourceSha256": "bab511629231db51610291f708ec36d88600e8e412fd692c86d507d5feeb5ed9",
-      "installedSha256": "bab511629231db51610291f708ec36d88600e8e412fd692c86d507d5feeb5ed9",
-      "comparison": "Equal except CLI comments/use-client removal and line endings"
+      "installedSha256": "bab511629231db51610291f708ec36d88600e8e412fd692c86d507d5feeb5ed9"
     },
     {
       "path": "minecraft-hotbar.css",
       "sourcePath": "registry/ui/minecraft-hotbar.css",
       "sourceSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4",
-      "installedSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4",
-      "comparison": "Equal except CLI comments/use-client removal and line endings"
+      "installedSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -181,27 +179,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "pointer, numeric keys, arrow keys and wheel selection"
-    ]
+  "typecheck": {
+    "passed": true
   },
   "negativeControlMismatchedPixels": 1,
-  "environment": {
-    "browser": "Microsoft Edge via Playwright",
-    "viewport": [
-      1536,
-      900
-    ],
-    "devicePixelRatio": 1,
-    "scales": [
-      1,
-      2,
-      3
-    ]
-  },
-  "limitations": [
-    "Nine empty slots and each selected position, scales 1-3, explicit #202020 uniform compositing surface. Arbitrary icons, focus and transparent browser compositing are outside the pixel matrix."
-  ]
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

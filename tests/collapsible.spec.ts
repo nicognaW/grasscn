@@ -16,8 +16,8 @@ for(const directory of ["tests/reference","tests/reference/button-cjk","tests/re
   await page.setViewportSize({width:1536,height:900})
   const params=new URLSearchParams({component:"collapsible",native:"1",part:body?"body":"header",label:c.label??"Button",text:body?c.label:"",width:String(c.width),height:String(c.height??20),scale:String(c.scale),state:c.state,x:String(c.x??16),y:String(c.y??16),align:c.alignment??"left"})
   if(c.wrapWidth!=null)params.set("wrapWidth",String(c.wrapWidth));if(expanded)params.set("expanded","1")
-  await page.goto(`/?${params}`);const subject=page.locator("#subject");await expect(page.locator('[data-slot="collapsible"]')).toHaveCount(1);await expect(subject).toBeVisible()
-  await page.addStyleTag({content:`html,body{background:${c.background??"#202020"}}#root{visibility:hidden}#subject{visibility:visible}`});await page.mouse.move(0,0)
+  await page.goto(`/?${params}`);const subject=page.locator("[data-subject]");await expect(page.locator('[data-slot="collapsible"]')).toHaveCount(1);await expect(subject).toBeVisible()
+  await page.addStyleTag({content:`html,body{background:${c.background??"#202020"}}#root{visibility:hidden}[data-subject]{visibility:visible}`});await page.mouse.move(0,0)
   if(body)await expect(subject.locator('[data-mc-label-layout-ready]')).toHaveAttribute("data-mc-label-layout-ready","true")
   else{if(c.state==="hover")await subject.hover();if(c.state==="focus"){await subject.focus();await page.keyboard.press("Tab");await page.keyboard.press("Shift+Tab");await expect(subject).toBeFocused()}}
   for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute("data-mc-label-ready","true")

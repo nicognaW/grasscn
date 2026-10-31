@@ -1,17 +1,14 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/hud.json --yes --overwrite",
-  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/hud.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "hud.tsx",
       "sourcePath": "registry/ui/hud.tsx",
-      "sourceSha256": "304980537dd8d4fdd7b13afe36e7c70103aeb595f63f740237a417c527efd6b7",
-      "installedSha256": "5e0be54c151d8c55556e9887d134ca0193dc9659ccfc5aff6830df6a281e51ce"
+      "sourceSha256": "5573985864fbf776d8b4c89b406fe7fb057a0dc957c004fdb1274839ee196383",
+      "installedSha256": "5573985864fbf776d8b4c89b406fe7fb057a0dc957c004fdb1274839ee196383"
     },
     {
       "path": "minecraft-hud.css",
@@ -22,14 +19,20 @@
     {
       "path": "minecraft-adventure-image.tsx",
       "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
-      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
-      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+      "sourceSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d",
+      "installedSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d"
     },
     {
       "path": "minecraft-adventure-assets.ts",
       "sourcePath": "registry/ui/minecraft-adventure-assets.ts",
       "sourceSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a",
       "installedSha256": "172647f0f4c82366402e201c71bc3196566608b7632205c14394b472cdde459a"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -350,26 +353,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Controlled value props and meter accessibility semantics"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "environment": {
-    "browser": "Microsoft Edge via Playwright",
-    "viewport": [
-      1536,
-      900
-    ],
-    "devicePixelRatio": 1,
-    "scales": [
-      1,
-      2,
-      3
-    ]
-  },
-  "limitations": [
-    "Declared static values and status types only. Damage flashing, hardcore, hunger effects, mount rows, animated air popping and arbitrary maxima are outside this native matrix."
-  ]
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

@@ -32,8 +32,8 @@
     background: var(--mc-toggle-off) center / 100% 100% no-repeat;
     image-rendering: pixelated;
   }
-  .mc-toggle[data-state="on"]::before { background-image: var(--mc-toggle-on); }
+  .mc-toggle[data-pressed]::before { background-image: var(--mc-toggle-on); }
   .mc-toggle:is(:hover, :focus-visible)::before { background-image: var(--mc-toggle-off-highlighted); }
-  .mc-toggle[data-state="on"]:is(:hover, :focus-visible)::before { background-image: var(--mc-toggle-on-highlighted); }
+  .mc-toggle[data-pressed]:is(:hover, :focus-visible)::before { background-image: var(--mc-toggle-on-highlighted); }
   .mc-toggle:is(:disabled, [data-disabled], [aria-disabled="true"]) { cursor: default; }
 }

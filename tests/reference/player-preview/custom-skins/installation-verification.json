@@ -1,11 +1,8 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/player-preview.json --yes --overwrite",
-  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/player-preview.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "minecraft-avatar-assets.ts",
@@ -28,14 +25,20 @@
     {
       "path": "player-preview.tsx",
       "sourcePath": "registry/ui/player-preview.tsx",
-      "sourceSha256": "3d22825b051b9a3325b44297aa03dbfb2b92e7ef494009353a8092caa8aedd46",
-      "installedSha256": "d25bac23c32202a22cf5807a12c472c49fd23cb70400eed8750270943f7f3ecb"
+      "sourceSha256": "65a67363e52dbb3e93f98d88bff3d1323fca96e6d062e97f63ea1ae69854b35e",
+      "installedSha256": "65a67363e52dbb3e93f98d88bff3d1323fca96e6d062e97f63ea1ae69854b35e"
     },
     {
       "path": "minecraft-player-skin.ts",
       "sourcePath": "registry/ui/minecraft-player-skin.ts",
       "sourceSha256": "c528efd99256df1186f02411c55ec42f2f665337105fe9ab3ab222186a238a5e",
       "installedSha256": "13e0182078fec60d3bb4050cdf61bccc615fa7c2b914f3cb54b8c6be94843b07"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -191,36 +194,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Keyboard and pointer rotation, native pitch clamp and Home reset",
-      "Automatic slim Dream selection after Steve preset",
-      "Automatic classic skin selection after Alex preset",
-      "Website Load skin after both presets, with native-exact Dream back pixels",
-      "One-pixel comparator negative control"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "environment": {
-    "browser": "Microsoft Edge via Playwright",
-    "viewport": [
-      1536,
-      900
-    ],
-    "devicePixelRatio": 1,
-    "scales": [
-      1,
-      2,
-      3
-    ],
-    "renderer": "Hardware WebGL2, 32-bit floating depth target and native per-face lighting"
-  },
-  "limitations": [
-    "80x120 logical viewport, scales 1-3, Edge/DPR1 hardware WebGL2: original wide Steve/slim Alex default, front and side poses; frozen Dream slim front, back, angled-back and side; custom wide Steve back and angled-back; builtin Steve/Alex back and angled-back. Other skins, dimensions, poses and raster environments are outside the exact pixel matrix.",
-    "Automatic arm-model inference uses standard transparent unused UV regions in 64x64 PNGs. Nonstandard/ambiguous textures should specify model explicitly; no live Mojang metadata lookup is performed."
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
   ],
-  "evidence": {
-    "installedTestLog": "../../work/grasscn-website/final2/custom-player-installed/stdout.log",
-    "regressionTestLog": "../../work/grasscn-website/final2/custom-skin-installed-final/stdout.log"
-  }
+  "fixtureSha256": "f690c75185670b70ac2de05172a937df8258364a851ef8dfd90035a54b6f72e3"
 }

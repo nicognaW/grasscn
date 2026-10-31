@@ -1,23 +1,20 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/player-list.json --yes --overwrite",
-  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/player-list.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "avatar.tsx",
       "sourcePath": "registry/ui/avatar.tsx",
-      "sourceSha256": "6186345b7dfad298744c315d188fa03cf4a76f5d623103c5fa5d2ebf8a2dfce5",
-      "installedSha256": "dd915cd4686a4c9083d4ea4df5c0dd9458d62b89ac6b520456a9b3c9a314ec74"
+      "sourceSha256": "7cf0586b863313ba492219ddce00e3448232e9ecc18beba37f5429ed920098a4",
+      "installedSha256": "7cf0586b863313ba492219ddce00e3448232e9ecc18beba37f5429ed920098a4"
     },
     {
       "path": "label.tsx",
       "sourcePath": "registry/ui/label.tsx",
-      "sourceSha256": "593ee40f92ae09780497e3fc8ac7023591cb72a2ef3a5939c592497abd799354",
-      "installedSha256": "593ee40f92ae09780497e3fc8ac7023591cb72a2ef3a5939c592497abd799354"
+      "sourceSha256": "efebd9ebb0e00fe099457c3e10108c5f8b2c1304755b6e6d633700b5c67f6e42",
+      "installedSha256": "efebd9ebb0e00fe099457c3e10108c5f8b2c1304755b6e6d633700b5c67f6e42"
     },
     {
       "path": "minecraft-avatar-assets.ts",
@@ -40,8 +37,8 @@
     {
       "path": "minecraft-document-text.tsx",
       "sourcePath": "registry/ui/minecraft-document-text.tsx",
-      "sourceSha256": "fd6742972656ad32702986c9942ef660e4c42a910139f1e825cb457bf81cf8de",
-      "installedSha256": "7faef4791c5518b3d64fc8c8389d29a876a5f228f17f539638b28f8bbccdd0e3"
+      "sourceSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd",
+      "installedSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd"
     },
     {
       "path": "minecraft-font.ts",
@@ -118,14 +115,14 @@
     {
       "path": "minecraft-text.tsx",
       "sourcePath": "registry/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a"
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074"
     },
     {
       "path": "minecraft-unicode-label.tsx",
       "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee"
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995"
     },
     {
       "path": "minecraft-unifont-atlas.ts",
@@ -154,8 +151,14 @@
     {
       "path": "player-list.tsx",
       "sourcePath": "registry/ui/player-list.tsx",
-      "sourceSha256": "d2aae651ec4235d27a87e1239d825681e55102008ea4208732324af3de9156f2",
-      "installedSha256": "d2aae651ec4235d27a87e1239d825681e55102008ea4208732324af3de9156f2"
+      "sourceSha256": "f340ce7666c4db0ba5b1441d55855e670415fb1565b92fe84cfdb0e5917db22e",
+      "installedSha256": "f340ce7666c4db0ba5b1441d55855e670415fb1565b92fe84cfdb0e5917db22e"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -311,16 +314,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Pointer and keyboard player selection without sound",
-      "Maximum80 players and20 rows per column",
-      "Scoreboard descending ranking, internal-name filtering and top15 limit",
-      "One-pixel comparator negative control"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "limitations": [
-    "Thirty declared cases: player rosters with3/7/22/41/80 entries, no score and integer scores, builtin Alex/Steve/Kai heads, eight latency thresholds, single-line header/footer; scoreboards with0/3/18 input entries and top15, scales1-3, Edge/DPR1. Spectators, teams, hearts, custom skins, multiline headers/footers, arbitrary glyphs and raster environments are outside this exact pixel matrix."
-  ]
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

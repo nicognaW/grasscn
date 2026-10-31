@@ -1,2399 +1,358 @@
 {
-  "component": "resizable",
-  "manifest": "tests/reference/pagination-arrow/manifest.json",
-  "targetReport": "tests/reference/resizable/installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://127.0.0.1:5173/r/resizable.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
-    {
-      "path": "minecraft-textarea-assets.ts",
-      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
-      "installedPath": "src/components/ui/minecraft-textarea-assets.ts",
-      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
-      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-pagination-assets.css",
-      "sourcePath": "registry/ui/minecraft-pagination-assets.css",
-      "installedPath": "src/components/ui/minecraft-pagination-assets.css",
-      "sourceSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
-      "installedSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
     {
       "path": "resizable.tsx",
       "sourcePath": "registry/ui/resizable.tsx",
-      "installedPath": "src/components/ui/resizable.tsx",
-      "sourceSha256": "122eec6b7d54d57114b2bafff13a875e147f1e17638111f82ff7f877f7301d42",
-      "installedSha256": "e9aa6baba2a8e77f989b2c662564be1d67f3747d370764688d10e669abd3b9b3",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "6c65f9f87fac4838634be558b3031783ef7d13fe7eec619be1f760229c0b293f",
+      "installedSha256": "6c65f9f87fac4838634be558b3031783ef7d13fe7eec619be1f760229c0b293f"
     },
     {
       "path": "minecraft-resizable.css",
       "sourcePath": "registry/ui/minecraft-resizable.css",
-      "installedPath": "src/components/ui/minecraft-resizable.css",
       "sourceSha256": "5adb145627a0e41d118b3368504dd6832d9f7da19341ac4002b2f84cc818e939",
-      "installedSha256": "5adb145627a0e41d118b3368504dd6832d9f7da19341ac4002b2f84cc818e939",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "5adb145627a0e41d118b3368504dd6832d9f7da19341ac4002b2f84cc818e939"
+    },
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33"
+    },
+    {
+      "path": "minecraft-pagination-assets.css",
+      "sourcePath": "registry/ui/minecraft-pagination-assets.css",
+      "sourceSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
+      "installedSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d"
     },
     {
       "path": "minecraft-resizable-assets.css",
       "sourcePath": "registry/ui/minecraft-resizable-assets.css",
-      "installedPath": "src/components/ui/minecraft-resizable-assets.css",
       "sourceSha256": "e75102c3afbee388635e95e19e78d45b65c202bf54ad144b6f6e4204b9f928c4",
-      "installedSha256": "e75102c3afbee388635e95e19e78d45b65c202bf54ad144b6f6e4204b9f928c4",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "e75102c3afbee388635e95e19e78d45b65c202bf54ad144b6f6e4204b9f928c4"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "pagination-arrow-c0-s1.png",
-      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c0-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-81f6cec0a97ae0ba7149",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-7c7ad--pagination-arrow-c0-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
-        "pngSha256": "cd9d86507d25e4f4d083900b1805b9052719f2371a9aa66857194414d7d436d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc"
     },
     {
       "name": "pagination-arrow-c1-s1.png",
-      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c1-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-cdef336ea43456abf31d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e5474--pagination-arrow-c1-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
-        "pngSha256": "a0a48c8e43e92bcf2ac15cf5279c460adbc166fbbe6bd237875d80cab69151fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39"
     },
     {
       "name": "pagination-arrow-c2-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c2-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-735d9e318d72189c2e6f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-6a4b3--pagination-arrow-c2-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c3-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c3-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-c25a84b1a18dc90f419c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-3a66a--pagination-arrow-c3-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c4-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c4-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-d92307166b2c6be4fbd8",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-67b56--pagination-arrow-c4-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c5-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c5-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-d37290225367b929ba01",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-03890--pagination-arrow-c5-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c6-s1.png",
-      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c6-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-29348639aa1a2c6c1cc8",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-d54d7--pagination-arrow-c6-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
-        "pngSha256": "cd9d86507d25e4f4d083900b1805b9052719f2371a9aa66857194414d7d436d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc"
     },
     {
       "name": "pagination-arrow-c7-s1.png",
-      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c7-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-cea01bd64e9c289b8e1a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-acf34--pagination-arrow-c7-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
-        "pngSha256": "a0a48c8e43e92bcf2ac15cf5279c460adbc166fbbe6bd237875d80cab69151fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39"
     },
     {
       "name": "pagination-arrow-c8-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c8-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-809325f632f2c6097b17",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-03cd1--pagination-arrow-c8-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c9-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s1.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c9-s1.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-ff3a9aed9bef6bd4367a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-020b0--pagination-arrow-c9-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c10-s1.png",
-      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c10-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-c58c016977c37d9e588e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-574f0-pagination-arrow-c10-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
-        "pngSha256": "fe960f4cf6ffe635510ae6bb2179fd52fb71331d9a106ba21f1aa2395517c876",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326"
     },
     {
       "name": "pagination-arrow-c11-s1.png",
-      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c11-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-87d87a9dc04214deb108",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-709af-pagination-arrow-c11-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
-        "pngSha256": "2262705b3c714dd906c195ee4e6a91bbe5ff5e3f785c52446dcc58294334d984",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f"
     },
     {
       "name": "pagination-arrow-c12-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c12-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-3295b1e2cb4b733dbd5a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e761b-pagination-arrow-c12-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c13-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c13-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-e8ac1e02f034b6ff603a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-581a4-pagination-arrow-c13-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c14-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c14-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-11ac1948477b21ddfbb1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-4e928-pagination-arrow-c14-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c15-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c15-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-90dc26c75867b2595fe9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-2f087-pagination-arrow-c15-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c16-s1.png",
-      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c16-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-da87ea87b1092d9a6c01",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e764a-pagination-arrow-c16-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
-        "pngSha256": "fe960f4cf6ffe635510ae6bb2179fd52fb71331d9a106ba21f1aa2395517c876",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326"
     },
     {
       "name": "pagination-arrow-c17-s1.png",
-      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c17-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-68816b3d725655498f61",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-f2cba-pagination-arrow-c17-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
-        "pngSha256": "2262705b3c714dd906c195ee4e6a91bbe5ff5e3f785c52446dcc58294334d984",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f"
     },
     {
       "name": "pagination-arrow-c18-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c18-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-ad3b6115af1528eb7356",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-65509-pagination-arrow-c18-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c19-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s1.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c19-s1.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "1",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-63631d72e657f11af780",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=1&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-7a6d3-pagination-arrow-c19-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c0-s2.png",
-      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c0-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-3f1360df6678b66a9404",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-28ca3--pagination-arrow-c0-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
-        "pngSha256": "89bf6f3b718c6d77cdabafa3a69f8e535bc2240ee9f6790f9ef7c775fea1a88c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee"
     },
     {
       "name": "pagination-arrow-c1-s2.png",
-      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c1-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-b71ae7d8af37da280bab",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e6e7d--pagination-arrow-c1-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
-        "pngSha256": "679b05f9c56480beeccb25d8c7e64f39c56e7b2fb33d05c20dc04be3cf0d097a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284"
     },
     {
       "name": "pagination-arrow-c2-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c2-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-96dd393324d1af8f665f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-2d7f3--pagination-arrow-c2-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c3-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c3-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-d7524a61a0a3c72269ee",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-31753--pagination-arrow-c3-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c4-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c4-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-b1ebacd1a2fe08e776af",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-ef2d1--pagination-arrow-c4-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c5-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c5-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-5e0c2d0fc8e91e6876cf",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-d4b0f--pagination-arrow-c5-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c6-s2.png",
-      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c6-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-0b9fa5a176335eecf65b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-73f3b--pagination-arrow-c6-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
-        "pngSha256": "89bf6f3b718c6d77cdabafa3a69f8e535bc2240ee9f6790f9ef7c775fea1a88c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee"
     },
     {
       "name": "pagination-arrow-c7-s2.png",
-      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c7-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-45b92e199a67cf9c137e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-6db8f--pagination-arrow-c7-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
-        "pngSha256": "679b05f9c56480beeccb25d8c7e64f39c56e7b2fb33d05c20dc04be3cf0d097a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284"
     },
     {
       "name": "pagination-arrow-c8-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c8-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-179bc43785e3943a686d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-b218c--pagination-arrow-c8-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c9-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s2.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c9-s2.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-138145a79a4f3b31dc1e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-b8e47--pagination-arrow-c9-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c10-s2.png",
-      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c10-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-5b05b3a245f3295c656d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-a30b3-pagination-arrow-c10-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
-        "pngSha256": "a84ad5cdc33ea029ee2e533e3412ffb324379de8a58dfa9e20a333c5525851b2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0"
     },
     {
       "name": "pagination-arrow-c11-s2.png",
-      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c11-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-a1dce6cc8427f32cd1ab",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-f189d-pagination-arrow-c11-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
-        "pngSha256": "7382bfc5bf86a41b7865de4e680a1a756f50760b57cb5a0a16c05cab7b0d736d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872"
     },
     {
       "name": "pagination-arrow-c12-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c12-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-1b6d502f9af7c4c73ebe",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-5c849-pagination-arrow-c12-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c13-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c13-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-d8644e10217c4654de9a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-09d48-pagination-arrow-c13-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c14-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c14-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-f56e8c0e059cc13d91d4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-6486b-pagination-arrow-c14-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c15-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c15-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-b5a4e6b0589e87d8768e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-547b0-pagination-arrow-c15-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c16-s2.png",
-      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c16-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-43882cdcfaeb70c445cb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-dd9b2-pagination-arrow-c16-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
-        "pngSha256": "a84ad5cdc33ea029ee2e533e3412ffb324379de8a58dfa9e20a333c5525851b2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0"
     },
     {
       "name": "pagination-arrow-c17-s2.png",
-      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c17-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-bad2b2384788174974b4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-17598-pagination-arrow-c17-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
-        "pngSha256": "7382bfc5bf86a41b7865de4e680a1a756f50760b57cb5a0a16c05cab7b0d736d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872"
     },
     {
       "name": "pagination-arrow-c18-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c18-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-51bf54190ebe2a28a7f6",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-1c6dd-pagination-arrow-c18-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c19-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s2.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c19-s2.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "2",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-f5b7632459d4adf602f1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=2&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-d660a-pagination-arrow-c19-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c0-s3.png",
-      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c0-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-83a0a276551dbd06e88b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-c3083--pagination-arrow-c0-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
-        "pngSha256": "77796e950df250453fa4a06ba58817f09a0701c74cb4c80739e269590c1d775b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed"
     },
     {
       "name": "pagination-arrow-c1-s3.png",
-      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c1-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-5d6270aa3cb1cdd95aaf",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-fa593--pagination-arrow-c1-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
-        "pngSha256": "e49891c4a203e309f5ab126043e44d036250dd004615f8a2ab2690875c5c8b43",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84"
     },
     {
       "name": "pagination-arrow-c2-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c2-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-b0a4d4b163f91cbced6d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-56c82--pagination-arrow-c2-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c3-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c3-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-3fc81feead36f3c98694",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-813b9--pagination-arrow-c3-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c4-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c4-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-f3e2fee8978350786555",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-1bd56--pagination-arrow-c4-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c5-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c5-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-d844ac97df8be3ec1101",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-cd4e1--pagination-arrow-c5-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c6-s3.png",
-      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c6-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-04081218e1422e4c4de5",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-4a9a1--pagination-arrow-c6-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
-        "pngSha256": "77796e950df250453fa4a06ba58817f09a0701c74cb4c80739e269590c1d775b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed"
     },
     {
       "name": "pagination-arrow-c7-s3.png",
-      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c7-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-5ecf0d262474b28c97a2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-c084d--pagination-arrow-c7-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
-        "pngSha256": "e49891c4a203e309f5ab126043e44d036250dd004615f8a2ab2690875c5c8b43",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84"
     },
     {
       "name": "pagination-arrow-c8-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c8-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-4da34f0dde04a045e12f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-4f19d--pagination-arrow-c8-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c9-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s3.png",
-        "part": "backward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c9-s3.png",
-          "part": "backward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-cfd3ea3ad9a451ac174e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-57072--pagination-arrow-c9-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c10-s3.png",
-      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c10-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-f2930fbbf292b2d9c6b3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-f17cc-pagination-arrow-c10-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
-        "pngSha256": "0c0a371e222c4d328abdc9d137b0492e06cff21ddeaa25ab11f8ce0cd8da361b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801"
     },
     {
       "name": "pagination-arrow-c11-s3.png",
-      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c11-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-43d2eb1d0ec1dce3072d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-c1abb-pagination-arrow-c11-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
-        "pngSha256": "f0b0b1e0843a9120f5a35854f3180ef52a48aa47799b6b90d0438e3cf2defa5c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519"
     },
     {
       "name": "pagination-arrow-c12-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c12-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-be097e89efc794ad9911",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-15a83-pagination-arrow-c12-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c13-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c13-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-e618b6d06edf0f2cd0fe",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-d4e5d-pagination-arrow-c13-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     },
     {
       "name": "pagination-arrow-c14-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c14-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020"
-        },
-        "testId": "7bec589ade1fa1fb714f-b0b3e15a3b9f44b1d229",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e05df-pagination-arrow-c14-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c15-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c15-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080"
-        },
-        "testId": "7bec589ade1fa1fb714f-97b19cd0c481655ec8ac",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-e0f62-pagination-arrow-c15-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     },
     {
       "name": "pagination-arrow-c16-s3.png",
-      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c16-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-627253230e2d539f14c3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-0b011-pagination-arrow-c16-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
-        "pngSha256": "0c0a371e222c4d328abdc9d137b0492e06cff21ddeaa25ab11f8ce0cd8da361b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801"
     },
     {
       "name": "pagination-arrow-c17-s3.png",
-      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c17-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-cbc7f2be970bea5d9001",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-a2935-pagination-arrow-c17-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
-        "pngSha256": "f0b0b1e0843a9120f5a35854f3180ef52a48aa47799b6b90d0438e3cf2defa5c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519"
     },
     {
       "name": "pagination-arrow-c18-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c18-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#202020",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-0b02f50599c110a52954",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23202020&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-437a1-pagination-arrow-c18-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c19-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "resizable",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s3.png",
-        "part": "forward-arrow",
-        "alias": "base",
-        "variants": {
-          "component": "resizable",
-          "manifest": "tests/reference/pagination-arrow/manifest.json",
-          "case": "pagination-arrow-c19-s3.png",
-          "part": "forward-arrow",
-          "alias": "base"
-        },
-        "query": {
-          "component": "resizable",
-          "scale": "3",
-          "background": "#808080",
-          "disabled": "1"
-        },
-        "testId": "7bec589ade1fa1fb714f-cee0415dd0bc2a9394ef",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=resizable&scale=3&background=%23808080&disabled=1",
-        "subjectSlot": "resizable-handle",
-        "subjectElement": "DIV",
-        "joinBasis": "explicit-metrics",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\resizable-Resizable-origin-b713e-pagination-arrow-c19-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.579Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
   "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "typecheck": {
+    "passed": true
+  },
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

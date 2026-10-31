@@ -1,11 +1,8 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/sign.json --yes --overwrite",
-  "consumer": "Separate initialized Vite/React consumer with independent npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/sign.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "minecraft-adventure-assets.ts",
@@ -16,8 +13,8 @@
     {
       "path": "minecraft-document-text.tsx",
       "sourcePath": "registry/ui/minecraft-document-text.tsx",
-      "sourceSha256": "fd6742972656ad32702986c9942ef660e4c42a910139f1e825cb457bf81cf8de",
-      "installedSha256": "7faef4791c5518b3d64fc8c8389d29a876a5f228f17f539638b28f8bbccdd0e3"
+      "sourceSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd",
+      "installedSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd"
     },
     {
       "path": "minecraft-font.ts",
@@ -40,8 +37,8 @@
     {
       "path": "minecraft-sign-paint.tsx",
       "sourcePath": "registry/ui/minecraft-sign-paint.tsx",
-      "sourceSha256": "0460647b10d41f1f0fb93908954f0bc39042e64b20a922d56517ac5ef1ed0c99",
-      "installedSha256": "0460647b10d41f1f0fb93908954f0bc39042e64b20a922d56517ac5ef1ed0c99"
+      "sourceSha256": "f29ef6aee2087facf375787ec17f687c69cebd552aa84a9365d3c28cd54de1d0",
+      "installedSha256": "f29ef6aee2087facf375787ec17f687c69cebd552aa84a9365d3c28cd54de1d0"
     },
     {
       "path": "minecraft-sign.css",
@@ -76,8 +73,14 @@
     {
       "path": "sign.tsx",
       "sourcePath": "registry/ui/sign.tsx",
-      "sourceSha256": "a3d068513870e4805c3566ff3289362eca83be341527ed21264c1e30e8e6f591",
-      "installedSha256": "5441115714bd2bab0b0cd05ff7a48353a6a0c537de3992d8ce3ff31a8042f013"
+      "sourceSha256": "a5d2379dcb8d6928773921d4cd1ed447bebf6da68dd0fbaab443d18af432370d",
+      "installedSha256": "a5d2379dcb8d6928773921d4cd1ed447bebf6da68dd0fbaab443d18af432370d"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -803,26 +806,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Readonly semantic group with real accessible text; public lines/wood/glowing props"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "environment": {
-    "browser": "Microsoft Edge via Playwright",
-    "viewport": [
-      1536,
-      900
-    ],
-    "devicePixelRatio": 1,
-    "scales": [
-      1,
-      2,
-      3
-    ]
-  },
-  "limitations": [
-    "Standing/hanging sign display, all 12 woods, black regular/glowing ASCII text, scales 1-3, fixed viewport1536x900 and integer positions. Other glyphs, colours and raster environments are outside the pixel matrix."
-  ]
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

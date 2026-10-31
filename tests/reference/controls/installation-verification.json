@@ -1,1067 +1,170 @@
 {
-  "component": "checkbox",
-  "manifest": "tests/reference/controls/manifest.json",
-  "targetReport": "tests/reference/controls/installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://localhost:5173/r/checkbox.json --yes --overwrite",
+  "consumer": "separate initialized shadcn Vite/React consumer",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "caseIsolation": "Fresh page/context every64 cases; browser restarted every256 cases",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
-      "path": "minecraft-sound.ts",
-      "sourcePath": "registry/ui/minecraft-sound.ts",
-      "installedPath": "src/components/ui/minecraft-sound.ts",
-      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-sound-assets.ts",
-      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
-      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
-      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
       "path": "checkbox.tsx",
-      "sourcePath": "registry/ui/checkbox.tsx",
-      "installedPath": "src/components/ui/checkbox.tsx",
-      "sourceSha256": "898f25419a1f33e6b2a9c64ad4b0607ac1bc4a37abfa2470544b521b7c339007",
-      "installedSha256": "898f25419a1f33e6b2a9c64ad4b0607ac1bc4a37abfa2470544b521b7c339007",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "3a4c98239c5d177bcf0dc600dabd96ee40473fb463c677ec511c6a5dddd76223",
+      "sourceSha256": "3a4c98239c5d177bcf0dc600dabd96ee40473fb463c677ec511c6a5dddd76223",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-checkbox.css",
-      "sourcePath": "registry/ui/minecraft-checkbox.css",
-      "installedPath": "src/components/ui/minecraft-checkbox.css",
-      "sourceSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
-      "installedSha256": "df93645e633861efcf3bd8bd6eb38093cd0f16d7039924508244ee5a7e0f934c",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "dd9ca05f5bf3f9aabf00c0c9120d2cb1ec52f362bdec3a4a5f3dee927f0de3d7",
+      "sourceSha256": "dd9ca05f5bf3f9aabf00c0c9120d2cb1ec52f362bdec3a4a5f3dee927f0de3d7",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-control-assets.css",
-      "sourcePath": "registry/ui/minecraft-control-assets.css",
-      "installedPath": "src/components/ui/minecraft-control-assets.css",
-      "sourceSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
       "installedSha256": "63a88789ebb8baef5eb3dd08b7d6822a2a3c557bf40862d8f44035d96278fc1b",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "checkbox-unchecked-normal-s1.png",
-      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-normal-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-normal-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "normal",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-589698f2c292e6032a49",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=normal&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-cc426-box-unchecked-normal-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-normal-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
-        "pngSha256": "c1659920e97b0c5c69fa6f9b58df80ac11fda1df1f973ffd8a2e6338cdf57da2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
     },
     {
       "name": "checkbox-unchecked-hover-s1.png",
-      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-hover-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-hover-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "hover",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-2fc1ea5728fa950176a5",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=hover&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-7b010-kbox-unchecked-hover-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-hover-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
-        "pngSha256": "c1659920e97b0c5c69fa6f9b58df80ac11fda1df1f973ffd8a2e6338cdf57da2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
     },
     {
       "name": "checkbox-unchecked-focus-s1.png",
-      "decodedRgbaSha256": "13e22886df3b4906d13ab13ddab7a730cec25022e3399fe2f4d30c351cd94554",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-focus-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-focus-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "focus",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-e6920b316ecd7a08ae93",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=focus&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-4ee27-kbox-unchecked-focus-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-focus-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "13e22886df3b4906d13ab13ddab7a730cec25022e3399fe2f4d30c351cd94554",
-        "pngSha256": "352fc475dce35347c4558270e29b5a71d9ba3938be946dda35a3a0509f0a29a2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "13e22886df3b4906d13ab13ddab7a730cec25022e3399fe2f4d30c351cd94554"
     },
     {
       "name": "checkbox-unchecked-disabled-s1.png",
-      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-disabled-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-disabled-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "disabled",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-22eedba41140347431e9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=disabled&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-0b4fb-x-unchecked-disabled-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-disabled-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f",
-        "pngSha256": "c1659920e97b0c5c69fa6f9b58df80ac11fda1df1f973ffd8a2e6338cdf57da2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6ba521438dd10e726f1784e3f94dcb4166f969bc92c536030e3490be4e6b2f1f"
     },
     {
       "name": "checkbox-checked-normal-s1.png",
-      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-normal-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-normal-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "normal",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-69824b92fb5a398ef2e4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=normal&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-5ee4b-ckbox-checked-normal-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-normal-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
-        "pngSha256": "41775a15a5871b5b42af944402cbb9e0bfc6bdaa9350552349da5fc76e05ccb3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
     },
     {
       "name": "checkbox-checked-hover-s1.png",
-      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-hover-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-hover-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "hover",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-bf83ed994c1a301acec2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=hover&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-hover-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-hover-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
-        "pngSha256": "41775a15a5871b5b42af944402cbb9e0bfc6bdaa9350552349da5fc76e05ccb3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
     },
     {
       "name": "checkbox-checked-focus-s1.png",
-      "decodedRgbaSha256": "7df773b49f893559fd99043ebef36c7b520b4c1f5f6aa8a169840b8006b3e820",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-focus-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-focus-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "focus",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-e1ba05f6232cc5b79a60",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=focus&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-focus-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-focus-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7df773b49f893559fd99043ebef36c7b520b4c1f5f6aa8a169840b8006b3e820",
-        "pngSha256": "094b7626fb98ea07b513809d429626e8b0a167eac99d7fafc5f76f7ce550f1e7",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7df773b49f893559fd99043ebef36c7b520b4c1f5f6aa8a169840b8006b3e820"
     },
     {
       "name": "checkbox-checked-disabled-s1.png",
-      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-disabled-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-disabled-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 289,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "1",
-          "state": "disabled",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-66f6e6d38f0b646d4506",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=1&state=disabled&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-e6997-box-checked-disabled-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-disabled-s1.png",
-        "width": 17,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27",
-        "pngSha256": "41775a15a5871b5b42af944402cbb9e0bfc6bdaa9350552349da5fc76e05ccb3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "17f92f38150bfcad0aa4aabf6c7487b6699599fc4c8516a8db28e00058f6be27"
     },
     {
       "name": "checkbox-unchecked-normal-s2.png",
-      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-normal-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-normal-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "normal",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-e10097b6e2511a8a2086",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=normal&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-883a8-box-unchecked-normal-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-normal-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
-        "pngSha256": "dc45fc6850a985a407ae5278b2cda9cf6404d14b9f42d5b8f53f478b8c8b7efe",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
     },
     {
       "name": "checkbox-unchecked-hover-s2.png",
-      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-hover-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-hover-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "hover",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-d6d91327e0001121878a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=hover&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-a9c6f-kbox-unchecked-hover-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-hover-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
-        "pngSha256": "dc45fc6850a985a407ae5278b2cda9cf6404d14b9f42d5b8f53f478b8c8b7efe",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
     },
     {
       "name": "checkbox-unchecked-focus-s2.png",
-      "decodedRgbaSha256": "a5aa3c87b02c7f65a84cf85a26919c2df2713ad750f9fd0d2c0ab2b50e76d884",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-focus-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-focus-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "focus",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-1f7c782c50e3405c0b5d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=focus&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-e5394-kbox-unchecked-focus-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-focus-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a5aa3c87b02c7f65a84cf85a26919c2df2713ad750f9fd0d2c0ab2b50e76d884",
-        "pngSha256": "28c034adc13d90b271d4049b761f6d900ca782582966e1b3b4f72c5e303bec1c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a5aa3c87b02c7f65a84cf85a26919c2df2713ad750f9fd0d2c0ab2b50e76d884"
     },
     {
       "name": "checkbox-unchecked-disabled-s2.png",
-      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-disabled-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-disabled-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "disabled",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-15776820688474abd65d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=disabled&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-80300-x-unchecked-disabled-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-disabled-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032",
-        "pngSha256": "dc45fc6850a985a407ae5278b2cda9cf6404d14b9f42d5b8f53f478b8c8b7efe",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "93aca9334263c0abc72890c05f533780cf85c5802e67ce98ef9cf02937794032"
     },
     {
       "name": "checkbox-checked-normal-s2.png",
-      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-normal-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-normal-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "normal",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-1990564e99f607e452a3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=normal&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-52ea8-ckbox-checked-normal-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-normal-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
-        "pngSha256": "1d15d30f9ca232ac143825003c997cb172e8178ee686c914759358f1343e9f44",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
     },
     {
       "name": "checkbox-checked-hover-s2.png",
-      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-hover-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-hover-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "hover",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-ecf0cdfd956389573c02",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=hover&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-hover-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-hover-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
-        "pngSha256": "1d15d30f9ca232ac143825003c997cb172e8178ee686c914759358f1343e9f44",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
     },
     {
       "name": "checkbox-checked-focus-s2.png",
-      "decodedRgbaSha256": "13aea591213b02ce7c02372bacf760592c40556af208dbeec3026089cd0863b1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-focus-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-focus-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "focus",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-031e7cb0210ea1207882",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=focus&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-focus-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-focus-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "13aea591213b02ce7c02372bacf760592c40556af208dbeec3026089cd0863b1",
-        "pngSha256": "946272f044631f853bd7e8415675c11270e061d238832a1059ac5efb8e90a226",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "13aea591213b02ce7c02372bacf760592c40556af208dbeec3026089cd0863b1"
     },
     {
       "name": "checkbox-checked-disabled-s2.png",
-      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-disabled-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-disabled-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 1156,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "2",
-          "state": "disabled",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-879c1156ed34f724b58a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=2&state=disabled&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-14478-box-checked-disabled-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-disabled-s2.png",
-        "width": 34,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef",
-        "pngSha256": "1d15d30f9ca232ac143825003c997cb172e8178ee686c914759358f1343e9f44",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "78a1965bd17220d81c1da755eb140dac2843dcbf542652bb520092cd812fa1ef"
     },
     {
       "name": "checkbox-unchecked-normal-s3.png",
-      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-normal-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-normal-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "normal",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-23476c31885a09ff3b8d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=normal&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-7e185-box-unchecked-normal-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-normal-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
-        "pngSha256": "b7251cdca5810b22f79edcef76e824c4d5420e000b3d0f321c65ad382061b46a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
     },
     {
       "name": "checkbox-unchecked-hover-s3.png",
-      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-hover-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-hover-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "hover",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-2b824f132d279ef5f371",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=hover&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-15ba1-kbox-unchecked-hover-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-hover-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
-        "pngSha256": "b7251cdca5810b22f79edcef76e824c4d5420e000b3d0f321c65ad382061b46a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
     },
     {
       "name": "checkbox-unchecked-focus-s3.png",
-      "decodedRgbaSha256": "39bce04967376c7ee04485319c9cd95556ef14d3442063a7bc4904b32b49d206",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-focus-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-focus-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "focus",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-2f137f242f99f89e7e11",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=focus&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-38158-kbox-unchecked-focus-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-focus-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "39bce04967376c7ee04485319c9cd95556ef14d3442063a7bc4904b32b49d206",
-        "pngSha256": "24fb0d727bde35af46f3577645bab2c99bb31e462f64b3c269b489356598e54f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "39bce04967376c7ee04485319c9cd95556ef14d3442063a7bc4904b32b49d206"
     },
     {
       "name": "checkbox-unchecked-disabled-s3.png",
-      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-unchecked-disabled-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-unchecked-disabled-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "disabled",
-          "checked": "false"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-8c2b275ca22fb60b1638",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=disabled&checked=false",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-97f1e-x-unchecked-disabled-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-unchecked-disabled-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e",
-        "pngSha256": "b7251cdca5810b22f79edcef76e824c4d5420e000b3d0f321c65ad382061b46a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "00ca562f8a7e1b2e797df5123032378ea1149ac4dab0ca00fdbd6ff3a00fa69e"
     },
     {
       "name": "checkbox-checked-normal-s3.png",
-      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-normal-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-normal-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "normal",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-8cbed7f82d01f0eebec7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=normal&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-65670-ckbox-checked-normal-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-normal-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
-        "pngSha256": "8c531c92f63ffcab09b44849c8ca130bb345abb59420b208454fafbe40430291",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
     },
     {
       "name": "checkbox-checked-hover-s3.png",
-      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-hover-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-hover-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "hover",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-e77de61d7484b794bf5b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=hover&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-hover-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-hover-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
-        "pngSha256": "8c531c92f63ffcab09b44849c8ca130bb345abb59420b208454fafbe40430291",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
     },
     {
       "name": "checkbox-checked-focus-s3.png",
-      "decodedRgbaSha256": "a7e242d4e77f78075298b502dae6efda087a2bf9bac23af09498b0393e8ee474",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-focus-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-focus-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "focus",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-a9355aa05af42b336eaf",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=focus&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pixels-checkbox-checked-focus-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-focus-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a7e242d4e77f78075298b502dae6efda087a2bf9bac23af09498b0393e8ee474",
-        "pngSha256": "ede1734e414af8f2cf88feb64288aa2aef44cdb16bd6da10147914f584ac5a09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a7e242d4e77f78075298b502dae6efda087a2bf9bac23af09498b0393e8ee474"
     },
     {
       "name": "checkbox-checked-disabled-s3.png",
-      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "checkbox",
-        "manifest": "tests/reference/controls/manifest.json",
-        "case": "checkbox-checked-disabled-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "checkbox-checked-disabled-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 2601,
-          "tolerance": 0,
-          "component": "checkbox"
-        },
-        "query": {
-          "component": "checkbox",
-          "scale": "3",
-          "state": "disabled",
-          "checked": "true"
-        },
-        "testId": "b018fb422dd9cd1fd1e5-74349d2e534c44c7adbb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=checkbox&scale=3&state=disabled&checked=true",
-        "subjectSlot": "checkbox",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\controls-Control-native-pi-c0f25-box-checked-disabled-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\controls\\captures\\checkbox-checked-disabled-s3.png",
-        "width": 51,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2",
-        "pngSha256": "8c531c92f63ffcab09b44849c8ca130bb345abb59420b208454fafbe40430291",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b2c010df258018d9e8eec17983866eff46f1d3a32ba436ad6f3cadf35015d0c2"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.249Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
-  "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "pageErrors": []
 }

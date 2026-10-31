@@ -17,10 +17,10 @@ test("Toggle preview supports CJK labels, native pressed state and disabling",as
 
 test("Toggle Group preview exposes independent single and multiple values",async({page})=>{
  await page.goto(`${origin}#toggle-group`)
- const single=page.getByRole('radiogroup',{name:'One recipe station'}),multiple=page.getByRole('toolbar',{name:'Several recipe stations'})
- await single.getByRole('radio',{name:'Furnace recipes'}).click();await expect(page.getByLabel('Single recipe station')).toHaveText('furnace')
+ const single=page.getByRole('group',{name:'One recipe station'}),multiple=page.getByRole('group',{name:'Several recipe stations'})
+ await single.getByRole('button',{name:'Furnace recipes'}).click();await expect(page.getByLabel('Single recipe station')).toHaveText('furnace')
  await multiple.getByRole('button',{name:'Stonecutter recipes'}).click();await expect(page.getByLabel('Multiple recipe stations')).toHaveText('crafting, stonecutter')
- await page.getByRole('button',{name:'Disable filters',exact:true}).click();await expect(single.getByRole('radio').first()).toBeDisabled();await expect(multiple.getByRole('button').first()).toBeDisabled()
+ await page.getByRole('button',{name:'Disable filters',exact:true}).click();await expect(single.getByRole('button').first()).toBeDisabled();await expect(multiple.getByRole('button').first()).toBeDisabled()
  await page.getByRole('button',{name:'Reset filters',exact:true}).click();await expect(page.getByLabel('Single recipe station')).toHaveText('crafting');await expect(page.getByLabel('Multiple recipe stations')).toHaveText('crafting')
 })
 
@@ -144,7 +144,7 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
   expect(errors).toEqual([])
 })
 async function focusByKeyboard(page: Page, locator: Locator) {
-  for (let i = 0; i < 24; i++) {
+  for (let i = 0; i < 256; i++) {
     await page.keyboard.press("Tab")
     if (await locator.evaluate(element => element === document.activeElement)) return
   }
@@ -417,6 +417,9 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   await page.getByRole("button", { name: "More tab: Enabled", exact: true }).click()
   await world.focus()
   await page.keyboard.press("ArrowRight")
+  await expect(page.getByRole("tab", { name: "More", exact: true })).toBeFocused()
+  await expect(world).toHaveAttribute("aria-selected", "true")
+  await page.keyboard.press("ArrowRight")
   await expect(page.getByRole("tab", { name: "Game", exact: true })).toBeFocused()
   await expect(page.getByLabel("Tabs world name", { exact: true })).toHaveValue("我的世界")
   await page.getByLabel("First tab title", { exact: true }).fill("你好，世界")
@@ -441,6 +444,9 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   await trigger.focus()
   await page.keyboard.press("ArrowDown")
   await expect(page.getByRole("option", { name: "Survival", exact: true })).toBeFocused()
+  await page.keyboard.press("ArrowDown")
+  await expect(page.getByRole("option", { name: "Creative", exact: true })).toBeFocused()
+  await expect(page.getByRole("option", { name: "Creative", exact: true })).toHaveAttribute("aria-disabled", "true")
   await page.keyboard.press("ArrowDown")
   await expect(page.getByRole("option", { name: "Adventure", exact: true })).toBeFocused()
   await page.keyboard.press("Enter")

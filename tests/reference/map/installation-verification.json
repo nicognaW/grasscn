@@ -1,11 +1,8 @@
 {
-  "command": "shadcn add http://127.0.0.1:5355/r/map.json --yes --overwrite",
-  "consumer": "Independent initialized Vite/React consumer and npm dependencies",
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "command": "shadcn add http://127.0.0.1:5173/r/map.json --yes --overwrite",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
   "consumerRsc": false,
-  "typecheck": {
-    "passed": true
-  },
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "minecraft-adventure-assets.ts",
@@ -16,8 +13,8 @@
     {
       "path": "minecraft-adventure-image.tsx",
       "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
-      "sourceSha256": "9c4e61ed90c964e8dbff355a6744ba9fb2cb400d2bd68638bb4724276a759d77",
-      "installedSha256": "a242b6e78a9858cfa40c72b38dde8929c802e80bfce403e997fcc8052bc4a757"
+      "sourceSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d",
+      "installedSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d"
     },
     {
       "path": "minecraft-map-palette.ts",
@@ -46,8 +43,14 @@
     {
       "path": "map.tsx",
       "sourcePath": "registry/ui/map.tsx",
-      "sourceSha256": "f45a8a6960baaa6f3bd716e721c5a4f2ac1dab081f8a16e7de5c76c29f827955",
-      "installedSha256": "d7f2bb98becc20e9690e84ae10ee58d2eb56440d7685f8ad14d7f84f56e58b73"
+      "sourceSha256": "0c2038308843be575c9a049cda5c2ceac074b8e296057db2b2892155626787ff",
+      "installedSha256": "0c2038308843be575c9a049cda5c2ceac074b8e296057db2b2892155626787ff"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0"
     }
   ],
   "cases": [
@@ -143,16 +146,15 @@
     }
   ],
   "pageErrors": [],
-  "behavior": {
-    "passed": true,
-    "tests": [
-      "Map click resolves logical coordinates",
-      "Markers activate by pointer and keyboard without triggering terrain click",
-      "Locator viewport bearing clipping and keyboard waypoint activation",
-      "One-pixel comparator negative control"
-    ]
+  "typecheck": {
+    "passed": true
   },
-  "limitations": [
-    "63 declared cases at scales 1-3 in Edge/DPR1: terrain, all 256 palette indices, transparent map, frame/village decorations at rotations 0/4/7; white/green locator dots at seven bearings and empty locator. Other marker types, altitude arrows, distance shapes, viewports and raster environments are outside this exact matrix."
-  ]
+  "negativeControlMismatchedPixels": 1,
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1536,
+    900
+  ],
+  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
 }

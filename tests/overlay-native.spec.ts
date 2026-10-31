@@ -19,9 +19,9 @@ for(const component of ["sheet","drawer","alert"]){
      const q=new URLSearchParams({component,native:"1",part,width:String(c.width),height:String(c.height),scale:String(c.scale),background:c.background,x:String(c.x),y:String(c.y),align:c.alignment??"left"})
      if(c.label!=null)q.set("label",c.label);if(c.text!=null)q.set("text",c.text);if(c.wrapWidth!=null)q.set("wrapWidth",String(c.wrapWidth))
      await page.goto(`/?${q}`)
-     const subject=page.locator("#subject");await expect(subject).toBeVisible()
+     const subject=page.locator("[data-subject]");await expect(subject).toBeVisible()
      await expect(subject).toHaveAttribute("data-slot",component==="alert"?"alert":`${component}-${part==="surface"?"content":part}`)
-     await page.addStyleTag({content:`#root{visibility:hidden}#subject{visibility:visible}[data-slot="${component}-overlay"]{visibility:hidden!important}${component==="alert"?"":`[data-slot="${component}-content"]{visibility:hidden}#subject{visibility:visible}`}`})
+     await page.addStyleTag({content:`#root{visibility:hidden}[data-subject]{visibility:visible}[data-slot="${component}-overlay"]{visibility:hidden!important}${component==="alert"?"":`[data-slot="${component}-content"]{visibility:hidden}[data-subject]{visibility:visible}`}`})
      await page.mouse.move(0,0)
      if(directory==="label"){await expect(subject).toHaveAttribute("data-mc-label-layout-ready","true");for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute("data-mc-label-ready","true")}
      await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))

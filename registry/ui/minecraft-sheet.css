@@ -7,7 +7,7 @@
  .mc-sheet-content[data-side="right"] {right:0;top:0;bottom:0;width:calc(250px * var(--mc-scale,2));}
  .mc-sheet-content[data-side="top"] {left:0;right:0;top:0;}
  .mc-sheet-content[data-side="bottom"] {left:0;right:0;bottom:0;}
- .mc-sheet-content[data-state="closed"],.mc-sheet-overlay[data-state="closed"] {display:none;}
+ .mc-sheet-content[data-closed],.mc-sheet-overlay[data-closed] {display:none;}
  .mc-sheet-header {display:flex;flex-direction:column;align-items:flex-start;gap:calc(12px * var(--mc-scale,2));}
  .mc-sheet-footer {display:flex;flex-direction:column;align-items:stretch;gap:calc(6px * var(--mc-scale,2));margin-top:auto;}
  .mc-sheet-default-close {margin-top:auto;width:100%;}

@@ -33,10 +33,10 @@ test.describe("Tabs extra native matrix", () => {
   if(c.labels) query.set("labels",JSON.stringify(c.labels))
   if(c.contentHeight) query.set("contentHeight",String(c.contentHeight))
   await page.goto(`/?${query}`)
-  const card=page.locator("#subject")
+  const card=page.locator("[data-subject]")
   await expect(card).toBeVisible()
   await card.evaluate((node,p)=>Object.assign(node.style,{position:"fixed",left:p.x+"px",top:p.y+"px",width:p.width+"px",visibility:"visible"}),{x:c.x*c.scale,y:c.y*c.scale,width:c.width*c.scale})
-  await page.addStyleTag({content: `html,body{background:${c.background}} #root{visibility:hidden} #subject{visibility:visible}`})
+  await page.addStyleTag({content: `html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}`})
   await page.mouse.move(0,0)
   if(c.element==="tabs-trigger") {
     await expect(card).toHaveAttribute("data-mc-tab-ready","true")

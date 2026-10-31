@@ -23,7 +23,7 @@ test.describe("Toggle native recipe-filter matrix",()=>{
  for(const c of manifest.cases)test(`Toggle native pixels: ${c.name}`,async({page},info)=>{
   await page.setViewportSize({width:1536,height:900})
   const params=new URLSearchParams({component:"toggle",scale:String(c.scale),state:c.state,checked:String(c.checked),x:String(c.x),y:String(c.y),background:c.background})
-  await page.goto(`/?${params}`);const subject=page.locator('#subject');await expect(subject).toHaveAttribute('data-slot','toggle');await page.mouse.move(0,0)
+  await page.goto(`/?${params}`);const subject=page.locator('[data-subject]');await expect(subject).toHaveAttribute('data-slot','toggle');await page.mouse.move(0,0)
   if(c.state.endsWith("hover"))await subject.hover()
   if(c.state==='focus'){await subject.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');await expect(subject).toBeFocused()}
   await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))

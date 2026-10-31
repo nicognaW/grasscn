@@ -1,2933 +1,482 @@
 {
-  "component": "popover",
-  "manifest": "tests/reference/popover/manifest.json",
-  "targetReport": null,
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://localhost:5173/r/popover.json --yes --overwrite",
+  "consumer": "separate initialized shadcn Vite/React consumer",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "caseIsolation": "Fresh page/context every64 cases; browser restarted every256 cases",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "button.tsx",
-      "sourcePath": "registry/ui/button.tsx",
-      "installedPath": "src/components/ui/button.tsx",
-      "sourceSha256": "a886121239a46a1470f7568693cded46741f6a13798aa4d1ada885aba1e0a51b",
-      "installedSha256": "e0dc491172d421f4f713cadb39d10ef69016b3fe77124c245b1219be0bae5b1f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-font.ts",
-      "sourcePath": "registry/ui/minecraft-font.ts",
-      "installedPath": "src/components/ui/minecraft-font.ts",
-      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-button.css",
-      "sourcePath": "registry/ui/minecraft-button.css",
-      "installedPath": "src/components/ui/minecraft-button.css",
-      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-assets.css",
-      "sourcePath": "registry/ui/minecraft-assets.css",
-      "installedPath": "src/components/ui/minecraft-assets.css",
-      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
       "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
-      "path": "minecraft-sound.ts",
-      "sourcePath": "registry/ui/minecraft-sound.ts",
-      "installedPath": "src/components/ui/minecraft-sound.ts",
-      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-sound-assets.ts",
-      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
-      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
-      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unicode-label.tsx",
-      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input-assets.ts",
-      "sourcePath": "registry/ui/minecraft-input-assets.ts",
-      "installedPath": "src/components/ui/minecraft-input-assets.ts",
-      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont.ts",
-      "sourcePath": "registry/ui/minecraft-unifont.ts",
-      "installedPath": "src/components/ui/minecraft-unifont.ts",
-      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-data.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
-      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
-      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
-      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.tsx",
-      "sourcePath": "registry/ui/minecraft-surface.tsx",
-      "installedPath": "src/components/ui/minecraft-surface.tsx",
-      "sourceSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "installedSha256": "7fecb328b3c259bd61f9a4fcbf0dd26d362213307ae00e27e8ac753ae2e95ffe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-surface.css",
-      "sourcePath": "registry/ui/minecraft-surface.css",
-      "installedPath": "src/components/ui/minecraft-surface.css",
-      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.tsx",
-      "sourcePath": "registry/ui/minecraft-text.tsx",
-      "installedPath": "src/components/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.css",
-      "sourcePath": "registry/ui/minecraft-text.css",
-      "installedPath": "src/components/ui/minecraft-text.css",
-      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text-assets.css",
-      "sourcePath": "registry/ui/minecraft-text-assets.css",
-      "installedPath": "src/components/ui/minecraft-text-assets.css",
-      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-card.css",
-      "sourcePath": "registry/ui/minecraft-card.css",
-      "installedPath": "src/components/ui/minecraft-card.css",
-      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
-      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "minecraft-button.css",
+      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-card-sprite.ts",
-      "sourcePath": "registry/ui/minecraft-card-sprite.ts",
-      "installedPath": "src/components/ui/minecraft-card-sprite.ts",
-      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
       "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-card-text.tsx",
-      "sourcePath": "registry/ui/minecraft-card-text.tsx",
-      "installedPath": "src/components/ui/minecraft-card-text.tsx",
-      "sourceSha256": "de837b6b062595274e3126604cc4ff232b1bca4c95cef85b7e8c2b8c81ef3714",
       "installedSha256": "de837b6b062595274e3126604cc4ff232b1bca4c95cef85b7e8c2b8c81ef3714",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "de837b6b062595274e3126604cc4ff232b1bca4c95cef85b7e8c2b8c81ef3714",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
-      "path": "minecraft-textarea-assets.ts",
-      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
-      "installedPath": "src/components/ui/minecraft-textarea-assets.ts",
-      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
-      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "path": "minecraft-card.css",
+      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-popover-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-popover-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-popover-atlas.ts",
-      "sourceSha256": "2524e3d6c9614008e1ad54e1490476526d57eb0f1bdde89c3b435d2f37ac92a3",
       "installedSha256": "2524e3d6c9614008e1ad54e1490476526d57eb0f1bdde89c3b435d2f37ac92a3",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "2524e3d6c9614008e1ad54e1490476526d57eb0f1bdde89c3b435d2f37ac92a3",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-popover-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-popover-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-popover-gpu.ts",
-      "sourceSha256": "87373f715cf4927a7ef373f9b060ca05bbf82b9271c1b64437a3ca0f50669e64",
       "installedSha256": "87373f715cf4927a7ef373f9b060ca05bbf82b9271c1b64437a3ca0f50669e64",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "87373f715cf4927a7ef373f9b060ca05bbf82b9271c1b64437a3ca0f50669e64",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-popover-text.tsx",
-      "sourcePath": "registry/ui/minecraft-popover-text.tsx",
-      "installedPath": "src/components/ui/minecraft-popover-text.tsx",
-      "sourceSha256": "168419d0119c6c202a902624876d4f195a60ebbf0dd87b3ee09c27912ac13862",
       "installedSha256": "168419d0119c6c202a902624876d4f195a60ebbf0dd87b3ee09c27912ac13862",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "168419d0119c6c202a902624876d4f195a60ebbf0dd87b3ee09c27912ac13862",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-popover-unicode.tsx",
-      "sourcePath": "registry/ui/minecraft-popover-unicode.tsx",
-      "installedPath": "src/components/ui/minecraft-popover-unicode.tsx",
-      "sourceSha256": "74def4fa4730133fdfd4ffd8f8401a811e7ef11ceff5a1d4daa7ef6c6d2227b8",
       "installedSha256": "74def4fa4730133fdfd4ffd8f8401a811e7ef11ceff5a1d4daa7ef6c6d2227b8",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "74def4fa4730133fdfd4ffd8f8401a811e7ef11ceff5a1d4daa7ef6c6d2227b8",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "minecraft-popover.css",
-      "sourcePath": "registry/ui/minecraft-popover.css",
-      "installedPath": "src/components/ui/minecraft-popover.css",
-      "sourceSha256": "9188018ae9587cfaf92181be310ec2ce41955f3dab585cd17082260f3935ca01",
-      "installedSha256": "9188018ae9587cfaf92181be310ec2ce41955f3dab585cd17082260f3935ca01",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "dc02d7e7f68e6bfcc83ff5057b260bfbadea4ca84de8c460ca9879869a877ce2",
+      "sourceSha256": "dc02d7e7f68e6bfcc83ff5057b260bfbadea4ca84de8c460ca9879869a877ce2",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-surface.css",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     },
     {
       "path": "popover.tsx",
-      "sourcePath": "registry/ui/popover.tsx",
-      "installedPath": "src/components/ui/popover.tsx",
-      "sourceSha256": "39767ef22d68ad44e69149af4b3deeff409d625e7190ee8c9655493ef8d6b679",
-      "installedSha256": "091aea786da57293e5a50baa3e03927f868095670b8688b9ed5c5a2543a92c3c",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "installedSha256": "b5df6c846949872afdf1d7f23a927c9dc8f092ce205bd457836bf98962a842f3",
+      "sourceSha256": "b5df6c846949872afdf1d7f23a927c9dc8f092ce205bd457836bf98962a842f3",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "comparison": "Equal except CLI comment removal and use-client removal for rsc:false; data URIs unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "popover-c0-s1.png",
-      "decodedRgbaSha256": "1d3282b20fffd0742ea02946fae9e9a6fcb168627b5cf328e8a26abe1c12a508",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c0-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c0-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 47200,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-f5113be4d30c06a16331",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-5296a-ve-pixels-popover-c0-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c0-s1.png",
-        "width": 236,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "1d3282b20fffd0742ea02946fae9e9a6fcb168627b5cf328e8a26abe1c12a508",
-        "pngSha256": "8c04b2863597909af078c4b00998c6b568cec0e0905542695f1555b0b32599f1",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "1d3282b20fffd0742ea02946fae9e9a6fcb168627b5cf328e8a26abe1c12a508"
     },
     {
       "name": "popover-c1-s1.png",
-      "decodedRgbaSha256": "ca5d79e8fb8153ed7a662137b70660079fb183b8d3882de194e9aee181f8f66c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c1-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c1-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 47200,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-848bc4f828c2679765fc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-36e64-ve-pixels-popover-c1-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c1-s1.png",
-        "width": 236,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ca5d79e8fb8153ed7a662137b70660079fb183b8d3882de194e9aee181f8f66c",
-        "pngSha256": "c225219347838ae45e202db2acbfe054cf028abee2fe5e6938ea2018a6ac2f6c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ca5d79e8fb8153ed7a662137b70660079fb183b8d3882de194e9aee181f8f66c"
     },
     {
       "name": "popover-c2-s1.png",
-      "decodedRgbaSha256": "4ba2a95430c052d58b5c64968b8ff5c310cf6dd8ffa037e9211d2c3757aa3aa1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c2-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c2-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-0965ccc8e3b374727b87",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-b0d36-ve-pixels-popover-c2-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c2-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "4ba2a95430c052d58b5c64968b8ff5c310cf6dd8ffa037e9211d2c3757aa3aa1",
-        "pngSha256": "96ed321557d96ddcd67c9a6c7c413b65f774770da873e21447cb7eef072fe86d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "4ba2a95430c052d58b5c64968b8ff5c310cf6dd8ffa037e9211d2c3757aa3aa1"
     },
     {
       "name": "popover-c3-s1.png",
-      "decodedRgbaSha256": "3941b2bcfb40af6b690db3eeca50cedf1d20c0234ff3955e9fee04fe8ae25f66",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c3-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c3-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-660309117e23559bfd25",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-9f94a-ve-pixels-popover-c3-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c3-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3941b2bcfb40af6b690db3eeca50cedf1d20c0234ff3955e9fee04fe8ae25f66",
-        "pngSha256": "cc21b2ac6eb571987a659663f03f08511d38e708ef1340bb71fd22bde6fc227f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3941b2bcfb40af6b690db3eeca50cedf1d20c0234ff3955e9fee04fe8ae25f66"
     },
     {
       "name": "popover-c4-s1.png",
-      "decodedRgbaSha256": "8fd7b68a03dd08e0e1339c7c35a17cf285aa7c38da60fa81b59a11df963677ee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c4-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c4-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-88f614e67fe0b8e390fc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-5a588-ve-pixels-popover-c4-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c4-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "8fd7b68a03dd08e0e1339c7c35a17cf285aa7c38da60fa81b59a11df963677ee",
-        "pngSha256": "59160b53a69863f1a50b8c86b3b0a6cff8815379641da4f7342a2f21d3c81ca1",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "8fd7b68a03dd08e0e1339c7c35a17cf285aa7c38da60fa81b59a11df963677ee"
     },
     {
       "name": "popover-c5-s1.png",
-      "decodedRgbaSha256": "a57c4d5918c7ae1fca012154ad44c10c4c371949b625a4fd21b02c2f0c06a19a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c5-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c5-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-5eb8406ab665f984be3e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-988ba-ve-pixels-popover-c5-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c5-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a57c4d5918c7ae1fca012154ad44c10c4c371949b625a4fd21b02c2f0c06a19a",
-        "pngSha256": "900b30281a37b66161487c86aac263f95b2387c44048a34b2c73f8d93c8efde0",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a57c4d5918c7ae1fca012154ad44c10c4c371949b625a4fd21b02c2f0c06a19a"
     },
     {
       "name": "popover-c6-s1.png",
-      "decodedRgbaSha256": "bda54aacbdb177dfdcf604b4460cb35938d372580b94e3a350973a9eef562803",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c6-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c6-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-1b47a8659ca2f2b76d8f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-d5b60-ve-pixels-popover-c6-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c6-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "bda54aacbdb177dfdcf604b4460cb35938d372580b94e3a350973a9eef562803",
-        "pngSha256": "a81a70a78f1bffff2b44afdcc927abba325b8f32a33edeace6e3e585f81c36ea",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "bda54aacbdb177dfdcf604b4460cb35938d372580b94e3a350973a9eef562803"
     },
     {
       "name": "popover-c7-s1.png",
-      "decodedRgbaSha256": "5e86fec84d3e287d07153a54c35457dd240adb06f6f4d41b509eed97eeea553f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c7-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c7-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-d9d09d58e1a03da6d66c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-f1028-ve-pixels-popover-c7-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c7-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5e86fec84d3e287d07153a54c35457dd240adb06f6f4d41b509eed97eeea553f",
-        "pngSha256": "be4a3bd07d030d023cb27fa4a194ecfae072a0814ddce5d7ff8f8eadacf530b3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5e86fec84d3e287d07153a54c35457dd240adb06f6f4d41b509eed97eeea553f"
     },
     {
       "name": "popover-c8-s1.png",
-      "decodedRgbaSha256": "cec7a02754249f94f56da7d02891a37b6bac10a15a40f153695ca09288d1c999",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c8-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c8-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-2b0408c44bcad27f348e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-ed722-ve-pixels-popover-c8-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c8-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cec7a02754249f94f56da7d02891a37b6bac10a15a40f153695ca09288d1c999",
-        "pngSha256": "73dc320a703c158a95c9b34ada0d155f7480ba3071886c79a4a979abd3c2127a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cec7a02754249f94f56da7d02891a37b6bac10a15a40f153695ca09288d1c999"
     },
     {
       "name": "popover-c9-s1.png",
-      "decodedRgbaSha256": "6d07885c8639f43499d0319d51e1ce7d6989e824715ec21df33c42d01f979d9f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c9-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c9-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-7281d0229403ffca3ff1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-7803e-ve-pixels-popover-c9-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c9-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6d07885c8639f43499d0319d51e1ce7d6989e824715ec21df33c42d01f979d9f",
-        "pngSha256": "de8ed1ff4c1a5f3f955cb7ce0eb2c708d790b2e2d08c52d7d093a71607833851",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6d07885c8639f43499d0319d51e1ce7d6989e824715ec21df33c42d01f979d9f"
     },
     {
       "name": "popover-c10-s1.png",
-      "decodedRgbaSha256": "0fa5848f0c3d0de6f1cb5b17880293a5f0449dd0252e3fb34ddccdc74914dcee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c10-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c10-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-ba479bfca46624055e54",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-459eb-e-pixels-popover-c10-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c10-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0fa5848f0c3d0de6f1cb5b17880293a5f0449dd0252e3fb34ddccdc74914dcee",
-        "pngSha256": "e293b42dbfaa0d750e0351b0fb07dbb69579eeb36414959d6f96799c073a6c32",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0fa5848f0c3d0de6f1cb5b17880293a5f0449dd0252e3fb34ddccdc74914dcee"
     },
     {
       "name": "popover-c11-s1.png",
-      "decodedRgbaSha256": "319e53b6e9e1416eafc63a24512a552455b6b6b5ca6a4e22c6078e25ad517f58",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c11-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c11-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-32847e73937d5f0f2b0c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-27640-e-pixels-popover-c11-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c11-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "319e53b6e9e1416eafc63a24512a552455b6b6b5ca6a4e22c6078e25ad517f58",
-        "pngSha256": "a8e3704df208964beaf76f15af01cfe98817046e782a4e0dd0a46fb319529e57",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "319e53b6e9e1416eafc63a24512a552455b6b6b5ca6a4e22c6078e25ad517f58"
     },
     {
       "name": "popover-c12-s1.png",
-      "decodedRgbaSha256": "b8c15832afc624d82117969dd2d4afe6459113cf12450db66b71ed3b7ec49b8f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c12-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c12-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-2ec08e30168557a79508",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-abd30-e-pixels-popover-c12-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c12-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b8c15832afc624d82117969dd2d4afe6459113cf12450db66b71ed3b7ec49b8f",
-        "pngSha256": "17265804a6f2c81561f71cbd5a7178c18d3443cb54f1d4ae465e326dfee7f448",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b8c15832afc624d82117969dd2d4afe6459113cf12450db66b71ed3b7ec49b8f"
     },
     {
       "name": "popover-c13-s1.png",
-      "decodedRgbaSha256": "2e30dbca828c463f643169f1dd59e5ded9f71e2ccdaae7448bb098dcc4c851c1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c13-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c13-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-93addd64241512b43405",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-c326d-e-pixels-popover-c13-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c13-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "2e30dbca828c463f643169f1dd59e5ded9f71e2ccdaae7448bb098dcc4c851c1",
-        "pngSha256": "30ddfc794bf354e9ca5fa23e5bc7dbc53e0749c728c423e2fa1013f1e375d91c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "2e30dbca828c463f643169f1dd59e5ded9f71e2ccdaae7448bb098dcc4c851c1"
     },
     {
       "name": "popover-c14-s1.png",
-      "decodedRgbaSha256": "ea7ac525e71ef06db9c51e5e8e4ddb88a996634355805b76b40f5e216605f614",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c14-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c14-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-a2c04359b44d22449094",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-cc7c7-e-pixels-popover-c14-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c14-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "ea7ac525e71ef06db9c51e5e8e4ddb88a996634355805b76b40f5e216605f614",
-        "pngSha256": "a2b69025261f263430f674466d7354b9497725eb1d257b6235f3fd323436d076",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "ea7ac525e71ef06db9c51e5e8e4ddb88a996634355805b76b40f5e216605f614"
     },
     {
       "name": "popover-c15-s1.png",
-      "decodedRgbaSha256": "5b2aadc284f90c25d33d44ee26761a46a54ee214fea09ef275b2b663ac2de989",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c15-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c15-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-33a55a9080504c8722eb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-e0979-e-pixels-popover-c15-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c15-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b2aadc284f90c25d33d44ee26761a46a54ee214fea09ef275b2b663ac2de989",
-        "pngSha256": "66ea1704cb786e4ea2a6c265be1327abd01c853c8b5b2032c9e9c29a9a3ee00e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b2aadc284f90c25d33d44ee26761a46a54ee214fea09ef275b2b663ac2de989"
     },
     {
       "name": "popover-c16-s1.png",
-      "decodedRgbaSha256": "506c94fd73bf8c46d205edffe423979f88397ff10e6c720980427f5bdead5eb7",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c16-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c16-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-a7e5d79b7c764f418a00",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-97189-e-pixels-popover-c16-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c16-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "506c94fd73bf8c46d205edffe423979f88397ff10e6c720980427f5bdead5eb7",
-        "pngSha256": "d6e7675c73930357b0f2058a433863f4cd97f7a3da615cf8acee2b3426ba42a5",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "506c94fd73bf8c46d205edffe423979f88397ff10e6c720980427f5bdead5eb7"
     },
     {
       "name": "popover-c17-s1.png",
-      "decodedRgbaSha256": "fe7bc056d6a15f23515baeee63ec12221bcd3bb5a552ade37a5ff6648c84cebb",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c17-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c17-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-fa9241e098e145031254",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-5f552-e-pixels-popover-c17-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c17-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "fe7bc056d6a15f23515baeee63ec12221bcd3bb5a552ade37a5ff6648c84cebb",
-        "pngSha256": "d6383add89ec164dc8f28bd9c337d1131b52c7d5905834a46ddaff37252c14ab",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "fe7bc056d6a15f23515baeee63ec12221bcd3bb5a552ade37a5ff6648c84cebb"
     },
     {
       "name": "popover-c18-s1.png",
-      "decodedRgbaSha256": "3a932b3d6b9fd0cd4128711c8bb4b949fc7b55f6db044572641eb2668ff85489",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c18-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c18-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-3d5a096a39b0ba3e00a8",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-aa6fd-e-pixels-popover-c18-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c18-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3a932b3d6b9fd0cd4128711c8bb4b949fc7b55f6db044572641eb2668ff85489",
-        "pngSha256": "e81fe027463e32415a9c5cff113148f48c9fb8a38af3d13520453236d2b1e7fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3a932b3d6b9fd0cd4128711c8bb4b949fc7b55f6db044572641eb2668ff85489"
     },
     {
       "name": "popover-c19-s1.png",
-      "decodedRgbaSha256": "23f46d8704f6d7366d6720595cfdf699575111b2ec49a749ee5c47c7f7abdd4c",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c19-s1.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c19-s1.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 40000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "1",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-528586ff96d943edb9d4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=1&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-2cdea-e-pixels-popover-c19-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c19-s1.png",
-        "width": 200,
-        "height": 200,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "23f46d8704f6d7366d6720595cfdf699575111b2ec49a749ee5c47c7f7abdd4c",
-        "pngSha256": "5e0c37e0119a26b1f095ffe01e229a987406457c8d0abf94db6a10fa4c168073",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "23f46d8704f6d7366d6720595cfdf699575111b2ec49a749ee5c47c7f7abdd4c"
     },
     {
       "name": "popover-c0-s2.png",
-      "decodedRgbaSha256": "b52a08289e55a504644e1222c637f02761358147d966d344ad5f62d8ead82bc4",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c0-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c0-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 188800,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-0480617fd60364f28a71",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-9a559-ve-pixels-popover-c0-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c0-s2.png",
-        "width": 472,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b52a08289e55a504644e1222c637f02761358147d966d344ad5f62d8ead82bc4",
-        "pngSha256": "b8124f5242dc81512b5373ad6a6ebda06836ad5f32cff78d2bc38e2c42d2ab01",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b52a08289e55a504644e1222c637f02761358147d966d344ad5f62d8ead82bc4"
     },
     {
       "name": "popover-c1-s2.png",
-      "decodedRgbaSha256": "b387219c9a358eaa87c60a976e478833677f7f6a239856369d6630efed8ea89b",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c1-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c1-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 188800,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-e1b982e35ba06f2a061d",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-8bea4-ve-pixels-popover-c1-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c1-s2.png",
-        "width": 472,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "b387219c9a358eaa87c60a976e478833677f7f6a239856369d6630efed8ea89b",
-        "pngSha256": "5706ec239090c7f6747a34f5b49ae2970d464e11428717c0bfbcc16b87e7d798",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "b387219c9a358eaa87c60a976e478833677f7f6a239856369d6630efed8ea89b"
     },
     {
       "name": "popover-c2-s2.png",
-      "decodedRgbaSha256": "a63c3656d2ac7ee13d5ca1cb229fb6cacefdc87774385f60c2b0454bea5a5224",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c2-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c2-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-343fe87eda25a835e173",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-327bc-ve-pixels-popover-c2-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c2-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a63c3656d2ac7ee13d5ca1cb229fb6cacefdc87774385f60c2b0454bea5a5224",
-        "pngSha256": "ed50618da505d52406694078c187c756d40235bac9b10e764f11d41bdc472101",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a63c3656d2ac7ee13d5ca1cb229fb6cacefdc87774385f60c2b0454bea5a5224"
     },
     {
       "name": "popover-c3-s2.png",
-      "decodedRgbaSha256": "7e974af73ceaa597ac8dace02ccddca10cb16bdb12ef773a074b6b3a510e7632",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c3-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c3-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-8d1102318dbf9c883605",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-6d6fa-ve-pixels-popover-c3-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c3-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7e974af73ceaa597ac8dace02ccddca10cb16bdb12ef773a074b6b3a510e7632",
-        "pngSha256": "0637025823a4fa3916e7b58951749fe15e6519ad77109d5b8c01574f84b0b24b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7e974af73ceaa597ac8dace02ccddca10cb16bdb12ef773a074b6b3a510e7632"
     },
     {
       "name": "popover-c4-s2.png",
-      "decodedRgbaSha256": "0670890e89d2bd47e8bab8ac862188405ff1ce61426c60e9f1ae04fbe182c6da",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c4-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c4-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-23ab51576c3173a92667",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-d4599-ve-pixels-popover-c4-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c4-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0670890e89d2bd47e8bab8ac862188405ff1ce61426c60e9f1ae04fbe182c6da",
-        "pngSha256": "5c73f60eee30aa7f6b5b7063a70fa9ca25455501ed83785ea726c6c057c2b231",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0670890e89d2bd47e8bab8ac862188405ff1ce61426c60e9f1ae04fbe182c6da"
     },
     {
       "name": "popover-c5-s2.png",
-      "decodedRgbaSha256": "695f9107680e6ccdf1ce826d68bee45ab1081f531d8e7c0cc9cd0c8b8f71a4a6",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c5-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c5-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-14bd23cd151a58fdbd8e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-977a2-ve-pixels-popover-c5-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c5-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "695f9107680e6ccdf1ce826d68bee45ab1081f531d8e7c0cc9cd0c8b8f71a4a6",
-        "pngSha256": "f6b3830a734d9f23a1ac489be8301d9f33c9a38c34c63b311ba3ca9dcfc4726c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "695f9107680e6ccdf1ce826d68bee45ab1081f531d8e7c0cc9cd0c8b8f71a4a6"
     },
     {
       "name": "popover-c6-s2.png",
-      "decodedRgbaSha256": "59c8e98743fd527e7853a106817087dcb49d34623acddc811ccd7b16f8631cb3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c6-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c6-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-c2fca88548498c569b0e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-0c345-ve-pixels-popover-c6-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c6-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "59c8e98743fd527e7853a106817087dcb49d34623acddc811ccd7b16f8631cb3",
-        "pngSha256": "a1d6392aaa6f303812cca9a8f3735fd8a224f6bff54188543e9364e3a10722ba",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "59c8e98743fd527e7853a106817087dcb49d34623acddc811ccd7b16f8631cb3"
     },
     {
       "name": "popover-c7-s2.png",
-      "decodedRgbaSha256": "97db88ecbac8a97793e69b5bd3a321c8c87a430163e91071e659bc0d0ddd17da",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c7-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c7-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-f1f4b0f6c7e0d58fa166",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-73d06-ve-pixels-popover-c7-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c7-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "97db88ecbac8a97793e69b5bd3a321c8c87a430163e91071e659bc0d0ddd17da",
-        "pngSha256": "605daecf0c35a413d6d0081f7123abac984f40cb7531696b719e2a7880ad832e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "97db88ecbac8a97793e69b5bd3a321c8c87a430163e91071e659bc0d0ddd17da"
     },
     {
       "name": "popover-c8-s2.png",
-      "decodedRgbaSha256": "c535306ffa29c8ee8044397b5662ef464cc1ac3ec7d3e342d5f9d89b4d3de61d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c8-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c8-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-c2df50710f5833840657",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-4d83c-ve-pixels-popover-c8-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c8-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c535306ffa29c8ee8044397b5662ef464cc1ac3ec7d3e342d5f9d89b4d3de61d",
-        "pngSha256": "57637d57f55d82841f4b2fe3ad1cb240339789f3f514f48aef56092a81fca765",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c535306ffa29c8ee8044397b5662ef464cc1ac3ec7d3e342d5f9d89b4d3de61d"
     },
     {
       "name": "popover-c9-s2.png",
-      "decodedRgbaSha256": "e77cc1e66e8e80797e189b826fb89a2a304d0692da51cebfd6f69d9613b88c39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c9-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c9-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-a74558bab77d939e3573",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-3e216-ve-pixels-popover-c9-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c9-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e77cc1e66e8e80797e189b826fb89a2a304d0692da51cebfd6f69d9613b88c39",
-        "pngSha256": "692f0f9dbd273e6c68ff1e92ada17036669b74a99701f89daf49bf74e228164d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e77cc1e66e8e80797e189b826fb89a2a304d0692da51cebfd6f69d9613b88c39"
     },
     {
       "name": "popover-c10-s2.png",
-      "decodedRgbaSha256": "f8ed140f6b5b7885af4a685f4330c51b8b9352079b4b92a1aa75a1b456ed474d",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c10-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c10-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-ac8d97d2348403d644dc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-568e9-e-pixels-popover-c10-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c10-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "f8ed140f6b5b7885af4a685f4330c51b8b9352079b4b92a1aa75a1b456ed474d",
-        "pngSha256": "3543ca223fe58c9408ecee9022d3a4cedc25aff7d0f5580faa235f9349bbb49f",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "f8ed140f6b5b7885af4a685f4330c51b8b9352079b4b92a1aa75a1b456ed474d"
     },
     {
       "name": "popover-c11-s2.png",
-      "decodedRgbaSha256": "812d174417ae75c713a77441c47c563b021f6b966f8a0dbd0343784038de8ddf",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c11-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c11-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-ef1ccd4b585ff7082652",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-c04ef-e-pixels-popover-c11-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c11-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "812d174417ae75c713a77441c47c563b021f6b966f8a0dbd0343784038de8ddf",
-        "pngSha256": "ca94eab333c514e0822bbeb0bb72bbe654c982d49665ce6075d9f786868a8168",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "812d174417ae75c713a77441c47c563b021f6b966f8a0dbd0343784038de8ddf"
     },
     {
       "name": "popover-c12-s2.png",
-      "decodedRgbaSha256": "c7b3484652087f7e27971ddf6ce90abd54b72a0e58826559d35b5a8cff3455a9",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c12-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c12-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-6fceb45d7b0e6313c13b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-37539-e-pixels-popover-c12-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c12-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c7b3484652087f7e27971ddf6ce90abd54b72a0e58826559d35b5a8cff3455a9",
-        "pngSha256": "ea46367315ee5f58db7dc97e306067065b81789fe25f0c7f20f054c7ebc9781a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c7b3484652087f7e27971ddf6ce90abd54b72a0e58826559d35b5a8cff3455a9"
     },
     {
       "name": "popover-c13-s2.png",
-      "decodedRgbaSha256": "6d87b28e73956d3e588ff26606a99e2f1c78740b3a82d2f3ed28eafaf0adfae3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c13-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c13-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-c3678c5df786ea57df04",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-5a691-e-pixels-popover-c13-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c13-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6d87b28e73956d3e588ff26606a99e2f1c78740b3a82d2f3ed28eafaf0adfae3",
-        "pngSha256": "fa62a19327e9da38e28e6659c3779eaa20fc4f0bea2375ae6bc1cf50b2ddf710",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6d87b28e73956d3e588ff26606a99e2f1c78740b3a82d2f3ed28eafaf0adfae3"
     },
     {
       "name": "popover-c14-s2.png",
-      "decodedRgbaSha256": "8aac80130e86cc4713da18cfdd49b574f8465cbcf7f49035f96fb40eb4547a60",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c14-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c14-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-b8928c96301e175d66f0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-b238e-e-pixels-popover-c14-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c14-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "8aac80130e86cc4713da18cfdd49b574f8465cbcf7f49035f96fb40eb4547a60",
-        "pngSha256": "04f8aa33e94be0f6dee21aed684932efb833e4a75a1e7709576827ebccf4f6fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "8aac80130e86cc4713da18cfdd49b574f8465cbcf7f49035f96fb40eb4547a60"
     },
     {
       "name": "popover-c15-s2.png",
-      "decodedRgbaSha256": "0a10d0b11cb376eaf2ef30e4d3597eeba86c1323d3f253a35e617335076d736e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c15-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c15-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-fe25278dcdde80907142",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-7749f-e-pixels-popover-c15-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c15-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0a10d0b11cb376eaf2ef30e4d3597eeba86c1323d3f253a35e617335076d736e",
-        "pngSha256": "cbb60acff64a78d6f0b5af853531abc42535fff523e89673ba14838a6ad9462e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0a10d0b11cb376eaf2ef30e4d3597eeba86c1323d3f253a35e617335076d736e"
     },
     {
       "name": "popover-c16-s2.png",
-      "decodedRgbaSha256": "db4f0389d17c8f5b704d12d0ba6ccddd5744f566f963e8c680adbcfba235e534",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c16-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c16-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-a406ea8bfa70e8d74cb3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-8f233-e-pixels-popover-c16-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c16-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "db4f0389d17c8f5b704d12d0ba6ccddd5744f566f963e8c680adbcfba235e534",
-        "pngSha256": "9b3cd3e1cc39e6e24fbcbcfdfe1001b2863ff15554c1a37e15107788c5fe0936",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "db4f0389d17c8f5b704d12d0ba6ccddd5744f566f963e8c680adbcfba235e534"
     },
     {
       "name": "popover-c17-s2.png",
-      "decodedRgbaSha256": "de393bad297e37a3a23d7481bad3db204dbde054aad7987338c3b142ba27edff",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c17-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c17-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-35b931254f9e45f88c01",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-6eba3-e-pixels-popover-c17-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c17-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "de393bad297e37a3a23d7481bad3db204dbde054aad7987338c3b142ba27edff",
-        "pngSha256": "103d49847477b11fb6a4a524e3fa39d8cbe876a4484af5f3cfdd0f4381b51bd3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "de393bad297e37a3a23d7481bad3db204dbde054aad7987338c3b142ba27edff"
     },
     {
       "name": "popover-c18-s2.png",
-      "decodedRgbaSha256": "5d2ff6c84cc729a1e179cf8b6b58c9b70e234f7ac7afb3a8f6706b295499e795",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c18-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c18-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-7eef3b1e332271bc88ea",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-ac011-e-pixels-popover-c18-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c18-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5d2ff6c84cc729a1e179cf8b6b58c9b70e234f7ac7afb3a8f6706b295499e795",
-        "pngSha256": "b1885decca5a32df9088c3d3dcf4133b91e51d33df4da1d7ae28a344f6a30028",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5d2ff6c84cc729a1e179cf8b6b58c9b70e234f7ac7afb3a8f6706b295499e795"
     },
     {
       "name": "popover-c19-s2.png",
-      "decodedRgbaSha256": "abda1fae0b4da6f23f8d0e15583838b9f70c74089652e7cd85ae9b330c5e4075",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c19-s2.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c19-s2.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 160000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "2",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-5bc7465bf09f2b2ad207",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=2&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-b7fb2-e-pixels-popover-c19-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c19-s2.png",
-        "width": 400,
-        "height": 400,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "abda1fae0b4da6f23f8d0e15583838b9f70c74089652e7cd85ae9b330c5e4075",
-        "pngSha256": "db6a61504f2a97d640acdb43b3e890838f66f7a659099955176b927a8a8aabf4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "abda1fae0b4da6f23f8d0e15583838b9f70c74089652e7cd85ae9b330c5e4075"
     },
     {
       "name": "popover-c0-s3.png",
-      "decodedRgbaSha256": "28f283e39dd402ad2a3d6a440591fface3300caa765d29ddcff403f5a15e0804",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c0-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c0-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 424800,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-9c93cb2381023558e7fd",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-bff2c-ve-pixels-popover-c0-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c0-s3.png",
-        "width": 708,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "28f283e39dd402ad2a3d6a440591fface3300caa765d29ddcff403f5a15e0804",
-        "pngSha256": "7a28610269dd6084bae6b1ecd7342ae2bdb448cf3eae189b76c06dc5e64a86da",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "28f283e39dd402ad2a3d6a440591fface3300caa765d29ddcff403f5a15e0804"
     },
     {
       "name": "popover-c1-s3.png",
-      "decodedRgbaSha256": "d0734e91f15e64d83ba2738c9fe02cd5a38fb0a4ad2768c82bd35ef3a9aa418a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c1-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c1-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 424800,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "236",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-          "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-        },
-        "testId": "b0a26b22abe1a944db4c-f6602f63b6f85ed1bc79",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=236&height=200&x=16&y=16&text=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E&label=+%21%22%23%24%25%26%27%28%29*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40ABCDEFGHIJKLMNOPQRSTUVWXYZ%5B%5C%5D%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D%7E",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-fb618-ve-pixels-popover-c1-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c1-s3.png",
-        "width": 708,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d0734e91f15e64d83ba2738c9fe02cd5a38fb0a4ad2768c82bd35ef3a9aa418a",
-        "pngSha256": "fae948f30145adbca00f065e1452c918b899d4a604d031b68e8a47cd2758c209",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d0734e91f15e64d83ba2738c9fe02cd5a38fb0a4ad2768c82bd35ef3a9aa418a"
     },
     {
       "name": "popover-c2-s3.png",
-      "decodedRgbaSha256": "e2888ef6f9ec55be0d578bbcf5f6abfdf399faae2c013f6cd0f83cff65446a4e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c2-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c2-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-ef1160e1e9ef797db850",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-9e1dc-ve-pixels-popover-c2-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c2-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "e2888ef6f9ec55be0d578bbcf5f6abfdf399faae2c013f6cd0f83cff65446a4e",
-        "pngSha256": "d5bb2dff65573224a34f977ef25db0ef0370774309356cfa407452756107500b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "e2888ef6f9ec55be0d578bbcf5f6abfdf399faae2c013f6cd0f83cff65446a4e"
     },
     {
       "name": "popover-c3-s3.png",
-      "decodedRgbaSha256": "6112de27f895349dbd287d6b1de2ab5e245473a81593415acc489714ca85ebcd",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c3-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c3-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界",
-          "label": "你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-754e01dc943c8570a2ed",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-c51a5-ve-pixels-popover-c3-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c3-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6112de27f895349dbd287d6b1de2ab5e245473a81593415acc489714ca85ebcd",
-        "pngSha256": "d9b538a525756bc50c29f8f437c0e30dc8aeb98ba3b4c2f3318918a8ee24089c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6112de27f895349dbd287d6b1de2ab5e245473a81593415acc489714ca85ebcd"
     },
     {
       "name": "popover-c4-s3.png",
-      "decodedRgbaSha256": "259c995b14b06c2aa749db67255161914538bb67c10be4f41020dc0f8e83de29",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c4-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c4-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-2cc5ac4b1138972ee2ad",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-140f1-ve-pixels-popover-c4-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c4-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "259c995b14b06c2aa749db67255161914538bb67c10be4f41020dc0f8e83de29",
-        "pngSha256": "d667f70b41f75ab70f8966e98389b5b64bc6f2c8ea2969bf4345a3fe6f08033a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "259c995b14b06c2aa749db67255161914538bb67c10be4f41020dc0f8e83de29"
     },
     {
       "name": "popover-c5-s3.png",
-      "decodedRgbaSha256": "913f2f5341c416b186eae6d1e939161b97f7ce743516844afbf2e5f13f6538dd",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c5-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c5-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "こんにちは",
-          "label": "こんにちは"
-        },
-        "testId": "b0a26b22abe1a944db4c-710d4ad68a88416078db",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-9fe98-ve-pixels-popover-c5-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c5-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "913f2f5341c416b186eae6d1e939161b97f7ce743516844afbf2e5f13f6538dd",
-        "pngSha256": "65cb218c1b2d1375e399d7058929b38c8c256281f410553891415bef663508f9",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "913f2f5341c416b186eae6d1e939161b97f7ce743516844afbf2e5f13f6538dd"
     },
     {
       "name": "popover-c6-s3.png",
-      "decodedRgbaSha256": "79cfe7889a90e4fa417785fcc3309e935ac909ec2b3efb00bce1f37616ac67f6",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c6-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c6-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-0e271cbdccf7cd280b39",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-cb45b-ve-pixels-popover-c6-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c6-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "79cfe7889a90e4fa417785fcc3309e935ac909ec2b3efb00bce1f37616ac67f6",
-        "pngSha256": "081622d648cb392ed6c4ebefa2ea1eb2265b885a3a4a1ffc26edf9a0b4517119",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "79cfe7889a90e4fa417785fcc3309e935ac909ec2b3efb00bce1f37616ac67f6"
     },
     {
       "name": "popover-c7-s3.png",
-      "decodedRgbaSha256": "7694ed317e88f76635134a5339d66f9d0212c7bd7ed4e84302a516010df48b5f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c7-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c7-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요",
-          "label": "안녕하세요"
-        },
-        "testId": "b0a26b22abe1a944db4c-5e301b122e9afd945a45",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-e9225-ve-pixels-popover-c7-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c7-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7694ed317e88f76635134a5339d66f9d0212c7bd7ed4e84302a516010df48b5f",
-        "pngSha256": "2b9fc34cb9b72377431dd983fc6febd28a71bed1b936368aabedf0f7cc969a81",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7694ed317e88f76635134a5339d66f9d0212c7bd7ed4e84302a516010df48b5f"
     },
     {
       "name": "popover-c8-s3.png",
-      "decodedRgbaSha256": "7f2686d1e4d04c218d836d66ab2a1dfc381a080c8b6a6978f6431e00b51e86b2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c8-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c8-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-eb97243d30181c7d7b67",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-27136-ve-pixels-popover-c8-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c8-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7f2686d1e4d04c218d836d66ab2a1dfc381a080c8b6a6978f6431e00b51e86b2",
-        "pngSha256": "d27f8f0bda9a6607512cdc6a529aafe1d24cf689171895cc10f3a99528f46973",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7f2686d1e4d04c218d836d66ab2a1dfc381a080c8b6a6978f6431e00b51e86b2"
     },
     {
       "name": "popover-c9-s3.png",
-      "decodedRgbaSha256": "9e0a08880d2211027d468246911023e51bc3f419a2c07e8bfab91556a46159c5",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c9-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c9-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-01f98458acc0bdd1cbd2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-b8562-ve-pixels-popover-c9-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c9-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9e0a08880d2211027d468246911023e51bc3f419a2c07e8bfab91556a46159c5",
-        "pngSha256": "5165726e1109c3dc26e1e4e7d5ad3213d42524241514e49d9d1d6dd8e40c69c0",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9e0a08880d2211027d468246911023e51bc3f419a2c07e8bfab91556a46159c5"
     },
     {
       "name": "popover-c10-s3.png",
-      "decodedRgbaSha256": "7477b56183d8cd3d4f02c986ce7bd664abee505e9a31a416bbc8f8a0241246b5",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c10-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c10-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-e04a558c94045261cd23",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-dd033-e-pixels-popover-c10-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c10-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "7477b56183d8cd3d4f02c986ce7bd664abee505e9a31a416bbc8f8a0241246b5",
-        "pngSha256": "7e6e1a37c7b5699e589a007c91b4c1dcccdb1b2bad1c38225694f42d8bdf22bb",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "7477b56183d8cd3d4f02c986ce7bd664abee505e9a31a416bbc8f8a0241246b5"
     },
     {
       "name": "popover-c11-s3.png",
-      "decodedRgbaSha256": "46ac54a67a46e94daeebc608ca8a3aed59369204aaf1a0086842d254b699bac2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c11-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c11-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "你好，世界你好，世界你好，世界你好，世界你好，世界你好，世界",
-          "label": "你好，世界你好，世界你好，世界你好，世界你好，世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-ee928e42a8d8f1d149ab",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C&label=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-29c6b-e-pixels-popover-c11-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c11-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "46ac54a67a46e94daeebc608ca8a3aed59369204aaf1a0086842d254b699bac2",
-        "pngSha256": "01fcc68af7c0e4172bed6b053ca802e5bb9f84f5395fadc913d1425522af0e42",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "46ac54a67a46e94daeebc608ca8a3aed59369204aaf1a0086842d254b699bac2"
     },
     {
       "name": "popover-c12-s3.png",
-      "decodedRgbaSha256": "69de5d2843a02fd069690445c24908e2131e2919fec002757da1af1350e17a1e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c12-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c12-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-480ea48e448a42d4cfab",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-f3b5c-e-pixels-popover-c12-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c12-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "69de5d2843a02fd069690445c24908e2131e2919fec002757da1af1350e17a1e",
-        "pngSha256": "9922a5210fcf96a6366a9ddc0684cb8e565f55a9e258c5dbd0339b69e4f3efdd",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "69de5d2843a02fd069690445c24908e2131e2919fec002757da1af1350e17a1e"
     },
     {
       "name": "popover-c13-s3.png",
-      "decodedRgbaSha256": "6f517b5f876e0c5d0106933c5fbc45c5da6adb693b2a1b329e3065ba87fc6e1a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c13-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c13-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "Hello 世界\n你好，世界\nこんにちは",
-          "label": "Hello 世界"
-        },
-        "testId": "b0a26b22abe1a944db4c-3f7b799981beff50cc20",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=Hello+%E4%B8%96%E7%95%8C%0A%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%0A%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF&label=Hello+%E4%B8%96%E7%95%8C",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-01dc4-e-pixels-popover-c13-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c13-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6f517b5f876e0c5d0106933c5fbc45c5da6adb693b2a1b329e3065ba87fc6e1a",
-        "pngSha256": "36db7a0bd7c1078ab2ae0b969fb63792cba5ed680c1054ac6a01fe9eddf25c33",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6f517b5f876e0c5d0106933c5fbc45c5da6adb693b2a1b329e3065ba87fc6e1a"
     },
     {
       "name": "popover-c14-s3.png",
-      "decodedRgbaSha256": "555763c0477ae5ee54ad557b6599803be24551da4fc5686e6106101983369362",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c14-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c14-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-63ba84a1c1250bb2f971",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-2678c-e-pixels-popover-c14-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c14-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "555763c0477ae5ee54ad557b6599803be24551da4fc5686e6106101983369362",
-        "pngSha256": "322adfb68a87c8dfc2f04154332cb771202b80d147037000a4a7d9ca13b6c004",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "555763c0477ae5ee54ad557b6599803be24551da4fc5686e6106101983369362"
     },
     {
       "name": "popover-c15-s3.png",
-      "decodedRgbaSha256": "38693d1502c1e021e6f3e5b6fcaada51ecf7ea9ebf1c046f9e5e805fae391e2a",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c15-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c15-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "",
-          "label": ""
-        },
-        "testId": "b0a26b22abe1a944db4c-c09c2c848104437f6f87",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=&label=",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-590fb-e-pixels-popover-c15-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c15-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "38693d1502c1e021e6f3e5b6fcaada51ecf7ea9ebf1c046f9e5e805fae391e2a",
-        "pngSha256": "812107cd08f6b71fdfa172ec01e31c6b2bdb45f7b113671b58b75a298dd8acc4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "38693d1502c1e021e6f3e5b6fcaada51ecf7ea9ebf1c046f9e5e805fae391e2a"
     },
     {
       "name": "popover-c16-s3.png",
-      "decodedRgbaSha256": "6feb0ea8b1f7f75d4b6bdf09c662445a18cdd3d5bc5f4fcdda3f158c7b64f284",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c16-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c16-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-71fb7d473a7d46977980",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-1cac8-e-pixels-popover-c16-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c16-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6feb0ea8b1f7f75d4b6bdf09c662445a18cdd3d5bc5f4fcdda3f158c7b64f284",
-        "pngSha256": "8c93ae3fd88b28f8f1761cd8d11a130c5227131a7c2c1f2dc6cc2c188769f02d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6feb0ea8b1f7f75d4b6bdf09c662445a18cdd3d5bc5f4fcdda3f158c7b64f284"
     },
     {
       "name": "popover-c17-s3.png",
-      "decodedRgbaSha256": "13dd174cb54a7c41e30829800859d708d3eef76da23536d0ad4f5153599b02e1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c17-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c17-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello\n世 Hello",
-          "label": "안녕하세요 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-151ec6dcd84a586a721f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello%0A%E4%B8%96+Hello&label=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-af6e8-e-pixels-popover-c17-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c17-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "13dd174cb54a7c41e30829800859d708d3eef76da23536d0ad4f5153599b02e1",
-        "pngSha256": "276d9dce5915975098690abd0f3c0b1614094ed869cacc1e9f4b0cb1ec5f417e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "13dd174cb54a7c41e30829800859d708d3eef76da23536d0ad4f5153599b02e1"
     },
     {
       "name": "popover-c18-s3.png",
-      "decodedRgbaSha256": "07d18ffd926caf108bc441bffd1d593bd4f23ab633ffea98dde0868e9f7eb697",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c18-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c18-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-9b4e7ad5c50cc7e96339",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-cb22c-e-pixels-popover-c18-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c18-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "07d18ffd926caf108bc441bffd1d593bd4f23ab633ffea98dde0868e9f7eb697",
-        "pngSha256": "9b26cade3b97f303e1e018b073dadafe5f397531e4ad7bc258fc25481a8479f8",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "07d18ffd926caf108bc441bffd1d593bd4f23ab633ffea98dde0868e9f7eb697"
     },
     {
       "name": "popover-c19-s3.png",
-      "decodedRgbaSha256": "326e5a636f3b49c46996218c45b7742824bb9c3675adca67c0fa2326643fad60",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "popover",
-        "manifest": "tests/reference/popover/manifest.json",
-        "case": "popover-c19-s3.png",
-        "part": null,
-        "alias": "base",
-        "variants": {
-          "case": "popover-c19-s3.png",
-          "mismatchedPixels": 0,
-          "totalPixels": 360000,
-          "tolerance": 0,
-          "component": "popover"
-        },
-        "query": {
-          "component": "popover",
-          "native": "1",
-          "scale": "3",
-          "width": "200",
-          "height": "200",
-          "x": "16",
-          "y": "16",
-          "text": "안녕하세요 Hello",
-          "label": "世 Hello"
-        },
-        "testId": "b0a26b22abe1a944db4c-44dbcbaff83d158dd235",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=popover&native=1&scale=3&width=200&height=200&x=16&y=16&text=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94+Hello&label=%E4%B8%96+Hello",
-        "subjectSlot": "popover-content",
-        "subjectElement": "DIV",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\popover-Popover-original-s-e53d9-e-pixels-popover-c19-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\popover\\captures\\popover-c19-s3.png",
-        "width": 600,
-        "height": 600,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "326e5a636f3b49c46996218c45b7742824bb9c3675adca67c0fa2326643fad60",
-        "pngSha256": "4feede70bf440cc86267b77e10ee5b39e7bf7d3c15eae806a394ef2e24f8a509",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "326e5a636f3b49c46996218c45b7742824bb9c3675adca67c0fa2326643fad60"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.535Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
-  "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "pageErrors": []
 }

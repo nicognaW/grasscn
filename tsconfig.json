@@ -16,9 +16,6 @@
       "@/lib/utils": [
         "./tests/fixture/utils.ts"
       ],
-      "@/hooks/use-toast": [
-        "./registry/hooks/use-toast.ts"
-      ],
       "@/components/ui/*": [
         "./registry/ui/*"
       ]

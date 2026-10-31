@@ -12,7 +12,7 @@ for(const {reference,sample} of specimens)test(`native expansion pixels ${sample
  await page.setViewportSize({width:1536,height:900})
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))
  await page.goto(`${process.env.GRASSCN_EXPANSION_URL??`${process.env.GRASSCN_FIXTURE_URL??'http://127.0.0.1:5174'}/adventure.html`}?scale=${sample.scale}&case=${encodeURIComponent(JSON.stringify(sample))}`)
- const subject=page.locator('#subject');await expect(subject).toBeVisible()
+ const subject=page.locator('[data-subject]');await expect(subject).toBeVisible()
  if(sample.element==='player-preview')await expect(subject).toHaveAttribute('data-ready','true')
  if(sample.element==='sign'||sample.element==='hanging-sign')await expect(subject.locator('canvas')).toHaveAttribute('data-ready','true')
  await expect.poll(()=>subject.locator('img').evaluateAll(images=>images.every(image=>(image as HTMLImageElement).complete&&(image as HTMLImageElement).naturalWidth>0))).toBe(true)
@@ -51,7 +51,7 @@ test('expansion pixel comparator rejects one altered pixel',()=>{const bytes=rea
 test('player preview keyboard, pointer rotation, clamp and reset',async({page})=>{
  const sample={element:'player-preview',state:'wide/steve',width:80,height:120,value:30,anchor:-5}
  await page.goto(`${process.env.GRASSCN_EXPANSION_URL??'http://127.0.0.1:5174/adventure.html'}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`)
- const player=page.locator('#subject');await expect(player).toHaveAttribute('data-ready','true');const before=await player.screenshot()
+ const player=page.locator('[data-subject]');await expect(player).toHaveAttribute('data-ready','true');const before=await player.screenshot()
  await player.focus();await player.press('ArrowLeft');await expect.poll(()=>page.evaluate(()=>JSON.parse(document.documentElement.dataset.rotation??'null'))).toEqual({yaw:25,pitch:-5})
  await player.press('Home');await expect.poll(()=>page.evaluate(()=>JSON.parse(document.documentElement.dataset.rotation??'null'))).toEqual({yaw:30,pitch:-5})
  await player.blur();expect(await player.screenshot()).toEqual(before)

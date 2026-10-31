@@ -1,524 +1,155 @@
 {
-  "component": "table",
-  "manifest": "tests/reference/table-background/manifest.json",
-  "targetReport": "tests/reference/table/table-background-installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://127.0.0.1:5173/r/table.json --yes --overwrite",
+  "consumer": "fresh initialized Vite/React consumer with independent node_modules",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
-      "path": "minecraft-font.ts",
-      "sourcePath": "registry/ui/minecraft-font.ts",
-      "installedPath": "src/components/ui/minecraft-font.ts",
-      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unicode-label.tsx",
-      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
-      "installedPath": "src/components/ui/minecraft-unicode-label.tsx",
-      "sourceSha256": "ad86a28c9efdeaa63701ced5cc9a00700fc728812f1eaafd08915e47a65eb520",
-      "installedSha256": "6844f30244956494a27b72e8994dca44a694e7e24f5e013281cc273ffd63b6ee",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-input-assets.ts",
-      "sourcePath": "registry/ui/minecraft-input-assets.ts",
-      "installedPath": "src/components/ui/minecraft-input-assets.ts",
-      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont.ts",
-      "sourcePath": "registry/ui/minecraft-unifont.ts",
-      "installedPath": "src/components/ui/minecraft-unifont.ts",
-      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-data.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-data.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-data.ts",
-      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
-      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-atlas.ts",
-      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-unifont-gpu.ts",
-      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
-      "installedPath": "src/components/ui/minecraft-unifont-gpu.ts",
-      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.tsx",
-      "sourcePath": "registry/ui/minecraft-text.tsx",
-      "installedPath": "src/components/ui/minecraft-text.tsx",
-      "sourceSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "installedSha256": "a9989464a5a6078c636c0695169b3b1ea538edbbc812c5ffe801744b14f9349a",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text.css",
-      "sourcePath": "registry/ui/minecraft-text.css",
-      "installedPath": "src/components/ui/minecraft-text.css",
-      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-text-assets.css",
-      "sourcePath": "registry/ui/minecraft-text-assets.css",
-      "installedPath": "src/components/ui/minecraft-text-assets.css",
-      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-label.css",
-      "sourcePath": "registry/ui/minecraft-label.css",
-      "installedPath": "src/components/ui/minecraft-label.css",
-      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-label-atlas.ts",
-      "sourcePath": "registry/ui/minecraft-label-atlas.ts",
-      "installedPath": "src/components/ui/minecraft-label-atlas.ts",
-      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
-      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-select-assets.ts",
-      "sourcePath": "registry/ui/minecraft-select-assets.ts",
-      "installedPath": "src/components/ui/minecraft-select-assets.ts",
-      "sourceSha256": "097445bd17dda213c9c706880f8fc1e47f86c12cae3a58b7a641c67aa53074d9",
-      "installedSha256": "2ee10ac2b58855970e62189969695adb50b795e87d21b6d2e1e79c16e3906fa4",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-disclosure-text.tsx",
-      "sourcePath": "registry/ui/minecraft-disclosure-text.tsx",
-      "installedPath": "src/components/ui/minecraft-disclosure-text.tsx",
-      "sourceSha256": "a05ced822af99f27653173cb1204af9988e7cd93c0a0f916790b9a67217627ba",
-      "installedSha256": "e3287d58ef09c643da21db600faed7954a3ebf3f9b556cd60325a566b0cd70a5",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
       "path": "table.tsx",
-      "sourcePath": "registry/ui/table.tsx",
-      "installedPath": "src/components/ui/table.tsx",
-      "sourceSha256": "13e485315999eb134a4b9daf69fbc1e2d4c3e8f494185c455c879ca43c574b9f",
-      "installedSha256": "e43b015c18e24f25c2dd387bd8c319579a8f09a1ba87e7be810b2fd783de153b",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "31b3ca2f5c883b77fcfd344df58e34cb518927aebc6d6441de66b6ecf6003e8f",
+      "installedSha256": "31b3ca2f5c883b77fcfd344df58e34cb518927aebc6d6441de66b6ecf6003e8f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-table.css",
-      "sourcePath": "registry/ui/minecraft-table.css",
-      "installedPath": "src/components/ui/minecraft-table.css",
       "sourceSha256": "e3e93321b45b34538bd5422fbfadc292619566ae9772bd9c300d98c0247e73a6",
       "installedSha256": "e3e93321b45b34538bd5422fbfadc292619566ae9772bd9c300d98c0247e73a6",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-label.css",
+      "sourceSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "installedSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-data.ts",
+      "sourceSha256": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+      "installedSha256": "36811749bf4969c87c21480cc002cab05b999cc17576bccff5a57c160e6efd57",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-gpu.ts",
+      "sourceSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "installedSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-label-atlas.ts",
+      "sourceSha256": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+      "installedSha256": "a33660f53fd8a5ad6a239570302524655960b32d928f4b8e7a788e9964e31f8f",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-select-assets.ts",
+      "sourceSha256": "097445bd17dda213c9c706880f8fc1e47f86c12cae3a58b7a641c67aa53074d9",
+      "installedSha256": "2ee10ac2b58855970e62189969695adb50b795e87d21b6d2e1e79c16e3906fa4",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-disclosure-text.tsx",
+      "sourceSha256": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+      "installedSha256": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "table-list-background-dark-s1.png",
-      "decodedRgbaSha256": "d6c21467b19b56ca468e54507f049003876c74117d452d4c4471ae19cda6b2a4",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-dark-s1.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-dark-s1.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 16,
-          "height": 16,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "1",
-          "x": "20",
-          "y": "44",
-          "background": "#202020"
-        },
-        "testId": "544711e0cdb2ec46ff99-82f768836ee0e03b5c56",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=1&x=20&y=44&background=%23202020",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-8d98a-list-background-dark-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-dark-s1.png",
-        "width": 16,
-        "height": 16,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6c21467b19b56ca468e54507f049003876c74117d452d4c4471ae19cda6b2a4",
-        "pngSha256": "98abfca39feab71ecfbabb1281549dfafa5199def5a0d8b37bf93b00ff3a8e99",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6c21467b19b56ca468e54507f049003876c74117d452d4c4471ae19cda6b2a4"
     },
     {
       "name": "table-list-background-light-s1.png",
-      "decodedRgbaSha256": "df0e1fdfcbb09ce91c7be508e696b6dcfe47488b24bb48ac0c66f20ec0da4501",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-light-s1.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-light-s1.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 16,
-          "height": 16,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "1",
-          "x": "20",
-          "y": "218",
-          "background": "#808080"
-        },
-        "testId": "544711e0cdb2ec46ff99-92e443780fca599e4efc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=1&x=20&y=218&background=%23808080",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-3c008-ist-background-light-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-light-s1.png",
-        "width": 16,
-        "height": 16,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "df0e1fdfcbb09ce91c7be508e696b6dcfe47488b24bb48ac0c66f20ec0da4501",
-        "pngSha256": "6bdf1f203417d9cac92628fcf5bb5f126fb700f8af0f9308a04bf73107277f96",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "df0e1fdfcbb09ce91c7be508e696b6dcfe47488b24bb48ac0c66f20ec0da4501"
     },
     {
       "name": "table-list-background-dark-s2.png",
-      "decodedRgbaSha256": "46c98ebdf02d18b8f63a0ee0fe778d6cb6c882cafce09d96c204f8dcbf830822",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-dark-s2.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-dark-s2.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 32,
-          "height": 32,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "2",
-          "x": "20",
-          "y": "44",
-          "background": "#202020"
-        },
-        "testId": "544711e0cdb2ec46ff99-69ffd947db93326a618a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=2&x=20&y=44&background=%23202020",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-1aa8c-list-background-dark-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-dark-s2.png",
-        "width": 32,
-        "height": 32,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "46c98ebdf02d18b8f63a0ee0fe778d6cb6c882cafce09d96c204f8dcbf830822",
-        "pngSha256": "92dc4ab17557ef9d2991cb8a68ead73c0d07d0cd488bf2337102021adffbfaf5",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "46c98ebdf02d18b8f63a0ee0fe778d6cb6c882cafce09d96c204f8dcbf830822"
     },
     {
       "name": "table-list-background-light-s2.png",
-      "decodedRgbaSha256": "f27860bee1bc8e34d8292181ef84897d5faa24622caa22e6e631093647f463b2",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-light-s2.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-light-s2.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 32,
-          "height": 32,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "2",
-          "x": "20",
-          "y": "218",
-          "background": "#808080"
-        },
-        "testId": "544711e0cdb2ec46ff99-e61af715617b53534ad1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=2&x=20&y=218&background=%23808080",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-51903-ist-background-light-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-light-s2.png",
-        "width": 32,
-        "height": 32,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "f27860bee1bc8e34d8292181ef84897d5faa24622caa22e6e631093647f463b2",
-        "pngSha256": "2059d6aa665fa76bec768d9d890abb1d538d841d2d976284e582f571b0f608f1",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "f27860bee1bc8e34d8292181ef84897d5faa24622caa22e6e631093647f463b2"
     },
     {
       "name": "table-list-background-dark-s3.png",
-      "decodedRgbaSha256": "9a3a79ad1b7ca5da7c4a93b9a153dc078764e3a806c9e2b51c05076d490420b9",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-dark-s3.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-dark-s3.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 48,
-          "height": 48,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "3",
-          "x": "20",
-          "y": "44",
-          "background": "#202020"
-        },
-        "testId": "544711e0cdb2ec46ff99-e375b08f38a5529d8d8c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=3&x=20&y=44&background=%23202020",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-6bc0a-list-background-dark-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-dark-s3.png",
-        "width": 48,
-        "height": 48,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9a3a79ad1b7ca5da7c4a93b9a153dc078764e3a806c9e2b51c05076d490420b9",
-        "pngSha256": "94147805b881616692f589e980b4420fed09405714eb57fa9b25ef42c72987df",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9a3a79ad1b7ca5da7c4a93b9a153dc078764e3a806c9e2b51c05076d490420b9"
     },
     {
       "name": "table-list-background-light-s3.png",
-      "decodedRgbaSha256": "a5b6d24853e768c424591a3e38a603bf2a046da7f15fa87d4adb38176bfc0233",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "table",
-        "manifest": "tests/reference/table-background/manifest.json",
-        "case": "table-list-background-light-s3.png",
-        "part": "background",
-        "alias": "background",
-        "variants": {
-          "case": "table-list-background-light-s3.png",
-          "part": "background",
-          "mismatchedPixels": 0,
-          "width": 48,
-          "height": 48,
-          "component": "table"
-        },
-        "query": {
-          "component": "table",
-          "native": "1",
-          "part": "cell",
-          "backgroundOnly": "1",
-          "width": "16",
-          "height": "16",
-          "scale": "3",
-          "x": "20",
-          "y": "218",
-          "background": "#808080"
-        },
-        "testId": "544711e0cdb2ec46ff99-cd7d020720689eb790fb",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=table&native=1&part=cell&backgroundOnly=1&width=16&height=16&scale=3&x=20&y=218&background=%23808080",
-        "subjectSlot": "table-cell",
-        "subjectElement": "TD",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\table-Table-exact-native-l-f2ce9-ist-background-light-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\table-background\\captures\\table-list-background-light-s3.png",
-        "width": 48,
-        "height": 48,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a5b6d24853e768c424591a3e38a603bf2a046da7f15fa87d4adb38176bfc0233",
-        "pngSha256": "25585d7fe423075e1e8a0f96ef3d01a8f9af3c48fc4cf34f99a90cd0bc9a3074",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a5b6d24853e768c424591a3e38a603bf2a046da7f15fa87d4adb38176bfc0233"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.679Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
   "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "typecheck": {
+    "command": "npm run typecheck",
+    "passed": true
+  },
+  "behavior": {
+    "passed": 2,
+    "failed": 0
+  },
+  "runtimeErrorAudit": "Explicit pageerror listener and assertion for all369 fresh-consumer checks.",
+  "scope": "Original native constituent slots only; semantic table layout and row selection are web compositions."
 }

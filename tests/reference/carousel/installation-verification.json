@@ -1,2744 +1,365 @@
 {
-  "component": "carousel",
-  "manifest": "tests/reference/pagination-arrow/manifest.json",
-  "targetReport": "tests/reference/carousel/installation-verification.json",
-  "dryRun": false,
-  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
+  "command": "shadcn add http://127.0.0.1:5173/r/carousel.json --yes --overwrite",
+  "consumer": "fresh initialized Vite/React consumer with independent node_modules",
   "consumerRsc": false,
-  "cliInvocation": {
-    "command": "C:\\Program Files\\nodejs\\node.exe",
-    "args": [
-      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js",
-      "add",
-      "http://127.0.0.1:5173/r/button.json",
-      "http://127.0.0.1:5173/r/checkbox.json",
-      "http://127.0.0.1:5173/r/slider.json",
-      "http://127.0.0.1:5173/r/input.json",
-      "http://127.0.0.1:5173/r/tooltip.json",
-      "http://127.0.0.1:5173/r/card.json",
-      "http://127.0.0.1:5173/r/textarea.json",
-      "http://127.0.0.1:5173/r/label.json",
-      "http://127.0.0.1:5173/r/separator.json",
-      "http://127.0.0.1:5173/r/scroll-area.json",
-      "http://127.0.0.1:5173/r/progress.json",
-      "http://127.0.0.1:5173/r/tabs.json",
-      "http://127.0.0.1:5173/r/select.json",
-      "http://127.0.0.1:5173/r/radio-group.json",
-      "http://127.0.0.1:5173/r/switch.json",
-      "http://127.0.0.1:5173/r/dialog.json",
-      "http://127.0.0.1:5173/r/alert-dialog.json",
-      "http://127.0.0.1:5173/r/popover.json",
-      "http://127.0.0.1:5173/r/dropdown-menu.json",
-      "http://127.0.0.1:5173/r/context-menu.json",
-      "http://127.0.0.1:5173/r/menubar.json",
-      "http://127.0.0.1:5173/r/collapsible.json",
-      "http://127.0.0.1:5173/r/toggle.json",
-      "http://127.0.0.1:5173/r/toggle-group.json",
-      "http://127.0.0.1:5173/r/aspect-ratio.json",
-      "http://127.0.0.1:5173/r/button-group.json",
-      "http://127.0.0.1:5173/r/pagination.json",
-      "http://127.0.0.1:5173/r/badge.json",
-      "http://127.0.0.1:5173/r/typography.json",
-      "http://127.0.0.1:5173/r/breadcrumb.json",
-      "http://127.0.0.1:5173/r/kbd.json",
-      "http://127.0.0.1:5173/r/sheet.json",
-      "http://127.0.0.1:5173/r/drawer.json",
-      "http://127.0.0.1:5173/r/empty.json",
-      "http://127.0.0.1:5173/r/resizable.json",
-      "http://127.0.0.1:5173/r/command.json",
-      "http://127.0.0.1:5173/r/sidebar.json",
-      "http://127.0.0.1:5173/r/sonner.json",
-      "http://127.0.0.1:5173/r/avatar.json",
-      "http://127.0.0.1:5173/r/input-group.json",
-      "http://127.0.0.1:5173/r/table.json",
-      "http://127.0.0.1:5173/r/calendar.json",
-      "http://127.0.0.1:5173/r/date-picker.json",
-      "http://127.0.0.1:5173/r/item.json",
-      "http://127.0.0.1:5173/r/data-table.json",
-      "http://127.0.0.1:5173/r/carousel.json",
-      "http://127.0.0.1:5173/r/message.json",
-      "http://127.0.0.1:5173/r/bubble.json",
-      "http://127.0.0.1:5173/r/form.json",
-      "http://127.0.0.1:5173/r/field.json",
-      "http://127.0.0.1:5173/r/code-block.json",
-      "http://127.0.0.1:5173/r/chart.json",
-      "http://127.0.0.1:5173/r/trace.json",
-      "http://127.0.0.1:5173/r/message-scroller.json",
-      "http://127.0.0.1:5173/r/skeleton.json",
-      "http://127.0.0.1:5173/r/spinner.json",
-      "http://127.0.0.1:5173/r/native-select.json",
-      "http://127.0.0.1:5173/r/marker.json",
-      "http://127.0.0.1:5173/r/input-otp.json",
-      "http://127.0.0.1:5173/r/questionnaire.json",
-      "http://127.0.0.1:5173/r/attachment.json",
-      "http://127.0.0.1:5173/r/combobox.json",
-      "--yes",
-      "--overwrite"
-    ],
-    "cwd": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\repair-all-consumer",
-    "startedAt": "2026-10-30T05:39:50.242Z",
-    "exitCode": 0,
-    "finishedAt": "2026-10-30T05:39:57.589Z"
-  },
-  "frozenBundle": {
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\bundle-manifest.json",
-    "sha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-  },
+  "browser": "156.0.4314.50",
+  "devicePixelRatio": 1,
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
-      "path": "minecraft-sound.ts",
-      "sourcePath": "registry/ui/minecraft-sound.ts",
-      "installedPath": "src/components/ui/minecraft-sound.ts",
-      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-sound-assets.ts",
-      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
-      "installedPath": "src/components/ui/minecraft-sound-assets.ts",
-      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-pagination.css",
-      "sourcePath": "registry/ui/minecraft-pagination.css",
-      "installedPath": "src/components/ui/minecraft-pagination.css",
-      "sourceSha256": "3f9474dff2b595586e28fdd0f2350744ef5c895d64c5821fe751cb7f113c1819",
-      "installedSha256": "3f9474dff2b595586e28fdd0f2350744ef5c895d64c5821fe751cb7f113c1819",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
-      "path": "minecraft-pagination-assets.css",
-      "sourcePath": "registry/ui/minecraft-pagination-assets.css",
-      "installedPath": "src/components/ui/minecraft-pagination-assets.css",
-      "sourceSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
-      "installedSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
-    },
-    {
       "path": "carousel.tsx",
-      "sourcePath": "registry/ui/carousel.tsx",
-      "installedPath": "src/components/ui/carousel.tsx",
-      "sourceSha256": "18328d67468b04e0d0bd4b44a4cab4282846f940208368ea41354088433d48e4",
-      "installedSha256": "18328d67468b04e0d0bd4b44a4cab4282846f940208368ea41354088433d48e4",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "sourceSha256": "786bf548ea4d5a385e22421f624e6b807824c277d27d21a0f45430504aebccee",
+      "installedSha256": "786bf548ea4d5a385e22421f624e6b807824c277d27d21a0f45430504aebccee",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-carousel.css",
-      "sourcePath": "registry/ui/minecraft-carousel.css",
-      "installedPath": "src/components/ui/minecraft-carousel.css",
       "sourceSha256": "b0f8b386553631d3fbb6576a95f61b6325e2f814c67a3a2de3b218c74eb62a53",
       "installedSha256": "b0f8b386553631d3fbb6576a95f61b6325e2f814c67a3a2de3b218c74eb62a53",
-      "canonicalEqual": true,
-      "comparison": "Canonical equality against actual shadcn CLI installation; only CLI comment/use-client removal permitted."
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-pagination.css",
+      "sourceSha256": "3f9474dff2b595586e28fdd0f2350744ef5c895d64c5821fe751cb7f113c1819",
+      "installedSha256": "3f9474dff2b595586e28fdd0f2350744ef5c895d64c5821fe751cb7f113c1819",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-pagination-assets.css",
+      "sourceSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
+      "installedSha256": "c7271f6d3f72616afdd97a5da555e4e2decf6227073300ce7548c6dd8e0e525d",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-render.tsx",
+      "sourceSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "installedSha256": "bae59aaeb79138171162298d9f6bdddb9b3e7ac36faf266cdb8e93cd0ba73ff0",
+      "comparison": "Equal except permitted CLI comment/use-client removal; original embedded asset bytes unchanged"
     }
   ],
-  "typecheck": {
-    "passed": true,
-    "exitCode": 0
-  },
-  "pageErrorEvidence": {
-    "status": "separate-pinned-gallery-audit",
-    "path": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\gallery-audit\\report.json",
-    "sha256": "101c3515a27e2c6678951211e50d52a7eef900315116b7c83e32cbadf6f710fc",
-    "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752",
-    "scope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-    "pageErrors": [],
-    "browser": "156.0.4314.50"
-  },
   "cases": [
     {
       "name": "pagination-arrow-c0-s1.png",
-      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c0-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-be6c5e368b6129b9eba4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-e7c5d--pagination-arrow-c0-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
-        "pngSha256": "cd9d86507d25e4f4d083900b1805b9052719f2371a9aa66857194414d7d436d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc"
     },
     {
       "name": "pagination-arrow-c1-s1.png",
-      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c1-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-f12e72501cf37e3bbf67",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-cebdb--pagination-arrow-c1-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
-        "pngSha256": "a0a48c8e43e92bcf2ac15cf5279c460adbc166fbbe6bd237875d80cab69151fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39"
     },
     {
       "name": "pagination-arrow-c2-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c2-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-06f12c86c543588adc86",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-8fc5b--pagination-arrow-c2-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c3-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c3-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-b75218ae26c7fc9d3450",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-38396--pagination-arrow-c3-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c4-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c4-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-f360ca3e9299bb2027f0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-8057f--pagination-arrow-c4-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c5-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c5-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-3bb800570b07adaccd8c",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-98688--pagination-arrow-c5-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c6-s1.png",
-      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c6-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-dcae41fe49f102380508",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-396f1--pagination-arrow-c6-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc",
-        "pngSha256": "cd9d86507d25e4f4d083900b1805b9052719f2371a9aa66857194414d7d436d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "5b22f34ef301e48b35f03cc4d828ff7de67883c4b06ad96c1cc55836cd1495dc"
     },
     {
       "name": "pagination-arrow-c7-s1.png",
-      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c7-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-170df5fecb828489c100",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-e3259--pagination-arrow-c7-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39",
-        "pngSha256": "a0a48c8e43e92bcf2ac15cf5279c460adbc166fbbe6bd237875d80cab69151fc",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "266cce53e94b575b9964f084ce3769124dc0a8f6f0c34bc51d1aff570f91ca39"
     },
     {
       "name": "pagination-arrow-c8-s1.png",
-      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c8-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-9555fe4d92d1aeb08a93",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-4b820--pagination-arrow-c8-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897",
-        "pngSha256": "0802d0943fc85e1b697fd75c0655b60b797bca680ac85f008b972a0dddf8a26e",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "d6f55c359bedb4701b8ff17434400dd775bd878c94ed2babd5839250dfd22897"
     },
     {
       "name": "pagination-arrow-c9-s1.png",
-      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c9-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-7ee4a2371021af85ff68",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-2d50c--pagination-arrow-c9-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e",
-        "pngSha256": "191810428893d24c85708bf72e92399c24b1213a03aaebc49b7bb88a92c8bb79",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "769918f383e952a088f2cfd25f167fbb677354015a58bc7feb326c0476dbf42e"
     },
     {
       "name": "pagination-arrow-c10-s1.png",
-      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c10-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-40c57469eda65cbe8824",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-3ab08-pagination-arrow-c10-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
-        "pngSha256": "fe960f4cf6ffe635510ae6bb2179fd52fb71331d9a106ba21f1aa2395517c876",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326"
     },
     {
       "name": "pagination-arrow-c11-s1.png",
-      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c11-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-5b8026b17ccd2e35281b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-da43e-pagination-arrow-c11-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
-        "pngSha256": "2262705b3c714dd906c195ee4e6a91bbe5ff5e3f785c52446dcc58294334d984",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f"
     },
     {
       "name": "pagination-arrow-c12-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c12-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-af37aeb89db5bdec7468",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-20714-pagination-arrow-c12-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c13-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c13-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-0c686bbdc5f717d4d4d6",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-8b3e3-pagination-arrow-c13-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c14-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c14-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-b7e6742e95d2720bf94e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-eff95-pagination-arrow-c14-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c15-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c15-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-cbcdc7cb4b229b109427",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-b25e2-pagination-arrow-c15-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c16-s1.png",
-      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c16-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-149c08f283b3261e8e15",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-f97c6-pagination-arrow-c16-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326",
-        "pngSha256": "fe960f4cf6ffe635510ae6bb2179fd52fb71331d9a106ba21f1aa2395517c876",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c1b0b2eb89f049acbbc46e9810a0ae08abc14cd6934f34f1b95b23286a7db326"
     },
     {
       "name": "pagination-arrow-c17-s1.png",
-      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c17-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-e932fe886d9a30b5aba5",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-44be5-pagination-arrow-c17-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f",
-        "pngSha256": "2262705b3c714dd906c195ee4e6a91bbe5ff5e3f785c52446dcc58294334d984",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c9cfa9e439033044c21fd4b2918b69bb6c9715c142d255bf289122da94d5e08f"
     },
     {
       "name": "pagination-arrow-c18-s1.png",
-      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c18-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-f5bb77059a4d954cc95b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=1&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-d8c4f-pagination-arrow-c18-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba",
-        "pngSha256": "e18418489daf869cb43c7e1bec303f418e062a66b54b8fe85c6f92d051eecb09",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "03dd952229b1aea22bfd228b8f32243e29852394d292e522670346afe801afba"
     },
     {
       "name": "pagination-arrow-c19-s1.png",
-      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s1.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c19-s1.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 12,
-          "height": 17,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "1",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-d2f5cf78c627e1b8d33a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=1&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-a6ff2-pagination-arrow-c19-s1-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s1.png",
-        "width": 12,
-        "height": 17,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318",
-        "pngSha256": "8d1602e27d31e17a5820aa0bd0f71370916c6798369bbcd6e7c37848407006af",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "6fbf38f59d71a875c260a3fa0442e26bb467501020d9d1e79ef0ba5715c88318"
     },
     {
       "name": "pagination-arrow-c0-s2.png",
-      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c0-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-907fea46c25c15bddf80",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-2047e--pagination-arrow-c0-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
-        "pngSha256": "89bf6f3b718c6d77cdabafa3a69f8e535bc2240ee9f6790f9ef7c775fea1a88c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee"
     },
     {
       "name": "pagination-arrow-c1-s2.png",
-      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c1-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-dfa5e952daed955b60b3",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-cbacc--pagination-arrow-c1-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
-        "pngSha256": "679b05f9c56480beeccb25d8c7e64f39c56e7b2fb33d05c20dc04be3cf0d097a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284"
     },
     {
       "name": "pagination-arrow-c2-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c2-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-e1e7430eb2e0278e22fc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-0702c--pagination-arrow-c2-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c3-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c3-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-f6371f9c22f032805f16",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-8e5bc--pagination-arrow-c3-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c4-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c4-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-2d15cb7ffb50bfeeb1a2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-9f478--pagination-arrow-c4-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c5-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c5-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-a792ed2c569e94401649",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-ce7fd--pagination-arrow-c5-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c6-s2.png",
-      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c6-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-19f4c2eed718f11a1250",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-84361--pagination-arrow-c6-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee",
-        "pngSha256": "89bf6f3b718c6d77cdabafa3a69f8e535bc2240ee9f6790f9ef7c775fea1a88c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a64177b47b2b605247094be33347d059436136250d563f27509f0ccb1de03eee"
     },
     {
       "name": "pagination-arrow-c7-s2.png",
-      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c7-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-1dfd497fa6637c879ec0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-a9451--pagination-arrow-c7-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284",
-        "pngSha256": "679b05f9c56480beeccb25d8c7e64f39c56e7b2fb33d05c20dc04be3cf0d097a",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0cc133bd7b66c8ef71cac4745cf62c8da01d7b4f6321c99c9feae6c635570284"
     },
     {
       "name": "pagination-arrow-c8-s2.png",
-      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c8-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-514ae03f27fd8038a61b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-47115--pagination-arrow-c8-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3",
-        "pngSha256": "d5496b43ecf45e7513605dd199e4f764c3be500727d533de8633bf59276b7025",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5d27590b92e18d1b8d5773a2a7537b35a4e90b6b426b6607156fd7fada283a3"
     },
     {
       "name": "pagination-arrow-c9-s2.png",
-      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c9-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-d88077cc7db7cb5d121b",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-ef24b--pagination-arrow-c9-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64",
-        "pngSha256": "6f36ba5214b9278097da2f8d20629b2f306a5614a5458800767cc6799a9f5002",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a6d5b0858eece04ed10658e1c0e896a404f05b556ba93b98e8810e46c940dc64"
     },
     {
       "name": "pagination-arrow-c10-s2.png",
-      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c10-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-46fa78c0eacde7e945de",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-1a889-pagination-arrow-c10-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
-        "pngSha256": "a84ad5cdc33ea029ee2e533e3412ffb324379de8a58dfa9e20a333c5525851b2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0"
     },
     {
       "name": "pagination-arrow-c11-s2.png",
-      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c11-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-5c23b6c6dbe4af02300f",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-754ae-pagination-arrow-c11-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
-        "pngSha256": "7382bfc5bf86a41b7865de4e680a1a756f50760b57cb5a0a16c05cab7b0d736d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872"
     },
     {
       "name": "pagination-arrow-c12-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c12-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-e4b760fa9d6895baf7a7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-0bd86-pagination-arrow-c12-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c13-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c13-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-95c80a67b24c4a442ea6",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-2bd4d-pagination-arrow-c13-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c14-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c14-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-26739a2f404e3451e966",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-9a438-pagination-arrow-c14-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c15-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c15-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-fbf214d7882d915c5ab9",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-5f1d4-pagination-arrow-c15-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c16-s2.png",
-      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c16-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-0118b68a1ebbb64e3c87",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-6ccd7-pagination-arrow-c16-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0",
-        "pngSha256": "a84ad5cdc33ea029ee2e533e3412ffb324379de8a58dfa9e20a333c5525851b2",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c5a6a5ab64e67ea80e633cf5ed4ad033e0a96fe2de5ff4558817ce9c1213dad0"
     },
     {
       "name": "pagination-arrow-c17-s2.png",
-      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c17-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-8564081ea79dbbac7185",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-61809-pagination-arrow-c17-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872",
-        "pngSha256": "7382bfc5bf86a41b7865de4e680a1a756f50760b57cb5a0a16c05cab7b0d736d",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bcd529bab26d0787506818f04baf58fafafbf59425f6acdaac86fa5b6f65872"
     },
     {
       "name": "pagination-arrow-c18-s2.png",
-      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c18-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-8a3368ec9815fe01e4c8",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=2&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-536da-pagination-arrow-c18-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1",
-        "pngSha256": "a05d58ea560bba9954edfeff91d21e207f7b7e259dd6557136976cfcdae616c4",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "cc274af2e0cd708b05f9a71f2ecccd4cd216dd11cafe8a9cd6dd87e2287e68f1"
     },
     {
       "name": "pagination-arrow-c19-s2.png",
-      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s2.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c19-s2.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 24,
-          "height": 34,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "2",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-4eaa99b4c3c74329420e",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=2&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-8e334-pagination-arrow-c19-s2-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s2.png",
-        "width": 24,
-        "height": 34,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04",
-        "pngSha256": "7564e4f7c9795043bc65ee6e538601080ea56972c6bba74241fa2fbb4ed60575",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "71968b507ee02d23cc0708f70718101411dc2d00c7e41e972569cbe953ca8a04"
     },
     {
       "name": "pagination-arrow-c0-s3.png",
-      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c0-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c0-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-4a010c92d5cb8ee95b03",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-06cbf--pagination-arrow-c0-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c0-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
-        "pngSha256": "77796e950df250453fa4a06ba58817f09a0701c74cb4c80739e269590c1d775b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed"
     },
     {
       "name": "pagination-arrow-c1-s3.png",
-      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c1-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c1-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "normal",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-a451566abce9d98a7115",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=normal&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-520bb--pagination-arrow-c1-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c1-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
-        "pngSha256": "e49891c4a203e309f5ab126043e44d036250dd004615f8a2ab2690875c5c8b43",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84"
     },
     {
       "name": "pagination-arrow-c2-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c2-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c2-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-60f07eaebbbad9a918b4",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-e186e--pagination-arrow-c2-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c2-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c3-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c3-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c3-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-58cfeda06593164f55b2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=hover&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-d5bcc--pagination-arrow-c3-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c3-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c4-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c4-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c4-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-f4ba826d46bd78623375",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-e97c5--pagination-arrow-c4-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c4-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c5-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c5-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c5-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "focus",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-502c920a8725f2f9abb1",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=focus&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-a6c6a--pagination-arrow-c5-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c5-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c6-s3.png",
-      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c6-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c6-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-adb7374de777fa4ce577",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-d605b--pagination-arrow-c6-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c6-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed",
-        "pngSha256": "77796e950df250453fa4a06ba58817f09a0701c74cb4c80739e269590c1d775b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9f35606311fd7dc69b72bf4c5d1abd2910adb35726dab9dbf02ca412d75ce0ed"
     },
     {
       "name": "pagination-arrow-c7-s3.png",
-      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c7-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c7-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-76eaa2571cc571726642",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-ce6ab--pagination-arrow-c7-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c7-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84",
-        "pngSha256": "e49891c4a203e309f5ab126043e44d036250dd004615f8a2ab2690875c5c8b43",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "3c3c0ec11069f12e867e83dcb999b7e892625b610202af834d12a1e74d392d84"
     },
     {
       "name": "pagination-arrow-c8-s3.png",
-      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c8-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c8-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-ed57e5a48f082d3c88cd",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-c77b9--pagination-arrow-c8-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c8-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661",
-        "pngSha256": "aeb65445cad85c06063d49e9b7dcf9127787e0b36affc52b6d217f753acaf285",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "a8196d5aeda52eacbf063c20a3fbb5fd7cc72fae16d0caf273aa5d29455d1661"
     },
     {
       "name": "pagination-arrow-c9-s3.png",
-      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c9-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c9-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "backward",
-          "state": "disabled-hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-3f646dc7decdc4365f29",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=backward&state=disabled-hover&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-previous",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-a8707--pagination-arrow-c9-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c9-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917",
-        "pngSha256": "cffff13de4108c4506f24c02bc7975cdefadd4e8dab3c21975ac20914dba84d3",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "90398db8561016a5c00471c0a304405e7e786dfc986a5cc010a3edb31f4aa917"
     },
     {
       "name": "pagination-arrow-c10-s3.png",
-      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c10-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c10-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-14081a39caea1897fbea",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-baf82-pagination-arrow-c10-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c10-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
-        "pngSha256": "0c0a371e222c4d328abdc9d137b0492e06cff21ddeaa25ab11f8ce0cd8da361b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801"
     },
     {
       "name": "pagination-arrow-c11-s3.png",
-      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c11-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c11-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "normal",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-1975cfe80db43f3899a0",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=normal&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-cea54-pagination-arrow-c11-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c11-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
-        "pngSha256": "f0b0b1e0843a9120f5a35854f3180ef52a48aa47799b6b90d0438e3cf2defa5c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519"
     },
     {
       "name": "pagination-arrow-c12-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c12-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c12-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-e0d530082911ee8163fd",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-370fc-pagination-arrow-c12-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c12-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c13-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c13-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c13-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-53d4f7b37ba329b43aa7",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=hover&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-35977-pagination-arrow-c13-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c13-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     },
     {
       "name": "pagination-arrow-c14-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c14-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c14-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-0fe10f71bd50335a3b36",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-0e80a-pagination-arrow-c14-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c14-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c15-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c15-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c15-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "focus",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-819960e57ead096d7e9a",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=focus&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-15adc-pagination-arrow-c15-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c15-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     },
     {
       "name": "pagination-arrow-c16-s3.png",
-      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c16-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c16-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-4da40fc09553812cd1e2",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-245d1-pagination-arrow-c16-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c16-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801",
-        "pngSha256": "0c0a371e222c4d328abdc9d137b0492e06cff21ddeaa25ab11f8ce0cd8da361b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "dbc847f12795e7bc00671ea8a8ce9111bad3e12a89bc32e06ffe553078658801"
     },
     {
       "name": "pagination-arrow-c17-s3.png",
-      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c17-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c17-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-b05b2426b714b2406738",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-57e90-pagination-arrow-c17-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c17-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519",
-        "pngSha256": "f0b0b1e0843a9120f5a35854f3180ef52a48aa47799b6b90d0438e3cf2defa5c",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "9725f8a1637a994e91945dfc77b0fb6eb69496b9f2bdc4762831cf3bcac99519"
     },
     {
       "name": "pagination-arrow-c18-s3.png",
-      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c18-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c18-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#202020"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-554b1d1d13a0cd11a511",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=3&x=16&y=16&background=%23202020",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-2a6f9-pagination-arrow-c18-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c18-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3",
-        "pngSha256": "5d002cea23f47150893cb644086da14ecc440fafaefa05673cdd16e73fc5c670",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "0bd48e69ba63644c675948ef47f407756333b6f62215081cdf7e87a7fac4eee3"
     },
     {
       "name": "pagination-arrow-c19-s3.png",
-      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
       "mismatchedPixels": 0,
-      "evidence": {
-        "component": "carousel",
-        "manifest": "tests/reference/pagination-arrow/manifest.json",
-        "case": "pagination-arrow-c19-s3.png",
-        "part": "arrow",
-        "alias": "arrow",
-        "variants": {
-          "case": "pagination-arrow-c19-s3.png",
-          "part": "arrow",
-          "mismatchedPixels": 0,
-          "width": 36,
-          "height": 51,
-          "component": "carousel"
-        },
-        "query": {
-          "component": "carousel",
-          "native": "1",
-          "direction": "forward",
-          "state": "disabled-hover",
-          "scale": "3",
-          "x": "16",
-          "y": "16",
-          "background": "#808080"
-        },
-        "testId": "057dc0a839e1a5ce9f3c-cf03112ed8a02ce776dc",
-        "runtimeUrl": "http://127.0.0.1:5342/?component=carousel&native=1&direction=forward&state=disabled-hover&scale=3&x=16&y=16&background=%23808080",
-        "subjectSlot": "carousel-next",
-        "subjectElement": "BUTTON",
-        "joinBasis": "runtime-component-and-unique-registered-case",
-        "actualPath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\next-complete-final\\test-results\\carousel-Carousel-original-dbab7-pagination-arrow-c19-s3-png\\actual.png",
-        "nativePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\tests\\reference\\pagination-arrow\\captures\\pagination-arrow-c19-s3.png",
-        "width": 36,
-        "height": 51,
-        "mismatchedPixels": 0,
-        "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43",
-        "pngSha256": "467fdf45a00c20e332a31892de59d0ba253626d89262112949880c88eefa7c0b",
-        "bundleSha256": "d6a4846146677a4c92ba9c39cd0810fa71daa58484e872af3823abbf84e1f752"
-      }
+      "decodedRgbaSha256": "c0dd54812dbfe343598832a22877a3b82c726c8ac3b77fa53d203b78723cfb43"
     }
   ],
-  "appliedAt": "2026-10-30T06:30:04.241Z",
-  "command": "C:\\Program Files\\nodejs\\node.exe C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\craftcn\\node_modules\\shadcn\\dist\\index.js add http://127.0.0.1:5173/r/button.json http://127.0.0.1:5173/r/checkbox.json http://127.0.0.1:5173/r/slider.json http://127.0.0.1:5173/r/input.json http://127.0.0.1:5173/r/tooltip.json http://127.0.0.1:5173/r/card.json http://127.0.0.1:5173/r/textarea.json http://127.0.0.1:5173/r/label.json http://127.0.0.1:5173/r/separator.json http://127.0.0.1:5173/r/scroll-area.json http://127.0.0.1:5173/r/progress.json http://127.0.0.1:5173/r/tabs.json http://127.0.0.1:5173/r/select.json http://127.0.0.1:5173/r/radio-group.json http://127.0.0.1:5173/r/switch.json http://127.0.0.1:5173/r/dialog.json http://127.0.0.1:5173/r/alert-dialog.json http://127.0.0.1:5173/r/popover.json http://127.0.0.1:5173/r/dropdown-menu.json http://127.0.0.1:5173/r/context-menu.json http://127.0.0.1:5173/r/menubar.json http://127.0.0.1:5173/r/collapsible.json http://127.0.0.1:5173/r/toggle.json http://127.0.0.1:5173/r/toggle-group.json http://127.0.0.1:5173/r/aspect-ratio.json http://127.0.0.1:5173/r/button-group.json http://127.0.0.1:5173/r/pagination.json http://127.0.0.1:5173/r/badge.json http://127.0.0.1:5173/r/typography.json http://127.0.0.1:5173/r/breadcrumb.json http://127.0.0.1:5173/r/kbd.json http://127.0.0.1:5173/r/sheet.json http://127.0.0.1:5173/r/drawer.json http://127.0.0.1:5173/r/empty.json http://127.0.0.1:5173/r/resizable.json http://127.0.0.1:5173/r/command.json http://127.0.0.1:5173/r/sidebar.json http://127.0.0.1:5173/r/sonner.json http://127.0.0.1:5173/r/avatar.json http://127.0.0.1:5173/r/input-group.json http://127.0.0.1:5173/r/table.json http://127.0.0.1:5173/r/calendar.json http://127.0.0.1:5173/r/date-picker.json http://127.0.0.1:5173/r/item.json http://127.0.0.1:5173/r/data-table.json http://127.0.0.1:5173/r/carousel.json http://127.0.0.1:5173/r/message.json http://127.0.0.1:5173/r/bubble.json http://127.0.0.1:5173/r/form.json http://127.0.0.1:5173/r/field.json http://127.0.0.1:5173/r/code-block.json http://127.0.0.1:5173/r/chart.json http://127.0.0.1:5173/r/trace.json http://127.0.0.1:5173/r/message-scroller.json http://127.0.0.1:5173/r/skeleton.json http://127.0.0.1:5173/r/spinner.json http://127.0.0.1:5173/r/native-select.json http://127.0.0.1:5173/r/marker.json http://127.0.0.1:5173/r/input-otp.json http://127.0.0.1:5173/r/questionnaire.json http://127.0.0.1:5173/r/attachment.json http://127.0.0.1:5173/r/combobox.json --yes --overwrite",
   "pageErrors": [],
-  "pageErrorsScope": "Global pageerror listener across all61 maintained demos covering62 registry components, desktop/mobile and combined gallery. Native-case pixels verified separately; no claim of global errors monitored on every native case.",
-  "browser": "156.0.4314.50"
+  "typecheck": {
+    "command": "npm run typecheck",
+    "passed": true
+  },
+  "behavior": {
+    "passed": 5,
+    "failed": 0
+  },
+  "runtimeErrorAudit": "Explicit pageerror listener and assertion for all66 fresh-consumer checks.",
+  "scope": "Original native constituent slots only; Slide layout/gestures/keyboard state and vertical rotation are web compositions."
 }

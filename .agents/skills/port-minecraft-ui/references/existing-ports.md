@@ -36,3 +36,15 @@ Current captured references identify Minecraft Java Edition 26.2 from the artifa
 Capture commands accept the selected version and Java directories through arguments or environment variables. Read the relevant launcher before use. Keep runtime/output directories isolated and preserve the source artifact pin. Extending verified coverage to another version requires inspected resources and new captured references rather than bypassing an existing pin.
 
 Consumer installation and ordinary browser regressions use the packaged assets and committed captured references. They do not require the developer's Minecraft path.
+
+## Specialized tools
+
+Run these directly when needed; they are not routine package commands:
+
+- `node tests/reference/capture.mjs <version-directory> <java-bin>` captures Button reference cases.
+- `node tests/reference/capture-controls.mjs <version-directory> <java-bin> [case-file]` captures the selected control corpus.
+- `node scripts/verify-reference-repeat.mjs <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
+- `node scripts/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
+- `node scripts/check-map.mjs --list` lists component mappings.
+
+Read the corresponding script for additional inputs and scope. Capturing or regenerating a particular corpus does not establish verified coverage for the entire registry.
