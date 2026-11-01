@@ -1,0 +1,17 @@
+import * as React from "react"
+import { Label } from "../registry/ui/label"
+import { Input } from "../registry/ui/input"
+import type { DemoProps } from "../types"
+
+export default function LabelDemo({ scale }: DemoProps) {
+  const [text, setText] = React.useState("Player Name")
+  return <>
+    <div className="demo-options"><Label htmlFor="preview-label-text" scale={scale}>Label text</Label><Input id="preview-label-text" aria-label="Label text" style={{width:200*scale}} scale={scale} value={text} onChange={event => setText(event.target.value)} /></div>
+    <div className="demo-stage" data-stage="label">
+      <div className="demo-pair"><Label htmlFor="preview-label-input" scale={scale}>{text}</Label><Input id="preview-label-input" scale={scale} defaultValue="New World" /></div>
+      <div className="demo-pair"><Label htmlFor="preview-label-disabled" scale={scale}>Disabled field</Label><Input id="preview-label-disabled" scale={scale} defaultValue="Unavailable" disabled /></div>
+      <div className="demo-pair"><span className="sample-caption">WRAPPED / CENTERED</span><Label scale={scale} maxWidth={100} align="center">Create a new world with friends</Label></div>
+    </div>
+    <div className="demo-result"><span className="status-dot" /><span>Click a label to focus its field</span></div>
+  </>
+}
