@@ -1,23 +1,176 @@
-import {repoRoot, resolveRepositoryPath, packageBin} from '@ppt/paths'
-import assert from "node:assert/strict"
-import path from "node:path"
-import {readFile,writeFile,mkdir} from "node:fs/promises"
-import {createHash} from "node:crypto"
-import {execFileSync} from "node:child_process"
-import {fileURLToPath} from "node:url"
-import {chromium,expect} from "@playwright/test"
-import {PNG} from "pngjs"
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const [consumerArgument,url]=process.argv.slice(2)
-assert.ok(consumerArgument&&url,"Usage: bun src/installed/verify-input-otp-installed.mjs <consumer-dir> <consumer-url>")
-const root=repoRoot,consumer=path.resolve(consumerArgument),sha=bytes=>createHash("sha256").update(bytes).digest("hex")
-const registry=JSON.parse(await readFile(resolveRepositoryPath(path.join("registry.json")),"utf8")),item=registry.items.find(item=>item.name==="input-otp"),settings=JSON.parse(await readFile(path.join(consumer,"components.json"),"utf8")),files=[]
-const canonical=bytes=>{let text=bytes.toString().replace(/\/\*[\s\S]*?\*\//g,"").trim();if(settings.rsc===false)text=text.replace(/^["']use client["'];?\s*/,"");return text.replace(/^(?:\/\/[^\n]*\n\s*)+/,"")}
-for(const entry of item.files){const name=path.basename(entry.path),source=await readFile(resolveRepositoryPath(path.join(entry.path))),installed=await readFile(path.join(consumer,"src/components/ui",name));assert.equal(canonical(installed),canonical(source),`${name}: CLI changed source`);files.push({path:name,sourceSha256:sha(source),installedSha256:sha(installed),comparison:"Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"})}
-execFileSync(process.execPath,[packageBin('typescript','tsc',consumer),"--noEmit"],{cwd:consumer,stdio:"pipe"})
+import { packageBin } from "@grasscn/tests/tooling";
+import { chromium, expect } from "@playwright/test";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
 
-const reference=resolveRepositoryPath(path.join("tests/reference/input-otp")),manifest=JSON.parse(await readFile(path.join(reference,"manifest.json"),"utf8")),browser=await chromium.launch({channel:"msedge"}),browserVersion=await browser.version(),cases=[],pageErrors=[];let next=0
-async function worker(){while(next<manifest.cases.length){const c=manifest.cases[next++],page=await browser.newPage({viewport:{width:1536,height:900},deviceScaleFactor:1});page.on("pageerror",e=>pageErrors.push(e.message));try{
- await page.clock.install({time:new Date("2026-10-28T00:00:00Z")});await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));const q=new URLSearchParams({component:"input-otp",native:"1",scale:String(c.scale),text:c.text,state:c.state,x:String(c.x),y:String(c.y),width:String(c.width),height:String(c.height),background:c.background});await page.goto(`${url}?${q}`);const subject=page.locator("#subject"),mirror=subject.locator("input"),input=page.getByRole("textbox",{name:"One-time code"});await expect(mirror).toHaveAttribute("data-mc-ready","true");if(/[^\x00-\x7f]/.test(c.text))await expect(mirror).toHaveAttribute("data-mc-bitmap","true");if(c.state.startsWith("focus"))await input.focus();await page.mouse.move(0,0);await page.clock.runFor(c.caretMs);await expect(subject).toHaveAttribute("data-active",String(c.state.startsWith("focus")));await expect(mirror).toHaveAttribute("data-mc-ready","true");const bytes=await readFile(path.join(reference,"captures",c.name));assert.equal(sha(bytes),c.sha256);const expected=PNG.sync.read(bytes),actual=PNG.sync.read(await subject.screenshot());assert.deepEqual([actual.width,actual.height],[expected.width,expected.height]);assert.ok(actual.data.equals(expected.data),`Installed InputOTP ${c.name}: pixels differ`);const changed=PNG.sync.read(PNG.sync.write(expected));changed.data[0]^=1;let mutations=0;for(let i=0;i<expected.data.length;i+=4)mutations+=Number(!expected.data.subarray(i,i+4).equals(changed.data.subarray(i,i+4)));assert.equal(mutations,1);cases.push({name:c.name,mismatchedPixels:0,decodedRgbaSha256:sha(actual.data)})
- }finally{await page.close()}}}
-try{await Promise.all([worker(),worker()]);assert.deepEqual(pageErrors,[]);cases.sort((a,b)=>manifest.cases.findIndex(c=>c.name===a.name)-manifest.cases.findIndex(c=>c.name===b.name));await writeFile(path.join(reference,"installation-verification.json"),JSON.stringify({command:"shadcn add http://127.0.0.1:5173/r/input-otp.json --yes --overwrite",consumer:"Separate initialized shadcn React/Vite consumer with independent physical npm dependencies",consumerRsc:settings.rsc,browser:browserVersion,viewport:[1536,900],devicePixelRatio:1,sourceJarSha256:manifest.sourceJarSha256,files,cases,pageErrors,typecheck:{command:"tsc --noEmit",passed:true},comparatorMutationDetected:true},null,2)+"\n");console.log(`Installed InputOTP: ${cases.length} native cases exact; ${files.length} canonical sources; types passed`)}finally{await browser.close()}
+const [consumerArgument, url] = process.argv.slice(2);
+assert.ok(
+  consumerArgument && url,
+  "Usage: bun src/installed/verify-input-otp-installed.mjs <consumer-dir> <consumer-url>"
+);
+const root = repoRoot,
+  consumer = path.resolve(consumerArgument),
+  sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const registry = JSON.parse(
+    await readFile(webFile(path.join("registry.json")), "utf8")
+  ),
+  item = registry.items.find((item) => item.name === "input-otp"),
+  settings = JSON.parse(
+    await readFile(path.join(consumer, "components.json"), "utf8")
+  ),
+  files = [];
+const canonical = (bytes) => {
+  let text = bytes
+    .toString()
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .trim();
+  if (settings.rsc === false)
+    text = text.replace(/^["']use client["'];?\s*/, "");
+  return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
+};
+for (const entry of item.files) {
+  const name = path.basename(entry.path),
+    source = await readFile(webFile(path.join(entry.path))),
+    installed = await readFile(path.join(consumer, "src/components/ui", name));
+  assert.equal(
+    canonical(installed),
+    canonical(source),
+    `${name}: CLI changed source`
+  );
+  files.push({
+    path: name,
+    sourceSha256: sha(source),
+    installedSha256: sha(installed),
+    comparison:
+      "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged",
+  });
+}
+execFileSync(
+  process.execPath,
+  [packageBin("typescript", "tsc", consumer), "--noEmit"],
+  { cwd: consumer, stdio: "pipe" }
+);
+
+const reference = pixelPerfectFile(path.join("tests/reference/input-otp")),
+  manifest = JSON.parse(
+    await readFile(path.join(reference, "manifest.json"), "utf8")
+  ),
+  browser = await chromium.launch({ channel: "msedge" }),
+  browserVersion = await browser.version(),
+  cases = [],
+  pageErrors = [];
+let next = 0;
+async function worker() {
+  while (next < manifest.cases.length) {
+    const c = manifest.cases[next++],
+      page = await browser.newPage({
+        viewport: { width: 1536, height: 900 },
+        deviceScaleFactor: 1,
+      });
+    page.on("pageerror", (e) => pageErrors.push(e.message));
+    try {
+      await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
+      await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+      const q = new URLSearchParams({
+        component: "input-otp",
+        native: "1",
+        scale: String(c.scale),
+        text: c.text,
+        state: c.state,
+        x: String(c.x),
+        y: String(c.y),
+        width: String(c.width),
+        height: String(c.height),
+        background: c.background,
+      });
+      await page.goto(`${url}?${q}`);
+      const subject = page.locator("#subject"),
+        mirror = subject.locator("input"),
+        input = page.getByRole("textbox", { name: "One-time code" });
+      await expect(mirror).toHaveAttribute("data-mc-ready", "true");
+      if (/[^\x00-\x7f]/.test(c.text))
+        await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
+      if (c.state.startsWith("focus")) await input.focus();
+      await page.mouse.move(0, 0);
+      await page.clock.runFor(c.caretMs);
+      await expect(subject).toHaveAttribute(
+        "data-active",
+        String(c.state.startsWith("focus"))
+      );
+      await expect(mirror).toHaveAttribute("data-mc-ready", "true");
+      const bytes = await readFile(path.join(reference, "captures", c.name));
+      assert.equal(sha(bytes), c.sha256);
+      const expected = PNG.sync.read(bytes),
+        actual = PNG.sync.read(await subject.screenshot());
+      assert.deepEqual(
+        [actual.width, actual.height],
+        [expected.width, expected.height]
+      );
+      assert.ok(
+        actual.data.equals(expected.data),
+        `Installed InputOTP ${c.name}: pixels differ`
+      );
+      const changed = PNG.sync.read(PNG.sync.write(expected));
+      changed.data[0] ^= 1;
+      let mutations = 0;
+      for (let i = 0; i < expected.data.length; i += 4)
+        mutations += Number(
+          !expected.data
+            .subarray(i, i + 4)
+            .equals(changed.data.subarray(i, i + 4))
+        );
+      assert.equal(mutations, 1);
+      cases.push({
+        name: c.name,
+        mismatchedPixels: 0,
+        decodedRgbaSha256: sha(actual.data),
+      });
+    } finally {
+      await page.close();
+    }
+  }
+}
+try {
+  await Promise.all([worker(), worker()]);
+  assert.deepEqual(pageErrors, []);
+  cases.sort(
+    (a, b) =>
+      manifest.cases.findIndex((c) => c.name === a.name) -
+      manifest.cases.findIndex((c) => c.name === b.name)
+  );
+  await writeFile(
+    path.join(reference, "installation-verification.json"),
+    JSON.stringify(
+      {
+        command:
+          "shadcn add http://127.0.0.1:5173/r/input-otp.json --yes --overwrite",
+        consumer:
+          "Separate initialized shadcn React/Vite consumer with independent physical npm dependencies",
+        consumerRsc: settings.rsc,
+        browser: browserVersion,
+        viewport: [1536, 900],
+        devicePixelRatio: 1,
+        sourceJarSha256: manifest.sourceJarSha256,
+        files,
+        cases,
+        pageErrors,
+        typecheck: { command: "tsc --noEmit", passed: true },
+        comparatorMutationDetected: true,
+      },
+      null,
+      2
+    ) + "\n"
+  );
+  console.log(
+    `Installed InputOTP: ${cases.length} native cases exact; ${files.length} canonical sources; types passed`
+  );
+} finally {
+  await browser.close();
+}

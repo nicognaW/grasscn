@@ -40,13 +40,7 @@
       "cache": false
     }
   },
-  "globalDependencies": [
-    "workspace-paths.mjs",
-    "workspace-paths.d.mts",
-    ".bun-version",
-    "bunfig.toml",
-    "patches/**"
-  ],
+  "globalDependencies": [".bun-version", "bunfig.toml", "patches/**"],
   "globalPassThroughEnv": [
     "GRASSCN_*",
     "PLAYWRIGHT_*",

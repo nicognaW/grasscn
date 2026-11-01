@@ -24,6 +24,7 @@ import {
   productionBuildIdentity,
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
+import { packageBin } from "@grasscn/tests/tooling";
 import {
   browserReuseResults,
   readVerificationState,
@@ -39,8 +40,7 @@ import {
   repoRoot,
   testRoot,
   pixelPerfectRoot,
-  resolveRepositoryPath,
-  packageBin,
+  repositoryFile,
 } from "@ppt/paths";
 
 import {
@@ -492,7 +492,7 @@ try {
       const commandArgs = [...args];
 
       if (commandArgs[0].startsWith("scripts/")) {
-        commandArgs[0] = resolveRepositoryPath(commandArgs[0]);
+        commandArgs[0] = repositoryFile(commandArgs[0]);
       }
 
       const child = spawn(process.execPath, commandArgs, {

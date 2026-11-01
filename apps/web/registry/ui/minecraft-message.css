@@ -1,14 +1,64 @@
-@layer theme,base,components,utilities;
+@layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
 @layer components {
- .mc-message-group,.mc-message-content{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;min-width:0;flex-direction:column;gap:0}
- .mc-message{--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;display:flex;width:100%;min-width:0;gap:calc(2 * var(--mc-pixel));font-family:"Minecraft Bitmap",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel));color:#fff}
- .mc-message-content{--mc-pixel:calc(1px * var(--mc-scale,2));width:100%;overflow-wrap:anywhere}
- .mc-message-content[data-mc-chat-surface]{box-sizing:border-box;display:block;padding:var(--mc-pixel) calc(8 * var(--mc-pixel)) 0 calc(4 * var(--mc-pixel));background:rgba(0,0,0,.4980392156862745)}
- .mc-message-content[data-mc-chat-surface]>.mc-label{display:flex;margin-bottom:calc(-1 * var(--mc-pixel))}
- .mc-message-avatar{display:flex;flex-shrink:0;align-items:center;justify-content:center;align-self:flex-end;overflow:hidden;image-rendering:pixelated}
- .mc-message-header,.mc-message-footer{display:flex;align-items:center;min-width:0;max-width:100%;color:#aaa}
- .mc-message-header>.mc-label,.mc-message-footer>.mc-label{color:inherit}
- .mc-chat-rich-inline{display:inline}
+  .mc-message-group,
+  .mc-message-content {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0;
+  }
+  .mc-message {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    gap: calc(2 * var(--mc-pixel));
+    font-family: "Minecraft Bitmap", monospace;
+    font-size: calc(8 * var(--mc-pixel));
+    line-height: calc(9 * var(--mc-pixel));
+    color: #fff;
+  }
+  .mc-message-content {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .mc-message-content[data-mc-chat-surface] {
+    box-sizing: border-box;
+    display: block;
+    padding: var(--mc-pixel) calc(8 * var(--mc-pixel)) 0
+      calc(4 * var(--mc-pixel));
+    background: rgba(0, 0, 0, 0.4980392156862745);
+  }
+  .mc-message-content[data-mc-chat-surface] > .mc-label {
+    display: flex;
+    margin-bottom: calc(-1 * var(--mc-pixel));
+  }
+  .mc-message-avatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    overflow: hidden;
+    image-rendering: pixelated;
+  }
+  .mc-message-header,
+  .mc-message-footer {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    color: #aaa;
+  }
+  .mc-message-header > .mc-label,
+  .mc-message-footer > .mc-label {
+    color: inherit;
+  }
+  .mc-chat-rich-inline {
+    display: inline;
+  }
 }
-

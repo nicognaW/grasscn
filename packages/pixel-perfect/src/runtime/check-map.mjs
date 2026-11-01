@@ -4,7 +4,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 import {
@@ -14,7 +15,7 @@ import {
 
 const root = repoRoot;
 const json = async (file) =>
-  JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"));
+  JSON.parse(await readFile(evidenceFile(file), "utf8"));
 const args = process.argv.slice(2);
 const mapArg = args.indexOf("--map");
 const map = await json(
@@ -31,7 +32,7 @@ const historicalEvidence = await validateHistoricalEvidence({
   ),
   map,
   registry,
-  resolvePath: resolveRepositoryPath,
+  resolvePath: evidenceFile,
 });
 const pilot = await json("tests/reference/manifest.json");
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
@@ -41,7 +42,7 @@ const embeddedFontZipDigest = async () => {
   if (embeddedFontDigest) return embeddedFontDigest;
   const embedded = (
     await readFile(
-      resolveRepositoryPath(path.join("registry/ui/minecraft-unifont-data.ts")),
+      evidenceFile(path.join("registry/ui/minecraft-unifont-data.ts")),
       "utf8"
     )
   ).match(/export const unifontZip = "([A-Za-z0-9+/=]+)"/);
@@ -204,9 +205,7 @@ for (const component of map.components) {
     for (const file of installation.files) {
       hash(file.installedSha256);
       const sourceSha = digest(
-        await readFile(
-          resolveRepositoryPath(path.join("registry/ui", file.path))
-        )
+        await readFile(evidenceFile(path.join("registry/ui", file.path)))
       );
       assert.equal(
         sourceSha,
@@ -241,13 +240,13 @@ for (const component of map.components) {
         "ControlsReferenceMain.java"
       );
       assert.equal(
-        digest(await readFile(resolveRepositoryPath(source))),
+        digest(await readFile(evidenceFile(source))),
         manifest.captureSourceSha256,
         `Native harness snapshot integrity: ${source}`
       );
       const casesFile = path.join(path.dirname(manifestFile), "cases.json");
       assert.equal(
-        digest(await readFile(resolveRepositoryPath(casesFile))),
+        digest(await readFile(evidenceFile(casesFile))),
         manifest.caseDefinitionSha256,
         `Native case definition integrity: ${casesFile}`
       );
@@ -259,7 +258,7 @@ for (const component of map.components) {
         reference.name
       );
       assert.equal(
-        digest(await readFile(resolveRepositoryPath(file))),
+        digest(await readFile(evidenceFile(file))),
         reference.sha256,
         `Reference integrity: ${file}`
       );
@@ -272,7 +271,7 @@ for (const component of map.components) {
           frame.name
         );
         assert.equal(
-          digest(await readFile(resolveRepositoryPath(file))),
+          digest(await readFile(evidenceFile(file))),
           frame.sha256,
           `Full-frame integrity: ${file}`
         );
@@ -347,8 +346,7 @@ for (const component of map.components) {
         );
         assert.equal(
           digest(
-            PNG.sync.read(await readFile(resolveRepositoryPath(referenceFile)))
-              .data
+            PNG.sync.read(await readFile(evidenceFile(referenceFile))).data
           ),
           repeated.decodedRgbaSha256
         );
@@ -408,7 +406,7 @@ for (const component of map.components) {
       assert.equal(
         digest(
           await readFile(
-            resolveRepositoryPath(
+            evidenceFile(
               path.join(path.dirname(manifestFile), "glyph-atlas.json")
             )
           )
@@ -418,7 +416,7 @@ for (const component of map.components) {
       assert.equal(
         digest(
           await readFile(
-            resolveRepositoryPath(
+            evidenceFile(
               path.join(
                 provenance.glyphProbeSource ??
                   "tests/reference/GlyphProbeMain.java"
@@ -462,7 +460,7 @@ for (const component of map.components) {
           provenance.glyphAtlasCaptureManifest
         );
         assert.equal(
-          digest(await readFile(resolveRepositoryPath(observationPath))),
+          digest(await readFile(evidenceFile(observationPath))),
           provenance.glyphAtlasCaptureManifestSha256
         );
         const observation = await json(observationPath);
@@ -471,7 +469,7 @@ for (const component of map.components) {
           provenance.glyphAtlasObservationFile
         );
         assert.equal(
-          digest(await readFile(resolveRepositoryPath(observedAtlasPath))),
+          digest(await readFile(evidenceFile(observedAtlasPath))),
           provenance.glyphAtlasSha256
         );
         assert.equal(
@@ -490,7 +488,7 @@ for (const component of map.components) {
             frame.name
           );
           assert.equal(
-            digest(await readFile(resolveRepositoryPath(framePath))),
+            digest(await readFile(evidenceFile(framePath))),
             frame.sha256
           );
         }
@@ -503,7 +501,7 @@ for (const component of map.components) {
             `Missing glyph-observation native case: ${reference.name}`
           );
           const observedBytes = await readFile(
-            resolveRepositoryPath(
+            evidenceFile(
               path.join(
                 path.dirname(observationPath),
                 "captures",
@@ -513,7 +511,7 @@ for (const component of map.components) {
           );
           assert.equal(digest(observedBytes), observed.sha256);
           const referenceBytes = await readFile(
-            resolveRepositoryPath(
+            evidenceFile(
               path.join(path.dirname(manifestFile), "captures", reference.name)
             )
           );

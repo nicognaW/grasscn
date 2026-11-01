@@ -4,7 +4,8 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 
 import {
   validateHistoricalEvidence,
@@ -39,12 +40,12 @@ for (const name of [...new Set(names)].sort()) {
   });
 }
 const map = JSON.parse(
-  await readFile(resolveRepositoryPath("registry/minecraft-map.json"), "utf8")
+  await readFile(evidenceFile("registry/minecraft-map.json"), "utf8")
 );
 /** @type {unknown} */
 
 const registry = JSON.parse(
-  await readFile(resolveRepositoryPath("registry.json"), "utf-8")
+  await readFile(evidenceFile("registry.json"), "utf-8")
 );
 
 const historicalEvidence = await validateHistoricalEvidence({
@@ -54,7 +55,7 @@ const historicalEvidence = await validateHistoricalEvidence({
   ),
   map,
   registry,
-  resolvePath: resolveRepositoryPath,
+  resolvePath: evidenceFile,
 });
 
 await writeFile(

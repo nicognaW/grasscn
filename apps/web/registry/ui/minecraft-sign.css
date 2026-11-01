@@ -1,3 +1,24 @@
-@layer components {.mc-sign{position:relative;flex:none;isolation:isolate;image-rendering:pixelated;overflow:hidden}.mc-sign>img{pointer-events:none}.mc-sign [data-slot=document-text]{pointer-events:none}}
+@layer components {
+  .mc-sign {
+    position: relative;
+    flex: none;
+    isolation: isolate;
+    image-rendering: pixelated;
+    overflow: hidden;
+  }
+  .mc-sign > img {
+    pointer-events: none;
+  }
+  .mc-sign [data-slot="document-text"] {
+    pointer-events: none;
+  }
+}
 
-.mc-sign-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:pre}
+.mc-sign-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: pre;
+}

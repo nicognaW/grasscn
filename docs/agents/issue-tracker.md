@@ -27,8 +27,7 @@ Follow the Matt Pocock `pr` skill's body structure, using the glossary's terms a
 
 ## Evidence
 
-- **Before:** <Existing preview or missing component; captured Minecraft reference for the target appearance.>
-  **After:** <Screenshot or video of the new UI port in the working preview.>
+- **Before:** <Existing preview or missing component; captured Minecraft reference for the target appearance.> **After:** <Screenshot or video of the new UI port in the working preview.>
 - **Checks:** <Checks actually run, their results, and remaining verification gaps.>
 - **Coverage:** <Reference cases, game version and display conditions shown; web adaptations.>
 

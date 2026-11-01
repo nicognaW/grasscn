@@ -12,7 +12,8 @@ import {
   productionBuildIdentity,
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
-import { repoRoot, testRoot, packageBin } from "@tests/paths";
+import { repoRoot, testRoot } from "@tests/paths";
+import { packageBin } from "@tests/tooling";
 
 import { readVerificationState } from "../runtime/verification-types.ts";
 

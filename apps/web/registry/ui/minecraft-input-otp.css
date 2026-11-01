@@ -1,1 +1,31 @@
-@layer components {.mc-otp,.mc-otp-group{display:flex;align-items:center;gap:4px}.mc-otp-slot{--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;box-sizing:border-box;width:calc(20 * var(--mc-pixel));height:calc(20 * var(--mc-pixel));flex:none}.mc-otp-slot>.mc-input{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}.mc-otp [data-input-otp]{outline:none!important;box-shadow:none!important}.mc-otp [data-input-otp]::selection{background:transparent}}
+@layer components {
+  .mc-otp,
+  .mc-otp-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .mc-otp-slot {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    position: relative;
+    box-sizing: border-box;
+    width: calc(20 * var(--mc-pixel));
+    height: calc(20 * var(--mc-pixel));
+    flex: none;
+  }
+  .mc-otp-slot > .mc-input {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .mc-otp [data-input-otp] {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .mc-otp [data-input-otp]::selection {
+    background: transparent;
+  }
+}

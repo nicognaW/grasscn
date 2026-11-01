@@ -1,11 +1,91 @@
-import {resolveRepositoryPath, pixelPerfectRoot} from '@ppt/paths'
-import {pixelPerfectTest as test,expect} from "@grasscn/pixel-perfect/test"
-import {readFileSync,writeFileSync} from "node:fs"
-import {createHash} from "node:crypto"
-import {PNG} from "pngjs"
-import {compare} from "@ppt/harness/families/text-components-test-utils"
-test.describe.configure({mode:"parallel"})
-test("Empty comparator catches one changed pixel",()=>{const manifest=JSON.parse(readFileSync(resolveRepositoryPath('tests/reference/empty/manifest.json', pixelPerfectRoot),'utf8')),expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/empty/captures/${manifest.cases[0].name}`, pixelPerfectRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
-for(const [part,directory] of [["default","tests/reference/empty"],["title","tests/reference/label"],["description","tests/reference/label"]]){const manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),"utf8"));for(const c of manifest.cases)test(`Empty ${part} native pixels: ${c.name}`,async({page},info)=>{
- await page.setViewportSize({width:1536,height:900});const params=new URLSearchParams({component:"empty",native:"1",part,text:c.label??"",scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y),background:c.background,align:c.alignment??"left"});if(c.wrapWidth!=null)params.set("wrapWidth",String(c.wrapWidth));await page.goto(`/?${params}`);const subject=page.locator("[data-subject]");await expect(subject).toHaveAttribute("data-slot",part==="default"?"empty":`empty-${part}`);await expect(subject).toBeVisible();await expect(part==="default"?subject.locator("[data-mc-label-layout-ready]"):subject).toHaveAttribute("data-mc-label-layout-ready","true");for(const line of await subject.locator('[data-mc-label-ready]').all())await expect(line).toHaveAttribute("data-mc-label-ready","true");await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));const expectedBytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, pixelPerfectRoot));expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256);const actualBytes=await subject.screenshot(),{mismatchedPixels,diff}=compare(PNG.sync.read(expectedBytes),PNG.sync.read(actualBytes));writeFileSync(info.outputPath("actual.png"),actualBytes);writeFileSync(info.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({part,case:c.name,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)
-})}
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { compare } from "@ppt/harness/families/text-components-test-utils";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
+test.describe.configure({ mode: "parallel" });
+test("Empty comparator catches one changed pixel", () => {
+  const manifest = JSON.parse(
+      readFileSync(
+        pixelPerfectFile("tests/reference/empty/manifest.json"),
+        "utf8"
+      )
+    ),
+    expected = PNG.sync.read(
+      readFileSync(
+        pixelPerfectFile(
+          `tests/reference/empty/captures/${manifest.cases[0].name}`
+        )
+      )
+    ),
+    actual = PNG.sync.read(PNG.sync.write(expected));
+  actual.data[0] ^= 1;
+  expect(compare(expected, actual).mismatchedPixels).toBe(1);
+});
+for (const [part, directory] of [
+  ["default", "tests/reference/empty"],
+  ["title", "tests/reference/label"],
+  ["description", "tests/reference/label"],
+]) {
+  const manifest = JSON.parse(
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
+  );
+  for (const c of manifest.cases)
+    test(`Empty ${part} native pixels: ${c.name}`, async ({ page }, info) => {
+      await page.setViewportSize({ width: 1536, height: 900 });
+      const params = new URLSearchParams({
+        component: "empty",
+        native: "1",
+        part,
+        text: c.label ?? "",
+        scale: String(c.scale),
+        width: String(c.width),
+        height: String(c.height),
+        x: String(c.x),
+        y: String(c.y),
+        background: c.background,
+        align: c.alignment ?? "left",
+      });
+      if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+      await page.goto(`/?${params}`);
+      const subject = page.locator("[data-subject]");
+      await expect(subject).toHaveAttribute(
+        "data-slot",
+        part === "default" ? "empty" : `empty-${part}`
+      );
+      await expect(subject).toBeVisible();
+      await expect(
+        part === "default"
+          ? subject.locator("[data-mc-label-layout-ready]")
+          : subject
+      ).toHaveAttribute("data-mc-label-layout-ready", "true");
+      for (const line of await subject.locator("[data-mc-label-ready]").all())
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      await page.evaluate(
+        () =>
+          new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+          )
+      );
+      const expectedBytes = readFileSync(
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
+      );
+      expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
+        c.sha256
+      );
+      const actualBytes = await subject.screenshot(),
+        { mismatchedPixels, diff } = compare(
+          PNG.sync.read(expectedBytes),
+          PNG.sync.read(actualBytes)
+        );
+      writeFileSync(info.outputPath("actual.png"), actualBytes);
+      writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
+      writeFileSync(
+        info.outputPath("metrics.json"),
+        JSON.stringify({ part, case: c.name, mismatchedPixels, tolerance: 0 })
+      );
+      expect(mismatchedPixels).toBe(0);
+    });
+}

@@ -1,14 +1,54 @@
 @layer components {
-.mc-carousel { position:relative; --mc-pixel:calc(1px * var(--mc-scale,2)); }
-.mc-carousel-viewport { overflow:hidden; }
-.mc-carousel-track { display:flex; touch-action:pan-y pinch-zoom; }
-.mc-carousel-item { min-width:0; flex:0 0 100%; }
-.mc-carousel[data-orientation="vertical"] .mc-carousel-track { flex-direction:column; height:100%; touch-action:pan-x pinch-zoom; }
-.mc-carousel[data-orientation="vertical"] .mc-carousel-viewport { height:100%; }
-.mc-carousel-arrow { position:absolute; top:50%; transform:translateY(-50%); padding:0; border:0; background:transparent; font:inherit; }
-.mc-carousel-arrow[data-direction="backward"] { left:calc(-16 * var(--mc-pixel)); }
-.mc-carousel-arrow[data-direction="forward"] { right:calc(-16 * var(--mc-pixel)); }
-.mc-carousel[data-orientation="vertical"] .mc-carousel-arrow { left:50%; right:auto; transform:translateX(-50%) rotate(90deg); }
-.mc-carousel[data-orientation="vertical"] .mc-carousel-arrow[data-direction="backward"] { top:calc(-20 * var(--mc-pixel)); }
-.mc-carousel[data-orientation="vertical"] .mc-carousel-arrow[data-direction="forward"] { top:auto; bottom:calc(-20 * var(--mc-pixel)); }
+  .mc-carousel {
+    position: relative;
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+  }
+  .mc-carousel-viewport {
+    overflow: hidden;
+  }
+  .mc-carousel-track {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+  }
+  .mc-carousel-item {
+    min-width: 0;
+    flex: 0 0 100%;
+  }
+  .mc-carousel[data-orientation="vertical"] .mc-carousel-track {
+    flex-direction: column;
+    height: 100%;
+    touch-action: pan-x pinch-zoom;
+  }
+  .mc-carousel[data-orientation="vertical"] .mc-carousel-viewport {
+    height: 100%;
+  }
+  .mc-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit;
+  }
+  .mc-carousel-arrow[data-direction="backward"] {
+    left: calc(-16 * var(--mc-pixel));
+  }
+  .mc-carousel-arrow[data-direction="forward"] {
+    right: calc(-16 * var(--mc-pixel));
+  }
+  .mc-carousel[data-orientation="vertical"] .mc-carousel-arrow {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) rotate(90deg);
+  }
+  .mc-carousel[data-orientation="vertical"]
+    .mc-carousel-arrow[data-direction="backward"] {
+    top: calc(-20 * var(--mc-pixel));
+  }
+  .mc-carousel[data-orientation="vertical"]
+    .mc-carousel-arrow[data-direction="forward"] {
+    top: auto;
+    bottom: calc(-20 * var(--mc-pixel));
+  }
 }

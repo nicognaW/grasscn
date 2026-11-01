@@ -1,22 +1,24 @@
 "use client";
-import * as React from "react";
 import { Combobox as Primitive } from "@base-ui/react";
-import { Input } from "./input";
+import * as React from "react";
+
 import { Button } from "./button";
-import { Separator } from "./separator";
+import { Input } from "./input";
+import { minecraftCardSprite } from "./minecraft-card-sprite";
 import {
   MenuScaleContext,
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
 import { MinecraftSurface } from "./minecraft-surface";
-import { minecraftCardSprite } from "./minecraft-card-sprite";
+import { Separator } from "./separator";
+
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
 type Scale = 1 | 2 | 3;
 function classes<S>(
   base: string,
-  value?: string | ((state: S) => string | undefined),
+  value?: string | ((state: S) => string | undefined)
 ) {
   return typeof value === "function"
     ? (state: S) => `${base} ${value(state) ?? ""}`
@@ -24,7 +26,7 @@ function classes<S>(
 }
 function scaled<S>(
   scale: Scale,
-  style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined),
+  style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
 ) {
   const merge = (value?: React.CSSProperties) =>
     ({ "--mc-scale": scale, ...value }) as React.CSSProperties;

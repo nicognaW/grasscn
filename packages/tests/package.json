@@ -23,7 +23,8 @@
     "./consumer-registry": "./src/installed/consumer-registry.mjs",
     "./consumer-validation": "./src/installed/consumer-validation-types.ts",
     "./prepared-consumers": "./src/installed/prepared-consumers.mjs",
-    "./verification-types": "./src/runtime/verification-types.ts"
+    "./verification-types": "./src/runtime/verification-types.ts",
+    "./tooling": "./src/tooling.ts"
   },
   "scripts": {
     "test": "bun cli/test.mjs",
