@@ -29,10 +29,31 @@
     cursor: text;
     opacity: 1;
   }
-  .mc-input:disabled, .mc-input:read-only { color: #707070; caret-color: #707070; }
-  .mc-input:disabled { cursor: not-allowed; }
-  .mc-input[data-mc-bitmap="true"] { font-family: "Minecraft Bitmap", "Minecraft Unihex Metrics", monospace; color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent; }
-  .mc-input[data-mc-bitmap="true"]::placeholder { color: transparent; -webkit-text-fill-color: transparent; }
-  .mc-input[data-mc-bitmap="true"]::selection { background: transparent; color: transparent; -webkit-text-fill-color: transparent; }
-  .mc-input::placeholder { opacity: 1; color: #555; }
+  .mc-input:disabled,
+  .mc-input:read-only {
+    color: #707070;
+    caret-color: #707070;
+  }
+  .mc-input:disabled {
+    cursor: not-allowed;
+  }
+  .mc-input[data-mc-bitmap="true"] {
+    font-family: "Minecraft Bitmap", "Minecraft Unihex Metrics", monospace;
+    color: transparent;
+    caret-color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .mc-input[data-mc-bitmap="true"]::placeholder {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .mc-input[data-mc-bitmap="true"]::selection {
+    background: transparent;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .mc-input::placeholder {
+    opacity: 1;
+    color: #555;
+  }
 }

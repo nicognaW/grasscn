@@ -1,9 +1,59 @@
 @layer components {
- .mc-badge { --mc-pixel:calc(1px * var(--mc-scale,2)); position:relative; display:inline-flex; box-sizing:border-box; align-items:flex-start; vertical-align:middle; width:calc(var(--mc-badge-natural) * var(--mc-scale,2)); max-width:100%; min-height:calc(26 * var(--mc-pixel)); padding:calc(9 * var(--mc-pixel)) calc(5 * var(--mc-pixel)) calc(8 * var(--mc-pixel)) calc(32 * var(--mc-pixel)); color:#fff; text-decoration:none; isolation:isolate; }
- .mc-badge-surface { position:absolute; inset:0; border-image-source:var(--mc-badge-panel); border-image-slice:10 fill; border-image-width:calc(10 * var(--mc-pixel)); border-image-repeat:stretch; image-rendering:pixelated; pointer-events:none; z-index:-1; }
- .mc-badge-emblem { position:absolute; left:calc(3 * var(--mc-pixel)); top:0; width:calc(26 * var(--mc-pixel)); height:calc(26 * var(--mc-pixel)); background:var(--mc-badge-emblem) center / 100% 100% no-repeat; image-rendering:pixelated; pointer-events:none; }
- .mc-badge-emblem > img { position:absolute; left:calc(5 * var(--mc-pixel)); top:calc(5 * var(--mc-pixel)); width:calc(16 * var(--mc-pixel)); height:calc(16 * var(--mc-pixel)); image-rendering:pixelated; }
- .mc-badge-title { min-width:0; position:relative; pointer-events:none; }
- .mc-badge:focus-visible { outline:var(--mc-pixel) solid #fff; outline-offset:var(--mc-pixel); }
- .mc-badge[aria-disabled="true"] { cursor:default; }
+  .mc-badge {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    align-items: flex-start;
+    vertical-align: middle;
+    width: calc(var(--mc-badge-natural) * var(--mc-scale, 2));
+    max-width: 100%;
+    min-height: calc(26 * var(--mc-pixel));
+    padding: calc(9 * var(--mc-pixel)) calc(5 * var(--mc-pixel))
+      calc(8 * var(--mc-pixel)) calc(32 * var(--mc-pixel));
+    color: #fff;
+    text-decoration: none;
+    isolation: isolate;
+  }
+  .mc-badge-surface {
+    position: absolute;
+    inset: 0;
+    border-image-source: var(--mc-badge-panel);
+    border-image-slice: 10 fill;
+    border-image-width: calc(10 * var(--mc-pixel));
+    border-image-repeat: stretch;
+    image-rendering: pixelated;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .mc-badge-emblem {
+    position: absolute;
+    left: calc(3 * var(--mc-pixel));
+    top: 0;
+    width: calc(26 * var(--mc-pixel));
+    height: calc(26 * var(--mc-pixel));
+    background: var(--mc-badge-emblem) center / 100% 100% no-repeat;
+    image-rendering: pixelated;
+    pointer-events: none;
+  }
+  .mc-badge-emblem > img {
+    position: absolute;
+    left: calc(5 * var(--mc-pixel));
+    top: calc(5 * var(--mc-pixel));
+    width: calc(16 * var(--mc-pixel));
+    height: calc(16 * var(--mc-pixel));
+    image-rendering: pixelated;
+  }
+  .mc-badge-title {
+    min-width: 0;
+    position: relative;
+    pointer-events: none;
+  }
+  .mc-badge:focus-visible {
+    outline: var(--mc-pixel) solid #fff;
+    outline-offset: var(--mc-pixel);
+  }
+  .mc-badge[aria-disabled="true"] {
+    cursor: default;
+  }
 }

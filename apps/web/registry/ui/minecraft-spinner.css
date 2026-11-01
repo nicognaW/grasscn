@@ -1,2 +1,11 @@
-@layer theme,base,components,utilities;
-@layer components{.mc-spinner{display:inline-block;flex-shrink:0;vertical-align:middle;image-rendering:pixelated;shape-rendering:crispEdges;overflow:hidden}}
+@layer theme, base, components, utilities;
+@layer components {
+  .mc-spinner {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+    image-rendering: pixelated;
+    shape-rendering: crispEdges;
+    overflow: hidden;
+  }
+}

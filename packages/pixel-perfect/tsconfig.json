@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
+    "lib": ["ES2022", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -13,29 +10,14 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/lib/utils": [
-        "../tests/fixtures/renderer/utils.ts"
-      ],
-      "@/components/ui/*": [
-        "../../apps/web/registry/ui/*"
-      ],
-      "@tests/*": [
-        "../tests/src/*"
-      ],
-      "@ppt/*": [
-        "../pixel-perfect/src/*"
-      ],
-      "@tests/paths": [
-        "../tests/src/paths.ts"
-      ],
-      "@ppt/paths": [
-        "../pixel-perfect/src/paths.ts"
-      ]
+      "@/lib/utils": ["../tests/fixtures/renderer/utils.ts"],
+      "@/components/ui/*": ["../../apps/web/registry/ui/*"],
+      "@tests/*": ["../tests/src/*"],
+      "@ppt/*": ["../pixel-perfect/src/*"],
+      "@tests/paths": ["../tests/src/paths.ts"],
+      "@ppt/paths": ["../pixel-perfect/src/paths.ts"]
     },
-    "types": [
-      "node",
-      "vite/client"
-    ],
+    "types": ["node", "vite/client"],
     "resolveJsonModule": true
   },
   "include": [

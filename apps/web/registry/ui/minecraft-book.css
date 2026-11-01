@@ -1,1 +1,29 @@
-@layer components {.mc-book{position:relative;flex:none;overflow:hidden;image-rendering:pixelated}.mc-book:focus-visible{outline:2px solid white;outline-offset:2px}.mc-book-page{position:absolute;overflow:hidden}.mc-book-arrow{position:absolute;padding:0;border:0;background:none;cursor:pointer}.mc-book-arrow>img{display:block}.mc-book-arrow:focus-visible{outline:calc(1px * var(--mc-scale)) solid #fff}}
+@layer components {
+  .mc-book {
+    position: relative;
+    flex: none;
+    overflow: hidden;
+    image-rendering: pixelated;
+  }
+  .mc-book:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+  .mc-book-page {
+    position: absolute;
+    overflow: hidden;
+  }
+  .mc-book-arrow {
+    position: absolute;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .mc-book-arrow > img {
+    display: block;
+  }
+  .mc-book-arrow:focus-visible {
+    outline: calc(1px * var(--mc-scale)) solid #fff;
+  }
+}

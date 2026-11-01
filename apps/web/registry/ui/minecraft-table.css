@@ -1,14 +1,70 @@
 @layer components {
- .mc-table-container { width:100%; overflow-x:auto; --mc-pixel:calc(1px * var(--mc-scale,2)); }
- .mc-table { width:100%; caption-side:bottom; border-collapse:collapse; --mc-pixel:calc(1px * var(--mc-scale,2)); color:white; font-family:"Minecraft Bitmap",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(9 * var(--mc-pixel)); image-rendering:pixelated; }
- .mc-table-body { background-image:var(--mc-table-background); background-size:calc(16 * var(--mc-pixel)) calc(16 * var(--mc-pixel)); }
- .mc-table-header,.mc-table-footer { position:relative; }
- .mc-table-header::after,.mc-table-footer::before { content:""; display:block; position:absolute; left:0; width:100%; height:calc(2 * var(--mc-pixel)); background-size:calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); background-repeat:repeat-x; pointer-events:none; }
- .mc-table-header::after { bottom:0; background-image:var(--mc-table-header); }
- .mc-table-footer::before { top:0; background-image:var(--mc-table-footer); }
- .mc-table-row { height:calc(18 * var(--mc-pixel)); }
- .mc-table-row[data-state="selected"] { background-color:black; outline:var(--mc-pixel) solid #808080; outline-offset:calc(-1 * var(--mc-pixel)); }
- .mc-table:focus-within .mc-table-row[data-state="selected"] { outline-color:white; }
- .mc-table-head,.mc-table-cell { padding:calc(5 * var(--mc-pixel)) calc(4 * var(--mc-pixel)) calc(4 * var(--mc-pixel)); text-align:left; vertical-align:middle; white-space:nowrap; font-weight:normal; }
- .mc-table-caption { padding-top:calc(4 * var(--mc-pixel)); text-align:left; }
+  .mc-table-container {
+    width: 100%;
+    overflow-x: auto;
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+  }
+  .mc-table {
+    width: 100%;
+    caption-side: bottom;
+    border-collapse: collapse;
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    color: white;
+    font-family: "Minecraft Bitmap", monospace;
+    font-size: calc(8 * var(--mc-pixel));
+    line-height: calc(9 * var(--mc-pixel));
+    image-rendering: pixelated;
+  }
+  .mc-table-body {
+    background-image: var(--mc-table-background);
+    background-size: calc(16 * var(--mc-pixel)) calc(16 * var(--mc-pixel));
+  }
+  .mc-table-header,
+  .mc-table-footer {
+    position: relative;
+  }
+  .mc-table-header::after,
+  .mc-table-footer::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: calc(2 * var(--mc-pixel));
+    background-size: calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel));
+    background-repeat: repeat-x;
+    pointer-events: none;
+  }
+  .mc-table-header::after {
+    bottom: 0;
+    background-image: var(--mc-table-header);
+  }
+  .mc-table-footer::before {
+    top: 0;
+    background-image: var(--mc-table-footer);
+  }
+  .mc-table-row {
+    height: calc(18 * var(--mc-pixel));
+  }
+  .mc-table-row[data-state="selected"] {
+    background-color: black;
+    outline: var(--mc-pixel) solid #808080;
+    outline-offset: calc(-1 * var(--mc-pixel));
+  }
+  .mc-table:focus-within .mc-table-row[data-state="selected"] {
+    outline-color: white;
+  }
+  .mc-table-head,
+  .mc-table-cell {
+    padding: calc(5 * var(--mc-pixel)) calc(4 * var(--mc-pixel))
+      calc(4 * var(--mc-pixel));
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: normal;
+  }
+  .mc-table-caption {
+    padding-top: calc(4 * var(--mc-pixel));
+    text-align: left;
+  }
 }

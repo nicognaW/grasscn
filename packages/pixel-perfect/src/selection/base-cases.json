@@ -5,39 +5,29 @@
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Tabs preview preserves native tab bar at scale 2",
-      "components": [
-        "tabs"
-      ],
+      "components": ["tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/tabs",
         "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced."
       },
-      "titlePath": [
-        "Tabs preview preserves native tab bar at scale 2"
-      ]
+      "titlePath": ["Tabs preview preserves native tab bar at scale 2"]
     },
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Select preview preserves native cycle button at scale 2",
-      "components": [
-        "select"
-      ],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/select",
         "reason": "Default Survival cycle button at the website fixed GUI scale."
       },
-      "titlePath": [
-        "Select preview preserves native cycle button at scale 2"
-      ]
+      "titlePath": ["Select preview preserves native cycle button at scale 2"]
     },
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Radio Group preview preserves native widget pixels at scale 2",
-      "components": [
-        "radio-group"
-      ],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/radio-group",
@@ -50,27 +40,19 @@
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Switch preview preserves native on/off pixels at scale 2",
-      "components": [
-        "switch"
-      ],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/switch",
         "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale."
       },
-      "titlePath": [
-        "Switch preview preserves native on/off pixels at scale 2"
-      ]
+      "titlePath": ["Switch preview preserves native on/off pixels at scale 2"]
     },
     {
       "file": "button/pixels.spec.ts",
       "title": "vanilla pixels: normal-w200-s2.png",
-      "titlePath": [
-        "vanilla pixels: normal-w200-s2.png"
-      ],
-      "components": [
-        "button"
-      ],
+      "titlePath": ["vanilla pixels: normal-w200-s2.png"],
+      "components": ["button"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/button",
@@ -80,12 +62,8 @@
     {
       "file": "checkbox/controls.spec.ts",
       "title": "Control native pixels: checkbox-unchecked-normal-s2.png",
-      "titlePath": [
-        "Control native pixels: checkbox-unchecked-normal-s2.png"
-      ],
-      "components": [
-        "checkbox"
-      ],
+      "titlePath": ["Control native pixels: checkbox-unchecked-normal-s2.png"],
+      "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/checkbox",
@@ -95,12 +73,8 @@
     {
       "file": "slider/slider.spec.ts",
       "title": "Control native pixels: slider-w200-v500-normal-s2.png",
-      "titlePath": [
-        "Control native pixels: slider-w200-v500-normal-s2.png"
-      ],
-      "components": [
-        "slider"
-      ],
+      "titlePath": ["Control native pixels: slider-w200-v500-normal-s2.png"],
+      "components": ["slider"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/slider",
@@ -110,12 +84,8 @@
     {
       "file": "input/input.spec.ts",
       "title": "Input native pixels: input-w200-normal-c39-s2.png",
-      "titlePath": [
-        "Input native pixels: input-w200-normal-c39-s2.png"
-      ],
-      "components": [
-        "input"
-      ],
+      "titlePath": ["Input native pixels: input-w200-normal-c39-s2.png"],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/input",
@@ -125,12 +95,8 @@
     {
       "file": "textarea/textarea.spec.ts",
       "title": "Textarea native pixels: textarea-c18-s2.png",
-      "titlePath": [
-        "Textarea native pixels: textarea-c18-s2.png"
-      ],
-      "components": [
-        "textarea"
-      ],
+      "titlePath": ["Textarea native pixels: textarea-c18-s2.png"],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/textarea",
@@ -140,12 +106,8 @@
     {
       "file": "separator/separator.spec.ts",
       "title": "Separator native pixels (div): separator-c6-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c6-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c6-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -155,12 +117,8 @@
     {
       "file": "separator/separator.spec.ts",
       "title": "Separator native pixels (div): separator-c24-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c24-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c24-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -174,9 +132,7 @@
         "Progress native matrix",
         "Progress native pixels: progress-c6-s2.png"
       ],
-      "components": [
-        "progress"
-      ],
+      "components": ["progress"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/progress",

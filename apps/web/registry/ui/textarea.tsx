@@ -1,15 +1,41 @@
 "use client";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import * as React from "react";
+
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { attachMinecraftTextarea } from "./minecraft-textarea-paint";
+
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-textarea.css";
-function Textarea({ className, scale = 2, style, ref, ...props }: React.ComponentProps<"textarea"> & {
-    scale?: 1 | 2 | 3;
+function Textarea({
+  className,
+  scale = 2,
+  style,
+  ref,
+  ...props
+}: React.ComponentProps<"textarea"> & {
+  scale?: 1 | 2 | 3;
 }) {
-    const node = React.useRef<HTMLTextAreaElement>(null);
-    React.useImperativeHandle(ref, () => node.current!, []);
-    React.useEffect(() => node.current ? attachMinecraftTextarea(node.current, scale) : undefined, [scale]);
-    return <textarea ref={node} data-slot="textarea" spellCheck={false} autoCorrect="off" className={cn("mc-textarea", className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} {...props}/>;
+  const node = React.useRef<HTMLTextAreaElement>(null);
+  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useEffect(
+    () =>
+      node.current ? attachMinecraftTextarea(node.current, scale) : undefined,
+    [scale]
+  );
+  return (
+    <textarea
+      ref={node}
+      data-slot="textarea"
+      spellCheck={false}
+      autoCorrect="off"
+      className={cn("mc-textarea", className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  );
 }
 export { Textarea };

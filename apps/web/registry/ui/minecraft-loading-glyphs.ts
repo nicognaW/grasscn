@@ -1,4 +1,68 @@
 // Exact binary alpha positions from original Minecraft ASCII atlas. PNG sha256 e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a
-export const minecraftLoadingGlyphs = {"O":{"advance":6,"pixels":[[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[4,2],[0,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]]},"o":{"advance":6,"pixels":[[1,2],[2,2],[3,2],[0,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]]},"+":{"advance":6,"pixels":[[2,1],[2,2],[0,3],[1,3],[2,3],[3,3],[4,3],[2,4],[2,5]]},"-":{"advance":6,"pixels":[[0,3],[1,3],[2,3],[3,3],[4,3]]}} as const
+export const minecraftLoadingGlyphs = {
+  O: {
+    advance: 6,
+    pixels: [
+      [1, 0],
+      [2, 0],
+      [3, 0],
+      [0, 1],
+      [4, 1],
+      [0, 2],
+      [4, 2],
+      [0, 3],
+      [4, 3],
+      [0, 4],
+      [4, 4],
+      [0, 5],
+      [4, 5],
+      [1, 6],
+      [2, 6],
+      [3, 6],
+    ],
+  },
+  o: {
+    advance: 6,
+    pixels: [
+      [1, 2],
+      [2, 2],
+      [3, 2],
+      [0, 3],
+      [4, 3],
+      [0, 4],
+      [4, 4],
+      [0, 5],
+      [4, 5],
+      [1, 6],
+      [2, 6],
+      [3, 6],
+    ],
+  },
+  "+": {
+    advance: 6,
+    pixels: [
+      [2, 1],
+      [2, 2],
+      [0, 3],
+      [1, 3],
+      [2, 3],
+      [3, 3],
+      [4, 3],
+      [2, 4],
+      [2, 5],
+    ],
+  },
+  "-": {
+    advance: 6,
+    pixels: [
+      [0, 3],
+      [1, 3],
+      [2, 3],
+      [3, 3],
+      [4, 3],
+    ],
+  },
+} as const;
 
-export const minecraftLoadingAsciiPng = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAAQMAAAD58POIAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAtJJREFUeNrtk6GPG1cQxj90eqBSnoIWVPKoCgg02qtK7oECwyXlBgcMH+vCAQWjolWRoVUVWEUGBQUBgYaBkUL2L4gWXQZEt5l5jq3bVZILDMjn2efVb3+aefukxffMwruGhJh4B0sooO0aTikRgGgAypHAtLuAJtPGABQKKkZIBwduJFiaYdUhpTNg2JQNiP2WeboDWDLlXOlSc/YRnCFrkeecRAQgJMGWQlgNHESYk1LAnpZLCUPMLcCIEUdKQYOQBJ9JBCER80kiQJqArJpDtllr5gim2TY8eciDait9EBbJaMXCzJJCx6+Pgj90YOn7rabQ834v+E/MNKEYshX8cwGlh+CFWAqQE2DxKZylz6JlCmax562KR3vuCfAOZEvTBE7UmGE9HBBFAwKwSCgGERPhDJq9UOJYQCdi4LUQfwQbyeRdSPvQA/MoGIyAJZgDs6PkoKw4AeRD3thuDxw6fjVkIBxlK0mOHHa8FwFaYVF/9/DyBMTCyfGOpRhDbttyXJ15+XIKQMYlCSXEfDsBidMWOGwObS8eNQDguD1y8vOQyEzwqZwN7EnoZAwth2QH1LTpBDjwQC21EpSYC7js5NvNEogTsAKeT0ACCJ7Jwc6NLwMFdgDmUsl6jWlih5Jn3Xngx5vVCqfkdWmJ7hlwSXhoDIOD0uPx/PTbm6qqaqCurSpA/v19CoqhNfSuvr+r1Y23xaiu6qurs6F6d2/G3f296rlHbVUDqNyYAO8xBZUVnKD8PgsW9fXNu/F6fDdejOUSsAIW4+h1fWOPi4HiVKWBL4+DUpVdhkcMT8ZPAKvFwv4mRvXAGMfxZrG4GUe17QxPfEjtl7/EV4Jpfvl5Bn5NM/Anz8BfOgN/82M9/i9T5qEUf4jAGvjRF7wnoqeRbjsg9p0C0JieRmwddKQnI0bFujKQ9NQjRtyiQtcNbqC4WwAN4Iaqxg6eJc6JDz6OD74blGMNvZoZAAAAAElFTkSuQmCC"
+export const minecraftLoadingAsciiPng =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACAAQMAAAD58POIAAAABlBMVEX///////9VfPVsAAAAAXRSTlMAQObYZgAAAtJJREFUeNrtk6GPG1cQxj90eqBSnoIWVPKoCgg02qtK7oECwyXlBgcMH+vCAQWjolWRoVUVWEUGBQUBgYaBkUL2L4gWXQZEt5l5jq3bVZILDMjn2efVb3+aefukxffMwruGhJh4B0sooO0aTikRgGgAypHAtLuAJtPGABQKKkZIBwduJFiaYdUhpTNg2JQNiP2WeboDWDLlXOlSc/YRnCFrkeecRAQgJMGWQlgNHESYk1LAnpZLCUPMLcCIEUdKQYOQBJ9JBCER80kiQJqArJpDtllr5gim2TY8eciDait9EBbJaMXCzJJCx6+Pgj90YOn7rabQ834v+E/MNKEYshX8cwGlh+CFWAqQE2DxKZylz6JlCmax562KR3vuCfAOZEvTBE7UmGE9HBBFAwKwSCgGERPhDJq9UOJYQCdi4LUQfwQbyeRdSPvQA/MoGIyAJZgDs6PkoKw4AeRD3thuDxw6fjVkIBxlK0mOHHa8FwFaYVF/9/DyBMTCyfGOpRhDbttyXJ15+XIKQMYlCSXEfDsBidMWOGwObS8eNQDguD1y8vOQyEzwqZwN7EnoZAwth2QH1LTpBDjwQC21EpSYC7js5NvNEogTsAKeT0ACCJ7Jwc6NLwMFdgDmUsl6jWlih5Jn3Xngx5vVCqfkdWmJ7hlwSXhoDIOD0uPx/PTbm6qqaqCurSpA/v19CoqhNfSuvr+r1Y23xaiu6qurs6F6d2/G3f296rlHbVUDqNyYAO8xBZUVnKD8PgsW9fXNu/F6fDdejOUSsAIW4+h1fWOPi4HiVKWBL4+DUpVdhkcMT8ZPAKvFwv4mRvXAGMfxZrG4GUe17QxPfEjtl7/EV4Jpfvl5Bn5NM/Anz8BfOgN/82M9/i9T5qEUf4jAGvjRF7wnoqeRbjsg9p0C0JieRmwddKQnI0bFujKQ9NQjRtyiQtcNbqC4WwAN4Iaqxg6eJc6JDz6OD74blGMNvZoZAAAAAElFTkSuQmCC";

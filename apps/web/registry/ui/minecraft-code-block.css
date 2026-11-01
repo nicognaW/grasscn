@@ -1,22 +1,123 @@
-@layer theme,base,components,utilities;
+@layer theme, base, components, utilities;
 @layer components {
- .mc-code-block{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;position:relative;flex-direction:column;width:100%;min-width:0;border:var(--mc-pixel) solid #a0a0a0;background:#000;color:#fff;font-family:"Minecraft Bitmap",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel))}
- .mc-code-block[data-variant=destructive]{color:#f55}
- .mc-code-block-header,.mc-code-block-footer{display:flex;align-items:center;min-width:0;gap:calc(2 * var(--mc-pixel));padding:calc(4 * var(--mc-pixel));color:#aaa}
- .mc-code-block-title{min-width:0;overflow:hidden;white-space:nowrap;color:#fff}
- .mc-code-block-actions{display:flex;flex-shrink:0;gap:var(--mc-pixel);margin-left:auto}
- .mc-code-block-content{--mc-pixel:calc(1px * var(--mc-scale,2));display:block;min-width:0;min-height:0;overflow:auto;margin:0;padding:calc(4 * var(--mc-pixel));font:inherit;line-height:inherit;text-align:start;tab-size:4;outline:none;white-space:pre}
- .mc-code-block-content:focus-visible{outline:var(--mc-pixel) solid white;outline-offset:calc(-1 * var(--mc-pixel))}
- .mc-code-block-content[data-wrap]{white-space:pre-wrap;overflow-wrap:anywhere}
- .mc-code-block-content code{display:block;min-width:max-content;font:inherit}
- .mc-code-block-content[data-wrap] code{min-width:0}
- .mc-code-block-line{--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;display:block;min-height:calc(9 * var(--mc-pixel));counter-increment:line}
- .mc-code-block-content[data-numbered] .mc-code-block-line{--mc-pixel:calc(1px * var(--mc-scale,2));display:grid;grid-template-columns:calc(24 * var(--mc-pixel)) minmax(0,1fr);column-gap:calc(3 * var(--mc-pixel))}
- .mc-code-block-content[data-numbered] .mc-code-block-line:before{content:counter(line);text-align:end;color:#aaa;user-select:none}
- .mc-code-block-line[data-variant=added]{color:#5f5;background:#0000007f}
- .mc-code-block-line[data-variant=removed]{color:#f55;background:#0000007f}
- .mc-code-block-line[data-variant=highlighted]{background:#0000007f}
- .mc-code-block-line-marker{position:absolute;left:calc(-3 * var(--mc-pixel));top:0;width:calc(8 * var(--mc-pixel));height:calc(9 * var(--mc-pixel));shape-rendering:crispEdges;pointer-events:none;user-select:none}
- .mc-code-block-line-content{min-width:0}
- .mc-code-block-announcement{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+  .mc-code-block {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    border: var(--mc-pixel) solid #a0a0a0;
+    background: #000;
+    color: #fff;
+    font-family: "Minecraft Bitmap", monospace;
+    font-size: calc(8 * var(--mc-pixel));
+    line-height: calc(9 * var(--mc-pixel));
+  }
+  .mc-code-block[data-variant="destructive"] {
+    color: #f55;
+  }
+  .mc-code-block-header,
+  .mc-code-block-footer {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: calc(2 * var(--mc-pixel));
+    padding: calc(4 * var(--mc-pixel));
+    color: #aaa;
+  }
+  .mc-code-block-title {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .mc-code-block-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--mc-pixel);
+    margin-left: auto;
+  }
+  .mc-code-block-content {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    margin: 0;
+    padding: calc(4 * var(--mc-pixel));
+    font: inherit;
+    line-height: inherit;
+    text-align: start;
+    tab-size: 4;
+    outline: none;
+    white-space: pre;
+  }
+  .mc-code-block-content:focus-visible {
+    outline: var(--mc-pixel) solid white;
+    outline-offset: calc(-1 * var(--mc-pixel));
+  }
+  .mc-code-block-content[data-wrap] {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .mc-code-block-content code {
+    display: block;
+    min-width: max-content;
+    font: inherit;
+  }
+  .mc-code-block-content[data-wrap] code {
+    min-width: 0;
+  }
+  .mc-code-block-line {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    position: relative;
+    display: block;
+    min-height: calc(9 * var(--mc-pixel));
+    counter-increment: line;
+  }
+  .mc-code-block-content[data-numbered] .mc-code-block-line {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: grid;
+    grid-template-columns: calc(24 * var(--mc-pixel)) minmax(0, 1fr);
+    column-gap: calc(3 * var(--mc-pixel));
+  }
+  .mc-code-block-content[data-numbered] .mc-code-block-line:before {
+    content: counter(line);
+    text-align: end;
+    color: #aaa;
+    user-select: none;
+  }
+  .mc-code-block-line[data-variant="added"] {
+    color: #5f5;
+    background: #0000007f;
+  }
+  .mc-code-block-line[data-variant="removed"] {
+    color: #f55;
+    background: #0000007f;
+  }
+  .mc-code-block-line[data-variant="highlighted"] {
+    background: #0000007f;
+  }
+  .mc-code-block-line-marker {
+    position: absolute;
+    left: calc(-3 * var(--mc-pixel));
+    top: 0;
+    width: calc(8 * var(--mc-pixel));
+    height: calc(9 * var(--mc-pixel));
+    shape-rendering: crispEdges;
+    pointer-events: none;
+    user-select: none;
+  }
+  .mc-code-block-line-content {
+    min-width: 0;
+  }
+  .mc-code-block-announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }

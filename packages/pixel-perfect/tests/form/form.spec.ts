@@ -1,2 +1,2 @@
-import {formsNativeTests} from "@ppt/harness/families/forms-test-utils"
-formsNativeTests("form")
+import { formsNativeTests } from "@ppt/harness/families/forms-test-utils";
+formsNativeTests("form");

@@ -2,20 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "generate": {
-      "dependsOn": [
-        "^generate"
-      ],
+      "dependsOn": ["^generate"],
       "outputs": []
     },
     "build": {
-      "dependsOn": [
-        "^build",
-        "generate"
-      ],
-      "outputs": [
-        "dist/**",
-        "public/r/**"
-      ]
+      "dependsOn": ["^build", "generate"],
+      "outputs": ["dist/**", "public/r/**"]
     },
     "dev": {
       "cache": false,
@@ -23,35 +15,27 @@
     },
     "test": {
       "cache": false,
-      "dependsOn": [
-        "@grasscn/web#generate"
-      ]
+      "dependsOn": ["@grasscn/web#generate"]
     },
     "test:unit": {
       "cache": false
     },
     "verify": {
       "cache": false,
-      "dependsOn": [
-        "@grasscn/web#build"
-      ]
+      "dependsOn": ["@grasscn/web#build"]
     },
     "capture": {
       "cache": false
     },
     "registry:build": {
-      "outputs": [
-        "public/r/**"
-      ]
+      "outputs": ["public/r/**"]
     },
     "registry:serve": {
       "cache": false,
       "persistent": true
     },
     "fixture:build": {
-      "dependsOn": [
-        "@grasscn/web#generate"
-      ],
+      "dependsOn": ["@grasscn/web#generate"],
       "cache": false
     }
   },
