@@ -11,8 +11,15 @@ import {
   readRunPlan,
   readRunState,
   readRunAttempts,
-} from "@ppt/full-runs/run.mjs";
+} from "@ppt/full-runs/history";
+import {
+  evidenceLocation,
+  readRunPlanPaths,
+  validateReview,
+  findingBody,
+} from "@ppt/full-runs/review";
 import { caseKey } from "@ppt/selection/suite";
+export { validateReview } from "@ppt/full-runs/review";
 
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -755,102 +762,6 @@ export function prepareReport(number) {
     ["flaky", report.flaky.length],
     ["publishing", false],
   ]);
-}
-
-function evidenceLocation(report) {
-  return path.join(
-    readRunPlanPaths(report.runIssue),
-    `report-${report.evidenceHash}.json`
-  );
-}
-
-function readRunPlanPaths(number) {
-  // No GitHub read or authorization needed to locate durable local reporting artifacts.
-  return path.join(fullRunPaths(number).directory, "reporting");
-}
-
-export function validateReview(report, review) {
-  if (
-    review.schemaVersion !== 1 ||
-    review.runIssue !== report.runIssue ||
-    review.planHash !== report.planHash ||
-    review.testedCommit !== report.testedCommit ||
-    review.evidenceHash !== report.evidenceHash ||
-    !review.reviewedBy?.trim() ||
-    !Array.isArray(review.groups)
-  ) {
-    throw new Error(
-      "Review must bind the completed evidence and name its reviewer"
-    );
-  }
-
-  const remaining = new Set(report.failures.map((test) => test.key));
-  const keys = new Set();
-
-  for (const group of review.groups) {
-    if (
-      !/^[a-z0-9][a-z0-9.-]{2,100}$/.test(group.problemKey ?? "") ||
-      keys.has(group.problemKey) ||
-      !group.title?.trim() ||
-      !group.hypothesis?.trim() ||
-      !group.evidence?.trim() ||
-      !group.context?.trim() ||
-      !group.cases?.length
-    ) {
-      throw new Error(
-        "Each distinct problem needs a unique semantic key, title, hypothesis, evidence, context and member cases"
-      );
-    }
-
-    keys.add(group.problemKey);
-
-    if (
-      group.existingIssue !== undefined &&
-      (!Number.isInteger(group.existingIssue) ||
-        group.existingIssue < 1 ||
-        !group.reuseReason?.trim())
-    ) {
-      throw new Error(
-        "Existing issue reuse requires an issue number and semantic reason"
-      );
-    }
-
-    for (const key of group.cases) {
-      if (!remaining.delete(key)) {
-        throw Error(
-          "Failure omitted, duplicated or outside this completed run"
-        );
-      }
-    }
-  }
-
-  if (remaining.size) {
-    throw new Error(
-      `${remaining.size} failures remain ungrouped; inspect them before publication`
-    );
-  }
-}
-
-function findingBody(report, group) {
-  const failures = report.failures.filter((test) =>
-    group.cases.includes(test.key)
-  );
-
-  return `Full finding from ${report.issueUrl}\n\nTested local commit: ${report.testedCommit}\nPlan: ${report.planHash}\nEvidence identity: ${report.evidenceHash}\nExecution session: ${report.executionSession ?? report.executionThread}\nEnvironment: ${JSON.stringify(report.environment)}\n\nCause hypothesis: ${group.hypothesis}\n\nReviewed evidence: ${group.evidence}\n\nRepair context: ${group.context}\n\n${failures.length} affected cases; first 10:\n${failures
-    .slice(0, 10)
-    .map(
-      (test) =>
-        `- ${test.key}: expected ${test.expectedStatus}, observed ${test.status}; retry ${test.retry}. Errors: ${JSON.stringify(test.errors)?.slice(0, 1000)}\n  Local journal: ${test.journal}\n${test.artifacts
-          .slice(0, 3)
-          .map(
-            (artifact) =>
-              `  Local artifact: ${artifact.localPath} (sha256 ${artifact.sha256})`
-          )
-          .join("\n")}`
-    )
-    .join(
-      "\n"
-    )}\n\nComplete case/error/retry history and hashed evidence manifest (local, not uploaded): ${evidenceLocation(report)}\nReviewed membership/context: ${path.join(readRunPlanPaths(report.runIssue), `finding-${hash(group.problemKey)}.json`)}\n\nThe Full collection is complete. This finding enters the normal queue and does not block merging. Any suitable existing session, including the main session when its context fits, may repair it. Use a new repair session with this handoff when appropriate; do not create one per case. Reporting, assignment and reproduction commands grant no Full execution authorization. Changed-source Full validation requires a new run issue, human maintainer label approval and an independent executor. Base results and this historical Full snapshot establish only their own coverage.\n`;
 }
 
 export function publishReport(number, reviewFile) {

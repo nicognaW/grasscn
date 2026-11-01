@@ -13,12 +13,8 @@ import os from "node:os";
 import path from "node:path";
 
 import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import {
-  approvalLabel,
-  parseRunPlan,
-  runPlanBody,
-} from "@ppt/full-runs/plan";
-import { pixelPerfectTestRoot, repoRoot, pixelPerfectRoot } from "@ppt/paths";
+import { approvalLabel, parseRunPlan, runPlanBody } from "@ppt/full-runs/plan";
+import { pixelPerfectTestRoot, pixelPerfectRoot } from "@ppt/paths";
 import {
   baseCatalogue,
   caseKey,
@@ -33,8 +29,27 @@ export {
   runPlanBody,
 } from "@ppt/full-runs/plan";
 
-export const fullRoot = repoRoot;
-export const stateMarker = "<!-- grasscn-full-run-state:v1 -->";
+import {
+  fullRoot,
+  stateMarker,
+  issueNumber,
+  repository,
+  fullRunPaths,
+  readRunIssue,
+  parseStateComment,
+} from "@ppt/full-runs/history";
+export {
+  fullRoot,
+  stateMarker,
+  repository,
+  fullRunPaths,
+  readRunIssue,
+  readRunPlan,
+  readRunState,
+  readRunAttempts,
+  parseStateComment,
+} from "@ppt/full-runs/history";
+
 const hash = (value) => createHash("sha256").update(value).digest("hex");
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 
@@ -49,42 +64,6 @@ const gh = (args) =>
       maxBuffer: 32 * 1024 * 1024,
     })
   );
-
-const issueNumber = (value) => {
-  if (!/^[1-9]\d*$/.test(String(value))) {
-    throw new Error("Use a positive GitHub run issue number");
-  }
-
-  return Number(value);
-};
-
-export function repository() {
-  const remote = git(["remote", "get-url", "origin"]);
-  const match = /github\.com[:/]([^/]+\/[^/]+?)(?:\.git)?$/.exec(remote);
-
-  if (!match) {
-    throw new Error(
-      "Full run authorization requires this repository's GitHub origin"
-    );
-  }
-
-  return match[1];
-}
-
-export function fullRunPaths(number) {
-  const directory = path.join(
-    coordinationRoot(),
-    "full-runs",
-    String(issueNumber(number))
-  );
-
-  return {
-    attempts: path.join(directory, "attempts"),
-    claim: path.join(directory, "claim.json"),
-    directory,
-    state: path.join(directory, "state.json"),
-  };
-}
 
 export function environmentIdentity() {
   for (const key of [
@@ -139,112 +118,6 @@ export function environmentIdentity() {
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     webgl: process.env.GRASSCN_WEBGL_BACKEND ?? null,
   };
-}
-
-export function readRunIssue(number) {
-  const repo = repository();
-  const n = issueNumber(number);
-
-  const issue = gh(["api", `repos/${repo}/issues/${n}`]);
-  const [owner, name] = repo.split("/");
-
-  const edit = gh([
-    "api",
-    "graphql",
-    "-f",
-    "query=query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){issue(number:$number){lastEditedAt createdAt}}}",
-    "-f",
-    `owner=${owner}`,
-    "-f",
-    `name=${name}`,
-    "-F",
-    `number=${n}`,
-  ]).data.repository.issue;
-
-  const events = gh([
-    "api",
-    "--paginate",
-    "--slurp",
-    `repos/${repo}/issues/${n}/events`,
-  ]).flat();
-
-  const comments = gh([
-    "api",
-    "--paginate",
-    "--slurp",
-    `repos/${repo}/issues/${n}/comments`,
-  ]).flat();
-
-  return { comments, edit, events, issue, number: n, repo };
-}
-
-// Historical readers deliberately perform no execution authorization.
-export function readRunPlan(number) {
-  const run = readRunIssue(number);
-  const plan = parseRunPlan(run.issue.body ?? "");
-
-  return {
-    ...run,
-    paths: fullRunPaths(number),
-    plan,
-    planHash: hash(json(plan)),
-  };
-}
-
-export function readRunState(number) {
-  const paths = fullRunPaths(number);
-
-  return fs.existsSync(paths.state)
-    ? JSON.parse(fs.readFileSync(paths.state, "utf-8"))
-    : null;
-}
-
-export function readRunAttempts(number) {
-  const paths = fullRunPaths(number);
-
-  if (!fs.existsSync(paths.attempts)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(paths.attempts, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => {
-      const directory = path.join(paths.attempts, entry.name);
-
-      const read = (name) =>
-        fs.existsSync(path.join(directory, name))
-          ? JSON.parse(
-              fs
-                .readFileSync(path.join(directory, name), "utf-8")
-                .replace(/^\uFEFF/, "")
-            )
-          : null;
-
-      return {
-        directory,
-        receipt: read("verification.json"),
-        resources: read("resource-summary.json"),
-      };
-    });
-}
-
-export function parseStateComment(body) {
-  const index = body.indexOf(stateMarker);
-
-  if (index === -1) {
-    return null;
-  }
-
-  const match = body
-    .slice(index + stateMarker.length)
-    .match(/^\s*```json\s*\n([\s\S]*?)\n```/);
-
-  try {
-    return match ? JSON.parse(match[1]) : null;
-  } catch {
-    return null;
-  }
 }
 
 export function authorizeFullRun(
