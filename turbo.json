@@ -66,6 +66,7 @@
     "GRASSCN_*",
     "PLAYWRIGHT_*",
     "GOMAXPROCS",
+    "GOMEMLIMIT",
     "RAYON_NUM_THREADS",
     "TZ",
     "LANG",

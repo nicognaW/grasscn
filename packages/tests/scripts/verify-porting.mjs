@@ -1,19 +1,20 @@
 import {installedDependencyIdentity} from './dependency-identity.mjs'
 import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
-import {spawn, execFileSync} from 'node:child_process'
-import {createHash} from 'node:crypto'
+import {spawn} from 'node:child_process'
 import {mkdir, readFile, writeFile, readdir, stat} from 'node:fs/promises'
 import path from 'node:path'
-import {fileURLToPath} from 'node:url'
 import {reusableBrowserTests,browserFilePattern} from './browser-checkpoints.mjs'
 import {fixtureManifest,serveProductionFixture} from './production-fixture.mjs'
 import {baseCatalogue,collectBrowserCases,classifyBrowserCases} from './browser-suite.mjs'
 import {assertFullBrowserExecution} from './full-run.mjs'
 import {serveFullHosts} from './full-run-hosts.mjs'
+import {stampProductionBuild,serveNextProduction,sourceIdentity,productionBuildIdentity} from './next-production.mjs'
 
 const root = repoRoot
 const [suite, output, workerArgument='1'] = process.argv.slice(2)
 const workers=Number(workerArgument)
+const phase=process.env.GRASSCN_VERIFY_PHASE??'all'
+if(!['all','prepare','browser'].includes(phase))throw Error('Use prepare, browser or all verification phase')
 if(!Number.isInteger(workers)||workers<1||workers>8)throw Error('Use 1-8 browser workers')
 if (!['regressions', 'pixels', 'all', 'full'].includes(suite) || !output) throw Error('Use the guarded package commands')
 if (suite === 'pixels') throw Error('Matrix pixel audits are Full tests and require an approved run issue. Use the ordinary Base commands.')
@@ -36,17 +37,7 @@ if(managedFixture&&!fullMode){
   process.env.GRASSCN_TREE_INSTALLED_URL='http://127.0.0.1:5178/adventure.html'
 }
 await mkdir(output, {recursive:true})
-const git = args => execFileSync('git', args, {cwd:root, encoding:'utf8', maxBuffer:16*1024*1024}).trim()
-async function identity() {
-  const names = [...new Set(git(['ls-files','--cached','--others','--exclude-standard','-z']).split('\0').filter(Boolean))].sort()
-  const hash = createHash('sha256')
-  for (const name of names) {
-    let bytes
-    try { bytes = await readFile(resolveRepositoryPath(name)) } catch (error) { if(error.code !== 'ENOENT') throw error; bytes = Buffer.from('<deleted>') }
-    hash.update(name).update('\0').update(createHash('sha256').update(bytes).digest()).update('\0')
-  }
-  return {commit:git(['rev-parse','HEAD']), treeSha256:hash.digest('hex'), status:git(['status','--porcelain=v1'])}
-}
+const identity=sourceIdentity
 const before = await identity()
 const environment = {workers,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,locale:Intl.DateTimeFormat().resolvedOptions().locale,ci:process.env.CI??null,fixtureOverrides:Object.fromEntries(['GRASSCN_EXPANSION_URL','GRASSCN_EXPANSION_REFERENCE','GRASSCN_TREE_INSTALLED_URL','GRASSCN_INSTALLED_BUNDLE_SHA256'].map(key=>[key,process.env[key]??null])),bun:Bun.version, platform:process.platform, arch:process.arch, webgl:process.env.GRASSCN_WEBGL_BACKEND??null, fixture:process.env.GRASSCN_FIXTURE_URL??null, preview:process.env.GRASSCN_PREVIEW_URL??null}
 for(const executable of ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe','C:/Program Files/Microsoft/Edge/Application/msedge.exe']) {
@@ -58,6 +49,7 @@ environment.installedDependencies=await installedDependencyState()
 environment.browserSelection=fullMode?'full':'base'
 if(fullMode)environment.fullRun={issue:fullRun.number,planHash:fullRun.planHash,approvalEvent:fullRun.approval.eventId}
 environment.fixtureMode=managedFixture?'production':'provided-or-development'
+environment.websiteMode='owned-bun-next-production'
 const report = {suite, browserScope:fullMode?'full':'base', startedAt:new Date().toISOString(), source:before, environment, checks:[], completed:false, passed:false,
   scope:`${fullMode?'Approved Full':'Base'} browser selection only. No fresh native launch or shadcn CLI installation; no merge performed.`}
 const receipt = path.join(output,'verification.json')
@@ -72,21 +64,30 @@ for(const folder of await readdir(path.dirname(output))) {
 }
 await save()
 const steps = [
-  ['prepare-preview', ['scripts/prepare-preview.mjs']],
-  ['types', [packageBin('uncheck','uncheck',repoRoot),'--only=tsc','--cwd',repoRoot]],
+  ['generate', [packageBin('turbo','turbo',repoRoot),'run','generate']],
+  ['types', [packageBin('uncheck','uncheck',repoRoot),'--only=tsc','--require=tsc','--cwd',repoRoot]],
   ['primitives', ['scripts/check-primitives.mjs']],
   ['registry-closure', ['scripts/check-registry-closure.mjs']],
   ['evidence', ['scripts/check-map.mjs']],
   ['porting-evidence', ['scripts/check-porting-evidence.mjs']],
-  ['evidence-negative-controls', ['test','tests/porting-evidence.test.mjs','tests/primitives.test.mjs','tests/browser-checkpoints.test.mjs','tests/guarded-entry.test.mjs','tests/installed-case-cache.test.mjs','tests/production-fixture.test.mjs']],
+  ['unit-contracts', ['run','test:unit']],
+  ['production-build',[packageBin('turbo','turbo',repoRoot),'run','build']],
+  ['built-primitives',['scripts/check-primitives.mjs','--built']],
 ]
-if (suite === 'all'||fullMode) steps.push(['registry-build',[packageBin('shadcn','shadcn',webRoot),'build']], ['built-primitives',['scripts/check-primitives.mjs','--built']], ['preview-build',[packageBin('vite','vite',webRoot),'build','--config',path.join(webRoot,'vite.config.ts')]])
 if(managedFixture)steps.push(['fixture-build',['scripts/production-fixture.mjs']])
+if(phase==='browser'){
+  const prepared=JSON.parse(await readFile(path.join(output,'prepared.json'),'utf8'))
+  if(prepared.source?.commit!==before.commit||prepared.source?.treeSha256!==before.treeSha256||JSON.stringify(prepared.environment)!==JSON.stringify(environment))throw Error('Prepared verification source/environment changed')
+  const build=await productionBuildIdentity({source:before})
+  if(build.outputSha256!==prepared.websiteBuild?.outputSha256)throw Error('Prepared Next output changed')
+  if(managedFixture&&fixtureManifest().sha256!==prepared.fixtureBundle?.sha256)throw Error('Prepared fixture output changed')
+  steps.length=0;report.preparation=prepared;report.websiteBuild=prepared.websiteBuild
+}
 const selectedCases=fullMode?classifyBrowserCases(collectBrowserCases()).full:null
 // Retain exact case identities for historical reporting, independently of future source.
 if(fullMode){report.fullCases=selectedCases;await save()}
 const browserFiles=[...new Set((selectedCases??baseCatalogue()).map(test=>test.file))].sort()
-for(const file of browserFiles) steps.push([`browser:${file}`, [packageBin('@playwright/test','playwright'),'test',browserFilePattern(file),`--workers=${workers}`,...(workers>1?['--fully-parallel']:[]),`--output=${path.join(output,'browser',file)}`]])
+if(phase!=='prepare')for(const file of browserFiles) steps.push([`browser:${file}`, [packageBin('@playwright/test','playwright'),'test',browserFilePattern(file),`--workers=${workers}`,...(workers>1?['--fully-parallel']:[]),`--output=${path.join(output,'browser',file)}`]])
 let fixtureHost,previewHost,fullHosts
 let testFailures=false
 try {
@@ -97,23 +98,24 @@ try {
     let browserEnvironment={}
     let reusedTests=[]
     if(name.startsWith('browser:')){
+      await writeFile(path.join(output,'verification-phase.json'),JSON.stringify({phase:'browser',source:before}))
       if(managedFixture&&!fixtureHost&&!fullHosts){
         report.fixtureBundle=fixtureManifest()
         await writeFile(path.join(output,'fixture-bundle.json'),JSON.stringify(report.fixtureBundle,null,2)+'\n')
         if(fullMode){fullHosts=await serveFullHosts(fullRun.plan)}
         else fixtureHost=await serveProductionFixture()
-        let previewReady=false
-        try{const response=await fetch(process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/',{signal:AbortSignal.timeout(2500)});previewReady=response.ok;await response.body?.cancel()}catch{}
-        if(!previewReady){
-          if(process.env.GRASSCN_PREVIEW_URL)throw Error('The configured preview server is unavailable')
-          const {createServer}=await import('vite')
-          previewHost=await createServer({configFile:resolveRepositoryPath(path.join('vite.preview.config.ts'))})
-          await previewHost.listen()
-        }
         await save()
       }
+      if(!previewHost&&!fullHosts){
+        if(process.env.GRASSCN_PREVIEW_URL)throw Error('Ordinary verification owns its Next production server; do not provide a foreground preview URL')
+        previewHost=await serveNextProduction({port:Number(process.env.GRASSCN_VERIFICATION_PREVIEW_PORT??5176),expectedSource:before})
+        process.env.GRASSCN_PREVIEW_URL=previewHost.url+'/'
+      }
+      const website=previewHost?.identity??fullHosts?.websiteIdentity
+      report.websiteBuild={source:website.source,buildId:website.buildId,outputSha256:website.outputSha256}
+      browserEnvironment.GRASSCN_WEBSITE_IDENTITY=JSON.stringify(report.websiteBuild)
       const file=name.slice('browser:'.length),directory=path.join(output,'checkpoints',file)
-      reusedTests=await reusableBrowserTests(previous.filter(candidate=>candidate.report.suite===suite&&(!managedFixture||candidate.report.fixtureBundle?.sha256===report.fixtureBundle.sha256)),file,testRoot)
+      reusedTests=await reusableBrowserTests(previous.filter(candidate=>candidate.report.suite===suite&&candidate.report.websiteBuild?.outputSha256===report.websiteBuild.outputSha256&&(!managedFixture||candidate.report.fixtureBundle?.sha256===report.fixtureBundle.sha256)),file,testRoot)
       await mkdir(directory,{recursive:true})
       if(reusedTests.length){const list=path.join(directory,'retained-tests.txt');await writeFile(list,reusedTests.map(test=>test.line).join('\n')+'\n');args.push('--test-list-invert',list,'--pass-with-no-tests');console.log(`Retaining ${reusedTests.length} successful tests from matching source/environment`)}
       args.push(`--reporter=list,${fullMode?'json,':''}${path.join(testRoot,'scripts/checkpoint-reporter.mjs')}`)
@@ -122,10 +124,12 @@ try {
     }
     const code = await new Promise((resolve,reject)=>{
       const commandArgs=[...args]; if(commandArgs[0].startsWith('scripts/')) commandArgs[0]=resolveRepositoryPath(commandArgs[0]);
-      const child = spawn(process.execPath,commandArgs,{cwd:['registry-build','preview-build'].includes(name)?webRoot:testRoot,stdio:'inherit',env:{...process.env,GOMAXPROCS:'1',RAYON_NUM_THREADS:'1',...browserEnvironment}})
+      const child = spawn(process.execPath,commandArgs,{cwd:['generate','production-build'].includes(name)?repoRoot:testRoot,stdio:'inherit',env:{...process.env,GOMEMLIMIT:process.env.GOMEMLIMIT??'768MiB',GOMAXPROCS:'1',RAYON_NUM_THREADS:'1',...browserEnvironment}})
       child.on('error',reject); child.on('exit',(code,signal)=>resolve(code??(signal?1:0)))
     })
     report.checks.push({name,exitCode:code,...(reusedTests.length?{reusedTests}: {})}); await save()
+    if(name==='production-build'&&code===0){report.websiteBuild=await stampProductionBuild({source:before});await save()}
+    if(name==='fixture-build'&&code===0){report.fixtureBundle=fixtureManifest();await save()}
     if(code!==0){
       if(fullMode&&name.startsWith('browser:')){
         const file=name.slice('browser:'.length),directory=path.join(output,'checkpoints',file)
@@ -154,8 +158,10 @@ try {
     report.fixtureBundleAfter=fixtureManifest()
     if(report.fixtureBundleAfter.sha256!==report.fixtureBundle.sha256)throw Error('The production fixture changed during verification')
   }
-  report.completed = true
-  report.passed = !testFailures
+  report.completed = phase!=='prepare'
+  report.prepared = phase==='prepare'
+  report.passed = phase!=='prepare'&&!testFailures
+  if(phase==='prepare')await writeFile(path.join(output,'prepared.json'),JSON.stringify({source:before,environment,websiteBuild:report.websiteBuild,fixtureBundle:report.fixtureBundle},null,2)+'\n')
   if(testFailures)process.exitCode=1
 } catch(error) {
   report.error = error.message; process.exitCode = 1
