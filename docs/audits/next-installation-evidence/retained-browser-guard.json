@@ -1,0 +1,10 @@
+{
+  "ExitCode": 0,
+  "Reason": "completed",
+  "PeakCpu": 35.03787878787879,
+  "PeakRam": 74.39687367391689,
+  "CpuCap": 10,
+  "CpuReadback": 1000,
+  "RamCapGiB": 4.0,
+  "PauseCount": 0
+}
