@@ -10,7 +10,11 @@ export default withMDX({
   devIndicators: false,
   // Shiki is used by the client code viewer; bundle it rather than externalizing Bun's isolated package alias.
   transpilePackages: ["shiki"],
-  experimental: { cpus: 1 },
+  experimental: {
+    cpus: 1,
+    // Share loader runtimes across MDX/PostCSS work within the local build budget.
+    turbopackPluginRuntimeStrategy: "workerThreads",
+  },
   turbopack: { root: workspaceRoot },
   outputFileTracingRoot: workspaceRoot,
 });
