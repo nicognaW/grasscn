@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "//"
-  ],
+  "extends": ["//"],
   "tasks": {
     "generate": {
       "inputs": [
@@ -19,32 +17,15 @@
         "$TURBO_ROOT$/workspace-paths.mjs",
         "$TURBO_ROOT$/packages/pixel-perfect/tests/reference/**/*.json"
       ],
-      "outputs": [
-        ".source/**",
-        ".next/types/**",
-        "next-env.d.ts"
-      ]
+      "outputs": [".source/**", ".next/types/**", "next-env.d.ts"]
     },
     "registry:build": {
-      "outputs": [
-        "public/r/**"
-      ],
-      "inputs": [
-        "registry.json",
-        "registry/**",
-        "package.json"
-      ]
+      "outputs": ["public/r/**"],
+      "inputs": ["registry.json", "registry/**", "package.json"]
     },
     "build": {
-      "dependsOn": [
-        "generate",
-        "registry:build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/types/**"
-      ]
+      "dependsOn": ["generate", "registry:build"],
+      "outputs": [".next/**", "!.next/cache/**"]
     }
   }
 }
