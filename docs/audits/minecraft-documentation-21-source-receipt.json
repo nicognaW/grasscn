@@ -1,0 +1,83 @@
+{
+  "testedCommit": "d8c2bf7bd737bacd4d835194d07ab9f1648212d7",
+  "integrationBase": "e508c8923271a040a3792260d68cc29ece218ecf",
+  "sourceSha256": {
+    "apps/web/components/minecraft-playground.tsx": "809569954b2467b5cb2461eec597b43e1df3cc959b82333c295c403e664ac527",
+    "apps/web/content/docs/components/advancement-tree.mdx": "c63ad0d5c5f262730d99a90d6cdb0388fa687b3fc67ab02234ab703742d86bf9",
+    "apps/web/content/docs/components/book.mdx": "41b2522009639fd70e0a9590420e440a1ebe72cb7528e83fdc0c1e7439ee2d2d",
+    "apps/web/content/docs/components/hotbar.mdx": "fda9ca8fea46a9c14830da3eea3b9b12e76b8d4ad1236ad2d523365b0ed9f22d",
+    "apps/web/content/docs/components/hud.mdx": "7e34e5bca868c3bc255b804950bf7ed670c25caa674e2a11d89ba68de6e65d5a",
+    "apps/web/content/docs/components/map.mdx": "816728e19aaef85ed3c131e722db70f290de8d65a19e50e0b39fa15f49e35bc1",
+    "apps/web/content/docs/components/player-list.mdx": "563d42b1548a124f52dc63eb24371277b25c7d7931440f7257b7341e5993718e",
+    "apps/web/content/docs/components/player-preview.mdx": "3b083919fcdb9acc9885914494048447778bbd8850a9cd990cfc88ed2d82c937",
+    "apps/web/content/docs/components/sign.mdx": "43d4e2a0b380a77d40bbe0c18ceba2411013108df288dffb4fa3c3acbdeb3f70",
+    "apps/web/content/docs/components/trading.mdx": "4a5b57fc4bfc6b7559a48485549adc5d9e7b0bb8a9c2bf0dead59e9705785cec",
+    "apps/web/examples/catalog.ts": "39e4fb51e32860003484fa0064b0dd378c969368cfb85aacec96ccc3628cacd8",
+    "apps/web/examples/minecraft/advancement-tree-example.tsx": "0f0227f8054b92d3b62a2ad12eec1df8677a23a1dcb1b28dee2ce8ce7b74bf5f",
+    "apps/web/examples/minecraft/book-example.tsx": "404312a588396c14767fd38b00df133d3fd8637fb5ed499d0d42cf7a0b9872b5",
+    "apps/web/examples/minecraft/catalog.ts": "30592821c2dfa7dabd6040e1e8ec76bb1aebd1b5693d319c2aad8e07d25ecc13",
+    "apps/web/examples/minecraft/hotbar-example.tsx": "cb1d5c6f0f825437c77f7ced86e5281f7aade006369f880284da5c55bc5afd6d",
+    "apps/web/examples/minecraft/hotbar-tools.tsx": "6ec30a78ed7297bcd41087cb5270f32848bc980a8e23784175c37af9ff2a85c9",
+    "apps/web/examples/minecraft/hud-example.tsx": "2df7eacdfb6e5e666eab2d826c9c1a357f7441bd3242c86fbbd3101f0c90c30e",
+    "apps/web/examples/minecraft/map-example.tsx": "b96cd63c6eb4e1f4d7db802bbf3d53e10885c8009a257dcc6698d31f2a424b60",
+    "apps/web/examples/minecraft/map-locator.tsx": "232c0b1bde44b3e125a52b160e2f8b32627825ff3a6463e4762f8e0d23aeb7a9",
+    "apps/web/examples/minecraft/player-list-example.tsx": "1ba9d9209d08b3570525d038d85445f28d982ceea6ab4404f219e67f25640631",
+    "apps/web/examples/minecraft/player-list-scoreboard.tsx": "46e281f963aa22de5c16916cef6262c9aafc967355759841b04fb18da02b4fd2",
+    "apps/web/examples/minecraft/player-preview-alex.tsx": "095a6580a97b9cf6f6b78182ee58c3557733e0185a006bbc4ee0434334487a2e",
+    "apps/web/examples/minecraft/player-preview-example.tsx": "8270f747d1800cb74643b31faf524286d8a0106ebf2e46180d52d7685e82fec8",
+    "apps/web/examples/minecraft/sign-example.tsx": "1293e6304ee850651f658d7c2c6adb03af7de3bc2e5dfd328823a750b21e8342",
+    "apps/web/examples/minecraft/sign-hanging.tsx": "e2056b2cae5a8f8e32643b68e5e4e02365432cf4084a4ca3bfe60c053e271011",
+    "apps/web/examples/minecraft/trading-example.tsx": "a2f24a02edda0df18094fb7ef76f3592f725314f6e48bd4594a779dec7ced7e2",
+    "apps/web/scripts/minecraft-examples.test.tsx": "e5f5f964b7a4eb55f370f9399b814cdd3b21f05319f32e09840347dbe3b085d1",
+    "packages/tests/scripts/browser-base-cases.json": "d9f8b7fbf0d18202bffa2de83716fc2670a9433e9a47ca4cc84390cdf80f012f",
+    "packages/tests/tests/minecraft-documentation.spec.ts": "c6c7e061a1ccd7f154f9bfce472d7773f178bfb2b8d3bab43442a545e77017b0"
+  },
+  "buildGuard": {
+    "ExitCode": 0,
+    "Reason": "completed",
+    "PeakCpu": 52.65151515151515,
+    "PeakRam": 75.29097746064384,
+    "CpuCap": 4,
+    "CpuReadback": 400,
+    "RamCapGiB": 4.0,
+    "PauseCount": 1
+  },
+  "browserGuard": {
+    "ExitCode": 0,
+    "Reason": "completed",
+    "PeakCpu": 63.63636363636363,
+    "PeakRam": 76.94523112193443,
+    "CpuCap": 10,
+    "CpuReadback": 1000,
+    "RamCapGiB": 4.0,
+    "PauseCount": 5
+  },
+  "artifacts": {
+    ".pixel-perfect-test\\docs21\\desktop.png": "1f3eb3893c10ec21c7e81d6a1d05d0ecfaf770a7bdf5344b2c3eae59d2f5a19c",
+    ".pixel-perfect-test\\docs21\\mobile.png": "7eedc80c6e7bbd57d2a35287770432455bf52ea58901dd9a8bf5c3d2b1c6e4d2",
+    ".pixel-perfect-test\\docs21\\receipt.json": "f2fd9d063c85b40e7b950175a0afccf1d3b2d7983afca9122941ca69223719ec"
+  },
+  "runtimeEnvironment": {
+    "Bun": "1.4.4",
+    "buildGOMEMLIMIT": "768MiB",
+    "GOMAXPROCS": "1",
+    "RAYON_NUM_THREADS": "1",
+    "buildCpuPercent": 4,
+    "browserCpuPercent": 10,
+    "serverPort": 5191,
+    "browser": "Edge",
+    "DPR": 1
+  },
+  "results": {
+    "bookPublicRender": "1 passed after initial missing-example red",
+    "format": "19 files passed",
+    "webAndTestsTypecheck": "passed; Next build checker also enabled and passed",
+    "build": "65/65 pages, passed",
+    "focusedBaseInventory": "3 unique mapped tests",
+    "focusedBaseExecution": "3 passed, 21.9s",
+    "nativeHotbar": "zero differing RGBA pixels; retained hotbar-0-s2.png digest checked",
+    "oxlint": "failed loading eslint-plugin-github: TypeFlags.Intrinsic config error",
+    "Full": "not executed",
+    "independentConsumers": "owned by #22; not established by website run"
+  }
+}
