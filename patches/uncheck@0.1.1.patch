@@ -1,0 +1,21 @@
+diff --git a/dist/_chunks/cli.mjs b/dist/_chunks/cli.mjs
+index d65b4e148c229852207ef1351c610bb845d5a856..d0a6880c4c342159a869659ba40bafc921c28f1f 100644
+--- a/dist/_chunks/cli.mjs
++++ b/dist/_chunks/cli.mjs
+@@ -287,7 +287,7 @@ const readTextIfExists = fn(function* (file) {
+ const EXEC_BY_PACKAGE_MANAGER = {
+ 	pnpm: "pnpm exec",
+ 	yarn: "yarn run --silent",
+-	bun: "bunx --no-install",
++	bun: "bunx --bun --no-install",
+ 	npm: "npx --no"
+ };
+ const YARN_TOP_LEVEL = "yarn run -T --silent";
+@@ -300,6 +300,7 @@ const PACKAGE_MANAGER_BY_LOCKFILE = [
+ ];
+ const EXECS = [
+ 	...Object.values(EXEC_BY_PACKAGE_MANAGER),
++	"bunx --no-install",
+ 	YARN_TOP_LEVEL,
+ 	"yarn",
+ 	"bunx",
