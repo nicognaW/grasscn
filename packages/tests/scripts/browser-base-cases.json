@@ -926,6 +926,21 @@
         "route": "/docs/components/button#installation",
         "reason": "Default CLI installation offers all four package managers, copies their actual registry command and restores the visitor selection."
       }
+    },
+    {
+      "file": "docs-installation.spec.ts",
+      "title": "Button manual installation exposes complete files and defers large resources",
+      "titlePath": [
+        "Button manual installation exposes complete files and defers large resources"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Default Manual installation lists the actual closure, offers selected complete files, defers the font resource until requested, copies/downloads exact full content and resets per-file status."
+      }
     }
   ]
 }
