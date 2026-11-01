@@ -1,0 +1,1728 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197",
+  "caseDefinitionSha256": "32e786e4df18b975fd0776726a0a2b58518146e2c22586fc076f421e1527d251",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p0-s1.png",
+      "sha256": "c4e458a5d79511c4457c6e123bb9fc1f688a0fef1be97c9a576568b039a5435d"
+    },
+    {
+      "name": "native-controls-p0-s2.png",
+      "sha256": "ac1343de70d5bb81ea0fe3125e8fa89f1b9ce5ac8437c03fc77ceb9ac280d404"
+    },
+    {
+      "name": "native-controls-p0-s3.png",
+      "sha256": "dfa707676b5f7a439d9ecfb5d9fd242cd40a63e307a2a341c0beca78eee5defc"
+    },
+    {
+      "name": "native-controls-p1-s1.png",
+      "sha256": "641f63a0fd74e16c1c0e61874c7c5c82e2572f7c5d6071da540467e8ebbc83dc"
+    },
+    {
+      "name": "native-controls-p1-s2.png",
+      "sha256": "32da567ad84eb966de6e4c6593269e6818d27e8bc70942a4d395372bd0a56b7f"
+    },
+    {
+      "name": "native-controls-p1-s3.png",
+      "sha256": "a6ec584d6e36f5c0d0ea42f4ee09d4a628b68524b99913d1a787c16c2894694f"
+    },
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "e3ec4441bdc6e7adc3833de193310d4712f2689c92f97e7f6d4ca848195e9c2b"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "daec025caf2207aa77d7e6d17273aa1112260ac38b706de2d6f498aa4cd675ab"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "50c7be20462ab630e95266a3aacd813c3b5c3eb036e886c5d9a1b739ab727425"
+    }
+  ],
+  "cases": [
+    {
+      "name": "install-pm-npm-s1.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "5cdb18af0a213fde8326846c76f15c0335093f39b4b62deab79e67435f795a2d"
+    },
+    {
+      "name": "install-pm-pnpm-s1.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "94f72c38a2f72ef4f55f9061232b78cd65111ea8d95359018139d912bad8d7eb"
+    },
+    {
+      "name": "install-pm-yarn-s1.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 2,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "760d4adee48dd092bbd4e815de0608c395e9a723cfc54fd48f0496816e1b0bcd"
+    },
+    {
+      "name": "install-pm-bun-s1.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 3,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "d0bdffb4507ec9cfe96bc5b9632eced993504c01c8862e745716f604e4700232"
+    },
+    {
+      "name": "install-mode-cli-s1.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "721477c61b4d3fab39eb82ed1bf6ee7f34ff666ea753fb2ecdcefee3ada7da69"
+    },
+    {
+      "name": "install-mode-manual-s1.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "1dfcc7f59ec8825fb531f8c25906bc06c5372c1778d846d50dbd169ffb54f156"
+    },
+    {
+      "name": "install-action-load-s1.png",
+      "element": "button",
+      "label": "Load",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ea54c64d33d7e5d26c2250445cc954476a336b2b45a1b59ba74555f5c0aee10e"
+    },
+    {
+      "name": "install-action-download-s1.png",
+      "element": "button",
+      "label": "Download",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "54c1144fb6fffc05b62416641880e76a70d4308916f3280aa02a481aecae9e38"
+    },
+    {
+      "name": "install-action-retry-s1.png",
+      "element": "button",
+      "label": "Retry",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "3b48c27db9773605c7ae087bdc0c3b4e3839aa5445b22d9587a70cc505db8d05"
+    },
+    {
+      "name": "install-action-copy-full-file-s1.png",
+      "element": "button",
+      "label": "Copy full file",
+      "state": "normal",
+      "width": 110,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "0992bf03d0c30ab2cdd8a5951c1989e9b0fd213f13cc99a3518485b7aa597b73"
+    },
+    {
+      "name": "install-action-load-disabled-s1.png",
+      "element": "button",
+      "label": "Load",
+      "state": "disabled",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "baa0da169a39d2b8bcf53e74b7d501ce5c3696e167027ee207039dd9a48125c6"
+    },
+    {
+      "name": "install-file-button-tsx-s1.png",
+      "element": "button",
+      "label": "button.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f6e1d18378b2e99bbfa15dbddb7fedfc1e7dce6f9fef34e2f9790016ced9b7ee"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-font.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "348cc717df0158ea6f22a14345c7a8a04eeaebe49c5fcf3adbbbd624cac4b320"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s1.png",
+      "element": "button",
+      "label": "minecraft-button.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5142eddb46fe6b77a06e8c394599bcf98e18f88ad6b597ecac1e034394fc110e"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s1.png",
+      "element": "button",
+      "label": "minecraft-assets.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "0e6a4c08a58c961e95b78826cd30d0496d534e59f2e306e92618cabe63e5d0a6"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-sound.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "0bbd67485cefa426077cf4f019b72adb4b845e3407fb4f92062d220d0d2207f0"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-sound-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ad00be004ce6f3b5642e2ed2cfa226e49a4a48764159559659cf9dc627d70b51"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s1.png",
+      "element": "button",
+      "label": "minecraft-unicode-label.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "4c3da7ae0fd5a933f4f29a1f7394ccee0563c6d2e2c5f63d3299799ee4997d18"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-input-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "b9aece2896a7d272f034aaedee6c6f4f82c4ba0721cfac6920e970786180574b"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-unifont.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5784a6a4a9f0b314249ff5cd72365d7557543a74bf523b4d267af2a698818afb"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-unifont-data.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "54c4a430b7aa72d5f899a600279e76d1cc411b39e406e5b2e024f318c0553b45"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-unifont-atlas.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "181c25d53b9f2d90b3795560d779cc37f76833f45365e41d4269bf97c5839f9d"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s1.png",
+      "element": "button",
+      "label": "minecraft-unifont-gpu.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "b04bf00904f67aa1eda6e97a4e02e585e4aed05b9ded885203ab3ad10564687b"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s1.png",
+      "element": "button",
+      "label": "minecraft-render.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "7d21cec11271905afc576d1e62fea96a1740ae955deedf955161bcf1529386bd"
+    },
+    {
+      "name": "install-pm-npm-s2.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "195ed61d7509f69262443db4c74a711ff9e774af8932c710bfd1feeaf930ea83"
+    },
+    {
+      "name": "install-pm-pnpm-s2.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "ce959f7fb4a5c925d43ee4b6b58209a12e65c35727a32980869c88b6f7a3bc57"
+    },
+    {
+      "name": "install-pm-yarn-s2.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 2,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "5738c8caf226a53af8d7cc4b1dbaac8ae2983284a76e4718a222d2f60944149d"
+    },
+    {
+      "name": "install-pm-bun-s2.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 3,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "3c9b266af75231da5eeba353b673c7a2e46e9fc58169de567593e6eca2f7590d"
+    },
+    {
+      "name": "install-mode-cli-s2.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "c4e71d0e8ce7928249dab103c1eb811147a41f2ab73333cc4491e160bacd64c0"
+    },
+    {
+      "name": "install-mode-manual-s2.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "640023733da69a5b443e1d89e6f0a36110a3797c395982525cdfc971d607d71b"
+    },
+    {
+      "name": "install-action-load-s2.png",
+      "element": "button",
+      "label": "Load",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "eac183459a950fa3a38ab8b98e9cb41d5e897e07dcaae08999156e9bbcfdf7e9"
+    },
+    {
+      "name": "install-action-download-s2.png",
+      "element": "button",
+      "label": "Download",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "97878fc252b95121bbfc8bf640ddb8787dafa501f570e77caf21712fdd3c0051"
+    },
+    {
+      "name": "install-action-retry-s2.png",
+      "element": "button",
+      "label": "Retry",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "36ac107288dc59618dea20d7db45948e0d550e7e54128c665e807caca845bc13"
+    },
+    {
+      "name": "install-action-copy-full-file-s2.png",
+      "element": "button",
+      "label": "Copy full file",
+      "state": "normal",
+      "width": 110,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "4e3aa4417c8a9866850482d032f4f62e175637b6120e5c110d6a773158894568"
+    },
+    {
+      "name": "install-action-load-disabled-s2.png",
+      "element": "button",
+      "label": "Load",
+      "state": "disabled",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "cc72d72f9293f324f6fea791e3bfeeae507a44f232a0a1a35eda4d44fb6ba00e"
+    },
+    {
+      "name": "install-file-button-tsx-s2.png",
+      "element": "button",
+      "label": "button.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "010c1ce24cc65a3ca47c68e86cbf759de9f777eadda94ee7c3b2cef09f4701d9"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-font.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "61233af02da7ed55b55f5c2cac96f6f60f2a54a77e2afbc247bbaef89ba544e9"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s2.png",
+      "element": "button",
+      "label": "minecraft-button.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "f9aa96851d1d1f98363f0e57249afcda813eea1973d0140e63a3c08ed5809700"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s2.png",
+      "element": "button",
+      "label": "minecraft-assets.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "45132af2ae3a4d7eb676f9f8569180da32b701c7910ac707442775f1e6e02090"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-sound.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "de1a2a2055c6d0341ed25783643c4c57ac6bb69ada464518148bf338b06eebf7"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-sound-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "39b36563c5744cb69929ddd587df7221fbe896606b503e5c0cf15a301c5af0a9"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s2.png",
+      "element": "button",
+      "label": "minecraft-unicode-label.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "60c3f02e7b93bc49d46b107ddb7ac56725adb52ba6e3fde2a85802f6f26a9508"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-input-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "45d30677e00d69ddd5116ec366bdc63da2ed3b25b05ce2ccb8bb3ff6882047e0"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-unifont.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "49cc68fa5cb244ca30d4270d622e0909017a80661bfa3354874063db69005680"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-unifont-data.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "863bb312bf9ed77961fe0f805c7b7bdf2971ea98a47fa44a8b53a61e18203486"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-unifont-atlas.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "c1f202f220be5e72695bfb867331a8419a5801bef92d815e98fe77c7b9def1d1"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s2.png",
+      "element": "button",
+      "label": "minecraft-unifont-gpu.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "aa2131d12d545163e653b502e41795cfd87ef2ee1bd06dd13d20f0a6d2978d22"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s2.png",
+      "element": "button",
+      "label": "minecraft-render.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "e2121503d047402af2f40fbcb3c6c21590a6a6d916fdf65a63e5d31f5176b116"
+    },
+    {
+      "name": "install-pm-npm-s3.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "1ecc8920b00c79ca6e8b73df6c43e6358e14a29032f8ed65ec6723d28c04ebb3"
+    },
+    {
+      "name": "install-pm-pnpm-s3.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "4b675a70d76ae0cb1abc573b2c8c60e456626efc51c87cd7f7650eeb9ab64c29"
+    },
+    {
+      "name": "install-pm-yarn-s3.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 2,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "602659bd5120a9caf27bd23bc6884125408fc9576505d36c254b59a902f46e4a"
+    },
+    {
+      "name": "install-pm-bun-s3.png",
+      "element": "tabs",
+      "labels": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "selectedIndex": 3,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "npm",
+        "pnpm",
+        "Yarn",
+        "Bun"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 82,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 150,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        },
+        {
+          "x": 218,
+          "y": 0,
+          "width": 68,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "77d568af6eff01ac7fe78ac8990de874f9688c3099698e8256f85b95ccb1e4dd"
+    },
+    {
+      "name": "install-mode-cli-s3.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "eaaccb9681637b6d98c7fcd1926f79d09eb22bc24750d98e223c91c843476dc0"
+    },
+    {
+      "name": "install-mode-manual-s3.png",
+      "element": "tabs",
+      "labels": [
+        "CLI",
+        "Manual"
+      ],
+      "selectedIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "CLI",
+        "Manual"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "9bdc41936524f1b35316ee203a415787fe42801ad106fe77bac9d213a8ef8d01"
+    },
+    {
+      "name": "install-action-load-s3.png",
+      "element": "button",
+      "label": "Load",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "d2cd65a7c224441ba70ff7de60c2da30a2741773c77826a2ed9d01647f3380fb"
+    },
+    {
+      "name": "install-action-download-s3.png",
+      "element": "button",
+      "label": "Download",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "9c2c95f57335c19950ae07e2c2376f6ddc3a5a6d449a80e6da90835c13953123"
+    },
+    {
+      "name": "install-action-retry-s3.png",
+      "element": "button",
+      "label": "Retry",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "02cd7686be934b7093927f12ba4c06fd9676a2212f73c2b70d1ea937f0355ad6"
+    },
+    {
+      "name": "install-action-copy-full-file-s3.png",
+      "element": "button",
+      "label": "Copy full file",
+      "state": "normal",
+      "width": 110,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "f98b6e207eb9971fe4fb412a5ef7a5d259fb19966998befc1783db5160598080"
+    },
+    {
+      "name": "install-action-load-disabled-s3.png",
+      "element": "button",
+      "label": "Load",
+      "state": "disabled",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "952e08441b8c0cecaacc0f4bbebe625c23615d8519dd90937140ab86ff9048f3"
+    },
+    {
+      "name": "install-file-button-tsx-s3.png",
+      "element": "button",
+      "label": "button.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "b8856219a5a80f5bea87788a3f8400a914ea92af684907cae7be1de28a4b4e6d"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-font.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3cbb08c0fc62a7beb5f9b9e15482741b38dbaa8553d37e6ffad9ac67a7504515"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s3.png",
+      "element": "button",
+      "label": "minecraft-button.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "6b72250d4913a538ddaae320f4ba21b7c4552b56df383175b94e45cff5dece79"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s3.png",
+      "element": "button",
+      "label": "minecraft-assets.css",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "7eab642a84a35b64d59bbf77fc588506a60230cd68c08ee2c804ffff2c31a3a2"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-sound.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 1,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "fcd015950f6cf09894f1311ad84f6e9fd53de41c8481d2bdb58af177b673916f"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-sound-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "59276aa73f6f4c674e55255c61896026c08f763c43166849f21b24fd2119c68c"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s3.png",
+      "element": "button",
+      "label": "minecraft-unicode-label.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 48,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3b16992e2664a8cb3212ee82902800775ec94759bf2b4f2d90be343b1d6da702"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-input-assets.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 80,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "512a97a56252b42778a93ae206e6b7185eddec3e7fdf42c90f2f5e3119f6fa44"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-unifont.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "52b0cc3aeeca749cfe424c7ec99938943b836ccf2def812d0853d85f3f6b3953"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-unifont-data.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "224056863619b76280b857e8632722a59880fca92b227e1d043d5c2c31558a11"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-unifont-atlas.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "2d0e71702a69cbeaf081975af48065a5150488127cee13d335cc13b308b8eb65"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s3.png",
+      "element": "button",
+      "label": "minecraft-unifont-gpu.ts",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "ede33e9d697b6b2a4df6634063e803ad97d5077842ce4fcb3b44c26ad32c1493"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s3.png",
+      "element": "button",
+      "label": "minecraft-render.tsx",
+      "state": "normal",
+      "width": 303,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 2,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "d61cb1800b3f8d441a2b9da96018bbf8ff52b90b6484ad851102f37884a47ca8"
+    }
+  ],
+  "sourceDirectory": "source"
+}

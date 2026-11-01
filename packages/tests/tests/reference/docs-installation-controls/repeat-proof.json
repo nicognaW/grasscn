@@ -1,0 +1,510 @@
+{
+  "nativeLaunches": 2,
+  "scope": "Installation controls at declared labels, sizes and background; browser scope separately mapped",
+  "cases": [
+    {
+      "name": "install-action-copy-full-file-s1.png",
+      "width": 110,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "19d557fdf11242945b4d29410f8c5dba2347f717bab7852fbdce1ad62ca6835a"
+    },
+    {
+      "name": "install-action-copy-full-file-s2.png",
+      "width": 220,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "5554d84edbb65e9894c6f8fa44bbdc99838c781f87714830c58c7e4efeb52ad5"
+    },
+    {
+      "name": "install-action-copy-full-file-s3.png",
+      "width": 330,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "4fd8bc9f29a77551b0f6987612480868f31c5b3dd9b7338fdf7fe6f069f19b44"
+    },
+    {
+      "name": "install-action-download-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "8ae26bb552d1249380ed497c5491b8aed0efa8ef917b0807e347e4dd8840b06e"
+    },
+    {
+      "name": "install-action-download-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "30864c4194a8058ec07f6f1070835a8edd5e32c22c72f416abfc7800ba69c628"
+    },
+    {
+      "name": "install-action-download-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "f3d689d1812f37dc825eb6e5b7a930186dc78b45fd7912c6ec5640a49f0f0a75"
+    },
+    {
+      "name": "install-action-load-disabled-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "7ced44e28dd00d5665020e360d8dd08a12910335b20e1b42441f79544973cf85"
+    },
+    {
+      "name": "install-action-load-disabled-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "097310c79359704dafea14e20ab1ad24d964f92254a68da5c22da8227d10a38d"
+    },
+    {
+      "name": "install-action-load-disabled-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "827167f6ba5727c61123607a90b2fefcd00f86a9955066108a2bacb5d6bfef4b"
+    },
+    {
+      "name": "install-action-load-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "4c88113c9873a9f0c5ec39f65fff67698a0c8f83abb4ef4217c7bb3065a2506f"
+    },
+    {
+      "name": "install-action-load-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "46ecc9c2a4a5213e12207038bab2091f48c164948b8d5b5affbb9f0ffd33a60b"
+    },
+    {
+      "name": "install-action-load-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "16921eef30e5535df3fd366b4e9c8c330d745eba5c5f1e0b6b7d8cf184e68158"
+    },
+    {
+      "name": "install-action-retry-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "8da763640353e53a1d4511192fbe557eb3db842116040a007c52e0a66055dc33"
+    },
+    {
+      "name": "install-action-retry-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "781c9ec83dea9dfd93e8e2d48461e269960d626822fd9e8964e383f748ef2cdd"
+    },
+    {
+      "name": "install-action-retry-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "4a99fd2417bc9c79c45538ac3211b294eec0ea772bacc63b4534af3ac03304b9"
+    },
+    {
+      "name": "install-file-button-tsx-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c2cd7fa9b630b63f32fded5a2403ca8949f2b807cbb058810c0a3a1ae62a015a"
+    },
+    {
+      "name": "install-file-button-tsx-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "ad8f24299aa1675958139b23918e27eab9f57df4cddf6760fd764aa04a2b9588"
+    },
+    {
+      "name": "install-file-button-tsx-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "6921c205d328b6b6674d13f9f807d84c5637c8869d89f7795dd4416d1194125f"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "20ce4c7e4a4b63c71aa82580f3b52939052c8d756a28f8e5ac6c8c2f0b2eca5b"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "39e24263e859c4a9082195d1005f801aa85e918495cf8e19af93a3a8e677b020"
+    },
+    {
+      "name": "install-file-minecraft-assets-css-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9dcfd05804c4a81e7b9b07dbd19719947350e4eaba71beee6d0f1c8adc221fbe"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "bd887236abb917eaff54cd8747142ff1e802a3d93c652a8a788d022a864c708e"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "e68eeba2640224c17332c2ea97cbad374831cc792de79d2937070c1d385e3b18"
+    },
+    {
+      "name": "install-file-minecraft-button-css-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "b0d2144ec0de0192ffff15337442600bfa1c5a50f918dceb8b78cd8079293bb4"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "0d3723f4b09cd99385757a42c4e924040bff959c3c61a01241b665e217a2a595"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "6ccc4f3b2ad46973fbc066985633463f3e6ac5bbc430e423659e317456d9514d"
+    },
+    {
+      "name": "install-file-minecraft-font-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c86ccd922764c8e142c1bcc4bec0e7b463763b9b2d5eadd45a68fbd6a42975a1"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "103073d046fcd1e89e443f96311983323476864cd6bb75c29cf88f37622da0b3"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "81b125f2db38539c4e626f37dd7e561cd758d2373ef7446b5a3aef8f5f0b35a6"
+    },
+    {
+      "name": "install-file-minecraft-input-assets-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "58108f7abd2a4e6cf8e324c37e49848de1a7b3c6c7af13783a872cc89d3ede57"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a59d8aadccdd69f500fa4794bc5fa7dc7cf26077b0633b91944340838f264c76"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a2bf64905f5a60e58f5dd6e201d9044b30e3437bffcaf0547a7fce151eedbab1"
+    },
+    {
+      "name": "install-file-minecraft-render-tsx-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c20208416ba814a6d74526abd6c35fc00ae1db5f93ec7520a5ec408a4e43b4b5"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a56d7aaed38aed1e810048c6e6296cb8296673181ea98aa996cb0dc0229f3436"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c66bbb6e4249437d6cf68390a5e26290829d43f4affd0f9df97a7fad090ccc66"
+    },
+    {
+      "name": "install-file-minecraft-sound-assets-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9e7a8a505e981df227cb89360a988dc3926d3a9b790c13c45b6667bc284a8958"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "11a6772bb4cb425133f48dedbaca6c96523d2bb93dab46297f4aaaac3641d46a"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "73dec30bba8894fa38498d9a49a05721393cd3950508bcb41f46a9afd5f890b5"
+    },
+    {
+      "name": "install-file-minecraft-sound-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "14c22a1a42788799debbf26087c7eef54b09f82f095b1568be41c46f05312d89"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "53630c078fe4a03ae66e446262d21a5dd524b5a7a231f46db8314703ce237b19"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9b24940277f654433733f0e94f485f1a0b41b5c68615061bacf945162e60e2c8"
+    },
+    {
+      "name": "install-file-minecraft-unicode-label-tsx-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "b2640f478e8a6159d98009921705bf01b67bf1fb859915cc6696f3dcbf6fb7e9"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "919e2854a90593bcab3b13ad9c7b1f3bfce1cae422cdec5433527e94754e7862"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a1f0f44868a991e37c32fb2e6cff8de6432c0e42db9868e265ca282897872cbd"
+    },
+    {
+      "name": "install-file-minecraft-unifont-atlas-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a05e023cd2dbda7890f4510b19b90f0da988d211a954488ac0085faf4a4c5771"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9a16fed74f72344872425122457cb9f89803e6a3a91880d57e73c0ed1c71bbe3"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "b2a79880e2113bb89c9be13820a52afd29df4412490308a7a3c2eac7dd22a11d"
+    },
+    {
+      "name": "install-file-minecraft-unifont-data-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "52daf066204b513a587048855b6dceca2328c5202370c176070c66a229fa2b6f"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "00ba283711dc8188fd450e758201c5f16b08f299713ca6be8e8b81d5b0b3e817"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "3948a267b3f9f34edff9ae1bc23f2c814fd0e9fa5c19ca05fcd6f78f5f22d20d"
+    },
+    {
+      "name": "install-file-minecraft-unifont-gpu-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "76280dbd4181e92ac25580e77ffb52351a2c23c67c46a879ed531e351ba076d9"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s1.png",
+      "width": 303,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "31f7d73b5adc85c3f089a7dfaa4accca6b15b39ed764de9c0e91f9e9d673c4a3"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s2.png",
+      "width": 606,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c7e9f32e94efabe1f0b1811255f229f72f505d7952023b747ae2320163a0910e"
+    },
+    {
+      "name": "install-file-minecraft-unifont-ts-s3.png",
+      "width": 909,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "2efac901912a888b9ee78371e60bdd79f2ca9dfc227b198f7141f0d42461f6c5"
+    },
+    {
+      "name": "install-mode-cli-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "f21b5a6e7856ab5703cc1ab6ee8060961ed0181c24a1155700cb0fb73a2b772c"
+    },
+    {
+      "name": "install-mode-cli-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "0cbf528c09db63a1836a8c15999cac7959f34e47c2ac136026b72f0b8567d7ba"
+    },
+    {
+      "name": "install-mode-cli-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "67c94e7b5285332ed09b32e5f80c2ea59aa9cb9c944cca2dfde6853e3d4400d9"
+    },
+    {
+      "name": "install-mode-manual-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "4048d42c514c7544cd36e417fcf579697e7d469ce0df26905fdae37ff4b6086b"
+    },
+    {
+      "name": "install-mode-manual-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "4a481578190d081dc757ea8410567a92b2caec3cb8df106e4e82cceb952bed84"
+    },
+    {
+      "name": "install-mode-manual-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a4c09350a6fa2dfd4c09dc40100844f40bec1cb34343915c0c1499b254b76a6d"
+    },
+    {
+      "name": "install-pm-bun-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "65bcb3dab23085a8e3f6b1fc8e8dabe895e4c1ed24f1cac247bf5b86e5cc9942"
+    },
+    {
+      "name": "install-pm-bun-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "06c4e7c2d5625831360fb6e674127f54de0384d46f083692dd0d05d80b928c50"
+    },
+    {
+      "name": "install-pm-bun-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "281d6f01150c13de2e6a2fbe7705df22844f81528c98f76dc6bec611ed8632ed"
+    },
+    {
+      "name": "install-pm-npm-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "c4009a9a064051d1341b6c56a432caf4d5034655fb292452b9cf1779911671f7"
+    },
+    {
+      "name": "install-pm-npm-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "3b017027d476ba90499be45ff99e03b3b8d80afee4f22e67a526a71731dafe5b"
+    },
+    {
+      "name": "install-pm-npm-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9f35ccf3a0f146c616774da6c83e8e782c9dad4456a89fad39582579272f5883"
+    },
+    {
+      "name": "install-pm-pnpm-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "cfb502ba6fce389f3b7e1fcf8ad0740896ce408d5c3399e8452efeab9cd1fe11"
+    },
+    {
+      "name": "install-pm-pnpm-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "dd7f30f3a1b20a65f94ebe698f1ace3ebbf9c77027817e856e9e66d23f08ab63"
+    },
+    {
+      "name": "install-pm-pnpm-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "ca83bde4a1d8ddad9f871782202a1d92c9f74617edcc68909b06e0958c95e3fb"
+    },
+    {
+      "name": "install-pm-yarn-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "57e35111873294aea0a3fcda028ba67721723e81ccb22685aca0beb09480e5f1"
+    },
+    {
+      "name": "install-pm-yarn-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "d594a80ce513ee0bfa5d4ef2af1ce7bf8e811b9b9f03ffe0940f34890d11ad1b"
+    },
+    {
+      "name": "install-pm-yarn-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "30b5b6cbc838466e5ab8ae1b97d7f5c840ba0141a5bb01551bfd24be57752077"
+    }
+  ]
+}

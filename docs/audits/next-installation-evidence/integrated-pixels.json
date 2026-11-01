@@ -1,0 +1,120 @@
+{
+  "onePixelCorruptionDetected": true,
+  "cases": [
+    {
+      "reference": "docs-installation-controls/install-mode-cli-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-pm-npm-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-pm-pnpm-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-pm-yarn-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-pm-bun-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-mode-manual-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 29088
+    },
+    {
+      "reference": "docs-installation-controls/install-file-button-tsx-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-font-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-button-css-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-assets-css-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-sound-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-sound-assets-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-unicode-label-tsx-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-input-assets-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-unifont-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-unifont-data-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-unifont-atlas-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-unifont-gpu-ts-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-file-minecraft-render-tsx-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 24240
+    },
+    {
+      "reference": "docs-installation-controls/install-action-download-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 4800
+    },
+    {
+      "reference": "docs-installation-controls/install-action-load-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 4800
+    },
+    {
+      "reference": "docs-installation-controls/install-action-copy-full-file-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 8800
+    },
+    {
+      "reference": "docs-installation-controls/install-action-load-disabled-s2.png",
+      "differentPixels": 0,
+      "totalPixels": 4800
+    }
+  ]
+}
