@@ -148,6 +148,7 @@ export const validateReview = (
 
 export const findingBody = (report: CompletedReport, group: FindingGroup) => {
   const memberCaseKeys = new Set(group.cases);
+
   const failures = report.failures.filter((test) =>
     memberCaseKeys.has(test.key)
   );
