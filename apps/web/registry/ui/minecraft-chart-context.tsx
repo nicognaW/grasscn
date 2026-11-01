@@ -261,9 +261,9 @@ function useRegister(geometry: Geometry) {
 }
 
 /** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
-export const ChartPixelBar = (props: BarShapeProps) => {
-  return <PixelBarGeometry {...props} />;
-};
+export const ChartPixelBar = (props: BarShapeProps) => (
+  <PixelBarGeometry {...props} />
+);
 
 const PixelBarGeometry = (props: BarShapeProps) => {
   useRegister({
@@ -281,9 +281,9 @@ const PixelBarGeometry = (props: BarShapeProps) => {
 };
 
 /** A Pie shape adapter, not a second Pie implementation or data API. */
-export const ChartProfilerSector = (props: PieSectorShapeProps) => {
-  return <ProfilerSectorGeometry {...props} />;
-};
+export const ChartProfilerSector = (props: PieSectorShapeProps) => (
+  <ProfilerSectorGeometry {...props} />
+);
 
 const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
   useRegister({

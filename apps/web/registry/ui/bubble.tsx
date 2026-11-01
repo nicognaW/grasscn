@@ -268,17 +268,15 @@ const BubbleReactions = ({
 }: MinecraftProps<"div"> & {
   side?: "top" | "bottom";
   align?: "start" | "end";
-}) => {
-  return (
-    <div
-      data-slot="bubble-reactions"
-      data-side={side}
-      data-align={align}
-      className={cn(`mc-bubble-reactions`, className)}
-      {...props}
-    />
-  );
-};
+}) => (
+  <div
+    data-slot="bubble-reactions"
+    data-side={side}
+    data-align={align}
+    className={cn(`mc-bubble-reactions`, className)}
+    {...props}
+  />
+);
 
 export { BubbleGroup, Bubble, BubbleContent, BubbleReactions };
 

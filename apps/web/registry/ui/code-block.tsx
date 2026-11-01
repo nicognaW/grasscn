@@ -56,44 +56,38 @@ const CodeBlock = ({
 const CodeBlockHeader = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-header"
-      className={cn(`mc-code-block-header`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-header"
+    className={cn(`mc-code-block-header`, className)}
+    {...props}
+  />
+);
 
 const CodeBlockTitle = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-title"
-      className={cn(`mc-code-block-title`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-title"
+    className={cn(`mc-code-block-title`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 const CodeBlockActions = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-actions"
-      className={cn(`mc-code-block-actions`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-actions"
+    className={cn(`mc-code-block-actions`, className)}
+    {...props}
+  />
+);
 
 const CodeBlockCopyButton = ({
   value,
@@ -206,34 +200,32 @@ const CodeBlockContent = ({
   wrap?: boolean;
   lineNumbers?: boolean;
   startLine?: number;
-}) => {
-  return (
-    <pre
-      data-slot="code-block-content"
-      data-wrap={wrap || undefined}
-      data-numbered={lineNumbers || undefined}
-      dir="ltr"
-      tabIndex={0}
-      style={minecraftStyle(style, (__style) => ({
-        counterReset: `line ${startLine - 1}`,
-        ...__style,
-      }))}
-      className={cn(`mc-code-block-content`, className)}
-      {...props}
-    >
-      <code data-slot="code-block-code">
-        {lineNumbers && typeof children === "string"
-          ? children
-              .replace(/\n$/, "")
-              .split("\n")
-              .map((line, index) => (
-                <CodeBlockLine key={index}>{line}</CodeBlockLine>
-              ))
-          : selectable(children)}
-      </code>
-    </pre>
-  );
-};
+}) => (
+  <pre
+    data-slot="code-block-content"
+    data-wrap={wrap || undefined}
+    data-numbered={lineNumbers || undefined}
+    dir="ltr"
+    tabIndex={0}
+    style={minecraftStyle(style, (__style) => ({
+      counterReset: `line ${startLine - 1}`,
+      ...__style,
+    }))}
+    className={cn(`mc-code-block-content`, className)}
+    {...props}
+  >
+    <code data-slot="code-block-code">
+      {lineNumbers && typeof children === "string"
+        ? children
+            .replace(/\n$/, "")
+            .split("\n")
+            .map((line, index) => (
+              <CodeBlockLine key={index}>{line}</CodeBlockLine>
+            ))
+        : selectable(children)}
+    </code>
+  </pre>
+);
 
 const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
   const glyph = minecraftLoadingGlyphs[variant === "added" ? "+" : "-"];
@@ -287,17 +279,15 @@ const CodeBlockFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="code-block-footer"
-      className={cn(`mc-code-block-footer`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="code-block-footer"
+    className={cn(`mc-code-block-footer`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 export {
   CodeBlock,
