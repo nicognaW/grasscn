@@ -5,19 +5,22 @@ import {
   InputOTPSeparator,
 } from "@grasscn/web/ui/input-otp";
 import * as React from "react";
-export function InputOTPFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    native = q.has("native"),
-    state = q.get("state") ?? "normal",
-    [value, setValue] = React.useState(q.get("text") ?? ""),
-    [complete, setComplete] = React.useState(0),
-    ref = React.useRef<HTMLInputElement>(null),
-    [tag, setTag] = React.useState("");
+
+export const InputOTPFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const native = q.has("native");
+  const state = q.get("state") ?? "normal";
+  const [value, setValue] = React.useState(q.get("text") ?? "");
+  const [complete, setComplete] = React.useState(0);
+  const ref = React.useRef<HTMLInputElement>(null);
+  const [tag, setTag] = React.useState("");
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
   }, []);
+
   const root = (
     <InputOTP
       ref={ref}
@@ -27,7 +30,9 @@ export function InputOTPFixture() {
       maxLength={native ? 1 : 6}
       value={value}
       onChange={setValue}
-      onComplete={() => setComplete((n) => n + 1)}
+      onComplete={() => {
+        setComplete((n) => n + 1);
+      }}
       disabled={state === "disabled" || q.has("disabled")}
       readOnly={state.includes("readonly") || q.has("readOnly")}
       pattern={q.has("digits") ? "^[0-9]+$" : undefined}
@@ -46,8 +51,8 @@ export function InputOTPFixture() {
               style={
                 native
                   ? {
-                      width: Number(q.get("width") ?? 20) * scale,
                       height: Number(q.get("height") ?? 20) * scale,
+                      width: Number(q.get("width") ?? 20) * scale,
                     }
                   : undefined
               }
@@ -62,7 +67,8 @@ export function InputOTPFixture() {
       </InputOTPGroup>
     </InputOTP>
   );
-  if (native)
+
+  if (native) {
     return (
       <div
         style={{
@@ -76,6 +82,8 @@ export function InputOTPFixture() {
         {root}
       </div>
     );
+  }
+
   return (
     <form
       onSubmit={(e) => {
@@ -89,7 +97,9 @@ export function InputOTPFixture() {
           <button type="submit">Save code</button>
           <button
             type="button"
-            onClick={() => setTag(ref.current?.tagName ?? "")}
+            onClick={() => {
+              setTag(ref.current?.tagName ?? "");
+            }}
           >
             Read ref
           </button>
@@ -100,4 +110,4 @@ export function InputOTPFixture() {
       )}
     </form>
   );
-}
+};

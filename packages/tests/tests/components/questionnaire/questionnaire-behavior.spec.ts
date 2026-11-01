@@ -1,30 +1,32 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Questionnaire uses the official ordered items, validation and previous/next navigation", async ({
   page,
 }) => {
   await page.goto("/?component=questionnaire");
   await expect(page.locator("#progress")).toContainText("Question 1 of 3");
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.getByRole("alert")).toBeVisible();
   await expect(page.getByRole("radio", { name: /Creative/ })).toBeVisible();
   await page.getByRole("radio", { name: /Creative/ }).check();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.locator("#active")).toHaveText("features");
   await expect(page.getByRole("checkbox", { name: /Caves/ })).toBeVisible();
-  await page.getByRole("button", { name: "Previous", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Previous" }).click();
   await expect(page.getByRole("radio", { name: /Creative/ })).toBeChecked();
 });
+
 test("Questionnaire submits native values for single/multiple/freeform fields", async ({
   page,
 }) => {
   await page.goto("/?component=questionnaire");
   await page.getByRole("radio", { name: /Survival/ }).check();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await page.getByRole("checkbox", { name: /Caves/ }).check();
   await page.getByRole("checkbox", { name: /Villages/ }).check();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await page
-    .getByRole("textbox", { name: "World name", exact: true })
+    .getByRole("textbox", { exact: true, name: "World name" })
     .fill("兄弟们 Minecraft");
   await page.getByRole("button", { name: "Save world" }).click();
   await expect(page.locator("#result")).toHaveText(
@@ -36,6 +38,7 @@ test("Questionnaire submits native values for single/multiple/freeform fields", 
     ])
   );
 });
+
 test("Questionnaire freeform answer replaces presets, optional skip works, and spellcheck is off", async ({
   page,
 }) => {
@@ -44,13 +47,13 @@ test("Questionnaire freeform answer replaces presets, optional skip works, and s
   await expect(input).toHaveAttribute("spellcheck", "false");
   await expect(input).toHaveAttribute("autocorrect", "off");
   await input.fill("冒险");
-  await page.getByRole("button", { name: "Next", exact: true }).click();
-  await page.getByRole("button", { name: "Skip", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
+  await page.getByRole("button", { exact: true, name: "Skip" }).click();
   await expect(
-    page.getByRole("textbox", { name: "World name", exact: true })
+    page.getByRole("textbox", { exact: true, name: "World name" })
   ).toBeVisible();
   await page
-    .getByRole("textbox", { name: "World name", exact: true })
+    .getByRole("textbox", { exact: true, name: "World name" })
     .fill("世界");
   await page.getByRole("button", { name: "Save world" }).click();
   await expect(page.locator("#result")).toHaveText(
@@ -60,6 +63,7 @@ test("Questionnaire freeform answer replaces presets, optional skip works, and s
     ])
   );
 });
+
 test("Questionnaire forwards actual form refs and supports numbered shortcuts", async ({
   page,
 }) => {
@@ -79,7 +83,7 @@ test("Questionnaire controlled item changes and render-state callbacks preserve 
   await page.goto("/?component=questionnaire&controlled=1&customRender=1");
   await expect(page.locator("#custom-progress")).toHaveText("1/3");
   await page.getByRole("radio", { name: /Creative/ }).check();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(page.locator("#active")).toHaveText("features");
   await expect(page.getByRole("radio", { name: /Creative/ })).toBeVisible();
   await expect(page.getByRole("checkbox", { name: /Caves/ })).toHaveCount(0);
@@ -87,17 +91,19 @@ test("Questionnaire controlled item changes and render-state callbacks preserve 
   await expect(page.getByRole("checkbox", { name: /Caves/ })).toBeVisible();
   await expect(page.locator("#custom-progress")).toHaveText("2/3");
 });
+
 test("Questionnaire choice and navigation interactions play the original click exactly once", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).voices.push({
-        volume: this.volume,
-        rate: this.playbackRate,
         original: this.src.startsWith("data:audio/ogg;base64,"),
+        rate: this.playbackRate,
+        volume: this.volume,
       });
+
       return Promise.resolve();
     };
   });
@@ -106,9 +112,9 @@ test("Questionnaire choice and navigation interactions play the original click e
   await choice.hover();
   expect(await page.evaluate(() => (window as any).voices.length)).toBe(0);
   await choice.check();
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Next" }).click();
   expect(await page.evaluate(() => (window as any).voices)).toEqual([
-    { volume: 0.25, rate: 1, original: true },
-    { volume: 0.25, rate: 1, original: true },
+    { original: true, rate: 1, volume: 0.25 },
+    { original: true, rate: 1, volume: 0.25 },
   ]);
 });

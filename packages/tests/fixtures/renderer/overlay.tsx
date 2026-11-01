@@ -9,60 +9,77 @@ import * as Drawer from "@grasscn/web/ui/drawer";
 import { Input } from "@grasscn/web/ui/input";
 import * as Sheet from "@grasscn/web/ui/sheet";
 import * as React from "react";
-export function OverlayFixture() {
-  const p = new URLSearchParams(location.search),
-    scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-    component = p.get("component") ?? "sheet",
-    part = p.get("part") ?? "composition",
-    native = p.has("native"),
-    side = (p.get("side") ?? "right") as "top" | "right" | "bottom" | "left";
+
+export const OverlayFixture = () => {
+  const p = new URLSearchParams(location.search);
+  const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+  const component = p.get("component") ?? "sheet";
+  const part = p.get("part") ?? "composition";
+  const native = p.has("native");
+
+  const side = (p.get("side") ?? "right") as
+    | "top"
+    | "right"
+    | "bottom"
+    | "left";
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
     document.body.style.background = p.get("background") ?? "#202020";
   }, []);
-  const [open, setOpen] = React.useState(p.has("open") || native),
-    [count, setCount] = React.useState(0),
-    [tag, setTag] = React.useState("");
-  const [snap, setSnap] = React.useState<number | string | null>(0.5),
-    [drags, setDrags] = React.useState(0),
-    [releases, setReleases] = React.useState(0);
+
+  const [open, setOpen] = React.useState(p.has("open") || native);
+  const [count, setCount] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+
+  const [snap, setSnap] = React.useState<number | string | null>(0.5);
+  const [drags, setDrags] = React.useState(0);
+  const [releases, setReleases] = React.useState(0);
+
   const ref = React.useRef<HTMLDivElement>(null);
-  const width = Number(p.get("width") ?? 250),
-    height = Number(p.get("height") ?? 200),
-    x = Number(p.get("x") ?? 16) * scale,
-    y = Number(p.get("y") ?? 16) * scale;
+
+  const width = Number(p.get("width") ?? 250);
+  const height = Number(p.get("height") ?? 200);
+  const x = Number(p.get("x") ?? 16) * scale;
+  const y = Number(p.get("y") ?? 16) * scale;
+
   const geom = {
-    position: "fixed",
+    height: height * scale,
     inset: "auto",
     left: x,
-    top: y,
-    width: width * scale,
-    height: height * scale,
     padding: p.has("text") ? undefined : 0,
+    position: "fixed",
+    top: y,
     transform: "none",
+    width: width * scale,
     willChange: "auto",
   } as React.CSSProperties;
-  const isDrawer = component === "drawer",
-    Root = isDrawer ? Drawer.Drawer : Sheet.Sheet,
-    Trigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger,
-    Content = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent,
-    Close = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose,
-    Header = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader,
-    Footer = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter,
-    Title = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle,
-    Description = isDrawer ? Drawer.DrawerDescription : Sheet.SheetDescription;
+
+  const isDrawer = component === "drawer";
+  const Root = isDrawer ? Drawer.Drawer : Sheet.Sheet;
+  const Trigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger;
+  const Content = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent;
+  const Close = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose;
+  const Header = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader;
+  const Footer = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter;
+  const Title = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle;
+
+  const Description = isDrawer
+    ? Drawer.DrawerDescription
+    : Sheet.SheetDescription;
+
   const textProps =
     native && part !== "surface"
       ? {
           id: "subject",
           scale,
           style: {
-            position: "fixed",
+            height: height * scale,
             left: x,
+            position: "fixed",
             top: y,
             width: width * scale,
-            height: height * scale,
           } as React.CSSProperties,
           ...(p.has("wrapWidth")
             ? { maxWidth: Number(p.get("wrapWidth")) }
@@ -71,6 +88,7 @@ export function OverlayFixture() {
           "data-subject": "true",
         }
       : {};
+
   return (
     <>
       <Root
@@ -85,9 +103,9 @@ export function OverlayFixture() {
                     : side,
               ...(p.has("snap")
                 ? {
-                    snapPoints: [0.25, 0.5, 1],
-                    snapPoint: snap,
                     onSnapPointChange: setSnap,
+                    snapPoint: snap,
+                    snapPoints: [0.25, 0.5, 1],
                   }
                 : {}),
             }
@@ -98,6 +116,7 @@ export function OverlayFixture() {
             setDrags((v) => v + 1);
             setReleases((v) => v + 1);
           }
+
           setOpen(next);
         }}
       >
@@ -105,7 +124,7 @@ export function OverlayFixture() {
           render={p.has("asChild") ? <button /> : undefined}
           disabled={p.has("disabled")}
         >
-          {"Open panel"}
+          Open panel
         </Trigger>
         <Content
           ref={ref}
@@ -119,10 +138,10 @@ export function OverlayFixture() {
               : {})}
           {...(native && part === "surface"
             ? {
-                id: "subject",
-                "aria-label": "Native surface",
                 "aria-describedby": undefined,
+                "aria-label": "Native surface",
                 "data-subject": "true",
+                id: "subject",
               }
             : {})}
         >
@@ -173,12 +192,19 @@ export function OverlayFixture() {
                   <Button
                     id="snap-next"
                     scale={scale}
-                    onClick={() => setSnap(snap === 0.5 ? 1 : 0.5)}
+                    onClick={() => {
+                      setSnap(snap === 0.5 ? 1 : 0.5);
+                    }}
                   >
                     Change snap
                   </Button>
                 )}
-                <Button scale={scale} onClick={() => setCount((v) => v + 1)}>
+                <Button
+                  scale={scale}
+                  onClick={() => {
+                    setCount((v) => v + 1);
+                  }}
+                >
                   Save
                 </Button>
                 <Close>Cancel</Close>
@@ -187,10 +213,20 @@ export function OverlayFixture() {
           )}
         </Content>
       </Root>
-      <button id="external" onClick={() => setOpen((v) => !v)}>
+      <button
+        id="external"
+        onClick={() => {
+          setOpen((v) => !v);
+        }}
+      >
         External toggle
       </button>
-      <button id="read-ref" onClick={() => setTag(ref.current?.tagName ?? "")}>
+      <button
+        id="read-ref"
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
+      >
         Read ref
       </button>
       <output id="ref-tag">{tag}</output>
@@ -200,4 +236,4 @@ export function OverlayFixture() {
       <output id="releases">{releases}</output>
     </>
   );
-}
+};

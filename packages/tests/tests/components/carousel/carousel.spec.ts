@@ -11,12 +11,12 @@ test.beforeEach(({ page }) => {
   page.on("pageerror", (error) => errors.push(error.message));
 });
 
-test.afterEach(async ({ page, browser }, info) => {
+test.afterEach(({ page, browser }, info) => {
   writeFileSync(
     info.outputPath("runtime.json"),
     JSON.stringify({
-      pageErrors: runtimeErrors.get(page) ?? [],
       browser: browser.version(),
+      pageErrors: runtimeErrors.get(page) ?? [],
     })
   );
   expect(runtimeErrors.get(page)).toEqual([]);
@@ -110,12 +110,13 @@ test("Carousel native arrow activations play original asset once and canceled ac
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        pitch: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -124,7 +125,7 @@ test("Carousel native arrow activations play original asset once and canceled ac
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
   await page.locator("#next").click();
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { source: minecraftClickSound, volume: 0.25, pitch: 1 },
+    { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.goto("/?component=carousel&cancel=1");
   await page.locator("#next").click();

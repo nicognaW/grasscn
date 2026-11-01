@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import "./minecraft-trace.css";
@@ -9,19 +10,20 @@ import {
 } from "./collapsible";
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-function Trace({
+
+const Trace = ({
   className,
   scale = 2,
   style,
   ...props
 }: React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <MessageScale value={scale}>
       <div
         data-slot="trace"
-        className={cn(`mc-trace ${""}`, className)}
+        className={cn(`mc-trace`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -31,69 +33,74 @@ function Trace({
       />
     </MessageScale>
   );
-}
-function TraceLine({
+};
+
+const TraceLine = ({
   className,
   status,
   ...props
 }: React.ComponentProps<"span"> & {
   status?: "running" | "error" | "pending";
-}) {
+}) => {
   return (
     <span
       data-slot="trace-line"
       data-status={status}
-      className={cn(`mc-trace-line ${""}`, className)}
+      className={cn(`mc-trace-line`, className)}
       {...props}
     />
   );
-}
-function TraceIcon({
+};
+
+const TraceIcon = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="trace-icon"
       aria-hidden="true"
-      className={cn(`mc-trace-icon ${""}`, className)}
+      className={cn(`mc-trace-icon`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </span>
   );
-}
-function TraceTitle({
+};
+
+const TraceTitle = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="trace-title"
-      className={cn(`mc-trace-title ${""}`, className)}
+      className={cn(`mc-trace-title`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </span>
   );
-}
-function TraceDescription({
+};
+
+const TraceDescription = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="trace-description"
-      className={cn(`mc-trace-description ${""}`, className)}
+      className={cn(`mc-trace-description`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </span>
   );
-}
+};
+
 type TraceCollapsibleProps = Omit<
   React.ComponentProps<typeof Collapsible>,
   "render" | "open"
@@ -109,33 +116,36 @@ type TraceCollapsibleProps = Omit<
         >;
       }
   );
-function TraceCollapsible({
+
+const TraceCollapsible = ({
   className,
   scale: ownScale,
   ...props
-}: TraceCollapsibleProps) {
-  const inherited = React.useContext(MessageScale),
-    scale = ownScale ?? inherited;
+}: TraceCollapsibleProps) => {
+  const inherited = React.useContext(MessageScale);
+  const scale = ownScale ?? inherited;
+
   return (
     <MessageScale value={scale}>
       <Collapsible
         scale={scale}
         data-slot="trace-collapsible"
-        className={cn(`mc-trace-collapsible ${""}`, className)}
+        className={cn(`mc-trace-collapsible`, className)}
         {...props}
       />
     </MessageScale>
   );
-}
-function TraceCollapsibleTrigger({
+};
+
+const TraceCollapsibleTrigger = ({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof CollapsibleTrigger>, "render">) {
+}: Omit<React.ComponentProps<typeof CollapsibleTrigger>, "render">) => {
   return (
     <CollapsibleTrigger
       data-slot="trace-collapsible-trigger"
-      className={cn(`mc-trace-collapsible-trigger ${""}`, className)}
+      className={cn(`mc-trace-collapsible-trigger`, className)}
       {...props}
     >
       {children}
@@ -149,12 +159,13 @@ function TraceCollapsibleTrigger({
       </TraceIcon>
     </CollapsibleTrigger>
   );
-}
-function TraceCollapsibleContent({
+};
+
+const TraceCollapsibleContent = ({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof CollapsibleContent>, "render">) {
+}: Omit<React.ComponentProps<typeof CollapsibleContent>, "render">) => {
   return (
     <CollapsibleContent
       data-slot="trace-collapsible-content"
@@ -163,13 +174,14 @@ function TraceCollapsibleContent({
     >
       <div
         data-slot="trace-collapsible-content-inner"
-        className={cn(`mc-trace-collapsible-content-inner ${""}`, className)}
+        className={cn(`mc-trace-collapsible-content-inner`, className)}
       >
         <ChatChildren>{children}</ChatChildren>
       </div>
     </CollapsibleContent>
   );
-}
+};
+
 export {
   Trace,
   TraceLine,
@@ -180,4 +192,5 @@ export {
   TraceCollapsibleTrigger,
   TraceCollapsibleContent,
 };
+
 export type { TraceCollapsibleProps };

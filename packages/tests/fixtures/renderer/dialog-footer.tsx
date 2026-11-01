@@ -9,17 +9,20 @@ import {
   DialogFooter,
 } from "@grasscn/web/ui/dialog";
 import * as React from "react";
-export function DialogFooterFixture() {
-  const p = new URLSearchParams(location.search),
-    scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-    [count, setCount] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLDivElement>(null),
-    enabled = p.has("enabled")
-      ? true
-      : p.has("explicitFalse")
-        ? false
-        : undefined;
+
+export const DialogFooterFixture = () => {
+  const p = new URLSearchParams(location.search);
+  const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+  const [count, setCount] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const enabled = p.has("enabled")
+    ? true
+    : p.has("explicitFalse")
+      ? false
+      : undefined;
+
   return (
     <>
       <Dialog scale={scale}>
@@ -35,7 +38,12 @@ export function DialogFooterFixture() {
             data-forwarded="kept"
             className="custom-footer"
           >
-            <Button scale={scale} onClick={() => setCount((v) => v + 1)}>
+            <Button
+              scale={scale}
+              onClick={() => {
+                setCount((v) => v + 1);
+              }}
+            >
               Existing action
             </Button>
             {p.has("extra") && <Button scale={scale}>Another action</Button>}
@@ -44,7 +52,9 @@ export function DialogFooterFixture() {
       </Dialog>
       <button
         id="inspect-footer"
-        onClick={() => setTag(ref.current?.tagName ?? "none")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "none");
+        }}
       >
         Read ref
       </button>
@@ -52,4 +62,4 @@ export function DialogFooterFixture() {
       <output id="footer-events">{count}</output>
     </>
   );
-}
+};

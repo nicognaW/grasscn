@@ -6,8 +6,9 @@ test("Select respects cancelled opening and closing in uncontrolled mode", async
 }) => {
   await page.addInitScript(() => {
     (window as any).__selectVoices = 0;
-    HTMLMediaElement.prototype.play = function () {
-      (window as any).__selectVoices++;
+    HTMLMediaElement.prototype.play = function play() {
+      (window as any).__selectVoices += 1;
+
       return Promise.resolve();
     };
   });
@@ -26,22 +27,25 @@ test("Select respects cancelled opening and closing in uncontrolled mode", async
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   expect(await page.evaluate(() => (window as any).__selectVoices)).toBe(1);
 });
+
 test("Select keyboard navigation visits disabled options without committing them", async ({
   page,
 }) => {
   await page.goto("/?component=select&disabledIndex=1");
+
   const trigger = page.getByRole("combobox", {
-    name: "Game mode",
     exact: true,
+    name: "Game mode",
   });
+
   await expect(trigger).toHaveText("Survival");
   await trigger.focus();
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("option", { name: "Survival", exact: true })
+    page.getByRole("option", { exact: true, name: "Survival" })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
-  const disabled = page.getByRole("option", { name: "Creative", exact: true });
+  const disabled = page.getByRole("option", { exact: true, name: "Creative" });
   await expect(disabled).toBeFocused();
   await expect(disabled).toHaveAttribute("aria-disabled", "true");
   await page.keyboard.press("Enter");
@@ -51,7 +55,7 @@ test("Select keyboard navigation visits disabled options without committing them
   );
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("option", { name: "Adventure", exact: true })
+    page.getByRole("option", { exact: true, name: "Adventure" })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(trigger).toHaveText("Adventure");
@@ -61,13 +65,14 @@ test("Select keyboard navigation visits disabled options without committing them
   );
   await expect(page.getByRole("listbox")).toHaveCount(0);
 });
+
 test("Select pointer focus does not commit before activation, and Escape cancels", async ({
   page,
 }) => {
   await page.goto("/?component=select");
   const trigger = page.getByRole("combobox");
   await trigger.click();
-  const creative = page.getByRole("option", { name: "Creative", exact: true });
+  const creative = page.getByRole("option", { exact: true, name: "Creative" });
   await creative.hover();
   await expect(creative).toHaveAttribute("data-highlighted", "");
   await expect(page.getByLabel("Select changes", { exact: true })).toHaveText(
@@ -77,18 +82,19 @@ test("Select pointer focus does not commit before activation, and Escape cancels
   await expect(trigger).toHaveText("Survival");
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await page.getByRole("option", { name: "Creative", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Creative" }).click();
   await expect(trigger).toHaveText("Creative");
   await expect(
     page.getByLabel("Selected game mode", { exact: true })
   ).toHaveText("item-1");
 });
+
 test("Select preserves controlled acceptance, rejection and external updates", async ({
   page,
 }) => {
   await page.goto("/?component=select&controlled=1");
   await page.getByRole("combobox").click();
-  await page.getByRole("option", { name: "Creative", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Creative" }).click();
   await expect(page.getByRole("combobox")).toHaveText("Creative");
   await page.locator("#select-external").click();
   await expect(page.getByRole("combobox")).toHaveText("Adventure");
@@ -97,12 +103,13 @@ test("Select preserves controlled acceptance, rejection and external updates", a
   );
   await page.goto("/?component=select&controlled=1&reject=1");
   await page.getByRole("combobox").click();
-  await page.getByRole("option", { name: "Creative", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Creative" }).click();
   await expect(page.getByRole("combobox")).toHaveText("Survival");
   await expect(page.getByLabel("Select changes", { exact: true })).toHaveText(
     "1"
   );
 });
+
 test("Select supports an empty placeholder and semantic groups", async ({
   page,
 }) => {
@@ -110,33 +117,35 @@ test("Select supports an empty placeholder and semantic groups", async ({
   await expect(page.getByRole("combobox")).toHaveText("Choose game mode");
   await page.getByRole("combobox").click();
   await expect(
-    page.getByRole("group", { name: "Game modes", exact: true })
+    page.getByRole("group", { exact: true, name: "Game modes" })
   ).toBeVisible();
   await expect(page.locator('[data-slot="select-separator"]')).toBeVisible();
-  await page.getByRole("option", { name: "Adventure", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Adventure" }).click();
   await expect(page.getByRole("combobox")).toHaveText("Adventure");
 });
+
 test("Select participates in native forms and omits disabled values", async ({
   page,
 }) => {
   await page.goto("/?component=select&form=1&required=1&selectedIndex=-1");
-  await page.getByRole("button", { name: "Save mode", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Save mode" }).click();
   await expect(page.getByLabel("Submitted mode", { exact: true })).toHaveText(
     ""
   );
   await page.getByRole("combobox").click();
-  await page.getByRole("option", { name: "Creative", exact: true }).click();
-  await page.getByRole("button", { name: "Save mode", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Creative" }).click();
+  await page.getByRole("button", { exact: true, name: "Save mode" }).click();
   await expect(page.getByLabel("Submitted mode", { exact: true })).toHaveText(
     "item-1"
   );
   await page.goto("/?component=select&form=1&disabled=1");
   await expect(page.getByRole("combobox")).toBeDisabled();
-  await page.getByRole("button", { name: "Save mode", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Save mode" }).click();
   await expect(page.getByLabel("Submitted mode", { exact: true })).toHaveText(
     "missing"
   );
 });
+
 test("Select Trigger, Content and Item preserve refs and asChild composition", async ({
   page,
 }) => {
@@ -153,35 +162,37 @@ test("Select Trigger, Content and Item preserve refs and asChild composition", a
   );
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("option", { name: "Adventure", exact: true })
+    page.getByRole("option", { exact: true, name: "Adventure" })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("combobox")).toHaveText("Adventure");
 });
+
 test("Select uses the original cycle-button click for opening, while list selection and scrolling stay silent", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).selectVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).selectVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
-  const voices = () => page.evaluate(() => (window as any).selectVoices);
+  const voices = async () => page.evaluate(() => (window as any).selectVoices);
   await page.goto("/?component=select");
   await page.getByRole("combobox").hover();
   expect(await voices()).toEqual([]);
   await page.getByRole("combobox").click();
   await expect
     .poll(voices)
-    .toEqual([{ source: minecraftClickSound, volume: 0.25, rate: 1 }]);
-  await page.getByRole("option", { name: "Creative", exact: true }).hover();
-  await page.getByRole("option", { name: "Creative", exact: true }).click();
+    .toEqual([{ rate: 1, source: minecraftClickSound, volume: 0.25 }]);
+  await page.getByRole("option", { exact: true, name: "Creative" }).hover();
+  await page.getByRole("option", { exact: true, name: "Creative" }).click();
   expect(await voices()).toHaveLength(1);
   await page.goto("/?component=select-trigger&state=disabled");
   await page.getByRole("combobox").dispatchEvent("click");
@@ -193,12 +204,12 @@ test("Select uses the original cycle-button click for opening, while list select
   await viewport.hover();
   await page.mouse.wheel(0, 120);
   await expect
-    .poll(() => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => viewport.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   expect(await voices()).toEqual([]);
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("option", { name: "Option 9", exact: true })
+    page.getByRole("option", { exact: true, name: "Option 9" })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("combobox")).toHaveText("Option 9");

@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Marker asChild preserves link, keyboard activation, ref and original rich children", async ({
   page,
 }) => {
@@ -16,14 +17,17 @@ test("Marker asChild preserves link, keyboard activation, ref and original rich 
     "true"
   );
 });
+
 test("Marker native separator layouts and exported styling helper stay usable", async ({
   page,
 }) => {
   await page.goto("/?component=marker");
+
   const values = await page.locator("#separated").evaluate((e) => ({
-    before: getComputedStyle(e, "::before").backgroundImage,
     after: getComputedStyle(e, "::after").backgroundImage,
+    before: getComputedStyle(e, "::before").backgroundImage,
   }));
+
   expect(values.before.startsWith('url("data:image/png;base64,')).toBe(true);
   expect(values.before).toBe(values.after);
   expect(
@@ -32,6 +36,7 @@ test("Marker native separator layouts and exported styling helper stay usable", 
       .evaluate((e) => getComputedStyle(e, "::after").backgroundImage)
   ).toBe(values.after);
 });
+
 test("Marker CJK text is painted with original label glyphs", async ({
   page,
 }) => {

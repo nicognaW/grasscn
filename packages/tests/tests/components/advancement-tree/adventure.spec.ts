@@ -1,5 +1,3 @@
-import path from "node:path";
-
 import { test, expect } from "@grasscn/tests/test";
 
 test.use({
@@ -16,14 +14,19 @@ test("advancement tree selection, keyboard, details and panning", async ({
   page,
 }) => {
   await page.goto(
-    (process.env.GRASSCN_TREE_INSTALLED_URL ??
-      "http://127.0.0.1:5174/adventure.html") + "?scale=2&mask=1"
+    `${
+      process.env.GRASSCN_TREE_INSTALLED_URL ??
+      "http://127.0.0.1:5174/adventure.html"
+    }?scale=2&mask=1`
   );
-  const tree = page.getByRole("group", { name: "Advancement tree" }),
-    first = page.getByRole("button", {
-      name: "Milestone 0, completed",
-      exact: true,
-    });
+
+  const tree = page.getByRole("group", { name: "Advancement tree" });
+
+  const first = page.getByRole("button", {
+    exact: true,
+    name: "Milestone 0, completed",
+  });
+
   await first.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toContainText(
     "Milestone 0"
@@ -32,15 +35,17 @@ test("advancement tree selection, keyboard, details and panning", async ({
   await expect(first).toHaveAttribute("aria-pressed", "true");
   await first.press("ArrowRight");
   await expect(
-    page.getByRole("button", { name: "Milestone 1", exact: true })
+    page.getByRole("button", { exact: true, name: "Milestone 1" })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("button", { name: "Milestone 1", exact: true })
+    page.getByRole("button", { exact: true, name: "Milestone 1" })
   ).toHaveAttribute("aria-pressed", "true");
   await tree.focus();
-  const plane = page.locator(".mc-advancement-plane"),
-    before = await plane.getAttribute("style");
+
+  const plane = page.locator(".mc-advancement-plane");
+  const before = await plane.getAttribute("style");
+
   await tree.press("ArrowRight");
   expect(await plane.getAttribute("style")).not.toEqual(before);
   await tree.press("Home");
@@ -58,19 +63,19 @@ test("advancement roadmap is available in the local website", async ({
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.setViewportSize({ height: 1000, width: 1440 });
   await page.goto("http://127.0.0.1:5176/components/advancement-tree");
   await expect(
-    page.getByRole("heading", { name: "Advancement Tree", exact: true })
+    page.getByRole("heading", { exact: true, name: "Advancement Tree" })
   ).toBeVisible();
   await expect(
     page.getByRole("group", { name: "Release roadmap" })
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Mark incomplete", exact: true })
+    .getByRole("button", { exact: true, name: "Mark incomplete" })
     .click();
   await expect(
-    page.getByRole("button", { name: "Plan", exact: true })
+    page.getByRole("button", { exact: true, name: "Plan" })
   ).toHaveAttribute("data-completed", "false");
   expect(
     await page.evaluate(
@@ -78,8 +83,8 @@ test("advancement roadmap is available in the local website", async ({
     )
   ).toBe(true);
   await page.screenshot({
-    path: info.outputPath("advancement-tree-preview.png"),
     fullPage: false,
+    path: info.outputPath("advancement-tree-preview.png"),
   });
   expect(errors).toEqual([]);
 });

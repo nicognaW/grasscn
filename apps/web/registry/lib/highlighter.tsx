@@ -1,26 +1,23 @@
 import * as React from "react";
-import {
-  createHighlighterCore,
-  type GrammarState,
-  type HighlighterCore,
-} from "shiki/core";
+import { createHighlighterCore } from "shiki/core";
+import type { GrammarState, HighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
 // Add the languages you need. Each one loads the first time it is used.
 const languages = {
-  bash: () => import("shiki/langs/shellscript.mjs"),
-  css: () => import("shiki/langs/css.mjs"),
-  diff: () => import("shiki/langs/diff.mjs"),
-  html: () => import("shiki/langs/html.mjs"),
-  javascript: () => import("shiki/langs/javascript.mjs"),
-  json: () => import("shiki/langs/json.mjs"),
-  jsx: () => import("shiki/langs/jsx.mjs"),
-  markdown: () => import("shiki/langs/markdown.mjs"),
-  python: () => import("shiki/langs/python.mjs"),
-  sql: () => import("shiki/langs/sql.mjs"),
-  tsx: () => import("shiki/langs/tsx.mjs"),
-  typescript: () => import("shiki/langs/typescript.mjs"),
-  yaml: () => import("shiki/langs/yaml.mjs"),
+  bash: async () => import("shiki/langs/shellscript.mjs"),
+  css: async () => import("shiki/langs/css.mjs"),
+  diff: async () => import("shiki/langs/diff.mjs"),
+  html: async () => import("shiki/langs/html.mjs"),
+  javascript: async () => import("shiki/langs/javascript.mjs"),
+  json: async () => import("shiki/langs/json.mjs"),
+  jsx: async () => import("shiki/langs/jsx.mjs"),
+  markdown: async () => import("shiki/langs/markdown.mjs"),
+  python: async () => import("shiki/langs/python.mjs"),
+  sql: async () => import("shiki/langs/sql.mjs"),
+  tsx: async () => import("shiki/langs/tsx.mjs"),
+  typescript: async () => import("shiki/langs/typescript.mjs"),
+  yaml: async () => import("shiki/langs/yaml.mjs"),
 };
 
 const aliases: Record<string, keyof typeof languages> = {
@@ -36,9 +33,8 @@ const aliases: Record<string, keyof typeof languages> = {
 };
 
 const minecraftTheme = {
+  colors: { "editor.background": "#000000", "editor.foreground": "#FFFFFF" },
   name: "minecraft-native",
-  type: "dark" as const,
-  colors: { "editor.foreground": "#FFFFFF", "editor.background": "#000000" },
   settings: [
     { scope: ["comment"], settings: { foreground: "#555555" } },
     { scope: ["keyword", "storage"], settings: { foreground: "#FF55FF" } },
@@ -53,6 +49,7 @@ const minecraftTheme = {
     },
     { scope: ["invalid"], settings: { foreground: "#FF5555" } },
   ],
+  type: "dark" as const,
 };
 
 const nativePalette = [
@@ -73,16 +70,22 @@ const nativePalette = [
   "#FFFF55",
   "#FFFFFF",
 ];
+
 function nativeTokenColor(value?: string) {
-  if (!value || !/^#[0-9a-f]{6}$/i.test(value)) return "#FFFFFF";
-  const rgb = [1, 3, 5].map((i) => parseInt(value.slice(i, i + 2), 16));
+  if (!value || !/^#[0-9a-f]{6}$/i.test(value)) {
+    return "#FFFFFF";
+  }
+
+  const rgb = [1, 3, 5].map((i) => Number.parseInt(value.slice(i, i + 2), 16));
+
   return nativePalette.reduce((best, color) => {
     const distance = (c: string) =>
       [1, 3, 5].reduce(
         (sum, index, i) =>
-          sum + (parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
+          sum + (Number.parseInt(c.slice(index, index + 2), 16) - rgb[i]) ** 2,
         0
       );
+
     return distance(color) < distance(best) ? color : best;
   }, nativePalette[0]);
 }
@@ -91,9 +94,9 @@ let highlighter: Promise<HighlighterCore> | undefined;
 
 function getHighlighter() {
   highlighter ??= createHighlighterCore({
-    themes: [minecraftTheme],
-    langs: [],
     engine: createJavaScriptRegexEngine({ forgiving: true }),
+    langs: [],
+    themes: [minecraftTheme],
   });
 
   return highlighter;
@@ -134,10 +137,10 @@ export async function loadHighlighter(language: string) {
     highlight(code: string, state?: GrammarState) {
       const tokenize = (text: string) =>
         shiki.codeToTokens(text, {
-          lang,
-          theme: "minecraft-native",
           defaultColor: false,
           grammarState: state,
+          lang,
+          theme: "minecraft-native",
         }).tokens;
 
       // ANSI has no grammar state, so each line is tokenized on its own and

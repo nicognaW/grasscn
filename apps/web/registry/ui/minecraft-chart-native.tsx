@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
 
@@ -11,19 +12,28 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
+
 const f = Math.fround;
+
 const widthOf = (value: string) =>
-  Array.from(value).reduce(
-    (n, c) => n + (minecraftGlyphs[c.charCodeAt(0) - 32]?.[2] ?? 6),
-    0
-  );
+  [...value].reduce((n, c) => {
+    const codePoint = c.codePointAt(0);
+
+    if (codePoint === undefined) {
+      throw new Error("Expected a non-empty chart glyph character");
+    }
+
+    return n + (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
+  }, 0);
+
 const cssColor = (value: number) =>
-  `#${(value & 0xffffff).toString(16).padStart(6, "0")}`;
-function NativeChartText({
+  `#${(value & 0xff_ff_ff).toString(16).padStart(6, "0")}`;
+
+const NativeChartText = ({
   text,
   x,
   y,
-  color = 0xffffff,
+  color = 0xff_ff_ff,
   shadow = true,
   scale,
 }: {
@@ -33,46 +43,51 @@ function NativeChartText({
   color?: number;
   shadow?: boolean;
   scale: 1 | 2 | 3;
-}) {
-  const ink = cssColor(color),
-    shade = shadow
-      ? cssColor(
-          ((((color >> 16) & 255) >> 2) << 16) |
-            ((((color >> 8) & 255) >> 2) << 8) |
-            ((color & 255) >> 2)
-        )
-      : "transparent";
+}) => {
+  const ink = cssColor(color);
+
+  const shade = shadow
+    ? cssColor(
+        ((((color >> 16) & 255) >> 2) << 16) |
+          ((((color >> 8) & 255) >> 2) << 8) |
+          ((color & 255) >> 2)
+      )
+    : "transparent";
+
   return (
     <span
       className="mc-chart-text"
       style={
         {
-          left: x * scale,
-          top: y * scale,
           "--mc-ink": ink,
           "--mc-shadow": shade,
           color: ink,
+          left: x * scale,
+          top: y * scale,
         } as React.CSSProperties
       }
     >
-      {/[^\x00-\x7f]/.test(text) ? (
+      {/[^\x00-\x7F]/.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />
       ) : (
         <MinecraftText>{text}</MinecraftText>
       )}
     </span>
   );
-}
+};
+
 /** Minecraft's frame-duration gradient; input is in nanoseconds. */
 export function chartFpsColor(nanos: number) {
-  const ms = Math.max(0, Math.min(56, nanos / 1e6)),
-    t = f(ms < 28 ? ms / 28 : (ms - 28) / 28),
-    a = ms < 28 ? [0, 255, 0] : [255, 255, 0],
-    b = ms < 28 ? [255, 255, 0] : [255, 0, 0];
+  const ms = Math.max(0, Math.min(56, nanos / 1e6));
+  const t = f(ms < 28 ? ms / 28 : (ms - 28) / 28);
+  const a = ms < 28 ? [0, 255, 0] : [255, 255, 0];
+  const b = ms < 28 ? [255, 255, 0] : [255, 0, 0];
+
   return `rgb(${a.map((v, i) => v + Math.floor(f(t * (b[i] - v)))).join(",")})`;
 }
+
 /** Decoration inside a Recharts BarChart. The bar shape supplies engine geometry. */
-function ChartFpsFrame({
+const ChartFpsFrame = ({
   labels = [],
   guides,
   framerateLimit = 260,
@@ -80,115 +95,128 @@ function ChartFpsFrame({
   labels?: readonly string[];
   guides?: readonly { label: string; value: number }[];
   framerateLimit?: number;
-}) {
+}) => {
   const { entries, scale } = useChartGeometry();
-  const chartWidth = useChartWidth() ?? 0,
-    chartHeight = useChartHeight() ?? 0;
+
+  const chartWidth = useChartWidth() ?? 0;
+  const chartHeight = useChartHeight() ?? 0;
+
   const width = chartWidth / scale;
   const bars = entries.filter((item) => item.kind === "bar");
   const host = React.useRef<HTMLDivElement>(null);
   const yScale = useYAxisScale();
   const presentation = guides ? { guides } : undefined;
+
   const line = (y: number, color: string, key: string) => (
+    <span
+      key={key}
+      className="mc-chart-rect"
+      style={{
+        background: color,
+        height: scale,
+        left: 0,
+        top: y * scale,
+        width: width * scale,
+      }}
+    />
+  );
+
+  const shade = (text: string, y: number) => (
+    <React.Fragment key={text}>
       <span
-        key={key}
         className="mc-chart-rect"
         style={{
-          left: 0,
+          background: "rgba(80,80,80,0.5647058823529412)",
+          height: 9 * scale,
+          left: scale,
           top: y * scale,
-          width: width * scale,
-          height: scale,
-          background: color,
+          width: (widthOf(text) + 1) * scale,
         }}
       />
-    ),
-    shade = (text: string, y: number) => (
-      <React.Fragment key={text}>
-        <span
-          className="mc-chart-rect"
-          style={{
-            left: scale,
-            top: y * scale,
-            width: (widthOf(text) + 1) * scale,
-            height: 9 * scale,
-            background: "rgba(80,80,80,0.5647058823529412)",
-          }}
-        />
-        {bars.map((bar, i) => {
-          const h = Math.round(bar.height / scale),
-            baseline = Math.round((bar.y + bar.height) / scale),
-            top = Math.max(y, baseline - h),
-            bottom = Math.min(y + 9, baseline),
-            left = Math.round(bar.x / scale),
-            width = Math.min(
-              Math.round(bar.width / scale),
-              widthOf(text) + 2 - left
-            );
-          if (width <= 0 || bottom <= top) return null;
-          const rgb = chartColorChannels(bar.fill, host.current),
-            mixed = rgb.map((v) =>
-              Math.round((80 * 144) / 255 + (v * 111) / 255)
-            );
-          return (
-            <span
-              key={i}
-              className="mc-chart-rect"
-              style={{
-                left: left * scale,
-                top: top * scale,
-                width: width * scale,
-                height: (bottom - top) * scale,
-                background: `rgb(${mixed.join(",")})`,
-              }}
-            />
-          );
-        })}
-        <NativeChartText
-          text={text}
-          x={2}
-          y={y + 1}
-          color={0xe0e0e0}
-          shadow={false}
-          scale={scale}
-        />
-      </React.Fragment>
-    );
+      {bars.map((bar, i) => {
+        const h = Math.round(bar.height / scale);
+        const baseline = Math.round((bar.y + bar.height) / scale);
+        const top = Math.max(y, baseline - h);
+        const bottom = Math.min(y + 9, baseline);
+        const left = Math.round(bar.x / scale);
+
+        const width = Math.min(
+          Math.round(bar.width / scale),
+          widthOf(text) + 2 - left
+        );
+
+        if (width <= 0 || bottom <= top) {
+          return null;
+        }
+
+        const rgb = chartColorChannels(bar.fill, host.current);
+
+        const mixed = rgb.map((v) =>
+          Math.round((80 * 144) / 255 + (v * 111) / 255)
+        );
+
+        return (
+          <span
+            key={i}
+            className="mc-chart-rect"
+            style={{
+              background: `rgb(${mixed.join(",")})`,
+              height: (bottom - top) * scale,
+              left: left * scale,
+              top: top * scale,
+              width: width * scale,
+            }}
+          />
+        );
+      })}
+      <NativeChartText
+        text={text}
+        x={2}
+        y={y + 1}
+        color={0xe0_e0_e0}
+        shadow={false}
+        scale={scale}
+      />
+    </React.Fragment>
+  );
+
   return (
     <foreignObject
       x={0}
       y={0}
       width={chartWidth}
       height={chartHeight}
-      style={{ pointerEvents: "none", overflow: "visible" }}
+      style={{ overflow: "visible", pointerEvents: "none" }}
     >
       <div
         ref={host}
         data-slot="chart-fps-frame"
         data-mc-ready={bars.length > 0}
-        style={{ position: "relative", width: chartWidth, height: chartHeight }}
+        style={{ height: chartHeight, position: "relative", width: chartWidth }}
       >
         <span
           className="mc-chart-rect"
           style={{
+            background: "rgba(80,80,80,0.5647058823529412)",
+            height: 60 * scale,
             left: 0,
             top: 9 * scale,
             width: width * scale,
-            height: 60 * scale,
-            background: "rgba(80,80,80,0.5647058823529412)",
           }}
         />
         {bars.map((bar, i) => {
           const h = Math.round(bar.height / scale);
+
           return (
             <span
               key={i}
               className="mc-chart-rect"
               style={{
+                background: bar.fill,
+                height: h * scale,
                 left: Math.round(bar.x / scale) * scale,
                 top: (Math.round((bar.y + bar.height) / scale) - h) * scale,
                 width: Math.round(bar.width / scale) * scale,
-                height: h * scale,
-                background: bar.fill,
               }}
             />
           );
@@ -198,21 +226,21 @@ function ChartFpsFrame({
         <span
           className="mc-chart-rect"
           style={{
+            background: "white",
+            height: 59 * scale,
             left: 0,
             top: 10 * scale,
             width: scale,
-            height: 59 * scale,
-            background: "white",
           }}
         />
         <span
           className="mc-chart-rect"
           style={{
+            background: "white",
+            height: 59 * scale,
             left: (width - 1) * scale,
             top: 10 * scale,
             width: scale,
-            height: 59 * scale,
-            background: "white",
           }}
         />
         {labels.map((text, i) => (
@@ -227,7 +255,7 @@ function ChartFpsFrame({
                   : width - widthOf(text) - 2
             }
             y={0}
-            color={0xe0e0e0}
+            color={0xe0_e0_e0}
             scale={scale}
           />
         ))}
@@ -237,9 +265,10 @@ function ChartFpsFrame({
               9,
               Math.min(
                 68,
-                Math.round(Number(yScale?.(guide.value) ?? 9 * scale) / scale)
+                Math.round((yScale?.(guide.value) ?? 9 * scale) / scale)
               )
             );
+
             return (
               <React.Fragment key={index}>
                 {line(y, "white", `guide-${index}`)}
@@ -267,20 +296,30 @@ function ChartFpsFrame({
       </div>
     </foreignObject>
   );
-}
+};
+
 export function chartProfilerColor(name: string) {
   let hash = 0;
-  for (let i = 0; i < name.length; i++)
-    hash = (Math.imul(hash, 31) + name.charCodeAt(i)) | 0;
-  return cssColor(((hash & 0xaaaaaa) + 0x444444) & 0xffffff);
+
+  for (let i = 0; i < name.length; i += 1) {
+    hash = Math.trunc(Math.imul(hash, 31) + name.charCodeAt(i));
+  }
+
+  return cssColor(((hash & 0xaa_aa_aa) + 0x44_44_44) & 0xff_ff_ff);
 }
-const sin = new Float32Array(65536);
-for (let i = 0; i < sin.length; i++)
-  sin[i] = Math.sin((i * Math.PI * 2) / 65536);
+
+const sin = new Float32Array(65_536);
+
+for (let i = 0; i < sin.length; i += 1) {
+  sin[i] = Math.sin((i * Math.PI * 2) / 65_536);
+}
+
 const nativeSin = (angle: number) =>
-    sin[Math.trunc(angle * 10430.378350470453) & 65535],
-  nativeCos = (angle: number) =>
-    sin[Math.trunc(angle * 10430.378350470453 + 16384) & 65535];
+  sin[Math.trunc(angle * 10_430.378350470453) & 65_535];
+
+const nativeCos = (angle: number) =>
+  sin[Math.trunc(angle * 10_430.378350470453 + 16_384) & 65_535];
+
 function paintProfiler(
   canvas: HTMLCanvasElement,
   data: readonly {
@@ -295,36 +334,60 @@ function paintProfiler(
   const surface = document.createElement("canvas");
   surface.width = 260 * scale;
   surface.height = 114 * scale;
+
   const gl = surface.getContext("webgl2", {
-    antialias: false,
     alpha: true,
+    antialias: false,
     premultipliedAlpha: false,
     preserveDrawingBuffer: true,
   });
-  if (!gl || gl.isContextLost()) return false;
+
+  if (!gl || gl.isContextLost()) {
+    return false;
+  }
+
   try {
     const shader = (type: number, source: string) => {
       const s = gl.createShader(type);
-      if (!s) return null;
+
+      if (!s) {
+        return null;
+      }
+
       gl.shaderSource(s, source);
       gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) return null;
+
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        return null;
+      }
+
       return s;
     };
+
     const vs = shader(
-        gl.VERTEX_SHADER,
-        "#version 300 es\nin vec2 position;in vec3 color;out vec3 vColor;uniform vec2 extent;void main(){gl_Position=vec4(position*vec2(2.0,-2.0)/extent+vec2(-1.0,1.0),0.0,1.0);vColor=color;}"
-      ),
-      fs = shader(
-        gl.FRAGMENT_SHADER,
-        "#version 300 es\nprecision highp float;in vec3 vColor;out vec4 outColor;void main(){outColor=vec4(vColor,1.0);}"
-      ),
-      program = gl.createProgram()!;
-    if (!program || !vs || !fs) return false;
+      gl.VERTEX_SHADER,
+      "#version 300 es\nin vec2 position;in vec3 color;out vec3 vColor;uniform vec2 extent;void main(){gl_Position=vec4(position*vec2(2.0,-2.0)/extent+vec2(-1.0,1.0),0.0,1.0);vColor=color;}"
+    );
+
+    const fs = shader(
+      gl.FRAGMENT_SHADER,
+      "#version 300 es\nprecision highp float;in vec3 vColor;out vec4 outColor;void main(){outColor=vec4(vColor,1.0);}"
+    );
+
+    const program = gl.createProgram();
+
+    if (!program || !vs || !fs) {
+      return false;
+    }
+
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return false;
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      return false;
+    }
+
     gl.useProgram(program);
     gl.viewport(0, 0, surface.width, surface.height);
     gl.clearColor(0, 0, 0, 0);
@@ -332,27 +395,32 @@ function paintProfiler(
     gl.disable(gl.DEPTH_TEST);
     gl.disable(gl.BLEND);
     gl.disable(gl.CULL_FACE);
-    const tops: number[] = [],
-      sides: number[] = [];
+
+    const tops: number[] = [];
+    const sides: number[] = [];
 
     for (const item of data) {
-      const start = item.start,
-        percentage = item.sweep,
-        steps = Math.floor(Math.abs(percentage) / 4) + 1,
-        rgb = chartColorChannels(item.fill, canvas),
-        dark = rgb.map((v) => Math.floor((v * 128) / 255));
+      const { start } = item;
+      const percentage = item.sweep;
+      const steps = Math.floor(Math.abs(percentage) / 4) + 1;
+      const rgb = chartColorChannels(item.fill, canvas);
+      const dark = rgb.map((v) => Math.floor((v * 128) / 255));
+
       const point = (i: number) => {
         const a = f(
           ((start + (percentage * i) / steps) * 6.2831854820251465) / 100
         );
+
         return [f(nativeSin(a) * 105), f(f(nativeCos(a) * 105) * 0.5)];
       };
+
       const vertex = (target: number[], p: number[], ink: number[]) =>
         target.push(
           f(f(p[0] * scale) + 130 * scale),
           f(f(p[1] * scale) + 52 * scale),
           ...ink.map((v) => v / 255)
         );
+
       const triangle = (
         target: number[],
         a: number[],
@@ -364,22 +432,32 @@ function paintProfiler(
         vertex(target, b, ink);
         vertex(target, c, ink);
       };
-      for (let i = steps; i > 0; i--)
+
+      for (let i = steps; i > 0; i -= 1) {
         triangle(tops, [0, 0], point(i), point(i - 1), rgb);
-      for (let i = steps; i > 0; i--) {
-        const a = point(i),
-          b = point(i - 1);
-        if (f(f(a[1] + b[1]) / 2) < 0) continue;
-        const ab = [a[0], f(a[1] + 10)],
-          bb = [b[0], f(b[1] + 10)];
+      }
+
+      for (let i = steps; i > 0; i -= 1) {
+        const a = point(i);
+        const b = point(i - 1);
+
+        if (f(f(a[1] + b[1]) / 2) < 0) {
+          continue;
+        }
+
+        const ab = [a[0], f(a[1] + 10)];
+        const bb = [b[0], f(b[1] + 10)];
+
         triangle(sides, a, ab, bb, dark);
         triangle(sides, a, bb, b, dark);
       }
     }
-    const buffer = gl.createBuffer()!;
+
+    const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     const values = new Float32Array([...tops, ...sides]);
     gl.bufferData(gl.ARRAY_BUFFER, values, gl.STATIC_DRAW);
+
     for (const [name, size, offset] of [
       ["position", 2, 0],
       ["color", 3, 8],
@@ -388,6 +466,7 @@ function paintProfiler(
       gl.enableVertexAttribArray(loc);
       gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 20, offset);
     }
+
     gl.uniform2f(
       gl.getUniformLocation(program, "extent"),
       surface.width,
@@ -398,9 +477,17 @@ function paintProfiler(
     gl.deleteProgram(program);
     gl.deleteShader(vs);
     gl.deleteShader(fs);
-    if (gl.isContextLost()) return false;
+
+    if (gl.isContextLost()) {
+      return false;
+    }
+
     const context = canvas.getContext("2d");
-    if (!context) return false;
+
+    if (!context) {
+      return false;
+    }
+
     canvas.width = surface.width;
     canvas.height = surface.height;
     const pixels = new Uint8Array(surface.width * surface.height * 4);
@@ -413,10 +500,15 @@ function paintProfiler(
       gl.UNSIGNED_BYTE,
       pixels
     );
-    if (gl.isContextLost()) return false;
-    const rgba = new Uint8ClampedArray(pixels.length),
-      stride = surface.width * 4;
-    for (let y = 0; y < surface.height; y++)
+
+    if (gl.isContextLost()) {
+      return false;
+    }
+
+    const rgba = new Uint8ClampedArray(pixels.length);
+    const stride = surface.width * 4;
+
+    for (let y = 0; y < surface.height; y += 1) {
       rgba.set(
         pixels.subarray(
           (surface.height - 1 - y) * stride,
@@ -424,93 +516,125 @@ function paintProfiler(
         ),
         y * stride
       );
+    }
+
     context.putImageData(
       new ImageData(rgba, surface.width, surface.height),
       0,
       0
     );
+
     return true;
-  } catch (error) {
-    if (gl.isContextLost()) return false;
+  } catch {
+    if (gl.isContextLost()) {
+      return false;
+    }
+
     return false;
   } finally {
     gl.getExtension("WEBGL_lose_context")?.loseContext();
   }
 }
+
 /** Header, legend and batched pixel surface for Recharts Pie shapes. */
-function ChartProfilerFrame({
+const ChartProfilerFrame = ({
   rootName = "root",
   globalPercentage = 100,
 }: {
   rootName?: string;
   globalPercentage?: number;
-}) {
+}) => {
   const { entries, scale, revision } = useChartGeometry();
   const sectors = entries.filter((item) => item.kind === "sector");
   const key = JSON.stringify(sectors);
+
   const data = React.useMemo(
     () =>
       sectors.map((item) => ({
+        fill: item.fill,
+        globalPercentage: item.globalPercentage,
         name: item.name,
         percentage: item.percent * 100,
-        sweep: ((item.endAngle - item.startAngle) / 360) * 100,
         start: ((item.startAngle + 90) / 360) * 100,
-        globalPercentage: item.globalPercentage,
-        fill: item.fill,
+        sweep: ((item.endAngle - item.startAngle) / 360) * 100,
       })),
     [key]
   );
+
   const unit = sectors[0] ? sectors[0].outerRadius / 105 : scale;
-  const width = useChartWidth() ?? 0,
-    height = useChartHeight() ?? 0;
-  const canvas = React.useRef<HTMLCanvasElement>(null),
-    [ready, setReady] = React.useState(false);
+
+  const width = useChartWidth() ?? 0;
+  const height = useChartHeight() ?? 0;
+
+  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = React.useState(false);
+
   React.useLayoutEffect(() => {
-    if (!data.length) return;
-    let disposed = false,
-      frame = 0;
+    if (!data.length) {
+      return;
+    }
+
+    let disposed = false;
+    let frame = 0;
+
     setReady(false);
+
     const render = () => {
-      if (disposed) return;
-      if (canvas.current && paintProfiler(canvas.current, data, unit))
+      if (disposed) {
+        return;
+      }
+
+      if (canvas.current && paintProfiler(canvas.current, data, unit)) {
         setReady(true);
-      else frame = requestAnimationFrame(render);
+      } else {
+        frame = requestAnimationFrame(render);
+      }
     };
+
     render();
+
     return () => {
       disposed = true;
       cancelAnimationFrame(frame);
     };
   }, [data, unit, revision]);
-  if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0))
+
+  if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0)) {
     throw new Error("Profiler percentages must be finite and nonnegative");
+  }
+
   const percent = (v: number) => `${v.toFixed(2)}%`;
-  if (!sectors.length) return null;
+
+  if (!sectors.length) {
+    return null;
+  }
+
   const sector = sectors[0];
+
   return (
     <foreignObject
       x={0}
       y={0}
       width={width}
       height={height}
-      style={{ pointerEvents: "none", overflow: "visible" }}
+      style={{ overflow: "visible", pointerEvents: "none" }}
     >
       <div
         data-slot="chart-profiler-frame"
         data-mc-ready={ready}
-        style={{ position: "relative", width, height }}
+        style={{ height, position: "relative", width }}
       >
         <canvas
           key="profiler-2d-surface"
           ref={canvas}
           aria-hidden="true"
           style={{
-            position: "absolute",
-            left: sector.cx - 130 * unit,
-            top: sector.cy - 52 * unit,
-            width: 260 * unit,
             height: 114 * unit,
             imageRendering: "pixelated",
+            left: sector.cx - 130 * unit,
+            position: "absolute",
+            top: sector.cy - 52 * unit,
+            width: 260 * unit,
           }}
         />
         <NativeChartText text={rootName} x={5} y={5} scale={scale} />
@@ -521,11 +645,13 @@ function ChartProfilerFrame({
           scale={scale}
         />
         {data.map((item, i) => {
-          const rgb = chartColorChannels(item.fill, canvas.current),
-            color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
-          const local = percent(item.percentage),
-            global = percent(item.globalPercentage ?? item.percentage),
-            y = 134 + i * 9;
+          const rgb = chartColorChannels(item.fill, canvas.current);
+          const color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+
+          const local = percent(item.percentage);
+          const global = percent(item.globalPercentage ?? item.percentage);
+          const y = 134 + i * 9;
+
           return (
             <React.Fragment key={i}>
               <NativeChartText
@@ -555,5 +681,6 @@ function ChartProfilerFrame({
       </div>
     </foreignObject>
   );
-}
+};
+
 export { ChartFpsFrame, ChartProfilerFrame };

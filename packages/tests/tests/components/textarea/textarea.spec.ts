@@ -26,9 +26,11 @@ test("Textarea keeps its native ref, uncontrolled form data and reset repaint", 
   await page.goto("/?component=textarea&text=Hello&uncontrolled=1");
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-ready", "true");
+
   const original = await area.evaluate((node) =>
     (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
   );
+
   await area.fill("New\nvalue");
   expect(
     await page
@@ -38,7 +40,7 @@ test("Textarea keeps its native ref, uncontrolled form data and reset repaint", 
   await page.locator("#reset").click();
   await expect(area).toHaveValue("Hello");
   await expect
-    .poll(() =>
+    .poll(async () =>
       area.evaluate((node) =>
         (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
       )
@@ -81,7 +83,7 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
 }) => {
   const text = Array.from({ length: 30 }, (_, i) => `Line ${i + 1}`).join("\n");
   await page.goto(
-    `/?${new URLSearchParams({ component: "textarea", text, width: "206", height: "80" })}`
+    `/?${new URLSearchParams({ component: "textarea", height: "80", text, width: "206" })}`
   );
   const area = page.getByRole("textbox", { name: "Test textarea" });
   await expect(area).toHaveAttribute("data-mc-scrollbar", "true");
@@ -91,7 +93,7 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 50);
   await page.mouse.up();
   await expect
-    .poll(() => area.evaluate((node) => node.scrollTop))
+    .poll(async () => area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await area.evaluate((node) => {
     node.scrollTop = 0;
@@ -99,6 +101,6 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   await area.hover();
   await page.mouse.wheel(0, 100);
   await expect
-    .poll(() => area.evaluate((node) => node.scrollTop))
+    .poll(async () => area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
 });

@@ -11,11 +11,13 @@ export function compare(expected: PNG, actual: PNG) {
     expected.height,
   ]);
   let mismatchedPixels = 0;
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += +mismatch;
     diff.data.set(
       mismatch
@@ -29,66 +31,71 @@ export function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
 
 export function nativeTextTests(
   component: "badge" | "typography" | "breadcrumb" | "kbd"
 ) {
   test.describe.configure({ mode: "parallel" });
+
   const directories =
     component === "badge"
       ? ["tests/reference/tooltip"]
       : component === "kbd"
         ? ["tests/reference", "tests/reference/button-cjk"]
         : ["tests/reference/label"];
+
   test(`${component} pixel comparator detects a changed pixel`, () => {
     const manifest = JSON.parse(
-        readFileSync(
-          pixelPerfectFile(`${directories[0]}/manifest.json`),
-          "utf8"
-        )
-      ),
-      expected = PNG.sync.read(
-        readFileSync(
-          pixelPerfectFile(
-            `${directories[0]}/captures/${manifest.cases[0].name}`
-          )
-        )
-      ),
-      mutated = PNG.sync.read(PNG.sync.write(expected));
+      readFileSync(pixelPerfectFile(`${directories[0]}/manifest.json`), "utf-8")
+    );
+
+    const expected = PNG.sync.read(
+      readFileSync(
+        pixelPerfectFile(`${directories[0]}/captures/${manifest.cases[0].name}`)
+      )
+    );
+
+    const mutated = PNG.sync.read(PNG.sync.write(expected));
+
     mutated.data[0] ^= 1;
     expect(compare(expected, mutated).mismatchedPixels).toBe(1);
   });
+
   for (const directory of directories) {
     const manifest = JSON.parse(
-        readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
-      ),
-      parts =
-        component === "typography"
-          ? [
-              "default",
-              "h1",
-              "h2",
-              "h3",
-              "h4",
-              "p",
-              "small",
-              "blockquote",
-              "code",
-              "lead",
-              "large",
-              "muted",
-            ]
-          : component === "breadcrumb"
-            ? ["link", "page"]
-            : ["default"];
-    for (const part of parts)
-      for (const c of manifest.cases)
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+    );
+
+    const parts =
+      component === "typography"
+        ? [
+            "default",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "p",
+            "small",
+            "blockquote",
+            "code",
+            "lead",
+            "large",
+            "muted",
+          ]
+        : component === "breadcrumb"
+          ? ["link", "page"]
+          : ["default"];
+
+    for (const part of parts) {
+      for (const c of manifest.cases) {
         test(`${component} ${part} native pixels: ${c.name}`, async ({
           page,
         }, info) => {
           await page.setViewportSize({ width: 1536, height: 900 });
+
           const params = new URLSearchParams({
             component,
             native: "1",
@@ -104,6 +111,7 @@ export function nativeTextTests(
             background: c.background ?? "#202020",
             align: c.alignment ?? "left",
           });
+
           if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
@@ -117,8 +125,10 @@ export function nativeTextTests(
           );
           await expect(subject).toBeVisible();
           await page.mouse.move(0, 0);
+
           if (component === "kbd") {
             if (c.state === "hover") await subject.hover();
+
             if (c.state === "focus") {
               await subject.focus();
               await page.keyboard.press("Tab");
@@ -126,6 +136,7 @@ export function nativeTextTests(
               await expect(subject).toBeFocused();
             }
           }
+
           if (component === "badge")
             await expect(
               subject.locator("[data-mc-tooltip-painted]")
@@ -135,29 +146,36 @@ export function nativeTextTests(
               "data-mc-label-layout-ready",
               "true"
             );
+
           for (const line of await subject
             .locator("[data-mc-label-ready]")
             .all())
             await expect(line).toHaveAttribute("data-mc-label-ready", "true");
           await page.evaluate(
-            () =>
-              new Promise<void>((resolve) =>
+            async () =>
+              await new Promise<void>((resolve) =>
                 requestAnimationFrame(() =>
-                  requestAnimationFrame(() => resolve())
+                  requestAnimationFrame(() => {
+                    resolve();
+                  })
                 )
               )
           );
+
           const bytes = readFileSync(
             pixelPerfectFile(`${directory}/captures/${c.name}`)
           );
+
           expect(createHash("sha256").update(bytes).digest("hex")).toBe(
             c.sha256
           );
+
           const actualBytes = await subject.screenshot(),
             { mismatchedPixels, diff } = compare(
               PNG.sync.read(bytes),
               PNG.sync.read(actualBytes)
             );
+
           writeFileSync(info.outputPath("actual.png"), actualBytes);
           writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
           writeFileSync(
@@ -174,5 +192,7 @@ export function nativeTextTests(
           );
           expect(mismatchedPixels).toBe(0);
         });
+      }
+    }
   }
 }

@@ -1,10 +1,13 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("AlertDialogMedia preserves semantic div/ref, caller attributes, rich children and events", async ({
   page,
 }) => {
   await page.goto("/?component=alert-dialog-media");
-  const dialog = page.getByRole("alertdialog", { name: "Confirm world" }),
-    media = page.getByRole("group", { name: "Confirmation media" });
+
+  const dialog = page.getByRole("alertdialog", { name: "Confirm world" });
+  const media = page.getByRole("group", { name: "Confirmation media" });
+
   await expect(dialog).toBeVisible();
   await expect(media).toHaveAttribute("data-slot", "alert-dialog-media");
   await expect(media).toHaveAttribute("data-user", "kept");
@@ -17,6 +20,6 @@ test("AlertDialogMedia preserves semantic div/ref, caller attributes, rich child
   await expect(dialog).toBeVisible();
   await page.getByRole("button", { name: "Read media ref" }).click();
   await expect(page.getByLabel("Media ref")).toHaveText("DIV");
-  await page.getByRole("button", { name: "Back", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Back" }).click();
   await expect(dialog).toBeHidden();
 });

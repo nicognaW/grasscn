@@ -1,6 +1,8 @@
 "use client";
-import {
-  MessageScroller as Primitive,
+
+import { MessageScroller as Primitive } from "@shadcn/react/message-scroller";
+
+export {
   useMessageScroller,
   useMessageScrollerScrollable,
   useMessageScrollerVisibility,
@@ -13,12 +15,15 @@ import { Button } from "./button";
 import { MessageContent, MessageScale } from "./message";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
+
 const ScrollerScale = React.createContext<1 | 2 | 3>(2);
+
 function MessageScrollerProvider(
   props: React.ComponentProps<typeof Primitive.Provider>
 ) {
   return <Primitive.Provider {...props} />;
 }
+
 function MessageScroller({
   className,
   scale = 2,
@@ -32,14 +37,14 @@ function MessageScroller({
       <MessageScale value={scale}>
         <Primitive.Root
           data-slot="message-scroller"
-          className={cn(`mc-message-scroller ${""}`, className)}
+          className={cn(`mc-message-scroller`, className)}
           style={minecraftStyle(
             style,
             (__style) =>
               ({
                 "--mc-scale": scale,
-                "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
                 "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+                "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
                 ...__style,
               }) as React.CSSProperties
           )}
@@ -49,6 +54,7 @@ function MessageScroller({
     </ScrollerScale>
   );
 }
+
 function MessageScrollerViewport({
   className,
   ...props
@@ -56,11 +62,12 @@ function MessageScrollerViewport({
   return (
     <Primitive.Viewport
       data-slot="message-scroller-viewport"
-      className={cn(`mc-message-scroller-viewport ${""}`, className)}
+      className={cn(`mc-message-scroller-viewport`, className)}
       {...props}
     />
   );
 }
+
 function MessageScrollerContent({
   className,
   ...props
@@ -68,11 +75,12 @@ function MessageScrollerContent({
   return (
     <Primitive.Content
       data-slot="message-scroller-content"
-      className={cn(`mc-message-scroller-content ${""}`, className)}
+      className={cn(`mc-message-scroller-content`, className)}
       {...props}
     />
   );
 }
+
 function MessageScrollerItem({
   className,
   scrollAnchor = false,
@@ -83,7 +91,7 @@ function MessageScrollerItem({
     <Primitive.Item
       data-slot="message-scroller-item"
       scrollAnchor={scrollAnchor}
-      className={cn(`mc-message-scroller-item ${""}`, className)}
+      className={cn(`mc-message-scroller-item`, className)}
       {...props}
     >
       {typeof children === "string" || typeof children === "number" ? (
@@ -94,6 +102,7 @@ function MessageScrollerItem({
     </Primitive.Item>
   );
 }
+
 function MessageScrollerButton({
   direction = "end",
   className,
@@ -105,6 +114,7 @@ function MessageScrollerButton({
 }: React.ComponentProps<typeof Primitive.Button> &
   Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   const scale = React.useContext(ScrollerScale);
+
   return (
     <Primitive.Button
       data-slot="message-scroller-button"
@@ -112,7 +122,7 @@ function MessageScrollerButton({
       data-variant={variant}
       data-size={size}
       direction={direction}
-      className={cn(`mc-message-scroller-button ${""}`, className)}
+      className={cn(`mc-message-scroller-button`, className)}
       render={render ?? <Button variant={variant} size={size} scale={scale} />}
       {...props}
     >
@@ -120,6 +130,7 @@ function MessageScrollerButton({
     </Primitive.Button>
   );
 }
+
 export {
   MessageScrollerProvider,
   MessageScroller,
@@ -127,7 +138,4 @@ export {
   MessageScrollerContent,
   MessageScrollerItem,
   MessageScrollerButton,
-  useMessageScroller,
-  useMessageScrollerScrollable,
-  useMessageScrollerVisibility,
 };

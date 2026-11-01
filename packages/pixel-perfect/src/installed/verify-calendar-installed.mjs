@@ -19,65 +19,86 @@ import {
   repositoryFile,
 } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
-const repo = repoRoot,
-  [consumerArg, component, url] = process.argv.slice(2),
-  consumer = path.resolve(consumerArg),
-  hash = (b) => createHash("sha256").update(b).digest("hex");
+
+const [consumerArg, component, url] = process.argv.slice(2);
+const consumer = path.resolve(consumerArg);
+const hash = (b) => createHash("sha256").update(b).digest("hex");
+
 assert.ok(["calendar", "date-picker"].includes(component) && url);
+
 const item = JSON.parse(
-    fs.readFileSync(webFile(path.join("registry.json")))
-  ).items.find((i) => i.name === component),
-  settings = JSON.parse(
-    fs.readFileSync(path.join(consumer, "components.json"))
-  ),
-  canonical = (b) => {
-    let t = b
-      .toString()
-      .replace(/\r\n/g, "\n")
-      .replace(/\/\*[\s\S]*?\*\//g, "")
-      .trim();
-    if (settings.rsc === false) t = t.replace(/^["']use client["'];?\s*/, "");
-    return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
-  },
-  files = item.files.map((f) => {
-    const name = path.basename(f.path),
-      a = fs.readFileSync(webFile(path.join(f.path))),
-      b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
-    assert.ok(
-      canonical(a) === canonical(b),
-      name + " changed beyond CLI transforms"
-    );
-    return {
-      path: name,
-      sourcePath: f.path,
-      sourceSha256: hash(a),
-      installedSha256: hash(b),
-    };
-  });
-const browser = await chromium.launch({ channel: "msedge" }),
-  pageErrors = [];
-let page,
-  comparisons = 0;
-const inputIdentity = installedConsumerIdentity(consumer),
-  runtimeIdentity = {
-    files,
-    settings,
-    browser: browser.version(),
-    consumer: inputIdentity,
-    url,
-    viewport: [1536, 900, 1],
-    verifier: hash(fs.readFileSync(fileURLToPath(import.meta.url))),
+  fs.readFileSync(webFile(path.join("registry.json")))
+).items.find((i) => i.name === component);
+
+const settings = JSON.parse(
+  fs.readFileSync(path.join(consumer, "components.json"))
+);
+
+const canonical = (b) => {
+  let t = b
+    .toString()
+    .replaceAll("\r\n", "\n")
+    .replaceAll(/\/\*[\s\S]*?\*\//g, "")
+    .trim();
+
+  if (settings.rsc === false) {
+    t = t.replace(/^["']use client["'];?\s*/, "");
+  }
+
+  return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
+};
+
+const files = item.files.map((f) => {
+  const name = path.basename(f.path);
+  const a = fs.readFileSync(webFile(path.join(f.path)));
+  const b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
+
+  assert.ok(
+    canonical(a) === canonical(b),
+    `${name} changed beyond CLI transforms`
+  );
+
+  return {
+    installedSha256: hash(b),
+    path: name,
+    sourcePath: f.path,
+    sourceSha256: hash(a),
   };
+});
+
+const browser = await chromium.launch({ channel: "msedge" });
+const pageErrors = [];
+
+let comparisons = 0;
+let page;
+
+const inputIdentity = installedConsumerIdentity(consumer);
+
+const runtimeIdentity = {
+  browser: browser.version(),
+  consumer: inputIdentity,
+  files,
+  settings,
+  url,
+  verifier: hash(fs.readFileSync(import.meta.filename)),
+  viewport: [1536, 900, 1],
+};
+
 function differences(a, b) {
   assert.deepEqual([a.width, a.height], [b.width, b.height]);
   let count = 0;
-  for (let i = 0; i < a.data.length; i += 4)
+
+  for (let i = 0; i < a.data.length; i += 4) {
     count += Number(
       !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
     );
+  }
+
   return count;
 }
+
 try {
   for (const [part, dir] of [
     ["cell", "calendar-day"],
@@ -92,12 +113,15 @@ try {
       : []),
   ]) {
     const manifest = JSON.parse(
-        fs.readFileSync(
-          pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
-        )
-      ),
-      cases = [];
+      fs.readFileSync(
+        pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
+      )
+    );
+
+    const cases = [];
+
     let retainedCases = 0;
+
     const cache = installedCaseCache(
       repositoryFile(
         path.join(
@@ -116,154 +140,202 @@ try {
         ),
       }
     );
+
     for (const c of manifest.cases) {
       const reference = fs.readFileSync(
         pixelPerfectFile(path.join("tests/reference", dir, "captures", c.name))
       );
+
       assert.equal(hash(reference), c.sha256);
+
       const aliases =
-          part === "cell" && c.state === "hover"
-            ? [
-                "base",
-                "selected",
-                "today",
-                "range-start",
-                "range-middle",
-                "range-end",
-              ]
-            : ["base"],
-        fields = aliases.map((alias) =>
-          alias === "base"
-            ? "decodedRgbaSha256"
-            : alias.replaceAll("-", "") + "DecodedRgbaSha256"
-        ),
-        retained = cache.read(c.name, reference, fields);
+        part === "cell" && c.state === "hover"
+          ? [
+              "base",
+              "selected",
+              "today",
+              "range-start",
+              "range-middle",
+              "range-end",
+            ]
+          : ["base"];
+
+      const fields = aliases.map((alias) =>
+        alias === "base"
+          ? "decodedRgbaSha256"
+          : `${alias.replaceAll("-", "")}DecodedRgbaSha256`
+      );
+
+      const retained = cache.read(c.name, reference, fields);
+
       if (retained) {
-        retainedCases++;
+        retainedCases += 1;
         cases.push(retained);
-        if (cases.length % 128 === 0)
+
+        if (cases.length % 128 === 0) {
           console.log("RETAINED", component, part, cases.length);
+        }
+
         continue;
       }
-      let record = { name: c.name, mismatchedPixels: 0 },
-        images = {};
+
+      const record = { mismatchedPixels: 0, name: c.name };
+      const images = {};
+
       for (const alias of aliases) {
-        if (comparisons++ % 128 === 0) {
-          if (page) await page.close();
+        const previousComparisonCount = comparisons;
+        comparisons += 1;
+
+        if (previousComparisonCount % 128 === 0) {
+          if (page) {
+            await page.close();
+          }
+
           page = await browser.newPage({
-            viewport: { width: 1536, height: 900 },
             deviceScaleFactor: 1,
+            viewport: { height: 900, width: 1536 },
           });
           page.on("pageerror", (e) => pageErrors.push(e.message));
           await page.goto(url);
           await page.waitForFunction(() => !!window.renderCalendarCase);
         }
+
         const q = {
+          align: c.alignment ?? "left",
+          background: c.background ?? manifest.background ?? "#202020",
+          case: component + part + c.name + alias,
+          checked: String(c.checked ?? false),
           component,
+          height: String(c.height),
+          label: c.label ?? "",
           native: "1",
           part,
-          case: component + part + c.name + alias,
+          range: alias.startsWith("range-") ? alias.slice(6) : "",
           scale: String(c.scale),
+          selected: String(alias === "selected"),
+          state: alias === "base" ? c.state : "normal",
+          today: String(alias === "today"),
           width: String(c.width),
-          height: String(c.height),
           x: String(c.x ?? 16),
           y: String(c.y ?? 16),
-          label: c.label ?? "",
-          background: c.background ?? manifest.background ?? "#202020",
-          align: c.alignment ?? "left",
-          checked: String(c.checked ?? false),
-          state: alias === "base" ? c.state : "normal",
-          selected: String(alias === "selected"),
-          today: String(alias === "today"),
-          range: alias.startsWith("range-") ? alias.slice(6) : "",
         };
-        if (c.text != null) q.text = c.text;
-        if (c.wrapWidth) q.wrapWidth = String(c.wrapWidth);
+
+        const optionalText = c.text;
+
+        if (optionalText !== null && optionalText !== undefined) {
+          q.text = c.text;
+        }
+
+        if (c.wrapWidth) {
+          q.wrapWidth = String(c.wrapWidth);
+        }
+
         await page.evaluate((q) => window.renderCalendarCase(q), q);
         await expect(page.locator("#marker")).toHaveAttribute(
           "data-case",
           q.case
         );
         await expect(page.locator("#subject")).toBeVisible();
+
         if (part === "label") {
           await expect(page.locator("#subject")).toHaveAttribute(
             "data-mc-label-layout-ready",
             "true"
           );
+
           for (const canvas of await page
             .locator("#subject [data-mc-label-ready]")
-            .all())
+            .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+          }
         }
-        if (part === "trigger-cjk")
+
+        if (part === "trigger-cjk") {
           for (const canvas of await page
             .locator("#subject [data-mc-label-ready]")
-            .all())
+            .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+          }
+        }
+
         await page.mouse.move(0, 0);
+
         if (
           alias === "base" &&
           (c.state === "hover" || c.state === "disabled-hover")
-        )
+        ) {
           await page.locator("#subject").hover({ force: true });
-        if (alias === "base" && c.state === "focus")
+        }
+
+        if (alias === "base" && c.state === "focus") {
           await page.locator("#subject").focus();
+        }
+
         await page.evaluate(
-          () =>
+          async () =>
             new Promise((r) =>
               requestAnimationFrame(() => requestAnimationFrame(r))
             )
         );
+
         const bytes = fs.readFileSync(
           pixelPerfectFile(
             path.join("tests/reference", dir, "captures", c.name)
           )
         );
+
         assert.equal(hash(bytes), c.sha256);
-        const expected = PNG.sync.read(bytes),
-          actualBytes = await page
-            .locator("#subject")
-            .screenshot({ animations: "disabled" }),
-          actual = PNG.sync.read(actualBytes),
-          mismatch = differences(expected, actual);
+
+        const expected = PNG.sync.read(bytes);
+
+        const actualBytes = await page
+          .locator("#subject")
+          .screenshot({ animations: "disabled" });
+
+        const actual = PNG.sync.read(actualBytes);
+        const mismatch = differences(expected, actual);
+
         if (mismatch) {
           fs.writeFileSync(
-            path.join(pixelPerfectTestRoot, component + "-actual.png"),
+            path.join(pixelPerfectTestRoot, `${component}-actual.png`),
             actualBytes
           );
-          throw Error(
+          throw new Error(
             `${component} ${part} ${c.name} ${alias}: ${mismatch} pixels`
           );
         }
+
         record[
           alias === "base"
             ? "decodedRgbaSha256"
-            : alias.replaceAll("-", "") + "DecodedRgbaSha256"
+            : `${alias.replaceAll("-", "")}DecodedRgbaSha256`
         ] = hash(actual.data);
         images[
           alias === "base"
             ? "decodedRgbaSha256"
-            : alias.replaceAll("-", "") + "DecodedRgbaSha256"
+            : `${alias.replaceAll("-", "")}DecodedRgbaSha256`
         ] = actualBytes;
       }
+
       assert.deepEqual(pageErrors, []);
       cache.write(c.name, reference, record, images);
       cases.push(record);
-      if (cases.length % 128 === 0) console.log(component, part, cases.length);
+
+      if (cases.length % 128 === 0) {
+        console.log(component, part, cases.length);
+      }
     }
+
     const expected = PNG.sync.read(
-        fs.readFileSync(
-          pixelPerfectFile(
-            path.join(
-              "tests/reference",
-              dir,
-              "captures",
-              manifest.cases[0].name
-            )
-          )
+      fs.readFileSync(
+        pixelPerfectFile(
+          path.join("tests/reference", dir, "captures", manifest.cases[0].name)
         )
-      ),
-      changed = PNG.sync.read(PNG.sync.write(expected));
+      )
+    );
+
+    const changed = PNG.sync.read(PNG.sync.write(expected));
+
     changed.data[0] ^= 1;
     assert.equal(differences(expected, changed), 1);
     assert.deepEqual(pageErrors, []);
@@ -272,34 +344,37 @@ try {
       inputIdentity,
       "Installed sources, fixtures or dependencies changed during capture"
     );
+
     const report = {
+      browser: browser.version(),
+      caseIsolation: "Fresh context every128 comparisons",
+      cases,
       command: `shadcn add http://127.0.0.1:5173/r/${component}.json --yes --overwrite`,
       consumer:
         "Separate initialized Vite/React consumer with independent node_modules",
+      consumerInputSha256: inputIdentity,
       consumerRsc: settings.rsc,
-      browser: browser.version(),
-      viewport: { width: 1536, height: 900 },
       devicePixelRatio: 1,
-      caseIsolation: "Fresh context every128 comparisons",
+      files,
+      negativeControlMismatchedPixels: 1,
+      pageErrors: [],
+      renderVerificationUrl: url,
+      retainedCases,
       sourceJarSha256: manifest.sourceJarSha256,
       sourceManifest: path.posix.join("tests/reference", dir, "manifest.json"),
-      files,
-      cases,
-      retainedCases,
-      pageErrors: [],
-      negativeControlMismatchedPixels: 1,
-      renderVerificationUrl: url,
-      consumerInputSha256: inputIdentity,
       verifierSha256: runtimeIdentity.verifier,
+      viewport: { height: 900, width: 1536 },
     };
+
     const out = pixelPerfectFile(path.join("tests/reference", component));
     fs.mkdirSync(out, { recursive: true });
     fs.writeFileSync(
-      path.join(out, part + "-installation-verification.json"),
+      path.join(out, `${part}-installation-verification.json`),
       JSON.stringify(report, null, 2)
     );
     console.log(component, part, cases.length, "references exact");
   }
+
   console.log(
     component,
     comparisons,

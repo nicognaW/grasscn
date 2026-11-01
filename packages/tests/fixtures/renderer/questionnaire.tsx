@@ -16,39 +16,45 @@ import {
   QuestionnaireChoiceDescription,
 } from "@grasscn/web/ui/questionnaire";
 import * as React from "react";
-export function QuestionnaireFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    [result, setResult] = React.useState(""),
-    [item, setItem] = React.useState(""),
-    [tag, setTag] = React.useState(""),
-    [forced, setForced] = React.useState("mode"),
-    ref = React.useRef<HTMLFormElement>(null);
+
+export const QuestionnaireFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const [result, setResult] = React.useState("");
+  const [item, setItem] = React.useState("");
+  const [tag, setTag] = React.useState("");
+  const [forced, setForced] = React.useState("mode");
+  const ref = React.useRef<HTMLFormElement>(null);
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
   }, []);
+
   const bounds = {
-    position: "fixed",
+    border: 0,
+    height: Number(q.get("height") ?? 20) * scale,
     left: Number(q.get("x") ?? 16) * scale,
+    margin: 0,
+    padding: 0,
+    position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: Number(q.get("width") ?? 200) * scale,
-    height: Number(q.get("height") ?? 20) * scale,
-    padding: 0,
-    margin: 0,
-    border: 0,
   } as React.CSSProperties;
+
   if (q.has("native")) {
-    const part = q.get("part") ?? "title",
-      text = q.get("label") ?? "Hello Minecraft",
-      textProps = {
-        id: "subject",
-        style: bounds,
-        maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-        align: (q.get("align") ?? "left") as "left" | "center",
-        "data-subject": "true",
-      };
-    if (part === "input")
+    const part = q.get("part") ?? "title";
+    const text = q.get("label") ?? "Hello Minecraft";
+
+    const textProps = {
+      align: (q.get("align") ?? "left") as "left" | "center",
+      "data-subject": "true",
+      id: "subject",
+      maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
+      style: bounds,
+    };
+
+    if (part === "input") {
       return (
         <Questionnaire scale={scale} items={[{ name: "input" }]}>
           <QuestionnaireItem name="input">
@@ -68,7 +74,9 @@ export function QuestionnaireFixture() {
           </QuestionnaireItem>
         </Questionnaire>
       );
-    if (part === "checkbox")
+    }
+
+    if (part === "checkbox") {
       return (
         <Questionnaire
           scale={scale}
@@ -95,17 +103,22 @@ export function QuestionnaireFixture() {
           </QuestionnaireItem>
         </Questionnaire>
       );
+    }
+
     if (part === "action") {
-      const action = q.get("action") ?? "next",
-        Action =
-          action === "previous"
-            ? QuestionnairePrevious
-            : action === "skip"
-              ? QuestionnaireSkip
-              : action === "submit"
-                ? QuestionnaireSubmit
-                : QuestionnaireNext,
-        active = action === "submit" ? "third" : "second";
+      const action = q.get("action") ?? "next";
+
+      const Action =
+        action === "previous"
+          ? QuestionnairePrevious
+          : action === "skip"
+            ? QuestionnaireSkip
+            : action === "submit"
+              ? QuestionnaireSubmit
+              : QuestionnaireNext;
+
+      const active = action === "submit" ? "third" : "second";
+
       return (
         <Questionnaire
           scale={scale}
@@ -126,6 +139,7 @@ export function QuestionnaireFixture() {
         </Questionnaire>
       );
     }
+
     return (
       <Questionnaire scale={scale} items={[{ name: "text" }]}>
         <QuestionnaireItem name="text" invalid={part === "error"}>
@@ -144,19 +158,21 @@ export function QuestionnaireFixture() {
       </Questionnaire>
     );
   }
+
   const items = [
     {
+      choices: [{ value: "survival" }, { value: "creative" }],
       name: "mode",
       required: true,
-      choices: [{ value: "survival" }, { value: "creative" }],
     },
     {
+      choices: [{ value: "caves" }, { value: "villages" }],
       name: "features",
       required: false,
-      choices: [{ value: "caves" }, { value: "villages" }],
     },
     { name: "name", required: true },
   ] as const;
+
   return (
     <>
       <Questionnaire
@@ -169,9 +185,7 @@ export function QuestionnaireFixture() {
         onSubmit={(event) => {
           event.preventDefault();
           setResult(
-            JSON.stringify(
-              Array.from(new FormData(event.currentTarget).entries())
-            )
+            JSON.stringify([...new FormData(event.currentTarget).entries()])
           );
         }}
       >
@@ -180,10 +194,7 @@ export function QuestionnaireFixture() {
           render={
             q.has("customRender")
               ? (props, state) => (
-                  <output
-                    {...(props as React.ComponentProps<"output">)}
-                    id="custom-progress"
-                  >
+                  <output {...props} id="custom-progress">
                     {state.current}/{state.total}
                   </output>
                 )
@@ -232,16 +243,23 @@ export function QuestionnaireFixture() {
       </Questionnaire>
       <button
         id="read-questionnaire-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
       <output id="questionnaire-ref">{tag}</output>
-      <button id="force-features" onClick={() => setForced("features")}>
+      <button
+        id="force-features"
+        onClick={() => {
+          setForced("features");
+        }}
+      >
         External step
       </button>
       <output id="active">{item}</output>
       <output id="result">{result}</output>
     </>
   );
-}
+};

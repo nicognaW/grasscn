@@ -16,12 +16,17 @@ import {
 } from "@grasscn/web/ui/sidebar";
 import * as React from "react";
 
-export function BaseUICompositionFixture() {
+export const BaseUICompositionFixture = () => {
   const [disabled, setDisabled] = React.useState(false);
   const [subClicks, setSubClicks] = React.useState(0);
+
   return (
     <>
-      <button onClick={() => setDisabled((value) => !value)}>
+      <button
+        onClick={() => {
+          setDisabled((value) => !value);
+        }}
+      >
         Toggle disabled
       </button>
       <Button
@@ -78,4 +83,4 @@ export function BaseUICompositionFixture() {
       </Dialog>
     </>
   );
-}
+};

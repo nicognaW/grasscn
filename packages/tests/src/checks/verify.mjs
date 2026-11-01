@@ -5,23 +5,30 @@ import path from "node:path";
 import { serveVerificationHosts } from "@grasscn/tests/hosts";
 import { packageBin } from "@grasscn/tests/tooling";
 import { repoRoot, testRoot, webRoot } from "@tests/paths";
+
 const [output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
-if (!output || !Number.isInteger(workers) || workers < 1 || workers > 8)
-  throw Error("Use the guarded normal verification command");
+
+if (!output || !Number.isInteger(workers) || workers < 1 || workers > 8) {
+  throw new Error("Use the guarded normal verification command");
+}
+
 await fs.mkdir(output, { recursive: true });
+
 const report = {
-  scope: "normal",
-  startedAt: new Date().toISOString(),
   checks: [],
   completed: false,
   passed: false,
+  scope: "normal",
+  startedAt: new Date().toISOString(),
 };
-const save = () =>
+
+const save = async () =>
   fs.writeFile(
     path.join(output, "verification.json"),
-    JSON.stringify(report, null, 2) + "\n"
+    `${JSON.stringify(report, null, 2)}\n`
   );
+
 const steps = [
   ["generate", [path.join(webRoot, "scripts/prepare-preview.mjs")], repoRoot],
   [
@@ -75,45 +82,59 @@ const steps = [
     testRoot,
   ],
 ];
+
 let hosts;
+
 try {
   /* oxlint-disable no-await-in-loop -- Build steps consume earlier outputs; save each receipt and fail before starting the next step. */
   for (const [name, args, cwd] of steps) {
-    if (name === "normal-tests")
+    if (name === "normal-tests") {
       hosts = await serveVerificationHosts({
         fixturePort: 5284,
         previewPort: 5286,
         proxyPort: 5287,
       });
+    }
+
     const env = {
       ...process.env,
       GOMAXPROCS: "1",
-      RAYON_NUM_THREADS: "1",
       GRASSCN_BROWSER_SCOPE: "ordinary",
+      RAYON_NUM_THREADS: "1",
       ...(hosts
         ? {
+            GRASSCN_BROWSER_PROXY_PORT: "5287",
+            GRASSCN_EXPANSION_URL: "http://127.0.0.1:5174/adventure.html",
             GRASSCN_FIXTURE_URL: "http://127.0.0.1:5174",
             GRASSCN_PREVIEW_URL: "http://127.0.0.1:5176/",
-            GRASSCN_EXPANSION_URL: "http://127.0.0.1:5174/adventure.html",
             GRASSCN_TREE_INSTALLED_URL: "http://127.0.0.1:5174/adventure.html",
-            GRASSCN_BROWSER_PROXY_PORT: "5287",
           }
         : {}),
     };
+
     console.log(`Normal verification: ${name}`);
+
     const code = await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, args, {
         cwd,
         env,
         stdio: "inherit",
       });
+
       child.on("error", reject);
-      child.on("exit", (code, signal) => resolve(code ?? (signal ? 1 : 0)));
+      child.on("exit", (code, signal) => {
+        resolve(code ?? (signal ? 1 : 0));
+      });
     });
-    report.checks.push({ name, exitCode: code });
+
+    report.checks.push({ exitCode: code, name });
     await save();
-    if (code !== 0) throw Error(`${name} failed (${code})`);
+
+    if (code !== 0) {
+      throw new Error(`${name} failed (${code})`);
+    }
   }
+
   /* oxlint-enable no-await-in-loop */
   report.completed = true;
   report.passed = true;

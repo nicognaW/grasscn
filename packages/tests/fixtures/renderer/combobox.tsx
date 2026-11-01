@@ -12,7 +12,6 @@ import {
   ComboboxChips,
   ComboboxChip,
   ComboboxChipsInput,
-  ComboboxTrigger,
   ComboboxValue,
   useComboboxAnchor,
   ComboboxClear,
@@ -20,40 +19,49 @@ import {
 } from "@grasscn/web/ui/combobox";
 import { Input } from "@grasscn/web/ui/input";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  native = p.has("native"),
-  part = p.get("part") ?? "list",
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  labels = JSON.parse(
-    p.get("labels") ?? '["Stone","Stick","世界"]'
-  ) as string[],
-  nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label })),
-  blocks = ["Stone", "Stick", "世界", "Bedrock"];
-export function ComboboxFixture() {
+
+const p = new URLSearchParams(location.search);
+const native = p.has("native");
+const part = p.get("part") ?? "list";
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+const labels = JSON.parse(
+  p.get("labels") ?? '["Stone","Stick","世界"]'
+) as string[];
+
+const nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label }));
+const blocks = ["Stone", "Stick", "世界", "Bedrock"];
+
+export const ComboboxFixture = () => {
   React.useLayoutEffect(() => {
-    const bg = p.get("background") ?? "#202020",
-      html = document.documentElement.style.background,
-      body = document.body.style.background;
+    const bg = p.get("background") ?? "#202020";
+    const html = document.documentElement.style.background;
+    const body = document.body.style.background;
+
     document.documentElement.style.background = bg;
     document.body.style.background = bg;
+
     return () => {
       document.documentElement.style.background = html;
       document.body.style.background = body;
     };
   }, []);
+
   const [value, setValue] = React.useState<string | null>(
-      p.has("initial") ? "Stone" : null
-    ),
-    [multiple, setMultiple] = React.useState<string[]>(["Stone"]),
-    [search, setSearch] = React.useState(""),
-    [attempt, setAttempt] = React.useState(""),
-    [refTag, setRefTag] = React.useState(""),
-    input = React.useRef<HTMLInputElement>(null),
-    list = React.useRef<HTMLDivElement>(null),
-    anchor = useComboboxAnchor();
+    p.has("initial") ? "Stone" : null
+  );
+
+  const [multiple, setMultiple] = React.useState<string[]>(["Stone"]);
+  const [search, setSearch] = React.useState("");
+  const [attempt, setAttempt] = React.useState("");
+  const [refTag, setRefTag] = React.useState("");
+  const input = React.useRef<HTMLInputElement>(null);
+  const list = React.useRef<HTMLDivElement>(null);
+  const anchor = useComboboxAnchor();
+
   const pos = {
-    position: "fixed" as const,
     left: Number(p.get("x") ?? 16) * scale,
+    position: "fixed" as const,
     top: Number(p.get("y") ?? 16) * scale,
     width: Number(p.get("width") ?? 200) * scale,
     ...(part === "list"
@@ -63,7 +71,8 @@ export function ComboboxFixture() {
         }
       : {}),
   };
-  if (native)
+
+  if (native) {
     return part === "input" ? (
       <Combobox
         scale={scale}
@@ -123,7 +132,9 @@ export function ComboboxFixture() {
         </ComboboxList>
       </Combobox>
     );
-  if (p.has("multiple"))
+  }
+
+  if (p.has("multiple")) {
     return (
       <Combobox
         scale={scale}
@@ -165,6 +176,8 @@ export function ComboboxFixture() {
         <output id="value">{multiple.join(",")}</output>
       </Combobox>
     );
+  }
+
   return (
     <form
       onSubmit={(e) => {
@@ -179,8 +192,12 @@ export function ComboboxFixture() {
         value={value}
         onValueChange={(next, details) => {
           setAttempt(next ?? "none");
-          if (p.has("reject")) details.cancel();
-          else setValue(next);
+
+          if (p.has("reject")) {
+            details.cancel();
+          } else {
+            setValue(next);
+          }
         }}
         inputValue={search}
         onInputValueChange={setSearch}
@@ -188,7 +205,9 @@ export function ComboboxFixture() {
         disabled={p.has("disabled")}
         readOnly={p.has("readOnly")}
         onOpenChange={(open, details) => {
-          if (p.has("rejectOpen")) details.cancel();
+          if (p.has("rejectOpen")) {
+            details.cancel();
+          }
         }}
       >
         <ComboboxInput
@@ -269,9 +288,9 @@ export function ComboboxFixture() {
       <button
         id="ref"
         type="button"
-        onClick={() =>
-          setRefTag(`${input.current?.tagName}/${list.current?.tagName}`)
-        }
+        onClick={() => {
+          setRefTag(`${input.current?.tagName}/${list.current?.tagName}`);
+        }}
       >
         Read refs
       </button>
@@ -281,4 +300,4 @@ export function ComboboxFixture() {
       </button>
     </form>
   );
-}
+};

@@ -7,7 +7,7 @@ test("Command infers rich item values and hides groups without matching items", 
   const input = page.getByRole("combobox", { name: "Search commands" });
   await input.fill("calendar");
   await expect(
-    page.getByRole("option", { name: "Calendar", exact: true })
+    page.getByRole("option", { exact: true, name: "Calendar" })
   ).toBeVisible();
   const groups = page.locator('[data-slot="command-group"]');
   await expect(groups.filter({ hasText: "Tools" })).toBeVisible();
@@ -40,7 +40,7 @@ test("Command uses cmdk fuzzy matching rather than a substring-only replacement"
   const input = page.getByRole("combobox", { name: "Search commands" });
   await input.fill("stng");
   await expect(
-    page.getByRole("option", { name: "Settings", exact: true })
+    page.getByRole("option", { exact: true, name: "Settings" })
   ).toBeVisible();
   await input.press("Enter");
   await expect(page.getByLabel("Selected command")).toHaveText("settings");

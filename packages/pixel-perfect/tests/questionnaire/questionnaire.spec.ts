@@ -2,8 +2,9 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const parts = [
   ["title", "label"],
   ["description", "label"],
@@ -14,29 +15,34 @@ const parts = [
   ["action", "button-cjk"],
   ["input", "input"],
 ];
+
 for (const [part, dir] of parts) {
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
-      "utf8"
+      "utf-8"
     )
   );
+
   test.describe(`Questionnaire actual ${part} native constituents ${dir}`, () => {
     test.describe.configure({ mode: "parallel" });
-    for (const c of manifest.cases)
+
+    for (const c of manifest.cases) {
       for (const action of part === "action"
         ? ["next", "previous", "skip", "submit"]
         : part === "checkbox"
           ? ["next", "radio"]
-          : ["next"])
+          : ["next"]) {
         test(`${c.name} ${action}`, async ({ page }, info) => {
           await page.setViewportSize({ width: 1536, height: 900 });
+
           if (part === "input") {
             await page.clock.install({
               time: new Date("2026-10-28T00:00:00Z"),
             });
             await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
           }
+
           const q = new URLSearchParams({
             component: "questionnaire",
             native: "1",
@@ -55,31 +61,40 @@ for (const [part, dir] of parts) {
             background: c.background ?? manifest.background ?? "#202020",
             align: c.alignment ?? "left",
           });
+
           if (action === "radio") q.set("radio", "1");
+
           if (c.wrapWidth) q.set("wrapWidth", String(c.wrapWidth));
+
           if (c.maxLength != null) q.set("maxLength", String(c.maxLength));
           await page.goto("/?" + q);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
+
           if (["title", "description", "error", "progress"].includes(part))
             await expect(subject).toHaveAttribute(
               "data-mc-label-layout-ready",
               "true"
             );
+
           if (part === "input")
             await expect(subject).toHaveAttribute("data-mc-ready", "true");
           await page.mouse.move(0, 0);
+
           if (c.state.startsWith("focus"))
             await (
               part === "checkbox" ? subject.locator("input") : subject
             ).focus();
+
           if (c.state === "hover")
             await (
               part === "checkbox" ? subject.locator("input") : subject
             ).hover();
+
           if (part === "input") {
             const cursor = c.cursor ?? c.text.length,
               anchor = c.anchor ?? cursor;
+
             await subject.evaluate(
               (el, p) => {
                 (el as HTMLInputElement).setSelectionRange(
@@ -101,23 +116,26 @@ for (const [part, dir] of parts) {
                 "true"
               );
             await page.evaluate(
-              () =>
-                new Promise((r) =>
+              async () =>
+                await new Promise((r) =>
                   requestAnimationFrame(() => requestAnimationFrame(r))
                 )
             );
           }
+
           const bytes = readFileSync(
               pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
             ),
             actualBytes = await subject.screenshot({ animations: "disabled" }),
             a = PNG.sync.read(bytes),
             b = PNG.sync.read(actualBytes);
+
           expect(createHash("sha256").update(bytes).digest("hex")).toBe(
             c.sha256
           );
           expect([b.width, b.height]).toEqual([a.width, a.height]);
           let mismatchedPixels = 0;
+
           for (let i = 0; i < a.data.length; i += 4)
             mismatchedPixels += Number(
               !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
@@ -141,5 +159,7 @@ for (const [part, dir] of parts) {
           writeFileSync(info.outputPath("actual.png"), actualBytes);
           expect(mismatchedPixels).toBe(0);
         });
+      }
+    }
   });
 }

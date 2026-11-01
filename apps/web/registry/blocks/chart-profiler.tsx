@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/chart";
 
 /** Ordinary counts, durations or revenue; Recharts calculates the shares. */
-export function ProfilerChartExample({
+export const ProfilerChartExample = ({
   data,
   dataKey,
   nameKey = "name",
@@ -29,25 +30,25 @@ export function ProfilerChartExample({
   rootName?: string;
   globalPercentage?: number;
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <ChartContainer
       {...props}
       config={{ [dataKey]: { label: dataKey } }}
       scale={scale}
       style={{
-        position: "relative",
-        width: 270 * scale,
-        height: (139 + data.length * 9) * scale,
         aspectRatio: "auto",
         background: "rgba(80,80,80,0.5647058823529412)",
+        height: (139 + data.length * 9) * scale,
+        position: "relative",
+        width: 270 * scale,
         ...style,
       }}
     >
       <PieChart
         accessibilityLayer
         aria-label={ariaLabel}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
       >
         <Pie
           data={data}
@@ -73,4 +74,4 @@ export function ProfilerChartExample({
       </PieChart>
     </ChartContainer>
   );
-}
+};

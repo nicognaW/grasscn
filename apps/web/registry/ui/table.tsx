@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
@@ -6,24 +7,34 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { minecraftSelectAssets } from "./minecraft-select-assets";
 
 import "./minecraft-table.css";
+
 const TableScale = React.createContext<1 | 2 | 3>(2);
+
 function literalText(children: React.ReactNode): string | null {
-  let result = "",
-    plain = true;
+  let plain = true;
+  let result = "";
+
   const visit = (node: React.ReactNode) => {
-    if (node == null || typeof node === "boolean") return;
+    if (node === null || node === undefined || typeof node === "boolean") {
+      return;
+    }
+
     if (
       typeof node === "string" ||
       typeof node === "number" ||
       typeof node === "bigint"
     ) {
       result += String(node);
+
       return;
     }
+
     if (Array.isArray(node)) {
       node.forEach(visit);
+
       return;
     }
+
     if (
       React.isValidElement<{
         children?: React.ReactNode;
@@ -31,27 +42,37 @@ function literalText(children: React.ReactNode): string | null {
       node.type === React.Fragment
     ) {
       visit(node.props.children);
+
       return;
     }
+
     plain = false;
   };
+
   visit(children);
+
   return plain ? result : null;
 }
-type TextLayout = {
+
+interface TextLayout {
   maxTextWidth?: number;
   textAlign?: "left" | "center";
-};
-function TableText({
+}
+
+const TableText = ({
   children,
   maxTextWidth,
   textAlign = "left",
 }: {
   children: React.ReactNode;
-} & TextLayout) {
-  const scale = React.useContext(TableScale),
-    value = literalText(children);
-  if (children == null || typeof children === "boolean") return null;
+} & TextLayout) => {
+  const scale = React.useContext(TableScale);
+  const value = literalText(children);
+
+  if (children == null || typeof children === "boolean") {
+    return null;
+  }
+
   return value == null ? (
     children
   ) : (
@@ -64,15 +85,16 @@ function TableText({
       {value}
     </MinecraftDisclosureText>
   );
-}
-function Table({
+};
+
+const Table = ({
   className,
   scale = 2,
   style,
   ...props
 }: React.ComponentProps<"table"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <TableScale.Provider value={scale}>
       <div
@@ -82,7 +104,7 @@ function Table({
       >
         <table
           data-slot="table"
-          className={cn(`mc-table ${""}`, className)}
+          className={cn(`mc-table`, className)}
           style={minecraftStyle(
             style,
             (__style) =>
@@ -90,8 +112,8 @@ function Table({
                 "--mc-scale": scale,
                 "--mc-table-background":
                   minecraftSelectAssets.menu_list_background,
-                "--mc-table-header": minecraftSelectAssets.header_separator,
                 "--mc-table-footer": minecraftSelectAssets.footer_separator,
+                "--mc-table-header": minecraftSelectAssets.header_separator,
                 ...__style,
               }) as React.CSSProperties
           )}
@@ -100,55 +122,66 @@ function Table({
       </div>
     </TableScale.Provider>
   );
-}
-function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
+};
+
+const TableHeader = ({
+  className,
+  ...props
+}: React.ComponentProps<"thead">) => {
   return (
     <thead
       data-slot="table-header"
-      className={cn(`mc-table-header ${""}`, className)}
+      className={cn(`mc-table-header`, className)}
       {...props}
     />
   );
-}
-function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
+};
+
+const TableBody = ({ className, ...props }: React.ComponentProps<"tbody">) => {
   return (
     <tbody
       data-slot="table-body"
-      className={cn(`mc-table-body ${""}`, className)}
+      className={cn(`mc-table-body`, className)}
       {...props}
     />
   );
-}
-function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
+};
+
+const TableFooter = ({
+  className,
+  ...props
+}: React.ComponentProps<"tfoot">) => {
   return (
     <tfoot
       data-slot="table-footer"
-      className={cn(`mc-table-footer ${""}`, className)}
+      className={cn(`mc-table-footer`, className)}
       {...props}
     />
   );
-}
-function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
+};
+
+const TableRow = ({ className, ...props }: React.ComponentProps<"tr">) => {
   return (
     <tr
       data-slot="table-row"
-      className={cn(`mc-table-row ${""}`, className)}
+      className={cn(`mc-table-row`, className)}
       {...props}
     />
   );
-}
-function TableHead({
+};
+
+const TableHead = ({
   className,
   children,
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"th"> & TextLayout) {
+}: React.ComponentProps<"th"> & TextLayout) => {
   return (
     <th
       data-slot="table-head"
       scope="col"
-      className={cn(`mc-table-head ${""}`, className)}
+      className={cn(`mc-table-head`, className)}
       {...props}
     >
       <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
@@ -156,18 +189,19 @@ function TableHead({
       </TableText>
     </th>
   );
-}
-function TableCell({
+};
+
+const TableCell = ({
   className,
   children,
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"td"> & TextLayout) {
+}: React.ComponentProps<"td"> & TextLayout) => {
   return (
     <td
       data-slot="table-cell"
-      className={cn(`mc-table-cell ${""}`, className)}
+      className={cn(`mc-table-cell`, className)}
       {...props}
     >
       <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
@@ -175,18 +209,19 @@ function TableCell({
       </TableText>
     </td>
   );
-}
-function TableCaption({
+};
+
+const TableCaption = ({
   className,
   children,
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"caption"> & TextLayout) {
+}: React.ComponentProps<"caption"> & TextLayout) => {
   return (
     <caption
       data-slot="table-caption"
-      className={cn(`mc-table-caption ${""}`, className)}
+      className={cn(`mc-table-caption`, className)}
       {...props}
     >
       <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
@@ -194,7 +229,8 @@ function TableCaption({
       </TableText>
     </caption>
   );
-}
+};
+
 export {
   Table,
   TableHeader,

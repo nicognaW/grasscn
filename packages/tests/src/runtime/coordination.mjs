@@ -4,9 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { repoRoot } from "@tests/paths";
-const json = (value) => JSON.stringify(value, null, 2) + "\n";
+
+const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
+
 const git = (args) =>
-  execFileSync("git", args, { cwd: repoRoot, encoding: "utf8" }).trim();
+  execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8" }).trim();
 
 export function coordinationRoot() {
   return path.join(
@@ -16,9 +18,12 @@ export function coordinationRoot() {
 }
 
 export function processIdentity(pid) {
-  if (!Number.isInteger(pid) || pid <= 0) return null;
+  if (!Number.isInteger(pid) || pid <= 0) {
+    return null;
+  }
+
   try {
-    if (process.platform === "win32")
+    if (process.platform === "win32") {
       return execFileSync(
         "powershell",
         [
@@ -26,11 +31,13 @@ export function processIdentity(pid) {
           "-Command",
           `(Get-Process -Id ${pid} -ErrorAction Stop).StartTime.ToUniversalTime().ToString('o')`,
         ],
-        { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
+        { encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] }
       ).trim();
+    }
+
     return fs
-      .readFileSync(`/proc/${pid}/stat`, "utf8")
-      .slice(fs.readFileSync(`/proc/${pid}/stat`, "utf8").lastIndexOf(")") + 2)
+      .readFileSync(`/proc/${pid}/stat`, "utf-8")
+      .slice(fs.readFileSync(`/proc/${pid}/stat`, "utf-8").lastIndexOf(")") + 2)
       .split(" ")[19];
   } catch {
     return null;
@@ -46,5 +53,8 @@ export function foregroundLease() {
     json({ pid: process.pid, start: processIdentity(process.pid) }),
     { flag: "wx" }
   );
-  return () => fs.rmSync(file, { force: true });
+
+  return () => {
+    fs.rmSync(file, { force: true });
+  };
 }

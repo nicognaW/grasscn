@@ -1,12 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
+
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for (const width of [320, 390, 768, 1024, 1565])
+
+for (const width of [320, 390, 768, 1024, 1565]) {
   test(`homepage examples render without overflow or runtime errors at ${width}px`, async ({
     page,
   }) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.setViewportSize({ width, height: 951 });
+    await page.setViewportSize({ height: 951, width });
     await page.goto(origin);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("grasscn");
     await expect(
@@ -16,31 +18,38 @@ for (const width of [320, 390, 768, 1024, 1565])
     ).toHaveCount(14);
     await expect(
       page.getByRole("application", {
-        name: "API response time example",
         exact: true,
+        name: "API response time example",
       })
     ).toBeVisible();
     await expect(
-      page.getByRole("img", { name: "Sam Rivera", exact: true })
+      page.getByRole("img", { exact: true, name: "Sam Rivera" })
     ).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
       )
     ).toBe(true);
+
     const escaped = await page.locator(".grass-panel").evaluateAll((panels) =>
       panels.flatMap((panel) =>
-        Array.from(
-          panel.querySelectorAll(
+        [
+          ...panel.querySelectorAll(
             "input:not([type=hidden]):not([aria-hidden=true]),textarea,button[data-slot]"
-          )
-        )
+          ),
+        ]
           .filter((el) => {
             // Base UI form proxy inputs are visually hidden; measure the visible controls.
-            if (el.tagName === "INPUT" && getComputedStyle(el).opacity === "0")
+            if (
+              el.tagName === "INPUT" &&
+              getComputedStyle(el).opacity === "0"
+            ) {
               return false;
-            const box = el.getBoundingClientRect(),
-              outer = panel.getBoundingClientRect();
+            }
+
+            const box = el.getBoundingClientRect();
+            const outer = panel.getBoundingClientRect();
+
             return (
               box.width > 0 &&
               (box.left < outer.left - 1 || box.right > outer.right + 1)
@@ -49,113 +58,123 @@ for (const width of [320, 390, 768, 1024, 1565])
           .map((el) => el.getAttribute("aria-label") ?? el.textContent)
       )
     );
+
     expect(escaped).toEqual([]);
     expect(errors).toEqual([]);
   });
+}
+
 test("homepage links, search and component gallery remain connected", async ({
   page,
 }) => {
   await page.goto(origin);
+
   const search = page.getByRole("combobox", {
-    name: "Search components",
     exact: true,
+    name: "Search components",
   });
+
   await search.fill("textarea");
   await search.press("Enter");
   await expect(page.locator("#component-textarea")).toBeVisible();
   await page
     .getByRole("banner")
-    .getByRole("link", { name: "grasscn home", exact: true })
+    .getByRole("link", { exact: true, name: "grasscn home" })
     .click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("grasscn");
   await page
-    .getByRole("link", { name: "Browse components", exact: true })
+    .getByRole("link", { exact: true, name: "Browse components" })
     .click();
   await expect(
     page
-      .getByRole("navigation", { name: "Components", exact: true })
-      .getByRole("link", { name: "Button", exact: true })
+      .getByRole("navigation", { exact: true, name: "Components" })
+      .getByRole("link", { exact: true, name: "Button" })
   ).toBeVisible();
   await page.goBack();
   await expect(search).toBeVisible();
 });
+
 test("project form, launch checklist and preferences reflect user choices", async ({
   page,
 }) => {
   await page.goto(origin);
   await page
-    .getByRole("textbox", { name: "Project name", exact: true })
+    .getByRole("textbox", { exact: true, name: "Project name" })
     .fill("客户门户");
   await page
-    .getByRole("combobox", { name: "Project category", exact: true })
+    .getByRole("combobox", { exact: true, name: "Project category" })
     .click();
-  await page.getByRole("option", { name: "Engineering", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Engineering" }).click();
   await page
-    .getByRole("button", { name: "Create project", exact: true })
+    .getByRole("button", { exact: true, name: "Create project" })
     .click();
   await expect(page.getByLabel("Project result")).toHaveText(
     "Created: 客户门户"
   );
   await page
-    .getByRole("checkbox", { name: "Ship something memorable", exact: true })
+    .getByRole("checkbox", { exact: true, name: "Ship something memorable" })
     .check();
   await expect(page.getByLabel("Launch progress")).toHaveText(
     "3 of 4 complete"
   );
-  await page.getByRole("switch", { name: "Product news", exact: true }).click();
+  await page.getByRole("switch", { exact: true, name: "Product news" }).click();
   await page
-    .getByRole("button", { name: "Save preferences", exact: true })
+    .getByRole("button", { exact: true, name: "Save preferences" })
     .click();
   await expect(page.getByLabel("Preferences status")).toHaveText(
     "Preferences saved for this demo."
   );
 });
+
 test("chat sends CJK, charts switch, and payout threshold can be saved", async ({
   page,
 }) => {
   await page.goto(origin);
   await page
-    .getByRole("textbox", { name: "Team message", exact: true })
+    .getByRole("textbox", { exact: true, name: "Team message" })
     .fill("你好，团队！");
-  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Send" }).click();
   await expect(
     page.getByRole("log", { name: "Team conversation" })
   ).toContainText("<You> 你好，团队！");
   await expect(
-    page.getByRole("textbox", { name: "Team message", exact: true })
+    page.getByRole("textbox", { exact: true, name: "Team message" })
   ).toHaveValue("");
-  await page.getByRole("button", { name: "Area", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Area" }).click();
   await expect(
-    page.getByRole("button", { name: "Area", exact: true })
+    page.getByRole("button", { exact: true, name: "Area" })
   ).toHaveAttribute("aria-pressed", "true");
+
   const slider = page.getByRole("slider", {
-    name: "Payout threshold",
     exact: true,
+    name: "Payout threshold",
   });
+
   await slider.focus();
   await slider.press("ArrowRight");
   await page
-    .getByRole("button", { name: "Save threshold", exact: true })
+    .getByRole("button", { exact: true, name: "Save threshold" })
     .click();
   await expect(page.getByLabel("Payout status")).toHaveText(
     "Threshold set to $275."
   );
 });
+
 test("installation picker copies the selected real registry command", async ({
   page,
   context,
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  await page.goto(origin + "#install");
+  await page.goto(`${origin}#install`);
   await page
-    .getByRole("combobox", { name: "Component to install", exact: true })
+    .getByRole("combobox", { exact: true, name: "Component to install" })
     .click();
-  await page.getByRole("option", { name: "card", exact: true }).click();
-  await page.getByRole("button", { name: "Copy", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "card" }).click();
+  await page.getByRole("button", { exact: true, name: "Copy" }).click();
   await expect(
-    page.getByRole("button", { name: "Copied", exact: true })
+    page.getByRole("button", { exact: true, name: "Copied" })
   ).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+  expect(await page.evaluate(async () => navigator.clipboard.readText())).toBe(
     "npx shadcn@latest add http://127.0.0.1:5173/r/card.json"
   );
 });

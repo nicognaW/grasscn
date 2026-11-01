@@ -8,11 +8,11 @@ test.beforeEach(({ page }) => {
   page.on("pageerror", (e) => (page as any).__errors.push(e.message));
 });
 
-test.afterEach(async ({ page, browser }, info) => {
+test.afterEach(({ page, browser }, info) => {
   const errors = (page as any).__errors;
   writeFileSync(
     info.outputPath("runtime.json"),
-    JSON.stringify({ pageErrors: errors, browser: browser.version() })
+    JSON.stringify({ browser: browser.version(), pageErrors: errors })
   );
   expect(errors).toEqual([]);
 });
@@ -60,8 +60,11 @@ test("ChartLegendContent preserves labels, custom icons and CJK bitmap readiness
   await expect(
     legend.locator("[data-mc-label-layout-ready]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
-  for (const text of await legend.locator("[data-mc-label-ready]").all())
+
+  for (const text of await legend.locator("[data-mc-label-ready]").all()) {
     await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await page.goto("/?component=chart&hideIcon=1");
   await expect(
     page.locator(".mc-chart-legend").getByLabel("Desktop icon")
@@ -130,12 +133,20 @@ test("Profiler recovers transient GPU creation failures without unmounting its c
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     let attempts = 0;
-    HTMLCanvasElement.prototype.getContext = function (
+    HTMLCanvasElement.prototype.getContext = function getContext(
       this: HTMLCanvasElement,
       kind: any,
       ...args: any[]
     ) {
-      if (kind === "webgl2" && attempts++ < 2) return null;
+      if (kind === "webgl2") {
+        const previousAttempts = attempts;
+        attempts += 1;
+
+        if (previousAttempts < 2) {
+          return null;
+        }
+      }
+
       return original.apply(this, [kind, ...args] as any);
     } as any;
   });
@@ -156,22 +167,28 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
 }) => {
   await page.goto("/?component=chart");
   const canvas = page.locator("#themed-pixels canvas");
-  const hasColor = (color: number[]) =>
+
+  const hasColor = async (color: number[]) =>
     canvas.evaluate((element: HTMLCanvasElement, color) => {
       const pixels = element
         .getContext("2d")!
         .getImageData(0, 0, element.width, element.height).data;
-      for (let i = 0; i < pixels.length; i += 4)
+
+      for (let i = 0; i < pixels.length; i += 4) {
         if (
           pixels[i] === color[0] &&
           pixels[i + 1] === color[1] &&
           pixels[i + 2] === color[2]
-        )
+        ) {
           return true;
+        }
+      }
+
       return false;
     }, color);
-  await expect.poll(() => hasColor([34, 221, 68])).toBe(true);
+
+  await expect.poll(async () => hasColor([34, 221, 68])).toBe(true);
   await page.locator("#theme").click();
-  await expect.poll(() => hasColor([0, 170, 17])).toBe(true);
+  await expect.poll(async () => hasColor([0, 170, 17])).toBe(true);
   expect(await hasColor([34, 221, 68])).toBe(false);
 });

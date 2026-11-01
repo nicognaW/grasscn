@@ -1,7 +1,6 @@
-import {
-  minecraftAvatarSkins,
-  type MinecraftAvatarSkin,
-} from "./minecraft-avatar-assets";
+import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
+import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
+
 let renderer:
   | {
       canvas: HTMLCanvasElement;
@@ -11,6 +10,7 @@ let renderer:
       texture: WebGLTexture;
     }
   | undefined;
+
 export function paintMinecraftAvatar(
   target: HTMLCanvasElement,
   skin: MinecraftAvatarSkin,
@@ -18,25 +18,37 @@ export function paintMinecraftAvatar(
   upsideDown: boolean,
   scale: number
 ) {
-  if (renderer?.gl.isContextLost()) renderer = undefined;
+  if (renderer?.gl.isContextLost()) {
+    renderer = undefined;
+  }
+
   if (!renderer) {
-    const canvas = document.createElement("canvas"),
-      gl = canvas.getContext("webgl", {
-        alpha: true,
-        antialias: false,
-        premultipliedAlpha: false,
-        preserveDrawingBuffer: true,
-      });
-    if (!gl) return false;
+    const canvas = document.createElement("canvas");
+
+    const gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: true,
+    });
+
+    if (!gl) {
+      return false;
+    }
+
     const shader = (type: number, source: string) => {
       const s = gl.createShader(type)!;
       gl.shaderSource(s, source);
       gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
-        throw Error(gl.getShaderInfoLog(s) ?? "Avatar shader");
+
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        throw new Error(gl.getShaderInfoLog(s) ?? "Avatar shader");
+      }
+
       return s;
     };
-    const program = gl.createProgram()!;
+
+    const program = gl.createProgram();
     gl.attachShader(
       program,
       shader(
@@ -53,8 +65,9 @@ export function paintMinecraftAvatar(
     );
     gl.linkProgram(program);
     gl.useProgram(program);
-    const buffer = gl.createBuffer()!;
+    const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
     for (const [name, offset] of [
       ["position", 0],
       ["uv", 8],
@@ -63,12 +76,18 @@ export function paintMinecraftAvatar(
       gl.enableVertexAttribArray(p);
       gl.vertexAttribPointer(p, 2, gl.FLOAT, false, 16, offset);
     }
-    const texture = gl.createTexture()!;
+
+    const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    for (const p of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER])
+
+    for (const p of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) {
       gl.texParameteri(gl.TEXTURE_2D, p, gl.NEAREST);
-    for (const p of [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T])
+    }
+
+    for (const p of [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T]) {
       gl.texParameteri(gl.TEXTURE_2D, p, gl.CLAMP_TO_EDGE);
+    }
+
     gl.disable(gl.DITHER);
     gl.enable(gl.BLEND);
     gl.blendFuncSeparate(
@@ -77,14 +96,22 @@ export function paintMinecraftAvatar(
       gl.ONE,
       gl.ONE_MINUS_SRC_ALPHA
     );
-    renderer = { canvas, gl, program, buffer, texture };
+    renderer = { buffer, canvas, gl, program, texture };
   }
-  const { canvas, gl, program } = renderer,
-    b = target.getBoundingClientRect(),
-    w = Math.round(b.width),
-    h = Math.round(b.height);
-  if (canvas.width !== innerWidth) canvas.width = innerWidth;
-  if (canvas.height !== innerHeight) canvas.height = innerHeight;
+
+  const { canvas, gl, program } = renderer;
+  const b = target.getBoundingClientRect();
+  const w = Math.round(b.width);
+  const h = Math.round(b.height);
+
+  if (canvas.width !== innerWidth) {
+    canvas.width = innerWidth;
+  }
+
+  if (canvas.height !== innerHeight) {
+    canvas.height = innerHeight;
+  }
+
   gl.viewport(0, 0, canvas.width, canvas.height);
   gl.useProgram(program);
   gl.uniformMatrix4fv(
@@ -125,17 +152,20 @@ export function paintMinecraftAvatar(
       c.charCodeAt(0)
     )
   );
-  const x = Math.round(b.x) / scale,
-    y = Math.round(b.y) / scale,
-    right = x + w / scale,
-    bottom = y + h / scale,
-    v0 = (upsideDown ? 16 : 8) / 64,
-    v1 = (upsideDown ? 8 : 16) / 64;
+
+  const x = Math.round(b.x) / scale;
+  const y = Math.round(b.y) / scale;
+  const right = x + w / scale;
+  const bottom = y + h / scale;
+  const v0 = (upsideDown ? 16 : 8) / 64;
+  const v1 = (upsideDown ? 8 : 16) / 64;
+
   const quad = (u: number) => {
-    const a = [x, y, u / 64, v0],
-      c = [right, bottom, (u + 8) / 64, v1],
-      left = [x, bottom, u / 64, v1],
-      top = [right, y, (u + 8) / 64, v0];
+    const a = [x, y, u / 64, v0];
+    const c = [right, bottom, (u + 8) / 64, v1];
+    const left = [x, bottom, u / 64, v1];
+    const top = [right, y, (u + 8) / 64, v0];
+
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([...a, ...left, ...c, ...c, ...top, ...a]),
@@ -143,13 +173,25 @@ export function paintMinecraftAvatar(
     );
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   };
+
   quad(8);
-  if (hat) quad(40);
-  if (target.width !== w) target.width = w;
-  if (target.height !== h) target.height = h;
+
+  if (hat) {
+    quad(40);
+  }
+
+  if (target.width !== w) {
+    target.width = w;
+  }
+
+  if (target.height !== h) {
+    target.height = h;
+  }
+
   const context = target.getContext("2d")!;
   context.clearRect(0, 0, w, h);
   context.imageSmoothingEnabled = false;
   context.drawImage(canvas, Math.round(b.x), Math.round(b.y), w, h, 0, 0, w, h);
+
   return true;
 }

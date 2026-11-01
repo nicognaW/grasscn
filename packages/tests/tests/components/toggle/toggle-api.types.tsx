@@ -1,8 +1,10 @@
 import { Toggle, toggleVariants } from "@grasscn/web/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@grasscn/web/ui/toggle-group";
 import * as React from "react";
-const itemRef = React.createRef<HTMLButtonElement>(),
-  groupRef = React.createRef<HTMLDivElement>();
+
+const itemRef = React.createRef<HTMLButtonElement>();
+const groupRef = React.createRef<HTMLDivElement>();
+
 const toggle = (
   <Toggle
     render={<button />}
@@ -14,6 +16,7 @@ const toggle = (
     {"Crafting \u4E16\u754C"}
   </Toggle>
 );
+
 const single = (
   <ToggleGroup
     ref={groupRef}
@@ -26,6 +29,7 @@ const single = (
     <ToggleGroupItem ref={itemRef} value="a" aria-label="Crafting" />
   </ToggleGroup>
 );
+
 const multiple = (
   <ToggleGroup
     defaultValue={["a"]}
@@ -36,9 +40,13 @@ const multiple = (
     <ToggleGroupItem value="a" />
   </ToggleGroup>
 );
+
 // @ts-expect-error The original recipe filter has no outline variant.
 const outline = <Toggle variant="outline" />;
+
 // @ts-expect-error The original recipe filter has no small visual size.
 const small = <ToggleGroup size="sm" multiple={false} />;
-toggleVariants({ variant: "default", size: "default", className: "custom" });
+
+toggleVariants({ className: "custom", size: "default", variant: "default" });
+
 void [toggle, single, multiple, outline, small];

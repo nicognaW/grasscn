@@ -1,45 +1,68 @@
 "use client";
+
 import * as React from "react";
 
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftItemAtlas } from "./minecraft-item-atlas";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftRenderProp,
 } from "./minecraft-render";
+import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   6;
+
 const textWidth = (text: string) =>
-  Math.ceil(Array.from(text).reduce((width, char) => width + advance(char), 0));
+  Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
+
 function splitLines(text: string, width?: number) {
   const lines: string[] = [];
+
   for (let remaining of text.split("\n")) {
-    while (width != null && textWidth(remaining) > width) {
-      const chars = Array.from(remaining);
-      let used = 0,
-        count = 0,
-        space = -1;
+    while (
+      width !== null &&
+      width !== undefined &&
+      textWidth(remaining) > width
+    ) {
+      const chars = [...remaining];
+
+      let count = 0;
+      let used = 0;
+      let space = -1;
+
       while (count < chars.length) {
-        if (chars[count] === " ") space = count;
-        if (used + advance(chars[count]) > width && count > 0) break;
-        used += advance(chars[count++]);
+        if (chars[count] === " ") {
+          space = count;
+        }
+
+        if (used + advance(chars[count]) > width && count > 0) {
+          break;
+        }
+
+        const currentCharacter = chars[count];
+        count += 1;
+        used += advance(currentCharacter);
       }
+
       const end = space < 0 ? Math.max(1, count) : space;
       lines.push(chars.slice(0, end).join(""));
       remaining = chars.slice(end + Number(space >= 0)).join("");
     }
+
     lines.push(remaining);
   }
+
   return lines;
 }
+
 type MinecraftItemTextProps = React.HTMLAttributes<HTMLElement> & {
   render?: MinecraftRenderProp;
   ref?: React.Ref<HTMLElement>;
@@ -49,7 +72,8 @@ type MinecraftItemTextProps = React.HTMLAttributes<HTMLElement> & {
   maxWidth?: number;
   align?: "left" | "center";
 };
-function MinecraftItemText({
+
+const MinecraftItemText = ({
   children,
   className,
   scale = 2,
@@ -61,41 +85,53 @@ function MinecraftItemText({
   style,
   ref,
   ...props
-}: MinecraftItemTextProps) {
+}: MinecraftItemTextProps) => {
   const node = React.useRef<HTMLElement>(null);
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
   const child = null;
   const content = children;
+
   const accessibleText =
     typeof content === "string" || typeof content === "number"
       ? String(content)
       : null;
+
   let text = accessibleText;
-  if (text != null && clipWidth != null && clipWidth > 0)
+
+  if (text != null && clipWidth != null && clipWidth > 0) {
     text = text
       .split("\n")
       .map((line) => {
         if (textWidth(line) <= clipWidth) return line;
+
         let value = "",
           used = 0;
+
         for (const char of Array.from(line)) {
           const next = advance(char);
+
           if (used + next > clipWidth - textWidth("...")) break;
           value += char;
           used += next;
         }
+
         return value + "...";
       })
       .join("\n");
-  const unicode = text != null && /[^\x00-\x7f]/.test(text);
+  }
+
+  const unicode = text != null && /[^\x00-\x7F]/.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
-      loadUnihex().then(() => {
-        if (live) setFontReady(true);
+      void loadUnihex().then(() => {
+        if (live) {
+          setFontReady(true);
+        }
       });
+
       return () => {
         live = false;
       };
@@ -103,25 +139,34 @@ function MinecraftItemText({
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element = node.current!;
-    const update = () =>
+
+    const update = () => {
       setContainerWidth(Math.floor(element.clientWidth / scale));
+    };
+
     update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [scale]);
+
   const supported =
     text != null &&
     (!unicode || fontReady) &&
-    Array.from(text).every(
+    [...text].every(
       (char) =>
-        char === "\n" || /^[\x20-\x7e]$/.test(char) || getUnihexGlyph(char)
+        char === "\n" || /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
     );
+
   const lines = supported && text != null ? splitLines(text, maxWidth) : [];
   const widest = Math.max(0, ...lines.map(textWidth));
   const width = containerWidth ?? maxWidth ?? widest;
+
   const richText = (value: React.ReactNode): React.ReactNode => {
-    if (typeof value === "string" || typeof value === "number")
+    if (typeof value === "string" || typeof value === "number") {
       return (
         <MinecraftItemText
           scale={scale}
@@ -130,10 +175,14 @@ function MinecraftItemText({
           {value}
         </MinecraftItemText>
       );
-    if (Array.isArray(value))
+    }
+
+    if (Array.isArray(value)) {
       return value.map((child, index) => (
         <React.Fragment key={index}>{richText(child)}</React.Fragment>
       ));
+    }
+
     if (
       React.isValidElement<{
         children?: React.ReactNode;
@@ -156,14 +205,17 @@ function MinecraftItemText({
             "sub",
             "sup",
           ].includes(value.type)))
-    )
+    ) {
       return React.cloneElement(
         value,
         undefined,
         richText(value.props.children)
       );
+    }
+
     return value;
   };
+
   const rendered = supported ? (
     <>
       {lines.map((line, index) => (
@@ -191,7 +243,9 @@ function MinecraftItemText({
   ) : (
     content
   );
+
   const Component = MinecraftRender;
+
   return (
     <Component
       as={as}
@@ -199,7 +253,7 @@ function MinecraftItemText({
       ref={node}
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label ${""}`, className)}
+      className={cn(`mc-label`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -214,6 +268,8 @@ function MinecraftItemText({
       {rendered}
     </Component>
   );
-}
+};
+
 export { MinecraftItemText };
+
 export type { MinecraftItemTextProps };

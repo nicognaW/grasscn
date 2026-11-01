@@ -1,45 +1,55 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
 for (const component of ["sheet", "drawer"]) {
   test(`${component} preserves keyboard dismissal, accessible text, CJK input and close focus`, async ({
     page,
   }) => {
     await page.goto(`/?component=${component}`);
+
     const trigger = page.getByRole("button", {
-      name: "Open panel",
       exact: true,
+      name: "Open panel",
     });
+
     await trigger.focus();
     await page.keyboard.press("Enter");
+
     const panel = page.getByRole("dialog", {
-      name: "World settings 世界",
       exact: true,
+      name: "World settings 世界",
     });
+
     await expect(panel).toBeVisible();
     await expect(panel).toHaveAccessibleDescription("Settings 第二行");
+
     for (const text of await panel
       .locator("[data-mc-label-layout-ready]")
-      .all())
+      .all()) {
       await expect(text).toHaveAttribute("data-mc-label-layout-ready", "true");
+    }
+
     const input = panel.getByRole("textbox", {
-      name: "World name",
       exact: true,
+      name: "World name",
     });
+
     await input.fill("你好，世界");
     await expect(input).toHaveValue("你好，世界");
     await expect(input).toHaveAttribute("spellcheck", "false");
-    await panel.getByRole("button", { name: "Save", exact: true }).click();
+    await panel.getByRole("button", { exact: true, name: "Save" }).click();
     await expect(page.locator("#count")).toHaveText("1");
     await page.keyboard.press("Escape");
     await expect(panel).toHaveCount(0);
     await expect(trigger).toBeFocused();
     await trigger.click();
-    await panel.getByRole("button", { name: "Cancel", exact: true }).click();
+    await panel.getByRole("button", { exact: true, name: "Cancel" }).click();
     await expect(panel).toHaveCount(0);
     await expect(trigger).toBeFocused();
   });
   test(`${component} supports every viewport edge`, async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1280 });
+
     for (const side of ["top", "right", "bottom", "left"]) {
       await page.goto(`/?component=${component}&side=${side}&open=1`);
       const panel = page.getByRole("dialog");
@@ -47,6 +57,7 @@ for (const component of ["sheet", "drawer"]) {
       await expect
         .poll(async () => {
           const r = (await panel.boundingBox())!;
+
           return Math.round(
             side === "top"
               ? r.y
@@ -64,19 +75,19 @@ for (const component of ["sheet", "drawer"]) {
     page,
   }) => {
     await page.goto(`/?component=${component}&controlled=1&asChild=1`);
-    await page.getByRole("button", { name: "Open panel", exact: true }).click();
+    await page.getByRole("button", { exact: true, name: "Open panel" }).click();
     await expect(page.getByRole("dialog")).toBeVisible();
-    await page
-      .locator("#read-ref")
-      .evaluate((n: HTMLButtonElement) => n.click());
+    await page.locator("#read-ref").evaluate((n: HTMLButtonElement) => {
+      n.click();
+    });
     await expect(page.locator("#ref-tag")).toHaveText("DIV");
-    await page
-      .locator("#external")
-      .evaluate((n: HTMLButtonElement) => n.click());
+    await page.locator("#external").evaluate((n: HTMLButtonElement) => {
+      n.click();
+    });
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await page.goto(`/?component=${component}&disabled=1`);
     await expect(
-      page.getByRole("button", { name: "Open panel", exact: true })
+      page.getByRole("button", { exact: true, name: "Open panel" })
     ).toBeDisabled();
     await expect(page.getByRole("dialog")).toHaveCount(0);
   });
@@ -87,12 +98,14 @@ for (const component of ["sheet", "drawer"]) {
     const panel = page.getByRole("dialog");
     await expect(panel).toBeVisible();
     await panel.getByRole("textbox").focus();
-    for (let i = 0; i < 8; i++) {
+
+    for (let i = 0; i < 8; i += 1) {
       await page.keyboard.press("Tab");
       expect(
         await panel.evaluate((n) => n.contains(document.activeElement))
       ).toBe(true);
     }
+
     expect(await panel.evaluate((n) => n.scrollHeight > n.clientHeight)).toBe(
       true
     );
@@ -104,36 +117,40 @@ for (const component of ["sheet", "drawer"]) {
   }) => {
     await page.addInitScript(() => {
       (window as any).sounds = [];
-      HTMLMediaElement.prototype.play = function () {
+      HTMLMediaElement.prototype.play = function play() {
         (window as any).sounds.push({
+          rate: this.playbackRate,
           source: this.src,
           volume: this.volume,
-          rate: this.playbackRate,
         });
+
         return Promise.resolve();
       };
     });
     await page.goto(`/?component=${component}`);
+
     const trigger = page.getByRole("button", {
-      name: "Open panel",
       exact: true,
+      name: "Open panel",
     });
+
     await trigger.hover();
     expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
     await trigger.click();
     await page
       .getByRole("dialog")
-      .getByRole("button", { name: "Cancel", exact: true })
+      .getByRole("button", { exact: true, name: "Cancel" })
       .click();
     expect(await page.evaluate(() => (window as any).sounds)).toEqual(
       Array.from({ length: 2 }, () => ({
+        rate: 1,
         source: minecraftClickSound,
         volume: 0.25,
-        rate: 1,
       }))
     );
   });
 }
+
 test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
   await page.goto("/?component=drawer&side=bottom&open=1");
   const panel = page.getByRole("dialog");
@@ -154,6 +171,7 @@ test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
     .toBeGreaterThan(0);
   await expect(panel).toHaveCount(0);
 });
+
 test("Drawer supports controlled Base UI snap points", async ({ page }) => {
   await page.goto("/?component=drawer&side=bottom&open=1&snap=1");
   const panel = page.getByRole("dialog");
@@ -162,9 +180,9 @@ test("Drawer supports controlled Base UI snap points", async ({ page }) => {
   await expect
     .poll(async () => Math.round((await panel.boundingBox())!.y))
     .toBe(450);
-  await panel
-    .locator("#snap-next")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await panel.locator("#snap-next").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.locator("#snap")).toHaveText("1");
   await expect
     .poll(async () => Math.round((await panel.boundingBox())!.y))

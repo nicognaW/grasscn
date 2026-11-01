@@ -25,16 +25,18 @@ const schema = z.object({
     .string()
     .min(1, "Enter your player name")
     .min(2, "Use at least two characters"),
-  world: z.string().min(1, "Enter a world name"),
   notes: z.string(),
+  world: z.string().min(1, "Enter a world name"),
 });
+
 type Settings = z.infer<typeof schema>;
 
-export function FormExample({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const form = useForm<Settings>({
+    defaultValues: { name: "", notes: "", world: "My world" },
     resolver: zodResolver(schema),
-    defaultValues: { name: "", world: "My world", notes: "" },
   });
+
   const [saved, setSaved] = React.useState<Settings | null>(null);
   const [disabled, setDisabled] = React.useState(false);
   const [width, setWidth] = React.useState(240);
@@ -42,18 +44,28 @@ export function FormExample({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
   const id = React.useId();
   React.useLayoutEffect(() => {
     const element = host.current!;
-    const measure = () => setWidth(Math.floor(element.clientWidth / scale));
+
+    const measure = () => {
+      setWidth(Math.floor(element.clientWidth / scale));
+    };
+
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [scale]);
+
   return (
     <>
       <Button
         scale={scale}
         type="button"
-        onClick={() => setDisabled((value) => !value)}
+        onClick={() => {
+          setDisabled((value) => !value);
+        }}
       >
         {disabled ? "Enable fields" : "Disable fields"}
       </Button>
@@ -65,8 +77,8 @@ export function FormExample({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
         style={{
           display: "grid",
           gap: 12 * scale,
-          minWidth: 0,
           maxWidth: 420 * scale,
+          minWidth: 0,
         }}
       >
         <FieldSet disabled={disabled}>
@@ -158,7 +170,7 @@ export function FormExample({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
                       disabled={disabled}
                       aria-describedby={`${id}-notes-hint`}
                       placeholder="What will you build?"
-                      style={{ width: "100%", height: 48 * scale }}
+                      style={{ height: 48 * scale, width: "100%" }}
                     />
                     <FieldDescription
                       scale={scale}
@@ -211,4 +223,4 @@ export function FormExample({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </div>
     </>
   );
-}
+};

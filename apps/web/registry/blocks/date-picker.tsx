@@ -12,8 +12,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DatePickerDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+export const DatePickerDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const [date, setDate] = React.useState<Date>();
+
   return (
     <Popover scale={scale}>
       <PopoverTrigger
@@ -30,7 +31,7 @@ export function DatePickerDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       <PopoverContent
         data-slot="date-picker-content"
         align="start"
-        style={{ width: "auto", padding: 0 }}
+        style={{ padding: 0, width: "auto" }}
       >
         <Calendar
           scale={scale}
@@ -42,10 +43,11 @@ export function DatePickerDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </PopoverContent>
     </Popover>
   );
-}
+};
 
-export function DatePickerRangeDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
+export const DatePickerRangeDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   const [range, setRange] = React.useState<DateRange>();
+
   return (
     <Popover scale={scale}>
       <PopoverTrigger
@@ -64,7 +66,7 @@ export function DatePickerRangeDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       <PopoverContent
         data-slot="date-picker-content"
         align="start"
-        style={{ width: "auto", padding: 0 }}
+        style={{ padding: 0, width: "auto" }}
       >
         <Calendar
           scale={scale}
@@ -80,4 +82,4 @@ export function DatePickerRangeDemo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
       </PopoverContent>
     </Popover>
   );
-}
+};

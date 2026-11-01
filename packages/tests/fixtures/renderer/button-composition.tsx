@@ -1,16 +1,20 @@
 import { Button } from "@grasscn/web/ui/button";
 import * as React from "react";
-export function ButtonCompositionFixture() {
-  const p = new URLSearchParams(location.search),
-    scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-    mode = p.get("composition") ?? "split",
-    label = p.get("label") ?? "Button",
-    [count, setCount] = React.useState(0);
+
+export const ButtonCompositionFixture = () => {
+  const p = new URLSearchParams(location.search);
+  const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+  const mode = p.get("composition") ?? "split";
+  const label = p.get("label") ?? "Button";
+  const [count, setCount] = React.useState(0);
+
   let content: React.ReactNode;
-  if (mode === "split") content = [label.slice(0, 3), label.slice(3)];
-  else if (mode === "numeric")
+
+  if (mode === "split") {
+    content = [label.slice(0, 3), label.slice(3)];
+  } else if (mode === "numeric") {
     content = [label.slice(0, -2), Number(label.at(-2)), Number(label.at(-1))];
-  else if (mode === "fragments")
+  } else if (mode === "fragments") {
     content = (
       <>
         {label.slice(0, 2)}
@@ -20,9 +24,9 @@ export function ButtonCompositionFixture() {
         </React.Fragment>
       </>
     );
-  else if (mode === "empty")
+  } else if (mode === "empty") {
     content = [label.slice(0, 3), null, false, undefined, label.slice(3)];
-  else
+  } else {
     content = [
       <svg
         key="icon"
@@ -37,12 +41,16 @@ export function ButtonCompositionFixture() {
         key="rich"
         data-testid="consumer-rich"
         data-preserved="yes"
-        onClick={() => setCount((v) => v + 1)}
+        onClick={() => {
+          setCount((v) => v + 1);
+        }}
       >
         Rich content
       </span>,
       " Tail",
     ];
+  }
+
   return (
     <>
       <Button
@@ -50,8 +58,8 @@ export function ButtonCompositionFixture() {
         scale={scale}
         disabled={p.get("state") === "disabled"}
         style={{
-          position: "fixed",
           left: Number(p.get("x") ?? 16) * scale,
+          position: "fixed",
           top: Number(p.get("y") ?? 16) * scale,
           width: Number(p.get("width") ?? 200) * scale,
         }}
@@ -62,4 +70,4 @@ export function ButtonCompositionFixture() {
       <output aria-label="Rich child events">{count}</output>
     </>
   );
-}
+};

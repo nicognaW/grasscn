@@ -11,11 +11,13 @@ export function compare(expected: PNG, actual: PNG) {
     expected.height,
   ]);
   let mismatchedPixels = 0;
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += +mismatch;
     diff.data.set(
       mismatch
@@ -29,7 +31,8 @@ export function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
 
 export function formsNativeTests(component: "form" | "field") {
@@ -37,36 +40,38 @@ export function formsNativeTests(component: "form" | "field") {
   const directories = ["tests/reference/label"];
   test(`${component} pixel comparator detects a changed pixel`, () => {
     const manifest = JSON.parse(
-        readFileSync(
-          pixelPerfectFile(`${directories[0]}/manifest.json`),
-          "utf8"
-        )
-      ),
-      expected = PNG.sync.read(
-        readFileSync(
-          pixelPerfectFile(
-            `${directories[0]}/captures/${manifest.cases[0].name}`
-          )
-        )
-      ),
-      mutated = PNG.sync.read(PNG.sync.write(expected));
+      readFileSync(pixelPerfectFile(`${directories[0]}/manifest.json`), "utf-8")
+    );
+
+    const expected = PNG.sync.read(
+      readFileSync(
+        pixelPerfectFile(`${directories[0]}/captures/${manifest.cases[0].name}`)
+      )
+    );
+
+    const mutated = PNG.sync.read(PNG.sync.write(expected));
+
     mutated.data[0] ^= 1;
     expect(compare(expected, mutated).mismatchedPixels).toBe(1);
   });
+
   for (const directory of directories) {
     const manifest = JSON.parse(
-        readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
-      ),
-      parts =
-        component === "form"
-          ? ["label", "description", "message"]
-          : ["label", "legend", "title", "description"];
-    for (const part of parts)
-      for (const c of manifest.cases)
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+    );
+
+    const parts =
+      component === "form"
+        ? ["label", "description", "message"]
+        : ["label", "legend", "title", "description"];
+
+    for (const part of parts) {
+      for (const c of manifest.cases) {
         test(`${component} ${part} native pixels: ${c.name}`, async ({
           page,
         }, info) => {
           await page.setViewportSize({ width: 1536, height: 900 });
+
           const params = new URLSearchParams({
             component,
             native: "1",
@@ -82,6 +87,7 @@ export function formsNativeTests(component: "form" | "field") {
             background: c.background ?? "#202020",
             align: c.alignment ?? "left",
           });
+
           if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
@@ -91,29 +97,36 @@ export function formsNativeTests(component: "form" | "field") {
             "data-mc-label-layout-ready",
             "true"
           );
+
           for (const line of await subject
             .locator("[data-mc-label-ready]")
             .all())
             await expect(line).toHaveAttribute("data-mc-label-ready", "true");
           await page.evaluate(
-            () =>
-              new Promise<void>((resolve) =>
+            async () =>
+              await new Promise<void>((resolve) =>
                 requestAnimationFrame(() =>
-                  requestAnimationFrame(() => resolve())
+                  requestAnimationFrame(() => {
+                    resolve();
+                  })
                 )
               )
           );
+
           const bytes = readFileSync(
             pixelPerfectFile(`${directory}/captures/${c.name}`)
           );
+
           expect(createHash("sha256").update(bytes).digest("hex")).toBe(
             c.sha256
           );
+
           const actualBytes = await subject.screenshot(),
             { mismatchedPixels, diff } = compare(
               PNG.sync.read(bytes),
               PNG.sync.read(actualBytes)
             );
+
           writeFileSync(info.outputPath("actual.png"), actualBytes);
           writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
           writeFileSync(
@@ -128,5 +141,7 @@ export function formsNativeTests(component: "form" | "field") {
           );
           expect(mismatchedPixels).toBe(0);
         });
+      }
+    }
   }
 }

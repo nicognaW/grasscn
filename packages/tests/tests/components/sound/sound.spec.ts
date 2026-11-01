@@ -1,14 +1,16 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
-import { test, expect, type Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-import { testRoot, referenceFile } from "@tests/paths";
+import { referenceFile } from "@tests/paths";
 
 const provenance = JSON.parse(
-  readFileSync(referenceFile("sound-provenance.json"), "utf8")
+  readFileSync(referenceFile("sound-provenance.json"), "utf-8")
 );
-const voices = (page: Page) =>
+
+const voices = async (page: Page) =>
   page.evaluate(
     () =>
       (window as any).__soundVoices as {
@@ -17,19 +19,22 @@ const voices = (page: Page) =>
         source: string;
       }[]
   );
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     (window as any).__soundVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__soundVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
 });
+
 test("Click sound contains the exact original OGG and decodes in the browser", async ({
   page,
 }) => {
@@ -40,21 +45,26 @@ test("Click sound contains the exact original OGG and decodes in the browser", a
     provenance.sha256
   );
   await page.goto("/");
+
   const result = await page.evaluate(async (source) => {
     const context = new AudioContext();
+
     try {
       const audio = await context.decodeAudioData(
         await (await fetch(source)).arrayBuffer()
       );
+
       return { channels: audio.numberOfChannels, duration: audio.duration };
     } finally {
       await context.close();
     }
   }, minecraftClickSound);
+
   expect(result.channels).toBe(2);
   expect(result.duration).toBeGreaterThan(0);
 });
-for (const component of ["button", "checkbox"])
+
+for (const component of ["button", "checkbox"]) {
   test(`${component} plays once per activation, with native pitch and volume`, async ({
     page,
   }) => {
@@ -64,7 +74,7 @@ for (const component of ["button", "checkbox"])
     expect(await voices(page)).toHaveLength(0);
     await control.click();
     expect(await voices(page)).toEqual([
-      { source: minecraftClickSound, volume: 0.25, rate: 1 },
+      { rate: 1, source: minecraftClickSound, volume: 0.25 },
     ]);
     await page.keyboard.press("Space");
     expect(await voices(page)).toHaveLength(2);
@@ -72,6 +82,8 @@ for (const component of ["button", "checkbox"])
     await page.locator("[data-subject]").dispatchEvent("click");
     expect(await voices(page)).toHaveLength(0);
   });
+}
+
 test("Slider plays on pointer release, with no press, drag or keyboard tick sound", async ({
   page,
 }) => {
@@ -93,6 +105,7 @@ test("Slider plays on pointer release, with no press, drag or keyboard tick soun
   await page.keyboard.press("ArrowRight");
   expect(await voices(page)).toHaveLength(1);
 });
+
 test("Input focus, selection and typing remain silent", async ({ page }) => {
   await page.goto("/?component=input");
   await page.locator("[data-subject]").fill("Silent");

@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { testRoot, webFile } from "@tests/paths";
+import { webFile } from "@tests/paths";
+
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`, async ({
     page,
   }) => {
@@ -15,14 +16,28 @@ for (const scale of [2])
     const card = page.locator("#component-form");
     await expect(card).toBeVisible();
     await expect(page.locator("h1")).toHaveText("Form");
-    const form = card.getByRole("form", { name: "Player and world settings" }),
-      name = form.getByRole("textbox", { name: "Player name", exact: true }),
-      world = form.getByRole("textbox", { name: "World name", exact: true }),
-      notes = form.getByRole("textbox", { name: "Journey notes", exact: true });
+
+    const form = card.getByRole("form", { name: "Player and world settings" });
+
+    const name = form.getByRole("textbox", {
+      name: "Player name",
+      exact: true,
+    });
+
+    const world = form.getByRole("textbox", {
+      name: "World name",
+      exact: true,
+    });
+
+    const notes = form.getByRole("textbox", {
+      exact: true,
+      name: "Journey notes",
+    });
+
     await expect(form.locator("[data-slot=field-set]")).toHaveCount(1);
     await expect(form.locator("[data-slot=field]")).toHaveCount(3);
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(name).toBeFocused();
     await expect(name).toHaveAttribute("aria-invalid", "true");
@@ -33,12 +48,14 @@ for (const scale of [2])
       await name.evaluate((n) =>
         (n.getAttribute("aria-describedby") ?? "")
           .split(" ")
-          .every((id) => !!document.getElementById(id))
+          .every(
+            (id) => id !== "" && !!document.querySelector(`#${CSS.escape(id)}`)
+          )
       )
     ).toBe(true);
     await name.fill("你");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       form.getByRole("alert").filter({ hasText: "Use at least two characters" })
@@ -47,7 +64,7 @@ for (const scale of [2])
     await world.fill("草地方块");
     await notes.fill("第一行\nSecond line\n第三行");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       card
@@ -61,6 +78,7 @@ for (const scale of [2])
     ).toHaveText("草地方块");
     await expect(name).toHaveAttribute("aria-invalid", "false");
     await expect(notes).toHaveValue("第一行\nSecond line\n第三行");
+
     for (const control of [name, world, notes]) {
       await expect(control).toHaveAttribute("spellcheck", "false");
       expect(
@@ -69,33 +87,38 @@ for (const scale of [2])
         )
       ).toBe(scale);
     }
+
     await card
-      .getByRole("button", { name: "Disable fields", exact: true })
+      .getByRole("button", { exact: true, name: "Disable fields" })
       .click();
+
     for (const control of [
       name,
       world,
       notes,
-      form.getByRole("button", { name: "Save player", exact: true }),
-    ])
+      form.getByRole("button", { exact: true, name: "Save player" }),
+    ]) {
       await expect(control).toBeDisabled();
+    }
+
     await card
-      .getByRole("button", { name: "Enable fields", exact: true })
+      .getByRole("button", { exact: true, name: "Enable fields" })
       .click();
-    await form.getByRole("button", { name: "Reset", exact: true }).click();
+    await form.getByRole("button", { exact: true, name: "Reset" }).click();
     await expect(name).toHaveValue("");
     await expect(world).toHaveValue("My world");
     await expect(notes).toHaveValue("");
     await expect(card.getByLabel("Saved player")).toHaveCount(0);
     await world.fill("");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       form.getByRole("alert").filter({ hasText: "Enter a world name" })
     ).toBeVisible();
     expect(errors).toEqual([]);
   });
+}
 
 test("Field is consolidated into Form", async ({ page }) => {
   await page.goto(`${origin}#/components/field`);
@@ -104,15 +127,17 @@ test("Field is consolidated into Form", async ({ page }) => {
   await expect(page.locator("#component-field")).toHaveCount(0);
   const nav = page.getByRole("navigation", { name: "Components" });
   await expect(
-    nav.getByRole("link", { name: "Form", exact: true })
+    nav.getByRole("link", { exact: true, name: "Form" })
   ).toHaveCount(1);
   await expect(
-    nav.getByRole("link", { name: "Field", exact: true })
+    nav.getByRole("link", { exact: true, name: "Field" })
   ).toHaveCount(0);
-  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf8"));
+  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf-8"));
+
   const form = registry.items.find(
     (item: { name: string }) => item.name === "form"
   );
+
   expect(
     form.files.some(
       (file: { path: string }) => file.path === "registry/ui/field.tsx"

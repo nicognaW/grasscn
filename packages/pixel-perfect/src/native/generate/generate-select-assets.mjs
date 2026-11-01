@@ -1,32 +1,42 @@
+// Ordered entries preserve generated source and provenance byte order.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+
 const directory = process.argv[2];
-if (!directory)
+
+if (!directory) {
   throw new Error("Pass the original menu-list texture directory");
+}
+
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
-    "utf8"
+    "utf-8"
   )
 );
-const textures = {},
-  sources = {};
+
+const textures = {};
+const sources = {};
+
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+
 for (const name of [
   "menu_list_background",
   "header_separator",
   "footer_separator",
 ]) {
-  const bytes = await readFile(path.join(directory, `${name}.png`)),
-    member = `assets/minecraft/textures/gui/${name}.png`;
+  const bytes = await readFile(path.join(directory, `${name}.png`));
+  const member = `assets/minecraft/textures/gui/${name}.png`;
+
   assert.equal(hash(bytes), inventory.assets[member].sha256);
   textures[name] = `url("data:image/png;base64,${bytes.toString("base64")}")`;
   sources[member] = { sha256: hash(bytes) };
 }
+
 for (const name of [
   "button",
   "button_highlighted",
@@ -47,23 +57,28 @@ for (const name of [
       : {}),
   };
 }
+
 await writeFile(
   webFile("registry/ui/minecraft-select-assets.ts"),
-  "// Original Minecraft list textures: Mojang Studios. Unchanged PNG bytes.\nexport const minecraftSelectAssets = " +
-    JSON.stringify(textures) +
-    " as const\n"
+  `// Original Minecraft list textures: Mojang Studios. Unchanged PNG bytes.\nexport const minecraftSelectAssets = ${JSON.stringify(
+    textures
+  )} as const\n`
 );
+
 await writeFile(
   pixelPerfectFile("tests/reference/select/asset-provenance.json"),
-  JSON.stringify(
-    {
-      sourceJarSha256: inventory.jarSha256,
-      sources,
-      rendering:
+  `${JSON.stringify(
+    Object.fromEntries([
+      ["sourceJarSha256", inventory.jarSha256],
+      ["sources", sources],
+      [
+        "rendering",
         "Original CycleButton.displayOnlyValue uses AbstractButton sprites and scrolling label with2-pixel margins. Popup supplies controlled labels and geometry to original LanguageSelectionList and Entry classes, through reflection only for constructor/private label access. Rows270x18, content padding2, label centered at row y+5; selection1-pixel outline white when the list has a focused entry, otherwise808080, inside black. Native menu-list background and2-pixel header/footer separators are retained. Scrollbar x=rowRight+8, width6; native integer thumb geometry. Web hover-to-focus, popup positioning, optional grouping and commit behavior are Radix composition. Native pure-hover cases use a public pointer-move override to hold selection/focus fixed. Original CycleButton opening click uses ui.button.click; original language-list entry selection and scrolling are silent.",
-    },
+      ],
+    ]),
     null,
     2
-  ) + "\n"
+  )}\n`
 );
+
 console.log("Generated original Select textures and source pins");

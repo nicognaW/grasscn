@@ -10,34 +10,41 @@ import {
   TableCaption,
 } from "@grasscn/web/ui/table";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  width = Number(p.get("width") ?? 200),
-  height = Number(p.get("height") ?? 9),
-  part = p.get("part") ?? "app",
-  label = p.get("label") ?? "Minecraft";
-export function TableFixture() {
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const width = Number(p.get("width") ?? 200);
+const height = Number(p.get("height") ?? 9);
+const part = p.get("part") ?? "app";
+const label = p.get("label") ?? "Minecraft";
+
+export const TableFixture = () => {
   React.useLayoutEffect(() => {
-    const bg = p.get("background") ?? "#202020",
-      html = document.documentElement.style.background,
-      body = document.body.style.background;
+    const bg = p.get("background") ?? "#202020";
+    const html = document.documentElement.style.background;
+    const body = document.body.style.background;
+
     document.documentElement.style.background = bg;
     document.body.style.background = bg;
+
     return () => {
       document.documentElement.style.background = html;
       document.body.style.background = body;
     };
   }, []);
-  const [selected, setSelected] = React.useState(false),
-    [count, setCount] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLTableElement>(null);
+
+  const [selected, setSelected] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLTableElement>(null);
+
   const layout = {
     maxTextWidth: p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined,
     textAlign:
       p.get("alignment") === "center" ? ("center" as const) : ("left" as const),
   };
-  if (p.has("native"))
+
+  if (p.has("native")) {
     return (
       <Table
         scale={scale}
@@ -113,6 +120,8 @@ export function TableFixture() {
         )}
       </Table>
     );
+  }
+
   return (
     <>
       <Table scale={scale} ref={ref} aria-label="World statistics">
@@ -129,7 +138,9 @@ export function TableFixture() {
             data-state={selected ? "selected" : undefined}
             aria-selected={selected}
             tabIndex={0}
-            onClick={() => setSelected((v) => !v)}
+            onClick={() => {
+              setSelected((v) => !v);
+            }}
           >
             <TableCell>你好，世界</TableCell>
             <TableCell>
@@ -166,7 +177,12 @@ export function TableFixture() {
           </TableRow>
         </TableFooter>
       </Table>
-      <button id="ref" onClick={() => setTag(ref.current?.tagName ?? "")}>
+      <button
+        id="ref"
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
+      >
         Read ref
       </button>
       <output id="tag">{tag}</output>
@@ -174,4 +190,4 @@ export function TableFixture() {
       <output id="selected">{String(selected)}</output>
     </>
   );
-}
+};

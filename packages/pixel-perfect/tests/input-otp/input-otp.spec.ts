@@ -3,40 +3,54 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 test.describe.configure({ mode: "parallel" });
-const dir = "tests/reference/input-otp",
-  manifest = JSON.parse(
-    readFileSync(pixelPerfectFile(dir + "/manifest.json"), "utf8")
-  );
-for (const c of manifest.cases)
+
+const dir = "tests/reference/input-otp";
+
+const manifest = JSON.parse(
+  readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
+);
+
+for (const c of manifest.cases) {
   test(`InputOTP actual native EditBox slot ${c.name}`, async ({
     page,
   }, info) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
     await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+
     const q = new URLSearchParams({
+      background: c.background,
       component: "input-otp",
+      height: String(c.height),
       native: "1",
       scale: String(c.scale),
-      text: c.text,
       state: c.state,
+      text: c.text,
+      width: String(c.width),
       x: String(c.x),
       y: String(c.y),
-      width: String(c.width),
-      height: String(c.height),
-      background: c.background,
     });
+
     await page.goto(`/?${q}`);
-    const subject = page.locator("[data-subject]"),
-      mirror = subject.locator("input"),
-      input = page.getByRole("textbox", { name: "One-time code" });
+
+    const subject = page.locator("[data-subject]");
+    const mirror = subject.locator("input");
+    const input = page.getByRole("textbox", { name: "One-time code" });
+
     await expect(mirror).toHaveAttribute("data-mc-ready", "true");
-    if (/[^\x00-\x7f]/.test(c.text))
+
+    if (/[^\x00-\x7F]/.test(c.text)) {
       await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
-    if (c.state.startsWith("focus")) await input.focus();
+    }
+
+    if (c.state.startsWith("focus")) {
+      await input.focus();
+    }
+
     await page.mouse.move(0, 0);
     await page.clock.runFor(c.caretMs);
     await expect(subject).toHaveAttribute(
@@ -46,34 +60,39 @@ for (const c of manifest.cases)
     await expect(mirror).toHaveAttribute("data-mc-ready", "true");
     const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`));
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
-    const actualBytes = await subject.screenshot(),
-      { mismatchedPixels, diff } = compare(
-        PNG.sync.read(bytes),
-        PNG.sync.read(actualBytes)
-      );
+
+    const actualBytes = await subject.screenshot();
+
+    const { mismatchedPixels, diff } = compare(
+      PNG.sync.read(bytes),
+      PNG.sync.read(actualBytes)
+    );
+
     writeFileSync(info.outputPath("actual.png"), actualBytes);
     writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
     writeFileSync(
       info.outputPath("metrics.json"),
       JSON.stringify({
-        component: "input-otp",
-        manifest: dir + "/manifest.json",
-        part: "slot",
         alias: "base",
         case: c.name,
+        component: "input-otp",
+        manifest: dir + "/manifest.json",
         mismatchedPixels,
+        part: "slot",
         tolerance: 0,
       })
     );
     expect(mismatchedPixels).toBe(0);
   });
+}
+
 test("InputOTP comparator rejects one changed native pixel", () => {
   const e = PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile(`${dir}/captures/${manifest.cases[0].name}`)
-      )
-    ),
-    a = PNG.sync.read(PNG.sync.write(e));
+    readFileSync(pixelPerfectFile(`${dir}/captures/${manifest.cases[0].name}`))
+  );
+
+  const a = PNG.sync.read(PNG.sync.write(e));
+
   a.data[0] ^= 1;
   expect(compare(e, a).mismatchedPixels).toBe(1);
 });

@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Calendar single selection, disabled dates, keyboard and month navigation use actual DayPicker", async ({
   page,
 }) => {
@@ -19,6 +20,7 @@ test("Calendar single selection, disabled dates, keyboard and month navigation u
   await calendar.getByRole("button", { name: /next month/i }).click();
   await expect(calendar).toContainText("November 2026");
 });
+
 test("DatePicker opens by keyboard, selects value, submits form text and restores focus", async ({
   page,
 }) => {
@@ -37,6 +39,7 @@ test("DatePicker opens by keyboard, selects value, submits form text and restore
   await page.keyboard.press("Escape");
   await expect(popup).toHaveCount(0);
 });
+
 test("Calendar range is genuine DayPicker range selection with two months", async ({
   page,
 }) => {
@@ -62,17 +65,18 @@ test("Calendar multiple selection and custom Minecraft month/year dropdowns pres
   await expect(page.locator("#multiple")).toHaveText("1");
   const dropdown = page.getByLabel("Dropdown calendar", { exact: true });
   await dropdown.getByRole("combobox", { name: /month/i }).click();
-  await page.getByRole("option", { name: "November", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "November" }).click();
   await expect(
     dropdown.getByRole("gridcell", { name: /November 10th/ })
   ).toBeVisible();
   await dropdown.getByRole("combobox", { name: /year/i }).focus();
   await page.keyboard.press("Enter");
-  await page.getByRole("option", { name: "2027", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "2027" }).click();
   await expect(
     dropdown.getByRole("gridcell", { name: /November 10th, 2027/ })
   ).toBeVisible();
 });
+
 test("Date picker composition uses a disabled trigger to block opening", async ({
   page,
 }) => {
@@ -82,6 +86,7 @@ test("Date picker composition uses a disabled trigger to block opening", async (
   ).toBeDisabled();
   await expect(page.locator("[data-slot=date-picker-content]")).toHaveCount(0);
 });
+
 test("Date picker example owns selection across close and reopen", async ({
   page,
 }) => {
@@ -104,12 +109,13 @@ test("Calendar cell and navigation activation preserve original one-voice click 
 }) => {
   await page.addInitScript(() => {
     (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).voices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
@@ -6,12 +7,14 @@ import { playMinecraftClick } from "./minecraft-sound";
 import { Select, SelectTrigger } from "./select";
 
 import "./minecraft-native-select.css";
+
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
   size?: "default";
   scale?: 1 | 2 | 3;
   wrapperProps?: React.ComponentProps<"div">;
 };
-function NativeSelect({
+
+const NativeSelect = ({
   size = "default",
   scale = 2,
   wrapperProps,
@@ -24,59 +27,78 @@ function NativeSelect({
   onKeyDown,
   multiple,
   ...props
-}: NativeSelectProps) {
-  if (size !== "default")
+}: NativeSelectProps) => {
+  if (size !== "default") {
     throw Error(
       "Minecraft native select supports the original default CycleButton height only"
     );
-  const node = React.useRef<HTMLSelectElement>(null),
-    [label, setLabel] = React.useState("");
+  }
+
+  const node = React.useRef<HTMLSelectElement>(null);
+  const [label, setLabel] = React.useState("");
+
   const forwarded = React.useCallback(
     (element: HTMLSelectElement | null) => {
       node.current = element;
+
       if (typeof ref === "function") {
         const cleanup = ref(element);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             node.current = null;
             cleanup();
           };
+        }
+
         return;
       }
-      if (ref) ref.current = element;
+
+      if (ref) {
+        ref.current = element;
+      }
     },
     [ref]
   );
+
   React.useLayoutEffect(() => {
     const element = node.current;
-    if (!element) return;
+
+    if (!element) {
+      return;
+    }
+
     let frame = 0;
-    const update = () =>
-        setLabel(
-          Array.from(element.selectedOptions)
-            .map((option) => option.label)
-            .join(", ")
-        ),
-      deferred = () => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(update);
-      };
+
+    const update = () => {
+      setLabel(
+        [...element.selectedOptions].map((option) => option.label).join(", ")
+      );
+    };
+
+    const deferred = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+
     update();
     const observer = new MutationObserver(update);
     observer.observe(element, {
+      attributeFilter: ["selected", "label", "value"],
+      attributes: true,
+      characterData: true,
       childList: true,
       subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ["selected", "label", "value"],
     });
     element.form?.addEventListener("reset", deferred);
+
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       element.form?.removeEventListener("reset", deferred);
     };
   }, [props.value, props.defaultValue, props.form, children, multiple]);
+
   return (
     <div
       {...wrapperProps}
@@ -92,28 +114,36 @@ function NativeSelect({
         data-slot="native-select"
         data-size={size}
         ref={forwarded}
-        className={cn(`mc-native-select-control ${""}`, className)}
+        className={cn(`mc-native-select-control`, className)}
         style={style}
         multiple={multiple}
         {...props}
         onChange={(event) => {
           onChange?.(event);
           queueMicrotask(() => {
-            if (node.current)
+            if (node.current) {
               setLabel(
                 Array.from(node.current.selectedOptions)
                   .map((option) => option.label)
                   .join(", ")
               );
+            }
           });
         }}
         onPointerDown={(event) => {
           onPointerDown?.(event);
-          if (!event.defaultPrevented && !props.disabled && event.button === 0)
+
+          if (
+            !event.defaultPrevented &&
+            !props.disabled &&
+            event.button === 0
+          ) {
             playMinecraftClick();
+          }
         }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
+
           if (
             !event.defaultPrevented &&
             !props.disabled &&
@@ -121,8 +151,9 @@ function NativeSelect({
             (event.key === "Enter" ||
               event.key === " " ||
               (event.altKey && event.key === "ArrowDown"))
-          )
+          ) {
             playMinecraftClick();
+          }
         }}
       >
         {children}
@@ -136,9 +167,9 @@ function NativeSelect({
             disabled={props.disabled}
           >
             <SelectTrigger
-              aria-disabled={props.disabled || undefined}
+              aria-disabled={props.disabled ?? undefined}
               tabIndex={-1}
-              style={{ width: "100%", height: "100%" }}
+              style={{ height: "100%", width: "100%" }}
             >
               {label}
             </SelectTrigger>
@@ -147,30 +178,34 @@ function NativeSelect({
       )}
     </div>
   );
-}
-function NativeSelectOption({
+};
+
+const NativeSelectOption = ({
   className,
   ...props
-}: React.ComponentProps<"option">) {
+}: React.ComponentProps<"option">) => {
   return (
     <option
       data-slot="native-select-option"
-      className={cn(`mc-native-select-option ${""}`, className)}
+      className={cn(`mc-native-select-option`, className)}
       {...props}
     />
   );
-}
-function NativeSelectOptGroup({
+};
+
+const NativeSelectOptGroup = ({
   className,
   ...props
-}: React.ComponentProps<"optgroup">) {
+}: React.ComponentProps<"optgroup">) => {
   return (
     <optgroup
       data-slot="native-select-optgroup"
-      className={cn(`mc-native-select-optgroup ${""}`, className)}
+      className={cn(`mc-native-select-optgroup`, className)}
       {...props}
     />
   );
-}
+};
+
 export { NativeSelect, NativeSelectOption, NativeSelectOptGroup };
+
 export type { NativeSelectProps };

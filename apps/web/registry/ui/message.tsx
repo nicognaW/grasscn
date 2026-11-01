@@ -1,27 +1,32 @@
 "use client";
+
 import * as React from "react";
 
 import "./minecraft-message.css";
 import { MinecraftChatText } from "./minecraft-chat-text";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+
 const MessageScale = React.createContext<1 | 2 | 3>(2);
 const MessageAuthor = React.createContext<string | undefined>(undefined);
+
 type MessageProps = React.ComponentProps<"div"> & {
   align?: "start" | "end";
   scale?: 1 | 2 | 3;
   author?: string;
   kind?: "chat" | "system";
 };
-function MessageGroup({ className, ...props }: React.ComponentProps<"div">) {
+
+const MessageGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="message-group"
-      className={cn(`mc-message-group ${""}`, className)}
+      className={cn(`mc-message-group`, className)}
       {...props}
     />
   );
-}
-function Message({
+};
+
+const Message = ({
   className,
   align = "start",
   scale: ownScale,
@@ -29,9 +34,10 @@ function Message({
   kind = "chat",
   style,
   ...props
-}: MessageProps) {
-  const inherited = React.useContext(MessageScale),
-    scale = ownScale ?? inherited;
+}: MessageProps) => {
+  const inherited = React.useContext(MessageScale);
+  const scale = ownScale ?? inherited;
+
   return (
     <MessageScale value={scale}>
       <MessageAuthor value={author}>
@@ -40,7 +46,7 @@ function Message({
           data-align={align}
           data-author={author}
           data-kind={kind}
-          className={cn(`mc-message ${""}`, className)}
+          className={cn(`mc-message`, className)}
           style={minecraftStyle(
             style,
             (__style) =>
@@ -55,25 +61,36 @@ function Message({
       </MessageAuthor>
     </MessageScale>
   );
-}
-function MessageAvatar({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const MessageAvatar = ({
+  className,
+  ...props
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="message-avatar"
-      className={cn(`mc-message-avatar ${""}`, className)}
+      className={cn(`mc-message-avatar`, className)}
       {...props}
     />
   );
-}
+};
+
 function isChatInline(value: React.ReactNode): boolean {
   if (
-    value == null ||
+    value === null ||
+    value === undefined ||
     typeof value === "boolean" ||
     typeof value === "string" ||
     typeof value === "number"
-  )
+  ) {
     return true;
-  if (Array.isArray(value)) return value.every(isChatInline);
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(isChatInline);
+  }
+
   return (
     React.isValidElement<{
       children?: React.ReactNode;
@@ -99,8 +116,10 @@ function isChatInline(value: React.ReactNode): boolean {
     isChatInline(value.props.children)
   );
 }
-function ChatChildren({ children }: React.PropsWithChildren) {
+
+const ChatChildren = ({ children }: React.PropsWithChildren) => {
   const scale = React.useContext(MessageScale);
+
   return isChatInline(children) ? (
     <MinecraftChatText scale={scale} style={{ color: "inherit" }}>
       {children}
@@ -108,34 +127,44 @@ function ChatChildren({ children }: React.PropsWithChildren) {
   ) : (
     children
   );
-}
-function MessageContent({
+};
+
+const MessageContent = ({
   className,
   children,
   ref,
   ...props
-}: React.ComponentProps<"div">) {
-  const scale = React.useContext(MessageScale),
-    author = React.useContext(MessageAuthor),
-    node = React.useRef<HTMLDivElement>(null),
-    [width, setWidth] = React.useState<number>(),
-    scalar = typeof children === "string" || typeof children === "number";
+}: React.ComponentProps<"div">) => {
+  const scale = React.useContext(MessageScale);
+  const author = React.useContext(MessageAuthor);
+  const node = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState<number>();
+  const scalar = typeof children === "string" || typeof children === "number";
+
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useLayoutEffect(() => {
     const element = node.current!;
-    const update = () => setWidth(Math.floor(element.clientWidth / scale) - 12);
+
+    const update = () => {
+      setWidth(Math.floor(element.clientWidth / scale) - 12);
+    };
+
     update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [scale]);
+
   return (
     <div
       ref={node}
       data-slot="message-content"
       data-mc-chat-surface={scalar ? "true" : undefined}
-      data-mc-chat-ready={width != null ? "true" : "false"}
-      className={cn(`mc-message-content ${""}`, className)}
+      data-mc-chat-ready={width == null ? "false" : "true"}
+      className={cn(`mc-message-content`, className)}
       {...props}
     >
       {scalar ? (
@@ -151,37 +180,40 @@ function MessageContent({
       )}
     </div>
   );
-}
-function MessageHeader({
+};
+
+const MessageHeader = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="message-header"
-      className={cn(`mc-message-header ${""}`, className)}
+      className={cn(`mc-message-header`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </div>
   );
-}
-function MessageFooter({
+};
+
+const MessageFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="message-footer"
-      className={cn(`mc-message-footer ${""}`, className)}
+      className={cn(`mc-message-footer`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </div>
   );
-}
+};
+
 export {
   MessageGroup,
   Message,
@@ -194,4 +226,5 @@ export {
   ChatChildren,
   isChatInline,
 };
+
 export type { MessageProps };

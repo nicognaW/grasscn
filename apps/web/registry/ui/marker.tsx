@@ -1,34 +1,44 @@
 "use client";
-import { cva, type VariantProps } from "class-variance-authority";
+
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import { Label, type LabelProps } from "./label";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import { Label } from "./label";
+import type { LabelProps } from "./label";
 import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftPolymorphicProps,
+} from "./minecraft-render";
+import type {
+  MinecraftProps,
+  MinecraftPolymorphicProps,
 } from "./minecraft-render";
 import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-marker.css";
+
 const MarkerScale = React.createContext<1 | 2 | 3>(2);
+
 const markerVariants = cva("mc-marker", {
+  defaultVariants: { variant: "default" },
   variants: {
     variant: {
+      border: "mc-marker-border",
       default: "",
       separator: "mc-marker-separated",
-      border: "mc-marker-border",
     },
   },
-  defaultVariants: { variant: "default" },
 });
+
 type MarkerProps = MinecraftPolymorphicProps<"div"> &
   VariantProps<typeof markerVariants> & {
     scale?: 1 | 2 | 3;
     separatorEdge?: "header" | "footer";
   };
-function Marker({
+
+const Marker = ({
   variant = "default",
   render,
   scale = 2,
@@ -37,18 +47,22 @@ function Marker({
   children,
   style,
   ...props
-}: MarkerProps) {
-  if (!["default", "separator", "border"].includes(variant ?? "default"))
+}: MarkerProps) => {
+  if (!["default", "separator", "border"].includes(variant ?? "default")) {
     throw Error("Unsupported Minecraft marker layout");
-  const Root = MinecraftRender,
-    child = null,
-    content = children;
+  }
+
+  const Root = MinecraftRender;
+  const child = null;
+  const content = children;
+
   const contents =
     typeof content === "string" || typeof content === "number" ? (
       <MarkerContent>{content}</MarkerContent>
     ) : (
       content
     );
+
   return (
     <MarkerScale value={scale}>
       <Root
@@ -61,8 +75,8 @@ function Marker({
           style,
           (__style) =>
             ({
-              "--mc-scale": scale,
               "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
+              "--mc-scale": scale,
               ...__style,
             }) as React.CSSProperties
         )}
@@ -72,29 +86,32 @@ function Marker({
       </Root>
     </MarkerScale>
   );
-}
-function MarkerIcon({ className, ...props }: MinecraftProps<"span">) {
+};
+
+const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => {
   return (
     <span
       data-slot="marker-icon"
       aria-hidden="true"
-      className={cn(`mc-marker-icon ${""}`, className)}
+      className={cn(`mc-marker-icon`, className)}
       {...props}
     />
   );
-}
-function MarkerContent({
+};
+
+const MarkerContent = ({
   className,
   children,
   maxWidth,
   align = "left",
   ...props
-}: MinecraftProps<"span"> & Pick<LabelProps, "maxWidth" | "align">) {
+}: MinecraftProps<"span"> & Pick<LabelProps, "maxWidth" | "align">) => {
   const scale = React.useContext(MarkerScale);
+
   return (
     <span
       data-slot="marker-content"
-      className={cn(`mc-marker-content ${""}`, className)}
+      className={cn(`mc-marker-content`, className)}
       {...props}
     >
       {typeof children === "string" || typeof children === "number" ? (
@@ -111,6 +128,8 @@ function MarkerContent({
       )}
     </span>
   );
-}
+};
+
 export { Marker, MarkerIcon, MarkerContent, markerVariants };
+
 export type { MarkerProps };

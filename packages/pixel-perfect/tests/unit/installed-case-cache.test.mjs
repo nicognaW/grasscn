@@ -10,28 +10,35 @@ import {
 } from "@ppt/installed/case-cache.mjs";
 import { pixelPerfectTestRoot } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
 const scratchRoot = path.join(pixelPerfectTestRoot, "unit");
+
 fs.mkdirSync(scratchRoot, { recursive: true });
 
 test("installed case checkpoints require all aliases, exact pixels and matching source identity", () => {
   const directory = fs.mkdtempSync(
     path.join(scratchRoot, "grasscn-case-cache-")
   );
+
   try {
-    const png = new PNG({ width: 2, height: 2 });
+    const png = new PNG({ height: 2, width: 2 });
     png.data.fill(255);
-    const bytes = PNG.sync.write(png),
-      rgba = digest(png.data);
+
+    const bytes = PNG.sync.write(png);
+    const rgba = digest(png.data);
+
     const record = {
-      name: "case",
-      mismatchedPixels: 0,
       decodedRgbaSha256: rgba,
+      mismatchedPixels: 0,
+      name: "case",
       selectedDecodedRgbaSha256: rgba,
     };
-    const identity = { source: "one", browser: "edge" },
-      cache = installedCaseCache(directory, identity);
+
+    const identity = { browser: "edge", source: "one" };
+    const cache = installedCaseCache(directory, identity);
+
     cache.write("case", bytes, record, {
       decodedRgbaSha256: bytes,
       selectedDecodedRgbaSha256: bytes,
@@ -65,13 +72,15 @@ test("installed case checkpoints require all aliases, exact pixels and matching 
     assert.throws(() =>
       cache.write("case", bytes, record, { decodedRgbaSha256: changed })
     );
+
     const folder = path.join(
       directory,
       fs.readdirSync(directory)[0],
       digest("case")
     );
+
     fs.writeFileSync(
-      path.join(folder, digest("decodedRgbaSha256") + ".png"),
+      path.join(folder, `${digest("decodedRgbaSha256")}.png`),
       changed
     );
     assert.equal(
@@ -85,7 +94,7 @@ test("installed case checkpoints require all aliases, exact pixels and matching 
     assert.ok(
       directory.startsWith(path.join(scratchRoot, "grasscn-case-cache-"))
     );
-    fs.rmSync(directory, { recursive: true, force: true });
+    fs.rmSync(directory, { force: true, recursive: true });
   }
 });
 
@@ -93,6 +102,7 @@ test("consumer identity changes with fixture and installed dependency inputs", (
   const directory = fs.mkdtempSync(
     path.join(scratchRoot, "grasscn-case-cache-")
   );
+
   try {
     fs.mkdirSync(path.join(directory, "src"));
     fs.writeFileSync(path.join(directory, "src", "fixture.tsx"), "first");
@@ -126,6 +136,6 @@ test("consumer identity changes with fixture and installed dependency inputs", (
     assert.ok(
       directory.startsWith(path.join(scratchRoot, "grasscn-case-cache-"))
     );
-    fs.rmSync(directory, { recursive: true, force: true });
+    fs.rmSync(directory, { force: true, recursive: true });
   }
 });

@@ -5,11 +5,14 @@ test("Dialog opens, traps keyboard focus, closes with Escape and restores its tr
   page,
 }) => {
   await page.goto("/?component=dialog");
+
   const trigger = page.getByRole("button", {
-      name: "Open dialog",
-      exact: true,
-    }),
-    dialog = page.getByRole("dialog");
+    exact: true,
+    name: "Open dialog",
+  });
+
+  const dialog = page.getByRole("dialog");
+
   await trigger.click();
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("button").first()).toBeFocused();
@@ -21,37 +24,41 @@ test("Dialog opens, traps keyboard focus, closes with Escape and restores its tr
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
 });
+
 test("Dialog footer actions and close preserve their public behavior", async ({
   page,
 }) => {
   await page.goto("/?component=dialog&open");
   const dialog = page.getByRole("dialog");
-  await dialog.getByRole("button", { name: "Continue", exact: true }).click();
+  await dialog.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(page.getByLabel("Dialog actions")).toHaveText("1");
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("button", { name: "Done", exact: true }).click();
+  await dialog.getByRole("button", { exact: true, name: "Done" }).click();
   await expect(dialog).toHaveCount(0);
 });
+
 test("Dialog disabled footer action remains inert and keyboard skips it", async ({
   page,
 }) => {
   await page.goto("/?component=dialog&open&disabledIndex=0");
   const dialog = page.getByRole("dialog");
   await expect(
-    dialog.getByRole("button", { name: "Cancel", exact: true })
+    dialog.getByRole("button", { exact: true, name: "Cancel" })
   ).toBeDisabled();
   await expect(
-    dialog.getByRole("button", { name: "Continue", exact: true })
+    dialog.getByRole("button", { exact: true, name: "Continue" })
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByLabel("Dialog actions")).toHaveText("1");
 });
+
 test("Dialog dismisses on outside pointer interaction", async ({ page }) => {
   await page.goto("/?component=dialog&open");
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.mouse.click(5, 5);
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
+
 test("Dialog consumers can prevent Escape and outside dismissal", async ({
   page,
 }) => {
@@ -62,124 +69,143 @@ test("Dialog consumers can prevent Escape and outside dismissal", async ({
   await expect(dialog).toBeVisible();
   await page.mouse.click(5, 5);
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("button", { name: "Done", exact: true }).click();
+  await dialog.getByRole("button", { exact: true, name: "Done" }).click();
   await expect(dialog).toHaveCount(0);
 });
+
 test("Dialog controlled state can reject and accept open changes", async ({
   page,
 }) => {
   await page.goto("/?component=dialog&controlled&reject");
-  await page.getByRole("button", { name: "Open dialog", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Open dialog" }).click();
   await expect(page.getByLabel("Dialog changes")).toHaveText("1");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page.goto("/?component=dialog&controlled");
   await page
-    .getByRole("button", { name: "Change dialog externally", exact: true })
+    .getByRole("button", { exact: true, name: "Change dialog externally" })
     .click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
+
 test("Dialog exposes its title and description through accessible relationships", async ({
   page,
 }) => {
   await page.goto("/?component=dialog&open");
+
   const dialog = page.getByRole("dialog", {
-    name: "World settings",
     exact: true,
+    name: "World settings",
   });
+
   await expect(dialog).toHaveAccessibleDescription("A helpful description.");
   await expect(dialog.locator('button[aria-label="Close"]')).toHaveCount(0);
 });
+
 test("Dialog keeps long content and its close action reachable in a short viewport", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 800, height: 400 });
+  await page.setViewportSize({ height: 400, width: 800 });
   await page.goto(
     `/?${new URLSearchParams({ component: "dialog", open: "1", text: Array.from({ length: 40 }, () => "A helpful description.").join("\n") })}`
   );
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
+
   const dimensions = await dialog.evaluate((n) => ({
+    bottom: n.getBoundingClientRect().bottom,
     height: n.clientHeight,
     scroll: n.scrollHeight,
     top: n.getBoundingClientRect().top,
-    bottom: n.getBoundingClientRect().bottom,
   }));
+
   expect(dimensions.scroll).toBeGreaterThan(dimensions.height);
   expect(dimensions.top).toBeGreaterThanOrEqual(0);
   expect(dimensions.bottom).toBeLessThanOrEqual(400);
-  await dialog.getByRole("button", { name: "Done", exact: true }).click();
+  await dialog.getByRole("button", { exact: true, name: "Done" }).click();
   await expect(dialog).toHaveCount(0);
 });
+
 test("Dialog composes custom elements, forwards refs and preserves nested form submission", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?component=dialog-composition");
+
   const trigger = page.getByRole("button", {
+    exact: true,
     name: "Composed trigger",
-    exact: true,
   });
+
   await trigger.click();
+
   const dialog = page.getByRole("dialog", {
-    name: "Composed title",
     exact: true,
+    name: "Composed title",
   });
+
   await expect(dialog).toHaveAccessibleDescription("Composed description");
   expect(await dialog.evaluate((n) => n.tagName)).toBe("SECTION");
   await dialog
-    .getByRole("button", { name: "Inspect refs", exact: true })
+    .getByRole("button", { exact: true, name: "Inspect refs" })
     .click();
   await expect(page.getByLabel("Dialog composed refs")).toHaveText(
     "BUTTON,SECTION,ASIDE"
   );
   await dialog
-    .getByRole("textbox", { name: "Dialog form input", exact: true })
+    .getByRole("textbox", { exact: true, name: "Dialog form input" })
     .fill("World");
   await dialog.getByRole("textbox").press("Enter");
   await expect(page.getByLabel("Dialog submissions")).toHaveText("1");
   await expect(dialog).toBeVisible();
   await dialog
-    .getByRole("button", { name: "Composed close", exact: true })
+    .getByRole("button", { exact: true, name: "Composed close" })
     .click();
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
   expect(errors).toEqual([]);
 });
+
 test("Dialog buttons play the original click once; hover and Escape remain silent", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).__dialogSounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__dialogSounds.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
-  const voices = () => page.evaluate(() => (window as any).__dialogSounds);
+
+  const voices = async () =>
+    page.evaluate(() => (window as any).__dialogSounds);
+
   await page.goto("/?component=dialog");
+
   const trigger = page.getByRole("button", {
-    name: "Open dialog",
     exact: true,
+    name: "Open dialog",
   });
+
   await trigger.hover();
   expect(await voices()).toEqual([]);
   await trigger.click();
   expect(await voices()).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.keyboard.press("Escape");
   expect(await voices()).toHaveLength(1);
   await trigger.click();
   await page
     .getByRole("dialog")
-    .getByRole("button", { name: "Done", exact: true })
+    .getByRole("button", { exact: true, name: "Done" })
     .click();
   expect(await voices()).toHaveLength(3);
 });

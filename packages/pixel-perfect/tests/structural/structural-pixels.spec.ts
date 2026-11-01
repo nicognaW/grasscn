@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 function compare(expected: PNG, actual: PNG) {
@@ -11,11 +11,13 @@ function compare(expected: PNG, actual: PNG) {
     expected.height,
   ]);
   let mismatchedPixels = 0;
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
+
   for (let i = 0; i < actual.data.length; i += 4) {
     const different = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(different);
     diff.data.set(
       different
@@ -29,21 +31,27 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
+
 test("Structural pixel comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
-      )
-    ),
-    actual = PNG.sync.read(PNG.sync.write(expected));
+    readFileSync(
+      pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
+    )
+  );
+
+  const actual = PNG.sync.read(PNG.sync.write(expected));
+
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
+
 test.describe("Structural native constituents", () => {
   test.describe.configure({ mode: "parallel" });
-  for (const component of ["button-group", "pagination"])
+
+  for (const component of ["button-group", "pagination"]) {
     for (const directory of [
       "tests/reference",
       "tests/reference/button-cjk",
@@ -52,14 +60,16 @@ test.describe("Structural native constituents", () => {
         : []),
     ]) {
       const manifest = JSON.parse(
-          readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
-        ),
-        part = directory.endsWith("/label")
-          ? "text"
-          : directory.endsWith("/separator")
-            ? "separator"
-            : "button";
-      for (const c of manifest.cases)
+        readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+      );
+
+      const part = directory.endsWith("/label")
+        ? "text"
+        : directory.endsWith("/separator")
+          ? "separator"
+          : "button";
+
+      for (const c of manifest.cases) {
         for (const orientation of component === "button-group" &&
         part === "button"
           ? ["horizontal", "vertical"]
@@ -72,6 +82,7 @@ test.describe("Structural native constituents", () => {
               page,
             }, info) => {
               await page.setViewportSize({ width: 1536, height: 900 });
+
               const params = new URLSearchParams({
                 component,
                 native: "1",
@@ -88,8 +99,10 @@ test.describe("Structural native constituents", () => {
                 background: c.background ?? manifest.background ?? "#202020",
                 alignment: c.alignment ?? "left",
               });
+
               if (c.wrapWidth != null)
                 params.set("wrapWidth", String(c.wrapWidth));
+
               if (active) params.set("active", "1");
               await page.goto(`/?${params}`);
               const subject = page.locator("[data-subject]");
@@ -107,8 +120,10 @@ test.describe("Structural native constituents", () => {
                   "#root{visibility:hidden}[data-subject]{visibility:visible}",
               });
               await page.mouse.move(0, 0);
+
               if (!active && part === "button") {
                 if (c.state === "hover") await subject.hover();
+
                 if (c.state === "focus") {
                   await subject.focus();
                   await page.keyboard.press("Tab");
@@ -116,11 +131,13 @@ test.describe("Structural native constituents", () => {
                   await expect(subject).toBeFocused();
                 }
               }
+
               if (part === "text")
                 await expect(subject).toHaveAttribute(
                   "data-mc-label-layout-ready",
                   "true"
                 );
+
               for (const label of await subject
                 .locator("[data-mc-label-ready]")
                 .all())
@@ -129,23 +146,29 @@ test.describe("Structural native constituents", () => {
                   "true"
                 );
               await page.evaluate(
-                () =>
-                  new Promise<void>((resolve) =>
+                async () =>
+                  await new Promise<void>((resolve) =>
                     requestAnimationFrame(() =>
-                      requestAnimationFrame(() => resolve())
+                      requestAnimationFrame(() => {
+                        resolve();
+                      })
                     )
                   )
               );
+
               const expectedBytes = readFileSync(
                 pixelPerfectFile(`${directory}/captures/${c.name}`)
               );
+
               expect(
                 createHash("sha256").update(expectedBytes).digest("hex")
               ).toBe(c.sha256);
+
               const actualBytes = await subject.screenshot(),
                 actual = PNG.sync.read(actualBytes),
                 expected = PNG.sync.read(expectedBytes),
                 { mismatchedPixels, diff } = compare(expected, actual);
+
               writeFileSync(info.outputPath("actual.png"), actualBytes);
               writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
               writeFileSync(
@@ -162,5 +185,7 @@ test.describe("Structural native constituents", () => {
               expect(mismatchedPixels).toBe(0);
             });
           }
+      }
     }
+  }
 });

@@ -12,28 +12,31 @@ import * as React from "react";
 
 import "./native-reference.css";
 
-export function NativeTextCompositionsFixture() {
-  const q = new URLSearchParams(location.search),
-    component = q.get("component") ?? q.get("part") ?? "code-block",
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    label = q.get("label") ?? "Hello Minecraft!",
-    width = Number(q.get("width") ?? 172),
-    height = Number(q.get("height") ?? 9),
-    style = {
-      "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-      "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
-      "--reference-width": width * scale + "px",
-      "--reference-height": height * scale + "px",
-      "--reference-color": q.get("color") ?? undefined,
-      "--mc-scale": scale,
-      "--mc-pixel": scale + "px",
-    } as React.CSSProperties;
+export const NativeTextCompositionsFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const component = q.get("component") ?? q.get("part") ?? "code-block";
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const label = q.get("label") ?? "Hello Minecraft!";
+  const width = Number(q.get("width") ?? 172);
+  const height = Number(q.get("height") ?? 9);
+
+  const style = {
+    "--mc-pixel": scale + "px",
+    "--mc-scale": scale,
+    "--reference-color": q.get("color") ?? undefined,
+    "--reference-height": height * scale + "px",
+    "--reference-width": width * scale + "px",
+    "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
+    "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
+  } as React.CSSProperties;
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       q.get("background") ?? "#202020";
     document.body.style.background = q.get("background") ?? "#202020";
   }, []);
-  if (component === "spinner")
+
+  if (component === "spinner") {
     return (
       <Spinner
         className="native-reference-geometry native-reference-size native-reference-color"
@@ -45,7 +48,9 @@ export function NativeTextCompositionsFixture() {
         data-subject="true"
       />
     );
-  if (component === "trace")
+  }
+
+  if (component === "trace") {
     return (
       <Trace scale={scale}>
         <TraceLine
@@ -58,7 +63,9 @@ export function NativeTextCompositionsFixture() {
         </TraceLine>
       </Trace>
     );
-  if (component === "message-scroller")
+  }
+
+  if (component === "message-scroller") {
     return (
       <MessageScrollerProvider autoScroll={false} defaultScrollPosition="start">
         <MessageScroller scale={scale} className="native-reference-scroller">
@@ -77,6 +84,8 @@ export function NativeTextCompositionsFixture() {
         </MessageScroller>
       </MessageScrollerProvider>
     );
+  }
+
   return (
     <CodeBlock scale={scale} className="native-reference-code">
       <CodeBlockContent
@@ -89,4 +98,4 @@ export function NativeTextCompositionsFixture() {
       </CodeBlockContent>
     </CodeBlock>
   );
-}
+};

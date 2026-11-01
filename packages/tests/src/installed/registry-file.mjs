@@ -16,16 +16,20 @@ export function installedRegistryFile(
     "UI directory must agree with components.json"
   );
   const sourceRoot = ui.slice(0, -path.normalize(uiAlias).length);
+
   const aliases = {
     components: "components",
-    ui: "ui",
     hooks: "hooks",
     lib: "lib",
+    ui: "ui",
   };
+
   let target;
+
   const placeholder = /^@(components|ui|hooks|lib)\/(.+)$/.exec(
     entry.target ?? ""
   );
+
   if (placeholder) {
     const alias = settings.aliases[aliases[placeholder[1]]];
     assert.ok(alias, `Missing ${placeholder[1]} alias`);
@@ -34,15 +38,16 @@ export function installedRegistryFile(
       alias.replace(/^[@~]\//, ""),
       placeholder[2]
     );
-  } else if (entry.target)
+  } else if (entry.target) {
     target = path.resolve(root, entry.target.replace(/^~\//, ""));
-  else {
+  } else {
     const kind =
       entry.type === "registry:hook"
         ? "hooks"
         : entry.type === "registry:lib"
           ? "lib"
           : "ui";
+
     const directory =
       kind === "ui"
         ? ui
@@ -50,11 +55,14 @@ export function installedRegistryFile(
             sourceRoot,
             settings.aliases[kind].replace(/^[@~]\//, "")
           );
+
     target = path.join(directory, path.basename(entry.path));
   }
+
   assert.ok(
     target.startsWith(root + path.sep),
     "Installed registry file must stay inside the consumer"
   );
+
   return target;
 }

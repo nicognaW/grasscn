@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
@@ -7,30 +8,45 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
+
 function keyText(content: React.ReactNode): React.ReactNode {
-  if (Array.isArray(content))
+  if (Array.isArray(content)) {
     return content.map((child, index) => (
       <React.Fragment key={index}>{keyText(child)}</React.Fragment>
     ));
-  if (typeof content !== "string" && typeof content !== "number")
+  }
+
+  if (typeof content !== "string" && typeof content !== "number") {
     return content;
+  }
+
   const text = String(content);
-  if (!/^[\x20-\x7e]*$/.test(text))
+
+  if (!/^[\u0020-\u007E]*$/.test(text)) {
     return <MinecraftUnicodeLabel text={text} />;
+  }
+
   return (
     <span className="mc-text">
       <span className="mc-text-pixels" aria-hidden="true">
         {Array.from(text, (char, index) => {
-          const [x, y, advance] = minecraftGlyphs[char.charCodeAt(0) - 32];
+          const codePoint = char.codePointAt(0);
+
+          if (codePoint === undefined) {
+            throw new Error("Expected a non-empty glyph character");
+          }
+
+          const [x, y, advance] = minecraftGlyphs[codePoint - 32];
+
           return (
             <span
               key={index}
               className="mc-glyph"
               style={
                 {
+                  "--mc-advance": advance,
                   "--mc-glyph-x": x,
                   "--mc-glyph-y": y,
-                  "--mc-advance": advance,
                   visibility: char === " " ? "hidden" : undefined,
                 } as React.CSSProperties
               }
@@ -42,25 +58,35 @@ function keyText(content: React.ReactNode): React.ReactNode {
     </span>
   );
 }
+
 type KbdProps = React.ComponentProps<"kbd"> & {
   scale?: 1 | 2 | 3;
 };
-function Kbd({ children, className, scale = 2, style, ...props }: KbdProps) {
-  const label = React.useRef<HTMLSpanElement>(null),
-    [inkWidth, setInkWidth] = React.useState(0);
+
+const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
+  const label = React.useRef<HTMLSpanElement>(null);
+  const [inkWidth, setInkWidth] = React.useState(0);
+
   React.useLayoutEffect(() => {
     const element = label.current!;
-    const measure = () =>
+
+    const measure = () => {
       setInkWidth(Math.ceil(element.getBoundingClientRect().width));
+    };
+
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [children, scale]);
+
   return (
     <kbd
       data-slot="kbd"
-      className={cn(`mc-button mc-kbd ${""}`, className)}
+      className={cn(`mc-button mc-kbd`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -83,15 +109,18 @@ function Kbd({ children, className, scale = 2, style, ...props }: KbdProps) {
       </span>
     </kbd>
   );
-}
-function KbdGroup({ className, ...props }: React.ComponentProps<"span">) {
+};
+
+const KbdGroup = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="kbd-group"
-      className={cn(`mc-kbd-group ${""}`, className)}
+      className={cn(`mc-kbd-group`, className)}
       {...props}
     />
   );
-}
+};
+
 export { Kbd, KbdGroup };
+
 export type { KbdProps };

@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Avatar uses original player face, image events and forwarded image ref", async ({
   page,
 }) => {
@@ -16,6 +17,7 @@ test("Avatar uses original player face, image events and forwarded image ref", a
     0
   );
 });
+
 test("Avatar error fallback renders CJK glyphs and preserves real text", async ({
   page,
 }) => {
@@ -27,6 +29,7 @@ test("Avatar error fallback renders CJK glyphs and preserves real text", async (
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
   await expect(fallback.locator("canvas")).toHaveCount(1);
 });
+
 test("Avatar fallback delay, native default face and rich custom fallback remain visible", async ({
   page,
 }) => {
@@ -48,6 +51,7 @@ test("Avatar fallback delay, native default face and rich custom fallback remain
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#player$/);
 });
+
 test("Avatar badge/group/count preserve composition and semantics", async ({
   page,
 }) => {
