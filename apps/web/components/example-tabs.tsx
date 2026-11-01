@@ -10,11 +10,13 @@ export function ExampleTabs({
   code,
   filename,
   title,
+  tabListWidth,
 }: {
   children: ReactNode;
   code: string;
   filename: string;
   title: string;
+  tabListWidth?: number;
 }) {
   return (
     <section className="documentation-example" aria-label={title}>
@@ -24,7 +26,10 @@ export function ExampleTabs({
         className="documentation-example-tabs"
       >
         <div className="documentation-tabs-scroll">
-          <TabsList aria-label={`${title} view`}>
+          <TabsList
+            aria-label={`${title} view`}
+            style={{ width: tabListWidth }}
+          >
             <TabsTrigger value="preview">Preview</TabsTrigger>
             <TabsTrigger value="code">Code</TabsTrigger>
           </TabsList>
