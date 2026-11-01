@@ -22,7 +22,29 @@ const prepared = {
   source,
   websiteIdentity,
   bun: Bun.version,
+  environment: {
+    platform: process.platform,
+    arch: process.arch,
+    locale: Intl.DateTimeFormat().resolvedOptions().locale,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  },
 };
+
+test("prepared consumer refuses changed platform architecture locale and timezone", () => {
+  for (const key of ["platform", "arch", "locale", "timezone"])
+    expect(() =>
+      assertPreparedSnapshot(
+        {
+          ...prepared,
+          environment: {
+            ...prepared.environment,
+            [key]: "different-environment",
+          },
+        },
+        { source, websiteIdentity }
+      )
+    ).toThrow("environment");
+});
 
 test("prepared consumer refuses another source or production build", () => {
   expect(() =>
@@ -57,7 +79,11 @@ test("prepared build alone cannot substitute for passed ordinary runtime", async
   const owner = path.join(repoRoot, "test-results/manual-consumers");
   await mkdir(owner, { recursive: true });
   const directory = await mkdtemp(path.join(owner, "unit-prepared-"));
-  const publicBytes = JSON.stringify({ source, websiteIdentity });
+  const publicBytes = JSON.stringify({
+    source,
+    websiteIdentity,
+    environment: prepared.environment,
+  });
   await writeFile(path.join(directory, "public-inputs.json"), publicBytes);
   await writeFile(
     path.join(directory, "prepared.json"),

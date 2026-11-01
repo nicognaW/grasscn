@@ -14,6 +14,7 @@ for (const scale of [2] as const)
         );
         if (route === "date-picker")
           await page
+            .locator(".documentation-playground")
             .getByRole("button", { name: "Pick a range", exact: true })
             .click();
         const triggers =

@@ -13,6 +13,7 @@ import { pixelPerfectRoot, pixelPerfectTestRoot } from "@grasscn/tests/paths";
 import {
   readPreparedConsumerProjects,
   servePreparedConsumer,
+  consumerVerificationEnvironment,
 } from "@grasscn/tests/prepared-consumers";
 
 import { referenceFile } from "../paths.ts";
@@ -158,6 +159,7 @@ const report = {
     manifestSha256: sha256(manifestBytes),
   },
   environment: {
+    ...consumerVerificationEnvironment(),
     bun: Bun.version,
     platform: process.platform,
     arch: process.arch,

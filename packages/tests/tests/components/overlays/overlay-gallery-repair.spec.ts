@@ -8,16 +8,17 @@ for (const scale of [2]) {
   }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(origin + "docs/components/drawer");
-    await page.getByRole("button", { name: "Open drawer" }).click();
+    const trigger = page
+      .locator(".documentation-playground")
+      .getByRole("button", { name: "Open drawer" });
+    await trigger.click();
     const panel = page.locator("[data-slot=drawer-content]");
     await expect(panel).toBeVisible();
     await expect
       .poll(() => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
       .toBeLessThanOrEqual(2);
     await page.getByRole("button", { name: "Done", exact: true }).click();
-    await expect(
-      page.getByRole("button", { name: "Open drawer" })
-    ).toBeFocused();
+    await expect(trigger).toBeFocused();
   });
   test(`Avatar group count follows native face size and GUI${scale}`, async ({
     page,

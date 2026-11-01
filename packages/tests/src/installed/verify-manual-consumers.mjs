@@ -666,6 +666,18 @@ try {
       await expect(
         codeBlock.locator('[data-slot="code-block-content"]')
       ).toContainText('const world = "Minecraft";');
+      const renderedCode = codeBlock.locator(
+        '[data-slot="code-block-content"] [data-mc-selectable-ready]'
+      );
+      await expect(renderedCode).toHaveCount(1);
+      await expect(renderedCode).toHaveAttribute(
+        "data-mc-selectable-ready",
+        "true"
+      );
+      const renderedLabels = renderedCode.locator("[data-mc-label-ready]");
+      await expect.poll(() => renderedLabels.count()).toBeGreaterThan(0);
+      for (const label of await renderedLabels.all())
+        await expect(label).toHaveAttribute("data-mc-label-ready", "true");
       await codeBlock
         .getByRole("button", { name: "Copy", exact: true })
         .click();
@@ -976,6 +988,7 @@ try {
           buttonVisible: "passed",
           formValidationSaveAndReset: "passed",
           codeBlockExactClipboard: "passed",
+          codeBlockRendererResourcesReady: "passed",
           playerPreviewWideAndSlimWebGL2: "passed",
           mapMarkerCallback: "passed",
           signCanvas: "passed",

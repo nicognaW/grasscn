@@ -60,6 +60,15 @@ export async function validatePreparedProject(project, { excludedRoots } = {}) {
   return project;
 }
 
+export function consumerVerificationEnvironment() {
+  return {
+    platform: process.platform,
+    arch: process.arch,
+    locale: Intl.DateTimeFormat().resolvedOptions().locale,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  };
+}
+
 export function assertPreparedSnapshot(
   prepared,
   { source, websiteIdentity, status = "prepared" }
@@ -79,6 +88,11 @@ export function assertPreparedSnapshot(
     prepared.bun,
     Bun.version,
     "Prepared consumer Bun runtime changed"
+  );
+  assert.deepEqual(
+    prepared.environment,
+    consumerVerificationEnvironment(),
+    "Prepared consumer environment changed"
   );
 }
 
@@ -115,6 +129,11 @@ export async function readPreparedConsumerProjects({
     const collected = JSON.parse(bytes);
     assert.deepEqual(collected.source, source);
     assert.deepEqual(collected.websiteIdentity, websiteIdentity);
+    assert.deepEqual(
+      collected.environment,
+      consumerVerificationEnvironment(),
+      "Collected consumer environment changed"
+    );
   }
   let runtime;
   if (requirePassedRuntime) {
