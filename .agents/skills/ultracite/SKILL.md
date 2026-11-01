@@ -1,121 +1,54 @@
 ---
 name: ultracite
-description: "Ultracite is a zero-config linting and formatting preset for JavaScript/TypeScript projects. Use when: (1) Setting up or initializing Ultracite in a project, or migrating its existing lint and format config onto Ultracite (ultracite init), (2) Running linting or formatting commands (check, fix, doctor), (3) Writing or reviewing JS/TS code in a project that uses Ultracite — to follow its code standards, (4) Troubleshooting linting/formatting issues, (5) Upgrading Ultracite or bringing its configuration up to a newer release (ultracite upgrade), (6) User mentions 'ultracite', 'lint', 'format', 'code quality', or 'biome/eslint/oxlint' in a project with Ultracite installed."
+description: "Use when writing or reviewing JS/TS under Ultracite presets, running lint/format/type checks through Uncheck, or troubleshooting that setup."
 ---
 
-# Ultracite
+# Ultracite with Uncheck
 
-Zero-config linting and formatting for JS/TS projects. Supports three linter backends: **Oxlint** + Oxfmt (recommended), **Biome**, and **ESLint** + Prettier + Stylelint.
+Ultracite supplies linting and formatting presets. Uncheck runs the installed Oxlint, Oxfmt and TypeScript tools using the repository's configuration; it also runs Sherif when installed at the workspace root. Keep Ultracite preset imports and use Uncheck as the check/fix entrypoint.
 
-## Detecting Ultracite
+## Repository workflow
 
-Check if `ultracite` is in `package.json` dependencies or devDependencies. Detect the active linter by looking for (searching upward from the current directory):
+Run from the canonical repository root with the pinned Bun package manager and runtime. Read `package.json`, the lockfile, `oxlint.config.*`, `oxfmt.config.*` and relevant `tsconfig.json` files to identify the installed versions, presets and project boundaries. Uncheck discovers the workspace checks; Turbo owns generation, builds and tests.
 
-- `biome.json` / `biome.jsonc` → Biome
-- `eslint.config.*` (`.mjs`, `.js`, `.cjs`, `.ts`, `.mts`, `.cts`) → ESLint (with Prettier for formatting)
-- `oxlint.config.ts`, `oxlint.config.mts` or `.oxlintrc.json` → Oxlint (with `oxfmt.config.ts` or `oxfmt.config.mts` for formatting; init writes the `.mts` form in a package that isn't an ES module)
+On a fresh checkout, generate required inputs before checking:
 
-## CLI Commands
-
-```bash
-# Check for issues (read-only)
-bunx ultracite check
-
-# Auto-fix issues
-bunx ultracite fix
-
-# Diagnose setup problems
-bunx ultracite doctor
-
-# Initialize in a new project
-bunx ultracite init
+```sh
+bunx turbo run generate
+bunx --bun uncheck
 ```
 
-Replace `bunx` with `npx`, `pnpm exec`, or `yarn` depending on the package manager, so the project's installed Ultracite runs (`pnpm dlx` and `yarn dlx` download the latest release instead, and Yarn 1 has no `dlx`). Only `init` in a project without Ultracite needs a download runner such as `pnpm dlx`.
+## Commands
 
-`check` and `fix` accept optional file paths: `bunx ultracite check src/index.ts`. Unknown options are passed through to the underlying linter (e.g. `bunx ultracite check --max-warnings 0`).
+```sh
+# Check lint, formatting and types without applying fixes
+bunx --bun uncheck
 
-## Initialization
+# Apply supported fixes and report remaining errors
+bunx --bun uncheck --fix
 
-`bunx ultracite init` runs an interactive setup. For non-interactive (CI) use, pass flags:
+# Check specific paths
+bunx --bun uncheck apps/web/registry
 
-```bash
-bunx ultracite init \
-  --pm bun \
-  --linter biome \
-  --editors universal \
-  --agents claude copilot \
-  --frameworks react next \
-  --integrations husky lint-staged \
-  --yes
+# Run only a required workspace typecheck
+bunx --bun uncheck --only=tsc --require=tsc
+
+# Check staged files; --fix also stages its fixes
+bunx --bun uncheck staged
+
+# Refresh the existing pre-commit hook when hook changes are requested
+bunx --bun uncheck prepare --pre-commit
 ```
 
-**Flags:**
+Use `--only=oxlint` or `--only=oxfmt` to isolate lint or format failures. These flags are repeatable; use `--require` when a skipped check must fail. Consult `bunx --bun uncheck --help` and subcommand help for supported options. Backend-specific flags are not automatically Uncheck options.
 
-- `--pm` — `npm` | `yarn` | `pnpm` | `bun` | `deno` | `nub` | `aube`
-- `--linter` — `oxlint` (recommended) | `biome` | `eslint`
-- `--editors` — `universal` (writes `.vscode/settings.json` for every VS Code-based editor) | `vscode` | `cursor` | `devin` | `codebuddy` | `antigravity` | `bob` | `kiro` | `trae` | `void` | `zed`
-- `--agents` — every choice writes the rules to `AGENTS.md`. `universal` writes only that; `claude`, `gemini`, `aider` and `replit` also add the import, settings or copy that agent needs to read them; IDs like `codex`, `copilot`, `cline`, `amp` and `cursor-cli` (40 agents supported) need nothing more
-- `--frameworks` — `react` | `next` | `solid` | `vue` | `svelte` | `qwik` | `remix` | `tanstack` | `angular` | `astro` | `nestjs` | `jest` | `vitest` | `cypress` | `storybook` | `playwright` | `react-native` | `drizzle`
-- `--integrations` — `husky` | `lefthook` | `lint-staged` | `pre-commit`
-- `--hooks` — Enable auto-fix hooks: `claude` | `codex` | `copilot` | `cursor` | `devin` | `codebuddy` | `deepagents` | `grok`
-- `--js-plugins` — Opt-in Oxlint JS plugins: `@shadcn/lint` | `anti-slop` | `eslint-plugin-github` | `eslint-plugin-jsdoc` | `eslint-plugin-sonarjs` | `eslint-plugin-tsdoc` | `oxlint-plugin-react-doctor`
-- `--type-aware` — Enable type-aware linting (ESLint and Biome: extend their `type-aware` preset; Oxlint: installs `oxlint-tsgolint` and sets `typeAware`), and turn on `strictNullChecks` in tsconfig files
-- `--install-skill` — Install the reusable Ultracite skill after setup
-- `--skip-install` — Skip dependency installation
-- `--yes`, `-y` — Take the defaults without prompting (automatic when `CI=true` or there's no terminal); defaults to `oxlint` when `--linter` is omitted
-- `--quiet` — Only print warnings and errors
+Keep the explicit `--bun`: the repository's Uncheck dependency patch also ensures generated hooks use Bun. Preserve existing hook content and the patch when changing setup.
 
-Init creates config that extends Ultracite presets:
+## Presets and setup changes
 
-```jsonc
-// biome.jsonc
-{ "extends": ["ultracite/biome/core", "ultracite/biome/react"] }
-```
+Keep existing Ultracite imports, framework presets, plugin selection and local overrides in the Oxlint/Oxfmt configuration. Respect the configured formatter settings. Uncheck orchestrates tools; its optional presets do not replace the repository's selected Ultracite presets.
 
-```ts
-// eslint.config.mjs — arrays of flat configs, spread together
-import core from "ultracite/eslint/core";
-import react from "ultracite/eslint/react";
-export default [...core, ...react];
-```
-
-```ts
-// oxlint.config.ts — imports passed to extends
-import { defineConfig } from "oxlint";
-import core from "ultracite/oxlint/core";
-export default defineConfig({
-  env: core.env,
-  extends: [core],
-  ignorePatterns: core.ignorePatterns,
-});
-```
-
-Presets available per linter (`ultracite/<linter>/<preset>`): `core`, `react`, `next`, `solid`, `vue`, `svelte`, `qwik`, `remix`, `tanstack`, `angular`, `astro`, `nestjs`, `jest`, `vitest`, `cypress`, `storybook`, `playwright`, `react-native`, `drizzle` (`cypress` and `storybook` only have rules on ESLint, and `playwright`, `react-native` and `drizzle` only on ESLint and Biome; on the other linters they add no plugin rules). ESLint and Biome also have `type-aware`, the rules that need type information, and ESLint has a `<framework>/type-aware` add-on for `angular`, `jest`, `nestjs`, `qwik`, `tanstack` and `vitest`, extended after that framework's preset. Oxlint also has `js-plugins` (`eslint-plugin-github`, `eslint-plugin-sonarjs` and `oxlint-plugin-react-doctor` run through oxlint's JS plugin support, with `next/js-plugins` and `tanstack/js-plugins` adding framework-specific React Doctor rules), `anti-slop` and `shadcn`. These are opt-in: init only adds them when picked in its prompt or passed with `--js-plugins`. Oxlint and ESLint also have `gdp`, for codebases that use gdp-ts authorization proofs (`@gdp-ts/core` ships the plugin); init never adds it, so extend it by hand after `core`.
-
-## Migrating an Existing Project
-
-Migrating means moving the project's own ESLint, Prettier, Stylelint, Biome or Oxlint configuration onto Ultracite's presets; the project can keep its linter. Run `init` (it preselects the linter it finds), carry over rules the presets don't cover after Ultracite's presets, and run `ultracite fix` to format everything in one commit. Then fix what `check` still reports, or migrate progressively:
-
-- Turn off each failing rule after Ultracite's presets: in `rules` for Oxlint (`ultracite check -f json` lists them as `plugin(rule)`, written `plugin/rule`), or `linter.rules` and `assist.actions.source` for Biome (`ultracite check --reporter=summary`). On ESLint, `ultracite check --suppress-all` records today's errors in `eslint-suppressions.json` instead.
-- Turn them back on a few at a time: remove an override (or prune with `ultracite check --prune-suppressions`), run `ultracite fix`, fix the rest, one rule per change.
-
-Full steps: https://www.ultracite.ai/docs/migrate.md
-
-## Upgrading
-
-```bash
-npx ultracite@latest upgrade
-```
-
-`upgrade` installs the latest Ultracite (or the release `--version 7` names), reinstalls the linter at the versions that release supports, and runs `doctor`. Major releases also change how the configuration looks; `upgrade` lists the guides the project still needs, and with `--claude` or `--codex` it has that agent CLI apply them.
-
-To apply them yourself, follow each guide that applies, oldest first. Each one says how to tell whether the project needs it:
-
-- [references/upgrades/v5.md](references/upgrades/v5.md): Biome 1's config format to Biome 2's
-- [references/upgrades/v6.md](references/upgrades/v6.md): the single `ultracite` preset to `ultracite/core` plus framework presets
-- [references/upgrades/v7.md](references/upgrades/v7.md): `ultracite/<preset>` to `ultracite/biome/<preset>`, and the `lint` and `format` commands to `check` and `fix`
-- [references/upgrades/v8.md](references/upgrades/v8.md): removing `prettier/prettier` from ESLint and Stylelint configs, the Cypress and Storybook presets, ESLint configs that set type-checked rules, Oxlint's `typeAware` option, `init --yes`, and Zed's formatter on ESLint
+For requested setup changes, add the necessary devDependencies with Bun and edit the existing configuration directly. Consult `bunx --bun uncheck init --help` if initial setup is needed; review its script and preset choices against the repository convention of direct Uncheck commands. Existing projects use `prepare` for hook maintenance.
 
 ## Code Standards
 
@@ -137,15 +70,12 @@ Formatting is handled by the project's configured linter/formatter. Respect the 
 
 ## Troubleshooting
 
-Run `bunx ultracite doctor` to diagnose. It checks:
+Run the relevant Uncheck check and distinguish configuration-load failures, missing tools, rule violations, formatting differences and type errors. A tool that cannot load its configuration has not checked the code.
 
-1. Linter and formatter installation (Biome; or ESLint + Prettier + Stylelint; or Oxlint + oxfmt)
-2. Config validity (extends the ultracite presets correctly)
-3. Ultracite in package.json dependencies
-4. Conflicting tools when not using the ESLint backend (legacy `.eslintrc.*` files, `.prettierrc.*`/`prettier.config.*`)
+- **Missing generated inputs:** run Turbo generation before typechecking.
+- **Missing tools:** compare installed dependencies with the pinned lockfile; restore the frozen Bun install when needed. Use `--require` to detect unexpectedly skipped checks.
+- **Configuration failures:** inspect preset exports, plugin dependencies and compatible versions before editing source or weakening rules.
+- **Rules not applying:** verify the selected presets, overrides and ignore patterns in the active config.
+- **Formatting differences:** apply fixes to the requested scope with `bunx --bun uncheck --fix <paths>`.
 
-Common fixes:
-
-- **Conflicting configs**: After moving to Oxlint or Biome, delete leftover `.eslintrc.*` and `.prettierrc.*` files. On ESLint, `.eslintrc.*` files are inert (ESLint 10 only reads `eslint.config.*`) and `.prettierrc.*` is the formatter's config, so neither is a conflict
-- **Missing dependency**: Run `bunx ultracite init` again or manually add `ultracite` to devDependencies
-- **Rules not applying**: Ensure config file extends the correct presets for your framework
+Report the checks actually run and any failures left unresolved. A lint/format/typecheck pass does not establish build, browser or captured-reference coverage.
