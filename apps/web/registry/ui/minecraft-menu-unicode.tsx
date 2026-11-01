@@ -12,6 +12,7 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function loadAlpha() {
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
@@ -76,7 +77,8 @@ export const MenuUnicodeLine = ({
             const on = ascii
               ? source[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
               : uni
-                ? ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) *
+                ? // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+                  ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) *
                   255
                 : 0;
 

@@ -16,6 +16,7 @@ import type { UnihexGlyph } from "./minecraft-unifont";
 
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function loadAlpha() {
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
@@ -255,6 +256,7 @@ function paintUnihex(
       if (
         sx >= 0 &&
         sx < glyph.bitWidth &&
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
       ) {
         context.fillRect(px, py, 1, 1);

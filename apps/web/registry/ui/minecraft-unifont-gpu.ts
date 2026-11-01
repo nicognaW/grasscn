@@ -220,6 +220,7 @@ export function paintUnihexGPU(
   for (let row = 0; row < 16; row += 1) {
     for (let col = 0; col < glyph.width; col += 1) {
       const on =
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[row] >>> (glyph.bitWidth - 1 - col - glyph.left)) & 1;
 
       rgba.set([255, 255, 255, on ? 255 : 0], (row * glyph.width + col) * 4);

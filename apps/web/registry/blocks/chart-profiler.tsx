@@ -59,6 +59,7 @@ export const ProfilerChartExample = ({
         startAngle={-90}
         endAngle={270}
         isAnimationActive={false}
+        // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
         shape={ChartProfilerSector}
       >
         {data.map((row, index) => (
