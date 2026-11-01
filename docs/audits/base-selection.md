@@ -88,3 +88,7 @@ The following five inherited Base entries were reviewed against their entire ass
 
 All remaining inherited website-default fixture mappings were checked against the current primary examples or retained playground controls. Historical `/components` citations now identify canonical docs and the retained interactive-playground section where that is the actual justification. Explicit legacy-link tests retain their old URL because compatibility itself is their subject. No shadcn-owned mapping or fixture case identity changed.
 
+
+### Branding boundary and remaining visual gap
+
+`preview-branding.spec.ts` remains wholly outside Base. Its source-asset check independently compares the SVG-embedded48px grass image composited on the original black background with the retained scale3 Minecraft capture, separately from production DOM. The header check observes the actual132x48 logo, keeps a screenshot and checks exact served SVG/favicon bytes; it never rewrites element geometry or background. The authored SVG intrinsic size is176x64 with48x48grass at(0,8), so the current132x48header displays36pxgrass (fractional2.25scale). Retained native branding cases cover scales1/3 onblack/white, not this geometry/context. Actual integrated-header zero-RGBA coverage therefore remains an explicit acceptance gap. Preserved source bytes and native asset provenance do not establish that missing integrated match, and the hard visual goal is not lowered. No Full execution was performed for this correction.
