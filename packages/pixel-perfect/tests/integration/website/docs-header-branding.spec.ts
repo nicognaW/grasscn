@@ -2,78 +2,106 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { parseHeaderManifest } from "@ppt/runtime/docs-reference-types";
 import { PNG } from "pngjs";
+
+const compare = (left: PNG, right: PNG) => {
+  let count = 0;
+  const diff = new PNG({ height: left.height, width: left.width });
+
+  for (let offset = 0; offset < left.data.length; offset += 4) {
+    if (
+      !left.data
+        .subarray(offset, offset + 4)
+        .equals(right.data.subarray(offset, offset + 4))
+    ) {
+      count += 1;
+      diff.data.set([255, 0, 255, 255], offset);
+    }
+  }
+
+  return { count, diff };
+};
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
-).replace(/\/$/, "");
+).replace(/\/$/u, "");
 
 test("default header grass at intrinsic SVG size matches original Minecraft GUI3", async ({
   page,
 }, info) => {
-  await page.setViewportSize({ width: 1536, height: 900 });
+  await page.setViewportSize({ height: 900, width: 1536 });
   await page.goto(`${origin}/docs`);
   const header = page.getByRole("banner");
+
   const logo = header
-    .getByRole("link", { name: "grasscn home", exact: true })
+    .getByRole("link", { exact: true, name: "grasscn home" })
     .locator("img");
-  await logo.evaluate((element) => (element as HTMLImageElement).decode());
-  const bounds = (await logo.boundingBox())!;
+
+  await logo.evaluate(async (element) => {
+    if (!(element instanceof HTMLImageElement)) {
+      throw new TypeError("Header logo must be an image");
+    }
+
+    await element.decode();
+  });
+  const bounds = await logo.boundingBox();
+  expect(bounds).not.toBeNull();
+
+  if (bounds === null) {
+    throw new Error("Visible header logo needs layout bounds");
+  }
+
   expect([bounds.width, bounds.height]).toEqual([176, 64]);
   expect([bounds.x, bounds.y].every(Number.isInteger)).toBe(true);
   await expect(header).toHaveCSS("background-color", "rgb(32, 32, 32)");
   await expect(logo).toHaveCSS("image-rendering", "pixelated");
   expect(await page.evaluate(() => devicePixelRatio)).toBe(1);
-  const manifest = JSON.parse(
+
+  const manifest = parseHeaderManifest(
     await readFile(
       new URL("../../reference/branding-header/manifest.json", import.meta.url),
-      "utf8"
+      "utf-8"
     )
   );
+
   expect(manifest.repeatDecodedRgbaEqual).toBe(true);
-  const reference = manifest.cases[0];
+  const [reference] = manifest.cases;
   expect({
-    scale: reference.scale,
     background: reference.background,
-    width: reference.width,
     height: reference.height,
-  }).toEqual({ scale: 3, background: "#202020", width: 48, height: 48 });
+    scale: reference.scale,
+    width: reference.width,
+  }).toEqual({ background: "#202020", height: 48, scale: 3, width: 48 });
+
   const bytes = await readFile(
     new URL(
       `../../reference/branding-header/${reference.path}`,
       import.meta.url
     )
   );
+
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(
     reference.sha256
   );
   await page.mouse.move(0, 0);
+
   // Crop the unchanged SVG's actual grass bounds. The source image is48x48 at
   // (0,8) in its intrinsic176x64 viewport; no DOM/style/content rewriting.
   const actualBytes = await page.screenshot({
-    clip: { x: bounds.x, y: bounds.y + 8, width: 48, height: 48 },
+    clip: { height: 48, width: 48, x: bounds.x, y: bounds.y + 8 },
   });
-  const actual = PNG.sync.read(actualBytes),
-    expected = PNG.sync.read(bytes);
+
+  const actual = PNG.sync.read(actualBytes);
+  const expected = PNG.sync.read(bytes);
+
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
   ]);
-  const compare = (left: PNG, right: PNG) => {
-    let count = 0;
-    const diff = new PNG({ width: left.width, height: left.height });
-    for (let offset = 0; offset < left.data.length; offset += 4)
-      if (
-        !left.data
-          .subarray(offset, offset + 4)
-          .equals(right.data.subarray(offset, offset + 4))
-      ) {
-        count++;
-        diff.data.set([255, 0, 255, 255], offset);
-      }
-    return { count, diff };
-  };
+
   const mutation = PNG.sync.read(PNG.sync.write(expected));
+  // eslint-disable-next-line no-bitwise -- Preserve the established exact byte operation for one-pixel negative controls or diagnostic RGBA shading.
   mutation.data[0] ^= 1;
   expect(compare(mutation, expected).count).toBe(1);
   const result = compare(actual, expected);
@@ -86,17 +114,17 @@ test("default header grass at intrinsic SVG size matches original Minecraft GUI3
     info.outputPath("header-grass-metrics.json"),
     JSON.stringify(
       {
-        reference: reference.path,
-        referenceSha256: reference.sha256,
-        sourceJarSha256: manifest.sourceJarSha256,
+        background: "#202020",
+        bounds,
         caseDefinitionSha256: manifest.caseDefinitionSha256,
         mismatchedPixels: result.count,
-        totalPixels: 48 * 48,
         mutationRejected: true,
-        bounds,
-        background: "#202020",
+        reference: reference.path,
+        referenceSha256: reference.sha256,
         route: page.url(),
         scope: manifest.scope,
+        sourceJarSha256: manifest.sourceJarSha256,
+        totalPixels: 48 * 48,
       },
       null,
       2

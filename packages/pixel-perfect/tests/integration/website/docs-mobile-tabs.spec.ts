@@ -2,85 +2,118 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/pixel-perfect/test";
+import {
+  parseNativeManifest,
+  nativeReference,
+} from "@ppt/runtime/docs-reference-types";
 import { PNG } from "pngjs";
+
+const compare = (left: PNG, right: PNG) => {
+  let count = 0;
+  const diff = new PNG({ height: left.height, width: left.width });
+
+  for (let offset = 0; offset < left.data.length; offset += 4) {
+    if (
+      !left.data
+        .subarray(offset, offset + 4)
+        .equals(right.data.subarray(offset, offset + 4))
+    ) {
+      count += 1;
+      diff.data.set([255, 0, 255, 255], offset);
+    }
+  }
+
+  return { count, diff };
+};
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
-).replace(/\/$/, "");
+).replace(/\/$/u, "");
 
 test("mobile documentation Preview and Code remain visible and match compact native tabs", async ({
   page,
 }, info) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
   await page.goto(`${origin}/docs/components/button`);
+
   const example = page.getByRole("region", {
+    exact: true,
     name: "Button example",
-    exact: true,
   });
+
   const tabs = example.getByRole("tablist", {
-    name: "Button example view",
     exact: true,
+    name: "Button example view",
   });
+
   await tabs.scrollIntoViewIfNeeded();
-  for (const name of ["Preview", "Code"])
-    await expect(tabs.getByRole("tab", { name, exact: true })).toBeInViewport({
+
+  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
+  for (const name of ["Preview", "Code"]) {
+    await expect(tabs.getByRole("tab", { exact: true, name })).toBeInViewport({
       ratio: 1,
     });
-  const geometry = await tabs.evaluate((element) => ({
-    width: element.getBoundingClientRect().width,
-    scroll: element.parentElement!.scrollLeft,
-    background: getComputedStyle(element.parentElement!).backgroundColor,
-  }));
-  expect(geometry).toEqual({
-    width: 240,
-    scroll: 0,
-    background: "rgb(32, 32, 32)",
+  }
+  /* eslint-enable no-await-in-loop */
+
+  const geometry = await tabs.evaluate((element) => {
+    const parent = element.parentElement;
+
+    if (parent === null) {
+      throw new Error("Example tab strip needs its scroll container");
+    }
+
+    return {
+      background: getComputedStyle(parent).backgroundColor,
+      scroll: parent.scrollLeft,
+      width: element.getBoundingClientRect().width,
+    };
   });
+
+  expect(geometry).toEqual({
+    background: "rgb(32, 32, 32)",
+    scroll: 0,
+    width: 240,
+  });
+
   const family = new URL(
     "../../reference/showcase-code-tabs/",
     import.meta.url
   );
-  const manifest = JSON.parse(
-    await readFile(new URL("manifest.json", family), "utf8")
+
+  const manifest = parseNativeManifest(
+    await readFile(new URL("manifest.json", family), "utf-8")
   );
+
+  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
   for (const state of ["preview", "code"]) {
     if (state === "code") {
-      await tabs.getByRole("tab", { name: "Code", exact: true }).click();
-      await example.getByRole("button", { name: "Copy", exact: true }).focus();
+      await tabs.getByRole("tab", { exact: true, name: "Code" }).click();
+      await example.getByRole("button", { exact: true, name: "Copy" }).focus();
       await expect(example.locator("pre")).toContainText(
-        "function ButtonExample"
+        "const ButtonExample ="
       );
     }
+
     await expect(tabs).toHaveAttribute("data-mc-tabs-ready", "true");
     await page.mouse.move(0, 0);
     const name = `showcase-tabs-${state}-s2.png`;
     const bytes = await readFile(new URL(`captures/${name}`, family));
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-      manifest.cases.find((entry: { name: string }) => entry.name === name)
-        .sha256
+      nativeReference(manifest, name).sha256
     );
-    const expected = PNG.sync.read(bytes),
-      actualBytes = await tabs.screenshot(),
-      actual = PNG.sync.read(actualBytes);
+
+    const expected = PNG.sync.read(bytes);
+    const actualBytes = await tabs.screenshot();
+    const actual = PNG.sync.read(actualBytes);
+
     expect([actual.width, actual.height]).toEqual([
       expected.width,
       expected.height,
     ]);
-    const compare = (left: PNG, right: PNG) => {
-      let count = 0;
-      const diff = new PNG({ width: left.width, height: left.height });
-      for (let offset = 0; offset < left.data.length; offset += 4)
-        if (
-          !left.data
-            .subarray(offset, offset + 4)
-            .equals(right.data.subarray(offset, offset + 4))
-        ) {
-          count++;
-          diff.data.set([255, 0, 255, 255], offset);
-        }
-      return { count, diff };
-    };
+
     const mutation = PNG.sync.read(PNG.sync.write(expected));
+    // eslint-disable-next-line no-bitwise -- Preserve the established exact byte operation for one-pixel negative controls or diagnostic RGBA shading.
     mutation.data[0] ^= 1;
     expect(compare(mutation, expected).count).toBe(1);
     const result = compare(actual, expected);
@@ -92,25 +125,25 @@ test("mobile documentation Preview and Code remain visible and match compact nat
     await writeFile(
       info.outputPath(`${state}-metrics.json`),
       JSON.stringify({
-        reference: name,
-        referenceSha256: manifest.cases.find(
-          (entry: { name: string }) => entry.name === name
-        ).sha256,
+        geometry,
         mismatchedPixels: result.count,
         mutationRejected: true,
-        geometry,
+        reference: name,
+        referenceSha256: nativeReference(manifest, name).sha256,
         route: page.url(),
       })
     );
     expect(result.count).toBe(0);
   }
+  /* eslint-enable no-await-in-loop */
+
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth
     )
   ).toBe(true);
   await page.screenshot({
-    path: info.outputPath("mobile-docs-code.png"),
     fullPage: true,
+    path: info.outputPath("mobile-docs-code.png"),
   });
 });
