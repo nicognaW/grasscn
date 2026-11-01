@@ -11,20 +11,26 @@ import {
 } from "@/components/ui/resizable";
 import { Typography } from "@/components/ui/typography";
 
-export default function ResizableExample() {
+const ResizableExample = () => {
   const group = useRef<GroupImperativeHandle>(null);
   const [layout, setLayout] = useState("50% / 50%");
+
   return (
-    <div style={{ display: "grid", gap: 24 }}>
+    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", gap: 24 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <ResizablePanelGroup
         orientation="horizontal"
         groupRef={group}
-        onLayoutChanged={(value) =>
+        onLayoutChanged={(value) => {
           setLayout(
             `${Math.round(value.left ?? 50)}% / ${Math.round(value.right ?? 50)}%`
-          )
-        }
-        style={{ width: 560, maxWidth: "100%", height: 280 }}
+          );
+        }}
+        /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+        style={{ height: 280, maxWidth: "100%", width: 560 }}
+        /* eslint-enable shadcn/no-inline-styles */
       >
         <ResizablePanel id="left" defaultSize="50%" minSize="30%">
           <Typography>Inventory</Typography>
@@ -34,7 +40,11 @@ export default function ResizableExample() {
           <Typography>Recipes</Typography>
         </ResizablePanel>
       </ResizablePanelGroup>
-      <Button onClick={() => group.current?.setLayout({ left: 50, right: 50 })}>
+      <Button
+        onClick={() => {
+          group.current?.setLayout({ left: 50, right: 50 });
+        }}
+      >
         Reset panels
       </Button>
       <Typography as="output" aria-label="Panel layout">
@@ -42,4 +52,6 @@ export default function ResizableExample() {
       </Typography>
     </div>
   );
-}
+};
+
+export default ResizableExample;

@@ -2,6 +2,6 @@
 
 import { Spinner } from "@/components/ui/spinner";
 
-export default function SpinnerExample() {
-  return <Spinner aria-label="Loading world" />;
-}
+const SpinnerExample = () => <Spinner aria-label="Loading world" />;
+
+export default SpinnerExample;

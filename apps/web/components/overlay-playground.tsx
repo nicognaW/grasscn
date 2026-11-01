@@ -25,41 +25,45 @@ import BubbleExample from "../examples/overlays/bubble-example";
 import "./documentation.css";
 
 const playgrounds = {
-  tooltip: Demo0,
-  dialog: Demo1,
   "alert-dialog": Demo2,
-  popover: Demo3,
-  "dropdown-menu": Demo4,
-  "context-menu": Demo5,
-  menubar: Demo6,
-  sheet: Demo7,
-  drawer: Demo8,
-  command: Demo9,
-  avatar: Demo10,
-  table: Demo11,
-  calendar: Demo12,
-  "date-picker": Demo13,
-  item: Demo14,
-  "data-table": Demo15,
-  carousel: Demo16,
-  message: Demo17,
-  bubble: BubbleExample,
-  "message-scroller": Demo17,
   attachment: Demo18,
+  avatar: Demo10,
+  bubble: BubbleExample,
+  calendar: Demo12,
+  carousel: Demo16,
   chart: Demo19,
+  command: Demo9,
+  "context-menu": Demo5,
+  "data-table": Demo15,
+  "date-picker": Demo13,
+  dialog: Demo1,
+  drawer: Demo8,
+  "dropdown-menu": Demo4,
+  item: Demo14,
+  menubar: Demo6,
+  message: Demo17,
+  "message-scroller": Demo17,
+  popover: Demo3,
+  sheet: Demo7,
+  table: Demo11,
+  tooltip: Demo0,
 };
-export function OverlayPlayground({
+
+export const OverlayPlayground = ({
   name,
 }: {
   name: keyof typeof playgrounds;
-}) {
+}) => {
   const Playground = playgrounds[name];
+
   return (
     <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-playground minecraft-example"
+      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`Interactive ${name} playground`}
     >
       <Playground scale={2} />
     </section>
   );
-}
+};

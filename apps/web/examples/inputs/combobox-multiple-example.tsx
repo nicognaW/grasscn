@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -13,10 +14,13 @@ import {
   ComboboxValue,
   useComboboxAnchor,
 } from "@/components/ui/combobox";
+
 const blocks = ["Oak Planks", "Stone", "Bedrock"];
-export default function MultipleComboboxExample() {
+
+const MultipleComboboxExample = () => {
   const [inventory, setInventory] = useState<string[]>(["Oak Planks"]);
   const anchor = useComboboxAnchor();
+
   return (
     <Combobox
       multiple
@@ -50,4 +54,6 @@ export default function MultipleComboboxExample() {
       </ComboboxContent>
     </Combobox>
   );
-}
+};
+
+export default MultipleComboboxExample;

@@ -2,18 +2,21 @@ import { notFound } from "next/navigation";
 
 import { chartTypes, ChartShowcase } from "../../../components/charts/showcase";
 
-export function generateStaticParams() {
-  return chartTypes
-    .filter(([key]) => key !== "overview")
-    .map(([type]) => ({ type }));
-}
+export const generateStaticParams = () =>
+  chartTypes.flatMap(([type]) => (type === "overview" ? [] : [{ type }]));
 
-export default async function ChartTypePage({
+const ChartTypePage = async ({
   params,
 }: {
   params: Promise<{ type: string }>;
-}) {
+}) => {
   const { type } = await params;
-  if (!chartTypes.some(([key]) => key === type)) notFound();
+
+  if (!chartTypes.some(([key]) => key === type)) {
+    notFound();
+  }
+
   return <ChartShowcase type={type} />;
-}
+};
+
+export default ChartTypePage;

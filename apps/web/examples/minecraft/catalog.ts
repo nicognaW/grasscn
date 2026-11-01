@@ -13,7 +13,13 @@ import PlayerPreviewExample from "./player-preview-example";
 import SignExample from "./sign-example";
 import SignHanging from "./sign-hanging";
 import TradingExample from "./trading-example";
+
 export const minecraftExamples = {
+  "advancement-tree-example": {
+    Component: AdvancementTreeExample,
+    filename: "minecraft/advancement-tree-example.tsx",
+    title: "Advancement Tree Example",
+  },
   "book-example": {
     Component: BookExample,
     filename: "minecraft/book-example.tsx",
@@ -34,31 +40,6 @@ export const minecraftExamples = {
     filename: "minecraft/hud-example.tsx",
     title: "Hud Example",
   },
-  "sign-example": {
-    Component: SignExample,
-    filename: "minecraft/sign-example.tsx",
-    title: "Sign Example",
-  },
-  "sign-hanging": {
-    Component: SignHanging,
-    filename: "minecraft/sign-hanging.tsx",
-    title: "Sign Hanging",
-  },
-  "player-preview-example": {
-    Component: PlayerPreviewExample,
-    filename: "minecraft/player-preview-example.tsx",
-    title: "Player Preview Example",
-  },
-  "player-preview-alex": {
-    Component: PlayerPreviewAlex,
-    filename: "minecraft/player-preview-alex.tsx",
-    title: "Player Preview Alex",
-  },
-  "advancement-tree-example": {
-    Component: AdvancementTreeExample,
-    filename: "minecraft/advancement-tree-example.tsx",
-    title: "Advancement Tree Example",
-  },
   "map-example": {
     Component: MapExample,
     filename: "minecraft/map-example.tsx",
@@ -78,6 +59,26 @@ export const minecraftExamples = {
     Component: PlayerListScoreboard,
     filename: "minecraft/player-list-scoreboard.tsx",
     title: "Player List Scoreboard",
+  },
+  "player-preview-alex": {
+    Component: PlayerPreviewAlex,
+    filename: "minecraft/player-preview-alex.tsx",
+    title: "Player Preview Alex",
+  },
+  "player-preview-example": {
+    Component: PlayerPreviewExample,
+    filename: "minecraft/player-preview-example.tsx",
+    title: "Player Preview Example",
+  },
+  "sign-example": {
+    Component: SignExample,
+    filename: "minecraft/sign-example.tsx",
+    title: "Sign Example",
+  },
+  "sign-hanging": {
+    Component: SignHanging,
+    filename: "minecraft/sign-hanging.tsx",
+    title: "Sign Hanging",
   },
   "trading-example": {
     Component: TradingExample,

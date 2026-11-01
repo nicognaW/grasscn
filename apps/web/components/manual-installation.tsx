@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
 import type {
@@ -14,108 +15,220 @@ import { DocumentText } from "./document-text";
 import { DependencyCommand } from "./installation-command";
 
 const displayLimit = 4096;
-function FileSource({ file }: { file: InstallationFile }) {
-  const deferred = file.sourceBytes > 16384;
+
+const FileSource = ({ file }: { file: InstallationFile }) => {
+  const deferred = file.sourceBytes > 16_384;
   const [contents, setContents] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [failure, setFailure] = useState(false);
+
   const [copy, setCopy] = useState<"idle" | "copying" | "success" | "failed">(
     "idle"
   );
+
   const load = async () => {
-    if (contents !== undefined) return contents;
+    if (contents !== undefined) {
+      return contents;
+    }
+
     setLoading(true);
     setFailure(false);
+
+    let text: string | undefined;
+
+    /* eslint-disable react/todo -- This browser I/O operation requires guarded failure and cleanup paths; React Compiler is not enabled. */
     try {
       const response = await fetch(file.url);
-      if (!response.ok) throw Error("Source unavailable");
-      const text = await response.text();
+
+      if (!response.ok) {
+        throw new Error("Source unavailable");
+      }
+
+      text = await response.text();
       setContents(text);
-      return text;
     } catch {
       setFailure(true);
-      return undefined;
     } finally {
       setLoading(false);
     }
+    /* eslint-enable react/todo */
+
+    return text;
   };
+
+  /* eslint-disable react-doctor/no-fetch-in-effect -- The selected public source file is lazy client data; its owned AbortController cancels work and gates all state updates. */
   useEffect(() => {
-    if (deferred) return;
-    const controller = new AbortController();
-    setLoading(true);
-    fetch(file.url, { signal: controller.signal })
-      .then(async (response) => {
-        if (!response.ok) throw Error("Source unavailable");
-        const text = await response.text();
-        if (!controller.signal.aborted) setContents(text);
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setFailure(true);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
-      });
-    return () => controller.abort();
+    let cancel: (() => void) | undefined;
+
+    if (!deferred) {
+      const controller = new AbortController();
+
+      const loadInitial = async () => {
+        setLoading(true);
+
+        /* eslint-disable react/todo -- This browser I/O operation requires guarded failure and cleanup paths; React Compiler is not enabled. */
+        try {
+          const response = await fetch(file.url, { signal: controller.signal });
+
+          if (!response.ok) {
+            throw new Error("Source unavailable");
+          }
+
+          const text = await response.text();
+
+          if (!controller.signal.aborted) {
+            setContents(text);
+          }
+        } catch {
+          if (!controller.signal.aborted) {
+            setFailure(true);
+          }
+        } finally {
+          if (!controller.signal.aborted) {
+            setLoading(false);
+          }
+        }
+        /* eslint-enable react/todo */
+      };
+
+      void loadInitial();
+
+      cancel = () => {
+        controller.abort();
+      };
+    }
+
+    return cancel;
   }, [deferred, file.url]);
+  /* eslint-enable react-doctor/no-fetch-in-effect */
+
   const bulk =
     deferred ||
-    (contents?.length ?? 0) > 16384 ||
+    (contents?.length ?? 0) > 16_384 ||
     (contents?.split("\n").some((line) => line.length > 512) ?? false);
+
   const copyFile = async () => {
     setCopy("copying");
     const text = await load();
+
+    /* eslint-disable react/todo -- This browser I/O operation requires guarded failure and cleanup paths; React Compiler is not enabled. */
     try {
-      if (text === undefined || !navigator.clipboard?.writeText)
-        throw Error("Clipboard unavailable");
+      if (text === undefined || navigator.clipboard?.writeText === undefined) {
+        throw new Error("Clipboard unavailable");
+      }
+
       await navigator.clipboard.writeText(text);
       setCopy("success");
     } catch {
       setCopy("failed");
     }
+    /* eslint-enable react/todo */
   };
-  const filename = file.destination.split("/").at(-1)!;
+
+  const filename = file.destination.split("/").at(-1) ?? file.destination;
+
+  let language = "typescript";
+
+  if (filename.endsWith(".css")) {
+    language = "css";
+  } else if (filename.endsWith(".tsx")) {
+    language = "tsx";
+  }
+
+  const compactPreview =
+    contents === undefined ? (
+      <div
+        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+        role="status"
+        /* eslint-enable jsx-a11y/prefer-tag-over-role */
+      />
+    ) : (
+      <CodeView
+        code={contents}
+        filename={file.destination}
+        language={language}
+        label="Manual installation file"
+      />
+    );
+
   return (
     <section
       aria-label="Selected manual file"
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-manual-source"
+      /* eslint-enable shadcn/no-unknown-classes */
     >
       <DocumentParagraph>{file.destination}</DocumentParagraph>
       <DocumentParagraph>Source: {file.source}</DocumentParagraph>
-      <div className="documentation-manual-actions">
+      <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+        className="documentation-manual-actions"
+        /* eslint-enable shadcn/no-unknown-classes */
+      >
+        {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
         <Button
+          /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
           className="documentation-control"
+          /* eslint-enable shadcn/no-unknown-classes */
           nativeButton={false}
+
+          /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
           role="link"
+          /* eslint-enable jsx-a11y/prefer-tag-over-role */
+
           render={<a href={`${file.url}?download=1`} download={filename} />}
         >
           Download
         </Button>
+        {/* eslint-enable jsx-a11y/control-has-associated-label */}
         {bulk ? (
           <>
+            {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
             <Button
+              /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control"
-              onClick={load}
+              /* eslint-enable shadcn/no-unknown-classes */
+              onClick={() => {
+                void load();
+              }}
               disabled={loading || contents !== undefined}
             >
               Load
             </Button>
+            {/* eslint-enable jsx-a11y/control-has-associated-label */}
+            {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
             <Button
+              /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control documentation-full-copy"
-              onClick={copyFile}
+              /* eslint-enable shadcn/no-unknown-classes */
+              onClick={() => {
+                void copyFile();
+              }}
               disabled={copy === "copying"}
             >
               Copy full file
             </Button>
+            {/* eslint-enable jsx-a11y/control-has-associated-label */}
           </>
         ) : null}
       </div>
       {loading ? <DocumentText>Loading file</DocumentText> : null}
       {failure ? (
-        <div role="alert">
+        <div
+          /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+          role="alert"
+          /* eslint-enable jsx-a11y/prefer-tag-over-role */
+        >
           <DocumentText>File could not be loaded.</DocumentText>
-          <Button className="documentation-control" onClick={load}>
+          {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
+          <Button /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+            className="documentation-control"
+            /* eslint-enable shadcn/no-unknown-classes */ onClick={() => {
+              void load();
+            }}
+          >
             Retry
           </Button>
+          {/* eslint-enable jsx-a11y/control-has-associated-label */}
         </div>
       ) : null}
       {bulk ? (
@@ -125,10 +238,16 @@ function FileSource({ file }: { file: InstallationFile }) {
             {displayLimit} characters; Copy full file and Download always
             provide the complete file.
           </DocumentParagraph>
-          {contents !== undefined ? (
+          {contents === undefined ? null : (
             <pre
+              /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-manual-preview"
+              /* eslint-enable shadcn/no-unknown-classes */
+
+              /* eslint-disable jsx-a11y/no-noninteractive-tabindex -- The source preview is keyboard-focusable for exact code selection and clipboard fallback. */
               tabIndex={0}
+              /* eslint-enable jsx-a11y/no-noninteractive-tabindex */
+
               aria-label={`${filename} preview`}
               onCopy={(event) => {
                 event.clipboardData.setData("text/plain", contents);
@@ -137,44 +256,41 @@ function FileSource({ file }: { file: InstallationFile }) {
             >
               <DocumentText>{contents.slice(0, displayLimit)}</DocumentText>
             </pre>
-          ) : null}
-          <div role="status" aria-live="polite">
+          )}
+          <div
+            /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+            role="status"
+            /* eslint-enable jsx-a11y/prefer-tag-over-role */
+            aria-live="polite"
+          >
             <DocumentText>
-              {copy === "success"
-                ? "Copied complete file"
-                : copy === "failed"
-                  ? "Copy failed. Download the complete file, or select the loaded preview and copy it."
-                  : ""}
+              {
+                {
+                  copying: "",
+                  failed:
+                    "Copy failed. Download the complete file, or select the loaded preview and copy it.",
+                  idle: "",
+                  success: "Copied complete file",
+                }[copy]
+              }
             </DocumentText>
           </div>
         </>
-      ) : contents !== undefined ? (
-        <CodeView
-          code={contents}
-          filename={file.destination}
-          language={
-            filename.endsWith(".css")
-              ? "css"
-              : filename.endsWith(".tsx")
-                ? "tsx"
-                : "typescript"
-          }
-          label="Manual installation file"
-        />
       ) : (
-        <div role="status" />
+        compactPreview
       )}
     </section>
   );
-}
-export function ManualInstallation({
+};
+
+export const ManualInstallation = ({
   manifest,
   initialFile,
 }: {
   manifest: InstallationManifest;
   initialFile?: string;
-}) {
-  const [selected, setSelected] = useState(
+}) => {
+  const [selected, setSelected] = useState<InstallationFile | undefined>(
     () =>
       manifest.files.find(
         (file) =>
@@ -182,8 +298,12 @@ export function ManualInstallation({
           file.source.split("/").at(-1) === initialFile
       ) ?? manifest.files[0]
   );
+
   return (
-    <div className="documentation-manual">
+    <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+      className="documentation-manual"
+      /* eslint-enable shadcn/no-unknown-classes */
+    >
       <DocumentParagraph>
         Use an existing{" "}
         <DocumentLink href="https://ui.shadcn.com/docs/installation">
@@ -207,20 +327,37 @@ export function ManualInstallation({
         are preserved.
       </DocumentParagraph>
       <DocumentText>{manifest.files.length} required files</DocumentText>
-      <ScrollArea className="documentation-manual-files" scale={2}>
+      <ScrollArea /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+        className="documentation-manual-files"
+        /* eslint-enable shadcn/no-unknown-classes */ scale={2}
+      >
         <nav
           aria-label="Manual files"
+          /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
           className="documentation-manual-file-list"
+          /* eslint-enable shadcn/no-unknown-classes */
         >
           {manifest.files.map((file) => (
-            <div key={file.url} className="documentation-manual-file-entry">
+            <div
+              key={
+                file.url
+              } /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+              className="documentation-manual-file-entry"
+              /* eslint-enable shadcn/no-unknown-classes */
+            >
+              {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
               <Button
+                /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
                 className="documentation-manual-file"
+                /* eslint-enable shadcn/no-unknown-classes */
                 aria-pressed={selected?.url === file.url}
-                onClick={() => setSelected(file)}
+                onClick={() => {
+                  setSelected(file);
+                }}
               >
                 {file.source.split("/").at(-1)}
               </Button>
+              {/* eslint-enable jsx-a11y/control-has-associated-label */}
               <DocumentParagraph>{file.destination}</DocumentParagraph>
             </div>
           ))}
@@ -229,10 +366,14 @@ export function ManualInstallation({
       {selected ? (
         <FileSource key={selected.url} file={selected} />
       ) : (
-        <DocumentText role="alert">
+        <DocumentText
+          /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+          role="alert"
+          /* eslint-enable jsx-a11y/prefer-tag-over-role */
+        >
           Installation files unavailable.
         </DocumentText>
       )}
     </div>
   );
-}
+};

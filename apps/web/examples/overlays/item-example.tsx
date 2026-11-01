@@ -12,8 +12,9 @@ import {
   ItemActions,
 } from "@/components/ui/item";
 
-export default function Example() {
+const Example = () => {
   const [opened, setOpened] = useState(0);
+
   return (
     <div>
       <Item>
@@ -23,7 +24,14 @@ export default function Example() {
           <ItemDescription>{"world-1\nSurvival Mode"}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button style={{ width: 120 }} onClick={() => setOpened(opened + 1)}>
+          <Button
+            /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+            style={{ width: 120 }}
+            /* eslint-enable shadcn/no-inline-styles */
+            onClick={() => {
+              setOpened(opened + 1);
+            }}
+          >
             Open
           </Button>
         </ItemActions>
@@ -31,4 +39,6 @@ export default function Example() {
       <output aria-label="Opened worlds">{opened} opened</output>
     </div>
   );
-}
+};
+
+export default Example;

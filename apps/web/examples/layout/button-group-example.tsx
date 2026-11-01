@@ -9,15 +9,30 @@ import {
   ButtonGroupSeparator,
 } from "@/components/ui/button-group";
 
-export default function ButtonGroupExample() {
+const ButtonGroupExample = () => {
   const [saved, setSaved] = useState(false);
+
   return (
     <ButtonGroup aria-label="World actions">
-      <Button style={{ width: 160 }} onClick={() => setSaved(true)}>
+      <Button
+        /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+        style={{ width: 160 }}
+        /* eslint-enable shadcn/no-inline-styles */
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
         Save
       </Button>
       <ButtonGroupSeparator />
-      <Button style={{ width: 160 }} onClick={() => setSaved(false)}>
+      <Button
+        /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+        style={{ width: 160 }}
+        /* eslint-enable shadcn/no-inline-styles */
+        onClick={() => {
+          setSaved(false);
+        }}
+      >
         Reset
       </Button>
       <ButtonGroupText aria-live="polite">
@@ -25,4 +40,6 @@ export default function ButtonGroupExample() {
       </ButtonGroupText>
     </ButtonGroup>
   );
-}
+};
+
+export default ButtonGroupExample;

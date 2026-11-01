@@ -1,10 +1,11 @@
 import { Input } from "@/components/ui/input";
-export default function ReadOnlyInputExample() {
-  return (
-    <Input
-      aria-label="Read-only player name"
-      defaultValue="Hello Minecraft"
-      readOnly
-    />
-  );
-}
+
+const ReadOnlyInputExample = () => (
+  <Input
+    aria-label="Read-only player name"
+    defaultValue="Hello Minecraft"
+    readOnly
+  />
+);
+
+export default ReadOnlyInputExample;

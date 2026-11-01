@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import { Label } from "@/components/ui/label";
@@ -15,25 +16,39 @@ import {
   QuestionnaireNext,
   QuestionnaireSubmit,
 } from "@/components/ui/questionnaire";
+
 const items = [
   {
+    choices: [{ value: "survival" }, { value: "creative" }],
     name: "mode",
     required: true,
-    choices: [{ value: "survival" }, { value: "creative" }],
   },
   { name: "name", required: true },
 ] as const;
-export default function QuestionnaireExample() {
+
+const QuestionnaireExample = () => {
   const [result, setResult] = useState("");
+
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", gap: 16 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <Questionnaire
         items={items}
         shortcuts="numbers"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
-          setResult(`${data.get("name")}: ${data.get("mode")}`);
+          const name = data.get("name");
+          const mode = data.get("mode");
+
+          // eslint-disable-next-line anti-slop/no-runtime-typeof -- FormData is an input boundary; these two controls submit text fields.
+          if (typeof name !== "string" || typeof mode !== "string") {
+            return;
+          }
+
+          setResult(`${name}: ${mode}`);
         }}
       >
         <QuestionnaireItem name="mode" required>
@@ -60,4 +75,6 @@ export default function QuestionnaireExample() {
       </output>
     </div>
   );
-}
+};
+
+export default QuestionnaireExample;

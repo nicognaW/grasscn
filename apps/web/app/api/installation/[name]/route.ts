@@ -1,12 +1,15 @@
 import { installationManifest } from "../../../../lib/installation";
 
 export const dynamic = "force-dynamic";
-export async function GET(
+
+export const GET = async (
   _request: Request,
   { params }: { params: Promise<{ name: string }> }
-) {
+) => {
   try {
-    const manifest = await installationManifest((await params).name);
+    const { name } = await params;
+    const manifest = await installationManifest(name);
+
     return manifest
       ? Response.json(manifest)
       : new Response("Installation not found", { status: 404 });
@@ -16,4 +19,4 @@ export async function GET(
       { status: 503 }
     );
   }
-}
+};

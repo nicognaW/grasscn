@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -8,9 +9,11 @@ import {
   InputGroupButton,
 } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
-export default function InputGroupExample() {
+
+const InputGroupExample = () => {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState("");
+
   return (
     <form
       onSubmit={(event) => {
@@ -18,17 +21,25 @@ export default function InputGroupExample() {
         setSent(message);
         setMessage("");
       }}
+      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
       style={{ display: "grid", gap: 12 }}
+      /* eslint-enable shadcn/no-inline-styles */
     >
       <InputGroup>
         <InputGroupInput
           aria-label="Chat message"
           value={message}
-          onChange={(event) => setMessage(event.target.value)}
+          onChange={(event) => {
+            setMessage(event.target.value);
+          }}
           placeholder="Message"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton type="submit" style={{ width: 120 }}>
+          <InputGroupButton
+            type="submit" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+            style={{ width: 120 }}
+            /* eslint-enable shadcn/no-inline-styles */
+          >
             Send
           </InputGroupButton>
         </InputGroupAddon>
@@ -38,4 +49,6 @@ export default function InputGroupExample() {
       </output>
     </form>
   );
-}
+};
+
+export default InputGroupExample;

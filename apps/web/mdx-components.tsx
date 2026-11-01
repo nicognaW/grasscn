@@ -21,28 +21,26 @@ import {
   TypographyTable,
 } from "./registry/ui/typography";
 
-export function getMDXComponents(
+export const getMDXComponents = (
   components: MDXComponents = {}
-): MDXComponents {
-  return {
-    a: DocumentLink,
-    h1: DocumentH1,
-    h2: DocumentH2,
-    h3: DocumentH3,
-    h4: DocumentH4,
-    h5: DocumentH5,
-    h6: DocumentH6,
-    p: DocumentParagraph,
-    blockquote: TypographyBlockquote,
-    code: DocumentInlineCode,
-    pre: DocumentCodeBlock,
-    li: DocumentListItem,
-    th: DocumentTableHeader,
-    td: DocumentTableCell,
-    ul: TypographyList,
-    table: TypographyTable,
-    ...components,
-  };
-}
+): MDXComponents => ({
+  a: DocumentLink,
+  blockquote: TypographyBlockquote,
+  code: DocumentInlineCode,
+  h1: DocumentH1,
+  h2: DocumentH2,
+  h3: DocumentH3,
+  h4: DocumentH4,
+  h5: DocumentH5,
+  h6: DocumentH6,
+  li: DocumentListItem,
+  p: DocumentParagraph,
+  pre: DocumentCodeBlock,
+  table: TypographyTable,
+  td: DocumentTableCell,
+  th: DocumentTableHeader,
+  ul: TypographyList,
+  ...components,
+});
 
 export const useMDXComponents = getMDXComponents;

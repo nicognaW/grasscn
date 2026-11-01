@@ -2,10 +2,10 @@
 
 import { Badge } from "@/components/ui/badge";
 
-export default function BadgeExample() {
-  return (
-    <Badge achievement="challenge" earned>
-      Diamonds!
-    </Badge>
-  );
-}
+const BadgeExample = () => (
+  <Badge achievement="challenge" earned>
+    Diamonds!
+  </Badge>
+);
+
+export default BadgeExample;

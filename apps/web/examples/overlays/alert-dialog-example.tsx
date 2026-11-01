@@ -14,9 +14,10 @@ import {
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 
-export default function Example() {
+const Example = () => {
   const [open, setOpen] = useState(false);
   const [confirmed, setConfirmed] = useState(0);
+
   return (
     <div>
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -44,4 +45,6 @@ export default function Example() {
       <output aria-label="Confirmed deletions">{confirmed} confirmed</output>
     </div>
   );
-}
+};
+
+export default Example;

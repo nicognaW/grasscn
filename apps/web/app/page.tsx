@@ -1,5 +1,5 @@
 import HomePageShowcase from "../components/home/homepage";
 
-export default function HomePage() {
-  return <HomePageShowcase />;
-}
+const HomePage = () => <HomePageShowcase />;
+
+export default HomePage;

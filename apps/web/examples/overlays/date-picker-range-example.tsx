@@ -2,6 +2,6 @@
 
 import { DatePickerRangeDemo } from "@/components/date-picker";
 
-export default function Example() {
-  return <DatePickerRangeDemo />;
-}
+const Example = () => <DatePickerRangeDemo />;
+
+export default Example;

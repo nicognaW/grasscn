@@ -14,9 +14,10 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
-export default function Example() {
+const Example = () => {
   const [open, setOpen] = useState(false);
   const [saved, setSaved] = useState(0);
+
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -42,4 +43,6 @@ export default function Example() {
       <output aria-label="Saved worlds">{saved} saved</output>
     </div>
   );
-}
+};
+
+export default Example;

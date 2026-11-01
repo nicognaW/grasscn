@@ -1,4 +1,5 @@
 "use client";
+
 import Demo0 from "../demos/checkbox";
 import Demo13 from "../demos/combobox";
 import Demo14 from "../demos/form";
@@ -15,32 +16,41 @@ import Demo7 from "../demos/switch";
 import Demo3 from "../demos/textarea";
 import Demo8 from "../demos/toggle";
 import Demo9 from "../demos/toggle-group";
+
 const playgrounds = {
   checkbox: Demo0,
-  slider: Demo1,
-  input: Demo2,
-  textarea: Demo3,
-  label: Demo4,
-  select: Demo5,
-  "radio-group": Demo6,
-  switch: Demo7,
-  toggle: Demo8,
-  "toggle-group": Demo9,
-  "native-select": Demo10,
-  "input-group": Demo11,
-  "input-otp": Demo12,
   combobox: Demo13,
   form: Demo14,
+  input: Demo2,
+  "input-group": Demo11,
+  "input-otp": Demo12,
+  label: Demo4,
+  "native-select": Demo10,
   questionnaire: Demo15,
+  "radio-group": Demo6,
+  select: Demo5,
+  slider: Demo1,
+  switch: Demo7,
+  textarea: Demo3,
+  toggle: Demo8,
+  "toggle-group": Demo9,
 };
-export function InputPlayground({ name }: { name: keyof typeof playgrounds }) {
+
+export const InputPlayground = ({
+  name,
+}: {
+  name: keyof typeof playgrounds;
+}) => {
   const Playground = playgrounds[name];
+
   return (
     <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-playground minecraft-example"
+      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`${name} interactive playground`}
     >
       <Playground scale={2} />
     </section>
   );
-}
+};

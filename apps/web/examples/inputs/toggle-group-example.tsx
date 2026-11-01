@@ -1,9 +1,12 @@
 "use client";
+
 import { useState } from "react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-export default function ToggleGroupExample() {
+
+const ToggleGroupExample = () => {
   const [stations, setStations] = useState<string[]>(["crafting"]);
+
   return (
     <ToggleGroup
       aria-label="Crafting station"
@@ -15,4 +18,6 @@ export default function ToggleGroupExample() {
       <ToggleGroupItem value="furnace" aria-label="Furnace" />
     </ToggleGroup>
   );
-}
+};
+
+export default ToggleGroupExample;

@@ -8,27 +8,45 @@ const data = Array.from({ length: 240 }, (_, index) => {
   const sample = [86, 112, 98, 172, 146, 104, 132, 220, 158, 94, 121, 188][
     index % 12
   ];
+
   return { value: sample };
 });
 
-export default function Example() {
+const Example = () => {
   const container = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState<1 | 2>(1);
+
+  /* eslint-disable react-doctor/effect-needs-cleanup -- Observer allocation occurs only for a mounted node and its returned disconnect closure owns the same observer. */
   useEffect(() => {
     const node = container.current;
-    if (!node) return;
-    const measure = () => setScale(node.clientWidth >= 560 ? 2 : 1);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    return () => observer.disconnect();
+
+    let disconnect: (() => void) | undefined;
+
+    if (node !== null) {
+      const measure = () => {
+        setScale(node.clientWidth >= 560 ? 2 : 1);
+      };
+
+      measure();
+      const observer = new ResizeObserver(measure);
+      observer.observe(node);
+
+      disconnect = () => {
+        observer.disconnect();
+      };
+    }
+
+    return disconnect;
   }, []);
+  /* eslint-enable react-doctor/effect-needs-cleanup */
 
   return (
     <div
       ref={container}
-      className="chart-native-fit"
-      style={{ minWidth: 0, display: "grid", justifyItems: "safe center" }}
+
+      /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", justifyItems: "safe center", minWidth: 0 }}
+      /* eslint-enable shadcn/no-inline-styles */
     >
       <FpsChartExample
         aria-label="API response time"
@@ -36,11 +54,13 @@ export default function Example() {
         dataKey="value"
         domain={[0, 300]}
         guides={[
-          { value: 300, label: "300 ms" },
-          { value: 150, label: "150 ms" },
+          { label: "300 ms", value: 300 },
+          { label: "150 ms", value: 150 },
         ]}
         scale={scale}
       />
     </div>
   );
-}
+};
+
+export default Example;

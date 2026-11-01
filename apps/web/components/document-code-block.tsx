@@ -1,32 +1,43 @@
-import {
-  Children,
-  isValidElement,
-  type ComponentProps,
-  type ReactNode,
-} from "react";
+import { Children, isValidElement } from "react";
+import type { ComponentProps, ReactNode } from "react";
 
 import { CodeView } from "./code-view";
 
-function plainCode(node: ReactNode): string {
-  return Children.toArray(node)
+const isTextNode = (value: ReactNode): value is string | number =>
+  // eslint-disable-next-line anti-slop/no-runtime-typeof -- ReactNode is the rendering boundary; native text and element nodes require distinct handling.
+  typeof value === "string" || typeof value === "number";
+
+const plainCode = (node: ReactNode): string =>
+  /* eslint-disable react/no-react-children -- The MDX rendering boundary must flatten and preserve arbitrary React children before native glyph rendering. */
+  Children.toArray(node)
+    /* eslint-enable react/no-react-children */
+
     .map((child) => {
-      if (typeof child === "string" || typeof child === "number")
+      if (isTextNode(child)) {
         return String(child);
-      if (isValidElement<{ children?: ReactNode }>(child))
+      }
+
+      if (isValidElement<{ children?: ReactNode }>(child)) {
         return plainCode(child.props.children);
+      }
+
       return "";
     })
     .join("");
-}
 
-export function DocumentCodeBlock({
+export const DocumentCodeBlock = ({
   children,
   ...props
 }: ComponentProps<"pre"> & {
   "data-language"?: string;
   "data-title"?: string;
-}) {
-  const child = Children.toArray(children).find(isValidElement);
+}) => {
+  const child =
+    /* eslint-disable react/no-react-children -- The MDX rendering boundary must flatten and preserve arbitrary React children before native glyph rendering. */
+    Children.toArray(children)
+      /* eslint-enable react/no-react-children */
+      .find(isValidElement);
+
   const codeProps = isValidElement<{
     className?: string;
     "data-language"?: string;
@@ -34,11 +45,13 @@ export function DocumentCodeBlock({
   }>(child)
     ? child.props
     : undefined;
+
   const language =
     props["data-language"] ??
     codeProps?.["data-language"] ??
-    codeProps?.className?.replace(/^language-/, "") ??
+    codeProps?.className?.replace(/^language-/u, "") ??
     "text";
+
   return (
     <CodeView
       code={plainCode(children)}
@@ -47,4 +60,4 @@ export function DocumentCodeBlock({
       label="Code snippet"
     />
   );
-}
+};

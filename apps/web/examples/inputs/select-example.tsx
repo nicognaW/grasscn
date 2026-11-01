@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -8,13 +9,16 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+
 const modes = [
-  { value: "survival", label: "Survival" },
-  { value: "creative", label: "Creative" },
-  { value: "adventure", label: "Adventure" },
+  { label: "Survival", value: "survival" },
+  { label: "Creative", value: "creative" },
+  { label: "Adventure", value: "adventure" },
 ];
-export default function SelectExample() {
+
+const SelectExample = () => {
   const [mode, setMode] = useState<string | null>("survival");
+
   return (
     <Select items={modes} value={mode} onValueChange={setMode}>
       <SelectTrigger aria-label="Game mode">
@@ -29,4 +33,6 @@ export default function SelectExample() {
       </SelectContent>
     </Select>
   );
-}
+};
+
+export default SelectExample;

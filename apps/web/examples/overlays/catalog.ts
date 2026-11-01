@@ -25,90 +25,50 @@ import Example11 from "./table-example";
 import Example0 from "./tooltip-example";
 
 export const overlayExamples = {
-  "command-palette-example": {
-    Component: CommandPaletteExample,
-    filename: "overlays/command-palette-example.tsx",
-    title: "World command palette",
-  },
-  "tooltip-example": {
-    Component: Example0,
-    filename: "overlays/tooltip-example.tsx",
-    title: "Tooltip",
-  },
-  "dialog-example": {
-    Component: Example1,
-    filename: "overlays/dialog-example.tsx",
-    title: "Dialog",
-  },
   "alert-dialog-example": {
     Component: Example2,
     filename: "overlays/alert-dialog-example.tsx",
     title: "Alert Dialog",
   },
-  "popover-example": {
-    Component: Example3,
-    filename: "overlays/popover-example.tsx",
-    title: "Popover",
-  },
-  "dropdown-menu-example": {
-    Component: Example4,
-    filename: "overlays/dropdown-menu-example.tsx",
-    title: "Dropdown Menu",
-  },
-  "context-menu-example": {
-    Component: Example5,
-    filename: "overlays/context-menu-example.tsx",
-    title: "Context Menu",
-  },
-  "menubar-example": {
-    Component: Example6,
-    filename: "overlays/menubar-example.tsx",
-    title: "Menubar",
-  },
-  "sheet-example": {
-    Component: Example7,
-    filename: "overlays/sheet-example.tsx",
-    title: "Sheet",
-  },
-  "drawer-example": {
-    Component: Example8,
-    filename: "overlays/drawer-example.tsx",
-    title: "Drawer",
-  },
-  "command-example": {
-    Component: Example9,
-    filename: "overlays/command-example.tsx",
-    title: "Command",
+  "attachment-example": {
+    Component: Example22,
+    filename: "overlays/attachment-example.tsx",
+    title: "Attachment",
   },
   "avatar-example": {
     Component: Example10,
     filename: "overlays/avatar-example.tsx",
     title: "Avatar",
   },
-  "table-example": {
-    Component: Example11,
-    filename: "overlays/table-example.tsx",
-    title: "Table",
+  "bubble-example": {
+    Component: Example20,
+    filename: "overlays/bubble-example.tsx",
+    title: "Bubble",
   },
   "calendar-example": {
     Component: Example12,
     filename: "overlays/calendar-example.tsx",
     title: "Calendar",
   },
-  "date-picker-example": {
-    Component: Example13,
-    filename: "overlays/date-picker-example.tsx",
-    title: "Date Picker",
+  "carousel-example": {
+    Component: Example18,
+    filename: "overlays/carousel-example.tsx",
+    title: "Carousel",
   },
-  "date-picker-range-example": {
-    Component: Example14,
-    filename: "overlays/date-picker-range-example.tsx",
-    title: "Date Picker Range",
+  "command-example": {
+    Component: Example9,
+    filename: "overlays/command-example.tsx",
+    title: "Command",
   },
-  "item-example": {
-    Component: Example15,
-    filename: "overlays/item-example.tsx",
-    title: "Item",
+  "command-palette-example": {
+    Component: CommandPaletteExample,
+    filename: "overlays/command-palette-example.tsx",
+    title: "World command palette",
+  },
+  "context-menu-example": {
+    Component: Example5,
+    filename: "overlays/context-menu-example.tsx",
+    title: "Context Menu",
   },
   "data-table-example": {
     Component: Example16,
@@ -120,29 +80,69 @@ export const overlayExamples = {
     filename: "overlays/data-table-features-example.tsx",
     title: "Data Table Features",
   },
-  "carousel-example": {
-    Component: Example18,
-    filename: "overlays/carousel-example.tsx",
-    title: "Carousel",
+  "date-picker-example": {
+    Component: Example13,
+    filename: "overlays/date-picker-example.tsx",
+    title: "Date Picker",
+  },
+  "date-picker-range-example": {
+    Component: Example14,
+    filename: "overlays/date-picker-range-example.tsx",
+    title: "Date Picker Range",
+  },
+  "dialog-example": {
+    Component: Example1,
+    filename: "overlays/dialog-example.tsx",
+    title: "Dialog",
+  },
+  "drawer-example": {
+    Component: Example8,
+    filename: "overlays/drawer-example.tsx",
+    title: "Drawer",
+  },
+  "dropdown-menu-example": {
+    Component: Example4,
+    filename: "overlays/dropdown-menu-example.tsx",
+    title: "Dropdown Menu",
+  },
+  "item-example": {
+    Component: Example15,
+    filename: "overlays/item-example.tsx",
+    title: "Item",
+  },
+  "menubar-example": {
+    Component: Example6,
+    filename: "overlays/menubar-example.tsx",
+    title: "Menubar",
   },
   "message-example": {
     Component: Example19,
     filename: "overlays/message-example.tsx",
     title: "Message",
   },
-  "bubble-example": {
-    Component: Example20,
-    filename: "overlays/bubble-example.tsx",
-    title: "Bubble",
-  },
   "message-scroller-example": {
     Component: Example21,
     filename: "overlays/message-scroller-example.tsx",
     title: "Message Scroller",
   },
-  "attachment-example": {
-    Component: Example22,
-    filename: "overlays/attachment-example.tsx",
-    title: "Attachment",
+  "popover-example": {
+    Component: Example3,
+    filename: "overlays/popover-example.tsx",
+    title: "Popover",
+  },
+  "sheet-example": {
+    Component: Example7,
+    filename: "overlays/sheet-example.tsx",
+    title: "Sheet",
+  },
+  "table-example": {
+    Component: Example11,
+    filename: "overlays/table-example.tsx",
+    title: "Table",
+  },
+  "tooltip-example": {
+    Component: Example0,
+    filename: "overlays/tooltip-example.tsx",
+    title: "Tooltip",
   },
 } satisfies Record<string, ExampleDefinition>;

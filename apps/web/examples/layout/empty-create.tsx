@@ -11,8 +11,9 @@ import {
   EmptyContent,
 } from "@/components/ui/empty";
 
-export default function EmptyCreate() {
+const EmptyCreate = () => {
   const [created, setCreated] = useState(false);
+
   return (
     <Empty>
       <EmptyHeader>
@@ -20,10 +21,17 @@ export default function EmptyCreate() {
         <EmptyDescription>Create your first world.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button disabled={created} onClick={() => setCreated(true)}>
+        <Button
+          disabled={created}
+          onClick={() => {
+            setCreated(true);
+          }}
+        >
           Create world
         </Button>
       </EmptyContent>
     </Empty>
   );
-}
+};
+
+export default EmptyCreate;
