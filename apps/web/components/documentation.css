@@ -167,7 +167,7 @@
 .documentation-manual-file-list {
   display: grid;
   gap: 8px;
-  padding-right: 24px;
+  padding: 2px 24px 2px 2px;
 }
 .documentation-manual-file {
   width: min(100%, 606px);

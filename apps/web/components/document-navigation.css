@@ -30,7 +30,8 @@
 .minecraft-docs-layout nav li {
   margin: 0 0 4px;
 }
-.minecraft-docs-layout nav .mc-button {
+.minecraft-docs-sidebar nav .mc-button,
+.minecraft-docs-toc nav .mc-button {
   width: 200px;
   max-width: 100%;
 }
