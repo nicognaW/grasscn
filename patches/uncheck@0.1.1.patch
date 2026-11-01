@@ -7,7 +7,7 @@ index d65b4e148c229852207ef1351c610bb845d5a856..d0a6880c4c342159a869659ba40bafc9
  	pnpm: "pnpm exec",
  	yarn: "yarn run --silent",
 -	bun: "bunx --no-install",
-+	bun: "bunx --bun --no-install",
++	bun: "bun x --bun --no-install",
  	npm: "npx --no"
  };
  const YARN_TOP_LEVEL = "yarn run -T --silent";

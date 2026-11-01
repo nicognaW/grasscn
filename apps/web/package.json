@@ -7,7 +7,7 @@
     "generate": "bun scripts/prepare-preview.mjs",
     "dev": "bun scripts/prepare-preview.mjs && bun --bun vite --config vite.config.ts",
     "build": "bun --bun vite build --config vite.config.ts",
-    "registry:build": "bunx --bun --no-install shadcn build",
+    "registry:build": "bun x --bun --no-install shadcn build",
     "registry:serve": "bun run registry:build && bun scripts/serve.mjs"
   },
   "dependencies": {
