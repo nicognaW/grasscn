@@ -18,159 +18,208 @@ import {
   assertConsumerPortAvailable,
   consumerEnvironment,
   directoryIdentity,
-  sha256,
 } from "./consumer-boundary.mjs";
 import {
   fetchPublicRegistry,
   assertRegistryInstallation,
 } from "./consumer-registry.mjs";
+import {
+  parseWebsiteIdentity,
+  parseCliReceipt,
+  parseRegistry,
+  encodeConsumerFile,
+} from "./consumer-validation-types.ts";
 import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
 
 // Run only under the shared resource guard with an already owned production website.
 // This is deliberately separate from manual projects: shadcn is the only Grasscn writer here.
 const root = repoRoot;
 const phase = process.env.GRASSCN_CLI_CONSUMER_PHASE;
-assert(
+
+assert.ok(
   ["prepare", "runtime"].includes(phase),
   "Use prepare (4%) then runtime (10%) under the shared guard"
 );
+
 assert.equal(Bun.version, "1.4.4");
+
 const origin = process.env.GRASSCN_PREVIEW_URL;
-assert(
-  origin && /^http:\/\/127\.0\.0\.1:\d+$/.test(origin),
+
+assert.ok(
+  origin !== undefined &&
+    origin !== "" &&
+    /^http:\/\/127\.0\.0\.1:\d+$/u.test(origin),
   "Owned production preview origin required"
 );
+
 const source = await sourceIdentity(root);
-const websiteIdentity = JSON.parse(
+
+const websiteIdentity = parseWebsiteIdentity(
   process.env.GRASSCN_WEBSITE_IDENTITY ?? "null"
 );
+
 assertProductionSource(websiteIdentity, source);
-assert(
+
+assert.ok(
   websiteIdentity.buildId && websiteIdentity.outputSha256,
   "Production build identity required"
 );
+
+const productionIdentity = await productionBuildIdentity({ source });
+
 assert.equal(
-  (await productionBuildIdentity({ source })).outputSha256,
+  productionIdentity.outputSha256,
   websiteIdentity.outputSha256,
   "Website production output must remain source-bound"
 );
+
 const outputRoot = path.join(root, "test-results", "cli-consumers");
-const output = process.env.GRASSCN_CLI_CONSUMER_DIRECTORY
-  ? path.resolve(process.env.GRASSCN_CLI_CONSUMER_DIRECTORY)
-  : path.join(outputRoot, String(Date.now()));
-assert(
+
+const output =
+  process.env.GRASSCN_CLI_CONSUMER_DIRECTORY !== undefined &&
+  process.env.GRASSCN_CLI_CONSUMER_DIRECTORY !== ""
+    ? path.resolve(process.env.GRASSCN_CLI_CONSUMER_DIRECTORY)
+    : path.join(outputRoot, String(Date.now()));
+
+assert.ok(
   output.startsWith(outputRoot + path.sep),
   "CLI artifacts must stay under cli-consumers"
 );
+
 await mkdir(output, { recursive: true });
+
 const preparedFile = path.join(output, "prepared.json");
+
+/** @type {import("./consumer-validation-types.ts").CliReport | undefined} */
 let prepared;
+
 if (phase === "runtime") {
-  prepared = JSON.parse(await readFile(preparedFile, "utf8"));
+  prepared = parseCliReceipt(await readFile(preparedFile, "utf-8"));
   assert.equal(prepared.status, "prepared");
   assert.deepEqual(prepared.source, source);
   assert.deepEqual(prepared.websiteIdentity, websiteIdentity);
 }
+
 try {
   await readFile(
     phase === "prepare" ? preparedFile : path.join(output, "report.json")
   );
   assert.fail("CLI phase requires fresh execution; old reports cannot resume");
 } catch (error) {
-  if (error.code !== "ENOENT") throw error;
+  if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) {
+    throw error;
+  }
 }
+
 const consumer =
   prepared?.consumer ?? (await mkdtemp(path.join(tmpdir(), "grasscn-cli-")));
+
 const git = Bun.spawn(
   ["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
-  { cwd: root, stdout: "pipe", stderr: "inherit" }
+  { cwd: root, stderr: "inherit", stdout: "pipe" }
 );
-const commonDirectory = (await new Response(git.stdout).text()).trim();
+
+const gitOutput = await new Response(git.stdout).text();
+const commonDirectory = gitOutput.trim();
+
 assert.equal(await git.exited, 0);
+
 await assertExternalProject(consumer, [root, path.dirname(commonDirectory)]);
+
+/** @type {import("./consumer-validation-types.ts").CliReport} */
 const report = {
   ...prepared,
-  status: "incomplete",
+  bun: Bun.version,
+  consumer,
   phase,
   source,
+  status: "incomplete",
+  steps: [],
   website: origin,
   websiteIdentity,
-  consumer,
-  bun: Bun.version,
-  steps: [],
 };
+
 report.environment = consumerVerificationEnvironment();
-if (prepared)
+
+if (prepared) {
   assert.deepEqual(
     prepared.environment,
     report.environment,
     "CLI consumer environment unchanged"
   );
+}
+
+/** @param {string} filename @param {unknown} contents */
 const write = async (filename, contents) => {
   const destination = path.join(consumer, filename);
   await mkdir(path.dirname(destination), { recursive: true });
-  await writeFile(
-    destination,
-    typeof contents === "string" ? contents : JSON.stringify(contents, null, 2)
-  );
+  await writeFile(destination, encodeConsumerFile(contents));
 };
-async function run(args) {
+
+/** @param {string[]} args - Arguments for the independent consumer command. */
+const run = async (args) => {
   const child = Bun.spawn([process.execPath, ...args], {
     cwd: consumer,
-    stdout: "inherit",
-    stderr: "inherit",
     env: consumerEnvironment(),
+    stderr: "inherit",
+    stdout: "inherit",
   });
+
   assert.equal(
     await child.exited,
     0,
     `External CLI consumer command: ${args.join(" ")}`
   );
-}
-let server, browser;
+};
+
+let browser;
+let server;
+
 try {
   if (phase === "prepare") {
     await write("package.json", {
-      name: "grasscn-cli-consumer",
-      private: true,
-      type: "module",
-      packageManager: "bun@1.4.4",
       dependencies: {
+        clsx: "2.1.1",
         react: "19.3.1",
         "react-dom": "19.3.1",
-        clsx: "2.1.1",
         "tailwind-merge": "3.7.0",
         tailwindcss: "4.3.3",
       },
       devDependencies: {
-        vite: "8.3.5",
         "@tailwindcss/vite": "4.3.3",
-        shadcn: "4.23.0",
-        typescript: "7.0.2",
+        "@types/node": "26.6.5",
         "@types/react": "19.3.0",
         "@types/react-dom": "19.3.0",
-        "@types/node": "26.6.5",
+        shadcn: "4.23.0",
+        typescript: "7.0.2",
+        vite: "8.3.5",
       },
+      name: "grasscn-cli-consumer",
+      packageManager: "bun@1.4.4",
+      private: true,
+      type: "module",
     });
+
     const settings = {
       $schema: "https://ui.shadcn.com/schema.json",
-      style: "base-nova",
-      rsc: false,
-      tsx: true,
-      tailwind: {
-        config: "",
-        css: "src/globals.css",
-        baseColor: "neutral",
-        cssVariables: true,
-      },
       aliases: {
         components: "@/components",
-        ui: "@/components/ui",
         hooks: "@/hooks",
         lib: "@/lib",
+        ui: "@/components/ui",
         utils: "@/lib/utils",
       },
+      rsc: false,
+      style: "base-nova",
+      tailwind: {
+        baseColor: "neutral",
+        config: "",
+        css: "src/globals.css",
+        cssVariables: true,
+      },
+      tsx: true,
     };
+
     await write("components.json", settings);
     await write(
       "src/lib/utils.ts",
@@ -182,17 +231,17 @@ try {
     );
     await write("tsconfig.json", {
       compilerOptions: {
-        target: "ES2022",
+        esModuleInterop: true,
+        jsx: "react-jsx",
         lib: ["ES2022", "DOM", "DOM.Iterable"],
         module: "ESNext",
         moduleResolution: "Bundler",
-        jsx: "react-jsx",
-        strict: true,
         noEmit: true,
-        skipLibCheck: true,
-        esModuleInterop: true,
-        resolveJsonModule: true,
         paths: { "@/*": ["./src/*"] },
+        resolveJsonModule: true,
+        skipLibCheck: true,
+        strict: true,
+        target: "ES2022",
         types: ["vite/client"],
       },
       include: ["src", "vite.config.ts"],
@@ -210,10 +259,12 @@ try {
       'import{createRoot}from"react-dom/client";import{Button}from"@/components/ui/button";import"./globals.css";createRoot(document.getElementById("root")!).render(<Button data-subject>Button</Button>);'
     );
     await run(["install", "--ignore-scripts", "--network-concurrency", "1"]);
-    const registry = JSON.parse(
-      await readFile(path.join(root, "apps/web/registry.json"), "utf8")
+
+    const registry = parseRegistry(
+      await readFile(path.join(root, "apps/web/registry.json"), "utf-8")
     );
-    assert(
+
+    assert.ok(
       new Set(registry.items.map((item) => item.name)).size ===
         registry.items.length
     );
@@ -221,17 +272,21 @@ try {
     report.registryPayloads = Object.fromEntries(
       [...payloads].map(([name, value]) => [
         name,
-        { url: value.url, sha256: value.sha256 },
+        { sha256: value.sha256, url: value.url },
       ])
     );
-    report.currentItemNames = registry.items.map((item) => item.name).sort();
+    report.currentItemNames = registry.items
+      .map((item) => item.name)
+      .toSorted();
+
     const initializedDependencies =
       await assertIndependentDependencies(consumer);
+
     const cli = packageBin("shadcn", "shadcn", consumer);
     report.cli = {
-      version: initializedDependencies.shadcn.version,
-      path: cli,
       packageSha256: initializedDependencies.shadcn.packageSha256,
+      path: cli,
+      version: initializedDependencies.shadcn.version,
     };
     await run([
       "--bun",
@@ -252,8 +307,9 @@ try {
       settings
     );
     report.dependencyIdentity = await assertIndependentDependencies(consumer);
-    report.installedBytes = installedDependencyIdentity(consumer);
-    assert(report.installedBytes);
+    const installedBytes = installedDependencyIdentity(consumer);
+    assert.ok(installedBytes !== null);
+    report.installedBytes = installedBytes;
     await run(["--bun", "node_modules/typescript/bin/tsc", "--noEmit"]);
     report.steps.push(
       "All installed TypeScript files typecheck in the external consumer"
@@ -309,34 +365,56 @@ try {
       ],
       {
         cwd: consumer,
-        stdout: "inherit",
-        stderr: "inherit",
         env: consumerEnvironment(),
+        stderr: "inherit",
+        stdout: "inherit",
       }
     );
-    for (let attempt = 0; ; attempt++) {
-      assert(
+
+    /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Readiness retries must observe the same owned server before retrying. */
+    for (let attempt = 0; ; attempt += 1) {
+      assert.ok(
         server.exitCode === null,
         "Owned CLI consumer host exited before readiness"
       );
+
       try {
-        if ((await fetch(`http://127.0.0.1:${port}`)).ok) break;
-      } catch {}
-      assert(attempt < 120, "CLI consumer production host readiness timeout");
+        const response = await fetch(`http://127.0.0.1:${port}`);
+
+        if (response.ok) {
+          break;
+        }
+      } catch {
+        // The owned server may refuse connections while its listener starts.
+      }
+
+      assert.ok(
+        attempt < 120,
+        "CLI consumer production host readiness timeout"
+      );
       await Bun.sleep(500);
     }
+    /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
+
     const observerRequire = createRequire(path.join(testRoot, "package.json"));
-    const { chromium } = observerRequire("@playwright/test");
-    browser = await chromium.launch({ headless: true, channel: "msedge" });
+
+    /** @type {typeof import("@playwright/test")} */
+    // eslint-disable-next-line typescript/no-unsafe-assignment -- Preserve the pinned observer module selected through its own package resolution.
+    const playwrightModule = observerRequire("@playwright/test");
+    const { chromium } = playwrightModule;
+
+    browser = await chromium.launch({ channel: "msedge", headless: true });
     report.browserVersion = browser.version();
+
     const page = await browser.newPage({
-      viewport: { width: 1280, height: 900 },
       deviceScaleFactor: 1,
+      viewport: { height: 900, width: 1280 },
     });
+
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(`http://127.0.0.1:${port}`);
-    const subject = page.getByRole("button", { name: "Button", exact: true });
+    const subject = page.getByRole("button", { exact: true, name: "Button" });
     await subject.waitFor();
     await page.mouse.move(1000, 800);
     const actualBytes = await subject.screenshot();
@@ -358,19 +436,24 @@ try {
   }
 } catch (error) {
   report.status = "failed";
-  report.error = String(error.stack ?? error);
+  report.error =
+    error instanceof Error ? (error.stack ?? error.message) : String(error);
   throw error;
 } finally {
-  if (browser) await browser.close();
+  if (browser) {
+    await browser.close();
+  }
+
   if (server) {
     server.kill();
     await server.exited;
   }
+
   await writeFile(
     phase === "prepare" ? preparedFile : path.join(output, "report.json"),
     JSON.stringify(report, null, 2)
   );
   console.log(
-    JSON.stringify({ status: report.status, output, error: report.error })
+    JSON.stringify({ error: report.error, output, status: report.status })
   );
 }
