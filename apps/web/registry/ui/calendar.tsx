@@ -75,6 +75,7 @@ const CalendarMonthButton = ({
       if (!event.defaultPrevented) {
         playMinecraftClick();
       }
+
       onClick?.(event);
     }}
   />

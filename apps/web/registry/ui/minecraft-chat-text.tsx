@@ -119,6 +119,7 @@ const MinecraftChatText = ({
           if (used + next > clipWidth - textWidth("...")) {
             break;
           }
+
           value += char;
           used += next;
         }

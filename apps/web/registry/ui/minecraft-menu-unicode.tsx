@@ -41,14 +41,17 @@ export const MenuUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
+
   const input = React.useMemo(
     () => ({ bold, scale, text, width }),
     [bold, scale, text, width]
   );
+
   const [completion, setCompletion] = React.useState<{
     input: typeof input;
     supported: boolean;
   }>();
+
   const ready = completion?.input === input && completion.supported;
 
   React.useLayoutEffect(() => {

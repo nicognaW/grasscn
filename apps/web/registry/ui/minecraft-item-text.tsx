@@ -117,6 +117,7 @@ const MinecraftItemText = ({
           if (used + next > clipWidth - textWidth("...")) {
             break;
           }
+
           value += char;
           used += next;
         }

@@ -43,8 +43,10 @@ const Slider = ({
   scale?: 1 | 2 | 3;
   label?: string;
 }) => {
-  const [initialValue] = React.useState(() => defaultValue ?? [min, max]);
-  const [uncontrolled, setUncontrolled] = React.useState(initialValue);
+  const [uncontrolled, setUncontrolled] = React.useState(
+    () => defaultValue ?? [min, max]
+  );
+  const initialValue = React.useRef(uncontrolled);
   const root = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => root.current!);
   React.useEffect(() => {
@@ -63,7 +65,7 @@ const Slider = ({
     const reset = (event: Event) => {
       queueMicrotask(() => {
         if (!event.defaultPrevented) {
-          setUncontrolled(initialValue);
+          setUncontrolled(initialValue.current);
         }
       });
     };
@@ -73,7 +75,7 @@ const Slider = ({
     return () => {
       form.removeEventListener("reset", reset);
     };
-  }, [value, props.form, initialValue]);
+  }, [value, props.form]);
   const inheritedDirection = baseDirection();
 
   const dir =
