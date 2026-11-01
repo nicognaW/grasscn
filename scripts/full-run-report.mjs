@@ -125,7 +125,7 @@ export function completedRunReport(number) {
   const cases = [...scope.keys()].map(key => {
     const result = records.get(key)
     if (!result || result.status === 'interrupted') throw Error(`Uncollected Full case: ${key}`)
-    return {...result, history: history.get(key), unexpected: result.status !== result.expectedStatus, flaky: result.status === result.expectedStatus && history.get(key).some(item => item.status !== item.expectedStatus)}
+    return {...result, history: history.get(key), unexpected: result.status !== result.expectedStatus, flaky: ['passed', 'failed', 'timedOut'].includes(result.status) && result.status === result.expectedStatus && history.get(key).some(item => ['passed', 'failed', 'timedOut'].includes(item.status) && item.status !== item.expectedStatus)}
   })
   if (cases.some(test => test.unexpected) === last.passed) throw Error('Receipt outcome disagrees with final case results')
   const report = {schemaVersion: 1, runIssue: run.number, repository: run.repo, issueUrl: run.issue.html_url, testedCommit: run.plan.commit, planHash: run.planHash, scope: 'full', environment: run.plan.environment, executionThread: state.executionThread, executionSession: state.executionSession, approval: state.approval, outcome: state.outcome, total: cases.length, failures: cases.filter(test => test.unexpected), flaky: cases.filter(test => test.flaky), skipped: cases.filter(test => test.status === 'skipped').map(test => test.key), evidence: retainedEvidence}
