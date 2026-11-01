@@ -309,7 +309,7 @@ if (suite === "all" || fullMode) {
 }
 
 if (managedFixture) {
-  steps.push(["fixture-build", [path.join(testRoot, "cli/build-fixture.mjs")]]);
+  steps.push(["fixture-build", [path.join(testRoot, "cli/build-fixture.ts")]]);
 }
 
 const selectedCases = fullMode
