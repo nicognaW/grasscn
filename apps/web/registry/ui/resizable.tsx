@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import * as ResizablePrimitive from "react-resizable-panels";
 
@@ -6,20 +7,22 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-resizable.css";
 import "./minecraft-resizable-assets.css";
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
-function ResizablePanelGroup({
+
+const ResizablePanelGroup = ({
   className,
   scale = 2,
   style,
   ...props
 }: ResizablePrimitive.GroupProps & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <ScaleContext.Provider value={scale}>
       <ResizablePrimitive.Group
         data-slot="resizable-panel-group"
-        className={cn(`mc-resizable-group ${""}`, className)}
+        className={cn(`mc-resizable-group`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -29,20 +32,22 @@ function ResizablePanelGroup({
       />
     </ScaleContext.Provider>
   );
-}
-function ResizablePanel({
+};
+
+const ResizablePanel = ({
   className,
   ...props
-}: ResizablePrimitive.PanelProps) {
+}: ResizablePrimitive.PanelProps) => {
   return (
     <ResizablePrimitive.Panel
       data-slot="resizable-panel"
-      className={cn(`mc-resizable-panel ${""}`, className)}
+      className={cn(`mc-resizable-panel`, className)}
       {...props}
     />
   );
-}
-function ResizableHandle({
+};
+
+const ResizableHandle = ({
   withHandle = false,
   className,
   style,
@@ -52,14 +57,15 @@ function ResizableHandle({
 }: ResizablePrimitive.SeparatorProps & {
   withHandle?: boolean;
   scale?: 1 | 2 | 3;
-}) {
-  const inherited = React.useContext(ScaleContext),
-    scale = scaleProp ?? inherited;
+}) => {
+  const inherited = React.useContext(ScaleContext);
+  const scale = scaleProp ?? inherited;
+
   return (
     <ResizablePrimitive.Separator
       data-slot="resizable-handle"
       data-with-handle={String(withHandle)}
-      className={cn(`mc-resizable-handle ${""}`, className)}
+      className={cn(`mc-resizable-handle`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -89,5 +95,6 @@ function ResizableHandle({
       ) : null}
     </ResizablePrimitive.Separator>
   );
-}
+};
+
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle };

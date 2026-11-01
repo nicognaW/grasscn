@@ -20,12 +20,15 @@ import {
 } from "@grasscn/web/ui/combobox";
 import { Input } from "@grasscn/web/ui/input";
 import * as React from "react";
-type World = {
+
+interface World {
   id: string;
   name: string;
-};
+}
+
 const worlds: World[] = [{ id: "a", name: "世界" }];
-export function SingleApi() {
+
+export const SingleApi = () => {
   return (
     <Combobox
       items={worlds}
@@ -34,7 +37,9 @@ export function SingleApi() {
       itemToStringValue={(item) => item.id}
       isItemEqualToValue={(a, b) => a.id === b.id}
       onValueChange={(value, details) => {
-        if (value?.id === "blocked") details.cancel();
+        if (value?.id === "blocked") {
+          details.cancel();
+        }
       }}
       scale={3}
       name="world"
@@ -82,9 +87,11 @@ export function SingleApi() {
       <ComboboxClear />
     </Combobox>
   );
-}
-export function MultipleApi() {
+};
+
+export const MultipleApi = () => {
   const anchor = useComboboxAnchor();
+
   return (
     <Combobox<string, true>
       multiple
@@ -115,4 +122,4 @@ export function MultipleApi() {
       </ComboboxContent>
     </Combobox>
   );
-}
+};

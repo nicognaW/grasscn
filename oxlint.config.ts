@@ -22,7 +22,6 @@ export default defineConfig({
   ignorePatterns: [...(core.ignorePatterns ?? []), ...generatedCode],
   jsPlugins: [...jsPlugins.jsPlugins, ...shadcn.jsPlugins],
   options: { typeAware: true },
-  settings: jsPluginSettings,
   overrides: [
     {
       // Compile-only contracts test accepted public props, not rendered styles.
@@ -61,7 +60,7 @@ export default defineConfig({
     {
       files: [
         "**/packages/tests/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
-        "**/packages/pixel-perfect/tests/**/*.spec.{ts,tsx,js,mjs}",
+        "**/packages/pixel-perfect/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
       ],
       plugins: ["vitest"],
       // These suites import their actual Bun/Playwright APIs, not Vitest.
@@ -93,4 +92,5 @@ export default defineConfig({
       },
     },
   ],
+  settings: jsPluginSettings,
 });

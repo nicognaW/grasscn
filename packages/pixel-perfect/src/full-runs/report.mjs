@@ -1,3 +1,4 @@
+// Ordered entries preserve retained report bytes and their evidence hashes.
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import fs from "node:fs";
@@ -14,48 +15,63 @@ import {
 import { caseKey } from "@ppt/selection/suite.mjs";
 
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
-const json = (value) => JSON.stringify(value, null, 2) + "\n";
+const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
+
 const read = (file) =>
-  JSON.parse(fs.readFileSync(file, "utf8").replace(/^\uFEFF/, ""));
+  JSON.parse(fs.readFileSync(file, "utf-8").replace(/^\uFEFF/, ""));
+
 const api = (args) =>
   JSON.parse(
     execFileSync("gh", ["api", ...args], {
       cwd: fullRoot,
-      encoding: "utf8",
+      encoding: "utf-8",
       maxBuffer: 128 * 1024 * 1024,
     })
   );
+
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
 function atomic(file, value) {
   const temp = `${file}.${process.pid}.tmp`;
   fs.writeFileSync(temp, json(value));
   fs.renameSync(temp, file);
 }
+
 function beneath(root, file) {
-  const resolved = fs.realpathSync(file),
-    parent = fs.realpathSync(root);
-  if (!resolved.startsWith(parent + path.sep))
-    throw Error(`Evidence escapes retained attempt: ${file}`);
+  const resolved = fs.realpathSync(file);
+  const parent = fs.realpathSync(root);
+
+  if (!resolved.startsWith(parent + path.sep)) {
+    throw new Error(`Evidence escapes retained attempt: ${file}`);
+  }
+
   return resolved;
 }
+
 function evidence(root, file) {
   file = beneath(root, file);
+
   return { localPath: file, sha256: hash(fs.readFileSync(file)) };
 }
 
 /** Read historical evidence only. Never calls authorizeFullRun or launches a browser. */
 export function completedRunReport(number) {
-  const run = readRunPlan(number),
-    state = readRunState(number);
-  if (run.plan.repository.toLowerCase() !== run.repo.toLowerCase())
-    throw Error("Run repository mismatch");
+  const run = readRunPlan(number);
+  const state = readRunState(number);
+
+  if (run.plan.repository.toLowerCase() !== run.repo.toLowerCase()) {
+    throw new Error("Run repository mismatch");
+  }
+
   if (
     state?.phase !== "completed" ||
     !["passed", "failed"].includes(state.outcome)
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "Full collection is incomplete; defer finding publication and repairs"
     );
+  }
+
   if (
     state.issue !== run.number ||
     state.repository !== run.repo ||
@@ -64,26 +80,33 @@ export function completedRunReport(number) {
     !same(state.environment, run.plan.environment) ||
     !state.executionThread ||
     !state.approval?.eventId
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "Completed state does not bind this plan, snapshot, environment and executor"
     );
-  const attempts = readRunAttempts(number).sort((a, b) =>
+  }
+
+  const attempts = readRunAttempts(number).toSorted((a, b) =>
     a.directory.localeCompare(b.directory)
   );
+
   const final = attempts.find(
     (attempt) =>
       path.resolve(attempt.directory) === path.resolve(state.attempt ?? "")
   );
+
   if (
     !final ||
     final !== attempts.at(-1) ||
     state.receipt !== path.join(final.directory, "verification.json")
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "Final attempt/receipt binding is missing or newer evidence exists"
     );
+  }
+
   const last = final.receipt;
+
   if (
     last?.completed !== true ||
     last.browserScope !== "full" ||
@@ -91,48 +114,65 @@ export function completedRunReport(number) {
     last.passed !== (state.outcome === "passed") ||
     !Array.isArray(last.fullCases) ||
     !last.fullCases.length
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "No complete Full receipt with exact scope; finishedAt alone is insufficient"
     );
+  }
+
   const scope = new Map(last.fullCases.map((test) => [caseKey(test), test]));
-  if (scope.size !== last.fullCases.length)
-    throw Error("Duplicate Full scope identities");
-  const records = new Map(),
-    history = new Map(),
-    sourceHashes = new Map(),
-    ownerSources = new Map(),
-    definitionHashes = new Map(),
-    files = new Set(last.fullCases.map((test) => test.file)),
-    retainedEvidence = [];
+
+  if (scope.size !== last.fullCases.length) {
+    throw new Error("Duplicate Full scope identities");
+  }
+
+  const records = new Map();
+  const history = new Map();
+  const sourceHashes = new Map();
+  const ownerSources = new Map();
+  const definitionHashes = new Map();
+  const files = new Set(last.fullCases.map((test) => test.file));
+  const retainedEvidence = [];
+
   let environment;
+
   for (const attempt of attempts) {
     beneath(run.paths.attempts, attempt.directory);
     const resourceFile = path.join(attempt.directory, "resource-summary.json");
-    if (fs.existsSync(resourceFile))
+
+    if (fs.existsSync(resourceFile)) {
       retainedEvidence.push(evidence(attempt.directory, resourceFile));
-    const receipt = attempt.receipt;
+    }
+
+    const { receipt } = attempt;
+
     if (!receipt) {
       if (
         attempt === final ||
         fs.existsSync(path.join(attempt.directory, "checkpoints"))
-      )
-        throw Error(
+      ) {
+        throw new Error(
           `Missing attempt receipt with collection evidence: ${attempt.directory}`
         );
+      }
+
       continue; // A guard can stop before verification starts. This attempt contributes no results.
     }
+
     const binding = receipt.environment?.fullRun;
+
     if (
       receipt.source?.commit !== run.plan.commit ||
       receipt.browserScope !== "full" ||
       binding?.issue !== run.number ||
       binding?.planHash !== run.planHash ||
       binding?.approvalEvent !== state.approval.eventId
-    )
-      throw Error(
+    ) {
+      throw new Error(
         "Attempt belongs to different source, scope or authorization"
       );
+    }
+
     for (const field of [
       "bun",
       "platform",
@@ -142,28 +182,38 @@ export function completedRunReport(number) {
       "ci",
       "webgl",
       "edge",
-    ])
-      if (!same(receipt.environment[field], run.plan.environment[field]))
+    ]) {
+      if (!same(receipt.environment[field], run.plan.environment[field])) {
         throw Error(`Receipt environment differs from approved ${field}`);
+      }
+    }
+
     if (
       receipt.environment.workers !== run.plan.execution.workers ||
       receipt.environment.installedDependencies?.installedSha256 !==
         run.plan.environment.installedDependenciesSha256 ||
       receipt.environment.installedDependencies?.lockSha256 !==
         run.plan.environment.bunLockSha256
-    )
-      throw Error(
+    ) {
+      throw new Error(
         "Receipt workers/dependencies differ from approved environment"
       );
+    }
+
     if (
       environment &&
       (!same(environment, receipt.environment) ||
         receipt.source.treeSha256 !== last.source.treeSha256)
-    )
-      throw Error("Attempt environment/tree changed across resumes");
+    ) {
+      throw new Error("Attempt environment/tree changed across resumes");
+    }
+
     environment = receipt.environment;
-    if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source))
-      throw Error("Source changed during collection");
+
+    if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source)) {
+      throw new Error("Source changed during collection");
+    }
+
     if (
       receipt.completed &&
       (!same(
@@ -171,45 +221,68 @@ export function completedRunReport(number) {
         receipt.environment.installedDependencies
       ) ||
         receipt.fixtureBundleAfter?.sha256 !== receipt.fixtureBundle?.sha256)
-    )
-      throw Error("Completed receipt changed dependencies or fixture");
+    ) {
+      throw new Error("Completed receipt changed dependencies or fixture");
+    }
+
     retainedEvidence.push(
       evidence(
         attempt.directory,
         path.join(attempt.directory, "verification.json")
       )
     );
+
     for (const file of files) {
-      if (normalizeCasePath(file) !== file)
-        throw Error("Browser file is outside Full scope");
+      if (normalizeCasePath(file) !== file) {
+        throw new Error("Browser file is outside Full scope");
+      }
+
       const directory = path.join(attempt.directory, "checkpoints", file);
-      if (!fs.existsSync(directory)) continue;
+
+      if (!fs.existsSync(directory)) {
+        continue;
+      }
+
       const check = receipt.checks?.find(
         (item) => item.name === `browser:${file}`
       );
+
       const expectedFile = beneath(
         attempt.directory,
         path.join(directory, "expected.json")
       );
+
       const expected = read(expectedFile);
+
       if (
         ![2, 3].includes(expected.schemaVersion) ||
         !Array.isArray(expected.tests)
-      )
-        throw Error("Invalid checkpoint declarations");
+      ) {
+        throw new Error("Invalid checkpoint declarations");
+      }
+
       retainedEvidence.push(evidence(attempt.directory, expectedFile));
+
       const journalFile = beneath(
         attempt.directory,
         path.join(directory, "results.jsonl")
       );
+
       retainedEvidence.push(evidence(attempt.directory, journalFile));
-      const raw = fs.readFileSync(journalFile, "utf8"),
-        lines = raw.split("\n");
-      if (!raw.endsWith("\n")) lines.pop();
+
+      const raw = fs.readFileSync(journalFile, "utf-8");
+      const lines = raw.split("\n");
+
+      if (!raw.endsWith("\n")) {
+        lines.pop();
+      }
+
       const journal = lines.filter(Boolean).map((line) => JSON.parse(line));
+
       const declarations = new Map(
         expected.tests.map((test) => [test.id, test])
       );
+
       if (!sourceHashes.has(file)) {
         // Resolve the path in the approved snapshot, including pre-extraction runs.
         const candidates = receipt.pptOnly
@@ -218,6 +291,7 @@ export function completedRunReport(number) {
               `packages/pixel-perfect/tests/${file}`,
               `packages/tests/tests/${file}`,
             ];
+
         const sources = execFileSync(
           "git",
           [
@@ -228,94 +302,123 @@ export function completedRunReport(number) {
             "--",
             ...candidates,
           ],
-          { cwd: fullRoot, encoding: "utf8" }
+          { cwd: fullRoot, encoding: "utf-8" }
         )
           .trim()
           .split("\n")
           .filter(Boolean);
-        if (sources.length !== 1)
-          throw Error(
+
+        if (sources.length !== 1) {
+          throw new Error(
             `Ambiguous or missing source in approved snapshot: ${file}`
           );
+        }
+
         ownerSources.set(file, sources[0]);
+
         const bytes = execFileSync(
           "git",
           ["show", `${run.plan.commit}:${sources[0]}`],
           { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
         );
+
         // Windows core.autocrlf checks out committed text with CRLF; both byte
         // representations identify the same committed source, not changed logic.
         sourceHashes.set(
           file,
           new Set([
             hash(bytes),
-            hash(bytes.toString("utf8").replace(/\r?\n/g, "\r\n")),
+            hash(bytes.toString("utf-8").replaceAll(/\r?\n/g, "\r\n")),
           ])
         );
       }
+
       for (const declaration of expected.tests) {
         const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
+
         if (
           !scope.has(key) ||
           !sourceHashes.get(file).has(declaration.sourceSha256)
-        )
-          throw Error(
+        ) {
+          throw new Error(
             "Declaration source or case identity differs from approved scope"
           );
+        }
+
         if (expected.schemaVersion === 2) {
           // A legacy helper declaration cannot establish the owning wrapper's source.
           const recorded = normalizeCasePath(declaration.file);
+
           if (
             ![file, `tests/${file}`, ownerSources.get(file)].includes(recorded)
-          )
-            throw Error(
+          ) {
+            throw new Error(
               "Legacy declaration does not prove a direct owning case source"
             );
+          }
         } else {
           if (
             !expected.sourceRoot ||
             !expected.repositoryRoot ||
             !Array.isArray(declaration.sourceFiles)
-          )
-            throw Error("Checkpoint is missing source-root binding");
-          const owner = normalizeCasePath(declaration.file),
-            definition = normalizeCasePath(declaration.definitionFile);
+          ) {
+            throw new Error("Checkpoint is missing source-root binding");
+          }
+
+          const owner = normalizeCasePath(declaration.file);
+          const definition = normalizeCasePath(declaration.definitionFile);
+
           if (
             owner !== declaration.file ||
             definition !== declaration.definitionFile
-          )
-            throw Error("Checkpoint source paths are not canonical");
+          ) {
+            throw new Error("Checkpoint source paths are not canonical");
+          }
+
           const ownerAbsolute = path.resolve(expected.sourceRoot, owner);
+
           const caseFile = normalizeCasePath(
             path
               .relative(expected.rootDir, ownerAbsolute)
               .replaceAll(path.sep, "/")
           );
+
           const ownerRepositoryFile = normalizeCasePath(
             path
               .relative(expected.repositoryRoot, ownerAbsolute)
               .replaceAll(path.sep, "/")
           );
+
           if (
             caseFile !== file ||
             ownerRepositoryFile !== ownerSources.get(file)
-          )
-            throw Error("Checkpoint owner differs from approved case source");
+          ) {
+            throw new Error(
+              "Checkpoint owner differs from approved case source"
+            );
+          }
+
           const required = new Map([
             [owner, declaration.sourceSha256],
             [definition, declaration.definitionSha256],
           ]);
-          if (required.size !== declaration.sourceFiles.length)
-            throw Error(
+
+          if (required.size !== declaration.sourceFiles.length) {
+            throw new Error(
               "Checkpoint does not bind exactly its owner and definition sources"
             );
+          }
+
           for (const source of declaration.sourceFiles) {
             const sourceFile = normalizeCasePath(source.file);
+
             if (
               sourceFile !== source.file ||
               required.get(sourceFile) !== source.sha256
-            )
-              throw Error("Checkpoint source inputs are ambiguous");
+            ) {
+              throw new Error("Checkpoint source inputs are ambiguous");
+            }
+
             const repositoryFile = normalizeCasePath(
               path
                 .relative(
@@ -324,121 +427,162 @@ export function completedRunReport(number) {
                 )
                 .replaceAll(path.sep, "/")
             );
-            if (repositoryFile.includes(":"))
-              throw Error(
+
+            if (repositoryFile.includes(":")) {
+              throw new Error(
                 "Checkpoint source is outside the approved repository"
               );
+            }
+
             if (!definitionHashes.has(repositoryFile)) {
               const bytes = execFileSync(
                 "git",
                 ["show", `${run.plan.commit}:${repositoryFile}`],
                 { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
               );
+
               definitionHashes.set(
                 repositoryFile,
                 new Set([
                   hash(bytes),
-                  hash(bytes.toString("utf8").replace(/\r?\n/g, "\r\n")),
+                  hash(bytes.toString("utf-8").replaceAll(/\r?\n/g, "\r\n")),
                 ])
               );
             }
-            if (!definitionHashes.get(repositoryFile).has(source.sha256))
-              throw Error(
+
+            if (!definitionHashes.get(repositoryFile).has(source.sha256)) {
+              throw new Error(
                 "Checkpoint definition source differs from approved snapshot"
               );
+            }
+
             required.delete(sourceFile);
           }
-          if (required.size) throw Error("Checkpoint omitted a source input");
+
+          if (required.size) {
+            throw new Error("Checkpoint omitted a source input");
+          }
         }
       }
-      const terminal = new Set(),
-        accounted = new Set();
+
+      const terminal = new Set();
+      const accounted = new Set();
+
       for (const record of journal) {
         const declaration = declarations.get(record.id);
+
         if (
           !declaration ||
           !same(record.title, declaration.title) ||
           record.file !== declaration.file ||
           record.sourceChanged !== false ||
           !Number.isInteger(record.retry)
-        )
-          throw Error("Journal identity or source changed");
+        ) {
+          throw new Error("Journal identity or source changed");
+        }
+
         if (
           expected.schemaVersion === 3 &&
           (record.definitionFile !== declaration.definitionFile ||
             record.sourceSha256 !== declaration.sourceSha256 ||
             record.definitionSha256 !== declaration.definitionSha256 ||
             !same(record.sourceFiles, declaration.sourceFiles))
-        )
-          throw Error("Journal source binding differs from its declaration");
+        ) {
+          throw new Error(
+            "Journal source binding differs from its declaration"
+          );
+        }
+
         if (
           !["passed", "failed", "timedOut", "skipped", "interrupted"].includes(
             record.status
           ) ||
           !["passed", "failed", "skipped"].includes(record.expectedStatus)
-        )
-          throw Error("Invalid recorded result status");
+        ) {
+          throw new Error("Invalid recorded result status");
+        }
+
         const key = caseKey({ file, titlePath: declaration.title.slice(2) });
         accounted.add(key);
+
         const artifacts = (record.verification?.artifacts ?? []).map(
           (artifact) => {
-            if (path.basename(artifact.file) !== artifact.file)
-              throw Error("Invalid artifact filename");
+            if (path.basename(artifact.file) !== artifact.file) {
+              throw new Error("Invalid artifact filename");
+            }
+
             const result = evidence(
               attempt.directory,
               path.join(record.verification.outputDirectory, artifact.file)
             );
-            if (result.sha256 !== artifact.pngSha256)
-              throw Error("Artifact hash changed");
+
+            if (result.sha256 !== artifact.pngSha256) {
+              throw new Error("Artifact hash changed");
+            }
+
             return result;
           }
         );
-        const result = {
-          key,
-          file,
-          titlePath: declaration.title.slice(2),
-          status: record.status,
-          expectedStatus: record.expectedStatus,
-          retry: record.retry,
-          errors: record.errors,
-          artifacts,
-          verification: record.verification,
-          journal: journalFile,
-          attempt: attempt.directory,
-        };
+
+        const result = Object.fromEntries([
+          ["key", key],
+          ["file", file],
+          ["titlePath", declaration.title.slice(2)],
+          ["status", record.status],
+          ["expectedStatus", record.expectedStatus],
+          ["retry", record.retry],
+          ["errors", record.errors],
+          ["artifacts", artifacts],
+          ["verification", record.verification],
+          ["journal", journalFile],
+          ["attempt", attempt.directory],
+        ]);
+
         const previous = records.get(key);
+
         if (
           previous?.attempt === attempt.directory &&
           record.retry < previous.retry
-        )
-          throw Error("Retry journal regressed");
+        ) {
+          throw new Error("Retry journal regressed");
+        }
+
         records.set(key, result);
         history.set(key, [
           ...(history.get(key) ?? []),
-          {
-            status: record.status,
-            expectedStatus: record.expectedStatus,
-            retry: record.retry,
-            attempt: attempt.directory,
-          },
+          Object.fromEntries([
+            ["status", record.status],
+            ["expectedStatus", record.expectedStatus],
+            ["retry", record.retry],
+            ["attempt", attempt.directory],
+          ]),
         ]);
-        if (record.status !== "interrupted") terminal.add(record.id);
+
+        if (record.status !== "interrupted") {
+          terminal.add(record.id);
+        }
       }
+
       if (receipt.completed) {
         const summaryFile = beneath(
-            attempt.directory,
-            path.join(directory, "summary.json")
-          ),
-          summary = read(summaryFile);
+          attempt.directory,
+          path.join(directory, "summary.json")
+        );
+
+        const summary = read(summaryFile);
+
         const browserFile = beneath(
-            attempt.directory,
-            path.join(directory, "playwright.json")
-          ),
-          browser = read(browserFile);
+          attempt.directory,
+          path.join(directory, "playwright.json")
+        );
+
+        const browser = read(browserFile);
+
         retainedEvidence.push(
           evidence(attempt.directory, summaryFile),
           evidence(attempt.directory, browserFile)
         );
+
         if (
           !["passed", "failed"].includes(summary.status) ||
           summary.changedSources?.length ||
@@ -446,101 +590,135 @@ export function completedRunReport(number) {
           browser.errors?.length ||
           (raw && !raw.endsWith("\n")) ||
           expected.tests.some((test) => !terminal.has(test.id))
-        )
-          throw Error(
+        ) {
+          throw new Error(
             "Completed receipt has incomplete/corrupt browser collection"
           );
+        }
       }
+
       for (const reused of check?.reusedTests ?? []) {
         // Retained identities are checked below through the prior attempt declarations, not titles in a command string.
         const from = attempts.find(
           (item) =>
             path.join(item.directory, "verification.json") === reused.from
         );
-        if (!from) throw Error("Retained pass has no source-bound attempt");
+
+        if (!from) {
+          throw new Error("Retained pass has no source-bound attempt");
+        }
+
         const old = read(
           beneath(
             from.directory,
             path.join(from.directory, "checkpoints", file, "expected.json")
           )
         ).tests.find((test) => test.id === reused.id);
-        const key = old && caseKey({ file, titlePath: old.title.slice(2) }),
-          retained = records.get(key);
+
+        const key = old && caseKey({ file, titlePath: old.title.slice(2) });
+        const retained = records.get(key);
+
         if (
           !retained ||
           retained.status !== "passed" ||
           retained.expectedStatus !== "passed" ||
           retained.retry !== 0 ||
           retained.attempt !== from.directory
-        )
-          throw Error("Retained pass was superseded or lacks valid provenance");
+        ) {
+          throw new Error(
+            "Retained pass was superseded or lacks valid provenance"
+          );
+        }
+
         accounted.add(key);
       }
+
       if (
         attempt === final &&
         [...scope].some(
           ([key, test]) => test.file === file && !accounted.has(key)
         )
-      )
-        throw Error(
+      ) {
+        throw new Error(
           "Final file omitted cases without retained-pass provenance"
         );
+      }
     }
   }
-  for (const file of files)
-    if (!last.checks?.some((check) => check.name === `browser:${file}`))
+
+  for (const file of files) {
+    if (!last.checks?.some((check) => check.name === `browser:${file}`)) {
       throw Error("Final receipt did not finish every Full file");
+    }
+  }
+
   if (
     last.checks.some(
       (check) => !check.name.startsWith("browser:") && check.exitCode !== 0
     )
-  )
-    throw Error("Precheck failed before Full completion");
+  ) {
+    throw new Error("Precheck failed before Full completion");
+  }
+
   const cases = [...scope.keys()].map((key) => {
     const result = records.get(key);
-    if (!result || result.status === "interrupted")
-      throw Error(`Uncollected Full case: ${key}`);
-    return {
-      ...result,
-      history: history.get(key),
-      unexpected: result.status !== result.expectedStatus,
-      flaky:
+
+    if (!result || result.status === "interrupted") {
+      throw new Error(`Uncollected Full case: ${key}`);
+    }
+
+    return Object.fromEntries([
+      ...Object.entries(result),
+      ["history", history.get(key)],
+      ["unexpected", result.status !== result.expectedStatus],
+      [
+        "flaky",
         ["passed", "failed", "timedOut"].includes(result.status) &&
-        result.status === result.expectedStatus &&
-        history
-          .get(key)
-          .some(
-            (item) =>
-              ["passed", "failed", "timedOut"].includes(item.status) &&
-              item.status !== item.expectedStatus
-          ),
-    };
+          result.status === result.expectedStatus &&
+          history
+            .get(key)
+            .some(
+              (item) =>
+                ["passed", "failed", "timedOut"].includes(item.status) &&
+                item.status !== item.expectedStatus
+            ),
+      ],
+    ]);
   });
-  if (cases.some((test) => test.unexpected) === last.passed)
-    throw Error("Receipt outcome disagrees with final case results");
-  const report = {
-    schemaVersion: 1,
-    runIssue: run.number,
-    repository: run.repo,
-    issueUrl: run.issue.html_url,
-    testedCommit: run.plan.commit,
-    planHash: run.planHash,
-    scope: "full",
-    environment: run.plan.environment,
-    executionThread: state.executionThread,
-    executionSession: state.executionSession,
-    approval: state.approval,
-    outcome: state.outcome,
-    total: cases.length,
-    failures: cases.filter((test) => test.unexpected),
-    flaky: cases.filter((test) => test.flaky),
-    skipped: cases
-      .filter((test) => test.status === "skipped")
-      .map((test) => test.key),
-    evidence: retainedEvidence,
-  };
+
+  if (cases.some((test) => test.unexpected) === last.passed) {
+    throw new Error("Receipt outcome disagrees with final case results");
+  }
+
+  const report = Object.fromEntries([
+    ["schemaVersion", 1],
+    ["runIssue", run.number],
+    ["repository", run.repo],
+    ["issueUrl", run.issue.html_url],
+    ["testedCommit", run.plan.commit],
+    ["planHash", run.planHash],
+    ["scope", "full"],
+    ["environment", run.plan.environment],
+    ["executionThread", state.executionThread],
+    ["executionSession", state.executionSession],
+    ["approval", state.approval],
+    ["outcome", state.outcome],
+    ["total", cases.length],
+    ["failures", cases.filter((test) => test.unexpected)],
+    ["flaky", cases.filter((test) => test.flaky)],
+    [
+      "skipped",
+      cases.filter((test) => test.status === "skipped").map((test) => test.key),
+    ],
+    ["evidence", retainedEvidence],
+  ]);
+
   report.evidenceHash = hash(json(report));
-  return { run, report };
+
+  return Object.fromEntries([
+    ["run", run],
+    ["report", report],
+  ]);
 }
 
 export function prepareReport(number) {
@@ -549,26 +727,34 @@ export function prepareReport(number) {
   fs.mkdirSync(directory, { recursive: true });
   const file = path.join(directory, `report-${report.evidenceHash}.json`);
   atomic(file, report);
-  const review = {
-    schemaVersion: 1,
-    runIssue: run.number,
-    planHash: run.planHash,
-    testedCommit: run.plan.commit,
-    evidenceHash: report.evidenceHash,
-    reviewedBy: "",
-    groups: [],
-    instructions:
+
+  const review = Object.fromEntries([
+    ["schemaVersion", 1],
+    ["runIssue", run.number],
+    ["planHash", run.planHash],
+    ["testedCommit", run.plan.commit],
+    ["evidenceHash", report.evidenceHash],
+    ["reviewedBy", ""],
+    ["groups", []],
+    [
+      "instructions",
       "Inspect evidence and existing issues. Account for every failure exactly once. Each semantic problemKey needs a cause hypothesis and evidence; shared error text alone is not a root cause. Optional existingIssue requires reuseReason. No repairs until collection completes.",
-  };
+    ],
+  ]);
+
   const reviewFile = path.join(directory, `review-${report.evidenceHash}.json`);
-  if (!fs.existsSync(reviewFile)) atomic(reviewFile, review);
-  return {
-    report: file,
-    review: reviewFile,
-    failures: report.failures.length,
-    flaky: report.flaky.length,
-    publishing: false,
-  };
+
+  if (!fs.existsSync(reviewFile)) {
+    atomic(reviewFile, review);
+  }
+
+  return Object.fromEntries([
+    ["report", file],
+    ["review", reviewFile],
+    ["failures", report.failures.length],
+    ["flaky", report.flaky.length],
+    ["publishing", false],
+  ]);
 }
 
 function evidenceLocation(report) {
@@ -592,12 +778,15 @@ export function validateReview(report, review) {
     review.evidenceHash !== report.evidenceHash ||
     !review.reviewedBy?.trim() ||
     !Array.isArray(review.groups)
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "Review must bind the completed evidence and name its reviewer"
     );
-  const remaining = new Set(report.failures.map((test) => test.key)),
-    keys = new Set();
+  }
+
+  const remaining = new Set(report.failures.map((test) => test.key));
+  const keys = new Set();
+
   for (const group of review.groups) {
     if (
       !/^[a-z0-9][a-z0-9.-]{2,100}$/.test(group.problemKey ?? "") ||
@@ -607,36 +796,46 @@ export function validateReview(report, review) {
       !group.evidence?.trim() ||
       !group.context?.trim() ||
       !group.cases?.length
-    )
-      throw Error(
+    ) {
+      throw new Error(
         "Each distinct problem needs a unique semantic key, title, hypothesis, evidence, context and member cases"
       );
+    }
+
     keys.add(group.problemKey);
+
     if (
       group.existingIssue !== undefined &&
       (!Number.isInteger(group.existingIssue) ||
         group.existingIssue < 1 ||
         !group.reuseReason?.trim())
-    )
-      throw Error(
+    ) {
+      throw new Error(
         "Existing issue reuse requires an issue number and semantic reason"
       );
-    for (const key of group.cases)
-      if (!remaining.delete(key))
+    }
+
+    for (const key of group.cases) {
+      if (!remaining.delete(key)) {
         throw Error(
           "Failure omitted, duplicated or outside this completed run"
         );
+      }
+    }
   }
-  if (remaining.size)
-    throw Error(
+
+  if (remaining.size) {
+    throw new Error(
       `${remaining.size} failures remain ungrouped; inspect them before publication`
     );
+  }
 }
 
 function findingBody(report, group) {
   const failures = report.failures.filter((test) =>
     group.cases.includes(test.key)
   );
+
   return `Full finding from ${report.issueUrl}\n\nTested local commit: ${report.testedCommit}\nPlan: ${report.planHash}\nEvidence identity: ${report.evidenceHash}\nExecution session: ${report.executionSession ?? report.executionThread}\nEnvironment: ${JSON.stringify(report.environment)}\n\nCause hypothesis: ${group.hypothesis}\n\nReviewed evidence: ${group.evidence}\n\nRepair context: ${group.context}\n\n${failures.length} affected cases; first 10:\n${failures
     .slice(0, 10)
     .map(
@@ -655,12 +854,14 @@ function findingBody(report, group) {
 }
 
 export function publishReport(number, reviewFile) {
-  const { run, report } = completedRunReport(number),
-    review = read(reviewFile);
+  const { run, report } = completedRunReport(number);
+  const review = read(reviewFile);
+
   validateReview(report, review);
   const directory = path.join(run.paths.directory, "reporting");
   fs.mkdirSync(directory, { recursive: true });
   const lock = path.join(directory, "publication.lock");
+
   try {
     fs.writeFileSync(
       lock,
@@ -668,23 +869,33 @@ export function publishReport(number, reviewFile) {
       { flag: "wx" }
     );
   } catch (error) {
-    if (error.code === "EEXIST")
+    if (error.code === "EEXIST") {
       throw Error(
-        `Another publisher or stale publication claim exists: ${lock}; inspect before removing it`
+        `Another publisher or stale publication claim exists: ${lock}; inspect before removing it`,
+        { cause: error }
       );
+    }
+
     throw error;
   }
-  const journalFile = path.join(directory, "publication.json"),
-    journal = fs.existsSync(journalFile) ? read(journalFile) : { groups: {} };
+
+  const journalFile = path.join(directory, "publication.json");
+
+  const journal = fs.existsSync(journalFile)
+    ? read(journalFile)
+    : { groups: {} };
+
   function writeApi(endpoint, body, method = "POST") {
     const file = path.join(directory, `request-${process.pid}.json`);
     fs.writeFileSync(file, json(body));
+
     try {
       return api(["--method", method, endpoint, "--input", file]);
     } finally {
       fs.rmSync(file, { force: true });
     }
   }
+
   try {
     // Paginate bodies rather than relying on eventually indexed search. After an ambiguous
     // API error, stop; a later invocation scans operation markers before retrying writes.
@@ -695,6 +906,7 @@ export function publishReport(number, reviewFile) {
     ])
       .flat()
       .filter((issue) => !issue.pull_request);
+
     const repositoryComments = review.groups.length
       ? api([
           "--paginate",
@@ -702,65 +914,86 @@ export function publishReport(number, reviewFile) {
           `repos/${run.repo}/issues/comments?per_page=100`,
         ]).flat()
       : [];
+
     atomic(evidenceLocation(report), report);
     const links = [];
+
     for (const group of review.groups) {
-      const identity = hash(`${run.repo.toLowerCase()}\n${group.problemKey}`),
-        marker = `<!-- grasscn-full-problem:v1:${identity} -->`;
+      const identity = hash(`${run.repo.toLowerCase()}\n${group.problemKey}`);
+      const marker = `<!-- grasscn-full-problem:v1:${identity} -->`;
+
       const occurrence = `<!-- grasscn-full-occurrence:v1:${run.number}:${run.planHash}:${identity} -->`;
+
       const matches = issues.filter(
         (issue) =>
-          issue.body?.includes(marker) ||
+          issue.body?.includes(marker) ??
           repositoryComments.some(
             (comment) =>
               comment.issue_url === issue.url && comment.body?.includes(marker)
           )
       );
-      if (matches.length > 1)
-        throw Error(
+
+      if (matches.length > 1) {
+        throw new Error(
           "Multiple issues already claim this semantic problem; resolve duplicates before publishing"
         );
+      }
+
       let issue = matches[0];
+
       if (group.existingIssue) {
         const chosen = issues.find(
           (item) => item.number === group.existingIssue
         );
+
         if (
           !chosen ||
           chosen.number === run.number ||
           (issue && issue.number !== chosen.number)
-        )
-          throw Error(
+        ) {
+          throw new Error(
             "Reviewed existing issue is invalid or conflicts with problem identity"
           );
+        }
+
         issue = chosen;
       }
+
       if (!issue) {
-        issue = writeApi(`repos/${run.repo}/issues`, {
-          title: group.title,
-          body: `${marker}\n\n${findingBody(report, group)}`,
-          labels: ["needs-triage"],
-        });
+        issue = writeApi(
+          `repos/${run.repo}/issues`,
+          Object.fromEntries([
+            ["title", group.title],
+            ["body", `${marker}\n\n${findingBody(report, group)}`],
+            ["labels", ["needs-triage"]],
+          ])
+        );
         issues.push(issue);
       }
-      atomic(path.join(directory, `finding-${hash(group.problemKey)}.json`), {
-        report: evidenceLocation(report),
-        reportSha256: hash(json(report)),
-        reviewedBy: review.reviewedBy,
-        group,
-      });
-      journal.groups[group.problemKey] = {
-        issue: issue.number,
-        url: issue.html_url,
-        evidenceHash: report.evidenceHash,
-        groupHash: hash(json(group)),
-      };
+
+      atomic(
+        path.join(directory, `finding-${hash(group.problemKey)}.json`),
+        Object.fromEntries([
+          ["report", evidenceLocation(report)],
+          ["reportSha256", hash(json(report))],
+          ["reviewedBy", review.reviewedBy],
+          ["group", group],
+        ])
+      );
+      journal.groups[group.problemKey] = Object.fromEntries([
+        ["issue", issue.number],
+        ["url", issue.html_url],
+        ["evidenceHash", report.evidenceHash],
+        ["groupHash", hash(json(group))],
+      ]);
       atomic(journalFile, journal);
+
       const comments = api([
         "--paginate",
         "--slurp",
         `repos/${run.repo}/issues/${issue.number}/comments`,
       ]).flat();
+
       if (!comments.some((comment) => comment.body?.includes(occurrence))) {
         const comment = writeApi(
           `repos/${run.repo}/issues/${issue.number}/comments`,
@@ -768,25 +1001,37 @@ export function publishReport(number, reviewFile) {
             body: `${marker}\n${occurrence}\n\n${group.reuseReason ? `Reuse rationale: ${group.reuseReason}\n\n` : ""}${findingBody(report, group)}`,
           }
         );
+
         journal.groups[group.problemKey].comment = comment.id;
         atomic(journalFile, journal);
       }
-      links.push({
-        problem: group.problemKey,
-        issue: issue.html_url,
-        state: issue.state,
-      });
+
+      links.push(
+        Object.fromEntries([
+          ["problem", group.problemKey],
+          ["issue", issue.html_url],
+          ["state", issue.state],
+        ])
+      );
     }
+
     const marker = `<!-- grasscn-full-report:v1:${run.number}:${run.planHash} -->`;
     const body = `${marker}\n\nFull collection completed: **${report.outcome}** against local commit ${report.testedCommit}. Scope: ${report.total} Full cases; ${report.failures.length} unexpected final results, ${report.flaky.length} recovered/flaky cases, ${report.skipped.length} skipped. Skips are not passes.\n\nPlan hash: ${report.planHash}\nExecution session: ${report.executionSession ?? report.executionThread}\nEnvironment: ${JSON.stringify(report.environment)}\nReviewed by: ${review.reviewedBy}\nEvidence bundle sha256 identity: ${report.evidenceHash}\n\n${links.map((link) => `- ${link.problem}: ${link.issue} (${link.state}; no automatic reopening)`).join("\n") || "No unexpected final failures."}\n\nFlaky case identities: ${report.flaky.length} (complete identities in local report bundle)\nSkipped case identities: ${report.skipped.length} (complete identities in local report bundle)\n\nLocal retained evidence (not uploaded):\n${evidenceLocation(report)} (file sha256 ${hash(json(report))}); contains every attempt receipt/journal/artifact path and recorded sha256\n\nThese results apply only to this Full snapshot. Base coverage is separate. Findings enter the normal work queue; merging is not blocked. Repairs may use any suitable session after completion. A Full rerun needs a new issue, human approval and independent execution session.\n`;
+
     const comments = api([
-        "--paginate",
-        "--slurp",
-        `repos/${run.repo}/issues/${run.number}/comments`,
-      ]).flat(),
-      existing = comments.filter((comment) => comment.body?.includes(marker));
-    if (existing.length > 1)
-      throw Error("Duplicate run report markers require review");
+      "--paginate",
+      "--slurp",
+      `repos/${run.repo}/issues/${run.number}/comments`,
+    ]).flat();
+
+    const existing = comments.filter((comment) =>
+      comment.body?.includes(marker)
+    );
+
+    if (existing.length > 1) {
+      throw new Error("Duplicate run report markers require review");
+    }
+
     const comment = existing.length
       ? writeApi(
           `repos/${run.repo}/issues/comments/${existing[0].id}`,
@@ -794,44 +1039,61 @@ export function publishReport(number, reviewFile) {
           "PATCH"
         )
       : writeApi(`repos/${run.repo}/issues/${run.number}/comments`, { body });
+
     journal.report = { comment: comment.id, evidenceHash: report.evidenceHash };
     atomic(journalFile, journal);
-    return { reportComment: comment.html_url, findings: links };
+
+    return Object.fromEntries([
+      ["reportComment", comment.html_url],
+      ["findings", links],
+    ]);
   } finally {
     fs.rmSync(lock, { force: true });
   }
 }
 
 export function repairHandoff(number, reviewFile, problemKey) {
-  const { run, report } = completedRunReport(number),
-    review = read(reviewFile);
+  const { run, report } = completedRunReport(number);
+  const review = read(reviewFile);
+
   validateReview(report, review);
   const group = review.groups.find((item) => item.problemKey === problemKey);
-  if (!group) throw Error("Unknown reviewed problem key");
+
+  if (!group) {
+    throw new Error("Unknown reviewed problem key");
+  }
+
   const directory = path.join(run.paths.directory, "reporting");
   fs.mkdirSync(directory, { recursive: true });
-  const journalFile = path.join(directory, "publication.json"),
-    published = fs.existsSync(journalFile)
-      ? read(journalFile).groups?.[problemKey]
-      : null;
+
+  const journalFile = path.join(directory, "publication.json");
+
+  const published = fs.existsSync(journalFile)
+    ? read(journalFile).groups?.[problemKey]
+    : null;
+
   const issue = published?.url;
+
   if (
     !issue ||
     published.evidenceHash !== report.evidenceHash ||
     published.groupHash !== hash(json(group))
-  )
-    throw Error(
+  ) {
+    throw new Error(
       "Publish/link this reviewed finding and evidence before creating its repair handoff"
     );
+  }
+
   const file = path.join(directory, `repair-${problemKey}.md`);
   fs.writeFileSync(
     file,
     `# Repair handoff: ${group.title}\n\nFinding issue: ${issue}\n\n${findingBody(report, group)}`
   );
-  return {
-    handoff: file,
-    issue,
-    sessionCreated: false,
-    fullExecutionAuthorized: false,
-  };
+
+  return Object.fromEntries([
+    ["handoff", file],
+    ["issue", issue],
+    ["sessionCreated", false],
+    ["fullExecutionAuthorized", false],
+  ]);
 }

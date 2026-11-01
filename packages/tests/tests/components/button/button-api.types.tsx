@@ -1,4 +1,5 @@
 import { Button, buttonVariants } from "@grasscn/web/ui/button";
+
 // Compile-time contract: only native visual variants, with standard web props.
 export function ButtonApiContract() {
   const supported = (
@@ -9,9 +10,10 @@ export function ButtonApiContract() {
       scale={3}
       style={{ width: 309 }}
     >
-      {"Inventory"}
+      Inventory
     </Button>
   );
+
   // @ts-expect-error Minecraft has no shadcn outline button.
   const outline = <Button variant="outline">Outline</Button>;
   // @ts-expect-error Minecraft has no shadcn destructive color variant.
@@ -20,5 +22,6 @@ export function ButtonApiContract() {
   const small = <Button size="sm">Small</Button>;
   // @ts-expect-error Icon presets do not describe a native button size.
   const icon = buttonVariants({ size: "icon" });
+
   return [supported, outline, destructive, small, icon];
 }

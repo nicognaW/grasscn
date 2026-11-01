@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test.use({
@@ -18,18 +18,18 @@ test.use({
 const reference = path.resolve("tests/reference/advancement-tree");
 
 const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile(path.join(reference, "manifest.json")), "utf8")
+  readFileSync(pixelPerfectFile(path.join(reference, "manifest.json")), "utf-8")
 );
 
-for (const c of manifest.cases)
+for (const c of manifest.cases) {
   test(`advancement tree native pixels ${c.name}`, async ({ page }, info) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(
       `${process.env.GRASSCN_TREE_INSTALLED_URL ?? "http://127.0.0.1:5174/adventure.html"}?scale=${c.scale}&mask=${c.value}&x=${c.cursor}&y=${c.anchor}`
     );
     await expect(page.locator("[data-subject] img")).toHaveCount(8);
     await expect
-      .poll(() =>
+      .poll(async () =>
         page
           .locator("[data-subject] img")
           .evaluateAll((images) =>
@@ -41,20 +41,27 @@ for (const c of manifest.cases)
           )
       )
       .toBe(true);
-    const actual = await page.locator("[data-subject]").screenshot(),
-      expected = readFileSync(
-        pixelPerfectFile(path.join(reference, "captures", c.name))
-      ),
-      a = PNG.sync.read(actual),
-      b = PNG.sync.read(expected);
+
+    const actual = await page.locator("[data-subject]").screenshot();
+
+    const expected = readFileSync(
+      pixelPerfectFile(path.join(reference, "captures", c.name))
+    );
+
+    const a = PNG.sync.read(actual);
+    const b = PNG.sync.read(expected);
+
     expect([a.width, a.height]).toEqual([b.width, b.height]);
     let differences = 0;
-    const diff = new PNG({ width: a.width, height: a.height });
+    const diff = new PNG({ height: a.height, width: a.width });
+
     for (let i = 0; i < a.data.length; i += 4) {
       const same = a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4));
-      if (!same) differences++;
+
+      if (!same) differences += 1;
       diff.data.set(same ? [0, 0, 0, 0] : [255, 0, 255, 255], i);
     }
+
     if (differences) {
       writeFileSync(info.outputPath("actual.png"), actual);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
@@ -81,9 +88,11 @@ for (const c of manifest.cases)
         contentType: "image/png",
       });
     }
+
     writeFileSync(
       info.outputPath("pixels.json"),
-      JSON.stringify({ name: c.name, mismatchedPixels: differences })
+      JSON.stringify({ mismatchedPixels: differences, name: c.name })
     );
     expect(differences).toBe(0);
   });
+}

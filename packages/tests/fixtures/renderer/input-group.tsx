@@ -7,49 +7,56 @@ import {
   InputGroupText,
 } from "@grasscn/web/ui/input-group";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  native = p.has("native"),
-  part = p.get("part") ?? "input",
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  state = p.get("state") ?? "normal",
-  width = Number(p.get("width") ?? 200);
-export function InputGroupFixture() {
+
+const p = new URLSearchParams(location.search);
+const native = p.has("native");
+const part = p.get("part") ?? "input";
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const state = p.get("state") ?? "normal";
+const width = Number(p.get("width") ?? 200);
+
+export const InputGroupFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       p.get("background") ?? "#202020";
   }, []);
-  const [value, setValue] = React.useState(p.get("text") ?? "Hello Minecraft"),
-    [events, setEvents] = React.useState(0),
-    [tag, setTag] = React.useState("");
-  const input = React.useRef<HTMLInputElement>(null),
-    area = React.useRef<HTMLTextAreaElement>(null),
-    button = React.useRef<HTMLButtonElement>(null),
-    position: React.CSSProperties = {
-      position: "absolute",
-      left: Number(p.get("x") ?? 16) * scale,
-      top: Number(p.get("y") ?? 16) * scale,
-      width: width * scale,
-    };
+
+  const [value, setValue] = React.useState(p.get("text") ?? "Hello Minecraft");
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+
+  const input = React.useRef<HTMLInputElement>(null);
+  const area = React.useRef<HTMLTextAreaElement>(null);
+  const button = React.useRef<HTMLButtonElement>(null);
+
+  const position: React.CSSProperties = {
+    left: Number(p.get("x") ?? 16) * scale,
+    position: "absolute",
+    top: Number(p.get("y") ?? 16) * scale,
+    width: width * scale,
+  };
+
   const shared = {
-    id: "subject",
+    "aria-label": "Group field",
+    "data-subject": "true",
     disabled: state.startsWith("disabled"),
-    readOnly: state.includes("readonly"),
-    placeholder: p.get("placeholder") ?? "",
-    value,
+    id: "subject",
     onChange: (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
       setValue(event.target.value);
       setEvents((v) => v + 1);
     },
+    placeholder: p.get("placeholder") ?? "",
+    readOnly: state.includes("readonly"),
     style: {
-      width: width * scale,
       height: Number(p.get("height") ?? 20) * scale,
+      width: width * scale,
     },
-    "aria-label": "Group field",
-    "data-subject": "true",
+    value,
   };
-  if (native)
+
+  if (native) {
     return (
       <InputGroup scale={scale} style={position}>
         {part === "text" ? (
@@ -93,11 +100,14 @@ export function InputGroupFixture() {
         )}
       </InputGroup>
     );
+  }
+
   const align = (p.get("align") ?? "inline-start") as
     | "inline-start"
     | "inline-end"
     | "block-start"
     | "block-end";
+
   return (
     <form
       onSubmit={(event) => {
@@ -109,7 +119,9 @@ export function InputGroupFixture() {
         <InputGroupAddon
           align={align}
           onClick={(event) => {
-            if (p.has("cancelAddon")) event.preventDefault();
+            if (p.has("cancelAddon")) {
+              event.preventDefault();
+            }
           }}
         >
           <InputGroupText>Message</InputGroupText>
@@ -117,7 +129,9 @@ export function InputGroupFixture() {
             ref={button}
             disabled={p.has("disabled")}
             style={{ width: 80 * scale }}
-            onClick={() => setEvents((v) => v + 1)}
+            onClick={() => {
+              setEvents((v) => v + 1);
+            }}
           >
             Send
           </InputGroupButton>
@@ -127,14 +141,18 @@ export function InputGroupFixture() {
             ref={area}
             aria-label="Group field"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
           />
         ) : (
           <InputGroupInput
             ref={input}
             aria-label="Group field"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
           />
         )}
       </InputGroup>
@@ -154,4 +172,4 @@ export function InputGroupFixture() {
       <output aria-label="Group refs">{tag}</output>
     </form>
   );
-}
+};

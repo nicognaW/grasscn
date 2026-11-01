@@ -5,27 +5,35 @@ import { readFileSync } from "node:fs";
 
 import { referenceFile } from "@grasscn/tests/paths";
 import { splashMotion, splashTransform } from "@grasscn/web/splash-motion";
-const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv")),
-  provenance = JSON.parse(
-    readFileSync(referenceFile("title-splash/provenance.json"), "utf8")
-  );
+
+const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
+
+const provenance = JSON.parse(
+  readFileSync(referenceFile("title-splash/provenance.json"), "utf-8")
+);
+
 const rows = bytes
-  .toString("utf8")
+  .toString("utf-8")
   .trim()
   .split(/\r?\n/)
   .filter((line) => !line.startsWith("#"))
   .map((line) => line.split(",").map(Number));
-const buffer = new DataView(new ArrayBuffer(4)),
-  bits = (value) => {
-    buffer.setFloat32(0, value);
-    return buffer.getInt32(0);
-  };
+
+const buffer = new DataView(new ArrayBuffer(4));
+
+const bits = (value) => {
+  buffer.setFloat32(0, value);
+
+  return buffer.getInt32(0);
+};
+
 test("all 1000 splash phases match the independent native single-precision and shipped JOML oracle", () => {
   assert.equal(
     createHash("sha256").update(bytes).digest("hex"),
     provenance.expectedSha256
   );
   assert.equal(rows.length, 1000);
+
   for (const [time, ...expected] of rows) {
     const actual = splashMotion(time, 104);
     assert.deepEqual(
@@ -37,6 +45,7 @@ test("all 1000 splash phases match the independent native single-precision and s
     );
   }
 });
+
 test("the glyph origin uses native integer centering and the native -8 baseline", () => {
   assert.equal(splashMotion(0, 105).originX, -52);
   assert.equal(splashMotion(0, 105).originY, -8);
@@ -53,10 +62,12 @@ test("vanilla reaches maximum size twice per second, 500ms apart", () => {
     { length: 1000 },
     (_, time) => splashMotion(time, 104).scale
   );
+
   const peaks = scales.flatMap((value, time) =>
     value > scales[(time + 999) % 1000] && value > scales[(time + 1) % 1000]
       ? [time]
       : []
   );
+
   assert.deepEqual(peaks, [0, 500]);
 });

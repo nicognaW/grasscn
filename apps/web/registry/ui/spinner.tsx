@@ -1,12 +1,15 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-spinner.css";
+
 const frames = ["O o o", "o O o", "o o O", "o O o"] as const;
-function Spinner({
+
+const Spinner = ({
   className,
   scale = 2,
   timeMs,
@@ -18,31 +21,48 @@ function Spinner({
   scale?: 1 | 2 | 3;
   timeMs?: number;
   logicalWidth?: number;
-}) {
+}) => {
   const [time, setTime] = React.useState(0);
   React.useEffect(() => {
-    if (timeMs != null) return;
+    if (timeMs != null) {
+      return;
+    }
+
     let frame = 0;
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
+
     const tick = () => {
       setTime(motion.matches ? 0 : Math.floor(performance.now() / 300) * 300);
       frame = requestAnimationFrame(tick);
     };
+
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, [timeMs]);
-  const text = frames[Math.floor(Math.max(0, timeMs ?? time) / 300) % 4],
-    pixels: Array<[number, number]> = [];
+
+  const text = frames[Math.floor(Math.max(0, timeMs ?? time) / 300) % 4];
+  const pixels: [number, number][] = [];
+
   let x = Math.floor(logicalWidth / 2) - 13;
+
   for (const char of text) {
     if (char === " ") {
       x += 4;
       continue;
     }
+
     const glyph = minecraftLoadingGlyphs[char as "O" | "o"];
-    for (const [px, py] of glyph.pixels) pixels.push([x + px, py]);
+
+    for (const [px, py] of glyph.pixels) {
+      pixels.push([x + px, py]);
+    }
+
     x += glyph.advance;
   }
+
   return (
     <svg
       data-slot="spinner"
@@ -51,7 +71,7 @@ function Spinner({
       viewBox={`0 0 ${logicalWidth} 9`}
       width={logicalWidth * scale}
       height={9 * scale}
-      className={cn(`mc-spinner ${""}`, className)}
+      className={cn(`mc-spinner`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -72,5 +92,6 @@ function Spinner({
       {children}
     </svg>
   );
-}
+};
+
 export { Spinner };

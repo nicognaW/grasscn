@@ -6,13 +6,15 @@ import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 export const DialogLayoutContext = React.createContext({
-  scale: 2,
   contentWidth: 214,
+  scale: 2,
 });
+
 function widthOf(text: string, bold: boolean) {
   return Math.ceil(
-    Array.from(text).reduce((sum, char) => {
+    [...text].reduce((sum, char) => {
       const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+
       return (
         sum +
         (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +
@@ -21,29 +23,43 @@ function widthOf(text: string, bold: boolean) {
     }, 0)
   );
 }
+
 function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
+
   for (let remaining of text.split("\n")) {
     while (widthOf(remaining, bold) > maximum) {
-      let count = 0,
-        used = 0,
-        space = -1;
+      let count = 0;
+      let used = 0;
+      let space = -1;
+
       while (count < remaining.length) {
-        if (remaining[count] === " ") space = count;
+        if (remaining[count] === " ") {
+          space = count;
+        }
+
         const next = widthOf(remaining[count], bold);
-        if (used + next > maximum && count > 0) break;
+
+        if (used + next > maximum && count > 0) {
+          break;
+        }
+
         used += next;
-        count++;
+        count += 1;
       }
+
       const end = space >= 0 ? space : Math.max(1, count);
       lines.push(remaining.slice(0, end));
       remaining = remaining.slice(end + Number(space >= 0));
     }
+
     lines.push(remaining);
   }
+
   return lines;
 }
-export function MinecraftDialogText({
+
+export const MinecraftDialogText = ({
   children,
   bold = false,
   item = false,
@@ -51,32 +67,41 @@ export function MinecraftDialogText({
   children: React.ReactNode;
   bold?: boolean;
   item?: boolean;
-}) {
+}) => {
   const { scale, contentWidth } = React.useContext(DialogLayoutContext);
   const [, loaded] = React.useReducer((n) => n + 1, 0);
+
   const unicode =
-    typeof children === "string" && /[^\x20-\x7e\n]/.test(children);
+    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+
   React.useEffect(() => {
     let active = true;
-    if (unicode)
-      loadUnihex().then(() => {
+
+    if (unicode) {
+      void loadUnihex().then(() => {
         if (active) loaded();
       });
+    }
+
     return () => {
       active = false;
     };
   }, [unicode]);
+
   if (
     (typeof children !== "string" && typeof children !== "number") ||
-    !Array.from(String(children)).every(
-      (char) => /^[\x20-\x7e\n]$/.test(char) || getUnihexGlyph(char)
+    ![...String(children)].every(
+      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
     )
-  )
+  ) {
     return <span data-mc-dialog-item={item || undefined}>{children}</span>;
-  const text = String(children),
-    lines = text === "" ? [] : wrap(text, contentWidth, bold),
-    widths = lines.map((line) => widthOf(line, bold)),
-    widest = Math.max(0, ...widths);
+  }
+
+  const text = String(children);
+  const lines = text === "" ? [] : wrap(text, contentWidth, bold);
+  const widths = lines.map((line) => widthOf(line, bold));
+  const widest = Math.max(0, ...widths);
+
   return (
     <span
       className="mc-dialog-text"
@@ -107,6 +132,7 @@ export function MinecraftDialogText({
                   {Array.from(line, (char, i) => {
                     const [x, y, advance] =
                       minecraftGlyphs[char.charCodeAt(0) - 32];
+
                     return (
                       <span
                         className="mc-card-bold-glyph"
@@ -136,4 +162,4 @@ export function MinecraftDialogText({
       <span className="mc-dialog-accessible">{text}</span>
     </span>
   );
-}
+};

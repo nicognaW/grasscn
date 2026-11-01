@@ -1,15 +1,18 @@
 import { setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
 import { Toaster, toast as notify } from "@grasscn/web/ui/sonner";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  count = Number(p.get("count") ?? 1);
-function SonnerFixture() {
-  const [actions, setActions] = React.useState(0),
-    [created, setCreated] = React.useState(0),
-    ids = React.useRef<Array<string | number>>([]);
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const count = Number(p.get("count") ?? 1);
+
+const SonnerFixture = () => {
+  const [actions, setActions] = React.useState(0);
+  const [created, setCreated] = React.useState(0);
+  const ids = React.useRef<(string | number)[]>([]);
+
   const show = () => {
-    for (let i = 0; i < count; i++)
+    for (let i = 0; i < count; i++) {
       ids.current.push(
         notify(
           p.has("rich") ? (
@@ -25,6 +28,7 @@ function SonnerFixture() {
                     label: "Undo",
                     onClick: (event) => {
                       setActions((v) => v + 1);
+
                       if (p.has("cancelAction")) event.preventDefault();
                     },
                   },
@@ -36,31 +40,38 @@ function SonnerFixture() {
           }
         )
       );
+    }
+
     setCreated((v) => v + count);
   };
+
   React.useEffect(() => {
-    if (!p.has("closed")) show();
+    if (!p.has("closed")) {
+      show();
+    }
   }, []);
-  const x = Number(p.get("x") ?? 16) * scale,
-    y = Number(p.get("y") ?? 16) * scale,
-    width = Number(p.get("width") ?? 190) * scale,
-    height = Number(p.get("height") ?? 32) * scale;
+
+  const x = Number(p.get("x") ?? 16) * scale;
+  const y = Number(p.get("y") ?? 16) * scale;
+  const width = Number(p.get("width") ?? 190) * scale;
+  const height = Number(p.get("height") ?? 32) * scale;
+
   return (
     <>
       <Toaster
         scale={scale}
         position="top-right"
-        offset={p.has("native") ? { top: y, right: innerWidth - x - width } : 0}
+        offset={p.has("native") ? { right: innerWidth - x - width, top: y } : 0}
       />
       <div
         id="subject"
         style={{
-          position: "fixed",
+          height,
           left: x,
+          pointerEvents: "none",
+          position: "fixed",
           top: y,
           width,
-          height,
-          pointerEvents: "none",
         }}
         data-subject="true"
       />
@@ -74,8 +85,8 @@ function SonnerFixture() {
         id="update"
         onClick={() =>
           notify("Updated 世界", {
-            id: ids.current[0],
             description: "こんにちは",
+            id: ids.current[0],
           })
         }
       >
@@ -85,9 +96,9 @@ function SonnerFixture() {
         id="promise"
         onClick={() =>
           notify.promise(Promise.resolve("Saved"), {
+            error: "Save failed",
             loading: "Saving world",
             success: "World saved",
-            error: "Save failed",
           })
         }
       >
@@ -97,28 +108,41 @@ function SonnerFixture() {
       <output id="created">{created}</output>
     </>
   );
-}
-function StrictFixture() {
-  const [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLElement>(null);
+};
+
+const StrictFixture = () => {
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLElement>(null);
+
   return (
     <>
       <Toaster ref={ref} />
       <button id="show" onClick={() => notify("World saved")}>
         Show
       </button>
-      <button id="read-ref" onClick={() => setTag(ref.current?.tagName ?? "")}>
+      <button
+        id="read-ref"
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
+      >
         Read ref
       </button>
       <output id="ref-tag">{tag}</output>
     </>
   );
-}
-export function ToastFixture() {
+};
+
+export const ToastFixture = () => {
   document.documentElement.style.background = p.get("background") ?? "#202020";
   document.body.style.background = p.get("background") ?? "#202020";
-  if (p.has("native")) setMinecraftSoundVolume(0);
-  else if (p.has("volume")) setMinecraftSoundVolume(Number(p.get("volume")));
+
+  if (p.has("native")) {
+    setMinecraftSoundVolume(0);
+  } else if (p.has("volume")) {
+    setMinecraftSoundVolume(Number(p.get("volume")));
+  }
+
   return p.get("component") === "sonner-strict" ? (
     <React.StrictMode>
       <StrictFixture />
@@ -126,4 +150,4 @@ export function ToastFixture() {
   ) : (
     <SonnerFixture />
   );
-}
+};

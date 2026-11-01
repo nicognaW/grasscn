@@ -2,97 +2,122 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 for (const dir of ["label", "separator"]) {
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
-      "utf8"
+      "utf-8"
     )
   );
+
   test.describe(`Marker ${dir} native constituents`, () => {
     test.describe.configure({ mode: "parallel" });
-    for (const c of manifest.cases)
+
+    for (const c of manifest.cases) {
       test(c.name, async ({ page }, info) => {
-        await page.setViewportSize({ width: 1536, height: 900 });
+        await page.setViewportSize({ height: 900, width: 1536 });
         await page.addInitScript(
           () =>
             (Date.now = () =>
               Number(new URLSearchParams(location.search).get("timeMs") ?? 0))
         );
+
         const q = new URLSearchParams({
+          align: c.alignment ?? "left",
+          background: c.background,
           component: "marker",
+          height: String(c.height),
+          label: c.label ?? "",
           native: "1",
           part: dir === "label" ? "text" : "line",
-          label: c.label ?? "",
           scale: String(c.scale),
-          width: String(c.width),
-          height: String(c.height),
-          x: String(c.x),
-          y: String(c.y),
           state: c.state,
           timeMs: String(c.timeMs ?? 0),
-          background: c.background,
-          align: c.alignment ?? "left",
+          width: String(c.width),
+          x: String(c.x),
+          y: String(c.y),
           ...(c.wrapWidth ? { wrapWidth: String(c.wrapWidth) } : {}),
         });
-        await page.goto("/?" + q);
+
+        await page.goto(`/?${q}`);
+
         if (dir === "label") {
           await expect(
             page.locator("[data-mc-label-layout-ready]")
           ).toHaveAttribute("data-mc-label-layout-ready", "true");
-          for (const label of await page.locator("[data-mc-label-ready]").all())
+
+          for (const label of await page
+            .locator("[data-mc-label-ready]")
+            .all()) {
             await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+          }
         }
+
         await page.mouse.move(0, 0);
-        if (c.state === "focus") await page.locator("[data-subject]").focus();
-        else
-          await page.evaluate(() =>
-            (document.activeElement as HTMLElement)?.blur()
-          );
-        if (c.state.endsWith("hover"))
+
+        if (c.state === "focus") {
+          await page.locator("[data-subject]").focus();
+        } else {
+          await page.evaluate(() => {
+            (document.activeElement as HTMLElement)?.blur();
+          });
+        }
+
+        if (c.state.endsWith("hover")) {
           await page.locator("[data-subject]").hover({ force: true });
+        }
+
         await page.evaluate(
-          () =>
+          async () =>
             new Promise((r) =>
               requestAnimationFrame(() => requestAnimationFrame(r))
             )
         );
+
         const bytes = readFileSync(
-            pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
-          ),
-          actualBytes = await page
-            .locator("[data-subject]")
-            .screenshot({ animations: "disabled" }),
-          a = PNG.sync.read(bytes),
-          b = PNG.sync.read(actualBytes);
+          pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
+        );
+
+        const actualBytes = await page
+          .locator("[data-subject]")
+          .screenshot({ animations: "disabled" });
+
+        const a = PNG.sync.read(bytes);
+        const b = PNG.sync.read(actualBytes);
+
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
         expect([b.width, b.height]).toEqual([a.width, a.height]);
         let mismatchedPixels = 0;
-        for (let i = 0; i < a.data.length; i += 4)
+
+        for (let i = 0; i < a.data.length; i += 4) {
           mismatchedPixels += Number(
             !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
           );
+        }
+
         writeFileSync(
           info.outputPath("metrics.json"),
           JSON.stringify({
+            alias: "base",
+            case: c.name,
             component: "marker",
             manifest:
               dir === "."
                 ? "tests/reference/manifest.json"
                 : `tests/reference/${dir}/manifest.json`,
-            part: dir === "label" ? "text" : "line",
-            alias: "base",
-            case: c.name,
             mismatchedPixels,
-            tolerance: 0,
+            part: dir === "label" ? "text" : "line",
             scope:
               "Original Label/Separator constituent cases; marker arrangement is composition",
+            tolerance: 0,
           })
         );
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         expect(mismatchedPixels).toBe(0);
       });
+    }
   });
 }

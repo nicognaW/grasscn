@@ -10,16 +10,24 @@ import {
   CodeBlockFooter,
 } from "@grasscn/web/ui/code-block";
 import * as React from "react";
-const q = new URLSearchParams(location.search),
-  scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
-export function CodeBlockFixture() {
+
+const q = new URLSearchParams(location.search);
+const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+
+export const CodeBlockFixture = () => {
   const [text, setText] = React.useState(
-      q.get("text") ?? "First\n\n你好 世界\nLast"
-    ),
-    [events, setEvents] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLPreElement>(null),
-    highlighted = useHighlightedCode(text, q.get("language") ?? "typescript");
+    q.get("text") ?? "First\n\n你好 世界\nLast"
+  );
+
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLPreElement>(null);
+
+  const highlighted = useHighlightedCode(
+    text,
+    q.get("language") ?? "typescript"
+  );
+
   return (
     <div style={{ padding: 32, width: 700 }}>
       <CodeBlock
@@ -34,7 +42,10 @@ export function CodeBlockFixture() {
               disabled={q.has("disabled")}
               onClick={(e) => {
                 setEvents((n) => n + 1);
-                if (q.has("cancel")) e.preventDefault();
+
+                if (q.has("cancel")) {
+                  e.preventDefault();
+                }
               }}
             />
           </CodeBlockActions>
@@ -45,7 +56,7 @@ export function CodeBlockFixture() {
           wrap={q.has("wrap")}
           lineNumbers={q.has("numbers")}
           startLine={7}
-          style={{ width: q.has("wrap") ? 180 : undefined, maxHeight: 400 }}
+          style={{ maxHeight: 400, width: q.has("wrap") ? 180 : undefined }}
           data-subject="true"
         >
           {q.has("highlight") ? (
@@ -69,11 +80,15 @@ export function CodeBlockFixture() {
         aria-label="Code input"
         spellCheck={false}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
       />
       <button
         id="read-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "missing")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "missing");
+        }}
       >
         Read ref
       </button>
@@ -81,4 +96,4 @@ export function CodeBlockFixture() {
       <output id="events">{events}</output>
     </div>
   );
-}
+};

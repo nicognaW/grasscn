@@ -7,28 +7,27 @@ import { baseGrep } from "@ppt/selection/suite.mjs";
 const inventory =
   process.argv.includes("--list") &&
   process.env.GRASSCN_BROWSER_GUARD_COLLECTION !== "1";
+
 const full = process.env.GRASSCN_BROWSER_SCOPE === "full";
+
 const proxyPort = full
   ? process.env.GRASSCN_FULL_PROXY_PORT
   : process.env.GRASSCN_BROWSER_PROXY_PORT;
 
 export default defineConfig({
-  testDir: "./tests",
-  testIgnore: ["**/reference/**", "**/unit/**"],
-  outputDir: path.join(pixelPerfectTestRoot, "browser"),
-  testMatch: ["**/*.spec.ts", "**/*.spec.js"],
   fullyParallel: false,
-  workers: 1,
+  globalSetup: "./src/selection/guard.mjs",
   grep: inventory || full ? undefined : baseGrep(),
   grepInvert: !inventory && full ? baseGrep() : undefined,
-  globalSetup: "./src/selection/guard.mjs",
+  outputDir: path.join(pixelPerfectTestRoot, "browser"),
+  testDir: "./tests",
+  testIgnore: ["**/reference/**", "**/unit/**"],
+  testMatch: ["**/*.spec.ts", "**/*.spec.js"],
   use: {
     baseURL: process.env.GRASSCN_FIXTURE_URL ?? "http://127.0.0.1:5174",
     browserName: "chromium",
     channel: "msedge",
-    viewport: { width: 1280, height: 900 },
     deviceScaleFactor: 1,
-    proxy: proxyPort ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
     launchOptions: proxyPort
       ? {
           args: [
@@ -37,6 +36,8 @@ export default defineConfig({
           ],
         }
       : undefined,
+    proxy: proxyPort ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
+    viewport: { height: 900, width: 1280 },
   },
   webServer: process.env.GRASSCN_FIXTURE_URL
     ? undefined
@@ -52,4 +53,5 @@ export default defineConfig({
           reuseExistingServer: !process.env.CI,
         },
       ],
+  workers: 1,
 });

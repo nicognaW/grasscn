@@ -1,6 +1,7 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-for (const part of ["input", "textarea"])
+
+for (const part of ["input", "textarea"]) {
   test(`Input Group ${part} supports editing, addon focus and refs`, async ({
     page,
   }) => {
@@ -21,6 +22,8 @@ for (const part of ["input", "textarea"])
       `${part === "input" ? "INPUT" : "TEXTAREA"}/BUTTON`
     );
   });
+}
+
 test("Input Group addon alignment and cancelled focus remain functional", async ({
   page,
 }) => {
@@ -31,43 +34,51 @@ test("Input Group addon alignment and cancelled focus remain functional", async 
     "block-end",
   ]) {
     await page.goto(`/?component=input-group&align=${align}`);
-    const addon = page.locator("[data-slot=input-group-addon]"),
-      field = page.getByRole("textbox");
+
+    const addon = page.locator("[data-slot=input-group-addon]");
+    const field = page.getByRole("textbox");
+
     await expect(addon).toHaveAttribute("data-align", align);
-    const a = (await addon.boundingBox())!,
-      f = (await field.boundingBox())!;
+
+    const a = (await addon.boundingBox())!;
+    const f = (await field.boundingBox())!;
+
     expect(
       align.startsWith("block") ? Math.abs(a.y - f.y) : Math.abs(a.x - f.x)
     ).toBeGreaterThan(1);
   }
+
   await page.goto("/?component=input-group&cancelAddon=1");
   await page.locator("[data-slot=input-group-text]").click();
   await expect(page.getByRole("textbox")).not.toBeFocused();
 });
+
 test("Input Group native buttons do not submit forms or steal focus", async ({
   page,
 }) => {
   await page.goto("/?component=input-group");
-  const button = page.getByRole("button", { name: "Send", exact: true });
+  const button = page.getByRole("button", { exact: true, name: "Send" });
   await button.click();
   await expect(button).toBeFocused();
   await expect(page.getByLabel("Group actions")).toHaveText("1");
   await expect(page.getByLabel("Group refs")).not.toHaveText("submitted");
   await page.goto("/?component=input-group&disabled=1");
   await page
-    .getByRole("button", { name: "Send", exact: true })
+    .getByRole("button", { exact: true, name: "Send" })
     .dispatchEvent("click");
   await expect(page.getByLabel("Group actions")).toHaveText("0");
 });
+
 test("Input Group plays only the original button audio", async ({ page }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -75,8 +86,8 @@ test("Input Group plays only the original button audio", async ({ page }) => {
   await page.locator("[data-slot=input-group-text]").click();
   await page.getByRole("textbox").fill("世界");
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
-  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Send" }).click();
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { src: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, src: minecraftClickSound, volume: 0.25 },
   ]);
 });

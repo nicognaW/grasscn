@@ -5,21 +5,16 @@ import { repoRoot } from "@tests/paths";
 
 // General tests always participate in ordinary verification; PPT selection does not apply.
 export default defineConfig({
+  fullyParallel: false,
+  outputDir: path.join(repoRoot, "test-results/general"),
   testDir: "./tests",
   testIgnore: ["**/reference/**", "**/unit/**"],
   testMatch: ["**/*.spec.ts", "**/*.spec.js"],
-  outputDir: path.join(repoRoot, "test-results/general"),
-  fullyParallel: false,
-  workers: 1,
   use: {
     baseURL: process.env.GRASSCN_FIXTURE_URL ?? "http://127.0.0.1:5174",
     browserName: "chromium",
     channel: "msedge",
-    viewport: { width: 1280, height: 900 },
     deviceScaleFactor: 1,
-    proxy: process.env.GRASSCN_BROWSER_PROXY_PORT
-      ? { server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}` }
-      : undefined,
     launchOptions: process.env.GRASSCN_BROWSER_PROXY_PORT
       ? {
           args: [
@@ -28,6 +23,10 @@ export default defineConfig({
           ],
         }
       : undefined,
+    proxy: process.env.GRASSCN_BROWSER_PROXY_PORT
+      ? { server: `http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}` }
+      : undefined,
+    viewport: { height: 900, width: 1280 },
   },
   webServer: process.env.GRASSCN_FIXTURE_URL
     ? undefined
@@ -43,4 +42,5 @@ export default defineConfig({
           reuseExistingServer: !process.env.CI,
         },
       ],
+  workers: 1,
 });

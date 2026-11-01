@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { documentTextWidth } from "./minecraft-document-text";
@@ -6,21 +7,29 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { paintSignGpu } from "./minecraft-sign-gpu";
 import { loadUnihex, getUnihexGlyph, paintUnihex } from "./minecraft-unifont";
+
 const images = new Map<string, Promise<HTMLImageElement>>();
+
 function load(src: string) {
   let promise = images.get(src);
+
   if (!promise) {
     promise = new Promise<HTMLImageElement>((resolve, reject) => {
       const image = new Image();
-      image.onload = () => resolve(image);
+      image.onload = () => {
+        resolve(image);
+      };
+
       image.onerror = reject;
       image.src = src;
     });
     images.set(src, promise);
   }
+
   return promise;
 }
-export function MinecraftSignPaint({
+
+export const MinecraftSignPaint = ({
   src,
   lines,
   scale,
@@ -32,17 +41,25 @@ export function MinecraftSignPaint({
   scale: number;
   color: string;
   hanging: boolean;
-}) {
-  const ref = React.useRef<HTMLCanvasElement>(null),
-    [ready, setReady] = React.useState(false),
-    [revision, setRevision] = React.useState(0);
+}) => {
+  const ref = React.useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = React.useState(false);
+  const [revision, setRevision] = React.useState(0);
+
   React.useEffect(() => {
-    const repaint = () => setRevision((v) => v + 1),
-      observer = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) repaint();
-      });
+    const repaint = () => {
+      setRevision((v) => v + 1);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        repaint();
+      }
+    });
+
     observer.observe(ref.current!);
     window.addEventListener("resize", repaint);
+
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", repaint);
@@ -54,22 +71,28 @@ export function MinecraftSignPaint({
     Promise.all([
       load(src),
       load(minecraftInputAssets.atlas),
-      lines.some((line) => /[^\x20-\x7e]/.test(line))
+      lines.some((line) => /[^\x20-\x7E]/.test(line))
         ? loadUnihex()
         : Promise.resolve(),
     ])
       .then(([texture, font]) => {
-        if (!live) return;
-        const canvas = ref.current!,
-          ctx = canvas.getContext("2d")!,
-          width = 120 * scale,
-          height = (hanging ? 74 : 110) * scale;
+        if (!live) {
+          return;
+        }
+
+        const canvas = ref.current!;
+        const ctx = canvas.getContext("2d")!;
+        const width = 120 * scale;
+        const height = (hanging ? 74 : 110) * scale;
+
         canvas.width = width;
         canvas.height = height;
-        const output = ctx.createImageData(width, height),
-          scratch = document.createElement("canvas"),
-          sc = scratch.getContext("2d")!,
-          f = Math.fround;
+
+        const output = ctx.createImageData(width, height);
+        const scratch = document.createElement("canvas");
+        const sc = scratch.getContext("2d")!;
+        const f = Math.fround;
+
         const draw = (
           source: ImageData,
           left: number,
@@ -81,7 +104,7 @@ export function MinecraftSignPaint({
             let y = Math.max(0, Math.ceil(top - 0.5));
             y < Math.min(height, Math.ceil(bottom - 0.5));
             y++
-          )
+          ) {
             for (
               let x = Math.max(0, Math.ceil(left - 0.5));
               x < Math.min(width, Math.ceil(right - 0.5));
@@ -108,21 +131,27 @@ export function MinecraftSignPaint({
                 i = (sy * source.width + sx) * 4,
                 j = (y * width + x) * 4,
                 alpha = source.data[i + 3] / 255;
+
               if (!alpha) continue;
+
               for (let k = 0; k < 3; k++)
                 output.data[j + k] = source.data[i + k];
               output.data[j + 3] = source.data[i + 3];
             }
+          }
         };
+
         scratch.width = texture.naturalWidth;
         scratch.height = texture.naturalHeight;
         sc.drawImage(texture, 0, 0);
-        const factor = f((hanging ? 4.5 : 3.9) * scale),
-          origin = (hanging ? 50 : 30) * scale,
-          tx = 60 * scale,
-          ty = origin + (hanging ? -13 : 27) * scale,
-          halfX = hanging ? 8 : 12,
-          halfY = hanging ? 8 : 13;
+
+        const factor = f((hanging ? 4.5 : 3.9) * scale);
+        const origin = (hanging ? 50 : 30) * scale;
+        const tx = 60 * scale;
+        const ty = origin + (hanging ? -13 : 27) * scale;
+        const halfX = hanging ? 8 : 12;
+        const halfY = hanging ? 8 : 13;
+
         draw(
           sc.getImageData(0, 0, scratch.width, scratch.height),
           f(tx + f(-halfX * factor)),
@@ -131,17 +160,24 @@ export function MinecraftSignPaint({
           f(ty + f(halfY * factor))
         );
         const textScale = f((hanging ? 1 : f(0.9765628)) * scale);
+
         for (const [index, line] of lines.entries()) {
           const textWidth = documentTextWidth(line);
-          if (!textWidth) continue;
+
+          if (!textWidth) {
+            continue;
+          }
+
           scratch.width = textWidth;
           scratch.height = 9;
           sc.imageSmoothingEnabled = false;
           let x = 0;
+
           for (const char of line) {
             const glyph = minecraftGlyphs[char.codePointAt(0)! - 32];
+
             if (glyph) {
-              if (char !== " ")
+              if (char !== " ") {
                 sc.drawImage(
                   font,
                   glyph[0],
@@ -153,9 +189,12 @@ export function MinecraftSignPaint({
                   glyph[2],
                   8
                 );
+              }
+
               x += glyph[2];
             } else {
               const glyph = getUnihexGlyph(char);
+
               if (glyph) {
                 sc.fillStyle = "#ffffff";
                 paintUnihex(sc, glyph, x, 0, 1);
@@ -163,12 +202,15 @@ export function MinecraftSignPaint({
               }
             }
           }
+
           sc.globalCompositeOperation = "source-in";
           sc.fillStyle = color;
           sc.fillRect(0, 0, scratch.width, scratch.height);
           sc.globalCompositeOperation = "source-over";
-          const left = -Math.floor(textWidth / 2),
-            top = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
+
+          const left = -Math.floor(textWidth / 2);
+          const top = index * (hanging ? 9 : 10) - (hanging ? 18 : 20);
+
           draw(
             sc.getImageData(0, 0, scratch.width, 9),
             f(tx + f(left * textScale)),
@@ -177,19 +219,22 @@ export function MinecraftSignPaint({
             f(origin + f((top + 9) * textScale))
           );
         }
-        const bounds = canvas.getBoundingClientRect(),
-          gpu = lines.every((line) => /^[\x20-\x7e]*$/.test(line))
-            ? paintSignGpu(
-                texture,
-                font,
-                lines,
-                scale,
-                color,
-                hanging,
-                bounds.x,
-                bounds.y
-              )
-            : undefined;
+
+        const bounds = canvas.getBoundingClientRect();
+
+        const gpu = lines.every((line) => /^[\x20-\x7E]*$/.test(line))
+          ? paintSignGpu(
+              texture,
+              font,
+              lines,
+              scale,
+              color,
+              hanging,
+              bounds.x,
+              bounds.y
+            )
+          : undefined;
+
         ctx.putImageData(
           gpu ? new ImageData(gpu, width, height) : output,
           0,
@@ -198,12 +243,16 @@ export function MinecraftSignPaint({
         setReady(true);
       })
       .catch(() => {
-        if (live) setReady(false);
+        if (live) {
+          setReady(false);
+        }
       });
+
     return () => {
       live = false;
     };
   }, [src, lines, scale, color, hanging, revision]);
+
   return (
     <canvas
       ref={ref}
@@ -214,4 +263,4 @@ export function MinecraftSignPaint({
       style={{ display: "block", imageRendering: "pixelated" }}
     />
   );
-}
+};

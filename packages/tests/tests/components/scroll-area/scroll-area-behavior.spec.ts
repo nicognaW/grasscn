@@ -1,7 +1,9 @@
 import { test, expect } from "@grasscn/tests/test";
+
 const viewport = '[data-slot="scroll-area-viewport"]';
 const bar = '[data-slot="scroll-area-scrollbar"]';
 const thumb = '[data-slot="scroll-area-thumb"]';
+
 test("ScrollArea wheel and keyboard scrolling use the browser viewport", async ({
   page,
 }) => {
@@ -13,22 +15,23 @@ test("ScrollArea wheel and keyboard scrolling use the browser viewport", async (
   await page.locator(viewport).hover();
   await page.mouse.wheel(0, 120);
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await page.locator(viewport).focus();
   await page.keyboard.press("End");
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(800);
   await page.keyboard.press("Home");
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(0);
   await page.keyboard.press("ArrowDown");
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
 });
+
 test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   page,
 }) => {
@@ -36,9 +39,11 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
     const state = window as Window & {
       scrollAudioPlays?: number;
     };
+
     state.scrollAudioPlays = 0;
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       state.scrollAudioPlays!++;
+
       return Promise.resolve();
     };
   });
@@ -47,8 +52,10 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
     "data-scrollable",
     "true"
   );
-  const handle = await page.locator(thumb).boundingBox(),
-    track = await page.locator(bar).boundingBox();
+
+  const handle = await page.locator(thumb).boundingBox();
+  const track = await page.locator(bar).boundingBox();
+
   await page.mouse.move(
     handle!.x + handle!.width / 2,
     handle!.y + handle!.height / 2
@@ -59,11 +66,11 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
   });
   await page.mouse.up();
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(800);
   await page.mouse.click(track!.x + track!.width / 2, track!.y + 1);
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(0);
   await expect(page.getByLabel("Pointer events", { exact: true })).toHaveText(
     "2"
@@ -78,7 +85,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
         ).scrollAudioPlays
     )
   ).toBe(0);
-  await page.getByRole("button", { name: "Row 1", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Row 1" }).click();
   expect(
     await page.evaluate(
       () =>
@@ -90,6 +97,7 @@ test("ScrollArea thumb dragging and track clicks reach both endpoints", async ({
     )
   ).toBe(1);
 });
+
 test("ScrollArea disables scrolling without changing child controls", async ({
   page,
 }) => {
@@ -102,13 +110,14 @@ test("ScrollArea disables scrolling without changing child controls", async ({
   );
   await page.locator(viewport).hover();
   await page.mouse.wheel(0, 120);
-  await page.locator(bar).click({ position: { x: 3, y: 100 }, force: true });
+  await page.locator(bar).click({ force: true, position: { x: 3, y: 100 } });
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(0);
-  await page.getByRole("button", { name: "Row 1", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Row 1" }).click();
   await expect(page.getByLabel("Activations", { exact: true })).toHaveText("1");
 });
+
 test("ScrollArea reacts to fitting, overflowing and resized content", async ({
   page,
 }) => {
@@ -122,13 +131,14 @@ test("ScrollArea reacts to fitting, overflowing and resized content", async ({
   await page.locator("#shrink-content").click();
   await expect(page.locator(bar)).not.toBeVisible();
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBe(0);
   await page.locator("[data-subject]").evaluate((node) => {
     node.style.height = "20px";
   });
   await expect(page.locator(bar)).toBeVisible();
 });
+
 test("ScrollArea forwards root and viewport refs, custom chrome and asChild", async ({
   page,
 }) => {
@@ -146,13 +156,14 @@ test("ScrollArea forwards root and viewport refs, custom chrome and asChild", as
     "SECTION/DIV"
   );
 });
+
 test("ScrollArea keeps clipped child controls keyboard reachable", async ({
   page,
 }) => {
   await page.goto("/?component=scroll-area&height=80&contentHeight=480");
-  await page.getByRole("button", { name: "Row 20", exact: true }).focus();
+  await page.getByRole("button", { exact: true, name: "Row 20" }).focus();
   await expect
-    .poll(() => page.locator(viewport).evaluate((node) => node.scrollTop))
+    .poll(async () => page.locator(viewport).evaluate((node) => node.scrollTop))
     .toBeGreaterThan(700);
   await page.keyboard.press("Enter");
   await expect(page.getByLabel("Activations", { exact: true })).toHaveText("1");

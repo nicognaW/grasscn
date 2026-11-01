@@ -5,14 +5,16 @@ import {
   AvatarBadge,
   AvatarGroup,
   AvatarGroupCount,
-  type MinecraftAvatarSkin,
 } from "@grasscn/web/ui/avatar";
+import type { MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 import * as React from "react";
-export function AvatarFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    [status, setStatus] = React.useState(""),
-    ref = React.useRef<HTMLImageElement>(null);
+
+export const AvatarFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const [status, setStatus] = React.useState("");
+  const ref = React.useRef<HTMLImageElement>(null);
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
@@ -20,8 +22,10 @@ export function AvatarFixture() {
   React.useEffect(() => {
     (window as any).avatarImageRef = ref.current;
   });
+
   if (q.get("native") === "1") {
     const part = q.get("part");
+
     return (
       <Avatar
         id="subject"
@@ -34,17 +38,17 @@ export function AvatarFixture() {
               : "default"
         }
         style={{
-          position: "absolute",
+          height: Number(q.get("height") ?? 16) * scale,
           left: Number(q.get("x") ?? 8) * scale,
+          position: "absolute",
           top: Number(q.get("y") ?? 8) * scale,
           width: Number(q.get("width") ?? 16) * scale,
-          height: Number(q.get("height") ?? 16) * scale,
         }}
         data-subject="true"
       >
         {part === "label" ? (
           <AvatarFallback
-            style={{ display: "block", background: "transparent" }}
+            style={{ background: "transparent", display: "block" }}
             maxWidth={
               q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined
             }
@@ -63,6 +67,7 @@ export function AvatarFixture() {
       </Avatar>
     );
   }
+
   return (
     <>
       <Avatar id="loaded">
@@ -93,12 +98,10 @@ export function AvatarFixture() {
         <AvatarGroupCount>+2</AvatarGroupCount>
       </AvatarGroup>
       <Avatar render={<a href="#player" id="linked" />}>
-        {
-          <AvatarFallback>
-            <strong>Player</strong>
-          </AvatarFallback>
-        }
+        <AvatarFallback>
+          <strong>Player</strong>
+        </AvatarFallback>
       </Avatar>
     </>
   );
-}
+};

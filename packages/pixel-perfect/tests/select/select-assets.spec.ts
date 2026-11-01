@@ -4,34 +4,46 @@ import { readFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftSelectAssets } from "@grasscn/web/ui/minecraft-select-assets";
 import { selectUnihexAtlas } from "@grasscn/web/ui/minecraft-select-atlas";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
+
 const json = (file: string) =>
-  JSON.parse(readFileSync(pixelPerfectFile(file), "utf8"));
+  JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
+
 test("Select retains original list texture bytes", () => {
   const provenance = json("tests/reference/select/asset-provenance.json");
+
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {
     const bytes = Buffer.from(
-      uri.match(/base64,([A-Za-z0-9+/=]+)/)![1],
+      /base64,([A-Za-z0-9+/=]+)/.exec(uri)![1],
       "base64"
     );
+
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       provenance.sources[`assets/minecraft/textures/gui/${name}.png`].sha256
     );
   }
 });
+
 test("Select uses the observed CJK atlas without changing the original renderer", () => {
   const observed = json("tests/reference/select-extra/glyph-atlas.json");
   expect(Object.keys(selectUnihexAtlas).sort()).toEqual(
     Object.keys(observed).sort()
   );
-  for (const [code, uv] of Object.entries(selectUnihexAtlas))
-    for (const axis of ["u0", "u1", "v0", "v1"] as const)
+
+  for (const [code, uv] of Object.entries(selectUnihexAtlas)) {
+    for (const axis of ["u0", "u1", "v0", "v1"] as const) {
       expect(uv[axis]).toBe(observed[code][axis]);
+    }
+  }
+
   const repeat = json("tests/reference/select-extra/repeatability.json");
   expect(repeat.glyphObservationEnabled).toEqual({
     runOne: true,
     runTwo: false,
   });
   expect(repeat.cases).toHaveLength(144);
-  for (const c of repeat.cases) expect(c.mismatchedPixels).toBe(0);
+
+  for (const c of repeat.cases) {
+    expect(c.mismatchedPixels).toBe(0);
+  }
 });

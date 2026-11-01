@@ -1,10 +1,7 @@
 import { DatePickerDemo } from "@grasscn/web/blocks/date-picker";
 import { Button } from "@grasscn/web/ui/button";
-import {
-  Calendar,
-  CalendarDayButton,
-  type CalendarProps,
-} from "@grasscn/web/ui/calendar";
+import { Calendar, CalendarDayButton } from "@grasscn/web/ui/calendar";
+import type { CalendarProps } from "@grasscn/web/ui/calendar";
 import {
   CardHeader,
   CardTitle,
@@ -20,17 +17,19 @@ import { format } from "date-fns";
 import * as React from "react";
 
 import "./native-reference.css";
-export function CalendarFixture() {
-  const q = new URLSearchParams(location.search),
-    component = q.get("component") ?? "calendar",
-    part = q.get("part") ?? "cell",
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    width = Number(q.get("width") ?? 20),
-    height = Number(q.get("height") ?? 20),
-    x = Number(q.get("x") ?? 8) * scale,
-    y = Number(q.get("y") ?? 8) * scale,
-    state = q.get("state") ?? "normal",
-    label = q.get("label") ?? "1";
+
+export const CalendarFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const component = q.get("component") ?? "calendar";
+  const part = q.get("part") ?? "cell";
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const width = Number(q.get("width") ?? 20);
+  const height = Number(q.get("height") ?? 20);
+  const x = Number(q.get("x") ?? 8) * scale;
+  const y = Number(q.get("y") ?? 8) * scale;
+  const state = q.get("state") ?? "normal";
+  const label = q.get("label") ?? "1";
+
   const [selected, setSelected] = React.useState<Date>();
   const [dateOpen, setDateOpen] = React.useState(false);
   const [multiple, setMultiple] = React.useState<Date[] | undefined>();
@@ -39,9 +38,13 @@ export function CalendarFixture() {
       q.get("background") ?? "#202020";
   }, []);
   React.useLayoutEffect(() => {
-    if (q.get("native") !== "1") return;
+    if (q.get("native") !== "1") {
+      return;
+    }
+
     document.documentElement.classList.add("native-reference-calendar");
     let frame = 0;
+
     const place = () => {
       if (part === "arrow") {
         const button = document.querySelector<HTMLButtonElement>(
@@ -49,6 +52,7 @@ export function CalendarFixture() {
             ? ".rdp-button_next"
             : ".rdp-button_previous"
         );
+
         if (button) {
           button.id = "subject";
           button.dataset.subject = "true";
@@ -57,20 +61,25 @@ export function CalendarFixture() {
             "native-reference-size",
             "native-reference-arrow"
           );
-          button.style.setProperty("--reference-x", x + "px");
-          button.style.setProperty("--reference-y", y + "px");
-          button.style.setProperty("--reference-width", width * scale + "px");
-          button.style.setProperty("--reference-height", height * scale + "px");
-        } else frame = requestAnimationFrame(place);
+          button.style.setProperty("--reference-x", `${x}px`);
+          button.style.setProperty("--reference-y", `${y}px`);
+          button.style.setProperty("--reference-width", `${width * scale}px`);
+          button.style.setProperty("--reference-height", `${height * scale}px`);
+        } else {
+          frame = requestAnimationFrame(place);
+        }
       }
     };
+
     place();
+
     return () => {
       cancelAnimationFrame(frame);
       document.documentElement.classList.remove("native-reference-calendar");
     };
   }, [component, part, scale, width, height, x, y, state, label]);
-  if (q.get("native") === "1" && part.startsWith("trigger"))
+
+  if (q.get("native") === "1" && part.startsWith("trigger")) {
     return (
       <Popover scale={scale} open={false}>
         <PopoverTrigger
@@ -96,6 +105,8 @@ export function CalendarFixture() {
         </PopoverTrigger>
       </Popover>
     );
+  }
+
   if (q.get("native") === "1") {
     const props: CalendarProps = {
       scale,
@@ -115,14 +126,13 @@ export function CalendarFixture() {
           : undefined,
       ...(part === "label"
         ? {
-            formatters: { formatCaption: () => label },
             captionTextProps: {
+              align: (q.get("align") ?? "left") as "left" | "center",
+              className: "native-reference-geometry native-reference-size",
               id: "subject",
               maxWidth: q.has("wrapWidth")
                 ? Number(q.get("wrapWidth"))
                 : undefined,
-              align: (q.get("align") ?? "left") as "left" | "center",
-              className: "native-reference-geometry native-reference-size",
               style: {
                 "--reference-x": x + "px",
                 "--reference-y": y + "px",
@@ -131,12 +141,12 @@ export function CalendarFixture() {
               } as React.CSSProperties,
               ...{ "data-subject": "true" },
             },
+            formatters: { formatCaption: () => label },
           }
         : {}),
       ...(part === "surface" && q.has("text")
         ? {
             components: {
-              Nav: () => <></>,
               Months: () => (
                 <>
                   <CardHeader>
@@ -148,6 +158,7 @@ export function CalendarFixture() {
                   </CardFooter>
                 </>
               ),
+              Nav: () => <></>,
             },
           }
         : {}),
@@ -164,11 +175,11 @@ export function CalendarFixture() {
                       state === "focus" &&
                       day.date.getDate() === Number(label) &&
                       day.date.getDate() === Number(label),
+                    range_end: q.get("range") === "end",
+                    range_middle: q.get("range") === "middle",
+                    range_start: q.get("range") === "start",
                     selected: q.get("selected") === "true",
                     today: q.get("today") === "true",
-                    range_start: q.get("range") === "start",
-                    range_middle: q.get("range") === "middle",
-                    range_end: q.get("range") === "end",
                   }}
                   id={
                     day.date.getDate() === Number(label) ? "subject" : undefined
@@ -177,10 +188,10 @@ export function CalendarFixture() {
                   className={`${p.className ?? ""} native-reference-geometry native-reference-size`}
                   style={
                     {
+                      "--reference-height": height * scale + "px",
+                      "--reference-width": width * scale + "px",
                       "--reference-x": x + "px",
                       "--reference-y": y + "px",
-                      "--reference-width": width * scale + "px",
-                      "--reference-height": height * scale + "px",
                     } as React.CSSProperties
                   }
                   data-subject={
@@ -200,14 +211,15 @@ export function CalendarFixture() {
       style:
         part === "surface"
           ? ({
-              "--reference-x": x + "px",
-              "--reference-y": y + "px",
-              "--reference-width": width * scale + "px",
               "--reference-height": height * scale + "px",
               "--reference-padding": (q.has("text") ? 18 * scale : 0) + "px",
+              "--reference-width": width * scale + "px",
+              "--reference-x": x + "px",
+              "--reference-y": y + "px",
             } as React.CSSProperties)
           : undefined,
     };
+
     return (
       <>
         {component === "date-picker" ? (
@@ -229,7 +241,8 @@ export function CalendarFixture() {
       </>
     );
   }
-  if (q.get("scenario") === "disabled")
+
+  if (q.get("scenario") === "disabled") {
     return (
       <Popover>
         <PopoverTrigger render={<Button disabled aria-label="Disabled date" />}>
@@ -237,8 +250,12 @@ export function CalendarFixture() {
         </PopoverTrigger>
       </Popover>
     );
-  if (q.get("scenario") === "uncontrolled")
+  }
+
+  if (q.get("scenario") === "uncontrolled") {
     return <DatePickerDemo scale={scale} />;
+  }
+
   return (
     <>
       <Calendar
@@ -300,4 +317,4 @@ export function CalendarFixture() {
       />
     </>
   );
-}
+};

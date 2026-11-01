@@ -6,65 +6,93 @@ import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
+
 const advance = (char: string, bold: boolean) => {
   const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
+
   return (
     (ascii?.[2] ?? getUnihexGlyph(char)?.advance ?? 0) +
     (bold ? (ascii ? 1 : 0.5) : 0)
   );
 };
+
 const textWidth = (text: string, bold: boolean) =>
-  Math.ceil(
-    Array.from(text).reduce((sum, char) => sum + advance(char, bold), 0)
-  );
+  Math.ceil([...text].reduce((sum, char) => sum + advance(char, bold), 0));
+
 function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
+
   for (const paragraph of text.split("\n")) {
-    let remaining = Array.from(paragraph);
+    let remaining = [...paragraph];
+
     while (textWidth(remaining.join(""), bold) > maximum) {
-      let count = 0,
-        used = 0,
-        space = -1;
+      let count = 0;
+      let used = 0;
+      let space = -1;
+
       while (count < remaining.length) {
-        if (remaining[count] === " ") space = count;
+        if (remaining[count] === " ") {
+          space = count;
+        }
+
         const next = advance(remaining[count], bold);
-        if (used + next > maximum && count > 0) break;
+
+        if (used + next > maximum && count > 0) {
+          break;
+        }
+
         used += next;
-        count++;
+        count += 1;
       }
+
       const end = space >= 0 ? space : Math.max(1, count);
       lines.push(remaining.slice(0, end).join(""));
       remaining = remaining.slice(end + Number(space >= 0));
     }
+
     lines.push(remaining.join(""));
   }
+
   return lines;
 }
-export function MinecraftPopoverText({
+
+export const MinecraftPopoverText = ({
   children,
   bold = false,
 }: {
   children: React.ReactNode;
   bold?: boolean;
-}) {
-  const { scale, width } = React.useContext(PopoverTextContext),
-    [, loaded] = React.useReducer((n) => n + 1, 0);
-  const scalar = typeof children === "string" || typeof children === "number",
-    text = scalar ? String(children) : "",
-    unicode = /[^\x20-\x7e\n]/.test(text);
+}) => {
+  const { scale, width } = React.useContext(PopoverTextContext);
+  const [, loaded] = React.useReducer((n) => n + 1, 0);
+
+  const scalar = typeof children === "string" || typeof children === "number";
+  const text = scalar ? String(children) : "";
+  const unicode = /[^\x20-\x7E\n]/.test(text);
+
   React.useEffect(() => {
     let active = true;
-    if (unicode)
-      loadUnihex().then(() => {
+
+    if (unicode) {
+      void loadUnihex().then(() => {
         if (active) loaded();
       });
+    }
+
     return () => {
       active = false;
     };
   }, [unicode]);
-  if (!scalar) return <>{children}</>;
-  if (!text) return <span data-mc-popover-text-ready="true" />;
-  if (!unicode)
+
+  if (!scalar) {
+    return <>{children}</>;
+  }
+
+  if (!text) {
+    return <span data-mc-popover-text-ready="true" />;
+  }
+
+  if (!unicode) {
     return (
       <span className="mc-popover-text" data-mc-popover-text-ready="true">
         <span aria-hidden="true" style={{ display: "block" }}>
@@ -73,15 +101,20 @@ export function MinecraftPopoverText({
         <span className="mc-card-accessible">{text}</span>
       </span>
     );
+  }
+
   if (
-    !Array.from(text).every(
-      (char) => /^[\x20-\x7e\n]$/.test(char) || getUnihexGlyph(char)
+    ![...text].every(
+      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
     )
-  )
+  ) {
     return <span data-mc-popover-text-ready="false">{text}</span>;
-  const lines = wrap(text, width, bold),
-    widths = lines.map((line) => textWidth(line, bold)),
-    widest = Math.max(0, ...widths);
+  }
+
+  const lines = wrap(text, width, bold);
+  const widths = lines.map((line) => textWidth(line, bold));
+  const widest = Math.max(0, ...widths);
+
   return (
     <span className="mc-popover-text" data-mc-popover-text-ready="true">
       <span aria-hidden="true">
@@ -109,4 +142,4 @@ export function MinecraftPopoverText({
       <span className="mc-card-accessible">{text}</span>
     </span>
   );
-}
+};

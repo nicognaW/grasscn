@@ -3,10 +3,10 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-type NativeCase = {
+interface NativeCase {
   name: string;
   text: string;
   placeholder?: string;
@@ -22,7 +22,7 @@ type NativeCase = {
   caretMs: number;
   sha256: string;
   referenceDirectory: string;
-};
+}
 
 const manifest = {
   cases: ["textarea", "textarea-cjk"].flatMap((directory) =>
@@ -30,7 +30,7 @@ const manifest = {
       JSON.parse(
         readFileSync(
           pixelPerfectFile(`tests/reference/${directory}/manifest.json`),
-          "utf8"
+          "utf-8"
         )
       ).cases as NativeCase[]
     ).map((c) => ({ ...c, referenceDirectory: directory }))
@@ -42,12 +42,14 @@ function compare(expected: PNG, actual: PNG) {
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const different = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(different);
     diff.data.set(
       different
@@ -61,6 +63,7 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
 
@@ -72,27 +75,31 @@ test("Textarea comparator catches a one-pixel mutation", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const c of manifest.cases)
+for (const c of manifest.cases) {
   test(`Textarea native pixels: ${c.name}`, async ({ page }, testInfo) => {
-    if (c.referenceDirectory === "textarea-cjk")
+    if (c.referenceDirectory === "textarea-cjk") {
       await page.setViewportSize({ width: 1536, height: 900 });
+    }
+
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
     await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
     await page.goto(
-      `/?${new URLSearchParams({ component: "textarea", text: c.text, placeholder: c.placeholder ?? "", state: c.state, width: String(c.width), height: String(c.height), scale: String(c.scale) })}`
+      `/?${new URLSearchParams({ component: "textarea", height: String(c.height), placeholder: c.placeholder ?? "", scale: String(c.scale), state: c.state, text: c.text, width: String(c.width) })}`
     );
     const area = page.getByRole("textbox", { name: "Test textarea" });
+
     if (c.referenceDirectory === "textarea-cjk") {
       await area.evaluate(
         (node, position) => {
           Object.assign((node as HTMLElement).style, {
-            position: "fixed",
             left: `${position.x}px`,
+            position: "fixed",
             top: `${position.y}px`,
           });
         },
@@ -100,11 +107,14 @@ for (const c of manifest.cases)
       );
       await expect(area).toHaveAttribute("data-mc-bitmap", "true");
     }
+
     await expect(area).toHaveAttribute("data-mc-ready", "true");
+
     if (c.state.startsWith("focus")) {
       await page.keyboard.press("Tab");
       await expect(area).toBeFocused();
     }
+
     await page.mouse.move(0, 0);
     await area.evaluate(
       (node, settings) => {
@@ -117,23 +127,27 @@ for (const c of manifest.cases)
         area.scrollTop = settings.scroll;
       },
       {
-        cursor: c.cursor ?? c.text.length,
         anchor: c.anchor ?? c.cursor ?? c.text.length,
+        cursor: c.cursor ?? c.text.length,
         scroll: (c.value ?? 0) * c.scale,
       }
     );
     await page.clock.runFor(c.caretMs);
+
     const expectedBytes = await readFile(
       pixelPerfectFile(
         `tests/reference/${c.referenceDirectory}/captures/${c.name}`
       )
     );
+
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
     );
-    const actualBytes = await area.screenshot({ animations: "disabled" }),
-      actual = PNG.sync.read(actualBytes),
-      expected = PNG.sync.read(expectedBytes);
+
+    const actualBytes = await area.screenshot({ animations: "disabled" });
+    const actual = PNG.sync.read(actualBytes);
+    const expected = PNG.sync.read(expectedBytes);
+
     const { diff, mismatchedPixels } = compare(expected, actual);
     await writeFile(testInfo.outputPath("actual.png"), actualBytes);
     await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -143,3 +157,4 @@ for (const c of manifest.cases)
     );
     expect(mismatchedPixels).toBe(0);
   });
+}

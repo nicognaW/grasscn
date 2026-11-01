@@ -17,7 +17,8 @@ import { PlayerPreview } from "@grasscn/web/ui/player-preview";
 import { Sign, HangingSign } from "@grasscn/web/ui/sign";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
-type Sample = {
+
+interface Sample {
   element: string;
   uncontrolled?: boolean;
   offerCount?: number;
@@ -37,7 +38,8 @@ type Sample = {
   height?: number;
   cursor?: number;
   background?: string;
-};
+}
+
 export default function DraftDemos({
   sample,
   scale,
@@ -45,20 +47,21 @@ export default function DraftDemos({
   sample: Sample;
   scale: 1 | 2 | 3;
 }) {
-  const [value, setValue] = React.useState(sample.value ?? 0),
-    [selected, setSelected] = React.useState(String(sample.value ?? 0)),
-    [trades, setTrades] = React.useState(0),
-    [scroll, setScroll] = React.useState(sample.cursor ?? 0);
-  React.useEffect(
-    () => setMinecraftSoundVolume(sample.muted ? 0 : 1),
-    [sample.muted]
-  );
-  const common = { id: "subject", scale, "data-subject": "true" };
+  const [value, setValue] = React.useState(sample.value ?? 0);
+  const [selected, setSelected] = React.useState(String(sample.value ?? 0));
+  const [trades, setTrades] = React.useState(0);
+  const [scroll, setScroll] = React.useState(sample.cursor ?? 0);
+
+  React.useEffect(() => {
+    setMinecraftSoundVolume(sample.muted ? 0 : 1);
+  }, [sample.muted]);
+  const common = { "data-subject": "true", id: "subject", scale };
+
   const pixels = React.useMemo(
     () =>
       sample.state === "saved-world"
         ? getWorldMapPixels()
-        : Uint8Array.from({ length: 16384 }, (_, i) =>
+        : Uint8Array.from({ length: 16_384 }, (_, i) =>
             sample.state === "palette"
               ? i % 256
               : sample.state === "empty"
@@ -73,40 +76,45 @@ export default function DraftDemos({
           ),
     [sample.state]
   );
+
   const roster = [
     {
       id: "alex",
-      name: "Alex",
-      skin: "slim/alex" as const,
       latency: 42,
+      name: "Alex",
       score: 18,
+      skin: "slim/alex" as const,
     },
     {
       id: "steve",
-      name: "Steve",
-      skin: "wide/steve" as const,
       latency: 220,
+      name: "Steve",
       score: 12,
+      skin: "wide/steve" as const,
     },
     {
       id: "kai",
-      name: "Kai",
-      skin: "wide/kai" as const,
       latency: 670,
+      name: "Kai",
       score: 7,
+      skin: "wide/kai" as const,
     },
   ];
+
   const icon = <img src={minecraftBadgeAssets.diamond} alt="" />;
+
   const offers = Array.from({ length: sample.offerCount ?? 9 }, (_, i) => ({
+    cost: { count: i + 1, icon, label: "Diamonds" },
     id: String(i),
-    label: `Offer ${i + 1}`,
-    cost: { label: "Diamonds", count: i + 1, icon },
-    result: { label: `Reward ${i + 1}`, count: 1, icon },
     inStock: i !== (sample.offerCount ?? 9) - 1,
+    label: `Offer ${i + 1}`,
+    result: { count: 1, icon, label: `Reward ${i + 1}` },
   }));
+
   let content: React.ReactNode;
+
   switch (sample.element) {
-    case "book":
+    case "book": {
       content = (
         <Book
           {...common}
@@ -122,7 +130,9 @@ export default function DraftDemos({
         />
       );
       break;
-    case "hotbar":
+    }
+
+    case "hotbar": {
       content = (
         <Hotbar
           {...common}
@@ -132,7 +142,9 @@ export default function DraftDemos({
         />
       );
       break;
-    case "health":
+    }
+
+    case "health": {
       content = (
         <HealthMeter
           {...common}
@@ -140,30 +152,40 @@ export default function DraftDemos({
           condition={
             (
               {
+                ABSORBING: "absorbing",
+                FROZEN: "frozen",
                 NORMAL: "normal",
                 POISIONED: "poisoned",
                 WITHERED: "withered",
-                FROZEN: "frozen",
-                ABSORBING: "absorbing",
               } as const
             )[sample.state as "NORMAL"] ?? "normal"
           }
         />
       );
       break;
-    case "armor":
+    }
+
+    case "armor": {
       content = <ArmorMeter {...common} value={value} />;
       break;
-    case "hunger":
+    }
+
+    case "hunger": {
       content = <HungerMeter {...common} value={value} />;
       break;
-    case "air":
+    }
+
+    case "air": {
       content = <AirMeter {...common} value={value} />;
       break;
-    case "experience":
+    }
+
+    case "experience": {
       content = <ExperienceBar {...common} value={value} />;
       break;
-    case "player-preview":
+    }
+
+    case "player-preview": {
       content = (
         <PlayerPreview
           {...common}
@@ -181,13 +203,15 @@ export default function DraftDemos({
           width={sample.width ?? 80}
           height={sample.height ?? 120}
           defaultRotation={{
-            yaw: sample.value ?? 30,
             pitch: sample.anchor ?? -5,
+            yaw: sample.value ?? 30,
           }}
         />
       );
       break;
-    case "map":
+    }
+
+    case "map": {
       content = (
         <MinecraftMap
           onMapClick={(point) =>
@@ -199,20 +223,20 @@ export default function DraftDemos({
             sample.checked
               ? [
                   {
+                    decoration: "frame",
                     id: "home",
+                    label: "Home",
+                    rotation: value,
                     x: 0,
                     y: 0,
-                    label: "Home",
-                    decoration: "frame",
-                    rotation: value,
                   },
                   {
+                    decoration: "plains_village",
                     id: "village",
+                    label: "Village",
+                    rotation: value,
                     x: 70,
                     y: -50,
-                    label: "Village",
-                    decoration: "plains_village",
-                    rotation: value,
                   },
                 ]
               : []
@@ -224,14 +248,16 @@ export default function DraftDemos({
         />
       );
       break;
-    case "locator":
+    }
+
+    case "locator": {
       content = (
         <div
           id="subject"
           style={{
+            height: 17 * scale,
             position: "relative",
             width: 182 * scale,
-            height: 17 * scale,
           }}
           data-subject="true"
         >
@@ -242,16 +268,16 @@ export default function DraftDemos({
               sample.checked
                 ? [
                     {
-                      id: "point",
-                      label: "Waypoint",
                       bearing: value,
                       color: sample.color ?? "#ffffff",
+                      id: "point",
+                      label: "Waypoint",
                       shape: "default_3",
                     },
                   ]
                 : []
             }
-            style={{ position: "absolute", left: 0, top: 6 * scale }}
+            style={{ left: 0, position: "absolute", top: 6 * scale }}
             onMarkerSelect={(id) => {
               setSelected(id);
               document.documentElement.dataset.marker = id;
@@ -260,7 +286,9 @@ export default function DraftDemos({
         </div>
       );
       break;
-    case "sign":
+    }
+
+    case "sign": {
       content = (
         <Sign
           {...common}
@@ -274,7 +302,9 @@ export default function DraftDemos({
         />
       );
       break;
-    case "hanging-sign":
+    }
+
+    case "hanging-sign": {
       content = (
         <HangingSign
           {...common}
@@ -286,24 +316,26 @@ export default function DraftDemos({
         />
       );
       break;
-    case "player-list":
+    }
+
+    case "player-list": {
       content = (
         <PlayerList
           {...common}
           players={(sample.labels ?? roster.map((p) => p.name)).map(
             (name, i) => ({
               id: String(i),
-              name,
-              skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
               latency:
                 (sample.labels?.length ?? 3) === 3
                   ? [42, 220, 670][i]
                   : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
+              name,
               score: sample.checked
                 ? (sample.labels?.length ?? 3) === 3
                   ? [18, 12, 7][i]
                   : i * 3 + 7
                 : undefined,
+              skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
             })
           )}
           header={sample.label}
@@ -312,7 +344,9 @@ export default function DraftDemos({
         />
       );
       break;
-    case "scoreboard":
+    }
+
+    case "scoreboard": {
       content = (
         <Scoreboard
           {...common}
@@ -328,8 +362,10 @@ export default function DraftDemos({
         />
       );
       break;
+    }
+
     case "trading-scrollbar":
-    case "trading":
+    case "trading": {
       content = (
         <Trading
           ref={(node) => {
@@ -345,7 +381,9 @@ export default function DraftDemos({
           title="Component shop"
           selectedId={selected}
           onSelectedIdChange={setSelected}
-          onTrade={() => setTrades((v) => v + 1)}
+          onTrade={() => {
+            setTrades((v) => v + 1);
+          }}
           data-subject={
             (sample.element === "trading-scrollbar" ? undefined : "subject") ===
             "subject"
@@ -355,28 +393,34 @@ export default function DraftDemos({
         />
       );
       break;
-    default:
-      throw Error("Unknown draft feature: " + sample.element);
+    }
+
+    default: {
+      throw new Error(`Unknown draft feature: ${sample.element}`);
+    }
   }
-  if (sample.element === "trading-scrollbar")
+
+  if (sample.element === "trading-scrollbar") {
     return (
       <div
         id="subject"
         style={{
-          position: "relative",
-          width: 6 * scale,
           height: 140 * scale,
           overflow: "hidden",
+          position: "relative",
+          width: 6 * scale,
         }}
         data-subject="true"
       >
         <div
-          style={{ position: "absolute", left: -94 * scale, top: -18 * scale }}
+          style={{ left: -94 * scale, position: "absolute", top: -18 * scale }}
         >
           {content}
         </div>
       </div>
     );
+  }
+
   return (
     <>
       {content}
@@ -385,12 +429,14 @@ export default function DraftDemos({
           aria-label="Scroll offset"
           type="number"
           value={scroll}
-          onChange={(event) => setScroll(Number(event.target.value))}
+          onChange={(event) => {
+            setScroll(Number(event.target.value));
+          }}
         />
       )}
       <output
         aria-label="Demo value"
-        style={{ display: "block", color: "white", marginTop: 20 }}
+        style={{ color: "white", display: "block", marginTop: 20 }}
       >
         {value} / {selected} / {trades}
       </output>

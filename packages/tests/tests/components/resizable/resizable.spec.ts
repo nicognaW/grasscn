@@ -1,20 +1,35 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
+
+async function layoutLeft(page: Page) {
+  const text = await page.locator("#layout").textContent();
+
+  if (text === null) {
+    throw new Error("Resizable layout text is missing");
+  }
+
+  return JSON.parse(text).left;
+}
 
 test("Resizable preserves horizontal and vertical geometry and standard separator semantics", async ({
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
     await page.goto(`/?component=resizable&orientation=${orientation}`);
-    const group = page.locator("#group"),
-      handle = page.getByRole("separator", { name: "Resize panels" });
+
+    const group = page.locator("#group");
+    const handle = page.getByRole("separator", { name: "Resize panels" });
+
     await expect(group).toHaveAttribute("data-slot", "resizable-panel-group");
     await expect(handle).toHaveAttribute(
       "aria-orientation",
       orientation === "horizontal" ? "vertical" : "horizontal"
     );
     await expect(handle).toHaveAttribute("aria-valuenow", "50");
-    const left = (await page.locator("#left").boundingBox())!,
-      right = (await page.locator("#right").boundingBox())!;
+
+    const left = (await page.locator("#left").boundingBox())!;
+    const right = (await page.locator("#right").boundingBox())!;
+
     expect(
       orientation === "horizontal" ? right.x > left.x : right.y > left.y
     ).toBe(true);
@@ -36,11 +51,7 @@ test("Resizable responds to pointer dragging and reports layouts", async ({
   await expect
     .poll(async () => Number(await handle.getAttribute("aria-valuenow")))
     .toBeGreaterThan(50);
-  await expect
-    .poll(
-      async () => JSON.parse(await page.locator("#layout").innerText()).left
-    )
-    .toBeGreaterThan(50);
+  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(50);
 });
 
 test("Resizable supports keyboard arrows and Home/End constraints", async ({
@@ -80,29 +91,13 @@ test("Resizable forwards imperative panel/group refs and element refs", async ({
   await page.locator("#read-ref").click();
   await expect(page.locator("#refs")).toHaveText("DIV/DIV/left,right");
   await page.locator("#set-layout").click();
-  await expect
-    .poll(
-      async () => JSON.parse(await page.locator("#layout").innerText()).left
-    )
-    .toBeCloseTo(25, 0);
+  await expect.poll(() => layoutLeft(page)).toBeCloseTo(25, 0);
   await page.locator("#resize").click();
-  await expect
-    .poll(
-      async () => JSON.parse(await page.locator("#layout").innerText()).left
-    )
-    .toBeCloseTo(35, 0);
+  await expect.poll(() => layoutLeft(page)).toBeCloseTo(35, 0);
   await page.locator("#collapse").click();
-  await expect
-    .poll(
-      async () => JSON.parse(await page.locator("#layout").innerText()).left
-    )
-    .toBe(0);
+  await expect.poll(() => layoutLeft(page)).toBe(0);
   await page.locator("#expand").click();
-  await expect
-    .poll(
-      async () => JSON.parse(await page.locator("#layout").innerText()).left
-    )
-    .toBeGreaterThan(0);
+  await expect.poll(() => layoutLeft(page)).toBeGreaterThan(0);
 });
 
 test("Resizable honors disabled separators and disabled groups", async ({
@@ -123,8 +118,9 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = 0;
-    HTMLMediaElement.prototype.play = function () {
-      (window as any).sounds++;
+    HTMLMediaElement.prototype.play = function play() {
+      (window as any).sounds += 1;
+
       return Promise.resolve();
     };
   });
@@ -136,14 +132,16 @@ test("Resizable preserves optional grip and never synthesizes interaction audio"
   expect(await page.evaluate(() => (window as any).sounds)).toBe(0);
 });
 
-for (const orientation of ["horizontal", "vertical"])
+for (const orientation of ["horizontal", "vertical"]) {
   test(`Resizable ${orientation} grip arrows agree with resize direction`, async ({
     page,
   }) => {
     await page.goto(`/?component=resizable&orientation=${orientation}`);
-    const handle = page.getByRole("separator", { name: "Resize panels" }),
-      arrow = handle.locator("[data-slot=resizable-arrow]").first(),
-      bounds = (await arrow.boundingBox())!;
+
+    const handle = page.getByRole("separator", { name: "Resize panels" });
+    const arrow = handle.locator("[data-slot=resizable-arrow]").first();
+    const bounds = (await arrow.boundingBox())!;
+
     expect(bounds.width < bounds.height).toBe(orientation === "horizontal");
     expect(await handle.evaluate((node) => getComputedStyle(node).cursor)).toBe(
       orientation === "horizontal" ? "col-resize" : "row-resize"
@@ -157,3 +155,4 @@ for (const orientation of ["horizontal", "vertical"])
         .evaluate((node) => getComputedStyle(node).outlineStyle)
     ).toBe("solid");
   });
+}

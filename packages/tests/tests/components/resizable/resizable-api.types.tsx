@@ -8,10 +8,12 @@ import type {
   GroupImperativeHandle,
   PanelImperativeHandle,
 } from "react-resizable-panels";
-function Types() {
-  const g = React.useRef<GroupImperativeHandle>(null),
-    p = React.useRef<PanelImperativeHandle>(null),
-    e = React.createRef<HTMLDivElement>();
+
+const Types = () => {
+  const g = React.useRef<GroupImperativeHandle>(null);
+  const p = React.useRef<PanelImperativeHandle>(null);
+  const e = React.createRef<HTMLDivElement>();
+
   return (
     <ResizablePanelGroup
       orientation="vertical"
@@ -29,5 +31,6 @@ function Types() {
       <ResizablePanel id="two" defaultSize="60%" />
     </ResizablePanelGroup>
   );
-}
+};
+
 void Types;

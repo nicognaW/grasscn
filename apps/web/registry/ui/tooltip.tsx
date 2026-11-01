@@ -1,9 +1,14 @@
 "use client";
+
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { MinecraftText } from "./minecraft-text";
 import {
@@ -14,10 +19,11 @@ import { MinecraftTooltipSurface } from "./minecraft-tooltip-paint";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
 import "./minecraft-tooltip.css";
-function TooltipProvider({
+
+const TooltipProvider = ({
   delay = 0,
   ...props
-}: MinecraftProps<typeof TooltipPrimitive.Provider>) {
+}: MinecraftProps<typeof TooltipPrimitive.Provider>) => {
   return (
     <TooltipPrimitive.Provider
       data-slot="tooltip-provider"
@@ -25,16 +31,19 @@ function TooltipProvider({
       {...props}
     />
   );
-}
-function Tooltip(props: MinecraftProps<typeof TooltipPrimitive.Root>) {
+};
+
+const Tooltip = (props: MinecraftProps<typeof TooltipPrimitive.Root>) => {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
-}
-function TooltipTrigger(
+};
+
+const TooltipTrigger = (
   props: MinecraftProps<typeof TooltipPrimitive.Trigger>
-) {
+) => {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
-}
-function TooltipContent({
+};
+
+const TooltipContent = ({
   className,
   sideOffset = 0,
   scale = 2,
@@ -66,46 +75,57 @@ function TooltipContent({
   })) & {
   scale?: 1 | 2 | 3;
   maxWidth?: number;
-}) {
+}) => {
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
   const [available, setAvailable] = React.useState(maxWidth);
   React.useImperativeHandle(ref, () => node!, [node]);
   React.useLayoutEffect(() => {
-    if (!node) return;
+    if (!node) {
+      return;
+    }
+
     const measure = () => {
       const physical =
-        parseFloat(
+        Number.parseFloat(
           getComputedStyle(node).getPropertyValue("--available-width")
         ) || window.innerWidth;
+
       setAvailable(
         Math.max(1, Math.min(maxWidth, Math.floor(physical / scale - 24)))
       );
     };
+
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(node);
     window.addEventListener("resize", measure);
+
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", measure);
     };
   }, [node, maxWidth, scale]);
+
   const skin = (content: React.ReactNode) => {
     const plain =
       (typeof content === "string" || typeof content === "number") &&
-      /^[\x20-\x7e\n]*$/.test(String(content))
+      /^[\x20-\x7E\n]*$/.test(String(content))
         ? String(content)
         : undefined;
+
     const lines =
       plain == null
         ? undefined
         : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
+
     const width = lines
       ? Math.max(0, ...lines.map(minecraftTextWidth)) + 24
       : undefined;
+
     const height = lines
       ? (lines.length === 1 ? 8 : lines.length * 10) + 24
       : undefined;
+
     return (
       <>
         {width && height ? (
@@ -132,6 +152,7 @@ function TooltipContent({
       </>
     );
   };
+
   const plain =
     typeof children === "string" || typeof children === "number"
       ? String(children)
@@ -142,17 +163,22 @@ function TooltipContent({
           typeof children.props.children === "string"
         ? children.props.children
         : undefined;
+
   const lines =
-    plain == null || !/^[\x20-\x7e\n]*$/.test(plain)
+    plain == null || !/^[\x20-\x7E\n]*$/.test(plain)
       ? undefined
       : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
+
   const width = lines
     ? Math.max(0, ...lines.map(minecraftTextWidth)) + 24
     : undefined;
+
   const height = lines
     ? (lines.length === 1 ? 8 : lines.length * 10) + 24
     : undefined;
+
   const content = skin(children);
+
   return (
     <TooltipPrimitive.Portal keepMounted={keepMounted}>
       <TooltipPrimitive.Positioner
@@ -176,9 +202,9 @@ function TooltipContent({
             (__style) =>
               ({
                 "--mc-scale": scale,
+                "--mc-tooltip-height": height,
                 "--mc-tooltip-max": maxWidth,
                 "--mc-tooltip-width": width,
-                "--mc-tooltip-height": height,
                 ...__style,
               }) as React.CSSProperties
           )}
@@ -189,5 +215,6 @@ function TooltipContent({
       </TooltipPrimitive.Positioner>
     </TooltipPrimitive.Portal>
   );
-}
+};
+
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

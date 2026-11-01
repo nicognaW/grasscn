@@ -1,8 +1,11 @@
 import { test, expect } from "@grasscn/tests/test";
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
+
 const url = (sample: object) =>
   `${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify(sample))}`;
+
 test("player list supports pointer and keyboard selection without UI sound", async ({
   page,
 }) => {
@@ -10,26 +13,28 @@ test("player list supports pointer and keyboard selection without UI sound", asy
     (window as any).played = 0;
     (window as any).Audio = class {
       play() {
-        (window as any).played++;
-        return Promise.resolve();
+        (window as any).played += 1;
+
+        return;
       }
     };
   });
   await page.goto(
     url({
+      checked: true,
       element: "player-list",
       labels: ["Alex", "Steve", "Kai"],
-      checked: true,
     })
   );
-  await page.getByRole("button", { name: "Steve", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Steve" }).click();
   await expect(page.getByLabel("Demo value")).toHaveText("0 / 1 / 0");
-  const kai = page.getByRole("button", { name: "Kai", exact: true });
+  const kai = page.getByRole("button", { exact: true, name: "Kai" });
   await kai.focus();
   await kai.press("Enter");
   await expect(page.getByLabel("Demo value")).toHaveText("0 / 2 / 0");
   expect(await page.evaluate(() => (window as any).played)).toBe(0);
 });
+
 test("player list uses at most eighty entries and twenty rows per column", async ({
   page,
 }) => {
@@ -41,15 +46,18 @@ test("player list uses at most eighty entries and twenty rows per column", async
   );
   await expect(page.getByRole("listitem")).toHaveCount(80);
   await expect(
-    page.getByRole("button", { name: "Player81", exact: true })
+    page.getByRole("button", { exact: true, name: "Player81" })
   ).toHaveCount(0);
-  const grid = page.getByRole("list", { name: "Players", exact: true });
+  const grid = page.getByRole("list", { exact: true, name: "Players" });
+
   const layout = await grid.evaluate((element) => ({
-    rows: getComputedStyle(element).gridTemplateRows.split(" ").length,
     columns: getComputedStyle(element).gridTemplateColumns.split(" ").length,
+    rows: getComputedStyle(element).gridTemplateRows.split(" ").length,
   }));
-  expect(layout).toEqual({ rows: 20, columns: 4 });
+
+  expect(layout).toEqual({ columns: 4, rows: 20 });
 });
+
 test("scoreboard sorts scores, hides internal entries and caps the visible ranking", async ({
   page,
 }) => {
@@ -60,7 +68,7 @@ test("scoreboard sorts scores, hides internal entries and caps the visible ranki
       labels: ["Zed", "#internal", "amy", "Bea"],
     })
   );
-  const table = page.getByRole("table", { name: "Build points", exact: true });
+  const table = page.getByRole("table", { exact: true, name: "Build points" });
   await expect(table.getByRole("cell")).toHaveText([
     "Bea",
     "16",

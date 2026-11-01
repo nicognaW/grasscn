@@ -2,18 +2,23 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const hash = (b: Buffer) => createHash("sha256").update(b).digest("hex");
-for (const kind of ["fps", "pie"])
+
+for (const kind of ["fps", "pie"]) {
   test(`Chart ${kind} expected pixels come from pinned original full frames and source snapshots`, () => {
-    const dir = `tests/reference/chart-${kind}`,
-      m = JSON.parse(
-        readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
-      ),
-      r = JSON.parse(
-        readFileSync(pixelPerfectFile(`${dir}/repeatability.json`), "utf8")
-      );
+    const dir = `tests/reference/chart-${kind}`;
+
+    const m = JSON.parse(
+      readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
+    );
+
+    const r = JSON.parse(
+      readFileSync(pixelPerfectFile(`${dir}/repeatability.json`), "utf-8")
+    );
+
     expect(
       hash(
         readFileSync(
@@ -27,20 +32,25 @@ for (const kind of ["fps", "pie"])
     expect(r.sourceJarSha256).toBe(m.sourceJarSha256);
     expect(r.captureSourceSha256).toBe(m.captureSourceSha256);
     expect(r.caseDefinitionSha256).toBe(m.caseDefinitionSha256);
+
     for (const c of m.cases) {
-      const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`)),
-        expected = PNG.sync.read(bytes),
-        frameName = `native-controls-p${c.page}-s${c.scale}.png`,
-        frameBytes = readFileSync(
-          pixelPerfectFile(`${dir}/frames/${frameName}`)
-        ),
-        frame = PNG.sync.read(frameBytes),
-        pixels = Buffer.alloc(expected.width * expected.height * 4);
+      const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`));
+      const expected = PNG.sync.read(bytes);
+      const frameName = `native-controls-p${c.page}-s${c.scale}.png`;
+
+      const frameBytes = readFileSync(
+        pixelPerfectFile(`${dir}/frames/${frameName}`)
+      );
+
+      const frame = PNG.sync.read(frameBytes);
+      const pixels = Buffer.alloc(expected.width * expected.height * 4);
+
       expect(hash(bytes)).toBe(c.sha256);
       expect(hash(frameBytes)).toBe(
         m.frames.find((f: { name: string }) => f.name === frameName).sha256
       );
-      for (let y = 0; y < expected.height; y++) {
+
+      for (let y = 0; y < expected.height; y += 1) {
         const start = ((c.y * c.scale + y) * frame.width + c.x * c.scale) * 4;
         frame.data.copy(
           pixels,
@@ -49,9 +59,11 @@ for (const kind of ["fps", "pie"])
           start + expected.width * 4
         );
       }
+
       expect(pixels.equals(expected.data)).toBe(true);
       const repeated = r.cases.find((v: { name: string }) => v.name === c.name);
       expect(repeated.mismatchedPixels).toBe(0);
       expect(repeated.decodedRgbaSha256).toBe(hash(expected.data));
     }
   });
+}

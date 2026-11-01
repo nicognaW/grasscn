@@ -4,33 +4,38 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftClasses as cn } from "./minecraft-render";
 
 import "./minecraft-text.css";
-function MinecraftText({
+
+const MinecraftText = ({
   children,
   className,
 }: {
   children: React.ReactNode;
   className?: string;
-}) {
+}) => {
   if (
     (typeof children !== "string" && typeof children !== "number") ||
-    !/^[\x20-\x7e]*$/.test(String(children))
-  )
+    !/^[\x20-\x7E]*$/.test(String(children))
+  ) {
     return <span className={className}>{children}</span>;
+  }
+
   const text = String(children);
+
   return (
-    <span className={cn(`mc-bitmap ${""}`, className)}>
+    <span className={cn(`mc-bitmap`, className)}>
       <span className="mc-text-pixels" aria-hidden="true">
         {Array.from(text, (char, index) => {
           const [x, y, advance] = minecraftGlyphs[char.charCodeAt(0) - 32];
+
           return (
             <span
               key={index}
               className="mc-glyph"
               style={
                 {
+                  "--mc-advance": advance,
                   "--mc-glyph-x": x,
                   "--mc-glyph-y": y,
-                  "--mc-advance": advance,
                   visibility: char === " " ? "hidden" : undefined,
                 } as React.CSSProperties
               }
@@ -41,5 +46,6 @@ function MinecraftText({
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
+
 export { MinecraftText };

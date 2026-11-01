@@ -1,27 +1,32 @@
 "use client";
+
 import * as React from "react";
 
 import { Button } from "./button";
 import { MinecraftItemMedia } from "./minecraft-item-media";
+import { MinecraftItemText } from "./minecraft-item-text";
+import type { MinecraftItemTextProps } from "./minecraft-item-text";
 import {
-  MinecraftItemText,
-  type MinecraftItemTextProps,
-} from "./minecraft-item-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftPolymorphicProps,
+} from "./minecraft-render";
+import type {
+  MinecraftProps,
+  MinecraftPolymorphicProps,
 } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-item.css";
 import "./minecraft-attachment.css";
+
 const AttachmentContext = React.createContext<{
-    scale: 1 | 2 | 3;
-    disabled: boolean;
-  }>({ scale: 2, disabled: false }),
-  AttachmentClip = React.createContext<number | undefined>(undefined);
+  scale: 1 | 2 | 3;
+  disabled: boolean;
+}>({ disabled: false, scale: 2 });
+
+const AttachmentClip = React.createContext<number | undefined>(undefined);
+
 type AttachmentProps = MinecraftProps<"div"> & {
   state?: "idle" | "uploading" | "processing" | "error" | "done";
   size?: "default";
@@ -30,7 +35,8 @@ type AttachmentProps = MinecraftProps<"div"> & {
   selected?: boolean;
   disabled?: boolean;
 };
-function Attachment({
+
+const Attachment = ({
   state = "done",
   size = "default",
   orientation = "horizontal",
@@ -42,31 +48,41 @@ function Attachment({
   ref,
   onClickCapture,
   ...props
-}: AttachmentProps) {
-  if (size !== "default")
+}: AttachmentProps) => {
+  if (size !== "default") {
     throw Error(
       "Minecraft attachment rows support the original default size only"
     );
+  }
+
   const inactive =
-      disabled ||
-      props["aria-disabled"] === true ||
-      props["aria-disabled"] === "true",
-    node = React.useRef<HTMLDivElement>(null);
+    disabled ||
+    props["aria-disabled"] === true ||
+    props["aria-disabled"] === "true";
+
+  const node = React.useRef<HTMLDivElement>(null);
+
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useLayoutEffect(() => {
-    const root = node.current!,
-      update = () => {
-        root.dataset.mcItemInteractive = String(
-          !inactive && !!root.querySelector("[data-slot=attachment-trigger]")
-        );
-      };
+    const root = node.current!;
+
+    const update = () => {
+      root.dataset.mcItemInteractive = String(
+        !inactive && !!root.querySelector("[data-slot=attachment-trigger]")
+      );
+    };
+
     update();
     const observer = new MutationObserver(update);
-    observer.observe(root, { subtree: true, childList: true });
-    return () => observer.disconnect();
+    observer.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [inactive]);
+
   return (
-    <AttachmentContext value={{ scale, disabled: inactive }}>
+    <AttachmentContext value={{ disabled: inactive, scale }}>
       <div
         ref={node}
         data-slot="attachment"
@@ -75,7 +91,7 @@ function Attachment({
         data-orientation={orientation}
         data-selected={selected ? "true" : undefined}
         aria-disabled={inactive || undefined}
-        className={cn(`mc-item mc-attachment ${""}`, className)}
+        className={cn(`mc-item mc-attachment`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -86,142 +102,164 @@ function Attachment({
           if (inactive) {
             event.preventDefault();
             event.stopPropagation();
+
             return;
           }
+
           onClickCapture?.(event);
         }}
       />
     </AttachmentContext>
   );
-}
-function AttachmentMedia({
+};
+
+const AttachmentMedia = ({
   variant = "icon",
   className,
   children,
   ...props
 }: MinecraftProps<"div"> & {
   variant?: "icon" | "image";
-}) {
+}) => {
   const { scale } = React.useContext(AttachmentContext);
+
   return (
     <div
       data-slot="attachment-media"
       data-variant={variant}
-      className={cn(`mc-item-media mc-attachment-media ${""}`, className)}
+      className={cn(`mc-item-media mc-attachment-media`, className)}
       {...props}
     >
       {children ?? <MinecraftItemMedia scale={scale} />}
     </div>
   );
-}
-function AttachmentContent({
+};
+
+const AttachmentContent = ({
   className,
   ref,
   ...props
-}: MinecraftProps<"div">) {
-  const { scale } = React.useContext(AttachmentContext),
-    node = React.useRef<HTMLDivElement>(null),
-    [width, setWidth] = React.useState<number>();
+}: MinecraftProps<"div">) => {
+  const { scale } = React.useContext(AttachmentContext);
+  const node = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState<number>();
+
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useLayoutEffect(() => {
-    const element = node.current!,
-      measure = () => setWidth(Math.floor(element.clientWidth / scale));
+    const element = node.current!;
+
+    const measure = () => {
+      setWidth(Math.floor(element.clientWidth / scale));
+    };
+
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [scale]);
+
   return (
     <AttachmentClip value={width}>
       <div
         ref={node}
         data-slot="attachment-content"
         data-mc-item-content-ready={width != null}
-        className={cn(`mc-item-content mc-attachment-content ${""}`, className)}
+        className={cn(`mc-item-content mc-attachment-content`, className)}
         {...props}
       />
     </AttachmentClip>
   );
-}
+};
+
 type AttachmentTextProps = MinecraftProps<"span"> &
   Pick<MinecraftItemTextProps, "maxWidth" | "align" | "clipWidth" | "render">;
-function AttachmentTitle({
+
+const AttachmentTitle = ({
   className,
   clipWidth,
   ...props
-}: AttachmentTextProps) {
-  const { scale } = React.useContext(AttachmentContext),
-    inherited = React.useContext(AttachmentClip);
+}: AttachmentTextProps) => {
+  const { scale } = React.useContext(AttachmentContext);
+  const inherited = React.useContext(AttachmentClip);
+
   return (
     <MinecraftItemText
       as="span"
       data-slot="attachment-title"
       scale={scale}
       clipWidth={clipWidth ?? inherited}
-      className={cn(`mc-item-title mc-attachment-title ${""}`, className)}
+      className={cn(`mc-item-title mc-attachment-title`, className)}
       {...props}
     />
   );
-}
-function AttachmentDescription({
+};
+
+const AttachmentDescription = ({
   className,
   clipWidth,
   ...props
-}: AttachmentTextProps) {
-  const { scale } = React.useContext(AttachmentContext),
-    inherited = React.useContext(AttachmentClip);
+}: AttachmentTextProps) => {
+  const { scale } = React.useContext(AttachmentContext);
+  const inherited = React.useContext(AttachmentClip);
+
   return (
     <MinecraftItemText
       as="span"
       data-slot="attachment-description"
       scale={scale}
       clipWidth={clipWidth ?? inherited}
-      className={cn(
-        `mc-item-description mc-attachment-description ${""}`,
-        className
-      )}
+      className={cn(`mc-item-description mc-attachment-description`, className)}
       {...props}
     />
   );
-}
-function AttachmentActions({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const AttachmentActions = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="attachment-actions"
-      className={cn(`mc-item-actions mc-attachment-actions ${""}`, className)}
+      className={cn(`mc-item-actions mc-attachment-actions`, className)}
       {...props}
     />
   );
-}
-function AttachmentAction({
+};
+
+const AttachmentAction = ({
   className,
   disabled,
   onClickCapture,
   ...props
-}: MinecraftProps<typeof Button>) {
-  const context = React.useContext(AttachmentContext),
-    inactive = context.disabled || disabled;
+}: MinecraftProps<typeof Button>) => {
+  const context = React.useContext(AttachmentContext);
+  const inactive = context.disabled || disabled;
+
   return (
     <Button
       data-slot="attachment-action"
       type="button"
       scale={context.scale}
-      className={cn(`mc-attachment-action ${""}`, className)}
+      className={cn(`mc-attachment-action`, className)}
       {...props}
       disabled={inactive}
-      aria-disabled={inactive || props["aria-disabled"]}
+      aria-disabled={inactive ?? props["aria-disabled"]}
       onClickCapture={(event) => {
         if (inactive) {
           event.preventDefault();
           event.stopPropagation();
+
           return;
         }
+
         onClickCapture?.(event);
       }}
     />
   );
-}
-function AttachmentTrigger({
+};
+
+const AttachmentTrigger = ({
   render,
   className,
   disabled,
@@ -229,46 +267,53 @@ function AttachmentTrigger({
   onClickCapture,
   type,
   ...props
-}: MinecraftPolymorphicProps<"button"> & {}) {
-  const context = React.useContext(AttachmentContext),
-    inactive = context.disabled || disabled,
-    Root = MinecraftRender;
+}: MinecraftPolymorphicProps<"button"> & {}) => {
+  const context = React.useContext(AttachmentContext);
+  const inactive = context.disabled || disabled;
+  const Root = MinecraftRender;
+
   return (
     <Root
       render={render}
       as="button"
       data-slot="attachment-trigger"
-      className={cn(`mc-attachment-trigger ${""}`, className)}
+      className={cn(`mc-attachment-trigger`, className)}
       type={render ? undefined : (type ?? "button")}
       disabled={inactive}
-      aria-disabled={inactive || undefined}
+      aria-disabled={inactive ?? undefined}
       {...props}
       onClickCapture={(event) => {
         if (inactive) {
           event.preventDefault();
           event.stopPropagation();
+
           return;
         }
+
         onClickCapture?.(event);
       }}
       onClick={(event) => {
         onClick?.(event);
         queueMicrotask(() => {
-          if (!event.defaultPrevented && !inactive) playMinecraftClick();
+          if (!event.defaultPrevented && !inactive) {
+            playMinecraftClick();
+          }
         });
       }}
     />
   );
-}
-function AttachmentGroup({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const AttachmentGroup = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="attachment-group"
-      className={cn(`mc-attachment-group ${""}`, className)}
+      className={cn(`mc-attachment-group`, className)}
       {...props}
     />
   );
-}
+};
+
 export {
   Attachment,
   AttachmentGroup,
@@ -280,4 +325,5 @@ export {
   AttachmentAction,
   AttachmentTrigger,
 };
+
 export type { AttachmentProps, AttachmentTextProps };

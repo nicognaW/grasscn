@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { Button } from "./button";
@@ -8,38 +9,43 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
-function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+
+const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => {
   return (
     <nav
       role="navigation"
       aria-label="pagination"
       data-slot="pagination"
-      className={cn(`mc-pagination ${""}`, className)}
+      className={cn(`mc-pagination`, className)}
       {...props}
     />
   );
-}
-function PaginationContent({
+};
+
+const PaginationContent = ({
   className,
   ...props
-}: React.ComponentProps<"ul">) {
+}: React.ComponentProps<"ul">) => {
   return (
     <ul
       data-slot="pagination-content"
-      className={cn(`mc-pagination-content ${""}`, className)}
+      className={cn(`mc-pagination-content`, className)}
       {...props}
     />
   );
-}
-function PaginationItem(props: React.ComponentProps<"li">) {
+};
+
+const PaginationItem = (props: React.ComponentProps<"li">) => {
   return <li data-slot="pagination-item" {...props} />;
-}
+};
+
 type PaginationLinkProps = React.ComponentProps<"a"> & {
   isActive?: boolean;
   size?: "default";
   scale?: 1 | 2 | 3;
 };
-function PaginationLink({
+
+const PaginationLink = ({
   isActive,
   size = "default",
   scale = 2,
@@ -48,18 +54,20 @@ function PaginationLink({
   style,
   onClick,
   ...props
-}: PaginationLinkProps) {
-  if (size !== "default")
+}: PaginationLinkProps) => {
+  if (size !== "default") {
     throw new Error(
       "Minecraft pagination supports the native default visual size only"
     );
+  }
+
   return (
     <Button
       render={
         <a
           aria-current={isActive ? "page" : undefined}
           data-slot="pagination-link"
-          data-active={isActive || undefined}
+          data-active={isActive ?? undefined}
           {...props}
           onClick={(event) => {
             if (
@@ -67,15 +75,17 @@ function PaginationLink({
               props["aria-disabled"] === "true"
             ) {
               event.preventDefault();
+
               return;
             }
+
             onClick?.(event);
           }}
         />
       }
       scale={scale}
       size={size}
-      className={cn(`mc-pagination-link ${""}`, className)}
+      className={cn(`mc-pagination-link`, className)}
       style={minecraftStyle(style, (__style) => ({
         width: 40 * scale,
         ...__style,
@@ -84,8 +94,9 @@ function PaginationLink({
       {children}
     </Button>
   );
-}
-function PaginationArrow({
+};
+
+const PaginationArrow = ({
   direction,
   scale = 2,
   size = "default",
@@ -97,18 +108,20 @@ function PaginationArrow({
   ...props
 }: PaginationLinkProps & {
   direction: "backward" | "forward";
-}) {
-  if (size !== "default")
+}) => {
+  if (size !== "default") {
     throw new Error(
       "Minecraft pagination supports the native default visual size only"
     );
+  }
+
   return (
     <a
       data-slot={
         direction === "forward" ? "pagination-next" : "pagination-previous"
       }
       data-direction={direction}
-      className={cn(`mc-pagination-arrow ${""}`, className)}
+      className={cn(`mc-pagination-arrow`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -122,17 +135,23 @@ function PaginationArrow({
           props["aria-disabled"] === "true"
         ) {
           event.preventDefault();
+
           return;
         }
+
         onClick?.(event);
-        if (!event.defaultPrevented) playMinecraftClick();
+
+        if (!event.defaultPrevented) {
+          playMinecraftClick();
+        }
       }}
     >
       {children}
     </a>
   );
-}
-function PaginationPrevious(props: PaginationLinkProps) {
+};
+
+const PaginationPrevious = (props: PaginationLinkProps) => {
   return (
     <PaginationArrow
       direction="backward"
@@ -140,8 +159,9 @@ function PaginationPrevious(props: PaginationLinkProps) {
       {...props}
     />
   );
-}
-function PaginationNext(props: PaginationLinkProps) {
+};
+
+const PaginationNext = (props: PaginationLinkProps) => {
   return (
     <PaginationArrow
       direction="forward"
@@ -149,20 +169,21 @@ function PaginationNext(props: PaginationLinkProps) {
       {...props}
     />
   );
-}
-function PaginationEllipsis({
+};
+
+const PaginationEllipsis = ({
   className,
   scale = 2,
   style,
   ...props
 }: React.ComponentProps<"span"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <span
       aria-hidden="true"
       data-slot="pagination-ellipsis"
-      className={cn(`mc-pagination-ellipsis ${""}`, className)}
+      className={cn(`mc-pagination-ellipsis`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -173,7 +194,8 @@ function PaginationEllipsis({
       <MinecraftText>...</MinecraftText>
     </span>
   );
-}
+};
+
 export {
   Pagination,
   PaginationContent,
@@ -183,4 +205,5 @@ export {
   PaginationNext,
   PaginationEllipsis,
 };
+
 export type { PaginationLinkProps };

@@ -11,38 +11,54 @@ export const ConfirmationTextContext = React.createContext<{
   contentWidth: number;
   compact?: boolean;
   nativeContentWidth?: number;
-}>({ scale: 2, contentWidth: 462 });
+}>({ contentWidth: 462, scale: 2 });
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   0;
+
 const widthOf = (text: string) =>
-  Math.ceil(Array.from(text).reduce((sum, char) => sum + advance(char), 0));
+  Math.ceil([...text].reduce((sum, char) => sum + advance(char), 0));
+
 function wrap(text: string, maximum: number) {
   const lines: string[] = [];
+
   for (let remaining of text.split("\n")) {
     while (widthOf(remaining) > maximum) {
-      let count = 0,
-        used = 0,
-        space = -1;
+      let count = 0;
+      let used = 0;
+      let space = -1;
+
       while (count < remaining.length) {
-        if (remaining[count] === " ") space = count;
+        if (remaining[count] === " ") {
+          space = count;
+        }
+
         const next = advance(remaining[count]);
-        if (used + next > maximum && count > 0) break;
+
+        if (used + next > maximum && count > 0) {
+          break;
+        }
+
         used += next;
-        count++;
+        count += 1;
       }
+
       const end = space >= 0 ? space : Math.max(1, count);
       lines.push(remaining.slice(0, end));
       remaining = remaining.slice(end + Number(space >= 0));
     }
+
     lines.push(remaining);
   }
+
   return lines;
 }
+
 export function confirmationButtonText(children: React.ReactNode) {
   return (typeof children === "string" || typeof children === "number") &&
-    /[^\x20-\x7e]/.test(String(children)) ? (
+    /[^\u0020-\u007E]/.test(String(children)) ? (
     <MinecraftUnicodeLabel
       text={String(children)}
       atlas={confirmationUnihexAtlas}
@@ -51,51 +67,70 @@ export function confirmationButtonText(children: React.ReactNode) {
     children
   );
 }
-export function MinecraftConfirmationText({
+
+export const MinecraftConfirmationText = ({
   children,
   title = false,
 }: {
   children: React.ReactNode;
   title?: boolean;
-}) {
+}) => {
   const {
-      scale,
-      contentWidth,
-      compact = false,
-      nativeContentWidth = contentWidth,
-    } = React.useContext(ConfirmationTextContext),
-    [, loaded] = React.useReducer((n) => n + 1, 0);
+    scale,
+    contentWidth,
+    compact = false,
+    nativeContentWidth = contentWidth,
+  } = React.useContext(ConfirmationTextContext);
+
+  const [, loaded] = React.useReducer((n) => n + 1, 0);
+
   const unicode =
-    typeof children === "string" && /[^\x20-\x7e\n]/.test(children);
+    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+
   React.useEffect(() => {
     let active = true;
-    if (unicode)
-      loadUnihex().then(() => {
+
+    if (unicode) {
+      void loadUnihex().then(() => {
         if (active) loaded();
       });
+    }
+
     return () => {
       active = false;
     };
   }, [unicode]);
+
   if (
     (typeof children !== "string" && typeof children !== "number") ||
-    !Array.from(String(children)).every(
-      (char) => /^[\x20-\x7e\n]$/.test(char) || getUnihexGlyph(char)
+    ![...String(children)].every(
+      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
     )
-  )
+  ) {
     return <span>{children}</span>;
-  const text = String(children),
-    allLines =
-      text === "" ? [] : title && !compact ? [text] : wrap(text, contentWidth),
-    lines = compact ? allLines : allLines.slice(0, title ? 1 : 15);
+  }
+
+  const text = String(children);
+
+  const allLines =
+    text === "" ? [] : title && !compact ? [text] : wrap(text, contentWidth);
+
+  const lines = compact ? allLines : allLines.slice(0, title ? 1 : 15);
+
   if (!compact && !title && allLines.length > 15) {
     let last = lines[14];
     const limit = widthOf(last) - widthOf("...");
-    while (last.length && widthOf(last) > limit) last = last.slice(0, -1);
-    lines[14] = last + "...";
+
+    while (last.length && widthOf(last) > limit) {
+      last = last.slice(0, -1);
+    }
+
+    lines[14] = `${last}...`;
   }
-  const widths = lines.map(widthOf),
-    widest = Math.max(0, ...widths);
+
+  const widths = lines.map(widthOf);
+  const widest = Math.max(0, ...widths);
+
   const nativeLines =
     text === ""
       ? []
@@ -104,6 +139,7 @@ export function MinecraftConfirmationText({
         : compact
           ? wrap(text, nativeContentWidth)
           : allLines;
+
   return (
     <span
       className="mc-confirmation-text"
@@ -128,7 +164,7 @@ export function MinecraftConfirmationText({
                 scale,
             }}
           >
-            {/[^\x20-\x7e]/.test(line) ? (
+            {/[^\x20-\x7E]/.test(line) ? (
               <MinecraftUnicodeLabel
                 text={line}
                 atlas={confirmationUnihexAtlas}
@@ -142,4 +178,4 @@ export function MinecraftConfirmationText({
       <span className="mc-dialog-accessible">{text}</span>
     </span>
   );
-}
+};

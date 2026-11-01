@@ -1,12 +1,18 @@
 "use client";
+
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-separator.css";
+
 type SeparatorProps = Omit<
   MinecraftProps<typeof SeparatorPrimitive>,
   "orientation"
@@ -15,7 +21,8 @@ type SeparatorProps = Omit<
   edge?: "header" | "footer";
   scale?: 1 | 2 | 3;
 };
-function Separator({
+
+const Separator = ({
   className,
   orientation = "horizontal",
   role = "none",
@@ -23,9 +30,11 @@ function Separator({
   scale = 2,
   style,
   ...props
-}: SeparatorProps) {
-  if (orientation !== "horizontal")
+}: SeparatorProps) => {
+  if (orientation !== "horizontal") {
     throw new Error("Minecraft Separator supports horizontal orientation only");
+  }
+
   return (
     <SeparatorPrimitive
       data-slot="separator"
@@ -33,7 +42,7 @@ function Separator({
       orientation={orientation}
       role={role}
       aria-hidden={role === "none" ? true : undefined}
-      className={cn(`mc-separator ${""}`, className)}
+      className={cn(`mc-separator`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -46,6 +55,8 @@ function Separator({
       {...props}
     />
   );
-}
+};
+
 export { Separator };
+
 export type { SeparatorProps };

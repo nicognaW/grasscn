@@ -4,28 +4,37 @@ import { useConfirmationSnapshot } from "./minecraft-confirmation-snapshot";
 
 // Screen's post-effect is six alternating box passes, not a Gaussian blur.
 // This SVG path is still under native pixel verification.
-export function MinecraftConfirmationBlur({
+export const MinecraftConfirmationBlur = ({
   radius,
   identity,
 }: {
   radius: number;
   identity: string;
-}) {
-  const ref = React.useRef<SVGSVGElement>(null),
-    id = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const canvas = React.useRef<HTMLCanvasElement>(null),
-    ready = useConfirmationSnapshot(canvas, identity, radius);
+}) => {
+  const ref = React.useRef<SVGSVGElement>(null);
+  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/g, "");
+
+  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const ready = useConfirmationSnapshot(canvas, identity, radius);
+
   const size = 2 * Math.max(0, Math.round(radius)) + 1;
   React.useLayoutEffect(() => {
     const host = ref.current!.parentElement!;
-    if (radius > 0 && !ready) host.style.backdropFilter = `url(#${id})`;
-    else host.style.removeProperty("backdrop-filter");
+
+    if (radius > 0 && !ready) {
+      host.style.backdropFilter = `url(#${id})`;
+    } else {
+      host.style.removeProperty("backdrop-filter");
+    }
+
     host.dataset.mcConfirmationBackdropReady = "true";
+
     return () => {
       host.style.removeProperty("backdrop-filter");
       delete host.dataset.mcConfirmationBackdropReady;
     };
   }, [id, radius, ready]);
+
   return (
     <>
       <svg
@@ -33,7 +42,7 @@ export function MinecraftConfirmationBlur({
         width="0"
         height="0"
         aria-hidden="true"
-        style={{ position: "absolute", pointerEvents: "none" }}
+        style={{ pointerEvents: "none", position: "absolute" }}
       >
         <defs>
           <filter
@@ -61,14 +70,14 @@ export function MinecraftConfirmationBlur({
         ref={canvas}
         aria-hidden="true"
         style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
           height: "100%",
+          inset: 0,
           pointerEvents: "none",
+          position: "absolute",
           visibility: ready && radius > 0 ? "visible" : "hidden",
+          width: "100%",
         }}
       />
     </>
   );
-}
+};

@@ -2,11 +2,13 @@ import * as React from "react";
 
 import { paintToast } from "./minecraft-toast-gpu";
 import { toastLayout } from "./minecraft-toast-layout";
+
 export type ToastMotion = {
   phase: "entering" | "exiting" | "shown" | "hidden";
   start: number;
 };
-export function MinecraftToastGraphic({
+
+export const MinecraftToastGraphic = ({
   title,
   message,
   scale,
@@ -18,25 +20,35 @@ export function MinecraftToastGraphic({
   scale: 1 | 2 | 3;
   motion: React.RefObject<ToastMotion>;
   onLayout?: (width: number, height: number) => void;
-}) {
-  const ref = React.useRef<HTMLCanvasElement>(null),
-    [ready, setReady] = React.useState(false);
+}) => {
+  const ref = React.useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = React.useState(false);
+
   React.useLayoutEffect(() => {
-    let disposed = false,
-      frame = 0,
-      signature = "";
+    let disposed = false;
+    let frame = 0;
+    let signature = "";
+
     setReady(false);
     const canvas = ref.current!;
-    toastLayout(title, message).then((layout) => {
-      if (disposed) return;
+    void toastLayout(title, message).then((layout) => {
+      if (disposed) {
+        return;
+      }
+
       onLayout?.(layout.width, layout.height);
+
       const paint = () => {
-        if (disposed) return;
-        const bounds = canvas.getBoundingClientRect(),
-          state = motion.current,
-          elapsed = Math.max(0, Math.min(600, Date.now() - state.start)),
-          t = Math.fround(elapsed / 600),
-          square = Math.fround(t * t);
+        if (disposed) {
+          return;
+        }
+
+        const bounds = canvas.getBoundingClientRect();
+        const state = motion.current;
+        const elapsed = Math.max(0, Math.min(600, Date.now() - state.start));
+        const t = Math.fround(elapsed / 600);
+        const square = Math.fround(t * t);
+
         const portion =
           state.phase === "hidden"
             ? 0
@@ -45,18 +57,22 @@ export function MinecraftToastGraphic({
               : state.phase === "exiting"
                 ? Math.fround(1 - square)
                 : square;
+
         const offset = Math.fround(
-            layout.width - Math.fround(layout.width * portion)
-          ),
-          next = JSON.stringify([
-            bounds.x,
-            bounds.y,
-            innerWidth,
-            innerHeight,
-            offset,
-          ]);
+          layout.width - Math.fround(layout.width * portion)
+        );
+
+        const next = JSON.stringify([
+          bounds.x,
+          bounds.y,
+          innerWidth,
+          innerHeight,
+          offset,
+        ]);
+
         if (signature !== next) {
           signature = next;
+
           const painted =
             layout.supported &&
             paintToast(
@@ -69,13 +85,16 @@ export function MinecraftToastGraphic({
               layout.title,
               layout.message
             );
+
           setReady(painted);
         }
       };
+
       const tick = () => {
         paint();
         frame = requestAnimationFrame(tick);
       };
+
       tick();
       window.addEventListener("resize", paint);
       window.addEventListener("scroll", paint, true);
@@ -85,26 +104,28 @@ export function MinecraftToastGraphic({
       };
     });
     let cleanup = () => {};
+
     return () => {
       disposed = true;
       cancelAnimationFrame(frame);
       cleanup();
     };
   }, [title, message, scale, motion, onLayout]);
+
   return (
     <canvas
       ref={ref}
       data-mc-toast-ready={ready}
       aria-hidden="true"
       style={{
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: "100%",
         height: "100%",
+        left: 0,
         pointerEvents: "none",
+        position: "absolute",
+        top: 0,
         visibility: ready ? "visible" : "hidden",
+        width: "100%",
       }}
     />
   );
-}
+};

@@ -4,7 +4,6 @@ import fs from "node:fs";
 import http from "node:http";
 import path from "node:path";
 import { pipeline } from "node:stream";
-import { fileURLToPath } from "node:url";
 
 import {
   repoRoot,
@@ -15,16 +14,19 @@ import {
 } from "@tests/paths";
 
 const root = repoRoot;
+
 export const fixtureDirectory = repositoryFile(
   path.join(".pixel-perfect-test", "production-fixture", "dist")
 );
+
 const fallbackDirectory = fixtureRoot;
 const skins = ["dream-skin.png", "steve-skin.png"];
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+
 const types = {
+  ".css": "text/css;charset=utf-8",
   ".html": "text/html;charset=utf-8",
   ".js": "text/javascript;charset=utf-8",
-  ".css": "text/css;charset=utf-8",
   ".json": "application/json",
   ".png": "image/png",
   ".svg": "image/svg+xml",
@@ -37,32 +39,47 @@ export function fixtureManifest(
   fallback = fallbackDirectory
 ) {
   const files = [];
+
   function visit(folder) {
-    for (const name of fs.readdirSync(folder).sort()) {
-      const file = path.join(folder, name),
-        info = fs.lstatSync(file);
+    for (const name of fs.readdirSync(folder).toSorted()) {
+      const file = path.join(folder, name);
+      const info = fs.lstatSync(file);
+
       assert.ok(
         !info.isSymbolicLink(),
         "Fixture bundles must not contain symlinks"
       );
-      if (info.isDirectory()) visit(file);
-      else
+
+      if (info.isDirectory()) {
+        visit(file);
+      } else {
         files.push({
           path: path.relative(directory, file).split(path.sep).join("/"),
           sha256: digest(fs.readFileSync(file)),
         });
+      }
     }
   }
+
   visit(directory);
+
   const fallbackFiles = skins.map((name) => ({
     name,
     sha256: digest(fs.readFileSync(path.join(fallback, name))),
   }));
+
   return {
     directory,
-    files,
     fallbackFiles,
-    sha256: digest(JSON.stringify({ files, fallbackFiles })),
+    files,
+    sha256: digest(
+      JSON.stringify(
+        Object.fromEntries([
+          ["files", files],
+          ["fallbackFiles", fallbackFiles],
+        ])
+      )
+    ),
   };
 }
 
@@ -70,29 +87,33 @@ export async function buildProductionFixture() {
   // Vite empties this output directory. Check its resolved target before allowing that.
   const intended = repositoryFile(path.join(".pixel-perfect-test")) + path.sep;
   assert.ok(path.resolve(fixtureDirectory).startsWith(intended));
-  if (fs.existsSync(fixtureDirectory))
+
+  if (fs.existsSync(fixtureDirectory)) {
     assert.ok(
       fs
         .realpathSync(fixtureDirectory)
         .startsWith(fs.realpathSync(root) + path.sep)
     );
+  }
+
   const { build } = await import("vite");
   await build({
-    configFile: path.join(testRoot, "vite.config.ts"),
-    cacheDir: repositoryFile(
-      path.join(".pixel-perfect-test", "production-fixture", "cache")
-    ),
     build: {
-      outDir: fixtureDirectory,
       emptyOutDir: true,
+      outDir: fixtureDirectory,
       rollupOptions: {
         input: {
-          index: fixtureFile("index.html"),
           adventure: fixtureFile("adventure.html"),
+          index: fixtureFile("index.html"),
         },
       },
     },
+    cacheDir: repositoryFile(
+      path.join(".pixel-perfect-test", "production-fixture", "cache")
+    ),
+    configFile: path.join(testRoot, "vite.config.ts"),
   });
+
   return fixtureManifest();
 }
 
@@ -107,12 +128,21 @@ export async function serveProductionFixture({
         decodeURIComponent(
           new URL(request.url, "http://127.0.0.1").pathname
         ).replace(/^\/+/, "") || "index.html";
+
       let file = path.resolve(directory, name);
-      if (!file.startsWith(path.resolve(directory) + path.sep))
-        throw Error("Outside fixture directory");
-      if (skins.includes(name) && !fs.existsSync(file))
+
+      if (!file.startsWith(path.resolve(directory) + path.sep)) {
+        throw new Error("Outside fixture directory");
+      }
+
+      if (skins.includes(name) && !fs.existsSync(file)) {
         file = path.join(fallback, name);
-      if (!fs.statSync(file).isFile()) throw Error("Not a file");
+      }
+
+      if (!fs.statSync(file).isFile()) {
+        throw new Error("Not a file");
+      }
+
       response.setHeader(
         "Content-Type",
         types[path.extname(file)] ?? "application/octet-stream"
@@ -121,22 +151,26 @@ export async function serveProductionFixture({
         "Cache-Control",
         path.extname(file) === ".html" ? "no-store" : "public,max-age=3600"
       );
-      pipeline(fs.createReadStream(file), response, () => {});
+      pipeline(fs.createReadStream(file), response, () => {
+        /* empty */
+      });
     } catch {
       response.statusCode = 404;
       response.end("Not found");
     }
   });
+
   await new Promise((resolve, reject) => {
     server.once("error", reject);
     server.listen(port, "127.0.0.1", resolve);
   });
+
   return {
-    server,
-    url: `http://127.0.0.1:${server.address().port}`,
     close: async () => {
       server.closeAllConnections();
       await new Promise((resolve) => server.close(resolve));
     },
+    server,
+    url: `http://127.0.0.1:${server.address().port}`,
   };
 }

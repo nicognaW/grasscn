@@ -2,24 +2,25 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-assets";
-import { testRoot, webFile } from "@tests/paths";
+import { webFile } from "@tests/paths";
+
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 test("Page scrollbars embed the unchanged original game textures", () => {
-  const css = readFileSync(webFile("minecraft-scrollbars.css"), "utf8");
+  const css = readFileSync(webFile("minecraft-scrollbars.css"), "utf-8");
   expect(css).toContain(minecraftTextareaAssets.scroller);
   expect(css).toContain(minecraftTextareaAssets.scroller_background);
 });
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Document, nested and horizontal bars use Minecraft artwork at GUI scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(origin + "#textarea");
+    await page.setViewportSize({ height: 844, width: 390 });
+    await page.goto(`${origin}#textarea`);
 
     await expect
-      .poll(() =>
+      .poll(async () =>
         page.evaluate(
           () =>
             getComputedStyle(document.documentElement, "::-webkit-scrollbar")
@@ -45,6 +46,7 @@ for (const scale of [2])
         );
       }
     });
+
     for (const selector of [
       "html",
       "#scrollbar-nested-proof",
@@ -52,20 +54,22 @@ for (const scale of [2])
       ".docs-sidebar nav",
     ]) {
       const result = await page.locator(selector).evaluate((element) => {
-        const bar = getComputedStyle(element, "::-webkit-scrollbar"),
-          track = getComputedStyle(element, "::-webkit-scrollbar-track"),
-          thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
+        const bar = getComputedStyle(element, "::-webkit-scrollbar");
+        const track = getComputedStyle(element, "::-webkit-scrollbar-track");
+        const thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
+
         return {
-          width: bar.width,
-          height: bar.height,
-          color: getComputedStyle(element).scrollbarColor,
-          thumb: thumb.borderImageSource,
-          track: track.borderImageSource,
-          radius: thumb.borderRadius,
           buttons: getComputedStyle(element, "::-webkit-scrollbar-button")
             .display,
+          color: getComputedStyle(element).scrollbarColor,
+          height: bar.height,
+          radius: thumb.borderRadius,
+          thumb: thumb.borderImageSource,
+          track: track.borderImageSource,
+          width: bar.width,
         };
       });
+
       expect(result.width).toBe(`${6 * scale}px`);
       expect(result.height).toBe(`${6 * scale}px`);
       expect(result.color).toBe("auto");
@@ -76,17 +80,18 @@ for (const scale of [2])
       expect(result.radius).toBe("0px");
       expect(result.buttons).toBe("none");
     }
+
     const nested = page.locator("#scrollbar-nested-proof");
     await nested.focus();
     await nested.press("End");
     await expect
-      .poll(() => nested.evaluate((e) => e.scrollTop))
+      .poll(async () => nested.evaluate((e) => e.scrollTop))
       .toBeGreaterThan(0);
     const nav = page.locator(".docs-sidebar nav");
     await nav.hover();
     await page.mouse.wheel(400, 0);
     await expect
-      .poll(() => nav.evaluate((e) => e.scrollLeft))
+      .poll(async () => nav.evaluate((e) => e.scrollLeft))
       .toBeGreaterThan(0);
     // Textarea has a separate verified native scroller; avoid a second OS scrollbar.
     expect(
@@ -95,21 +100,27 @@ for (const scale of [2])
         .evaluate((e) => getComputedStyle(e, "::-webkit-scrollbar").display)
     ).toBe("none");
   });
+}
 
 test("Retired components are absent from supported catalog and served payloads", async ({
   page,
   request,
 }) => {
-  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf8")),
-    map = JSON.parse(
-      readFileSync(webFile("registry/minecraft-map.json"), "utf8")
-    );
+  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf-8"));
+
+  const map = JSON.parse(
+    readFileSync(webFile("registry/minecraft-map.json"), "utf-8")
+  );
+
   expect(registry.items.length).toBe(map.components.length);
+
   const served = await (
     await request.get("http://127.0.0.1:5173/r/registry.json")
   ).json();
+
   expect(served.items).toHaveLength(registry.items.length);
-  await page.goto(origin + "#all");
+  await page.goto(`${origin}#all`);
+
   for (const name of [
     "Direction",
     "Toast",
@@ -124,7 +135,7 @@ test("Retired components are absent from supported catalog and served payloads",
     await expect(
       page
         .getByRole("navigation", { name: "Components" })
-        .getByRole("link", { name, exact: true })
+        .getByRole("link", { exact: true, name })
     ).toHaveCount(0);
     expect(
       registry.items.some(

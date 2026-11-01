@@ -3,13 +3,13 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/tooltip/manifest.json"),
-    "utf8"
+    "utf-8"
   )
 ) as {
   cases: {
@@ -32,12 +32,14 @@ function compare(expected: PNG, actual: PNG) {
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -51,6 +53,7 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
 
@@ -62,16 +65,17 @@ test("Tooltip comparator detects one changed pixel", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const c of manifest.cases)
+for (const c of manifest.cases) {
   test(`Tooltip native pixels: ${c.name}`, async ({ page }, testInfo) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(
-      `/?${new URLSearchParams({ component: "tooltip", open: "1", text: c.text, wrapWidth: String(c.wrapWidth), scale: String(c.scale) })}`
+      `/?${new URLSearchParams({ component: "tooltip", open: "1", scale: String(c.scale), text: c.text, wrapWidth: String(c.wrapWidth) })}`
     );
     await page.addStyleTag({
       content: `html,body { background: ${c.background}; } #root { visibility: hidden; } [data-mc-positioner] { transform: translate(${c.x * c.scale}px, ${c.y * c.scale}px) !important; }`,
@@ -85,7 +89,9 @@ for (const c of manifest.cases)
     await expect(content.locator("canvas")).toHaveAttribute(
       "data-mc-backdrop",
       [1, 3, 5]
-        .map((start) => parseInt(c.background.slice(start, start + 2), 16))
+        .map((start) =>
+          Number.parseInt(c.background.slice(start, start + 2), 16)
+        )
         .join(",")
     );
     await expect(content.locator("canvas")).toHaveAttribute(
@@ -93,17 +99,21 @@ for (const c of manifest.cases)
       [c.x * c.scale, c.y * c.scale].join(",")
     );
     await page.mouse.move(0, 0);
+
     const expectedBytes = await readFile(
       pixelPerfectFile(`tests/reference/tooltip/captures/${c.name}`)
     );
+
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
     );
     const actualBytes = await content.screenshot({ animations: "disabled" });
+
     const { diff, mismatchedPixels } = compare(
       PNG.sync.read(expectedBytes),
       PNG.sync.read(actualBytes)
     );
+
     await writeFile(testInfo.outputPath("actual.png"), actualBytes);
     await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
     await writeFile(
@@ -112,8 +122,8 @@ for (const c of manifest.cases)
         {
           case: c.name,
           mismatchedPixels,
-          totalPixels: c.width * c.height * c.scale * c.scale,
           tolerance: 0,
+          totalPixels: c.width * c.height * c.scale * c.scale,
         },
         null,
         2
@@ -121,3 +131,4 @@ for (const c of manifest.cases)
     );
     expect(mismatchedPixels).toBe(0);
   });
+}

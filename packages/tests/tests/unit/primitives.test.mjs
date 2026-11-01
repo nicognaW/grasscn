@@ -1,45 +1,43 @@
 import { test } from "bun:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import {
-  copyFile,
-  mkdir,
-  mkdtemp,
-  readFile,
-  rm,
-  writeFile,
-} from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import { testRoot as root } from "@grasscn/tests/paths";
+
 const output = path.join(root, "test-results");
+
 async function fixture(run) {
   await mkdir(output, { recursive: true });
   const directory = await mkdtemp(path.join(output, "primitives-"));
-  const json = (name, value) =>
+
+  const json = async (name, value) =>
     writeFile(path.join(directory, name), JSON.stringify(value));
+
   try {
-    for (const folder of ["scripts", "registry/ui", "preview", "public/r"])
+    for (const folder of ["scripts", "registry/ui", "preview", "public/r"]) {
       await mkdir(path.join(directory, folder), { recursive: true });
+    }
 
     await json("package.json", {
-      type: "module",
       dependencies: { "@base-ui/react": "1.9.0" },
+      type: "module",
     });
     await json("bun.lock", {
       lockfileVersion: 2,
-      workspaces: { "": { dependencies: { "@base-ui/react": "1.9.0" } } },
       packages: { "@base-ui/react": ["@base-ui/react@1.9.0", "", {}] },
+      workspaces: { "": { dependencies: { "@base-ui/react": "1.9.0" } } },
     });
     await json("registry.json", {
-      items: [{ name: "button", dependencies: ["@base-ui/react"], files: [] }],
+      items: [{ dependencies: ["@base-ui/react"], files: [], name: "button" }],
     });
     await json("public/r/button.json", {
       dependencies: ["@base-ui/react"],
       files: [],
     });
     await json("public/r/registry.json", { items: [] });
+
     const check = (...args) =>
       spawnSync(
         process.execPath,
@@ -49,24 +47,26 @@ async function fixture(run) {
           directory,
           ...args,
         ],
-        { cwd: directory, encoding: "utf8" }
+        { cwd: directory, encoding: "utf-8" }
       );
-    await run({ directory, json, check });
+
+    await run({ check, directory, json });
   } finally {
     assert.equal(path.dirname(directory), output);
     assert.ok(path.basename(directory).startsWith("primitives-"));
-    await rm(directory, { recursive: true, force: true });
+    await rm(directory, { force: true, recursive: true });
   }
 }
 
-test("primitive policy rejects direct, transitive and optional Radix routes", async () =>
-  fixture(async ({ json, check }) => {
+test("primitive policy rejects direct, transitive and optional Radix routes", async () => {
+  await fixture(async ({ json, check }) => {
     assert.equal(check().status, 0);
     await json("package.json", { dependencies: { "radix-ui": "1.0.0" } });
     let result = check();
     assert.equal(result.status, 1);
     assert.match(result.stderr, /package\.json dependencies: radix-ui/);
     await json("package.json", { dependencies: { "@base-ui/react": "1.9.0" } });
+
     for (const field of [
       "dependencies",
       "optionalDependencies",
@@ -75,25 +75,26 @@ test("primitive policy rejects direct, transitive and optional Radix routes", as
       await json("bun.lock", {
         lockfileVersion: 2,
         packages: {
+          "@radix-ui/react-dialog": ["@radix-ui/react-dialog@1.0.0", "", {}],
           example: [
             "example@1.0.0",
             "",
             { [field]: { "@radix-ui/react-dialog": "1.0.0" } },
           ],
-          "@radix-ui/react-dialog": ["@radix-ui/react-dialog@1.0.0", "", {}],
         },
       });
       result = check();
       assert.equal(result.status, 1);
       assert.match(result.stderr, /example -> @radix-ui\/react-dialog/);
     }
-  }));
+  });
+});
 
-test("primitive policy checks built source and catches obsolete registry payloads", async () =>
-  fixture(async ({ directory, json, check }) => {
+test("primitive policy checks built source and catches obsolete registry payloads", async () => {
+  await fixture(async ({ directory, json, check }) => {
     assert.equal(check("--built").status, 0);
     await json("public/r/button.json", {
-      files: [{ path: "button.tsx", content: 'import {Command} from "cmdk"' }],
+      files: [{ content: 'import {Command} from "cmdk"', path: "button.tsx" }],
     });
     let result = check("--built");
     assert.equal(result.status, 1);
@@ -110,10 +111,11 @@ test("primitive policy checks built source and catches obsolete registry payload
       (await readFile(path.join(directory, "public/r/removed-component.json")))
         .length
     );
-  }));
+  });
+});
 
-test("primitive policy rejects version-pinned packages in registry payloads", async () =>
-  fixture(async ({ json, check }) => {
+test("primitive policy rejects version-pinned packages in registry payloads", async () => {
+  await fixture(async ({ json, check }) => {
     for (const dependency of [
       "vaul@1.1.2",
       "cmdk@1.1.1",
@@ -121,11 +123,11 @@ test("primitive policy rejects version-pinned packages in registry payloads", as
       "@radix-ui/react-dialog@1.0.0",
     ]) {
       await json("registry.json", {
-        items: [{ name: "button", dependencies: [dependency] }],
+        items: [{ dependencies: [dependency], name: "button" }],
       });
       assert.equal(check().status, 1, dependency);
       await json("registry.json", {
-        items: [{ name: "button", dependencies: ["@base-ui/react"] }],
+        items: [{ dependencies: ["@base-ui/react"], name: "button" }],
       });
       await json("public/r/button.json", {
         dependencies: [dependency],
@@ -133,22 +135,25 @@ test("primitive policy rejects version-pinned packages in registry payloads", as
       });
       assert.equal(check("--built").status, 1, dependency);
     }
-  }));
+  });
+});
 
-test("upstream cmdk may carry Radix, but a shared dependency must not create another route", async () =>
-  fixture(async ({ json, check }) => {
+test("upstream cmdk may carry Radix, but a shared dependency must not create another route", async () => {
+  await fixture(async ({ json, check }) => {
     await json("package.json", {
       dependencies: { "@base-ui/react": "1.9.0", cmdk: "1.1.1" },
     });
+
     const packages = {
+      "@radix-ui/react-dialog": ["@radix-ui/react-dialog@1.1.6", "", {}],
       cmdk: ["cmdk@1.1.1", "", { dependencies: { shared: "1.0.0" } }],
       shared: [
         "shared@1.0.0",
         "",
         { dependencies: { "@radix-ui/react-dialog": "1.1.6" } },
       ],
-      "@radix-ui/react-dialog": ["@radix-ui/react-dialog@1.1.6", "", {}],
     };
+
     await json("bun.lock", { lockfileVersion: 2, packages });
     assert.equal(check().status, 0);
     await json("package.json", {
@@ -157,32 +162,35 @@ test("upstream cmdk may carry Radix, but a shared dependency must not create ano
     const result = check();
     assert.equal(result.status, 1);
     assert.match(result.stderr, /lockfile: @radix-ui\/react-dialog/);
-  }));
+  });
+});
 
-test("cmdk is restricted to Command source and registry closures containing Command", async () =>
-  fixture(async ({ directory, json, check }) => {
+test("cmdk is restricted to Command source and registry closures containing Command", async () => {
+  await fixture(async ({ directory, json, check }) => {
     await writeFile(
       path.join(directory, "registry/ui/command.tsx"),
       'import {Command} from "cmdk"'
     );
+
     const item = {
-      name: "command",
       dependencies: ["cmdk@1.1.1"],
       files: [{ path: "registry/ui/command.tsx" }],
+      name: "command",
     };
+
     await json("registry.json", { items: [item] });
     await json("public/r/command.json", {
       dependencies: item.dependencies,
       files: [
         {
-          path: "registry/ui/command.tsx",
           content: 'import {Command} from "cmdk"',
+          path: "registry/ui/command.tsx",
         },
       ],
     });
     await json("registry.json", {
       items: [
-        { name: "button", dependencies: ["@base-ui/react"], files: [] },
+        { dependencies: ["@base-ui/react"], files: [], name: "button" },
         item,
       ],
     });
@@ -194,4 +202,5 @@ test("cmdk is restricted to Command source and registry closures containing Comm
     const result = check();
     assert.equal(result.status, 1);
     assert.match(result.stderr, /preview\/bad\.tsx: cmdk/);
-  }));
+  });
+});

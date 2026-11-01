@@ -2,45 +2,59 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile, webFile } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const hash = (bytes: Buffer) =>
-    createHash("sha256").update(bytes).digest("hex"),
-  directory = "tests/reference/resizable";
+  createHash("sha256").update(bytes).digest("hex");
+
+const directory = "tests/reference/resizable";
+
 test("Historical scrollbar grip pixels remain exact crops from both original native launches and retained fullframes", () => {
   const manifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
-    ),
-    proofBytes = readFileSync(
-      pixelPerfectFile(`${directory}/crop-derivation.json`)
-    ),
-    proof = JSON.parse(proofBytes.toString()),
-    repeat = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/repeatability.json`), "utf8")
-    );
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+  );
+
+  const proofBytes = readFileSync(
+    pixelPerfectFile(`${directory}/crop-derivation.json`)
+  );
+
+  const proof = JSON.parse(proofBytes.toString());
+
+  const repeat = JSON.parse(
+    readFileSync(pixelPerfectFile(`${directory}/repeatability.json`), "utf-8")
+  );
+
   expect(hash(proofBytes)).toBe(manifest.derivation.cropProvenanceSha256);
   expect(
     hash(readFileSync(pixelPerfectFile(manifest.derivation.sourceManifest)))
   ).toBe(manifest.derivation.sourceManifestSha256);
+
   for (const c of proof.cases) {
     const expected = PNG.sync.read(
-        readFileSync(pixelPerfectFile(`${directory}/captures/${c.name}`))
-      ),
-      againBytes = readFileSync(
-        pixelPerfectFile(`${directory}/repeat-crops/${c.name}`)
-      ),
-      again = PNG.sync.read(againBytes),
-      parentBytes = readFileSync(
-        pixelPerfectFile(`tests/reference/scroll-area/captures/${c.parentCase}`)
-      ),
-      frameBytes = readFileSync(
-        pixelPerfectFile(
-          `tests/reference/scroll-area/frames/${c.parentFullFrame}`
-        )
-      ),
-      repeatFrameBytes = readFileSync(
-        pixelPerfectFile(`${directory}/repeat-frames/${c.parentFullFrame}`)
-      );
+      readFileSync(pixelPerfectFile(`${directory}/captures/${c.name}`))
+    );
+
+    const againBytes = readFileSync(
+      pixelPerfectFile(`${directory}/repeat-crops/${c.name}`)
+    );
+
+    const again = PNG.sync.read(againBytes);
+
+    const parentBytes = readFileSync(
+      pixelPerfectFile(`tests/reference/scroll-area/captures/${c.parentCase}`)
+    );
+
+    const frameBytes = readFileSync(
+      pixelPerfectFile(
+        `tests/reference/scroll-area/frames/${c.parentFullFrame}`
+      )
+    );
+
+    const repeatFrameBytes = readFileSync(
+      pixelPerfectFile(`${directory}/repeat-frames/${c.parentFullFrame}`)
+    );
+
     expect(hash(parentBytes)).toBe(c.parentPngSha256);
     expect(hash(frameBytes)).toBe(c.parentFullFrameSha256);
     expect(hash(repeatFrameBytes)).toBe(c.parentRepeatFullFrameSha256);
@@ -49,14 +63,16 @@ test("Historical scrollbar grip pixels remain exact crops from both original nat
         .runTwoPngSha256
     );
     expect(again.data.equals(expected.data)).toBe(true);
+
     for (const [bytes, rect] of [
       [parentBytes, c.cropWithinParent],
       [frameBytes, c.cropWithinFullFrame],
       [repeatFrameBytes, c.cropWithinFullFrame],
     ] as const) {
-      const source = PNG.sync.read(bytes),
-        data = Buffer.alloc(rect.width * rect.height * 4);
-      for (let y = 0; y < rect.height; y++) {
+      const source = PNG.sync.read(bytes);
+      const data = Buffer.alloc(rect.width * rect.height * 4);
+
+      for (let y = 0; y < rect.height; y += 1) {
         const start = ((rect.y + y) * source.width + rect.x) * 4;
         source.data.copy(
           data,
@@ -65,6 +81,7 @@ test("Historical scrollbar grip pixels remain exact crops from both original nat
           start + rect.width * 4
         );
       }
+
       expect([rect.width, rect.height]).toEqual([
         expected.width,
         expected.height,
@@ -73,35 +90,41 @@ test("Historical scrollbar grip pixels remain exact crops from both original nat
     }
   }
 });
+
 test("Resizable ships unchanged original recipe-book arrow PNG artwork", () => {
   const provenance = JSON.parse(
-      readFileSync(
-        pixelPerfectFile(
-          "tests/reference/pagination-arrow/asset-provenance.json"
-        ),
-        "utf8"
-      )
-    ),
-    css = readFileSync(
-      webFile("registry/ui/minecraft-resizable-assets.css"),
-      "utf8"
-    );
+    readFileSync(
+      pixelPerfectFile(
+        "tests/reference/pagination-arrow/asset-provenance.json"
+      ),
+      "utf-8"
+    )
+  );
+
+  const css = readFileSync(
+    webFile("registry/ui/minecraft-resizable-assets.css"),
+    "utf-8"
+  );
+
   let count = 0;
+
   for (const match of css.matchAll(
     /\.mc-resizable-arrow\[data-direction="(backward|forward)"\]\s*\{([\s\S]*?)\}/g
   )) {
-    const images = [...match[2].matchAll(/data:image\/png;base64,([^"\)]+)/g)];
+    const images = [...match[2].matchAll(/data:image\/png;base64,([^")]+)/g)];
     expect(images).toHaveLength(2);
+
     for (const [index, image] of images.entries()) {
       const member = `assets/minecraft/textures/gui/sprites/recipe_book/page_${match[1]}${index ? "_highlighted" : ""}.png`;
       expect(hash(Buffer.from(image[1], "base64"))).toBe(
         provenance.sources[member].sha256
       );
-      count++;
+      count += 1;
     }
   }
+
   expect(count).toBe(4);
-  expect(readFileSync(webFile("registry/ui/resizable.tsx"), "utf8")).toContain(
+  expect(readFileSync(webFile("registry/ui/resizable.tsx"), "utf-8")).toContain(
     'import "../minecraft-resizable-assets.css"'
   );
 });

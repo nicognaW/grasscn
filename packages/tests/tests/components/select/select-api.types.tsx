@@ -11,15 +11,19 @@ import {
   SelectScrollDownButton,
 } from "@grasscn/web/ui/select";
 import * as React from "react";
-const trigger = React.createRef<HTMLButtonElement>(),
-  content = React.createRef<HTMLDivElement>(),
-  item = React.createRef<HTMLDivElement>();
+
+const trigger = React.createRef<HTMLButtonElement>();
+const content = React.createRef<HTMLDivElement>();
+const item = React.createRef<HTMLDivElement>();
+
 const valid = (
   <Select
     name="mode"
     required
     value="survival"
-    onValueChange={() => {}}
+    onValueChange={() => {
+      /* empty */
+    }}
     scale={3}
   >
     <SelectTrigger ref={trigger} size="default" aria-label="Mode">
@@ -41,8 +45,11 @@ const valid = (
     </SelectContent>
   </Select>
 );
+
 // @ts-expect-error Minecraft has no small cycle-button visual variant.
 const small = <SelectTrigger size="sm" />;
+
 // @ts-expect-error Native pixels require supported integer GUI scales.
 const fractional = <Select scale={1.5} />;
+
 void [valid, small, fractional];

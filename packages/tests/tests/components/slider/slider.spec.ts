@@ -34,9 +34,11 @@ test("Slider pointer drag changes value and commits on release", async ({
     { steps: 4 }
   );
   await page.mouse.up();
+
   const actual = Number(
     await page.getByRole("slider").getAttribute("aria-valuenow")
   );
+
   expect(actual).toBeGreaterThan(750);
   expect(actual).toBeLessThan(850);
   await expect(page.getByLabel("Commits", { exact: true })).toHaveText("1");
@@ -73,11 +75,13 @@ test("Range slider keeps separate thumbs and named form values", async ({
   await page.keyboard.press("Tab");
   await page.keyboard.press("ArrowLeft");
   await expect(thumbs.nth(1)).toHaveAttribute("aria-valuenow", "799");
+
   const form = await page
     .locator("form")
-    .evaluate((element) =>
-      Array.from(new FormData(element as HTMLFormElement).entries())
-    );
+    .evaluate((element) => [
+      ...new FormData(element as HTMLFormElement).entries(),
+    ]);
+
   expect(form).toEqual([
     ["volume", "201"],
     ["volume", "799"],
@@ -116,8 +120,10 @@ test("RTL slider changes with RTL arrows and places minimum at the right", async
 }) => {
   await page.goto("/?component=slider&dir=rtl&value=0");
   const thumb = page.getByRole("slider");
-  const root = (await page.locator("[data-subject]").boundingBox())!,
-    handle = (await thumb.boundingBox())!;
+
+  const root = (await page.locator("[data-subject]").boundingBox())!;
+  const handle = (await thumb.boundingBox())!;
+
   expect(handle.x + handle.width).toBe(root.x + root.width);
   await page.keyboard.press("Tab");
   await page.keyboard.press("ArrowLeft");
@@ -130,8 +136,10 @@ test("Vertical sliders retain native Base UI value behavior", async ({
   await page.goto("/?component=slider&orientation=vertical&value=0");
   const thumb = page.getByRole("slider");
   await expect(thumb).toHaveAttribute("aria-orientation", "vertical");
-  const root = (await page.locator("[data-subject]").boundingBox())!,
-    handle = (await thumb.boundingBox())!;
+
+  const root = (await page.locator("[data-subject]").boundingBox())!;
+  const handle = (await thumb.boundingBox())!;
+
   expect(handle.y + handle.height).toBe(root.y + root.height);
   await page.keyboard.press("Tab");
   await page.keyboard.press("ArrowUp");

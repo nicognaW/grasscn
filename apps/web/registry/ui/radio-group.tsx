@@ -1,17 +1,24 @@
 "use client";
+
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-radio-group.css";
+
 const RadioContext = React.createContext<{
   scale: 1 | 2 | 3;
   disabled: boolean;
-}>({ scale: 2, disabled: false });
+}>({ disabled: false, scale: 2 });
+
 function RadioGroup<Value = string>({
   className,
   scale = 2,
@@ -25,8 +32,9 @@ function RadioGroup<Value = string>({
   scale?: 1 | 2 | 3;
 }) {
   const keyboardSelection = React.useRef(false);
+
   return (
-    <RadioContext.Provider value={{ scale, disabled }}>
+    <RadioContext.Provider value={{ disabled, scale }}>
       <RadioGroupPrimitive<Value>
         disabled={disabled}
         onPointerDownCapture={(event) => {
@@ -43,12 +51,15 @@ function RadioGroup<Value = string>({
         }}
         onValueChange={(next, details) => {
           onValueChange?.(next, details);
-          if (!disabled && !details.isCanceled && keyboardSelection.current)
+
+          if (!disabled && !details.isCanceled && keyboardSelection.current) {
             playMinecraftClick();
+          }
+
           keyboardSelection.current = false;
         }}
         data-slot="radio-group"
-        className={cn(`mc-radio-group ${""}`, className)}
+        className={cn(`mc-radio-group`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -59,7 +70,8 @@ function RadioGroup<Value = string>({
     </RadioContext.Provider>
   );
 }
-function RadioGroupItem({
+
+const RadioGroupItem = ({
   className,
   scale: explicitScale,
   style,
@@ -71,11 +83,13 @@ function RadioGroupItem({
   ...props
 }: MinecraftProps<typeof RadioPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) {
-  const context = React.useContext(RadioContext),
-    scale = explicitScale ?? context.scale,
-    disabled = itemDisabled || context.disabled;
+}) => {
+  const context = React.useContext(RadioContext);
+  const scale = explicitScale ?? context.scale;
+  const disabled = itemDisabled || context.disabled;
+
   const child = null;
+
   const indicator = (
     <RadioPrimitive.Indicator
       data-slot="radio-group-indicator"
@@ -83,20 +97,21 @@ function RadioGroupItem({
       aria-hidden="true"
     />
   );
+
   return (
     <RadioPrimitive.Root
       render={render}
       data-slot="radio-group-item"
-      className={cn(`mc-checkbox mc-radio-item ${""}`, className)}
+      className={cn(`mc-checkbox mc-radio-item`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
           ({
-            "--mc-scale": scale,
-            "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
             "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-            "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
             "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+            "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+            "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+            "--mc-scale": scale,
             ...__style,
           }) as React.CSSProperties
       )}
@@ -106,32 +121,37 @@ function RadioGroupItem({
       onPointerDown={(event) => {
         if (disabled) {
           event.preventDefault();
+
           return;
         }
+
         onPointerDown?.(event);
       }}
       onClick={(event) => {
         if (
           disabled ||
-          event.currentTarget.hasAttribute("data-disabled") ||
+          Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true" ||
           (event.currentTarget as HTMLButtonElement).disabled
         ) {
           event.preventDefault();
+
           return;
         }
+
         onClick?.(event);
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented)
+
+        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
           playMinecraftClick();
+        }
       }}
     >
-      {
-        <>
-          {children}
-          {indicator}
-        </>
-      }
+      <>
+        {children}
+        {indicator}
+      </>
     </RadioPrimitive.Root>
   );
-}
+};
+
 export { RadioGroup, RadioGroupItem };
