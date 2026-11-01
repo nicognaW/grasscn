@@ -911,6 +911,21 @@
         "route": "/docs/components/button",
         "reason": "Scale2 default primary Preview tab, keyboard-selected Code tab, normal Copy button, actual highlighted directive, and default implementation Expand/Collapse buttons. Only these6 declared cases are selected; extra captured scales/states remain outside this case."
       }
+    },
+    {
+      "file": "docs-installation.spec.ts",
+      "title": "Button installation copies and remembers the visitor package manager",
+      "titlePath": [
+        "Button installation copies and remembers the visitor package manager"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Default CLI installation offers all four package managers, copies their actual registry command and restores the visitor selection."
+      }
     }
   ]
 }
