@@ -38,7 +38,7 @@ const same = (
   b: string[] | CheckpointSource[] | undefined
 ) => JSON.stringify(a) === JSON.stringify(b);
 
-async function sourceMatches(
+const sourceMatches = async function sourceMatches(
   expected: CheckpointCatalogue,
   declaration: CheckpointDeclaration,
   record: CheckpointResult & { file: string; title: string[] },
@@ -137,10 +137,10 @@ async function sourceMatches(
   } catch {
     return false;
   }
-}
+};
 
 /** The caller must already match the entire source tree and runtime environment. */
-export async function reusableBrowserTests(
+export const reusableBrowserTests = async function reusableBrowserTests(
   candidates: CheckpointCandidate[],
   file: string,
   root: string,
@@ -293,4 +293,4 @@ export async function reusableBrowserTests(
   }
 
   return [...tests.values()];
-}
+};

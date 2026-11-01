@@ -22,7 +22,9 @@ const isRelativeCasePathCandidate = (
   !path.win32.isAbsolute(value) &&
   !/^[A-Za-z]:/u.test(value);
 
-export function normalizeCasePath(value: string | undefined) {
+export const normalizeCasePath = function normalizeCasePath(
+  value: string | undefined
+) {
   if (!isRelativeCasePathCandidate(value)) {
     throw new Error("Expected a safe relative case path");
   }
@@ -36,18 +38,21 @@ export function normalizeCasePath(value: string | undefined) {
   }
 
   return normalized;
-}
+};
 
-export function relativeCaseFile(root: string, file: string) {
+export const relativeCaseFile = function relativeCaseFile(
+  root: string,
+  file: string
+) {
   return normalizeCasePath(path.relative(root, file).replaceAll(path.sep, "/"));
-}
+};
 
 const escape = (value: string) =>
   value.replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&");
 
-export function browserFilePattern(file: string) {
+export const browserFilePattern = function browserFilePattern(file: string) {
   return String.raw`(?:^|[\\/])${normalizeCasePath(file)
     .split("/")
     .map(escape)
     .join(String.raw`[\\/]`)}$`;
-}
+};
