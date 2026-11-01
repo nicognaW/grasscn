@@ -1,4 +1,5 @@
-import { test, expect, type Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
 async function openMenu(page: Page, query = "") {
@@ -15,13 +16,16 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   const menu = page.getByRole("menu");
   await expect(menu).toBeVisible();
   const trigger = (await page.locator("#context-hit").boundingBox())!;
+
   const border = await page.locator("#context-hit").evaluate((node) => {
     const style = getComputedStyle(node);
+
     return [
-      parseFloat(style.borderLeftWidth),
-      parseFloat(style.borderTopWidth),
+      Number.parseFloat(style.borderLeftWidth),
+      Number.parseFloat(style.borderTopWidth),
     ];
   });
+
   const bounds = (await menu.boundingBox())!;
   expect([bounds.x, bounds.y]).toEqual([
     trigger.x + border[0] + 24 + 4,
@@ -33,23 +37,23 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: "Unavailable", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Unavailable" })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: "你好，世界", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "你好，世界" })
   ).toBeFocused();
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
   await page.keyboard.press("ArrowRight");
   await expect(
-    page.getByRole("menuitem", { name: "Video settings", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Video settings" })
   ).toBeFocused();
   await page.keyboard.press("ArrowLeft");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(menu).toHaveCount(0);
@@ -68,14 +72,16 @@ test("Context Menu preserves checkbox, radio and prevented-close behavior", asyn
   page,
 }) => {
   await openMenu(page, "keepOpen");
+
   const checkbox = page.getByRole("menuitemcheckbox", {
-    name: "Show coordinates",
     exact: true,
+    name: "Show coordinates",
   });
+
   await checkbox.click();
   await expect(checkbox).toBeChecked();
   await expect(page.getByRole("menu")).toBeVisible();
-  await page.getByRole("menuitemradio", { name: "Game", exact: true }).click();
+  await page.getByRole("menuitemradio", { exact: true, name: "Game" }).click();
   await expect(page.getByLabel("Menu radio", { exact: true })).toHaveText(
     "game"
   );
@@ -112,21 +118,21 @@ test("Context Menu preserves composed element refs and actions", async ({
     "BUTTON"
   );
   await expect(page.getByRole("menu")).toHaveJSProperty("tagName", "SECTION");
-  await page
-    .locator("#context-outside")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await page.locator("#context-outside").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.getByLabel("Menu refs", { exact: true })).toHaveText(
     "BUTTON,SECTION"
   );
   await page
-    .getByRole("menuitem", { name: "Composed action", exact: true })
+    .getByRole("menuitem", { exact: true, name: "Composed action" })
     .click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
-  await page
-    .locator("#context-outside")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await page.locator("#context-outside").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.getByLabel("Menu refs", { exact: true })).toHaveText(
     "BUTTON,"
   );
@@ -138,7 +144,7 @@ test("Context Menu renders CJK actions without browser errors", async ({
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await openMenu(page);
-  const item = page.getByRole("menuitem", { name: "你好，世界", exact: true });
+  const item = page.getByRole("menuitem", { exact: true, name: "你好，世界" });
   await expect(item.locator("[data-mc-menu-unicode-ready]")).toHaveAttribute(
     "data-mc-menu-unicode-ready",
     "true"
@@ -154,15 +160,15 @@ test("Context Menu follows RTL submenu navigation", async ({ page }) => {
   await openMenu(page, "rtl");
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
   await page.keyboard.press("ArrowLeft");
   await expect(
-    page.getByRole("menuitem", { name: "Video settings", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Video settings" })
   ).toBeFocused();
   await page.keyboard.press("ArrowRight");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
 });
 
@@ -171,12 +177,13 @@ test("Context Menu opening and hovering stay silent; checkbox activation plays t
 }) => {
   await page.addInitScript(() => {
     (window as any).__contextVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__contextVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -186,10 +193,10 @@ test("Context Menu opening and hovering stay silent; checkbox activation plays t
     []
   );
   await page
-    .getByRole("menuitemcheckbox", { name: "Show coordinates", exact: true })
+    .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
     .click();
   expect(await page.evaluate(() => (window as any).__contextVoices)).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
 });
 
@@ -197,31 +204,33 @@ test("Context Menu opens on touch long-press and cancels a cancelled touch", asy
   browser,
 }) => {
   const context = await browser.newContext({ hasTouch: true });
+
   try {
-    const page = await context.newPage(),
-      cdp = await context.newCDPSession(page);
+    const page = await context.newPage();
+    const cdp = await context.newCDPSession(page);
+
     await page.goto("/?component=context-menu");
     await expect(page.locator("#context-hit")).toBeVisible();
     await cdp.send("Input.dispatchTouchEvent", {
-      type: "touchStart",
       touchPoints: [{ x: 100, y: 100 }],
+      type: "touchStart",
     });
     await expect(page.getByRole("menu")).toBeVisible({ timeout: 2000 });
     await cdp.send("Input.dispatchTouchEvent", {
-      type: "touchEnd",
       touchPoints: [],
+      type: "touchEnd",
     });
     await page.keyboard.press("Escape");
     await expect(page.getByRole("menu")).toHaveCount(0);
     await page.goto("/?component=context-menu");
     await expect(page.locator("#context-hit")).toBeVisible();
     await cdp.send("Input.dispatchTouchEvent", {
-      type: "touchStart",
       touchPoints: [{ x: 100, y: 100 }],
+      type: "touchStart",
     });
     await cdp.send("Input.dispatchTouchEvent", {
-      type: "touchCancel",
       touchPoints: [],
+      type: "touchCancel",
     });
     await page.waitForTimeout(850);
     await expect(page.getByRole("menu")).toHaveCount(0);

@@ -1,4 +1,5 @@
 "use client";
+
 import {
   DirectionProvider as BaseDirectionProvider,
   useDirection as baseDirection,
@@ -6,15 +7,20 @@ import {
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSliderSprites as sprites } from "./minecraft-slider-sprites";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-slider.css";
 import { MinecraftText } from "./minecraft-text";
-function Slider({
+
+const Slider = ({
   className,
   defaultValue,
   value,
@@ -40,37 +46,56 @@ function Slider({
 }: MinecraftProps<typeof SliderPrimitive.Root> & {
   scale?: 1 | 2 | 3;
   label?: string;
-}) {
+}) => {
   const initialValue = React.useRef(defaultValue ?? [min, max]);
   const [uncontrolled, setUncontrolled] = React.useState(initialValue.current);
   const root = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => root.current!);
   React.useEffect(() => {
-    if (value !== undefined) return;
+    if (value !== undefined) {
+      return;
+    }
+
     const input = root.current?.querySelector("input");
     const form = input?.form ?? root.current?.closest("form");
-    if (!form) return;
+
+    if (!form) {
+      return;
+    }
+
     // The bitmap value and the primitive must reset together in ordinary HTML forms.
-    const reset = (event: Event) =>
+    const reset = (event: Event) => {
       queueMicrotask(() => {
-        if (!event.defaultPrevented) setUncontrolled(initialValue.current);
+        if (!event.defaultPrevented) {
+          setUncontrolled(initialValue.current);
+        }
       });
+    };
+
     form.addEventListener("reset", reset);
-    return () => form.removeEventListener("reset", reset);
+
+    return () => {
+      form.removeEventListener("reset", reset);
+    };
   }, [value, props.form]);
   const inheritedDirection = baseDirection();
+
   const dir =
     direction === "rtl" || direction === "ltr" ? direction : inheritedDirection;
+
   const currentValue = value ?? uncontrolled;
+
   const values = Array.isArray(currentValue)
     ? currentValue
     : [currentValue as number];
+
   const [editing, setEditing] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
   const highlightTrack = !disabled && focused && !editing;
   const highlightHandle = !disabled && (hovered || (focused && editing));
+
   return (
     <BaseDirectionProvider direction={dir}>
       <SliderPrimitive.Root
@@ -91,10 +116,14 @@ function Slider({
         )}
         onValueChange={(next, details) => {
           onValueChange?.(next, details);
-          if (!details.isCanceled) setUncontrolled(next);
+
+          if (!details.isCanceled) {
+            setUncontrolled(next);
+          }
         }}
         onFocusCapture={(event) => {
           onFocusCapture?.(event);
+
           if (!event.defaultPrevented) {
             setFocused(true);
             setEditing(true);
@@ -102,6 +131,7 @@ function Slider({
         }}
         onBlurCapture={(event) => {
           onBlurCapture?.(event);
+
           if (!event.currentTarget.contains(event.relatedTarget)) {
             setFocused(false);
             setEditing(false);
@@ -109,6 +139,7 @@ function Slider({
         }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
+
           if (
             !event.defaultPrevented &&
             (event.key === "Enter" || event.key === " ")
@@ -119,11 +150,17 @@ function Slider({
         }}
         onMouseEnter={(event) => {
           onMouseEnter?.(event);
-          if (!event.defaultPrevented) setHovered(true);
+
+          if (!event.defaultPrevented) {
+            setHovered(true);
+          }
         }}
         onMouseLeave={(event) => {
           onMouseLeave?.(event);
-          if (!event.defaultPrevented) setHovered(false);
+
+          if (!event.defaultPrevented) {
+            setHovered(false);
+          }
         }}
         {...props}
         onPointerDownCapture={(event) => {
@@ -133,8 +170,11 @@ function Slider({
         }}
         onPointerUpCapture={(event) => {
           onPointerUpCapture?.(event);
-          if (pressed.current && !disabled && !event.defaultPrevented)
+
+          if (pressed.current && !disabled && !event.defaultPrevented) {
             playMinecraftClick();
+          }
+
           pressed.current = false;
         }}
         onPointerCancelCapture={(event) => {
@@ -142,9 +182,9 @@ function Slider({
           onPointerCancelCapture?.(event);
         }}
       >
-        <SliderPrimitive.Control style={{ position: "absolute", inset: 0 }}>
+        <SliderPrimitive.Control style={{ inset: 0, position: "absolute" }}>
           <SliderPrimitive.Track
-            style={{ position: "absolute", inset: 0 }}
+            style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"
             className="mc-slider-track"
           >
@@ -163,7 +203,9 @@ function Slider({
               max === min
                 ? 0
                 : Math.min(1, Math.max(0, (current - min) / (max - min)));
+
             const reverse = orientation === "horizontal" ? dir === "rtl" : true;
+
             return (
               <span
                 key={index}
@@ -205,5 +247,6 @@ function Slider({
       </SliderPrimitive.Root>
     </BaseDirectionProvider>
   );
-}
+};
+
 export { Slider };

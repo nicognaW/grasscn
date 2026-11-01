@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
@@ -7,26 +8,32 @@ import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
 import "./minecraft-chart.css";
+
 export {
   ChartFpsFrame,
   ChartProfilerFrame,
   chartFpsColor,
   chartProfilerColor,
 } from "./minecraft-chart-native";
+
 export {
   ChartPixelBar,
   ChartProfilerSector,
   ChartPixelSurface,
   ChartAxisTick,
 } from "./minecraft-chart-context";
+
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";
 
 import { ChartGeometryProvider } from "./minecraft-chart-context";
+
 // Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: "", dark: ".dark" } as const;
-const INITIAL_DIMENSION = { width: 320, height: 200 } as const;
+const THEMES = { dark: ".dark", light: "" } as const;
+const INITIAL_DIMENSION = { height: 200, width: 320 } as const;
+
 type TooltipNameType = number | string;
+
 export type ChartConfig = Record<
   string,
   {
@@ -43,19 +50,25 @@ export type ChartConfig = Record<
       }
   )
 >;
-type ChartContextProps = {
+
+interface ChartContextProps {
   config: ChartConfig;
   scale: 1 | 2 | 3;
-};
+}
+
 const ChartContext = React.createContext<ChartContextProps | null>(null);
+
 function useChart() {
   const context = React.useContext(ChartContext);
+
   if (!context) {
     throw new Error("useChart must be used within a <ChartContainer />");
   }
+
   return context;
 }
-function ChartContainer({
+
+const ChartContainer = ({
   id,
   className,
   children,
@@ -75,11 +88,12 @@ function ChartContainer({
     width: number;
     height: number;
   };
-}) {
+}) => {
   const host = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => host.current!, []);
   const uniqueId = React.useId();
-  const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`;
+  const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
+
   return (
     <ChartContext.Provider value={{ config, scale }}>
       <ChartGeometryProvider scale={scale} host={host} colors={config}>
@@ -109,14 +123,17 @@ function ChartContainer({
       </ChartGeometryProvider>
     </ChartContext.Provider>
   );
-}
+};
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme ?? config.color
   );
+
   if (!colorConfig.length) {
     return null;
   }
+
   return (
     <style
       dangerouslySetInnerHTML={{
@@ -129,6 +146,7 @@ ${colorConfig
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ??
       itemConfig.color;
+
     return color ? `  --color-${key}: ${color};` : null;
   })
   .join("\n")}
@@ -140,16 +158,20 @@ ${colorConfig
     />
   );
 };
-function ChartText({ children }: { children: React.ReactNode }) {
+
+const ChartText = ({ children }: { children: React.ReactNode }) => {
   const { scale } = useChart();
+
   return typeof children === "string" || typeof children === "number" ? (
     <MinecraftDisclosureText scale={scale}>{children}</MinecraftDisclosureText>
   ) : (
     children
   );
-}
+};
+
 const ChartTooltip = RechartsPrimitive.Tooltip;
-function ChartTooltipContent({
+
+const ChartTooltipContent = ({
   active,
   payload,
   className,
@@ -176,19 +198,23 @@ function ChartTooltipContent({
       TooltipNameType
     >,
     "accessibilityLayer"
-  >) {
+  >) => {
   const { config } = useChart();
+
   const tooltipLabel = React.useMemo(() => {
     if (hideLabel || !payload?.length) {
       return null;
     }
+
     const [item] = payload;
     const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
     const itemConfig = getPayloadConfigFromPayload(config, item, key);
+
     const value =
       !labelKey && typeof label === "string"
         ? (config[label]?.label ?? label)
         : itemConfig?.label;
+
     if (labelFormatter) {
       return (
         <div className={cn("font-medium", labelClassName)}>
@@ -196,9 +222,11 @@ function ChartTooltipContent({
         </div>
       );
     }
+
     if (!value) {
       return null;
     }
+
     return (
       <div className={cn("font-medium", labelClassName)}>
         <ChartText>{value}</ChartText>
@@ -213,10 +241,13 @@ function ChartTooltipContent({
     config,
     labelKey,
   ]);
+
   if (!active || !payload?.length) {
     return null;
   }
+
   const nestLabel = payload.length === 1 && indicator !== "dot";
+
   return (
     <div
       className={cn(
@@ -226,7 +257,7 @@ function ChartTooltipContent({
     >
       <MinecraftSurface sprite={sprites.background} />
       <MinecraftSurface sprite={sprites.frame} />
-      {!nestLabel ? tooltipLabel : null}
+      {nestLabel ? null : tooltipLabel}
       <div className="grid gap-1.5">
         {payload
           .filter((item) => item.type !== "none")
@@ -234,6 +265,7 @@ function ChartTooltipContent({
             const key = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
             const indicatorColor = color ?? item.payload?.fill ?? item.color;
+
             return (
               <div
                 key={index}
@@ -255,10 +287,10 @@ function ChartTooltipContent({
                             "shrink-0 border-(--color-border) bg-(--color-bg)",
                             {
                               "h-2.5 w-2.5": indicator === "dot",
-                              "w-1": indicator === "line",
+                              "my-0.5": nestLabel && indicator === "dashed",
                               "w-0 border-[1.5px] border-dashed bg-transparent":
                                 indicator === "dashed",
-                              "my-0.5": nestLabel && indicator === "dashed",
+                              "w-1": indicator === "line",
                             }
                           )}
                           style={
@@ -300,9 +332,11 @@ function ChartTooltipContent({
       </div>
     </div>
   );
-}
+};
+
 const ChartLegend = RechartsPrimitive.Legend;
-function ChartLegendContent({
+
+const ChartLegendContent = ({
   className,
   hideIcon = false,
   payload,
@@ -311,11 +345,13 @@ function ChartLegendContent({
 }: React.ComponentProps<"div"> & {
   hideIcon?: boolean;
   nameKey?: string;
-} & RechartsPrimitive.DefaultLegendContentProps) {
+} & RechartsPrimitive.DefaultLegendContentProps) => {
   const { config } = useChart();
+
   if (!payload?.length) {
     return null;
   }
+
   return (
     <div
       className={cn(
@@ -329,6 +365,7 @@ function ChartLegendContent({
         .map((item, index) => {
           const key = `${nameKey ?? item.dataKey ?? "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
+
           return (
             <div
               key={index}
@@ -352,7 +389,8 @@ function ChartLegendContent({
         })}
     </div>
   );
-}
+};
+
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
   config: ChartConfig,
@@ -360,31 +398,34 @@ function getPayloadConfigFromPayload(
   key: string
 ) {
   if (typeof payload !== "object" || payload === null) {
-    return undefined;
+    return;
   }
+
   const payloadPayload =
     "payload" in payload &&
     typeof payload.payload === "object" &&
     payload.payload !== null
       ? payload.payload
       : undefined;
+
   let configLabelKey: string = key;
+
   if (
     key in payload &&
     typeof payload[key as keyof typeof payload] === "string"
   ) {
-    configLabelKey = payload[key as keyof typeof payload] as string;
+    configLabelKey = payload[key as keyof typeof payload];
   } else if (
     payloadPayload &&
     key in payloadPayload &&
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string;
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
   }
+
   return configLabelKey in config ? config[configLabelKey] : config[key];
 }
+
 export {
   ChartContainer,
   ChartTooltip,

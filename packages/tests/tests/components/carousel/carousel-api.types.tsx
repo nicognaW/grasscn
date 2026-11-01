@@ -4,14 +4,18 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  type CarouselApi,
-  type CarouselOptions,
-  type CarouselPlugin,
+} from "@grasscn/web/ui/carousel";
+import type {
+  CarouselApi,
+  CarouselOptions,
+  CarouselPlugin,
 } from "@grasscn/web/ui/carousel";
 import * as React from "react";
+
 const ref = React.createRef<HTMLDivElement>();
-const opts: CarouselOptions = { loop: true, align: "start", direction: "rtl" };
+const opts: CarouselOptions = { align: "start", direction: "rtl", loop: true };
 const plugins: CarouselPlugin = [];
+
 export const api = (
   <Carousel
     ref={ref}
@@ -20,7 +24,9 @@ export const api = (
     opts={opts}
     plugins={plugins}
     setApi={(api: CarouselApi) => api?.scrollTo(1, true)}
-    onKeyDownCapture={(e) => e.currentTarget.focus()}
+    onKeyDownCapture={(e) => {
+      e.currentTarget.focus();
+    }}
   >
     <CarouselContent ref={React.createRef<HTMLDivElement>()}>
       <CarouselItem ref={React.createRef<HTMLDivElement>()}>World</CarouselItem>
@@ -31,6 +37,10 @@ export const api = (
       variant="default"
       size="default"
     />
-    <CarouselNext onClick={(e) => e.preventDefault()} />
+    <CarouselNext
+      onClick={(e) => {
+        e.preventDefault();
+      }}
+    />
   </Carousel>
 );

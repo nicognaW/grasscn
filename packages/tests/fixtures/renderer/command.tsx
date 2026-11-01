@@ -11,32 +11,39 @@ import {
   CommandDialog,
 } from "@grasscn/web/ui/command";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  native = p.has("native"),
-  part = p.get("part") ?? "list",
-  labels = JSON.parse(
-    p.get("labels") ?? '["Stone","Stick","世界"]'
-  ) as string[];
-export function CommandFixture() {
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const native = p.has("native");
+const part = p.get("part") ?? "list";
+
+const labels = JSON.parse(
+  p.get("labels") ?? '["Stone","Stick","世界"]'
+) as string[];
+
+export const CommandFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
     document.body.style.background = p.get("background") ?? "#202020";
   }, []);
-  const root = React.useRef<HTMLDivElement>(null),
-    input = React.useRef<HTMLInputElement>(null),
-    [selected, setSelected] = React.useState(
-      Number(p.get("selectedIndex") ?? -1) >= 0
-        ? `row-${p.get("selectedIndex")}`
-        : ""
-    ),
-    [search, setSearch] = React.useState(p.get("text") ?? ""),
-    [output, setOutput] = React.useState(""),
-    [open, setOpen] = React.useState(p.has("open"));
+
+  const root = React.useRef<HTMLDivElement>(null);
+  const input = React.useRef<HTMLInputElement>(null);
+
+  const [selected, setSelected] = React.useState(
+    Number(p.get("selectedIndex") ?? -1) >= 0
+      ? `row-${p.get("selectedIndex")}`
+      : ""
+  );
+
+  const [search, setSearch] = React.useState(p.get("text") ?? "");
+  const [output, setOutput] = React.useState("");
+  const [open, setOpen] = React.useState(p.has("open"));
+
   const position: React.CSSProperties = {
-    position: "absolute",
     left: Number(p.get("x") ?? 16) * scale,
+    position: "absolute",
     top: Number(p.get("y") ?? 16) * scale,
     width: Number(p.get("width") ?? 200) * scale,
     ...(part === "list" && native
@@ -46,6 +53,7 @@ export function CommandFixture() {
         }
       : {}),
   };
+
   const inputControl = (
     <CommandInput
       id={native && part === "input" ? "subject" : undefined}
@@ -65,6 +73,7 @@ export function CommandFixture() {
       }
     />
   );
+
   const entries = p.has("implicit") ? (
     <>
       <CommandGroup heading="Tools" forceMount={p.has("force")}>
@@ -110,13 +119,15 @@ export function CommandFixture() {
       <CommandEmpty>No commands found.</CommandEmpty>
     </>
   );
+
   const content = (
     <>
       {inputControl}
       <CommandList label="Available commands">{entries}</CommandList>
     </>
   );
-  if (native)
+
+  if (native) {
     return (
       <Command
         ref={root}
@@ -147,9 +158,17 @@ export function CommandFixture() {
         )}
       </Command>
     );
+  }
+
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open commands</Button>
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Open commands
+      </Button>
       {p.has("dialog") ? (
         <CommandDialog
           open={open}
@@ -168,10 +187,12 @@ export function CommandFixture() {
       <output aria-label="Selected command">{output}</output>
       <button
         id="read-ref"
-        onClick={() => setOutput(input.current?.tagName ?? "")}
+        onClick={() => {
+          setOutput(input.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
     </>
   );
-}
+};

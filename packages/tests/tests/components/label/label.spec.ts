@@ -37,10 +37,10 @@ test("Label preserves the complete accessible name across wrapped lines", async 
     `/?component=label&wrapWidth=100&label=${encodeURIComponent(label)}`
   );
   await expect(
-    page.getByRole("textbox", { name: label, exact: true })
+    page.getByRole("textbox", { exact: true, name: label })
   ).toBeVisible();
   await page.locator("[data-subject]").click();
   await expect(
-    page.getByRole("textbox", { name: label, exact: true })
+    page.getByRole("textbox", { exact: true, name: label })
   ).toBeFocused();
 });

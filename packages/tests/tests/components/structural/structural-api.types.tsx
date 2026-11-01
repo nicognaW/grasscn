@@ -15,9 +15,11 @@ import {
   PaginationEllipsis,
 } from "@grasscn/web/ui/pagination";
 import * as React from "react";
-function StructuralTypes() {
-  const div = React.createRef<HTMLDivElement>(),
-    anchor = React.createRef<HTMLAnchorElement>();
+
+const StructuralTypes = () => {
+  const div = React.createRef<HTMLDivElement>();
+  const anchor = React.createRef<HTMLAnchorElement>();
+
   return (
     <>
       <AspectRatio ref={div} ratio={16 / 9} style={{ overflow: "hidden" }}>
@@ -32,7 +34,7 @@ function StructuralTypes() {
         <ButtonGroupText maxWidth={100} align="center" scale={3}>
           世界
         </ButtonGroupText>
-        <ButtonGroupText render={<span />}>{"Rich content"}</ButtonGroupText>
+        <ButtonGroupText render={<span />}>Rich content</ButtonGroupText>
         <ButtonGroupSeparator
           ref={div}
           orientation="vertical"
@@ -59,8 +61,11 @@ function StructuralTypes() {
       </Pagination>
     </>
   );
-}
+};
+
 // @ts-expect-error Minecraft provides no icon-sized visual variant.
 const unsupported = <PaginationLink size="icon" />;
+
 void StructuralTypes;
+
 void unsupported;

@@ -1,15 +1,17 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Attachment preview, removal and original native click sounds remain distinct", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).voices.push({
-        volume: this.volume,
-        rate: this.playbackRate,
         original: this.src.startsWith("data:audio/ogg;base64,"),
+        rate: this.playbackRate,
+        volume: this.volume,
       });
+
       return Promise.resolve();
     };
   });
@@ -20,10 +22,11 @@ test("Attachment preview, removal and original native click sounds remain distin
   await expect(page.locator("#removed")).toHaveText("1");
   await expect(page.locator("#opened")).toHaveText("1");
   expect(await page.evaluate(() => (window as any).voices)).toEqual([
-    { volume: 0.25, rate: 1, original: true },
-    { volume: 0.25, rate: 1, original: true },
+    { original: true, rate: 1, volume: 0.25 },
+    { original: true, rate: 1, volume: 0.25 },
   ]);
 });
+
 test("Attachment forwards refs and keeps custom image/rich content and asChild links visible", async ({
   page,
 }) => {
@@ -42,6 +45,7 @@ test("Attachment forwards refs and keeps custom image/rich content and asChild l
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#preview$/);
 });
+
 test("Disabled Attachment blocks actions and callbacks, including dispatched events", async ({
   page,
 }) => {
@@ -61,6 +65,7 @@ test("Disabled Attachment blocks actions and callbacks, including dispatched eve
   await expect(page.locator("#opened")).toHaveText("0");
   await expect(page.locator("#removed")).toHaveText("0");
 });
+
 test("Attachment grouping, orientation, states and CJK text preserve the composition API", async ({
   page,
 }) => {
@@ -73,12 +78,15 @@ test("Attachment grouping, orientation, states and CJK text preserve the composi
   await expect(
     page.locator("[data-slot=attachment-title]").first()
   ).toHaveAttribute("data-mc-label-layout-ready", "true");
+
   for (const line of await page
     .locator("[data-slot=attachment-title]")
     .first()
     .locator("[data-mc-label-ready]")
-    .all())
+    .all()) {
     await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await expect(
     page.locator("[data-slot=attachment-title]").first()
   ).toContainText("Screenshot 世界");

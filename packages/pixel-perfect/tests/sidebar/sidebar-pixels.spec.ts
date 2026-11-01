@@ -3,21 +3,27 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-const repo = path.resolve("."),
-  hash = (value: Buffer) => createHash("sha256").update(value).digest("hex");
+
+const repo = path.resolve(".");
+
+const hash = (value: Buffer) =>
+  createHash("sha256").update(value).digest("hex");
+
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
   ]);
   let mismatchedPixels = 0;
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const different = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(different);
     diff.data.set(
       different
@@ -31,16 +37,19 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
 
 const runtimeErrors = new WeakMap<object, string[]>();
-test.beforeEach(async ({ page }) => {
+
+test.beforeEach(({ page }) => {
   const errors: string[] = [];
   runtimeErrors.set(page, errors);
   page.on("pageerror", (error) => errors.push(error.message));
 });
-test.afterEach(async ({ page, browser }, info) => {
+
+test.afterEach(({ page, browser }, info) => {
   writeFileSync(
     info.outputPath("browser-version.json"),
     JSON.stringify({ version: browser.version() })
@@ -52,16 +61,19 @@ test.afterEach(async ({ page, browser }, info) => {
 
 test("Sidebar native constituent comparator rejects one changed pixel", () => {
   const expected = PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile(
-          path.join(repo, "tests/reference/captures/normal-w200-s1.png")
-        )
+    readFileSync(
+      pixelPerfectFile(
+        path.join(repo, "tests/reference/captures/normal-w200-s1.png")
       )
-    ),
-    actual = PNG.sync.read(PNG.sync.write(expected));
+    )
+  );
+
+  const actual = PNG.sync.read(PNG.sync.write(expected));
+
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
+
 const matrices = [
   ["", "button"],
   ["button-cjk", "button"],
@@ -72,49 +84,57 @@ const matrices = [
   ["separator", "separator"],
   ["scroll-area", "scroll"],
 ] as const;
+
 test.describe("Sidebar original native constituent cases", () => {
   test.describe.configure({ mode: "parallel" });
+
   for (const [folder, kind] of matrices) {
-    const directory = path.join(repo, "tests/reference", folder),
-      manifest = JSON.parse(
-        readFileSync(
-          pixelPerfectFile(path.join(directory, "manifest.json")),
-          "utf8"
-        )
-      );
+    const directory = path.join(repo, "tests/reference", folder);
+
+    const manifest = JSON.parse(
+      readFileSync(
+        pixelPerfectFile(path.join(directory, "manifest.json")),
+        "utf-8"
+      )
+    );
+
     for (const c of manifest.cases) {
       const representative =
-          (folder === "" && c.width === 200 && c.label === "Button") ||
-          (folder === "button-cjk" &&
-            c.width === 103 &&
-            c.label === "你好，世界"),
-        parts =
-          kind === "button"
-            ? [
-                "menu-button",
-                "sub-button",
-                ...(representative
-                  ? ["trigger", "group-action", "menu-action"]
-                  : []),
-              ]
-            : kind === "label"
-              ? ["label", "badge"]
-              : [kind];
-      for (const part of parts)
+        (folder === "" && c.width === 200 && c.label === "Button") ||
+        (folder === "button-cjk" &&
+          c.width === 103 &&
+          c.label === "你好，世界");
+
+      const parts =
+        kind === "button"
+          ? [
+              "menu-button",
+              "sub-button",
+              ...(representative
+                ? ["trigger", "group-action", "menu-action"]
+                : []),
+            ]
+          : kind === "label"
+            ? ["label", "badge"]
+            : [kind];
+
+      for (const part of parts) {
         for (const active of ["menu-button", "sub-button"].includes(part) &&
         ["hover", "focus"].includes(c.state)
           ? [false, true]
-          : [false])
+          : [false]) {
           test(`Sidebar ${part} native pixels ${c.name} active:${active}`, async ({
             page,
           }, info) => {
             await page.setViewportSize({ width: 1536, height: 900 });
+
             if (kind === "input") {
               await page.clock.install({
                 time: new Date("2026-10-28T00:00:00Z"),
               });
               await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
             }
+
             const params = new URLSearchParams({
               native: "1",
               part,
@@ -126,6 +146,7 @@ test.describe("Sidebar original native constituent cases", () => {
               y: String(c.y ?? 16),
               background: c.background ?? manifest.background ?? "#202020",
             });
+
             for (const field of [
               "label",
               "text",
@@ -137,6 +158,7 @@ test.describe("Sidebar original native constituent cases", () => {
               "value",
             ])
               if (c[field] != null) params.set(field, String(c[field]));
+
             if (active) params.set("active", "1");
             await page.goto(`/?component=sidebar&${params}`);
             const subject = page.locator("[data-subject]");
@@ -159,23 +181,29 @@ test.describe("Sidebar original native constituent cases", () => {
                 "#root{visibility:hidden}[data-subject]{visibility:visible}",
             });
             await page.mouse.move(0, 0);
+
             if (kind === "input") {
               await expect(subject).toHaveAttribute("data-mc-ready", "true");
               await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
+
               if (c.state.startsWith("focus")) {
                 await subject.focus();
                 await expect(subject).toBeFocused();
               }
+
               if (c.state === "hover") await subject.hover();
+
               const cursor = c.cursor ?? c.text.length,
                 anchor = c.anchor ?? cursor;
+
               await subject.evaluate(
-                (node, selection) =>
+                (node, selection) => {
                   (node as HTMLInputElement).setSelectionRange(
                     Math.min(selection.cursor, selection.anchor),
                     Math.max(selection.cursor, selection.anchor),
                     selection.cursor < selection.anchor ? "backward" : "forward"
-                  ),
+                  );
+                },
                 { cursor, anchor }
               );
               await page.clock.runFor(c.caretMs);
@@ -185,22 +213,29 @@ test.describe("Sidebar original native constituent cases", () => {
                 "data-mc-scroll-ready",
                 "true"
               );
+
               const viewport = subject.locator(
                 '[data-slot="scroll-area-viewport"]'
               );
+
               await viewport.evaluate((node, scroll) => {
                 node.scrollTop = scroll;
               }, c.value * c.scale);
               await expect
-                .poll(() => viewport.evaluate((node) => node.scrollTop))
+                .poll(
+                  async () => await viewport.evaluate((node) => node.scrollTop)
+                )
                 .toBe(c.value * c.scale);
+
               if (c.state === "hover")
                 await subject
                   .locator('[data-slot="scroll-area-scrollbar"]')
                   .hover();
+
               if (c.state === "focus") await viewport.focus();
             } else if (kind === "button" && !active) {
               if (c.state === "hover") await subject.hover();
+
               if (c.state === "focus") {
                 await subject.focus();
                 await page.keyboard.press("Tab");
@@ -208,11 +243,13 @@ test.describe("Sidebar original native constituent cases", () => {
                 await expect(subject).toBeFocused();
               }
             }
+
             if (kind === "label")
               await expect(subject).toHaveAttribute(
                 "data-mc-label-layout-ready",
                 "true"
               );
+
             for (const label of await subject
               .locator("[data-mc-label-ready]")
               .all())
@@ -220,23 +257,30 @@ test.describe("Sidebar original native constituent cases", () => {
                 "data-mc-label-ready",
                 "true"
               );
+
             if (kind !== "input")
               await page.evaluate(
-                () =>
-                  new Promise<void>((resolve) =>
+                async () =>
+                  await new Promise<void>((resolve) =>
                     requestAnimationFrame(() =>
-                      requestAnimationFrame(() => resolve())
+                      requestAnimationFrame(() => {
+                        resolve();
+                      })
                     )
                   )
               );
+
             const expectedBytes = readFileSync(
               pixelPerfectFile(path.join(directory, "captures", c.name))
             );
+
             expect(hash(expectedBytes)).toBe(c.sha256);
+
             const actualBytes = await subject.screenshot(),
               expected = PNG.sync.read(expectedBytes),
               actual = PNG.sync.read(actualBytes),
               { mismatchedPixels, diff } = compare(expected, actual);
+
             writeFileSync(info.outputPath("actual.png"), actualBytes);
             writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
             writeFileSync(
@@ -251,6 +295,8 @@ test.describe("Sidebar original native constituent cases", () => {
             );
             expect(mismatchedPixels).toBe(0);
           });
+        }
+      }
     }
   }
 });

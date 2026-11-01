@@ -9,7 +9,9 @@ import {
   TableCaption,
 } from "@grasscn/web/ui/table";
 import * as React from "react";
+
 const ref = React.createRef<HTMLTableElement>();
+
 export const api = (
   <Table ref={ref} scale={3} aria-label="Inventory">
     <TableCaption textAlign="center" maxTextWidth={100}>
@@ -27,7 +29,9 @@ export const api = (
         <TableCell
           rowSpan={2}
           maxTextWidth={100}
-          onClick={(e) => e.currentTarget.focus()}
+          onClick={(e) => {
+            e.currentTarget.focus();
+          }}
         >
           你好
         </TableCell>

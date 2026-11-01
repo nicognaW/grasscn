@@ -2,19 +2,22 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const different = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(different);
     diff.data.set(
       different
@@ -28,28 +31,35 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
+
 test("Menubar trigger comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
-      )
-    ),
-    actual = PNG.sync.read(PNG.sync.write(expected));
+    readFileSync(
+      pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
+    )
+  );
+
+  const actual = PNG.sync.read(PNG.sync.write(expected));
+
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
+
 for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
   const manifest = JSON.parse(
-    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
   );
-  for (const c of manifest.cases)
-    for (const open of c.state === "hover" ? [false, true] : [false])
+
+  for (const c of manifest.cases) {
+    for (const open of c.state === "hover" ? [false, true] : [false]) {
       test(`Menubar trigger native pixels: ${c.name} open:${open}`, async ({
         page,
       }, info) => {
         await page.setViewportSize({ width: 1536, height: 900 });
+
         const params = new URLSearchParams({
           component: "menubar",
           triggerPixels: "1",
@@ -60,6 +70,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           x: String(c.x ?? 16),
           y: String(c.y ?? 16),
         });
+
         if (open) params.set("open", "1");
         await page.goto(`/?${params}`);
         const trigger = page.locator('[data-slot="menubar-trigger"]').first();
@@ -68,18 +79,23 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           content: '[data-slot="menubar-content"]{visibility:hidden}',
         });
         await page.mouse.move(0, 0);
+
         if (c.state === "hover" && !open) await trigger.hover();
+
         if (c.state === "focus") {
           await page.keyboard.press("Tab");
           await expect(trigger).toBeFocused();
         }
+
         for (const line of await trigger.locator("[data-mc-label-ready]").all())
           await expect(line).toHaveAttribute("data-mc-label-ready", "true");
         await page.evaluate(
-          () =>
-            new Promise<void>((resolve) =>
+          async () =>
+            await new Promise<void>((resolve) =>
               requestAnimationFrame(() =>
-                requestAnimationFrame(() => resolve())
+                requestAnimationFrame(() => {
+                  resolve();
+                })
               )
             )
         );
@@ -88,17 +104,21 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           (c.x ?? 16) * c.scale,
           (c.y ?? 16) * c.scale,
         ]);
+
         const expectedBytes = readFileSync(
           pixelPerfectFile(`${directory}/captures/${c.name}`)
         );
+
         expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
           c.sha256
         );
+
         const actualBytes = await trigger.screenshot(),
           { diff, mismatchedPixels } = compare(
             PNG.sync.read(expectedBytes),
             PNG.sync.read(actualBytes)
           );
+
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
         writeFileSync(
@@ -107,4 +127,6 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
         );
         expect(mismatchedPixels).toBe(0);
       });
+    }
+  }
 }

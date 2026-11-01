@@ -32,29 +32,38 @@ import {
   useSidebar,
 } from "@grasscn/web/ui/sidebar";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  part = p.get("part") ?? "app",
-  native = p.has("native"),
-  state = p.get("state") ?? "normal",
-  width = Number(p.get("width") ?? 200),
-  height = Number(p.get("height") ?? 20),
-  label = p.get("label") ?? "Worlds",
-  position: React.CSSProperties = {
-    position: "fixed",
-    left: Number(p.get("x") ?? 16) * scale,
-    top: Number(p.get("y") ?? 16) * scale,
-    width: width * scale,
-    height: height * scale,
-  };
-function Inspector() {
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const part = p.get("part") ?? "app";
+const native = p.has("native");
+const state = p.get("state") ?? "normal";
+const width = Number(p.get("width") ?? 200);
+const height = Number(p.get("height") ?? 20);
+const label = p.get("label") ?? "Worlds";
+
+const position: React.CSSProperties = {
+  height: height * scale,
+  left: Number(p.get("x") ?? 16) * scale,
+  position: "fixed",
+  top: Number(p.get("y") ?? 16) * scale,
+  width: width * scale,
+};
+
+const Inspector = () => {
   const ctx = useSidebar();
+
   return (
-    <div style={{ position: "absolute", top: 700, left: 32 }}>
+    <div style={{ left: 32, position: "absolute", top: 700 }}>
       <output id="state">{ctx.state}</output>
       <output id="mobile">{String(ctx.isMobile)}</output>
       <output id="open-mobile">{String(ctx.openMobile)}</output>
-      <button id="external" onClick={() => ctx.setOpen((value) => !value)}>
+      <button
+        id="external"
+        onClick={() => {
+          ctx.setOpen((value) => !value);
+        }}
+      >
         External toggle
       </button>
       <button
@@ -68,46 +77,57 @@ function Inspector() {
       </button>
     </div>
   );
-}
-export function SidebarFixture() {
+};
+
+export const SidebarFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
     document.body.style.background = p.get("background") ?? "#202020";
   }, []);
-  const [open, setOpen] = React.useState(!p.has("collapsed")),
-    [events, setEvents] = React.useState(0),
-    [scrollEvents, setScrollEvents] = React.useState(0),
-    [text, setText] = React.useState(p.get("text") ?? "Hello Minecraft"),
-    [refValue, setRefValue] = React.useState(""),
-    menuRef = React.useRef<HTMLButtonElement>(null),
-    subRef = React.useRef<HTMLAnchorElement>(null),
-    inputRef = React.useRef<HTMLInputElement>(null),
-    contentRef = React.useRef<HTMLDivElement>(null);
+
+  const [open, setOpen] = React.useState(!p.has("collapsed"));
+  const [events, setEvents] = React.useState(0);
+  const [scrollEvents, setScrollEvents] = React.useState(0);
+  const [text, setText] = React.useState(p.get("text") ?? "Hello Minecraft");
+  const [refValue, setRefValue] = React.useState("");
+  const menuRef = React.useRef<HTMLButtonElement>(null);
+  const subRef = React.useRef<HTMLAnchorElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const contentRef = React.useRef<HTMLDivElement>(null);
+
   const provider = {
     scale,
     defaultOpen: !p.has("collapsed"),
     ...(p.has("controlled") ? { open } : {}),
     onOpenChange: (value: boolean) => {
       setEvents((v) => v + 1);
-      if (!p.has("reject")) setOpen(value);
+
+      if (!p.has("reject")) {
+        setOpen(value);
+      }
     },
   };
+
   const click = (event: React.MouseEvent) => {
     if (p.has("cancel")) {
       event.preventDefault();
+
       return;
     }
+
     setEvents((v) => v + 1);
   };
+
   const buttonProps = {
-    id: "subject",
-    style: position,
-    disabled: state === "disabled",
-    onClick: click,
     "data-subject": "true",
+    disabled: state === "disabled",
+    id: "subject",
+    onClick: click,
+    style: position,
   };
-  if (native)
+
+  if (native) {
     return (
       <SidebarProvider {...provider} style={{ minHeight: 0 }}>
         {part === "menu-button" ? (
@@ -137,7 +157,9 @@ export function SidebarFixture() {
             id="subject"
             aria-label="Test input"
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             placeholder={p.get("placeholder") ?? ""}
             disabled={state === "disabled"}
             readOnly={state.includes("readonly")}
@@ -230,6 +252,8 @@ export function SidebarFixture() {
         ) : null}
       </SidebarProvider>
     );
+  }
+
   return (
     <SidebarProvider
       {...provider}
@@ -251,13 +275,17 @@ export function SidebarFixture() {
             ref={inputRef}
             aria-label="Search worlds"
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
           />
         </SidebarHeader>
         <SidebarSeparator />
         <SidebarContent
           ref={contentRef}
-          onScroll={() => setScrollEvents((v) => v + 1)}
+          onScroll={() => {
+            setScrollEvents((v) => v + 1);
+          }}
         >
           <SidebarGroup>
             <SidebarGroupLabel>Game worlds</SidebarGroupLabel>
@@ -303,7 +331,7 @@ export function SidebarFixture() {
                     }
                     tooltip="Settings"
                   >
-                    {"Settings"}
+                    Settings
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
@@ -311,14 +339,16 @@ export function SidebarFixture() {
                     render={
                       <a
                         href="#disabled"
-                        onClick={() => setEvents((v) => v + 100)}
+                        onClick={() => {
+                          setEvents((v) => v + 100);
+                        }}
                       />
                     }
                     id="disabled"
                     disabled
                     tooltip="Unavailable"
                   >
-                    {"Unavailable"}
+                    Unavailable
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 {p.has("long")
@@ -350,11 +380,11 @@ export function SidebarFixture() {
         <SidebarTrigger id="toggle" />
         <button
           id="read-ref"
-          onClick={() =>
+          onClick={() => {
             setRefValue(
               `${menuRef.current?.tagName}/${subRef.current?.tagName}/${inputRef.current?.tagName}/${contentRef.current?.tagName}`
-            )
-          }
+            );
+          }}
         >
           Read refs
         </button>
@@ -366,4 +396,4 @@ export function SidebarFixture() {
       <Inspector />
     </SidebarProvider>
   );
-}
+};

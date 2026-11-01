@@ -1,4 +1,5 @@
 "use client";
+
 import { AlertDialog as Primitive } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
@@ -10,21 +11,28 @@ import {
   MinecraftConfirmationText,
   confirmationButtonText,
 } from "./minecraft-confirmation-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 import "./minecraft-alert-dialog.css";
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const IdentityContext = React.createContext("");
-function AlertDialog({
+
+const AlertDialog = ({
   scale = 2,
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const identity = React.useId();
+
   return (
     <IdentityContext.Provider value={identity}>
       <ScaleContext.Provider value={scale}>
@@ -32,13 +40,15 @@ function AlertDialog({
       </ScaleContext.Provider>
     </IdentityContext.Provider>
   );
-}
-function AlertDialogTrigger({
+};
+
+const AlertDialogTrigger = ({
   render,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Trigger>) {
+}: MinecraftProps<typeof Primitive.Trigger>) => {
   const scale = React.useContext(ScaleContext);
+
   return (
     <Primitive.Trigger
       data-slot="alert-dialog-trigger"
@@ -48,12 +58,13 @@ function AlertDialogTrigger({
       {children}
     </Primitive.Trigger>
   );
-}
+};
 
-function AlertDialogPortal(props: MinecraftProps<typeof Primitive.Portal>) {
+const AlertDialogPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
   return <Primitive.Portal {...props} />;
-}
-function AlertDialogOverlay({
+};
+
+const AlertDialogOverlay = ({
   className,
   children,
   render,
@@ -62,21 +73,23 @@ function AlertDialogOverlay({
   ...props
 }: MinecraftProps<typeof Primitive.Backdrop> & {
   blur?: number;
-}) {
+}) => {
   const identity = React.useContext(IdentityContext);
   const child = null;
+
   const content = (
     <>
       <MinecraftConfirmationBlur radius={blur} identity={identity} />
       {children}
     </>
   );
+
   return (
     <Primitive.Backdrop
       render={render}
       data-slot="alert-dialog-overlay"
       data-mc-confirmation-id={identity}
-      className={cn(`mc-alert-dialog-overlay ${""}`, className)}
+      className={cn(`mc-alert-dialog-overlay`, className)}
       style={minecraftStyle(style, (__style) => ({
         backgroundImage: `url("${confirmationMenuBackground}")`,
         ...__style,
@@ -86,13 +99,15 @@ function AlertDialogOverlay({
       {content}
     </Primitive.Backdrop>
   );
-}
+};
+
 type AlertDialogContentProps = MinecraftProps<typeof Primitive.Popup> & {
   scale?: 1 | 2 | 3;
   blur?: number;
   keepMounted?: boolean;
 };
-function AlertDialogContent({
+
+const AlertDialogContent = ({
   scale: explicitScale,
   blur = 5,
   children,
@@ -102,38 +117,58 @@ function AlertDialogContent({
   render,
   keepMounted,
   ...props
-}: AlertDialogContentProps) {
-  const inherited = React.useContext(ScaleContext),
-    scale = explicitScale ?? inherited;
+}: AlertDialogContentProps) => {
+  const inherited = React.useContext(ScaleContext);
+  const scale = explicitScale ?? inherited;
+
   const identity = React.useContext(IdentityContext);
-  const [node, setNode] = React.useState<HTMLDivElement | null>(null),
-    [viewport, setViewport] = React.useState(() =>
-      typeof window === "undefined" ? 1024 : innerWidth
-    );
-  const [compact, setCompact] = React.useState(false),
-    [measuredWidth, setMeasuredWidth] = React.useState(462);
+
+  const [node, setNode] = React.useState<HTMLDivElement | null>(null);
+
+  const [viewport, setViewport] = React.useState(() =>
+    typeof window === "undefined" ? 1024 : innerWidth
+  );
+
+  const [compact, setCompact] = React.useState(false);
+  const [measuredWidth, setMeasuredWidth] = React.useState(462);
+
   const forwarded = React.useCallback(
     (element: HTMLDivElement | null) => {
       setNode(element);
+
       if (typeof ref === "function") {
         const cleanup = ref(element);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             setNode(null);
             cleanup();
           };
-      } else if (ref) ref.current = element;
+        }
+      } else if (ref) {
+        ref.current = element;
+      }
     },
     [ref]
   );
+
   React.useLayoutEffect(() => {
-    if (!node) return;
+    if (!node) {
+      return;
+    }
+
     let frame = 0;
+
     const measure = () => {
       setViewport(innerWidth);
-      if (!node.offsetWidth) return;
-      const gutter = 8 * scale,
-        availableHeight = Math.max(scale, innerHeight - 2 * gutter);
+
+      if (!node.offsetWidth) {
+        return;
+      }
+
+      const gutter = 8 * scale;
+      const availableHeight = Math.max(scale, innerHeight - 2 * gutter);
+
       node.style.setProperty(
         "--mc-confirmation-max-width",
         `${Math.max(scale, innerWidth - 2 * gutter)}px`
@@ -142,32 +177,41 @@ function AlertDialogContent({
         "--mc-confirmation-max-height",
         `${availableHeight}px`
       );
+
       const naturalTitle = Number(
         node.querySelector<HTMLElement>("[data-mc-confirmation-natural-width]")
           ?.dataset.mcConfirmationNaturalWidth ?? 0
       );
+
       const header = node.querySelector<HTMLElement>(
         '[data-slot="alert-dialog-header"]'
       );
+
       let naturalHeight =
         node.scrollHeight +
         (header ? Math.max(0, header.scrollHeight - header.clientHeight) : 0);
+
       for (const text of node.querySelectorAll<HTMLElement>(
         "[data-mc-confirmation-native-height]"
-      ))
+      )) {
         naturalHeight +=
           Number(text.dataset.mcConfirmationNativeHeight) -
           text.getBoundingClientRect().height;
+      }
+
       const nextCompact =
         innerWidth < 320 * scale ||
         naturalTitle > innerWidth ||
         naturalHeight > availableHeight;
+
       node.dataset.mcConfirmationCompact = String(nextCompact);
       setCompact(nextCompact);
+
       const availableWidth = Math.max(
         scale,
         Math.floor(node.clientWidth / scale) * scale
       );
+
       node.dataset.mcConfirmationStacked = String(
         nextCompact && availableWidth < 304 * scale
       );
@@ -184,50 +228,67 @@ function AlertDialogContent({
           )
         )
       );
-      const boxWidth = node.offsetWidth / scale,
-        width = (nextCompact ? node.clientWidth : node.offsetWidth) / scale,
-        height = node.offsetHeight / scale;
+
+      const boxWidth = node.offsetWidth / scale;
+      const width = (nextCompact ? node.clientWidth : node.offsetWidth) / scale;
+      const height = node.offsetHeight / scale;
+
       node.style.left = `${Math.floor((Math.ceil(innerWidth / scale) - boxWidth) / 2) * scale}px`;
       node.style.top = `${Math.floor((Math.ceil(innerHeight / scale) - height) / 2) * scale}px`;
       const bounds = node.getBoundingClientRect();
+
       for (const item of node.querySelectorAll<HTMLElement>(
         '[data-mc-confirmation-item="true"]'
       )) {
-        if (item.closest(".mc-alert-dialog-content") !== node) continue;
-        const rect = item.getBoundingClientRect(),
-          inHeader =
-            nextCompact &&
-            header &&
-            item.closest('[data-slot="alert-dialog-header"]') === header,
-          areaWidth = inHeader ? header.clientWidth / scale : width,
-          areaLeft = inHeader
-            ? header.getBoundingClientRect().left
-            : bounds.left,
-          previous = Number(item.dataset.mcConfirmationShift ?? 0),
-          next =
-            previous +
-            areaLeft +
-            Math.floor((areaWidth - rect.width / scale) / 2) * scale -
-            rect.left;
+        if (item.closest(".mc-alert-dialog-content") !== node) {
+          continue;
+        }
+
+        const rect = item.getBoundingClientRect();
+
+        const inHeader =
+          nextCompact &&
+          header &&
+          item.closest('[data-slot="alert-dialog-header"]') === header;
+
+        const areaWidth = inHeader ? header.clientWidth / scale : width;
+
+        const areaLeft = inHeader
+          ? header.getBoundingClientRect().left
+          : bounds.left;
+
+        const previous = Number(item.dataset.mcConfirmationShift ?? 0);
+
+        const next =
+          previous +
+          areaLeft +
+          Math.floor((areaWidth - rect.width / scale) / 2) * scale -
+          rect.left;
+
         item.dataset.mcConfirmationShift = String(next);
         item.style.setProperty("--mc-confirmation-x", `${next}px`);
       }
+
       node.dataset.mcConfirmationReady = "true";
     };
+
     const update = () => {
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(measure);
-      },
-      resize = new ResizeObserver(update),
-      mutation = new MutationObserver(update);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
+    };
+
+    const resize = new ResizeObserver(update);
+    const mutation = new MutationObserver(update);
+
     resize.observe(node);
     mutation.observe(node, {
-      subtree: true,
-      childList: true,
       characterData: true,
+      childList: true,
+      subtree: true,
     });
     window.addEventListener("resize", update);
     measure();
+
     return () => {
       resize.disconnect();
       mutation.disconnect();
@@ -235,18 +296,19 @@ function AlertDialogContent({
       window.removeEventListener("resize", update);
     };
   }, [node, scale]);
+
   return (
     <AlertDialogPortal keepMounted={keepMounted}>
       <AlertDialogOverlay blur={blur} />
       <ScaleContext.Provider value={scale}>
         <ConfirmationTextContext.Provider
           value={{
-            scale,
             compact,
-            nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
             contentWidth: compact
               ? measuredWidth
               : Math.max(1, Math.ceil(viewport / scale) - 50),
+            nativeContentWidth: Math.max(1, Math.ceil(viewport / scale) - 50),
+            scale,
           }}
         >
           <Primitive.Popup
@@ -254,7 +316,7 @@ function AlertDialogContent({
             data-slot="alert-dialog-content"
             data-mc-confirmation-id={identity}
             ref={forwarded}
-            className={cn(`mc-alert-dialog-content ${""}`, className)}
+            className={cn(`mc-alert-dialog-content`, className)}
             style={minecraftStyle(
               style,
               (__style) =>
@@ -268,103 +330,117 @@ function AlertDialogContent({
       </ScaleContext.Provider>
     </AlertDialogPortal>
   );
-}
-function AlertDialogHeader({
+};
+
+const AlertDialogHeader = ({
   className,
   tabIndex,
   ...props
-}: MinecraftProps<"div">) {
+}: MinecraftProps<"div">) => {
   const { compact } = React.useContext(ConfirmationTextContext);
+
   return (
     <div
       data-slot="alert-dialog-header"
       tabIndex={tabIndex ?? (compact ? 0 : undefined)}
-      className={cn(`mc-alert-dialog-header ${""}`, className)}
+      className={cn(`mc-alert-dialog-header`, className)}
       {...props}
     />
   );
-}
-function AlertDialogMedia({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const AlertDialogMedia = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="alert-dialog-media"
       data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-media ${""}`, className)}
+      className={cn(`mc-alert-dialog-media`, className)}
       {...props}
     />
   );
-}
-function AlertDialogFooter({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const AlertDialogFooter = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="alert-dialog-footer"
       data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-footer ${""}`, className)}
+      className={cn(`mc-alert-dialog-footer`, className)}
       {...props}
     />
   );
-}
-function AlertDialogTitle({
+};
+
+const AlertDialogTitle = ({
   children,
   className,
   render,
   ...props
-}: MinecraftProps<typeof Primitive.Title>) {
+}: MinecraftProps<typeof Primitive.Title>) => {
   const child = null;
+
   const content = (
     <MinecraftConfirmationText title>{children}</MinecraftConfirmationText>
   );
+
   return (
     <Primitive.Title
       render={render}
       data-slot="alert-dialog-title"
       data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-title ${""}`, className)}
+      className={cn(`mc-alert-dialog-title`, className)}
       {...props}
     >
       {content}
     </Primitive.Title>
   );
-}
-function AlertDialogDescription({
+};
+
+const AlertDialogDescription = ({
   children,
   className,
   render,
   ...props
-}: MinecraftProps<typeof Primitive.Description>) {
+}: MinecraftProps<typeof Primitive.Description>) => {
   const child = null;
+
   const content = (
     <MinecraftConfirmationText>{children}</MinecraftConfirmationText>
   );
+
   return (
     <Primitive.Description
       render={render}
       data-slot="alert-dialog-description"
       data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-description ${""}`, className)}
+      className={cn(`mc-alert-dialog-description`, className)}
       {...props}
     >
       {content}
     </Primitive.Description>
   );
-}
-function AlertDialogAction({
+};
+
+const AlertDialogAction = ({
   children = "Yes",
   ...props
-}: MinecraftProps<typeof Button>) {
+}: MinecraftProps<typeof Button>) => {
   const scale = React.useContext(ScaleContext);
+
   return (
     <Button data-slot="alert-dialog-action" scale={scale} {...props}>
       {confirmationButtonText(children)}
     </Button>
   );
-}
-function AlertDialogCancel({
+};
+
+const AlertDialogCancel = ({
   render,
   children = "No",
   ...props
-}: MinecraftProps<typeof Primitive.Close>) {
+}: MinecraftProps<typeof Primitive.Close>) => {
   const scale = React.useContext(ScaleContext);
+
   return (
     <Primitive.Close
       data-slot="alert-dialog-cancel"
@@ -374,7 +450,8 @@ function AlertDialogCancel({
       {confirmationButtonText(children)}
     </Primitive.Close>
   );
-}
+};
+
 export {
   AlertDialog,
   AlertDialogTrigger,
@@ -389,4 +466,5 @@ export {
   AlertDialogAction,
   AlertDialogCancel,
 };
+
 export type { AlertDialogContentProps };

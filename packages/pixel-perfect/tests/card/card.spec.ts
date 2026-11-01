@@ -3,11 +3,11 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/card/manifest.json"), "utf8")
+  readFileSync(pixelPerfectFile("tests/reference/card/manifest.json"), "utf-8")
 ) as {
   cases: {
     name: string;
@@ -26,12 +26,14 @@ function compare(expected: PNG, actual: PNG) {
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -45,6 +47,7 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
 
@@ -56,23 +59,28 @@ test("Card comparator catches a one-pixel change", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const c of manifest.cases)
+for (const c of manifest.cases) {
   test(`Card native pixels: ${c.name}`, async ({ page }, testInfo) => {
     const query = new URLSearchParams({
       component: "card",
-      width: String(c.width),
       height: String(c.height),
       scale: String(c.scale),
+      width: String(c.width),
     });
-    if (c.text != null) {
-      query.set("text", c.text);
+
+    const caseText = c.text;
+
+    if (caseText !== null && caseText !== undefined) {
+      query.set("text", caseText);
       query.set("label", c.label!);
     }
+
     await page.goto(`/?${query}`);
     await page.addStyleTag({
       content: `html,body { background: ${c.background}; }`,
@@ -80,17 +88,21 @@ for (const c of manifest.cases)
     await page.mouse.move(0, 0);
     const card = page.locator('[data-slot="card"]');
     await expect(card).toBeVisible();
+
     const expectedBytes = await readFile(
       pixelPerfectFile(`tests/reference/card/captures/${c.name}`)
     );
+
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
     );
     const actualBytes = await card.screenshot({ animations: "disabled" });
+
     const { diff, mismatchedPixels } = compare(
       PNG.sync.read(expectedBytes),
       PNG.sync.read(actualBytes)
     );
+
     await writeFile(testInfo.outputPath("actual.png"), actualBytes);
     await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
     await writeFile(
@@ -99,8 +111,8 @@ for (const c of manifest.cases)
         {
           case: c.name,
           mismatchedPixels,
-          totalPixels: c.width * c.height * c.scale * c.scale,
           tolerance: 0,
+          totalPixels: c.width * c.height * c.scale * c.scale,
         },
         null,
         2
@@ -108,3 +120,4 @@ for (const c of manifest.cases)
     );
     expect(mismatchedPixels).toBe(0);
   });
+}

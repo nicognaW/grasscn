@@ -14,31 +14,36 @@ import {
   MessageScale,
 } from "@grasscn/web/ui/message";
 import * as React from "react";
-export function ChatFamilyFixture() {
-  const q = new URLSearchParams(location.search),
-    component = q.get("component") ?? q.get("part") ?? "message",
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    native = q.has("native"),
-    label = q.get("label") ?? "Hello Minecraft!",
-    [text, setText] = React.useState(label),
-    [events, setEvents] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLDivElement>(null),
-    width = Number(q.get("width") ?? 172),
-    common = {
-      position: "fixed",
-      left: Number(q.get("x") ?? 16) * scale,
-      top: Number(q.get("y") ?? 16) * scale,
-      width: width * scale,
-      ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
-      color: q.get("color") ?? "#ffffff",
-      "--mc-scale": scale,
-      "--mc-pixel": scale + "px",
-    } as React.CSSProperties;
+
+export const ChatFamilyFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const component = q.get("component") ?? q.get("part") ?? "message";
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const native = q.has("native");
+  const label = q.get("label") ?? "Hello Minecraft!";
+  const [text, setText] = React.useState(label);
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLDivElement>(null);
+  const width = Number(q.get("width") ?? 172);
+
+  const common = {
+    position: "fixed",
+    left: Number(q.get("x") ?? 16) * scale,
+    top: Number(q.get("y") ?? 16) * scale,
+    width: width * scale,
+    ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}),
+    color: q.get("color") ?? "#ffffff",
+    "--mc-scale": scale,
+    "--mc-pixel": `${scale}px`,
+  } as React.CSSProperties;
+
   document.documentElement.style.background = q.get("background") ?? "#202020";
   document.body.style.background = q.get("background") ?? "#202020";
-  const rich = q.has("rich"),
-    content = rich ? <strong data-testid="rich-text">{text}</strong> : text;
+
+  const rich = q.has("rich");
+  const content = rich ? <strong data-testid="rich-text">{text}</strong> : text;
+
   const subject =
     component === "bubble" ? (
       <BubbleGroup
@@ -56,7 +61,9 @@ export function ChatFamilyFixture() {
                   type="button"
                   disabled={q.has("disabled")}
                   aria-label="Chat action"
-                  onClick={() => setTag("child")}
+                  onClick={() => {
+                    setTag("child");
+                  }}
                 />
               ) : undefined
             }
@@ -65,7 +72,10 @@ export function ChatFamilyFixture() {
             style={native ? common : { color: common.color }}
             onClick={(event) => {
               setEvents((n) => n + 1);
-              if (q.has("cancel")) event.preventDefault();
+
+              if (q.has("cancel")) {
+                event.preventDefault();
+              }
             }}
             data-subject="true"
           >
@@ -77,7 +87,12 @@ export function ChatFamilyFixture() {
               align={q.get("align") === "end" ? "end" : "start"}
               data-testid="reactions"
             >
-              <button type="button" onClick={() => setEvents((n) => n + 1)}>
+              <button
+                type="button"
+                onClick={() => {
+                  setEvents((n) => n + 1);
+                }}
+              >
                 React
               </button>
             </BubbleReactions>
@@ -113,20 +128,25 @@ export function ChatFamilyFixture() {
         </Message>
       </MessageGroup>
     );
+
   return (
     <MessageScale value={scale}>
       {subject}
-      <div style={{ position: "fixed", left: 1000, top: 800 }}>
+      <div style={{ left: 1000, position: "fixed", top: 800 }}>
         <input
           aria-label="Chat text"
           spellCheck={false}
           autoCorrect="off"
           value={text}
-          onChange={(event) => setText(event.target.value)}
+          onChange={(event) => {
+            setText(event.target.value);
+          }}
         />
         <button
           id="read-ref"
-          onClick={() => setTag(ref.current?.tagName ?? "missing")}
+          onClick={() => {
+            setTag(ref.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -135,4 +155,4 @@ export function ChatFamilyFixture() {
       </div>
     </MessageScale>
   );
-}
+};

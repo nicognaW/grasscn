@@ -1,47 +1,70 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftChatAtlas } from "./minecraft-chat-atlas";
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { disclosureAdvance } from "./minecraft-disclosure-metrics";
 import { minecraftGlyphs } from "./minecraft-font";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftRenderProp,
 } from "./minecraft-render";
+import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
   disclosureAdvance(char) ??
   6;
+
 const textWidth = (text: string) =>
-  Math.ceil(Array.from(text).reduce((width, char) => width + advance(char), 0));
+  Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
+
 function splitLines(text: string, width?: number) {
   const lines: string[] = [];
+
   for (let remaining of text.split("\n")) {
-    while (width != null && textWidth(remaining) > width) {
-      const chars = Array.from(remaining);
-      let used = 0,
-        count = 0,
-        space = -1;
+    while (
+      width !== null &&
+      width !== undefined &&
+      textWidth(remaining) > width
+    ) {
+      const chars = [...remaining];
+
+      let count = 0;
+      let used = 0;
+      let space = -1;
+
       while (count < chars.length) {
-        if (chars[count] === " ") space = count;
-        if (used + advance(chars[count]) > width && count > 0) break;
-        used += advance(chars[count++]);
+        if (chars[count] === " ") {
+          space = count;
+        }
+
+        if (used + advance(chars[count]) > width && count > 0) {
+          break;
+        }
+
+        const currentCharacter = chars[count];
+        count += 1;
+        used += advance(currentCharacter);
       }
+
       const end = space < 0 ? Math.max(1, count) : space;
       lines.push(chars.slice(0, end).join(""));
       remaining = chars.slice(end + Number(space >= 0)).join("");
     }
+
     lines.push(remaining);
   }
+
   return lines;
 }
+
 type MinecraftChatTextProps = React.HTMLAttributes<HTMLElement> & {
   render?: MinecraftRenderProp;
   ref?: React.Ref<HTMLElement>;
@@ -51,7 +74,8 @@ type MinecraftChatTextProps = React.HTMLAttributes<HTMLElement> & {
   maxWidth?: number;
   align?: "left" | "center";
 };
-function MinecraftChatText({
+
+const MinecraftChatText = ({
   children,
   className,
   scale = 2,
@@ -63,41 +87,53 @@ function MinecraftChatText({
   style,
   ref,
   ...props
-}: MinecraftChatTextProps) {
+}: MinecraftChatTextProps) => {
   const node = React.useRef<HTMLElement>(null);
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
   const child = null;
   const content = children;
+
   const accessibleText =
     typeof content === "string" || typeof content === "number"
       ? String(content)
       : null;
+
   let text = accessibleText;
-  if (text != null && clipWidth != null && clipWidth > 0)
+
+  if (text != null && clipWidth != null && clipWidth > 0) {
     text = text
       .split("\n")
       .map((line) => {
         if (textWidth(line) <= clipWidth) return line;
+
         let value = "",
           used = 0;
+
         for (const char of Array.from(line)) {
           const next = advance(char);
+
           if (used + next > clipWidth - textWidth("...")) break;
           value += char;
           used += next;
         }
+
         return value + "...";
       })
       .join("\n");
-  const unicode = text != null && /[^\x00-\x7f]/.test(text);
+  }
+
+  const unicode = text != null && /[^\x00-\x7F]/.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
-      loadUnihex().then(() => {
-        if (live) setFontReady(true);
+      void loadUnihex().then(() => {
+        if (live) {
+          setFontReady(true);
+        }
       });
+
       return () => {
         live = false;
       };
@@ -105,27 +141,38 @@ function MinecraftChatText({
   }, [unicode]);
   React.useLayoutEffect(() => {
     const element = node.current!;
+
     const update = () => {
       const width = Math.floor(element.clientWidth / scale);
-      if (width > 0) setContainerWidth(width);
+
+      if (width > 0) {
+        setContainerWidth(width);
+      }
     };
+
     update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, [scale]);
+
   const supported =
     text != null &&
     (!unicode || fontReady) &&
-    Array.from(text).every(
+    [...text].every(
       (char) =>
-        char === "\n" || /^[\x20-\x7e]$/.test(char) || getUnihexGlyph(char)
+        char === "\n" || /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
     );
+
   const lines = text == null ? [] : splitLines(text, maxWidth);
   const widest = Math.max(0, ...lines.map(textWidth));
   const width = containerWidth ?? maxWidth ?? widest;
+
   const richText = (value: React.ReactNode): React.ReactNode => {
-    if (typeof value === "string" || typeof value === "number")
+    if (typeof value === "string" || typeof value === "number") {
       return (
         <MinecraftChatText
           scale={scale}
@@ -134,10 +181,14 @@ function MinecraftChatText({
           {value}
         </MinecraftChatText>
       );
-    if (Array.isArray(value))
+    }
+
+    if (Array.isArray(value)) {
       return value.map((child, index) => (
         <React.Fragment key={index}>{richText(child)}</React.Fragment>
       ));
+    }
+
     if (
       React.isValidElement<{
         children?: React.ReactNode;
@@ -160,16 +211,25 @@ function MinecraftChatText({
             "sub",
             "sup",
           ].includes(value.type)))
-    )
+    ) {
       return React.cloneElement(
         value,
         undefined,
         richText(value.props.children)
       );
+    }
+
     return value;
   };
+
   const rendered =
-    text != null ? (
+    text == null ? (
+      accessibleText == null ? (
+        <span className="mc-chat-rich-inline">{richText(content)}</span>
+      ) : (
+        content
+      )
+    ) : (
       <>
         {lines.map((line, index) => (
           <span
@@ -198,12 +258,10 @@ function MinecraftChatText({
         ))}
         <span className="mc-text-accessible">{accessibleText}</span>
       </>
-    ) : accessibleText == null ? (
-      <span className="mc-chat-rich-inline">{richText(content)}</span>
-    ) : (
-      content
     );
+
   const Component = MinecraftRender;
+
   return (
     <Component
       as={as}
@@ -211,7 +269,7 @@ function MinecraftChatText({
       ref={node}
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
-      className={cn(`mc-label ${""}`, className)}
+      className={cn(`mc-label`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -226,6 +284,8 @@ function MinecraftChatText({
       {rendered}
     </Component>
   );
-}
+};
+
 export { MinecraftChatText };
+
 export type { MinecraftChatTextProps };

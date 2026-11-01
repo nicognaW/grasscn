@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import {
   BarChart,
@@ -29,8 +30,9 @@ import {
   ChartLegendContent,
   ChartPixelSurface,
   ChartAxisTick,
-  type ChartConfig,
 } from "@/components/ui/chart";
+import type { ChartConfig } from "@/components/ui/chart";
+
 export type AnalyticsChartType =
   | "bar"
   | "stacked-bar"
@@ -40,6 +42,7 @@ export type AnalyticsChartType =
   | "donut"
   | "radar"
   | "radial";
+
 const colors = [
   "#55ff55",
   "#5555ff",
@@ -48,8 +51,9 @@ const colors = [
   "#55ffff",
   "#ff55ff",
 ];
+
 /** Example gallery recipe. Consumers compose Recharts directly in ChartContainer. */
-export function AnalyticsChartExample({
+export const AnalyticsChartExample = ({
   data,
   config,
   series,
@@ -66,14 +70,17 @@ export function AnalyticsChartExample({
   type?: AnalyticsChartType;
   scale?: 1 | 2 | 3;
   height?: number;
-}) {
+}) => {
   const color = (key: string, index: number) =>
     config[key]?.color ??
     `var(--color-${key},${colors[index % colors.length]})`;
+
   const tooltip = (
     <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
   );
+
   const legend = <ChartLegend content={<ChartLegendContent />} />;
+
   const axes = (
     <>
       <CartesianGrid vertical={false} stroke="#555555" />
@@ -97,9 +104,11 @@ export function AnalyticsChartExample({
       />
     </>
   );
-  const margin = { top: 8 * scale, right: 8 * scale, bottom: 0, left: 0 };
+
+  const margin = { bottom: 0, left: 0, right: 8 * scale, top: 8 * scale };
   let chart: React.ReactElement;
-  if (type === "pie" || type === "donut")
+
+  if (type === "pie" || type === "donut") {
     chart = (
       <PieChart
         accessibilityLayer
@@ -124,7 +133,7 @@ export function AnalyticsChartExample({
         {legend}
       </PieChart>
     );
-  else if (type === "radial")
+  } else if (type === "radial") {
     chart = (
       <RadialBarChart
         accessibilityLayer
@@ -147,7 +156,7 @@ export function AnalyticsChartExample({
         {legend}
       </RadialBarChart>
     );
-  else if (type === "radar")
+  } else if (type === "radar") {
     chart = (
       <RadarChart
         accessibilityLayer
@@ -178,7 +187,7 @@ export function AnalyticsChartExample({
         {legend}
       </RadarChart>
     );
-  else if (type === "line")
+  } else if (type === "line") {
     chart = (
       <LineChart
         accessibilityLayer
@@ -202,7 +211,7 @@ export function AnalyticsChartExample({
         {legend}
       </LineChart>
     );
-  else if (type === "area")
+  } else if (type === "area") {
     chart = (
       <AreaChart
         accessibilityLayer
@@ -227,7 +236,7 @@ export function AnalyticsChartExample({
         {legend}
       </AreaChart>
     );
-  else
+  } else {
     chart = (
       <BarChart
         accessibilityLayer
@@ -250,6 +259,8 @@ export function AnalyticsChartExample({
         {legend}
       </BarChart>
     );
+  }
+
   return (
     <div data-slot="chart-example" data-chart-type={type}>
       <ChartContainer
@@ -257,9 +268,9 @@ export function AnalyticsChartExample({
         config={config}
         scale={scale}
         style={{
-          width: "100%",
-          height: height * scale,
           aspectRatio: "auto",
+          height: height * scale,
+          width: "100%",
           ...style,
         }}
       >
@@ -295,4 +306,4 @@ export function AnalyticsChartExample({
       </details>
     </div>
   );
-}
+};

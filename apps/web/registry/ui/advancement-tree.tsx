@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { Badge } from "./badge";
@@ -13,7 +14,8 @@ import {
 } from "./tooltip";
 
 import "./minecraft-advancement-tree.css";
-type AdvancementNode = {
+
+interface AdvancementNode {
   id: string;
   parentId?: string;
   x: number;
@@ -24,11 +26,13 @@ type AdvancementNode = {
   completed?: boolean;
   hidden?: boolean;
   icon?: React.ReactNode;
-};
-type AdvancementPan = {
+}
+
+interface AdvancementPan {
   x: number;
   y: number;
-};
+}
+
 type AdvancementTreeProps = React.ComponentProps<"div"> & {
   nodes: readonly AdvancementNode[];
   scale?: 1 | 2 | 3;
@@ -42,7 +46,8 @@ type AdvancementTreeProps = React.ComponentProps<"div"> & {
   height?: number;
   background?: string;
 };
-function AdvancementTree({
+
+const AdvancementTree = ({
   nodes,
   scale = 2,
   selectedId,
@@ -66,35 +71,56 @@ function AdvancementTree({
   onClickCapture,
   onDragStart,
   ...props
-}: AdvancementTreeProps) {
+}: AdvancementTreeProps) => {
   const ids = new Set<string>();
+
   for (const node of nodes) {
-    if (ids.has(node.id)) throw Error(`Duplicate advancement id: ${node.id}`);
+    if (ids.has(node.id)) {
+      throw Error(`Duplicate advancement id: ${node.id}`);
+    }
+
     ids.add(node.id);
-    if (!Number.isFinite(node.x) || !Number.isFinite(node.y))
+
+    if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
       throw Error("Advancement positions must be finite");
+    }
   }
+
   const points = nodes.map((node) => ({
     ...node,
     px: Math.floor(Math.fround(node.x * 28)),
     py: Math.floor(Math.fround(node.y * 27)),
   }));
+
   const positions = new Map(points.map((node) => [node.id, node]));
+
   for (const node of nodes) {
-    if (node.parentId && !ids.has(node.parentId))
+    if (node.parentId && !ids.has(node.parentId)) {
       throw Error(`Missing advancement parent: ${node.parentId}`);
+    }
+
     const visited = new Set([node.id]);
     let parent = node.parentId;
+
     while (parent) {
-      if (visited.has(parent))
+      if (visited.has(parent)) {
         throw Error("Advancement parents must not form a cycle");
+      }
+
       visited.add(parent);
       parent = positions.get(parent)?.parentId;
     }
   }
+
   const initial = () => {
-    if (defaultPan) return defaultPan;
-    if (!points.length) return { x: 0, y: 0 };
+    if (defaultPan) {
+      return defaultPan;
+    }
+
+    if (!points.length) {
+      return { x: 0, y: 0 };
+    }
+
     return {
       x:
         Math.floor(width / 2) -
@@ -112,85 +138,107 @@ function AdvancementTree({
         ),
     };
   };
-  const [offset, setOffset] = React.useState<AdvancementPan>(initial),
-    [selection, setSelection] = React.useState(defaultSelectedId),
-    root = React.useRef<HTMLDivElement>(null),
-    drag = React.useRef<{
-      x: number;
-      y: number;
-      pan: AdvancementPan;
-      id: number;
-    } | null>(null),
-    suppressClick = React.useRef(false),
-    [isDragging, setIsDragging] = React.useState(false),
-    [tooltipId, setTooltipId] = React.useState<string | null>(null);
+
+  const [offset, setOffset] = React.useState<AdvancementPan>(initial);
+  const [selection, setSelection] = React.useState(defaultSelectedId);
+  const root = React.useRef<HTMLDivElement>(null);
+
+  const drag = React.useRef<{
+    x: number;
+    y: number;
+    pan: AdvancementPan;
+    id: number;
+  } | null>(null);
+
+  const suppressClick = React.useRef(false);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [tooltipId, setTooltipId] = React.useState<string | null>(null);
+
   React.useImperativeHandle(forwardedRef, () => root.current!, []);
-  const position = pan ?? offset,
-    current = selectedId ?? selection;
+
+  const position = pan ?? offset;
+  const current = selectedId ?? selection;
+
   const updatePan = (next: AdvancementPan) => {
     const value = { x: Math.floor(next.x), y: Math.floor(next.y) };
-    if (!pan) setOffset(value);
+
+    if (!pan) {
+      setOffset(value);
+    }
+
     onPanChange?.(value);
   };
+
   const choose = (id: string) => {
-    if (selectedId === undefined) setSelection(id);
+    if (selectedId === undefined) {
+      setSelection(id);
+    }
+
     onSelectedIdChange?.(id);
   };
-  const visible = points.filter((node) => !node.hidden || node.completed),
-    paths = (outline: boolean) =>
-      visible.flatMap((node) => {
-        const parent = node.parentId && positions.get(node.parentId);
-        if (!parent) return [];
-        const ax = parent.px + 13,
-          bx = parent.px + 30,
-          ay = parent.py + 13,
-          cx = node.px + 13,
-          cy = node.py + 13;
-        return outline
-          ? [
-              {
-                x: Math.min(bx + 1, ax),
-                y: ay,
-                w: Math.abs(bx + 1 - ax) + 1,
-                h: 1,
-              },
-              {
-                x: Math.min(bx, ax),
-                y: ay - 1,
-                w: Math.abs(bx - ax) + 1,
-                h: 3,
-              },
-              {
-                x: Math.min(cx, bx - 1),
-                y: cy - 1,
-                w: Math.abs(cx - (bx - 1)) + 1,
-                h: 3,
-              },
-              {
-                x: bx - 1,
-                y: Math.min(cy, ay) + 1,
-                w: 3,
-                h: Math.max(0, Math.abs(cy - ay) - 1),
-              },
-            ]
-          : [
-              { x: Math.min(bx, ax), y: ay, w: Math.abs(bx - ax) + 1, h: 1 },
-              { x: Math.min(cx, bx), y: cy, w: Math.abs(cx - bx) + 1, h: 1 },
-              {
-                x: bx,
-                y: Math.min(cy, ay) + 1,
-                w: 1,
-                h: Math.max(0, Math.abs(cy - ay) - 1),
-              },
-            ];
-      });
+
+  const visible = points.filter((node) => !node.hidden || node.completed);
+
+  const paths = (outline: boolean) =>
+    visible.flatMap((node) => {
+      const parent = node.parentId && positions.get(node.parentId);
+
+      if (!parent) {
+        return [];
+      }
+
+      const ax = parent.px + 13;
+      const bx = parent.px + 30;
+      const ay = parent.py + 13;
+      const cx = node.px + 13;
+      const cy = node.py + 13;
+
+      return outline
+        ? [
+            {
+              h: 1,
+              w: Math.abs(bx + 1 - ax) + 1,
+              x: Math.min(bx + 1, ax),
+              y: ay,
+            },
+            {
+              h: 3,
+              w: Math.abs(bx - ax) + 1,
+              x: Math.min(bx, ax),
+              y: ay - 1,
+            },
+            {
+              h: 3,
+              w: Math.abs(cx - (bx - 1)) + 1,
+              x: Math.min(cx, bx - 1),
+              y: cy - 1,
+            },
+            {
+              h: Math.max(0, Math.abs(cy - ay) - 1),
+              w: 3,
+              x: bx - 1,
+              y: Math.min(cy, ay) + 1,
+            },
+          ]
+        : [
+            { h: 1, w: Math.abs(bx - ax) + 1, x: Math.min(bx, ax), y: ay },
+            { h: 1, w: Math.abs(cx - bx) + 1, x: Math.min(cx, bx), y: cy },
+            {
+              h: Math.max(0, Math.abs(cy - ay) - 1),
+              w: 1,
+              x: bx,
+              y: Math.min(cy, ay) + 1,
+            },
+          ];
+    });
+
   return (
     <TooltipProvider>
       <div
         {...props}
         ref={root}
         data-slot="advancement-tree"
-        className={cn(`mc-advancement-tree ${""}`, className)}
+        className={cn(`mc-advancement-tree`, className)}
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? "Advancement tree"}
         style={minecraftStyle(
@@ -198,28 +246,34 @@ function AdvancementTree({
           (__style) =>
             ({
               "--mc-scale": scale,
-              width: width * scale,
-              height: height * scale,
               backgroundImage: `url("${background}")`,
-              backgroundSize: `${16 * scale}px ${16 * scale}px`,
               backgroundPosition: `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
+              backgroundSize: `${16 * scale}px ${16 * scale}px`,
+              height: height * scale,
+              width: width * scale,
               ...__style,
             }) as React.CSSProperties
         )}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (event.defaultPrevented) return;
+
+          if (event.defaultPrevented) {
+            return;
+          }
+
           if (event.target === event.currentTarget) {
             const delta = {
+              ArrowDown: [0, -16],
               ArrowLeft: [16, 0],
               ArrowRight: [-16, 0],
               ArrowUp: [0, 16],
-              ArrowDown: [0, -16],
             }[event.key];
+
             if (delta) {
               event.preventDefault();
               updatePan({ x: position.x + delta[0], y: position.y + delta[1] });
             }
+
             if (event.key === "Home") {
               event.preventDefault();
               updatePan(initial());
@@ -229,38 +283,56 @@ function AdvancementTree({
         tabIndex={props.tabIndex ?? 0}
         onPointerDown={(event) => {
           onPointerDown?.(event);
+
           if (
             event.defaultPrevented ||
             event.button !== 0 ||
-            event.isPrimary === false
-          )
+            !event.isPrimary
+          ) {
             return;
+          }
+
           suppressClick.current = false;
           drag.current = {
+            id: event.pointerId,
+            pan: position,
             x: event.clientX,
             y: event.clientY,
-            pan: position,
-            id: event.pointerId,
           };
         }}
         onPointerMove={(event) => {
           onPointerMove?.(event);
-          if (event.defaultPrevented) return;
+
+          if (event.defaultPrevented) {
+            return;
+          }
+
           const start = drag.current;
-          if (!start || event.pointerId !== start.id) return;
+
+          if (!start || event.pointerId !== start.id) {
+            return;
+          }
+
           if (event.buttons === 0) {
             drag.current = null;
             setIsDragging(false);
+
             return;
           }
-          const dx = event.clientX - start.x,
-            dy = event.clientY - start.y;
-          if (!suppressClick.current && Math.hypot(dx, dy) < 6) return;
+
+          const dx = event.clientX - start.x;
+          const dy = event.clientY - start.y;
+
+          if (!suppressClick.current && Math.hypot(dx, dy) < 6) {
+            return;
+          }
+
           if (!suppressClick.current) {
             suppressClick.current = true;
             setIsDragging(true);
             event.currentTarget.setPointerCapture(event.pointerId);
           }
+
           updatePan({
             x: start.pan.x + dx / scale,
             y: start.pan.y + dy / scale,
@@ -268,11 +340,17 @@ function AdvancementTree({
         }}
         onPointerUp={(event) => {
           onPointerUp?.(event);
-          if (drag.current?.id !== event.pointerId) return;
+
+          if (drag.current?.id !== event.pointerId) {
+            return;
+          }
+
           drag.current = null;
           setIsDragging(false);
-          if (event.currentTarget.hasPointerCapture(event.pointerId))
+
+          if (event.currentTarget.hasPointerCapture(event.pointerId)) {
             event.currentTarget.releasePointerCapture(event.pointerId);
+          }
         }}
         onPointerCancel={(event) => {
           onPointerCancel?.(event);
@@ -282,6 +360,7 @@ function AdvancementTree({
         }}
         onLostPointerCapture={(event) => {
           onLostPointerCapture?.(event);
+
           if (drag.current?.id === event.pointerId) {
             drag.current = null;
             setIsDragging(false);
@@ -289,7 +368,11 @@ function AdvancementTree({
         }}
         onClickCapture={(event) => {
           onClickCapture?.(event);
-          if (event.defaultPrevented) return;
+
+          if (event.defaultPrevented) {
+            return;
+          }
+
           if (event.detail > 0 && suppressClick.current) {
             suppressClick.current = false;
             event.preventDefault();
@@ -331,11 +414,11 @@ function AdvancementTree({
             <Tooltip
               key={node.id}
               open={!isDragging && tooltipId === node.id}
-              onOpenChange={(open) =>
+              onOpenChange={(open) => {
                 setTooltipId((current) =>
                   open ? node.id : current === node.id ? null : current
-                )
-              }
+                );
+              }}
             >
               <TooltipTrigger
                 render={
@@ -348,18 +431,28 @@ function AdvancementTree({
                     className="mc-advancement-node"
                     style={{ left: node.px * scale, top: node.py * scale }}
                     onClick={(event) => {
-                      if (!event.defaultPrevented) choose(node.id);
+                      if (!event.defaultPrevented) {
+                        choose(node.id);
+                      }
                     }}
                     onKeyDown={(event) => {
                       const index = visible.findIndex((n) => n.id === node.id);
                       let next = index;
+
                       if (
                         event.key === "ArrowRight" ||
                         event.key === "ArrowDown"
-                      )
+                      ) {
                         next = (index + 1) % visible.length;
-                      if (event.key === "ArrowLeft" || event.key === "ArrowUp")
+                      }
+
+                      if (
+                        event.key === "ArrowLeft" ||
+                        event.key === "ArrowUp"
+                      ) {
                         next = (index - 1 + visible.length) % visible.length;
+                      }
+
                       if (next !== index) {
                         event.preventDefault();
                         root.current
@@ -409,6 +502,8 @@ function AdvancementTree({
       </div>
     </TooltipProvider>
   );
-}
+};
+
 export { AdvancementTree };
+
 export type { AdvancementNode, AdvancementPan, AdvancementTreeProps };

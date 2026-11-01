@@ -1,7 +1,10 @@
-import { test, expect, type Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
 const trigger = (page: Page) =>
-  page.getByRole("button", { name: "World details", exact: true });
+  page.getByRole("button", { exact: true, name: "World details" });
+
 test("Collapsible toggles with mouse and keyboard", async ({ page }) => {
   await page.goto("/?component=collapsible");
   await trigger(page).click();
@@ -11,6 +14,7 @@ test("Collapsible toggles with mouse and keyboard", async ({ page }) => {
   await trigger(page).press(" ");
   await expect(trigger(page)).toHaveAttribute("aria-expanded", "true");
 });
+
 test("Collapsible supports controlled and external state", async ({ page }) => {
   await page.goto("/?component=collapsible&controlled=1");
   await page.locator("#collapsible-external").click();
@@ -21,6 +25,7 @@ test("Collapsible supports controlled and external state", async ({ page }) => {
     page.getByLabel("Collapsible changes", { exact: true })
   ).toHaveText("1");
 });
+
 test("Collapsible rejects controlled requests without inventing state", async ({
   page,
 }) => {
@@ -31,6 +36,7 @@ test("Collapsible rejects controlled requests without inventing state", async ({
     page.getByLabel("Collapsible changes", { exact: true })
   ).toHaveText("1");
 });
+
 test("Collapsible preserves default-open and force-mount semantics", async ({
   page,
 }) => {
@@ -43,6 +49,7 @@ test("Collapsible preserves default-open and force-mount semantics", async ({
     1
   );
 });
+
 test("Collapsible inherits disabled state and supports event cancellation", async ({
   page,
 }) => {
@@ -57,6 +64,7 @@ test("Collapsible inherits disabled state and supports event cancellation", asyn
     page.getByLabel("Collapsible changes", { exact: true })
   ).toHaveText("0");
 });
+
 test("Collapsible preserves all composed element refs and inner actions", async ({
   page,
 }) => {
@@ -69,13 +77,14 @@ test("Collapsible preserves all composed element refs and inner actions", async 
     "ARTICLE,BUTTON,SECTION"
   );
   await page
-    .getByRole("button", { name: "Inside action", exact: true })
+    .getByRole("button", { exact: true, name: "Inside action" })
     .click();
   await expect(
     page.getByLabel("Collapsible changes", { exact: true })
   ).toHaveText("2");
   await expect(trigger(page)).toHaveAttribute("aria-expanded", "true");
 });
+
 test("Collapsible keeps native CJK text accessible", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -86,46 +95,56 @@ test("Collapsible keeps native CJK text accessible", async ({ page }) => {
     "data-mc-label-layout-ready",
     "true"
   );
-  for (const glyph of await body.locator("[data-mc-label-ready]").all())
+
+  for (const glyph of await body.locator("[data-mc-label-ready]").all()) {
     await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await expect(body).toContainText("你好，世界");
   expect(errors).toEqual([]);
 });
+
 test("Collapsible preserves form editing without closing the section", async ({
   page,
 }) => {
   await page.goto("/?component=collapsible&rich=1");
   await trigger(page).click();
-  const input = page.getByRole("textbox", { name: "World name", exact: true });
+  const input = page.getByRole("textbox", { exact: true, name: "World name" });
   await input.fill("你好，世界");
-  await page.getByRole("button", { name: "Save world", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Save world" }).click();
   await expect(input).toHaveValue("你好，世界");
   await expect(trigger(page)).toHaveAttribute("aria-expanded", "true");
 });
+
 test("Collapsible clicks use the original asset once and disabled actions are silent", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).__collapsibleVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__collapsibleVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
-  const voices = () => page.evaluate(() => (window as any).__collapsibleVoices);
+
+  const voices = async () =>
+    page.evaluate(() => (window as any).__collapsibleVoices);
+
   await page.goto("/?component=collapsible");
   await trigger(page).hover();
   expect(await voices()).toEqual([]);
   await trigger(page).click();
   expect(await voices()).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await trigger(page).press("Enter");
   expect(await voices()).toHaveLength(2);
+
   for (const query of ["disabled=1", "prevent=1"]) {
     await page.goto(`/?component=collapsible&${query}`);
     await trigger(page).click({ force: true });

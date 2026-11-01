@@ -7,7 +7,7 @@ import {
   toastGlyphAtlas,
   toastSpriteAtlas,
 } from "@grasscn/web/ui/minecraft-toast-atlas";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const hash = (bytes: Uint8Array) =>
@@ -15,17 +15,18 @@ const hash = (bytes: Uint8Array) =>
 
 test("SystemToast retains original PNG bytes, RGBA and asymmetric nine-slice metadata", () => {
   const inventory = JSON.parse(
-      readFileSync(
-        pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
-        "utf8"
-      )
-    ),
-    pin =
-      inventory.assets[
-        "assets/minecraft/textures/gui/sprites/toast/system.png"
-      ],
-    bytes = Buffer.from(minecraftToastSprite.image.split(",")[1], "base64"),
-    image = PNG.sync.read(bytes);
+    readFileSync(
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
+      "utf-8"
+    )
+  );
+
+  const pin =
+    inventory.assets["assets/minecraft/textures/gui/sprites/toast/system.png"];
+
+  const bytes = Buffer.from(minecraftToastSprite.image.split(",")[1], "base64");
+  const image = PNG.sync.read(bytes);
+
   expect(hash(bytes)).toBe(pin.sha256);
   expect(Buffer.from(minecraftToastSprite.rgba, "base64")).toEqual(image.data);
   expect([image.width, image.height]).toEqual([160, 64]);
@@ -35,19 +36,21 @@ test("SystemToast retains original PNG bytes, RGBA and asymmetric nine-slice met
 
 test("SystemToast uses the UVs and metrics observed in its normalized native context", () => {
   const glyphs = JSON.parse(
+    readFileSync(
+      pixelPerfectFile("tests/reference/toast/glyph-atlas.json"),
+      "utf-8"
+    )
+  );
+
+  const observed = Object.values(
+    JSON.parse(
       readFileSync(
-        pixelPerfectFile("tests/reference/toast/glyph-atlas.json"),
-        "utf8"
+        pixelPerfectFile("tests/reference/toast/toast-atlas.json"),
+        "utf-8"
       )
-    ),
-    observed = Object.values(
-      JSON.parse(
-        readFileSync(
-          pixelPerfectFile("tests/reference/toast/toast-atlas.json"),
-          "utf8"
-        )
-      )
-    )[0] as any;
+    )
+  )[0] as any;
+
   expect(toastGlyphAtlas).toEqual(glyphs);
   expect(Object.keys(glyphs)).toHaveLength(112);
   expect(toastSpriteAtlas.width).toBe(

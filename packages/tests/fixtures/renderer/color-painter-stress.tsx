@@ -4,26 +4,42 @@ import { minecraftChatAtlas } from "@grasscn/web/ui/minecraft-chat-atlas";
 import { MinecraftColorUnicodeLabel } from "@grasscn/web/ui/minecraft-color-unicode";
 import { minecraftItemAtlas } from "@grasscn/web/ui/minecraft-item-atlas";
 import * as React from "react";
-export function ColorPainterStressFixture() {
-  const [scale, setScale] = React.useState<1 | 2 | 3>(3),
-    [noise, setNoise] = React.useState(true),
-    [mounted, setMounted] = React.useState(true);
+
+export const ColorPainterStressFixture = () => {
+  const [scale, setScale] = React.useState<1 | 2 | 3>(3);
+  const [noise, setNoise] = React.useState(true);
+  const [mounted, setMounted] = React.useState(true);
+
   React.useLayoutEffect(() => {
     document.body.style.background = document.documentElement.style.background =
       "#202020";
   }, []);
+
   return (
     <>
-      <div style={{ position: "fixed", right: 0, bottom: 0 }}>
+      <div style={{ bottom: 0, position: "fixed", right: 0 }}>
         {([1, 2, 3] as const).map((value) => (
-          <button key={value} onClick={() => setScale(value)}>
+          <button
+            key={value}
+            onClick={() => {
+              setScale(value);
+            }}
+          >
             Scale {value}
           </button>
         ))}
-        <button onClick={() => setNoise((value) => !value)}>
+        <button
+          onClick={() => {
+            setNoise((value) => !value);
+          }}
+        >
           Toggle siblings
         </button>
-        <button onClick={() => setMounted((value) => !value)}>
+        <button
+          onClick={() => {
+            setMounted((value) => !value);
+          }}
+        >
           Toggle all
         </button>
       </div>
@@ -32,20 +48,20 @@ export function ColorPainterStressFixture() {
           <div
             style={
               {
-                "--mc-scale": scale,
                 "--mc-pixel": scale + "px",
+                "--mc-scale": scale,
               } as React.CSSProperties
             }
           >
             <BubbleContent
               id="subject"
               style={{
-                position: "fixed",
+                color: "#ff5555",
+                height: 9 * scale,
                 left: 16 * scale,
+                position: "fixed",
                 top: 16 * scale,
                 width: 252 * scale,
-                height: 9 * scale,
-                color: "#ff5555",
               }}
               data-subject="true"
             >
@@ -57,13 +73,13 @@ export function ColorPainterStressFixture() {
                     data-stress-label
                     key={index}
                     style={{
-                      position: "fixed",
-                      left: 700 + index,
-                      top: 300 + index,
-                      opacity: 0,
                       color: ["#55ff55", "#ff55ff", "#ffaa00", "#55ffff"][
                         index % 4
                       ],
+                      left: 700 + index,
+                      opacity: 0,
+                      position: "fixed",
+                      top: 300 + index,
                     }}
                   >
                     <MinecraftColorUnicodeLabel
@@ -80,4 +96,4 @@ export function ColorPainterStressFixture() {
       ) : null}
     </>
   );
-}
+};

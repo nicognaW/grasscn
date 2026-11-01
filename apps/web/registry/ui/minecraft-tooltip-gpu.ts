@@ -13,38 +13,52 @@ export function gpuTooltipPixels(
   y: number
 ) {
   const canvas = document.createElement("canvas");
-  const viewportWidth = window.innerWidth,
-    viewportHeight = window.innerHeight;
+
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
   canvas.width = viewportWidth;
   canvas.height = viewportHeight;
+
   const gl = canvas.getContext("webgl", {
     alpha: false,
     antialias: false,
     preserveDrawingBuffer: true,
   });
-  if (!gl) return undefined;
+
+  if (!gl) {
+    return;
+  }
+
   const shader = (kind: number, source: string) => {
     const value = gl.createShader(kind)!;
     gl.shaderSource(value, source);
     gl.compileShader(value);
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS))
+
+    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
       throw new Error(gl.getShaderInfoLog(value) ?? "Tooltip shader failed");
+    }
+
     return value;
   };
-  const program = gl.createProgram()!;
+
+  const program = gl.createProgram();
+
   const vertex = shader(
     gl.VERTEX_SHADER,
     "attribute vec2 position; attribute vec2 uv; varying vec2 coord; uniform vec2 projection; void main(){gl_Position=vec4(position*projection+vec2(-1.,1.),0.,1.);coord=uv;}"
   );
+
   const fragment = shader(
     gl.FRAGMENT_SHADER,
     "precision highp float; varying vec2 coord; uniform sampler2D atlas; void main(){gl_FragColor=texture2D(atlas,coord);}"
   );
+
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
   gl.useProgram(program);
-  const texture = gl.createTexture()!;
+  const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
@@ -61,9 +75,11 @@ export function gpuTooltipPixels(
     gl.UNSIGNED_BYTE,
     null
   );
+
   for (const name of ["background", "frame"] as const) {
-    const sprite = sprites[name],
-      location = atlas.locations[name];
+    const sprite = sprites[name];
+    const location = atlas.locations[name];
+
     const rgba = Uint8Array.from(atob(sprite.rgba), (c) => c.charCodeAt(0));
     gl.texSubImage2D(
       gl.TEXTURE_2D,
@@ -77,8 +93,10 @@ export function gpuTooltipPixels(
       rgba
     );
   }
-  const buffer = gl.createBuffer()!;
+
+  const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
   for (const [name, offset] of [
     ["position", 0],
     ["uv", 8],
@@ -87,6 +105,7 @@ export function gpuTooltipPixels(
     gl.enableVertexAttribArray(location);
     gl.vertexAttribPointer(location, 2, gl.FLOAT, false, 16, offset);
   }
+
   gl.uniform2f(
     gl.getUniformLocation(program, "projection"),
     2 / viewportWidth,
@@ -97,8 +116,10 @@ export function gpuTooltipPixels(
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-  const originX = Math.round(x),
-    originY = Math.round(y);
+
+  const originX = Math.round(x);
+  const originY = Math.round(y);
+
   const draw = (
     dx: number,
     dy: number,
@@ -109,12 +130,14 @@ export function gpuTooltipPixels(
     sw: number,
     sh: number
   ) => {
-    const x = originX + dx,
-      y = originY + dy;
-    const a = [x, y, u / atlas.width, v / atlas.height],
-      b = [x, y + h, u / atlas.width, (v + sh) / atlas.height],
-      c = [x + w, y + h, (u + sw) / atlas.width, (v + sh) / atlas.height],
-      d = [x + w, y, (u + sw) / atlas.width, v / atlas.height];
+    const x = originX + dx;
+    const y = originY + dy;
+
+    const a = [x, y, u / atlas.width, v / atlas.height];
+    const b = [x, y + h, u / atlas.width, (v + sh) / atlas.height];
+    const c = [x + w, y + h, (u + sw) / atlas.width, (v + sh) / atlas.height];
+    const d = [x + w, y, (u + sw) / atlas.width, v / atlas.height];
+
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([...a, ...b, ...c, ...a, ...c, ...d]),
@@ -122,24 +145,33 @@ export function gpuTooltipPixels(
     );
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   };
+
   for (const name of ["background", "frame"] as const) {
-    const sprite = sprites[name],
-      location = atlas.locations[name];
-    const border = sprite.border.left,
-      sizes = [border, 100 - border * 2, border];
-    const widths = [border * scale, width - border * scale * 2, border * scale],
-      heights = [border * scale, height - border * scale * 2, border * scale];
+    const sprite = sprites[name];
+    const location = atlas.locations[name];
+
+    const border = sprite.border.left;
+    const sizes = [border, 100 - border * 2, border];
+
+    const widths = [border * scale, width - border * scale * 2, border * scale];
+
+    const heights = [
+      border * scale,
+      height - border * scale * 2,
+      border * scale,
+    ];
+
     for (
-      let row = 0, y = 0, sy = 0;
+      let row = 0, sy = 0, y = 0;
       row < 3;
-      y += heights[row], sy += sizes[row++]
-    )
+      y += heights[row], sy += sizes[row], row += 1
+    ) {
       for (
-        let col = 0, x = 0, sx = 0;
+        let col = 0, sx = 0, x = 0;
         col < 3;
-        x += widths[col], sx += sizes[col++]
+        x += widths[col], sx += sizes[col], col += 1
       ) {
-        if (sprite.stretch)
+        if (sprite.stretch) {
           draw(
             x,
             y,
@@ -150,11 +182,12 @@ export function gpuTooltipPixels(
             sizes[col],
             sizes[row]
           );
-        else
+        } else {
           for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale)
             for (let dx = 0; dx < widths[col]; dx += sizes[col] * scale) {
               const w = Math.min(sizes[col] * scale, widths[col] - dx),
                 h = Math.min(sizes[row] * scale, heights[row] - dy);
+
               draw(
                 x + dx,
                 y + dy,
@@ -166,10 +199,14 @@ export function gpuTooltipPixels(
                 h / scale
               );
             }
+        }
       }
+    }
   }
-  const raw = new Uint8Array(width * height * 4),
-    result = new Uint8ClampedArray(raw.length);
+
+  const raw = new Uint8Array(width * height * 4);
+  const result = new Uint8ClampedArray(raw.length);
+
   gl.readPixels(
     originX,
     viewportHeight - originY - height,
@@ -179,16 +216,20 @@ export function gpuTooltipPixels(
     gl.UNSIGNED_BYTE,
     raw
   );
-  for (let y = 0; y < height; y++)
+
+  for (let y = 0; y < height; y += 1) {
     result.set(
       raw.subarray((height - y - 1) * width * 4, (height - y) * width * 4),
       y * width * 4
     );
+  }
+
   gl.deleteBuffer(buffer);
   gl.deleteTexture(texture);
   gl.deleteProgram(program);
   gl.deleteShader(vertex);
   gl.deleteShader(fragment);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
+
   return result;
 }

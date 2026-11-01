@@ -1,19 +1,20 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Typography retains native text inside semantic headings and prose elements", async ({
   page,
 }) => {
   for (const [part, tag] of Object.entries({
+    blockquote: "BLOCKQUOTE",
+    code: "CODE",
     h1: "H1",
     h2: "H2",
     h3: "H3",
     h4: "H4",
+    large: "DIV",
+    lead: "P",
+    muted: "P",
     p: "P",
     small: "SMALL",
-    blockquote: "BLOCKQUOTE",
-    code: "CODE",
-    lead: "P",
-    large: "DIV",
-    muted: "P",
   })) {
     await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
     const subject = page.locator("[data-subject]");
@@ -22,6 +23,7 @@ test("Typography retains native text inside semantic headings and prose elements
     expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
   }
 });
+
 test("Typography preserves wrapping, line breaks and full accessible heading names", async ({
   page,
 }) => {
@@ -37,6 +39,7 @@ test("Typography preserves wrapping, line breaks and full accessible heading nam
   ).toBeVisible();
   await expect(page.locator("[data-subject] > .mc-label-line")).toHaveCount(3);
 });
+
 test("Typography asChild keeps consumer links, refs and events", async ({
   page,
 }) => {
@@ -48,12 +51,14 @@ test("Typography asChild keeps consumer links, refs and events", async ({
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("A");
 });
+
 test("Rich Typography children retain semantic markup", async ({ page }) => {
   await page.goto("/?component=typography&rich=1&text=Rich%20content");
   await expect(page.locator("[data-subject] strong")).toHaveText(
     "Rich content"
   );
 });
+
 test("Breadcrumb supplies nav, ordered list, link destinations and a current page", async ({
   page,
 }) => {
@@ -61,12 +66,12 @@ test("Breadcrumb supplies nav, ordered list, link destinations and a current pag
   const nav = page.getByRole("navigation", { name: "Breadcrumb" });
   await expect(nav.locator("ol")).toHaveCount(1);
   await expect(
-    nav.getByRole("link", { name: "Home", exact: true })
+    nav.getByRole("link", { exact: true, name: "Home" })
   ).toHaveAttribute("href", "#home");
   await expect(
-    nav.getByRole("link", { name: "World", exact: true })
+    nav.getByRole("link", { exact: true, name: "World" })
   ).toHaveAttribute("href", "#world");
-  const current = nav.getByRole("link", { name: "Current page", exact: true });
+  const current = nav.getByRole("link", { exact: true, name: "Current page" });
   await expect(current).toHaveAttribute("aria-current", "page");
   await expect(current).toHaveAttribute("aria-disabled", "true");
   expect(await current.getAttribute("tabindex")).toBeNull();
@@ -78,11 +83,12 @@ test("Breadcrumb supplies nav, ordered list, link destinations and a current pag
     "true"
   );
 });
+
 test("Breadcrumb links preserve keyboard navigation, composed anchors and refs", async ({
   page,
 }) => {
   await page.goto("/?component=breadcrumb&native=1&asChild=1&text=World");
-  const subject = page.getByRole("link", { name: "World", exact: true });
+  const subject = page.getByRole("link", { exact: true, name: "World" });
   await subject.focus();
   await expect(subject).toBeFocused();
   await page.keyboard.press("Enter");
@@ -91,6 +97,7 @@ test("Breadcrumb links preserve keyboard navigation, composed anchors and refs",
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("A");
 });
+
 test("Badge supports native plain/CJK content, rich children and asChild links", async ({
   page,
 }) => {
@@ -102,19 +109,25 @@ test("Badge supports native plain/CJK content, rich children and asChild links",
     await page.goto(`/?component=badge&${suffix}`);
     const subject = page.locator("[data-subject]");
     await expect(subject).toBeVisible();
-    if (suffix.includes("rich"))
+
+    if (suffix.includes("rich")) {
       await expect(subject.locator("strong")).toHaveText("Rich");
+    }
+
     if (suffix.includes("asChild")) {
       await expect(subject).toHaveAttribute("href", "#destination");
       await subject.click();
       await expect(page.locator("#events")).toHaveText("1");
       await page.locator("#read-ref").click();
       await expect(page.locator("#tag")).toHaveText("A");
-    } else if (suffix.includes("世界"))
-      for (const line of await subject.locator("[data-mc-label-ready]").all())
+    } else if (suffix.includes("世界")) {
+      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
         await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      }
+    }
   }
 });
+
 test("Kbd exposes keyboard semantics and refs without inventing button semantics", async ({
   page,
 }) => {
@@ -123,22 +136,25 @@ test("Kbd exposes keyboard semantics and refs without inventing button semantics
   expect(await subject.evaluate((node) => node.tagName)).toBe("KBD");
   expect(await subject.getAttribute("tabindex")).toBeNull();
   await expect(
-    page.getByRole("button", { name: "Ctrl", exact: true })
+    page.getByRole("button", { exact: true, name: "Ctrl" })
   ).toHaveCount(0);
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("KBD");
   await expect(page.locator("[data-slot=kbd-group] kbd")).toHaveCount(2);
 });
+
 test("Text and passive keyboard components remain silent on pointer and keyboard interaction", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push(this.src);
+
       return Promise.resolve();
     };
   });
+
   for (const component of ["badge", "typography", "breadcrumb", "kbd"]) {
     await page.goto(
       `/?component=${component}&native=1&asChild=1&text=Continue`

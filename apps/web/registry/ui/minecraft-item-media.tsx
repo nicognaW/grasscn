@@ -6,36 +6,53 @@ import {
   retainItemMedia,
   releaseItemMedia,
 } from "./minecraft-item-media-gpu";
-export function MinecraftItemMedia({ scale }: { scale: 1 | 2 | 3 }) {
-  const canvas = React.useRef<HTMLCanvasElement>(null),
-    [painted, setPainted] = React.useState(false);
+
+export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
+  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const [painted, setPainted] = React.useState(false);
+
   React.useLayoutEffect(() => {
     retainItemMedia();
-    const node = canvas.current!,
-      media = node.parentElement!,
-      root = (node.closest(".mc-item") ?? media) as HTMLElement;
-    let signature = "",
-      inside = root.matches(":hover"),
-      pointer: { x: number; y: number } | undefined;
+
+    const node = canvas.current!;
+    const media = node.parentElement!;
+    const root = node.closest<HTMLElement>(".mc-item") ?? media;
+
+    let signature = "";
+    let inside = root.matches(":hover");
+    let pointer: { x: number; y: number } | undefined;
+
     const paint = () => {
-      const rect = node.getBoundingClientRect(),
-        mediaBounds = media.getBoundingClientRect(),
-        hovered = root.dataset.mcItemInteractive === "true" && inside,
-        overIcon = pointer
-          ? pointer.x >= mediaBounds.left &&
-            pointer.x < mediaBounds.right &&
-            pointer.y >= mediaBounds.top &&
-            pointer.y < mediaBounds.bottom
-          : media.matches(":hover"),
-        state: 0 | 1 | 2 = hovered ? (overIcon ? 2 : 1) : 0,
-        key = [rect.x, rect.y, innerWidth, innerHeight, state, scale].join(":");
-      if (key === signature) return;
-      signature = key;
-      const pixels = itemMediaPixels(state, scale, rect.x, rect.y);
-      if (!pixels) {
-        setPainted(false);
+      const rect = node.getBoundingClientRect();
+      const mediaBounds = media.getBoundingClientRect();
+      const hovered = root.dataset.mcItemInteractive === "true" && inside;
+
+      const overIcon = pointer
+        ? pointer.x >= mediaBounds.left &&
+          pointer.x < mediaBounds.right &&
+          pointer.y >= mediaBounds.top &&
+          pointer.y < mediaBounds.bottom
+        : media.matches(":hover");
+
+      const state: 0 | 1 | 2 = hovered ? (overIcon ? 2 : 1) : 0;
+
+      const key = [rect.x, rect.y, innerWidth, innerHeight, state, scale].join(
+        ":"
+      );
+
+      if (key === signature) {
         return;
       }
+
+      signature = key;
+      const pixels = itemMediaPixels(state, scale, rect.x, rect.y);
+
+      if (!pixels) {
+        setPainted(false);
+
+        return;
+      }
+
       node.width = node.height = 32 * scale;
       node
         .getContext("2d")!
@@ -43,32 +60,39 @@ export function MinecraftItemMedia({ scale }: { scale: 1 | 2 | 3 }) {
       node.dataset.mcItemMediaState = String(state);
       setPainted(true);
     };
+
     const enter = (event: Event) => {
-        inside = true;
-        const pointerEvent = event as PointerEvent;
-        pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
-        paint();
-      },
-      leave = () => {
-        inside = false;
-        pointer = undefined;
-        paint();
-      },
-      move = (event: Event) => {
-        const pointerEvent = event as PointerEvent;
-        pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
-        paint();
-      };
+      inside = true;
+      const pointerEvent = event as PointerEvent;
+      pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
+      paint();
+    };
+
+    const leave = () => {
+      inside = false;
+      pointer = undefined;
+      paint();
+    };
+
+    const move = (event: Event) => {
+      const pointerEvent = event as PointerEvent;
+      pointer = { x: pointerEvent.clientX, y: pointerEvent.clientY };
+      paint();
+    };
+
     const observer = new ResizeObserver(paint);
     observer.observe(node);
     observer.observe(root);
-    const frame = requestAnimationFrame(paint),
-      timer = setInterval(paint, 100);
+
+    const frame = requestAnimationFrame(paint);
+    const timer = setInterval(paint, 100);
+
     root.addEventListener("pointerenter", enter);
     root.addEventListener("pointerleave", leave);
     root.addEventListener("pointermove", move);
     window.addEventListener("scroll", paint, true);
     window.addEventListener("resize", paint);
+
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
@@ -81,6 +105,7 @@ export function MinecraftItemMedia({ scale }: { scale: 1 | 2 | 3 }) {
       releaseItemMedia();
     };
   }, [scale]);
+
   return (
     <>
       <img
@@ -100,4 +125,4 @@ export function MinecraftItemMedia({ scale }: { scale: 1 | 2 | 3 }) {
       />
     </>
   );
-}
+};

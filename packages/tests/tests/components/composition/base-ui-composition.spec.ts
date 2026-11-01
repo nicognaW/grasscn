@@ -4,15 +4,17 @@ test("Base UI state callbacks retain Minecraft defaults and update on the native
   page,
 }) => {
   await page.goto("/?component=base-ui-composition");
+
   const button = page.getByRole("button", {
-    name: "Stateful button",
     exact: true,
+    name: "Stateful button",
   });
+
   await expect(button).toHaveClass(/mc-button/);
   await expect(button).toHaveClass(/state-enabled/);
   await expect(button).toHaveCSS("width", "240px");
   await page
-    .getByRole("button", { name: "Toggle disabled", exact: true })
+    .getByRole("button", { exact: true, name: "Toggle disabled" })
     .click();
   await expect(button).toBeDisabled();
   await expect(button).toHaveClass(/state-disabled/);
@@ -29,29 +31,33 @@ test("Input uses Base UI Field state and popup callbacks receive popup state", a
   page,
 }) => {
   await page.goto("/?component=base-ui-composition");
+
   const input = page.getByRole("textbox", {
-    name: "Inherited field",
     exact: true,
+    name: "Inherited field",
   });
+
   await expect(input).toHaveValue("Hello 世界");
   await expect(input).toBeEnabled();
   await expect(
-    page.getByRole("link", { name: "Composed group text", exact: true })
+    page.getByRole("link", { exact: true, name: "Composed group text" })
   ).toHaveAttribute("href", "#group");
   await expect(
-    page.getByRole("link", { name: "Composed sidebar label", exact: true })
+    page.getByRole("link", { exact: true, name: "Composed sidebar label" })
   ).toHaveAttribute("href", "#sidebar");
   await page
-    .getByRole("button", { name: "Toggle disabled", exact: true })
+    .getByRole("button", { exact: true, name: "Toggle disabled" })
     .click();
   await expect(input).toBeDisabled();
   await page
-    .getByRole("button", { name: "Open stateful dialog", exact: true })
+    .getByRole("button", { exact: true, name: "Open stateful dialog" })
     .click();
+
   const dialog = page.getByRole("dialog", {
-    name: "Native state",
     exact: true,
+    name: "Native state",
   });
+
   await expect(dialog).toHaveClass(/mc-dialog-content/);
   await expect(dialog).toHaveClass(/state-open/);
   await expect(dialog).toHaveCSS("--open-state", "1");
@@ -63,10 +69,12 @@ test("sidebar submenu render forwards consumer attributes and handlers once", as
   page,
 }) => {
   await page.goto("/?component=base-ui-composition");
+
   const link = page.getByRole("link", {
-    name: "Composed submenu",
     exact: true,
+    name: "Composed submenu",
   });
+
   await expect(link).toHaveAttribute("href", "#composed-sub");
   await link.click();
   await expect(page.getByLabel("Submenu actions", { exact: true })).toHaveText(

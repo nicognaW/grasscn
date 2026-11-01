@@ -1,58 +1,72 @@
 "use client";
+
 import * as React from "react";
 
-import { MinecraftProse, type MinecraftProseProps } from "./minecraft-prose";
+import { MinecraftProse } from "./minecraft-prose";
+import type { MinecraftProseProps } from "./minecraft-prose";
 import { minecraftClasses as cn } from "./minecraft-render";
 
 import "./minecraft-typography.css";
+
 type TypographyProps = MinecraftProseProps;
-function Typography({ className, ...props }: TypographyProps) {
+
+const Typography = ({ className, ...props }: TypographyProps) => {
   return (
     <MinecraftProse
       data-slot="typography"
-      className={cn(`mc-typography ${""}`, className)}
+      className={cn(`mc-typography`, className)}
       {...props}
     />
   );
-}
+};
+
 const textElement = (as: keyof React.JSX.IntrinsicElements, slot: string) =>
   function Text({ className, ...props }: TypographyProps) {
     return (
       <Typography as={as} data-slot={slot} className={className} {...props} />
     );
   };
-const TypographyH1 = textElement("h1", "typography-h1"),
-  TypographyH2 = textElement("h2", "typography-h2"),
-  TypographyH3 = textElement("h3", "typography-h3"),
-  TypographyH4 = textElement("h4", "typography-h4");
-const TypographyP = textElement("p", "typography-p"),
-  TypographyBlockquote = textElement("blockquote", "typography-blockquote"),
-  TypographyInlineCode = textElement("code", "typography-inline-code");
-const TypographyLead = textElement("p", "typography-lead"),
-  TypographyLarge = textElement("div", "typography-large"),
-  TypographySmall = textElement("small", "typography-small"),
-  TypographyMuted = textElement("p", "typography-muted");
-function TypographyList({ className, ...props }: React.ComponentProps<"ul">) {
+
+const TypographyH1 = textElement("h1", "typography-h1");
+const TypographyH2 = textElement("h2", "typography-h2");
+const TypographyH3 = textElement("h3", "typography-h3");
+const TypographyH4 = textElement("h4", "typography-h4");
+
+const TypographyP = textElement("p", "typography-p");
+const TypographyBlockquote = textElement("blockquote", "typography-blockquote");
+const TypographyInlineCode = textElement("code", "typography-inline-code");
+
+const TypographyLead = textElement("p", "typography-lead");
+const TypographyLarge = textElement("div", "typography-large");
+const TypographySmall = textElement("small", "typography-small");
+const TypographyMuted = textElement("p", "typography-muted");
+
+const TypographyList = ({
+  className,
+  ...props
+}: React.ComponentProps<"ul">) => {
   return (
     <ul
       data-slot="typography-list"
-      className={cn(`mc-typography-list ${""}`, className)}
+      className={cn(`mc-typography-list`, className)}
       {...props}
     />
   );
-}
-function TypographyTable({
+};
+
+const TypographyTable = ({
   className,
   ...props
-}: React.ComponentProps<"table">) {
+}: React.ComponentProps<"table">) => {
   return (
     <table
       data-slot="typography-table"
-      className={cn(`mc-typography-table ${""}`, className)}
+      className={cn(`mc-typography-table`, className)}
       {...props}
     />
   );
-}
+};
+
 export {
   Typography,
   TypographyH1,
@@ -69,4 +83,5 @@ export {
   TypographyList,
   TypographyTable,
 };
+
 export type { TypographyProps };

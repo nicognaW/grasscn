@@ -1,24 +1,33 @@
 "use client";
+
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-toggle-assets.css";
 import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-toggle.css";
+
 const toggleVariants = cva("mc-toggle", {
-  variants: { variant: { default: "" }, size: { default: "" } },
-  defaultVariants: { variant: "default", size: "default" },
+  defaultVariants: { size: "default", variant: "default" },
+  variants: { size: { default: "" }, variant: { default: "" } },
 });
+
 type ToggleProps = MinecraftProps<typeof TogglePrimitive> &
   VariantProps<typeof toggleVariants> & {
     scale?: 1 | 2 | 3;
   };
-function Toggle({
+
+const Toggle = ({
   className,
   variant = "default",
   size = "default",
@@ -30,18 +39,21 @@ function Toggle({
   onClick,
   onPointerDown,
   ...props
-}: ToggleProps) {
-  if (variant !== "default" || size !== "default")
+}: ToggleProps) => {
+  if (variant !== "default" || size !== "default") {
     throw new Error(
       "Minecraft recipe filters support the default visual variant and size only"
     );
+  }
+
   const child = null;
+
   return (
     <TogglePrimitive
       render={render}
       data-slot="toggle"
       disabled={disabled}
-      className={cn(toggleVariants({ variant, size }), className)}
+      className={cn(toggleVariants({ size, variant }), className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -52,27 +64,35 @@ function Toggle({
       onPointerDown={(event) => {
         if (disabled) {
           event.preventDefault();
+
           return;
         }
+
         onPointerDown?.(event);
       }}
       onClick={(event) => {
         if (
           disabled ||
-          event.currentTarget.hasAttribute("data-disabled") ||
+          Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
           event.preventDefault();
+
           return;
         }
+
         onClick?.(event);
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented)
+
+        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
           playMinecraftClick();
+        }
       }}
     >
       {children}
     </TogglePrimitive>
   );
-}
+};
+
 export { Toggle, toggleVariants };
+
 export type { ToggleProps };

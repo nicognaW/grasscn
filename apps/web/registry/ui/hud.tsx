@@ -1,19 +1,20 @@
 "use client";
+
 import * as React from "react";
 
-import {
-  AdventureImage,
-  type AdventureTexture,
-} from "./minecraft-adventure-image";
+import { AdventureImage } from "./minecraft-adventure-image";
+import type { AdventureTexture } from "./minecraft-adventure-image";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hud.css";
+
 type MeterProps = React.ComponentProps<"div"> & {
   value: number;
   scale?: 1 | 2 | 3;
   max?: number;
 };
-function IconMeter({
+
+const IconMeter = ({
   value,
   max = 20,
   scale = 2,
@@ -25,25 +26,30 @@ function IconMeter({
 }: MeterProps & {
   kind: "health" | "armor" | "hunger" | "air";
   condition?: "normal" | "poisoned" | "withered" | "frozen" | "absorbing";
-}) {
-  const limit = kind === "air" ? 10 : 20,
-    count = Math.max(
-      1,
-      Math.min(10, Math.ceil(max / (kind === "air" ? 1 : 2)))
-    ),
-    amount = Math.max(
-      0,
-      Math.min(max, limit, Number.isFinite(value) ? value : 0)
-    ),
-    step = kind === "air" ? 1 : 2;
+}) => {
+  const limit = kind === "air" ? 10 : 20;
+
+  const count = Math.max(
+    1,
+    Math.min(10, Math.ceil(max / (kind === "air" ? 1 : 2)))
+  );
+
+  const amount = Math.max(
+    0,
+    Math.min(max, limit, Number.isFinite(value) ? value : 0)
+  );
+
+  const step = kind === "air" ? 1 : 2;
+
   const prefix =
     kind === "health"
-      ? `gui/sprites/hud/heart/${condition === "normal" ? "" : condition + "_"}`
+      ? `gui/sprites/hud/heart/${condition === "normal" ? "" : `${condition}_`}`
       : kind === "hunger"
         ? "gui/sprites/hud/food_"
         : kind === "armor"
           ? "gui/sprites/hud/armor_"
           : "gui/sprites/hud/air";
+
   return (
     <div
       {...props}
@@ -53,38 +59,41 @@ function IconMeter({
       aria-valuemin={0}
       aria-valuemax={Math.min(max, limit)}
       aria-valuenow={amount}
-      className={cn(`mc-hud-meter ${""}`, className)}
+      className={cn(`mc-hud-meter`, className)}
       style={minecraftStyle(style, (__style) => ({
-        width: (count * 8 + 1) * scale,
         height: 9 * scale,
+        width: (count * 8 + 1) * scale,
         ...__style,
       }))}
     >
       {Array.from(
         { length: kind === "armor" && amount === 0 ? 0 : count },
         (_, order) => {
-          const i = kind === "health" ? count - 1 - order : order,
-            filled = Math.max(0, Math.min(step, amount - i * step)),
-            empty =
-              kind === "health"
-                ? "gui/sprites/hud/heart/container"
-                : kind === "air"
-                  ? "gui/sprites/hud/air_empty"
-                  : prefix + "empty",
-            fill =
-              kind === "air"
-                ? "gui/sprites/hud/air"
-                : prefix + (filled >= step ? "full" : "half");
+          const i = kind === "health" ? count - 1 - order : order;
+          const filled = Math.max(0, Math.min(step, amount - i * step));
+
+          const empty =
+            kind === "health"
+              ? "gui/sprites/hud/heart/container"
+              : kind === "air"
+                ? "gui/sprites/hud/air_empty"
+                : prefix + "empty";
+
+          const fill =
+            kind === "air"
+              ? "gui/sprites/hud/air"
+              : prefix + (filled >= step ? "full" : "half");
+
           return (
             <span
               key={i}
               style={{
+                height: 9 * scale,
                 left:
                   (kind === "hunger" || kind === "air" ? count - 1 - i : i) *
                   8 *
                   scale,
                 width: 9 * scale,
-                height: 9 * scale,
               }}
             >
               {!(
@@ -108,32 +117,38 @@ function IconMeter({
       )}
     </div>
   );
-}
-function HealthMeter(
+};
+
+const HealthMeter = (
   props: MeterProps & {
     condition?: "normal" | "poisoned" | "withered" | "frozen" | "absorbing";
   }
-) {
+) => {
   return <IconMeter {...props} kind="health" />;
-}
-function ArmorMeter(props: MeterProps) {
+};
+
+const ArmorMeter = (props: MeterProps) => {
   return <IconMeter {...props} kind="armor" />;
-}
-function HungerMeter(props: MeterProps) {
+};
+
+const HungerMeter = (props: MeterProps) => {
   return <IconMeter {...props} kind="hunger" />;
-}
-function AirMeter(props: MeterProps) {
+};
+
+const AirMeter = (props: MeterProps) => {
   return <IconMeter max={10} {...props} kind="air" />;
-}
-function ExperienceBar({
+};
+
+const ExperienceBar = ({
   value,
   scale = 2,
   style,
   className,
   ...props
-}: Omit<MeterProps, "max">) {
-  const progress = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0)),
-    width = Math.min(182, Math.floor(Math.fround(progress * 183)));
+}: Omit<MeterProps, "max">) => {
+  const progress = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0));
+  const width = Math.min(182, Math.floor(Math.fround(progress * 183)));
+
   return (
     <div
       {...props}
@@ -143,10 +158,10 @@ function ExperienceBar({
       aria-valuemin={0}
       aria-valuemax={1}
       aria-valuenow={progress}
-      className={cn(`mc-xp-bar ${""}`, className)}
+      className={cn(`mc-xp-bar`, className)}
       style={minecraftStyle(style, (__style) => ({
-        width: 182 * scale,
         height: 5 * scale,
+        width: 182 * scale,
         ...__style,
       }))}
     >
@@ -162,6 +177,8 @@ function ExperienceBar({
       </span>
     </div>
   );
-}
+};
+
 export { HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar };
+
 export type { MeterProps };

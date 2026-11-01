@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Empty keeps scalar native-row text, CJK rendering, refs and events", async ({
   page,
 }) => {
@@ -11,13 +12,17 @@ test("Empty keeps scalar native-row text, CJK rendering, refs and events", async
     "data-mc-label-layout-ready",
     "true"
   );
-  for (const line of await subject.locator("[data-mc-label-ready]").all())
+
+  for (const line of await subject.locator("[data-mc-label-ready]").all()) {
     await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await subject.click();
   await expect(page.locator("#events")).toHaveText("1");
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV");
 });
+
 test("Empty supports Header, Media, Title, Description and Content composition", async ({
   page,
 }) => {
@@ -32,10 +37,12 @@ test("Empty supports Header, Media, Title, Description and Content composition",
   await expect(page.locator("[data-slot=empty-description]")).toContainText(
     "Create a world to begin your adventure."
   );
+
   const action = page.getByRole("button", {
-    name: "Create world",
     exact: true,
+    name: "Create world",
   });
+
   await expect(action.locator("xpath=..")).toHaveAttribute(
     "data-slot",
     "empty-content"
@@ -44,6 +51,7 @@ test("Empty supports Header, Media, Title, Description and Content composition",
   await page.keyboard.press("Enter");
   await expect(page.locator("#events")).toHaveText("1");
 });
+
 test("Empty slots preserve real multiline and accessible content", async ({
   page,
 }) => {
@@ -56,13 +64,15 @@ test("Empty slots preserve real multiline and accessible content", async ({
   await expect(subject.locator(".mc-label-line")).toHaveCount(3);
   await expect(subject).toContainText(text);
 });
+
 test("Empty static surfaces do not synthesize interaction sounds", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push(this.src);
+
       return Promise.resolve();
     };
   });

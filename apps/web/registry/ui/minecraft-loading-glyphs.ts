@@ -1,5 +1,29 @@
 // Exact binary alpha positions from original Minecraft ASCII atlas. PNG sha256 e8646f1ed1f4bfd597d262cca3d8fac88ceaaa62807bbd5e607b2e3fe41c928a
 export const minecraftLoadingGlyphs = {
+  "+": {
+    advance: 6,
+    pixels: [
+      [2, 1],
+      [2, 2],
+      [0, 3],
+      [1, 3],
+      [2, 3],
+      [3, 3],
+      [4, 3],
+      [2, 4],
+      [2, 5],
+    ],
+  },
+  "-": {
+    advance: 6,
+    pixels: [
+      [0, 3],
+      [1, 3],
+      [2, 3],
+      [3, 3],
+      [4, 3],
+    ],
+  },
   O: {
     advance: 6,
     pixels: [
@@ -36,30 +60,6 @@ export const minecraftLoadingGlyphs = {
       [1, 6],
       [2, 6],
       [3, 6],
-    ],
-  },
-  "+": {
-    advance: 6,
-    pixels: [
-      [2, 1],
-      [2, 2],
-      [0, 3],
-      [1, 3],
-      [2, 3],
-      [3, 3],
-      [4, 3],
-      [2, 4],
-      [2, 5],
-    ],
-  },
-  "-": {
-    advance: 6,
-    pixels: [
-      [0, 3],
-      [1, 3],
-      [2, 3],
-      [3, 3],
-      [4, 3],
     ],
   },
 } as const;

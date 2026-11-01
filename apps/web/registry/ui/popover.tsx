@@ -1,4 +1,5 @@
 "use client";
+
 import { Popover as Primitive } from "@base-ui/react/popover";
 import * as React from "react";
 
@@ -9,32 +10,40 @@ import {
   PopoverTextContext,
   MinecraftPopoverText,
 } from "./minecraft-popover-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-card.css";
 import "./minecraft-popover.css";
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
-function Popover({
+
+const Popover = ({
   scale = 2,
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <ScaleContext.Provider value={scale}>
       <Primitive.Root {...props} />
     </ScaleContext.Provider>
   );
-}
-function PopoverTrigger({
+};
+
+const PopoverTrigger = ({
   render,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Trigger>) {
+}: MinecraftProps<typeof Primitive.Trigger>) => {
   const scale = React.useContext(ScaleContext);
+
   return (
     <Primitive.Trigger
       data-slot="popover-trigger"
@@ -44,7 +53,7 @@ function PopoverTrigger({
       {children}
     </Primitive.Trigger>
   );
-}
+};
 
 type PopoverContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
@@ -62,7 +71,8 @@ type PopoverContentProps = (MinecraftProps<typeof Primitive.Popup> &
   })) & {
   scale?: 1 | 2 | 3;
 };
-function PopoverContent({
+
+const PopoverContent = ({
   className,
   align = "center",
   sideOffset = 4,
@@ -79,29 +89,41 @@ function PopoverContent({
   anchor,
   keepMounted,
   ...props
-}: PopoverContentProps) {
-  const inherited = React.useContext(ScaleContext),
-    scale = explicitScale ?? inherited,
-    id = React.useId();
-  const [node, setNode] = React.useState<HTMLDivElement | null>(null),
-    [width, setWidth] = React.useState(214);
+}: PopoverContentProps) => {
+  const inherited = React.useContext(ScaleContext);
+  const scale = explicitScale ?? inherited;
+  const id = React.useId();
+
+  const [node, setNode] = React.useState<HTMLDivElement | null>(null);
+  const [width, setWidth] = React.useState(214);
+
   const forwarded = React.useCallback(
     (element: HTMLDivElement | null) => {
       setNode(element);
+
       if (typeof ref === "function") {
         const cleanup = ref(element);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             setNode(null);
             cleanup();
           };
-      } else if (ref) ref.current = element;
+        }
+      } else if (ref) {
+        ref.current = element;
+      }
     },
     [ref]
   );
+
   React.useLayoutEffect(() => {
-    if (!node) return;
+    if (!node) {
+      return;
+    }
+
     let frame = 0;
+
     const measure = () => {
       const computed = getComputedStyle(node);
       setWidth(
@@ -109,8 +131,8 @@ function PopoverContent({
           1,
           Math.floor(
             (node.clientWidth -
-              parseFloat(computed.paddingLeft) -
-              parseFloat(computed.paddingRight)) /
+              Number.parseFloat(computed.paddingLeft) -
+              Number.parseFloat(computed.paddingRight)) /
               scale
           )
         )
@@ -120,17 +142,20 @@ function PopoverContent({
         node.dataset.mcPopoverReady = "true";
       });
     };
-    const resize = new ResizeObserver(measure),
-      mutation = new MutationObserver(measure);
+
+    const resize = new ResizeObserver(measure);
+    const mutation = new MutationObserver(measure);
+
     resize.observe(node);
     mutation.observe(node, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true,
       attributeFilter: ["id"],
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true,
     });
     measure();
+
     return () => {
       resize.disconnect();
       mutation.disconnect();
@@ -146,6 +171,7 @@ function PopoverContent({
   ]);
   const child = null;
   const text = children;
+
   const contents = (
     <>
       <span className="mc-popover-background" aria-hidden="true">
@@ -158,6 +184,7 @@ function PopoverContent({
       )}
     </>
   );
+
   return (
     <Primitive.Portal keepMounted={keepMounted}>
       <ScaleContext.Provider value={scale}>
@@ -179,14 +206,14 @@ function PopoverContent({
                 render={render}
                 data-slot="popover-content"
                 ref={forwarded}
-                className={cn(`mc-card mc-popover ${""}`, className)}
+                className={cn(`mc-card mc-popover`, className)}
                 style={minecraftStyle(
                   style,
                   (__style) =>
                     ({
-                      "--mc-scale": scale,
                       "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
                       "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+                      "--mc-scale": scale,
                       ...__style,
                     }) as React.CSSProperties
                 )}
@@ -200,55 +227,57 @@ function PopoverContent({
       </ScaleContext.Provider>
     </Primitive.Portal>
   );
-}
-function PopoverHeader({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const PopoverHeader = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="popover-header"
-      className={cn(`mc-card-header ${""}`, className)}
+      className={cn(`mc-card-header`, className)}
       {...props}
     />
   );
-}
-function PopoverTitle({
+};
+
+const PopoverTitle = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Title>) {
+}: MinecraftProps<typeof Primitive.Title>) => {
   return (
     <Primitive.Title
       data-slot="popover-title"
-      className={cn(`mc-card-title mc-popover-title ${""}`, className)}
+      className={cn(`mc-card-title mc-popover-title`, className)}
       {...props}
     >
       <MinecraftPopoverText bold>{children}</MinecraftPopoverText>
     </Primitive.Title>
   );
-}
-function PopoverDescription({
+};
+
+const PopoverDescription = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Description>) {
+}: MinecraftProps<typeof Primitive.Description>) => {
   return (
     <Primitive.Description
       data-slot="popover-description"
-      className={cn(
-        `mc-card-description mc-popover-description ${""}`,
-        className
-      )}
+      className={cn(`mc-card-description mc-popover-description`, className)}
       {...props}
     >
       <MinecraftPopoverText>{children}</MinecraftPopoverText>
     </Primitive.Description>
   );
-}
-function PopoverClose({
+};
+
+const PopoverClose = ({
   render,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Close>) {
+}: MinecraftProps<typeof Primitive.Close>) => {
   const scale = React.useContext(ScaleContext);
+
   return (
     <Primitive.Close
       data-slot="popover-close"
@@ -258,7 +287,7 @@ function PopoverClose({
       {children}
     </Primitive.Close>
   );
-}
+};
 
 export {
   PopoverClose,
@@ -269,4 +298,5 @@ export {
   PopoverTitle,
   PopoverDescription,
 };
+
 export type { PopoverContentProps };

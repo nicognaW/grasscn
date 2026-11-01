@@ -5,7 +5,7 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
   page,
 }) => {
   /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
-  for (const ratio of [1, 4 / 3, 16 / 9])
+  for (const ratio of [1, 4 / 3, 16 / 9]) {
     for (const width of [160, 320, 640]) {
       await page.goto(
         `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
@@ -19,8 +19,10 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
       const art = (await page.locator("#art").boundingBox())!;
       expect([art.width, art.height]).toEqual([40, 40]);
     }
+  }
   /* oxlint-enable no-await-in-loop */
 });
+
 test("Aspect Ratio supports explicit clipping without resampling its content", async ({
   page,
 }) => {
@@ -37,6 +39,7 @@ test("Aspect Ratio supports explicit clipping without resampling its content", a
   const box = (await page.locator("#ratio").boundingBox())!;
   expect(box.height).toBe(10);
 });
+
 test("Button Group preserves horizontal/vertical geometry and independent activations", async ({
   page,
 }) => {
@@ -45,15 +48,18 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
     await page.goto(`/?component=button-group&orientation=${orientation}`);
     const group = page.getByRole("group", { name: "Game actions" });
     await expect(group).toHaveAttribute("data-orientation", orientation);
-    const first = (await page.locator("[data-subject]").boundingBox())!,
-      last = (await group
-        .getByRole("button", { name: "Next", exact: true })
-        .boundingBox())!;
+
+    const first = (await page.locator("[data-subject]").boundingBox())!;
+
+    const last = (await group
+      .getByRole("button", { exact: true, name: "Next" })
+      .boundingBox())!;
+
     expect(
       orientation === "horizontal" ? last.x > first.x : last.y > first.y
     ).toBe(true);
     await page.locator("[data-subject]").click();
-    await group.getByRole("button", { name: "Next", exact: true }).click();
+    await group.getByRole("button", { exact: true, name: "Next" }).click();
     await expect(page.locator("#events")).toHaveText("2");
     await expect(group.getByRole("separator")).toHaveAttribute(
       "aria-orientation",
@@ -69,6 +75,7 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
   }
   /* oxlint-enable no-await-in-loop */
 });
+
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent", async ({
   page,
 }) => {
@@ -78,11 +85,12 @@ test("Button Group disabled buttons stay disabled and keyboard focus stays indep
   await expect(page.locator("#events")).toHaveText("0");
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("button", { name: "Next", exact: true })
+    page.getByRole("button", { exact: true, name: "Next" })
   ).toBeFocused();
   await page.keyboard.press("Space");
   await expect(page.locator("#events")).toHaveText("1");
 });
+
 test("Pagination preserves navigation, anchors, refs, active state and keyboard activation", async ({
   page,
 }) => {
@@ -110,6 +118,7 @@ test("Pagination preserves navigation, anchors, refs, active state and keyboard 
     page.locator('[data-slot="pagination-ellipsis"]')
   ).toHaveAttribute("aria-hidden", "true");
 });
+
 test("Pagination cancellation and disabled links prevent activation and navigation", async ({
   page,
 }) => {
@@ -122,17 +131,19 @@ test("Pagination cancellation and disabled links prevent activation and navigati
   }
   /* oxlint-enable no-await-in-loop */
 });
+
 test("Pagination uses original audio once per accepted action and stays silent when canceled", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        pitch: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -142,8 +153,9 @@ test("Pagination uses original audio once per accepted action and stays silent w
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
   await page.locator("[data-subject]").click();
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { source: minecraftClickSound, volume: 0.25, pitch: 1 },
+    { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
+
   /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&${suffix}`);
@@ -152,26 +164,31 @@ test("Pagination uses original audio once per accepted action and stays silent w
   }
   /* oxlint-enable no-await-in-loop */
 });
+
 test("Pagination original arrows retain native links and keyboard activation with original click audio", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        pitch: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
+
   /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const forward of [false, true]) {
     await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
+
     const arrow = page.getByRole("link", {
       name: forward ? "Go to next page" : "Go to previous page",
     });
+
     await expect(arrow).toHaveAttribute("href", "#next");
     await arrow.hover();
     await arrow.focus();
@@ -179,21 +196,24 @@ test("Pagination original arrows retain native links and keyboard activation wit
     await page.keyboard.press("Enter");
     expect(new URL(page.url()).hash).toBe("#next");
     expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-      { source: minecraftClickSound, volume: 0.25, pitch: 1 },
+      { pitch: 1, source: minecraftClickSound, volume: 0.25 },
     ]);
   }
   /* oxlint-enable no-await-in-loop */
 });
+
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push(this.src);
+
       return Promise.resolve();
     };
   });
+
   /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);

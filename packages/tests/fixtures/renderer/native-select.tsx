@@ -4,18 +4,21 @@ import {
   NativeSelectOptGroup,
 } from "@grasscn/web/ui/native-select";
 import * as React from "react";
-export function NativeSelectFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    [value, setValue] = React.useState("one"),
-    [selected, setSelected] = React.useState(""),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLSelectElement>(null);
+
+export const NativeSelectFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const [value, setValue] = React.useState("one");
+  const [selected, setSelected] = React.useState("");
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLSelectElement>(null);
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
   }, []);
-  if (q.has("native"))
+
+  if (q.has("native")) {
     return (
       <NativeSelect
         id="subject"
@@ -39,15 +42,15 @@ export function NativeSelectFixture() {
         </NativeSelectOption>
       </NativeSelect>
     );
+  }
+
   return (
     <form
       id="form"
       onSubmit={(event) => {
         event.preventDefault();
         setSelected(
-          JSON.stringify(
-            Array.from(new FormData(event.currentTarget).entries())
-          )
+          JSON.stringify([...new FormData(event.currentTarget).entries()])
         );
       }}
     >
@@ -56,7 +59,9 @@ export function NativeSelectFixture() {
         name="choice"
         ref={ref}
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
       >
         <NativeSelectOption value="one">One</NativeSelectOption>
         <NativeSelectOptGroup label="Worlds">
@@ -99,7 +104,9 @@ export function NativeSelectFixture() {
       <button
         type="button"
         id="read-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
@@ -109,4 +116,4 @@ export function NativeSelectFixture() {
       <output id="result">{selected}</output>
     </form>
   );
-}
+};

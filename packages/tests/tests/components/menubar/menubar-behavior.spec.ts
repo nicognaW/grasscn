@@ -1,10 +1,13 @@
-import { test, expect, type Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
 const game = (page: Page) =>
-  page.getByRole("menuitem", { name: "Game menu", exact: true });
+  page.getByRole("menuitem", { exact: true, name: "Game menu" });
+
 const world = (page: Page) =>
-  page.getByRole("menuitem", { name: "World menu", exact: true });
+  page.getByRole("menuitem", { exact: true, name: "World menu" });
+
 async function openMenu(page: Page, query = "") {
   await page.goto(`/?component=menubar&${query}`);
   await game(page).click();
@@ -24,7 +27,7 @@ test("Menubar roving focus skips disabled menus and wraps", async ({
   await page.keyboard.press("ArrowLeft");
   await expect(world(page)).toBeFocused();
   await expect(
-    page.getByRole("menuitem", { name: "Unavailable menu", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Unavailable menu" })
   ).toBeDisabled();
 });
 
@@ -38,15 +41,15 @@ test("Menubar navigates between open menus with the keyboard", async ({
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: "Unavailable", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Unavailable" })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: "你好，世界", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "你好，世界" })
   ).toBeFocused();
   await page.keyboard.press("ArrowRight");
   await expect(
-    page.getByRole("menuitem", { name: "Create world", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Create world" })
   ).toBeVisible();
   await expect(page.getByRole("menuitem", { name: /Resume game/ })).toHaveCount(
     0
@@ -63,13 +66,15 @@ test("Menubar pointer hover switches open menus without opening disabled menus",
   await openMenu(page);
   await world(page).hover();
   await expect(
-    page.getByRole("menuitem", { name: "Create world", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Create world" })
   ).toBeVisible();
   await expect(world(page)).toHaveAttribute("data-popup-open", "");
+
   const disabled = page.getByRole("menuitem", {
-    name: "Unavailable menu",
     exact: true,
+    name: "Unavailable menu",
   });
+
   const rect = (await disabled.boundingBox())!;
   await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
   await expect(world(page)).toHaveAttribute("data-popup-open", "");
@@ -80,14 +85,14 @@ test("Menubar submenu navigation restores focus and Escape returns to its trigge
   page,
 }) => {
   await openMenu(page);
-  await page.getByRole("menuitem", { name: "More", exact: true }).focus();
+  await page.getByRole("menuitem", { exact: true, name: "More" }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(
-    page.getByRole("menuitem", { name: "Video settings", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Video settings" })
   ).toBeFocused();
   await page.keyboard.press("ArrowLeft");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("menu")).toHaveCount(0);
@@ -113,25 +118,27 @@ test("Menubar selects an action once and permits cancelling automatic dismissal"
 
 test("Menubar preserves checkbox and radio state", async ({ page }) => {
   await openMenu(page, "keepOpen");
+
   const checkbox = page.getByRole("menuitemcheckbox", {
-    name: "Show coordinates",
     exact: true,
+    name: "Show coordinates",
   });
+
   await checkbox.click();
   await expect(checkbox).toBeChecked();
   await expect(page.getByLabel("Menu checked", { exact: true })).toHaveText(
     "true"
   );
-  await page.getByRole("menuitemradio", { name: "Game", exact: true }).click();
+  await page.getByRole("menuitemradio", { exact: true, name: "Game" }).click();
   await expect(page.getByLabel("Menu radio", { exact: true })).toHaveText(
     "game"
   );
   await expect(page.getByRole("menu")).toBeVisible();
   await expect(
-    page.getByRole("menuitemradio", { name: "Game", exact: true })
+    page.getByRole("menuitemradio", { exact: true, name: "Game" })
   ).toBeChecked();
   await expect(
-    page.getByRole("menuitemradio", { name: "World", exact: true })
+    page.getByRole("menuitemradio", { exact: true, name: "World" })
   ).not.toBeChecked();
 });
 
@@ -164,9 +171,9 @@ test("Menubar permits Escape and outside-interaction cancellation", async ({
   await openMenu(page, "preventEscape&preventOutside");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("menu")).toBeVisible();
-  await page
-    .locator("#menubar-outside")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await page.locator("#menubar-outside").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.getByRole("menu")).toBeVisible();
 });
 
@@ -175,21 +182,21 @@ test("Menubar preserves composed element refs and clears unmounted content refs"
 }) => {
   await openMenu(page, "triggerAsChild&contentAsChild&preventOutside");
   await expect(page.getByRole("menu")).toHaveJSProperty("tagName", "SECTION");
-  await page
-    .locator("#menubar-outside")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await page.locator("#menubar-outside").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.getByLabel("Menu refs", { exact: true })).toHaveText(
     "DIV,BUTTON,SECTION"
   );
   await page
-    .getByRole("menuitem", { name: "Composed action", exact: true })
+    .getByRole("menuitem", { exact: true, name: "Composed action" })
     .click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
-  await page
-    .locator("#menubar-outside")
-    .evaluate((node: HTMLButtonElement) => node.click());
+  await page.locator("#menubar-outside").evaluate((node: HTMLButtonElement) => {
+    node.click();
+  });
   await expect(page.getByLabel("Menu refs", { exact: true })).toHaveText(
     "DIV,BUTTON,"
   );
@@ -201,7 +208,7 @@ test("Menubar renders CJK labels and invokes the corresponding action", async ({
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await openMenu(page);
-  const item = page.getByRole("menuitem", { name: "你好，世界", exact: true });
+  const item = page.getByRole("menuitem", { exact: true, name: "你好，世界" });
   await expect(item.locator("[data-mc-menu-unicode-ready]")).toHaveAttribute(
     "data-mc-menu-unicode-ready",
     "true"
@@ -221,20 +228,20 @@ test("Menubar typeahead focuses a matching action", async ({ page }) => {
   ).toBeFocused();
   await page.keyboard.press("m");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
 });
 
 test("Menubar uses RTL submenu and trigger navigation", async ({ page }) => {
   await openMenu(page, "rtl");
-  await page.getByRole("menuitem", { name: "More", exact: true }).focus();
+  await page.getByRole("menuitem", { exact: true, name: "More" }).focus();
   await page.keyboard.press("ArrowLeft");
   await expect(
-    page.getByRole("menuitem", { name: "Video settings", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "Video settings" })
   ).toBeFocused();
   await page.keyboard.press("ArrowRight");
   await expect(
-    page.getByRole("menuitem", { name: "More", exact: true })
+    page.getByRole("menuitem", { exact: true, name: "More" })
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(game(page)).toBeFocused();
@@ -247,16 +254,20 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
 }) => {
   await page.addInitScript(() => {
     (window as any).__menubarVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__menubarVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
-  const voices = () => page.evaluate(() => (window as any).__menubarVoices);
+
+  const voices = async () =>
+    page.evaluate(() => (window as any).__menubarVoices);
+
   await page.goto("/?component=menubar&keepOpen");
   await game(page).hover();
   await game(page).focus();
@@ -267,12 +278,12 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   await page.keyboard.press("Escape");
   await game(page).press("Enter");
   expect(await voices()).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.getByRole("menuitem", { name: /Resume game/ }).hover();
   expect(await voices()).toHaveLength(1);
   await page
-    .getByRole("menuitemcheckbox", { name: "Show coordinates", exact: true })
+    .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
     .click();
   expect(await voices()).toHaveLength(2);
   await page.keyboard.press("Escape");
@@ -284,20 +295,21 @@ for (const query of ["nativeButtonChild", "controlled&reject"]) {
   test(`Menubar keeps trigger sound single for ${query}`, async ({ page }) => {
     await page.addInitScript(() => {
       (window as any).__menubarVoices = 0;
-      HTMLMediaElement.prototype.play = function () {
-        (window as any).__menubarVoices++;
+      HTMLMediaElement.prototype.play = function play() {
+        (window as any).__menubarVoices += 1;
+
         return Promise.resolve();
       };
     });
     await openMenu(page, query);
     await expect
-      .poll(() => page.evaluate(() => (window as any).__menubarVoices))
+      .poll(async () => page.evaluate(() => (window as any).__menubarVoices))
       .toBe(1);
     await page.keyboard.press("Escape");
     await game(page).focus();
     await game(page).press("Enter");
     await expect
-      .poll(() => page.evaluate(() => (window as any).__menubarVoices))
+      .poll(async () => page.evaluate(() => (window as any).__menubarVoices))
       .toBe(2);
   });
 }

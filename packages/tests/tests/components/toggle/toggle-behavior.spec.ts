@@ -1,13 +1,16 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
 test("Toggle supports pointer, Space and Enter with pressed semantics", async ({
   page,
 }) => {
   await page.goto("/?component=toggle");
+
   const control = page.getByRole("button", {
-    name: "Recipe filter",
     exact: true,
+    name: "Recipe filter",
   });
+
   await expect(control).toHaveAttribute("aria-pressed", "false");
   await control.click();
   await expect(control).toHaveAttribute("aria-pressed", "true");
@@ -17,6 +20,7 @@ test("Toggle supports pointer, Space and Enter with pressed semantics", async ({
   await expect(control).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("#events")).toHaveText("3");
 });
+
 test("Toggle supports initial, controlled and externally changed values", async ({
   page,
 }) => {
@@ -45,6 +49,7 @@ test("Toggle supports initial, controlled and externally changed values", async 
   );
   await expect(page.locator("#events")).toHaveText("1");
 });
+
 test("Toggle cancellation prevents state changes", async ({ page }) => {
   await page.goto("/?component=toggle&cancel=1");
   await page.locator("[data-subject]").click();
@@ -54,6 +59,7 @@ test("Toggle cancellation prevents state changes", async ({ page }) => {
   );
   await expect(page.locator("#events")).toHaveText("0");
 });
+
 test("Toggle disabled button and composed link cannot activate", async ({
   page,
 }) => {
@@ -66,6 +72,7 @@ test("Toggle disabled button and composed link cannot activate", async ({
     await expect(page.locator("#events")).toHaveText("0");
   }
 });
+
 test("Toggle retains refs, rich children and asChild composition", async ({
   page,
 }) => {
@@ -81,6 +88,7 @@ test("Toggle retains refs, rich children and asChild composition", async ({
     await expect(page.locator("#tag")).toHaveText(anchor ? "A" : "BUTTON");
   }
 });
+
 test("Toggle remains a non-submit button in a form", async ({ page }) => {
   await page.goto("/?component=toggle");
   await expect(page.locator("[data-subject]")).toHaveAttribute(
@@ -102,17 +110,19 @@ test("Toggle remains a non-submit button in a form", async ({ page }) => {
     "true"
   );
 });
+
 test("Toggle plays original game audio once per accepted activation", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -126,11 +136,12 @@ test("Toggle plays original game audio once per accepted activation", async ({
   await page.keyboard.press("Enter");
   expect(await page.evaluate(() => (window as any).sounds)).toEqual(
     Array.from({ length: 3 }, () => ({
+      rate: 1,
       src: minecraftClickSound,
       volume: 0.25,
-      rate: 1,
     }))
   );
+
   for (const suffix of [
     "cancel=1",
     "state=disabled",

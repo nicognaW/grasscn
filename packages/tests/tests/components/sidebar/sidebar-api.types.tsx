@@ -25,7 +25,8 @@ import {
   useSidebar,
 } from "@grasscn/web/ui/sidebar";
 import * as React from "react";
-function SidebarHook() {
+
+const SidebarHook = () => {
   const {
     state,
     open,
@@ -35,24 +36,29 @@ function SidebarHook() {
     isMobile,
     toggleSidebar,
   } = useSidebar();
+
   const updates = () => {
     setOpen((v) => !v);
     setOpenMobile((v) => !v);
   };
+
   void updates;
   void state;
   void open;
   void openMobile;
   void isMobile;
   void toggleSidebar;
+
   return null;
-}
-function SidebarTypes() {
-  const div = React.createRef<HTMLDivElement>(),
-    button = React.createRef<HTMLButtonElement>(),
-    anchor = React.createRef<HTMLAnchorElement>(),
-    input = React.createRef<HTMLInputElement>(),
-    main = React.createRef<HTMLElement>();
+};
+
+const SidebarTypes = () => {
+  const div = React.createRef<HTMLDivElement>();
+  const button = React.createRef<HTMLButtonElement>();
+  const anchor = React.createRef<HTMLAnchorElement>();
+  const input = React.createRef<HTMLInputElement>();
+  const main = React.createRef<HTMLElement>();
+
   return (
     <SidebarProvider
       ref={div}
@@ -74,12 +80,12 @@ function SidebarTypes() {
           onScroll={(e) => void e.currentTarget.scrollTop}
         >
           <SidebarGroup>
-            <SidebarGroupLabel render={<span />}>{"Group"}</SidebarGroupLabel>
+            <SidebarGroupLabel render={<span />}>Group</SidebarGroupLabel>
             <SidebarGroupAction
               render={<button aria-label="Create" />}
               ref={button}
             >
-              {"+"}
+              +
             </SidebarGroupAction>
             <SidebarGroupContent>
               <SidebarMenu>
@@ -130,14 +136,21 @@ function SidebarTypes() {
       </SidebarInset>
     </SidebarProvider>
   );
-}
+};
+
 // @ts-expect-error No vanilla floating visual variant is offered.
 const floating = <Sidebar variant="floating" />;
+
 // @ts-expect-error No vanilla outline menu-button visual variant is offered.
 const outline = <SidebarMenuButton variant="outline" />;
+
 // @ts-expect-error No small visual menu-button variant is offered.
 const small = <SidebarMenuSubButton size="sm" />;
+
 void SidebarTypes;
+
 void floating;
+
 void outline;
+
 void small;

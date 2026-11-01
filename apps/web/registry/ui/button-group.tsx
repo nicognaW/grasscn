@@ -1,28 +1,35 @@
 "use client";
+
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftPolymorphicProps,
+} from "./minecraft-render";
+import type {
+  MinecraftProps,
+  MinecraftPolymorphicProps,
 } from "./minecraft-render";
 import { Separator } from "./separator";
 
 import "./minecraft-button-group.css";
+
 const buttonGroupVariants = cva("mc-button-group", {
+  defaultVariants: { orientation: "horizontal" },
   variants: {
     orientation: {
       horizontal: "mc-button-group-horizontal",
       vertical: "mc-button-group-vertical",
     },
   },
-  defaultVariants: { orientation: "horizontal" },
 });
-function ButtonGroup({
+
+const ButtonGroup = ({
   className,
   orientation = "horizontal",
   scale = 2,
@@ -31,7 +38,7 @@ function ButtonGroup({
 }: MinecraftProps<"div"> &
   VariantProps<typeof buttonGroupVariants> & {
     scale?: 1 | 2 | 3;
-  }) {
+  }) => {
   return (
     <div
       role="group"
@@ -46,8 +53,9 @@ function ButtonGroup({
       {...props}
     />
   );
-}
-function ButtonGroupText({
+};
+
+const ButtonGroupText = ({
   className,
   render,
   children,
@@ -59,22 +67,24 @@ function ButtonGroupText({
   scale?: 1 | 2 | 3;
   maxWidth?: number;
   align?: "left" | "center";
-}) {
-  if (render)
+}) => {
+  if (render) {
     return (
       <MinecraftRender
         render={render}
         data-slot="button-group-text"
-        className={cn(`mc-button-group-text ${""}`, className)}
+        className={cn(`mc-button-group-text`, className)}
         {...props}
       >
         {children}
       </MinecraftRender>
     );
+  }
+
   return (
     <MinecraftDisclosureText
       data-slot="button-group-text"
-      className={cn(`mc-button-group-text ${""}`, className)}
+      className={cn(`mc-button-group-text`, className)}
       scale={scale}
       maxWidth={maxWidth}
       align={align}
@@ -83,8 +93,9 @@ function ButtonGroupText({
       {children}
     </MinecraftDisclosureText>
   );
-}
-function ButtonGroupSeparator({
+};
+
+const ButtonGroupSeparator = ({
   className,
   orientation = "vertical",
   scale = 2,
@@ -94,7 +105,7 @@ function ButtonGroupSeparator({
   ...props
 }: Omit<MinecraftProps<typeof Separator>, "orientation"> & {
   orientation?: "horizontal" | "vertical";
-}) {
+}) => {
   return (
     <SeparatorPrimitive
       orientation={orientation}
@@ -102,7 +113,7 @@ function ButtonGroupSeparator({
       aria-orientation={role === "none" ? undefined : orientation}
       data-slot="button-group-separator"
       data-orientation={orientation}
-      className={cn(`mc-button-group-separator ${""}`, className)}
+      className={cn(`mc-button-group-separator`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -117,7 +128,8 @@ function ButtonGroupSeparator({
       />
     </SeparatorPrimitive>
   );
-}
+};
+
 export {
   ButtonGroup,
   ButtonGroupText,

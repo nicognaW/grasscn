@@ -1,10 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
 const base = "/?component=toggle-group";
+
 test("Toggle Group single selection and deselection", async ({ page }) => {
   await page.goto(base);
-  const one = page.getByRole("button", { name: "Filter one" }),
-    two = page.getByRole("button", { name: "Filter two" });
+
+  const one = page.getByRole("button", { name: "Filter one" });
+  const two = page.getByRole("button", { name: "Filter two" });
+
   await one.click();
   await expect(one).toHaveAttribute("aria-pressed", "true");
   await two.click();
@@ -14,12 +18,15 @@ test("Toggle Group single selection and deselection", async ({ page }) => {
   await expect(two).not.toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("#events")).toHaveText("3");
 });
+
 test("Toggle Group multiple preserves independent pressed values", async ({
   page,
 }) => {
   await page.goto(`${base}&type=multiple`);
-  const one = page.getByRole("button", { name: "Filter one" }),
-    two = page.getByRole("button", { name: "Filter two" });
+
+  const one = page.getByRole("button", { name: "Filter one" });
+  const two = page.getByRole("button", { name: "Filter two" });
+
   await one.click();
   await two.click();
   await expect(one).toHaveAttribute("aria-pressed", "true");
@@ -28,6 +35,7 @@ test("Toggle Group multiple preserves independent pressed values", async ({
   await expect(one).toHaveAttribute("aria-pressed", "false");
   await expect(two).toHaveAttribute("aria-pressed", "true");
 });
+
 test("Toggle Group roving keyboard focus supports RTL and vertical layout", async ({
   page,
 }) => {
@@ -37,8 +45,10 @@ test("Toggle Group roving keyboard focus supports RTL and vertical layout", asyn
     ["&orientation=vertical", "ArrowDown"],
   ]) {
     await page.goto(base + extra);
-    const one = page.locator("[data-subject]"),
-      two = page.locator("#item-two");
+
+    const one = page.locator("[data-subject]");
+    const two = page.locator("#item-two");
+
     await one.focus();
     await page.keyboard.press(key);
     await expect(two).toBeFocused();
@@ -50,6 +60,7 @@ test("Toggle Group roving keyboard focus supports RTL and vertical layout", asyn
     await expect(one).toBeFocused();
   }
 });
+
 test("Toggle Group skips disabled items and obeys no-loop", async ({
   page,
 }) => {
@@ -60,6 +71,7 @@ test("Toggle Group skips disabled items and obeys no-loop", async ({
   await page.keyboard.press("ArrowRight");
   await expect(page.locator("#item-three")).toBeFocused();
 });
+
 test("Toggle Group supports controlled external values and rejected updates", async ({
   page,
 }) => {
@@ -73,6 +85,7 @@ test("Toggle Group supports controlled external values and rejected updates", as
       ""
     );
   }
+
   await page.goto(`${base}&controlled=1&reject=1`);
   await page.locator("[data-subject]").click();
   await expect(page.locator("[data-subject]")).not.toHaveAttribute(
@@ -80,6 +93,7 @@ test("Toggle Group supports controlled external values and rejected updates", as
   );
   await expect(page.locator("#events")).toHaveText("1");
 });
+
 test("Toggle Group cancelled activation and disabled roots remain unchanged", async ({
   page,
 }) => {
@@ -96,6 +110,7 @@ test("Toggle Group cancelled activation and disabled roots remain unchanged", as
     await expect(page.locator("#events")).toHaveText("0");
   }
 });
+
 test("Toggle Group retains composed children, refs and accessible names", async ({
   page,
 }) => {
@@ -109,17 +124,19 @@ test("Toggle Group retains composed children, refs and accessible names", async 
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV/A");
 });
+
 test("Toggle Group uses original click audio and silent focus navigation", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -130,8 +147,9 @@ test("Toggle Group uses original click audio and silent focus navigation", async
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
   await page.keyboard.press("Space");
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
+
   for (const extra of [
     "cancel=1",
     "state=disabled",

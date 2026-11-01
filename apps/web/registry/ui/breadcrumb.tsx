@@ -1,22 +1,22 @@
 "use client";
+
 import * as React from "react";
 
 import { MinecraftProse } from "./minecraft-prose";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import {
-  type MinecraftProps,
-  type MinecraftPolymorphicProps,
-} from "./minecraft-render";
+import type { MinecraftPolymorphicProps } from "./minecraft-render";
 
 import "./minecraft-breadcrumb.css";
+
 const BreadcrumbScale = React.createContext<1 | 2 | 3>(2);
-function Breadcrumb({
+
+const Breadcrumb = ({
   scale = 2,
   style,
   ...props
 }: React.ComponentProps<"nav"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <BreadcrumbScale value={scale}>
       <nav
@@ -31,31 +31,41 @@ function Breadcrumb({
       />
     </BreadcrumbScale>
   );
-}
-function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
+};
+
+const BreadcrumbList = ({
+  className,
+  ...props
+}: React.ComponentProps<"ol">) => {
   return (
     <ol
       data-slot="breadcrumb-list"
-      className={cn(`mc-breadcrumb-list ${""}`, className)}
+      className={cn(`mc-breadcrumb-list`, className)}
       {...props}
     />
   );
-}
-function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
+};
+
+const BreadcrumbItem = ({
+  className,
+  ...props
+}: React.ComponentProps<"li">) => {
   return (
     <li
       data-slot="breadcrumb-item"
-      className={cn(`mc-breadcrumb-item ${""}`, className)}
+      className={cn(`mc-breadcrumb-item`, className)}
       {...props}
     />
   );
-}
+};
+
 type BreadcrumbLinkProps = MinecraftPolymorphicProps<"a"> & {
   scale?: 1 | 2 | 3;
   maxWidth?: number;
   align?: "left" | "center";
 };
-function BreadcrumbLink({
+
+const BreadcrumbLink = ({
   render,
   className,
   children,
@@ -63,14 +73,15 @@ function BreadcrumbLink({
   maxWidth,
   align,
   ...props
-}: BreadcrumbLinkProps) {
+}: BreadcrumbLinkProps) => {
   const inherited = React.useContext(BreadcrumbScale);
+
   return (
     <MinecraftProse
       as="a"
       render={render}
       data-slot="breadcrumb-link"
-      className={cn(`mc-breadcrumb-link ${""}`, className)}
+      className={cn(`mc-breadcrumb-link`, className)}
       scale={scale ?? inherited}
       maxWidth={maxWidth}
       align={align}
@@ -79,8 +90,9 @@ function BreadcrumbLink({
       {children}
     </MinecraftProse>
   );
-}
-function BreadcrumbPage({
+};
+
+const BreadcrumbPage = ({
   children,
   className,
   scale,
@@ -91,8 +103,9 @@ function BreadcrumbPage({
   scale?: 1 | 2 | 3;
   maxWidth?: number;
   align?: "left" | "center";
-}) {
+}) => {
   const inherited = React.useContext(BreadcrumbScale);
+
   return (
     <MinecraftProse
       as="span"
@@ -100,7 +113,7 @@ function BreadcrumbPage({
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn(`mc-breadcrumb-page ${""}`, className)}
+      className={cn(`mc-breadcrumb-page`, className)}
       scale={scale ?? inherited}
       maxWidth={maxWidth}
       align={align}
@@ -109,30 +122,34 @@ function BreadcrumbPage({
       {children}
     </MinecraftProse>
   );
-}
-function BreadcrumbSeparator({
+};
+
+const BreadcrumbSeparator = ({
   children,
   className,
   ...props
-}: React.ComponentProps<"li">) {
+}: React.ComponentProps<"li">) => {
   const scale = React.useContext(BreadcrumbScale);
+
   return (
     <li
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn(`mc-breadcrumb-separator ${""}`, className)}
+      className={cn(`mc-breadcrumb-separator`, className)}
       {...props}
     >
       {children ?? <MinecraftProse scale={scale}>{">"}</MinecraftProse>}
     </li>
   );
-}
-function BreadcrumbEllipsis({
+};
+
+const BreadcrumbEllipsis = ({
   className,
   ...props
-}: React.ComponentProps<"span">) {
+}: React.ComponentProps<"span">) => {
   const scale = React.useContext(BreadcrumbScale);
+
   return (
     <span
       data-slot="breadcrumb-ellipsis"
@@ -145,7 +162,8 @@ function BreadcrumbEllipsis({
       <span className="mc-breadcrumb-accessible">More</span>
     </span>
   );
-}
+};
+
 export {
   Breadcrumb,
   BreadcrumbList,
@@ -155,4 +173,5 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 };
+
 export type { BreadcrumbLinkProps };

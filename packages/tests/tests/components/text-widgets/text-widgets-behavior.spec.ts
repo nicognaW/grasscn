@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Trace preserves eight slots, status colors, controlled keyboard disclosure and content-class contract", async ({
   page,
 }) => {
@@ -17,17 +18,21 @@ test("Trace preserves eight slots, status colors, controlled keyboard disclosure
   await expect(page.getByTestId("details")).not.toHaveClass(/caller-content/);
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV");
+
   for (const [state, color] of [
     ["running", "rgb(255, 255, 255)"],
     ["error", "rgb(255, 85, 85)"],
     ["pending", "rgb(85, 85, 85)"],
-  ])
+  ]) {
     await expect(page.getByTestId(state)).toHaveCSS("color", color);
+  }
+
   await trigger.focus();
   await page.keyboard.press("Space");
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await expect(page.locator("#changes")).toHaveText("2");
 });
+
 test("Trace disabled trigger remains closed and silent", async ({ page }) => {
   await page.goto("?component=trace&disabled=1");
   const trigger = page.getByRole("button", { name: "Details" });
@@ -35,26 +40,27 @@ test("Trace disabled trigger remains closed and silent", async ({ page }) => {
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await expect(page.locator("#changes")).toHaveText("0");
 });
+
 test("MessageScroller preserves provider/hooks, viewport ref, scroll API and visibility", async ({
   page,
 }) => {
   await page.goto("?component=message-scroller");
   const viewport = page.getByTestId("viewport");
   await expect
-    .poll(() =>
+    .poll(async () =>
       viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
     .toBe(true);
-  await page.getByRole("button", { name: "API start", exact: true }).click();
-  await expect.poll(() => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await page.getByRole("button", { exact: true, name: "API start" }).click();
+  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
   await expect(page.getByTestId("scrollable")).toContainText('"end":true');
-  await page.getByRole("button", { name: "API message", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
-  await page.getByRole("button", { name: "API end", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "API end" }).click();
   await expect
-    .poll(() =>
+    .poll(async () =>
       viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
@@ -63,44 +69,46 @@ test("MessageScroller preserves provider/hooks, viewport ref, scroll API and vis
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("DIV");
 });
+
 test("MessageScroller native buttons and auto-scroll retain keyboard/manual control", async ({
   page,
 }) => {
   await page.goto("?component=message-scroller&position=start");
   const viewport = page.getByTestId("viewport");
-  await expect.poll(() => viewport.evaluate((n) => n.scrollTop)).toBe(0);
-  const end = page.getByRole("button", { name: "Scroll to end", exact: true });
+  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  const end = page.getByRole("button", { exact: true, name: "Scroll to end" });
   await end.focus();
   await page.keyboard.press("Enter");
   await expect
-    .poll(() =>
+    .poll(async () =>
       viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
     .toBe(true);
-  await page.getByRole("button", { name: "Append", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Append" }).click();
   await expect(page.getByTestId("message-31")).toBeAttached();
   await expect
-    .poll(() =>
+    .poll(async () =>
       viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
     .toBe(true);
-  await page.getByRole("button", { name: "API start", exact: true }).click();
-  await expect.poll(() => viewport.evaluate((n) => n.scrollTop)).toBe(0);
-  await page.getByRole("button", { name: "Append", exact: true }).click();
-  await expect.poll(() => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await page.getByRole("button", { exact: true, name: "API start" }).click();
+  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await page.getByRole("button", { exact: true, name: "Append" }).click();
+  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
 });
+
 test("MessageScroller preserves visible anchor position on prepend", async ({
   page,
 }) => {
   await page.goto("?component=message-scroller&noauto=1");
-  await page.getByRole("button", { name: "API message", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
   const before = (await page.getByTestId("message-15").boundingBox())!.y;
-  await page.getByRole("button", { name: "Prepend", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Prepend" }).click();
   await expect(page.getByTestId("message-0")).toBeAttached();
   await expect
     .poll(async () =>
@@ -108,6 +116,7 @@ test("MessageScroller preserves visible anchor position on prepend", async ({
     )
     .toBeLessThanOrEqual(1);
 });
+
 test("Spinner retains SVG semantics, ref, custom children, events and exact1200ms phase cycle", async ({
   page,
 }) => {
@@ -118,21 +127,27 @@ test("Spinner retains SVG semantics, ref, custom children, events and exact1200m
   const start = await spinner.innerHTML();
   await page.getByRole("button", { name: "Next phase" }).click();
   expect(await spinner.innerHTML()).not.toBe(start);
-  for (let i = 0; i < 3; i++)
+
+  for (let i = 0; i < 3; i += 1) {
     await page.getByRole("button", { name: "Next phase" }).click();
+  }
+
   expect(await spinner.innerHTML()).toBe(start);
   await spinner.click();
   await expect(page.locator("#events")).toHaveText("1");
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("svg");
 });
+
 test("Spinner respects reduced motion and stays a passive status widget", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("?component=spinner&animate=1");
-  const spinner = page.getByRole("status", { name: "Working" }),
-    first = await spinner.innerHTML();
+
+  const spinner = page.getByRole("status", { name: "Working" });
+  const first = await spinner.innerHTML();
+
   await page.waitForTimeout(650);
   expect(await spinner.innerHTML()).toBe(first);
   await expect(spinner).not.toHaveAttribute("tabindex");

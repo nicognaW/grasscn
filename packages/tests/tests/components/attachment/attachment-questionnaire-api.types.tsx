@@ -17,9 +17,11 @@ import {
   QuestionnaireTitle,
 } from "@grasscn/web/ui/questionnaire";
 import * as React from "react";
-const form = React.createRef<HTMLFormElement>(),
-  input = React.createRef<HTMLInputElement>(),
-  label = React.createRef<HTMLLabelElement>();
+
+const form = React.createRef<HTMLFormElement>();
+const input = React.createRef<HTMLInputElement>();
+const label = React.createRef<HTMLLabelElement>();
+
 <Attachment state="uploading" orientation="vertical">
   <AttachmentMedia variant="image">
     <img alt="Custom preview" src="local.png" />
@@ -30,11 +32,12 @@ const form = React.createRef<HTMLFormElement>(),
   <AttachmentTrigger render={<a href="#preview" />}>
     {undefined}
   </AttachmentTrigger>
-  <AttachmentAction render={<a href="#remove" />}>{"X"}</AttachmentAction>
+  <AttachmentAction render={<a href="#remove" />}>X</AttachmentAction>
 </Attachment>;
+
 <Questionnaire
   ref={form}
-  items={[{ name: "mode", choices: [{ value: "one" }] }]}
+  items={[{ choices: [{ value: "one" }], name: "mode" }]}
   item="mode"
   onItemChange={(name) => name.toUpperCase()}
   shortcuts="numbers"
@@ -68,7 +71,9 @@ const form = React.createRef<HTMLFormElement>(),
   <QuestionnaireNext />
   <QuestionnaireSubmit />
 </Questionnaire>;
+
 // @ts-expect-error Vanilla world-entry rows have no small visual variant.
 <Attachment size="sm" />;
+
 // @ts-expect-error The original Button does not have an outline variant.
 <QuestionnairePrevious variant="outline" />;

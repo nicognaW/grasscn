@@ -1,10 +1,13 @@
 "use client";
+
 import * as React from "react";
 
 import { adventureAssets } from "./minecraft-adventure-assets";
 import { minecraftStyle } from "./minecraft-render";
+
 type AdventureTexture = keyof typeof adventureAssets;
-function AdventureImage({
+
+const AdventureImage = ({
   texture,
   scale = 1,
   style,
@@ -12,8 +15,9 @@ function AdventureImage({
 }: Omit<React.ComponentProps<"img">, "src"> & {
   texture: AdventureTexture;
   scale?: number;
-}) {
+}) => {
   const asset = adventureAssets[texture];
+
   return (
     <img
       alt=""
@@ -29,6 +33,8 @@ function AdventureImage({
       }))}
     />
   );
-}
+};
+
 export { AdventureImage };
+
 export type { AdventureTexture };

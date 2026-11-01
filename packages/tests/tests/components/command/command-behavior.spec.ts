@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("Command filters keywords and CJK while preserving real input and refs", async ({
   page,
 }) => {
@@ -9,10 +10,10 @@ test("Command filters keywords and CJK while preserving real input and refs", as
   await input.fill("rock");
   await expect(page.getByRole("option")).toHaveCount(2);
   await expect(
-    page.getByRole("option", { name: "Stone Ctrl S", exact: true })
+    page.getByRole("option", { exact: true, name: "Stone Ctrl S" })
   ).toContainText("Stone");
   await expect(
-    page.getByRole("option", { name: "Bedrock", exact: true })
+    page.getByRole("option", { exact: true, name: "Bedrock" })
   ).toHaveAttribute("aria-disabled", "true");
   await input.fill("世界");
   await expect(page.getByRole("option")).toHaveCount(1);
@@ -27,6 +28,7 @@ test("Command filters keywords and CJK while preserving real input and refs", as
   await page.locator("#read-ref").click();
   await expect(page.getByLabel("Selected command")).toHaveText("INPUT");
 });
+
 test("Command supports pointer, keyboard navigation and disabled entries", async ({
   page,
 }) => {
@@ -36,10 +38,10 @@ test("Command supports pointer, keyboard navigation and disabled entries", async
   await input.press("ArrowDown");
   await input.press("Enter");
   await expect(page.getByLabel("Selected command")).toHaveText("stick");
-  await page.getByRole("option", { name: "Settings", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "Settings" }).click();
   await expect(page.getByLabel("Selected command")).toHaveText("settings");
   await page
-    .getByRole("option", { name: "Bedrock", exact: true })
+    .getByRole("option", { exact: true, name: "Bedrock" })
     .dispatchEvent("click");
   await expect(page.getByLabel("Selected command")).toHaveText("settings");
   await input.fill("");
@@ -47,19 +49,24 @@ test("Command supports pointer, keyboard navigation and disabled entries", async
   await input.press("Enter");
   await expect(page.getByLabel("Selected command")).toHaveText("settings");
 });
+
 test("Command Dialog has accessible text, modal focus and Escape dismissal", async ({
   page,
 }) => {
   await page.goto("/?component=command&dialog=1");
+
   const trigger = page.getByRole("button", {
+    exact: true,
     name: "Open commands",
-    exact: true,
   });
+
   await trigger.click();
+
   const dialog = page.getByRole("dialog", {
-    name: "World commands",
     exact: true,
+    name: "World commands",
   });
+
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveAccessibleDescription("Find a command");
   const input = dialog.getByRole("combobox");
@@ -72,17 +79,19 @@ test("Command Dialog has accessible text, modal focus and Escape dismissal", asy
   await trigger.click();
   await page
     .getByRole("dialog")
-    .getByRole("button", { name: "Done", exact: true })
+    .getByRole("button", { exact: true, name: "Done" })
     .click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
+
 test("Command input and selection stay silent like native command suggestions", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push(this.src);
+
       return Promise.resolve();
     };
   });

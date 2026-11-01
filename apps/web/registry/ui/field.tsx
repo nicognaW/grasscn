@@ -1,14 +1,21 @@
 "use client";
-import { cva, type VariantProps } from "class-variance-authority";
+
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
 
 import { Label } from "./label";
-import { MinecraftProse, type MinecraftProseProps } from "./minecraft-prose";
+import { MinecraftProse } from "./minecraft-prose";
+import type { MinecraftProseProps } from "./minecraft-prose";
 
 import "./minecraft-field.css";
 import { minecraftClasses as cn } from "./minecraft-render";
 import { Separator } from "./separator";
-function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
+
+const FieldSet = ({
+  className,
+  ...props
+}: React.ComponentProps<"fieldset">) => {
   return (
     <fieldset
       data-slot="field-set"
@@ -16,14 +23,15 @@ function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
       {...props}
     />
   );
-}
-function FieldLegend({
+};
+
+const FieldLegend = ({
   className,
   variant = "legend",
   ...props
 }: MinecraftProseProps & {
   variant?: "legend" | "label";
-}) {
+}) => {
   return (
     <MinecraftProse
       as="legend"
@@ -33,8 +41,9 @@ function FieldLegend({
       {...props}
     />
   );
-}
-function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const FieldGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="field-group"
@@ -42,22 +51,24 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
+};
+
 const fieldVariants = cva("mc-field", {
+  defaultVariants: { orientation: "vertical" },
   variants: {
     orientation: {
-      vertical: "mc-field-vertical",
       horizontal: "mc-field-horizontal",
       responsive: "mc-field-responsive",
+      vertical: "mc-field-vertical",
     },
   },
-  defaultVariants: { orientation: "vertical" },
 });
-function Field({
+
+const Field = ({
   className,
   orientation = "vertical",
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) => {
   return (
     <div
       role="group"
@@ -67,8 +78,9 @@ function Field({
       {...props}
     />
   );
-}
-function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const FieldContent = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="field-content"
@@ -76,11 +88,12 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
-function FieldLabel({
+};
+
+const FieldLabel = ({
   className,
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: React.ComponentProps<typeof Label>) => {
   return (
     <Label
       data-slot="field-label"
@@ -88,8 +101,9 @@ function FieldLabel({
       {...props}
     />
   );
-}
-function FieldTitle({ className, ...props }: MinecraftProseProps) {
+};
+
+const FieldTitle = ({ className, ...props }: MinecraftProseProps) => {
   return (
     <MinecraftProse
       as="div"
@@ -98,8 +112,9 @@ function FieldTitle({ className, ...props }: MinecraftProseProps) {
       {...props}
     />
   );
-}
-function FieldDescription({ className, ...props }: MinecraftProseProps) {
+};
+
+const FieldDescription = ({ className, ...props }: MinecraftProseProps) => {
   return (
     <MinecraftProse
       as="p"
@@ -108,14 +123,15 @@ function FieldDescription({ className, ...props }: MinecraftProseProps) {
       {...props}
     />
   );
-}
-function FieldSeparator({
+};
+
+const FieldSeparator = ({
   children,
   className,
   ...props
 }: React.ComponentProps<"div"> & {
   children?: React.ReactNode;
-}) {
+}) => {
   return (
     <div
       data-slot="field-separator"
@@ -134,8 +150,9 @@ function FieldSeparator({
       )}
     </div>
   );
-}
-function FieldError({
+};
+
+const FieldError = ({
   className,
   children,
   errors,
@@ -143,26 +160,30 @@ function FieldError({
   ...props
 }: React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
-  errors?: Array<
+  errors?: (
     | {
         message?: string;
       }
     | undefined
-  >;
-}) {
+  )[];
+}) => {
   const content = useMemo(() => {
     if (children) {
       return children;
     }
+
     if (!errors?.length) {
       return null;
     }
+
     const uniqueErrors = [
       ...new Map(errors.map((error) => [error?.message, error])).values(),
     ];
+
     if (uniqueErrors?.length == 1) {
       return uniqueErrors[0]?.message;
     }
+
     return (
       <ul className="mc-field-error-list">
         {uniqueErrors.map(
@@ -176,9 +197,11 @@ function FieldError({
       </ul>
     );
   }, [children, errors]);
+
   if (!content) {
     return null;
   }
+
   return (
     <div
       role="alert"
@@ -193,7 +216,8 @@ function FieldError({
       )}
     </div>
   );
-}
+};
+
 export {
   Field,
   FieldLabel,

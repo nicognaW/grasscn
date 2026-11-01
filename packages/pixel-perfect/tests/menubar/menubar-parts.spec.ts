@@ -2,19 +2,22 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < actual.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -28,18 +31,23 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
-const directory = "tests/reference/menu-parts",
-  manifest = JSON.parse(
-    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
-  );
-for (const c of manifest.cases)
+
+const directory = "tests/reference/menu-parts";
+
+const manifest = JSON.parse(
+  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+);
+
+for (const c of manifest.cases) {
   for (const kind of c.element === "menu-checkbox"
     ? ["menu-checkbox", "menu-radio"]
-    : [c.element])
+    : [c.element]) {
     test(`Menubar slot pixels: ${c.name} ${kind}`, async ({ page }, info) => {
       await page.setViewportSize({ width: 1536, height: 900 });
+
       const query = new URLSearchParams({
         component: "menubar",
         native: "1",
@@ -55,13 +63,17 @@ for (const c of manifest.cases)
         y: String(c.y),
         surface: c.element === "suggestion-list" ? "suggestions" : "popup",
       });
+
       await page.goto(`/?${query}`);
       await page.addStyleTag({
         content: `html,body{background:${c.background}} #root{visibility:hidden}`,
       });
       const subject = page.locator('[data-slot="menubar-content"]');
       await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
-      await subject.evaluate((node) => (node as HTMLElement).focus());
+      await subject.evaluate((node) => {
+        (node as HTMLElement).focus();
+      });
+
       if (c.state === "focus")
         await subject
           .locator(
@@ -73,6 +85,7 @@ for (const c of manifest.cases)
       await expect(
         subject.locator('[data-mc-menu-text-ready="false"]')
       ).toHaveCount(0);
+
       for (const line of await subject
         .locator("[data-mc-menu-unicode-ready]")
         .all())
@@ -81,23 +94,31 @@ for (const c of manifest.cases)
           "true"
         );
       await page.evaluate(
-        () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+        async () =>
+          await new Promise<void>((resolve) =>
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => {
+                resolve();
+              })
+            )
           )
       );
       const bounds = (await subject.boundingBox())!;
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);
+
       const bytes = readFileSync(
         pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
+
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
+
       const actual = await subject.screenshot(),
         { mismatchedPixels, diff } = compare(
           PNG.sync.read(bytes),
           PNG.sync.read(actual)
         );
+
       writeFileSync(info.outputPath("actual.png"), actual);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
       writeFileSync(
@@ -106,3 +127,5 @@ for (const c of manifest.cases)
       );
       expect(mismatchedPixels).toBe(0);
     });
+  }
+}

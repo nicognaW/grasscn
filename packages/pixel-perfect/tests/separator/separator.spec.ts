@@ -4,13 +4,13 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-assets";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/separator/manifest.json"),
-    "utf8"
+    "utf-8"
   )
 ) as {
   cases: {
@@ -31,12 +31,14 @@ function compare(expected: PNG, actual: PNG) {
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -50,6 +52,7 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
 
@@ -61,13 +64,14 @@ test("Separator comparator catches a one-pixel change", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const asChild of [false, true])
-  for (const c of manifest.cases)
+for (const asChild of [false, true]) {
+  for (const c of manifest.cases) {
     test(`Separator native pixels (${asChild ? "hr" : "div"}): ${c.name}`, async ({
       page,
     }, testInfo) => {
@@ -77,6 +81,7 @@ for (const asChild of [false, true])
         scale: String(c.scale),
         state: c.state,
       });
+
       if (asChild) query.set("asChild", "1");
       await page.goto(`/?${query}`);
       await page.addStyleTag({
@@ -85,17 +90,21 @@ for (const asChild of [false, true])
       await page.mouse.move(0, 0);
       const card = page.locator('[data-slot="separator"]');
       await expect(card).toBeVisible();
+
       const expectedBytes = await readFile(
         pixelPerfectFile(`tests/reference/separator/captures/${c.name}`)
       );
+
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256
       );
       const actualBytes = await card.screenshot({ animations: "disabled" });
+
       const { diff, mismatchedPixels } = compare(
         PNG.sync.read(expectedBytes),
         PNG.sync.read(actualBytes)
       );
+
       await writeFile(testInfo.outputPath("actual.png"), actualBytes);
       await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
       await writeFile(
@@ -113,19 +122,23 @@ for (const asChild of [false, true])
       );
       expect(mismatchedPixels).toBe(0);
     });
+  }
+}
 
 test("Separator embeds unchanged original title and in-world textures", () => {
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/separator/asset-provenance.json"),
-      "utf8"
+      "utf-8"
     )
   );
+
   for (const edge of ["header", "footer"] as const) {
     const bytes = Buffer.from(
       minecraftSeparatorAssets[edge].split(",")[1],
       "base64"
     );
+
     const sha = createHash("sha256").update(bytes).digest("hex");
     expect(sha).toBe(
       provenance.sources[`assets/minecraft/textures/gui/${edge}_separator.png`]
