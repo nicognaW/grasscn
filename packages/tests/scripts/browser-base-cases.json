@@ -3,6 +3,104 @@
   "selection": "Existing default website paths or actual shadcn-owned tests; no sampling or quota.",
   "cases": [
     {
+      "file": "docs-navigation-pixels.spec.ts",
+      "title": "documentation header Components matches its captured Minecraft Button",
+      "titlePath": ["documentation header Components matches its captured Minecraft Button"],
+      "components": ["website"],
+      "evidence": { "kind": "website-default", "route": "/docs", "reason": "The default desktop header Components link is the actual scale2/logical100x20 Button on #202020. This single declared native constituent case does not select other labels, states or scales." }
+    },
+    {
+      "file": "docs-navigation-pixels.spec.ts",
+      "title": "documentation search placeholder matches its captured Minecraft input",
+      "titlePath": ["documentation search placeholder matches its captured Minecraft input"],
+      "components": ["website"],
+      "evidence": { "kind": "website-default", "route": "/docs", "reason": "The initial default desktop header search displays Find documentation... in its scale2/logical200x20 input on #202020. One unfocused default case, no scale or content matrix." }
+    },
+    {
+      "file": "docs-navigation-pixels.spec.ts",
+      "title": "documentation prose search typing matches its captured Minecraft input",
+      "titlePath": ["documentation prose search typing matches its captured Minecraft input"],
+      "components": ["website"],
+      "evidence": { "kind": "website-default", "route": "/docs", "reason": "The actual default prose-search journey types hear after Ctrl K in the scale2/logical200x20 header input. Caret-on phase is fixed using the existing Input test method. No other query, focus phase or scale is selected." }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "mobile documentation navigation opens the page tree without page overflow",
+      "titlePath": ["mobile documentation navigation opens the page tree without page overflow"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "The actual mobile default docs navigation at390x844 uses Browse documentation to disclose the page tree, choose Button, and close it. Desktop navigation cannot exercise this mobile-only control. One viewport, no matrix."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "the legacy Field export result reaches independently discoverable Field documentation",
+      "titlePath": ["the legacy Field export result reaches independently discoverable Field documentation"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/form?part=FieldLabel#component-import",
+        "reason": "The prior website's default symbol search emits this grouped Form/FieldLabel destination (site-shell.tsx at d2c92b7). It now leads to the actual Field page and sidebar entry while retaining the relevant part query."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "the legacy Button link retains its query and reaches the usage section",
+      "titlePath": ["the legacy Button link retains its query and reaches the usage section"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/button?ref=bookmark#component-import",
+        "reason": "The prior website's default Button documentation entry and Import section remain a supported visitor entry point, preserving the incoming query and landing on actual Usage content."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "documentation search discovers a component alias",
+      "titlePath": ["documentation search discovers a component alias"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#usage",
+        "reason": "Default header search finds Button by its authored push button alias and follows the ordinary usage destination."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "documentation search discovers the public component export",
+      "titlePath": ["documentation search discovers the public component export"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#usage",
+        "reason": "Default header symbol search for Button's actual public buttonVariants styling helper, following the result to the component usage section."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "documentation search finds authored prose and follows its section",
+      "titlePath": ["documentation search finds authored prose and follows its section"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#usage",
+        "reason": "Default header search opened with Ctrl K, querying actual Button usage prose, then following its section with arrow/Enter keys."
+      }
+    },
+    {
+      "file": "docs-navigation.spec.ts",
+      "title": "documentation sidebar and heading links follow the authored page tree",
+      "titlePath": ["documentation sidebar and heading links follow the authored page tree"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Default docs journey: choose Button in the authored sidebar and follow its Usage heading in the table of contents."
+      }
+    },
+    {
       "file": "home.spec.ts",
       "title": "homepage links, search and component gallery remain connected",
       "components": [
