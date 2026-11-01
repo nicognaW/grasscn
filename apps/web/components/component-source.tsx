@@ -1,6 +1,6 @@
-import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import { installationSource } from "../lib/installation";
 import registry from "../registry.json";
 import { CodeView } from "./code-view";
 import { DocumentLink } from "./document-link";
@@ -10,31 +10,28 @@ import { DocumentText } from "./document-text";
 export async function ComponentSource({
   name,
   title = name,
+  initialFile,
 }: {
   name: string;
   title?: string;
+  initialFile?: string;
 }) {
   const item = registry.items.find((entry) => entry.name === name);
-  const file = item?.files.find(
-    (entry) => path.basename(entry.path) === `${name}.tsx`
-  );
-  if (!file)
+  const index =
+    item?.files.findIndex((entry) =>
+      initialFile
+        ? entry.path === initialFile
+        : path.posix.basename(entry.path) === `${name}.tsx`
+    ) ?? -1;
+  if (index < 0)
     return (
       <DocumentText role="alert">
         Component source unavailable: {name}
       </DocumentText>
     );
   try {
-    if (!file.path.startsWith("registry/"))
-      throw Error("Unsupported registry source path");
-    const code = await readFile(
-      path.join(process.cwd(), "registry", file.path.slice("registry/".length)),
-      "utf8"
-    );
-    const filename =
-      "target" in file && typeof file.target === "string"
-        ? file.target.replace("@components/", "components/")
-        : `components/ui/${path.basename(file.path)}`;
+    const source = await installationSource(name, String(index));
+    if (!source) throw Error("Component source unavailable");
     return (
       <section
         className="documentation-implementation"
@@ -49,8 +46,8 @@ export async function ComponentSource({
           .
         </DocumentParagraph>
         <CodeView
-          code={code}
-          filename={filename}
+          code={source.contents}
+          filename={source.destination}
           label="Component implementation"
         />
       </section>
