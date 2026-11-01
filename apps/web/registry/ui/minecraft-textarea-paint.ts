@@ -195,14 +195,16 @@ function text(
 
       if (char !== " ") {
         for (let py = 0; py < 8; py += 1) {
-          for (let px = 0; px < 8; px++)
-            if (alpha[((glyph[1] + py) * 128 + glyph[0] + px) * 4 + 3])
+          for (let px = 0; px < 8; px++) {
+            if (alpha[((glyph[1] + py) * 128 + glyph[0] + px) * 4 + 3]) {
               context.fillRect(
                 (offset + px + Number(shadow)) * scale,
                 (y + py + Number(shadow)) * scale,
                 scale,
                 scale
               );
+            }
+          }
         }
       }
 

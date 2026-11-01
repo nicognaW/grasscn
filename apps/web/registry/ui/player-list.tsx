@@ -61,7 +61,9 @@ const PlayerList = ({
 
     if (/[^\u0020-\u007E\n]/u.test(text)) {
       void loadUnihex().then(() => {
-        if (live) refresh();
+        if (live) {
+          refresh();
+        }
       });
     }
 
@@ -326,7 +328,9 @@ const Scoreboard = ({
 
     if (/[^\u0020-\u007E\n]/u.test(text)) {
       void loadUnihex().then(() => {
-        if (live) refresh();
+        if (live) {
+          refresh();
+        }
       });
     }
 

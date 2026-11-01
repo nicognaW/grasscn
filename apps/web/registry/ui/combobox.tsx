@@ -241,8 +241,9 @@ const ComboboxList = ({
         "--mc-menu-frame-height": `${element.clientHeight}px`,
         "--mc-menu-scroll-px": `${element.scrollTop}px`,
       })) {
-        if (element.style.getPropertyValue(key) !== value)
+        if (element.style.getPropertyValue(key) !== value) {
           element.style.setProperty(key, value);
+        }
       }
 
       cancelAnimationFrame(frame);
