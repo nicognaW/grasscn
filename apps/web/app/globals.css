@@ -30,7 +30,7 @@ a:focus-visible:not(.mc-button) { outline: 2px solid #fff; outline-offset: 4px; 
 .minecraft-prose p { white-space: normal; }
 .minecraft-paragraph { width: 100%; min-width: 0; }
 .minecraft-example { width: 100%; min-width: 0; padding: 24px; overflow: auto; background: #202020; }
-.minecraft-prose a, .minecraft-document > a { color: #55ff55; --mc-ink: #55ff55; --mc-shadow: #153f15; text-decoration: underline; text-underline-offset: 4px; }
+.minecraft-prose a:not(.mc-button), .minecraft-document > a:not(.mc-button) { color: #55ff55; --mc-ink: #55ff55; --mc-shadow: #153f15; text-decoration: underline; text-underline-offset: 4px; }
 .minecraft-footer { min-height: 80px; padding: 24px 32px; background: #202020; border-top: 4px solid #555; }
 .skip-link { position: fixed; top: -100px; left: 16px; z-index: 100; background: #000; padding: 8px; }
 .skip-link:focus { top: 8px; }

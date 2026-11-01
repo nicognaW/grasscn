@@ -865,6 +865,53 @@
         "route": "/docs/components/button",
         "reason": "Scale2 default primary Preview tab, keyboard-selected Code tab, normal Copy button, actual highlighted directive, and default implementation Expand/Collapse buttons. Only these6 declared cases are selected; extra captured scales/states remain outside this case."
       }
+    },
+    {
+      "file": "docs-installation.spec.ts",
+      "title": "Button installation copies and remembers the visitor package manager",
+      "titlePath": [
+        "Button installation copies and remembers the visitor package manager"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Default CLI installation offers all four package managers, copies their actual registry command and restores the visitor selection."
+      }
+    },
+    {
+      "file": "docs-installation.spec.ts",
+      "title": "Button manual installation exposes complete files and defers large resources",
+      "titlePath": [
+        "Button manual installation exposes complete files and defers large resources"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Default Manual installation lists the actual closure, offers selected complete files, defers the font resource until requested, copies/downloads exact full content and resets per-file status. Its ordinary 390px mobile composition must contain source overflow; desktop/mobile screenshots review this website composition without claiming a native page."
+      }
+    },
+    {
+      "file": "docs-installation-pixels.spec.ts",
+      "title": "default installation controls match their captured Minecraft content and states",
+      "titlePath": [
+        "default installation controls match their captured Minecraft content and states"
+      ],
+      "components": [
+        "website",
+        "button",
+        "tabs"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Actual scale2 CLI/Manual strips, all four visible package-manager selections, every registry-derived default Manual file selector, Download/Load/Copy full file actions and loaded-resource disabled Load on the integrated Button page. Retry and other native scales remain outside this browser case."
+      }
     }
   ]
 }
