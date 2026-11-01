@@ -4,15 +4,25 @@ A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn
 
 ## Language
 
+### UI and compatibility
+
 **UI port**:
 A Grasscn component that reproduces a Minecraft interface element through a shadcn-compatible API and web semantics.
 _Avoid_: Minecraft skin
+
+**Web adaptation**:
+An interaction or composition introduced for web use that has no corresponding Minecraft behavior or layout.
+
+**Native behavior**:
+The response of a Minecraft interface element to an input or sequence of inputs, including state changes and interaction timing.
 
 **Player skin**:
 A Minecraft player's character texture and its associated wide or slim body model.
 
 **Verified version**:
 A Minecraft version against which a UI port has been verified for declared reference cases. Verification of one version does not establish verification of every supported version.
+
+### Pixel verification
 
 **Reference case**:
 A specific combination of content, UI state, dimensions, display conditions and time where applicable, with a known Minecraft result.
@@ -25,28 +35,25 @@ Zero differing pixels between a UI port and its captured reference for a particu
 _Avoid_: Visually close
 
 **Pixel Perfect Test**:
-A test that checks a UI port against a captured Minecraft reference, requiring zero differing decoded RGBA pixels for a declared reference case. A Pixel Perfect Test is classified as Base or Full under the same rules as other browser tests.
-
-**Native behavior**:
-The response of a Minecraft interface element to an input or sequence of inputs, including state changes and interaction timing.
-
-**Web adaptation**:
-An interaction or composition introduced for web use that has no corresponding Minecraft behavior or layout.
+A test that checks a UI port against a captured Minecraft reference, requiring zero differing decoded RGBA pixels for a declared reference case. Website navigation and component behavior checks have their own purposes.
+_Avoid_: Browser test (when referring to pixel verification)
 
 **Verified coverage**:
 The reference cases, game versions and environments for which a UI port's appearance or behavior has been demonstrated. Coverage applies to those declared conditions rather than every possible use of the component.
+
+### Test selection and execution
 
 **Website default path**:
 The ordinary content, state and interaction presented by a component's default Grasscn website demo.
 
 **Base mapping**:
-The recorded relationship between one Grasscn browser test case and a website default path or an actual upstream shadcn test.
+The recorded relationship between one Grasscn test case and a website default path or an actual upstream shadcn test.
 
 **Base tests**:
-Grasscn browser tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
+Grasscn Pixel Perfect Tests, website tests and component behavior tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
 
 **Full tests**:
-The remaining Grasscn browser tests outside Base tests, covering additional reference cases, variants and edge cases.
+The remaining cases in the classified test suite outside Base tests, covering additional reference cases, variants and edge cases.
 
 **Full test run**:
 An approved execution of Full tests against one fixed source and environment snapshot. Resuming interrupted portions against that same snapshot continues the same run.
