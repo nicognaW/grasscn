@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Questionnaire, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit, QuestionnaireProgress, QuestionnaireChoiceDescription } from '../../../../apps/web/registry/ui/questionnaire';
+import { Questionnaire, QuestionnaireItem, QuestionnaireTitle, QuestionnaireDescription, QuestionnaireChoices, QuestionnaireChoice, QuestionnaireInput, QuestionnaireError, QuestionnaireActions, QuestionnairePrevious, QuestionnaireSkip, QuestionnaireNext, QuestionnaireSubmit, QuestionnaireProgress, QuestionnaireChoiceDescription } from '@grasscn/web/ui/questionnaire';
 export function QuestionnaireFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, [result, setResult] = React.useState(''), [item, setItem] = React.useState(''), [tag, setTag] = React.useState(''), [forced, setForced] = React.useState('mode'), ref = React.useRef<HTMLFormElement>(null);
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);

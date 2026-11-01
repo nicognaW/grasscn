@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentTrigger, AttachmentAction, AttachmentActions, AttachmentGroup } from '../../../../apps/web/registry/ui/attachment';
+import { Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentTrigger, AttachmentAction, AttachmentActions, AttachmentGroup } from '@grasscn/web/ui/attachment';
 export function AttachmentFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, state = q.get('state') ?? 'normal', [opened, setOpened] = React.useState(0), [removed, setRemoved] = React.useState(0), [tag, setTag] = React.useState(''), ref = React.useRef<HTMLDivElement>(null);
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);

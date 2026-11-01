@@ -1,10 +1,10 @@
 import * as React from "react";
-import * as Sheet from "../../../../apps/web/registry/ui/sheet";
-import * as Drawer from "../../../../apps/web/registry/ui/drawer";
-import { Alert, AlertTitle, AlertDescription } from "../../../../apps/web/registry/ui/alert";
-import { CardHeader, CardFooter, CardTitle, CardDescription } from "../../../../apps/web/registry/ui/card";
-import { Button } from "../../../../apps/web/registry/ui/button";
-import { Input } from "../../../../apps/web/registry/ui/input";
+import * as Sheet from "@grasscn/web/ui/sheet";
+import * as Drawer from "@grasscn/web/ui/drawer";
+import { Alert, AlertTitle, AlertDescription } from "@grasscn/web/ui/alert";
+import { CardHeader, CardFooter, CardTitle, CardDescription } from "@grasscn/web/ui/card";
+import { Button } from "@grasscn/web/ui/button";
+import { Input } from "@grasscn/web/ui/input";
 export function OverlayFixture() {
     const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, component = p.get("component") ?? "sheet", part = p.get("part") ?? "composition", native = p.has("native"), side = (p.get("side") ?? "right") as "top" | "right" | "bottom" | "left";
     React.useLayoutEffect(() => { document.documentElement.style.background = p.get("background") ?? "#202020"; document.body.style.background = p.get("background") ?? "#202020"; }, []);

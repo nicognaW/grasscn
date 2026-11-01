@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "../../../../apps/web/registry/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@grasscn/web/ui/input-otp";
 export function InputOTPFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, native = q.has("native"), state = q.get("state") ?? "normal", [value, setValue] = React.useState(q.get("text") ?? ""), [complete, setComplete] = React.useState(0), ref = React.useRef<HTMLInputElement>(null), [tag, setTag] = React.useState("");
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get("background") ?? "#202020"; }, []);

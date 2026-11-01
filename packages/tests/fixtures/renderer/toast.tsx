@@ -1,6 +1,6 @@
 import * as React from "react";
-import { setMinecraftSoundVolume } from "../../../../apps/web/registry/ui/minecraft-sound";
-import { Toaster, toast as notify } from "../../../../apps/web/registry/ui/sonner";
+import { setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
+import { Toaster, toast as notify } from "@grasscn/web/ui/sonner";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, count = Number(p.get("count") ?? 1);
 function SonnerFixture() {
     const [actions, setActions] = React.useState(0), [created, setCreated] = React.useState(0), ids = React.useRef<Array<string | number>>([]);

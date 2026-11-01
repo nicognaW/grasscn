@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button } from "../../../../apps/web/registry/ui/button";
+import { Button } from "@grasscn/web/ui/button";
 export function ButtonCompositionFixture() {
     const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, mode = p.get("composition") ?? "split", label = p.get("label") ?? "Button", [count, setCount] = React.useState(0);
     let content: React.ReactNode;

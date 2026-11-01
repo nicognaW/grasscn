@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Command, CommandInput, CommandList, CommandItem, CommandGroup, CommandEmpty, CommandSeparator, CommandShortcut, CommandDialog } from "../../../../apps/web/registry/ui/command";
-import { Button } from "../../../../apps/web/registry/ui/button";
+import { Command, CommandInput, CommandList, CommandItem, CommandGroup, CommandEmpty, CommandSeparator, CommandShortcut, CommandDialog } from "@grasscn/web/ui/command";
+import { Button } from "@grasscn/web/ui/button";
 const p = new URLSearchParams(location.search), scale = Number(p.get('scale') ?? 2) as 1 | 2 | 3, native = p.has('native'), part = p.get('part') ?? 'list', labels = JSON.parse(p.get('labels') ?? '["Stone","Stick","世界"]') as string[];
 export function CommandFixture() {
     React.useLayoutEffect(() => { document.documentElement.style.background = p.get('background') ?? '#202020'; document.body.style.background = p.get('background') ?? '#202020'; }, []);

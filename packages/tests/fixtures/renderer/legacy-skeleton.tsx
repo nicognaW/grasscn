@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
-import { MinecraftSurface } from "../../../../apps/web/registry/ui/minecraft-surface";
-import { minecraftCardSprite } from "../../../../apps/web/registry/ui/minecraft-card-sprite";
+import { MinecraftSurface } from "@grasscn/web/ui/minecraft-surface";
+import { minecraftCardSprite } from "@grasscn/web/ui/minecraft-card-sprite";
 import "./legacy-skeleton.css";
 function Skeleton({ className, scale = 2, style, children, ...props }: React.ComponentProps<"div"> & {
     scale?: 1 | 2 | 3;

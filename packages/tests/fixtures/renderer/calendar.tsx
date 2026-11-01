@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Calendar, CalendarDayButton, type CalendarProps } from '../../../../apps/web/registry/ui/calendar';
-import { CardHeader, CardTitle, CardDescription, CardFooter } from '../../../../apps/web/registry/ui/card';
-import { Button } from '../../../../apps/web/registry/ui/button';
-import {DatePickerDemo} from '../../../../apps/web/registry/blocks/date-picker';
-import {Popover,PopoverTrigger,PopoverContent} from '../../../../apps/web/registry/ui/popover';
+import { Calendar, CalendarDayButton, type CalendarProps } from '@grasscn/web/ui/calendar';
+import { CardHeader, CardTitle, CardDescription, CardFooter } from '@grasscn/web/ui/card';
+import { Button } from '@grasscn/web/ui/button';
+import {DatePickerDemo} from '@grasscn/web/blocks/date-picker';
+import {Popover,PopoverTrigger,PopoverContent} from '@grasscn/web/ui/popover';
 import {format} from 'date-fns';
 export function CalendarFixture() {
     const q = new URLSearchParams(location.search), component = q.get('component') ?? 'calendar', part = q.get('part') ?? 'cell', scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, width = Number(q.get('width') ?? 20), height = Number(q.get('height') ?? 20), x = Number(q.get('x') ?? 8) * scale, y = Number(q.get('y') ?? 8) * scale, state = q.get('state') ?? 'normal', label = q.get('label') ?? '1';

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { AdvancementTree } from "../../../../apps/web/registry/ui/advancement-tree";
-import { Hotbar } from "../../../../apps/web/registry/ui/hotbar";
-import { MinecraftMap } from "../../../../apps/web/registry/ui/map";
-import { Book } from "../../../../apps/web/registry/ui/book";
-import { Trading } from "../../../../apps/web/registry/ui/trading";
-import { PlayerList } from "../../../../apps/web/registry/ui/player-list";
+import { AdvancementTree } from "@grasscn/web/ui/advancement-tree";
+import { Hotbar } from "@grasscn/web/ui/hotbar";
+import { MinecraftMap } from "@grasscn/web/ui/map";
+import { Book } from "@grasscn/web/ui/book";
+import { Trading } from "@grasscn/web/ui/trading";
+import { PlayerList } from "@grasscn/web/ui/player-list";
 
 export function CustomApiFixture() {
   const tree = React.useRef<HTMLDivElement>(null), hotbar = React.useRef<HTMLDivElement>(null);

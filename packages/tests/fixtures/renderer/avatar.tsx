@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount, type MinecraftAvatarSkin } from "../../../../apps/web/registry/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount, type MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 export function AvatarFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, [status, setStatus] = React.useState(''), ref = React.useRef<HTMLImageElement>(null);
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);

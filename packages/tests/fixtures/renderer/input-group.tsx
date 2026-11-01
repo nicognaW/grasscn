@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupTextarea, InputGroupButton, InputGroupText } from "../../../../apps/web/registry/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupTextarea, InputGroupButton, InputGroupText } from "@grasscn/web/ui/input-group";
 const p = new URLSearchParams(location.search), native = p.has('native'), part = p.get('part') ?? 'input', scale = Number(p.get('scale') ?? 2) as 1 | 2 | 3, state = p.get('state') ?? 'normal', width = Number(p.get('width') ?? 200);
 export function InputGroupFixture() {
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = p.get('background') ?? '#202020'; }, []);

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { MinecraftProse } from "../../../../apps/web/registry/ui/minecraft-prose";
-import { Field, FieldSet, FieldLegend, FieldGroup, FieldLabel, FieldTitle, FieldContent, FieldDescription, FieldSeparator, FieldError } from "../../../../apps/web/registry/ui/field";
-import { Input } from "../../../../apps/web/registry/ui/input";
-import { Button } from "../../../../apps/web/registry/ui/button";
+import { MinecraftProse } from "@grasscn/web/ui/minecraft-prose";
+import { Field, FieldSet, FieldLegend, FieldGroup, FieldLabel, FieldTitle, FieldContent, FieldDescription, FieldSeparator, FieldError } from "@grasscn/web/ui/field";
+import { Input } from "@grasscn/web/ui/input";
+import { Button } from "@grasscn/web/ui/button";
 export function FormsFixture() {
     const q = new URLSearchParams(location.search), component = q.get("component") ?? "form", native = q.has("native"), part = q.get("part") ?? "label", scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, text = q.get("label") ?? "Player name", [saved, setSaved] = React.useState(""), [disabled, setDisabled] = React.useState(false), ref = React.useRef<HTMLLabelElement>(null), [tag, setTag] = React.useState("");
     const form = useForm({ defaultValues: { name: "" }, mode: "onSubmit" }), common = { id: "subject", scale, maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined, align: q.get("align") === "center" ? "center" as const : "left" as const, style: { position: "fixed" as const, left: Number(q.get("x") ?? 16) * scale, top: Number(q.get("y") ?? 16) * scale, width: Number(q.get("width") ?? 200) * scale, height: Number(q.get("height") ?? 9) * scale }, "data-subject": "true" };

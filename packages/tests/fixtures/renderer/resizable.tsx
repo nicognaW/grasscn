@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "../../../../apps/web/registry/ui/resizable";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@grasscn/web/ui/resizable";
 import type { GroupImperativeHandle, PanelImperativeHandle } from "react-resizable-panels";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, orientation = p.get("orientation") === "vertical" ? "vertical" : "horizontal";
 export function ResizableFixture() {

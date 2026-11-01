@@ -1,7 +1,7 @@
 import * as React from "react";
-import { FpsChartExample } from "../../../../apps/web/registry/blocks/chart-fps";
-import { ProfilerChartExample } from "../../../../apps/web/registry/blocks/chart-profiler";
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartPixelBar, ChartPixelSurface } from "../../../../apps/web/registry/ui/chart";
+import { FpsChartExample } from "@grasscn/web/blocks/chart-fps";
+import { ProfilerChartExample } from "@grasscn/web/blocks/chart-profiler";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartPixelBar, ChartPixelSurface } from "@grasscn/web/ui/chart";
 import { BarChart, Bar, XAxis, CartesianGrid } from "recharts";
 const p = new URLSearchParams(location.search), c = JSON.parse(p.get("case") ?? "{}"), scale = c.scale ?? 2;
 const style = { position: "fixed" as const, left: (c.x ?? 16) * scale, top: (c.y ?? 16) * scale };

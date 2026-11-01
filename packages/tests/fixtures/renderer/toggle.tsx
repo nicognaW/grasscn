@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Toggle, toggleVariants } from "../../../../apps/web/registry/ui/toggle";
+import { Toggle, toggleVariants } from "@grasscn/web/ui/toggle";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, state = p.get("state") ?? "normal";
 export function ToggleFixture() {
     React.useLayoutEffect(() => { document.documentElement.style.background = p.get("background") ?? "#202020"; document.body.style.margin = "0"; }, []);

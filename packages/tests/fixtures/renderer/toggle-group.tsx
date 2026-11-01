@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ToggleGroup, ToggleGroupItem } from "../../../../apps/web/registry/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@grasscn/web/ui/toggle-group";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, state = p.get("state") ?? "normal";
 export function ToggleGroupFixture() {
     const initial = p.get("checked") === "true" ? ["one"] : [], [value, setValue] = React.useState(initial), [events, setEvents] = React.useState(0), [tag, setTag] = React.useState("");
