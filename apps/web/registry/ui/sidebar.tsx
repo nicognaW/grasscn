@@ -123,8 +123,9 @@ const SidebarProvider = ({
   const setOpen = React.useCallback<
     React.Dispatch<React.SetStateAction<boolean>>
   >(
-    (next) => {
-      const value = typeof next === "function" ? next(latest.current) : next;
+    (update) => {
+      const value =
+        typeof update === "function" ? update(latest.current) : update;
 
       if (controlled === undefined) {
         latest.current = value;
