@@ -141,3 +141,12 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+
+.documentation-install-command {
+  width: 100%;
+  min-width: 0;
+}
+.documentation-install-command > [data-slot="tabs"] {
+  width: 100%;
+  min-width: 0;
+}
