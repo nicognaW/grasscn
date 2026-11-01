@@ -1,6 +1,6 @@
 # grasscn
 
-A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn components registry.
+A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn components registry. The project's support scope is Minecraft Java Edition 26.2 and later.
 
 ## Language
 
