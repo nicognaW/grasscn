@@ -1,0 +1,49 @@
+---
+title: Context Menu
+description: Pointer-positioned world actions using Minecraft menu parts.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Pointer-positioned world actions using Minecraft menu parts.
+
+## Preview
+
+<ComponentExample name="context-menu-example" />
+
+## Usage
+
+`ContextMenuTrigger` is the actual primitive trigger rather than an automatic Button. Give its region meaningful content. Right-click the example to invoke an action or change the controlled coordinates preference.
+
+## Composition
+
+Content opens at the pointer with right/start alignment and owns its portal. CheckboxItem uses `checked` and `onCheckedChange`; RadioGroup uses `value` and `onValueChange`. Sub/SubTrigger/SubContent provide nested commands. Supported surfaces are popup and suggestions.
+
+## Interaction and limits
+
+Provide a reachable alternative for critical actions on touch devices. Shortcut labels do not register shortcuts. Only the default Item variant is supported. Native menu constituents have captured references, while pointer anchoring, nesting and overall menu composition are web adaptations.
+
+See the [upstream API](https://base-ui.com/react/components/context-menu) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="context-menu"
+  title="Context Menu"
+  initialFile="context-menu.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="context-menu"
+  title="Context Menu"
+  initialFile="registry/ui/context-menu.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="context-menu" />

@@ -1,0 +1,330 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\admin\\.bun\\bin\\bun.exe",
+      "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "overlay-documentation.spec.ts",
+      "--list",
+      "--reporter=json"
+    ],
+    "configFile": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\packages\\tests\\playwright.config.ts",
+    "rootDir": "C:/Users/admin/Documents/Codex/2026-10-28/hel/outputs/grasscn/.native-reference/nx-20/packages/tests/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\packages\\tests\\scripts\\browser-selection-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/admin/Documents/Codex/2026-10-28/hel/outputs/grasscn/.native-reference/nx-20/.pixel-perfect-test/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/admin/Documents/Codex/2026-10-28/hel/outputs/grasscn/.native-reference/nx-20/packages/tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts",
+          "*.spec.js"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\.pixel-perfect-test\\browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "name": "",
+        "testDir": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\packages\\tests\\tests",
+        "snapshotDir": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-20\\packages\\tests\\tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts",
+          "*.spec.js"
+        ],
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5190",
+          "browserName": "chromium",
+          "channel": "msedge",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "deviceScaleFactor": 1
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "overlay-documentation.spec.ts",
+      "file": "overlay-documentation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "overlay documentation exposes exact examples, own grouped source and retained playgrounds",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-9e3b294dd96942d070b0",
+          "file": "overlay-documentation.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "documentation confirmation callbacks update once and close their actual modal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-aca6d645f7d6583bacd9",
+          "file": "overlay-documentation.spec.ts",
+          "line": 123,
+          "column": 1
+        },
+        {
+          "title": "documentation edge panels expose labelled Done actions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-ceb601aacf693965bf68",
+          "file": "overlay-documentation.spec.ts",
+          "line": 157,
+          "column": 1
+        },
+        {
+          "title": "documentation menu and command examples dispatch real selections",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-cedbacbe2731d0ec4beb",
+          "file": "overlay-documentation.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "documentation tooltip and popover open from their real focusable triggers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-54ebf4b0ba2e858cb27c",
+          "file": "overlay-documentation.spec.ts",
+          "line": 216,
+          "column": 1
+        },
+        {
+          "title": "documentation Calendar and Date Picker select with their actual DayPicker 10 APIs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-e4b1faa46472c1473f5d",
+          "file": "overlay-documentation.spec.ts",
+          "line": 250,
+          "column": 1
+        },
+        {
+          "title": "documentation world browser filters and pages through TanStack Table 9",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-1dc6d5043f1ab3341b10",
+          "file": "overlay-documentation.spec.ts",
+          "line": 274,
+          "column": 1
+        },
+        {
+          "title": "documentation message scroller appends messages and navigates its bounded history",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-b80ddb535e38a9eafbde",
+          "file": "overlay-documentation.spec.ts",
+          "line": 304,
+          "column": 1
+        },
+        {
+          "title": "documentation bubble reactions and attachment actions retain local state",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-41ef819271b4b830c0f3",
+          "file": "overlay-documentation.spec.ts",
+          "line": 332,
+          "column": 1
+        },
+        {
+          "title": "overlay documentation remains usable at its default mobile width",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-ab3d39e227ecc1ced655",
+          "file": "overlay-documentation.spec.ts",
+          "line": 361,
+          "column": 1
+        },
+        {
+          "title": "default documentation packaged avatar faces match native PlayerFaceExtractor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "db5dce5ef43749592904-2c7e98affcef1588d5a6",
+          "file": "overlay-documentation.spec.ts",
+          "line": 378,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T11:55:32.888Z",
+    "duration": 61.06099999999998,
+    "expected": 0,
+    "skipped": 11,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

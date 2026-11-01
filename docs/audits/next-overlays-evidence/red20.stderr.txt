@@ -1,0 +1,23 @@
+Resolving dependencies
+Resolved, downloaded and extracted [1]
+
+$ bunx --bun --no-install uncheck prepare --pre-commit
+
+packages\tests\tests\overlay-examples.test.tsx:
+
+# Unhandled error between tests
+-------------------------------
+error: Cannot find module '../../../apps/web/examples/overlays/table-example' from 'C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-20\packages\tests\tests\overlay-examples.test.tsx'
+-------------------------------
+
+
+ 0 pass
+ 1 fail
+ 1 error
+Ran 1 test across 1 file. [36.00ms]
+1 | const run=async(args)=>{const p=Bun.spawn(['bun',...args],{stdout:'inherit',stderr:'inherit'});if(await p.exited)throw Error(args.join(' '))};
+                                                                                                                           ^
+error: test ./packages/tests/tests/overlay-examples.test.tsx
+      at <anonymous> (C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-tools\red20.mjs:1:120)
+
+Bun v1.4.4 (Windows x64)

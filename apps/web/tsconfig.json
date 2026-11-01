@@ -16,7 +16,12 @@
       "@/components/form": ["./registry/blocks/form.tsx"],
       "@/components/chart-fps": ["./registry/blocks/chart-fps.tsx"],
       "@/components/chart-profiler": ["./registry/blocks/chart-profiler.tsx"],
-      "@/components/chart-analytics": ["./registry/blocks/chart-analytics.tsx"]
+      "@/components/chart-analytics": ["./registry/blocks/chart-analytics.tsx"],
+      "@/components/data-table": ["./registry/blocks/data-table.tsx"],
+      "@/components/data-table-features": [
+        "./registry/blocks/data-table-features.ts"
+      ],
+      "@/components/date-picker": ["./registry/blocks/date-picker.tsx"]
     },
     "types": ["node"],
     "resolveJsonModule": true,
@@ -47,3 +52,4 @@
   ],
   "exclude": ["node_modules"]
 }
+

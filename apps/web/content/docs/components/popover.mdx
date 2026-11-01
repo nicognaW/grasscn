@@ -1,0 +1,45 @@
+---
+title: Popover
+description: An anchored Minecraft popup panel for contextual content.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+An anchored Minecraft popup panel for contextual content.
+
+## Preview
+
+<ComponentExample name="popover-example" />
+
+## Usage
+
+`Popover` supplies scale 2 by default. Place a named Trigger next to Content; use Header, Title and Description for structured content. Controlled `open` and `onOpenChange` let a successful form action dismiss the panel.
+
+## Composition
+
+Content creates its own Portal and Positioner and defaults to bottom/center with sideOffset 4. Anchor, collision and keepMounted props are forwarded. Scalar content uses painted wrapping; structured controls remain your own children.
+
+## Interaction and limits
+
+Base UI owns outside dismissal, keyboard focus and restoration. Preserve accessible names for any input you put inside. Popup surfaces and declared title/body cases have native references; anchoring, forms and collision placement are web adaptations.
+
+See the [upstream API](https://base-ui.com/react/components/popover) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="popover" title="Popover" initialFile="popover.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="popover"
+  title="Popover"
+  initialFile="registry/ui/popover.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="popover" />

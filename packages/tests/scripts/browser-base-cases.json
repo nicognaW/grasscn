@@ -1229,9 +1229,7 @@
       "titlePath": [
         "Minecraft documentation delivers maintained examples for all nine installable items"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/book",
@@ -1244,9 +1242,7 @@
       "titlePath": [
         "Minecraft primary examples expose paging selection status and trade callbacks"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/book",
@@ -1259,13 +1255,152 @@
       "titlePath": [
         "documentation empty Hotbar matches native selection zero on explicit backdrop"
       ],
-      "components": [
-        "hotbar"
-      ],
+      "components": ["hotbar"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/hotbar",
         "reason": "Actual primary empty nine-slot Hotbar at scale2, selection0, uniform #202020; exactly retained native hotbar-0-s2 input and geometry. Other states/scales remain outside selection."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "overlay documentation exposes exact examples, own grouped source and retained playgrounds",
+      "titlePath": [
+        "overlay documentation exposes exact examples, own grouped source and retained playgrounds"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/bubble",
+        "reason": "All 22 new default component pages expose their actual runnable file, separate own implementation and retained interactive playground, with no default runtime errors. This navigation check does not claim native pixels or arbitrary variants."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation confirmation callbacks update once and close their actual modal",
+      "titlePath": [
+        "documentation confirmation callbacks update once and close their actual modal"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/alert-dialog",
+        "reason": "The default AlertDialog and Dialog action journey changes state once and explicitly closes, with focus returned to its trigger."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation edge panels expose labelled Done actions",
+      "titlePath": ["documentation edge panels expose labelled Done actions"],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/sheet",
+        "reason": "The actual default Sheet and Drawer examples use an explicitly labelled Done footer close and inherited scale."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation menu and command examples dispatch real selections",
+      "titlePath": [
+        "documentation menu and command examples dispatch real selections"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/dropdown-menu",
+        "reason": "Default DropdownMenu checkbox/action callbacks and cmdk command selection update the actual displayed result."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation world browser filters and pages through TanStack Table 9",
+      "titlePath": [
+        "documentation world browser filters and pages through TanStack Table 9"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/data-table",
+        "reason": "The displayed World browser default page size, Next, filter and selection/empty-result journey uses the real TanStack9 table instance."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation message scroller appends messages and navigates its bounded history",
+      "titlePath": [
+        "documentation message scroller appends messages and navigates its bounded history"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/message-scroller",
+        "reason": "The default 12-line message history exposes First, compose/Send and Latest; its bounded viewport must scroll to both ends through the real Provider."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation bubble reactions and attachment actions retain local state",
+      "titlePath": [
+        "documentation bubble reactions and attachment actions retain local state"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/attachment",
+        "reason": "The default Bubble reaction and Attachment preview/remove/restore callbacks update local example state."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "overlay documentation remains usable at its default mobile width",
+      "titlePath": [
+        "overlay documentation remains usable at its default mobile width"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/dialog",
+        "reason": "The actual default mobile documentation route at390px includes composed and resource-heavy examples without horizontal document overflow; no viewport matrix."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "default documentation packaged avatar faces match native PlayerFaceExtractor",
+      "titlePath": [
+        "default documentation packaged avatar faces match native PlayerFaceExtractor"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/avatar",
+        "reason": "The packaged Steve and Alex faces displayed by the default Avatar example atscale2 match their exact16logical hat/upright dark native PlayerFaceExtractor cases. No other skins,sizes or scales."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation tooltip and popover open from their real focusable triggers",
+      "titlePath": [
+        "documentation tooltip and popover open from their real focusable triggers"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/tooltip",
+        "reason": "The default Tooltip keyboard focus/Escape path and default Popover namedpanel/Escape/focusreturn use their actual Button-backed triggers."
+      }
+    },
+    {
+      "file": "overlay-documentation.spec.ts",
+      "title": "documentation Calendar and Date Picker select with their actual DayPicker 10 APIs",
+      "titlePath": [
+        "documentation Calendar and Date Picker select with their actual DayPicker 10 APIs"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/date-picker",
+        "reason": "The displayed October2026 Calendar and singleDatePicker choose October15 through the actual DayPicker10 APIs; the exact installed block keeps its popup open after selection and dismisses onEscape. No rangeorformvariant."
       }
     }
   ]

@@ -1,0 +1,45 @@
+---
+title: Drawer
+description: A swipeable panel built with the Base UI Drawer engine.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+A swipeable panel built with the Base UI Drawer engine.
+
+## Preview
+
+<ComponentExample name="drawer-example" />
+
+## Usage
+
+Root defaults to `swipeDirection="down"`, which opens the bottom-side layout. Use up, left or right for a different swipe direction. The wrapper does not expose a Radix/Vaul `direction` prop.
+
+## Composition
+
+Content owns Portal, Overlay and Viewport. Compose Header, Title, Description, Footer and Close inside it. The example turns off the automatic close and supplies `DrawerClose` with Done. Root provides the inherited integer scale.
+
+## Interaction and limits
+
+DrawerClose defaults to Done. Drag, snap and focus behavior come from Base UI Drawer. The edge arrangement and gestures are web adaptations; only the declared PopupScreen panel and label constituents have native pixel coverage.
+
+See the [upstream API](https://base-ui.com/react/components/drawer) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="drawer" title="Drawer" initialFile="drawer.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="drawer"
+  title="Drawer"
+  initialFile="registry/ui/drawer.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="drawer" />
