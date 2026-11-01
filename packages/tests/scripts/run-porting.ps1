@@ -1,4 +1,4 @@
-param([ValidateSet('regressions','pixels','all','full')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
+param([ValidateSet('regressions','pixels','all','full')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,10)][int]$CpuPercent=10,[ValidateRange(50,75)][int]$CpuStopPercent=75)
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
 $node=(Get-Command bun).Source
@@ -56,7 +56,7 @@ public static class GrasscnBudget {
   public ulong Total,Available,TotalPage,AvailablePage,TotalVirtual,AvailableVirtual,ExtendedVirtual;
  }
  [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern IntPtr CreateJobObject(IntPtr attributes,string name);
- [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] static extern bool SetCpu(IntPtr job,int info,ref Cpu value,uint size);
+ [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] public static extern bool SetCpu(IntPtr job,int info,ref Cpu value,uint size);
  [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] static extern bool SetExtended(IntPtr job,int info,ref Extended value,uint size);
  [DllImport("kernel32.dll",EntryPoint="QueryInformationJobObject",SetLastError=true)] public static extern bool ReadCpu(IntPtr job,int info,out Cpu value,uint size,IntPtr length);
  [DllImport("kernel32.dll",SetLastError=true)] public static extern bool AssignProcessToJobObject(IntPtr job,IntPtr process);
@@ -67,11 +67,11 @@ public static class GrasscnBudget {
  [DllImport("kernel32.dll")] static extern bool GetSystemTimes(out long idle,out long kernel,out long user);
  public static long[] Times(){long i,k,u;if(!GetSystemTimes(out i,out k,out u))throw new Exception("GetSystemTimes failed");return new long[]{i,k,u};}
  public static Memory Ram(){var m=new Memory();if(!GlobalMemoryStatusEx(m))throw new Exception("Memory sample failed");return m;}
- public static IntPtr Create(uint cpuPercent,ulong memoryBytes){
+ public static IntPtr Create(uint cpuPercent,ulong memoryBytes,uint affinityCpuPercent){
   var job=CreateJobObject(IntPtr.Zero,null);if(job==IntPtr.Zero)throw new Exception("CreateJobObject "+Marshal.GetLastWin32Error());
   var cpu=new Cpu{Flags=5,Rate=cpuPercent*100};
   if(!SetCpu(job,15,ref cpu,(uint)Marshal.SizeOf(cpu)))throw new Exception("CPU cap "+Marshal.GetLastWin32Error());
-  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(16,Math.Max(1,(int)Math.Ceiling(Environment.ProcessorCount*cpuPercent/100.0))))-1);limits.JobMemory=(UIntPtr)memoryBytes;
+  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(16,Math.Max(1,(int)Math.Ceiling(Environment.ProcessorCount*affinityCpuPercent/100.0))))-1);limits.JobMemory=(UIntPtr)memoryBytes;
   if(!SetExtended(job,9,ref limits,(uint)Marshal.SizeOf(limits)))throw new Exception("Memory cap "+Marshal.GetLastWin32Error());
   return job;
  }
@@ -79,16 +79,17 @@ public static class GrasscnBudget {
 '@
 $baseline=[GrasscnBudget]::Ram()
 $usedBytes=$baseline.Total-$baseline.Available
-$headroom=[Math]::Min(10GB,[Math]::Floor($baseline.Total*.89-$usedBytes))
+$headroom=[Math]::Min(4GB,[Math]::Floor($baseline.Total*.87-$usedBytes))
 if($baseline.Load -ge 86 -or $headroom -lt .4GB){throw 'Insufficient headroom to start safely; no browser workers launched.'}
 $memoryBudget=[uint64]$headroom
 
 $cpuBefore=[GrasscnBudget]::Times();Start-Sleep -Seconds 1;$cpuAfter=[GrasscnBudget]::Times();$cpuDelta=($cpuAfter[1]-$cpuBefore[1])+($cpuAfter[2]-$cpuBefore[2]);$baselineCpu=100.*(1-($cpuAfter[0]-$cpuBefore[0])/$cpuDelta)
-$cpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor($CpuStopPercent-5-$baselineCpu)))
+$browserCpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor($CpuStopPercent-5-$baselineCpu)))
+$cpuBudget=[uint32][Math]::Min(4,$browserCpuBudget)
 
-$logicalProcessorLimit=[Math]::Min(16,[Math]::Max(1,[Math]::Ceiling([Environment]::ProcessorCount*$cpuBudget/100.0)))
+$logicalProcessorLimit=[Math]::Min(16,[Math]::Max(1,[Math]::Ceiling([Environment]::ProcessorCount*$browserCpuBudget/100.0)))
 if($baselineCpu+100.*$logicalProcessorLimit/[Environment]::ProcessorCount -gt $CpuStopPercent){throw 'CPU preflight exceeds the verification headroom budget.'}
-$job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget)
+$job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget,$browserCpuBudget)
 $limits=[GrasscnBudget+Cpu]::new()
 if(-not [GrasscnBudget]::ReadCpu($job,15,[ref]$limits,8,[IntPtr]::Zero)){throw 'Unable to read back CPU cap'}
 if($limits.Flags -ne 5 -or $limits.Rate -ne $cpuBudget*100){throw 'CPU cap readback mismatch'}
@@ -101,6 +102,7 @@ $node=(Get-Command bun).Source
 $budgetGate=Join-Path $runDirectory ('budget-ready-'+[Guid]::NewGuid().ToString('N')+'.json')
 $argsList=@('scripts/guarded-entry.mjs',('"'+$budgetGate+'"'),'scripts/verify-porting.mjs',$Suite,('"'+$runDirectory+'"'),$Workers.ToString())
 $env:GOMAXPROCS='1'
+$env:GOMEMLIMIT='768MiB'
 $env:RAYON_NUM_THREADS='1'
 $process=$null;$reason='completed' ;$peakCpu=0.;$peakRam=0.;$count=0
 try {
@@ -113,6 +115,17 @@ try {
  $before=[GrasscnBudget]::Times()
  while(-not $process.HasExited){
   Start-Sleep -Milliseconds 500
+  $phaseFile=Join-Path $runDirectory 'verification-phase.json'
+  if($cpuBudget -ne $browserCpuBudget -and (Test-Path -LiteralPath $phaseFile)){
+   try{$verificationPhase=Get-Content -LiteralPath $phaseFile -Raw|ConvertFrom-Json}catch{$verificationPhase=$null}
+   if($verificationPhase.phase -eq 'browser'){
+    $browserLimits=[GrasscnBudget+Cpu]::new();$browserLimits.Flags=5;$browserLimits.Rate=$browserCpuBudget*100
+    if(-not [GrasscnBudget]::SetCpu($job,15,[ref]$browserLimits,8)){throw 'Cannot enforce browser CPU phase cap'}
+    if(-not [GrasscnBudget]::ReadCpu($job,15,[ref]$limits,8,[IntPtr]::Zero) -or $limits.Rate -ne $browserLimits.Rate -or $limits.Flags -ne 5){throw 'Browser CPU phase readback mismatch'}
+    $cpuBudget=$browserCpuBudget
+    [pscustomobject]@{Phase='browser';CpuHardCapPercent=$cpuBudget;CpuReadback=$limits.Rate;At=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $runDirectory 'browser-resource-policy.json')
+   }
+  }
   $after=[GrasscnBudget]::Times();$total=($after[1]-$before[1])+($after[2]-$before[2]);$idle=$after[0]-$before[0]
   $cpu=if($total -gt 0){100.*($total-$idle)/$total}else{0.};$before=$after
   $ram=[GrasscnBudget]::Ram();$ramPercent=100.*($ram.Total-$ram.Available)/$ram.Total
