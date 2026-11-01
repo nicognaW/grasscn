@@ -73,7 +73,7 @@ for(const folder of await readdir(path.dirname(output))) {
 await save()
 const steps = [
   ['prepare-preview', ['scripts/prepare-preview.mjs']],
-  ['types', [packageBin('typescript','tsc'),'--noEmit']],
+  ['types', [packageBin('uncheck','uncheck',repoRoot),'--only=tsc','--cwd',repoRoot]],
   ['primitives', ['scripts/check-primitives.mjs']],
   ['registry-closure', ['scripts/check-registry-closure.mjs']],
   ['evidence', ['scripts/check-map.mjs']],
