@@ -116,6 +116,7 @@
     },
   },
   "patchedDependencies": {
+    "@shadcn/lint@0.2.3": "patches/@shadcn%2Flint@0.2.3.patch",
     "uncheck@0.1.1": "patches/uncheck@0.1.1.patch",
   },
   "packages": {

@@ -14,7 +14,7 @@ test("Sonner preserves its original global create/update/dismiss API and CJK", a
     await expect(page.locator('[data-sonner-toast]')).toHaveCount(1);
     await page.locator("#close").click();
     await expect(page.locator('[data-sonner-toast]')).toHaveCount(0);
-    await expect(page.locator(".mc-sonner-ghost")).toHaveCount(0);
+    await expect(page.locator("[data-mc-sonner-ghost]")).toHaveCount(0);
 });
 test("Sonner keeps action events, cancellation and rich HTML", async ({ page }) => {
     await page.goto("/?component=sonner&actions=1&cancelAction=1");

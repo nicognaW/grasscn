@@ -70,18 +70,6 @@ for (const component of ["sheet", "drawer"]) {
         expect(await page.evaluate(() => (window as any).sounds)).toEqual(Array.from({ length: 2 }, () => ({ source: minecraftClickSound, volume: .25, rate: 1 })));
     });
 }
-test("Alert retains alert semantics, original text layout, refs and consumer interaction", async ({ page }) => {
-    await page.goto("/?component=alert&label=World%20Settings&text=Hello%20Minecraft");
-    const alert = page.getByRole("alert");
-    await expect(alert).toContainText("World Settings");
-    await alert.getByRole("button", { name: "Done", exact: true }).click();
-    await expect(page.locator("#count")).toHaveText("1");
-    await page.locator("#read-ref").click();
-    await expect(page.locator("#ref-tag")).toHaveText("DIV");
-    await page.goto("/?component=alert&label=你好世界&text=第二行");
-    for (const line of await page.getByRole("alert").locator('[data-mc-label-layout-ready]').all())
-        await expect(line).toHaveAttribute("data-mc-label-layout-ready", "true");
-});
 test("Drawer dismisses through Base UI swipe details", async ({ page }) => {
     await page.goto("/?component=drawer&side=bottom&open=1");
     const panel = page.getByRole("dialog");

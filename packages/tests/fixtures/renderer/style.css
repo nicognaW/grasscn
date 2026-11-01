@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./native-reference.css";
+@import "../../../../apps/web/registry/ui/minecraft-components.css";
 @source "../../../../apps/web/registry/ui";
 html, body { margin: 0; background: #202020; }
 #root { display: flex; align-items: flex-start; flex-direction: column; gap: 24px; padding: 32px; }

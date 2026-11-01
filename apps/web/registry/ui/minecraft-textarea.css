@@ -1,6 +1,6 @@
 @layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
-@import "./minecraft-unifont-metrics.css";
+
 @layer components {
   .mc-textarea { --mc-pixel: calc(1px * var(--mc-scale, 2)); box-sizing: border-box; display: block; width: calc(200 * var(--mc-pixel)); height: calc(80 * var(--mc-pixel)); min-width: calc(12 * var(--mc-pixel)); min-height: calc(18 * var(--mc-pixel)); border: 0; border-radius: 0; outline: none; resize: vertical; padding: calc(4 * var(--mc-pixel)); background: #000 var(--mc-textarea-image) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; font-family: "Minecraft Bitmap", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); font-weight: 400; font-kerning: none; font-synthesis: none; letter-spacing: 0; color: #e0e0e0; caret-color: #d0d0d0; scrollbar-width: none; overflow: auto; white-space: pre-wrap; overflow-wrap: break-word; opacity: 1; }
   .mc-textarea::-webkit-scrollbar { display: none; }

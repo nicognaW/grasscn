@@ -37,15 +37,11 @@ import { StructuralFixture } from "./structural";
 import { ToggleGroupFixture } from "./toggle-group";
 import { ToggleFixture } from "./toggle";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@grasscn/web/ui/collapsible";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@grasscn/web/ui/accordion";
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuPositioner, navigationMenuTriggerStyle } from "@grasscn/web/ui/navigation-menu";
-import { minecraftTabsAssets as navigationAssets } from "@grasscn/web/ui/minecraft-tabs-assets";
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarGroup, MenubarLabel, MenubarItem, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubTrigger, MenubarPortal, MenubarSubContent } from "@grasscn/web/ui/menubar";
 import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubTrigger, ContextMenuPortal, ContextMenuSubContent } from "@grasscn/web/ui/context-menu";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { createPortal } from "react-dom";
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@grasscn/web/ui/hover-card";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "@grasscn/web/ui/dropdown-menu";
 import { Button, buttonVariants } from "@grasscn/web/ui/button";
 import { Checkbox } from "@grasscn/web/ui/checkbox";
@@ -148,68 +144,6 @@ function CollapsibleFixture() {
                 setOpen(next);
         }} style={native ? { position: "fixed", left: Number(params.get("x") ?? 16) * scale, top: Number(params.get("y") ?? 16) * scale, width: Number(params.get("width") ?? 200) * scale } : undefined}>{child}</Collapsible><button id="collapsible-refs" style={{ position: "fixed", right: 8, bottom: 8 }} onClick={() => setRefs([root.current?.tagName, trigger.current?.tagName, content.current?.tagName].join(","))}>Read collapsible refs</button><button id="collapsible-external" onClick={() => setOpen(value => !value)}>Change externally</button><output aria-label="Collapsible changes">{changes}</output><output aria-label="Collapsible refs">{refs}</output><output aria-label="Collapsible value">{String(open)}</output></>;
 }
-function AccordionFixture() {
-    const native = params.has("native"), part = params.get("part"), multiple = params.has("multiple"), [single, setSingle] = React.useState(params.has("open") ? "game" : ""), [many, setMany] = React.useState<string[]>(params.has("open") ? ["game"] : []), [changes, setChanges] = React.useState(0), [refs, setRefs] = React.useState("");
-    const root = React.useRef<HTMLDivElement>(null), item = React.useRef<HTMLDivElement>(null), trigger = React.useRef<HTMLButtonElement>(null), content = React.useRef<HTMLDivElement>(null);
-    const initial = native ? part === "body" || params.has("expanded") ? "game" : "" : params.has("open") ? "game" : "";
-    const controlled = params.has("controlled") || native;
-    const shared = { ref: root, scale, orientation: params.has("horizontal") ? "horizontal" as const : "vertical" as const, dir: params.has("rtl") ? "rtl" as const : "ltr" as const, disabled: params.has("rootDisabled"), style: native ? { position: "fixed" as const, left: Number(params.get("x") ?? 16) * scale, top: Number(params.get("y") ?? 16) * scale, width: Number(params.get("width") ?? 200) * scale } : undefined };
-    const children = <><AccordionItem ref={item} value="game" disabled={params.has("disabled")}><AccordionTrigger render={params.has("asChild") ? <button /> : undefined} style={native && part === "body" ? { position: "fixed", left: -10000 } : undefined} {...(native && part !== "body" ? { id: "subject", "data-subject": "true" } : {})} ref={trigger} {...(native && part !== "body" && params.get("state") === "disabled" ? { disabled: true } : {})} onClick={params.has("prevent") ? event => { event.preventDefault(); event.preventBaseUIHandler(); } : undefined}>{params.has("asChild") ? "Game settings" : native ? params.get("label") ?? "Button" : "Game settings"}</AccordionTrigger><AccordionContent render={params.has("contentAsChild") ? <section /> : undefined} {...(native && part === "body" ? { id: "subject", "data-subject": "true" } : {})} ref={content} wrap={!native} align={params.get("align") === "center" ? "center" : "left"} maxWidth={params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined} keepMounted={params.has("forceMount") ? true : undefined} style={native && part === "body" ? { position: "fixed", left: Number(params.get("x") ?? 16) * scale, top: Number(params.get("y") ?? 16) * scale, width: Number(params.get("width")) * scale, height: Number(params.get("height")) * scale, padding: 0 } : undefined}>{params.has("contentAsChild") ? <button onClick={() => setChanges(n => n + 1)}>Inside action</button> : native ? params.get("text") ?? "" : "Hello Minecraft"}</AccordionContent></AccordionItem>{!native && <><AccordionItem value="world"><AccordionTrigger>World settings</AccordionTrigger><AccordionContent>你好，世界</AccordionContent></AccordionItem><AccordionItem value="unavailable" disabled><AccordionTrigger>Unavailable</AccordionTrigger><AccordionContent>Unavailable</AccordionContent></AccordionItem></>}
- </>;
-    return <>{multiple ? <Accordion {...shared} value={controlled ? many : undefined} defaultValue={params.has("open") ? ["game"] : undefined} onValueChange={__values => {
-                const next = __values;
-                setChanges(n => n + 1);
-                if (!params.has("reject"))
-                    setMany(next);
-            }} multiple={true}>{children}</Accordion> : <Accordion {...shared} value={native ? (initial ? [initial] : []) : controlled ? (single ? [single] : []) : undefined} defaultValue={params.has("open") ? ["game"] : undefined} onValueChange={(__values, details) => {
-                if (params.has("locked") && __values.length === 0) {
-                    details.cancel();
-                    return;
-                }
-                const next = __values[0] ?? "";
-                setChanges(n => n + 1);
-                if (!params.has("reject"))
-                    setSingle(next);
-            }} multiple={false}>{children}</Accordion>}<button id="accordion-refs" style={{ position: "fixed", right: 8, bottom: 8 }} onClick={() => setRefs([root.current?.tagName, item.current?.tagName, trigger.current?.tagName, content.current?.tagName].join(","))}>Read accordion refs</button><output aria-label="Accordion changes">{changes}</output><output aria-label="Accordion refs">{refs}</output></>;
-}
-function NavigationFixture() {
-    const native = params.has("native"), part = params.get("part"), links = params.has("links"), width = Number(params.get("width") ?? 400), height = Number(params.get("height") ?? 24), state = params.get("state") ?? "normal", selected = Number(params.get("selectedIndex") ?? 0), disabled = Number(params.get("disabledIndex") ?? -1);
-    const labels: string[] = JSON.parse(params.get("labels") ?? '["Game","World","More"]'), single = part === "tabs-trigger";
-    const value = single ? params.get("selected") === "true" ? "0" : "" : String(selected);
-    const [current, setCurrent] = React.useState<string | null>(params.has("open") ? "0" : null), [actions, setActions] = React.useState(0), [refs, setRefs] = React.useState("");
-    const rootRef = React.useRef<HTMLElement>(null), listRef = React.useRef<HTMLUListElement>(null), triggerRef = React.useRef<HTMLButtonElement>(null), contentRef = React.useRef<HTMLDivElement>(null), viewportRef = React.useRef<HTMLDivElement>(null), indicatorRef = React.useRef<HTMLDivElement>(null);
-    const control = (label: string, index: number) => links ? <NavigationMenuLink active={single ? params.get("selected") === "true" : index === selected} aria-disabled={index === disabled || single && state.startsWith("disabled") ? true : undefined} href="#navigation-target" id={single ? "subject" : undefined} style={single ? { width: width * scale } : undefined} data-subject={(single ? "subject" : undefined) === "subject" ? "true" : undefined}>{label}</NavigationMenuLink> : <NavigationMenuTrigger render={params.has("triggerAsChild") ? <button /> : undefined} ref={index === 0 ? triggerRef : undefined} disabled={index === disabled || single && state.startsWith("disabled")} id={single ? "subject" : undefined} style={single ? { width: width * scale } : undefined} data-subject={(single ? "subject" : undefined) === "subject" ? "true" : undefined}>{label}</NavigationMenuTrigger>;
-    const select = (event: {
-        preventDefault(): void;
-        preventBaseUIHandler?(): void;
-    }) => {
-        setActions(n => n + 1);
-        if (params.has("preventSelect")) {
-            event.preventDefault(); event.preventBaseUIHandler?.(); }
-    };
-    if (params.has("panel")) {
-        const labels: string[] = JSON.parse(params.get("labels") ?? "[]"), mode = params.get("mode") ?? "card", panelSurface = params.get("surface") === "suggestions" ? "suggestions" : "popup", rows = mode === "rows";
-        return <NavigationMenu scale={scale} value="panel" style={{ position: "fixed", left: (Number(params.get("x") ?? 16) - 14) * scale, top: (Number(params.get("y") ?? 16) - 24) * scale, width: width * scale }}>
-   <NavigationMenuList><NavigationMenuItem value="panel"><NavigationMenuTrigger>World</NavigationMenuTrigger><NavigationMenuContent id="subject" surface={panelSurface} style={{ width: width * scale, height: height * scale, padding: rows ? panelSurface === "popup" ? 6 * scale : undefined : mode === "card" ? 0 : undefined, "--mc-navigation-gap": rows ? "0px" : undefined, "--mc-menu-padding": rows && panelSurface === "popup" ? 6 : undefined } as React.CSSProperties} data-subject="true">
-    {rows ? labels.map((label, index) => <NavigationMenuLink key={index} href={`#row-${index}`}>{label}</NavigationMenuLink>) : mode === "text" ? <><div className="mc-card-header"><h2 className="mc-card-title">{params.get("label") ?? "World Settings"}</h2><p className="mc-card-description">{params.get("text") ?? ""}</p></div><div style={{ display: "flex", gap: 6 * scale }}><Button scale={scale} style={{ width: "100%" }}>Done</Button></div></> : null}
-   </NavigationMenuContent></NavigationMenuItem></NavigationMenuList>
-  </NavigationMenu>;
-    }
-    return <><NavigationMenu ref={rootRef} scale={scale} value={native ? links ? "" : value : params.has("controlled") ? current : undefined} defaultValue={params.has("open") ? "0" : undefined} onValueChange={(next, details) => {
-            if ((params.has("manual") && details.reason === "trigger-hover") || (params.has("preventEscape") && details.reason === "escape-key") || (params.has("preventOutside") && (details.reason === "outside-press" || details.reason === "focus-out"))) { details.cancel(); return; }
-            if (!params.has("reject"))
-                setCurrent(next == null ? null : String(next));
-        }} delay={Number(params.get("delay") ?? 0)} orientation={params.has("vertical") ? "vertical" : "horizontal"} dir={params.has("rtl") ? "rtl" : "ltr"} style={native ? { position: "fixed", left: Number(params.get("x") ?? 16) * scale, top: Number(params.get("y") ?? 16) * scale, width: single ? 400 * scale : width * scale, height: single ? undefined : height * scale } : undefined} id={!single && native ? "subject" : undefined} data-subject={(!single && native ? "subject" : undefined) === "subject" ? "true" : undefined}>
- <NavigationMenuList ref={listRef} style={!single && native ? { width: width * scale } : undefined}>
- {(single ? [params.get("label") ?? "Game"] : labels).map((label, index) => <NavigationMenuItem key={index} value={String(index)}>{control(label, index)}{index === 0 && (!native || params.has("indicator")) && <NavigationMenuIndicator ref={indicatorRef}/>} { !native && <NavigationMenuContent render={params.has("contentAsChild") ? <section /> : undefined} ref={index === 0 ? contentRef : undefined}>{params.has("contentAsChild") ? <NavigationMenuLink closeOnClick render={<a href="#composed-nav"/>} onClick={select}>{"Composed link"}</NavigationMenuLink> : params.has("rich") ? <form onSubmit={event => { event.preventDefault(); setActions(n => n + 1); }}><p>Read <strong>world details</strong> here.</p><label htmlFor="navigation-world">World name</label><input id="navigation-world" aria-label="Navigation world name" spellCheck={false} autoCorrect="off" defaultValue="Minecraft"/><Button type="submit" scale={scale}>Save navigation settings</Button></form> : <><NavigationMenuLink closeOnClick href="#world" onClick={select}>World guide</NavigationMenuLink><NavigationMenuLink closeOnClick href="#video" onClick={select}>你好，世界</NavigationMenuLink></>}</NavigationMenuContent>}</NavigationMenuItem>)}
- {!native && <NavigationMenuItem><NavigationMenuLink href="#home" active={params.has("activeLink") || params.has("toggleHome") && actions > 0 && !params.has("reject")} onClick={select}>Home</NavigationMenuLink></NavigationMenuItem>}
- {!native && <NavigationMenuItem><NavigationMenuTrigger disabled>Unavailable</NavigationMenuTrigger><NavigationMenuContent>Unavailable</NavigationMenuContent></NavigationMenuItem>}
-
- </NavigationMenuList>
- {native && params.has("contentHeight") && <div aria-hidden="true" style={{ position: "absolute", left: 0, top: 24 * scale, width: "100%", height: Number(params.get("contentHeight")) * scale, backgroundImage: navigationAssets.textures.menu_background, backgroundSize: `${32 * scale}px ${32 * scale}px` }}/>}
-
- </NavigationMenu><button id="navigation-outside" style={{ position: "fixed", right: 8, bottom: 8 }} onClick={() => setRefs([rootRef.current?.tagName, listRef.current?.tagName, triggerRef.current?.tagName, contentRef.current?.tagName, rootRef.current?.ownerDocument.querySelector('[data-slot="navigation-menu-positioner"]')?.tagName, indicatorRef.current?.tagName].join(","))}>Read navigation refs</button><output aria-label="Navigation actions">{actions}</output><output aria-label="Navigation refs">{refs}</output><output aria-label="Navigation value">{current}</output></>;
-}
 function MenubarFixture() {
  const native=params.has("native"),triggerPixels=params.has("triggerPixels"),[open,setOpen]=React.useState(params.has("open")),[menuValue,setMenuValue]=React.useState(params.has("open")?"game":""),[actions,setActions]=React.useState(0),[checked,setChecked]=React.useState(false),[radio,setRadio]=React.useState("world"),[tags,setTags]=React.useState("");
  const content=React.useRef<HTMLDivElement>(null),trigger=React.useRef<HTMLButtonElement>(null),rootRef=React.useRef<HTMLDivElement>(null);
@@ -231,25 +165,6 @@ function DropdownFixture() {
  const rows=<><DropdownMenuGroup><DropdownMenuLabel>World Settings</DropdownMenuLabel><DropdownMenuItem onClick={choose}>Resume game<DropdownMenuShortcut>Esc</DropdownMenuShortcut></DropdownMenuItem><DropdownMenuItem disabled onClick={choose}>Unavailable</DropdownMenuItem><DropdownMenuItem onClick={choose}>你好，世界</DropdownMenuItem></DropdownMenuGroup><DropdownMenuSeparator/><DropdownMenuCheckboxItem checked={checked} disabled={params.has("disabledCheck")} onCheckedChange={setChecked} closeOnClick={false}>Show coordinates</DropdownMenuCheckboxItem><DropdownMenuRadioGroup value={radio} onValueChange={setRadio}><DropdownMenuRadioItem value="world" closeOnClick={false}>World</DropdownMenuRadioItem><DropdownMenuRadioItem value="game" closeOnClick={false}>Game</DropdownMenuRadioItem></DropdownMenuRadioGroup><DropdownMenuSub><DropdownMenuSubTrigger>More</DropdownMenuSubTrigger><DropdownMenuPortal><DropdownMenuSubContent side="right"><DropdownMenuItem onClick={choose}>Video settings</DropdownMenuItem><DropdownMenuItem onClick={choose}>Audio settings</DropdownMenuItem></DropdownMenuSubContent></DropdownMenuPortal></DropdownMenuSub></>;
  const popup=<DropdownMenuContent render={params.has("contentAsChild")?<section/>:undefined} id="subject" data-subject="true" ref={content} side={(params.get("side")??"bottom") as "top"|"right"|"bottom"|"left"} align={(params.get("align")??(native?"start":"center")) as "start"|"center"|"end"} sideOffset={native?0:4} surface={params.get("surface")==="suggestions"?"suggestions":"popup"} style={native?{width:Number(params.get("width"))*scale,height:Number(params.get("height"))*scale}:params.has("maxHeight")?{maxHeight:Number(params.get("maxHeight"))}:undefined}>{params.has("contentAsChild")?<DropdownMenuItem render={<a href="#menu-composed"/>} onClick={choose}>Composed action</DropdownMenuItem>:native?nativeBody:rows}</DropdownMenuContent>;
 return <><DropdownMenu scale={scale} open={native?true:params.has("controlled")?open:undefined} defaultOpen={params.has("open")} modal={native||params.has("nonmodal")?false:undefined} onOpenChange={handleOpen}>{<DropdownMenuTrigger render={params.has("nativeButtonChild")?<Button scale={scale}/>:native||params.has("triggerAsChild")?<button style={native?{position:"fixed",left:Number(params.get("x"))*scale,top:Number(params.get("y"))*scale,width:0,height:0,padding:0,border:0}:undefined}/>:undefined} ref={trigger} disabled={params.has("disabled")||(triggerPixels&&params.get("state")==="disabled")} style={triggerPixels?{position:"fixed",left:Number(params.get("x")??16)*scale,top:Number(params.get("y")??16)*scale,width:Number(params.get("width")??200)*scale}:undefined}>{triggerPixels?params.get("label")??"Button":"Game menu"}</DropdownMenuTrigger>}{popup}</DropdownMenu><button id="menu-outside" style={{position:"fixed",right:8,bottom:8}} onClick={()=>setTags([trigger.current?.tagName,content.current?.tagName].join(","))}>Inspect menu refs</button><output aria-label="Menu actions">{actions}</output><output aria-label="Menu checked">{String(checked)}</output><output aria-label="Menu radio">{radio}</output><output aria-label="Menu refs">{tags}</output></>;
-}
-function HoverCardFixture() {
-    const native = params.has("native"), controlled = params.has("controlled"), [open, setOpen] = React.useState(native || params.has("open")), [changes, setChanges] = React.useState(0), [links, setLinks] = React.useState(0), [actions, setActions] = React.useState(0), [tags, setTags] = React.useState("");
-    const trigger = React.useRef<HTMLAnchorElement>(null), content = React.useRef<HTMLDivElement>(null);
-    const rich = <><p>World details</p><a href="#world-guide" onClick={() => setLinks(n => n + 1)}>Read world guide</a><form style={{ display: "grid", gap: 6 * scale }} onSubmit={event => { event.preventDefault(); setActions(n => n + 1); setOpen(false); }}><label htmlFor="hover-world">World name</label><Input id="hover-world" scale={scale} style={{ width: "100%" }}/><Button type="submit" scale={scale} style={{ width: "100%" }}>Save hover settings</Button></form></>;
-    const body = params.has("rich") ? rich : params.get("text") ?? "Diamond Pickaxe\nA helpful description.";
-    const nativeStyle = native ? { position: "fixed" as const, left: Number(params.get("x") ?? 16) * scale, top: Number(params.get("y") ?? 16) * scale, width: 0, height: 0 } : undefined;
-    return <><HoverCard scale={scale} open={native ? true : controlled ? open : undefined} defaultOpen={params.has("open")} onOpenChange={(next, details) => {
-            if (!next && ((details.reason === "escape-key" && params.has("preventEscape")) || ((details.reason === "outside-press" || String(details.reason) === "focus-out") && params.has("preventOutside")))) {
-                details.cancel();
-                return;
-            }
-            setChanges(n => n + 1);
-            if (!params.has("reject") && !native)
-                setOpen(next);
-        }}>
-    <HoverCardTrigger delay={Number(params.get("delay") ?? 0)} closeDelay={Number(params.get("closeDelay") ?? 300)} render={native || params.has("triggerAsChild") ? <a data-composed-trigger="true"/> : undefined} id="hover-trigger" ref={trigger} href="#hover-trigger-link" style={nativeStyle}>{native || params.has("triggerAsChild") ? native ? "" : "World info" : "World info"}</HoverCardTrigger>
-    <HoverCardContent render={params.has("contentAsChild") ? <article data-composed-content="true"/> : undefined} id="subject" ref={content} align={(params.get("align") ?? (native ? "start" : "center")) as "start" | "center" | "end"} side={(params.get("side") ?? "bottom") as "top" | "right" | "bottom" | "left"} sideOffset={native ? 0 : 4} maxWidth={Number(params.get("wrapWidth") ?? 170)} data-subject="true">{body}</HoverCardContent>
-  </HoverCard><button id="hover-outside" style={{ position: "fixed", right: 8, top: 8 }} onClick={() => setTags([trigger.current?.tagName, content.current?.tagName].join(","))}>Read hover refs</button><output aria-label="Hover changes">{changes}</output><output aria-label="Hover links">{links}</output><output aria-label="Hover actions">{actions}</output><output aria-label="Hover refs">{tags}</output></>;
 }
 function PopoverFixture() {
     const native = params.has("native"), [open, setOpen] = React.useState(native || params.has("open")), [changes, setChanges] = React.useState(0), [actions, setActions] = React.useState(0), [refs, setRefs] = React.useState("");
@@ -351,7 +266,7 @@ function Fixture() {
         return <MarkerFixture />;
     if (params.get("component") === "chart")
         return <ChartFixture />;
-    if (["trace", "message-scroller", "skeleton", "spinner"].includes(params.get("component") ?? ""))
+    if (["trace", "message-scroller", "spinner"].includes(params.get("component") ?? ""))
         return params.has("native") ? <NativeTextCompositionsFixture /> : <TextWidgetsFixture />;
     if (params.get("component") === "native-select")
         return <NativeSelectFixture />;
@@ -389,9 +304,9 @@ function Fixture() {
         return <ButtonCompositionFixture />;
     if (["badge", "typography", "breadcrumb", "kbd", "empty"].includes(params.get("component") ?? ""))
         return <TextComponentsFixture />;
-    if (["sheet", "drawer", "alert"].includes(params.get("component") ?? ""))
+    if (["sheet", "drawer"].includes(params.get("component") ?? ""))
         return <OverlayFixture />;
-    if (["aspect-ratio", "direction", "button-group", "pagination"].includes(params.get("component") ?? ""))
+    if (["aspect-ratio", "button-group", "pagination"].includes(params.get("component") ?? ""))
         return <StructuralFixture />;
     if (params.get("component") === "toggle-group")
         return <ToggleGroupFixture />;
@@ -401,16 +316,10 @@ function Fixture() {
         return <ContextFixture />;
     if (params.get("component") === "collapsible")
         return <CollapsibleFixture />;
-    if (params.get("component") === "accordion")
-        return <AccordionFixture />;
-    if (params.get("component") === "navigation-menu")
-        return <NavigationFixture />;
     if (params.get("component") === "menubar")
         return <MenubarFixture />;
     if (params.get("component") === "dropdown-menu")
         return <DropdownFixture />;
-    if (params.get("component") === "hover-card")
-        return <HoverCardFixture />;
     if (params.get("component") === "popover-composition")
         return <PopoverCompositionFixture />;
     if (params.get("component") === "popover")

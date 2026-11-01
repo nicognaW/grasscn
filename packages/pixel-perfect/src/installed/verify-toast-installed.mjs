@@ -30,7 +30,7 @@ try{
   await page.goto(`${urlArg}?${q}`)
   if(component==="sonner")await expect(page.locator("#created")).toHaveText(String(c.selectedIndex??1))
   await page.clock.fastForward(0)
-  await page.addStyleTag({content:'#root{visibility:hidden}#subject,[data-sonner-toast],.mc-sonner-ghost{visibility:visible}'})
+  await page.addStyleTag({content:'#root{visibility:hidden}#subject,[data-sonner-toast],[data-mc-sonner-ghost]{visibility:visible}'})
   const subject=page.locator("#subject");await expect(subject).toBeVisible();await expect(page.locator(component==="sonner"?'[data-sonner-toast]':'[data-slot="toast"]')).toHaveCount(c.selectedIndex??1)
   await expect(page.locator('[data-mc-toast-ready]')).toHaveCount(c.selectedIndex??1)
   for(const canvas of await page.locator('[data-mc-toast-ready]').all())await expect(canvas).toHaveAttribute('data-mc-toast-ready','true')

@@ -18,7 +18,7 @@ for(const component of ["sonner"]){
    const q=new URLSearchParams({component,native:"1",label:c.label,width:String(c.width),height:String(c.height),scale:String(c.scale),background:c.background,x:String(c.x),y:String(c.y),count:String(c.selectedIndex??1)})
    if(c.text!=null)q.set("text",c.text)
    await page.goto(`/?${q}`);if(component==="sonner")await expect(page.locator("#created")).toHaveText(String(c.selectedIndex??1));await page.clock.fastForward(0)
-   await page.addStyleTag({content:'#root{visibility:hidden}[data-subject],[data-sonner-toast],.mc-sonner-ghost{visibility:visible}'})
+   await page.addStyleTag({content:'#root{visibility:hidden}[data-subject],[data-sonner-toast],[data-mc-sonner-ghost]{visibility:visible}'})
    const subject=page.locator("[data-subject]");await expect(subject).toBeVisible();await expect(page.locator(component==="sonner"?'[data-sonner-toast]':'[data-slot="toast"]')).toHaveCount(c.selectedIndex??1)
    await expect(page.locator('[data-mc-toast-ready]')).toHaveCount(c.selectedIndex??1);for(const canvas of await page.locator('[data-mc-toast-ready]').all())await expect(canvas).toHaveAttribute('data-mc-toast-ready','true')
    if(c.state==="exiting"){

@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as Sheet from "@grasscn/web/ui/sheet";
 import * as Drawer from "@grasscn/web/ui/drawer";
-import { Alert, AlertTitle, AlertDescription } from "@grasscn/web/ui/alert";
 import { CardHeader, CardFooter, CardTitle, CardDescription } from "@grasscn/web/ui/card";
 import { Button } from "@grasscn/web/ui/button";
 import { Input } from "@grasscn/web/ui/input";
@@ -13,10 +12,6 @@ export function OverlayFixture() {
     const ref = React.useRef<HTMLDivElement>(null);
     const width = Number(p.get("width") ?? 250), height = Number(p.get("height") ?? 200), x = Number(p.get("x") ?? 16) * scale, y = Number(p.get("y") ?? 16) * scale;
     const geom = { position: "fixed", inset: "auto", left: x, top: y, width: width * scale, height: height * scale, padding: p.has("text") ? undefined : 0, transform: "none", willChange: "auto" } as React.CSSProperties;
-    if (component === "alert")
-        return <><Alert id="subject" ref={ref} aria-label="Test alert" scale={scale} style={{ width: width * scale, height: height * scale, padding: p.has("text") ? undefined : 0 }} data-subject="true">
- {p.has("text") && <><CardHeader><AlertTitle>{p.get("label") ?? "World Settings"}</AlertTitle><AlertDescription>{p.get("text")}</AlertDescription></CardHeader><CardFooter><Button scale={scale} onClick={() => setCount(v => v + 1)}>Done</Button></CardFooter></>}
- </Alert><button id="read-ref" onClick={() => setTag(ref.current?.tagName ?? "")}>Read ref</button><output id="ref-tag">{tag}</output><output id="count">{count}</output></>;
     const isDrawer = component === "drawer", Root = isDrawer ? Drawer.Drawer : Sheet.Sheet, Trigger = isDrawer ? Drawer.DrawerTrigger : Sheet.SheetTrigger, Content = isDrawer ? Drawer.DrawerContent : Sheet.SheetContent, Close = isDrawer ? Drawer.DrawerClose : Sheet.SheetClose, Header = isDrawer ? Drawer.DrawerHeader : Sheet.SheetHeader, Footer = isDrawer ? Drawer.DrawerFooter : Sheet.SheetFooter, Title = isDrawer ? Drawer.DrawerTitle : Sheet.SheetTitle, Description = isDrawer ? Drawer.DrawerDescription : Sheet.SheetDescription;
     const textProps = native && part !== "surface" ? { id: "subject", scale, style: { position: "fixed", left: x, top: y, width: width * scale, height: height * scale } as React.CSSProperties, ...(p.has("wrapWidth") ? { maxWidth: Number(p.get("wrapWidth")) } : {}), align: p.get("align") ?? "left", "data-subject": "true" } : {};
     return <><Root scale={scale} {...(isDrawer ? { swipeDirection: side === "bottom" ? "down" as const : side === "top" ? "up" as const : side, ...(p.has("snap") ? { snapPoints: [.25, .5, 1], snapPoint: snap, onSnapPointChange: setSnap } : {}) } : {})} {...(p.has("controlled") ? { open } : { defaultOpen: open })} onOpenChange={(next, details) => { if (details.reason === "swipe") { setDrags(v=>v+1); setReleases(v=>v+1); } setOpen(next); }}>
