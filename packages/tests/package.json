@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "bun scripts/test.mjs",
-    "test:unit": "bun test --timeout 120000 ./tests/*.test.mjs"
+    "test:unit": "bun test --timeout 120000 ./tests/*.test.mjs",
+    "dev": "bun --bun vite --config vite.config.ts",
+    "fixture:build": "bun scripts/build-fixture.mjs"
   },
   "devDependencies": {
     "@grasscn/web": "workspace:*",
@@ -27,8 +29,21 @@
     "clsx": "^2.1.1",
     "@base-ui/react": "^1.9.0",
     "tailwind-merge": "^3.7.0",
-    "@grasscn/pixel-perfect": "workspace:*",
     "pngjs": "^7.0.0",
-    "@types/pngjs": "^6.0.5"
+    "@types/pngjs": "^6.0.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "modern-screenshot": "4.7.0"
+  },
+  "exports": {
+    "./test": "./src/harness/test.ts",
+    "./paths": "./src/paths.ts",
+    "./fixture": "./src/runtime/fixture.mjs",
+    "./coordination": "./src/runtime/coordination.mjs",
+    "./dependency-identity": "./src/runtime/dependency-identity.mjs",
+    "./installed-registry-file": "./src/installed/registry-file.mjs",
+    "./checkpoints": "./src/runtime/checkpoints.mjs",
+    "./checkpoint-reporter": "./src/runtime/checkpoint-reporter.mjs",
+    "./guarded-entry": "./src/runtime/guarded-entry.mjs",
+    "./windows-budget": "./src/runtime/windows-budget.ps1"
   }
 }

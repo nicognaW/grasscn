@@ -1,3 +1,5 @@
+import {coordinationRoot,processIdentity,foregroundLease} from '@grasscn/tests/coordination'
+export {coordinationRoot,processIdentity,foregroundLease} from '@grasscn/tests/coordination'
 import {pixelPerfectTestRoot, repoRoot, pixelPerfectRoot} from '../../../workspace-paths.mjs'
 import {installedDependencyIdentity} from './dependency-identity.mjs'
 import fs from 'node:fs'
@@ -25,29 +27,9 @@ export function repository() {
   return match[1]
 }
 
-export function coordinationRoot() {
-  return path.join(path.resolve(fullRoot, git(['rev-parse', '--git-common-dir'])), 'grasscn-verification')
-}
-
 export function fullRunPaths(number) {
   const directory = path.join(coordinationRoot(), 'full-runs', String(issueNumber(number)))
   return {directory, state: path.join(directory, 'state.json'), claim: path.join(directory, 'claim.json'), attempts: path.join(directory, 'attempts')}
-}
-
-export function processIdentity(pid) {
-  if (!Number.isInteger(pid) || pid <= 0) return null
-  try {
-    if (process.platform === 'win32') return execFileSync('powershell', ['-NoProfile', '-Command', `(Get-Process -Id ${pid} -ErrorAction Stop).StartTime.ToUniversalTime().ToString('o')`], {encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']}).trim()
-    return fs.readFileSync(`/proc/${pid}/stat`, 'utf8').slice(fs.readFileSync(`/proc/${pid}/stat`, 'utf8').lastIndexOf(')') + 2).split(' ')[19]
-  } catch { return null }
-}
-
-export function foregroundLease() {
-  const directory = path.join(coordinationRoot(), 'foreground')
-  fs.mkdirSync(directory, {recursive: true})
-  const file = path.join(directory, `${process.pid}-${randomUUID()}.json`)
-  fs.writeFileSync(file, json({pid: process.pid, start: processIdentity(process.pid)}), {flag: 'wx'})
-  return () => fs.rmSync(file, {force: true})
 }
 
 export function environmentIdentity() {

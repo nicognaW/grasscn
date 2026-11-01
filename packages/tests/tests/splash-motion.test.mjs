@@ -2,8 +2,8 @@ import {test} from "bun:test"
 import assert from "node:assert/strict"
 import {readFileSync} from "node:fs"
 import {createHash} from "node:crypto"
-import {splashMotion,splashTransform} from "../../../apps/web/splash-motion.ts"
-const root=new URL('../../pixel-perfect/tests/reference/title-splash/',import.meta.url)
+import {splashMotion,splashTransform} from "@grasscn/web/splash-motion"
+const root=new URL('../fixtures/reference/title-splash/',import.meta.url)
 const bytes=readFileSync(new URL('oracle-104.csv',root)),provenance=JSON.parse(readFileSync(new URL('provenance.json',root),'utf8'))
 const rows=bytes.toString('utf8').trim().split(/\r?\n/).filter(line=>!line.startsWith('#')).map(line=>line.split(',').map(Number))
 const buffer=new DataView(new ArrayBuffer(4)),bits=value=>{buffer.setFloat32(0,value);return buffer.getInt32(0)}

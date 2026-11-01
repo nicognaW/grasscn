@@ -60,6 +60,7 @@
       "version": "0.3.0",
       "devDependencies": {
         "@base-ui/react": "^1.9.0",
+        "@grasscn/tests": "workspace:*",
         "@grasscn/web": "workspace:*",
         "@playwright/test": "^1.64.1",
         "@tailwindcss/vite": "^4.3.3",
@@ -90,9 +91,9 @@
       "version": "0.3.0",
       "devDependencies": {
         "@base-ui/react": "^1.9.0",
-        "@grasscn/pixel-perfect": "workspace:*",
         "@grasscn/web": "workspace:*",
         "@playwright/test": "^1.64.1",
+        "@tailwindcss/vite": "^4.3.3",
         "@tanstack/react-table": "9.3.1",
         "@types/node": "^26.6.5",
         "@types/pngjs": "^6.0.5",
@@ -101,6 +102,7 @@
         "clsx": "^2.1.1",
         "cmdk": "1.1.1",
         "date-fns": "4.4.0",
+        "modern-screenshot": "4.7.0",
         "pngjs": "^7.0.0",
         "react": "^19.3.1",
         "react-dom": "^19.3.1",

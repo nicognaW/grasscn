@@ -42,5 +42,9 @@
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "shadcn": "4.23.0"
+  },
+  "exports": {
+    "./ui/button": "./registry/ui/button.tsx",
+    "./splash-motion": "./splash-motion.ts"
   }
 }

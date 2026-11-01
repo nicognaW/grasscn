@@ -1,2 +1,1 @@
-export * from "@playwright/test"
-export {test} from "@grasscn/pixel-perfect/test"
+export * from '@grasscn/tests/test'

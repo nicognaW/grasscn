@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import {pixelPerfectTestRoot} from '../../../workspace-paths.mjs'
 import path from 'node:path'
-import {fixtureManifest,serveProductionFixture} from '../scripts/production-fixture.mjs'
+import {fixtureManifest,serveProductionFixture} from '@grasscn/tests/fixture'
 
 const scratchRoot=path.join(pixelPerfectTestRoot,'unit')
 fs.mkdirSync(scratchRoot,{recursive:true})
