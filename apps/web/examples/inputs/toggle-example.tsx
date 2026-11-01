@@ -1,9 +1,12 @@
 "use client";
+
 import { useState } from "react";
 
 import { Toggle } from "@/components/ui/toggle";
-export default function ToggleExample() {
+
+const ToggleExample = () => {
   const [pressed, setPressed] = useState(false);
+
   return (
     <Toggle
       aria-label="Only craftable recipes"
@@ -11,4 +14,6 @@ export default function ToggleExample() {
       onPressedChange={setPressed}
     />
   );
-}
+};
+
+export default ToggleExample;

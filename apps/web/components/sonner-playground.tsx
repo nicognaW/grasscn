@@ -8,21 +8,29 @@ import { toast } from "../registry/ui/sonner";
 import { Textarea } from "../registry/ui/textarea";
 
 /** Adapted from the retained playground; the primary example owns this page's one Toaster. */
-export function SonnerPlayground({ scale }: { scale: 1 | 2 | 3 }) {
+export const SonnerPlayground = ({ scale }: { scale: 1 | 2 | 3 }) => {
   const [title, setTitle] = useState("World saved");
+
   const [message, setMessage] = useState(
     "Your progress has been saved.\n世界已保存"
   );
+
   const [shown, setShown] = useState(0);
+
   return (
     <>
-      <div className="demo-options">
+      <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+        className="demo-options"
+        /* eslint-enable shadcn/no-unknown-classes */
+      >
         <label>
           Title
           <Input
             aria-label="Sonner title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
           />
         </label>
         <label>
@@ -30,7 +38,9 @@ export function SonnerPlayground({ scale }: { scale: 1 | 2 | 3 }) {
           <Textarea
             aria-label="Sonner message"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
           />
         </label>
       </div>
@@ -46,4 +56,4 @@ export function SonnerPlayground({ scale }: { scale: 1 | 2 | 3 }) {
       <output aria-live="polite">Shown {shown} times</output>
     </>
   );
-}
+};

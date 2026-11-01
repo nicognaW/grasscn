@@ -11,19 +11,26 @@ import {
   ContextMenuSeparator,
 } from "@/components/ui/context-menu";
 
-export default function Example() {
+const Example = () => {
   const [coordinates, setCoordinates] = useState(false);
   const [action, setAction] = useState("Choose an action");
+
   return (
     <div>
       <ContextMenu>
         <ContextMenuTrigger
-          style={{ display: "block", padding: 24, border: "2px solid #a0a0a0" }}
+          /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+          style={{ border: "2px solid #a0a0a0", display: "block", padding: 24 }}
+          /* eslint-enable shadcn/no-inline-styles */
         >
           Right-click for world actions
         </ContextMenuTrigger>
         <ContextMenuContent>
-          <ContextMenuItem onClick={() => setAction("Resumed")}>
+          <ContextMenuItem
+            onClick={() => {
+              setAction("Resumed");
+            }}
+          >
             Resume game
           </ContextMenuItem>
           <ContextMenuSeparator />
@@ -41,4 +48,6 @@ export default function Example() {
       </output>
     </div>
   );
-}
+};
+
+export default Example;

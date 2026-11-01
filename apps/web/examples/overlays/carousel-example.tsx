@@ -9,24 +9,30 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 
-export default function Example() {
-  return (
-    <div style={{ padding: 48, width: "100%", maxWidth: 500 }}>
-      <Carousel aria-label="World gallery">
-        <CarouselContent>
-          {["Grasslands", "Deep Dark", "Birch Forest"].map((name) => (
-            <CarouselItem key={name}>
-              <Card style={{ minHeight: 160 }}>
-                <CardHeader>
-                  <CardTitle>{name}</CardTitle>
-                </CardHeader>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
-  );
-}
+const Example = () => (
+  <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+    style={{ maxWidth: 500, padding: 48, width: "100%" }}
+    /* eslint-enable shadcn/no-inline-styles */
+  >
+    <Carousel aria-label="World gallery">
+      <CarouselContent>
+        {["Grasslands", "Deep Dark", "Birch Forest"].map((name) => (
+          <CarouselItem key={name}>
+            <Card /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+              style={{ minHeight: 160 }}
+              /* eslint-enable shadcn/no-inline-styles */
+            >
+              <CardHeader>
+                <CardTitle>{name}</CardTitle>
+              </CardHeader>
+            </Card>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  </div>
+);
+
+export default Example;

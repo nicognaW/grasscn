@@ -1,19 +1,24 @@
 "use client";
+
 import { useState } from "react";
 
-import {
-  AdvancementTree,
-  type AdvancementNode,
-} from "@/components/ui/advancement-tree";
+import { AdvancementTree } from "@/components/ui/advancement-tree";
+import type { AdvancementNode } from "@/components/ui/advancement-tree";
+
 const nodes: AdvancementNode[] = [
-  { id: "plan", title: "Plan", x: 0, y: 0, completed: true },
+  { completed: true, id: "plan", title: "Plan", x: 0, y: 0 },
   { id: "build", parentId: "plan", title: "Build", x: 1, y: 0 },
-  { id: "share", parentId: "build", title: "Share", x: 2, y: 0, kind: "goal" },
+  { id: "share", kind: "goal", parentId: "build", title: "Share", x: 2, y: 0 },
 ];
-export default function AdvancementTreeExample() {
+
+const AdvancementTreeExample = () => {
   const [selected, setSelected] = useState("plan");
+
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", gap: 16 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <AdvancementTree
         nodes={nodes}
         selectedId={selected}
@@ -25,4 +30,6 @@ export default function AdvancementTreeExample() {
       </output>
     </div>
   );
-}
+};
+
+export default AdvancementTreeExample;

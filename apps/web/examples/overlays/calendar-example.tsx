@@ -4,8 +4,9 @@ import { useState } from "react";
 
 import { Calendar } from "@/components/ui/calendar";
 
-export default function Example() {
+const Example = () => {
   const [date, setDate] = useState<Date | undefined>(new Date(2026, 9, 30));
+
   return (
     <div>
       <Calendar
@@ -19,4 +20,6 @@ export default function Example() {
       </output>
     </div>
   );
-}
+};
+
+export default Example;

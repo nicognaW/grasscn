@@ -1,5 +1,7 @@
 "use client";
+
 import { FormExample } from "@/components/form";
-export default function PlayerFormExample() {
-  return <FormExample />;
-}
+
+const PlayerFormExample = () => <FormExample />;
+
+export default PlayerFormExample;

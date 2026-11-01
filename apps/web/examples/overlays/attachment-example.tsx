@@ -14,15 +14,25 @@ import {
 } from "@/components/ui/attachment";
 import { Button } from "@/components/ui/button";
 
-export default function Example() {
+const Example = () => {
   const [removed, setRemoved] = useState(false);
   const [opened, setOpened] = useState(0);
+
   return (
     <div>
       {removed ? (
-        <Button onClick={() => setRemoved(false)}>Restore archive</Button>
+        <Button
+          onClick={() => {
+            setRemoved(false);
+          }}
+        >
+          Restore archive
+        </Button>
       ) : (
-        <Attachment style={{ width: 500, maxWidth: "100%" }}>
+        <Attachment /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+          style={{ maxWidth: "100%", width: 500 }}
+          /* eslint-enable shadcn/no-inline-styles */
+        >
           <AttachmentMedia />
           <AttachmentContent>
             <AttachmentTitle>New World.zip</AttachmentTitle>
@@ -32,12 +42,16 @@ export default function Example() {
           </AttachmentContent>
           <AttachmentTrigger
             aria-label="Preview archive"
-            onClick={() => setOpened(opened + 1)}
+            onClick={() => {
+              setOpened(opened + 1);
+            }}
           />
           <AttachmentActions>
             <AttachmentAction
               aria-label="Remove archive"
-              onClick={() => setRemoved(true)}
+              onClick={() => {
+                setRemoved(true);
+              }}
             >
               X
             </AttachmentAction>
@@ -47,4 +61,6 @@ export default function Example() {
       <output aria-label="Archive previews">{opened} previews</output>
     </div>
   );
-}
+};
+
+export default Example;

@@ -12,12 +12,14 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 
-export default function PaginationExample() {
+const PaginationExample = () => {
   const [page, setPage] = useState(1);
+
   const select = (event: MouseEvent<HTMLAnchorElement>, next: number) => {
     event.preventDefault();
     setPage(next);
   };
+
   return (
     <Pagination aria-label="Recipe pages">
       <PaginationContent>
@@ -25,7 +27,9 @@ export default function PaginationExample() {
           <PaginationPrevious
             href={`?page=${page - 1}`}
             aria-disabled={page === 1}
-            onClick={(event) => select(event, page - 1)}
+            onClick={(event) => {
+              select(event, page - 1);
+            }}
           />
         </PaginationItem>
         {[1, 2, 3].map((number) => (
@@ -33,7 +37,9 @@ export default function PaginationExample() {
             <PaginationLink
               href={`?page=${number}`}
               isActive={page === number}
-              onClick={(event) => select(event, number)}
+              onClick={(event) => {
+                select(event, number);
+              }}
             >
               {number}
             </PaginationLink>
@@ -43,10 +49,14 @@ export default function PaginationExample() {
           <PaginationNext
             href={`?page=${page + 1}`}
             aria-disabled={page === 3}
-            onClick={(event) => select(event, page + 1)}
+            onClick={(event) => {
+              select(event, page + 1);
+            }}
           />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
   );
-}
+};
+
+export default PaginationExample;

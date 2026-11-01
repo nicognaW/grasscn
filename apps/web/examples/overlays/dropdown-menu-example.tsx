@@ -11,15 +11,20 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-export default function Example() {
+const Example = () => {
   const [coordinates, setCoordinates] = useState(false);
   const [action, setAction] = useState("Choose an action");
+
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger>Game menu</DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setAction("Resumed")}>
+          <DropdownMenuItem
+            onClick={() => {
+              setAction("Resumed");
+            }}
+          >
             Resume game
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -37,4 +42,6 @@ export default function Example() {
       </output>
     </div>
   );
-}
+};
+
+export default Example;

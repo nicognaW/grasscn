@@ -8,8 +8,9 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 
-export default function CollapsibleExample() {
+const CollapsibleExample = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger>World details</CollapsibleTrigger>
@@ -18,4 +19,6 @@ export default function CollapsibleExample() {
       </CollapsibleContent>
     </Collapsible>
   );
-}
+};
+
+export default CollapsibleExample;

@@ -1,25 +1,35 @@
 "use client";
+
 import { useState } from "react";
 
-import { PlayerList, type PlayerListEntry } from "@/components/ui/player-list";
+import { PlayerList } from "@/components/ui/player-list";
+import type { PlayerListEntry } from "@/components/ui/player-list";
+
 const players: PlayerListEntry[] = [
-  { id: "alex", name: "Alex", skin: "slim/alex", latency: 42, score: 180 },
-  { id: "steve", name: "Steve", skin: "wide/steve", latency: 84, score: 156 },
-  { id: "kai", name: "Kai", skin: "wide/kai", latency: 220, score: 128 },
+  { id: "alex", latency: 42, name: "Alex", score: 180, skin: "slim/alex" },
+  { id: "steve", latency: 84, name: "Steve", score: 156, skin: "wide/steve" },
+  { id: "kai", latency: 220, name: "Kai", score: 128, skin: "wide/kai" },
 ];
-export default function PlayerListExample() {
+
+const PlayerListExample = () => {
   const [selected, setSelected] = useState("Alex");
+
   return (
-    <div style={{ display: "grid", gap: 16 }}>
+    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", gap: 16 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <PlayerList
         players={players}
         header="Build crew"
         footer="3 online"
-        onPlayerSelect={(id) =>
-          setSelected(players.find((player) => player.id === id)?.name ?? id)
-        }
+        onPlayerSelect={(id) => {
+          setSelected(players.find((player) => player.id === id)?.name ?? id);
+        }}
       />
       <output aria-live="polite">{selected}</output>
     </div>
   );
-}
+};
+
+export default PlayerListExample;

@@ -1,4 +1,5 @@
 "use client";
+
 import { useId } from "react";
 
 import {
@@ -8,8 +9,10 @@ import {
   FieldDescription,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-export default function FieldExample() {
+
+const FieldExample = () => {
   const id = useId();
+
   return (
     <Field>
       <FieldLabel htmlFor={id}>World name</FieldLabel>
@@ -25,4 +28,6 @@ export default function FieldExample() {
       </FieldContent>
     </Field>
   );
-}
+};
+
+export default FieldExample;

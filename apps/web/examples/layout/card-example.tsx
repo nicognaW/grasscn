@@ -14,11 +14,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 
-export default function CardExample() {
+const CardExample = () => {
   const [name, setName] = useState("Minecraft");
   const [saved, setSaved] = useState(false);
+
   return (
-    <Card style={{ width: 472, maxWidth: "100%" }}>
+    <Card /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ maxWidth: "100%", width: 472 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <CardHeader>
         <CardTitle>World Settings</CardTitle>
         <CardDescription>Change your world options.</CardDescription>
@@ -32,15 +36,25 @@ export default function CardExample() {
             setName(event.target.value);
             setSaved(false);
           }}
+          /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
           style={{ width: "100%" }}
+          /* eslint-enable shadcn/no-inline-styles */
         />
       </CardContent>
       <CardFooter>
-        <Button onClick={() => setSaved(true)}>Done</Button>
+        <Button
+          onClick={() => {
+            setSaved(true);
+          }}
+        >
+          Done
+        </Button>
         <Typography as="output" aria-live="polite">
           {saved ? "Settings saved" : "Edit your world name"}
         </Typography>
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default CardExample;

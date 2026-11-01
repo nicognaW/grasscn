@@ -5,84 +5,92 @@ import type { ComponentProps, HTMLAttributes } from "react";
 import { documentText, DocumentText } from "./document-text";
 
 type HeadingProps = ComponentProps<"h2">;
+
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
-function Heading({
+const Heading = ({
   as: Tag,
   children,
   className,
   ...props
-}: HeadingProps & { as: HeadingTag }) {
-  return (
-    <Tag
-      data-slot={`typography-${Tag}`}
-      className={`document-heading ${className ?? ""}`}
-      {...props}
-    >
-      <DocumentText>{children}</DocumentText>
-    </Tag>
-  );
-}
+}: HeadingProps & { as: HeadingTag }) => (
+  <Tag
+    data-slot={`typography-${Tag}`}
+    className={`document-heading ${className ?? ""}`}
+    {...props}
+  >
+    <DocumentText>{children}</DocumentText>
+  </Tag>
+);
 
-export function DocumentH1(props: HeadingProps) {
-  return <Heading as="h1" {...props} />;
-}
-export function DocumentH2(props: HeadingProps) {
-  return <Heading as="h2" {...props} />;
-}
-export function DocumentH3(props: HeadingProps) {
-  return <Heading as="h3" {...props} />;
-}
-export function DocumentH4(props: HeadingProps) {
-  return <Heading as="h4" {...props} />;
-}
-export function DocumentH5(props: HeadingProps) {
-  return <Heading as="h5" {...props} />;
-}
-export function DocumentH6(props: HeadingProps) {
-  return <Heading as="h6" {...props} />;
-}
+export const DocumentH1 = (props: HeadingProps) => (
+  <Heading as="h1" {...props} />
+);
 
-export function DocumentListItem({
+export const DocumentH2 = (props: HeadingProps) => (
+  <Heading as="h2" {...props} />
+);
+
+export const DocumentH3 = (props: HeadingProps) => (
+  <Heading as="h3" {...props} />
+);
+
+export const DocumentH4 = (props: HeadingProps) => (
+  <Heading as="h4" {...props} />
+);
+
+export const DocumentH5 = (props: HeadingProps) => (
+  <Heading as="h5" {...props} />
+);
+
+export const DocumentH6 = (props: HeadingProps) => (
+  <Heading as="h6" {...props} />
+);
+
+export const DocumentListItem = ({
   children,
   className,
   ...props
-}: ComponentProps<"li">) {
-  return (
-    <li className={`document-text ${className ?? ""}`} {...props}>
-      {documentText(children)}
-    </li>
-  );
-}
-export function DocumentTableHeader({
+}: ComponentProps<"li">) => (
+  <li /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+    className={`document-text ${className ?? ""}`}
+    /* eslint-enable shadcn/no-unknown-classes */ {...props}
+  >
+    {documentText(children)}
+  </li>
+);
+
+export const DocumentTableHeader = ({
   children,
   className,
   ...props
-}: ComponentProps<"th">) {
-  return (
-    <th className={`document-text ${className ?? ""}`} {...props}>
-      {documentText(children)}
-    </th>
-  );
-}
-export function DocumentTableCell({
+}: ComponentProps<"th">) => (
+  <th /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+    className={`document-text ${className ?? ""}`}
+    /* eslint-enable shadcn/no-unknown-classes */ {...props}
+  >
+    {documentText(children)}
+  </th>
+);
+
+export const DocumentTableCell = ({
   children,
   className,
   ...props
-}: ComponentProps<"td">) {
-  return (
-    <td className={`document-text ${className ?? ""}`} {...props}>
-      {documentText(children)}
-    </td>
-  );
-}
-export function DocumentInlineCode({
+}: ComponentProps<"td">) => (
+  <td /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+    className={`document-text ${className ?? ""}`}
+    /* eslint-enable shadcn/no-unknown-classes */ {...props}
+  >
+    {documentText(children)}
+  </td>
+);
+
+export const DocumentInlineCode = ({
   children,
   ...props
-}: HTMLAttributes<HTMLElement>) {
-  return (
-    <code {...props}>
-      <DocumentText>{children}</DocumentText>
-    </code>
-  );
-}
+}: HTMLAttributes<HTMLElement>) => (
+  <code {...props}>
+    <DocumentText>{children}</DocumentText>
+  </code>
+);
