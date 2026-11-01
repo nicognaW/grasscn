@@ -113,6 +113,7 @@ const Carousel = ({
       }}
     >
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Carousel's div region and div props/ref contract.
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -188,6 +189,7 @@ const CarouselContent = ({
 
 const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => (
   <div
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn CarouselItem's div slide grouping contract.
     role="group"
     aria-roledescription="slide"
     data-slot="carousel-item"
