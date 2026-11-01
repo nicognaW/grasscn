@@ -1,0 +1,50 @@
+---
+title: Player List
+description: A roster and a separate scoreboard from one installable item.
+aliases: [PlayerList, Scoreboard, PlayerListEntry, ScoreboardEntry]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+A roster and a separate scoreboard from one installable item.
+
+## Preview
+
+<ComponentExample name="player-list-example" />
+
+## Usage
+
+Import `PlayerList` and `Scoreboard` from `@/components/ui/player-list`. The primary roster supplies `players` with IDs, names, built-in skins, latency and integer scores inline. Its `onPlayerSelect` callback updates a selected-player output; it does not change player state.
+
+The first 80 entries are displayed in input order, using up to 20 rows per column. `rowWidth` is a logical-pixel override. Optional string `header` and `footer` can contain line breaks; arbitrary React content does not acquire native text measurement automatically.
+
+## Composition
+
+`Scoreboard` accepts `title` and `entries`, filters names beginning with `#`, sorts descending by score then case-insensitive name, and displays the top 15. It owns no player scoring or update action. The named example provides all three entries itself.
+
+Roster rows are list items. Supplying `onPlayerSelect` adds named buttons; without it, rows are display-only. Latency images have descriptive alternate text. Built-in `skin` needs no caller asset. `src` is a caller-owned head image; `username` requests the optional third-party `mc-heads.net/avatar` endpoint. Scores are integer display data, not hearts or team formatting.
+
+### Player List Scoreboard
+
+<ComponentExample name="player-list-scoreboard" />
+
+## Installation
+
+<Installation name="player-list" title="Player List" />
+
+## Component source
+
+<ComponentSource name="player-list" title="Player List" />
+
+## Interactive playground
+
+<MinecraftPlayground name="player-list" />
+
+## Verified coverage and limitations
+
+The retained roster/scoreboard cases cover declared built-in heads, player counts, latency thresholds, integer scores and simple headers/footers. Custom heads, spectator styling, multiline layouts, arbitrary glyphs and different raster environments retain narrower evidence boundaries. This callback/output composition is a web adaptation.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

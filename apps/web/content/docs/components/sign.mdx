@@ -1,0 +1,50 @@
+---
+title: Sign
+description: Standing and hanging sign displays with caller-owned text.
+aliases: [Sign, HangingSign, SignWood, SignProps]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Standing and hanging sign displays with caller-owned text.
+
+## Preview
+
+<ComponentExample name="sign-example" />
+
+## Usage
+
+Import `Sign` or `HangingSign` from `@/components/ui/sign`. Supply up to four strings in `lines`; a fifth line throws. The defaults are `wood="oak"`, `color="#000000"` and `glowing={false}`. Standing signs measure 120 by 110 logical pixels; hanging signs measure 120 by 74.
+
+The named example uses `HangingSign` from the same installed module. Both examples carry their complete line data inline.
+
+## Composition
+
+`wood` is one of oak, spruce, birch, jungle, acacia, dark_oak, mangrove, cherry, bamboo, crimson, warped or pale_oak. `color` must be a six-digit hex color. Non-glowing ink darkens each supplied channel to 40 percent; glowing ink uses the supplied color.
+
+These are display groups, not editable text fields. Own editing in separate controls, then pass updated `lines`. The default accessible name joins the lines; an explicit `aria-label` names the board, while hidden text retains the complete lines. Texture/font painting is asynchronous.
+
+### Sign Hanging
+
+<ComponentExample name="sign-hanging" />
+
+## Installation
+
+<Installation name="sign" title="Sign" />
+
+## Component source
+
+<ComponentSource name="sign" title="Sign" />
+
+## Interactive playground
+
+<MinecraftPlayground name="sign" />
+
+## Verified coverage and limitations
+
+The retained fixed black-text cases do not prove every color, glow setting, glyph or overflowing line. Standing/hanging examples are separate compositions; editable playground controls are web adaptations.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

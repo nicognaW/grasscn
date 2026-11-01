@@ -1,0 +1,46 @@
+---
+title: Advancement Tree
+description: A panning, selectable advancement graph.
+aliases: [AdvancementTree, AdvancementNode]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+A panning, selectable advancement graph.
+
+## Preview
+
+<ComponentExample name="advancement-tree-example" />
+
+## Usage
+
+Import `AdvancementTree` and `AdvancementNode` from `@/components/ui/advancement-tree`. Pass `nodes` with unique `id`, `title`, finite grid coordinates `x`/`y`, and an optional `parentId`. Missing parents, duplicate IDs and cycles throw. Coordinates map to 28 by 27 logical-pixel grid steps; the default viewport is 234 by 113 logical pixels.
+
+The primary example owns `selectedId` through `onSelectedIdChange`. Use `defaultSelectedId` for internal selection. `pan`/`onPanChange` and `defaultPan` control the view independently.
+
+## Composition
+
+`kind` chooses `task`, `goal` or `challenge`; `completed` changes its frame. Hidden nodes become visible when completed. Custom `icon` content is caller-owned. Selection does not complete a node or mutate your graph.
+
+The root is a focusable group. Drag to pan; root arrows pan by 16 logical pixels and Home recenters. On node buttons, arrows traverse input order. Nodes expose `aria-pressed`; tooltip content is supplied by each node's title and description. The component includes its tooltip provider.
+
+## Installation
+
+<Installation name="advancement-tree" title="Advancement Tree" />
+
+## Component source
+
+<ComponentSource name="advancement-tree" title="Advancement Tree" />
+
+## Interactive playground
+
+<MinecraftPlayground name="advancement-tree" />
+
+## Verified coverage and limitations
+
+Frame/connector rendering has retained native cases. This three-node release graph and selected-title output are web adaptations; its content does not inherit a pixel-perfect match from a differently populated capture. Custom icons, arbitrary text and changed viewport geometry need matching evidence.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.
