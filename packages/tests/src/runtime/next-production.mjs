@@ -132,6 +132,7 @@ async function preparationIdentity(root, directory) {
     generated,
     environment: {
       bun: Bun.version,
+      bunOptionsSha256: digest(process.env.BUN_OPTIONS ?? ""),
       platform: process.platform,
       arch: process.arch,
       locale: resolved.locale,

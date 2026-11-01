@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["BUN_OPTIONS"],
   "tasks": {
     "generate": {
       "dependsOn": ["^generate"],

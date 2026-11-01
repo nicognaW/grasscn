@@ -97,6 +97,17 @@ test("prepared production requires a completed matching build instead of silentl
       "run",
       "build",
     ]);
+    const bunOptionsBefore = process.env.BUN_OPTIONS;
+    try {
+      process.env.BUN_OPTIONS = "--smol";
+      await assert.rejects(
+        () => readPreparedProductionBuild(options),
+        /environment changed/i
+      );
+    } finally {
+      if (bunOptionsBefore === undefined) delete process.env.BUN_OPTIONS;
+      else process.env.BUN_OPTIONS = bunOptionsBefore;
+    }
     await assert.rejects(
       () =>
         readPreparedProductionBuild({
