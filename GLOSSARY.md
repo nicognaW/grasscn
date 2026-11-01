@@ -35,7 +35,7 @@ Zero differing pixels between a UI port and its captured reference for a particu
 _Avoid_: Visually close
 
 **Pixel Perfect Test**:
-A test that checks a UI port against a captured Minecraft reference, requiring zero differing decoded RGBA pixels for a declared reference case. Website navigation and component behavior checks have their own purposes.
+A test of a UI port's pixel-perfect match with a captured Minecraft reference, including original-asset and captured-reference integrity checks. Appearance comparisons require zero differing decoded RGBA pixels for a declared reference case.
 _Avoid_: Browser test (when referring to pixel verification)
 
 **Verified coverage**:
@@ -43,20 +43,23 @@ The reference cases, game versions and environments for which a UI port's appear
 
 ### Test selection and execution
 
+**Non-PPT test**:
+A website, component behavior, API, regression or tooling check outside captured-reference pixel verification and its Base/Full classification.
+
 **Website default path**:
 The ordinary content, state and interaction presented by a component's default Grasscn website demo.
 
 **Base mapping**:
-The recorded relationship between one Grasscn test case and a website default path or an actual upstream shadcn test.
+The recorded relationship between one Pixel Perfect Test case and a website default path or an actual upstream shadcn test.
 
 **Base tests**:
-Grasscn Pixel Perfect Tests, website tests and component behavior tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
+Pixel Perfect Tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
 
 **Full tests**:
-The remaining cases in the classified test suite outside Base tests, covering additional reference cases, variants and edge cases.
+The remaining Pixel Perfect Tests outside Base tests, covering additional reference cases, variants and edge cases.
 
 **Full test run**:
-An approved execution of Full tests against one fixed source and environment snapshot. Resuming interrupted portions against that same snapshot continues the same run.
+An approved execution of Full PPTs against one fixed source and environment snapshot. Resuming interrupted portions against that same snapshot continues the same run.
 
 **Full run issue**:
 The dedicated record of one Full test run, identifying its source, scope, environment, authorization, progress and result.

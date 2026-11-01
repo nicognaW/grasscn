@@ -1,56 +1,32 @@
-# Base selection review
+# Base PPT selection review
 
-The catalogue selects 57 existing cases by concrete default website paths or actual shadcn-owned tests. This is a reviewed selection, not a promised count or a generic sample. All other browser cases remain Full. The 57-case selection leaves the existing case pool unchanged.
+Base/Full applies only to PPTs. The earlier 57-case catalogue also classified website and behavior checks. Its 45 non-PPT mappings have been removed; those tests run normally in `packages/tests`, together with every other non-PPT case. No case was deleted or promoted to fill the smaller Base catalogue.
 
-The existing dedicated-preview navigation case visits all 67 published default component pages and activates the default Button and Checkbox. Focused entries add default control behavior and exact GUI2 appearances where the current pool has an eligible existing case. A display smoke check is not equivalent to focused interaction or comprehensive appearance verification.
+The current inventory contains 12 Base PPTs, 30,289 Full PPTs and 598 ordinary non-PPT browser cases: the same 30,899 case identities as before the migration. Counts describe this snapshot, not a quota. Browser-only image regressions and behavior-only cases were separated from mixed PPT files; combined native-pixel/behavior assertions remain intact.
 
-Three entries map to exact test titles in shadcn's pinned Questionnaire and MessageScroller browser sources, including validation/navigation, scoped keyboard shortcuts and the scroll-to-end button. No Base UI, DayPicker or other engine-test substitute is used.
+## Retained Base mappings
 
-## Focused coverage gaps
+Each entry retains its existing default-website mapping and reference conditions. Every file/title path must resolve exactly once.
 
-These published components currently have only the shared default-page smoke coverage in Base, not a separately selected focused case:
+| File | Existing case | Mapping |
+| --- | --- | --- |
+| preview.spec.ts | Tabs preview preserves native tab bar at scale 2 | /components/tabs |
+| preview.spec.ts | Select preview preserves native cycle button at scale 2 | /components/select |
+| preview.spec.ts | Radio Group preview preserves native widget pixels at scale 2 | /components/radio-group |
+| preview.spec.ts | Switch preview preserves native on/off pixels at scale 2 | /components/switch |
+| pixels.spec.ts | vanilla pixels: normal-w200-s2.png | /components/button |
+| controls.spec.ts | Control native pixels: checkbox-unchecked-normal-s2.png | /components/checkbox |
+| slider.spec.ts | Control native pixels: slider-w200-v500-normal-s2.png | /components/slider |
+| input.spec.ts | Input native pixels: input-w200-normal-c39-s2.png | /components/input |
+| textarea.spec.ts | Textarea native pixels: textarea-c18-s2.png | /components/textarea |
+| separator.spec.ts | Separator native pixels (div): separator-c6-s2.png | /components/separator |
+| separator.spec.ts | Separator native pixels (div): separator-c24-s2.png | /components/separator |
+| progress.spec.ts | Progress native pixels: progress-c6-s2.png | /components/progress |
 
-- aspect-ratio
-- attachment
-- avatar
-- badge
-- button-group
-- calendar
-- card
-- carousel
-- chart
-- code-block
-- combobox
-- command
-- data-table
-- drawer
-- form
-- input-group
-- input-otp
-- item
-- marker
-- message
-- pagination
-- player-list
-- player-preview
-- scroll-area
-- sheet
-- sidebar
-- sign
-- sonner
-- spinner
-- table
-- trace
-- typography
+## Coverage gaps
 
-Existing candidates for these components combine CJK edits, multiple scales/orientations, disabled/custom/composed variants, rich-content recipes or additional edge scenarios, or establish native constituent coverage rather than the website's default path. They remain Full. No tests are split, duplicated, rewritten or added to fill these gaps. This list is a selection limitation for maintainers to review, not a claim that the components have no tests.
-
-The InputOTP keyboard case also checks length overflow; the DataTable recipe includes rich cells and caller-owned state; the Spinner case includes custom children and events. These mixed cases remain unchanged in Full. The current partition is 57 Base and 30,842 Full out of 30,899 existing cases.
-
-Legacy Accordion, Hover Card and Navigation Menu suites are not selected through the website rule because they are not published standalone demos in the current 67-item website catalogue. Their existing cases remain Full.
-
-Every catalogue entry identifies its own existing file/title path and mapping reason. The catalogue must resolve each entry to exactly one collected case; stale or ambiguous identities are errors. A renamed or newly added describe-group case does not inherit Base status merely by reusing a leaf title.
+A component without a mapped PPT has no focused Base pixel proof, even if its website and interactions pass ordinary tests. Additional captured-reference scales, states, content and stress matrices remain Full unless an individual existing case qualifies under the importance rules. Preserve those limits; do not manufacture a desired Base count or substitute dependency-engine tests for actual shadcn mappings.
 
 ## Validation
 
-Use browser-suite inventory commands to check the current counts and partition. Full inventory collection does not execute tests or confer approval. No Full tests were executed to construct this selection.
+Use `bun run --cwd packages/pixel-perfect list --all --json` to validate the PPT partition and `bun run --cwd packages/tests test --list --reporter=json` to inspect ordinary non-PPT cases. Listing Full PPTs is not execution or authorization. No Full PPTs were executed for this migration.

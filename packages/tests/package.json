@@ -4,24 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "bun cli/test.mjs",
+    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.mjs",
     "dev": "bun --bun vite --config vite.config.ts",
-    "test": "bun scripts/browser-suite.mjs run",
-    "test:unit": "bun test --timeout 120000 ./tests/*.test.mjs",
-    "fixture:build": "bun scripts/production-fixture.mjs",
-    "verify": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite all",
-    "full-tests": "bun scripts/full-run.mjs"
+    "fixture:build": "bun cli/build-fixture.mjs"
   },
   "devDependencies": {
     "@grasscn/web": "workspace:*",
     "@playwright/test": "^1.64.1",
-    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
-    "@types/pngjs": "^6.0.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "modern-screenshot": "4.7.0",
-    "opentype.js": "^2.0.0",
-    "pngjs": "^7.0.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tailwindcss": "^4.3.3",
@@ -35,6 +28,25 @@
     "react-resizable-panels": "^4.15.1",
     "clsx": "^2.1.1",
     "@base-ui/react": "^1.9.0",
-    "tailwind-merge": "^3.7.0"
+    "tailwind-merge": "^3.7.0",
+    "pngjs": "^7.0.0",
+    "@types/pngjs": "^6.0.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "modern-screenshot": "4.7.0"
+  },
+  "exports": {
+    "./test": "./src/harness/test.ts",
+    "./paths": "./src/paths.ts",
+    "./fixture": "./src/runtime/fixture.mjs",
+    "./coordination": "./src/runtime/coordination.mjs",
+    "./dependency-identity": "./src/runtime/dependency-identity.mjs",
+    "./installed-registry-file": "./src/installed/registry-file.mjs",
+    "./checkpoints": "./src/runtime/checkpoints.mjs",
+    "./checkpoint-reporter": "./src/runtime/checkpoint-reporter.mjs",
+    "./guarded-entry": "./src/runtime/guarded-entry.mjs",
+    "./windows-budget": "./src/runtime/windows-budget.ps1",
+    "./case-paths": "./src/runtime/case-paths.mjs",
+    "./run-workload": "./src/runtime/run-workload.ps1",
+    "./hosts": "./src/runtime/hosts.mjs"
   }
 }

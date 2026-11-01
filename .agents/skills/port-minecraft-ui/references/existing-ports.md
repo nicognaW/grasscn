@@ -6,16 +6,16 @@ Paths are relative to the Git root. Read the files themselves for current comman
 
 | Boundary | Existing material | Adaptation rule |
 | --- | --- | --- |
-| Coverage and provenance | `apps/web/registry/minecraft-map.json`, `packages/tests/tests/reference/` | Start with the selected component's captured references, conditions and limitations. Preserve existing evidence when adding cases. |
-| Capture launch | `packages/tests/tests/reference/capture.mjs`, `packages/tests/tests/reference/capture-controls.mjs` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
-| Component-specific capture | `packages/tests/tests/reference/*/source/ControlsReferenceMain.java` | Adapt the relevant original Minecraft element, content and input sequences. Retain source and repeatability evidence. |
-| Pixel comparison | `packages/tests/tests/pixels.spec.ts`, `packages/tests/tests/adventure.spec.ts`, `packages/tests/tests/native-expansion.spec.ts` | Reuse strict decoded-RGBA comparisons and failure artifacts; adapt the locator and case schema. |
-| Interaction sequences | `packages/tests/tests/advancement-gestures.spec.ts`, `packages/tests/tests/trading-scroll.spec.ts`, `packages/tests/tests/player-custom-skin.spec.ts` | Exercise the public API, transitions, competing gestures, burst input and content replacement. Read `interactions.md` for applicability. |
-| Rendering investigations | `packages/tests/tests/reference/label/glyph-probe/`, `packages/tests/tests/reference/player-preview/model-probe/`, `packages/tests/tests/reference/map/atlas-probe/` | Use targeted original-renderer probes to explain glyph, float, atlas and projection disagreements. See `rendering.md`. |
-| Generated data | `packages/tests/tests/reference/map/demo-world/` | Verify frozen input, independently repeated generation and renderer output as separate links. See `dynamic-data.md`. |
+| Coverage and provenance | `apps/web/registry/minecraft-map.json`, `packages/pixel-perfect/tests/reference/` | Start with the selected component's captured references, conditions and limitations. Preserve existing evidence when adding cases. |
+| Capture launch | `packages/pixel-perfect/tests/reference/capture.mjs`, `packages/pixel-perfect/tests/reference/capture-controls.mjs` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
+| Component-specific capture | `packages/pixel-perfect/tests/reference/*/source/ControlsReferenceMain.java` | Adapt the relevant original Minecraft element, content and input sequences. Retain source and repeatability evidence. |
+| Pixel comparison | `packages/pixel-perfect/tests/button/pixels.spec.ts`, `packages/pixel-perfect/tests/advancement-tree/adventure.spec.ts`, `packages/pixel-perfect/tests/native-expansion/native-expansion.spec.ts` | Reuse strict decoded-RGBA comparisons and failure artifacts; adapt the locator and case schema. |
+| Interaction sequences | `packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts`, `packages/tests/tests/components/trading/trading-scroll.spec.ts`, `packages/tests/tests/components/player-preview/player-custom-skin.spec.ts` | Exercise the public API, transitions, competing gestures, burst input and content replacement. Read `interactions.md` for applicability. |
+| Rendering investigations | `packages/pixel-perfect/tests/reference/label/glyph-probe/`, `packages/pixel-perfect/tests/reference/player-preview/model-probe/`, `packages/pixel-perfect/tests/reference/map/atlas-probe/` | Use targeted original-renderer probes to explain glyph, float, atlas and projection disagreements. See `rendering.md`. |
+| Generated data | `packages/pixel-perfect/tests/reference/map/demo-world/` | Verify frozen input, independently repeated generation and renderer output as separate links. See `dynamic-data.md`. |
 | Registry installation | `apps/web/registry.json`, `public/r/`, component installation reports | Build and install through the actual shadcn CLI in a separate consumer. Include every required resource; keep helper guarantees distinct from component guarantees. |
-| Integrated preview | `apps/web/demos.json`, `apps/web/demos/`, `packages/tests/tests/native-expansion-preview.spec.ts` | Add a realistic working demo and verify surrounding layout and connected controls at desktop/mobile widths. |
-| Local verification | `package.json`, `packages/tests/scripts/run-porting.ps1`, `packages/tests/scripts/verify-porting.mjs` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
+| Integrated preview | `apps/web/demos.json`, `apps/web/demos/`, `packages/tests/tests/website/native-expansion-preview.spec.ts` | Add a realistic working demo and verify surrounding layout and connected controls at desktop/mobile widths. |
+| Local verification | `package.json`, `packages/pixel-perfect/cli/run-porting.ps1`, `packages/pixel-perfect/src/runtime/verify-porting.mjs` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
 | Domain and decision | `GLOSSARY.md`, `docs/adr/0001-captured-references.md` | Use the current terms and captured-reference acceptance decision. |
 
 ## Useful Button rendering findings
@@ -41,10 +41,10 @@ Consumer installation and ordinary browser regressions use the packaged assets a
 
 Run these directly when needed; they are not routine package commands:
 
-- `node tests/reference/capture.mjs <version-directory> <java-bin>` captures Button reference cases.
-- `node tests/reference/capture-controls.mjs <version-directory> <java-bin> [case-file]` captures the selected control corpus.
-- `node scripts/verify-reference-repeat.mjs <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
-- `node scripts/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
-- `node scripts/check-map.mjs --list` lists component mappings.
+- `bun packages/pixel-perfect/tests/reference/capture.mjs <version-directory> <java-bin>` captures Button reference cases.
+- `bun packages/pixel-perfect/tests/reference/capture-controls.mjs <version-directory> <java-bin> [case-file]` captures the selected control corpus.
+- `bun packages/pixel-perfect/src/native/verify-reference-repeat.mjs <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
+- `bun packages/pixel-perfect/src/native/generate/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
+- `bun packages/pixel-perfect/src/runtime/check-map.mjs --list` lists component mappings.
 
 Read the corresponding script for additional inputs and scope. Capturing or regenerating a particular corpus does not establish verified coverage for the entire registry.
