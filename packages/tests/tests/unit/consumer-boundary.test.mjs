@@ -1,4 +1,5 @@
 import { test, expect } from "bun:test";
+import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -12,14 +13,16 @@ import {
 test("external consumer rejects repository descendants and ancestors", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "grasscn-boundary-"));
   await mkdir(path.join(root, "repo", "consumer"), { recursive: true });
-  await expect(
+  await assert.rejects(
     assertExternalProject(path.join(root, "repo", "consumer"), [
       path.join(root, "repo"),
-    ])
-  ).rejects.toThrow("outside");
-  await expect(
-    assertExternalProject(root, [path.join(root, "repo")])
-  ).rejects.toThrow("outside");
+    ]),
+    /outside/u
+  );
+  await assert.rejects(
+    assertExternalProject(root, [path.join(root, "repo")]),
+    /outside/u
+  );
   await mkdir(path.join(root, "external"));
   expect(
     await assertExternalProject(path.join(root, "external"), [
@@ -37,7 +40,7 @@ test("external consumer rejects inherited dependency fallback", async () => {
   });
   await writeFile(
     path.join(root, "node_modules", "inherited", "package.json"),
-    JSON.stringify({ name: "inherited", main: "index.js" })
+    JSON.stringify({ main: "index.js", name: "inherited" })
   );
   await writeFile(
     path.join(root, "node_modules", "inherited", "index.js"),
@@ -47,8 +50,9 @@ test("external consumer rejects inherited dependency fallback", async () => {
     path.join(consumer, "package.json"),
     JSON.stringify({ dependencies: { inherited: "1" } })
   );
-  await expect(assertIndependentDependencies(consumer)).rejects.toThrow(
-    "own node_modules"
+  await assert.rejects(
+    assertIndependentDependencies(consumer),
+    /own node_modules/u
   );
   expect(consumerEnvironment({ NODE_PATH: root }).NODE_PATH).toBe("");
 });

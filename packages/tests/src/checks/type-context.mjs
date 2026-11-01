@@ -7,4 +7,6 @@ export const bunRuntimeVersion = Bun.version;
 export const rendererEntryPath = fixtureFile("index.html");
 
 /** @type {number[]} */
-export const sortedContextValues = [2, 1].toSorted();
+export const sortedContextValues = [2, 1].toSorted(
+  (first, second) => first - second
+);

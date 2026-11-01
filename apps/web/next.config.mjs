@@ -5,23 +5,32 @@ import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX({});
 const workspaceRoot = fileURLToPath(new URL("../../", import.meta.url));
 
+/**
+ * @param {{cache?: boolean | object}} config - Original Webpack configuration; all other properties remain untouched.
+ * @param {{dev: boolean}} context - Next's compilation mode.
+ */
+const configureWebpack = (config, { dev }) => {
+  // Serializing the large development pack retains duplicate source buffers.
+  if (dev) {
+    config.cache = false;
+  }
+
+  return config;
+};
+
 export default withMDX({
   agentRules: false,
   devIndicators: false,
-  // Shiki is used by the client code viewer; bundle it rather than externalizing Bun's isolated package alias.
-  transpilePackages: ["shiki"],
   experimental: {
     cpus: 1,
-    // Fumadocs customizes Webpack; release each compiler heap before prerendering.
-    webpackBuildWorker: true,
     // Share loader runtimes across MDX/PostCSS work within the local build budget.
     turbopackPluginRuntimeStrategy: "workerThreads",
+    // Fumadocs customizes Webpack; release each compiler heap before prerendering.
+    webpackBuildWorker: true,
   },
-  turbopack: { root: workspaceRoot },
   outputFileTracingRoot: workspaceRoot,
-  webpack(config, { dev }) {
-    // Serializing the large development pack retains duplicate source buffers.
-    if (dev) config.cache = false;
-    return config;
-  },
+  // Shiki is used by the client code viewer; bundle it rather than externalizing Bun's isolated package alias.
+  transpilePackages: ["shiki"],
+  turbopack: { root: workspaceRoot },
+  webpack: configureWebpack,
 });

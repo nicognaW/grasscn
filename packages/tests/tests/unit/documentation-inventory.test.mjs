@@ -7,6 +7,7 @@ import { documentationInventory } from "@tests/checks/documentation-inventory.mj
 
 test("documentation inventory rejects an installable item without a canonical authored page", () => {
   const root = mkdtempSync(path.join(tmpdir(), "grasscn-doc-inventory-"));
+
   try {
     mkdirSync(path.join(root, "content/docs/components"), { recursive: true });
     writeFileSync(
@@ -22,13 +23,13 @@ test("documentation inventory rejects an installable item without a canonical au
     expect(documentationInventory(root).pages).toEqual([
       {
         name: "button",
-        title: "Button",
-        route: "/docs/components/button",
-        registryItem: "button",
         playground: true,
+        registryItem: "button",
+        route: "/docs/components/button",
+        title: "Button",
       },
     ]);
   } finally {
-    rmSync(root, { recursive: true, force: true });
+    rmSync(root, { force: true, recursive: true });
   }
 });

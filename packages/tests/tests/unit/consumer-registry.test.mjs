@@ -1,4 +1,5 @@
-import { test, expect } from "bun:test";
+import { test } from "bun:test";
+import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -13,20 +14,23 @@ test("public registry consumer rejects a responding host from another source bui
   await mkdir(path.join(source, "apps/web/public/r"), { recursive: true });
   await writeFile(
     path.join(source, "apps/web/public/r/button.json"),
-    JSON.stringify({ name: "button", files: [{ content: "current" }] })
+    JSON.stringify({ files: [{ content: "current" }], name: "button" })
   );
+
   const server = Bun.serve({
+    fetch: () =>
+      Response.json({ files: [{ content: "stale" }], name: "button" }),
     hostname: "127.0.0.1",
     port: 0,
-    fetch: () =>
-      Response.json({ name: "button", files: [{ content: "stale" }] }),
   });
+
   try {
-    await expect(
-      fetchPublicRegistry(server.url.origin, [{ name: "button" }], source)
-    ).rejects.toThrow("current source");
+    await assert.rejects(
+      fetchPublicRegistry(server.url.origin, [{ name: "button" }], source),
+      /current source/u
+    );
   } finally {
-    server.stop(true);
+    await server.stop(true);
   }
 });
 
@@ -39,19 +43,25 @@ test("CLI installed imports cannot escape into an existing external source", asy
     path.join(consumer, "src/components/ui/button.tsx"),
     'import external from "../../../../outside"; export default external;'
   );
+
   const payloads = new Map([
     [
       "button",
       {
         payload: {
           files: [{ path: "registry/ui/button.tsx", type: "registry:ui" }],
+          name: "button",
         },
+        sha256: "unused",
+        url: "http://unused.invalid/r/button.json",
       },
     ],
   ]);
-  await expect(
+
+  await assert.rejects(
     assertRegistryInstallation(payloads, consumer, {
       aliases: { ui: "@/components/ui" },
-    })
-  ).rejects.toThrow("inside consumer");
+    }),
+    /inside consumer/u
+  );
 });
