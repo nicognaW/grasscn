@@ -1,9 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import type { ComponentProps } from "react"
-import { MinecraftText } from "../registry/ui/minecraft-text"
+import Link from "next/link";
+import type { ComponentProps } from "react";
 
-export function DocumentLink({ children, href = "#", ...props }: ComponentProps<"a">) {
-  return <Link href={href} {...props}><MinecraftText>{children}</MinecraftText></Link>
+import { DocumentText } from "./document-text";
+
+export function DocumentLink({
+  children,
+  href = "#",
+  ...props
+}: ComponentProps<"a">) {
+  return (
+    <Link href={href} {...props}>
+      <DocumentText>{children}</DocumentText>
+    </Link>
+  );
 }

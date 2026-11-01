@@ -1,0 +1,195 @@
+{
+  "source": "Original Minecraft controls and Font; only native input/color supplied by harness",
+  "nativeLaunches": 2,
+  "cases": [
+    {
+      "name": "docs-code-directive-s1.png",
+      "width": 100,
+      "height": 9,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "868fa9853cbbd533b71e6a1bd65235e0d19e6af98da9690ad35591af3116e92a"
+    },
+    {
+      "name": "docs-code-directive-s2.png",
+      "width": 200,
+      "height": 18,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "3c2677fdbce1a23c076c682846eeba3eb287a13f805f86ad7d90ba114a7b66b7"
+    },
+    {
+      "name": "docs-code-directive-s3.png",
+      "width": 300,
+      "height": 27,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "8f951e02b6020bae0b4164f43bb2d68ffd13698413bc44941ef75bbb39acdfd3"
+    },
+    {
+      "name": "docs-collapse-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "b7196810b8194ae16e8a6ed22008b0cd1e1914fc8ec9690ceed8c296eeb15b13"
+    },
+    {
+      "name": "docs-collapse-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "13aeae57f20f2258b62b3d32bd854d2802c426650f905c18be0d7572c88480c9"
+    },
+    {
+      "name": "docs-collapse-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9bd355d3236587cf1170e7f252b105e838a808d62f45895370407b2547b6dfb5"
+    },
+    {
+      "name": "docs-copy-focus-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "cb6eae650f3c7878ae7fbe289eba5ec3cd43a02f6cbd4e33ba3799f95d2e9f81"
+    },
+    {
+      "name": "docs-copy-focus-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "406813c7dcc445724a734862ae3f52605dcad11739fe8712280e3ce556741a62"
+    },
+    {
+      "name": "docs-copy-focus-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "3a426c7487a7cd7c3c060c9ac48faa43d5089d501ed9e393fafb6ad8d0462b4f"
+    },
+    {
+      "name": "docs-copy-hover-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "cb6eae650f3c7878ae7fbe289eba5ec3cd43a02f6cbd4e33ba3799f95d2e9f81"
+    },
+    {
+      "name": "docs-copy-hover-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "406813c7dcc445724a734862ae3f52605dcad11739fe8712280e3ce556741a62"
+    },
+    {
+      "name": "docs-copy-hover-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "3a426c7487a7cd7c3c060c9ac48faa43d5089d501ed9e393fafb6ad8d0462b4f"
+    },
+    {
+      "name": "docs-copy-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "08d7e24ce3b1b19762a1110051b4820dcca7cd23fef6f9c0f88b0941d54da8d0"
+    },
+    {
+      "name": "docs-copy-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "bd7aacae73b7d352f4d4e8f2982e4249034d43336d52aee439a1ff473696191c"
+    },
+    {
+      "name": "docs-copy-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "d1c14f88ea61e6d1ba9ed3831ce9291e5be90833a07a1f04cb76fc146ed299cd"
+    },
+    {
+      "name": "docs-expand-s1.png",
+      "width": 60,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "860325365feda038dd05efa73d482fb22dce3a939daba62e8beb51f144acf0d0"
+    },
+    {
+      "name": "docs-expand-s2.png",
+      "width": 120,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "da8210dea140af00fa19aa4535f56bc3943fd43dead04715e0ec00899c9a72d5"
+    },
+    {
+      "name": "docs-expand-s3.png",
+      "width": 180,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "ec15eaa84465e16d84454e987ff36c76239aea3764fe956d07c1c7377bca8313"
+    },
+    {
+      "name": "docs-tabs-code-focus-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "8df08b5a93e1a0360dc1b3845e667054af3c14c1c80e80dc0c254ca91391001c"
+    },
+    {
+      "name": "docs-tabs-code-focus-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9730476b3a24930ba262606446a0c3078bfddb4ae625ec076c036b4230b2a2f3"
+    },
+    {
+      "name": "docs-tabs-code-focus-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a9073c0e8776cfb02816d33fb473cb4bdb9616fac337f14798c121685ae65598"
+    },
+    {
+      "name": "docs-tabs-code-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "06555ff6151c599bb9261021d6610aabc02eeb7fce2c830349dcd5c7ec4e6237"
+    },
+    {
+      "name": "docs-tabs-code-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "f22d02809a3d45a9dbce07790e0f63689dbeb9c65f79030f9b809fda18804019"
+    },
+    {
+      "name": "docs-tabs-code-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "05fbff7912e58153bbe6f4adb9e3f48ce1e0d6391c421bd35fc47670c908f94e"
+    },
+    {
+      "name": "docs-tabs-preview-s1.png",
+      "width": 303,
+      "height": 24,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "f80062d8bc19d868a8c3a692cd3bfeabec3f26130b84b0148e08a2bb921f6bb9"
+    },
+    {
+      "name": "docs-tabs-preview-s2.png",
+      "width": 606,
+      "height": 48,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "daf5fcc54733c39f37fb82906a1fdf3852527492317f7b1f1a48b80715d3163c"
+    },
+    {
+      "name": "docs-tabs-preview-s3.png",
+      "width": 909,
+      "height": 72,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9ebe249b10dffb1a30bdb9214c91b52748d3bd32a7ed75649f5731b8952ad623"
+    }
+  ]
+}

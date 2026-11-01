@@ -1,0 +1,663 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "a5c01c943f720ef9ea15db801de1f0230e366fc4d5d6cc58dbf5cf56192801b0",
+  "caseDefinitionSha256": "e6f944e5d461f79d9ebb33ebd26cfd536ea3fa499d5a2e26239ba5e5fb95dc63",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "b8139e4cde7dff112011a7738e5d5d1e101bca449398a207e8943725d438aee7"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "22b98327fa2f5796f7675861b40e1415e8f899b0656c07a73b1c73dd6f51f282"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "87a086a43435b2c47b1413efce9a797c6d5fcfb018241b32363d6c8c59c55fd6"
+    }
+  ],
+  "cases": [
+    {
+      "name": "docs-tabs-preview-s1.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "66e1b27a8baf93ef7266c0bb0eda638cec42f4ba76cc87832aa218e6845ebb1c"
+    },
+    {
+      "name": "docs-tabs-code-s1.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "612c56e0556025c0246b8f6d84daecf4927c18af6d421b24dd349565ae17b43b"
+    },
+    {
+      "name": "docs-tabs-code-focus-s1.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "focus",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "b82a042e8dd460f94b0d2da2d6956746cf9d012bb9acf0c1cd7b3d8f3c8c04fd"
+    },
+    {
+      "name": "docs-copy-s1.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "ce72a3239018cf262e37eb7f77a8d5b5bbb27139f016020d256074649d059859"
+    },
+    {
+      "name": "docs-expand-s1.png",
+      "element": "button",
+      "label": "Expand",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "fbbc6d84d23e210016769c265e62e39f8ad04bf6b41c4475411eca79febbdb99"
+    },
+    {
+      "name": "docs-collapse-s1.png",
+      "element": "button",
+      "label": "Collapse",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "5013ac6287e950e6f750393cb678a6f5e10977d1cdd3b361dba2cabd3e8669ff"
+    },
+    {
+      "name": "docs-copy-hover-s1.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "hover",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "name": "docs-copy-focus-s1.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "focus",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "name": "docs-code-directive-s1.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 272,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\""
+      ],
+      "scale": 1,
+      "sha256": "7e41c626a02144557b5e44b971b5262b88d32bb25e05349dba307ffea2aa8402"
+    },
+    {
+      "name": "docs-tabs-preview-s2.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "425159fa92576c334dae37c1eaae3ad65cec7e960386acffee7462bc3d30f681"
+    },
+    {
+      "name": "docs-tabs-code-s2.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "314b3c0ac4acf323f5c0eece5c0517ab3a8e70970e8b90e098c532c934235afd"
+    },
+    {
+      "name": "docs-tabs-code-focus-s2.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "focus",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "bb1ce41ba80b07fcea3f9cadb611f21e76546c71548ca9ff1659fc39a7eddb29"
+    },
+    {
+      "name": "docs-copy-s2.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "2fdd3162c02e97ac0f586b574b91b3e1d167340805b9916a75bcbaa68ce8a324"
+    },
+    {
+      "name": "docs-expand-s2.png",
+      "element": "button",
+      "label": "Expand",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "f281319ae23d5d52a09e0ccaa314ac9212ead9831ddf1d3396ef24314dce2af7"
+    },
+    {
+      "name": "docs-collapse-s2.png",
+      "element": "button",
+      "label": "Collapse",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "5d518fb299e9199d7aba2359611b2d87e0591f89e6b3e2a442595277b142680d"
+    },
+    {
+      "name": "docs-copy-hover-s2.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "hover",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "name": "docs-copy-focus-s2.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "focus",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "name": "docs-code-directive-s2.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 272,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\""
+      ],
+      "scale": 2,
+      "sha256": "ad3cbe2de146598a2ab7e6b33ed9fdaff2c1841dfca784d505af41d62dc8029f"
+    },
+    {
+      "name": "docs-tabs-preview-s3.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "fae9411ac98129b891d80d089cb98b7dd96bebe6f23ca9b9cc87e9d002b211e0"
+    },
+    {
+      "name": "docs-tabs-code-s3.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "aff13af809eb84291f45cb1e0e19f933f76d8df45dce3a82b5a4448e963cfbd7"
+    },
+    {
+      "name": "docs-tabs-code-focus-s3.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "focus",
+      "width": 303,
+      "height": 24,
+      "x": 16,
+      "y": 80,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        },
+        {
+          "x": 152,
+          "y": 0,
+          "width": 138,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "9d3d92b42125f70bcf59d23b89dadd2062334b914035a08ca46a32746f1d276f"
+    },
+    {
+      "name": "docs-copy-s3.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 112,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "ce647de870d2d872da17d087819963143558c1be6ec364839cf91b92ea4b88d5"
+    },
+    {
+      "name": "docs-expand-s3.png",
+      "element": "button",
+      "label": "Expand",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 144,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "72f2ccc850f0824c9145427cf96dac7ccec9643f765f193f0de54677759d7783"
+    },
+    {
+      "name": "docs-collapse-s3.png",
+      "element": "button",
+      "label": "Collapse",
+      "state": "normal",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 176,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3018e2841639a120078521ab82025a8427185fd52eeebe60ff4f44a138dbf475"
+    },
+    {
+      "name": "docs-copy-hover-s3.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "hover",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 208,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "name": "docs-copy-focus-s3.png",
+      "element": "button",
+      "label": "Copy",
+      "state": "focus",
+      "width": 60,
+      "height": 20,
+      "x": 16,
+      "y": 240,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "name": "docs-code-directive-s3.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 272,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\""
+      ],
+      "scale": 3,
+      "sha256": "5659808478ceae24384c931d09dd6627c9d0d3f28ee3fb1c9246c92c01b98418"
+    }
+  ],
+  "sourceDirectory": "source"
+}
