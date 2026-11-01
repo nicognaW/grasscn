@@ -1,4 +1,4 @@
-import { resolveRepositoryPath, pixelPerfectRoot } from '../../../workspace-paths.mjs';
+import { resolveRepositoryPath, testRoot } from '../../../workspace-paths.mjs';
 
 import { test, expect } from "./verified-test";
 
@@ -6,7 +6,7 @@ import { PNG } from "pngjs";
 
 import { readFileSync } from "node:fs";
 
-const catalog = JSON.parse(readFileSync(resolveRepositoryPath("preview/catalog.generated.json", pixelPerfectRoot), "utf8")) as { total: number; completedCount: number; components: { name: string }[] }
+const catalog = JSON.parse(readFileSync(resolveRepositoryPath("preview/catalog.generated.json", testRoot), "utf8")) as { total: number; completedCount: number; components: { name: string }[] }
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 

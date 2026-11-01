@@ -19,7 +19,7 @@ export default defineConfig({
     launchOptions: process.env.GRASSCN_BROWSER_PROXY_PORT ? {args: [`--proxy-server=http://127.0.0.1:${process.env.GRASSCN_BROWSER_PROXY_PORT}`, "--proxy-bypass-list=<-loopback>"]} : undefined,
   },
   webServer: process.env.GRASSCN_FIXTURE_URL ? undefined : [
-    {command: "bun run --cwd ../pixel-perfect dev", url: "http://127.0.0.1:5174", reuseExistingServer: !process.env.CI},
+    {command: "bun run dev", url: "http://127.0.0.1:5174", reuseExistingServer: !process.env.CI},
     {command: "bun run --cwd ../../apps/web dev", url: "http://127.0.0.1:5176", reuseExistingServer: !process.env.CI},
   ],
 })

@@ -1,0 +1,9 @@
+{
+  "packages/pixel-perfect/tests/reference/sound-provenance.json": "packages/tests/fixtures/reference/sound-provenance.json",
+  "packages/pixel-perfect/tests/reference/toast/sound-provenance.json": "packages/tests/fixtures/reference/toast/sound-provenance.json",
+  "packages/pixel-perfect/tests/reference/native-expansion/trading-sound-provenance.json": "packages/tests/fixtures/reference/native-expansion/trading-sound-provenance.json",
+  "packages/pixel-perfect/tests/reference/trading/scrollbar/trading-scroll-events.json": "packages/tests/fixtures/reference/trading/scrollbar/trading-scroll-events.json",
+  "packages/pixel-perfect/tests/reference/title-splash/oracle-104.csv": "packages/tests/fixtures/reference/title-splash/oracle-104.csv",
+  "packages/pixel-perfect/tests/reference/title-splash/provenance.json": "packages/tests/fixtures/reference/title-splash/provenance.json",
+  "packages/pixel-perfect/tests/reference/title-splash/SplashMotionOracle.java": "packages/tests/fixtures/reference/title-splash/SplashMotionOracle.java"
+}

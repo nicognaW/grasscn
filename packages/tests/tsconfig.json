@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -10,11 +13,32 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/lib/utils": ["../pixel-perfect/tests/fixture/utils.ts"],
-      "@/components/ui/*": ["../../apps/web/registry/ui/*"]
+      "@/lib/utils": [
+        "../tests/fixtures/renderer/utils.ts"
+      ],
+      "@/components/ui/*": [
+        "../../apps/web/registry/ui/*"
+      ],
+      "@tests/*": [
+        "../tests/src/*"
+      ],
+      "@tests/paths": [
+        "../tests/src/paths.ts"
+      ]
     },
-    "types": ["node", "vite/client"],
+    "types": [
+      "node",
+      "vite/client"
+    ],
     "resolveJsonModule": true
   },
-  "include": ["tests/**/*.ts", "tests/**/*.tsx", "*.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.mts",
+    "fixtures/**/*.ts",
+    "fixtures/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "*.config.ts"
+  ]
 }

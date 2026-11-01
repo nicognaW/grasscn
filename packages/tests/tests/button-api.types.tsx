@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "../../../apps/web/registry/ui/button";
+import { Button, buttonVariants } from "@grasscn/web/ui/button";
 // Compile-time contract: only native visual variants, with standard web props.
 export function ButtonApiContract() {
     const supported = <Button render={<a href="#inventory"/>} variant="default" size="default" scale={3} style={{ width: 309 }}>{"Inventory"}</Button>;

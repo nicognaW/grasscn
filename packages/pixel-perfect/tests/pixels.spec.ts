@@ -1,5 +1,5 @@
-import {resolveRepositoryPath, pixelPerfectRoot} from '../../../workspace-paths.mjs'
-import { pixelPerfectTest as test, expect } from "./verified-test"
+import {resolveRepositoryPath, pixelPerfectRoot} from '@ppt/paths'
+import { test, expect } from "@grasscn/tests/test"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import path from "node:path"

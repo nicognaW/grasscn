@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import {spawnSync} from "node:child_process"
 import path from "node:path"
-import {foregroundLease} from "@grasscn/pixel-perfect/coordination"
+import {foregroundLease} from "@grasscn/tests/coordination"
 import {testRoot, packageBin} from "../../../workspace-paths.mjs"
 
 const args = process.argv.slice(2)

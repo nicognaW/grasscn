@@ -1,8 +1,8 @@
 # Pixel Perfect Tests
 
-This package owns captured Minecraft references, native capture and asset derivation, comparison helpers, rendering fixtures, PPT cases, installed-consumer pixel verification and the guarded verification harness. PPTs include captured-reference comparisons and the asset/provenance/comparator checks supporting that proof. A case combining native pixel assertions and behavior remains intact here.
+This package owns captured Minecraft references, native capture and asset derivation, comparison helpers, PPT cases, installed-consumer pixel verification and the guarded PPT verification harness. Shared renderer, artifacts, generic fixture hosting and runtime coordination are owned by `@grasscn/tests`. PPTs include captured-reference comparisons and the asset/provenance/comparator checks supporting that proof. A case combining native pixel assertions and behavior remains intact here.
 
-Website, component behavior, API and browser-only rendering regression tests live in `../tests`. Those cases run normally, including all variants, without Base/Full labels or approval. They reuse the exported artifact and foreground-coordination seams and rendering fixture.
+Website, component behavior, API and browser-only rendering regression tests live in `../tests`. Those cases run normally, including all variants, without Base/Full labels or approval. Both packages reuse the general package's exported artifact and foreground-coordination seams and rendering fixture. Legacy PPT infrastructure exports temporarily forward to those shared implementations during the expand-migrate-contract sequence.
 
 ## Commands
 

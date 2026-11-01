@@ -1,4 +1,4 @@
-import { resolveRepositoryPath, pixelPerfectRoot } from '../../../workspace-paths.mjs';
+import { resolveRepositoryPath, testRoot } from '../../../workspace-paths.mjs';
 
 import { test, expect } from './verified-test';
 
@@ -21,7 +21,7 @@ test('custom skin can fail, recover, and replace another model without remountin
  await page.route('https://mc-heads.net/skin/*',route=>{
   const name=decodeURIComponent(new URL(route.request().url()).pathname.split('/').pop()!)
   if(name==='Missing')return route.fulfill({status:404,body:''})
-  return route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(resolveRepositoryPath(`tests/fixture/${name==='Dream'?'dream':'steve'}-skin.png`, pixelPerfectRoot))})
+  return route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(resolveRepositoryPath(`tests/fixture/${name==='Dream'?'dream':'steve'}-skin.png`, testRoot))})
  })
  await page.goto('http://127.0.0.1:5176/components/player-preview')
  const player=page.getByRole('group',{name:'Player preview',exact:true}),input=page.getByRole('textbox',{name:'Player name',exact:true})

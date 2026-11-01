@@ -6,3 +6,5 @@ registry/** -text
 tests/reference/** -text
 apps/web/registry/** -text
 packages/pixel-perfect/tests/reference/** -text
+
+packages/tests/fixtures/reference/** -text

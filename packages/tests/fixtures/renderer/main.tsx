@@ -47,7 +47,7 @@ import { createRoot } from "react-dom/client";
 import { createPortal } from "react-dom";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "../../../../apps/web/registry/ui/hover-card";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuPortal } from "../../../../apps/web/registry/ui/dropdown-menu";
-import { Button, buttonVariants } from "../../../../apps/web/registry/ui/button";
+import { Button, buttonVariants } from "@grasscn/web/ui/button";
 import { Checkbox } from "../../../../apps/web/registry/ui/checkbox";
 import { Slider } from "../../../../apps/web/registry/ui/slider";
 import { Input } from "../../../../apps/web/registry/ui/input";
