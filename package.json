@@ -18,7 +18,6 @@
   "devDependencies": {
     "@shadcn/lint": "^0.2.3",
     "@types/node": "^26.6.5",
-    "eslint-plugin-github": "^6.1.2",
     "oxfmt": "^0.74.0",
     "oxlint": "^1.90.0",
     "oxlint-plugin-react-doctor": "^0.9.21",
