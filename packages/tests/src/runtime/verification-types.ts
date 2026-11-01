@@ -318,6 +318,13 @@ export const readVerificationState = (
 };
 
 export interface WorkflowReport {
+  generationOwnership?: {
+    cacheHit: true;
+    directory: string;
+    generationHash: string;
+    guardFiles: { path: string; sha256: string }[];
+    restored: true;
+  };
   build?: { buildId: string; generatedSha256: string; outputSha256: string };
   bun: string;
   finishedAt?: string;

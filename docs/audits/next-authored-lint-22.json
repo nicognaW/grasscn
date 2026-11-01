@@ -237,7 +237,8 @@
     "packages/tests/tests/website/next-showcase.spec.ts",
     "packages/tests/tests/website/overlay-documentation.spec.ts",
     "packages/pixel-perfect/src/runtime/historical-evidence.ts",
-    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts"
+    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts",
+    "packages/tests/src/checks/verify-generation-cache-ownership.ts"
   ],
   "immutableSourceInputs": [
     {

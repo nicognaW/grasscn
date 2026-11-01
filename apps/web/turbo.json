@@ -17,7 +17,14 @@
         "$TURBO_ROOT$/workspace-paths.mjs",
         "$TURBO_ROOT$/packages/pixel-perfect/tests/reference/**/*.json"
       ],
-      "outputs": [".source/**", ".next/types/**", "next-env.d.ts"]
+      "outputs": [
+        ".source/**",
+        ".next/types/routes.d.ts",
+        ".next/types/validator.ts",
+        ".next/types/root-params.d.ts",
+        ".next/types/cache-life.d.ts",
+        "next-env.d.ts"
+      ]
     },
     "registry:build": {
       "outputs": ["public/r/**"],
