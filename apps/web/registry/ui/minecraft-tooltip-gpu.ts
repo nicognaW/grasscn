@@ -4,7 +4,7 @@ import {
 } from "./minecraft-tooltip-sprites";
 
 /** Original atlas coordinates and nearest sampling, with native source-alpha blending. */
-export function gpuTooltipPixels(
+export const gpuTooltipPixels = function gpuTooltipPixels(
   width: number,
   height: number,
   scale: number,
@@ -233,4 +233,4 @@ export function gpuTooltipPixels(
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
   return result;
-}
+};

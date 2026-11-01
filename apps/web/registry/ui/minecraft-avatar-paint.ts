@@ -11,7 +11,7 @@ let renderer:
     }
   | undefined;
 
-export function paintMinecraftAvatar(
+export const paintMinecraftAvatar = function paintMinecraftAvatar(
   target: HTMLCanvasElement,
   skin: MinecraftAvatarSkin,
   hat: boolean,
@@ -194,4 +194,4 @@ export function paintMinecraftAvatar(
   context.drawImage(canvas, Math.round(b.x), Math.round(b.y), w, h, 0, 0, w, h);
 
   return true;
-}
+};
