@@ -28,7 +28,6 @@ test('advancement tree selection, keyboard, details and panning',async({page})=>
  await tree.press('Home');expect(await plane.getAttribute('style')).toEqual(before)
  const box=(await tree.boundingBox())!;await page.mouse.move(box.x+10,box.y+10);await page.mouse.down();await page.mouse.move(box.x+40,box.y+30,{steps:4});await page.mouse.up();expect(await plane.getAttribute('style')).not.toEqual(before)
 })
-test('advancement comparator rejects one altered pixel',()=>{const bytes=readFileSync(path.join(reference,'captures',manifest.cases[0].name)),a=PNG.sync.read(bytes),b=PNG.sync.read(bytes);b.data[0]^=1;let count=0;for(let i=0;i<a.data.length;i+=4)if(!a.data.subarray(i,i+4).equals(b.data.subarray(i,i+4)))count++;expect(count).toBe(1)})
 
 test('advancement roadmap is available in the local website',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))

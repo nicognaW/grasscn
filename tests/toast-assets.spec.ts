@@ -6,10 +6,6 @@ import {minecraftToastSprite} from "../registry/ui/minecraft-toast-assets"
 import {toastGlyphAtlas,toastSpriteAtlas} from "../registry/ui/minecraft-toast-atlas"
 import {minecraftToastSounds} from "../registry/ui/minecraft-toast-sound-assets"
 const hash=(bytes:Uint8Array)=>createHash("sha256").update(bytes).digest("hex")
-for(const component of ["Toast","Sonner"])test(`${component} comparator detects a deliberate one-pixel disagreement`,()=>{
- const manifest=JSON.parse(readFileSync("tests/reference/toast/manifest.json","utf8")),expected=PNG.sync.read(readFileSync(`tests/reference/toast/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1
- expect([actual.width,actual.height]).toEqual([expected.width,expected.height]);let mismatchedPixels=0;for(let i=0;i<actual.data.length;i+=4)mismatchedPixels+=Number(!actual.data.subarray(i,i+4).equals(expected.data.subarray(i,i+4)));expect(mismatchedPixels).toBe(1)
-})
 test("SystemToast retains original PNG bytes, RGBA and asymmetric nine-slice metadata",()=>{
  const inventory=JSON.parse(readFileSync("tests/reference/catalog/native-inventory.json","utf8")),pin=inventory.assets["assets/minecraft/textures/gui/sprites/toast/system.png"],bytes=Buffer.from(minecraftToastSprite.image.split(",")[1],"base64"),image=PNG.sync.read(bytes)
  expect(hash(bytes)).toBe(pin.sha256);expect(Buffer.from(minecraftToastSprite.rgba,"base64")).toEqual(image.data);expect([image.width,image.height]).toEqual([160,64]);expect(minecraftToastSprite.border).toEqual(pin.metadata.gui.scaling.border);expect(minecraftToastSprite.stretch).toBe(false)

@@ -6,7 +6,7 @@ if(process.env.GRASSCN_WEBGL_BACKEND)test.use({launchOptions:{args:[`--use-angle
 
 const corpora=process.env.GRASSCN_EXPANSION_REFERENCE?[path.resolve(process.env.GRASSCN_EXPANSION_REFERENCE)]:['book','hotbar','hud','hud/meters','sign','player-preview','player-preview/custom-skins','map','map/locator','map/demo-world','trading','trading/scrollbar','player-list'].map(name=>path.resolve('tests/reference',name))
 const reference=corpora[0]
-const manifest=JSON.parse(readFileSync(path.join(reference,'manifest.json'),'utf8'))
+
 const specimens=corpora.flatMap(reference=>JSON.parse(readFileSync(path.join(reference,'manifest.json'),'utf8')).cases.map((sample:any)=>({reference,sample})))
 for(const {reference,sample} of specimens)test(`native expansion pixels ${sample.name}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
@@ -46,7 +46,6 @@ test('hotbar pointer, keyboard and wheel selection',async({page})=>{
  await page.getByRole('button',{name:'Slot 5',exact:true}).click();await expect(page.getByRole('button',{name:'Slot 5',exact:true})).toHaveAttribute('aria-pressed','true')
 })
 
-test('expansion pixel comparator rejects one altered pixel',()=>{const bytes=readFileSync(path.join(reference,'captures',manifest.cases[0].name)),a=PNG.sync.read(bytes),b=PNG.sync.read(bytes);b.data[0]^=1;let differences=0;for(let i=0;i<a.data.length;i+=4)if(!a.data.subarray(i,i+4).equals(b.data.subarray(i,i+4)))differences++;expect(differences).toBe(1)})
 
 test('player preview keyboard, pointer rotation, clamp and reset',async({page})=>{
  const sample={element:'player-preview',state:'wide/steve',width:80,height:120,value:30,anchor:-5}

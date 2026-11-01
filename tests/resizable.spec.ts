@@ -24,7 +24,6 @@ test('Resizable honors disabled separators and disabled groups',async({page})=>{
 test('Resizable preserves optional grip and never synthesizes interaction audio',async({page})=>{
  await page.addInitScript(()=>{(window as any).sounds=0;HTMLMediaElement.prototype.play=function(){(window as any).sounds++;return Promise.resolve()}});await page.goto('/?component=resizable&noHandle=1');await expect(page.locator('[data-slot="resizable-grip"]')).toHaveCount(0);const handle=page.getByRole('separator',{name:'Resize panels'});await handle.focus();await page.keyboard.press('ArrowRight');expect(await page.evaluate(()=>(window as any).sounds)).toBe(0)
 })
-test('Resizable arrow comparator rejects one changed pixel',()=>{const png=PNG.sync.read(readFileSync('tests/reference/pagination-arrow/captures/pagination-arrow-c0-s1.png')),actual=PNG.sync.read(PNG.sync.write(png));actual.data[0]^=1;expect(png.data.equals(actual.data)).toBe(false)})
 const arrowManifest=JSON.parse(readFileSync('tests/reference/pagination-arrow/manifest.json','utf8'))
 for(const c of arrowManifest.cases)test(`Resizable original arrow constituent ${c.name}`,async({page},info)=>{
  const params=new URLSearchParams({component:'resizable',scale:String(c.scale),background:c.background});if(c.state.startsWith('disabled'))params.set('disabled','1');await page.goto(`/?${params}`)

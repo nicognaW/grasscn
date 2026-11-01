@@ -22,6 +22,8 @@ Preserve byte-pinned source and captured references; appearance claims apply onl
 
 ## Pull request verification
 
+Before reviewing changes, read `CODING_STANDARDS.md`.
+
 This project does not use GitHub Actions. Maintainers verify pull requests locally before merging; contributors are not responsible for running the maintainer verification workflow.
 
 Maintainers: before approving a merge, read `.agents/skills/port-minecraft-ui/references/local-verification.md` and verify the proposed merge result locally.
