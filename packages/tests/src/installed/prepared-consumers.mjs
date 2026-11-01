@@ -178,6 +178,7 @@ export const readPreparedConsumerProjects = async ({
         "Artifact must remain within its receipt owner"
       );
       assert.equal(
+        // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
         sha256(await readFile(file)),
         digest,
         `Ordinary consumer artifact changed: ${name}`
@@ -205,13 +206,17 @@ export const readPreparedConsumerProjects = async ({
     kind === "manual" ? ["manual-next", "manual-vite"] : ["cli-vite"]
   );
 
+  // Reverse before constructing the map to preserve the first matching runtime entry.
+  const observedByFramework = new Map(
+    (kind === "manual" && runtime ? runtime.consumers : [])
+      .toReversed()
+      .map((entry) => [entry.framework, entry])
+  );
   for (const project of projects) {
     if (runtime) {
       const observed =
         kind === "manual"
-          ? runtime.consumers.find(
-              (entry) => entry.framework === project.framework
-            )
+          ? observedByFramework.get(project.framework)
           : runtime;
 
       assert.ok(
@@ -226,6 +231,7 @@ export const readPreparedConsumerProjects = async ({
       assert.deepEqual(observed.installedBytes, project.installedBytes);
     }
 
+    // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
     await validatePreparedProject(project);
   }
 
@@ -296,6 +302,7 @@ export const servePreparedConsumer = async (
     }
 
     child.kill();
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
     await new Promise((resolve) => {
       const timer = setTimeout(() => {
         child.kill("SIGKILL");
@@ -330,11 +337,13 @@ export const servePreparedConsumer = async (
           : logs.includes("Local:")
       ) {
         try {
+          // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
           const response = await fetch(url, {
             signal: AbortSignal.timeout(2500),
           });
 
           const ready = response.ok;
+          // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
           await response.body?.cancel();
 
           if (ready) {
@@ -352,9 +361,12 @@ export const servePreparedConsumer = async (
               url,
             };
           }
-        } catch {}
+        } catch {
+          // The owned server may still be starting; retry until the readiness deadline.
+        }
       }
 
+      // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
       await Bun.sleep(100);
     }
 

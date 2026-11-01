@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, rename, realpath, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 
 import { sourceIdentity } from "@grasscn/tests/next-production";
 import { repoRoot, webRoot, testRoot } from "@tests/paths";
@@ -26,8 +27,10 @@ const directory = path.join(
 
 await mkdir(directory, { recursive: true });
 
+const awaitedIdentity1 = await realpath(directory);
+
 assert.ok(
-  (await realpath(directory)).startsWith((await realpath(repoRoot)) + path.sep),
+  awaitedIdentity1.startsWith((await realpath(repoRoot)) + path.sep),
   "Development backups must stay physically in this source workspace"
 );
 
@@ -49,10 +52,14 @@ for (const [index, name] of [
 ].entries()) {
   const target = path.resolve(webRoot, name);
 
+  // eslint-disable-next-line no-await-in-loop -- Complete each retained checkpoint read or generated-input restoration before advancing to the next dependent stage.
   try {
+    const awaitedIdentity2 = await realpath(target);
     assert.ok(
-      (await realpath(target)).startsWith((await realpath(webRoot)) + path.sep)
+      // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
+      awaitedIdentity2.startsWith((await realpath(webRoot)) + path.sep)
     );
+    // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
     await rename(target, path.join(directory, `generated-backup-${index}`));
 
     if (index < 2) {
@@ -98,7 +105,8 @@ try {
   while (!logs.includes("Ready in")) {
     assert.ok(child.exitCode === null, `Ordinary dev exited ${child.exitCode}`);
     assert.ok(Date.now() < deadline, "Ordinary dev did not become ready");
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // eslint-disable-next-line no-await-in-loop, promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+    await delay(100);
   }
 
   const require = createRequire(path.join(testRoot, "package.json"));
@@ -129,6 +137,7 @@ try {
     "/charts/line",
     ...inventory.pages.map((entry) => entry.route),
   ]) {
+    // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
     const response = await page.goto(`http://127.0.0.1:5176${route}`, {
       timeout: 120_000,
       waitUntil: "domcontentloaded",
@@ -143,7 +152,9 @@ try {
           .getByRole("heading", { exact: true, level: 1, name: title })
       : page.getByRole("heading", { level: 1 });
 
+    // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
     await expect(heading).toBeVisible({ timeout: 30_000 });
+    // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
     report.pages.push({ route, title: await heading.textContent() });
   }
 
@@ -188,6 +199,7 @@ try {
   await browser?.close();
 
   if (process.platform === "win32") {
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
     await new Promise((resolve) => {
       const stop = spawn("taskkill", ["/PID", String(child.pid), "/T", "/F"], {
         stdio: "ignore",
@@ -205,26 +217,36 @@ try {
   for (const { index, name } of preservedInputs) {
     const target = path.resolve(webRoot, name);
 
+    // eslint-disable-next-line no-await-in-loop -- Complete each retained checkpoint read or generated-input restoration before advancing to the next dependent stage.
     try {
+      const awaitedIdentity3 = await realpath(target);
       assert.ok(
-        (await realpath(target)).startsWith(
+        // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
+        awaitedIdentity3.startsWith(
+          // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
           (await realpath(webRoot)) + path.sep
         )
       );
+      // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
       await rename(
         target,
         path.join(directory, `generated-dev-after-${index}`)
       );
     } catch (error) {
+      // eslint-disable-next-line no-unsafe-finally -- Restoration failures must fail verification instead of leaving prior generated inputs silently missing.
       if (error.code !== "ENOENT") {
         throw error;
       }
     }
 
+    // eslint-disable-next-line no-await-in-loop -- Complete each retained checkpoint read or generated-input restoration before advancing to the next dependent stage.
     const saved = path.join(directory, `generated-backup-${index}`);
+    const awaitedIdentity4 = await realpath(saved);
     assert.ok(
-      (await realpath(saved)).startsWith((await realpath(directory)) + path.sep)
+      // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
+      awaitedIdentity4.startsWith((await realpath(directory)) + path.sep)
     );
+    // eslint-disable-next-line no-await-in-loop -- Validate the current browser route or restore the current generated input before advancing.
     await rename(saved, target);
   }
 

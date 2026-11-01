@@ -17,10 +17,10 @@ import { serveNextProduction } from "./next-production.mjs";
 /** @param {import("./isolated-host-routing.mjs").HostExecution} execution - Owned loopback ports. */
 export const serveVerificationHosts = async (execution) => {
   const { fixturePort, previewPort, proxyPort } = execution;
-  /** @type {Set<import("node:net").Socket>} */
+  /** @type {Set<import("node:stream").Duplex>} */
   const sockets = new Set();
 
-  /** @param {import("node:net").Socket} socket - Owned connection. */
+  /** @param {import("node:stream").Duplex} socket - Owned connection. */
   const track = (socket) => {
     sockets.add(socket);
     socket.once("close", () => {
@@ -46,7 +46,12 @@ export const serveVerificationHosts = async (execution) => {
   try {
     fixture = await serveProductionFixture({ port: fixturePort });
     preview = await serveNextProduction({ port: previewPort });
-    proxy = http.createServer(async (request, response) => {
+
+    /**
+     * @param {import("node:http").IncomingMessage} request - Browser proxy request.
+     * @param {import("node:http").ServerResponse} response - Owned proxy response.
+     */
+    const handleRequest = async (request, response) => {
       let target;
 
       try {
@@ -81,7 +86,7 @@ export const serveVerificationHosts = async (execution) => {
 
           try {
             const content = await readFile(
-              path.join(webRoot, "public/r", match.groups.file)
+              path.join(webRoot, "public/r", match.groups?.file ?? "")
             );
 
             response
@@ -90,27 +95,21 @@ export const serveVerificationHosts = async (execution) => {
               })
               .end(request.method === "HEAD" ? undefined : content);
           } catch (error) {
+            const missing =
+              error instanceof Error &&
+              "code" in error &&
+              error.code === "ENOENT";
             response
-              .writeHead(
-                error instanceof Error &&
-                  "code" in error &&
-                  error.code === "ENOENT"
-                  ? 404
-                  : 500,
-                {
-                  "Content-Type": "application/json",
-                }
-              )
+              .writeHead(missing ? 404 : 500, {
+                "Content-Type": "application/json",
+              })
               .end(
                 request.method === "HEAD"
                   ? undefined
                   : JSON.stringify({
-                      error:
-                        error instanceof Error &&
-                        "code" in error &&
-                        error.code === "ENOENT"
-                          ? "Registry item not found"
-                          : "Unable to read registry",
+                      error: missing
+                        ? "Registry item not found"
+                        : "Unable to read registry",
                     })
               );
           }
@@ -150,6 +149,16 @@ export const serveVerificationHosts = async (execution) => {
         response.end();
       });
       request.pipe(upstream);
+    };
+
+    proxy = http.createServer((request, response) => {
+      handleRequest(request, response).catch(() => {
+        if (!response.headersSent) {
+          response.writeHead(502);
+        }
+
+        response.end("Verification proxy request failed");
+      });
     });
     proxy.on("connection", track);
     proxy.on("connect", (request, socket, head) => {
@@ -178,11 +187,20 @@ export const serveVerificationHosts = async (execution) => {
         })
       );
 
-      upstream.on("error", () => socket.destroy());
-      socket.on("error", () => upstream.destroy());
-      socket.once("close", () => upstream.destroy());
-      upstream.once("close", () => socket.destroy());
+      upstream.on("error", () => {
+        socket.destroy();
+      });
+      socket.on("error", () => {
+        upstream.destroy();
+      });
+      socket.once("close", () => {
+        upstream.destroy();
+      });
+      upstream.once("close", () => {
+        socket.destroy();
+      });
     });
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
     await new Promise((resolve, reject) => {
       proxy.once("error", reject);
       proxy.listen(proxyPort, "127.0.0.1", resolve);
@@ -192,7 +210,10 @@ export const serveVerificationHosts = async (execution) => {
       close: async () => {
         closeSockets();
         proxy.closeAllConnections();
-        await new Promise((resolve) => proxy.close(resolve));
+        // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+        await new Promise((resolve) => {
+          proxy.close(resolve);
+        });
         await preview.close();
         await fixture.close();
       },

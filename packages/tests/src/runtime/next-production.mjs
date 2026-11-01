@@ -3,6 +3,7 @@ import { spawn, execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile, readdir, lstat, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 
 import { repoRoot, webRoot, packageBin } from "@tests/paths";
 
@@ -40,6 +41,7 @@ export const sourceIdentity = async (directory = repoRoot) => {
     let bytes;
 
     try {
+      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       bytes = await readFile(path.join(directory, file));
     } catch (error) {
       if (
@@ -77,7 +79,9 @@ export const productionBuildIdentity = async ({
 
   /** @param {string} folder - Verification input. */
   const visit = async (folder) => {
-    for (const name of (await readdir(folder)).toSorted()) {
+    const entries = await readdir(folder);
+
+    for (const name of entries.toSorted()) {
       const file = path.join(folder, name);
       const relative = path.relative(directory, file).replaceAll(path.sep, "/");
 
@@ -90,6 +94,7 @@ export const productionBuildIdentity = async ({
         continue;
       }
 
+      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       const info = await lstat(file);
       assert.ok(
         !info.isSymbolicLink(),
@@ -97,16 +102,21 @@ export const productionBuildIdentity = async ({
       );
 
       if (info.isDirectory()) {
+        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         await visit(file);
       } else {
+        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         files.push({ path: relative, sha256: digest(await readFile(file)) });
       }
     }
   };
 
-  const buildId = (
-    await readFile(path.join(directory, ".next/BUILD_ID"), "utf-8")
-  ).trim();
+  const buildIdContents = await readFile(
+    path.join(directory, ".next/BUILD_ID"),
+    "utf-8"
+  );
+
+  const buildId = buildIdContents.trim();
 
   assert.ok(buildId, "Missing Next production build ID");
   await visit(path.join(directory, ".next"));
@@ -152,8 +162,11 @@ const preparationIdentity = async (root, directory) => {
 
   /** @param {string} folder - Verification input. */
   const visit = async (folder) => {
-    for (const name of (await readdir(folder)).toSorted()) {
+    const entries = await readdir(folder);
+
+    for (const name of entries.toSorted()) {
       const filename = path.join(folder, name);
+      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       const info = await lstat(filename);
 
       assert.ok(
@@ -162,10 +175,12 @@ const preparationIdentity = async (root, directory) => {
       );
 
       if (info.isDirectory()) {
+        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         await visit(filename);
       } else {
         generated.push({
           path: path.relative(directory, filename).replaceAll(path.sep, "/"),
+          // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
           sha256: digest(await readFile(filename)),
         });
       }
@@ -276,8 +291,9 @@ export const readPreparedProductionBuild = async (options = {}) => {
     "Production receipt does not prove a completed build"
   );
   const directory = options.directory ?? webRoot;
+  const actualOutput = await productionBuildIdentity({ directory, source });
   assert.equal(
-    (await productionBuildIdentity({ directory, source })).outputSha256,
+    actualOutput.outputSha256,
     identity.outputSha256,
     "Prepared production output changed"
   );
@@ -310,19 +326,15 @@ export const serveNextProduction = async ({
   // Listen-probe first: Next must never silently reuse a foreground process.
   const { createServer } = await import("node:net");
   const probe = createServer();
-  await new Promise(
-    /** @param {() => void} resolve - Verification input. */ (
-      resolve,
-      reject
-    ) => {
-      probe.once("error", reject);
-      probe.listen(port, "127.0.0.1", resolve);
-    }
-  );
-  await new Promise(
-    /** @param {() => void} resolve - Verification input. */ (resolve) =>
-      probe.close(resolve)
-  );
+  // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+  await new Promise((resolve, reject) => {
+    probe.once("error", reject);
+    probe.listen(port, "127.0.0.1", resolve);
+  });
+  // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+  await new Promise((resolve) => {
+    probe.close(resolve);
+  });
 
   const child = spawn(
     process.execPath,
@@ -346,6 +358,7 @@ export const serveNextProduction = async ({
     }
   );
 
+  /** @type {Error | undefined} */
   let failure;
   let logs = "";
 
@@ -368,19 +381,18 @@ export const serveNextProduction = async ({
     }
 
     child.kill();
-    await new Promise(
-      /** @param {() => void} resolve - Verification input. */ (resolve) => {
-        const timer = setTimeout(() => {
-          child.kill("SIGKILL");
-          resolve();
-        }, 5000);
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+    await new Promise((resolve) => {
+      const timer = setTimeout(() => {
+        child.kill("SIGKILL");
+        resolve();
+      }, 5000);
 
-        child.once("exit", () => {
-          clearTimeout(timer);
-          resolve();
-        });
-      }
-    );
+      child.once("exit", () => {
+        clearTimeout(timer);
+        resolve();
+      });
+    });
   };
 
   try {
@@ -400,23 +412,25 @@ export const serveNextProduction = async ({
 
       if (logs.includes("Ready in")) {
         try {
+          // eslint-disable-next-line no-await-in-loop -- Poll only after the previous readiness attempt finishes.
           const response = await fetch(url, {
             signal: AbortSignal.timeout(2500),
           });
 
           ready = response.ok;
+          // eslint-disable-next-line no-await-in-loop -- Release each response before the next readiness attempt.
           await response.body?.cancel();
 
           if (ready) {
             break;
           }
-        } catch {}
+        } catch {
+          // The owned server may still be starting; retry until the readiness deadline.
+        }
       }
 
-      await new Promise(
-        /** @param {() => void} resolve - Verification input. */ (resolve) =>
-          setTimeout(resolve, 100)
-      );
+      // eslint-disable-next-line no-await-in-loop, promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+      await delay(100);
     }
 
     assert.ok(ready, "Owned Bun Next production server did not become ready");

@@ -35,6 +35,7 @@ test("prepared production requires a completed matching build instead of silentl
     ]) {
       fs.mkdirSync(path.join(root, name), { recursive: true });
     }
+
     fs.writeFileSync(path.join(root, "bun.lock"), '{"workspaces":{}}');
     fs.writeFileSync(
       path.join(root, "node_modules/tool/index.js"),
@@ -67,12 +68,12 @@ test("prepared production requires a completed matching build instead of silentl
     const options = { directory, receiptPath, root, source };
     await assert.rejects(
       async () => await readPreparedProductionBuild(options),
-      /ENOENT/
+      /ENOENT/u
     );
     await stampProductionBuild(options);
     await assert.rejects(
       async () => await readPreparedProductionBuild(options),
-      /completed build/i
+      /completed build/iu
     );
     await assert.rejects(
       async () =>
@@ -81,7 +82,7 @@ test("prepared production requires a completed matching build instead of silentl
           verifiedCommand: [process.execPath, "run", "build"],
           verifiedExitCode: 9,
         }),
-      /completed|exit/i
+      /completed|exit/iu
     );
     await assert.rejects(
       async () =>
@@ -90,7 +91,7 @@ test("prepared production requires a completed matching build instead of silentl
           verifiedCommand: [process.execPath, "run", "build", "--dry=json"],
           verifiedExitCode: 0,
         }),
-      /root build|command/i
+      /root build|command/iu
     );
     await stampProductionBuild({
       ...options,
@@ -110,7 +111,7 @@ test("prepared production requires a completed matching build instead of silentl
       process.env.BUN_OPTIONS = "--smol";
       await assert.rejects(
         async () => await readPreparedProductionBuild(options),
-        /environment changed/i
+        /environment changed/iu
       );
     } finally {
       if (bunOptionsBefore === undefined) {
@@ -126,7 +127,7 @@ test("prepared production requires a completed matching build instead of silentl
           ...options,
           source: { ...source, treeSha256: "another-tree" },
         }),
-      /source/i
+      /source/iu
     );
 
     for (const filename of [
@@ -139,9 +140,10 @@ test("prepared production requires a completed matching build instead of silentl
     ]) {
       const original = fs.readFileSync(filename);
       fs.writeFileSync(filename, "changed bytes");
+      // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       await assert.rejects(
         async () => await readPreparedProductionBuild(options),
-        /changed/i
+        /changed/iu
       );
       fs.writeFileSync(filename, original);
     }
@@ -152,13 +154,11 @@ test("prepared production requires a completed matching build instead of silentl
     fs.writeFileSync(receiptPath, JSON.stringify(differentEnvironment));
     await assert.rejects(
       async () => await readPreparedProductionBuild(options),
-      /environment changed/i
+      /environment changed/iu
     );
     fs.writeFileSync(receiptPath, originalReceipt);
-    assert.equal(
-      (await readPreparedProductionBuild(options)).buildId,
-      "known-completed-build"
-    );
+    const awaitedIdentity1 = await readPreparedProductionBuild(options);
+    assert.equal(awaitedIdentity1.buildId, "known-completed-build");
   } finally {
     assert.ok(path.basename(root).startsWith("grasscn-prepared-build-"));
     fs.rmSync(root, { force: true, recursive: true });
@@ -193,7 +193,7 @@ test("production identity rejects another source and detects changed delivered r
         ...source,
         treeSha256: "source-two",
       });
-    }, /source/i);
+    }, /source/iu);
     fs.writeFileSync(
       path.join(directory, "public/r/button.json"),
       "changed delivered registry"
@@ -209,9 +209,15 @@ test("production identity rejects another source and detects changed delivered r
       path.join(directory, ".next/server/page.js"),
       "changed built page"
     );
+
+    const awaitedIdentity2 = await productionBuildIdentity({
+      directory,
+      source,
+    });
+
     assert.notEqual(
       changedRegistry.outputSha256,
-      (await productionBuildIdentity({ directory, source })).outputSha256
+      awaitedIdentity2.outputSha256
     );
   } finally {
     assert.ok(path.basename(directory).startsWith("grasscn-next-identity-"));

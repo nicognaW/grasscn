@@ -30,8 +30,10 @@ const directory = path.join(
 
 await mkdir(directory, { recursive: true });
 
+const awaitedIdentity1 = await realpath(directory);
+
 assert.ok(
-  (await realpath(directory)).startsWith((await realpath(repoRoot)) + path.sep),
+  awaitedIdentity1.startsWith((await realpath(repoRoot)) + path.sep),
   "Workflow backups must stay physically in this source workspace"
 );
 
@@ -68,6 +70,7 @@ const run = async (name, args, { capture = false } = {}) => {
   });
   child.stderr.on("data", (value) => process.stderr.write(value));
 
+  // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
   const code = await new Promise((resolve, reject) => {
     child.once("error", reject);
     child.once("exit", resolve);
@@ -107,11 +110,13 @@ const preserveInstalledDependencies = async () => {
     );
 
     try {
+      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const info = await lstat(target);
       assert.ok(
         info.isDirectory() || info.isSymbolicLink(),
         "Expected an installed dependency directory"
       );
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const physical = await realpath(target);
       assert.ok(
         physical.startsWith(root + path.sep),
@@ -129,8 +134,9 @@ const preserveInstalledDependencies = async () => {
   await mkdir(backup);
 
   for (const [index, item] of targets
-    .sort((left, right) => right.target.length - left.target.length)
+    .toSorted((left, right) => right.target.length - left.target.length)
     .entries()) {
+    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     await rename(item.target, path.join(backup, String(index)));
   }
 
@@ -146,17 +152,21 @@ const preserveInstalledDependencies = async () => {
 const generatedDocsIdentity = async () => {
   const hash = createHash("sha256");
 
-  const visit = async (directory) => {
-    for (const entry of (
-      await readdir(directory, { withFileTypes: true })
-    ).sort((left, right) => left.name.localeCompare(right.name))) {
-      const filename = path.join(directory, entry.name);
+  const visit = async (folder) => {
+    const entries = await readdir(folder, { withFileTypes: true });
+
+    for (const entry of entries.toSorted((left, right) =>
+      left.name.localeCompare(right.name)
+    )) {
+      const filename = path.join(folder, entry.name);
 
       if (entry.isDirectory()) {
+        // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
         await visit(filename);
       } else if (entry.isFile()) {
         hash
           .update(path.relative(webRoot, filename))
+          // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
           .update(await readFile(filename));
       }
     }
@@ -197,8 +207,10 @@ try {
     ["uncheck", "uncheck", repoRoot],
     ["shadcn", "shadcn", webRoot],
   ]) {
+    // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const physical = await realpath(packageBin(name, binary, from));
     assert.ok(
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       physical.startsWith((await realpath(repoRoot)) + path.sep) &&
         physical.includes(`${path.sep}node_modules${path.sep}`),
       "Fresh toolchain must resolve inside this source workspace"
@@ -224,19 +236,22 @@ try {
 
   for (const [index, name] of outputPaths.entries()) {
     const target = path.resolve(webRoot, name);
+    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const resolved = await realpath(target);
 
     assert.ok(
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       resolved.startsWith((await realpath(webRoot)) + path.sep),
       "Generated backup must stay in this web workspace"
     );
+    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     await rename(target, path.join(backup, String(index)));
   }
 
   const restoredLog = await run("cache-restore", [turbo, "run", "build"]);
   assert.match(
     restoredLog,
-    /cache hit/,
+    /cache hit/u,
     "Restoration must actually use Turbo cache"
   );
   const restored = await productionBuildIdentity({ source });
@@ -297,10 +312,13 @@ try {
   report.invalidation = [];
 
   for (const probe of probes) {
+    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const original = await readFile(probe.file);
 
     try {
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       await writeFile(probe.file, probe.change(original));
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const changed = await taskHashes(`${probe.name}-hashes`);
       assert.notEqual(
         changed[probe.task],
@@ -312,8 +330,13 @@ try {
         hashes["@grasscn/web#build"],
         `${probe.name} did not invalidate web build`
       );
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const log = await run(`${probe.name}-generation`, probe.run);
-      assert.match(log, /cache miss/, "Changed inputs must execute generation");
+      assert.match(
+        log,
+        /cache miss/u,
+        "Changed inputs must execute generation"
+      );
       report.invalidation.push({
         after: changed[probe.task],
         before: hashes[probe.task],
@@ -321,6 +344,7 @@ try {
         task: probe.task,
       });
     } finally {
+      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       await writeFile(probe.file, original);
     }
   }

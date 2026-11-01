@@ -22,7 +22,6 @@ import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
 import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
 import {
   repoRoot,
-  webRoot,
   testRoot,
   pixelPerfectRoot,
   resolveRepositoryPath,
@@ -34,7 +33,6 @@ import {
   classifyBrowserCases,
 } from "@ppt/selection/suite.mjs";
 
-const root = repoRoot;
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
 const phase = process.env.GRASSCN_VERIFY_PHASE ?? "all";
@@ -130,6 +128,7 @@ for (const executable of [
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
 ]) {
   try {
+    // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     const info = await stat(executable);
     environment.edge = { executable, modified: info.mtimeMs, size: info.size };
     break;
@@ -140,8 +139,7 @@ for (const executable of [
   }
 }
 
-const installedDependencyState = async () =>
-  installedDependencyIdentity(repoRoot);
+const installedDependencyState = () => installedDependencyIdentity(repoRoot);
 
 environment.installedDependencies = await installedDependencyState();
 
@@ -178,8 +176,9 @@ const report = {
 
 const receipt = path.join(output, "verification.json");
 
-const save = async () =>
+const save = async () => {
   await writeFile(receipt, `${JSON.stringify(report, null, 2)}\n`);
+};
 
 const cacheAllowed =
   environment.installedDependencies !== null &&
@@ -188,7 +187,7 @@ const cacheAllowed =
       !process.env.GRASSCN_EXPANSION_URL &&
       !process.env.GRASSCN_TREE_INSTALLED_URL &&
       (!process.env.GRASSCN_FIXTURE_URL ||
-        /^http:\/\/127\.0\.0\.1:5174\/?$/.test(
+        /^http:\/\/127\.0\.0\.1:5174\/?$/u.test(
           process.env.GRASSCN_FIXTURE_URL
         ))));
 
@@ -202,6 +201,7 @@ for (const folder of await readdir(path.dirname(output))) {
       "verification.json"
     );
 
+    // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     const candidate = JSON.parse(await readFile(filename, "utf-8"));
 
     if (
@@ -331,6 +331,7 @@ try {
       name === "production-build" &&
       process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
     ) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       report.websiteBuild = await readPreparedProductionBuild({
         source: before,
       });
@@ -340,6 +341,7 @@ try {
         reusedCompletedBuild: true,
         verifiedCommand: report.websiteBuild.verifiedCommand,
       });
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await save();
       continue;
     }
@@ -351,6 +353,7 @@ try {
     let reusedTests = [];
 
     if (name.startsWith("browser:")) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await writeFile(
         path.join(output, "verification-phase.json"),
         JSON.stringify({ phase: "browser", source: before })
@@ -358,17 +361,21 @@ try {
 
       if (managedFixture && !fixtureHost && !fullHosts) {
         report.fixtureBundle = fixtureManifest();
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
         await writeFile(
           path.join(output, "fixture-bundle.json"),
           `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
         );
 
         if (fullMode) {
+          // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
           fullHosts = await serveFullHosts(fullRun.plan);
         } else {
+          // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
           fixtureHost = await serveProductionFixture();
         }
 
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
         await save();
       }
 
@@ -379,6 +386,7 @@ try {
           );
         }
 
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
         previewHost = await serveNextProduction({
           expectedSource: before,
           port: Number(process.env.GRASSCN_VERIFICATION_PREVIEW_PORT ?? 5176),
@@ -399,6 +407,7 @@ try {
       const file = name.slice("browser:".length);
       const directory = path.join(output, "checkpoints", file);
 
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       reusedTests = await reusableBrowserTests(
         previous.filter(
           (candidate) =>
@@ -412,10 +421,12 @@ try {
         file,
         pixelPerfectRoot
       );
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await mkdir(directory, { recursive: true });
 
       if (reusedTests.length) {
         const list = path.join(directory, "retained-tests.txt");
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
         await writeFile(
           list,
           `${reusedTests.map((test) => test.line).join("\n")}\n`
@@ -436,6 +447,7 @@ try {
       browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR = directory;
     }
 
+    // eslint-disable-next-line no-await-in-loop, promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
     const code = await new Promise((resolve, reject) => {
       const commandArgs = [...args];
 
@@ -458,29 +470,35 @@ try {
       });
 
       child.on("error", reject);
-      child.on("exit", (code, signal) => {
-        resolve(code ?? (signal ? 1 : 0));
+      child.on("exit", (exitCode, signal) => {
+        resolve(exitCode ?? (signal ? 1 : 0));
       });
     });
 
-    report.checks.push({
-      exitCode: code,
-      name,
-      ...(reusedTests.length ? { reusedTests } : {}),
-    });
+    const check = { exitCode: code, name };
+
+    if (reusedTests.length > 0) {
+      check.reusedTests = reusedTests;
+    }
+
+    report.checks.push(check);
+    // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     await save();
 
     if (name === "production-build" && code === 0) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       report.websiteBuild = await stampProductionBuild({
         source: before,
         verifiedCommand: [process.execPath, ...args],
         verifiedExitCode: code,
       });
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await save();
     }
 
     if (name === "fixture-build" && code === 0) {
       report.fixtureBundle = fixtureManifest();
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await save();
     }
 
@@ -493,39 +511,52 @@ try {
 
         try {
           summary = JSON.parse(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "summary.json"), "utf-8")
           );
-        } catch {}
+        } catch {
+          // Missing or incomplete checkpoint artifacts cannot prove collection completed.
+        }
 
         let collectionComplete = false;
 
         try {
           const expected = JSON.parse(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "expected.json"), "utf-8")
+            // eslint-disable-next-line no-await-in-loop -- Complete each retained checkpoint read or generated-input restoration before advancing to the next dependent stage.
           );
 
-          const results = (
-            await readFile(path.join(directory, "results.jsonl"), "utf-8")
-          )
-            .trim()
-            .split("\n")
-            .filter(Boolean)
-            .map((line) => JSON.parse(line));
+          const awaitedIdentity1 = await readFile(
+            path.join(directory, "results.jsonl"),
+            "utf-8"
+          );
+
+          const results =
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+            awaitedIdentity1
+              .trim()
+              .split("\n")
+              .filter(Boolean)
+              .map((line) => JSON.parse(line));
 
           const terminal = new Set(
-            results
-              .filter((result) => result.status !== "interrupted")
-              .map((result) => result.id)
+            results.flatMap((result) =>
+              result.status === "interrupted" ? [] : [result.id]
+            )
           );
 
           const browserReport = JSON.parse(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "playwright.json"), "utf-8")
           );
 
           collectionComplete =
             !browserReport.errors?.length &&
             expected.tests.every((test) => terminal.has(test.id));
-        } catch {}
+        } catch {
+          // Missing or incomplete checkpoint artifacts cannot prove collection completed.
+        }
 
         if (
           collectionComplete &&
@@ -587,10 +618,10 @@ try {
       path.join(output, "prepared.json"),
       `${JSON.stringify(
         {
-          source: before,
           environment,
-          websiteBuild: report.websiteBuild,
           fixtureBundle: report.fixtureBundle,
+          source: before,
+          websiteBuild: report.websiteBuild,
         },
         null,
         2
