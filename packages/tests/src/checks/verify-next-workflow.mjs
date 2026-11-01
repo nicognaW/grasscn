@@ -8,6 +8,7 @@ import {
   rename,
   realpath,
   readdir,
+  lstat,
 } from "node:fs/promises";
 import path from "node:path";
 
@@ -27,9 +28,14 @@ const directory = path.join(
   randomUUID()
 );
 await mkdir(directory, { recursive: true });
+assert.ok(
+  (await realpath(directory)).startsWith((await realpath(repoRoot)) + path.sep),
+  "Workflow backups must stay physically in this source workspace"
+);
 const source = await sourceIdentity(),
   report = {
     source,
+    bun: Bun.version,
     startedAt: new Date().toISOString(),
     steps: [],
     passed: false,
@@ -60,7 +66,56 @@ async function run(name, args, { capture = false } = {}) {
   assert.equal(code, 0, `${name} failed`);
   return stdout;
 }
-const turbo = packageBin("turbo", "turbo", repoRoot);
+let turbo;
+async function preserveInstalledDependencies() {
+  const root = await realpath(repoRoot),
+    lock = Bun.JSON5.parse(
+      await readFile(path.join(repoRoot, "bun.lock"), "utf8")
+    );
+  const targets = [];
+  for (const workspace of new Set([
+    "",
+    ...Object.keys(lock.workspaces ?? {}),
+  ])) {
+    const target = path.resolve(repoRoot, workspace, "node_modules"),
+      relative = path.relative(repoRoot, target);
+    assert.ok(
+      relative &&
+        !relative.startsWith(".." + path.sep) &&
+        relative !== ".." &&
+        !path.isAbsolute(relative),
+      "Dependency backup must stay in this source workspace"
+    );
+    try {
+      const info = await lstat(target);
+      assert.ok(
+        info.isDirectory() || info.isSymbolicLink(),
+        "Expected an installed dependency directory"
+      );
+      const physical = await realpath(target);
+      assert.ok(
+        physical.startsWith(root + path.sep),
+        "Dependency backup cannot follow an external directory"
+      );
+      targets.push({ target, relative, physical });
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+  }
+  const backup = path.join(directory, "installed-dependency-backup");
+  await mkdir(backup);
+  for (const [index, item] of targets
+    .sort((left, right) => right.target.length - left.target.length)
+    .entries())
+    await rename(item.target, path.join(backup, String(index)));
+  report.freshDependencyInstall = {
+    backup,
+    previousDirectories: targets.map(({ relative, physical }) => ({
+      relative,
+      physical,
+    })),
+  };
+}
 async function generatedDocsIdentity() {
   const hash = createHash("sha256");
   async function visit(directory) {
@@ -86,7 +141,32 @@ const taskHashes = async (name) => {
   return Object.fromEntries(data.tasks.map((task) => [task.taskId, task.hash]));
 };
 try {
+  const expectedBun = JSON.parse(
+    await readFile(path.join(repoRoot, "package.json"), "utf8")
+  ).packageManager;
+  assert.equal(
+    `bun@${Bun.version}`,
+    expectedBun,
+    "Workflow uses the pinned Bun runtime"
+  );
+  await preserveInstalledDependencies();
   await run("frozen-install", ["install", "--frozen-lockfile"]);
+  turbo = packageBin("turbo", "turbo", repoRoot);
+  report.freshToolchain = {};
+  for (const [name, binary, from] of [
+    ["turbo", "turbo", repoRoot],
+    ["next", "next", webRoot],
+    ["uncheck", "uncheck", repoRoot],
+    ["shadcn", "shadcn", webRoot],
+  ]) {
+    const physical = await realpath(packageBin(name, binary, from));
+    assert.ok(
+      physical.startsWith((await realpath(repoRoot)) + path.sep) &&
+        physical.includes(path.sep + "node_modules" + path.sep),
+      "Fresh toolchain must resolve inside this source workspace"
+    );
+    report.freshToolchain[name] = physical;
+  }
   await run("generate", [turbo, "run", "generate"]);
   await run("workspace-types", [
     packageBin("uncheck", "uncheck", repoRoot),

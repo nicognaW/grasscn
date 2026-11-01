@@ -22,6 +22,10 @@ const source = await sourceIdentity(),
     randomUUID()
   );
 await mkdir(directory, { recursive: true });
+assert.ok(
+  (await realpath(directory)).startsWith((await realpath(repoRoot)) + path.sep),
+  "Development backups must stay physically in this source workspace"
+);
 const report = {
   source,
   startedAt: new Date().toISOString(),
