@@ -92,6 +92,7 @@ function nativeTokenColor(value?: string) {
 
 let highlighter: Promise<HighlighterCore> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached highlighter Promise itself; async would wrap its identity and settlement.
 function getHighlighter() {
   highlighter ??= createHighlighterCore({
     engine: createJavaScriptRegexEngine({ forgiving: true }),

@@ -29,6 +29,7 @@ export const getUnihexGlyph = (char: string) => {
   return codepoint === undefined ? undefined : font?.get(codepoint);
 };
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached Unihex initialization Promise itself, including rejection; async would wrap it.
 export function loadUnihex() {
   return (pending ??= (async () => {
     const { unifontZip, unifontOverrides } =
@@ -113,6 +114,7 @@ export function loadUnihex() {
       let right = -1;
 
       for (let x = 0; x < bitWidth; x += 1) {
+        // oxlint-disable-next-line no-bitwise -- Locate occupied Unihex columns by testing their encoded bit across all glyph rows.
         if (rows.some((row) => (row >>> (bitWidth - 1 - x)) & 1)) {
           left = Math.min(left, x);
           right = Math.max(right, x);
@@ -188,6 +190,7 @@ export function paintUnihex(
       if (
         sx >= 0 &&
         sx < glyph.bitWidth &&
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
       ) {
         context.fillRect(px, py, 1, 1);
