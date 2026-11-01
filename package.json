@@ -8,10 +8,10 @@
     "build": "turbo run build",
     "registry:build": "turbo run registry:build",
     "registry:serve": "bun run --filter @grasscn/web registry:serve",
-    "test": "turbo run test",
-    "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/tests/scripts/run-porting.ps1 -Suite regressions",
-    "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/tests/scripts/run-porting.ps1 -Suite all",
-    "full-tests": "bun run --filter @grasscn/tests full-tests",
+    "test": "turbo run test --concurrency=1 --continue=dependencies-successful",
+    "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/pixel-perfect/scripts/run-porting.ps1 -Suite regressions",
+    "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/pixel-perfect/scripts/run-porting.ps1 -Suite all",
+    "full-tests": "bun run --filter @grasscn/pixel-perfect full-tests",
     "prepare": "bunx --bun --no-install uncheck prepare --pre-commit"
   },
   "devDependencies": {

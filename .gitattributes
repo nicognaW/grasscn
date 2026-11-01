@@ -5,4 +5,4 @@
 registry/** -text
 tests/reference/** -text
 apps/web/registry/** -text
-packages/tests/tests/reference/** -text
+packages/pixel-perfect/tests/reference/** -text

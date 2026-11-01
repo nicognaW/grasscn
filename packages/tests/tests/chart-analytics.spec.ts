@@ -1,12 +1,17 @@
-import { pixelPerfectTest as test, expect } from "./verified-test";
+import { test, expect } from "./verified-test";
+
 import { PNG } from "pngjs";
+
 const types=[['bar','Bar'],['stacked-bar','Stacked bar'],['line','Line'],['area','Area'],['pie','Pie'],['donut','Donut'],['radar','Radar'],['radial','Radial']] as const;
+
 async function select(page:any,label:string,value:string) { await page.getByRole('combobox',{name:label,exact:true}).click(); await page.getByRole('option',{name:value,exact:true}).click(); }
+
 async function open(page:any,scale:number,mobile=false) {
  await page.setViewportSize({width:mobile?390:1440,height:1000}); await page.goto(`${process.env.GRASSCN_PREVIEW_URL ?? 'http://127.0.0.1:5176/'}#/components/chart`);
 
  await expect(page.locator('[data-stage="chart"] [data-slot="chart-example"] canvas')).toHaveAttribute('data-mc-ready','true');
 }
+
 for(const scale of [2]) for(const mobile of [false,true]) test(`Analytics types preserve integer pixels and fit ${mobile?'mobile':'desktop'} GUI${scale}`,async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await open(page,scale,mobile);
  const stage=page.locator('[data-stage="chart"]'), chart=stage.locator('[data-slot="chart-example"]');
@@ -25,6 +30,7 @@ for(const scale of [2]) for(const mobile of [false,true]) test(`Analytics types 
  }
  expect(errors).toEqual([]);
 });
+
 test('Website analytics filters update real data and accessible table',async({page})=>{
  await open(page,2);const chart=page.locator('[data-slot="chart-example"]');
  await chart.locator('summary').click();await expect(chart.getByRole('row')).toHaveCount(7);await expect(chart.getByRole('cell',{name:'186',exact:true})).toBeVisible();
@@ -35,6 +41,7 @@ test('Website analytics filters update real data and accessible table',async({pa
  await expect(chart.locator('.mc-chart-tooltip')).toContainText('April');await expect(chart.locator('.mc-chart-tooltip')).toContainText('73');
  await page.keyboard.press('ArrowRight');await expect(chart.locator('.mc-chart-tooltip')).toContainText('May');await expect(chart.locator('.mc-chart-tooltip')).toContainText('209');
 });
+
 test('Analytics chart rerasterizes when available width changes',async({page})=>{
  await open(page,2);const chart=page.locator('[data-slot="chart-example"]'),canvas=chart.locator('canvas');const width=await canvas.getAttribute('width');
  await page.setViewportSize({width:540,height:1000});await expect.poll(()=>canvas.getAttribute('width')).not.toBe(width);

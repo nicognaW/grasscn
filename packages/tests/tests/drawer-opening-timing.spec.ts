@@ -1,5 +1,9 @@
-import{pixelPerfectTest as test,expect}from'./verified-test';import{PNG}from'pngjs';
+import { test, expect } from './verified-test';
+
+import { PNG } from 'pngjs';
+
 const preview=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/';
+
 for(const scale of[2]as const)test(`Drawer backdrop covers first frame while panel moves GUI${scale}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900});
  await page.goto(`${preview.replace(/\/$/,'')}/#drawer`);await expect.poll(()=>page.getByRole('button',{name:'Open drawer',exact:true}).evaluate(n=>getComputedStyle(n).getPropertyValue('--mc-scale').trim())).toBe(String(scale));await page.getByRole('button',{name:'Open drawer',exact:true}).scrollIntoViewIfNeeded();

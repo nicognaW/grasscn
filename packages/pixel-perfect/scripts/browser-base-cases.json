@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "selection": "Existing PPT cases mapped to default website appearance or actual shadcn-owned tests; no sampling or quota. Non-PPT tests run normally.",
+  "cases": [
+    {
+      "file": "preview.spec.ts",
+      "title": "Tabs preview preserves native tab bar at scale 2",
+      "components": [
+        "tabs"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/tabs",
+        "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced."
+      },
+      "titlePath": [
+        "Tabs preview preserves native tab bar at scale 2"
+      ]
+    },
+    {
+      "file": "preview.spec.ts",
+      "title": "Select preview preserves native cycle button at scale 2",
+      "components": [
+        "select"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/select",
+        "reason": "Default Survival cycle button at the website fixed GUI scale."
+      },
+      "titlePath": [
+        "Select preview preserves native cycle button at scale 2"
+      ]
+    },
+    {
+      "file": "preview.spec.ts",
+      "title": "Radio Group preview preserves native widget pixels at scale 2",
+      "components": [
+        "radio-group"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/radio-group",
+        "reason": "The default selected Survival option at the website fixed GUI scale."
+      },
+      "titlePath": [
+        "Radio Group preview preserves native widget pixels at scale 2"
+      ]
+    },
+    {
+      "file": "preview.spec.ts",
+      "title": "Switch preview preserves native on/off pixels at scale 2",
+      "components": [
+        "switch"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/switch",
+        "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale."
+      },
+      "titlePath": [
+        "Switch preview preserves native on/off pixels at scale 2"
+      ]
+    },
+    {
+      "file": "pixels.spec.ts",
+      "title": "vanilla pixels: normal-w200-s2.png",
+      "titlePath": [
+        "vanilla pixels: normal-w200-s2.png"
+      ],
+      "components": [
+        "button"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/button",
+        "reason": "Default website Button: 200 logical pixels, GUI2, normal state and unedited Button text."
+      }
+    },
+    {
+      "file": "controls.spec.ts",
+      "title": "Control native pixels: checkbox-unchecked-normal-s2.png",
+      "titlePath": [
+        "Control native pixels: checkbox-unchecked-normal-s2.png"
+      ],
+      "components": [
+        "checkbox"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/checkbox",
+        "reason": "Default website Enable shadows checkbox: unchecked normal GUI2; the existing preview pixel check uses this exact reference."
+      }
+    },
+    {
+      "file": "slider.spec.ts",
+      "title": "Control native pixels: slider-w200-v500-normal-s2.png",
+      "titlePath": [
+        "Control native pixels: slider-w200-v500-normal-s2.png"
+      ],
+      "components": [
+        "slider"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/slider",
+        "reason": "Default website Volume slider: 200 logical pixels, 50% value, normal GUI2."
+      }
+    },
+    {
+      "file": "input.spec.ts",
+      "title": "Input native pixels: input-w200-normal-c39-s2.png",
+      "titlePath": [
+        "Input native pixels: input-w200-normal-c39-s2.png"
+      ],
+      "components": [
+        "input"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/input",
+        "reason": "Unedited default website input at GUI2; the existing preview pixel check uses this exact reference."
+      }
+    },
+    {
+      "file": "textarea.spec.ts",
+      "title": "Textarea native pixels: textarea-c18-s2.png",
+      "titlePath": [
+        "Textarea native pixels: textarea-c18-s2.png"
+      ],
+      "components": [
+        "textarea"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/textarea",
+        "reason": "Unedited default website textarea at GUI2; the existing preview pixel check uses this exact reference."
+      }
+    },
+    {
+      "file": "separator.spec.ts",
+      "title": "Separator native pixels (div): separator-c6-s2.png",
+      "titlePath": [
+        "Separator native pixels (div): separator-c6-s2.png"
+      ],
+      "components": [
+        "separator"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/separator",
+        "reason": "Default website header separator at GUI2; the existing preview check uses this exact reference and the default div rendering."
+      }
+    },
+    {
+      "file": "separator.spec.ts",
+      "title": "Separator native pixels (div): separator-c24-s2.png",
+      "titlePath": [
+        "Separator native pixels (div): separator-c24-s2.png"
+      ],
+      "components": [
+        "separator"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/separator",
+        "reason": "Default website footer separator at GUI2; the existing preview check uses this exact reference and the default div rendering."
+      }
+    },
+    {
+      "file": "progress.spec.ts",
+      "title": "Progress native pixels: progress-c6-s2.png",
+      "titlePath": [
+        "Progress native matrix",
+        "Progress native pixels: progress-c6-s2.png"
+      ],
+      "components": [
+        "progress"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/progress",
+        "reason": "Default website Progress is the unnotched half-filled bar at GUI2; its existing preview pixel check uses this exact reference."
+      }
+    }
+  ]
+}

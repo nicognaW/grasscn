@@ -1,37 +1,36 @@
-# Choosing Base and Full tests
+# Choosing Base and Full PPTs
 
-Use this guide when adding, reviewing or reclassifying Pixel Perfect Tests, website tests or component behavior tests in the shared suite. The [accepted decision](../adr/0002-base-and-full-tests.md) defines the policy; [CODING_STANDARDS.md](../../CODING_STANDARDS.md) determines whether a test is worth retaining at all. A tautological or redundant test needs removal or improvement, not a place in Full.
+Use this guide when adding, reviewing or reclassifying Pixel Perfect Tests. The [accepted decision](../adr/0002-base-and-full-tests.md) defines the policy; [CODING_STANDARDS.md](../../CODING_STANDARDS.md) determines whether a test is worth retaining. A tautological or redundant test needs removal or improvement, not a place in Full.
 
-Use Pixel Perfect Test for comparisons with captured Minecraft references; name website and component behavior tests by their purpose. Browser describes the execution environment, not the purpose of a test. Base and Full classify individual cases across this shared suite.
+## Decide the purpose first
 
-## Decide one case at a time
+PPTs compare UI ports with captured Minecraft references or verify the integrity of that comparison: original asset bytes, provenance, repeatability and comparator negative controls. Keep those cases and their harness in `packages/pixel-perfect`.
 
-1. Read the whole case, including helpers, inputs and assertions. Its title alone does not establish coverage.
-2. Identify a concrete Base mapping: either the default usage shown in a website demo, or an actual test owned by upstream shadcn. Record the website route and relevant behavior, or a commit-pinned shadcn test URL and test title.
-3. Keep cases combining that primary behavior with deliberate edge cases or additional variants in Full. Choose another existing pure primary-path case where available; otherwise record the focused coverage gap.
-4. Add qualifying cases individually to `packages/tests/scripts/browser-base-cases.json`, with their exact file/title path and mapping evidence. Every case in the shared suite outside that catalogue is Full. Selecting one case does not select its file, component family or generated matrix.
+Website navigation, search, copying, component interactions, API contracts and browser-only rendering regressions belong in `packages/tests`. Using Playwright, taking a screenshot or decoding a PNG does not make a case a PPT. These non-PPT tests run normally alongside Base PPTs, including variants and stress cases; they require neither Base mappings nor Full approval.
 
-When shadcn has no corresponding test, use only the website-default rule. Base UI, DayPicker and other dependency tests are not substitutes for shadcn-owned tests; avoid recreating coverage already owned by those dependencies.
+A case checking both a captured reference and behavior remains a PPT. Separate behavior-only cases from mixed files without duplicating or dropping assertions. Classify each PPT by purpose and importance, never its filename alone.
 
-## Examples
+## Select individual PPT cases
 
-| Case content | Classification |
+1. Read the whole case, including helpers, inputs and assertions.
+2. Identify a concrete Base mapping: the default appearance shown in a website demo, or a corresponding actual test owned by upstream shadcn. Record the route and reference conditions, or a commit-pinned shadcn test URL and title.
+3. Keep PPTs combining the primary path with deliberate edge cases or additional variants in Full. Choose another existing primary-path PPT where available; otherwise record the coverage gap.
+4. Add qualifying cases individually to `packages/pixel-perfect/scripts/browser-base-cases.json`, with their exact file/title path and mapping evidence. Every other PPT is Full. Selecting one case does not select its file, component family or generated matrix.
+
+When shadcn has no corresponding test, use only the website-default rule. Base UI, DayPicker and other dependency tests are not substitutes for shadcn-owned tests. Avoid recreating dependency-owned behavior coverage.
+
+| Case | Treatment |
 | --- | --- |
-| Default Button activation or Checkbox toggling shown in its website demo | Base, with the specific demo mapping |
-| Questionnaire validation/navigation corresponding to an actual pinned shadcn test | Base, with the upstream mapping |
-| One existing default GUI-scale Pixel Perfect Test matching the website appearance | Base for that case; additional scales and variants stay Full |
-| Default OTP editing combined with overlength-input truncation | Full: the existing case mixes the primary path with an edge case |
-| Default Spinner animation combined with custom children and click handlers | Full: additional consumer variants share the case |
-| Additional CJK corpora, viewport matrices, disabled/custom states or stress scenarios beyond the mapped primary path | Full |
+| Existing default GUI-scale captured-reference comparison matching the website appearance | Base PPT, with its mapping |
+| Additional captured-reference scales, states or CJK matrices | Full PPT unless the individual case independently qualifies |
+| Comparator mutation or reference-integrity check | PPT suite; apply the same individual Base mapping rules |
+| Website search, copying or component keyboard interaction | Ordinary non-PPT test, including its variants |
+| Comparison between browser states without a captured Minecraft oracle | Ordinary non-PPT regression test |
 
-CJK text or a particular state is not automatically an edge case: if the website default itself uses it, judge the case against that actual demo. Likewise, being fast, historically passing, or useful for a recent fix does not establish a Base mapping.
+Judge CJK text and states against the actual default demo. Being fast, historically passing or useful for a recent fix does not establish a Base mapping. Select by importance without runtime targets, count quotas or sampling. Navigation smoke coverage does not establish pixel coverage; record limitations in [the selection audit](../audits/base-selection.md).
 
-## Keep the selection reviewable
+The original cleanup spec (#1) prohibited manufacturing Base coverage with new or rewritten cases. This later package/policy migration preserves the complete inventory while moving behavior-only cases out of PPT files. Future features and ports should add meaningful tests under the coding standards.
 
-Select by importance, without a runtime target, count quota or per-component allowance. The current count is an outcome, not a cap. A shared page-navigation smoke case establishes page coverage; it does not replace focused interaction or pixel coverage. Record those limitations in [the selection audit](../audits/base-selection.md).
+After catalogue changes, use `bun packages/pixel-perfect/scripts/browser-suite.mjs list --all --json` to verify every mapping resolves once and Base plus Full covers the PPT inventory. Use `bun run --cwd packages/tests test --list --reporter=json` for the independent non-PPT inventory. Listing never executes Full PPTs. Type checks, builds and harness unit checks remain ordinary prechecks.
 
-For this cleanup spec (#1), preserve existing cases: do not add, duplicate, split or rewrite tests to manufacture Base coverage. Future features, components and ports should have meaningful new tests; classify each by the same rules and review distinct coverage under the coding standards.
-
-After a catalogue change, use `bun packages/tests/scripts/browser-suite.mjs list --all --json` to check that every mapping resolves once and Base plus Full preserves the inventory. Listing does not execute Full tests. Type checks, builds and tooling unit tests remain outside this classification.
-
-For execution, approval and reporting, use [the Full-run lifecycle](full-test-runs.md). Full results do not block merging.
+For execution, approval and reporting, use [the Full-run lifecycle](full-test-runs.md). Full PPT results do not block merging.

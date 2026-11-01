@@ -12,7 +12,7 @@ Advancement Tree passed 12 Pixel Perfect Tests before selection/panning conflict
 
 Recover wheel, press, drag and visual thumb arithmetic independently. Cover empty/one/full/overflow and large lists, fractional input, boundaries, delta modes, consecutive events in one React batch, and controlled/uncontrolled usage. Synthetic wheel normalization does not prove hardware behavior.
 
-Trading's thumb travels 113 logical pixels but drag divides by 112. Press only arms dragging. Wheel uses clamp(trunc(current-nativeVerticalAmount),0,maxOffset), with float32 drag arithmetic. These are Trading-specific rules. See `packages/tests/tests/reference/trading/scrollbar/scroll-rules.json`, `trading-scroll-events.json`, and `interaction-repeatability.json`.
+Trading's thumb travels 113 logical pixels but drag divides by 112. Press only arms dragging. Wheel uses clamp(trunc(current-nativeVerticalAmount),0,maxOffset), with float32 drag arithmetic. These are Trading-specific rules. See `packages/pixel-perfect/tests/reference/trading/scrollbar/scroll-rules.json`, `trading-scroll-events.json`, and `interaction-repeatability.json`.
 
 `packages/tests/tests/trading-scroll.spec.ts` drives those native traces. Its burst regression caught expected offset 2 becoming 1 through stale React state.
 
@@ -20,4 +20,4 @@ Trading's thumb travels 113 logical pixels but drag divides by 112. Press only a
 
 Test A → B → A in one mounted component, explicit overrides, loading/failure/recovery, and stale asynchronous responses where relevant. Freeze external bytes for repeatable tests. Cold navigation for each input cannot prove replacement.
 
-Player Preview inherited the last preset's arm model. Cover custom wide/slim skins after both presets and front/back/exact 180-degree views. `packages/tests/tests/player-custom-skin.spec.ts` and `packages/tests/tests/reference/player-preview/custom-skins/` retain the checks. Auto-versus-explicit web output is regression evidence; a captured reference comes from Minecraft itself.
+Player Preview inherited the last preset's arm model. Cover custom wide/slim skins after both presets and front/back/exact 180-degree views. `packages/tests/tests/player-custom-skin.spec.ts` retains the behavior regressions; `packages/pixel-perfect/tests/player-custom-skin.spec.ts` and `packages/pixel-perfect/tests/reference/player-preview/custom-skins/` retain the captured-reference comparison. Auto-versus-explicit web output is regression evidence; a captured reference comes from Minecraft itself.

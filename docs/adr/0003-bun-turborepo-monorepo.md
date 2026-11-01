@@ -4,7 +4,7 @@ status: accepted
 
 # Adopt Bun and a shadcn-aligned Turborepo structure
 
-Pin an exact Bun version and use Bun as both package manager and runtime. Adopt a Turborepo monorepo whose responsibility boundaries follow upstream shadcn where applicable, keeping authored component sources in apps/web/registry and verification tooling and fixtures in packages/tests. Registry generation and website builds remain separate tasks with explicit dependencies. Shared configuration stays at the root; introduce additional packages only for actual shared responsibilities.
+Pin an exact Bun version and use Bun as both package manager and runtime. Adopt a Turborepo monorepo whose responsibility boundaries follow upstream shadcn where applicable, keeping authored component sources in apps/web/registry and Pixel Perfect Tests, captured references, verification tooling and rendering fixtures in packages/pixel-perfect, with website and component behavior cases in packages/tests. Registry generation and website builds remain separate tasks with explicit dependencies. Shared configuration stays at the root; introduce additional packages only for actual shared responsibilities.
 
 Retain the newly added Ultracite/Oxc, Uncheck and editor tooling. Invoke Uncheck with bunx --bun uncheck for workspace linting, formatting and typechecking, with --fix when fixes are intended, rather than introducing package scripts for those checks. Hooks use the same Bun runtime. Uncheck owns workspace check discovery; Turbo owns generation, builds and tests. Migrate Node-run unit tests to Bun's test runner and retain Playwright for browser testing. Keep the Vite website in this migration; Next.js and Fumadocs/MDX are possible future changes.
 

@@ -1,7 +1,7 @@
 import {test} from "bun:test"
 import assert from "node:assert/strict"
 import path from "node:path"
-import {installedRegistryFile} from "../scripts/installed-registry-file.mjs"
+import {installedRegistryFile} from "@grasscn/pixel-perfect/installed-registry-file"
 const consumer=path.resolve("consumer")
 const settings={aliases:{ui:"@/components/ui",components:"@/components",hooks:"@/hooks",lib:"@/lib"}}
 test("installed recipes use the configured components directory and primitives use ui",()=>{

@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/lib/utils": ["./tests/fixture/utils.ts"],
+      "@/lib/utils": ["../pixel-perfect/tests/fixture/utils.ts"],
       "@/components/ui/*": ["../../apps/web/registry/ui/*"]
     },
     "types": ["node", "vite/client"],
