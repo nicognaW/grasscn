@@ -123,9 +123,9 @@ const Select = <Value = string, Multiple extends boolean = false>({
   );
 };
 
-const SelectGroup = (props: MinecraftProps<typeof SelectPrimitive.Group>) => {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
-};
+const SelectGroup = (props: MinecraftProps<typeof SelectPrimitive.Group>) => (
+  <SelectPrimitive.Group data-slot="select-group" {...props} />
+);
 
 const SelectValue = ({
   children,
@@ -597,35 +597,31 @@ const SelectLabel = ({
   children,
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.GroupLabel>) => {
-  return (
-    <SelectPrimitive.GroupLabel
-      data-slot="select-label"
-      className={cn(`mc-select-label`, className)}
-      {...props}
-    >
-      {textSkin(children)}
-    </SelectPrimitive.GroupLabel>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.GroupLabel>) => (
+  <SelectPrimitive.GroupLabel
+    data-slot="select-label"
+    className={cn(`mc-select-label`, className)}
+    {...props}
+  >
+    {textSkin(children)}
+  </SelectPrimitive.GroupLabel>
+);
 
 const SelectSeparator = ({
   className,
   style,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.Separator>) => {
-  return (
-    <SelectPrimitive.Separator
-      data-slot="select-separator"
-      className={cn(`mc-select-separator`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: assets.footer_separator,
-        ...__style,
-      }))}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.Separator>) => (
+  <SelectPrimitive.Separator
+    data-slot="select-separator"
+    className={cn(`mc-select-separator`, className)}
+    style={minecraftStyle(style, (__style) => ({
+      backgroundImage: assets.footer_separator,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
 function scrollButtonContents(children: React.ReactNode) {
   return (
@@ -644,33 +640,29 @@ const SelectScrollUpButton = ({
   children = "^",
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.ScrollUpArrow>) => {
-  return (
-    <SelectPrimitive.ScrollUpArrow
-      data-slot="select-scroll-up-button"
-      className={cn(`mc-button mc-select-scroll-button`, className)}
-      {...props}
-    >
-      {scrollButtonContents(children)}
-    </SelectPrimitive.ScrollUpArrow>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.ScrollUpArrow>) => (
+  <SelectPrimitive.ScrollUpArrow
+    data-slot="select-scroll-up-button"
+    className={cn(`mc-button mc-select-scroll-button`, className)}
+    {...props}
+  >
+    {scrollButtonContents(children)}
+  </SelectPrimitive.ScrollUpArrow>
+);
 
 const SelectScrollDownButton = ({
   children = "v",
   className,
   ...props
-}: MinecraftProps<typeof SelectPrimitive.ScrollDownArrow>) => {
-  return (
-    <SelectPrimitive.ScrollDownArrow
-      data-slot="select-scroll-down-button"
-      className={cn(`mc-button mc-select-scroll-button`, className)}
-      {...props}
-    >
-      {scrollButtonContents(children)}
-    </SelectPrimitive.ScrollDownArrow>
-  );
-};
+}: MinecraftProps<typeof SelectPrimitive.ScrollDownArrow>) => (
+  <SelectPrimitive.ScrollDownArrow
+    data-slot="select-scroll-down-button"
+    className={cn(`mc-button mc-select-scroll-button`, className)}
+    {...props}
+  >
+    {scrollButtonContents(children)}
+  </SelectPrimitive.ScrollDownArrow>
+);
 
 export {
   Select,

@@ -26,13 +26,11 @@ const Sheet = ({
   ...props
 }: MinecraftProps<typeof SheetPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <SheetScale.Provider value={scale}>
-      <SheetPrimitive.Root {...props} />
-    </SheetScale.Provider>
-  );
-};
+}) => (
+  <SheetScale.Provider value={scale}>
+    <SheetPrimitive.Root {...props} />
+  </SheetScale.Provider>
+);
 
 const SheetTrigger = ({
   render,
@@ -70,9 +68,9 @@ const SheetClose = ({
   );
 };
 
-const SheetPortal = (props: MinecraftProps<typeof SheetPrimitive.Portal>) => {
-  return <SheetPrimitive.Portal {...props} />;
-};
+const SheetPortal = (props: MinecraftProps<typeof SheetPrimitive.Portal>) => (
+  <SheetPrimitive.Portal {...props} />
+);
 
 const SheetOverlay = ({
   className,
@@ -155,25 +153,21 @@ const SheetContent = ({
   );
 };
 
-const SheetHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sheet-header"
-      className={cn(`mc-sheet-header`, className)}
-      {...props}
-    />
-  );
-};
+const SheetHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sheet-header"
+    className={cn(`mc-sheet-header`, className)}
+    {...props}
+  />
+);
 
-const SheetFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sheet-footer"
-      className={cn(`mc-sheet-footer`, className)}
-      {...props}
-    />
-  );
-};
+const SheetFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sheet-footer"
+    className={cn(`mc-sheet-footer`, className)}
+    {...props}
+  />
+);
 
 const SheetTitle = ({
   render,

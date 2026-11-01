@@ -183,28 +183,24 @@ const NativeSelect = ({
 const NativeSelectOption = ({
   className,
   ...props
-}: React.ComponentProps<"option">) => {
-  return (
-    <option
-      data-slot="native-select-option"
-      className={cn(`mc-native-select-option`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"option">) => (
+  <option
+    data-slot="native-select-option"
+    className={cn(`mc-native-select-option`, className)}
+    {...props}
+  />
+);
 
 const NativeSelectOptGroup = ({
   className,
   ...props
-}: React.ComponentProps<"optgroup">) => {
-  return (
-    <optgroup
-      data-slot="native-select-optgroup"
-      className={cn(`mc-native-select-optgroup`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"optgroup">) => (
+  <optgroup
+    data-slot="native-select-optgroup"
+    className={cn(`mc-native-select-optgroup`, className)}
+    {...props}
+  />
+);
 
 export { NativeSelect, NativeSelectOption, NativeSelectOptGroup };
 

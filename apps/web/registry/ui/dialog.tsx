@@ -55,13 +55,11 @@ const Dialog = ({
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <DialogPrimitive.Root {...props} />
-    </ScaleContext.Provider>
-  );
-};
+}) => (
+  <ScaleContext.Provider value={scale}>
+    <DialogPrimitive.Root {...props} />
+  </ScaleContext.Provider>
+);
 
 const DialogTrigger = ({
   render,
@@ -99,9 +97,9 @@ const DialogClose = ({
   );
 };
 
-const DialogPortal = (props: MinecraftProps<typeof DialogPrimitive.Portal>) => {
-  return <DialogPrimitive.Portal {...props} />;
-};
+const DialogPortal = (props: MinecraftProps<typeof DialogPrimitive.Portal>) => (
+  <DialogPrimitive.Portal {...props} />
+);
 
 const DialogOverlay = ({
   className,
@@ -272,15 +270,13 @@ const DialogContent = ({
   );
 };
 
-const DialogHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="dialog-header"
-      className={cn(`mc-dialog-header`, className)}
-      {...props}
-    />
-  );
-};
+const DialogHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="dialog-header"
+    className={cn(`mc-dialog-header`, className)}
+    {...props}
+  />
+);
 
 const DialogFooter = ({
   className,

@@ -52,22 +52,20 @@ const TradeItemGraphic = ({
 }: {
   item: TradeItem;
   scale: number;
-}) => {
-  return (
-    <span
-      className="mc-trade-item"
-      aria-label={`${item.count ?? 1} ${item.label}`}
-      style={{ height: 16 * scale, width: 16 * scale }}
-    >
-      {item.icon}
-      {(item.count ?? 1) > 1 && (
-        <span className="mc-trade-count">
-          <MinecraftText>{item.count}</MinecraftText>
-        </span>
-      )}
-    </span>
-  );
-};
+}) => (
+  <span
+    className="mc-trade-item"
+    aria-label={`${item.count ?? 1} ${item.label}`}
+    style={{ height: 16 * scale, width: 16 * scale }}
+  >
+    {item.icon}
+    {(item.count ?? 1) > 1 && (
+      <span className="mc-trade-count">
+        <MinecraftText>{item.count}</MinecraftText>
+      </span>
+    )}
+  </span>
+);
 
 const Trading = ({
   offers,
