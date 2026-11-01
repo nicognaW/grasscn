@@ -9,10 +9,14 @@ import {
   CodeBlockContent,
 } from "@/components/ui/code-block";
 
-export default function CodeBlockExample() {
+const CodeBlockExample = () => {
   const code = 'const world = "Minecraft";';
+
   return (
-    <CodeBlock style={{ width: 560, maxWidth: "100%" }}>
+    <CodeBlock /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ maxWidth: "100%", width: 560 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <CodeBlockHeader>
         <CodeBlockTitle>world.ts</CodeBlockTitle>
         <CodeBlockActions>
@@ -22,4 +26,6 @@ export default function CodeBlockExample() {
       <CodeBlockContent>{code}</CodeBlockContent>
     </CodeBlock>
   );
-}
+};
+
+export default CodeBlockExample;

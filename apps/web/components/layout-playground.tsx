@@ -25,37 +25,44 @@ import { SonnerPlayground } from "./sonner-playground";
 import "./documentation.css";
 
 const playgrounds = {
-  card: CardDemo,
-  separator: SeparatorDemo,
-  "scroll-area": ScrollAreaDemo,
-  progress: ProgressDemo,
-  tabs: TabsDemo,
-  collapsible: CollapsibleDemo,
   "aspect-ratio": AspectRatioDemo,
-  "button-group": ButtonGroupDemo,
-  pagination: PaginationDemo,
   badge: BadgeDemo,
-  typography: TypographyDemo,
   breadcrumb: BreadcrumbDemo,
-  kbd: KbdDemo,
-  empty: EmptyDemo,
-  resizable: ResizableDemo,
-  sidebar: SidebarDemo,
-  spinner: SpinnerDemo,
+  "button-group": ButtonGroupDemo,
+  card: CardDemo,
   "code-block": CodeBlockDemo,
-  sonner: SonnerPlayground,
+  collapsible: CollapsibleDemo,
+  empty: EmptyDemo,
+  kbd: KbdDemo,
   marker: MarkerDemo,
+  pagination: PaginationDemo,
+  progress: ProgressDemo,
+  resizable: ResizableDemo,
+  "scroll-area": ScrollAreaDemo,
+  separator: SeparatorDemo,
+  sidebar: SidebarDemo,
+  sonner: SonnerPlayground,
+  spinner: SpinnerDemo,
+  tabs: TabsDemo,
   trace: TraceDemo,
+  typography: TypographyDemo,
 };
 
-export function LayoutPlayground({ name }: { name: keyof typeof playgrounds }) {
+export const LayoutPlayground = ({
+  name,
+}: {
+  name: keyof typeof playgrounds;
+}) => {
   const Playground = playgrounds[name];
+
   return (
     <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-playground minecraft-example"
+      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`Interactive ${name} playground`}
     >
       <Playground scale={2} />
     </section>
   );
-}
+};

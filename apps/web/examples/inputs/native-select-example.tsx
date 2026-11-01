@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -6,13 +7,17 @@ import {
   NativeSelectOption,
   NativeSelectOptGroup,
 } from "@/components/ui/native-select";
-export default function NativeSelectExample() {
+
+const NativeSelectExample = () => {
   const [mode, setMode] = useState("survival");
+
   return (
     <NativeSelect
       aria-label="Native world mode"
       value={mode}
-      onChange={(event) => setMode(event.target.value)}
+      onChange={(event) => {
+        setMode(event.target.value);
+      }}
     >
       <NativeSelectOptGroup label="World mode">
         <NativeSelectOption value="survival">Survival</NativeSelectOption>
@@ -20,4 +25,6 @@ export default function NativeSelectExample() {
       </NativeSelectOptGroup>
     </NativeSelect>
   );
-}
+};
+
+export default NativeSelectExample;

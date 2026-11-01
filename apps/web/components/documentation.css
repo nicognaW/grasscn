@@ -58,6 +58,11 @@
 .documentation-tabs-scroll > [data-slot="tabs-list"] {
   width: 606px;
 }
+@media (max-width: 767px) {
+  .documentation-tabs-scroll > [data-slot="tabs-list"] {
+    width: 240px;
+  }
+}
 .documentation-example
   > .documentation-example-tabs
   > [data-slot="tabs-content"] {

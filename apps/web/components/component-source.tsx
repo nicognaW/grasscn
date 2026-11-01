@@ -7,7 +7,7 @@ import { DocumentLink } from "./document-link";
 import { DocumentParagraph } from "./document-paragraph";
 import { DocumentText } from "./document-text";
 
-export async function ComponentSource({
+export const ComponentSource = async ({
   name,
   title = name,
   initialFile,
@@ -15,48 +15,68 @@ export async function ComponentSource({
   name: string;
   title?: string;
   initialFile?: string;
-}) {
+}) => {
   const item = registry.items.find((entry) => entry.name === name);
+
   const index =
     item?.files.findIndex((entry) =>
-      initialFile
+      initialFile !== undefined && initialFile !== ""
         ? entry.path === initialFile
         : path.posix.basename(entry.path) === `${name}.tsx`
     ) ?? -1;
-  if (index < 0)
+
+  if (index < 0) {
     return (
-      <DocumentText role="alert">
+      <DocumentText
+        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+        role="alert"
+        /* eslint-enable jsx-a11y/prefer-tag-over-role */
+      >
         Component source unavailable: {name}
       </DocumentText>
     );
+  }
+
+  let source;
+
   try {
-    const source = await installationSource(name, String(index));
-    if (!source) throw Error("Component source unavailable");
-    return (
-      <section
-        className="documentation-implementation"
-        aria-label={`${title} implementation source`}
-      >
-        <DocumentParagraph>
-          This is the component implementation. Its supporting styles, helpers
-          and resources are also required. See{" "}
-          <DocumentLink href="#installation">
-            complete manual installation
-          </DocumentLink>
-          .
-        </DocumentParagraph>
-        <CodeView
-          code={source.contents}
-          filename={source.destination}
-          label="Component implementation"
-        />
-      </section>
-    );
+    source = await installationSource(name, String(index));
   } catch {
+    // Source I/O failures use the existing retry message below.
+  }
+
+  if (!source) {
     return (
-      <DocumentText role="alert">
+      <DocumentText
+        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+        role="alert"
+        /* eslint-enable jsx-a11y/prefer-tag-over-role */
+      >
         Component source could not be loaded: {name}. Reload this page to retry.
       </DocumentText>
     );
   }
-}
+
+  return (
+    <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+      className="documentation-implementation"
+      /* eslint-enable shadcn/no-unknown-classes */
+      aria-label={`${title} implementation source`}
+    >
+      <DocumentParagraph>
+        This is the component implementation. Its supporting styles, helpers and
+        resources are also required. See{" "}
+        <DocumentLink href="#installation">
+          complete manual installation
+        </DocumentLink>
+        .
+      </DocumentParagraph>
+      <CodeView
+        code={source.contents}
+        filename={source.destination}
+        label="Component implementation"
+      />
+    </section>
+  );
+};

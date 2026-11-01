@@ -1,80 +1,234 @@
-import http from 'node:http'
-import path from 'node:path'
-import {readFile} from 'node:fs/promises'
-import {createConnection} from 'node:net'
-import {serveProductionFixture} from '@grasscn/tests/fixture'
-import {webRoot} from '@tests/paths'
+import { readFile } from "node:fs/promises";
+import http from "node:http";
+import { createConnection } from "node:net";
+import path from "node:path";
+
+import { serveProductionFixture } from "@grasscn/tests/fixture";
+import { webRoot } from "@tests/paths";
+
+import {
+  isolatedHttpTarget,
+  isolatedTunnelTarget,
+} from "./isolated-host-routing.mjs";
+import { serveNextProduction } from "./next-production.mjs";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
-export async function serveVerificationHosts({fixturePort, previewPort, proxyPort}) {
-  const owned = new Set([fixturePort, previewPort])
-  const map = new Map([[5174, fixturePort], [5178, fixturePort], [5176, previewPort]])
-  const sockets = new Set()
-  const track = socket => { sockets.add(socket); socket.once('close', () => sockets.delete(socket)); return socket }
-  const closeSockets = () => { for (const socket of sockets) socket.destroy() }
-  let fixture, preview, proxy
+/** @param {import("./isolated-host-routing.mjs").HostExecution} execution - Owned loopback ports. */
+export const serveVerificationHosts = async (execution) => {
+  const { fixturePort, previewPort, proxyPort } = execution;
+  /** @type {Set<import("node:stream").Duplex>} */
+  const sockets = new Set();
+
+  /** @param {import("node:stream").Duplex} socket - Owned connection. */
+  const track = (socket) => {
+    sockets.add(socket);
+    socket.once("close", () => {
+      sockets.delete(socket);
+    });
+
+    return socket;
+  };
+
+  const closeSockets = () => {
+    for (const socket of sockets) {
+      socket.destroy();
+    }
+  };
+
+  /** @type {Awaited<ReturnType<typeof serveProductionFixture>> | undefined} */
+  let fixture;
+  /** @type {Awaited<ReturnType<typeof serveNextProduction>> | undefined} */
+  let preview;
+  /** @type {import("node:http").Server | undefined} */
+  let proxy;
+
   try {
-    fixture = await serveProductionFixture({port: fixturePort})
-    const {preview: startPreview} = await import('vite')
-    preview = await startPreview({configFile: path.join(webRoot, 'vite.config.ts'), preview: {host: '127.0.0.1', port: previewPort, strictPort: true}})
-    proxy = http.createServer(async (request, response) => {
-      let target
+    fixture = await serveProductionFixture({ port: fixturePort });
+    preview = await serveNextProduction({ port: previewPort });
+
+    /**
+     * @param {import("node:http").IncomingMessage} request - Browser proxy request.
+     * @param {import("node:http").ServerResponse} response - Owned proxy response.
+     */
+    const handleRequest = async (request, response) => {
+      let target;
+
       try {
-        target = new URL(request.url, `http://${request.headers.host}`)
-        if (target.protocol !== 'http:' || !['127.0.0.1', 'localhost'].includes(target.hostname)) throw Error('Unowned browser request')
-        // The registry uses strict JSON routes, independently of Vite's SPA fallback.
-        if (target.port === '5173') {
-          if (!['GET', 'HEAD'].includes(request.method)) { response.writeHead(405, {Allow: 'GET, HEAD'}).end(); return }
-          const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/.exec(target.pathname)
-          if (!match) { response.writeHead(404, {'Content-Type': 'application/json'}).end(JSON.stringify({error: 'Registry item not found'})); return }
-          try {
-            const content = await readFile(path.join(webRoot, 'public/r', match[1]))
-            response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'}).end(request.method === 'HEAD' ? undefined : content)
-          } catch (error) {
-            response.writeHead(error.code === 'ENOENT' ? 404 : 500, {'Content-Type': 'application/json'}).end(request.method === 'HEAD' ? undefined : JSON.stringify({error: error.code === 'ENOENT' ? 'Registry item not found' : 'Unable to read registry'}))
-          }
-          return
+        target = new URL(request.url ?? "", `http://${request.headers.host}`);
+
+        if (
+          target.protocol !== "http:" ||
+          !["127.0.0.1", "localhost"].includes(target.hostname)
+        ) {
+          throw new Error("Unowned browser request");
         }
-        const port = map.get(Number(target.port)) ?? Number(target.port)
-        if (!owned.has(port)) throw Error('Unowned browser port')
-        target.hostname = '127.0.0.1'; target.port = String(port)
-      } catch { response.writeHead(502); response.end('Verification only serves its isolated snapshot'); return }
-      const upstream = http.request(target, {method: request.method, headers: {...request.headers, host: target.host}}, incoming => {
-        response.writeHead(incoming.statusCode ?? 502, incoming.headers); incoming.pipe(response)
-      })
-      upstream.on('error', () => { if (!response.headersSent) response.writeHead(502); response.end() })
-      request.pipe(upstream)
-    })
-    proxy.on('connection', track)
-    proxy.on('connect', (request, socket, head) => {
+
+        // The registry uses strict JSON routes, independently of Vite's SPA fallback.
+        if (target.port === "5173") {
+          if (!["GET", "HEAD"].includes(request.method ?? "")) {
+            response.writeHead(405, { Allow: "GET, HEAD" }).end();
+
+            return;
+          }
+
+          const match = /^\/r\/(?<file>[a-zA-Z0-9_-]+\.json)$/u.exec(
+            target.pathname
+          );
+
+          if (!match) {
+            response
+              .writeHead(404, { "Content-Type": "application/json" })
+              .end(JSON.stringify({ error: "Registry item not found" }));
+
+            return;
+          }
+
+          try {
+            const content = await readFile(
+              path.join(webRoot, "public/r", match.groups?.file ?? "")
+            );
+
+            response
+              .writeHead(200, {
+                "Content-Type": "application/json; charset=utf-8",
+              })
+              .end(request.method === "HEAD" ? undefined : content);
+          } catch (error) {
+            const missing =
+              error instanceof Error &&
+              "code" in error &&
+              error.code === "ENOENT";
+
+            response
+              .writeHead(missing ? 404 : 500, {
+                "Content-Type": "application/json",
+              })
+              .end(
+                request.method === "HEAD"
+                  ? undefined
+                  : JSON.stringify({
+                      error: missing
+                        ? "Registry item not found"
+                        : "Unable to read registry",
+                    })
+              );
+          }
+
+          return;
+        }
+
+        target = isolatedHttpTarget(
+          request.url ?? "",
+          request.headers.host ?? "",
+          execution
+        );
+      } catch {
+        response.writeHead(502);
+        response.end("Verification only serves its isolated snapshot");
+
+        return;
+      }
+
+      const upstream = http.request(
+        target,
+        {
+          headers: { ...request.headers, host: target.host },
+          method: request.method,
+        },
+        (incoming) => {
+          response.writeHead(incoming.statusCode ?? 502, incoming.headers);
+          incoming.pipe(response);
+        }
+      );
+
+      upstream.on("error", () => {
+        if (!response.headersSent) {
+          response.writeHead(502);
+        }
+
+        response.end();
+      });
+      request.pipe(upstream);
+    };
+
+    proxy = http.createServer((request, response) => {
+      handleRequest(request, response).catch(() => {
+        if (!response.headersSent) {
+          response.writeHead(502);
+        }
+
+        response.end("Verification proxy request failed");
+      });
+    });
+    proxy.on("connection", (socket) => {
+      track(socket);
+    });
+    proxy.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
-      let port
+      let port;
+
       try {
-        const target = new URL(`http://${request.url}`)
-        if (!['127.0.0.1', 'localhost'].includes(target.hostname) || target.host !== request.url) throw Error('Unowned tunnel')
-        port = target.port === '5173' ? proxyPort : map.get(Number(target.port)) ?? Number(target.port)
-        if (target.port !== '5173' && !owned.has(port)) throw Error('Unowned tunnel port')
-      } catch { socket.end('HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n'); return }
-      const upstream = track(createConnection({host: '127.0.0.1', port}, () => {
-        socket.write('HTTP/1.1 200 Connection Established\r\n\r\n')
-        if (head.length) upstream.write(head)
-        socket.pipe(upstream); upstream.pipe(socket)
-      }))
-      upstream.on('error', () => socket.destroy())
-      socket.on('error', () => upstream.destroy())
-      socket.once('close', () => upstream.destroy())
-      upstream.once('close', () => socket.destroy())
-    })
-    await new Promise((resolve, reject) => { proxy.once('error', reject); proxy.listen(proxyPort, '127.0.0.1', resolve) })
-    return {fixtureBundleUrl: fixture.url, close: async () => {
-      closeSockets(); proxy.closeAllConnections(); await new Promise(resolve => proxy.close(resolve))
-      await new Promise(resolve => preview.httpServer.close(resolve)); await fixture.close()
-    }}
+        port = isolatedTunnelTarget(request.url ?? "", execution);
+      } catch {
+        socket.end("HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n");
+
+        return;
+      }
+
+      const upstream = track(
+        createConnection({ host: "127.0.0.1", port }, () => {
+          socket.write("HTTP/1.1 200 Connection Established\r\n\r\n");
+
+          if (head.length) {
+            upstream.write(head);
+          }
+
+          socket.pipe(upstream);
+          upstream.pipe(socket);
+        })
+      );
+
+      upstream.on("error", () => {
+        socket.destroy();
+      });
+      socket.on("error", () => {
+        upstream.destroy();
+      });
+      socket.once("close", () => {
+        upstream.destroy();
+      });
+      upstream.once("close", () => {
+        socket.destroy();
+      });
+    });
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+    await new Promise((resolve, reject) => {
+      proxy.once("error", reject);
+      proxy.listen(proxyPort, "127.0.0.1", resolve);
+    });
+
+    return {
+      close: async () => {
+        closeSockets();
+        proxy.closeAllConnections();
+        // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+        await new Promise((resolve) => {
+          proxy.close(resolve);
+        });
+        await preview.close();
+        await fixture.close();
+      },
+      fixtureBundleUrl: fixture.url,
+      websiteIdentity: preview.identity,
+    };
   } catch (error) {
-    closeSockets(); proxy?.closeAllConnections(); proxy?.close()
-    if (preview) await new Promise(resolve => preview.httpServer.close(resolve))
-    await fixture?.close(); throw error
+    closeSockets();
+    proxy?.closeAllConnections();
+    proxy?.close();
+    await preview?.close();
+    await fixture?.close();
+    throw error;
   }
-}
+};

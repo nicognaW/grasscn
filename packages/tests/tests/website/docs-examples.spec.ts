@@ -2,24 +2,33 @@ import { readFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/tests/test";
 
+// These properties capture clipboard writes performed by this test page.
+declare global {
+  interface Window {
+    copiedCode: string;
+  }
+}
+
 test("Button documentation connects its executable example, complete code and implementation source", async ({
   page,
 }) => {
   await page.goto(
     `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"}/docs/components/button`
   );
+
   const example = page.getByRole("region", {
-    name: "Button example",
     exact: true,
+    name: "Button example",
   });
+
   await expect(
-    example.getByRole("button", { name: "Button", exact: true })
+    example.getByRole("button", { exact: true, name: "Button" })
   ).toBeVisible();
-  await example.getByRole("tab", { name: "Preview", exact: true }).focus();
+  await example.getByRole("tab", { exact: true, name: "Preview" }).focus();
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("Enter");
   await expect(
-    example.getByRole("tab", { name: "Code", exact: true })
+    example.getByRole("tab", { exact: true, name: "Code" })
   ).toHaveAttribute("aria-selected", "true");
   const source = example.locator("pre");
   await expect(source).toContainText(
@@ -33,55 +42,55 @@ test("Button documentation connects its executable example, complete code and im
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
       value: {
+        // eslint-disable-next-line require-await -- The clipboard mock preserves the asynchronous browser API while recording its supplied text synchronously.
         writeText: async (text: string) => {
-          (window as unknown as { copiedCode: string }).copiedCode = text;
+          window.copiedCode = text;
         },
       },
     });
   });
-  await example.getByRole("button", { name: "Copy", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Copy" }).click();
   await expect(example.getByRole("status")).toHaveText("Copied");
-  const copied = await page.evaluate(
-    () => (window as unknown as { copiedCode: string }).copiedCode
-  );
-  expect(copied).toContain("export default function ButtonExample()");
-  expect(copied).toMatch(/\}\s*$/);
+
+  const copied = await page.evaluate(() => window.copiedCode);
+
+  expect(copied).toContain("const ButtonExample =");
+  expect(copied).toContain("export default ButtonExample");
+  expect(copied).toMatch(/export default ButtonExample;?\s*$/u);
+
   const implementation = page.getByRole("region", {
-    name: "Button implementation source",
     exact: true,
+    name: "Button implementation source",
   });
+
   await expect(implementation).toContainText("Component implementation");
   await expect(implementation).toContainText("components/ui/button.tsx");
   await expect(
-    implementation.getByRole("button", { name: "Expand", exact: true })
+    implementation.getByRole("button", { exact: true, name: "Expand" })
   ).toHaveAttribute("aria-expanded", "false");
   await implementation
-    .getByRole("button", { name: "Copy", exact: true })
+    .getByRole("button", { exact: true, name: "Copy" })
     .click();
   await expect(implementation.getByRole("status")).toHaveText("Copied");
-  expect(
-    await page.evaluate(
-      () => (window as unknown as { copiedCode: string }).copiedCode
-    )
-  ).toBe(
+  expect(await page.evaluate(() => window.copiedCode)).toBe(
     await readFile(
       new URL("../../../../apps/web/registry/ui/button.tsx", import.meta.url),
-      "utf8"
+      "utf-8"
     )
   );
   await implementation
-    .getByRole("button", { name: "Expand", exact: true })
+    .getByRole("button", { exact: true, name: "Expand" })
     .click();
   await expect(implementation.locator("pre")).toContainText(
     "export { Button, buttonVariants }"
   );
   await implementation
-    .getByRole("button", { name: "Collapse", exact: true })
+    .getByRole("button", { exact: true, name: "Collapse" })
     .click();
   await expect(
-    implementation.getByRole("button", { name: "Expand", exact: true })
+    implementation.getByRole("button", { exact: true, name: "Expand" })
   ).toHaveAttribute("aria-expanded", "false");
   await expect(
-    page.getByRole("heading", { name: "Interactive playground", exact: true })
+    page.getByRole("heading", { exact: true, name: "Interactive playground" })
   ).toBeVisible();
 });

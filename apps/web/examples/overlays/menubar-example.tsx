@@ -10,15 +10,20 @@ import {
   MenubarItem,
 } from "@/components/ui/menubar";
 
-export default function Example() {
+const Example = () => {
   const [action, setAction] = useState("Choose a command");
+
   return (
     <div>
       <Menubar aria-label="World command bar">
         <MenubarMenu>
           <MenubarTrigger>Game</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => setAction("Resumed")}>
+            <MenubarItem
+              onClick={() => {
+                setAction("Resumed");
+              }}
+            >
               Resume game
             </MenubarItem>
           </MenubarContent>
@@ -26,7 +31,11 @@ export default function Example() {
         <MenubarMenu>
           <MenubarTrigger>World</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => setAction("Created")}>
+            <MenubarItem
+              onClick={() => {
+                setAction("Created");
+              }}
+            >
               Create world
             </MenubarItem>
           </MenubarContent>
@@ -35,4 +44,6 @@ export default function Example() {
       <output aria-label="Menu action">{action}</output>
     </div>
   );
-}
+};
+
+export default Example;

@@ -1,0 +1,21 @@
+{
+  "name": "grass-block-header-s3.png",
+  "element": "original GRASS_BLOCK inventory item",
+  "scale": 3,
+  "background": "#202020",
+  "logicalBounds": {
+    "x": 16,
+    "y": 16,
+    "width": 16,
+    "height": 16
+  },
+  "viewport": [
+    1536,
+    900
+  ],
+  "language": "en_us",
+  "mods": [],
+  "resourcePacks": [],
+  "minimumStableFrames": 20,
+  "minimumStableMilliseconds": 1000
+}

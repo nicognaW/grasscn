@@ -9,8 +9,9 @@ import { Button } from "../registry/ui/button";
 import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
 
-export function SiteFrame({ children }: { children: ReactNode }) {
+export const SiteFrame = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
+
   return (
     <div className="minecraft-site">
       <a className="skip-link" href="#content">
@@ -21,8 +22,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           <Image
             src="/grasscn-logo.svg"
             alt="grasscn"
-            width={132}
-            height={48}
+            width={176}
+            height={64}
             unoptimized
             loading="eager"
           />
@@ -40,7 +41,11 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             render={
               <Link
                 href="/docs"
+
+                /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
                 role="link"
+                /* eslint-enable jsx-a11y/prefer-tag-over-role */
+
                 aria-current={pathname.startsWith("/docs") ? "page" : undefined}
               />
             }
@@ -73,4 +78,4 @@ export function SiteFrame({ children }: { children: ReactNode }) {
       </footer>
     </div>
   );
-}
+};

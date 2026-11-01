@@ -4,6 +4,9 @@ import grass from "../assets/grass-block-48.png";
 import { AspectRatio } from "../registry/ui/aspect-ratio";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
+const isAssetUrl = (asset: unknown): asset is string =>
+  typeof asset === "string";
+
 export default function AspectRatioDemo({ scale }: DemoProps) {
   const [ratio, setRatio] = React.useState(16 / 9);
   return (
@@ -39,7 +42,7 @@ export default function AspectRatioDemo({ scale }: DemoProps) {
             }}
           >
             <img
-              src={typeof grass === "string" ? grass : grass.src}
+              src={isAssetUrl(grass) ? grass : grass.src}
               alt="Grass block"
               width="48"
               height="48"

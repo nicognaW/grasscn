@@ -11,12 +11,19 @@ import {
   CommandEmpty,
 } from "@/components/ui/command";
 
-export default function Example() {
+const Example = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Open command palette</Button>
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Open command palette
+      </Button>
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
@@ -27,8 +34,8 @@ export default function Example() {
         <CommandList>
           <CommandItem
             value="save"
-            onSelect={(value) => {
-              setValue(value);
+            onSelect={(selection) => {
+              setValue(selection);
               setOpen(false);
             }}
           >
@@ -36,8 +43,8 @@ export default function Example() {
           </CommandItem>
           <CommandItem
             value="explore"
-            onSelect={(value) => {
-              setValue(value);
+            onSelect={(selection) => {
+              setValue(selection);
               setOpen(false);
             }}
           >
@@ -51,4 +58,6 @@ export default function Example() {
       </output>
     </div>
   );
-}
+};
+
+export default Example;

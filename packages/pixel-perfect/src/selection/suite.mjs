@@ -12,6 +12,9 @@ const catalogueFile = path.join(browserRoot, 'src/selection/base-cases.json')
 const escape = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 export const caseKey = test => JSON.stringify([test.file, test.titlePath])
 
+/** @typedef {{file:string, titlePath:string[], package:string, projectName:string, id?:string}} BrowserCase */
+/** @typedef {{file:string, title:string, titlePath:string[], components:string[], evidence:{kind:string, reason:string, route?:string, url?:string, upstreamTest?:string}}} BaseCase */
+/** @returns {BaseCase[]} Source-qualified default PPT catalogue. */
 export function baseCatalogue() {
   const data = JSON.parse(fs.readFileSync(catalogueFile, 'utf8'))
   if (data.schemaVersion !== 1 || !Array.isArray(data.cases) || !data.cases.length) throw Error('Invalid or empty Base catalogue')
@@ -65,6 +68,7 @@ function withoutReporter(args) {
   return result
 }
 
+/** @param {string[]} [args] @param {{effectiveSelection?:boolean}} [options] @returns {BrowserCase[]} */
 export function collectBrowserCases(args = [], {effectiveSelection = false} = {}) {
   const result = spawnSync(process.execPath, [cli, 'test', '--config', suiteConfig, ...withoutReporter(args), '--list', '--reporter=json'], {
     cwd: browserRoot, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024,
@@ -77,6 +81,7 @@ export function collectBrowserCases(args = [], {effectiveSelection = false} = {}
   return flattenBrowserReport(report)
 }
 
+/** @param {BrowserCase[]} cases @returns {{base:BrowserCase[], full:BrowserCase[], evidence:Map<string,BaseCase>}} */
 export function classifyBrowserCases(cases) {
   if (cases.some(test => test.package !== 'pixel-perfect')) throw Error('Base/Full classification accepts only PPT cases; non-PPT tests run normally')
   const catalogue = baseCatalogue()

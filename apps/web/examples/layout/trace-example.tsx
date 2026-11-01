@@ -12,8 +12,9 @@ import {
   TraceCollapsibleContent,
 } from "@/components/ui/trace";
 
-export default function TraceExample() {
+const TraceExample = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <Trace>
       <TraceLine status="running">
@@ -29,4 +30,6 @@ export default function TraceExample() {
       </TraceCollapsible>
     </Trace>
   );
-}
+};
+
+export default TraceExample;

@@ -1,4 +1,5 @@
 "use client";
+
 import AdvancementTreeDemo from "../demos/advancement-tree";
 import BookDemo from "../demos/book";
 import HotbarDemo from "../demos/hotbar";
@@ -10,29 +11,34 @@ import SignDemo from "../demos/sign";
 import TradingDemo from "../demos/trading";
 
 import "./documentation.css";
+
 const playgrounds = {
   "advancement-tree": AdvancementTreeDemo,
   book: BookDemo,
   hotbar: HotbarDemo,
   hud: HudDemo,
-  sign: SignDemo,
-  "player-preview": PlayerPreviewDemo,
   map: MapDemo,
-  trading: TradingDemo,
   "player-list": PlayerListDemo,
+  "player-preview": PlayerPreviewDemo,
+  sign: SignDemo,
+  trading: TradingDemo,
 };
-export function MinecraftPlayground({
+
+export const MinecraftPlayground = ({
   name,
 }: {
   name: keyof typeof playgrounds;
-}) {
+}) => {
   const Demo = playgrounds[name];
+
   return (
     <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-playground minecraft-example"
+      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`${name} playground`}
     >
       <Demo scale={2} />
     </section>
   );
-}
+};

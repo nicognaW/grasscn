@@ -4,60 +4,61 @@ import { AnalyticsChartExample } from "@/components/chart-analytics";
 
 const data = [
   {
-    name: "Jan",
     desktop: 186,
     mobile: 80,
+    name: "Jan",
   },
   {
-    name: "Feb",
     desktop: 305,
     mobile: 200,
+    name: "Feb",
   },
   {
-    name: "Mar",
     desktop: 237,
     mobile: 120,
+    name: "Mar",
   },
   {
-    name: "Apr",
     desktop: 273,
     mobile: 190,
+    name: "Apr",
   },
   {
-    name: "May",
     desktop: 309,
     mobile: 210,
+    name: "May",
   },
   {
-    name: "Jun",
     desktop: 354,
     mobile: 240,
+    name: "Jun",
   },
 ];
+
 const config = {
   desktop: {
-    label: "Desktop",
     color: "#55ff55",
+    label: "Desktop",
   },
   mobile: {
-    label: "Mobile",
     color: "#55ffff",
+    label: "Mobile",
   },
   visitors: {
-    label: "Visitors",
     color: "#aaffaa",
+    label: "Visitors",
   },
 };
 
-export default function Example() {
-  return (
-    <AnalyticsChartExample
-      aria-label="Website visitor analytics"
-      type="bar"
-      data={data}
-      series={["desktop", "mobile"]}
-      config={config}
-      scale={1}
-    />
-  );
-}
+const Example = () => (
+  <AnalyticsChartExample
+    aria-label="Website visitor analytics"
+    type="bar"
+    data={data}
+    series={["desktop", "mobile"]}
+    config={config}
+    scale={1}
+  />
+);
+
+export default Example;

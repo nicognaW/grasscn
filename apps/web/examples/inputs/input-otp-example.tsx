@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -8,11 +9,16 @@ import {
   InputOTPSeparator,
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
-export default function InputOTPExample() {
+
+const InputOTPExample = () => {
   const [value, setValue] = useState("");
   const [complete, setComplete] = useState("");
+
   return (
-    <div style={{ display: "grid", gap: 12 }}>
+    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+      style={{ display: "grid", gap: 12 }}
+      /* eslint-enable shadcn/no-inline-styles */
+    >
       <InputOTP
         aria-label="One-time code"
         maxLength={6}
@@ -41,4 +47,6 @@ export default function InputOTPExample() {
       </output>
     </div>
   );
-}
+};
+
+export default InputOTPExample;

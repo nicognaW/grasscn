@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 import {
@@ -9,9 +10,12 @@ import {
   ComboboxItem,
   ComboboxEmpty,
 } from "@/components/ui/combobox";
+
 const biomes = ["Grasslands", "Birch Forest", "Deep Dark"];
-export default function ComboboxExample() {
+
+const ComboboxExample = () => {
   const [biome, setBiome] = useState<string | null>(null);
+
   return (
     <Combobox
       items={biomes}
@@ -36,4 +40,6 @@ export default function ComboboxExample() {
       </ComboboxContent>
     </Combobox>
   );
-}
+};
+
+export default ComboboxExample;

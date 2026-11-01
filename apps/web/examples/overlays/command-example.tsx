@@ -11,8 +11,9 @@ import {
   CommandEmpty,
 } from "@/components/ui/command";
 
-export default function Example() {
+const Example = () => {
   const [value, setValue] = useState("");
+
   return (
     <div>
       <Command label="World commands">
@@ -38,4 +39,6 @@ export default function Example() {
       </output>
     </div>
   );
-}
+};
+
+export default Example;

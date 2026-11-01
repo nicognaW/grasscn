@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -23,7 +23,7 @@
       ],
       "@/components/date-picker": ["./registry/blocks/date-picker.tsx"]
     },
-    "types": ["node"],
+    "types": ["bun", "node"],
     "resolveJsonModule": true,
     "plugins": [
       {
@@ -48,8 +48,12 @@
     "registry/**/*.ts",
     "registry/**/*.tsx",
     ".next/dev/types/**/*.ts",
-    "examples/**/*.tsx"
+    "examples/**/*.tsx",
+    "scripts/generate-component-symbols.mjs",
+    "scripts/*.test.tsx",
+    "scripts/*.test.ts",
+    "next.config.mjs",
+    "postcss.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
-

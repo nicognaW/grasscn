@@ -4,7 +4,7 @@ import { InstallationCommand } from "./installation-command";
 import { InstallationTabs } from "./installation-tabs";
 import { ManualInstallation } from "./manual-installation";
 
-export async function Installation({
+export const Installation = async ({
   name,
   title = name,
   initialFile,
@@ -12,15 +12,26 @@ export async function Installation({
   name: string;
   title?: string;
   initialFile?: string;
-}) {
+}) => {
   const manifest = await installationManifest(name);
-  if (!manifest)
+
+  if (!manifest) {
     return (
-      <DocumentText role="alert">Installation unavailable: {name}</DocumentText>
+      <DocumentText
+        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
+        role="alert"
+        /* eslint-enable jsx-a11y/prefer-tag-over-role */
+      >
+        Installation unavailable: {name}
+      </DocumentText>
     );
+  }
+
   return (
     <section
+      /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
       className="documentation-installation"
+      /* eslint-enable shadcn/no-unknown-classes */
       aria-label={`${title} installation`}
     >
       <InstallationTabs
@@ -35,4 +46,4 @@ export async function Installation({
       />
     </section>
   );
-}
+};

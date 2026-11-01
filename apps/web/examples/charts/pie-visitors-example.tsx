@@ -24,30 +24,31 @@ const data = [
     visitors: 90,
   },
 ];
+
 const config = {
   desktop: {
-    label: "Desktop",
     color: "#55ff55",
+    label: "Desktop",
   },
   mobile: {
-    label: "Mobile",
     color: "#55ffff",
+    label: "Mobile",
   },
   visitors: {
-    label: "Visitors",
     color: "#aaffaa",
+    label: "Visitors",
   },
 };
 
-export default function Example() {
-  return (
-    <AnalyticsChartExample
-      aria-label="Website visitor analytics"
-      type="pie"
-      data={data}
-      series={["visitors"]}
-      config={config}
-      scale={1}
-    />
-  );
-}
+const Example = () => (
+  <AnalyticsChartExample
+    aria-label="Website visitor analytics"
+    type="pie"
+    data={data}
+    series={["visitors"]}
+    config={config}
+    scale={1}
+  />
+);
+
+export default Example;

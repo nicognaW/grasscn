@@ -1,22 +1,31 @@
 import { installationSource } from "../../../../../lib/installation";
 
 export const dynamic = "force-dynamic";
-export async function GET(
+
+export const GET = async (
   request: Request,
   { params }: { params: Promise<{ name: string; file: string }> }
-) {
+) => {
   try {
     const { name, file } = await params;
     const source = await installationSource(name, file);
-    if (!source)
+
+    if (!source) {
       return new Response("Installation file not found", { status: 404 });
-    const headers: Record<string, string> = {
+    }
+
+    const headers = new Headers({
       "Content-Type": "text/plain; charset=utf-8",
       "X-Grasscn-Destination": source.destination,
-    };
-    if (new URL(request.url).searchParams.has("download"))
-      headers["Content-Disposition"] =
-        `attachment; filename="${source.destination.split("/").at(-1)}"`;
+    });
+
+    if (new URL(request.url).searchParams.has("download")) {
+      headers.set(
+        "Content-Disposition",
+        `attachment; filename="${source.destination.split("/").at(-1)}"`
+      );
+    }
+
     return new Response(source.contents, { headers });
   } catch {
     return new Response(
@@ -24,4 +33,4 @@ export async function GET(
       { status: 503 }
     );
   }
-}
+};
