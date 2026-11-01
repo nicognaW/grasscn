@@ -24,13 +24,15 @@ interface GitHubRunIssue {
   body: string | null;
   state: string;
   html_url: string;
-  labels: { name: string }[];
+  labels: (string | { name?: string })[];
   pull_request?: { url: string };
 }
 
 interface GitHubIssueEdits {
   data: {
-    repository: { issue: { lastEditedAt: string | null; createdAt: string } };
+    repository: {
+      issue: { lastEditedAt: string | null; createdAt: string } | null;
+    };
   };
 }
 
@@ -38,7 +40,7 @@ interface GitHubIssueEvent {
   id: number;
   event: string;
   created_at: string;
-  actor?: GitHubActor;
+  actor?: GitHubActor | null;
   label?: { name: string };
 }
 
@@ -81,8 +83,9 @@ interface ReceiptSource {
 
 interface ReceiptEnvironment extends Pick<
   FullEnvironment,
-  "bun" | "platform" | "arch" | "timezone" | "locale" | "ci" | "webgl" | "edge"
+  "bun" | "platform" | "arch" | "timezone" | "locale" | "ci" | "webgl"
 > {
+  edge?: FullEnvironment["edge"];
   fullRun?: { issue: number; planHash: string; approvalEvent: number };
   workers: number;
   installedDependencies: ReturnType<typeof installedDependencyIdentity>;
