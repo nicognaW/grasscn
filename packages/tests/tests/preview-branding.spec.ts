@@ -61,7 +61,7 @@ test("Header serves the preserved branding source at its actual production geome
   const image = PNG.sync.read(await logo.screenshot({path:info.outputPath("actual-header-logo.png")}))
   expect([image.width, image.height]).toEqual([132, 48])
   await expect(logo).toHaveCSS("image-rendering", "pixelated")
-  const response = await request.get(await logo.getAttribute("src") ?? "")
+  const response = await request.get(new URL(await logo.getAttribute("src") ?? "", origin).href)
   expect(response.ok()).toBe(true)
   expect((await response.body()).equals(await readFile(resolveRepositoryPath("preview/assets/grasscn-logo.svg", testRoot)))).toBe(true)
   // The intrinsic 176x64 source is displayed at132x48. Its grass becomes36px:
