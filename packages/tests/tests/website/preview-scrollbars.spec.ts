@@ -1,18 +1,17 @@
+import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import { registryDocument } from "@grasscn/tests/verification-types";
 import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-assets";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { webFile } from "@tests/paths";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
 test("Page scrollbars embed the unchanged original game textures", () => {
-  const css = readFileSync(
-    resolveRepositoryPath("preview/minecraft-scrollbars.css", testRoot),
-    "utf8"
-  );
+  const css = readFileSync(webFile("minecraft-scrollbars.css"), "utf-8");
   expect(css).toContain(minecraftTextareaAssets.scroller);
   expect(css).toContain(minecraftTextareaAssets.scroller_background);
 });
@@ -99,20 +98,32 @@ for (const scale of [2])
     ).toBe("none");
   });
 
+const componentMapCount = (text: string) => {
+  const value: unknown = JSON.parse(text);
+
+  assert.ok(
+    value instanceof Object &&
+      "components" in value &&
+      Array.isArray(value.components),
+    "Authored component map list required"
+  );
+
+  return value.components.length;
+};
+
 test("Retired components are absent from supported catalog and served payloads", async ({
   page,
   request,
 }) => {
-  const registry = JSON.parse(
-      readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
-    ),
-    map = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath("registry/minecraft-map.json", testRoot),
-        "utf8"
-      )
-    );
-  expect(registry.items.length).toBe(map.components.length);
+  const registry = registryDocument(
+    readFileSync(webFile("registry.json"), "utf-8")
+  );
+
+  const mapSize = componentMapCount(
+    readFileSync(webFile("registry/minecraft-map.json"), "utf-8")
+  );
+
+  expect(registry.items.length).toBe(mapSize);
   const served = await (
     await request.get(new URL("r/registry.json", origin).href)
   ).json();

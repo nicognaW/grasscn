@@ -4,7 +4,8 @@ import { createHash } from "node:crypto";
 import { readFile, readdir, lstat, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, webRoot, packageBin } from "@tests/paths";
+import { repoRoot, webRoot } from "@tests/paths";
+import { packageBin } from "@tests/tooling";
 
 import { installedDependencyIdentity } from "./dependency-identity.mjs";
 import { serveOwnedHttpProcess } from "./owned-http-process.mjs";

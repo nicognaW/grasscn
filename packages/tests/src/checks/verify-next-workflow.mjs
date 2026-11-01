@@ -17,7 +17,8 @@ import {
   productionBuildIdentity,
   stampProductionBuild,
 } from "@grasscn/tests/next-production";
-import { repoRoot, webRoot, packageBin } from "@tests/paths";
+import { repoRoot, webRoot } from "@tests/paths";
+import { packageBin } from "@tests/tooling";
 
 import {
   workspaceNames,

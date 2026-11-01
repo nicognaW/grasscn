@@ -4,7 +4,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import { repoRoot, packageBin } from "@grasscn/tests/paths";
+import { repoRoot } from "@grasscn/tests/paths";
+import { packageBin } from "@grasscn/tests/tooling";
 
 import { serveOwnedHttpProcess } from "../runtime/owned-http-process.mjs";
 import {

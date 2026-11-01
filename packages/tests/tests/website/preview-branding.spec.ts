@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { webFile } from "@tests/paths";
 import { PNG } from "pngjs";
 
 const origin = (
@@ -41,9 +41,7 @@ test("Header serves the preserved branding source at its actual production geome
   expect(response.ok()).toBe(true);
 
   const deliveredSvg = await response.body();
-  const originalSvg = await readFile(
-    resolveRepositoryPath("preview/assets/grasscn-logo.svg", testRoot)
-  );
+  const originalSvg = await readFile(webFile("assets/grasscn-logo.svg"));
 
   expect(deliveredSvg.equals(originalSvg)).toBe(true);
   // The original SVG is served at its intrinsic176x64 geometry. Native
@@ -60,9 +58,7 @@ test("Header serves the preserved branding source at its actual production geome
 
   expect(
     Buffer.from(iconBytes).equals(
-      await readFile(
-        resolveRepositoryPath("preview/assets/grass-block-16.png", testRoot)
-      )
+      await readFile(webFile("assets/grass-block-16.png"))
     )
   ).toBe(true);
   expect(errors).toEqual([]);

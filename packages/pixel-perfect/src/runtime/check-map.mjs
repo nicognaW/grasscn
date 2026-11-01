@@ -9,6 +9,7 @@ import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 import {
+  assertHistoricalUtilitySources,
   validateHistoricalEvidence,
   historicalMapComponents,
 } from "./historical-evidence.ts";
@@ -202,21 +203,13 @@ for (const component of map.components) {
       filenames
     );
     assert.deepEqual(behavior.files.map((file) => file.path).sort(), filenames);
+    assertHistoricalUtilitySources(
+      JSON.stringify(behavior),
+      JSON.stringify(installation)
+    );
+
     for (const file of installation.files) {
       hash(file.installedSha256);
-      const sourceSha = digest(
-        await readFile(evidenceFile(path.join("registry/ui", file.path)))
-      );
-      assert.equal(
-        sourceSha,
-        file.sourceSha256,
-        `${component.name}: installed utility proof is stale`
-      );
-      assert.equal(
-        behavior.files.find((entry) => entry.path === file.path)?.sourceSha256,
-        sourceSha,
-        `${component.name}: utility behavior proof is stale`
-      );
       assert.ok(
         file.comparison,
         `${component.name}: missing CLI source comparison`
