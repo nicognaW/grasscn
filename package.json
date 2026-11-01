@@ -4,53 +4,38 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "full-tests": "node scripts/full-run.mjs",
-    "dev": "node scripts/prepare-preview.mjs && vite --config vite.preview.config.ts",
-    "build": "npm run check && npm run registry:build && vite build --config vite.preview.config.ts",
-    "registry:build": "shadcn build && node scripts/check-primitives.mjs --built",
-    "registry:serve": "npm run registry:build && node scripts/serve.mjs",
-    "typecheck": "node scripts/prepare-preview.mjs && tsc --noEmit",
-    "test": "node scripts/prepare-preview.mjs && node scripts/browser-suite.mjs run",
-    "check": "npm run typecheck && node scripts/check-primitives.mjs && node scripts/check-registry-closure.mjs && node scripts/check-map.mjs && node scripts/check-porting-evidence.mjs && node --test tests/porting-evidence.test.mjs tests/primitives.test.mjs tests/installed-registry-file.test.mjs tests/browser-checkpoints.test.mjs tests/guarded-entry.test.mjs tests/installed-case-cache.test.mjs tests/production-fixture.test.mjs",
-    "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite regressions",
-    "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite all"
+    "dev": "turbo run dev --filter=@grasscn/web",
+    "build": "turbo run build",
+    "registry:build": "turbo run registry:build",
+    "registry:serve": "bun run --filter @grasscn/web registry:serve",
+    "test": "turbo run test",
+    "porting:check": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/tests/scripts/run-porting.ps1 -Suite regressions",
+    "check:pr": "powershell -NoProfile -ExecutionPolicy Bypass -File packages/tests/scripts/run-porting.ps1 -Suite all",
+    "full-tests": "bun run --filter @grasscn/tests full-tests",
+    "prepare": "bunx --bun --no-install uncheck prepare --pre-commit"
   },
   "devDependencies": {
-    "@base-ui/react": "^1.9.0",
-    "@hookform/resolvers": "^6.0.2",
-    "@playwright/test": "^1.64.1",
-    "@shadcn/react": "0.3.1",
-    "@tailwindcss/vite": "^4.3.3",
-    "@tanstack/react-table": "9.3.1",
+    "@shadcn/lint": "^0.2.3",
     "@types/node": "^26.6.5",
-    "@types/pngjs": "^6.0.5",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "cmdk": "1.1.1",
-    "date-fns": "4.4.0",
-    "embla-carousel-react": "8.6.0",
-    "input-otp": "^1.5.0",
-    "modern-screenshot": "4.7.0",
-    "opentype.js": "^2.0.0",
-    "pngjs": "^7.0.0",
-    "react": "^19.3.1",
-    "react-day-picker": "10.0.2",
-    "react-dom": "^19.3.1",
-    "react-hook-form": "^7.91.0",
-    "react-resizable-panels": "^4.15.1",
-    "recharts": "3.8.0",
-    "shadcn": "4.23.0",
-    "shiki": "4.5.0",
-    "sonner": "2.0.8",
-    "tailwind-merge": "^3.7.0",
-    "tailwindcss": "^4.3.3",
+    "eslint-plugin-github": "^6.1.2",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.90.0",
+    "oxlint-plugin-react-doctor": "^0.9.21",
+    "oxlint-tsgolint": "^7.0.2005",
     "typescript": "^7.0.2",
-    "vite": "^8.3.5",
-    "zod": "^4.6.7"
+    "ultracite": "^8.1.0",
+    "uncheck": "0.1.1",
+    "turbo": "2.11.10"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "bun": "1.4.4"
+  },
+  "packageManager": "bun@1.4.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "patchedDependencies": {
+    "uncheck@0.1.1": "patches/uncheck@0.1.1.patch"
   }
 }

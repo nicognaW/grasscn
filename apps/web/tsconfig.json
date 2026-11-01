@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/lib/utils": [
+        "./utils.ts"
+      ],
+      "@/components/ui/*": [
+        "./registry/ui/*"
+      ]
+    },
+    "types": [
+      "node",
+      "vite/client"
+    ],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "demos/**/*.tsx",
+    "registry/**/*.ts",
+    "registry/**/*.tsx"
+  ]
+}

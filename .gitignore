@@ -6,11 +6,7 @@ dist/
 test-results/
 playwright-report/
 
-# Rebuilt by shadcn build and scripts/prepare-preview.mjs.
-/public/r/
-/preview/catalog.generated.json
-/preview/search.generated.json
-/preview/component-sources.generated.ts
+# App-generated registry payloads and indexes are ignored by apps/web/.gitignore.
 
 # Compiler and tool caches.
 coverage/
@@ -19,3 +15,9 @@ coverage/
 *.tsbuildinfo
 __pycache__/
 *.py[cod]
+
+# Turborepo task cache.
+.turbo/
+
+# Browser preview screenshots written by the retained expansion cases.
+/work/native-expansion/

@@ -6,16 +6,16 @@ Paths are relative to the Git root. Read the files themselves for current comman
 
 | Boundary | Existing material | Adaptation rule |
 | --- | --- | --- |
-| Coverage and provenance | `registry/minecraft-map.json`, `tests/reference/` | Start with the selected component's captured references, conditions and limitations. Preserve existing evidence when adding cases. |
-| Capture launch | `tests/reference/capture.mjs`, `tests/reference/capture-controls.mjs` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
-| Component-specific capture | `tests/reference/*/source/ControlsReferenceMain.java` | Adapt the relevant original Minecraft element, content and input sequences. Retain source and repeatability evidence. |
-| Pixel comparison | `tests/pixels.spec.ts`, `tests/adventure.spec.ts`, `tests/native-expansion.spec.ts` | Reuse strict decoded-RGBA comparisons and failure artifacts; adapt the locator and case schema. |
-| Interaction sequences | `tests/advancement-gestures.spec.ts`, `tests/trading-scroll.spec.ts`, `tests/player-custom-skin.spec.ts` | Exercise the public API, transitions, competing gestures, burst input and content replacement. Read `interactions.md` for applicability. |
-| Rendering investigations | `tests/reference/label/glyph-probe/`, `tests/reference/player-preview/model-probe/`, `tests/reference/map/atlas-probe/` | Use targeted original-renderer probes to explain glyph, float, atlas and projection disagreements. See `rendering.md`. |
-| Generated data | `tests/reference/map/demo-world/` | Verify frozen input, independently repeated generation and renderer output as separate links. See `dynamic-data.md`. |
-| Registry installation | `registry.json`, `public/r/`, component installation reports | Build and install through the actual shadcn CLI in a separate consumer. Include every required resource; keep helper guarantees distinct from component guarantees. |
-| Integrated preview | `preview/demos.json`, `preview/demos/`, `tests/native-expansion-preview.spec.ts` | Add a realistic working demo and verify surrounding layout and connected controls at desktop/mobile widths. |
-| Local verification | `package.json`, `scripts/run-porting.ps1`, `scripts/verify-porting.mjs` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
+| Coverage and provenance | `apps/web/registry/minecraft-map.json`, `packages/tests/tests/reference/` | Start with the selected component's captured references, conditions and limitations. Preserve existing evidence when adding cases. |
+| Capture launch | `packages/tests/tests/reference/capture.mjs`, `packages/tests/tests/reference/capture-controls.mjs` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
+| Component-specific capture | `packages/tests/tests/reference/*/source/ControlsReferenceMain.java` | Adapt the relevant original Minecraft element, content and input sequences. Retain source and repeatability evidence. |
+| Pixel comparison | `packages/tests/tests/pixels.spec.ts`, `packages/tests/tests/adventure.spec.ts`, `packages/tests/tests/native-expansion.spec.ts` | Reuse strict decoded-RGBA comparisons and failure artifacts; adapt the locator and case schema. |
+| Interaction sequences | `packages/tests/tests/advancement-gestures.spec.ts`, `packages/tests/tests/trading-scroll.spec.ts`, `packages/tests/tests/player-custom-skin.spec.ts` | Exercise the public API, transitions, competing gestures, burst input and content replacement. Read `interactions.md` for applicability. |
+| Rendering investigations | `packages/tests/tests/reference/label/glyph-probe/`, `packages/tests/tests/reference/player-preview/model-probe/`, `packages/tests/tests/reference/map/atlas-probe/` | Use targeted original-renderer probes to explain glyph, float, atlas and projection disagreements. See `rendering.md`. |
+| Generated data | `packages/tests/tests/reference/map/demo-world/` | Verify frozen input, independently repeated generation and renderer output as separate links. See `dynamic-data.md`. |
+| Registry installation | `apps/web/registry.json`, `public/r/`, component installation reports | Build and install through the actual shadcn CLI in a separate consumer. Include every required resource; keep helper guarantees distinct from component guarantees. |
+| Integrated preview | `apps/web/demos.json`, `apps/web/demos/`, `packages/tests/tests/native-expansion-preview.spec.ts` | Add a realistic working demo and verify surrounding layout and connected controls at desktop/mobile widths. |
+| Local verification | `package.json`, `packages/tests/scripts/run-porting.ps1`, `packages/tests/scripts/verify-porting.mjs` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
 | Domain and decision | `GLOSSARY.md`, `docs/adr/0001-captured-references.md` | Use the current terms and captured-reference acceptance decision. |
 
 ## Useful Button rendering findings

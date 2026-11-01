@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "generate": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/workspace-paths.mjs",
+        "$TURBO_ROOT$/packages/tests/tests/reference/**/*.json"
+      ],
+      "outputs": [
+        "catalog.generated.json",
+        "search.generated.json",
+        "component-sources.generated.ts"
+      ]
+    },
+    "registry:build": {
+      "outputs": [
+        "public/r/**"
+      ],
+      "inputs": [
+        "registry.json",
+        "registry/**",
+        "package.json"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "generate",
+        "registry:build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    }
+  }
+}

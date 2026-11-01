@@ -1,0 +1,78 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "generate": {
+      "dependsOn": [
+        "^generate"
+      ],
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": [
+        "^build",
+        "generate"
+      ],
+      "outputs": [
+        "dist/**",
+        "public/r/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": [
+        "@grasscn/web#generate"
+      ]
+    },
+    "test:unit": {
+      "cache": false
+    },
+    "verify": {
+      "cache": false,
+      "dependsOn": [
+        "@grasscn/web#build"
+      ]
+    },
+    "capture": {
+      "cache": false
+    },
+    "registry:build": {
+      "outputs": [
+        "public/r/**"
+      ]
+    },
+    "registry:serve": {
+      "cache": false,
+      "persistent": true
+    },
+    "fixture:build": {
+      "dependsOn": [
+        "@grasscn/web#generate"
+      ],
+      "cache": false
+    }
+  },
+  "globalDependencies": [
+    "workspace-paths.mjs",
+    "workspace-paths.d.mts",
+    ".bun-version",
+    "bunfig.toml",
+    "patches/**"
+  ],
+  "globalPassThroughEnv": [
+    "GRASSCN_*",
+    "PLAYWRIGHT_*",
+    "GOMAXPROCS",
+    "RAYON_NUM_THREADS",
+    "TZ",
+    "LANG",
+    "LC_ALL",
+    "CI",
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "NO_PROXY"
+  ]
+}
