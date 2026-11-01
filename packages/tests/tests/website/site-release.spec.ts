@@ -71,11 +71,13 @@ test("search shows all items, more than six matches, and nested component import
     .poll(async () => page.getByRole("option").count())
     .toBeGreaterThan(6);
   await expect(
-    page.getByRole("option", { name: "FieldLabel", exact: true })
+    page.getByRole("option", { exact: true, name: "FieldLabel" })
   ).toBeVisible();
   await search.fill("CardHeader");
   await page.getByRole("option", { exact: true, name: "CardHeader" }).click();
-  await expect(page.locator("h1")).toHaveText("Card");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Card"
+  );
   await expect(page).toHaveURL(`${origin}docs/components/card#usage`);
   await search.fill("你好");
   await expect(page.getByRole("option")).toHaveCount(0);
@@ -113,7 +115,7 @@ test("component pages expose live preview, source, installation and composition"
   ).toBeVisible();
   const playground = page.locator(".documentation-playground");
   await playground
-    .getByRole("button", { name: "Button", exact: true })
+    .getByRole("button", { exact: true, name: "Button" })
     .first()
     .click();
   await expect(playground.getByLabel("Button activations")).toHaveText(
@@ -138,7 +140,9 @@ for (const width of [320, 390, 768, 1440])
       .getByRole("navigation", { exact: true, name: "Documentation" })
       .getByRole("link", { exact: true, name: "Form" })
       .click();
-    await expect(page.locator("h1")).toHaveText("Form");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Form"
+    );
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
@@ -148,7 +152,9 @@ for (const width of [320, 390, 768, 1440])
       .getByRole("navigation", { name: "Main navigation" })
       .getByRole("link", { exact: true, name: "Charts" })
       .click();
-    await expect(page.locator("h1")).toHaveText("Charts");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Charts"
+    );
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
@@ -160,9 +166,13 @@ test("canonical routes reload and legacy links still resolve", async ({
   page,
 }) => {
   await page.goto(`${origin}docs/components/button`);
-  await expect(page.locator("h1")).toHaveText("Button");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Button"
+  );
   await page.reload();
-  await expect(page.locator("h1")).toHaveText("Button");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Button"
+  );
   await expect(page).toHaveTitle(/Button.*grasscn/);
   await page
     .getByRole("navigation", { name: "Main navigation" })
@@ -170,11 +180,17 @@ test("canonical routes reload and legacy links still resolve", async ({
     .click();
   await expect(page).toHaveURL(origin + "charts");
   await page.goBack();
-  await expect(page.locator("h1")).toHaveText("Button");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Button"
+  );
   await page.goto(`${origin}components/button?ref=bookmark#component-import`);
-  await expect(page.locator("h1")).toHaveText("Button");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Button"
+  );
   await page.goto(`${origin}charts/line`);
-  await expect(page.locator("h1")).toHaveText("Line charts");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Line charts"
+  );
 });
 
 for (const width of [320, 390])
@@ -195,7 +211,7 @@ for (const width of [320, 390])
       if (name === "button-group") {
         await page
           .locator(".documentation-playground")
-          .getByRole("button", { name: "Load", exact: true })
+          .getByRole("button", { exact: true, name: "Load" })
           .click();
         await expect(
           page
@@ -205,7 +221,7 @@ for (const width of [320, 390])
       } else if (name === "table") {
         await page
           .locator(".documentation-playground")
-          .getByRole("button", { name: "Join", exact: true })
+          .getByRole("button", { exact: true, name: "Join" })
           .first()
           .click();
         await expect(
@@ -214,7 +230,7 @@ for (const width of [320, 390])
       } else {
         await page
           .locator(".documentation-playground")
-          .getByRole("link", { name: "2", exact: true })
+          .getByRole("link", { exact: true, name: "2" })
           .click();
         await expect(
           page

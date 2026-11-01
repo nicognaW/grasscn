@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 import { test, expect } from "@grasscn/tests/test";
+import { webRoot } from "@tests/paths";
 
 // These properties capture clipboard writes performed by this test page.
 declare global {
@@ -31,13 +33,43 @@ test("Button documentation connects its executable example, complete code and im
     example.getByRole("tab", { exact: true, name: "Code" })
   ).toHaveAttribute("aria-selected", "true");
   const source = example.locator("pre");
+
+  const filename = await example
+    .locator("[data-example-installation]")
+    .getAttribute("data-example-installation");
+
+  expect(filename).not.toBeNull();
+
+  if (filename === null || filename === "" || path.isAbsolute(filename)) {
+    throw new Error("Example must declare an owner-relative executable file");
+  }
+
+  const examplesRoot = path.join(webRoot, "examples");
+  const executablePath = path.resolve(examplesRoot, filename);
+  const relative = path.relative(examplesRoot, executablePath);
+
+  if (
+    !relative ||
+    relative === ".." ||
+    relative.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relative)
+  ) {
+    throw new Error("Example executable escapes its examples owner");
+  }
+
+  const executable = await readFile(executablePath, "utf-8");
+
   await expect(source).toContainText(
     'import { Button } from "@/components/ui/button"'
   );
   await expect(source).toContainText('"use client"');
-  await expect(source).toContainText(
-    "return <Button scale={2}>Button</Button>"
-  );
+  await expect
+    .poll(async () => {
+      const displayed = await source.textContent();
+
+      return displayed?.replaceAll("\r\n", "\n");
+    })
+    .toBe(executable.replaceAll("\r\n", "\n"));
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
@@ -54,6 +86,7 @@ test("Button documentation connects its executable example, complete code and im
 
   const copied = await page.evaluate(() => window.copiedCode);
 
+  expect(copied).toBe(executable);
   expect(copied).toContain("const ButtonExample =");
   expect(copied).toContain("export default ButtonExample");
   expect(copied).toMatch(/export default ButtonExample;?\s*$/u);

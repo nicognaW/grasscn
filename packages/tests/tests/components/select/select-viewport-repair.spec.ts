@@ -80,7 +80,17 @@ for (const scale of [2] as const)
         expect(row!.width).toBe(
           Math.min(270, before.width / scale - 30) * scale
         );
-        if (scroll.maximum > 0) {
+
+        const settledMaximum = await viewport.evaluate(
+          (n) => n.scrollHeight - n.clientHeight
+        );
+
+        await expect(popup).toHaveAttribute(
+          "data-mc-select-scrollable",
+          String(settledMaximum > 0)
+        );
+
+        if (settledMaximum > 0) {
           const bounds = (await bar.boundingBox())!;
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width

@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "originCommit": "977f538ddc56c7a432b49f96f41382282a65ff71",
+  "scope": "Recognized current source drift only; no pixel-verification grant.",
+  "files": [
+    {
+      "sourcePath": "registry/ui/minecraft-alert-dialog.css",
+      "historicalSha256": "dba513f92ab8923c54103f3360586f9cf0b84ef5cd754001bca1eacc9f0bd199",
+      "currentSha256": "4d79e2adc8b95dfa75cf8bb10afaecc8d46f272f9385476d1b8af9118468c435",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-assets.css",
+      "historicalSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "currentSha256": "2fb52ffd96ad403cae9124925e6518ecf71e30d056b27a7d0d7beea819c8cc21",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-avatar-assets.ts",
+      "historicalSha256": "fd93027ca25a8ed525ca9c98c1fab754c5192725703ff33246f24d065c8b2250",
+      "currentSha256": "3eca2891f125987309ce66e8c3527775d458341b29186bf2fcd785150f94f5d4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-button.css",
+      "historicalSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "currentSha256": "892ea0070b0a34194089d689bb1c51cc834f10c43e0f9d9969915ba77066e8d2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-card-sprite.ts",
+      "historicalSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "currentSha256": "b3ca3218aa039cb9a9fb374712b9c88d0b1c9ed6d5f6be73a524029115cf9829",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-card.css",
+      "historicalSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "currentSha256": "54d31bdff26e9f69185d66b2d5d21e634b676e60f0d4920449932a2d888145ad",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-chart.css",
+      "historicalSha256": "e4908a3e6aa9312cdf13c60571365c35dcf6d09db799b821de3113c51afb3e21",
+      "currentSha256": "e283246f839490b1f63ef95dbe130b77cbd2e426df15cf0d0f8f9e7a2320b528",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-code-block.css",
+      "historicalSha256": "f39b3ecce8774e8ad4afc5745b117187dac2752b59fd1486471f3549874ca526",
+      "currentSha256": "bd4cd9a578366b35a183866b1c9c86596c6eaf205262d51107cd795eaa7f99c2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-collapsible.css",
+      "historicalSha256": "c972aea55017eb0b372df56b1afdaf522ab7b6572837eaed56125b9f0faf6c6b",
+      "currentSha256": "c65e5a500aa91b0296760893b94abf7ba9ce146b744e931b8505f86bf7c369c4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-assets.ts",
+      "historicalSha256": "270bde6802bb50824befcfa7074bc08638e47285a8c5b24441b1a9929981b668",
+      "currentSha256": "5f145ffd43b036cb7f1a43db675ca660d850548fac61c09e241d3393a9557164",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-snapshot.ts",
+      "historicalSha256": "c93a6fe94b5c4bf759a97bf801fc9f3c55f97ede73f91c2e328838a31c5aac4a",
+      "currentSha256": "9aac54fe400ebf00dcbb518bafe18549db798ebd08e1c921c6f248fee0f5550c",
+      "classification": "owned-behavior-repair",
+      "reason": "Owned fixed-pseudo containing-block and viewport-offset repair, with current ordinary exact-RGBA tests; historical Full proof does not verify this version.",
+      "introducedAfter": "bb758ab3146a4e572297cca5f3bb839876a2dde6"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-control-assets.css",
+      "historicalSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
+      "currentSha256": "7e99bd86a44eba7b6fda9a62903d8b4af0614bd95abadbefa03b4d021c752c75",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog.css",
+      "historicalSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "currentSha256": "98a4a10f0f63649020f4ccc0f6211bfcacc35e6084b3b86a33412903f58cfb6b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input-assets.ts",
+      "historicalSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "currentSha256": "7536ebefacde10a5d949fb595f47ba4a7e033c4feb07b951faca83be97bfd1af",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input.css",
+      "historicalSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "currentSha256": "63c5b1605632b719a575d53132b4ad882e7d914f9695cd9731704b0446acab56",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item.css",
+      "historicalSha256": "19b654ef8dba26501c8a1e08f00d1621b1c4d58af1bdac64b457be66ab34e0e4",
+      "currentSha256": "276d1ebb01849481731de65e180b06c00d24e713d06715288e4026b008f99c1c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-label.css",
+      "historicalSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "currentSha256": "d71ea79baeda301d5341d63c8c5a686ab5fa2cebe352ebfeaf7f5a6502b474ba",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-loading-glyphs.ts",
+      "historicalSha256": "08dca8ac5fd51142585c00ca520f062e99146966cc1100c126e5e0671b6fde0f",
+      "currentSha256": "f5a9fe801859615fe7d5b6e970285b42440524c8044e84e6f21ff3cb244537b1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-marker.css",
+      "historicalSha256": "21443a59b6c27a32a9483d32b389dccee9a09e6ed2f3c74eea5138125ba268c8",
+      "currentSha256": "9e22b7d493bada1fe655eb848d74748e231d594ac85b44b678b053587b63dc51",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu.css",
+      "historicalSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "currentSha256": "06b29fdae85a2ff5d1743d40551e7764acb16acf54e54e7ec6539f53d5c27a12",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-message.css",
+      "historicalSha256": "aa4cf616d1ff5749b40b32898c31a2f654ec35ca11309054528f30b1e8381210",
+      "currentSha256": "55d9ae30b1da03c267fb61cf1aefa3dbc8eda0f3b86ba955412a95fe50232dc4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-native-select.css",
+      "historicalSha256": "8a22eeda84a644a9a82da10e9055b401bc14631978aadf5043bc5f904d18cbc4",
+      "currentSha256": "84f6096895e09851f51f94a52384c2592c09dce5b32e48f898ec05f92671ca0b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-list.css",
+      "historicalSha256": "91115256194789559ebdb73801ce935cff741a78ff1ee1a65ef1b956dba56d5c",
+      "currentSha256": "7d5ee123b509e405f9ba16d4b894f55d253e5d7c147ea6395421a5ba50eb5529",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-preview.css",
+      "historicalSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03",
+      "currentSha256": "4a81bdec5584ff9368b1dab3385e176286aed525e14ceb2bb5f5247c49b12153",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-progress-assets.ts",
+      "historicalSha256": "1e559758fd38512663f1b11d27d77e2b891a80e769a7244833031469c88a58aa",
+      "currentSha256": "0f2c04f4e6f5a02c2bfd0066785895505b08cbde70d316379ebd101fc0bd65bd",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-questionnaire.css",
+      "historicalSha256": "2e788b82e48db055202530b8a7e2480468fa2bf823132a9a469845bd27159121",
+      "currentSha256": "7f1b4e133de0d8a0a0a9529fcda1209538e355e27498061cf7abfb2fa0b9617b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-select-assets.ts",
+      "historicalSha256": "097445bd17dda213c9c706880f8fc1e47f86c12cae3a58b7a641c67aa53074d9",
+      "currentSha256": "f87b222a6da872bb3a007c31d565029658f940117db78670d4169636f9367ab1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-select.css",
+      "historicalSha256": "c2319bcf9af4dee734063bc27511a16f00afd3d815f33b2bf8bcbcb55f992208",
+      "currentSha256": "9cbcc2d090dd93ce06228821605fbfdcf5923a6c938d8998e578c1184fd0a56f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-selectable-text.css",
+      "historicalSha256": "3f6912d9f184bc7fc1edfc9b971eed6241cfabf70f0819f9808d3273ddde92ff",
+      "currentSha256": "33a4c7b458b63d8c7a32bda63cf013c39f3b0efe2de53a482b440870b3c53056",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-separator-assets.ts",
+      "historicalSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
+      "currentSha256": "a19fd3c51d457e40d78dd0cc0eb811a2ca69531bd4dc555897545757486584c8",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sonner.css",
+      "historicalSha256": "9bc3eee883b9009db9bfb49187ba7ec823e6ca8f77b8cc3714c684d73ece9d26",
+      "currentSha256": "52a912d8f623a3596b658ad3f6fb38ffbea605ed9434c61148738e48531d6c1f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
+      "historicalSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "currentSha256": "b5c25b5f1bb56e3fdfbf8f76199983f92e8899424a5c47ef5816bbd63a6ef174",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-table.css",
+      "historicalSha256": "e3e93321b45b34538bd5422fbfadc292619566ae9772bd9c300d98c0247e73a6",
+      "currentSha256": "454bfd128dbc96c6d71a45e7f68399caaf7774c6c7755a32f26f484a5e1562ed",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tabs-assets.ts",
+      "historicalSha256": "a0b1e362c2764d87e4d42dec03421cf1bc83f589a4f3ba741a106b57a968b079",
+      "currentSha256": "dcddab41c7d459e9f4c4cc2453f3b7b7524ec43d22f6123ff10eed46111a888f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tabs.css",
+      "historicalSha256": "8183c38e3c30e8100d09e217ad30e051762b37cf928f48553dd0de5f54d18914",
+      "currentSha256": "9d0eabd7a6e2736aeb7708e9eb74f09de007e61d4b562f94022ba265fbab4185",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-text-assets.css",
+      "historicalSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "currentSha256": "e560e1374785203aecd7684376d14676a483f84ac7185e47cbdab64bb930127b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
+      "historicalSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "currentSha256": "62eae03778259712249f2fd5b2f62554468b988eb448ae8b5fdbe6442a702487",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-textarea.css",
+      "historicalSha256": "15af273be70afd4580ad46b6d65a721340d839bbf48a9835aed9705356e923f4",
+      "currentSha256": "d4df6c6414f2a37c1f73f51ac4c49a001c5a8fd00d65f51bbeda5647c6612b2d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
+      "historicalSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
+      "currentSha256": "0473e83fb6115f045c9987e7c95e62fbc574c4d6056b5128d44b0bbc2d17cdd2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip.css",
+      "historicalSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4",
+      "currentSha256": "1e2b920ffc3d318bcd25cdc1cb0fdd2dddefad25ce4a969e1e31cecb60e2d9be",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
+      "historicalSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "currentSha256": "11c88168192b62e4a0609c890a66b4ed890e93c0d296a9b8b4a8dac2aa74a917",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont-metrics.css",
+      "historicalSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
+      "currentSha256": "2da1d53bbe1d8096667892207ea32a7aa2da903c2bde42c7444f54bb191470b1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    }
+  ]
+}

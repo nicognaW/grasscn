@@ -3,42 +3,43 @@
   "version": "0.3.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./test": "./src/harness/test.ts",
+    "./suite": "./src/selection/suite.mjs"
+  },
   "scripts": {
     "test": "bun cli/test.mjs",
-    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.mjs",
+    "test:unit": "bun test --timeout 120000 ./tests/unit",
     "verify": "powershell -NoProfile -ExecutionPolicy Bypass -File cli/run-porting.ps1 -Suite all",
     "full-tests": "bun cli/full-tests.mjs",
     "list": "bun cli/list.mjs"
   },
   "devDependencies": {
+    "@base-ui/react": "^1.9.0",
+    "@grasscn/tests": "workspace:*",
     "@grasscn/web": "workspace:*",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-table": "9.3.1",
     "@types/node": "^26.6.5",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "clsx": "^2.1.1",
+    "cmdk": "1.1.1",
+    "date-fns": "4.4.0",
     "modern-screenshot": "4.7.0",
     "opentype.js": "^2.0.0",
     "pngjs": "^7.0.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-hook-form": "^7.91.0",
+    "react-resizable-panels": "^4.15.1",
+    "recharts": "3.8.0",
+    "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
-    "cmdk": "1.1.1",
-    "react-hook-form": "^7.91.0",
-    "recharts": "3.8.0",
-    "@tanstack/react-table": "9.3.1",
-    "date-fns": "4.4.0",
-    "react-resizable-panels": "^4.15.1",
-    "clsx": "^2.1.1",
-    "@base-ui/react": "^1.9.0",
-    "tailwind-merge": "^3.7.0",
-    "@grasscn/tests": "workspace:*"
-  },
-  "exports": {
-    "./test": "./src/harness/test.ts",
-    "./suite": "./src/selection/suite.mjs"
+    "zod": "^4.6.7"
   }
 }

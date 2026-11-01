@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import grassBlockIcon from "../assets/grass-block-16.png";
 import { LegacyDocumentationLinks } from "../components/legacy-documentation-links";
 import { SiteFrame } from "../components/site-frame";
 import { componentSymbols } from "../lib/component-symbols";
@@ -10,6 +11,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   description: "Pixel-perfect Minecraft UI. shadcn components. Yours to build.",
+  icons: {
+    icon: { sizes: "16x16", type: "image/png", url: grassBlockIcon.src },
+  },
   title: { default: "grasscn", template: "%s · grasscn" },
 };
 

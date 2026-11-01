@@ -120,3 +120,65 @@ for (const scene of ["fixed-pseudo", "nested-fixed"])
       scene === "fixed-pseudo" ? [191, 0, 153, 255] : [191, 0, 0, 255]
     );
   });
+
+test("Scrolled confirmation preserves a fixed pseudo inside its transformed originating element", async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto(`${origin}docs/components/alert-dialog`);
+  await page.evaluate(() => {
+    const owner = document.createElement("div");
+    owner.style.cssText =
+      "position:fixed;top:20px;left:20px;width:80px;height:80px;z-index:10;pointer-events:none";
+    const child = document.createElement("div");
+    child.className = "snapshot-contained-pseudo";
+    child.style.cssText = "width:80px;height:80px;transform:translateZ(0)";
+    owner.append(child);
+    const style = document.createElement("style");
+    style.textContent =
+      '.snapshot-contained-pseudo::before{content:"";position:fixed;inset:0;background:#ff00cc;pointer-events:none}';
+    document.head.append(style);
+    document.body.append(owner);
+    window.scrollTo(0, 300);
+  });
+  await page
+    .getByRole("button", { exact: true, name: "Open confirmation" })
+    .click();
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+
+  const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
+  await expect(overlay).toHaveAttribute(
+    "data-mc-confirmation-frame",
+    /^[1-9]\d*$/u
+  );
+
+  const pixel = await overlay.locator("canvas").evaluate((node) => {
+    if (!(node instanceof HTMLCanvasElement)) {
+      throw new TypeError("Expected the confirmation canvas");
+    }
+
+    const canvas = node;
+
+    const gl = canvas.getContext("webgl");
+
+    if (gl === null) {
+      throw new Error("Expected the confirmation WebGL context");
+    }
+
+    const rgba = new Uint8Array(4);
+
+    gl.readPixels(
+      60,
+      canvas.height - 60,
+      1,
+      1,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      rgba
+    );
+
+    return [...rgba];
+  });
+
+  expect(pixel).toEqual([191, 0, 153, 255]);
+});

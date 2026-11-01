@@ -40,7 +40,7 @@ for (const scale of [2]) {
     });
   test(`all six OTP cells remain visible at GUI ${scale}`, async ({ page }) => {
     const card = await open(page, "input-otp");
-    await card.getByRole("button", { name: "CJK sample", exact: true }).click();
+    await card.getByRole("button", { exact: true, name: "CJK sample" }).click();
     await expect(card.getByLabel("OTP completions")).toHaveText(
       "1 complete codes"
     );
@@ -54,10 +54,10 @@ for (const scale of [2]) {
     const card = await open(page, "form");
     for (const text of ["", "a"]) {
       await card
-        .getByRole("textbox", { name: "Player name", exact: true })
+        .getByRole("textbox", { exact: true, name: "Player name" })
         .fill(text);
       await card
-        .getByRole("button", { name: "Save player", exact: true })
+        .getByRole("button", { exact: true, name: "Save player" })
         .click();
       const error = card.getByRole("alert");
       await expect(error).toBeVisible();
@@ -65,12 +65,16 @@ for (const scale of [2]) {
         await inside(line, card);
     }
     await card
-      .getByRole("textbox", { name: "Player name", exact: true })
+      .getByRole("textbox", { exact: true, name: "Player name" })
       .fill("玩家");
     await card
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
-    await expect(card.getByLabel("Saved player")).toHaveText("玩家");
+    await expect(
+      card
+        .getByLabel("Saved player")
+        .locator(":scope > [data-slot=label] > .mc-text-accessible")
+    ).toHaveText("玩家");
   });
 }
 test("recipe labels select their own filter and keyboard focus survives wrapping", async ({

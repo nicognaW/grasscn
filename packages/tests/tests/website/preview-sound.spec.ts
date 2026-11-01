@@ -22,6 +22,7 @@ test.beforeEach(async ({ page }) => {
     (window as any).__previewVoices = [];
     HTMLMediaElement.prototype.play = function () {
       (window as any).__previewVoices.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
       });
@@ -56,13 +57,15 @@ for (const [key, value] of [
     await page.goto(`${origin}docs/components/slider`);
     const volume = page
       .locator(".documentation-playground")
-      .getByRole("slider", { name: "Volume", exact: true });
+      .getByRole("slider", { exact: true, name: "Volume" });
     await volume.focus();
     await page.keyboard.press(key);
     await expect(volume).toHaveAttribute("aria-valuenow", value);
     await page
-      .locator('[data-slot="slider-thumb"]')
-      .filter({ has: volume })
+      .locator('.documentation-playground [data-slot="slider-thumb"]')
+      .filter({
+        has: page.getByRole("slider", { exact: true, name: "Volume" }),
+      })
       .click();
     await expect(volume).toHaveAttribute("aria-valuenow", value);
   });
@@ -114,16 +117,16 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   await checkbox.check();
   await navigate("Slider");
   await page
-    .locator('[data-slot="slider-thumb"]')
-    .filter({ has: volume })
+    .locator('.documentation-playground [data-slot="slider-thumb"]')
+    .filter({ has: page.getByRole("slider", { exact: true, name: "Volume" }) })
     .click();
   expect(await voices(page)).toEqual([]);
   await volume.focus();
   await page.keyboard.press("End");
   await expect(volume).toHaveAttribute("aria-valuenow", "100");
   await page
-    .locator('[data-slot="slider-thumb"]')
-    .filter({ has: volume })
+    .locator('.documentation-playground [data-slot="slider-thumb"]')
+    .filter({ has: page.getByRole("slider", { exact: true, name: "Volume" }) })
     .click();
   await navigate("Button");
   await button.click();
@@ -146,7 +149,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
 
   const volume = page
     .locator(".documentation-playground")
-    .getByRole("slider", { name: "Volume", exact: true });
+    .getByRole("slider", { exact: true, name: "Volume" });
   await volume.focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText(

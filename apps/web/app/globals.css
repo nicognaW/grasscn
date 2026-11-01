@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../registry/ui/minecraft-text-assets.css";
 @import "../minecraft-theme-assets.css";
+@import "../minecraft-scrollbars.css";
 @source "../registry";
 @source "../components";
 
@@ -96,6 +97,7 @@ a {
   min-width: 0;
 }
 .minecraft-example {
+  position: relative;
   width: 100%;
   min-width: 0;
   padding: 24px;
