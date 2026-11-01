@@ -33,6 +33,12 @@ An interaction or composition introduced for web use that has no corresponding M
 **Verified coverage**:
 The reference cases, game versions and environments for which a UI port's appearance or behavior has been demonstrated. Coverage applies to those declared conditions rather than every possible use of the component.
 
+**Website default path**:
+The ordinary content, state and interaction presented by a component's default Grasscn website demo.
+
+**Base mapping**:
+The recorded relationship between one Grasscn browser test case and a website default path or an actual upstream shadcn test.
+
 **Base tests**:
 Grasscn browser tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
 
@@ -41,3 +47,6 @@ The remaining Grasscn browser tests outside Base tests, covering additional refe
 
 **Full test run**:
 An approved execution of Full tests against one fixed source and environment snapshot. Resuming interrupted portions against that same snapshot continues the same run.
+
+**Full run issue**:
+The dedicated record of one Full test run, identifying its source, scope, environment, authorization, progress and result.
