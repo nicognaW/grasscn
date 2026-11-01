@@ -1,5 +1,5 @@
 import {test,expect} from './verified-test'
-const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
+const origin=(process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/').replace(/\/?$/, "/")
 for(const width of [320,390,768,1024,1565])test(`homepage examples render without overflow or runtime errors at ${width}px`,async({page})=>{
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))
  await page.setViewportSize({width,height:951});await page.goto(origin)
@@ -17,13 +17,13 @@ for(const width of [320,390,768,1024,1565])test(`homepage examples render withou
 })
 test('homepage links, search and component gallery remain connected',async({page})=>{
  await page.goto(origin)
- const search=page.getByRole('combobox',{name:'Search components',exact:true})
- await search.fill('textarea');await search.press('Enter')
- await expect(page.locator('#component-textarea')).toBeVisible()
+ const search=page.getByRole('combobox',{name:'Search documentation',exact:true})
+ await search.fill('Textarea');await page.getByRole('option',{name:'Textarea',exact:true}).first().click()
+ await expect(page.getByRole('heading',{name:'Textarea',exact:true})).toBeVisible()
  await page.getByRole('banner').getByRole('link',{name:'grasscn home',exact:true}).click()
  await expect(page.getByRole('heading',{level:1})).toHaveText('grasscn')
  await page.getByRole('link',{name:'Browse components',exact:true}).click()
- await expect(page.getByRole('navigation',{name:'Components',exact:true}).getByRole('link',{name:'Button',exact:true})).toBeVisible()
+ await expect(page.getByRole('navigation',{name:'Documentation',exact:true}).getByRole('link',{name:'Button',exact:true})).toBeVisible()
  await page.goBack();await expect(search).toBeVisible()
 })
 test('project form, launch checklist and preferences reflect user choices',async({page})=>{
@@ -56,9 +56,9 @@ test('installation picker copies the selected real registry command',async({page
  await page.goto(origin+'#install')
  await page.getByRole('combobox',{name:'Component to install',exact:true}).click()
  await page.getByRole('option',{name:'card',exact:true}).click()
- await page.getByRole('button',{name:'Copy',exact:true}).click()
- await expect(page.getByRole('button',{name:'Copied',exact:true})).toBeVisible()
- expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe('npx shadcn@latest add http://127.0.0.1:5173/r/card.json')
+ await page.locator('.grass-install').getByRole('button',{name:'Copy',exact:true}).click()
+ await expect(page.locator('.grass-install').getByRole('status')).toHaveText('Copied')
+ expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(`npx shadcn@latest add ${new URL(origin).origin}/r/card.json`)
 })
 
 test('Minecraft-style title has a yellow splash and respects reduced motion',async({page})=>{

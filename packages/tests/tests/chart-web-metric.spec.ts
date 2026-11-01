@@ -11,7 +11,7 @@ for(const scale of[1,2,3]as const)test(`Web metrics reuse F3 bar geometry and na
  await page.locator('#metric-format').click();await expect(plot).toContainText('125.0 req avg');
 });
 for(const scale of[2]as const)test(`F3 web-data demo updates native bars and browser-share 3D profiler GUI${scale}`,async({page})=>{
- await page.goto(`${preview.replace(/\/$/,'')}/#/components/chart`);
+ await page.goto(`${preview.replace(/\/$/,'')}/docs/components/chart`);
  const section=page.locator('[data-f3-web-data]'),metric=section.locator('[data-web-chart=metric]'),profiler=section.locator('[data-web-chart=profiler]');
  await expect(metric).toBeVisible();await expect(profiler).toBeVisible();await expect(profiler.locator('[data-slot=chart-profiler-frame]')).toHaveAttribute('data-mc-ready','true');
  await expect(metric).toContainText('ms avg');await expect(profiler).toContainText('Browser visitors');await expect(profiler).toContainText('Chrome');await expect(profiler).toContainText('Safari');await expect(profiler).not.toContainText('render');

@@ -1,7 +1,7 @@
 import{test,expect}from'./verified-test';
 const preview=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/';
 for(const scale of[2]as const)for(const mobile of[false,true])for(const route of['calendar','chart','select','date-picker']as const)test(`Default ${route} Select anchors initially at GUI${scale} ${mobile?'mobile':'desktop'}`,async({page})=>{
- const width=mobile?390:1440,height=mobile?844:955;await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,'')}/#/components/${route}`);
+ const width=mobile?390:1440,height=mobile?844:955;await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,'')}/docs/components/${route}`);
  if(route==='date-picker')await page.getByRole('button',{name:'Pick a range',exact:true}).click();
  const triggers=route==='date-picker'?page.locator('[data-slot=date-picker-content] [data-slot=select-trigger]'):page.locator(`[data-stage="${route}"] [data-slot=select-trigger]`);
  for(let index=0,count=await triggers.count();index<count;index++) { const trigger=triggers.nth(index);

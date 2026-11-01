@@ -1,13 +1,13 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
-const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
+const origin=(process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/').replace(/\/?$/, "/")
 
 for(const scale of [2])test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`,async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
- await page.goto(`${origin}#field`)
- await expect(page.locator('.component-card')).toHaveCount(1)
- const card=page.locator('#component-form');await expect(card).toBeVisible()
+ await page.goto(`${origin}docs/components/form`)
+ await expect(page.locator('.documentation-playground')).toHaveCount(1)
+ const card=page.locator('.documentation-playground');await expect(card).toBeVisible()
  await expect(page.locator('h1')).toHaveText('Form')
  const form=card.getByRole('form',{name:'Player and world settings'}),name=form.getByRole('textbox',{name:'Player name',exact:true}),world=form.getByRole('textbox',{name:'World name',exact:true}),notes=form.getByRole('textbox',{name:'Journey notes',exact:true})
  await expect(form.locator('[data-slot=field-set]')).toHaveCount(1)
@@ -31,16 +31,14 @@ for(const scale of [2])test(`Form embeds Field with accessible validation, CJK, 
  expect(errors).toEqual([])
 })
 
-test('Field is consolidated into Form',async({page})=>{
- await page.goto(`${origin}#/components/field`)
- await expect(page.locator('[data-stage=form]')).toHaveCount(1)
- await expect(page.locator('[data-stage=field]')).toHaveCount(1)
- await expect(page.locator('#component-field')).toHaveCount(0)
- const nav=page.getByRole('navigation',{name:'Components'})
+test('Field is independently documented while installed through Form',async({page})=>{
+ await page.goto(`${origin}docs/components/field`)
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Field')
+ const nav=page.getByRole('navigation',{name:'Documentation'})
  await expect(nav.getByRole('link',{name:'Form',exact:true})).toHaveCount(1)
- await expect(nav.getByRole('link',{name:'Field',exact:true})).toHaveCount(0)
- const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json', testRoot),'utf8'))
- const form=registry.items.find((item:{name:string})=>item.name==='form')
- expect(form.files.some((file:{path:string})=>file.path==='registry/ui/field.tsx')).toBe(true)
+ await expect(nav.getByRole('link',{name:'Field',exact:true})).toHaveCount(1)
+ const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json',testRoot),'utf8'))
+ expect(registry.items.find((item:{name:string})=>item.name==='form').files.some((file:{path:string})=>file.path==='registry/ui/field.tsx')).toBe(true)
  expect(registry.items.some((item:{name:string})=>item.name==='field')).toBe(false)
+ await expect(page.getByRole('region',{name:'Field implementation source',exact:true})).toContainText('components/ui/field.tsx')
 })
