@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { defineConfig } from "@playwright/test";
 import { pixelPerfectTestRoot } from "@ppt/paths";
-import { baseGrep } from "@ppt/selection/suite.mjs";
+import { baseGrep } from "@ppt/selection/suite";
 
 const inventory =
   process.argv.includes("--list") &&

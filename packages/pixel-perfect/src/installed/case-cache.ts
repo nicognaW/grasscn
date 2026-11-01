@@ -2,17 +2,42 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
 import { PNG } from "pngjs";
 
-const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+type IdentityValue =
+  | null
+  | boolean
+  | number
+  | string
+  | IdentityValue[]
+  | { [input: string]: IdentityValue };
 
-export function installedConsumerIdentity(consumer) {
+export interface InstalledCaseIdentity {
+  [input: string]: IdentityValue;
+}
+
+export interface CachedCase {
+  name: string;
+  mismatchedPixels: number;
+  [field: string]: string | number;
+}
+
+interface StoredCase {
+  name: string;
+  reference: string;
+  record: CachedCase;
+  images: Record<string, string>;
+}
+
+const digest = (bytes: string | Buffer) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+export const installedConsumerIdentity = (consumer: string) => {
   const hash = createHash("sha256");
 
-  function visit(relative) {
+  const visit = (relative: string) => {
     const target = path.join(consumer, relative);
 
     if (!fs.existsSync(target)) {
@@ -22,7 +47,7 @@ export function installedConsumerIdentity(consumer) {
     }
 
     if (fs.statSync(target).isDirectory()) {
-      for (const name of fs.readdirSync(target).toSorted()) {
+      for (const name of fs.readdirSync(target).sort()) {
         visit(path.join(relative, name));
       }
     } else {
@@ -32,7 +57,7 @@ export function installedConsumerIdentity(consumer) {
         .update(digest(fs.readFileSync(target)))
         .update("\0");
     }
-  }
+  };
 
   for (const entry of [
     "src",
@@ -44,9 +69,9 @@ export function installedConsumerIdentity(consumer) {
     visit(entry);
   }
 
-  for (const entry of fs.readdirSync(consumer).toSorted()) {
+  for (const entry of fs.readdirSync(consumer).sort()) {
     if (
-      /\.html$|^vite\.config\.|^tsconfig.*\.json$|^\.env(?:\.|$)/.test(entry)
+      /\.html$|^vite\.config\.|^tsconfig.*\.json$|^\.env(?:\.|$)/u.test(entry)
     ) {
       visit(entry);
     }
@@ -55,11 +80,31 @@ export function installedConsumerIdentity(consumer) {
   hash.update(JSON.stringify(installedDependencyIdentity(consumer)));
 
   return hash.digest("hex");
-}
+};
+
+const matches = (bytes: Buffer, reference: Buffer) => {
+  const actual = PNG.sync.read(bytes);
+  const expected = PNG.sync.read(reference);
+
+  return (
+    actual.width === expected.width &&
+    actual.height === expected.height &&
+    actual.data.equals(expected.data)
+  );
+};
+
+const atomic = (file: string, bytes: string | Buffer) => {
+  const temporary = `${file}.tmp`;
+  fs.writeFileSync(temporary, bytes);
+  fs.renameSync(temporary, file);
+};
 
 // Callers bind identity to sources, fixture/dependencies, browser and reference manifest.
 // Only completed cases with intact PNGs identical to the current reference are reusable.
-export function installedCaseCache(directory, identity) {
+export const installedCaseCache = (
+  directory: string,
+  identity: InstalledCaseIdentity
+) => {
   const key = digest(
     JSON.stringify({
       helper: digest(fs.readFileSync(import.meta.filename)),
@@ -69,33 +114,19 @@ export function installedCaseCache(directory, identity) {
   );
 
   const root = path.join(directory, key);
-  const caseRoot = (name) => path.join(root, digest(name));
-
-  function matches(bytes, reference) {
-    const actual = PNG.sync.read(bytes);
-    const expected = PNG.sync.read(reference);
-
-    return (
-      actual.width === expected.width &&
-      actual.height === expected.height &&
-      actual.data.equals(expected.data)
-    );
-  }
-
-  function atomic(file, bytes) {
-    const temporary = `${file}.tmp`;
-    fs.writeFileSync(temporary, bytes);
-    fs.renameSync(temporary, file);
-  }
+  const caseRoot = (name: string) => path.join(root, digest(name));
 
   return {
-    read(name, reference, fields) {
+    read(name: string, reference: Buffer, fields: readonly string[]) {
       try {
         const folder = caseRoot(name);
 
+        // SAFETY: write below owns this persisted cache format; all existing
+        // name, digest, alias and decoded-pixel checks remain before reuse.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Owner cache format; integrity and pixel checks precede reuse.
         const entry = JSON.parse(
           fs.readFileSync(path.join(folder, "case.json"), "utf-8")
-        );
+        ) as StoredCase;
 
         if (
           entry.name !== name ||
@@ -107,8 +138,8 @@ export function installedCaseCache(directory, identity) {
         }
 
         if (
-          JSON.stringify(Object.keys(entry.images).toSorted()) !==
-          JSON.stringify([...fields].toSorted())
+          JSON.stringify(Object.keys(entry.images).sort()) !==
+          JSON.stringify([...fields].sort())
         ) {
           return null;
         }
@@ -134,12 +165,17 @@ export function installedCaseCache(directory, identity) {
         return null;
       }
     },
-    write(name, reference, record, images) {
+    write(
+      name: string,
+      reference: Buffer,
+      record: CachedCase,
+      images: Record<string, Buffer>
+    ) {
       assert.equal(record.name, name);
       assert.equal(record.mismatchedPixels, 0);
 
       const rgba = digest(PNG.sync.read(reference).data);
-      const hashes = {};
+      const hashes: Record<string, string> = {};
 
       for (const [field, bytes] of Object.entries(images)) {
         assert.equal(record[field], rgba);
@@ -166,4 +202,4 @@ export function installedCaseCache(directory, identity) {
       );
     },
   };
-}
+};

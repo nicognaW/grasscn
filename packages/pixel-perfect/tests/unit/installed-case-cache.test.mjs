@@ -7,7 +7,7 @@ import path from "node:path";
 import {
   installedCaseCache,
   installedConsumerIdentity,
-} from "@ppt/installed/case-cache.mjs";
+} from "@ppt/installed/case-cache";
 import { pixelPerfectTestRoot } from "@ppt/paths";
 import { PNG } from "pngjs";
 

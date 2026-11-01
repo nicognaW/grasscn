@@ -19,7 +19,7 @@ import {
   caseKey,
   collectBrowserCases,
   classifyBrowserCases,
-} from "@ppt/selection/suite.mjs";
+} from "@ppt/selection/suite";
 
 export const fullRoot = repoRoot;
 export const approvalLabel = "full-tests:approved";

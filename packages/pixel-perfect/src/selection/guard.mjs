@@ -1,7 +1,4 @@
-import {
-  collectBrowserCases,
-  assertBaseExecution,
-} from "@ppt/selection/suite.mjs";
+import { collectBrowserCases, assertBaseExecution } from "@ppt/selection/suite";
 
 export default async function browserSelectionGuard() {
   const args = process.argv.slice(2);
