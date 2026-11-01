@@ -1,8 +1,44 @@
-param([ValidateSet('regressions','pixels','all')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
-$grasscnHeavyMutex=[Threading.Mutex]::new($false,'Local\GrasscnHeavyVerification');if(-not $grasscnHeavyMutex.WaitOne(0)){ $grasscnHeavyMutex.Dispose();throw 'Another guarded verification batch is active.' };try {
+param([ValidateSet('regressions','pixels','all','full')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
-$runDirectory=Join-Path $repo ('test-results/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)
+$node=(Get-Command node).Source
+$common=& git -C $repo rev-parse --git-common-dir
+if($LASTEXITCODE -ne 0){throw 'Cannot locate shared verification coordination'}
+if(-not [IO.Path]::IsPathRooted($common)){$common=Join-Path $repo $common}
+$foregroundDirectory=Join-Path ([IO.Path]::GetFullPath($common)) 'grasscn-verification/foreground'
+function Test-GrasscnForeground {
+ if(-not (Test-Path -LiteralPath $foregroundDirectory)){return $false}
+ foreach($file in Get-ChildItem -LiteralPath $foregroundDirectory -Filter '*.json' -File){
+  try{$lease=Get-Content -LiteralPath $file.FullName -Raw|ConvertFrom-Json;$owner=Get-Process -Id ([int]$lease.pid) -ErrorAction Stop
+   if($owner.StartTime.ToUniversalTime().ToString('o') -eq $lease.start){return $true}
+  }catch{}
+ }
+ return $false
+}
+function Get-GrasscnFullContext {
+ $result=& $node (Join-Path $repo 'scripts/full-run.mjs') context --issue $env:GRASSCN_FULL_RUN_ISSUE
+ if($LASTEXITCODE -ne 0){throw 'Full run authorization or executor ownership rejected'}
+ return ($result|ConvertFrom-Json)
+}
+$foregroundLease=$null;$runContext=$null
+if($Suite -eq 'full'){
+ $runContext=Get-GrasscnFullContext
+ if($Workers -ne $runContext.plan.execution.workers){throw 'Workers differ from the approved Full plan'}
+ $runDirectory=$runContext.attempt
+}else{
+ New-Item -ItemType Directory -Path $foregroundDirectory -Force|Out-Null
+ $foregroundLease=Join-Path $foregroundDirectory ($PID.ToString()+'-'+[Guid]::NewGuid().ToString('N')+'.json')
+ [IO.File]::WriteAllText($foregroundLease,([pscustomobject]@{pid=$PID;start=(Get-Process -Id $PID).StartTime.ToUniversalTime().ToString('o')}|ConvertTo-Json -Compress),[Text.UTF8Encoding]::new($false))
+ $runDirectory=Join-Path $repo ('test-results/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)
+}
+$grasscnHeavyMutex=[Threading.Mutex]::new($false,'Local\GrasscnHeavyVerification');$acquired=$false
+try {
+ while(-not $acquired){
+  if($Suite -eq 'full' -and (Test-GrasscnForeground)){Start-Sleep -Milliseconds 500;continue}
+  try{$acquired=$grasscnHeavyMutex.WaitOne(500)}catch [Threading.AbandonedMutexException]{$acquired=$true}
+ }
+ if($Suite -eq 'full'){$runContext=Get-GrasscnFullContext}
+
 New-Item -ItemType Directory -Path $runDirectory -Force | Out-Null
 Add-Type -TypeDefinition @'
 using System;
@@ -83,6 +119,7 @@ try {
   $ram=[GrasscnBudget]::Ram();$ramPercent=100.*($ram.Total-$ram.Available)/$ram.Total
   $peakCpu=[Math]::Max($peakCpu,$cpu);$peakRam=[Math]::Max($peakRam,$ramPercent);$count++
   $sampleWriter.WriteLine(([pscustomobject]@{At=[DateTime]::UtcNow.ToString('o');SystemCpuPercent=[Math]::Round($cpu,2);SystemRamPercent=[Math]::Round($ramPercent,2)} | ConvertTo-Json -Compress))
+  if($Suite -eq 'full' -and (Test-GrasscnForeground)){$reason='foreground-priority';[GrasscnBudget]::TerminateJobObject($job,79)|Out-Null;break}
   if($cpu -ge $CpuStopPercent -or $ramPercent -ge 88){$reason='system-headroom-guard';[GrasscnBudget]::TerminateJobObject($job,78)|Out-Null;break}
   $process.Refresh()
  }
@@ -94,4 +131,4 @@ try {
  if($reason -ne 'completed' -or $exitCode -ne 0){exit 1}
 } finally {$sampleWriter.Dispose();[GrasscnBudget]::CloseHandle($job)|Out-Null}
 
-} finally {$grasscnHeavyMutex.ReleaseMutex();$grasscnHeavyMutex.Dispose()}
+} finally {if($acquired){$grasscnHeavyMutex.ReleaseMutex()};$grasscnHeavyMutex.Dispose();if($foregroundLease){Remove-Item -LiteralPath $foregroundLease -Force -ErrorAction SilentlyContinue}}
