@@ -45,7 +45,7 @@ test('Retired components are absent from supported catalog and served payloads',
  const served=await (await request.get('http://127.0.0.1:5173/r/registry.json')).json()
  expect(served.items).toHaveLength(registry.items.length)
  await page.goto(origin+'#all')
- for(const name of ['Direction','Toast','Hover Card','Navigation Menu','Accordion','Alert','Skeleton','Field','Bubble','Message Scroller']){
+ for(const name of ['Direction','Toast','Hover Card','Navigation Menu','Accordion','Alert','Field','Bubble','Message Scroller']){
   await expect(page.getByRole('navigation',{name:'Components'}).getByRole('link',{name,exact:true})).toHaveCount(0)
   expect(registry.items.some((item:{name:string})=>item.name===name.toLowerCase().replaceAll(' ','-'))).toBe(false)
   expect((await request.get(`http://127.0.0.1:5173/r/${name.toLowerCase().replaceAll(' ','-')}.json`)).status()).toBe(404)

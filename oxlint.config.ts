@@ -25,6 +25,35 @@ export default defineConfig({
   settings: jsPluginSettings,
   overrides: [
     {
+      // Compile-only contracts test accepted public props, not rendered styles.
+      files: ["**/packages/tests/tests/components/**/*-api.types.tsx"],
+      rules: {
+        "shadcn/no-inline-styles": "off",
+        "shadcn/no-unknown-classes": "off",
+      },
+    },
+    {
+      // Existing behavior assertion proves caller class forwarding to the inner node.
+      files: ["**/packages/tests/fixtures/renderer/text-widgets.tsx"],
+      rules: {
+        "shadcn/no-unknown-classes": ["error", { allow: ["caller-content"] }],
+      },
+    },
+    {
+      // Existing behavior assertion proves caller class forwarding.
+      files: ["**/packages/tests/fixtures/renderer/dialog-footer.tsx"],
+      rules: {
+        "shadcn/no-unknown-classes": ["error", { allow: ["custom-footer"] }],
+      },
+    },
+    {
+      // Existing behavior assertion proves caller class forwarding.
+      files: ["**/packages/tests/fixtures/renderer/alert-dialog-media.tsx"],
+      rules: {
+        "shadcn/no-unknown-classes": ["error", { allow: ["caller-media"] }],
+      },
+    },
+    {
       files: ["**/apps/web/{app,components,lib}/**/*.{ts,tsx}"],
       plugins: ["nextjs"],
       rules: { ...next.rules, ...nextJsPlugins.rules },

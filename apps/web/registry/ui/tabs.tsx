@@ -110,7 +110,7 @@ function TabsTrigger({ className, style, ref, children, render, value, ...props 
             return;
         const update = () => {
             const width = Math.floor(element.clientWidth / scale);
-            const textWidth = text == null ? Math.ceil((element.querySelector<HTMLElement>(".mc-tabs-rich")?.getBoundingClientRect().width ?? 0) / scale) : Math.ceil(Array.from(text).reduce((sum, char) => sum + (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ?? getUnihexGlyph(char)?.advance ?? 6), 0));
+            const textWidth = text == null ? Math.ceil((element.querySelector<HTMLElement>("[data-mc-tabs-rich]")?.getBoundingClientRect().width ?? 0) / scale) : Math.ceil(Array.from(text).reduce((sum, char) => sum + (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ?? getUnihexGlyph(char)?.advance ?? 6), 0));
             const overflow = textWidth - (width - 2);
             let left = Math.floor(width / 2) - Math.floor(textWidth / 2);
             if (overflow > 0) {
@@ -140,7 +140,7 @@ function TabsTrigger({ className, style, ref, children, render, value, ...props 
     <TabSurface name="tab"/><TabSurface name="tab_highlighted"/><TabSurface name="tab_selected"/><TabSurface name="tab_selected_highlighted"/>
     <span className="mc-tab-menu" aria-hidden="true" style={{ backgroundImage: assets.textures.menu_background }}/>
     <span className="mc-tab-underline" aria-hidden="true"/>
-    <span className="mc-tab-label-window"><span className="mc-tab-label">{text == null ? <span className="mc-tabs-rich">{content}</span> : /^[\x20-\x7e]*$/.test(text) ? <MinecraftText>{text}</MinecraftText> : <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas}/>}</span></span>
+    <span className="mc-tab-label-window"><span className="mc-tab-label">{text == null ? <span data-mc-tabs-rich="">{content}</span> : /^[\x20-\x7e]*$/.test(text) ? <MinecraftText>{text}</MinecraftText> : <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas}/>}</span></span>
   </>;
     return <TabsPrimitive.Tab render={render} ref={forwarded} value={value} data-slot="tabs-trigger" data-mc-tab-value={value} className={cn(`mc-tabs-trigger ${""}`, className)} style={style} {...props}>
     {artwork}
