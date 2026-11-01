@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import * as React from "react";
 
 import grass from "../../assets/grass-block-48.png";
@@ -90,9 +91,9 @@ function Controls() {
         />
       </div>
       <div className="grass-panel-foot">
-        <a href="/docs/components/button">
+        <Link href="/docs/components/button">
           <DocumentText>Explore the primitives</DocumentText>
-        </a>
+        </Link>
         <output aria-label="Example button clicks">
           <DocumentText>
             {clicks ? `${clicks} clicks` : "Try it out"}
@@ -164,9 +165,9 @@ function Analytics() {
           </strong>
         </div>
       </div>
-      <a href="/charts" className="grass-text-link">
+      <Link href="/charts" className="grass-text-link">
         <DocumentText>Explore all charts</DocumentText>
-      </a>
+      </Link>
     </Panel>
   );
 }
@@ -329,9 +330,9 @@ function Tasks() {
             {done.filter(Boolean).length} of 4 complete
           </DocumentText>
         </output>
-        <a href="/docs/components/checkbox">
+        <Link href="/docs/components/checkbox">
           <DocumentText>Checkbox</DocumentText>
-        </a>
+        </Link>
       </div>
     </Panel>
   );
@@ -385,9 +386,9 @@ function Revenue() {
         <span>
           <DocumentText>USD</DocumentText>
         </span>
-        <a href="/docs/components/table">
+        <Link href="/docs/components/table">
           <DocumentText>View tables</DocumentText>
-        </a>
+        </Link>
       </div>
     </Panel>
   );
@@ -675,17 +676,17 @@ function Install() {
 export default function HomePageShowcase() {
   return (
     <div className="grass-home" id="home">
-      <a className="grass-skip" href="/#examples">
+      <Link className="grass-skip" href="/#examples">
         <DocumentText>Skip to examples</DocumentText>
-      </a>
+      </Link>
       <main id="content">
         <section className="grass-hero" aria-labelledby="grass-title">
-          <a href="/#install" className="grass-announcement">
+          <Link href="/#install" className="grass-announcement">
             <DocumentText>grasscn </DocumentText>
             <span>
               <DocumentText>0.2</DocumentText>
             </span>
-          </a>
+          </Link>
           <TitleScene />
           <p className="grass-title-tagline">
             <DocumentText>Pixel-perfect Minecraft UI.</DocumentText>
@@ -696,14 +697,14 @@ export default function HomePageShowcase() {
           <div className="grass-hero-actions">
             <Button
               nativeButton={false}
-              render={<a href="/#install" role="link" />}
+              render={<Link href="/#install" role="link" />}
               scale={2}
             >
               {"Get started"}
             </Button>
             <Button
               nativeButton={false}
-              render={<a href="/docs" role="link" />}
+              render={<Link href="/docs" role="link" />}
               scale={2}
             >
               {"Browse components"}
