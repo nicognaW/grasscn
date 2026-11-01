@@ -19,6 +19,7 @@
     "resolveJsonModule": true
   },
   "include": [
+    "cli/**/*.ts",
     "src/**/*.ts",
     "src/**/*.mts",
     "fixtures/**/*.ts",

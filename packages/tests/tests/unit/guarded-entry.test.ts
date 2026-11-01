@@ -1,14 +1,25 @@
 import { test } from "bun:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import type { ChildProcess } from "node:child_process";
 import { once } from "node:events";
 import { mkdir, mkdtemp, writeFile, access, rm } from "node:fs/promises";
 import path from "node:path";
+import { setTimeout } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 
 import { testRoot } from "@grasscn/tests/paths";
 
-async function fixture(run) {
+interface GuardedWorkloadFixture {
+  child: ChildProcess;
+  exited: Promise<unknown[]>;
+  gate: string;
+  marker: string;
+}
+
+async function fixture(
+  run: (context: GuardedWorkloadFixture) => Promise<void>
+) {
   await mkdir(path.join(testRoot, "test-results", "unit"), { recursive: true });
 
   const root = await mkdtemp(
@@ -35,7 +46,7 @@ async function fixture(run) {
     { stdio: "ignore" }
   );
 
-  const exited = once(child, "exit");
+  const exited: Promise<unknown[]> = once(child, "exit");
 
   try {
     await run({ child, exited, gate, marker });
@@ -51,7 +62,7 @@ async function fixture(run) {
 
 test("workload waits for enforced budgets before executing", async () =>
   fixture(async ({ child, exited, gate, marker }) => {
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    await setTimeout(150);
     await assert.rejects(access(marker));
     await writeFile(gate, JSON.stringify({ enforced: true, pid: child.pid }));
     assert.equal((await exited)[0], 0);
@@ -62,7 +73,7 @@ test("another process's budget gate cannot start the workload", async () =>
   fixture(async ({ child, exited, gate, marker }) => {
     await writeFile(
       gate,
-      JSON.stringify({ enforced: true, pid: child.pid + 1 })
+      JSON.stringify({ enforced: true, pid: Number(child.pid) + 1 })
     );
     assert.notEqual((await exited)[0], 0);
     await assert.rejects(access(marker));

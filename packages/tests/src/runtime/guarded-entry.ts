@@ -1,6 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { setTimeout } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
+
+const isPendingBudgetGate = (
+  error: unknown
+): error is NodeJS.ErrnoException | SyntaxError =>
+  error instanceof SyntaxError ||
+  (error instanceof Error && "code" in error && error.code === "ENOENT");
 
 // Do not load the workload until the parent has assigned our process to its job.
 const [gate, target, ...args] = process.argv.slice(2);
@@ -14,7 +21,12 @@ let admitted = false;
 
 while (Date.now() < deadline) {
   try {
-    const budget = JSON.parse(await fs.readFile(gate, "utf-8"));
+    // SAFETY: the parent writes this process budget receipt; existing pid/enforced guards remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Consume the enforced-budget writer contract without adding runtime validation.
+    const budget = JSON.parse(await fs.readFile(gate, "utf-8")) as {
+      pid: number;
+      enforced?: boolean;
+    };
 
     if (budget.pid !== process.pid || budget.enforced !== true) {
       throw new Error("Budget gate identity mismatch");
@@ -23,12 +35,12 @@ while (Date.now() < deadline) {
     admitted = true;
     break;
   } catch (error) {
-    if (error.code !== "ENOENT" && !(error instanceof SyntaxError)) {
+    if (!isPendingBudgetGate(error)) {
       throw error;
     }
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 25));
+  await setTimeout(25);
 }
 
 if (!admitted) {
