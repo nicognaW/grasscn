@@ -219,7 +219,10 @@ export const directoryIdentity = async (
     sha256: sha256(
       JSON.stringify(
         Object.entries(files).toSorted(([first], [second]) => {
-          if (first < second) return -1;
+          if (first < second) {
+            return -1;
+          }
+
           return Number(first > second);
         })
       )
