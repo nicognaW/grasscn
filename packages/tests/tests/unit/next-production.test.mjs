@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { parseProductionIdentity } from "../../src/runtime/verification-types.ts";
 
 import {
   productionBuildIdentity,
@@ -10,6 +11,7 @@ import {
   stampProductionBuild,
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
+import { test } from "vitest";
 
 test("prepared production requires a completed matching build instead of silently accepting existing output", async () => {
   const root = fs.mkdtempSync(
@@ -149,7 +151,8 @@ test("prepared production requires a completed matching build instead of silentl
     }
 
     const originalReceipt = fs.readFileSync(receiptPath, "utf-8");
-    const differentEnvironment = JSON.parse(originalReceipt);
+    const differentEnvironment = parseProductionIdentity(originalReceipt);
+    assert.ok(differentEnvironment.preparation);
     differentEnvironment.preparation.environment.bun = "different-runtime";
     fs.writeFileSync(receiptPath, JSON.stringify(differentEnvironment));
     await assert.rejects(

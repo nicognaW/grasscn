@@ -7,6 +7,16 @@ import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity"
 import { repoRoot, packageBin } from "@grasscn/tests/paths";
 
 import {
+  parseConsumerSnapshot,
+  parseCollectedSnapshot,
+  preparedProject,
+  retainedArtifacts,
+} from "../runtime/verification-types.ts";
+/** @typedef {import("../runtime/verification-types.ts").PreparedProject} PreparedProject */
+/** @typedef {import("../runtime/verification-types.ts").SourceIdentity} SourceIdentity */
+/** @typedef {import("../runtime/verification-types.ts").WebsiteIdentity} WebsiteIdentity */
+/** @typedef {import("../runtime/verification-types.ts").ConsumerSnapshot} ConsumerSnapshot */
+import {
   assertExternalProject,
   assertIndependentDependencies,
   assertConsumerPortAvailable,
@@ -15,6 +25,12 @@ import {
   sha256,
 } from "./consumer-boundary.mjs";
 
+/**
+ * @template {PreparedProject} T
+ * @param {T} project - Prepared installation with retained identities.
+ * @param {{excludedRoots?: string[]}} [options] - Forbidden source/workspace roots.
+ * @returns {Promise<T>} The unchanged validated installation.
+ */
 export const validatePreparedProject = async (
   project,
   { excludedRoots } = {}
@@ -74,6 +90,10 @@ export const consumerVerificationEnvironment = () => ({
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 });
 
+/**
+ * @param {ConsumerSnapshot} prepared - Persisted consumer snapshot.
+ * @param {{source: SourceIdentity, websiteIdentity: WebsiteIdentity, status?: string}} expected - Expected frozen snapshot.
+ */
 export const assertPreparedSnapshot = (
   prepared,
   { source, websiteIdentity, status = "prepared" }
@@ -101,6 +121,9 @@ export const assertPreparedSnapshot = (
   );
 };
 
+/**
+ * @param {{kind: string, artifactDirectory: string, source: SourceIdentity, websiteIdentity: WebsiteIdentity, requirePassedRuntime?: boolean}} options - Journey and frozen production snapshot.
+ */
 export const readPreparedConsumerProjects = async ({
   kind,
   artifactDirectory,
@@ -121,7 +144,7 @@ export const readPreparedConsumerProjects = async ({
     "Consumer artifacts must belong to the shared ordinary test-results owner"
   );
 
-  const prepared = JSON.parse(
+  const prepared = parseConsumerSnapshot(
     await readFile(path.join(artifactDirectory, "prepared.json"), "utf-8")
   );
 
@@ -137,7 +160,7 @@ export const readPreparedConsumerProjects = async ({
       prepared.publicInputsSha256,
       "Collected public code/instructions changed"
     );
-    const collected = JSON.parse(bytes);
+    const collected = parseCollectedSnapshot(bytes.toString("utf-8"));
     assert.deepEqual(collected.source, source);
     assert.deepEqual(collected.websiteIdentity, websiteIdentity);
     assert.deepEqual(
@@ -147,10 +170,13 @@ export const readPreparedConsumerProjects = async ({
     );
   }
 
+  /** @type {(ConsumerSnapshot & Record<string, unknown>) | undefined} */
   let runtime;
+  /** @type {string | undefined} */
+  let browserVersion;
 
   if (requirePassedRuntime) {
-    runtime = JSON.parse(
+    runtime = parseConsumerSnapshot(
       await readFile(path.join(artifactDirectory, "report.json"), "utf-8")
     );
     assertPreparedSnapshot(runtime, {
@@ -158,20 +184,21 @@ export const readPreparedConsumerProjects = async ({
       status: "passed",
       websiteIdentity,
     });
+    const artifacts = retainedArtifacts(runtime.artifacts);
+    // eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate the persisted browser runtime identity before consuming it.
     assert.ok(
-      runtime.artifacts?.sha256 &&
-        Object.keys(runtime.artifacts.files ?? {}).length > 0 &&
-        runtime.browserVersion,
+      typeof runtime.browserVersion === "string" &&
+        runtime.browserVersion.length > 0 &&
+        Object.keys(artifacts.files).length > 0,
       "Passed ordinary runtime must retain browser and artifact identities"
     );
+    ({ browserVersion } = runtime);
 
     if (kind === "manual") {
       assert.equal(runtime.publicInputsSha256, prepared.publicInputsSha256);
     }
 
-    for (const [name, digest] of Object.entries(
-      runtime.artifacts?.files ?? {}
-    )) {
+    for (const [name, digest] of Object.entries(artifacts.files)) {
       const file = path.resolve(artifactDirectory, name);
       assert.ok(
         file.startsWith(path.resolve(artifactDirectory) + path.sep),
@@ -186,38 +213,48 @@ export const readPreparedConsumerProjects = async ({
     }
   }
 
-  const projects =
+  const rawProjects =
     kind === "manual"
-      ? prepared.consumers.map((entry) => ({
-          ...entry,
-          id: `manual-${entry.framework}`,
-        }))
-      : [
-          {
-            ...prepared,
-            directory: prepared.consumer,
-            framework: "vite",
-            id: "cli-vite",
-          },
-        ];
+      ? prepared.consumers
+      : [{ ...prepared, directory: prepared.consumer, framework: "vite" }];
+  assert.ok(Array.isArray(rawProjects), "Prepared manual consumers required");
+
+  const projects = rawProjects.map((entry) => {
+    const project = preparedProject(entry);
+    return {
+      ...project,
+      id: kind === "manual" ? `manual-${project.framework}` : "cli-vite",
+    };
+  });
 
   assert.deepEqual(
     projects.map((entry) => entry.id).toSorted(),
     kind === "manual" ? ["manual-next", "manual-vite"] : ["cli-vite"]
   );
 
-  // Reverse before constructing the map to preserve the first matching runtime entry.
-  const observedByFramework = new Map(
-    (kind === "manual" && runtime ? runtime.consumers : [])
-      .toReversed()
-      .map((entry) => [entry.framework, entry])
+  const rawObserved = kind === "manual" && runtime ? runtime.consumers : [];
+  assert.ok(
+    Array.isArray(rawObserved),
+    "Passed ordinary runtime must retain prepared consumers"
   );
+  // Reverse before constructing the map to preserve the first matching runtime entry.
+  /** @type {Map<string, PreparedProject>} */
+  const observedByFramework = new Map();
+  for (const entry of rawObserved.toReversed()) {
+    const project = preparedProject(entry);
+    observedByFramework.set(project.framework, project);
+  }
+
   for (const project of projects) {
     if (runtime) {
       const observed =
         kind === "manual"
           ? observedByFramework.get(project.framework)
-          : runtime;
+          : preparedProject({
+              ...runtime,
+              directory: runtime.consumer,
+              framework: "vite",
+            });
 
       assert.ok(
         observed,
@@ -238,18 +275,22 @@ export const readPreparedConsumerProjects = async ({
   return projects.map((project) => ({
     ...project,
     artifactDirectory,
-    browserVersion: runtime?.browserVersion,
+    browserVersion,
     source,
     websiteIdentity,
   }));
 };
 
+/**
+ * @param {PreparedProject & {id?: string}} project - Frozen external installation.
+ * @param {{port?: number, startupTimeout?: number}} [options] - Explicit owned loopback listener.
+ */
 export const servePreparedConsumer = async (
   project,
   { port, startupTimeout = 120_000 } = {}
 ) => {
   assert.ok(
-    Number.isInteger(port) && port > 0,
+    port !== undefined && Number.isInteger(port) && port > 0,
     "Explicit consumer loopback port required"
   );
   await validatePreparedProject(project);
@@ -281,17 +322,24 @@ export const servePreparedConsumer = async (
     stdio: ["ignore", "pipe", "pipe"],
   });
 
+  /** @type {Error | undefined} */
   let failure;
   let logs = "";
 
-  child.stdout.on("data", (bytes) => {
-    logs += bytes;
+  /** @param {Buffer} bytes - Owned process output. */
+  const onStdout = (bytes) => {
+    logs += bytes.toString("utf-8");
     process.stdout.write(bytes);
-  });
-  child.stderr.on("data", (bytes) => {
-    logs += bytes;
+  };
+
+  /** @param {Buffer} bytes - Owned process error output. */
+  const onStderr = (bytes) => {
+    logs += bytes.toString("utf-8");
     process.stderr.write(bytes);
-  });
+  };
+
+  child.stdout.on("data", onStdout);
+  child.stderr.on("data", onStderr);
   child.on("error", (error) => {
     failure = error;
   });

@@ -8,10 +8,11 @@ import { setTimeout as delay } from "node:timers/promises";
 import { repoRoot, webRoot, packageBin } from "@tests/paths";
 
 import { installedDependencyIdentity } from "./dependency-identity.mjs";
+import { parseProductionIdentity } from "./verification-types.ts";
 
-/** @typedef {{commit: string, treeSha256: string, status?: string}} SourceIdentity */
-/** @typedef {{path: string, sha256: string}} FileIdentity */
-/** @typedef {{source: SourceIdentity, buildId: string, outputSha256: string, files: FileIdentity[], verifiedCommand?: string[], verifiedExitCode?: number, preparation?: Awaited<ReturnType<typeof preparationIdentity>>}} ProductionIdentity */
+/** @typedef {import("./verification-types.ts").SourceIdentity} SourceIdentity */
+/** @typedef {import("./verification-types.ts").FileIdentity} FileIdentity */
+/** @typedef {import("./verification-types.ts").ProductionIdentity} ProductionIdentity */
 /** @typedef {{source?: SourceIdentity, directory?: string, root?: string, receiptPath?: string, verifiedCommand?: string[], verifiedExitCode?: number}} BuildOptions */
 
 /** @param {string | Uint8Array} value - Verification input. */
@@ -72,9 +73,12 @@ export const productionBuildIdentity = async ({
   source,
 } = {}) => {
   assert.ok(
-    source?.commit && source?.treeSha256,
+    source !== undefined &&
+      source.commit.length > 0 &&
+      source.treeSha256.length > 0,
     "Production build needs source identity"
   );
+  /** @type {FileIdentity[]} */
   const files = [];
 
   /** @param {string} folder - Verification input. */
@@ -158,6 +162,7 @@ const preparationIdentity = async (root, directory) => {
     dependencies,
     "Prepared production requires installed dependency bytes"
   );
+  /** @type {FileIdentity[]} */
   const generated = [];
 
   /** @param {string} folder - Verification input. */
@@ -276,13 +281,13 @@ export const stampProductionBuild = async (options = {}) => {
 export const readPreparedProductionBuild = async (options = {}) => {
   const source = options.source ?? (await sourceIdentity());
 
-  const identity = JSON.parse(
+  const identity = parseProductionIdentity(
     await readFile(options.receiptPath ?? receipt, "utf-8")
   );
 
   assertProductionSource(identity, source);
   assert.ok(
-    identity.preparation?.completed &&
+    identity.preparation?.completed === true &&
       verifiedRootBuildCommand(
         identity.verifiedCommand,
         options.root ?? repoRoot
@@ -314,7 +319,7 @@ export const serveNextProduction = async ({
 } = {}) => {
   const source = expectedSource ?? (await sourceIdentity());
 
-  const identity = JSON.parse(await readFile(receipt, "utf-8"));
+  const identity = parseProductionIdentity(await readFile(receipt, "utf-8"));
 
   assertProductionSource(identity, source);
   const actual = await productionBuildIdentity({ source });
@@ -362,14 +367,20 @@ export const serveNextProduction = async ({
   let failure;
   let logs = "";
 
-  child.stdout.on("data", (value) => {
-    logs += value;
+  /** @param {Buffer} value - Child standard-output bytes. */
+  const onStdout = (value) => {
+    logs += value.toString("utf-8");
     process.stdout.write(value);
-  });
-  child.stderr.on("data", (value) => {
-    logs += value;
+  };
+
+  /** @param {Buffer} value - Child standard-error bytes. */
+  const onStderr = (value) => {
+    logs += value.toString("utf-8");
     process.stderr.write(value);
-  });
+  };
+
+  child.stdout.on("data", onStdout);
+  child.stderr.on("data", onStderr);
   child.on("error", (error) => {
     failure = error;
   });

@@ -99,6 +99,7 @@ export const serveVerificationHosts = async (execution) => {
               error instanceof Error &&
               "code" in error &&
               error.code === "ENOENT";
+
             response
               .writeHead(missing ? 404 : 500, {
                 "Content-Type": "application/json",
@@ -160,7 +161,9 @@ export const serveVerificationHosts = async (execution) => {
         response.end("Verification proxy request failed");
       });
     });
-    proxy.on("connection", track);
+    proxy.on("connection", (socket) => {
+      track(socket);
+    });
     proxy.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
