@@ -12,7 +12,7 @@ export interface InstalledComponentSettings {
 }
 
 // Resolve CLI target placeholders using the fixture's configured UI location.
-export function installedRegistryFile(
+export const installedRegistryFile = function installedRegistryFile(
   entry: InstalledRegistryEntry,
   consumer: string,
   settings: InstalledComponentSettings,
@@ -76,4 +76,4 @@ export function installedRegistryFile(
   );
 
   return target;
-}
+};
