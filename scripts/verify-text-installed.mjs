@@ -1,3 +1,4 @@
+import {installedRegistryFile} from "./installed-registry-file.mjs"
 import assert from "node:assert/strict"
 import {readFile,writeFile,mkdir} from "node:fs/promises"
 import {createHash} from "node:crypto"
@@ -15,8 +16,8 @@ const map=await json("registry/minecraft-map.json"),component=map.components.fin
 assert.ok(component?.pixelVerification.manifest&&item,"Item needs registered native references")
 const manifests=[component.pixelVerification.manifest,...(component.pixelVerification.additionalManifests??[])]
 if(manifestArgument)assert.ok(manifests.includes(manifestArgument),"Manifest must be registered on this item")
-const settings=JSON.parse(await readFile(path.join(consumer,"components.json"),"utf8")),canonical=bytes=>{let text=bytes.toString().replace(/\/\*[\s\S]*?\*\//g,"").trim();if(settings.rsc===false)text=text.replace(/^["']use client["'];?\s*/,"");return text.replace(/^(?:\/\/[^\n]*\n\s*)+/,"")},files=[]
-for(const entry of item.files){const filename=path.basename(entry.path),source=await readFile(path.join(repo,entry.path)),installed=await readFile(path.join(consumer,"src/components/ui",filename));assert.equal(canonical(installed),canonical(source),`Unexpected CLI transform: ${filename}`);files.push({path:filename,sourceSha256:sha(source),installedSha256:sha(installed),comparison:"Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"})}
+const settings=JSON.parse(await readFile(path.join(consumer,"components.json"),"utf8")),canonical=bytes=>{let text=bytes.toString().replace(/\r\n/g,"\n").replace(/\/\*[\s\S]*?\*\//g,"").trim();if(settings.rsc===false)text=text.replace(/^["']use client["'];?\s*/,"");return text.replace(/^(?:\/\/[^\n]*\n\s*)+/,"")},files=[]
+for(const entry of item.files){const filename=path.basename(entry.path),source=await readFile(path.join(repo,entry.path)),installed=await readFile(installedRegistryFile(entry,consumer,settings));assert.equal(canonical(installed),canonical(source),`Unexpected CLI transform: ${filename}`);files.push({path:filename,sourcePath:entry.path,sourceSha256:sha(source),installedSha256:sha(installed),comparison:"Equal except permitted CLI comments/use-client removal; embedded original resources unchanged"})}
 const compiler=path.join(consumer,"node_modules/typescript/bin/tsc"),types=spawnSync(process.execPath,[compiler,"--noEmit"],{cwd:consumer,encoding:"utf8"})
 assert.equal(types.status,0,`Consumer typecheck failed:\n${types.stdout??""}${types.stderr??""}`)
 const groups=[]

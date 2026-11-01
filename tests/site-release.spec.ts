@@ -8,7 +8,7 @@ test('search index covers every published item and its named exports',()=>{
  expect(index.map(i=>i.name).sort()).toEqual(registry.items.map((i:{name:string})=>i.name).sort())
  expect(index.find(i=>i.name==='card')?.exports).toContain('CardHeader')
  expect(index.find(i=>i.name==='form')?.exports).toContain('FieldLabel')
- expect(index.find(i=>i.name==='chart')?.exports).toContain('MinecraftProfilerChart')
+ expect(index.find(i=>i.name==='chart')?.exports).toContain('ChartProfilerFrame')
  expect(index.map(i=>i.name)).not.toContain('toast')
 })
 test('all production sections share navigation and omit internal status content',async({page})=>{

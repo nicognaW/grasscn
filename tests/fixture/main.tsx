@@ -1,3 +1,4 @@
+import {CustomApiFixture} from "./custom-api";
 import {TabsFallbackFixture} from "./tabs-fallback";
 import {BaseUICompositionFixture} from "./base-ui-composition";
 import { DirectionProvider as BaseDirectionProvider } from "@base-ui/react/direction-provider";
@@ -577,4 +578,4 @@ function Fixture() {
     <a href="#utility" className={buttonVariants()}>Utility link</a>
   </>;
 }
-createRoot(document.getElementById("root")!).render(<BaseDirectionProvider direction={params.has("rtl") || params.get("dir")==="rtl" ? "rtl" : "ltr"}><Fixture /></BaseDirectionProvider>);
+createRoot(document.getElementById("root")!).render(params.get("component")==="custom-api" ? <CustomApiFixture /> : <BaseDirectionProvider direction={params.has("rtl") || params.get("dir")==="rtl" ? "rtl" : "ltr"}><Fixture /></BaseDirectionProvider>);

@@ -66,3 +66,31 @@ test("primitive policy rejects version-pinned packages in registry payloads", as
     assert.equal(check("--built").status, 1, dependency)
   }
 }))
+
+test("upstream cmdk may carry Radix, but a shared dependency must not create another route", async () => fixture(async ({json, check}) => {
+  await json("package.json", {dependencies: {"@base-ui/react": "1.9.0", cmdk: "1.1.1"}})
+  const packages = {
+    "node_modules/cmdk": {dependencies: {shared: "1.0.0"}},
+    "node_modules/shared": {dependencies: {"@radix-ui/react-dialog": "1.1.6"}},
+    "node_modules/@radix-ui/react-dialog": {version: "1.1.6"},
+  }
+  await json("package-lock.json", {packages})
+  assert.equal(check().status, 0)
+  await json("package.json", {dependencies: {cmdk: "1.1.1", shared: "1.0.0"}})
+  const result = check()
+  assert.equal(result.status, 1)
+  assert.match(result.stderr, /lockfile: node_modules\/@radix-ui\/react-dialog/)
+}))
+
+test("cmdk is restricted to Command source and registry closures containing Command", async () => fixture(async ({directory, json, check}) => {
+  await writeFile(path.join(directory, "registry/ui/command.tsx"), 'import {Command} from "cmdk"')
+  const item = {name: "command", dependencies: ["cmdk@1.1.1"], files: [{path: "registry/ui/command.tsx"}]}
+  await json("registry.json", {items: [item]})
+  await json("public/r/command.json", {dependencies: item.dependencies, files: [{path: "registry/ui/command.tsx", content: 'import {Command} from "cmdk"'}]})
+  await json("registry.json", {items: [{name: "button", dependencies: ["@base-ui/react"], files: []}, item]})
+  assert.equal(check("--built").status, 0)
+  await writeFile(path.join(directory, "preview/bad.tsx"), 'import {Command} from "cmdk"')
+  const result = check()
+  assert.equal(result.status, 1)
+  assert.match(result.stderr, /preview\/bad\.tsx: cmdk/)
+}))

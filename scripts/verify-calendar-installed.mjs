@@ -1,3 +1,4 @@
+import {installedRegistryFile} from "./installed-registry-file.mjs"
 import {installedCaseCache,installedConsumerIdentity} from './installed-case-cache.mjs'
 // The CLI may convert LF/CRLF on Windows; raw source and installed hashes remain recorded.
 import assert from'node:assert/strict'
@@ -8,7 +9,7 @@ import{createHash}from'node:crypto'
 import{chromium,expect}from'@playwright/test'
 import{PNG}from'pngjs'
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),[consumerArg,component,url]=process.argv.slice(2),consumer=path.resolve(consumerArg),hash=b=>createHash('sha256').update(b).digest('hex');assert.ok(['calendar','date-picker'].includes(component)&&url)
-const item=JSON.parse(fs.readFileSync(path.join(repo,'registry.json'))).items.find(i=>i.name===component),settings=JSON.parse(fs.readFileSync(path.join(consumer,'components.json'))),canonical=b=>{let t=b.toString().replace(/\r\n/g,"\n").replace(/\/\*[\s\S]*?\*\//g,'').trim();if(settings.rsc===false)t=t.replace(/^["']use client["'];?\s*/,'');return t.replace(/^(?:\/\/[^\n]*\n\s*)+/,'')},files=item.files.map(f=>{const name=path.basename(f.path),a=fs.readFileSync(path.join(repo,f.path)),b=fs.readFileSync(path.join(consumer,'src/components/ui',name));assert.ok(canonical(a)===canonical(b),name+' changed beyond CLI transforms');return{path:name,sourceSha256:hash(a),installedSha256:hash(b)}})
+const item=JSON.parse(fs.readFileSync(path.join(repo,'registry.json'))).items.find(i=>i.name===component),settings=JSON.parse(fs.readFileSync(path.join(consumer,'components.json'))),canonical=b=>{let t=b.toString().replace(/\r\n/g,"\n").replace(/\/\*[\s\S]*?\*\//g,'').trim();if(settings.rsc===false)t=t.replace(/^["']use client["'];?\s*/,'');return t.replace(/^(?:\/\/[^\n]*\n\s*)+/,'')},files=item.files.map(f=>{const name=path.basename(f.path),a=fs.readFileSync(path.join(repo,f.path)),b=fs.readFileSync(installedRegistryFile(f,consumer,settings));assert.ok(canonical(a)===canonical(b),name+' changed beyond CLI transforms');return{path:name,sourcePath:f.path,sourceSha256:hash(a),installedSha256:hash(b)}})
 const browser=await chromium.launch({channel:'msedge'}),pageErrors=[];let page,comparisons=0
 const inputIdentity=installedConsumerIdentity(consumer),runtimeIdentity={files,settings,browser:browser.version(),consumer:inputIdentity,url,viewport:[1536,900,1],verifier:hash(fs.readFileSync(fileURLToPath(import.meta.url)))}
 function differences(a,b){assert.deepEqual([a.width,a.height],[b.width,b.height]);let count=0;for(let i=0;i<a.data.length;i+=4)count+=Number(!a.data.subarray(i,i+4).equals(b.data.subarray(i,i+4)));return count}

@@ -38,10 +38,11 @@ function TradeItemGraphic({ item, scale }: {
     item: TradeItem;
     scale: number;
 }) { return <span className="mc-trade-item" aria-label={`${item.count ?? 1} ${item.label}`} style={{ width: 16 * scale, height: 16 * scale }}>{item.icon}{(item.count ?? 1) > 1 && <span className="mc-trade-count"><MinecraftText>{item.count}</MinecraftText></span>}</span>; }
-function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, onTrade, scrollOffset, defaultScrollOffset = 0, onScrollOffsetChange, title = 'Trading', scale = 2, inventory, className, style, ref: forwardedRef, ...props }: TradingProps) {
+function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, onTrade, scrollOffset, defaultScrollOffset = 0, onScrollOffsetChange, title = 'Trading', scale = 2, inventory, className, style, ref: forwardedRef, onWheelCapture, ...props }: TradingProps) {
     const [current, setCurrent] = React.useState(defaultSelectedId ?? offers[0]?.id), [internalOffset, setInternalOffset] = React.useState(defaultScrollOffset), root = React.useRef<HTMLDivElement>(null), rail = React.useRef<HTMLDivElement>(null), listId = React.useId(), maxOffset = Math.max(0, offers.length - 7), offset = Math.max(0, Math.min(maxOffset, Math.trunc(scrollOffset ?? internalOffset))), selected = selectedId ?? current, offer = offers.find(o => o.id === selected) ?? offers[0];
     const latestOffset = React.useRef(offset);
     latestOffset.current = offset;
+    const cancelledWheel = React.useRef<WheelEvent | null>(null);
     React.useImperativeHandle(forwardedRef, () => root.current!, []);
     const choose = (id: string) => {
         if (selectedId === undefined)
@@ -56,7 +57,8 @@ function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, on
     }, [maxOffset, scrollOffset, onScrollOffsetChange]);
     React.useEffect(() => {
         const node = root.current!, wheel = (event: WheelEvent) => {
-            if (event.deltaY) {
+            if (cancelledWheel.current === event) { event.preventDefault(); return; }
+            if (!event.defaultPrevented && event.deltaY) {
                 event.preventDefault();
                 const amount = event.deltaMode === 1 ? event.deltaY : event.deltaMode === 2 ? event.deltaY * 7 : event.deltaY / 100;
                 changeOffset(Math.trunc(latestOffset.current + amount));
@@ -73,18 +75,19 @@ function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, on
         const f = Math.fround, y = f((event.clientY - bounds.top) / scale + 18), fraction = f(f(f(y - 18) - 13.5) / 112);
         changeOffset(Math.trunc(f(f(fraction * maxOffset) + .5)));
     };
-    return <TooltipProvider><div {...props} ref={root} data-slot="trading" role={props.role ?? 'group'} aria-label={props['aria-label'] ?? title} className={cn(`mc-trading ${""}`, className)} style={minecraftStyle(style, __style => ({ '--mc-scale': scale, width: 276 * scale, height: 166 * scale, ...__style } as React.CSSProperties))}>
+    return <TooltipProvider><div {...props} ref={root} onWheelCapture={event => { onWheelCapture?.(event); cancelledWheel.current = event.defaultPrevented ? event.nativeEvent : null; }} data-slot="trading" role={props.role ?? 'group'} aria-label={props['aria-label'] ?? title} className={cn(`mc-trading ${""}`, className)} style={minecraftStyle(style, __style => ({ '--mc-scale': scale, width: 276 * scale, height: 166 * scale, ...__style } as React.CSSProperties))}>
  <AdventureImage texture="gui/container/villager" scale={scale} style={{ position: 'absolute', left: 0, top: 0, maxWidth: 'none' }}/>
  <MinecraftDocumentText text="Trades" width={96} scale={scale} align="center" color="#404040" style={{ position: 'absolute', left: 5 * scale, top: 6 * scale }}/><MinecraftDocumentText text={title} width={162} scale={scale} align="center" color="#404040" style={{ position: 'absolute', left: 106 * scale, top: 6 * scale }}/><MinecraftDocumentText text="Inventory" width={162} scale={scale} color="#404040" style={{ position: 'absolute', left: 107 * scale, top: 72 * scale }}/>
- <div id={listId} className="mc-trade-offers" role="group" aria-label="Trade offers" style={{ left: 5 * scale, top: 18 * scale, width: 88 * scale, height: 140 * scale }}>{offers.slice(offset, offset + 7).map(item => <Tooltip key={item.id}><TooltipTrigger render={<Button type="button" scale={scale} aria-label={item.label} aria-pressed={offer?.id === item.id} onClick={() => choose(item.id)} className="mc-trade-offer" style={{ display: 'block', width: 88 * scale, height: 20 * scale }}/>}><span className="mc-trade-offer-content"><span style={{ left: 5 * scale, top: scale }}><TradeItemGraphic item={item.cost} scale={scale}/></span>{item.secondCost && <span style={{ left: 35 * scale, top: scale }}><TradeItemGraphic item={item.secondCost} scale={scale}/></span>}<AdventureImage texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? '_out_of_stock' : ''}`} scale={scale} style={{ position: 'absolute', left: 55 * scale, top: 4 * scale }}/><span style={{ left: 68 * scale, top: scale }}><TradeItemGraphic item={item.result} scale={scale}/></span></span></TooltipTrigger><TooltipContent scale={scale}>{item.label}{item.inStock === false ? ' — Out of stock' : ''}</TooltipContent></Tooltip>)}</div>
+ <div id={listId} className="mc-trade-offers" role="group" aria-label="Trade offers" style={{ left: 5 * scale, top: 18 * scale, width: 88 * scale, height: 140 * scale }}>{offers.slice(offset, offset + 7).map(item => <Tooltip key={item.id}><TooltipTrigger render={<Button type="button" scale={scale} aria-label={item.label} aria-pressed={offer?.id === item.id} onClick={event => { if (!event.defaultPrevented) choose(item.id); }} className="mc-trade-offer" style={{ display: 'block', width: 88 * scale, height: 20 * scale }}/>}><span className="mc-trade-offer-content"><span style={{ left: 5 * scale, top: scale }}><TradeItemGraphic item={item.cost} scale={scale}/></span>{item.secondCost && <span style={{ left: 35 * scale, top: scale }}><TradeItemGraphic item={item.secondCost} scale={scale}/></span>}<AdventureImage texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? '_out_of_stock' : ''}`} scale={scale} style={{ position: 'absolute', left: 55 * scale, top: 4 * scale }}/><span style={{ left: 68 * scale, top: scale }}><TradeItemGraphic item={item.result} scale={scale}/></span></span></TooltipTrigger><TooltipContent scale={scale}>{item.label}{item.inStock === false ? ' — Out of stock' : ''}</TooltipContent></Tooltip>)}</div>
  <div ref={rail} role="scrollbar" aria-label="Trade offers scroll" aria-controls={listId} aria-orientation="vertical" aria-valuemin={0} aria-valuemax={maxOffset} aria-valuenow={offset} aria-disabled={!maxOffset} tabIndex={maxOffset ? 0 : -1} className="mc-trade-scroll" style={{ left: 94 * scale, top: 18 * scale, width: 6 * scale, height: 140 * scale }} onKeyDown={event => {
+            if (event.defaultPrevented) return;
             const next = ({ ArrowDown: offset + 1, ArrowUp: offset - 1, PageDown: offset + 7, PageUp: offset - 7, Home: 0, End: maxOffset } as Record<string, number>)[event.key];
             if (next !== undefined) {
                 event.preventDefault();
                 changeOffset(next);
             }
         }} onContextMenu={event => event.preventDefault()} onPointerDown={event => {
-            if (!maxOffset)
+            if (event.defaultPrevented || !maxOffset)
                 return;
             const bounds = event.currentTarget.getBoundingClientRect();
             if (event.clientX <= bounds.left || event.clientX >= bounds.right || event.clientY <= bounds.top || event.clientY > bounds.bottom)
@@ -98,7 +101,7 @@ function Trading({ offers, selectedId, defaultSelectedId, onSelectedIdChange, on
             if (event.currentTarget.hasPointerCapture(event.pointerId))
                 event.currentTarget.releasePointerCapture(event.pointerId);
         }}><AdventureImage texture={`gui/sprites/container/villager/scroller${maxOffset ? '' : '_disabled'}`} scale={scale} style={{ position: 'absolute', top: thumbY * scale, left: 0 }}/></div>
- {offer && <><span className="mc-trade-payment" style={{ left: 136 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.cost} scale={scale}/></span>{offer.secondCost && <span className="mc-trade-payment" style={{ left: 162 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.secondCost} scale={scale}/></span>}<Tooltip><TooltipTrigger render={<button type="button" className="mc-trade-result" aria-label={`Trade for ${offer.result.label}`} disabled={offer.inStock === false} onClick={() => { onTrade?.(offer.id); playTradingSound(); }} style={{ left: 220 * scale, top: 37 * scale, width: 16 * scale, height: 16 * scale }}/>}>{offer.inStock !== false && <TradeItemGraphic item={offer.result} scale={scale}/>}</TooltipTrigger><TooltipContent scale={scale}>{offer.inStock === false ? 'Out of stock' : offer.result.label}</TooltipContent></Tooltip>{offer.inStock === false && <AdventureImage texture="gui/sprites/container/villager/out_of_stock" scale={scale} style={{ position: 'absolute', left: 182 * scale, top: 35 * scale }}/>}</>}
+ {offer && <><span className="mc-trade-payment" style={{ left: 136 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.cost} scale={scale}/></span>{offer.secondCost && <span className="mc-trade-payment" style={{ left: 162 * scale, top: 37 * scale }}><TradeItemGraphic item={offer.secondCost} scale={scale}/></span>}<Tooltip><TooltipTrigger render={<button type="button" className="mc-trade-result" aria-label={`Trade for ${offer.result.label}`} disabled={offer.inStock === false} onClick={event => { if (!event.defaultPrevented) { onTrade?.(offer.id); playTradingSound(); } }} style={{ left: 220 * scale, top: 37 * scale, width: 16 * scale, height: 16 * scale }}/>}>{offer.inStock !== false && <TradeItemGraphic item={offer.result} scale={scale}/>}</TooltipTrigger><TooltipContent scale={scale}>{offer.inStock === false ? 'Out of stock' : offer.result.label}</TooltipContent></Tooltip>{offer.inStock === false && <AdventureImage texture="gui/sprites/container/villager/out_of_stock" scale={scale} style={{ position: 'absolute', left: 182 * scale, top: 35 * scale }}/>}</>}
  <div className="mc-trade-inventory" style={{ left: 107 * scale, top: 83 * scale, width: 162 * scale, height: 76 * scale }}>{inventory}</div>
  </div></TooltipProvider>;
 }

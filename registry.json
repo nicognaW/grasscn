@@ -2692,39 +2692,12 @@
       "description": "Base UI Autocomplete search, groups, shortcuts and dialog semantics with original EditBox, suggestion rows and popup skins. Palette arrangement is a web composition; native equality limited to declared constituent cases.",
       "dependencies": [
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "cmdk@1.1.1"
       ],
       "files": [
         {
-          "path": "registry/ui/button.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/command.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/input.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-button.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-card-sprite.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-card.css",
           "type": "registry:ui"
         },
         {
@@ -2732,51 +2705,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-dialog-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-dialog-backdrop.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-dialog-gpu.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-dialog-text.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-dialog-unicode.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-dialog.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-font.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-input-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-input-paint.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-input.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-menu-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-menu-gpu.ts",
+          "path": "registry/ui/minecraft-menu.css",
           "type": "registry:ui"
         },
         {
@@ -2788,55 +2717,15 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-menu.css",
+          "path": "registry/ui/minecraft-menu-gpu.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-separator-assets.ts",
+          "path": "registry/ui/minecraft-menu-atlas.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-separator.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-sound-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-sound.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-surface.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-surface.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-textarea-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unicode-label.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "path": "registry/ui/minecraft-unifont.ts",
           "type": "registry:ui"
         },
         {
@@ -2848,15 +2737,27 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-unifont-metrics.css",
+          "path": "registry/ui/minecraft-unifont-atlas.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-unifont.ts",
+          "path": "registry/ui/minecraft-input-assets.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/separator.tsx",
+          "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text-assets.css",
           "type": "registry:ui"
         },
         {
@@ -2864,7 +2765,99 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-base-command.tsx",
+          "path": "registry/ui/minecraft-card-sprite.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-separator.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-separator-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-button.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-assets.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-card.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-textarea-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog-backdrop.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog-unicode.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-dialog-gpu.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-metrics.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-paint.ts",
           "type": "registry:ui"
         }
       ]
@@ -3616,7 +3609,7 @@
     },
     {
       "name": "date-picker",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Minecraft date-picker",
       "description": "Explicit Minecraft constituent composition with actual DayPicker calendar semantics.",
       "dependencies": [
@@ -3627,107 +3620,16 @@
       ],
       "files": [
         {
-          "path": "registry/ui/date-picker.tsx",
+          "path": "registry/blocks/date-picker.tsx",
+          "type": "registry:component",
+          "target": "@components/date-picker.tsx"
+        },
+        {
+          "path": "registry/ui/popover.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/calendar.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/button.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-button.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-font.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-sound.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-sound-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unicode-label.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-input-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-gpu.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/select.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-select-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-select-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-textarea-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-select.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/card.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-surface.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-surface.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-card-sprite.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-card-text.tsx",
+          "path": "registry/ui/minecraft-popover.css",
           "type": "registry:ui"
         },
         {
@@ -3735,31 +3637,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/label.tsx",
+          "path": "registry/ui/minecraft-text-assets.css",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-label-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-label.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-calendar.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-pagination.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-pagination-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/popover.tsx",
+          "path": "registry/ui/minecraft-textarea-assets.ts",
           "type": "registry:ui"
         },
         {
@@ -3771,15 +3653,15 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-popover-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/minecraft-popover-gpu.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-popover.css",
+          "path": "registry/ui/minecraft-popover-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont.ts",
           "type": "registry:ui"
         },
         {
@@ -3787,7 +3669,119 @@
           "type": "registry:ui"
         },
         {
+          "path": "registry/ui/minecraft-unifont-gpu.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-card-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.css",
+          "type": "registry:ui"
+        },
+        {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-card-sprite.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-surface.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-button.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-assets.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-pagination-assets.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-pagination.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-calendar.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-label.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-label-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-select.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-select-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-select-atlas.ts",
           "type": "registry:ui"
         }
       ]
@@ -3918,7 +3912,7 @@
     },
     {
       "name": "data-table",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Minecraft Data Table",
       "description": "TanStack Table v9 columns/data with sorting, filtering, pagination, selection and visibility. Original native Table constituents; data-grid behavior is an explicit web composition.",
       "dependencies": [
@@ -3927,19 +3921,53 @@
       ],
       "files": [
         {
-          "path": "registry/ui/data-table.tsx",
-          "type": "registry:ui"
+          "path": "registry/blocks/data-table.tsx",
+          "type": "registry:component",
+          "target": "@components/data-table.tsx"
         },
         {
-          "path": "registry/ui/table.tsx",
-          "type": "registry:ui"
+          "path": "registry/blocks/data-table-features.ts",
+          "type": "registry:component",
+          "target": "@components/data-table-features.ts"
         },
         {
-          "path": "registry/ui/minecraft-table.css",
+          "path": "registry/ui/minecraft-disclosure-text.tsx",
           "type": "registry:ui"
         },
         {
           "path": "registry/ui/minecraft-label.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-label-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-data.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-gpu.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-font.ts",
           "type": "registry:ui"
         },
         {
@@ -3955,47 +3983,19 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-font.ts",
+          "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "path": "registry/ui/table.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-input-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-data.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-gpu.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-label-atlas.ts",
+          "path": "registry/ui/minecraft-table.css",
           "type": "registry:ui"
         },
         {
           "path": "registry/ui/minecraft-select-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-disclosure-text.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
         }
       ]
@@ -4163,37 +4163,24 @@
     },
     {
       "name": "form",
-      "type": "registry:ui",
+      "type": "registry:block",
       "title": "Minecraft Form",
       "description": "Accessible forms with labels, validation and field composition.",
       "dependencies": [
         "react-hook-form",
         "class-variance-authority",
-        "@base-ui/react"
+        "@base-ui/react",
+        "@hookform/resolvers",
+        "zod"
       ],
       "files": [
         {
-          "path": "registry/ui/form.tsx",
-          "type": "registry:ui"
+          "path": "registry/blocks/form.tsx",
+          "type": "registry:component",
+          "target": "@components/form.tsx"
         },
         {
-          "path": "registry/ui/label.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-font.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-form.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-input-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-label-atlas.ts",
+          "path": "registry/ui/minecraft-disclosure-text.tsx",
           "type": "registry:ui"
         },
         {
@@ -4201,27 +4188,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-prose.tsx",
+          "path": "registry/ui/minecraft-label-atlas.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-text-assets.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-text.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unicode-label.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "path": "registry/ui/minecraft-unifont.ts",
           "type": "registry:ui"
         },
         {
@@ -4233,7 +4204,87 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-unifont.ts",
+          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-text-assets.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-textarea.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-metrics.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-textarea-paint.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-textarea-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-paint.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-sound-assets.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-button.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-assets.css",
           "type": "registry:ui"
         },
         {
@@ -4241,11 +4292,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-field.css",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-separator-assets.ts",
+          "path": "registry/ui/separator.tsx",
           "type": "registry:ui"
         },
         {
@@ -4253,11 +4300,19 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/separator.tsx",
+          "path": "registry/ui/minecraft-separator-assets.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-render.tsx",
+          "path": "registry/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-field.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-prose.tsx",
           "type": "registry:ui"
         }
       ]
@@ -4406,15 +4461,60 @@
       ],
       "files": [
         {
+          "path": "registry/blocks/chart-analytics.tsx",
+          "type": "registry:component",
+          "target": "@components/chart-analytics.tsx"
+        },
+        {
           "path": "registry/ui/chart.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-disclosure-text.tsx",
+          "path": "registry/ui/minecraft-chart-context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-chart-native.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-chart.css",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-assets.css",
           "type": "registry:ui"
         },
         {
           "path": "registry/ui/minecraft-font.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-color-unicode.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-color-unicode-gpu.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-atlas.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-data.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unifont-gpu.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-input-assets.ts",
           "type": "registry:ui"
         },
         {
@@ -4430,35 +4530,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-unicode-label.tsx",
+          "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-input-assets.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-gpu.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-unifont-data.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-label-atlas.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-label.css",
+          "path": "registry/ui/minecraft-tooltip-sprites.ts",
           "type": "registry:ui"
         },
         {
@@ -4470,32 +4546,30 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-tooltip-sprites.ts",
+          "path": "registry/ui/minecraft-disclosure-text.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-chart.css",
+          "path": "registry/ui/minecraft-label.css",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-assets.css",
+          "path": "registry/ui/minecraft-label-atlas.ts",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-chart-native.tsx",
+          "path": "registry/ui/minecraft-unicode-label.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/minecraft-color-unicode.tsx",
-          "type": "registry:ui"
+          "path": "registry/blocks/chart-profiler.tsx",
+          "type": "registry:component",
+          "target": "@components/chart-profiler.tsx"
         },
         {
-          "path": "registry/ui/minecraft-color-unicode-gpu.ts",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/minecraft-render.tsx",
-          "type": "registry:ui"
+          "path": "registry/blocks/chart-fps.tsx",
+          "type": "registry:component",
+          "target": "@components/chart-fps.tsx"
         }
       ]
     },

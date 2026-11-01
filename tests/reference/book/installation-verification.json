@@ -1,14 +1,14 @@
 {
   "command": "shadcn add http://127.0.0.1:5173/r/book.json --yes --overwrite",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\upstream-alignment-consumer",
   "consumerRsc": false,
   "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
       "path": "book.tsx",
       "sourcePath": "registry/ui/book.tsx",
-      "sourceSha256": "2ffa99759174e215e70477a24828591d7c9d02aac54143b59d125547f8852cca",
-      "installedSha256": "2ffa99759174e215e70477a24828591d7c9d02aac54143b59d125547f8852cca"
+      "sourceSha256": "ec4ed471230eaf3ec63af5fc93658423731eefca8c7b3d2a6a0cfe07b9eca94b",
+      "installedSha256": "4a09b95554a2959551b4767337aa24d6b2ec1fa2018e70067241d3a4a56f35ed"
     },
     {
       "path": "minecraft-adventure-assets.ts",
@@ -228,11 +228,11 @@
     "passed": true
   },
   "negativeControlMismatchedPixels": 1,
-  "browser": "156.0.4314.50",
+  "browser": "156.0.4314.58",
   "devicePixelRatio": 1,
   "viewport": [
     1536,
     900
   ],
-  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
+  "fixtureSha256": "eb122ccb34855f942679a6cc7852ff7ad9080ab844ad2d84e39623518cf8e621"
 }

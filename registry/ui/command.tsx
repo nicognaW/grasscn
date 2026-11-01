@@ -2,8 +2,9 @@
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
 import * as React from "react";
-import { CommandPrimitive } from "./minecraft-base-command";
-import { Input } from "./input";
+import { Command as CommandPrimitive } from "cmdk";
+import { attachMinecraftInput } from "./minecraft-input-paint";
+import "./minecraft-input.css";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "./dialog";
 import { Button } from "./button";
 import { Separator } from "./separator";
@@ -36,13 +37,16 @@ function CommandDialog({ title = "Command Palette", description = "Search for a 
             }
         }}><DialogHeader className="mc-command-dialog-heading"><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader><Command scale={scale} data-mc-dialog-item="true">{children}</Command>{showCloseButton && <DialogClose render={<Button scale={scale}/>}>Done</DialogClose>}</DialogContent></Dialog>;
 }
-function CommandInput({ className, scale: explicit, render, children, ...props }: MinecraftProps<typeof CommandPrimitive.Input> & {
+function CommandInput({ className, scale: explicit, ref, style, ...props }: React.ComponentProps<typeof CommandPrimitive.Input> & {
     scale?: Scale;
 }) {
     const inherited = React.useContext(MenuScaleContext), scale = explicit ?? inherited;
-    return <CommandPrimitive.Input data-slot="command-input" className={className} render={render ?? <Input scale={scale} className="mc-command-input"/>} {...props}/>;
+    const node = React.useRef<HTMLInputElement>(null);
+    React.useImperativeHandle(ref, () => node.current!, []);
+    React.useEffect(() => node.current ? attachMinecraftInput(node.current, scale) : undefined, [scale]);
+    return <CommandPrimitive.Input ref={node} data-slot="command-input" spellCheck={false} autoCorrect="off" className={cn("mc-input mc-command-input", className)} style={{ "--mc-scale": scale, ...style } as React.CSSProperties} {...props}/>;
 }
-function CommandList({ className, ref, children, style, render, surface = "suggestions", ...props }: MinecraftProps<typeof CommandPrimitive.List> & {
+function CommandList({ className, ref, children, style, surface = "suggestions", ...props }: React.ComponentProps<typeof CommandPrimitive.List> & {
     surface?: "suggestions" | "popup";
 }) {
     const scale = React.useContext(MenuScaleContext), node = React.useRef<HTMLDivElement>(null);
@@ -76,22 +80,13 @@ function CommandList({ className, ref, children, style, render, surface = "sugge
         return () => { resize.disconnect(); mutation.disconnect(); element.removeEventListener('scroll', measure); cancelAnimationFrame(frame); };
     }, [scale, surface]);
     const contents = <>{surface === "popup" && <span className="mc-menu-background" aria-hidden="true"><MinecraftSurface sprite={minecraftCardSprite}/></span>}<div className="mc-menu-items mc-command-items">{children}</div><span className="mc-menu-scroll-hint" data-edge="top" aria-hidden="true"/><span className="mc-menu-scroll-hint" data-edge="bottom" aria-hidden="true"/></>;
-    return <CommandPrimitive.List render={render} data-slot="command-list" data-surface={surface} ref={node} className={cn(`mc-menu-content mc-command-list ${""}`, className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} {...props}>{contents}</CommandPrimitive.List>;
+    return <CommandPrimitive.List data-slot="command-list" data-surface={surface} ref={node} className={cn(`mc-menu-content mc-command-list ${""}`, className)} style={{ "--mc-scale": scale, ...style } as React.CSSProperties} {...props}>{contents}</CommandPrimitive.List>;
 }
 function CommandEmpty({ children, className, ...props }: MinecraftProps<typeof CommandPrimitive.Empty>) { return <CommandPrimitive.Empty data-slot="command-empty" className={cn(`mc-command-empty ${""}`, className)} {...props}>{menuTextNodes(children)}</CommandPrimitive.Empty>; }
 function CommandGroup({ heading, className, ...props }: MinecraftProps<typeof CommandPrimitive.Group>) { return <CommandPrimitive.Group data-slot="command-group" className={cn(`mc-command-group ${""}`, className)} heading={heading == null ? undefined : <MinecraftMenuText>{heading}</MinecraftMenuText>} {...props}/>; }
-function commandText(children: React.ReactNode): string {
-    return React.Children.toArray(children).map(child => {
-        if (typeof child === "string" || typeof child === "number") return String(child);
-        if (!React.isValidElement<{ children?: React.ReactNode; "aria-hidden"?: boolean | "true" | "false" }>(child) || child.props["aria-hidden"] === true || child.props["aria-hidden"] === "true") return "";
-        return commandText(child.props.children);
-    }).join("");
+function CommandItem({ children, className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
+    return <CommandPrimitive.Item data-slot="command-item" className={cn("mc-command-item", className)} {...props}>{menuTextNodes(children)}</CommandPrimitive.Item>;
 }
-function CommandItem({ children, className, render, value, ...props }: MinecraftProps<typeof CommandPrimitive.Item>) {
-    const child = null;
-    const content = children, inferred = commandText(content).trim();
-    return <CommandPrimitive.Item render={render} data-slot="command-item" value={value ?? inferred} className={cn(`mc-command-item ${""}`, className)} {...props}>{menuTextNodes(children)}</CommandPrimitive.Item>;
-}
-function CommandSeparator({ className, render, children, ...props }: MinecraftProps<typeof CommandPrimitive.Separator>) { const scale = React.useContext(MenuScaleContext); return <CommandPrimitive.Separator render={render} data-slot="command-separator" {...props}>{render ? children : <Separator scale={scale} className={cn(`mc-command-separator ${""}`, className)}/>}</CommandPrimitive.Separator>; }
+function CommandSeparator({ className, children, ...props }: React.ComponentProps<typeof CommandPrimitive.Separator>) { const scale = React.useContext(MenuScaleContext); return <CommandPrimitive.Separator data-slot="command-separator" {...props}><Separator scale={scale} className={cn("mc-command-separator", className)}/>{children}</CommandPrimitive.Separator>; }
 function CommandShortcut({ children, className, ...props }: MinecraftProps<'span'>) { return <span data-slot="command-shortcut" className={cn(`mc-command-shortcut ${""}`, className)} {...props}>{menuTextNodes(children)}</span>; }
 export { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandShortcut, CommandSeparator };

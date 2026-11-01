@@ -50,8 +50,17 @@ const stable = previous && JSON.stringify({ total: previous.total, completedCoun
 const catalog = { ...payload, updatedAt: stable ? previous.updatedAt : new Date().toISOString() }
 await writeFile(path.join(root, "preview/catalog.generated.json"), JSON.stringify(catalog, null, 2) + "\n")
 const search = [],groups=await json("preview/component-groups.json"),sourceFiles=new Set()
+function componentSource(name) {
+ const item=registry.items.find(item=>item.name===name)
+ return item?.files.find(file=>path.basename(file.path)===`${name}.tsx`)?.path??`registry/ui/${name}.tsx`
+}
+function componentImport(name) {
+ const item=registry.items.find(item=>item.name===name)
+ const file=item?.files.find(file=>file.path===componentSource(name))
+ return file?.target?.startsWith('@components/')?`@/components/${file.target.slice('@components/'.length).replace(/\.tsx?$/,'')}`:`@/components/ui/${name}`
+}
 async function publicExports(name){
- const text=await readFile(path.join(root,`registry/ui/${name}.tsx`),"utf8"),exports=new Set()
+ const text=await readFile(path.join(root,componentSource(name)),"utf8"),exports=new Set()
  for(const match of text.matchAll(/export\s*\{([^}]+)\}/g))for(const token of match[1].split(',')){
   const value=token.trim();if(value.startsWith('type '))continue
   const name=value.split(/\s+as\s+/).at(-1).trim()
@@ -63,8 +72,8 @@ async function publicExports(name){
 for(const item of registry.items){
  const demo=components.find(c=>c.componentNames.includes(item.name)),members=[item.name,...(groups[item.name]??[])],exportSources={}
  for(const member of members){sourceFiles.add(member);for(const name of await publicExports(member))exportSources[name]=member}
- search.push({name:item.name,title:demo.title,category:demo.category,exports:Object.keys(exportSources),exportSources,aliases:groups[item.name]??[],demo:demo.name})
+ search.push({name:item.name,title:demo.title,category:demo.category,exports:Object.keys(exportSources),exportSources,importPaths:Object.fromEntries(members.map(member=>[member,componentImport(member)])),aliases:groups[item.name]??[],demo:demo.name})
 }
 await writeFile(path.join(root,"preview/search.generated.json"),JSON.stringify(search,null,2)+"\n")
-await writeFile(path.join(root,"preview/component-sources.generated.ts"),'export const componentSources:Record<string,()=>Promise<string>> = {\n'+[...sourceFiles].map(name=>`  "${name}":()=>import("../registry/ui/${name}.tsx?raw").then(module=>module.default),`).join('\n')+'\n}\n')
+await writeFile(path.join(root,"preview/component-sources.generated.ts"),'export const componentSources:Record<string,()=>Promise<string>> = {\n'+[...sourceFiles].map(name=>`  "${name}":()=>import("../${componentSource(name)}?raw").then(module=>module.default),`).join('\n')+'\n}\n')
 console.log(`Preview coverage: ${covered.length}/${completed.length} components in ${actual.length} demos; ${components.reduce((sum, c) => sum + c.referenceCases, 0)} native reference cases`)

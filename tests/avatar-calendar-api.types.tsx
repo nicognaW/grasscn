@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from '../registry/ui/avatar';
 import { Calendar, CalendarDayButton } from '../registry/ui/calendar';
-import { DatePicker } from '../registry/ui/date-picker';
+import { DatePickerDemo } from "../registry/blocks/date-picker";
 const imageRef = React.createRef<HTMLImageElement>(), rootRef = React.createRef<HTMLSpanElement>();
 <Avatar render={<a href="#profile"/>} ref={rootRef} size="sm">{<><AvatarImage ref={imageRef} alt="Steve" skin="wide/steve" onLoadingStatusChange={status => status.toUpperCase()}/><AvatarFallback delay={100}>玩家</AvatarFallback><AvatarBadge>1</AvatarBadge></>}</Avatar>;
 <AvatarGroup><AvatarGroupCount>+2</AvatarGroupCount></AvatarGroup>;
 <Calendar mode="single" selected={new Date()} onSelect={value => value?.getDate()}/>;
 <Calendar mode="multiple" onSelect={value => value?.map(date => date.getDate())}/>;
 <Calendar mode="range" required selected={{ from: new Date() }} onSelect={range => range.from?.getDate()}/>;
-<DatePicker mode="range" selected={{ from: new Date() }} onSelect={range => range?.from?.getDate()} triggerProps={{ ref: React.createRef<HTMLButtonElement>() }}/>;
+<DatePickerDemo scale={2}/>;
 // @ts-expect-error Native Avatar exposes only verified square sizes.
 <Avatar size="xl"/>;
 // @ts-expect-error Unknown original skin names cannot silently render a placeholder.
