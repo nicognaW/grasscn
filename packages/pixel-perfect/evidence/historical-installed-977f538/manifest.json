@@ -4,6 +4,24 @@
   "scope": "historical-source-snapshot",
   "files": [
     {
+      "sourcePath": "registry/ui/command.tsx",
+      "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+      "rawSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+      "bytes": 7895,
+      "compressedPath": "blobs/a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31.gz",
+      "compressedSha256": "b9ea4c43b08f06c17c7af0b0e486d5e8c7f2e8790e0ecec206a2a1f95a044a90",
+      "compressedBytes": 2277
+    },
+    {
+      "sourcePath": "registry/ui/input.tsx",
+      "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "rawSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "bytes": 940,
+      "compressedPath": "blobs/155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d.gz",
+      "compressedSha256": "9003737b918ac868a237b2dd7724c9bde53387a9179aebbe4532e6340780a8a9",
+      "compressedBytes": 495
+    },
+    {
       "sourcePath": "registry/ui/minecraft-alert-dialog.css",
       "sourceSha256": "dba513f92ab8923c54103f3360586f9cf0b84ef5cd754001bca1eacc9f0bd199",
       "bytes": 2854,
@@ -265,6 +283,15 @@
       "rawSha256": "3f6912d9f184bc7fc1edfc9b971eed6241cfabf70f0819f9808d3273ddde92ff"
     },
     {
+      "sourcePath": "registry/ui/minecraft-selectable-text.tsx",
+      "sourceSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+      "rawSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+      "bytes": 2767,
+      "compressedPath": "blobs/78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99.gz",
+      "compressedSha256": "dbc8466803fcf633169fd112f3f9dc382c5530b8ec5533156a6e52fe8caf5cec",
+      "compressedBytes": 1191
+    },
+    {
       "sourcePath": "registry/ui/minecraft-separator-assets.ts",
       "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
       "bytes": 407,
@@ -380,6 +407,33 @@
       "compressedSha256": "fae1e4a0bf27587bc71f6b6f9c91692acecac9c6a95f373280e1d9ff88369c2e",
       "compressedBytes": 447400,
       "rawSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f"
+    },
+    {
+      "sourcePath": "registry/ui/sonner.tsx",
+      "sourceSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76",
+      "rawSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76",
+      "bytes": 11384,
+      "compressedPath": "blobs/d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76.gz",
+      "compressedSha256": "02d96c66ab8500cae1433cd24146d8910e45c78eea233e5ebb63c31fc401c53d",
+      "compressedBytes": 3518
+    },
+    {
+      "sourcePath": "registry/ui/tabs.tsx",
+      "sourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+      "rawSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+      "bytes": 9629,
+      "compressedPath": "blobs/ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534.gz",
+      "compressedSha256": "c3b9c7392eec26a422f2dd7a941b93ac46b444f6008f73ebef550644538290e8",
+      "compressedBytes": 2814
+    },
+    {
+      "sourcePath": "registry/ui/textarea.tsx",
+      "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+      "rawSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+      "bytes": 858,
+      "compressedPath": "blobs/0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481.gz",
+      "compressedSha256": "a5f36eeab99ebe49e141a8abeab609acdce6a7cf370c0c24f32fd0d481f6b2e3",
+      "compressedBytes": 454
     }
   ],
   "reports": [
@@ -3021,7 +3075,8 @@
         },
         {
           "sourcePath": "registry/ui/minecraft-selectable-text.tsx",
-          "sourceSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99"
+          "sourceSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+          "archiveSourceSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99"
         },
         {
           "sourcePath": "registry/ui/minecraft-sound-assets.ts",
@@ -3413,7 +3468,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -3565,7 +3621,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -3717,7 +3774,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -3865,7 +3923,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/command.tsx",
-          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
+          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+          "archiveSourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
         },
         {
           "sourcePath": "registry/ui/minecraft-command.css",
@@ -4052,7 +4111,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/command.tsx",
-          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
+          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+          "archiveSourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
         },
         {
           "sourcePath": "registry/ui/minecraft-command.css",
@@ -4239,7 +4299,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/command.tsx",
-          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
+          "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+          "archiveSourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31"
         },
         {
           "sourcePath": "registry/ui/minecraft-command.css",
@@ -6927,7 +6988,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-textarea.css",
@@ -6950,7 +7012,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -7024,7 +7087,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -7086,7 +7150,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -7156,7 +7221,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7267,7 +7333,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7292,7 +7359,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7403,7 +7471,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7428,7 +7497,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7539,7 +7609,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7564,7 +7635,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7675,7 +7747,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7700,7 +7773,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7811,7 +7885,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7836,7 +7911,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -7947,7 +8023,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -7972,7 +8049,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-assets.css",
@@ -8083,7 +8161,8 @@
         },
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -10581,7 +10660,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -10709,7 +10789,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -10837,7 +10918,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -10965,7 +11047,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -11093,7 +11176,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input-paint.ts",
@@ -11764,7 +11848,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -11976,7 +12061,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -12188,7 +12274,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -12400,7 +12487,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -12612,7 +12700,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -12824,7 +12913,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -13036,7 +13126,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -13248,7 +13339,8 @@
         },
         {
           "sourcePath": "registry/ui/input.tsx",
-          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
+          "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+          "archiveSourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d"
         },
         {
           "sourcePath": "registry/ui/minecraft-input.css",
@@ -13556,7 +13648,8 @@
         },
         {
           "sourcePath": "registry/ui/sonner.tsx",
-          "sourceSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76"
+          "sourceSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76",
+          "archiveSourceSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76"
         },
         {
           "sourcePath": "registry/ui/minecraft-render.tsx",
@@ -13905,7 +13998,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/tabs.tsx",
-          "sourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534"
+          "sourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+          "archiveSourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534"
         },
         {
           "sourcePath": "registry/ui/minecraft-tabs.css",
@@ -13988,7 +14082,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/tabs.tsx",
-          "sourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534"
+          "sourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+          "archiveSourceSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534"
         },
         {
           "sourcePath": "registry/ui/minecraft-tabs.css",
@@ -14071,7 +14166,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-textarea-paint.ts",
@@ -14138,7 +14234,8 @@
       "files": [
         {
           "sourcePath": "registry/ui/textarea.tsx",
-          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
+          "sourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+          "archiveSourceSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481"
         },
         {
           "sourcePath": "registry/ui/minecraft-textarea-paint.ts",
