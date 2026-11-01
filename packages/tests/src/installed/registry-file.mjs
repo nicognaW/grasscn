@@ -2,6 +2,13 @@ import assert from "node:assert/strict"
 import path from "node:path"
 
 // Resolve CLI target placeholders using the fixture's configured UI location.
+/**
+ * @param {{path: string, target?: string, type?: string}} entry
+ * @param {string} consumer
+ * @param {{aliases: Record<string,string>}} settings
+ * @param {string} [uiDirectory]
+ * @returns {string}
+ */
 export function installedRegistryFile(entry, consumer, settings, uiDirectory = "src/components/ui") {
   const root = path.resolve(consumer)
   const uiAlias = settings.aliases.ui.replace(/^[@~]\//, "")
