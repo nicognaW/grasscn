@@ -44,6 +44,11 @@ export function MinecraftRender<
 
 type StateClass<State> = ClassValue | ((state: State) => ClassValue);
 
+/** Distinguish Base UI's state-dependent class props from static class values. */
+export const isMinecraftClassResolver = <State,>(
+  value: StateClass<State>
+): value is (state: State) => ClassValue => typeof value === "function";
+
 export function minecraftClasses(...values: ClassValue[]): string;
 export function minecraftClasses<State>(
   ...values: StateClass<State>[]
@@ -52,14 +57,33 @@ export function minecraftClasses<State>(...values: StateClass<State>[]) {
   const resolve = (state: State) =>
     mergeClasses(
       ...values.map((value) =>
-        typeof value === "function" ? value(state) : value
+        isMinecraftClassResolver(value) ? value(state) : value
       )
     );
 
-  return values.some((value) => typeof value === "function")
-    ? resolve
-    : mergeClasses(...(values as ClassValue[]));
+  const staticValues: ClassValue[] = [];
+
+  for (const value of values) {
+    if (isMinecraftClassResolver(value)) {
+      return resolve;
+    }
+
+    staticValues.push(value);
+  }
+
+  return mergeClasses(...staticValues);
 }
+
+type StateStyle<State> =
+  | React.CSSProperties
+  | ((state: State) => React.CSSProperties | undefined)
+  | undefined;
+
+/** Resolve the state callback only when the caller supplied one. */
+export const isMinecraftStyleResolver = <State,>(
+  style: StateStyle<State>
+): style is (state: State) => React.CSSProperties | undefined =>
+  typeof style === "function";
 
 export function minecraftStyle(
   style: React.CSSProperties | undefined,
@@ -79,7 +103,7 @@ export function minecraftStyle<State>(
     | undefined,
   paint: (style: React.CSSProperties | undefined) => React.CSSProperties
 ) {
-  return typeof style === "function"
+  return isMinecraftStyleResolver(style)
     ? (state: State) => paint(style(state))
     : paint(style);
 }

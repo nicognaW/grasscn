@@ -7,6 +7,10 @@ import { Button } from "./button";
 import { Input } from "./input";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { MenuScaleContext, menuTextNodes } from "./minecraft-menu-text";
+import {
+  isMinecraftClassResolver,
+  isMinecraftStyleResolver,
+} from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
@@ -15,11 +19,15 @@ import "./minecraft-combobox.css";
 
 type Scale = 1 | 2 | 3;
 
+interface ComboboxScaleStyle extends React.CSSProperties {
+  "--mc-scale": Scale;
+}
+
 function classes<S>(
   base: string,
   value?: string | ((state: S) => string | undefined)
 ) {
-  return typeof value === "function"
+  return isMinecraftClassResolver(value)
     ? (state: S) => `${base} ${value(state) ?? ""}`
     : `${base} ${value ?? ""}`;
 }
@@ -28,10 +36,12 @@ function scaled<S>(
   scale: Scale,
   style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
 ) {
-  const merge = (value?: React.CSSProperties) =>
-    ({ "--mc-scale": scale, ...value }) as React.CSSProperties;
+  const merge = (value?: React.CSSProperties): ComboboxScaleStyle => ({
+    "--mc-scale": scale,
+    ...value,
+  });
 
-  return typeof style === "function"
+  return isMinecraftStyleResolver(style)
     ? (state: S) => merge(style(state))
     : merge(style);
 }
