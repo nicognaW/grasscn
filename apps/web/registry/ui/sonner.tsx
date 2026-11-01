@@ -58,7 +58,7 @@ function ActionGraphic({ action, model, scale }: {
         Object.assign(action.node.style, { position: "absolute", left: `${(18 + action.index * (available + 6)) * scale}px`, right: "auto", top: `${(model.height + 6) * scale}px`, width: `${width * scale}px`, height: `${20 * scale}px`, padding: "0", fontSize: "0" });
     }, [action, model, scale, fontReady]);
     const inherited = Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`--mc-piece-${i}`, "inherit"]));
-    return <Button render={<span aria-hidden="true"/>} scale={scale} disabled={action.node.disabled} className="mc-sonner-button-art" style={{ ...inherited, "--mc-ink": "inherit", "--mc-shadow": "inherit", position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" } as React.CSSProperties}>{action.label}</Button>;
+    return <Button render={<span aria-hidden="true"/>} scale={scale} disabled={action.node.disabled} data-mc-sonner-button-art="" style={{ ...inherited, "--mc-ink": "inherit", "--mc-shadow": "inherit", position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" } as React.CSSProperties}>{action.label}</Button>;
 }
 function ModelGraphic({ model, scale }: {
     model: Model;
@@ -78,7 +78,7 @@ function ModelGraphic({ model, scale }: {
             model.geometryChanged?.();
         }
     }, [model, scale]);
-    return <span className="mc-sonner-art" style={{ position: model.rich ? "absolute" : "relative", display: "block", left: 0, top: 0, width: "100%", height: model.rich ? "100%" : height * scale, pointerEvents: "none", zIndex: -1 }}>{model.rich ? <MinecraftToastBackdrop scale={scale} motion={model.motion}/> : <MinecraftToastGraphic title={model.title} message={model.message} scale={scale} motion={model.motion} onLayout={update}/>}</span>;
+    return <span data-mc-sonner-art="" style={{ position: model.rich ? "absolute" : "relative", display: "block", left: 0, top: 0, width: "100%", height: model.rich ? "100%" : height * scale, pointerEvents: "none", zIndex: -1 }}>{model.rich ? <MinecraftToastBackdrop scale={scale} motion={model.motion}/> : <MinecraftToastGraphic title={model.title} message={model.message} scale={scale} motion={model.motion} onLayout={update}/>}</span>;
 }
 function Toaster({ scale = 2, richColors = false, expand = true, position = "top-right", offset = 0, gap = 0, visibleToasts = 5, className, style, toastOptions, ref, ...props }: ToasterProps) {
     if (richColors || !expand)
@@ -141,7 +141,7 @@ function Toaster({ scale = 2, richColors = false, expand = true, position = "top
                 node.style.setProperty("--mc-scale", String(scale));
                 node.dataset.mcToastRich = String(rich);
                 const buttons = Array.from(node.querySelectorAll<HTMLButtonElement>('button[data-button],button[data-close-button]'));
-                model.buttons = buttons.map((button, index) => { button.classList.add(...buttonVariants().split(" ")); const text = Array.from(button.childNodes).filter(n => !(n instanceof HTMLElement && n.classList.contains("mc-sonner-button-art"))).map(n => n.textContent ?? "").join(""); return { node: button, label: text || "Done", index, count: buttons.length }; });
+                model.buttons = buttons.map((button, index) => { button.classList.add(...buttonVariants().split(" ")); const text = Array.from(button.childNodes).filter(n => !(n instanceof HTMLElement && n.hasAttribute("data-mc-sonner-button-art"))).map(n => n.textContent ?? "").join(""); return { node: button, label: text || "Done", index, count: buttons.length }; });
                 if (node.dataset.removed === "true")
                     beginExit(model);
             }
@@ -156,13 +156,13 @@ function Toaster({ scale = 2, richColors = false, expand = true, position = "top
         const observer = new MutationObserver(records => {
             const relevant = records.some(record => {
                 const target = record.target.nodeType === Node.ELEMENT_NODE ? record.target as HTMLElement : record.target.parentElement;
-                if (target?.closest(".mc-sonner-art,.mc-sonner-button-art"))
+                if (target?.closest("[data-mc-sonner-art],[data-mc-sonner-button-art]"))
                     return false;
                 if (record.type === "attributes")
                     return record.attributeName === "data-removed";
                 if (record.type === "characterData")
                     return true;
-                return [...record.addedNodes, ...record.removedNodes].some(node => !(node instanceof HTMLElement && (node.classList.contains("mc-sonner-art") || node.classList.contains("mc-sonner-button-art"))));
+                return [...record.addedNodes, ...record.removedNodes].some(node => !(node instanceof HTMLElement && (node.hasAttribute("data-mc-sonner-art") || node.hasAttribute("data-mc-sonner-button-art"))));
             });
             if (relevant)
                 scan();
@@ -180,7 +180,7 @@ function Toaster({ scale = 2, richColors = false, expand = true, position = "top
         host.addEventListener("click", click);
         return () => { observer.disconnect(); host.removeEventListener("click", click); };
     }, [host, scale, gap]);
-    return <><Sonner ref={setHost} className={cn(`mc-sonner ${""}`, className)} position={position} offset={offset} gap={gap} visibleToasts={visibleToasts} expand={expand} richColors={false} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} toastOptions={{ ...toastOptions, unstyled: true }} {...props}/>{models.map(model => model.ghost ? <div key={model.key} aria-hidden="true" className="mc-sonner-ghost" style={{ position: "fixed", left: model.bounds.x, top: model.bounds.y, width: model.bounds.width, height: model.bounds.height, zIndex: 999999999, pointerEvents: "none", isolation: "isolate" }}><ModelGraphic model={model} scale={scale}/></div> : <React.Fragment key={model.key}>{createPortal(<ModelGraphic model={model} scale={scale}/>, model.node, String(model.key))}{model.buttons.filter(a => a.node.isConnected).map(action => createPortal(<ActionGraphic action={action} model={model} scale={scale}/>, action.node, `${model.key}-action-${action.index}`))}</React.Fragment>)}</>;
+    return <><Sonner ref={setHost} className={cn(`mc-sonner ${""}`, className)} position={position} offset={offset} gap={gap} visibleToasts={visibleToasts} expand={expand} richColors={false} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} toastOptions={{ ...toastOptions, unstyled: true }} {...props}/>{models.map(model => model.ghost ? <div key={model.key} aria-hidden="true" data-mc-sonner-ghost="" style={{ position: "fixed", left: model.bounds.x, top: model.bounds.y, width: model.bounds.width, height: model.bounds.height, zIndex: 999999999, pointerEvents: "none", isolation: "isolate" }}><ModelGraphic model={model} scale={scale}/></div> : <React.Fragment key={model.key}>{createPortal(<ModelGraphic model={model} scale={scale}/>, model.node, String(model.key))}{model.buttons.filter(a => a.node.isConnected).map(action => createPortal(<ActionGraphic action={action} model={model} scale={scale}/>, action.node, `${model.key}-action-${action.index}`))}</React.Fragment>)}</>;
 }
 export { Toaster, toast };
 export type { ToasterProps };

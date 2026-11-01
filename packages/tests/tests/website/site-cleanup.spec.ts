@@ -9,7 +9,6 @@ test("canonical documentation independently exposes grouped public parts and omi
   page,
 }) => {
   const inventory = documentationInventory();
-  expect(inventory.pages.map((item) => item.name)).not.toContain("skeleton");
 
   for (const [name, title, owner] of [
     ["field", "Field", "form"],

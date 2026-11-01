@@ -4,6 +4,7 @@ import * as React from "react";
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { minecraftChatAtlas } from "./minecraft-chat-atlas";
 import { loadUnihex } from "./minecraft-unifont";
+import "./minecraft-unifont-metrics.css";
 import "./minecraft-selectable-text.css";
 type Run = {
     text: string;

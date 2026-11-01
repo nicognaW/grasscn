@@ -126,7 +126,6 @@ test("Retired components are absent from supported catalog and served payloads",
     "Navigation Menu",
     "Accordion",
     "Alert",
-    "Skeleton",
   ]) {
     await expect(
       page

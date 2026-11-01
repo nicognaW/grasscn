@@ -7,7 +7,7 @@ import path from "node:path"
 import {createHash} from "node:crypto"
 import {PNG} from "pngjs"
 const [consumerArg,nameArg,urlArg]=process.argv.slice(2)
-assert.ok(consumerArg&&["sheet","drawer","alert"].includes(nameArg)&&urlArg,"Usage: bun src/installed/verify-overlay-installed.mjs <consumer> <sheet|drawer|alert> <fixture-url>")
+assert.ok(consumerArg&&["sheet","drawer"].includes(nameArg)&&urlArg,"Usage: bun src/installed/verify-overlay-installed.mjs <consumer> <sheet|drawer> <fixture-url>")
 const repo=repoRoot,consumer=path.resolve(consumerArg),base=urlArg,names=[nameArg],smoke=false,hash=b=>createHash("sha256").update(b).digest("hex"),browser=await chromium.launch({channel:"msedge"})
 const item=JSON.parse(fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))).items.find(i=>i.name===nameArg),settings=JSON.parse(fs.readFileSync(path.join(consumer,"components.json")))
 assert.ok(item)
@@ -20,7 +20,7 @@ try{
  const pending=[...names];await Promise.all(Array.from({length:Math.min(2,names.length)},async()=>{while(pending.length){const name=pending.shift();
   const errors=[];let page=await browser.newPage({viewport:{width:1536,height:900},deviceScaleFactor:1}),count=0;page.on("pageerror",e=>errors.push(e.message))
   const all=[]
-  for(const dir of name==="alert"?["card"]:["card","label"]){
+  for(const dir of ["card","label"]){
    const folder=resolveRepositoryPath(path.join("tests/reference",dir)),m=JSON.parse(fs.readFileSync(path.join(folder,"manifest.json")))
    const cases=m.cases
    const records=[]
@@ -32,7 +32,7 @@ try{
      const q=new URLSearchParams({component:name,native:"1",part,width:String(c.width),height:String(c.height),scale:String(c.scale),background:c.background,x:String(c.x),y:String(c.y),align:c.alignment??"left"})
      if(c.label!=null)q.set("label",c.label);if(c.text!=null)q.set("text",c.text);if(c.wrapWidth!=null)q.set("wrapWidth",String(c.wrapWidth))
      await page.goto(`${base}?${q}`);await page.mouse.move(0,0);await page.addStyleTag({content:"#root{visibility:hidden}#subject{visibility:visible}"})
-     if(name!=="alert")await page.addStyleTag({content:`[data-slot="${name}-overlay"]{visibility:hidden!important}[data-slot="${name}-content"]{visibility:hidden}#subject{visibility:visible}`})
+     await page.addStyleTag({content:`[data-slot="${name}-overlay"]{visibility:hidden!important}[data-slot="${name}-content"]{visibility:hidden}#subject{visibility:visible}`})
      const target=page.locator("#subject");await expect(target).toBeVisible()
      if(dir==="label"){await expect(target).toHaveAttribute("data-mc-label-layout-ready","true");for(const line of await target.locator('[data-mc-label-ready]').all())await expect(line).toHaveAttribute('data-mc-label-ready','true')}
      await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))

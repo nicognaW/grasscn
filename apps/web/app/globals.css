@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../registry/ui/minecraft-components.css";
 @import "../registry/ui/minecraft-text-assets.css";
 @import "../minecraft-theme-assets.css";
 @import "../minecraft-scrollbars.css";
