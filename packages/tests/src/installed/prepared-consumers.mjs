@@ -27,6 +27,7 @@ import {
   directoryIdentity,
   sha256,
 } from "./consumer-boundary.mjs";
+import { consumerBuildIdentity } from "./consumer-build-identity.mjs";
 
 /**
  * @template {PreparedProject} T
@@ -71,12 +72,12 @@ export const validatePreparedProject = async (
     "Prepared consumer inputs changed"
   );
   assert.deepEqual(
-    await directoryIdentity(
+    await consumerBuildIdentity(
       path.join(
         project.directory,
         project.framework === "next" ? ".next" : "dist"
       ),
-      new Set(["cache", "trace", "trace-build"])
+      project.framework
     ),
     project.buildOutput,
     "Prepared consumer production bytes changed"

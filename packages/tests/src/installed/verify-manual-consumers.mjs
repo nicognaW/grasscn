@@ -27,6 +27,7 @@ import {
   consumerEnvironment,
   directoryIdentity,
 } from "./consumer-boundary.mjs";
+import { consumerBuildIdentity } from "./consumer-build-identity.mjs";
 import {
   parseWebsiteIdentity,
   parsePublicInputs,
@@ -645,9 +646,9 @@ try {
 
         await run(buildCommand, consumer);
 
-        const buildOutput = await directoryIdentity(
+        const buildOutput = await consumerBuildIdentity(
           path.join(consumer, framework === "vite" ? "dist" : ".next"),
-          new Set(["cache", "trace", "trace-build"])
+          framework
         );
 
         /** @type {{bun: string; bundler: string; cpus?: number; smol?: boolean}} */
@@ -706,9 +707,9 @@ try {
         "Prepared consumer inputs unchanged"
       );
       assert.deepEqual(
-        await directoryIdentity(
+        await consumerBuildIdentity(
           path.join(consumer, framework === "vite" ? "dist" : ".next"),
-          new Set(["cache", "trace", "trace-build"])
+          framework
         ),
         built.buildOutput,
         "Prepared consumer production bytes unchanged"
