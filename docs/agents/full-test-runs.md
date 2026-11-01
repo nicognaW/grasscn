@@ -1,6 +1,6 @@
 # Full test run lifecycle
 
-Before GitHub writes, read [issue-tracker.md](issue-tracker.md). Base/Full definitions are in [the accepted ADR](../adr/0002-base-and-full-tests.md). This workflow changes execution of the existing browser pool; ordinary type checks, builds and integrity checks retain their existing behavior.
+Before GitHub writes, read [issue-tracker.md](issue-tracker.md). For choosing Base and Full cases, read [the classification guide](test-classification.md); definitions and policy are in [the accepted ADR](../adr/0002-base-and-full-tests.md). This workflow changes execution of the existing browser pool; ordinary type checks, builds and integrity checks retain their existing behavior.
 
 ## Plan and approval
 
