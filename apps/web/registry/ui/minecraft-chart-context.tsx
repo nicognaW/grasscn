@@ -8,6 +8,7 @@ import {
   useChartHeight,
   usePlotArea,
 } from "recharts";
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- These are Recharts' published renderer-prop type names.
 import type { BarShapeProps, PieSectorShapeProps } from "recharts";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
@@ -263,10 +264,12 @@ function useRegister(geometry: Geometry) {
 }
 
 /** Recharts owns the coordinates, scales, stacking, hit testing and tooltip state. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
 export const ChartPixelBar = (props: BarShapeProps) => (
   <PixelBarGeometry {...props} />
 );
 
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts renderer-prop contract.
 const PixelBarGeometry = (props: BarShapeProps) => {
   useRegister({
     fill: props.fill ?? "#55ff55",
@@ -283,10 +286,12 @@ const PixelBarGeometry = (props: BarShapeProps) => {
 };
 
 /** A Pie shape adapter, not a second Pie implementation or data API. */
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
 export const ChartProfilerSector = (props: PieSectorShapeProps) => (
   <ProfilerSectorGeometry {...props} />
 );
 
+// oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Keep the actual Recharts sector renderer-prop contract.
 const ProfilerSectorGeometry = (props: PieSectorShapeProps) => {
   useRegister({
     cx: props.cx,
