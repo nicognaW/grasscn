@@ -2,10 +2,9 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import path from "node:path";
 
+import { parseWebsiteIdentity } from "@grasscn/tests/verification-types";
 import { test as base } from "@playwright/test";
 import { PNG } from "pngjs";
-
-import { verificationWebsite } from "@grasscn/tests/verification-types";
 export * from "@playwright/test";
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -62,9 +61,10 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
             outputDirectory: info.outputDir,
             fixtureUrl: process.env.GRASSCN_FIXTURE_URL,
             previewUrl: process.env.GRASSCN_PREVIEW_URL,
-            websiteIdentity: process.env.GRASSCN_WEBSITE_IDENTITY === undefined
-              ? null
-              : verificationWebsite(process.env.GRASSCN_WEBSITE_IDENTITY),
+            websiteIdentity:
+              process.env.GRASSCN_WEBSITE_IDENTITY === undefined
+                ? null
+                : parseWebsiteIdentity(process.env.GRASSCN_WEBSITE_IDENTITY),
             bundleSha256: process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,
             renderedUrl,
             subjectSlot,

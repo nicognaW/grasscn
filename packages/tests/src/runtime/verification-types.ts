@@ -509,3 +509,10 @@ export const verificationWebsite = (value: unknown): WebsiteIdentity => {
 
   return value;
 };
+
+/** Decode the serialized host summary carried by browser verification environments. */
+export const parseWebsiteIdentity = (text: string): WebsiteIdentity => {
+  const value: unknown = JSON.parse(text);
+
+  return verificationWebsite(value);
+};
