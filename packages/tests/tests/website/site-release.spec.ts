@@ -89,7 +89,8 @@ test("component pages expose live preview, source, installation and composition"
 
   await example.getByRole("button", { exact: true, name: "Button" }).click();
   await example.getByRole("tab", { exact: true, name: "Code" }).click();
-  await expect(example.locator("pre")).toContainText("function ButtonExample");
+  await expect(example.locator("pre")).toContainText("const ButtonExample =");
+  await expect(example.locator("pre")).toContainText("export default ButtonExample");
   await expect(example.locator("pre")).not.toContainText("function Button({");
 
   const implementation = page.getByRole("region", {
