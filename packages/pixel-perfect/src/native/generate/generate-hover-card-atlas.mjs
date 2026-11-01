@@ -3,7 +3,7 @@ import assert from "node:assert/strict"
 import { createHash } from "node:crypto"
 import { readFile, writeFile } from "node:fs/promises"
 
-const base = new URL("../../../tests/reference/hover-card", import.meta.url)
+const base = new URL("../../../tests/reference/hover-card/", import.meta.url)
 const provenance = JSON.parse(await readFile(new URL("asset-provenance.json", base), "utf8"))
 const bytes = await readFile(new URL("glyph-atlas.json", base))
 assert.equal(createHash("sha256").update(bytes).digest("hex"), provenance.glyphAtlasSha256)

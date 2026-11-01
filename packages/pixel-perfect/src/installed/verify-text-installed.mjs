@@ -11,7 +11,7 @@ import {PNG} from "pngjs"
 
 const [consumerArgument,name,url,manifestArgument,partArgument]=process.argv.slice(2)
 const supported=new Set(["badge","typography","breadcrumb","kbd","empty","form","field"])
-assert.ok(consumerArgument&&supported.has(name)&&url,"Usage: bun scripts/verify-text-installed.mjs <consumer> <badge|typography|breadcrumb|kbd|empty> <fixture-url> [registered-manifest] [part]")
+assert.ok(consumerArgument&&supported.has(name)&&url,"Usage: bun src/installed/verify-text-installed.mjs <consumer> <badge|typography|breadcrumb|kbd|empty> <fixture-url> [registered-manifest] [part]")
 const repo=repoRoot,consumer=path.resolve(consumerArgument),json=async file=>JSON.parse(await readFile(resolveRepositoryPath(file),"utf8")),sha=bytes=>createHash("sha256").update(bytes).digest("hex")
 const map=await json("registry/minecraft-map.json"),component=map.components.find(c=>c.name===name),item=(await json("registry.json")).items.find(i=>i.name===name)
 assert.ok(component?.pixelVerification.manifest&&item,"Item needs registered native references")

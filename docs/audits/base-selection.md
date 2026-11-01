@@ -29,4 +29,4 @@ A component without a mapped PPT has no focused Base pixel proof, even if its we
 
 ## Validation
 
-Use `bun packages/pixel-perfect/scripts/browser-suite.mjs list --all --json` to validate the PPT partition and `bun run --cwd packages/tests test --list --reporter=json` to inspect ordinary non-PPT cases. Listing Full PPTs is not execution or authorization. No Full PPTs were executed for this migration.
+Use `bun run --cwd packages/pixel-perfect list --all --json` to validate the PPT partition and `bun run --cwd packages/tests test --list --reporter=json` to inspect ordinary non-PPT cases. Listing Full PPTs is not execution or authorization. No Full PPTs were executed for this migration.

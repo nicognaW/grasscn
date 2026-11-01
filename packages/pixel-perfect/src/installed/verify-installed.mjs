@@ -12,7 +12,7 @@ import {verifyNavigationCase} from "@ppt/installed/verify-navigation-installed.m
 import {verifyAccordionCase} from "@ppt/installed/verify-accordion-installed.mjs"
 
 const [consumerDir, name, url, uiDirectory = "src/components/ui", referenceManifest] = process.argv.slice(2)
-if (!consumerDir || !name || !url) throw new Error("Usage: bun scripts/verify-installed.mjs <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]")
+if (!consumerDir || !name || !url) throw new Error("Usage: bun src/installed/verify-installed.mjs <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]")
 const repo = repoRoot
 const json = async file => JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"))
 const map = await json("registry/minecraft-map.json")

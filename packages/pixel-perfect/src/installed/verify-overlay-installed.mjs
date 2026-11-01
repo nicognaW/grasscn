@@ -7,7 +7,7 @@ import path from "node:path"
 import {createHash} from "node:crypto"
 import {PNG} from "pngjs"
 const [consumerArg,nameArg,urlArg]=process.argv.slice(2)
-assert.ok(consumerArg&&["sheet","drawer","alert"].includes(nameArg)&&urlArg,"Usage: bun scripts/verify-overlay-installed.mjs <consumer> <sheet|drawer|alert> <fixture-url>")
+assert.ok(consumerArg&&["sheet","drawer","alert"].includes(nameArg)&&urlArg,"Usage: bun src/installed/verify-overlay-installed.mjs <consumer> <sheet|drawer|alert> <fixture-url>")
 const repo=repoRoot,consumer=path.resolve(consumerArg),base=urlArg,names=[nameArg],smoke=false,hash=b=>createHash("sha256").update(b).digest("hex"),browser=await chromium.launch({channel:"msedge"})
 const item=JSON.parse(fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))).items.find(i=>i.name===nameArg),settings=JSON.parse(fs.readFileSync(path.join(consumer,"components.json")))
 assert.ok(item)

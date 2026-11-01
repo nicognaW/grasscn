@@ -7,7 +7,7 @@ import { PNG } from "pngjs"
 import opentype from "opentype.js"
 
 const input = process.argv[2]
-if (!input) throw new Error("Usage: bun scripts/generate-assets.mjs <extracted-asset-directory>")
+if (!input) throw new Error("Usage: bun src/native/generate/generate-assets.mjs <extracted-asset-directory>")
 const atlasBytes = await readFile(path.join(input, "ascii.png"))
 const atlas = PNG.sync.read(atlasBytes)
 const definitions = JSON.parse(await readFile(path.join(input, "default.json"), "utf8"))

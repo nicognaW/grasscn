@@ -31,6 +31,6 @@ Judge CJK text and states against the actual default demo. Being fast, historica
 
 The original cleanup spec (#1) prohibited manufacturing Base coverage with new or rewritten cases. This later package/policy migration preserves the complete inventory while moving behavior-only cases out of PPT files. Future features and ports should add meaningful tests under the coding standards.
 
-After catalogue changes, use `bun packages/pixel-perfect/src/selection/suite.mjs list --all --json` to verify every mapping resolves once and Base plus Full covers the PPT inventory. Use `bun run --cwd packages/tests test --list --reporter=json` for the independent non-PPT inventory. Listing never executes Full PPTs. Type checks, builds and harness unit checks remain ordinary prechecks.
+After catalogue changes, use `bun run --cwd packages/pixel-perfect list --all --json` to verify every mapping resolves once and Base plus Full covers the PPT inventory. Use `bun run --cwd packages/tests test --list --reporter=json` for the independent non-PPT inventory. Listing never executes Full PPTs. Type checks, builds and harness unit checks remain ordinary prechecks.
 
 For execution, approval and reporting, use [the Full-run lifecycle](full-test-runs.md). Full PPT results do not block merging.

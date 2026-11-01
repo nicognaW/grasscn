@@ -9,7 +9,7 @@ import {chromium,expect} from "@playwright/test"
 import {PNG} from "pngjs"
 
 const [consumerArgument,url]=process.argv.slice(2)
-assert.ok(consumerArgument&&url,"Usage: bun scripts/verify-input-otp-installed.mjs <consumer-dir> <consumer-url>")
+assert.ok(consumerArgument&&url,"Usage: bun src/installed/verify-input-otp-installed.mjs <consumer-dir> <consumer-url>")
 const root=repoRoot,consumer=path.resolve(consumerArgument),sha=bytes=>createHash("sha256").update(bytes).digest("hex")
 const registry=JSON.parse(await readFile(resolveRepositoryPath(path.join("registry.json")),"utf8")),item=registry.items.find(item=>item.name==="input-otp"),settings=JSON.parse(await readFile(path.join(consumer,"components.json"),"utf8")),files=[]
 const canonical=bytes=>{let text=bytes.toString().replace(/\/\*[\s\S]*?\*\//g,"").trim();if(settings.rsc===false)text=text.replace(/^["']use client["'];?\s*/,"");return text.replace(/^(?:\/\/[^\n]*\n\s*)+/,"")}

@@ -5,7 +5,7 @@ import { createHash } from "node:crypto"
 import path from "node:path"
 
 const assets = process.argv[2]
-if (!assets) throw new Error("Usage: bun scripts/generate-sound-assets.mjs <Minecraft assets directory>")
+if (!assets) throw new Error("Usage: bun src/native/generate/generate-sound-assets.mjs <Minecraft assets directory>")
 const indexBytes = await readFile(path.join(assets, "indexes/32.json"))
 const index = JSON.parse(indexBytes)
 const hash = (bytes, algorithm = "sha256") => createHash(algorithm).update(bytes).digest("hex")
