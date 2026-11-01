@@ -16,6 +16,7 @@ interface Images {
 
 let images: Promise<Images> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function loadImages() {
   return (images ??= Promise.all(
     Object.values(minecraftInputAssets).map(

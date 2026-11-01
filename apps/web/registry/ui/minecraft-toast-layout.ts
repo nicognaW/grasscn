@@ -13,6 +13,7 @@ export type ToastGlyph = {
 
 let source: Promise<Uint8ClampedArray> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function alpha() {
   return (source ??= new Promise((resolve, reject) => {
     const image = new Image();

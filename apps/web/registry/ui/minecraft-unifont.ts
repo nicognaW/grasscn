@@ -29,6 +29,7 @@ export const getUnihexGlyph = (char: string) => {
   return codepoint === undefined ? undefined : font?.get(codepoint);
 };
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached Unihex initialization Promise itself, including rejection; async would wrap it.
 export function loadUnihex() {
   return (pending ??= (async () => {
     const { unifontZip, unifontOverrides } =
