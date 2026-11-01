@@ -10,6 +10,7 @@ import { MinecraftItemText } from "./minecraft-item-text";
 import type { MinecraftItemTextProps } from "./minecraft-item-text";
 import { MinecraftProse } from "./minecraft-prose";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -341,7 +342,7 @@ const ItemHeader = ({
       className={cn(`mc-item-header`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <MinecraftItemText scale={scale}>{children}</MinecraftItemText>
       ) : (
         children
@@ -363,7 +364,7 @@ const ItemFooter = ({
       className={cn(`mc-item-footer`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <MinecraftItemText scale={scale}>{children}</MinecraftItemText>
       ) : (
         children

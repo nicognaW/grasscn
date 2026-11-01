@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -260,10 +261,7 @@ const TabsTrigger = ({
 
   const content = children;
 
-  const text =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : null;
+  const text = isMinecraftTextContent(content) ? String(content) : null;
 
   React.useLayoutEffect(() => {
     let cancelled = false,
@@ -326,7 +324,7 @@ const TabsTrigger = ({
       }
     };
 
-    const unicode = text != null && /[^\x00-\x7F]/.test(text);
+    const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
 
     if (unicode) {
       void loadUnihex().then(() => {
@@ -358,7 +356,7 @@ const TabsTrigger = ({
         <span className="mc-tab-label">
           {text == null ? (
             <span data-mc-tabs-rich="">{content}</span>
-          ) : /^[\x20-\x7E]*$/.test(text) ? (
+          ) : /^[\u0020-\u007E]*$/u.test(text) ? (
             <MinecraftText>{text}</MinecraftText>
           ) : (
             <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />

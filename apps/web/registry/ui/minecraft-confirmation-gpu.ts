@@ -84,7 +84,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   }
 
-  const use = (program: WebGLProgram) => {
+  const activateProgram = (program: WebGLProgram) => {
     gl.useProgram(program);
     const location = gl.getAttribLocation(program, "position");
     gl.enableVertexAttribArray(location);
@@ -140,7 +140,7 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
         gl.UNSIGNED_BYTE,
         source
       );
-      use(blur);
+      activateProgram(blur);
       gl.uniform1f(gl.getUniformLocation(blur, "radius"), radius);
 
       for (let pass = 0; pass < 6; pass += 1) {
@@ -162,10 +162,10 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
       }
 
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      use(copy);
+      activateProgram(copy);
       gl.bindTexture(gl.TEXTURE_2D, textures[0]);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      use(shade);
+      activateProgram(shade);
       gl.enable(gl.BLEND);
       gl.blendFuncSeparate(
         gl.SRC_ALPHA,

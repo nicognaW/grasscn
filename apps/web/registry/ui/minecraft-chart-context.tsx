@@ -173,7 +173,7 @@ export const ChartAxisTick = ({
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E]/.test(text)) {
+    if (/[^\u0020-\u007E]/u.test(text)) {
       void loadUnihex().then(() => {
         if (live) refresh();
       });

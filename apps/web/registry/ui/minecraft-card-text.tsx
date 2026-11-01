@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
 export const CardScaleContext = React.createContext(2);
@@ -83,8 +84,8 @@ export const MinecraftCardText = ({
   }, [children, scale]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
-    !/^[\x20-\x7E\n]*$/.test(String(children))
+    !isMinecraftTextContent(children) ||
+    !/^[\u0020-\u007E\n]*$/u.test(String(children))
   ) {
     return <>{children}</>;
   }

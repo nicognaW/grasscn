@@ -9,6 +9,7 @@ import { MinecraftChatText } from "./minecraft-chat-text";
 import { disclosureAdvance } from "./minecraft-disclosure-metrics";
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -174,12 +175,12 @@ const BubbleContent = ({
   const original = children;
 
   const content =
-    author && (typeof original === "string" || typeof original === "number")
+    author && isMinecraftTextContent(original)
       ? `<${author}> ${original}`
       : original;
 
   const plainText = (value: React.ReactNode): string =>
-    typeof value === "string" || typeof value === "number"
+    isMinecraftTextContent(value)
       ? String(value)
       : Array.isArray(value)
         ? value.map(plainText).join("")
@@ -190,7 +191,7 @@ const BubbleContent = ({
           : "";
 
   const text = plainText(content);
-  const unicode = /[^\x00-\x7F]/.test(text);
+  const unicode = /[^\u0000-\u007F]/u.test(text);
 
   React.useLayoutEffect(() => {
     let live = true;

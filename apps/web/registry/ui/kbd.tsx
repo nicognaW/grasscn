@@ -3,7 +3,11 @@
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
 import "./minecraft-button.css";
@@ -16,7 +20,7 @@ function keyText(content: React.ReactNode): React.ReactNode {
     ));
   }
 
-  if (typeof content !== "string" && typeof content !== "number") {
+  if (!isMinecraftTextContent(content)) {
     return content;
   }
 

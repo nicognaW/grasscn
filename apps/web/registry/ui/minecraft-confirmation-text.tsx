@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { confirmationUnihexAtlas } from "./minecraft-confirmation-atlas";
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
@@ -57,8 +58,8 @@ function wrap(text: string, maximum: number) {
 }
 
 export function confirmationButtonText(children: React.ReactNode) {
-  return (typeof children === "string" || typeof children === "number") &&
-    /[^\u0020-\u007E]/.test(String(children)) ? (
+  return isMinecraftTextContent(children) &&
+    /[^\u0020-\u007E]/u.test(String(children)) ? (
     <MinecraftUnicodeLabel
       text={String(children)}
       atlas={confirmationUnihexAtlas}
@@ -85,7 +86,7 @@ export const MinecraftConfirmationText = ({
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
   const unicode =
-    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+    typeof children === "string" && /[^\u0020-\u007E\n]/u.test(children);
 
   React.useEffect(() => {
     let active = true;
@@ -102,9 +103,9 @@ export const MinecraftConfirmationText = ({
   }, [unicode]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
+    !isMinecraftTextContent(children) ||
     ![...String(children)].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
+      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
     return <span>{children}</span>;
@@ -164,7 +165,7 @@ export const MinecraftConfirmationText = ({
                 scale,
             }}
           >
-            {/[^\x20-\x7E]/.test(line) ? (
+            {/[^\u0020-\u007E]/u.test(line) ? (
               <MinecraftUnicodeLabel
                 text={line}
                 atlas={confirmationUnihexAtlas}

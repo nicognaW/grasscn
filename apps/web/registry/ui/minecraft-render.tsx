@@ -8,6 +8,12 @@ import { cn as mergeClasses } from "@/lib/utils";
 
 type ClassValue = Parameters<typeof mergeClasses>[number];
 
+/** Scalar content supported by the Minecraft bitmap text renderers. */
+export const isMinecraftTextContent = (
+  content: unknown
+): content is string | number =>
+  typeof content === "string" || typeof content === "number";
+
 export type MinecraftRenderProp = useRender.RenderProp<object>;
 
 export type MinecraftProps<T extends React.ElementType> =
