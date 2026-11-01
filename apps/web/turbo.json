@@ -1,43 +1,29 @@
 {
-  "extends": [
-    "//"
-  ],
+  "extends": ["//"],
   "tasks": {
     "generate": {
       "inputs": [
         "content/docs/**",
         "source.config.ts",
+        "scripts/generate-component-symbols.mjs",
+        "registry.json",
+        "registry/**/*.ts",
+        "registry/**/*.tsx",
+        "component-groups.json",
         "package.json",
         "app/**",
         "next.config.mjs",
         "tsconfig.json"
       ],
-      "outputs": [
-        ".source/**",
-        ".next/types/**",
-        "next-env.d.ts"
-      ]
+      "outputs": [".source/**", ".next/types/**", "next-env.d.ts"]
     },
     "registry:build": {
-      "outputs": [
-        "public/r/**"
-      ],
-      "inputs": [
-        "registry.json",
-        "registry/**",
-        "package.json"
-      ]
+      "outputs": ["public/r/**"],
+      "inputs": ["registry.json", "registry/**", "package.json"]
     },
     "build": {
-      "dependsOn": [
-        "generate",
-        "registry:build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/types/**"
-      ]
+      "dependsOn": ["generate", "registry:build"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/types/**"]
     }
   }
 }
