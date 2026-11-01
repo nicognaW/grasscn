@@ -15,32 +15,32 @@ On a fresh checkout, generate required inputs before checking:
 
 ```sh
 bunx turbo run generate
-bunx --bun uncheck
+bun x --bun uncheck
 ```
 
 ## Commands
 
 ```sh
 # Check lint, formatting and types without applying fixes
-bunx --bun uncheck
+bun x --bun uncheck
 
 # Apply supported fixes and report remaining errors
-bunx --bun uncheck --fix
+bun x --bun uncheck --fix
 
 # Check specific paths
-bunx --bun uncheck apps/web/registry
+bun x --bun uncheck apps/web/registry
 
 # Run only a required workspace typecheck
-bunx --bun uncheck --only=tsc --require=tsc
+bun x --bun uncheck --only=tsc --require=tsc
 
 # Check staged files; --fix also stages its fixes
-bunx --bun uncheck staged
+bun x --bun uncheck staged
 
 # Refresh the existing pre-commit hook when hook changes are requested
-bunx --bun uncheck prepare --pre-commit
+bun x --bun uncheck prepare --pre-commit
 ```
 
-Use `--only=oxlint` or `--only=oxfmt` to isolate lint or format failures. These flags are repeatable; use `--require` when a skipped check must fail. Consult `bunx --bun uncheck --help` and subcommand help for supported options. Backend-specific flags are not automatically Uncheck options.
+Use `--only=oxlint` or `--only=oxfmt` to isolate lint or format failures. These flags are repeatable; use `--require` when a skipped check must fail. Consult `bun x --bun uncheck --help` and subcommand help for supported options. Backend-specific flags are not automatically Uncheck options.
 
 Keep the explicit `--bun`: the repository's Uncheck dependency patch also ensures generated hooks use Bun. Preserve existing hook content and the patch when changing setup.
 
@@ -48,7 +48,7 @@ Keep the explicit `--bun`: the repository's Uncheck dependency patch also ensure
 
 Keep existing Ultracite imports, framework presets, plugin selection and local overrides in the Oxlint/Oxfmt configuration. Respect the configured formatter settings. Uncheck orchestrates tools; its optional presets do not replace the repository's selected Ultracite presets.
 
-For requested setup changes, add the necessary devDependencies with Bun and edit the existing configuration directly. Consult `bunx --bun uncheck init --help` if initial setup is needed; review its script and preset choices against the repository convention of direct Uncheck commands. Existing projects use `prepare` for hook maintenance.
+For requested setup changes, add the necessary devDependencies with Bun and edit the existing configuration directly. Consult `bun x --bun uncheck init --help` if initial setup is needed; review its script and preset choices against the repository convention of direct Uncheck commands. Existing projects use `prepare` for hook maintenance.
 
 ## Code Standards
 
@@ -76,6 +76,6 @@ Run the relevant Uncheck check and distinguish configuration-load failures, miss
 - **Missing tools:** compare installed dependencies with the pinned lockfile; restore the frozen Bun install when needed. Use `--require` to detect unexpectedly skipped checks.
 - **Configuration failures:** inspect preset exports, plugin dependencies and compatible versions before editing source or weakening rules.
 - **Rules not applying:** verify the selected presets, overrides and ignore patterns in the active config.
-- **Formatting differences:** apply fixes to the requested scope with `bunx --bun uncheck --fix <paths>`.
+- **Formatting differences:** apply fixes to the requested scope with `bun x --bun uncheck --fix <paths>`.
 
 Report the checks actually run and any failures left unresolved. A lint/format/typecheck pass does not establish build, browser or captured-reference coverage.

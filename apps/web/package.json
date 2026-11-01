@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "bunx --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.mjs && bun --bun next typegen",
+    "generate": "bun x --bun --no-install fumadocs-mdx && bun scripts/generate-component-symbols.mjs && bun --bun next typegen",
     "dev": "bun scripts/generate-component-symbols.mjs && bun --bun next dev --hostname 127.0.0.1 --port 5176",
     "build": "bun --bun next build",
-    "registry:build": "bunx --bun --no-install shadcn build",
+    "registry:build": "bun x --bun --no-install shadcn build",
     "registry:serve": "bun run registry:build && bun scripts/serve.mjs",
     "start": "bun --bun next start --hostname 127.0.0.1 --port 5176"
   },

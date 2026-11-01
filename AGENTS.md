@@ -16,7 +16,7 @@ Use the single-context layout: root `GLOSSARY.md` and `docs/adr/`. Before codeba
 
 ## Workspace commands
 
-Use the pinned Bun package manager and runtime. The website and authored registry live in `apps/web`; shared rendering fixtures, artifact collection, runtime coordination and non-PPT tests live in `packages/tests`; specialized pixel verification, captured references, selection and Full-run policy live in `packages/pixel-perfect`, which consumes the shared interfaces. Run `bunx turbo run generate` before `bunx --bun uncheck` on a fresh checkout. Uncheck owns linting, formatting and typechecking; Turbo owns generation, builds and tests.
+Use the pinned Bun package manager and runtime. The website and authored registry live in `apps/web`; shared rendering fixtures, artifact collection, runtime coordination and non-PPT tests live in `packages/tests`; specialized pixel verification, captured references, selection and Full-run policy live in `packages/pixel-perfect`, which consumes the shared interfaces. Run `bunx turbo run generate` before `bun x --bun uncheck` on a fresh checkout. Uncheck owns linting, formatting and typechecking; Turbo owns generation, builds and tests.
 
 ## Minecraft UI work
 

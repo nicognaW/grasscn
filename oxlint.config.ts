@@ -9,7 +9,7 @@ import shadcn from "ultracite/oxlint/shadcn";
 import antiSlop from "ultracite/oxlint/anti-slop";
 import { jsPluginSettings, selectJsPlugins } from "ultracite/oxlint/js-plugins";
 
-const jsPlugins = selectJsPlugins(["github", "react-doctor"]);
+const jsPlugins = selectJsPlugins(["react-doctor"]);
 
 export default defineConfig({
   env: core.env,
