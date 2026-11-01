@@ -17,7 +17,7 @@ interface GuardedWorkloadFixture {
   marker: string;
 }
 
-async function fixture(
+const fixture = async function fixture(
   run: (context: GuardedWorkloadFixture) => Promise<void>
 ) {
   await mkdir(path.join(testRoot, "test-results", "unit"), { recursive: true });
@@ -58,7 +58,7 @@ async function fixture(
     await exited;
     await rm(root, { force: true, recursive: true });
   }
-}
+};
 
 test("workload waits for enforced budgets before executing", async () =>
   fixture(async ({ child, exited, gate, marker }) => {

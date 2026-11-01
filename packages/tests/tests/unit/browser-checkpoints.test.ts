@@ -48,7 +48,9 @@ interface BrowserCacheFixture {
   save: (records: object[]) => Promise<void>;
 }
 
-async function fixture(run: (context: BrowserCacheFixture) => Promise<void>) {
+const fixture = async function fixture(
+  run: (context: BrowserCacheFixture) => Promise<void>
+) {
   const parent = path.join(testRoot, "test-results", "unit");
   await mkdir(parent, { recursive: true });
 
@@ -109,7 +111,7 @@ async function fixture(run: (context: BrowserCacheFixture) => Promise<void>) {
     assert.equal(path.dirname(root), parent);
     await rm(root, { force: true, recursive: true });
   }
-}
+};
 
 test("checkpoints retain only source-identical successful tests and intact artifacts", async () =>
   fixture(async ({ root, file, record, save, candidate, output }) => {

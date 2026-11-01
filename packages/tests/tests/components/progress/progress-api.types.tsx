@@ -1,6 +1,6 @@
 import { Progress } from "@grasscn/web/ui/progress";
 
-export function ProgressApiContract() {
+export const ProgressApiContract = function ProgressApiContract() {
   const supported = (
     <Progress
       color="purple"
@@ -23,4 +23,4 @@ export function ProgressApiContract() {
   const inventedOverlay = <Progress overlay="striped" />;
 
   return [supported, composed, inventedColor, inventedOverlay];
-}
+};

@@ -23,13 +23,13 @@ export const ToggleGroupFixture = () => {
     document.body.style.margin = "0";
   }, []);
 
-  function changed(next: string[]) {
+  const changed = function changed(next: string[]) {
     setEvents((v) => v + 1);
 
     if (!p.has("reject")) {
       setValue(next);
     }
-  }
+  };
 
   const singleProps = controlled
     ? { onValueChange: changed, value }

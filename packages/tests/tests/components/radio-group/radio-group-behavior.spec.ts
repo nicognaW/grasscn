@@ -2,7 +2,7 @@ import { test, expect } from "@grasscn/tests/test";
 import type { Page, Locator } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
-async function arrow(page: Page, key: string, target: Locator) {
+const arrow = async function arrow(page: Page, key: string, target: Locator) {
   // Verify selection while the arrow-key interaction is active.
   await page.keyboard.down(key);
 
@@ -11,7 +11,7 @@ async function arrow(page: Page, key: string, target: Locator) {
   } finally {
     await page.keyboard.up(key);
   }
-}
+};
 
 test("Radio Group supports none/one selected and cannot uncheck the selected item", async ({
   page,

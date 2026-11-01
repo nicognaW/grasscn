@@ -1,7 +1,7 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 
-async function layoutLeft(page: Page) {
+const layoutLeft = async function layoutLeft(page: Page) {
   const text = await page.locator("#layout").textContent();
 
   if (text === null) {
@@ -9,7 +9,7 @@ async function layoutLeft(page: Page) {
   }
 
   return JSON.parse(text).left;
-}
+};
 
 test("Resizable preserves horizontal and vertical geometry and standard separator semantics", async ({
   page,
