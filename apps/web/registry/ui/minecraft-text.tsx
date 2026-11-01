@@ -1,7 +1,10 @@
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
-import { minecraftClasses as cn } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+} from "./minecraft-render";
 
 import "./minecraft-text.css";
 
@@ -13,8 +16,8 @@ const MinecraftText = ({
   className?: string;
 }) => {
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
-    !/^[\x20-\x7E]*$/.test(String(children))
+    !isMinecraftTextContent(children) ||
+    !/^[\u0020-\u007E]*$/u.test(String(children))
   ) {
     return <span className={className}>{children}</span>;
   }

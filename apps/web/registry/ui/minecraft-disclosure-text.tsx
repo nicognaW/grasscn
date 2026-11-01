@@ -4,7 +4,11 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import { labelUnihexAtlas } from "./minecraft-label-atlas";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
@@ -80,12 +84,9 @@ const MinecraftDisclosureText = ({
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
 
-  const text =
-    typeof children === "string" || typeof children === "number"
-      ? String(children)
-      : null;
+  const text = isMinecraftTextContent(children) ? String(children) : null;
 
-  const unicode = text != null && /[^\x00-\x7F]/.test(text);
+  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
@@ -121,7 +122,7 @@ const MinecraftDisclosureText = ({
     (!unicode || fontReady) &&
     [...text].every(
       (char) =>
-        char === "\n" || /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+        char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     );
 
   const lines = supported ? splitLines(text, maxWidth) : [];
@@ -162,7 +163,7 @@ const MinecraftDisclosureText = ({
                     : 0,
               }}
             >
-              {/^[\x20-\x7E]*$/.test(line) ? (
+              {/^[\u0020-\u007E]*$/u.test(line) ? (
                 <MinecraftText>{line}</MinecraftText>
               ) : (
                 <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />

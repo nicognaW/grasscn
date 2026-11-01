@@ -11,6 +11,7 @@ import {
   MinecraftPopoverText,
 } from "./minecraft-popover-text";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -177,7 +178,7 @@ const PopoverContent = ({
       <span className="mc-popover-background" aria-hidden="true">
         <MinecraftSurface sprite={minecraftCardSprite} />
       </span>
-      {typeof text === "string" || typeof text === "number" ? (
+      {isMinecraftTextContent(text) ? (
         <MinecraftPopoverText>{text}</MinecraftPopoverText>
       ) : (
         text

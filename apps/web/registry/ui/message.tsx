@@ -4,7 +4,11 @@ import * as React from "react";
 
 import "./minecraft-message.css";
 import { MinecraftChatText } from "./minecraft-chat-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 
 const MessageScale = React.createContext<1 | 2 | 3>(2);
 const MessageAuthor = React.createContext<string | undefined>(undefined);
@@ -139,7 +143,7 @@ const MessageContent = ({
   const author = React.useContext(MessageAuthor);
   const node = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState<number>();
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
 
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useLayoutEffect(() => {

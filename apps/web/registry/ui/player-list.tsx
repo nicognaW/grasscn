@@ -59,7 +59,7 @@ const PlayerList = ({
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E\n]/.test(text)) {
+    if (/[^\u0020-\u007E\n]/u.test(text)) {
       void loadUnihex().then(() => {
         if (live) refresh();
       });
@@ -324,7 +324,7 @@ const Scoreboard = ({
   React.useEffect(() => {
     let live = true;
 
-    if (/[^\x20-\x7E\n]/.test(text)) {
+    if (/[^\u0020-\u007E\n]/u.test(text)) {
       void loadUnihex().then(() => {
         if (live) refresh();
       });

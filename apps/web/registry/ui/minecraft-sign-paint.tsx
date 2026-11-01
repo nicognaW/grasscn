@@ -71,7 +71,7 @@ export const MinecraftSignPaint = ({
     Promise.all([
       load(src),
       load(minecraftInputAssets.atlas),
-      lines.some((line) => /[^\x20-\x7E]/.test(line))
+      lines.some((line) => /[^\u0020-\u007E]/u.test(line))
         ? loadUnihex()
         : Promise.resolve(),
     ])
@@ -222,7 +222,7 @@ export const MinecraftSignPaint = ({
 
         const bounds = canvas.getBoundingClientRect();
 
-        const gpu = lines.every((line) => /^[\x20-\x7E]*$/.test(line))
+        const gpu = lines.every((line) => /^[\u0020-\u007E]*$/u.test(line))
           ? paintSignGpu(
               texture,
               font,

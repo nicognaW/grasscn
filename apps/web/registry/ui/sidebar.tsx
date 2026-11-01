@@ -8,6 +8,7 @@ import { Card } from "./card";
 import { Input } from "./input";
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -352,11 +353,7 @@ function sidebarControlLabel(children: React.ReactNode): React.ReactNode {
       return;
     }
 
-    if (
-      typeof child === "string" ||
-      typeof child === "number" ||
-      typeof child === "bigint"
-    ) {
+    if (isMinecraftTextContent(child) || typeof child === "bigint") {
       run += String(child);
     } else {
       flush();
@@ -770,7 +767,7 @@ const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => {
 function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
     .map((child) =>
-      typeof child === "string" || typeof child === "number"
+      isMinecraftTextContent(child)
         ? String(child)
         : React.isValidElement<{
               children?: React.ReactNode;

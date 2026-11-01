@@ -6,6 +6,7 @@ import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftItemAtlas } from "./minecraft-item-atlas";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -93,10 +94,9 @@ const MinecraftItemText = ({
   const child = null;
   const content = children;
 
-  const accessibleText =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : null;
+  const accessibleText = isMinecraftTextContent(content)
+    ? String(content)
+    : null;
 
   let text = accessibleText;
 
@@ -122,7 +122,7 @@ const MinecraftItemText = ({
       .join("\n");
   }
 
-  const unicode = text != null && /[^\x00-\x7F]/.test(text);
+  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
@@ -158,7 +158,7 @@ const MinecraftItemText = ({
     (!unicode || fontReady) &&
     [...text].every(
       (char) =>
-        char === "\n" || /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+        char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     );
 
   const lines = supported && text != null ? splitLines(text, maxWidth) : [];
@@ -166,7 +166,7 @@ const MinecraftItemText = ({
   const width = containerWidth ?? maxWidth ?? widest;
 
   const richText = (value: React.ReactNode): React.ReactNode => {
-    if (typeof value === "string" || typeof value === "number") {
+    if (isMinecraftTextContent(value)) {
       return (
         <MinecraftItemText
           scale={scale}

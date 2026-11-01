@@ -59,7 +59,7 @@ export const MinecraftColorUnicodeLabel = ({
     setColorUnihexAtlas(context, atlas);
     setBitmap(false);
     Promise.all([
-      /[^\x00-\x7F]/.test(text) ? loadUnihex() : Promise.resolve(),
+      /[^\u0000-\u007F]/u.test(text) ? loadUnihex() : Promise.resolve(),
       loadAlpha(),
     ])
       .then(([, pixels]) => {
@@ -69,7 +69,7 @@ export const MinecraftColorUnicodeLabel = ({
 
         if (
           ![...text].every(
-            (char) => /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+            (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
           )
         ) {
           setWidth(undefined);
