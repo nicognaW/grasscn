@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
-import { webRoot } from "../../../workspace-paths.mjs";
+import { webRoot } from "@tests/paths";
 
 // Test selection metadata only. Fumadocs remains the sole documentation renderer,
 // page-tree, heading and search owner; no body or navigation is generated here.

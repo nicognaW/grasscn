@@ -3,7 +3,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-import { documentationInventory } from "../scripts/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 
 test("documentation inventory rejects an installable item without a canonical authored page", () => {
   const root = mkdtempSync(path.join(tmpdir(), "grasscn-doc-inventory-"));
