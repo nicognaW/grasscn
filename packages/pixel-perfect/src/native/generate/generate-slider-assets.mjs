@@ -2,14 +2,14 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const input = process.argv[2];
 if (!input)
   throw new Error("Pass the extracted original slider PNG/metadata directory");
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -75,11 +75,11 @@ for (const name of [
   };
 }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-slider-sprites.ts"),
+  webFile("registry/ui/minecraft-slider-sprites.ts"),
   `// Original artwork: Mojang Studios. Pieces are exact crops of the original textures.\nexport const minecraftSliderSprites = ${JSON.stringify(sprites)} as const\n`
 );
 const textAssets = await readFile(
-  resolveRepositoryPath("registry/ui/minecraft-assets.css"),
+  webFile("registry/ui/minecraft-assets.css"),
   "utf8"
 );
 const fontFace = textAssets.match(/@font-face[^\n]+/)[0];
@@ -87,11 +87,11 @@ const atlas = textAssets.match(
   /--mc-ascii-atlas: (url\("[^"]+"\)); --mc-atlas-size: (\d+)/
 );
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-text-assets.css"),
+  webFile("registry/ui/minecraft-text-assets.css"),
   `${fontFace}\n.mc-bitmap { --mc-ascii-atlas: ${atlas[1]}; --mc-atlas-size: ${atlas[2]}; }\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/slider/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/slider/asset-provenance.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,

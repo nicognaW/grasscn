@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const repo = path.resolve(".");
@@ -53,10 +53,7 @@ test.afterEach(async ({ page, browser }, info) => {
 
 const labelManifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      path.join(repo, "tests/reference/label/manifest.json"),
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile(path.join(repo, "tests/reference/label/manifest.json")),
     "utf8"
   )
 );
@@ -96,9 +93,8 @@ test.describe("Table original native label constituents", () => {
             )
         );
         const bytes = readFileSync(
-          resolveRepositoryPath(
-            path.join(repo, "tests/reference/label/captures", c.name),
-            pixelPerfectRoot
+          pixelPerfectFile(
+            path.join(repo, "tests/reference/label/captures", c.name)
           )
         );
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
@@ -116,9 +112,8 @@ test.describe("Table original native label constituents", () => {
 
 const separatorManifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      path.join(repo, "tests/reference/separator/manifest.json"),
-      pixelPerfectRoot
+    pixelPerfectFile(
+      path.join(repo, "tests/reference/separator/manifest.json")
     ),
     "utf8"
   )
@@ -145,9 +140,8 @@ test.describe("Table native header/footer separator artwork", () => {
       const actualBytes = await subject.screenshot(),
         actual = PNG.sync.read(actualBytes),
         bytes = readFileSync(
-          resolveRepositoryPath(
-            path.join(repo, "tests/reference/separator/captures", c.name),
-            pixelPerfectRoot
+          pixelPerfectFile(
+            path.join(repo, "tests/reference/separator/captures", c.name)
           )
         ),
         expected = PNG.sync.read(bytes);
@@ -163,9 +157,8 @@ test.describe("Table native header/footer separator artwork", () => {
 
 const listBackground = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      path.join(repo, "tests/reference/table-background/manifest.json"),
-      pixelPerfectRoot
+    pixelPerfectFile(
+      path.join(repo, "tests/reference/table-background/manifest.json")
     ),
     "utf8"
   )
@@ -190,12 +183,8 @@ for (const c of listBackground.cases)
     const actualBytes = await page.locator("[data-subject]").screenshot(),
       actual = PNG.sync.read(actualBytes),
       bytes = readFileSync(
-        resolveRepositoryPath(
-          path.join(
-            repo,
-            `tests/reference/table-background/captures/${c.name}`
-          ),
-          pixelPerfectRoot
+        pixelPerfectFile(
+          path.join(repo, `tests/reference/table-background/captures/${c.name}`)
         )
       ),
       expected = PNG.sync.read(bytes);

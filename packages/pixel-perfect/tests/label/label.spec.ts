@@ -4,17 +4,11 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { labelUnihexAtlas } from "@grasscn/web/ui/minecraft-label-atlas";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/label/manifest.json",
-      pixelPerfectRoot
-    ),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf8")
 ) as {
   cases: {
     name: string;
@@ -62,9 +56,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Label comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/label/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/label/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -76,10 +69,7 @@ test("Label comparator catches a one-pixel change", async () => {
 test("Label uses the UVs observed in its native font-atlas context", () => {
   const observed = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/label/glyph-atlas.json",
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile("tests/reference/label/glyph-atlas.json"),
       "utf8"
     )
   );
@@ -118,10 +108,7 @@ for (const c of manifest.cases)
     for (const line of await card.locator("[data-mc-label-ready]").all())
       await expect(line).toHaveAttribute("data-mc-label-ready", "true");
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
-        `tests/reference/label/captures/${c.name}`,
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(`tests/reference/label/captures/${c.name}`)
     );
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256

@@ -14,7 +14,9 @@ import {
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
+  webFile,
+  pixelPerfectFile,
+  repositoryFile,
 } from "@ppt/paths";
 import { PNG } from "pngjs";
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
@@ -24,7 +26,7 @@ const repo = repoRoot,
   hash = (b) => createHash("sha256").update(b).digest("hex");
 assert.ok(["calendar", "date-picker"].includes(component) && url);
 const item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === component),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
@@ -40,7 +42,7 @@ const item = JSON.parse(
   },
   files = item.files.map((f) => {
     const name = path.basename(f.path),
-      a = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+      a = fs.readFileSync(webFile(path.join(f.path))),
       b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
     assert.ok(
       canonical(a) === canonical(b),
@@ -91,15 +93,13 @@ try {
   ]) {
     const manifest = JSON.parse(
         fs.readFileSync(
-          resolveRepositoryPath(
-            path.join("tests/reference", dir, "manifest.json")
-          )
+          pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
         )
       ),
       cases = [];
     let retainedCases = 0;
     const cache = installedCaseCache(
-      resolveRepositoryPath(
+      repositoryFile(
         path.join(
           ".pixel-perfect-test",
           "installed-case-cache",
@@ -111,18 +111,14 @@ try {
         ...runtimeIdentity,
         manifest: hash(
           fs.readFileSync(
-            resolveRepositoryPath(
-              path.join("tests/reference", dir, "manifest.json")
-            )
+            pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
           )
         ),
       }
     );
     for (const c of manifest.cases) {
       const reference = fs.readFileSync(
-        resolveRepositoryPath(
-          path.join("tests/reference", dir, "captures", c.name)
-        )
+        pixelPerfectFile(path.join("tests/reference", dir, "captures", c.name))
       );
       assert.equal(hash(reference), c.sha256);
       const aliases =
@@ -219,7 +215,7 @@ try {
             )
         );
         const bytes = fs.readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join("tests/reference", dir, "captures", c.name)
           )
         );
@@ -257,7 +253,7 @@ try {
     }
     const expected = PNG.sync.read(
         fs.readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join(
               "tests/reference",
               dir,
@@ -296,7 +292,7 @@ try {
       consumerInputSha256: inputIdentity,
       verifierSha256: runtimeIdentity.verifier,
     };
-    const out = resolveRepositoryPath(path.join("tests/reference", component));
+    const out = pixelPerfectFile(path.join("tests/reference", component));
     fs.mkdirSync(out, { recursive: true });
     fs.writeFileSync(
       path.join(out, part + "-installation-verification.json"),

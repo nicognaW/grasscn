@@ -6,7 +6,6 @@
     "generate": {
       "inputs": [
         "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/workspace-paths.mjs",
         "$TURBO_ROOT$/packages/pixel-perfect/tests/reference/**/*.json"
       ],
       "outputs": [

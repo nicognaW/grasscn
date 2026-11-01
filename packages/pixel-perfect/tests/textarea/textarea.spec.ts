@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 type NativeCase = {
@@ -29,10 +29,7 @@ const manifest = {
     (
       JSON.parse(
         readFileSync(
-          resolveRepositoryPath(
-            `tests/reference/${directory}/manifest.json`,
-            pixelPerfectRoot
-          ),
+          pixelPerfectFile(`tests/reference/${directory}/manifest.json`),
           "utf8"
         )
       ).cases as NativeCase[]
@@ -70,9 +67,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Textarea comparator catches a one-pixel mutation", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/textarea/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/textarea/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -128,9 +124,8 @@ for (const c of manifest.cases)
     );
     await page.clock.runFor(c.caretMs);
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
-        `tests/reference/${c.referenceDirectory}/captures/${c.name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/${c.referenceDirectory}/captures/${c.name}`
       )
     );
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(

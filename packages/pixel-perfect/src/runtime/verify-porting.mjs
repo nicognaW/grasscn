@@ -13,6 +13,7 @@ import {
   fixtureManifest,
   serveProductionFixture,
 } from "@grasscn/tests/fixture";
+import { packageBin } from "@grasscn/tests/tooling";
 import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
 import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
 import {
@@ -20,8 +21,8 @@ import {
   webRoot,
   testRoot,
   pixelPerfectRoot,
-  resolveRepositoryPath,
-  packageBin,
+  repositoryFile,
+  webFile,
 } from "@ppt/paths";
 import {
   baseCatalogue,
@@ -94,7 +95,7 @@ async function identity() {
   for (const name of names) {
     let bytes;
     try {
-      bytes = await readFile(resolveRepositoryPath(name));
+      bytes = await readFile(repositoryFile(name));
     } catch (error) {
       if (error.code !== "ENOENT") throw error;
       bytes = Buffer.from("<deleted>");
@@ -315,9 +316,7 @@ try {
             throw Error("The configured preview server is unavailable");
           const { createServer } = await import("vite");
           previewHost = await createServer({
-            configFile: resolveRepositoryPath(
-              path.join("vite.preview.config.ts")
-            ),
+            configFile: webFile("vite.config.ts"),
           });
           await previewHost.listen();
         }
@@ -336,7 +335,8 @@ try {
                 report.fixtureBundle.sha256)
         ),
         file,
-        pixelPerfectRoot
+        pixelPerfectRoot,
+        repoRoot
       );
       await mkdir(directory, { recursive: true });
       if (reusedTests.length) {

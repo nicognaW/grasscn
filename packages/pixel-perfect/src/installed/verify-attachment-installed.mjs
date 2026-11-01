@@ -8,7 +8,8 @@ import { fileURLToPath } from "node:url";
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
+  webFile,
+  pixelPerfectFile,
 } from "@ppt/paths";
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 const repo = repoRoot,
@@ -20,7 +21,7 @@ const repo = repoRoot,
   { PNG } = require("pngjs"),
   browser = await chromium.launch({ channel: "msedge" });
 const item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === "attachment"),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
@@ -35,7 +36,7 @@ const item = JSON.parse(
   },
   files = item.files.map((f) => {
     const name = path.basename(f.path),
-      a = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+      a = fs.readFileSync(webFile(path.join(f.path))),
       b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
     assert.ok(
       canonical(a) === canonical(b),
@@ -53,8 +54,7 @@ try {
   ]) {
     const m = JSON.parse(
         fs.readFileSync(
-          resolveRepositoryPath(path.join("tests/reference", dir)) +
-            "/manifest.json"
+          pixelPerfectFile(path.join("tests/reference", dir)) + "/manifest.json"
         )
       ),
       cases = [];
@@ -133,7 +133,7 @@ try {
       const a = PNG.sync.read(await subject.screenshot()),
         b = PNG.sync.read(
           fs.readFileSync(
-            resolveRepositoryPath(path.join("tests/reference", dir)) +
+            pixelPerfectFile(path.join("tests/reference", dir)) +
               "/captures/" +
               c.name
           )
@@ -142,7 +142,7 @@ try {
       assert.equal(
         hash(
           fs.readFileSync(
-            resolveRepositoryPath(
+            pixelPerfectFile(
               path.join("tests/reference", dir, "captures", c.name)
             )
           )
@@ -169,7 +169,7 @@ try {
     }
     const expected = PNG.sync.read(
         fs.readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join("tests/reference", dir, "captures", m.cases[0].name)
           )
         )
@@ -185,9 +185,7 @@ try {
       );
     assert.equal(different, 1);
     assert.deepEqual(pageErrors, []);
-    const target = resolveRepositoryPath(
-      path.join("tests/reference/attachment")
-    );
+    const target = pixelPerfectFile(path.join("tests/reference/attachment"));
     fs.mkdirSync(target, { recursive: true });
     fs.writeFileSync(
       path.join(

@@ -3,13 +3,10 @@ import { readFileSync } from "node:fs";
 
 import { test, expect, type Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, referenceFile } from "@tests/paths";
 
 const provenance = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("tests/reference/sound-provenance.json", testRoot),
-    "utf8"
-  )
+  readFileSync(referenceFile("sound-provenance.json"), "utf8")
 );
 const voices = (page: Page) =>
   page.evaluate(

@@ -1,14 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("tests/reference/manifest.json", pixelPerfectRoot),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/manifest.json"), "utf8")
 );
 
 for (const mode of ["split", "fragments", "empty", "numeric"])
@@ -52,12 +49,7 @@ for (const mode of ["split", "fragments", "empty", "numeric"])
       );
       const actual = PNG.sync.read(actualBytes),
         expected = PNG.sync.read(
-          readFileSync(
-            resolveRepositoryPath(
-              `tests/reference/captures/${c.name}`,
-              pixelPerfectRoot
-            )
-          )
+          readFileSync(pixelPerfectFile(`tests/reference/captures/${c.name}`))
         );
       expect([actual.width, actual.height]).toEqual([
         expected.width,
@@ -68,10 +60,7 @@ for (const mode of ["split", "fragments", "empty", "numeric"])
 
 const cjk = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/button-cjk/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
     "utf8"
   )
 );
@@ -119,10 +108,7 @@ for (const mode of ["split", "fragments", "empty"])
       const a = PNG.sync.read(actualBytes),
         e = PNG.sync.read(
           readFileSync(
-            resolveRepositoryPath(
-              `tests/reference/button-cjk/captures/${c.name}`,
-              pixelPerfectRoot
-            )
+            pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
           )
         );
       expect([a.width, a.height]).toEqual([e.width, e.height]);

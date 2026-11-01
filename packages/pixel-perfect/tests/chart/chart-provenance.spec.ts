@@ -2,52 +2,37 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const hash = (b: Buffer) => createHash("sha256").update(b).digest("hex");
 for (const kind of ["fps", "pie"])
   test(`Chart ${kind} expected pixels come from pinned original full frames and source snapshots`, () => {
     const dir = `tests/reference/chart-${kind}`,
       m = JSON.parse(
-        readFileSync(
-          resolveRepositoryPath(`${dir}/manifest.json`, pixelPerfectRoot),
-          "utf8"
-        )
+        readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
       ),
       r = JSON.parse(
-        readFileSync(
-          resolveRepositoryPath(`${dir}/repeatability.json`, pixelPerfectRoot),
-          "utf8"
-        )
+        readFileSync(pixelPerfectFile(`${dir}/repeatability.json`), "utf8")
       );
     expect(
       hash(
         readFileSync(
-          resolveRepositoryPath(
-            `${dir}/source/ControlsReferenceMain.java`,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile(`${dir}/source/ControlsReferenceMain.java`)
         )
       )
     ).toBe(m.captureSourceSha256);
-    expect(
-      hash(
-        readFileSync(
-          resolveRepositoryPath(`${dir}/cases.json`, pixelPerfectRoot)
-        )
-      )
-    ).toBe(m.caseDefinitionSha256);
+    expect(hash(readFileSync(pixelPerfectFile(`${dir}/cases.json`)))).toBe(
+      m.caseDefinitionSha256
+    );
     expect(r.sourceJarSha256).toBe(m.sourceJarSha256);
     expect(r.captureSourceSha256).toBe(m.captureSourceSha256);
     expect(r.caseDefinitionSha256).toBe(m.caseDefinitionSha256);
     for (const c of m.cases) {
-      const bytes = readFileSync(
-          resolveRepositoryPath(`${dir}/captures/${c.name}`, pixelPerfectRoot)
-        ),
+      const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`)),
         expected = PNG.sync.read(bytes),
         frameName = `native-controls-p${c.page}-s${c.scale}.png`,
         frameBytes = readFileSync(
-          resolveRepositoryPath(`${dir}/frames/${frameName}`, pixelPerfectRoot)
+          pixelPerfectFile(`${dir}/frames/${frameName}`)
         ),
         frame = PNG.sync.read(frameBytes),
         pixels = Buffer.alloc(expected.width * expected.height * 4);

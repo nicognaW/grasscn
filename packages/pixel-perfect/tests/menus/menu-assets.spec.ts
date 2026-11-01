@@ -3,24 +3,18 @@ import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { menuCheckboxAtlas } from "@grasscn/web/ui/minecraft-menu-checkbox-assets";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const inventory = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/catalog/native-inventory.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
 const native = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/menu-parts/checkbox-atlas.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/menu-parts/checkbox-atlas.json"),
     "utf8"
   )
 );

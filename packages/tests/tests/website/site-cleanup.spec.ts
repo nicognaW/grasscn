@@ -1,12 +1,9 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 const index = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("preview/search.generated.json", testRoot),
-    "utf8"
-  )
+  readFileSync(webFile("search.generated.json"), "utf8")
 ) as { name: string; title: string; exports: string[] }[];
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 test("catalog consolidates pages and removes discarded controls and copy", async ({

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const base = new URL("../../../tests/reference/label/", import.meta.url);
 const provenance = JSON.parse(
@@ -20,7 +20,7 @@ const atlas = Object.fromEntries(
     { u0, u1, v0, v1 },
   ])
 );
-const target = resolveRepositoryPath("registry/ui/minecraft-label-atlas.ts");
+const target = webFile("registry/ui/minecraft-label-atlas.ts");
 await writeFile(
   target,
   "// Original default-font UVs observed in the Label native capture; pixels come from the original Unihex archive.\nexport const labelUnihexAtlas = " +

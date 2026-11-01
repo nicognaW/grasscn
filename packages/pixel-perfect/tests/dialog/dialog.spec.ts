@@ -2,14 +2,11 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const directory = "tests/reference/dialog";
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
 );
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -42,10 +39,7 @@ function compare(expected: PNG, actual: PNG) {
 test("Dialog comparator catches a one-pixel change", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${manifest.cases[0].name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${manifest.cases[0].name}`)
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -58,10 +52,7 @@ for (const directory of [
 ])
   test.describe(`Dialog native viewport matrix ${directory}`, () => {
     const manifest = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-        "utf8"
-      )
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
     );
     test.describe.configure({ mode: "parallel" });
     for (const c of manifest.cases)
@@ -137,10 +128,7 @@ for (const directory of [
           )
         );
         const bytes = readFileSync(
-          resolveRepositoryPath(
-            `${directory}/captures/${c.name}`,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile(`${directory}/captures/${c.name}`)
         );
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
         const actual = await page.screenshot({ animations: "disabled" }),

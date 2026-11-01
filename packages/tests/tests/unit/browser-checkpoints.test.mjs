@@ -11,7 +11,7 @@ import {
   reusableBrowserTests,
 } from "@grasscn/tests/checkpoints";
 import { testRoot } from "@grasscn/tests/paths";
-import { packageBin } from "@grasscn/tests/paths";
+import { packageBin } from "@grasscn/tests/tooling";
 
 test("browser file filters select exact basenames on Windows and POSIX", () => {
   const pattern = new RegExp(browserFilePattern("select.spec.ts"));

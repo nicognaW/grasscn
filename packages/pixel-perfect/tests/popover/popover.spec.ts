@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -33,10 +33,7 @@ function compare(expected: PNG, actual: PNG) {
 test("Popover comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/card/captures/card-c0-s1.png",
-          pixelPerfectRoot
-        )
+        pixelPerfectFile("tests/reference/card/captures/card-c0-s1.png")
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -50,10 +47,7 @@ for (const directory of [
   test.describe(`Popover original surface ${directory}`, () => {
     test.describe.configure({ mode: "parallel" });
     const manifest = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-        "utf8"
-      )
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
     );
     for (const c of manifest.cases)
       test(`Popover native pixels: ${c.name}`, async ({ page }, testInfo) => {
@@ -100,10 +94,7 @@ for (const directory of [
         expect(bounds.x).toBe(c.x * c.scale);
         expect(bounds.y).toBe(c.y * c.scale);
         const bytes = readFileSync(
-          resolveRepositoryPath(
-            `${directory}/captures/${c.name}`,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile(`${directory}/captures/${c.name}`)
         );
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
         const actual = await subject.screenshot({ animations: "disabled" }),

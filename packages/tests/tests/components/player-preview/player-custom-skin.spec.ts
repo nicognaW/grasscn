@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, fixtureFile } from "@tests/paths";
 import { PNG } from "pngjs";
 
 const fixture =
@@ -79,10 +79,7 @@ test("custom skin can fail, recover, and replace another model without remountin
       contentType: "image/png",
       headers: { "access-control-allow-origin": "*" },
       body: readFileSync(
-        resolveRepositoryPath(
-          `tests/fixture/${name === "Dream" ? "dream" : "steve"}-skin.png`,
-          testRoot
-        )
+        fixtureFile(`${name === "Dream" ? "dream" : "steve"}-skin.png`)
       ),
     });
   });

@@ -8,7 +8,8 @@ import { fileURLToPath } from "node:url";
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
+  webFile,
+  pixelPerfectFile,
 } from "@ppt/paths";
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 const repo = repoRoot,
@@ -23,7 +24,7 @@ const settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
   ),
   item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === "marker"),
   canonical = (b) => {
     let t = b
@@ -35,7 +36,7 @@ const settings = JSON.parse(
   },
   files = item.files.map((f) => {
     const name = path.basename(f.path),
-      a = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+      a = fs.readFileSync(webFile(path.join(f.path))),
       b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
     assert.ok(
       canonical(a) === canonical(b),
@@ -50,8 +51,7 @@ try {
   for (const dir of ["label", "separator"]) {
     const m = JSON.parse(
         fs.readFileSync(
-          resolveRepositoryPath(path.join("tests/reference", dir)) +
-            "/manifest.json"
+          pixelPerfectFile(path.join("tests/reference", dir)) + "/manifest.json"
         )
       ),
       results = [];
@@ -108,7 +108,7 @@ try {
         ),
         expected = PNG.sync.read(
           fs.readFileSync(
-            resolveRepositoryPath(path.join("tests/reference", dir)) +
+            pixelPerfectFile(path.join("tests/reference", dir)) +
               "/captures/" +
               c.name
           )
@@ -120,7 +120,7 @@ try {
       assert.equal(
         hash(
           fs.readFileSync(
-            resolveRepositoryPath(
+            pixelPerfectFile(
               path.join("tests/reference", dir, "captures", c.name)
             )
           )
@@ -153,7 +153,7 @@ try {
     }
     const expected = PNG.sync.read(
         fs.readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join("tests/reference", dir, "captures", m.cases[0].name)
           )
         )
@@ -169,11 +169,11 @@ try {
       );
     assert.equal(changedPixels, 1);
     assert.deepEqual(pageErrors, []);
-    fs.mkdirSync(resolveRepositoryPath(path.join("tests/reference/marker")), {
+    fs.mkdirSync(pixelPerfectFile(path.join("tests/reference/marker")), {
       recursive: true,
     });
     fs.writeFileSync(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join(
           "tests/reference/marker",
           dir === "label"

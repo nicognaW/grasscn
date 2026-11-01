@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const repo = path.resolve("."),
   hash = (value: Buffer) => createHash("sha256").update(value).digest("hex");
@@ -53,9 +53,8 @@ test.afterEach(async ({ page, browser }, info) => {
 test("Sidebar native constituent comparator rejects one changed pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          path.join(repo, "tests/reference/captures/normal-w200-s1.png"),
-          pixelPerfectRoot
+        pixelPerfectFile(
+          path.join(repo, "tests/reference/captures/normal-w200-s1.png")
         )
       )
     ),
@@ -79,10 +78,7 @@ test.describe("Sidebar original native constituent cases", () => {
     const directory = path.join(repo, "tests/reference", folder),
       manifest = JSON.parse(
         readFileSync(
-          resolveRepositoryPath(
-            path.join(directory, "manifest.json"),
-            pixelPerfectRoot
-          ),
+          pixelPerfectFile(path.join(directory, "manifest.json")),
           "utf8"
         )
       );
@@ -234,10 +230,7 @@ test.describe("Sidebar original native constituent cases", () => {
                   )
               );
             const expectedBytes = readFileSync(
-              resolveRepositoryPath(
-                path.join(directory, "captures", c.name),
-                pixelPerfectRoot
-              )
+              pixelPerfectFile(path.join(directory, "captures", c.name))
             );
             expect(hash(expectedBytes)).toBe(c.sha256);
             const actualBytes = await subject.screenshot(),

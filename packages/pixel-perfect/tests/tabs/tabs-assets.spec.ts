@@ -4,13 +4,11 @@ import { readFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftTabsAssets as assets } from "@grasscn/web/ui/minecraft-tabs-assets";
 import { tabsUnihexAtlas } from "@grasscn/web/ui/minecraft-tabs-atlas";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const json = (file: string) =>
-  JSON.parse(
-    readFileSync(resolveRepositoryPath(file, pixelPerfectRoot), "utf8")
-  );
+  JSON.parse(readFileSync(pixelPerfectFile(file), "utf8"));
 const decode = (uri: string) =>
   Buffer.from(uri.match(/base64,([A-Za-z0-9+/=]+)/)![1], "base64");
 test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {

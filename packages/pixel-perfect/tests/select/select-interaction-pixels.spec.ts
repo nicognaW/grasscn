@@ -2,16 +2,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/select/manifest.json",
-      pixelPerfectRoot
-    ),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/select/manifest.json"), "utf8")
 );
 for (const scale of [1, 2, 3])
   for (const mode of ["pointer", "keyboard"])
@@ -74,10 +68,7 @@ for (const scale of [1, 2, 3])
       const actualBytes = await popup.screenshot();
       const expected = PNG.sync.read(
         readFileSync(
-          resolveRepositoryPath(
-            `tests/reference/select/captures/${c.name}`,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile(`tests/reference/select/captures/${c.name}`)
         )
       );
       writeFileSync(testInfo.outputPath("actual.png"), actualBytes);

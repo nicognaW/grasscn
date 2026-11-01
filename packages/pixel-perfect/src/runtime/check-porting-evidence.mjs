@@ -5,10 +5,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 
 export async function verifyPortingEvidence(root) {
-  const bytes = (name) => readFile(resolveRepositoryPath(name, root));
+  const bytes = (name) => readFile(evidenceFile(name, root));
   const json = async (name) => JSON.parse(await bytes(name));
   const digest = (data) => createHash("sha256").update(data).digest("hex");
   const trading = "tests/reference/trading/scrollbar/";

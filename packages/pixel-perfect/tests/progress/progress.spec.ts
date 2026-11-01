@@ -7,14 +7,11 @@ import {
   minecraftProgressAssets,
   minecraftProgressRgba,
 } from "@grasscn/web/ui/minecraft-progress-assets";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/progress/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/progress/manifest.json"),
     "utf8"
   )
 ) as {
@@ -59,9 +56,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Progress comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/progress/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/progress/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -89,10 +85,7 @@ test.describe("Progress native matrix", () => {
       const card = page.locator('[data-slot="progress"]');
       await expect(card).toBeVisible();
       const expectedBytes = await readFile(
-        resolveRepositoryPath(
-          `tests/reference/progress/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/progress/captures/${c.name}`)
       );
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256
@@ -123,10 +116,7 @@ test.describe("Progress native matrix", () => {
 test("Progress retains every original boss-bar PNG", () => {
   const provenance = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/progress/asset-provenance.json",
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
       "utf8"
     )
   );
@@ -219,10 +209,7 @@ for (const scale of [1, 2, 3])
     const actual = PNG.sync.read(actualBytes);
     const expected = PNG.sync.read(
       await readFile(
-        resolveRepositoryPath(
-          `tests/reference/progress/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/progress/captures/${c.name}`)
       )
     );
     expect(compare(expected, actual).mismatchedPixels).toBe(0);

@@ -5,8 +5,9 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, url] = process.argv.slice(2);
@@ -18,7 +19,7 @@ const root = repoRoot,
   consumer = path.resolve(consumerArgument),
   sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const registry = JSON.parse(
-    await readFile(resolveRepositoryPath(path.join("registry.json")), "utf8")
+    await readFile(webFile(path.join("registry.json")), "utf8")
   ),
   item = registry.items.find((item) => item.name === "input-otp"),
   settings = JSON.parse(
@@ -36,7 +37,7 @@ const canonical = (bytes) => {
 };
 for (const entry of item.files) {
   const name = path.basename(entry.path),
-    source = await readFile(resolveRepositoryPath(path.join(entry.path))),
+    source = await readFile(webFile(path.join(entry.path))),
     installed = await readFile(path.join(consumer, "src/components/ui", name));
   assert.equal(
     canonical(installed),
@@ -57,7 +58,7 @@ execFileSync(
   { cwd: consumer, stdio: "pipe" }
 );
 
-const reference = resolveRepositoryPath(path.join("tests/reference/input-otp")),
+const reference = pixelPerfectFile(path.join("tests/reference/input-otp")),
   manifest = JSON.parse(
     await readFile(path.join(reference, "manifest.json"), "utf8")
   ),

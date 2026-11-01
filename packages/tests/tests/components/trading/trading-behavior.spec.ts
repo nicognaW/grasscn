@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, referenceFile } from "@tests/paths";
 const base =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 const url = (sample: object = {}) =>
@@ -11,10 +11,7 @@ const url = (sample: object = {}) =>
 test("trading original sound bytes decode in the browser", async ({ page }) => {
   const provenance = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/native-expansion/trading-sound-provenance.json",
-        testRoot
-      ),
+      referenceFile("native-expansion/trading-sound-provenance.json"),
       "utf8"
     )
   );

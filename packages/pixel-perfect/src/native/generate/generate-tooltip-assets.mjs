@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const input = process.argv[2];
 if (!input)
@@ -11,7 +11,7 @@ if (!input)
   );
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -19,7 +19,7 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const sprites = {},
   sources = {};
 const placementBytes = await readFile(
-  resolveRepositoryPath("tests/reference/tooltip/atlas-placement.json")
+  pixelPerfectFile("tests/reference/tooltip/atlas-placement.json")
 );
 const placement = JSON.parse(placementBytes);
 const locations = {};
@@ -77,20 +77,18 @@ for (const name of ["background", "frame"]) {
   };
 }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-tooltip-sprites.ts"),
+  webFile("registry/ui/minecraft-tooltip-sprites.ts"),
   `// Original Minecraft artwork: Mojang Studios. Pieces are exact crops of original PNGs.\nexport const minecraftTooltipSprites = ${JSON.stringify(sprites)} as const\nexport const minecraftTooltipAtlas = ${JSON.stringify({ width: atlasWidth, height: atlasHeight, locations })} as const\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/tooltip/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/tooltip/asset-provenance.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,
       sources,
       atlasPlacementSha256: hash(placementBytes),
       atlasProbeSourceSha256: hash(
-        await readFile(
-          resolveRepositoryPath("tests/reference/AtlasProbeMain.java")
-        )
+        await readFile(pixelPerfectFile("tests/reference/AtlasProbeMain.java"))
       ),
       rendering:
         "Original background/frame with separate nine-slice metadata, native runtime atlas coordinates and source-alpha GPU blending; original ASCII glyph metrics and masks. Exact pixels depend on viewport and screen position. Solid CSS backdrops are composited; image/gradient backdrops retain original CSS surfaces without exact compositing proof.",

@@ -3,14 +3,11 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/tabs-extra/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/tabs-extra/manifest.json"),
     "utf8"
   )
 ) as {
@@ -64,9 +61,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Tabs comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/tabs-extra/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/tabs-extra/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -134,10 +130,7 @@ test.describe("Tabs extra native matrix", () => {
       for (const label of await card.locator("[data-mc-label-ready]").all())
         await expect(label).toHaveAttribute("data-mc-label-ready", "true");
       const expectedBytes = await readFile(
-        resolveRepositoryPath(
-          `tests/reference/tabs-extra/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/tabs-extra/captures/${c.name}`)
       );
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256

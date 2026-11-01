@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const directory = "tests/reference/select-extra";
 const read = async (file) => JSON.parse(await readFile(file, "utf8"));
@@ -31,7 +31,7 @@ const atlas = Object.fromEntries(
   ])
 );
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-select-atlas.ts"),
+  webFile("registry/ui/minecraft-select-atlas.ts"),
   "// Original baked glyph UVs observed after native Select rendering; observer-on and observer-off captures match exactly.\nexport const selectUnihexAtlas = " +
     JSON.stringify(atlas) +
     "\n"

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 function compare(expected: PNG, actual: PNG) {
@@ -34,10 +34,7 @@ function compare(expected: PNG, actual: PNG) {
 test("Structural pixel comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/captures/normal-w200-s1.png",
-          pixelPerfectRoot
-        )
+        pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -55,13 +52,7 @@ test.describe("Structural native constituents", () => {
         : []),
     ]) {
       const manifest = JSON.parse(
-          readFileSync(
-            resolveRepositoryPath(
-              `${directory}/manifest.json`,
-              pixelPerfectRoot
-            ),
-            "utf8"
-          )
+          readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
         ),
         part = directory.endsWith("/label")
           ? "text"
@@ -146,10 +137,7 @@ test.describe("Structural native constituents", () => {
                   )
               );
               const expectedBytes = readFileSync(
-                resolveRepositoryPath(
-                  `${directory}/captures/${c.name}`,
-                  pixelPerfectRoot
-                )
+                pixelPerfectFile(`${directory}/captures/${c.name}`)
               );
               expect(
                 createHash("sha256").update(expectedBytes).digest("hex")

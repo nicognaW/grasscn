@@ -4,23 +4,17 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftBadgeAssets } from "@grasscn/web/ui/minecraft-badge-assets";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 test.describe.configure({ mode: "parallel" });
 const directory = "tests/reference/badge-advancement",
   manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
   );
 test("Badge advancement comparator detects one changed pixel", () => {
   const a = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${manifest.cases[0].name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${manifest.cases[0].name}`)
       )
     ),
     b = PNG.sync.read(PNG.sync.write(a));
@@ -39,7 +33,7 @@ for (const c of manifest.cases)
     await expect(subject).toHaveAttribute("data-slot", "badge");
     await page.mouse.move(0, 0);
     const bytes = readFileSync(
-      resolveRepositoryPath(`${directory}/captures/${c.name}`, pixelPerfectRoot)
+      pixelPerfectFile(`${directory}/captures/${c.name}`)
     );
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
     const actual = await subject.screenshot(),
@@ -62,13 +56,7 @@ for (const c of manifest.cases)
 
 test("Badge embeds unchanged original advancement frames/panels and diamond artwork", () => {
   const provenance = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(
-        `${directory}/asset-provenance.json`,
-        pixelPerfectRoot
-      ),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/asset-provenance.json`), "utf8")
   );
   for (const record of provenance) {
     const bytes = Buffer.from(

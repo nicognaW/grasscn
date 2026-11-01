@@ -4,7 +4,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { normalizeCasePath, relativeCaseFile } from "@grasscn/tests/case-paths";
-import { repoRoot, pixelPerfectRoot, packageBin } from "@ppt/paths";
+import { packageBin } from "@grasscn/tests/tooling";
+import { repoRoot, pixelPerfectRoot } from "@ppt/paths";
 
 export const browserRoot = fileURLToPath(new URL("../..", import.meta.url));
 const suiteConfig = path.join(browserRoot, "playwright.config.ts");

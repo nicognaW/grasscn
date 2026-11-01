@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-const names = JSON.parse(
-  readFileSync(resolveRepositoryPath("preview/demos.json", testRoot), "utf8")
-).map((c: { name: string }) => c.name);
+const names = JSON.parse(readFileSync(webFile("demos.json"), "utf8")).map(
+  (c: { name: string }) => c.name
+);
 for (const viewport of [
   { width: 1440, height: 1000 },
   { width: 390, height: 844 },

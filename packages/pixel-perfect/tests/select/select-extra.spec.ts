@@ -3,14 +3,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const directory = "tests/reference/select-extra";
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
 ) as {
   cases: {
     name: string;
@@ -35,10 +32,7 @@ const manifest = JSON.parse(
 test("Select comparator catches a one-pixel change", () => {
   const expected = PNG.sync.read(
     readFileSync(
-      resolveRepositoryPath(
-        `${directory}/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(`${directory}/captures/${manifest.cases[0].name}`)
     )
   );
   const actual = PNG.sync.read(PNG.sync.write(expected));
@@ -121,10 +115,7 @@ test.describe("Select CJK native matrix", () => {
       const actualBytes = await subject.screenshot();
       writeFileSync(testInfo.outputPath("actual.png"), actualBytes);
       const expectedBytes = readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256

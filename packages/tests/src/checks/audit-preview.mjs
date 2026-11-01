@@ -2,16 +2,13 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath } from "@tests/paths";
+import { repoRoot, webFile } from "@tests/paths";
 const origin = process.argv[2] ?? "http://127.0.0.1:5176/",
   out = path.resolve(
     process.argv[3] ?? path.join(repoRoot, ".pixel-perfect-test/preview-audit")
   ),
   catalog = JSON.parse(
-    await readFile(
-      resolveRepositoryPath("preview/catalog.generated.json"),
-      "utf8"
-    )
+    await readFile(webFile("catalog.generated.json"), "utf8")
   );
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: "msedge" }),

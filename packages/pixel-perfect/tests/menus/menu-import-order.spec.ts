@@ -1,14 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/menu-parts/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/menu-parts/manifest.json"),
     "utf8"
   )
 );
@@ -61,10 +58,7 @@ for (const component of ["dropdown-menu", "context-menu", "menubar"])
       );
       const expected = PNG.sync.read(
           readFileSync(
-            resolveRepositoryPath(
-              `tests/reference/menu-parts/captures/${c.name}`,
-              pixelPerfectRoot
-            )
+            pixelPerfectFile(`tests/reference/menu-parts/captures/${c.name}`)
           )
         ),
         actual = PNG.sync.read(actualBytes);

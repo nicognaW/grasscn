@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const repo = path.resolve(".");
@@ -53,9 +53,8 @@ test.afterEach(async ({ page, browser }, info) => {
 
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      path.join(repo, "tests/reference/pagination-arrow/manifest.json"),
-      pixelPerfectRoot
+    pixelPerfectFile(
+      path.join(repo, "tests/reference/pagination-arrow/manifest.json")
     ),
     "utf8"
   )
@@ -79,9 +78,8 @@ for (const c of manifest.cases)
     if (c.state.includes("hover")) await subject.hover();
     else if (c.state === "focus") await subject.focus();
     const bytes = readFileSync(
-      resolveRepositoryPath(
-        path.join(repo, "tests/reference/pagination-arrow/captures", c.name),
-        pixelPerfectRoot
+      pixelPerfectFile(
+        path.join(repo, "tests/reference/pagination-arrow/captures", c.name)
       )
     );
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);

@@ -3,13 +3,15 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { repoRoot, resolveRepositoryPath } from "@tests/paths";
+import { repoRoot, webRoot } from "@tests/paths";
 
 const rootArgument = process.argv.indexOf("--root");
 const root =
   rootArgument < 0 ? repoRoot : path.resolve(process.argv[rootArgument + 1]);
-const resolve = (...names) => resolveRepositoryPath(path.join(...names), root);
-const json = async (name) => JSON.parse(await readFile(resolve(name), "utf8"));
+const sourceRoot = rootArgument < 0 ? webRoot : root;
+const resolve = (...names) => path.resolve(root, ...names);
+const json = async (name, directory = root) =>
+  JSON.parse(await readFile(path.resolve(directory, name), "utf8"));
 const radix = (name) => /^(?:@radix-ui\/|radix-ui(?:@|\/|$))/.test(name);
 const cmdk = (name) => /^cmdk(?:@|\/|$)/.test(name);
 const vaul = (name) => /^vaul(?:@|\/|$)/.test(name);
@@ -17,7 +19,7 @@ const banned = (name) => radix(name) || vaul(name);
 const manifest = await json("package.json");
 const lock = Bun.JSON5.parse(await readFile(resolve("bun.lock"), "utf8"));
 assert.equal(lock.lockfileVersion, 2, "Unsupported Bun lockfile format");
-const registry = await json("registry.json");
+const registry = await json("registry.json", sourceRoot);
 const failures = [];
 const packages = lock.packages ?? {};
 const metadata = (location) => packages[location]?.[2] ?? {};
@@ -131,8 +133,8 @@ for (const item of registry.items) {
       failures.push(`registry ${item.name}: ${name}`);
   }
 }
-async function inspect(directory) {
-  for (const entry of await readdir(resolve(directory), {
+async function inspect(directory, absolute) {
+  for (const entry of await readdir(absolute, {
     withFileTypes: true,
   })) {
     const relative = path.posix.join(directory, entry.name);
@@ -144,9 +146,9 @@ async function inspect(directory) {
         )
       )
         continue;
-      await inspect(relative);
+      await inspect(relative, path.join(absolute, entry.name));
     } else if (/\.[cm]?[jt]sx?$/.test(entry.name)) {
-      const source = await readFile(resolve(relative), "utf8");
+      const source = await readFile(path.join(absolute, entry.name), "utf8");
       for (const match of source.matchAll(
         /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["']([^"']+)["']/g
       )) {
@@ -159,19 +161,22 @@ async function inspect(directory) {
     }
   }
 }
-await inspect("registry");
-await inspect("preview");
+await inspect("registry", path.join(sourceRoot, "registry"));
+await inspect(
+  "preview",
+  rootArgument < 0 ? webRoot : path.join(root, "preview")
+);
 if (process.argv.includes("--built")) {
   const expected = new Set([
     "registry.json",
     ...registry.items.map((item) => `${item.name}.json`),
   ]);
-  for (const filename of await readdir(resolve("public/r"))) {
+  for (const filename of await readdir(path.join(sourceRoot, "public/r"))) {
     if (filename.endsWith(".json") && !expected.has(filename))
       failures.push(`obsolete built payload: ${filename}`);
   }
   for (const item of registry.items) {
-    const payload = await json(`public/r/${item.name}.json`);
+    const payload = await json(`public/r/${item.name}.json`, sourceRoot);
     for (const name of payload.dependencies ?? []) {
       if (banned(name) || (cmdk(name) && !includesCommand(item)))
         failures.push(`built ${item.name}: ${name}`);

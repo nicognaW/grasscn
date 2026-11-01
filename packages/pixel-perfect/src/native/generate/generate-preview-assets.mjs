@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 const input = process.argv[2];
 if (!input)
   throw new Error(
@@ -10,7 +10,7 @@ if (!input)
   );
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -35,12 +35,9 @@ for (const [variable, filename] of [
   sources[member] = { sha256, embeddedBytes: "unchanged" };
 }
 css.push("}");
+await writeFile(webFile("minecraft-theme-assets.css"), css.join("\n") + "\n");
 await writeFile(
-  resolveRepositoryPath("preview/minecraft-theme-assets.css"),
-  css.join("\n") + "\n"
-);
-await writeFile(
-  resolveRepositoryPath("preview/assets.provenance.json"),
+  webFile("assets.provenance.json"),
   JSON.stringify({ sourceJarSha256: inventory.jarSha256, sources }, null, 2) +
     "\n"
 );

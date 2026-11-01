@@ -5,8 +5,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import {
+  repoRoot,
+  webFile,
+  repositoryFile,
+  pixelPerfectFile,
+} from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 const [consumerArgument, origin, definitionArgument, manifestArgument] =
   process.argv.slice(2);
@@ -22,7 +29,7 @@ const repo = repoRoot,
 const item = definitionArgument
   ? JSON.parse(fs.readFileSync(path.resolve(definitionArgument), "utf8"))
   : JSON.parse(
-      fs.readFileSync(resolveRepositoryPath(path.join("registry.json")), "utf8")
+      fs.readFileSync(webFile(path.join("registry.json")), "utf8")
     ).items.find((item) => item.name === "item");
 assert.ok(
   item?.name === "item",
@@ -42,7 +49,7 @@ const settings = JSON.parse(
   };
 const files = item.files.map((file) => {
   const filename = path.basename(file.path),
-    source = fs.readFileSync(resolveRepositoryPath(path.join(file.path))),
+    source = fs.readFileSync(webFile(path.join(file.path))),
     installed = fs.readFileSync(
       path.join(consumer, "src/components/ui", filename)
     );
@@ -81,9 +88,7 @@ for (const [part, directory] of [
   ["separator", "separator"],
 ]) {
   const manifestFile = `tests/reference/${directory}/manifest.json`,
-    manifest = JSON.parse(
-      fs.readFileSync(resolveRepositoryPath(manifestFile), "utf8")
-    );
+    manifest = JSON.parse(fs.readFileSync(evidenceFile(manifestFile), "utf8"));
   if (manifestArgument && manifestArgument !== manifestFile) continue;
   for (const c of manifest.cases)
     for (const mode of part === "row"
@@ -103,7 +108,7 @@ const browser = await chromium.launch({ channel: "msedge" }),
   results = [],
   errors = [];
 let next = 0;
-const failures = resolveRepositoryPath(
+const failures = repositoryFile(
   path.join(".pixel-perfect-test/item-installed-pixel-failures")
 );
 fs.mkdirSync(failures, { recursive: true });
@@ -217,7 +222,7 @@ async function worker() {
           )
       );
       const bytes = fs.readFileSync(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join(path.dirname(manifestFile), "captures", c.name)
         )
       );
@@ -287,7 +292,7 @@ for (const [manifestFile, output, part] of [
 ]) {
   if (manifestArgument && manifestArgument !== manifestFile) continue;
   const manifest = JSON.parse(
-      fs.readFileSync(resolveRepositoryPath(manifestFile), "utf8")
+      fs.readFileSync(evidenceFile(manifestFile), "utf8")
     ),
     cases = manifest.cases.map((c) => {
       const matching = results.filter(
@@ -314,7 +319,7 @@ for (const [manifestFile, output, part] of [
       };
     });
   fs.writeFileSync(
-    resolveRepositoryPath(path.join("tests/reference/item", output)),
+    pixelPerfectFile(path.join("tests/reference/item", output)),
     JSON.stringify(
       {
         command: "shadcn add <local-registry>/r/item.json --yes --overwrite",

@@ -3,17 +3,11 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/slider/manifest.json",
-      pixelPerfectRoot
-    ),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/slider/manifest.json"), "utf8")
 ) as {
   cases: {
     name: string;
@@ -57,9 +51,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Control comparator detects one changed pixel", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/slider/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/slider/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -73,10 +66,7 @@ for (const reference of manifest.cases) {
     page,
   }, testInfo) => {
     const bytes = await readFile(
-      resolveRepositoryPath(
-        `tests/reference/slider/captures/${reference.name}`,
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(`tests/reference/slider/captures/${reference.name}`)
     );
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       reference.sha256

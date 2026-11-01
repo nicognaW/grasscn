@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, referenceFile } from "@tests/paths";
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 const reference =
@@ -9,7 +9,7 @@ const reference =
   "tests/reference/trading/scrollbar";
 const probes = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(`${reference}/trading-scroll-events.json`, testRoot),
+    referenceFile(`trading/scrollbar/trading-scroll-events.json`),
     "utf8"
   )
 ) as Record<

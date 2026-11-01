@@ -1,23 +1,18 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-import {
-  repoRoot,
-  webRoot,
-  testRoot,
-  fixtureRoot,
-  referenceRoot,
-} from "../../../workspace-paths.mjs";
-export {
-  repoRoot,
-  webRoot,
-  testRoot,
-  fixtureRoot,
-  referenceRoot,
-  pixelPerfectRoot,
-  pixelPerfectTestRoot,
-  packageBin,
-  resolveRepositoryPath,
-} from "../../../workspace-paths.mjs";
+export const testRoot = path.resolve(
+  fileURLToPath(new URL("../", import.meta.url))
+);
+export const repoRoot = path.resolve(testRoot, "../..");
+export const repositoryRoot = repoRoot;
+export const webRoot = path.join(repoRoot, "apps/web");
+export const fixtureRoot = path.join(testRoot, "fixtures/renderer");
+export const referenceRoot = path.join(testRoot, "fixtures/reference");
+
+export const repositoryFile = (name: string, root = repoRoot) =>
+  path.resolve(root, name);
+export const webFile = (name: string) => path.resolve(webRoot, name);
 
 function ownedFile(root: string, name: string) {
   if (typeof name !== "string" || path.isAbsolute(name))

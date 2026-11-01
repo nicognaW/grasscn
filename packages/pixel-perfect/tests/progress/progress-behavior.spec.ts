@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test("Progress custom maximum and label retain native half-fill pixels", async ({
@@ -14,10 +14,7 @@ test("Progress custom maximum and label retain native half-fill pixels", async (
   await expect(progress).toHaveAttribute("aria-valuetext", "125 of 250 loaded");
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        "tests/reference/progress/captures/progress-c6-s2.png",
-        pixelPerfectRoot
-      )
+      pixelPerfectFile("tests/reference/progress/captures/progress-c6-s2.png")
     )
   );
   const actual = PNG.sync.read(await progress.screenshot());
@@ -35,10 +32,7 @@ test("Progress unknown value keeps indeterminate semantics on the native empty s
   await expect(progress).not.toHaveAttribute("aria-valuetext");
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        "tests/reference/progress/captures/progress-c0-s2.png",
-        pixelPerfectRoot
-      )
+      pixelPerfectFile("tests/reference/progress/captures/progress-c0-s2.png")
     )
   );
   const actual = PNG.sync.read(await progress.screenshot());

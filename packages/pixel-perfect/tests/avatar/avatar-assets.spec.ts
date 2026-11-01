@@ -3,15 +3,12 @@ import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftAvatarSkins } from "@grasscn/web/ui/minecraft-avatar-assets";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 test("All18 original skins retain their PNG bytes and rawRGBA including hat transparency", () => {
   const provenance = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/avatar/provenance.json",
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile("tests/reference/avatar/provenance.json"),
       "utf8"
     )
   );
@@ -32,19 +29,13 @@ test("All18 original skins retain their PNG bytes and rawRGBA including hat tran
 test("Native Avatar reference guards pin real class members and no fake glyph observations", () => {
   const m = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/avatar/manifest.json",
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile("tests/reference/avatar/manifest.json"),
         "utf8"
       )
     ),
     p = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/avatar/provenance.json",
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile("tests/reference/avatar/provenance.json"),
         "utf8"
       )
     );

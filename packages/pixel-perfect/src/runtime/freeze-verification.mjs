@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot, webFile } from "@ppt/paths";
 
 assert.ok(process.argv[2], "Pass a new snapshot directory");
 const output = path.resolve(process.argv[2]);
@@ -34,7 +34,7 @@ for (const name of [...new Set(names)].sort()) {
   });
 }
 const map = JSON.parse(
-  await readFile(resolveRepositoryPath("registry/minecraft-map.json"), "utf8")
+  await readFile(webFile("registry/minecraft-map.json"), "utf8")
 );
 await writeFile(
   path.join(output, "source-manifest.json"),

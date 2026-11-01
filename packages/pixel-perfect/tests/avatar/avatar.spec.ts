@@ -2,14 +2,11 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const dir = "tests/reference/avatar",
   manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(dir + "/manifest.json", pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(dir + "/manifest.json"), "utf8")
   );
 function difference(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
@@ -23,10 +20,7 @@ function difference(a: PNG, b: PNG) {
 test("Avatar comparator catches a changed pixel", () => {
   const a = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          dir + "/captures/" + manifest.cases[0].name,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(dir + "/captures/" + manifest.cases[0].name)
       )
     ),
     b = PNG.sync.read(PNG.sync.write(a));
@@ -63,7 +57,7 @@ test.describe("Actual original PlayerFaceExtractor", () => {
           )
       );
       const expected = readFileSync(
-        resolveRepositoryPath(dir + "/captures/" + c.name, pixelPerfectRoot)
+        pixelPerfectFile(dir + "/captures/" + c.name)
       );
       expect(createHash("sha256").update(expected).digest("hex")).toBe(
         c.sha256
@@ -93,13 +87,7 @@ test.describe("Actual original PlayerFaceExtractor", () => {
 });
 
 const labels = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/label/manifest.json",
-      pixelPerfectRoot
-    ),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf8")
 );
 test.describe("AvatarFallback original Label constituents", () => {
   test.describe.configure({ mode: "parallel" });
@@ -133,10 +121,7 @@ test.describe("AvatarFallback original Label constituents", () => {
           )
       );
       const expected = readFileSync(
-          resolveRepositoryPath(
-            "tests/reference/label/captures/" + c.name,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile("tests/reference/label/captures/" + c.name)
         ),
         actual = await page
           .locator("[data-subject]")

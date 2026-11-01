@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const base = new URL("../../../tests/reference/alert-dialog/", import.meta.url),
   bytes = await readFile(new URL("glyph-atlas.json", base));
@@ -20,7 +20,7 @@ const atlas = Object.fromEntries(
   ])
 );
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-confirmation-atlas.ts"),
+  webFile("registry/ui/minecraft-confirmation-atlas.ts"),
   'import type { UnihexAtlas } from "./minecraft-unifont-gpu"\n// Original glyph UVs observed in the ConfirmScreen native loading context.\nexport const confirmationUnihexAtlas: UnihexAtlas = ' +
     JSON.stringify(atlas) +
     "\n"

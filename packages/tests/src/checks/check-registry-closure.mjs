@@ -3,20 +3,20 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { repoRoot, resolveRepositoryPath } from "@tests/paths";
+import { repoRoot, webFile } from "@tests/paths";
 
 const root = repoRoot;
 const registry = JSON.parse(
-    await readFile(resolveRepositoryPath(path.join("registry.json")), "utf8")
+    await readFile(webFile(path.join("registry.json")), "utf8")
   ),
   errors = [],
   sources = new Map();
 for (const item of registry.items) {
   const included = new Set(
-    item.files.map((file) => resolveRepositoryPath(path.join(file.path)))
+    item.files.map((file) => webFile(path.join(file.path)))
   );
   for (const file of item.files) {
-    const absolute = resolveRepositoryPath(path.join(file.path));
+    const absolute = webFile(path.join(file.path));
     if (!sources.has(absolute))
       sources.set(absolute, await readFile(absolute, "utf8"));
     const source = sources.get(absolute);
@@ -24,7 +24,7 @@ for (const item of registry.items) {
       /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)(["'])(\.[^"']+|@\/components\/ui\/[^"']+)\1/g
     )) {
       const target = match[2].startsWith("@/components/ui/")
-        ? resolveRepositoryPath(
+        ? webFile(
             path.join("registry/ui", match[2].slice("@/components/ui/".length))
           )
         : path.resolve(path.dirname(absolute), match[2]);

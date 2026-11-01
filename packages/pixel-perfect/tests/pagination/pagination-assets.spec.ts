@@ -2,23 +2,17 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test("Pagination embeds all four original recipe-book arrow PNGs unchanged", () => {
   const source = readFileSync(
-      resolveRepositoryPath(
-        "registry/ui/minecraft-pagination-assets.css",
-        pixelPerfectRoot
-      ),
+      webFile("registry/ui/minecraft-pagination-assets.css"),
       "utf8"
     ),
     inventory = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/catalog/native-inventory.json",
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
         "utf8"
       )
     );

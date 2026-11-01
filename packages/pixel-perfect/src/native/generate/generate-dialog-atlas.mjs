@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const base = new URL("../../../tests/reference/dialog-extra/", import.meta.url);
 const provenance = JSON.parse(
@@ -21,7 +21,7 @@ const observed = JSON.parse(bytes),
     ])
   );
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-dialog-atlas.ts"),
+  webFile("registry/ui/minecraft-dialog-atlas.ts"),
   'import type { UnihexAtlas } from "../../../scripts/minecraft-unifont-gpu"\n// Original glyph UVs observed in the Dialog native loading context.\nexport const dialogUnihexAtlas: UnihexAtlas = ' +
     JSON.stringify(atlas) +
     "\n"

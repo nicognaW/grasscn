@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 export function compare(expected: PNG, actual: PNG) {
@@ -45,13 +45,13 @@ export function nativeTextTests(
   test(`${component} pixel comparator detects a changed pixel`, () => {
     const manifest = JSON.parse(
         readFileSync(
-          resolveRepositoryPath(`${directories[0]}/manifest.json`),
+          pixelPerfectFile(`${directories[0]}/manifest.json`),
           "utf8"
         )
       ),
       expected = PNG.sync.read(
         readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             `${directories[0]}/captures/${manifest.cases[0].name}`
           )
         )
@@ -62,10 +62,7 @@ export function nativeTextTests(
   });
   for (const directory of directories) {
     const manifest = JSON.parse(
-        readFileSync(
-          resolveRepositoryPath(`${directory}/manifest.json`),
-          "utf8"
-        )
+        readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
       ),
       parts =
         component === "typography"
@@ -151,7 +148,7 @@ export function nativeTextTests(
               )
           );
           const bytes = readFileSync(
-            resolveRepositoryPath(`${directory}/captures/${c.name}`)
+            pixelPerfectFile(`${directory}/captures/${c.name}`)
           );
           expect(createHash("sha256").update(bytes).digest("hex")).toBe(
             c.sha256

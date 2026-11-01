@@ -5,7 +5,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import {
+  repoRoot,
+  webFile,
+  pixelPerfectFile,
+  repositoryFile,
+} from "@ppt/paths";
 import { PNG } from "pngjs";
 const [consumerArg, nameArg, urlArg] = process.argv.slice(2);
 assert.ok(
@@ -20,7 +25,7 @@ const repo = repoRoot,
   hash = (b) => createHash("sha256").update(b).digest("hex"),
   browser = await chromium.launch({ channel: "msedge" });
 const item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === nameArg),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
@@ -36,7 +41,7 @@ const canonical = (b) => {
 };
 const files = item.files.map((entry) => {
   const name = path.basename(entry.path),
-    source = fs.readFileSync(resolveRepositoryPath(path.join(entry.path))),
+    source = fs.readFileSync(webFile(path.join(entry.path))),
     installed = fs.readFileSync(path.join(consumer, "src/components/ui", name));
   assert.equal(
     canonical(installed),
@@ -87,9 +92,7 @@ try {
         page.on("pageerror", (e) => errors.push(e.message));
         const all = [];
         for (const dir of ["card", "label"]) {
-          const folder = resolveRepositoryPath(
-              path.join("tests/reference", dir)
-            ),
+          const folder = pixelPerfectFile(path.join("tests/reference", dir)),
             m = JSON.parse(fs.readFileSync(path.join(folder, "manifest.json")));
           const cases = m.cases;
           const records = [];
@@ -162,7 +165,7 @@ try {
                 expected = PNG.sync.read(expectedBytes),
                 result = compare(expected, actual);
               // Keep capture artifacts outside the consumer's Vite/Tailwind watch root.
-              const out = resolveRepositoryPath(
+              const out = repositoryFile(
                 path.join(
                   ".pixel-perfect-test",
                   "installed-verification",
@@ -232,7 +235,7 @@ try {
   for (const r of report)
     for (const dataset of r.datasets) {
       const manifest = JSON.parse(
-        fs.readFileSync(resolveRepositoryPath(path.join(dataset.manifest)))
+        fs.readFileSync(pixelPerfectFile(path.join(dataset.manifest)))
       );
       const proof = {
         command: `shadcn add http://127.0.0.1:5173/r/${nameArg}.json --yes --overwrite`,
@@ -251,7 +254,7 @@ try {
         negativeControlMismatchedPixels: 1,
         renderVerificationUrl: base,
       };
-      const filename = resolveRepositoryPath(
+      const filename = pixelPerfectFile(
         path.join(
           "tests/reference",
           nameArg,

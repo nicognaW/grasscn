@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2])
@@ -109,9 +109,7 @@ test("Field is consolidated into Form", async ({ page }) => {
   await expect(
     nav.getByRole("link", { name: "Field", exact: true })
   ).toHaveCount(0);
-  const registry = JSON.parse(
-    readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
-  );
+  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf8"));
   const form = registry.items.find(
     (item: { name: string }) => item.name === "form"
   );

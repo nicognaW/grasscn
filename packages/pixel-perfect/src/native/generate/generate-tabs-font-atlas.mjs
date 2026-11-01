@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 
 const directory = "tests/reference/tabs-extra";
 const read = async (file) =>
-  JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"));
+  JSON.parse(await readFile(pixelPerfectFile(file), "utf8"));
 const manifest = await read(`${directory}/manifest.json`),
   repeat = await read(`${directory}/repeatability.json`);
 assert.deepEqual(repeat.glyphObservationEnabled, {
@@ -15,9 +15,7 @@ assert.deepEqual(repeat.glyphObservationEnabled, {
 });
 assert.equal(repeat.cases.length, manifest.cases.length);
 assert.ok(repeat.cases.every((c) => c.mismatchedPixels === 0));
-const bytes = await readFile(
-    resolveRepositoryPath(`${directory}/glyph-atlas.json`)
-  ),
+const bytes = await readFile(pixelPerfectFile(`${directory}/glyph-atlas.json`)),
   observed = JSON.parse(bytes);
 const codepoints = new Set(
   manifest.cases
@@ -34,7 +32,7 @@ const atlas = Object.fromEntries(
   ])
 );
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-tabs-atlas.ts"),
+  webFile("registry/ui/minecraft-tabs-atlas.ts"),
   "// Original baked glyph UVs observed after native Tabs rendering; observer-on and observer-off captures match exactly.\nexport const tabsUnihexAtlas = " +
     JSON.stringify(atlas) +
     "\n"
@@ -42,7 +40,7 @@ await writeFile(
 const assets = await read("tests/reference/tabs/asset-provenance.json"),
   font = await read("tests/reference/input-cjk/asset-provenance.json");
 await writeFile(
-  resolveRepositoryPath(`${directory}/asset-provenance.json`),
+  pixelPerfectFile(`${directory}/asset-provenance.json`),
   JSON.stringify(
     {
       ...assets,

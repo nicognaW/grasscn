@@ -4,15 +4,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const repo = repoRoot,
-  primary = resolveRepositoryPath(path.join("tests/reference/scroll-area")),
+  primary = pixelPerfectFile(path.join("tests/reference/scroll-area")),
   repeat = path.resolve(
     process.argv[2] ??
       path.join(repoRoot, ".pixel-perfect-test/scroll-area-repeat")
   ),
-  dest = resolveRepositoryPath(path.join("tests/reference/resizable")),
+  dest = pixelPerfectFile(path.join("tests/reference/resizable")),
   manifest = JSON.parse(fs.readFileSync(path.join(primary, "manifest.json"))),
   again = JSON.parse(fs.readFileSync(path.join(repeat, "manifest.json"))),
   hash = (b) => createHash("sha256").update(b).digest("hex");

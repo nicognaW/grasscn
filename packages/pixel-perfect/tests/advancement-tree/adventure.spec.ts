@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test.use({
@@ -18,13 +18,7 @@ test.use({
 const reference = path.resolve("tests/reference/advancement-tree");
 
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      path.join(reference, "manifest.json"),
-      pixelPerfectRoot
-    ),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile(path.join(reference, "manifest.json")), "utf8")
 );
 
 for (const c of manifest.cases)
@@ -49,10 +43,7 @@ for (const c of manifest.cases)
       .toBe(true);
     const actual = await page.locator("[data-subject]").screenshot(),
       expected = readFileSync(
-        resolveRepositoryPath(
-          path.join(reference, "captures", c.name),
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(path.join(reference, "captures", c.name))
       ),
       a = PNG.sync.read(actual),
       b = PNG.sync.read(expected);

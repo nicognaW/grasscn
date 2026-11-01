@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const input = process.argv[2];
 if (!input)
@@ -11,7 +11,7 @@ if (!input)
   );
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -39,11 +39,11 @@ for (let row = 0, y = 0; row < 3; y += heights[row++])
     pieces.push(uri(PNG.sync.write(piece)));
   }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-card-sprite.ts"),
+  webFile("registry/ui/minecraft-card-sprite.ts"),
   `// Original Minecraft popup artwork: Mojang Studios. Pieces are exact PNG crops.\nexport const minecraftCardSprite = ${JSON.stringify({ width: image.width, height: image.height, border: { left: border, top: border, right: border, bottom: border }, stretch: scaling.stretch_inner ?? false, image: uri(bytes), pieces })} as const\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/card/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/card/asset-provenance.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import opentype from "opentype.js";
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 // Remove OpenType's wall-clock timestamps and repair the standard checksums.
@@ -133,24 +133,21 @@ for (const [plane, glyphs] of groups) {
   });
   css += `@font-face { font-family: "Minecraft Unihex Metrics"; src: url("data:font/otf;base64,${stableFont(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+${(plane * 65536).toString(16)}-${(plane * 65536 + 65535).toString(16)}; }\n`;
 }
+await writeFile(webFile("registry/ui/minecraft-unifont-metrics.css"), css);
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-unifont-metrics.css"),
-  css
-);
-await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-unifont-data.ts"),
+  webFile("registry/ui/minecraft-unifont-data.ts"),
   `// Unchanged Minecraft indexed GNU Unifont ZIP, including its original license.\nexport const unifontZip = ${JSON.stringify(zip.toString("base64"))}\nexport const unifontOverrides = ${JSON.stringify(overrides)} as const\n`
 );
 const atlasBytes = await readFile(
-  resolveRepositoryPath("tests/reference/input-cjk/glyph-atlas.json")
+  pixelPerfectFile("tests/reference/input-cjk/glyph-atlas.json")
 );
 const atlas = JSON.parse(atlasBytes);
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-unifont-atlas.ts"),
+  webFile("registry/ui/minecraft-unifont-atlas.ts"),
   `// Observed Minecraft default-font UVs; original glyph pixels remain in the indexed Unihex archive.\nexport const nativeUnihexAtlas: Record<string, {u0:number;u1:number;v0:number;v1:number}> = ${JSON.stringify(Object.fromEntries(Object.entries(atlas).map(([code, glyph]) => [code, { u0: glyph.u0, u1: glyph.u1, v0: glyph.v0, v1: glyph.v1 }])))}\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/input-cjk/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/input-cjk/asset-provenance.json"),
   JSON.stringify(
     {
       assetIndex: "32",
@@ -159,9 +156,7 @@ await writeFile(
       glyphCount: count,
       glyphAtlasSha256: hash(atlasBytes),
       glyphProbeSourceSha256: hash(
-        await readFile(
-          resolveRepositoryPath("tests/reference/GlyphProbeMain.java")
-        )
+        await readFile(pixelPerfectFile("tests/reference/GlyphProbeMain.java"))
       ),
       rendering:
         "Original indexed Unihex pixels and size overrides; oversample2, shadow offset0.5, native 0.01-texel inset and observed default-font UVs for the tested glyphs. GPU projection uses the actual input screen position and viewport. Advance-only font preserves native DOM hit-testing. Other CJK glyphs retain original pixels but their atlas sampling is unverified.",

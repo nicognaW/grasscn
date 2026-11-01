@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot, pixelPerfectFile } from "@ppt/paths";
 
 const root = repoRoot;
 const [version, java, work, output] = process.argv
@@ -57,7 +57,7 @@ const libraries = metadata.libraries
   .filter(Boolean)
   .map((relative) => path.join(minecraftRoot, "libraries", relative));
 const classpath = [classes, jar, ...libraries].join(path.delimiter),
-  source = resolveRepositoryPath(
+  source = pixelPerfectFile(
     path.join("tests/reference/GrassIconReferenceMain.java")
   );
 const quote = (argument) =>

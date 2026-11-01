@@ -3,15 +3,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 test.describe.configure({ mode: "parallel" });
 const dir = "tests/reference/input-otp",
   manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(dir + "/manifest.json", pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(dir + "/manifest.json"), "utf8")
   );
 for (const c of manifest.cases)
   test(`InputOTP actual native EditBox slot ${c.name}`, async ({
@@ -47,9 +44,7 @@ for (const c of manifest.cases)
       String(c.state.startsWith("focus"))
     );
     await expect(mirror).toHaveAttribute("data-mc-ready", "true");
-    const bytes = readFileSync(
-      resolveRepositoryPath(`${dir}/captures/${c.name}`, pixelPerfectRoot)
-    );
+    const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`));
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
     const actualBytes = await subject.screenshot(),
       { mismatchedPixels, diff } = compare(
@@ -75,10 +70,7 @@ for (const c of manifest.cases)
 test("InputOTP comparator rejects one changed native pixel", () => {
   const e = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `${dir}/captures/${manifest.cases[0].name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${dir}/captures/${manifest.cases[0].name}`)
       )
     ),
     a = PNG.sync.read(PNG.sync.write(e));
