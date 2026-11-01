@@ -2,9 +2,16 @@ import { readFile } from "node:fs/promises";
 import http from "node:http";
 import { createConnection } from "node:net";
 import path from "node:path";
+import type { Duplex } from "node:stream";
 
 import { serveProductionFixture } from "@grasscn/tests/fixture";
 import { webRoot } from "@tests/paths";
+import type { PreviewServer } from "vite";
+
+const isMissingRegistryItem = (
+  error: unknown
+): error is NodeJS.ErrnoException =>
+  error instanceof Error && "code" in error && error.code === "ENOENT";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
@@ -12,6 +19,10 @@ export async function serveVerificationHosts({
   fixturePort,
   previewPort,
   proxyPort,
+}: {
+  fixturePort: number;
+  previewPort: number;
+  proxyPort: number;
 }) {
   const owned = new Set([fixturePort, previewPort]);
 
@@ -21,11 +32,13 @@ export async function serveVerificationHosts({
     [5176, previewPort],
   ]);
 
-  const sockets = new Set();
+  const sockets = new Set<Duplex>();
 
-  const track = (socket) => {
+  const track = <Socket extends Duplex>(socket: Socket) => {
     sockets.add(socket);
-    socket.once("close", () => sockets.delete(socket));
+    socket.once("close", () => {
+      sockets.delete(socket);
+    });
 
     return socket;
   };
@@ -36,9 +49,9 @@ export async function serveVerificationHosts({
     }
   };
 
-  let fixture;
-  let preview;
-  let proxy;
+  let fixture: Awaited<ReturnType<typeof serveProductionFixture>> | undefined;
+  let preview: PreviewServer | undefined;
+  let proxy: http.Server | undefined;
 
   try {
     fixture = await serveProductionFixture({ port: fixturePort });
@@ -47,11 +60,16 @@ export async function serveVerificationHosts({
       configFile: path.join(webRoot, "vite.config.ts"),
       preview: { host: "127.0.0.1", port: previewPort, strictPort: true },
     });
-    proxy = http.createServer(async (request, response) => {
+    const proxyServer = http.createServer(async (request, response) => {
       let target;
 
       try {
-        target = new URL(request.url, `http://${request.headers.host}`);
+        target = new URL(
+          // SAFETY: IncomingMessage.url is present for native HTTP server requests.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the server API URL and existing invalid-route catch behavior.
+          request.url as string,
+          `http://${request.headers.host}`
+        );
 
         if (
           target.protocol !== "http:" ||
@@ -62,13 +80,15 @@ export async function serveVerificationHosts({
 
         // The registry uses strict JSON routes, independently of Vite's SPA fallback.
         if (target.port === "5173") {
-          if (!["GET", "HEAD"].includes(request.method)) {
+          if (!["GET", "HEAD"].includes(request.method ?? "")) {
             response.writeHead(405, { Allow: "GET, HEAD" }).end();
 
             return;
           }
 
-          const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/.exec(target.pathname);
+          const match = /^\/r\/(?<item>[a-zA-Z0-9_-]+\.json)$/u.exec(
+            target.pathname
+          );
 
           if (!match) {
             response
@@ -90,17 +110,16 @@ export async function serveVerificationHosts({
               .end(request.method === "HEAD" ? undefined : content);
           } catch (error) {
             response
-              .writeHead(error.code === "ENOENT" ? 404 : 500, {
+              .writeHead(isMissingRegistryItem(error) ? 404 : 500, {
                 "Content-Type": "application/json",
               })
               .end(
                 request.method === "HEAD"
                   ? undefined
                   : JSON.stringify({
-                      error:
-                        error.code === "ENOENT"
-                          ? "Registry item not found"
-                          : "Unable to read registry",
+                      error: isMissingRegistryItem(error)
+                        ? "Registry item not found"
+                        : "Unable to read registry",
                     })
               );
           }
@@ -144,8 +163,8 @@ export async function serveVerificationHosts({
       });
       request.pipe(upstream);
     });
-    proxy.on("connection", track);
-    proxy.on("connect", (request, socket, head) => {
+    proxyServer.on("connection", track);
+    proxyServer.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
       let port;
@@ -192,18 +211,31 @@ export async function serveVerificationHosts({
       socket.once("close", () => upstream.destroy());
       upstream.once("close", () => socket.destroy());
     });
-    await new Promise((resolve, reject) => {
-      proxy.once("error", reject);
-      proxy.listen(proxyPort, "127.0.0.1", resolve);
+    proxy = proxyServer;
+    await new Promise<void>((resolve, reject) => {
+      proxyServer.once("error", reject);
+      proxyServer.listen(proxyPort, "127.0.0.1", resolve);
     });
+    const ownedFixture = fixture;
+    const ownedPreview = preview;
 
     return {
       close: async () => {
         closeSockets();
-        proxy.closeAllConnections();
-        await new Promise((resolve) => proxy.close(resolve));
-        await new Promise((resolve) => preview.httpServer.close(resolve));
-        await fixture.close();
+        proxyServer.closeAllConnections();
+        // oxlint-disable-next-line promise/avoid-new -- The existing adapter deliberately resolves even if close reports an error.
+        await new Promise<void>((resolve) => {
+          proxyServer.close(() => {
+            resolve();
+          });
+        });
+        // oxlint-disable-next-line promise/avoid-new -- Preserve existing close completion and ignored callback errors.
+        await new Promise<void>((resolve) => {
+          ownedPreview.httpServer.close(() => {
+            resolve();
+          });
+        });
+        await ownedFixture.close();
       },
       fixtureBundleUrl: fixture.url,
     };
@@ -213,7 +245,13 @@ export async function serveVerificationHosts({
     proxy?.close();
 
     if (preview) {
-      await new Promise((resolve) => preview.httpServer.close(resolve));
+      const ownedPreview = preview;
+      // oxlint-disable-next-line promise/avoid-new -- Cleanup preserves the existing resolve-on-close-callback behavior.
+      await new Promise<void>((resolve) => {
+        ownedPreview.httpServer.close(() => {
+          resolve();
+        });
+      });
     }
 
     await fixture?.close();

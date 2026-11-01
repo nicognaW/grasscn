@@ -71,11 +71,11 @@ const steps = [
     ],
     webRoot,
   ],
-  ["fixture-build", [path.join(testRoot, "cli/build-fixture.mjs")], testRoot],
+  ["fixture-build", [path.join(testRoot, "cli/build-fixture.ts")], testRoot],
   [
     "normal-tests",
     [
-      path.join(testRoot, "cli/test.mjs"),
+      path.join(testRoot, "cli/test.ts"),
       `--workers=${workers}`,
       `--output=${path.join(output, "browser")}`,
     ],

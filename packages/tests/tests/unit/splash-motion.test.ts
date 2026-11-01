@@ -8,9 +8,11 @@ import { splashMotion, splashTransform } from "@grasscn/web/splash-motion";
 
 const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
 
+// SAFETY: this retained reference provenance supplies the expected independent oracle hash.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the actual retained provenance read and hash assertion.
 const provenance = JSON.parse(
   readFileSync(referenceFile("title-splash/provenance.json"), "utf-8")
-);
+) as { expectedSha256: string };
 
 const rows = bytes
   .toString("utf-8")
@@ -21,7 +23,7 @@ const rows = bytes
 
 const buffer = new DataView(new ArrayBuffer(4));
 
-const bits = (value) => {
+const bits = (value: number) => {
   buffer.setFloat32(0, value);
 
   return buffer.getInt32(0);

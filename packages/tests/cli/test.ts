@@ -9,7 +9,7 @@ import { testRoot } from "@tests/paths";
 const args = process.argv.slice(2);
 const releaseForeground = foregroundLease();
 
-const execute = (command) => {
+const execute = (command: string[]) => {
   const result = spawnSync(process.execPath, command, {
     cwd: testRoot,
     env: { ...process.env, GRASSCN_BROWSER_SCOPE: "ordinary" },
@@ -26,7 +26,7 @@ const execute = (command) => {
 try {
   const units = fs
     .readdirSync(path.join(testRoot, "tests/unit"))
-    .filter((name) => name.endsWith(".test.mjs"))
+    .filter((name) => name.endsWith(".test.ts"))
     .map((name) => path.join(testRoot, "tests/unit", name));
 
   const unitStatus = args.includes("--list")
