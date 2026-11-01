@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
-import { spawn, execFileSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile, readdir, lstat, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { setTimeout as delay } from "node:timers/promises";
 
 import { repoRoot, webRoot, packageBin } from "@tests/paths";
 
 import { installedDependencyIdentity } from "./dependency-identity.mjs";
+import { serveOwnedHttpProcess } from "./owned-http-process.mjs";
 import { parseProductionIdentity } from "./verification-types.ts";
 
 /** @typedef {import("./verification-types.ts").SourceIdentity} SourceIdentity */
@@ -341,9 +341,8 @@ export const serveNextProduction = async ({
     probe.close(resolve);
   });
 
-  const child = spawn(
-    process.execPath,
-    [
+  const server = await serveOwnedHttpProcess({
+    args: [
       "--bun",
       packageBin("next", "next", webRoot),
       "start",
@@ -352,112 +351,26 @@ export const serveNextProduction = async ({
       "--port",
       String(port),
     ],
-    {
-      cwd: webRoot,
-      env: {
-        ...process.env,
-        GOMEMLIMIT: process.env.GOMEMLIMIT ?? "768MiB",
-        NEXT_TELEMETRY_DISABLED: "1",
-      },
-      stdio: ["ignore", "pipe", "pipe"],
-    }
-  );
-
-  /** @type {Error | undefined} */
-  let failure;
-  let logs = "";
-
-  /** @param {Buffer} value - Child standard-output bytes. */
-  const onStdout = (value) => {
-    logs += value.toString("utf-8");
-    process.stdout.write(value);
-  };
-
-  /** @param {Buffer} value - Child standard-error bytes. */
-  const onStderr = (value) => {
-    logs += value.toString("utf-8");
-    process.stderr.write(value);
-  };
-
-  child.stdout.on("data", onStdout);
-  child.stderr.on("data", onStderr);
-  child.on("error", (error) => {
-    failure = error;
+    cwd: webRoot,
+    env: {
+      ...process.env,
+      GOMEMLIMIT: process.env.GOMEMLIMIT ?? "768MiB",
+      NEXT_TELEMETRY_DISABLED: "1",
+    },
+    label: "Bun Next production server",
+    port,
+    readyText: "Ready in",
+    startupTimeout,
   });
-  const url = `http://127.0.0.1:${port}`;
 
-  const close = async () => {
-    if (child.exitCode !== null) {
-      return;
-    }
-
-    child.kill();
-    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-    await new Promise((resolve) => {
-      const timer = setTimeout(() => {
-        child.kill("SIGKILL");
-        resolve();
-      }, 5000);
-
-      child.once("exit", () => {
-        clearTimeout(timer);
-        resolve();
-      });
-    });
+  return {
+    close: server.close,
+    identity: {
+      ...identity,
+      bun: Bun.version,
+      pid: server.pid,
+      runtime: process.execPath,
+    },
+    url: server.url,
   };
-
-  try {
-    const deadline = Date.now() + startupTimeout;
-    let ready = false;
-
-    while (Date.now() < deadline) {
-      if (failure) {
-        throw failure;
-      }
-
-      if (child.exitCode !== null) {
-        throw new Error(
-          `Owned Bun Next server exited ${child.exitCode}: ${logs}`
-        );
-      }
-
-      if (logs.includes("Ready in")) {
-        try {
-          // eslint-disable-next-line no-await-in-loop -- Poll only after the previous readiness attempt finishes.
-          const response = await fetch(url, {
-            signal: AbortSignal.timeout(2500),
-          });
-
-          ready = response.ok;
-          // eslint-disable-next-line no-await-in-loop -- Release each response before the next readiness attempt.
-          await response.body?.cancel();
-
-          if (ready) {
-            break;
-          }
-        } catch {
-          // The owned server may still be starting; retry until the readiness deadline.
-        }
-      }
-
-      // eslint-disable-next-line no-await-in-loop, promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-      await delay(100);
-    }
-
-    assert.ok(ready, "Owned Bun Next production server did not become ready");
-
-    return {
-      close,
-      identity: {
-        ...identity,
-        bun: Bun.version,
-        pid: child.pid,
-        runtime: process.execPath,
-      },
-      url,
-    };
-  } catch (error) {
-    await close();
-    throw error;
-  }
 };

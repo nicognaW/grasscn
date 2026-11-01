@@ -11,12 +11,14 @@ export const ExampleTabs = ({
   filename,
   title,
   tabListWidth,
+  installation,
 }: {
   children: ReactNode;
   code: string;
   filename: string;
   title: string;
   tabListWidth?: number;
+  installation: ReactNode;
 }) => (
   <section /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
     className="documentation-example"
@@ -49,5 +51,6 @@ export const ExampleTabs = ({
         <CodeView code={code} filename={filename} />
       </TabsContent>
     </Tabs>
+    {installation}
   </section>
 );

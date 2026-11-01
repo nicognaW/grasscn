@@ -35,6 +35,7 @@ export interface PublicInputs {
   browserVersion: string;
   bun: string;
   copiedExamples: Record<string, string>;
+  exampleItems: Record<string, string[]>;
   environment: ConsumerEnvironment;
   manifests: ManualManifest[];
   projectRoot: string;
@@ -177,6 +178,10 @@ const isPublicInputs = (value: unknown): value is PublicInputs =>
   isString(value.browserVersion) &&
   isString(value.bun) &&
   isStringRecord(value.copiedExamples) &&
+  isRecord(value.exampleItems) &&
+  Object.values(value.exampleItems).every(
+    (items) => Array.isArray(items) && items.every(isString)
+  ) &&
   Array.isArray(value.manifests) &&
   value.manifests.every(isManifest);
 

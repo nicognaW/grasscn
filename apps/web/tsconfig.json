@@ -51,6 +51,7 @@
     "examples/**/*.tsx",
     "scripts/generate-component-symbols.mjs",
     "scripts/*.test.tsx",
+    "scripts/*.test.ts",
     "next.config.mjs",
     "postcss.config.mjs"
   ],

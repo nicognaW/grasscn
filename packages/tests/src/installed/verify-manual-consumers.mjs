@@ -34,6 +34,7 @@ import {
   parseManualManifest,
   encodeConsumerFile,
 } from "./consumer-validation-types.ts";
+import { assertExamplePrerequisites } from "./example-prerequisites.mjs";
 import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
 
 // Run through the workspace resource guard with an owned production website already available.
@@ -257,6 +258,7 @@ let server;
 try {
   let copiedExamples = publicInputs?.copiedExamples;
   let manifests = publicInputs?.manifests;
+  let exampleItems = publicInputs?.exampleItems;
 
   if (phase === "collect") {
     const page = await browser.newPage({
@@ -287,6 +289,17 @@ try {
     );
     report.exampleSha256 = hash(exampleCode);
     copiedExamples = { button: exampleCode };
+    exampleItems = {
+      button: await example
+        .locator("a[data-example-item]")
+        .evaluateAll((links) =>
+          links.map((link) =>
+            link instanceof HTMLAnchorElement
+              ? (link.dataset.exampleItem ?? "")
+              : ""
+          )
+        ),
+    };
 
     /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
     for (const [slug, title, filename] of [
@@ -324,6 +337,15 @@ try {
         `Complete visitor code: ${filename}`
       );
       copiedExamples[filename] = code;
+      exampleItems[filename] = await region
+        .locator("a[data-example-item]")
+        .evaluateAll((links) =>
+          links.map((link) =>
+            link instanceof HTMLAnchorElement
+              ? (link.dataset.exampleItem ?? "")
+              : ""
+          )
+        );
     }
     /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
@@ -333,31 +355,17 @@ try {
     manifests = [];
 
     /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
-    for (const name of [
-      "button",
-      "code-block",
-      "form",
-      "player-preview",
-      "map",
-      "sign",
-      "trading",
-      "resizable",
-      "typography",
-      "sidebar",
-      "data-table",
-      "input",
-      "date-picker",
-      "message",
-      "alert-dialog",
-      "command",
-      "chart",
-    ]) {
+    for (const name of new Set(Object.values(exampleItems).flat())) {
       /** @type {Response} */
       const response = await fetch(`${origin}/api/installation/${name}`);
       assert.ok(response.ok, `Public ${name} inventory available`);
       manifests.push(parseManualManifest(await response.json()));
     }
     /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
+
+    for (const [name, code] of Object.entries(copiedExamples)) {
+      assertExamplePrerequisites(code, exampleItems[name], manifests);
+    }
 
     report.publicManifestSha256 = hash(JSON.stringify(manifests));
     await writeFile(
@@ -368,6 +376,7 @@ try {
           bun: Bun.version,
           copiedExamples,
           environment: report.environment,
+          exampleItems,
           manifests,
           projectRoot,
           source,
@@ -389,6 +398,10 @@ try {
       Object.entries(copiedExamples).map(([name, code]) => [name, hash(code)])
     );
     report.publicManifestSha256 = hash(JSON.stringify(manifests));
+
+    for (const [name, code] of Object.entries(copiedExamples)) {
+      assertExamplePrerequisites(code, exampleItems[name], manifests);
+    }
 
     /** @type {Record<string, string>} */
     const dependencies = {

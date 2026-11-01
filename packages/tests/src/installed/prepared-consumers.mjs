@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
-import { execFileSync, spawn } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
 import { repoRoot, packageBin } from "@grasscn/tests/paths";
 
+import { serveOwnedHttpProcess } from "../runtime/owned-http-process.mjs";
 import {
   parseConsumerSnapshot,
   parseCollectedSnapshot,
@@ -318,111 +319,27 @@ export const servePreparedConsumer = async (
           "--strictPort",
         ];
 
-  const child = spawn(process.execPath, ["--bun", ...args], {
+  const server = await serveOwnedHttpProcess({
+    args: ["--bun", ...args],
     cwd: project.directory,
     env: consumerEnvironment(),
-    stdio: ["ignore", "pipe", "pipe"],
+    label: "prepared consumer",
+    port,
+    readyText: project.framework === "next" ? "Ready in" : "Local:",
+    startupTimeout,
   });
 
-  /** @type {Error | undefined} */
-  let failure;
-  let logs = "";
-
-  /** @param {Buffer} bytes - Owned process output. */
-  const onStdout = (bytes) => {
-    logs += bytes.toString("utf-8");
-    process.stdout.write(bytes);
+  return {
+    close: server.close,
+    identity: {
+      buildOutput: project.buildOutput.sha256,
+      bun: Bun.version,
+      id: project.id,
+      inputs: project.inputs.sha256,
+      installedBytes: project.installedBytes,
+      pid: server.pid,
+      runtime: process.execPath,
+    },
+    url: server.url,
   };
-
-  /** @param {Buffer} bytes - Owned process error output. */
-  const onStderr = (bytes) => {
-    logs += bytes.toString("utf-8");
-    process.stderr.write(bytes);
-  };
-
-  child.stdout.on("data", onStdout);
-  child.stderr.on("data", onStderr);
-  child.on("error", (error) => {
-    failure = error;
-  });
-
-  const close = async () => {
-    if (child.exitCode !== null) {
-      return;
-    }
-
-    child.kill();
-    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-    await new Promise((resolve) => {
-      const timer = setTimeout(() => {
-        child.kill("SIGKILL");
-        resolve();
-      }, 5000);
-
-      child.once("exit", () => {
-        clearTimeout(timer);
-        resolve();
-      });
-    });
-  };
-
-  const url = `http://127.0.0.1:${port}`;
-
-  try {
-    const deadline = Date.now() + startupTimeout;
-
-    while (Date.now() < deadline) {
-      if (failure) {
-        throw failure;
-      }
-
-      assert.ok(
-        child.exitCode === null,
-        `Owned consumer exited before readiness: ${logs}`
-      );
-
-      if (
-        project.framework === "next"
-          ? logs.includes("Ready in")
-          : logs.includes("Local:")
-      ) {
-        try {
-          // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
-          const response = await fetch(url, {
-            signal: AbortSignal.timeout(2500),
-          });
-
-          const ready = response.ok;
-          // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
-          await response.body?.cancel();
-
-          if (ready) {
-            return {
-              close,
-              identity: {
-                buildOutput: project.buildOutput.sha256,
-                bun: Bun.version,
-                id: project.id,
-                inputs: project.inputs.sha256,
-                installedBytes: project.installedBytes,
-                pid: child.pid,
-                runtime: process.execPath,
-              },
-              url,
-            };
-          }
-        } catch {
-          // The owned server may still be starting; retry until the readiness deadline.
-        }
-      }
-
-      // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
-      await Bun.sleep(100);
-    }
-
-    throw new Error("Owned prepared consumer readiness timed out");
-  } catch (error) {
-    await close();
-    throw error;
-  }
 };

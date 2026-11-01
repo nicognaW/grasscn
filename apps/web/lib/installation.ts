@@ -22,7 +22,7 @@ interface RegistryFile {
   target?: string;
 }
 
-const destination = (file: RegistryFile) => {
+export const installationDestination = (file: RegistryFile) => {
   if (file.target?.startsWith("@components/") === true) {
     return file.target.replace("@components/", "components/");
   }
@@ -69,7 +69,7 @@ export const installationManifest = async (
     dependencies: [...item.dependencies],
     files: await Promise.all(
       item.files.map(async (file, index) => {
-        const target = destination(file);
+        const target = installationDestination(file);
         const url = `/api/installation/${encodeURIComponent(name)}/${index}`;
         const info = await stat(sourcePath(file.path));
 
@@ -104,7 +104,7 @@ export const installationSource = async (name: string, identity: string) => {
   }
 
   const code = await readFile(sourcePath(file.path), "utf-8");
-  const consumerPath = destination(file);
+  const consumerPath = installationDestination(file);
 
   const resolve = (specifier: string) => {
     const original = path.posix.normalize(
@@ -124,7 +124,7 @@ export const installationSource = async (name: string, identity: string) => {
 
     let target = path.posix.relative(
       path.posix.dirname(consumerPath),
-      destination(dependency)
+      installationDestination(dependency)
     );
 
     if (!path.posix.extname(specifier)) {
