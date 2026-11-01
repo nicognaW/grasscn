@@ -21,8 +21,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           <Image
             src="/grasscn-logo.svg"
             alt="grasscn"
-            width={132}
-            height={48}
+            width={176}
+            height={64}
             unoptimized
             loading="eager"
           />

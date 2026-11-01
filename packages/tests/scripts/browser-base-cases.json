@@ -1350,6 +1350,21 @@
         "route": "/docs/components/button",
         "reason": "The actual390px default documentation page shows both Preview/Code tabs without sideways scrolling. Their production240px strip uses the already independently captured Preview/Code normal120logical GUI2 native cases on#202020; selected Code is reached through its visible control, no test geometry rewriting. No other content/state/scale selected."
       }
+    },
+    {
+      "file": "docs-header-branding.spec.ts",
+      "title": "default header grass at intrinsic SVG size matches original Minecraft GUI3",
+      "titlePath": [
+        "default header grass at intrinsic SVG size matches original Minecraft GUI3"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "Actualdefault header preservesbyte-pinned176x64SVG with48pxgrass atGUI3 on#202020; compareone originalgrassconstituent at1536x900/DPR1 againsttwoseparateoriginalMinecraftlaunches. NoDOMforcedgeometry. Compositebadge andentireheaderremainwebadaptations; noothernativevariantselected."
+      }
     }
   ]
 }
