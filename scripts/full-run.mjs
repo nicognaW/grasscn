@@ -152,7 +152,8 @@ export function authorizeFullRun(number, {executor = false, checkSnapshot = true
   }
   if (executor) {
     const thread = process.env.CODEX_THREAD_ID
-    if (!thread || thread === plan.initiatingThread) throw Error('Execute Full tests in a brand-new independent Codex session, not the initiating session or a subagent')
+    const session = process.env.CODEX_SESSION_ID
+    if (!thread || !session || thread !== session || session === plan.initiatingThread) throw Error('Execute Full tests in a brand-new independent Codex session; a child-agent thread or the initiating session cannot own execution')
     if (fs.realpathSync(fullRoot).toLowerCase() === plan.initiatingCheckout.toLowerCase()) throw Error('The executor must use its own isolated checkout, separate from the initiating session')
     if (path.resolve(fullRoot, git(['rev-parse', '--git-dir'])).toLowerCase() === path.resolve(fullRoot, git(['rev-parse', '--git-common-dir'])).toLowerCase()) throw Error('Full execution requires an isolated linked worktree, not the primary checkout')
   }
@@ -162,7 +163,7 @@ export function authorizeFullRun(number, {executor = false, checkSnapshot = true
 export function writeRunState(run, fields) {
   fs.mkdirSync(run.paths.directory, {recursive: true})
   const previous = fs.existsSync(run.paths.state) ? JSON.parse(fs.readFileSync(run.paths.state, 'utf8')) : {}
-  const state = {...previous, schemaVersion: 1, issue: run.number, repository: run.repo, commit: run.plan.commit, planHash: run.planHash, approval: run.approval, executionThread: process.env.CODEX_THREAD_ID, environment: run.plan.environment, updatedAt: new Date().toISOString(), ...fields}
+  const state = {...previous, schemaVersion: 1, issue: run.number, repository: run.repo, commit: run.plan.commit, planHash: run.planHash, approval: run.approval, executionThread: process.env.CODEX_THREAD_ID, executionSession: process.env.CODEX_SESSION_ID, environment: run.plan.environment, updatedAt: new Date().toISOString(), ...fields}
   const temp = `${run.paths.state}.${process.pid}.tmp`
   fs.writeFileSync(temp, json(state)); fs.renameSync(temp, run.paths.state)
   return state
@@ -244,7 +245,7 @@ export async function main(args = process.argv.slice(2)) {
   for (const key of options.keys()) if (!allowed.includes(key)) throw Error(`Unknown option ${key}`)
   if (command === 'plan') {
     const commit = options.get('--commit') ?? git(['rev-parse', 'HEAD'])
-    const plan = {schemaVersion: 1, scope: 'full', repository: repository(), commit, initiatingThread: process.env.CODEX_THREAD_ID, initiatingCheckout: fs.realpathSync(fullRoot), environment: environmentIdentity(), execution: {workers: Number(options.get('--workers') ?? 1), fixturePort: Number(options.get('--fixture-port') ?? 5274), previewPort: Number(options.get('--preview-port') ?? 5276), proxyPort: Number(options.get('--proxy-port') ?? 5277)}}
+    const plan = {schemaVersion: 1, scope: 'full', repository: repository(), commit, initiatingThread: process.env.CODEX_SESSION_ID, initiatingCheckout: fs.realpathSync(fullRoot), environment: environmentIdentity(), execution: {workers: Number(options.get('--workers') ?? 1), fixturePort: Number(options.get('--fixture-port') ?? 5274), previewPort: Number(options.get('--preview-port') ?? 5276), proxyPort: Number(options.get('--proxy-port') ?? 5277)}}
     parseRunPlan(runPlanBody(plan))
     if (git(['rev-parse', 'HEAD']) !== commit || git(['status', '--porcelain=v1', '--untracked-files=all'])) throw Error('Prepare the plan from a clean checkout of its exact commit with dependencies installed')
     console.log(runPlanBody(plan)); return
