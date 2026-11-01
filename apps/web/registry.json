@@ -7,7 +7,7 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Minecraft Button",
-      "description": "Java 26.2 Button with original textures, ASCII/Unihex glyphs and click sound. Native default variant and size; scale, refs, native props and render supported. 66 ASCII plus 96 fixed CJK native cases at scales 1–3. Other glyphs and scrolling labels remain unverified.",
+      "description": "Minecraft Button with original textures, ASCII/Unihex glyphs and click sound. Native default variant and size; scale, refs, native props and render supported. 66 ASCII plus 96 fixed CJK native cases at scales 1–3. Other glyphs and scrolling labels remain unverified.",
       "dependencies": [
         "class-variance-authority",
         "@base-ui/react"
@@ -71,7 +71,7 @@
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Minecraft Checkbox",
-      "description": "Vanilla Java 26.2 Checkbox appearance with standard Base UI/shadcn behavior. Native-reference matrix covers boolean states at scales 1–3; mixed state is a web composition.",
+      "description": "Vanilla Minecraft Checkbox appearance with standard Base UI/shadcn behavior. Native-reference matrix covers boolean states at scales 1–3; mixed state is a web composition.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -106,7 +106,7 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Minecraft Slider",
-      "description": "Original Java 26.2 slider track/handle, logical-pixel position rounding, and ASCII labels with standard shadcn/Base UI values and events. Native matrix: 225 single-thumb horizontal cases at scales 1–3. Range/RTL/vertical are web extensions.",
+      "description": "Original Minecraft slider track/handle, logical-pixel position rounding, and ASCII labels with standard shadcn/Base UI values and events. Native matrix: 225 single-thumb horizontal cases at scales 1–3. Range/RTL/vertical are web extensions.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -165,7 +165,7 @@
       "name": "input",
       "type": "registry:ui",
       "title": "Minecraft Input",
-      "description": "Vanilla Java 26.2 EditBox on a real HTML input: original textures, ASCII/Unihex pixels, caret, selection and clipping. 306 ASCII plus 72 fixed CJK native cases at scales 1–3. Other glyphs and raster environments remain unverified; unsupported types retain browser rendering.",
+      "description": "Vanilla Minecraft EditBox on a real HTML input: original textures, ASCII/Unihex pixels, caret, selection and clipping. 306 ASCII plus 72 fixed CJK native cases at scales 1–3. Other glyphs and raster environments remain unverified; unsupported types retain browser rendering.",
       "files": [
         {
           "path": "registry/ui/input.tsx",
@@ -224,7 +224,7 @@
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Minecraft Tooltip",
-      "description": "Original Java 26.2 tooltip background/frame and ASCII glyphs with Base UI tooltip behavior. Native comparisons cover 180 composited cases at scales 1–3, fixed screen geometry and solid backdrops. Complex backdrops and other browser/GPU environments are unverified.",
+      "description": "Original Minecraft tooltip background/frame and ASCII glyphs with Base UI tooltip behavior. Native comparisons cover 180 composited cases at scales 1–3, fixed screen geometry and solid backdrops. Complex backdrops and other browser/GPU environments are unverified.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -287,7 +287,7 @@
       "name": "card",
       "type": "registry:ui",
       "title": "Minecraft Card",
-      "description": "Original Java 26.2 popup panel with native nine-slice tiling, bold ASCII titles, wrapped descriptions and 18/12 logical-pixel spacing. Standard Card section APIs; arbitrary card layouts remain web compositions. 96 native reference cases at scales 1–3.",
+      "description": "Original Minecraft popup panel with native nine-slice tiling, bold ASCII titles, wrapped descriptions and 18/12 logical-pixel spacing. Standard Card section APIs; arbitrary card layouts remain web compositions. 96 native reference cases at scales 1–3.",
       "files": [
         {
           "path": "registry/ui/card.tsx",
@@ -342,7 +342,7 @@
       "name": "textarea",
       "type": "registry:ui",
       "title": "Minecraft Textarea",
-      "description": "Original Java 26.2 multiline editor surface, glyphs, caret, selection and scrollbar on a real HTML textarea. 72 ASCII plus 42 fixed CJK native cases at scales 1–3. Other glyph sampling and character-limit decorations remain unverified.",
+      "description": "Original Minecraft multiline editor surface, glyphs, caret, selection and scrollbar on a real HTML textarea. 72 ASCII plus 42 fixed CJK native cases at scales 1–3. Other glyph sampling and character-limit decorations remain unverified.",
       "files": [
         {
           "path": "registry/ui/textarea.tsx",
@@ -405,7 +405,7 @@
       "name": "label",
       "type": "registry:ui",
       "title": "Minecraft Label",
-      "description": "Java 26.2 StringWidget and MultiLineTextWidget appearance with accessible Base UI label association, original ASCII/Unihex glyphs, native 9-pixel line spacing, wrapping and centering. 84 native cases at scales 1–3; other glyphs and raster environments remain unverified.",
+      "description": "Minecraft StringWidget and MultiLineTextWidget appearance with accessible Base UI label association, original ASCII/Unihex glyphs, native 9-pixel line spacing, wrapping and centering. 84 native cases at scales 1–3; other glyphs and raster environments remain unverified.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -472,7 +472,7 @@
       "name": "separator",
       "type": "registry:ui",
       "title": "Minecraft Separator",
-      "description": "Original Java 26.2 menu header/footer separator textures, native horizontal orientation and 2-pixel height, with Base UI semantic/decorative behavior, refs and render composition. 108 repeated native cases at scales1–3; vertical orientation is unsupported.",
+      "description": "Original Minecraft menu header/footer separator textures, native horizontal orientation and 2-pixel height, with Base UI semantic/decorative behavior, refs and render composition. 108 repeated native cases at scales1–3; vertical orientation is unsupported.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -499,7 +499,7 @@
       "name": "scroll-area",
       "type": "registry:ui",
       "title": "Minecraft Scroll Area",
-      "description": "Java 26.2 vertical scrollbar and borderless clipped viewport with original scroller textures and native integer thumb geometry. Base UI viewport preserves native browser scrolling; refs, custom ScrollBar and render composition supported. 297 repeatable native cases at scales1–3. Horizontal and hover-only variants are unsupported.",
+      "description": "Minecraft vertical scrollbar and borderless clipped viewport with original scroller textures and native integer thumb geometry. Base UI viewport preserves native browser scrolling; refs, custom ScrollBar and render composition supported. 297 repeatable native cases at scales1–3. Horizontal and hover-only variants are unsupported.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -526,7 +526,7 @@
       "name": "progress",
       "type": "registry:ui",
       "title": "Minecraft Progress",
-      "description": "Original Java26.2 boss-bar appearance, all7 colors and5 notch styles, native182x5 geometry and float/discrete fill arithmetic. Original PNG and RGBA assets; notches use native source-alpha GPU blending. Base UI value/max semantics, labels, refs and render. 1284 steady-state native cases at scales1–3; arbitrary resizing and interpolation remain unverified.",
+      "description": "Original Minecraft boss-bar appearance, all7 colors and5 notch styles, native182x5 geometry and float/discrete fill arithmetic. Original PNG and RGBA assets; notches use native source-alpha GPU blending. Base UI value/max semantics, labels, refs and render. 1284 steady-state native cases at scales1–3; arbitrary resizing and interpolation remain unverified.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -557,7 +557,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Minecraft Tabs",
-      "description": "Original Java26.2 horizontal menu tabs, four native sprites, selected underline, timed overflowing labels and menu panel texture. Base UI selection, keyboard navigation, refs and composition. 822 repeated native cases at GUI scales1-3; fixed CJK glyph sampling context. Default visual variant only.",
+      "description": "Original Minecraft horizontal menu tabs, four native sprites, selected underline, timed overflowing labels and menu panel texture. Base UI selection, keyboard navigation, refs and composition. 822 repeated native cases at GUI scales1-3; fixed CJK glyph sampling context. Default visual variant only.",
       "dependencies": [
         "class-variance-authority",
         "@base-ui/react"
@@ -637,7 +637,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Minecraft Select",
-      "description": "Original Java26.2 cycle-button trigger with original language-selection-list surface and scrollbar. Base UI dropdown semantics, forms, refs, composition and CJK labels; 942 repeatable native surface cases at scales1-3. Native default trigger size only; popup behavior and optional grouping are web composition.",
+      "description": "Original Minecraft cycle-button trigger with original language-selection-list surface and scrollbar. Base UI dropdown semantics, forms, refs, composition and CJK labels; 942 repeatable native surface cases at scales1-3. Native default trigger size only; popup behavior and optional grouping are web composition.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -728,7 +728,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Minecraft Radio Group",
-      "description": "Exclusive selection using original Java26.2 Checkbox artwork and full21x17 empty-label widget bounds. Base UI keyboard navigation, forms, controlled values, refs and render; original click audio. 48 repeatable native item cases at GUI scales1-3 on two backgrounds. Group layout and exclusive selection are web composition; no circular radio variant.",
+      "description": "Exclusive selection using original Minecraft Checkbox artwork and full21x17 empty-label widget bounds. Base UI keyboard navigation, forms, controlled values, refs and render; original click audio. 48 repeatable native item cases at GUI scales1-3 on two backgrounds. Group layout and exclusive selection are web composition; no circular radio variant.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -767,7 +767,7 @@
       "name": "switch",
       "type": "registry:ui",
       "title": "Minecraft Switch",
-      "description": "Original Java26.2 CycleButton ON/OFF appearance with shadcn/Base UI switch semantics. Original sprites, English value labels, click audio, refs, forms and render composition. Default150x20 native button, 192 repeated native cases at four widths and GUI scales1-3 on two backgrounds. Default visual size only.",
+      "description": "Original Minecraft CycleButton ON/OFF appearance with shadcn/Base UI switch semantics. Original sprites, English value labels, click audio, refs, forms and render composition. Default150x20 native button, 192 repeated native cases at four widths and GUI scales1-3 on two backgrounds. Default visual size only.",
       "dependencies": [
         "@base-ui/react"
       ],
@@ -1062,7 +1062,7 @@
       "name": "popover",
       "type": "registry:ui",
       "title": "Minecraft Popover",
-      "description": "Original Java 26.2 popup surface and typography, with shadcn/Base UI anchoring and interactive web behavior. 156 native appearance cases at scales 1-3; fixed CJK glyphs, original textures and click sound.",
+      "description": "Original Minecraft popup surface and typography, with shadcn/Base UI anchoring and interactive web behavior. 156 native appearance cases at scales 1-3; fixed CJK glyphs, original textures and click sound.",
       "dependencies": [
         "class-variance-authority",
         "@base-ui/react"
@@ -1709,7 +1709,7 @@
       "name": "toggle",
       "type": "registry:ui",
       "title": "Minecraft Toggle",
-      "description": "Original Java 26.2 recipe-book filter textures with shadcn pressed-state semantics. Native 26 by 16 logical pixels at scales 1–3; default variant and size only. Optional web children are a composition outside the native icon-only pixel claim.",
+      "description": "Original Minecraft recipe-book filter textures with shadcn pressed-state semantics. Native 26 by 16 logical pixels at scales 1–3; default variant and size only. Optional web children are a composition outside the native icon-only pixel claim.",
       "dependencies": [
         "class-variance-authority",
         "@base-ui/react"
@@ -3066,7 +3066,7 @@
       "name": "sonner",
       "type": "registry:ui",
       "title": "Minecraft Sonner",
-      "description": "Original Java26.2 SystemToast skin and600ms squared motion; native ASCII/CJK wrapping and original in/out audio. Default palette, GUIscales1–3. Actions and rich layouts are composed web controls.",
+      "description": "Original Minecraft SystemToast skin and600ms squared motion; native ASCII/CJK wrapping and original in/out audio. Default palette, GUIscales1–3. Actions and rich layouts are composed web controls.",
       "dependencies": [
         "class-variance-authority",
         "sonner@2.0.8",

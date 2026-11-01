@@ -7,7 +7,7 @@ import { PNG } from "pngjs"
 const input = process.argv[2]
 if (!input) throw new Error("Pass the directory containing the four original checkbox PNGs")
 const inventory = JSON.parse(await readFile(resolveRepositoryPath("tests/reference/catalog/native-inventory.json"), "utf8"))
-const css = ["/* Minecraft Java 26.2 original textures: Mojang Studios. Native-sized derivatives use the documented nearest-sampling rule. */", ":root {"]
+const css = ["/* Minecraft original textures: Mojang Studios. Native-sized derivatives use the documented nearest-sampling rule. */", ":root {"]
 const assets = {}
 const hash = data => createHash("sha256").update(data).digest("hex")
 for (const name of ["checkbox", "checkbox_selected", "checkbox_highlighted", "checkbox_selected_highlighted"]) {

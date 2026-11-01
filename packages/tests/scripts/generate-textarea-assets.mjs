@@ -13,7 +13,7 @@ for (const name of ["scroller", "scroller_background"]) {
   assets[name] = `data:image/png;base64,${bytes.toString("base64")}`
   sources[member] = { sha256: hash(bytes), metadataSha256: hash(metadata), scaling: JSON.parse(metadata).gui.scaling }
 }
-await writeFile(resolveRepositoryPath("registry/ui/minecraft-textarea-assets.ts"), `// Original Minecraft Java 26.2 scroller artwork: Mojang Studios. Unchanged PNG bytes.\nexport const minecraftTextareaAssets = ${JSON.stringify(assets)} as const\n`)
+await writeFile(resolveRepositoryPath("registry/ui/minecraft-textarea-assets.ts"), `// Original Minecraft scroller artwork: Mojang Studios. Unchanged PNG bytes.\nexport const minecraftTextareaAssets = ${JSON.stringify(assets)} as const\n`)
 const font = JSON.parse(await readFile(resolveRepositoryPath("tests/reference/input-cjk/asset-provenance.json")))
 const glyphAtlas = await readFile(resolveRepositoryPath("tests/reference/input-cjk/glyph-atlas.json"))
 for (const directory of ["textarea", "textarea-cjk"]) {

@@ -1,6 +1,6 @@
 @layer components {
  .mc-table-container { width:100%; overflow-x:auto; --mc-pixel:calc(1px * var(--mc-scale,2)); }
- .mc-table { width:100%; caption-side:bottom; border-collapse:collapse; --mc-pixel:calc(1px * var(--mc-scale,2)); color:white; font-family:"Minecraft Pilot 26.2",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(9 * var(--mc-pixel)); image-rendering:pixelated; }
+ .mc-table { width:100%; caption-side:bottom; border-collapse:collapse; --mc-pixel:calc(1px * var(--mc-scale,2)); color:white; font-family:"Minecraft Bitmap",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(9 * var(--mc-pixel)); image-rendering:pixelated; }
  .mc-table-body { background-image:var(--mc-table-background); background-size:calc(16 * var(--mc-pixel)) calc(16 * var(--mc-pixel)); }
  .mc-table-header,.mc-table-footer { position:relative; }
  .mc-table-header::after,.mc-table-footer::before { content:""; display:block; position:absolute; left:0; width:100%; height:calc(2 * var(--mc-pixel)); background-size:calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); background-repeat:repeat-x; pointer-events:none; }

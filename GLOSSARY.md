@@ -1,6 +1,6 @@
 # grasscn
 
-A pixel-perfect port of the unmodified Minecraft Java Edition interface, provided as a shadcn components registry. The project's support scope is Minecraft Java Edition 26.2 and later.
+A pixel-perfect port of the unmodified Minecraft interface, provided as a shadcn components registry. The project's support scope is Minecraft Java Edition 26.2 and later.
 
 ## Language
 
@@ -12,13 +12,13 @@ _Avoid_: Minecraft skin
 A Minecraft player's character texture and its associated wide or slim body model.
 
 **Verified version**:
-A supported Minecraft Java Edition version against which a port has been verified for declared reference cases. Verification of one version does not establish verification of every supported version.
+A Minecraft version against which a UI port has been verified for declared reference cases. Verification of one version does not establish verification of every supported version.
 
 **Reference case**:
 A specific combination of content, UI state, dimensions, display conditions and time where applicable, with a known Minecraft result.
 
 **Captured reference**:
-An appearance or interaction result captured from Minecraft Java Edition, with its game version and reference conditions identified.
+An appearance or interaction result captured from Minecraft, with its game version and reference conditions identified.
 
 **Pixel-perfect match**:
 Zero differing pixels between a UI port and its captured reference for a particular reference case, including textures, glyphs, spacing and text shadows.

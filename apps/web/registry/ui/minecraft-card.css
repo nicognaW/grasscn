@@ -1,7 +1,7 @@
 @layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
 @layer components {
-  .mc-card { --mc-pixel: calc(1px * var(--mc-scale, 2)); position: relative; isolation: isolate; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(12 * var(--mc-pixel)); padding: calc(18 * var(--mc-pixel)); min-width: calc(12 * var(--mc-pixel)); color: #fff; font-family: "Minecraft Pilot 26.2", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); font-synthesis: none; border: 0; border-radius: 0; background: transparent; }
+  .mc-card { --mc-pixel: calc(1px * var(--mc-scale, 2)); position: relative; isolation: isolate; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(12 * var(--mc-pixel)); padding: calc(18 * var(--mc-pixel)); min-width: calc(12 * var(--mc-pixel)); color: #fff; font-family: "Minecraft Bitmap", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); font-synthesis: none; border: 0; border-radius: 0; background: transparent; }
   .mc-card > .mc-surface { z-index: -1; }
   .mc-card-header { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(12 * var(--mc-pixel)); text-align: center; min-width: 0; }
   .mc-card-header:has(> [data-slot="card-action"]) { grid-template-columns: minmax(0, 1fr) auto; }

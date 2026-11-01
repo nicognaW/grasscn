@@ -16,7 +16,7 @@
     border-radius: 0;
     outline: 0;
     color: #fff;
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     font-size: calc(8 * var(--mc-pixel));
     line-height: calc(10 * var(--mc-pixel));
     image-rendering: pixelated;

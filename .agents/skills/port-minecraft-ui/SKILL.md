@@ -1,6 +1,6 @@
 ---
 name: port-minecraft-ui
-description: Port Minecraft Java UI elements into this shadcn registry using original assets and rendering evidence, then verify pixels against captured references from Minecraft Java Edition. Use when adding a UI port or extending its verified states, sizes, glyphs, or environments.
+description: Port Minecraft UI elements into this shadcn registry using original assets and rendering evidence, then verify pixels against captured references from Minecraft. Use when adding a UI port or extending its verified states, sizes, glyphs, or environments.
 ---
 
 # Port Minecraft UI
@@ -28,7 +28,7 @@ Carry forward previously verified cases when extending a component. Report unsup
 
 ## 2. Recover assets and rendering rules
 
-Inspect the supplied artifact read-only. Use available REA archive tools for artifact identity/inventory and focused bytecode disassembly or decompilation for Java rendering methods. If REA is unavailable, use available local archive/disassembly tools and record that provenance accurately. Runtime captures remain necessary for runtime claims.
+Inspect the supplied artifact read-only. Use available REA archive tools for artifact identity/inventory and focused bytecode disassembly or decompilation for native rendering methods. If REA is unavailable, use available local archive/disassembly tools and record that provenance accurately. Runtime captures remain necessary for runtime claims.
 
 Record the artifact SHA-256, original member paths and hashes, and the classes/methods that establish each rendering rule. Determine:
 
@@ -45,7 +45,7 @@ Resolve effective resources through the version's asset index as well as the JAR
 
 ## 3. Capture independent references from Minecraft
 
-Run the original Minecraft renderer in an isolated game directory with controlled settings and the required Java runtime/libraries. A test-only screen may supply layout, content, and state; the actual Minecraft element, font, and rendering pipeline must produce the captured reference. Keep the user's game installation and saves intact.
+Run the original Minecraft renderer in an isolated game directory with controlled settings and the required runtime and libraries. A test-only screen may supply layout, content, and state; the actual Minecraft element, font, and rendering pipeline must produce the captured reference. Keep the user's game installation and saves intact.
 
 Adapt the existing native harness for the new element rather than replacing it with a hand-painted approximation. Retain full frames as provenance, then crop exact element bounds without resizing or recoloring. For transparent elements, use identical controlled backgrounds in both renderers and identify the comparison as composited pixels.
 

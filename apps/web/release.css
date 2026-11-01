@@ -1,4 +1,4 @@
-.grass-site {--grass-green:#55ff55;--site-header-height:80px;min-height:100vh;color:#fff;font-family:"Minecraft Pilot 26.2",monospace;font-size:16px;line-height:24px;text-shadow:2px 2px #3f3f3f;background-color:#555;background-image:url('./assets/dirt.png');background-blend-mode:multiply;background-size:64px 64px;image-rendering:pixelated;}
+.grass-site {--grass-green:#55ff55;--site-header-height:80px;min-height:100vh;color:#fff;font-family:"Minecraft Bitmap",monospace;font-size:16px;line-height:24px;text-shadow:2px 2px #3f3f3f;background-color:#555;background-image:url('./assets/dirt.png');background-blend-mode:multiply;background-size:64px 64px;image-rendering:pixelated;}
 .grass-site>.grass-home {background:rgb(0 0 0 / 45%);}
 .grass-site .grass-header {background:#202020;border-bottom:4px solid #555;}
 .grass-header nav a[aria-current=page]{color:#55ff55;}

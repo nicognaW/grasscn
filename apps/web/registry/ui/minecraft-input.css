@@ -18,7 +18,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     image-rendering: pixelated;
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     font-size: calc(8 * var(--mc-pixel));
     font-weight: 400;
     font-kerning: none;
@@ -31,7 +31,7 @@
   }
   .mc-input:disabled, .mc-input:read-only { color: #707070; caret-color: #707070; }
   .mc-input:disabled { cursor: not-allowed; }
-  .mc-input[data-mc-bitmap="true"] { font-family: "Minecraft Pilot 26.2", "Minecraft Unihex Metrics 26.2", monospace; color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent; }
+  .mc-input[data-mc-bitmap="true"] { font-family: "Minecraft Bitmap", "Minecraft Unihex Metrics", monospace; color: transparent; caret-color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input[data-mc-bitmap="true"]::placeholder { color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input[data-mc-bitmap="true"]::selection { background: transparent; color: transparent; -webkit-text-fill-color: transparent; }
   .mc-input::placeholder { opacity: 1; color: #555; }

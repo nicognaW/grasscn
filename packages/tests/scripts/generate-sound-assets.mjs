@@ -23,7 +23,7 @@ assert.deepEqual(JSON.parse(definitions.bytes)[event].sounds, ["random/click_ste
 const resource = "minecraft/sounds/random/click_stereo.ogg"
 const sound = await original(resource)
 assert.equal(sound.sha1, "f0ca66561f832bf2f60b393837297c2692367cd5")
-await writeFile(resolveRepositoryPath("registry/ui/minecraft-sound-assets.ts"), `// Unmodified Minecraft Java 26.2 ui.button.click asset from asset index 32.\nexport const minecraftClickSound = "data:audio/ogg;base64,${sound.bytes.toString("base64")}"\n`)
+await writeFile(resolveRepositoryPath("registry/ui/minecraft-sound-assets.ts"), `// Unmodified Minecraft ui.button.click asset from asset index 32.\nexport const minecraftClickSound = "data:audio/ogg;base64,${sound.bytes.toString("base64")}"\n`)
 await writeFile(resolveRepositoryPath("tests/reference/sound-provenance.json"), JSON.stringify({ minecraftVersion: "26.2", assetIndex: 32,
   assetIndexSha256: hash(indexBytes), soundDefinitionsSha1: definitions.sha1, soundDefinitionsSha256: definitions.sha256,
   event, resource, sha1: sound.sha1, sha256: sound.sha256, size: sound.bytes.length, pitch: 1, volume: .25,

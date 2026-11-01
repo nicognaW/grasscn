@@ -42,12 +42,12 @@ for (let code = 32; code <= 126; code++) {
 }
 await writeFile(resolveRepositoryPath("registry/ui/minecraft-font.ts"), `// Original ASCII bitmap glyph [x, y, advance] metrics, code points 32..126.\nexport const minecraftGlyphs = ${JSON.stringify(glyphs)} as const\n`)
 const sources = { "ascii.png": createHash("sha256").update(atlasBytes).digest("hex") }
-let css = `/* Generated from Minecraft Java 26.2 assets. Original artwork remains Mojang's; local pilot only. */\n`
+let css = `/* Generated from Minecraft assets. Original artwork remains Mojang's; local pilot only. */\n`
 // Class-only buttonVariants() consumers cannot insert bitmap spans. Supply the same
 // glyph shapes as a web font; <Button> uses bitmap masks for verified exact pixels.
-const font = new opentype.Font({ familyName: "Minecraft Pilot 26.2", styleName: "Regular",
+const font = new opentype.Font({ familyName: "Minecraft Bitmap", styleName: "Regular",
   unitsPerEm: 8 * unit, ascender: 7 * unit, descender: -unit, glyphs: outlineGlyphs })
-css += `@font-face { font-family: "Minecraft Pilot 26.2"; src: url("data:font/otf;base64,${Buffer.from(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+0020-007E; }\n`
+css += `@font-face { font-family: "Minecraft Bitmap"; src: url("data:font/otf;base64,${Buffer.from(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+0020-007E; }\n`
 css += `.mc-button { --mc-ascii-atlas: url("data:image/png;base64,${atlasBytes.toString("base64")}"); --mc-atlas-size: ${atlas.width}; }\n`
 
 for (const [state, filename] of [["normal", "button.png"], ["highlighted", "button_highlighted.png"], ["disabled", "button_disabled.png"]]) {
