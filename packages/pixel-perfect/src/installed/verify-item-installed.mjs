@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url"
 import {spawnSync} from "node:child_process"
 import assert from "node:assert/strict"
 const [consumerArgument,origin,definitionArgument,manifestArgument]=process.argv.slice(2)
-assert.ok(consumerArgument&&origin,"Usage: bun scripts/verify-item-installed.mjs <consumer> <fixture-url> [registry-item-file] [registered-native-manifest]")
+assert.ok(consumerArgument&&origin,"Usage: bun src/installed/verify-item-installed.mjs <consumer> <fixture-url> [registry-item-file] [registered-native-manifest]")
 const repo=repoRoot,consumer=path.resolve(consumerArgument),sha=b=>createHash("sha256").update(b).digest("hex"),tasks=[],negativeControls=[]
 const item=definitionArgument?JSON.parse(fs.readFileSync(path.resolve(definitionArgument),"utf8")):JSON.parse(fs.readFileSync(resolveRepositoryPath(path.join("registry.json")),"utf8")).items.find(item=>item.name==="item")
 assert.ok(item?.name==="item","Need an actual shadcn Item registry definition")

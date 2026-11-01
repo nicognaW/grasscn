@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url"
 import {chromium,expect} from "@playwright/test"
 import {PNG} from "pngjs"
 const [consumerArgument,url]=process.argv.slice(2)
-assert.ok(consumerArgument&&url,"Usage: bun scripts/verify-input-group-installed.mjs <consumer-dir> <consumer-url>")
+assert.ok(consumerArgument&&url,"Usage: bun src/installed/verify-input-group-installed.mjs <consumer-dir> <consumer-url>")
 const root=repoRoot,consumer=path.resolve(consumerArgument),sha=bytes=>createHash("sha256").update(bytes).digest("hex")
 const item=JSON.parse(await readFile(resolveRepositoryPath(path.join("registry.json")),"utf8")).items.find(item=>item.name==="input-group"),settings=JSON.parse(await readFile(path.join(consumer,"components.json"),"utf8")),files=[]
 const canonical=bytes=>{let s=bytes.toString().replace(/\/\*[\s\S]*?\*\//g,"").trim();if(settings.rsc===false)s=s.replace(/^["']use client["'];?\s*/,"");return s.replace(/^(?:\/\/[^\n]*\n\s*)+/,"")}

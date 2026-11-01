@@ -7,7 +7,7 @@ import{fileURLToPath}from"node:url"
 import{PNG}from"pngjs"
 import{createHash}from"node:crypto"
 const [consumerArg,componentArg,urlArg]=process.argv.slice(2)
-assert.ok(consumerArg&&["sonner"].includes(componentArg)&&urlArg,"Usage: bun scripts/verify-toast-installed.mjs <consumer> <sonner> <fixture-url>")
+assert.ok(consumerArg&&["sonner"].includes(componentArg)&&urlArg,"Usage: bun src/installed/verify-toast-installed.mjs <consumer> <sonner> <fixture-url>")
 const repo=repoRoot,consumer=path.resolve(consumerArg),ref=resolveRepositoryPath(path.join("tests/reference/toast")),manifest=JSON.parse(fs.readFileSync(`${ref}/manifest.json`)),smoke=false,cases=manifest.cases,results=[]
 
 const sha=b=>createHash("sha256").update(b).digest("hex")

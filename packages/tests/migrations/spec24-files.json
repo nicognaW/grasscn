@@ -290,5 +290,6 @@
   "packages/tests/scripts/build-fixture.mjs": "packages/tests/cli/build-fixture.mjs",
   "packages/tests/scripts/check-primitives.mjs": "packages/tests/src/checks/check-primitives.mjs",
   "packages/tests/scripts/check-registry-closure.mjs": "packages/tests/src/checks/check-registry-closure.mjs",
-  "packages/tests/scripts/test.mjs": "packages/tests/cli/test.mjs"
+  "packages/tests/scripts/test.mjs": "packages/tests/cli/test.mjs",
+  "packages/pixel-perfect/tests/verified-test.ts": "packages/pixel-perfect/src/harness/test.ts"
 }

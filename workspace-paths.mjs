@@ -38,7 +38,7 @@ export function resolveRepositoryPath(name, base = repoRoot) {
   return path.resolve(base, logical)
 }
 
-export function packageBin(name, binary, from = pixelPerfectRoot) {
+export function packageBin(name, binary, from = testRoot) {
   const require = createRequire(path.join(from, 'package.json'))
   let location
   try { location = require.resolve(`${name}/package.json`) }
