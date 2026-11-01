@@ -352,6 +352,7 @@ try {
       "command",
       "chart",
     ]) {
+      /** @type {Response} */
       const response = await fetch(`${origin}/api/installation/${name}`);
       assert.ok(response.ok, `Public ${name} inventory available`);
       manifests.push(parseManualManifest(await response.json()));
@@ -407,6 +408,7 @@ try {
     }
 
     /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
+    // eslint-disable-next-line no-unreachable-loop -- Preparation continues and runtime closes the host before advancing through both fixed framework entries.
     for (const framework of ["vite", "next"]) {
       const consumer = path.join(projectRoot, framework);
       let dependencyIdentity;
@@ -481,6 +483,7 @@ try {
               !file.destination.includes("..") &&
                 !path.isAbsolute(file.destination)
             );
+            /** @type {Response} */
             const response = await fetch(`${origin}${file.url}?download=1`);
             assert.ok(response.ok, `Download complete ${file.destination}`);
             assert.equal(
@@ -875,9 +878,12 @@ try {
         await preview.scrollIntoViewIfNeeded();
         await preview.locator("canvas").waitFor({ state: "visible" });
         await consumerPage.waitForFunction(
-          (label) =>
-            document.querySelector(`[aria-label="${label}"]`)?.dataset.ready ===
-            "true",
+          (label) => {
+            const element = document.querySelector(`[aria-label="${label}"]`);
+
+            // eslint-disable-next-line unicorn/prefer-dom-node-dataset -- Query selectors expose Element; the generic attribute API preserves the native readiness contract.
+            return element?.getAttribute("data-ready") === "true";
+          },
           await preview.getAttribute("aria-label")
         );
         await preview.focus();
@@ -926,11 +932,14 @@ try {
 
       await sign.scrollIntoViewIfNeeded();
       await sign.locator("canvas").waitFor({ state: "visible" });
-      await consumerPage.waitForFunction(
-        () =>
-          document.querySelector('[aria-label="Standing sign"] canvas')?.dataset
-            .ready === "true"
-      );
+      await consumerPage.waitForFunction(() => {
+        const element = document.querySelector(
+          '[aria-label="Standing sign"] canvas'
+        );
+
+        // eslint-disable-next-line unicorn/prefer-dom-node-dataset -- Query selectors expose Element; the generic attribute API preserves the native readiness contract.
+        return element?.getAttribute("data-ready") === "true";
+      });
 
       const trading = consumerPage.getByRole("region", {
         exact: true,
@@ -946,7 +955,10 @@ try {
                 (images) =>
                   images.length > 0 &&
                   images.every(
-                    (image) => image.complete && image.naturalWidth === 16
+                    (image) =>
+                      image instanceof HTMLImageElement &&
+                      image.complete &&
+                      image.naturalWidth === 16
                   )
               )
         )
@@ -1259,3 +1271,4 @@ try {
     JSON.stringify({ error: report.error, output, status: report.status })
   );
 }
+
