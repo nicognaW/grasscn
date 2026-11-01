@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 
 const assets = process.argv[2];
 if (!assets)
@@ -33,11 +33,11 @@ const resource = "minecraft/sounds/random/click_stereo.ogg";
 const sound = await original(resource);
 assert.equal(sound.sha1, "f0ca66561f832bf2f60b393837297c2692367cd5");
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-sound-assets.ts"),
+  webFile("registry/ui/minecraft-sound-assets.ts"),
   `// Unmodified Minecraft ui.button.click asset from asset index 32.\nexport const minecraftClickSound = "data:audio/ogg;base64,${sound.bytes.toString("base64")}"\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/sound-provenance.json"),
+  pixelPerfectFile("tests/reference/sound-provenance.json"),
   JSON.stringify(
     {
       minecraftVersion: "26.2",

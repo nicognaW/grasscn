@@ -2,15 +2,12 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const arrowManifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/pagination-arrow/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/pagination-arrow/manifest.json"),
     "utf8"
   )
 );
@@ -40,10 +37,7 @@ for (const c of arrowManifest.cases)
       bytes = await arrow.screenshot(),
       actual = PNG.sync.read(bytes),
       expectedBytes = readFileSync(
-        resolveRepositoryPath(
-          `tests/reference/pagination-arrow/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/pagination-arrow/captures/${c.name}`)
       ),
       expected = PNG.sync.read(expectedBytes);
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(

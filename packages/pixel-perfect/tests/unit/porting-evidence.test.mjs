@@ -3,8 +3,9 @@ import assert from "node:assert/strict";
 import { mkdir, cp, mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 
-import { pixelPerfectTestRoot, resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectTestRoot } from "@ppt/paths";
 import { verifyPortingEvidence } from "@ppt/runtime/check-porting-evidence.mjs";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 
 test("evidence chain rejects corrupted inputs, generated outputs and stale trace identity", async () => {
   const scratchRoot = path.join(pixelPerfectTestRoot, "unit");
@@ -28,7 +29,7 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
   ];
   try {
     for (const file of files)
-      await cp(resolveRepositoryPath(file), path.join(root, file), {
+      await cp(evidenceFile(file), path.join(root, file), {
         recursive: true,
       });
     await verifyPortingEvidence(root);

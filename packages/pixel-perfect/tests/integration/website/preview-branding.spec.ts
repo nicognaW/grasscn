@@ -2,7 +2,8 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
@@ -10,20 +11,14 @@ const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["package.json", "package-lock.json", "registry.json"]) {
     const metadata = JSON.parse(
-      await readFile(resolveRepositoryPath(file, pixelPerfectRoot), "utf8")
+      await readFile(evidenceFile(file, pixelPerfectRoot), "utf8")
     );
     expect(metadata.name).toBe("grasscn");
     if (metadata.packages?.[""])
       expect(metadata.packages[""].name).toBe("grasscn");
   }
   const provenance = JSON.parse(
-    await readFile(
-      resolveRepositoryPath(
-        "preview/branding.provenance.json",
-        pixelPerfectRoot
-      ),
-      "utf8"
-    )
+    await readFile(webFile("branding.provenance.json"), "utf8")
   );
   expect(provenance.sourceJarSha256).toBe(
     "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
@@ -32,9 +27,7 @@ test("Grasscn project identity and native branding assets are consistent", async
     string,
     { sha256: string },
   ][]) {
-    const bytes = await readFile(
-      resolveRepositoryPath(`preview/assets/${file}`, pixelPerfectRoot)
-    );
+    const bytes = await readFile(webFile(`assets/${file}`));
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       record.sha256
     );
@@ -42,18 +35,12 @@ test("Grasscn project identity and native branding assets are consistent", async
   for (const c of provenance.cases) {
     const one = PNG.sync.read(
       await readFile(
-        resolveRepositoryPath(
-          `tests/reference/branding/native-one/${c.filename}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/branding/native-one/${c.filename}`)
       )
     );
     const two = PNG.sync.read(
       await readFile(
-        resolveRepositoryPath(
-          `tests/reference/branding/native-two/${c.filename}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/branding/native-two/${c.filename}`)
       )
     );
     expect(one.data.equals(two.data)).toBe(true);
@@ -86,9 +73,8 @@ test("Header keeps the original grass and badge asset exact at its native captur
   expect([image.width, image.height]).toEqual([176, 64]);
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        "tests/reference/branding/native-one/grass-block-black-s3.png",
-        pixelPerfectRoot
+      pixelPerfectFile(
+        "tests/reference/branding/native-one/grass-block-black-s3.png"
       )
     )
   );
@@ -115,12 +101,7 @@ test("Header keeps the original grass and badge asset exact at its native captur
   );
   expect(
     Buffer.from(iconBytes).equals(
-      await readFile(
-        resolveRepositoryPath(
-          "preview/assets/grass-block-16.png",
-          pixelPerfectRoot
-        )
-      )
+      await readFile(webFile("assets/grass-block-16.png"))
     )
   ).toBe(true);
   expect(errors).toEqual([]);

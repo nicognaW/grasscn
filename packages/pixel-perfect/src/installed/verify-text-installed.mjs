@@ -6,8 +6,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, name, url, manifestArgument, partArgument] =
@@ -27,8 +29,7 @@ assert.ok(
 );
 const repo = repoRoot,
   consumer = path.resolve(consumerArgument),
-  json = async (file) =>
-    JSON.parse(await readFile(resolveRepositoryPath(file), "utf8")),
+  json = async (file) => JSON.parse(await readFile(evidenceFile(file), "utf8")),
   sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const map = await json("registry/minecraft-map.json"),
   component = map.components.find((c) => c.name === name),
@@ -62,7 +63,7 @@ const settings = JSON.parse(
   files = [];
 for (const entry of item.files) {
   const filename = path.basename(entry.path),
-    source = await readFile(resolveRepositoryPath(path.join(entry.path))),
+    source = await readFile(webFile(path.join(entry.path))),
     installed = await readFile(
       installedRegistryFile(entry, consumer, settings)
     );
@@ -250,7 +251,7 @@ async function worker() {
           )
       );
       const bytes = await readFile(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join(path.dirname(group.manifestFile), "captures", c.name)
         )
       );
@@ -350,9 +351,9 @@ for (const group of groups) {
   const output = partArgument
     ? `tests/reference/${name}/diagnostic-${partArgument}.json`
     : (registered ?? `tests/reference/${name}/installation-verification.json`);
-  await mkdir(path.dirname(resolveRepositoryPath(output)), { recursive: true });
+  await mkdir(path.dirname(pixelPerfectFile(output)), { recursive: true });
   await writeFile(
-    resolveRepositoryPath(output),
+    pixelPerfectFile(output),
     JSON.stringify(
       {
         command: `shadcn add http://127.0.0.1:5173/r/${name}.json --yes --overwrite`,

@@ -3,7 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { foregroundLease } from "@grasscn/tests/coordination";
-import { testRoot, packageBin } from "@tests/paths";
+import { packageBin } from "@grasscn/tests/tooling";
+import { testRoot } from "@tests/paths";
 
 const args = process.argv.slice(2);
 const releaseForeground = foregroundLease();

@@ -4,11 +4,9 @@ import { readFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftSelectAssets } from "@grasscn/web/ui/minecraft-select-assets";
 import { selectUnihexAtlas } from "@grasscn/web/ui/minecraft-select-atlas";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 const json = (file: string) =>
-  JSON.parse(
-    readFileSync(resolveRepositoryPath(file, pixelPerfectRoot), "utf8")
-  );
+  JSON.parse(readFileSync(pixelPerfectFile(file), "utf8"));
 test("Select retains original list texture bytes", () => {
   const provenance = json("tests/reference/select/asset-provenance.json");
   for (const [name, uri] of Object.entries(minecraftSelectAssets)) {

@@ -11,11 +11,11 @@ import {
   testRoot,
   fixtureRoot,
   fixtureFile,
-  resolveRepositoryPath,
+  repositoryFile,
 } from "@tests/paths";
 
 const root = repoRoot;
-export const fixtureDirectory = resolveRepositoryPath(
+export const fixtureDirectory = repositoryFile(
   path.join(".pixel-perfect-test", "production-fixture", "dist")
 );
 const fallbackDirectory = fixtureRoot;
@@ -68,8 +68,7 @@ export function fixtureManifest(
 
 export async function buildProductionFixture() {
   // Vite empties this output directory. Check its resolved target before allowing that.
-  const intended =
-    resolveRepositoryPath(path.join(".pixel-perfect-test")) + path.sep;
+  const intended = repositoryFile(path.join(".pixel-perfect-test")) + path.sep;
   assert.ok(path.resolve(fixtureDirectory).startsWith(intended));
   if (fs.existsSync(fixtureDirectory))
     assert.ok(
@@ -80,7 +79,7 @@ export async function buildProductionFixture() {
   const { build } = await import("vite");
   await build({
     configFile: path.join(testRoot, "vite.config.ts"),
-    cacheDir: resolveRepositoryPath(
+    cacheDir: repositoryFile(
       path.join(".pixel-perfect-test", "production-fixture", "cache")
     ),
     build: {

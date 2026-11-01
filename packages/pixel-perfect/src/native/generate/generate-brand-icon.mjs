@@ -6,7 +6,7 @@ import path from "node:path";
 import { minecraftCardSprite } from "@grasscn/web/ui/minecraft-card-sprite";
 import { minecraftGlyphs } from "@grasscn/web/ui/minecraft-font";
 import { minecraftInputAssets } from "@grasscn/web/ui/minecraft-input-assets";
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [first, second] = process.argv.slice(2);
@@ -18,8 +18,8 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const one = JSON.parse(await readFile(path.join(first, "capture.json"))),
   two = JSON.parse(await readFile(path.join(second, "capture.json")));
 assert.deepEqual(one, two, "Native item capture identities differ");
-const assets = resolveRepositoryPath("preview/assets"),
-  references = resolveRepositoryPath("tests/reference/branding");
+const assets = webFile("assets"),
+  references = pixelPerfectFile("tests/reference/branding");
 await Promise.all([
   mkdir(assets, { recursive: true }),
   mkdir(references, { recursive: true }),
@@ -147,23 +147,23 @@ const provenance = {
   sourceAssets: {
     block: JSON.parse(
       await readFile(
-        resolveRepositoryPath("tests/reference/branding/model-assets.json")
+        pixelPerfectFile("tests/reference/branding/model-assets.json")
       )
     ),
     popup: JSON.parse(
       await readFile(
-        resolveRepositoryPath("tests/reference/card/asset-provenance.json")
+        pixelPerfectFile("tests/reference/card/asset-provenance.json")
       )
     ),
     asciiGlyphMetricsSha256: hash(
-      await readFile(resolveRepositoryPath("registry/ui/minecraft-font.ts"))
+      await readFile(webFile("registry/ui/minecraft-font.ts"))
     ),
     asciiRasterSha256: hash(Buffer.from(atlas.split(",")[1], "base64")),
   },
   generated,
 };
 await writeFile(
-  resolveRepositoryPath("preview/branding.provenance.json"),
+  webFile("branding.provenance.json"),
   JSON.stringify(provenance, null, 2) + "\n"
 );
 console.log(

@@ -2,14 +2,11 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const directory = "tests/reference/toggle",
   manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
   );
 const sha = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 function compare(expected: PNG, actual: PNG) {
@@ -41,10 +38,7 @@ function compare(expected: PNG, actual: PNG) {
 test("Toggle comparator rejects one altered pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${manifest.cases[0].name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${manifest.cases[0].name}`)
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -54,18 +48,12 @@ test("Toggle comparator rejects one altered pixel", () => {
 test("Toggle embeds the original four opaque recipe-filter PNGs", () => {
   const pins = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          `${directory}/asset-provenance.json`,
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile(`${directory}/asset-provenance.json`),
         "utf8"
       )
     ),
     css = readFileSync(
-      resolveRepositoryPath(
-        "registry/ui/minecraft-toggle-assets.css",
-        pixelPerfectRoot
-      ),
+      webFile("registry/ui/minecraft-toggle-assets.css"),
       "utf8"
     );
   const images = [
@@ -117,10 +105,7 @@ test.describe("Toggle native recipe-filter matrix", () => {
       const bounds = (await subject.boundingBox())!;
       expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);
       const expectedBytes = readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
       expect(sha(expectedBytes)).toBe(c.sha256);
       const actualBytes = await subject.screenshot(),

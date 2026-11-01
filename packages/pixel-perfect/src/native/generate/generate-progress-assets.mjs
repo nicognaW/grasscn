@@ -3,14 +3,14 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const directory = process.argv[2];
 if (!directory) throw new Error("Pass the original boss-bar PNG directory");
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -37,7 +37,7 @@ for (const [member, pin] of Object.entries(inventory.assets).filter(
 }
 assert.equal(Object.keys(assets).length, 22);
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-progress-assets.ts"),
+  webFile("registry/ui/minecraft-progress-assets.ts"),
   "// Original Minecraft boss-bar artwork: Mojang Studios. Unchanged PNG bytes and losslessly decoded original RGBA.\nexport const minecraftProgressAssets = " +
     JSON.stringify(assets) +
     " as const\nexport const minecraftProgressRgba = " +
@@ -45,7 +45,7 @@ await writeFile(
     " as const\n"
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/progress/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/progress/asset-provenance.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,

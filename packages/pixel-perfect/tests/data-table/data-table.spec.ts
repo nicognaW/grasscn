@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const repo = path.resolve(".");
@@ -53,10 +53,7 @@ test.afterEach(async ({ page, browser }, info) => {
 
 const labelManifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      path.join(repo, "tests/reference/label/manifest.json"),
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile(path.join(repo, "tests/reference/label/manifest.json")),
     "utf8"
   )
 );
@@ -100,9 +97,8 @@ test.describe("DataTable original native label constituents", () => {
             )
         );
         const bytes = readFileSync(
-          resolveRepositoryPath(
-            path.join(repo, "tests/reference/label/captures", c.name),
-            pixelPerfectRoot
+          pixelPerfectFile(
+            path.join(repo, "tests/reference/label/captures", c.name)
           )
         );
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);

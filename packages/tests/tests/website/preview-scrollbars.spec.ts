@@ -2,14 +2,11 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-assets";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 test("Page scrollbars embed the unchanged original game textures", () => {
-  const css = readFileSync(
-    resolveRepositoryPath("preview/minecraft-scrollbars.css", testRoot),
-    "utf8"
-  );
+  const css = readFileSync(webFile("minecraft-scrollbars.css"), "utf8");
   expect(css).toContain(minecraftTextareaAssets.scroller);
   expect(css).toContain(minecraftTextareaAssets.scroller_background);
 });
@@ -103,14 +100,9 @@ test("Retired components are absent from supported catalog and served payloads",
   page,
   request,
 }) => {
-  const registry = JSON.parse(
-      readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
-    ),
+  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf8")),
     map = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath("registry/minecraft-map.json", testRoot),
-        "utf8"
-      )
+      readFileSync(webFile("registry/minecraft-map.json"), "utf8")
     );
   expect(registry.items.length).toBe(map.components.length);
   const served = await (

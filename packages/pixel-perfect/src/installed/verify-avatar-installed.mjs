@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
+  pixelPerfectFile,
+  webFile,
 } from "@ppt/paths";
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 const repo = repoRoot,
@@ -19,7 +20,7 @@ const repo = repoRoot,
   { PNG } = require("pngjs");
 const m = JSON.parse(
     fs.readFileSync(
-      resolveRepositoryPath(path.join("tests/reference/avatar/manifest.json"))
+      pixelPerfectFile(path.join("tests/reference/avatar/manifest.json"))
     )
   ),
   browser = await chromium.launch({ channel: "msedge" }),
@@ -55,9 +56,7 @@ try {
       ),
       want = PNG.sync.read(
         fs.readFileSync(
-          resolveRepositoryPath(
-            path.join("tests/reference/avatar/captures", c.name)
-          )
+          pixelPerfectFile(path.join("tests/reference/avatar/captures", c.name))
         )
       );
     let diff = 0;
@@ -80,7 +79,7 @@ try {
   }
   if (pageErrors.length) throw Error(pageErrors.join("\n"));
   const item = JSON.parse(
-      fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+      fs.readFileSync(webFile(path.join("registry.json")))
     ).items.find((i) => i.name === "avatar"),
     settings = JSON.parse(
       fs.readFileSync(path.join(consumer, "components.json"))
@@ -95,7 +94,7 @@ try {
     },
     files = item.files.map((f) => {
       const name = path.basename(f.path),
-        a = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+        a = fs.readFileSync(webFile(path.join(f.path))),
         b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
       if (canonical(a) !== canonical(b))
         throw Error(name + " canonical mismatch");
@@ -103,7 +102,7 @@ try {
     });
   const negative = PNG.sync.read(
       fs.readFileSync(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join("tests/reference/avatar/captures", m.cases[0].name)
         )
       )
@@ -118,7 +117,7 @@ try {
       mismatch++;
   if (mismatch !== 1) throw Error("Negative comparator");
   fs.writeFileSync(
-    resolveRepositoryPath(
+    pixelPerfectFile(
       path.join("tests/reference/avatar/installation-verification.json")
     ),
     JSON.stringify(

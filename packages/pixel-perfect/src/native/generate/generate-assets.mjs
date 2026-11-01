@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import opentype from "opentype.js";
 import { PNG } from "pngjs";
 
@@ -63,7 +63,7 @@ for (let code = 32; code <= 126; code++) {
   );
 }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-font.ts"),
+  webFile("registry/ui/minecraft-font.ts"),
   `// Original ASCII bitmap glyph [x, y, advance] metrics, code points 32..126.\nexport const minecraftGlyphs = ${JSON.stringify(glyphs)} as const\n`
 );
 const sources = {
@@ -119,9 +119,9 @@ for (const [state, filename] of [
     })
     .join(" ")} }\n`;
 }
-await writeFile(resolveRepositoryPath("registry/ui/minecraft-assets.css"), css);
+await writeFile(webFile("registry/ui/minecraft-assets.css"), css);
 await writeFile(
-  resolveRepositoryPath("tests/reference/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/asset-provenance.json"),
   JSON.stringify(
     {
       minecraftVersion: "26.2",

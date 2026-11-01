@@ -16,7 +16,8 @@
     "./windows-budget": "./src/runtime/windows-budget.ps1",
     "./case-paths": "./src/runtime/case-paths.mjs",
     "./run-workload": "./src/runtime/run-workload.ps1",
-    "./hosts": "./src/runtime/hosts.mjs"
+    "./hosts": "./src/runtime/hosts.mjs",
+    "./tooling": "./src/tooling.ts"
   },
   "scripts": {
     "test": "bun cli/test.mjs",

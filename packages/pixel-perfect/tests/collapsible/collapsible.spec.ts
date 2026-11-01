@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function compareRgba(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -33,10 +33,7 @@ function compareRgba(expected: PNG, actual: PNG) {
 test("Collapsible comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/captures/normal-w200-s1.png",
-          pixelPerfectRoot
-        )
+        pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -49,10 +46,7 @@ for (const directory of [
   "tests/reference/label",
 ]) {
   const manifest = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-        "utf8"
-      )
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
     ),
     body = directory.endsWith("/label");
   test.describe(`Collapsible native matrix ${directory}`, () => {
@@ -120,10 +114,7 @@ for (const directory of [
             (c.y ?? 16) * c.scale,
           ]);
           const expectedBytes = readFileSync(
-            resolveRepositoryPath(
-              `${directory}/captures/${c.name}`,
-              pixelPerfectRoot
-            )
+            pixelPerfectFile(`${directory}/captures/${c.name}`)
           );
           expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
             c.sha256

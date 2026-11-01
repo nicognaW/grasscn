@@ -4,15 +4,12 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-assets";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/separator/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/separator/manifest.json"),
     "utf8"
   )
 ) as {
@@ -59,9 +56,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Separator comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/separator/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/separator/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -90,10 +86,7 @@ for (const asChild of [false, true])
       const card = page.locator('[data-slot="separator"]');
       await expect(card).toBeVisible();
       const expectedBytes = await readFile(
-        resolveRepositoryPath(
-          `tests/reference/separator/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`tests/reference/separator/captures/${c.name}`)
       );
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256
@@ -124,10 +117,7 @@ for (const asChild of [false, true])
 test("Separator embeds unchanged original title and in-world textures", () => {
   const provenance = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/separator/asset-provenance.json",
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile("tests/reference/separator/asset-provenance.json"),
       "utf8"
     )
   );

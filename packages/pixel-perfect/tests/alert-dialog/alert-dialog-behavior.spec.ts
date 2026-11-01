@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test("AlertDialog refreshes native backdrop pixels when the underlying background changes without repaint loops", async ({
@@ -18,9 +18,8 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   const expected = (name: string) =>
     PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `tests/reference/alert-dialog-backdrop/captures/${name}`,
-          pixelPerfectRoot
+        pixelPerfectFile(
+          `tests/reference/alert-dialog-backdrop/captures/${name}`
         )
       )
     ).data;
@@ -60,9 +59,8 @@ test("AlertDialog preserves fixed native UI while the page underneath scrolls", 
   const overlay = page.locator('[data-slot="alert-dialog-overlay"]'),
     expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/alert-dialog-backdrop/captures/alert-smoke-c3-s3.png",
-          pixelPerfectRoot
+        pixelPerfectFile(
+          "tests/reference/alert-dialog-backdrop/captures/alert-smoke-c3-s3.png"
         )
       )
     ).data;

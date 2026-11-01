@@ -5,12 +5,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
-  packageBin,
+  webFile,
+  pixelPerfectFile,
 } from "@ppt/paths";
 import { PNG } from "pngjs";
 const [consumerArgument, name, origin, definition] = process.argv.slice(2);
@@ -23,10 +24,7 @@ const repo = repoRoot,
   item = definition
     ? JSON.parse(fs.readFileSync(definition, "utf8"))
     : JSON.parse(
-        fs.readFileSync(
-          resolveRepositoryPath(path.join("registry.json")),
-          "utf8"
-        )
+        fs.readFileSync(webFile(path.join("registry.json")), "utf8")
       ).items.find((i) => i.name === name),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"), "utf8")
@@ -42,7 +40,7 @@ const repo = repoRoot,
   },
   files = item.files.map((f) => {
     const base = path.basename(f.path),
-      source = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+      source = fs.readFileSync(webFile(path.join(f.path))),
       installed = fs.readFileSync(
         path.join(consumer, "src/components/ui", base)
       );
@@ -67,7 +65,7 @@ const repo = repoRoot,
 assert.equal(types.status, 0, types.stdout + types.stderr);
 const manifest = JSON.parse(
     fs.readFileSync(
-      resolveRepositoryPath(path.join("tests/reference/message/manifest.json")),
+      pixelPerfectFile(path.join("tests/reference/message/manifest.json")),
       "utf8"
     )
   ),
@@ -133,7 +131,7 @@ async function worker() {
         count = compare(
           PNG.sync.read(
             fs.readFileSync(
-              resolveRepositoryPath(
+              pixelPerfectFile(
                 path.join("tests/reference/message/captures", c.name)
               )
             )
@@ -166,7 +164,7 @@ assert.deepEqual(errors, []);
 assert.ok(results.every((r) => r.mismatchedPixels === 0));
 const first = PNG.sync.read(
     fs.readFileSync(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join("tests/reference/message/captures", manifest.cases[0].name)
       )
     )
@@ -175,7 +173,7 @@ const first = PNG.sync.read(
 mutated.data[0] ^= 1;
 assert.equal(compare(first, mutated), 1);
 fs.writeFileSync(
-  resolveRepositoryPath(
+  pixelPerfectFile(
     path.join(
       "tests/reference/message",
       name === "message"

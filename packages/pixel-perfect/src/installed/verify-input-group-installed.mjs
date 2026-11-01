@@ -5,8 +5,9 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const [consumerArgument, url] = process.argv.slice(2);
 assert.ok(
@@ -17,7 +18,7 @@ const root = repoRoot,
   consumer = path.resolve(consumerArgument),
   sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const item = JSON.parse(
-    await readFile(resolveRepositoryPath(path.join("registry.json")), "utf8")
+    await readFile(webFile(path.join("registry.json")), "utf8")
   ).items.find((item) => item.name === "input-group"),
   settings = JSON.parse(
     await readFile(path.join(consumer, "components.json"), "utf8")
@@ -33,7 +34,7 @@ const canonical = (bytes) => {
 };
 for (const entry of item.files) {
   const name = path.basename(entry.path),
-    source = await readFile(resolveRepositoryPath(path.join(entry.path))),
+    source = await readFile(webFile(path.join(entry.path))),
     installed = await readFile(path.join(consumer, "src/components/ui", name));
   assert.equal(
     canonical(installed),
@@ -62,16 +63,14 @@ const routes = [
     ["", "button"],
     ["button-cjk", "button"],
   ],
-  directory = resolveRepositoryPath(path.join("tests/reference/input-group"));
+  directory = pixelPerfectFile(path.join("tests/reference/input-group"));
 await mkdir(directory, { recursive: true });
 let browser = await chromium.launch({ channel: "msedge" }),
   count = 0;
 const browserVersion = await browser.version();
 try {
   for (const [folder, part] of routes) {
-    const reference = resolveRepositoryPath(
-        path.join("tests/reference", folder)
-      ),
+    const reference = pixelPerfectFile(path.join("tests/reference", folder)),
       manifest = JSON.parse(
         await readFile(path.join(reference, "manifest.json"), "utf8")
       ),

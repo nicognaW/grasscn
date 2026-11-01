@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const directory = process.argv[2];
@@ -13,7 +13,7 @@ assert.ok(
 );
 const inventory = JSON.parse(
     await readFile(
-      resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
       "utf8"
     )
   ),
@@ -45,10 +45,7 @@ for (const direction of ["backward", "forward"]) {
   css += "}\n";
 }
 css += "}\n";
-await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-pagination-assets.css"),
-  css
-);
+await writeFile(webFile("registry/ui/minecraft-pagination-assets.css"), css);
 console.log(
   `Generated four original12×17 recipe-book page arrow sprites; pinned artifact${inventory.jarSha256}`
 );

@@ -8,7 +8,8 @@ import { chromium, expect } from "@playwright/test";
 import {
   pixelPerfectTestRoot,
   repoRoot,
-  resolveRepositoryPath,
+  webFile,
+  pixelPerfectFile,
 } from "@ppt/paths";
 import { PNG } from "pngjs";
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
@@ -17,7 +18,7 @@ const repo = repoRoot,
   consumer = path.resolve(consumerArg),
   hash = (b) => createHash("sha256").update(b).digest("hex"),
   item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === "questionnaire"),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
@@ -32,7 +33,7 @@ const repo = repoRoot,
   },
   files = item.files.map((f) => {
     const name = path.basename(f.path),
-      a = fs.readFileSync(resolveRepositoryPath(path.join(f.path))),
+      a = fs.readFileSync(webFile(path.join(f.path))),
       b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
     assert.ok(
       canonical(a) === canonical(b),
@@ -57,8 +58,7 @@ try {
   ].filter(([part]) => !partsArg || partsArg.split(",").includes(part))) {
     const m = JSON.parse(
         fs.readFileSync(
-          resolveRepositoryPath(path.join("tests/reference", dir)) +
-            "/manifest.json"
+          pixelPerfectFile(path.join("tests/reference", dir)) + "/manifest.json"
         )
       ),
       cases = [];
@@ -149,7 +149,7 @@ try {
           );
         }
         const bytes = fs.readFileSync(
-          resolveRepositoryPath(path.join("tests/reference", dir)) +
+          pixelPerfectFile(path.join("tests/reference", dir)) +
             "/captures/" +
             c.name
         );
@@ -193,7 +193,7 @@ try {
     }
     const expected = PNG.sync.read(
         fs.readFileSync(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join("tests/reference", dir, "captures", m.cases[0].name)
           )
         )
@@ -209,9 +209,7 @@ try {
       );
     assert.equal(n, 1);
     assert.deepEqual(pageErrors, []);
-    const target = resolveRepositoryPath(
-      path.join("tests/reference/questionnaire")
-    );
+    const target = pixelPerfectFile(path.join("tests/reference/questionnaire"));
     fs.mkdirSync(target, { recursive: true });
     const report = {
       command:
@@ -253,7 +251,7 @@ if (
   !partsArg ||
   textParts.every((part) => partsArg.split(",").includes(part))
 ) {
-  const directory = resolveRepositoryPath(
+  const directory = pixelPerfectFile(
     path.join("tests/reference/questionnaire")
   );
   const reports = textParts.map((part) =>
@@ -267,7 +265,7 @@ if (
   const base = reports[0];
   const manifest = JSON.parse(
     fs.readFileSync(
-      resolveRepositoryPath(path.join("tests/reference/label/manifest.json")),
+      pixelPerfectFile(path.join("tests/reference/label/manifest.json")),
       "utf8"
     )
   );
@@ -279,9 +277,7 @@ if (
   }
   const cases = manifest.cases.map((sample) => {
     const bytes = fs.readFileSync(
-      resolveRepositoryPath(
-        path.join("tests/reference/label/captures", sample.name)
-      )
+      pixelPerfectFile(path.join("tests/reference/label/captures", sample.name))
     );
     assert.equal(hash(bytes), sample.sha256);
     const expected = hash(PNG.sync.read(bytes).data);

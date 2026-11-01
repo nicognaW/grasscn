@@ -3,18 +3,20 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
-import {
-  resolveRepositoryPath,
-  repoRoot,
-  testRoot,
-  pixelPerfectRoot,
-} from "@grasscn/tests/paths";
 export { browserFilePattern } from "@grasscn/tests/case-paths";
 
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-async function sourceMatches(expected, declaration, record, file, spec, root) {
+async function sourceMatches(
+  expected,
+  declaration,
+  record,
+  file,
+  spec,
+  root,
+  allowedSourceRoot
+) {
   if (expected.schemaVersion === 2) {
     // Old records establish only direct definitions, never a helper-to-wrapper relationship.
     return (
@@ -56,11 +58,7 @@ async function sourceMatches(expected, declaration, record, file, spec, root) {
       currentTestRoot,
       ...testRelative.split("/").map(() => "..")
     );
-    const allowedRoot = [testRoot, pixelPerfectRoot].includes(
-      path.resolve(root)
-    )
-      ? repoRoot
-      : path.resolve(root);
+    const allowedRoot = path.resolve(allowedSourceRoot);
     const outside = path.relative(allowedRoot, currentSourceRoot);
     if (
       outside === ".." ||
@@ -90,10 +88,15 @@ async function sourceMatches(expected, declaration, record, file, spec, root) {
 }
 
 /** The caller must already match the entire source tree and runtime environment. */
-export async function reusableBrowserTests(candidates, file, root) {
+export async function reusableBrowserTests(
+  candidates,
+  file,
+  root,
+  sourceRoot = root
+) {
   file = normalizeCasePath(file);
   const tests = new Map(),
-    spec = resolveRepositoryPath(path.join("tests", file), root),
+    spec = path.resolve(root, "tests", file),
     source = digest(await readFile(spec));
   for (const candidate of [...candidates].sort((a, b) =>
     (a.report.startedAt ?? a.filename).localeCompare(
@@ -152,7 +155,15 @@ export async function reusableBrowserTests(candidates, file, root) {
         continue;
       }
       if (
-        !(await sourceMatches(expected, declaration, record, file, spec, root))
+        !(await sourceMatches(
+          expected,
+          declaration,
+          record,
+          file,
+          spec,
+          root,
+          sourceRoot
+        ))
       ) {
         tests.delete(record.id);
         continue;

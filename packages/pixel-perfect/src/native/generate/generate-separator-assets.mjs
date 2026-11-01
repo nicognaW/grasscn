@@ -3,13 +3,13 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 
 const directory = process.argv[2];
 if (!directory) throw new Error("Pass the original separator PNG directory");
 const inventory = JSON.parse(
   await readFile(
-    resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+    pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf8"
   )
 );
@@ -32,13 +32,13 @@ for (const prefix of ["", "inworld_"])
       );
   }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-separator-assets.ts"),
+  webFile("registry/ui/minecraft-separator-assets.ts"),
   "// Original Minecraft separator artwork: Mojang Studios. Unchanged PNG bytes.\nexport const minecraftSeparatorAssets = " +
     JSON.stringify(assets) +
     " as const\n"
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/separator/asset-provenance.json"),
+  pixelPerfectFile("tests/reference/separator/asset-provenance.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,

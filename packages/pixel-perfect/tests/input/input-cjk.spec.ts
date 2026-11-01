@@ -3,15 +3,12 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/input-cjk/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/input-cjk/manifest.json"),
     "utf8"
   )
 ) as {
@@ -63,9 +60,8 @@ function compare(expected: PNG, actual: PNG) {
 test("Input pixel comparator detects a one-pixel change", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/input-cjk/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/input-cjk/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -125,10 +121,7 @@ for (const c of manifest.cases)
     await page.clock.runFor(c.caretMs);
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
-        `tests/reference/input-cjk/captures/${c.name}`,
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(`tests/reference/input-cjk/captures/${c.name}`)
     );
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256

@@ -5,8 +5,9 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, url] = process.argv.slice(2);
@@ -18,7 +19,7 @@ const root = repoRoot,
   consumer = path.resolve(consumerArgument),
   sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const registry = JSON.parse(
-    await readFile(resolveRepositoryPath(path.join("registry.json")), "utf8")
+    await readFile(webFile(path.join("registry.json")), "utf8")
   ),
   item = registry.items.find((item) => item.name === "command"),
   settings = JSON.parse(
@@ -36,7 +37,7 @@ const canonical = (bytes) => {
 };
 for (const entry of item.files) {
   const name = path.basename(entry.path),
-    source = await readFile(resolveRepositoryPath(path.join(entry.path))),
+    source = await readFile(webFile(path.join(entry.path))),
     installed = await readFile(path.join(consumer, "src/components/ui", name));
   assert.equal(
     canonical(installed),
@@ -56,7 +57,7 @@ execFileSync(
   [packageBin("typescript", "tsc", consumer), "--noEmit"],
   { cwd: consumer, stdio: "pipe" }
 );
-await mkdir(resolveRepositoryPath(path.join("tests/reference/command")), {
+await mkdir(pixelPerfectFile(path.join("tests/reference/command")), {
   recursive: true,
 });
 let browser = await chromium.launch({ channel: "msedge" }),
@@ -68,9 +69,7 @@ try {
     ["input", "input"],
     ["input-cjk", "input-cjk"],
   ]) {
-    const directory = resolveRepositoryPath(
-        path.join("tests/reference", folder)
-      ),
+    const directory = pixelPerfectFile(path.join("tests/reference", folder)),
       manifest = JSON.parse(
         await readFile(path.join(directory, "manifest.json"), "utf8")
       ),
@@ -222,7 +221,7 @@ try {
       comparatorMutationDetected: true,
     };
     await writeFile(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join(
           "tests/reference/command",
           `${reportName}-installation-verification.json`

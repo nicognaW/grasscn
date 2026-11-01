@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -32,10 +32,7 @@ function compare(expected: PNG, actual: PNG) {
 }
 const directory = "tests/reference/menu-parts",
   manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
   );
 for (const c of manifest.cases)
   for (const kind of c.element === "menu-checkbox"
@@ -95,10 +92,7 @@ for (const c of manifest.cases)
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);
       const bytes = readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
       const actual = await subject.screenshot(),

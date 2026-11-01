@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const repo = path.resolve(".");
 const audits = new WeakMap<object, string[]>();
@@ -51,13 +51,7 @@ test.describe.configure({ mode: "parallel" });
 for (const kind of ["suggestions", "input", "input-cjk"]) {
   const dir = path.join(repo, "tests/reference", kind),
     m = JSON.parse(
-      readFileSync(
-        resolveRepositoryPath(
-          path.join(dir, "manifest.json"),
-          pixelPerfectRoot
-        ),
-        "utf8"
-      )
+      readFileSync(pixelPerfectFile(path.join(dir, "manifest.json")), "utf8")
     );
   for (const c of m.cases)
     test(`Combobox native ${kind}:${c.name}`, async ({ page }, info) => {
@@ -147,10 +141,7 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       }
       const expected = readFileSync(
-        resolveRepositoryPath(
-          path.join(dir, "captures", c.name),
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(path.join(dir, "captures", c.name))
       );
       expect(createHash("sha256").update(expected).digest("hex")).toBe(
         c.sha256

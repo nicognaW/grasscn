@@ -3,24 +3,20 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 test.describe.configure({ mode: "parallel" });
 test("Empty comparator catches one changed pixel", () => {
   const manifest = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/empty/manifest.json",
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile("tests/reference/empty/manifest.json"),
         "utf8"
       )
     ),
     expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          `tests/reference/empty/captures/${manifest.cases[0].name}`,
-          pixelPerfectRoot
+        pixelPerfectFile(
+          `tests/reference/empty/captures/${manifest.cases[0].name}`
         )
       )
     ),
@@ -34,10 +30,7 @@ for (const [part, directory] of [
   ["description", "tests/reference/label"],
 ]) {
   const manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
   );
   for (const c of manifest.cases)
     test(`Empty ${part} native pixels: ${c.name}`, async ({ page }, info) => {
@@ -77,10 +70,7 @@ for (const [part, directory] of [
           )
       );
       const expectedBytes = readFileSync(
-        resolveRepositoryPath(
-          `${directory}/captures/${c.name}`,
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256

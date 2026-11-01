@@ -5,8 +5,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath, packageBin } from "@ppt/paths";
+import {
+  repoRoot,
+  webFile,
+  pixelPerfectFile,
+  repositoryFile,
+} from "@ppt/paths";
 import { PNG } from "pngjs";
 const [consumerArgument, name, origin, descriptorArgument] =
     process.argv.slice(2),
@@ -21,10 +27,7 @@ const repo = repoRoot,
   item = descriptorArgument
     ? JSON.parse(fs.readFileSync(path.resolve(descriptorArgument), "utf8"))
     : JSON.parse(
-        fs.readFileSync(
-          resolveRepositoryPath(path.join("registry.json")),
-          "utf8"
-        )
+        fs.readFileSync(webFile(path.join("registry.json")), "utf8")
       ).items.find((i) => i.name === name),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"), "utf8")
@@ -46,7 +49,7 @@ const files = item.files.map((file) => {
         : file.type === "registry:lib"
           ? "lib"
           : "components/ui",
-    source = fs.readFileSync(resolveRepositoryPath(path.join(file.path))),
+    source = fs.readFileSync(webFile(path.join(file.path))),
     installed = fs.readFileSync(
       path.join(consumer, "src", directory, filename)
     );
@@ -73,7 +76,7 @@ assert.equal(types.status, 0, (types.stdout ?? "") + (types.stderr ?? ""));
 const directory = name === "spinner" ? name : "message",
   manifest = JSON.parse(
     fs.readFileSync(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join("tests/reference", directory, "manifest.json")
       ),
       "utf8"
@@ -178,7 +181,7 @@ async function worker() {
         );
       });
       const expectedBytes = fs.readFileSync(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join("tests/reference", directory, "captures", c.name)
         )
       );
@@ -193,7 +196,7 @@ async function worker() {
       });
       if (mismatchedPixels) {
         console.log(name, c.name, mismatchedPixels);
-        const failures = resolveRepositoryPath(
+        const failures = repositoryFile(
           path.join(
             ".pixel-perfect-test/text-components-integration/next-pixel-failures"
           )
@@ -221,7 +224,7 @@ assert.ok(
 );
 const expected = PNG.sync.read(
     fs.readFileSync(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join(
           "tests/reference",
           directory,
@@ -239,7 +242,7 @@ const file =
     ? "installation-verification.json"
     : name + "-installation-verification.json";
 fs.writeFileSync(
-  resolveRepositoryPath(path.join("tests/reference", directory, file)),
+  pixelPerfectFile(path.join("tests/reference", directory, file)),
   JSON.stringify(
     {
       command:

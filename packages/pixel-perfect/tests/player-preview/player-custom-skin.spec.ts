@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, fixtureFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 test("website loads Dream with slim arms after both presets", async ({
@@ -14,9 +14,7 @@ test("website loads Dream with slim arms after both presets", async ({
       status: 200,
       contentType: "image/png",
       headers: { "access-control-allow-origin": "*" },
-      body: readFileSync(
-        resolveRepositoryPath("tests/fixture/dream-skin.png", pixelPerfectRoot)
-      ),
+      body: readFileSync(fixtureFile("dream-skin.png")),
     })
   );
   await page.goto("http://127.0.0.1:5176/components/player-preview");
@@ -42,9 +40,8 @@ test("website loads Dream with slim arms after both presets", async ({
     a = PNG.sync.read(actual),
     b = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/player-preview/custom-skins/captures/player-back-1-s2.png",
-          pixelPerfectRoot
+        pixelPerfectFile(
+          "tests/reference/player-preview/custom-skins/captures/player-back-1-s2.png"
         )
       )
     );

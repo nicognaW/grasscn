@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -34,18 +34,14 @@ for (const component of ["sheet", "drawer"]) {
   test(`${component} pixel comparator rejects a changed pixel`, () => {
     const manifest = JSON.parse(
         readFileSync(
-          resolveRepositoryPath(
-            "tests/reference/card/manifest.json",
-            pixelPerfectRoot
-          ),
+          pixelPerfectFile("tests/reference/card/manifest.json"),
           "utf8"
         )
       ),
       expected = PNG.sync.read(
         readFileSync(
-          resolveRepositoryPath(
-            `tests/reference/card/captures/${manifest.cases[0].name}`,
-            pixelPerfectRoot
+          pixelPerfectFile(
+            `tests/reference/card/captures/${manifest.cases[0].name}`
           )
         )
       ),
@@ -56,10 +52,7 @@ for (const component of ["sheet", "drawer"]) {
   for (const directory of ["card", "label"]) {
     const folder = `tests/reference/${directory}`,
       manifest = JSON.parse(
-        readFileSync(
-          resolveRepositoryPath(`${folder}/manifest.json`, pixelPerfectRoot),
-          "utf8"
-        )
+        readFileSync(pixelPerfectFile(`${folder}/manifest.json`), "utf8")
       );
     test.describe(`${component} native constituents ${directory}`, () => {
       test.describe.configure({ mode: "parallel" });
@@ -119,10 +112,7 @@ for (const component of ["sheet", "drawer"]) {
                 )
             );
             const expectedBytes = readFileSync(
-              resolveRepositoryPath(
-                `${folder}/captures/${c.name}`,
-                pixelPerfectRoot
-              )
+              pixelPerfectFile(`${folder}/captures/${c.name}`)
             );
             expect(
               createHash("sha256").update(expectedBytes).digest("hex")

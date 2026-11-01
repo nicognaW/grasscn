@@ -1,20 +1,15 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 const index = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("preview/search.generated.json", testRoot),
-    "utf8"
-  )
+  readFileSync(webFile("search.generated.json"), "utf8")
 ) as { name: string; title: string; exports: string[] }[];
 const internal =
   /work in progress|\bWIP\b|26\.2|native cases|62\s*\/\s*62|19722|LOCAL PREVIEW|still being verified/i;
 test("search index covers every published item and its named exports", () => {
-  const registry = JSON.parse(
-    readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
-  );
+  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf8"));
   expect(index.map((i) => i.name).sort()).toEqual(
     registry.items.map((i: { name: string }) => i.name).sort()
   );
@@ -247,10 +242,10 @@ test("website code uses the shared Shiki highlighter without changing source tex
   ).toBeVisible();
   const displayed = await page.locator("#component-preview code").textContent();
   expect(displayed?.replace(/\r\n/g, "\n")).toBe(
-    readFileSync(
-      resolveRepositoryPath("registry/ui/button.tsx", testRoot),
-      "utf8"
-    ).replace(/\r\n/g, "\n")
+    readFileSync(webFile("registry/ui/button.tsx"), "utf8").replace(
+      /\r\n/g,
+      "\n"
+    )
   );
   const colors = await page
     .locator("#component-preview .mc-code-token")

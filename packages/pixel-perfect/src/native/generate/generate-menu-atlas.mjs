@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const base = new URL("../../../tests/reference/suggestions/", import.meta.url);
 const provenance = JSON.parse(
@@ -41,7 +41,7 @@ for (const [code, glyph] of Object.entries(atlas)) {
   assert.ok(glyph.u1 > glyph.u0 && glyph.v1 > glyph.v0);
 }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-menu-atlas.ts"),
+  webFile("registry/ui/minecraft-menu-atlas.ts"),
   `export type MenuGlyph = {${keys.map((key) => `${key}:number`).join(";")}}\n` +
     "// Original baked glyph geometry and UVs observed in the native Menu cases.\n" +
     `export const menuGlyphAtlas: Record<string,MenuGlyph> = ${JSON.stringify(atlas)}\n`

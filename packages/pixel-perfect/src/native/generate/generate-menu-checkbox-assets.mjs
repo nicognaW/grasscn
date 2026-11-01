@@ -3,17 +3,17 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const input = process.argv[2];
 assert.ok(input, "Pass a directory containing the four original checkbox PNGs");
 const locationFile = "tests/reference/menu-parts/checkbox-atlas.json",
   locations = JSON.parse(
-    await readFile(resolveRepositoryPath(locationFile), "utf8")
+    await readFile(pixelPerfectFile(locationFile), "utf8")
   ),
   inventory = JSON.parse(
     await readFile(
-      resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
       "utf8"
     )
   ),
@@ -59,17 +59,17 @@ for (const name of [
   };
 }
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-menu-checkbox-assets.ts"),
+  webFile("registry/ui/minecraft-menu-checkbox-assets.ts"),
   `// Original Minecraft GUI sprites and observed runtime atlas coordinates.\nexport const menuCheckboxAtlas=${JSON.stringify({ width, height, sprites })} as const\n`
 );
 await writeFile(
-  resolveRepositoryPath("tests/reference/menu-parts/checkbox-assets.json"),
+  pixelPerfectFile("tests/reference/menu-parts/checkbox-assets.json"),
   JSON.stringify(
     {
       sourceJarSha256: inventory.jarSha256,
       sources,
       atlasPlacementSha256: hash(
-        await readFile(resolveRepositoryPath(locationFile))
+        await readFile(pixelPerfectFile(locationFile))
       ),
       targetLogicalSize: 17,
       renderer:

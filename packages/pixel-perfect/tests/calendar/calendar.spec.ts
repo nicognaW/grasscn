@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
@@ -17,18 +17,14 @@ for (const component of ["calendar", "date-picker"]) {
   test(`${component} comparator rejects a one-pixel mutation`, () => {
     const m = JSON.parse(
         readFileSync(
-          resolveRepositoryPath(
-            "tests/reference/calendar-day/manifest.json",
-            pixelPerfectRoot
-          ),
+          pixelPerfectFile("tests/reference/calendar-day/manifest.json"),
           "utf8"
         )
       ),
       a = PNG.sync.read(
         readFileSync(
-          resolveRepositoryPath(
-            "tests/reference/calendar-day/captures/" + m.cases[0].name,
-            pixelPerfectRoot
+          pixelPerfectFile(
+            "tests/reference/calendar-day/captures/" + m.cases[0].name
           )
         )
       ),
@@ -50,10 +46,7 @@ for (const component of ["calendar", "date-picker"]) {
   ]) {
     const manifest = JSON.parse(
       readFileSync(
-        resolveRepositoryPath(
-          `tests/reference/${dir}/manifest.json`,
-          pixelPerfectRoot
-        ),
+        pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
         "utf8"
       )
     );
@@ -132,10 +125,7 @@ for (const component of ["calendar", "date-picker"]) {
                 )
             );
             const bytes = readFileSync(
-              resolveRepositoryPath(
-                `tests/reference/${dir}/captures/${c.name}`,
-                pixelPerfectRoot
-              )
+              pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
             );
             expect(createHash("sha256").update(bytes).digest("hex")).toBe(
               c.sha256

@@ -3,20 +3,18 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 export function nativeChatTests(component: "message" | "bubble") {
   test.describe.configure({ mode: "parallel" });
   const directory = "tests/reference/message",
     manifest = JSON.parse(
-      readFileSync(resolveRepositoryPath(`${directory}/manifest.json`), "utf8")
+      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
     );
   test(`${component} comparator detects one changed pixel`, () => {
     const expected = PNG.sync.read(
         readFileSync(
-          resolveRepositoryPath(
-            `${directory}/captures/${manifest.cases[0].name}`
-          )
+          pixelPerfectFile(`${directory}/captures/${manifest.cases[0].name}`)
         )
       ),
       changed = PNG.sync.read(PNG.sync.write(expected));
@@ -59,7 +57,7 @@ export function nativeChatTests(component: "message" | "bubble") {
           )
       );
       const bytes = readFileSync(
-        resolveRepositoryPath(`${directory}/captures/${c.name}`)
+        pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
       const actualBytes = await subject.screenshot(),

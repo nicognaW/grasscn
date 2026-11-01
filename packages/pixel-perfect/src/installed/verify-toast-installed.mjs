@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot, pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const [consumerArg, componentArg, urlArg] = process.argv.slice(2);
 assert.ok(
@@ -14,7 +14,7 @@ assert.ok(
 );
 const repo = repoRoot,
   consumer = path.resolve(consumerArg),
-  ref = resolveRepositoryPath(path.join("tests/reference/toast")),
+  ref = pixelPerfectFile(path.join("tests/reference/toast")),
   manifest = JSON.parse(fs.readFileSync(`${ref}/manifest.json`)),
   smoke = false,
   cases = manifest.cases,
@@ -22,7 +22,7 @@ const repo = repoRoot,
 
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 const item = JSON.parse(
-    fs.readFileSync(resolveRepositoryPath(path.join("registry.json")))
+    fs.readFileSync(webFile(path.join("registry.json")))
   ).items.find((i) => i.name === componentArg),
   settings = JSON.parse(
     fs.readFileSync(path.join(consumer, "components.json"))
@@ -42,7 +42,7 @@ const files = item.files.map((file) => {
       file.type === "registry:hook"
         ? `src/hooks/${basename}`
         : `src/components/ui/${basename}`,
-    source = fs.readFileSync(resolveRepositoryPath(path.join(file.path))),
+    source = fs.readFileSync(webFile(path.join(file.path))),
     installed = fs.readFileSync(path.join(consumer, installedPath));
   assert.equal(
     canonical(installed),
@@ -242,9 +242,7 @@ try {
       "Paused browser clock, exact600ms squared native phase via fastForward and resize event",
     renderVerificationUrl: urlArg,
   };
-  const target = resolveRepositoryPath(
-    path.join("tests/reference", componentArg)
-  );
+  const target = pixelPerfectFile(path.join("tests/reference", componentArg));
   fs.mkdirSync(target, { recursive: true });
   fs.writeFileSync(
     path.join(target, "installation-verification.json"),

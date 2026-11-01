@@ -1,17 +1,12 @@
 import path from "node:path";
 
-import {
-  fixtureRoot,
-  testRoot,
-  pixelPerfectTestRoot,
-  webRoot,
-} from "@grasscn/tests/paths";
+import { repoRoot, fixtureRoot, testRoot, webRoot } from "@grasscn/tests/paths";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   root: fixtureRoot,
-  cacheDir: path.join(pixelPerfectTestRoot, "vite/registry-fixture"),
+  cacheDir: path.join(repoRoot, ".pixel-perfect-test/vite/registry-fixture"),
   plugins: [tailwindcss()],
   resolve: {
     alias: {

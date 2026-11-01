@@ -4,14 +4,11 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("tests/reference/manifest.json", pixelPerfectRoot),
-    "utf8"
-  )
+  readFileSync(pixelPerfectFile("tests/reference/manifest.json"), "utf8")
 ) as {
   cases: {
     name: string;
@@ -26,10 +23,7 @@ const manifest = JSON.parse(
 for (const reference of manifest.cases) {
   test(`vanilla pixels: ${reference.name}`, async ({ page }, testInfo) => {
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
-        path.join("tests/reference/captures", reference.name),
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(path.join("tests/reference/captures", reference.name))
     );
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       reference.sha256

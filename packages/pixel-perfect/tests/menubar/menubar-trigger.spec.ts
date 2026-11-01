@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -33,10 +33,7 @@ function compare(expected: PNG, actual: PNG) {
 test("Menubar trigger comparator catches one changed pixel", () => {
   const expected = PNG.sync.read(
       readFileSync(
-        resolveRepositoryPath(
-          "tests/reference/captures/normal-w200-s1.png",
-          pixelPerfectRoot
-        )
+        pixelPerfectFile("tests/reference/captures/normal-w200-s1.png")
       )
     ),
     actual = PNG.sync.read(PNG.sync.write(expected));
@@ -45,10 +42,7 @@ test("Menubar trigger comparator catches one changed pixel", () => {
 });
 for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
   const manifest = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(`${directory}/manifest.json`, pixelPerfectRoot),
-      "utf8"
-    )
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
   );
   for (const c of manifest.cases)
     for (const open of c.state === "hover" ? [false, true] : [false])
@@ -95,10 +89,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           (c.y ?? 16) * c.scale,
         ]);
         const expectedBytes = readFileSync(
-          resolveRepositoryPath(
-            `${directory}/captures/${c.name}`,
-            pixelPerfectRoot
-          )
+          pixelPerfectFile(`${directory}/captures/${c.name}`)
         );
         expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
           c.sha256

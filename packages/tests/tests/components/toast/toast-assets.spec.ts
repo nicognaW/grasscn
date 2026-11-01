@@ -3,20 +3,14 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftToastSounds } from "@grasscn/web/ui/minecraft-toast-sound-assets";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, referenceFile } from "@tests/paths";
 
 const hash = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
 test("Toast original sound assets and native gain match the effective asset index", () => {
   const provenance = JSON.parse(
-    readFileSync(
-      resolveRepositoryPath(
-        "tests/reference/toast/sound-provenance.json",
-        testRoot
-      ),
-      "utf8"
-    )
+    readFileSync(referenceFile("toast/sound-provenance.json"), "utf8")
   );
   for (const kind of ["in", "out"] as const) {
     const source = provenance.events[`ui.toast.${kind}`];

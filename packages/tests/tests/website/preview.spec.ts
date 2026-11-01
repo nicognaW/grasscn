@@ -1,14 +1,11 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { testRoot, webFile } from "@tests/paths";
 import { PNG } from "pngjs";
 
 const catalog = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath("preview/catalog.generated.json", testRoot),
-    "utf8"
-  )
+  readFileSync(webFile("catalog.generated.json"), "utf8")
 ) as { total: number; completedCount: number; components: { name: string }[] };
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";

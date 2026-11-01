@@ -3,18 +3,14 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { minecraftGlyphs } from "@grasscn/web/ui/minecraft-font";
 import { minecraftInputAssets } from "@grasscn/web/ui/minecraft-input-assets";
-import { resolveRepositoryPath } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
-const dirt = await readFile(
-  resolveRepositoryPath("preview/assets/title-dirt.png")
-);
-const grassSide = await readFile(
-  resolveRepositoryPath("preview/assets/title-grass_block_side.png")
-);
+const dirt = await readFile(webFile("assets/title-dirt.png"));
+const grassSide = await readFile(webFile("assets/title-grass_block_side.png"));
 const grassOverlay = await readFile(
-  resolveRepositoryPath("preview/assets/title-grass_block_side_overlay.png")
+  webFile("assets/title-grass_block_side_overlay.png")
 );
 const side = PNG.sync.read(grassSide),
   overlay = PNG.sync.read(grassOverlay);
@@ -101,9 +97,9 @@ const depth = Array.from({ length: 12 }, (_, i) => 12 - i)
   )
   .join("");
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="260" height="64" viewBox="0 0 260 64" shape-rendering="crispEdges" style="image-rendering:pixelated"><title>grasscn</title><desc>Grass-topped block lettering with dirt faces and earth-colored depth.</desc><defs><path id="letters" d="${path}"/><clipPath id="face"><use href="#letters"/></clipPath><pattern id="dirt" width="32" height="32" patternUnits="userSpaceOnUse"><image href="data:image/png;base64,${dirt.toString("base64")}" width="32" height="32"/></pattern><pattern id="grass" width="32" height="32" patternUnits="userSpaceOnUse" y="3"><image href="data:image/png;base64,${grassFace.toString("base64")}" width="32" height="32"/></pattern></defs><g>${depth}</g><use href="#letters" fill="url(#dirt)"/><g clip-path="url(#face)"><rect y="3" width="260" height="32" fill="url(#grass)"/><rect width="260" height="44" fill="#fff0bf" opacity=".12"/><path d="${light}" stroke="#b9d894" stroke-width="1" fill="none"/><path d="${shade}" stroke="#39291c" stroke-width="1" fill="none"/></g></svg>\n`;
-await writeFile(resolveRepositoryPath("preview/assets/grasscn-title.svg"), svg);
+await writeFile(webFile("assets/grasscn-title.svg"), svg);
 await writeFile(
-  resolveRepositoryPath("preview/title.provenance.json"),
+  webFile("title.provenance.json"),
   JSON.stringify(
     {
       composition:

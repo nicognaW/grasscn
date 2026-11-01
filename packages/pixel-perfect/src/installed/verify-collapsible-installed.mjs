@@ -4,15 +4,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { expect } from "@playwright/test";
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 export async function verifyCollapsibleCase({ page, c, manifestFile, url }) {
   const body = manifestFile === "tests/reference/label/manifest.json";
   const bytes = await readFile(
-    resolveRepositoryPath(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
   assert.equal(sha(bytes), c.sha256);
   const expected = PNG.sync.read(bytes);

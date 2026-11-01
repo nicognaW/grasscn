@@ -6,7 +6,7 @@ import {
   type Locator,
   type Page,
 } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
@@ -24,9 +24,7 @@ async function nativePixels(locator: Locator, file: string) {
   const actual = PNG.sync.read(
     await locator.screenshot({ animations: "disabled" })
   );
-  const expected = PNG.sync.read(
-    await readFile(resolveRepositoryPath(file, pixelPerfectRoot))
-  );
+  const expected = PNG.sync.read(await readFile(pixelPerfectFile(file)));
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,

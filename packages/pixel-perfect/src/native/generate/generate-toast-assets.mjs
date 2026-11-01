@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { resolveRepositoryPath } from "@ppt/paths";
+import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const directory = process.argv[2];
 assert.ok(
@@ -13,7 +13,7 @@ assert.ok(
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex"),
   inventory = JSON.parse(
     await readFile(
-      resolveRepositoryPath("tests/reference/catalog/native-inventory.json"),
+      pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
       "utf8"
     )
   ),
@@ -39,18 +39,18 @@ const sprite = {
   stretch: scaling.stretch_inner ?? false,
 };
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-toast-assets.ts"),
+  webFile("registry/ui/minecraft-toast-assets.ts"),
   `export const minecraftToastSprite = ${JSON.stringify(sprite)} as const\n`
 );
 const glyphs = JSON.parse(
     await readFile(
-      resolveRepositoryPath("tests/reference/toast/glyph-atlas.json"),
+      pixelPerfectFile("tests/reference/toast/glyph-atlas.json"),
       "utf8"
     )
   ),
   observations = JSON.parse(
     await readFile(
-      resolveRepositoryPath("tests/reference/toast/toast-atlas.json"),
+      pixelPerfectFile("tests/reference/toast/toast-atlas.json"),
       "utf8"
     )
   ),
@@ -67,7 +67,7 @@ const width = Math.round(image.width / (native.u1 - native.u0)),
 const type =
   "Record<string,{u0:number;u1:number;v0:number;v1:number;left:number;right:number;up:number;down:number;advance:number;boldOffset:number;shadowOffset:number}>";
 await writeFile(
-  resolveRepositoryPath("registry/ui/minecraft-toast-atlas.ts"),
+  webFile("registry/ui/minecraft-toast-atlas.ts"),
   `export const toastGlyphAtlas:${type} = ${JSON.stringify(glyphs)}\nexport const toastSpriteAtlas = ${JSON.stringify(atlas)} as const\n`
 );
 console.log(

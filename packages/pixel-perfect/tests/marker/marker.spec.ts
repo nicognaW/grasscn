@@ -2,15 +2,12 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 for (const dir of ["label", "separator"]) {
   const manifest = JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        `tests/reference/${dir}/manifest.json`,
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf8"
     )
   );
@@ -63,10 +60,7 @@ for (const dir of ["label", "separator"]) {
             )
         );
         const bytes = readFileSync(
-            resolveRepositoryPath(
-              `tests/reference/${dir}/captures/${c.name}`,
-              pixelPerfectRoot
-            )
+            pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
           ),
           actualBytes = await page
             .locator("[data-subject]")

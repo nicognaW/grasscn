@@ -8,7 +8,8 @@ import { fileURLToPath } from "node:url";
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 import { chromium, expect } from "@playwright/test";
 import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed.mjs";
-import { repoRoot, resolveRepositoryPath } from "@ppt/paths";
+import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 const [
@@ -24,7 +25,7 @@ if (!consumerDir || !name || !url)
   );
 const repo = repoRoot;
 const json = async (file) =>
-  JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"));
+  JSON.parse(await readFile(evidenceFile(file), "utf8"));
 const map = await json("registry/minecraft-map.json");
 const component = map.components.find((c) => c.name === name);
 const item = (await json("registry.json")).items.find(
@@ -63,7 +64,7 @@ for (const entry of item.files) {
   const installed = await readFile(
     installedRegistryFile(entry, consumerDir, consumerSettings, uiDirectory)
   );
-  const source = await readFile(resolveRepositoryPath(path.join(entry.path)));
+  const source = await readFile(webFile(path.join(entry.path)));
   assert.ok(
     canonical(installed) === canonical(source),
     `${filename} changed beyond permitted CLI transforms`
@@ -157,7 +158,7 @@ try {
             )
         );
         const expectedBytes = await readFile(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join(path.dirname(manifestFile), "captures", c.name)
           )
         );
@@ -292,7 +293,7 @@ try {
         assert.equal(bounds.x, c.x * c.scale);
         assert.equal(bounds.y, c.y * c.scale);
         const bytes = await readFile(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join(path.dirname(manifestFile), "captures", c.name)
           )
         );
@@ -358,7 +359,7 @@ try {
           [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]
         );
         const bytes = await readFile(
-          resolveRepositoryPath(
+          pixelPerfectFile(
             path.join(path.dirname(manifestFile), "captures", c.name)
           )
         );
@@ -425,7 +426,7 @@ try {
       assert.equal(bounds.x, c.x * c.scale);
       assert.equal(bounds.y, c.y * c.scale);
       const bytes = await readFile(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join(path.dirname(manifestFile), "captures", c.name)
         )
       );
@@ -519,7 +520,7 @@ try {
           )
       );
       const bytes = await readFile(
-        resolveRepositoryPath(
+        pixelPerfectFile(
           path.join(path.dirname(manifestFile), "captures", c.name)
         )
       );
@@ -832,7 +833,7 @@ try {
       await expect(subject).toHaveAttribute("data-mc-ready", "true");
     }
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
+      pixelPerfectFile(
         path.join(path.dirname(manifestFile), "captures", c.name)
       )
     );
@@ -879,7 +880,7 @@ try {
           "installation-verification.json"
         ));
   await writeFile(
-    resolveRepositoryPath(reportFile),
+    evidenceFile(reportFile),
     JSON.stringify(report, null, 2) + "\n"
   );
   console.log(

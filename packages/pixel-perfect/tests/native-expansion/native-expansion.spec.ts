@@ -2,11 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import {
-  resolveRepositoryPath,
-  pixelPerfectRoot,
-  referenceFile,
-} from "@ppt/paths";
+import { pixelPerfectRoot, referenceFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
@@ -32,10 +28,7 @@ const reference = corpora[0];
 const specimens = corpora.flatMap((reference) =>
   JSON.parse(
     readFileSync(
-      resolveRepositoryPath(
-        path.join(reference, "manifest.json"),
-        pixelPerfectRoot
-      ),
+      pixelPerfectFile(path.join(reference, "manifest.json")),
       "utf8"
     )
   ).cases.map((sample: any) => ({ reference, sample }))
@@ -75,10 +68,7 @@ for (const { reference, sample } of specimens)
     await page.waitForTimeout(100);
     const actual = await subject.screenshot(),
       expected = readFileSync(
-        resolveRepositoryPath(
-          path.join(reference, "captures", sample.name),
-          pixelPerfectRoot
-        )
+        pixelPerfectFile(path.join(reference, "captures", sample.name))
       ),
       a = PNG.sync.read(actual),
       b = PNG.sync.read(expected);

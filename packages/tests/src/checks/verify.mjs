@@ -3,7 +3,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { serveVerificationHosts } from "@grasscn/tests/hosts";
-import { repoRoot, testRoot, webRoot, packageBin } from "@tests/paths";
+import { packageBin } from "@grasscn/tests/tooling";
+import { repoRoot, testRoot, webRoot } from "@tests/paths";
 const [output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
 if (!output || !Number.isInteger(workers) || workers < 1 || workers > 8)

@@ -3,14 +3,11 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 const manifest = JSON.parse(
   readFileSync(
-    resolveRepositoryPath(
-      "tests/reference/button-cjk/manifest.json",
-      pixelPerfectRoot
-    ),
+    pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
     "utf8"
   )
 ) as {
@@ -55,9 +52,8 @@ function compare(expected: PNG, actual: PNG) {
 test("CJK Button comparator catches one changed pixel", async () => {
   const expected = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
-        `tests/reference/button-cjk/captures/${manifest.cases[0].name}`,
-        pixelPerfectRoot
+      pixelPerfectFile(
+        `tests/reference/button-cjk/captures/${manifest.cases[0].name}`
       )
     )
   );
@@ -96,10 +92,7 @@ for (const c of manifest.cases)
       "true"
     );
     const expectedBytes = await readFile(
-      resolveRepositoryPath(
-        `tests/reference/button-cjk/captures/${c.name}`,
-        pixelPerfectRoot
-      )
+      pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
     );
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
