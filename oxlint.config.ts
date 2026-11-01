@@ -30,7 +30,7 @@ export default defineConfig({
   overrides: [
     {
       // These trees use Bun or the public Playwright wrapper, never Vitest globals.
-      files: ["packages/tests/tests/**", "packages/pixel-perfect/tests/**"],
+      files: ["**/packages/tests/tests/**", "**/packages/pixel-perfect/tests/**"],
       rules: { "vitest/prefer-importing-vitest-globals": "off" },
     },
   ],
