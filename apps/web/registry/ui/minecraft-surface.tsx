@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import "./minecraft-surface.css";
-type Sprite = {
+
+interface Sprite {
   width: number;
   height: number;
   border: {
@@ -13,28 +14,29 @@ type Sprite = {
   stretch: boolean;
   image: string;
   pieces: readonly string[];
-};
-function MinecraftSurface({ sprite }: { sprite: Sprite }) {
+}
+
+const MinecraftSurface = ({ sprite }: { sprite: Sprite }) => {
   const widths = [
     sprite.border.left,
     sprite.width - sprite.border.left - sprite.border.right,
     sprite.border.right,
   ];
+
   const heights = [
     sprite.border.top,
     sprite.height - sprite.border.top - sprite.border.bottom,
     sprite.border.bottom,
   ];
+
   return (
     <span
       aria-hidden="true"
       className="mc-surface"
-      style={
-        {
-          gridTemplateColumns: `calc(${widths[0]} * var(--mc-pixel)) minmax(0, 1fr) calc(${widths[2]} * var(--mc-pixel))`,
-          gridTemplateRows: `calc(${heights[0]} * var(--mc-pixel)) minmax(0, 1fr) calc(${heights[2]} * var(--mc-pixel))`,
-        } as React.CSSProperties
-      }
+      style={{
+        gridTemplateColumns: `calc(${widths[0]} * var(--mc-pixel)) minmax(0, 1fr) calc(${widths[2]} * var(--mc-pixel))`,
+        gridTemplateRows: `calc(${heights[0]} * var(--mc-pixel)) minmax(0, 1fr) calc(${heights[2]} * var(--mc-pixel))`,
+      }}
     >
       {sprite.pieces.map((piece, index) => (
         <span
@@ -50,5 +52,6 @@ function MinecraftSurface({ sprite }: { sprite: Sprite }) {
       ))}
     </span>
   );
-}
+};
+
 export { MinecraftSurface };

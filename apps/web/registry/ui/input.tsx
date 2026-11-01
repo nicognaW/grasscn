@@ -1,4 +1,5 @@
 "use client";
+
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import * as React from "react";
 
@@ -7,7 +8,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-input.css";
-function Input({
+
+const Input = ({
   className,
   type = "text",
   scale = 2,
@@ -16,7 +18,7 @@ function Input({
   ...props
 }: React.ComponentProps<"input"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const node = React.useRef<HTMLInputElement>(null);
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useEffect(
@@ -24,6 +26,7 @@ function Input({
       node.current ? attachMinecraftInput(node.current, scale) : undefined,
     [scale]
   );
+
   return (
     <InputPrimitive
       ref={node}
@@ -40,5 +43,6 @@ function Input({
       {...props}
     />
   );
-}
+};
+
 export { Input };

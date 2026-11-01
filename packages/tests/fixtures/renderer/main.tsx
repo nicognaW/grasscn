@@ -101,11 +101,8 @@ import {
   PopoverDescription,
   PopoverClose,
 } from "@grasscn/web/ui/popover";
-import {
-  Progress,
-  type BossBarColor,
-  type BossBarOverlay,
-} from "@grasscn/web/ui/progress";
+import { Progress } from "@grasscn/web/ui/progress";
+import type { BossBarColor, BossBarOverlay } from "@grasscn/web/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@grasscn/web/ui/radio-group";
 import { ScrollArea, ScrollBar } from "@grasscn/web/ui/scroll-area";
 import {
@@ -172,27 +169,36 @@ import { ToggleFixture } from "./toggle";
 import { ToggleGroupFixture } from "./toggle-group";
 
 import "./style.css";
+
 const params = new URLSearchParams(location.search);
-const scale = Number(params.get("scale") || 2) as 1 | 2 | 3;
-const width = Number(params.get("width") || 200);
-const state = params.get("state") || "normal";
-const label = params.get("label") || "Button";
-function SelectFixture() {
+const scale = Number(params.get("scale") ?? 2) as 1 | 2 | 3;
+const width = Number(params.get("width") ?? 200);
+const state = params.get("state") ?? "normal";
+const label = params.get("label") ?? "Button";
+
+const SelectFixture = () => {
   const titles: string[] = params.has("labels")
     ? JSON.parse(params.get("labels")!)
     : ["Survival", "Creative", "Adventure"];
+
   const initial = Number(params.get("selectedIndex") ?? 0);
+
   const [value, setValue] = React.useState(
     initial >= 0 ? `item-${initial}` : ""
   );
+
   const [changes, setChanges] = React.useState(0);
-  const triggerRef = React.useRef<HTMLButtonElement>(null),
-    contentRef = React.useRef<HTMLDivElement>(null),
-    itemRef = React.useRef<HTMLDivElement>(null);
+
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const contentRef = React.useRef<HTMLDivElement>(null);
+  const itemRef = React.useRef<HTMLDivElement>(null);
+
   const [refs, setRefs] = React.useState("");
   const [submittedValue, setSubmittedValue] = React.useState("");
-  const single = params.get("component") === "select-trigger",
-    capture = params.get("component") === "select-list";
+
+  const single = params.get("component") === "select-trigger";
+  const capture = params.get("component") === "select-list";
+
   const content = titles.map((title, index) => (
     <SelectItem
       render={
@@ -205,11 +211,18 @@ function SelectFixture() {
         params.has("disabledIndex") &&
         Number(params.get("disabledIndex")) === index
       }
-      onPointerMove={capture ? (event) => event.preventDefault() : undefined}
+      onPointerMove={
+        capture
+          ? (event) => {
+              event.preventDefault();
+            }
+          : undefined
+      }
     >
       {title}
     </SelectItem>
   ));
+
   const controls = (
     <>
       <Select
@@ -224,14 +237,18 @@ function SelectFixture() {
           if (
             (next && params.has("cancelOpen")) ||
             (!next && params.has("cancelClose"))
-          )
+          ) {
             details.cancel();
+          }
         }}
         defaultOpen={capture || params.has("open")}
         value={params.has("controlled") ? value : undefined}
         defaultValue={initial >= 0 ? `item-${initial}` : ""}
         onValueChange={(next) => {
-          if (!params.has("reject")) setValue(next ?? "");
+          if (!params.has("reject")) {
+            setValue(next ?? "");
+          }
+
           setChanges((current) => current + 1);
         }}
         disabled={
@@ -250,13 +267,11 @@ function SelectFixture() {
               : undefined
           }
         >
-          {
-            <SelectValue
-              placeholder={params.get("placeholder") ?? "Choose game mode"}
-            >
-              {single ? (params.get("label") ?? "Survival") : undefined}
-            </SelectValue>
-          }
+          <SelectValue
+            placeholder={params.get("placeholder") ?? "Choose game mode"}
+          >
+            {single ? (params.get("label") ?? "Survival") : undefined}
+          </SelectValue>
         </SelectTrigger>
         {!single && (
           <SelectContent
@@ -268,13 +283,13 @@ function SelectFixture() {
               "item-aligned"
             }
             collisionAvoidance={
-              capture ? { side: "none", align: "none" } : undefined
+              capture ? { align: "none", side: "none" } : undefined
             }
             style={
               capture
                 ? {
-                    width: width * scale,
                     height: Number(params.get("height")) * scale,
+                    width: width * scale,
                   }
                 : undefined
             }
@@ -300,17 +315,19 @@ function SelectFixture() {
       </Select>
       <button
         id="select-external"
-        onClick={() => setValue(`item-${titles.length - 1}`)}
+        onClick={() => {
+          setValue(`item-${titles.length - 1}`);
+        }}
       >
         Select externally
       </button>
       <button
         id="read-select-refs"
-        onClick={() =>
+        onClick={() => {
           setRefs(
             `${triggerRef.current?.tagName}/${contentRef.current?.tagName}/${itemRef.current?.tagName}`
-          )
-        }
+          );
+        }}
       >
         Read refs
       </button>
@@ -319,6 +336,7 @@ function SelectFixture() {
       <output aria-label="Select refs">{refs}</output>
     </>
   );
+
   return params.has("form") ? (
     <form
       onSubmit={(event) => {
@@ -335,9 +353,11 @@ function SelectFixture() {
   ) : (
     controls
   );
-}
-function RadioFixture() {
+};
+
+const RadioFixture = () => {
   const single = params.get("component") === "radio-group-item";
+
   const initial = single
     ? params.get("checked") === "true"
       ? "subject"
@@ -345,20 +365,25 @@ function RadioFixture() {
     : params.has("none")
       ? ""
       : (params.get("value") ?? "survival");
-  const [value, setValue] = React.useState(initial),
-    [changes, setChanges] = React.useState(0),
-    [events, setEvents] = React.useState(0),
-    [result, setResult] = React.useState("");
-  const rootRef = React.useRef<HTMLDivElement>(null),
-    itemRef = React.useRef<HTMLButtonElement>(null);
+
+  const [value, setValue] = React.useState(initial);
+  const [changes, setChanges] = React.useState(0);
+  const [events, setEvents] = React.useState(0);
+  const [result, setResult] = React.useState("");
+
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const itemRef = React.useRef<HTMLButtonElement>(null);
+
   const [refs, setRefs] = React.useState("");
+
   const names = single
     ? ["subject"]
     : ["survival", "creative", "adventure", "spectator"];
+
   const items = names.map((name, index) => (
     <div
       key={name}
-      style={{ display: "flex", alignItems: "center", gap: 4 * scale }}
+      style={{ alignItems: "center", display: "flex", gap: 4 * scale }}
     >
       <RadioGroupItem
         render={
@@ -381,6 +406,7 @@ function RadioFixture() {
         }
         onClick={(event) => {
           setEvents((current) => current + 1);
+
           if (params.has("prevent")) {
             event.preventDefault();
             event.preventBaseUIHandler();
@@ -401,6 +427,7 @@ function RadioFixture() {
       )}
     </div>
   ));
+
   const group = (
     <RadioGroup
       render={params.has("rootAsChild") ? <fieldset /> : undefined}
@@ -411,7 +438,10 @@ function RadioFixture() {
       defaultValue={initial}
       value={params.has("controlled") ? value : undefined}
       onValueChange={(next) => {
-        if (!params.has("reject")) setValue(next ?? "");
+        if (!params.has("reject")) {
+          setValue(next ?? "");
+        }
+
         setChanges((current) => current + 1);
       }}
       name={params.has("form") ? "mode" : undefined}
@@ -421,6 +451,7 @@ function RadioFixture() {
       {items}
     </RadioGroup>
   );
+
   return (
     <>
       <form
@@ -434,14 +465,19 @@ function RadioFixture() {
         {group}
         {params.has("form") && <button type="submit">Save mode</button>}
       </form>
-      <button id="radio-external" onClick={() => setValue("adventure")}>
+      <button
+        id="radio-external"
+        onClick={() => {
+          setValue("adventure");
+        }}
+      >
         Choose externally
       </button>
       <button
         id="radio-read-refs"
-        onClick={() =>
-          setRefs(`${rootRef.current?.tagName}/${itemRef.current?.tagName}`)
-        }
+        onClick={() => {
+          setRefs(`${rootRef.current?.tagName}/${itemRef.current?.tagName}`);
+        }}
       >
         Read refs
       </button>
@@ -452,16 +488,20 @@ function RadioFixture() {
       <output aria-label="Submitted radio">{result}</output>
     </>
   );
-}
-function SwitchFixture() {
+};
+
+const SwitchFixture = () => {
   const [checked, setChecked] = React.useState(
-      params.get("checked") === "true"
-    ),
-    [changes, setChanges] = React.useState(0),
-    [events, setEvents] = React.useState(0),
-    [result, setResult] = React.useState("");
-  const ref = React.useRef<HTMLButtonElement>(null),
-    [tag, setTag] = React.useState("");
+    params.get("checked") === "true"
+  );
+
+  const [changes, setChanges] = React.useState(0);
+  const [events, setEvents] = React.useState(0);
+  const [result, setResult] = React.useState("");
+
+  const ref = React.useRef<HTMLButtonElement>(null);
+  const [tag, setTag] = React.useState("");
+
   const control = (
     <Switch
       render={
@@ -481,7 +521,10 @@ function SwitchFixture() {
       defaultChecked={params.get("checked") === "true"}
       disabled={state === "disabled"}
       onCheckedChange={(next) => {
-        if (!params.has("reject")) setChecked(next);
+        if (!params.has("reject")) {
+          setChecked(next);
+        }
+
         setChanges((current) => current + 1);
       }}
       name={params.has("form") ? "mode" : undefined}
@@ -491,6 +534,7 @@ function SwitchFixture() {
       style={params.has("width") ? { width: width * scale } : undefined}
       onClick={(event) => {
         setEvents((current) => current + 1);
+
         if (params.has("prevent")) {
           event.preventDefault();
           event.preventBaseUIHandler();
@@ -501,6 +545,7 @@ function SwitchFixture() {
       {undefined}
     </Switch>
   );
+
   return (
     <>
       <form
@@ -521,13 +566,17 @@ function SwitchFixture() {
       </form>
       <button
         id="switch-external"
-        onClick={() => setChecked((current) => !current)}
+        onClick={() => {
+          setChecked((current) => !current);
+        }}
       >
         Change externally
       </button>
       <button
         id="switch-read-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "missing")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "missing");
+        }}
       >
         Read ref
       </button>
@@ -538,38 +587,47 @@ function SwitchFixture() {
       <output aria-label="Submitted switch">{result}</output>
     </>
   );
-}
-function ContextFixture() {
-  const native = params.has("native"),
-    triggerPixels = params.has("triggerPixels"),
-    [open, setOpen] = React.useState(params.has("open")),
-    [menuValue, setMenuValue] = React.useState(
-      params.has("open") ? "game" : ""
-    ),
-    [actions, setActions] = React.useState(0),
-    [checked, setChecked] = React.useState(false),
-    [radio, setRadio] = React.useState("world"),
-    [tags, setTags] = React.useState("");
-  const content = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLDivElement>(null),
-    rootRef = React.useRef<HTMLDivElement>(null);
+};
+
+const ContextFixture = () => {
+  const native = params.has("native");
+  const triggerPixels = params.has("triggerPixels");
+  const [open, setOpen] = React.useState(params.has("open"));
+
+  const [menuValue, setMenuValue] = React.useState(
+    params.has("open") ? "game" : ""
+  );
+
+  const [actions, setActions] = React.useState(0);
+  const [checked, setChecked] = React.useState(false);
+  const [radio, setRadio] = React.useState("world");
+  const [tags, setTags] = React.useState("");
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
   const labels: string[] = JSON.parse(
-      params.get("labels") ?? '["Game","World","More >"]'
-    ),
-    part = params.get("part"),
-    nativeLabel = params.get("label") ?? "World Settings",
-    nativeDisabled = (params.get("state") ?? "").startsWith("disabled"),
-    nativeChecked = params.get("checked") === "true";
+    params.get("labels") ?? '["Game","World","More >"]'
+  );
+
+  const part = params.get("part");
+  const nativeLabel = params.get("label") ?? "World Settings";
+  const nativeDisabled = (params.get("state") ?? "").startsWith("disabled");
+  const nativeChecked = params.get("checked") === "true";
+
   const choose = (event: {
     preventDefault(): void;
     preventBaseUIHandler?(): void;
   }) => {
     setActions((n) => n + 1);
+
     if (params.has("preventAction")) {
       event.preventDefault();
       event.preventBaseUIHandler?.();
     }
   };
+
   const nativeBody =
     part === "menu-checkbox" ? (
       <ContextMenuCheckboxItem
@@ -605,6 +663,7 @@ function ContextFixture() {
         </ContextMenuItem>
       ))
     );
+
   const handleOpen = (
     next: boolean,
     details: { reason: string; cancel(): void }
@@ -620,11 +679,14 @@ function ContextFixture() {
             params.has("preventOutside"))))
     ) {
       details.cancel();
+
       return;
     }
+
     setOpen(next);
     setMenuValue(next ? "game" : "");
   };
+
   const rows = (
     <>
       <ContextMenuGroup>
@@ -665,6 +727,7 @@ function ContextFixture() {
       </ContextMenuSub>
     </>
   );
+
   const popup = (
     <ContextMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -682,8 +745,8 @@ function ContextFixture() {
       style={
         native
           ? {
-              width: Number(params.get("width")) * scale,
               height: Number(params.get("height")) * scale,
+              width: Number(params.get("width")) * scale,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -701,6 +764,7 @@ function ContextFixture() {
       )}
     </ContextMenuContent>
   );
+
   return (
     <>
       <ContextMenu
@@ -714,12 +778,12 @@ function ContextFixture() {
           ref={trigger}
           style={
             native
-              ? { position: "fixed", inset: 0 }
+              ? { inset: 0, position: "fixed" }
               : {
-                  display: "block",
-                  width: 400,
-                  height: 200,
                   border: "2px solid #aaa",
+                  display: "block",
+                  height: 200,
+                  width: 400,
                 }
           }
           onContextMenu={
@@ -737,12 +801,12 @@ function ContextFixture() {
       </ContextMenu>
       <button
         id="context-outside"
-        style={{ position: "fixed", right: 8, bottom: 8 }}
-        onClick={() =>
+        style={{ bottom: 8, position: "fixed", right: 8 }}
+        onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
-          )
-        }
+          );
+        }}
       >
         Inspect menu refs
       </button>
@@ -752,26 +816,29 @@ function ContextFixture() {
       <output aria-label="Menu refs">{tags}</output>
     </>
   );
-}
-function CollapsibleFixture() {
-  const native = params.has("native"),
-    body = params.get("part") === "body",
-    [open, setOpen] = React.useState(params.has("open")),
-    [changes, setChanges] = React.useState(0),
-    [refs, setRefs] = React.useState("");
-  const root = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLButtonElement>(null),
-    content = React.useRef<HTMLDivElement>(null);
+};
+
+const CollapsibleFixture = () => {
+  const native = params.has("native");
+  const body = params.get("part") === "body";
+  const [open, setOpen] = React.useState(params.has("open"));
+  const [changes, setChanges] = React.useState(0);
+  const [refs, setRefs] = React.useState("");
+
+  const root = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const content = React.useRef<HTMLDivElement>(null);
+
   const child = (
     <>
       <CollapsibleTrigger
         render={params.has("asChild") ? <button /> : undefined}
         ref={trigger}
-        {...(native && !body ? { id: "subject", "data-subject": "true" } : {})}
+        {...(native && !body ? { "data-subject": "true", id: "subject" } : {})}
         {...(native && !body && params.get("state") === "disabled"
           ? { disabled: true }
           : {})}
-        style={native && body ? { position: "fixed", left: -10000 } : undefined}
+        style={native && body ? { left: -10000, position: "fixed" } : undefined}
         onClick={
           params.has("prevent")
             ? (event) => {
@@ -790,7 +857,7 @@ function CollapsibleFixture() {
       <CollapsibleContent
         render={params.has("contentAsChild") ? <section /> : undefined}
         ref={content}
-        {...(native && body ? { id: "subject", "data-subject": "true" } : {})}
+        {...(native && body ? { "data-subject": "true", id: "subject" } : {})}
         wrap={!native}
         align={params.get("align") === "center" ? "center" : "left"}
         maxWidth={
@@ -800,18 +867,22 @@ function CollapsibleFixture() {
         style={
           native && body
             ? {
-                position: "fixed",
+                height: Number(params.get("height")) * scale,
                 left: Number(params.get("x") ?? 16) * scale,
+                padding: 0,
+                position: "fixed",
                 top: Number(params.get("y") ?? 16) * scale,
                 width: Number(params.get("width")) * scale,
-                height: Number(params.get("height")) * scale,
-                padding: 0,
               }
             : undefined
         }
       >
         {params.has("contentAsChild") ? (
-          <button onClick={() => setChanges((n) => n + 1)}>
+          <button
+            onClick={() => {
+              setChanges((n) => n + 1);
+            }}
+          >
             Inside action
           </button>
         ) : native ? (
@@ -837,6 +908,7 @@ function CollapsibleFixture() {
       </CollapsibleContent>
     </>
   );
+
   return (
     <>
       <Collapsible
@@ -854,13 +926,16 @@ function CollapsibleFixture() {
         disabled={params.has("disabled")}
         onOpenChange={(next) => {
           setChanges((n) => n + 1);
-          if (!params.has("reject")) setOpen(next);
+
+          if (!params.has("reject")) {
+            setOpen(next);
+          }
         }}
         style={
           native
             ? {
-                position: "fixed",
                 left: Number(params.get("x") ?? 16) * scale,
+                position: "fixed",
                 top: Number(params.get("y") ?? 16) * scale,
                 width: Number(params.get("width") ?? 200) * scale,
               }
@@ -871,22 +946,24 @@ function CollapsibleFixture() {
       </Collapsible>
       <button
         id="collapsible-refs"
-        style={{ position: "fixed", right: 8, bottom: 8 }}
-        onClick={() =>
+        style={{ bottom: 8, position: "fixed", right: 8 }}
+        onClick={() => {
           setRefs(
             [
               root.current?.tagName,
               trigger.current?.tagName,
               content.current?.tagName,
             ].join(",")
-          )
-        }
+          );
+        }}
       >
         Read collapsible refs
       </button>
       <button
         id="collapsible-external"
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => {
+          setOpen((value) => !value);
+        }}
       >
         Change externally
       </button>
@@ -895,38 +972,47 @@ function CollapsibleFixture() {
       <output aria-label="Collapsible value">{String(open)}</output>
     </>
   );
-}
-function MenubarFixture() {
-  const native = params.has("native"),
-    triggerPixels = params.has("triggerPixels"),
-    [open, setOpen] = React.useState(params.has("open")),
-    [menuValue, setMenuValue] = React.useState(
-      params.has("open") ? "game" : ""
-    ),
-    [actions, setActions] = React.useState(0),
-    [checked, setChecked] = React.useState(false),
-    [radio, setRadio] = React.useState("world"),
-    [tags, setTags] = React.useState("");
-  const content = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLButtonElement>(null),
-    rootRef = React.useRef<HTMLDivElement>(null);
+};
+
+const MenubarFixture = () => {
+  const native = params.has("native");
+  const triggerPixels = params.has("triggerPixels");
+  const [open, setOpen] = React.useState(params.has("open"));
+
+  const [menuValue, setMenuValue] = React.useState(
+    params.has("open") ? "game" : ""
+  );
+
+  const [actions, setActions] = React.useState(0);
+  const [checked, setChecked] = React.useState(false);
+  const [radio, setRadio] = React.useState("world");
+  const [tags, setTags] = React.useState("");
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
   const labels: string[] = JSON.parse(
-      params.get("labels") ?? '["Game","World","More >"]'
-    ),
-    part = params.get("part"),
-    nativeLabel = params.get("label") ?? "World Settings",
-    nativeDisabled = (params.get("state") ?? "").startsWith("disabled"),
-    nativeChecked = params.get("checked") === "true";
+    params.get("labels") ?? '["Game","World","More >"]'
+  );
+
+  const part = params.get("part");
+  const nativeLabel = params.get("label") ?? "World Settings";
+  const nativeDisabled = (params.get("state") ?? "").startsWith("disabled");
+  const nativeChecked = params.get("checked") === "true";
+
   const choose = (event: {
     preventDefault(): void;
     preventBaseUIHandler?(): void;
   }) => {
     setActions((n) => n + 1);
+
     if (params.has("preventAction")) {
       event.preventDefault();
       event.preventBaseUIHandler?.();
     }
   };
+
   const nativeBody =
     part === "menu-checkbox" ? (
       <MenubarCheckboxItem checked={nativeChecked} disabled={nativeDisabled}>
@@ -959,6 +1045,7 @@ function MenubarFixture() {
         </MenubarItem>
       ))
     );
+
   const handleOpen = (
     next: boolean,
     details: { reason: string; cancel(): void }
@@ -974,11 +1061,14 @@ function MenubarFixture() {
             params.has("preventOutside"))))
     ) {
       details.cancel();
+
       return;
     }
+
     setOpen(next);
     setMenuValue(next ? "game" : "");
   };
+
   const rows = (
     <>
       <MenubarGroup>
@@ -1019,6 +1109,7 @@ function MenubarFixture() {
       </MenubarSub>
     </>
   );
+
   const popup = (
     <MenubarContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1041,8 +1132,8 @@ function MenubarFixture() {
       style={
         native
           ? {
-              width: Number(params.get("width")) * scale,
               height: Number(params.get("height")) * scale,
+              width: Number(params.get("width")) * scale,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -1060,6 +1151,7 @@ function MenubarFixture() {
       )}
     </MenubarContent>
   );
+
   return (
     <>
       <Menubar ref={rootRef} scale={scale}>
@@ -1074,48 +1166,47 @@ function MenubarFixture() {
           defaultOpen={params.has("open")}
           onOpenChange={handleOpen}
         >
-          {
-            <MenubarTrigger
-              render={
-                params.has("nativeButtonChild") ? (
-                  <Button scale={scale} />
-                ) : native || params.has("triggerAsChild") ? (
-                  <button
-                    style={
-                      native
-                        ? {
-                            position: "fixed",
-                            left: Number(params.get("x")) * scale,
-                            top: Number(params.get("y")) * scale,
-                            width: 0,
-                            height: 0,
-                            padding: 0,
-                            border: 0,
-                          }
-                        : undefined
-                    }
-                  />
-                ) : undefined
-              }
-              ref={trigger}
-              disabled={
-                params.has("disabled") ||
-                (triggerPixels && params.get("state") === "disabled")
-              }
-              style={
-                triggerPixels
-                  ? {
-                      position: "fixed",
-                      left: Number(params.get("x") ?? 16) * scale,
-                      top: Number(params.get("y") ?? 16) * scale,
-                      width: Number(params.get("width") ?? 200) * scale,
-                    }
-                  : undefined
-              }
-            >
-              {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
-            </MenubarTrigger>
-          }
+          <MenubarTrigger
+            render={
+              params.has("nativeButtonChild") ? (
+                <Button scale={scale} />
+              ) : native || params.has("triggerAsChild") ? (
+                <button
+                  style={
+                    native
+                      ? {
+                          position: "fixed",
+                          left: Number(params.get("x")) * scale,
+                          top: Number(params.get("y")) * scale,
+                          width: 0,
+                          height: 0,
+                          padding: 0,
+                          border: 0,
+                        }
+                      : undefined
+                  }
+                />
+              ) : undefined
+            }
+            ref={trigger}
+            disabled={
+              params.has("disabled") ||
+              (triggerPixels && params.get("state") === "disabled")
+            }
+            style={
+              triggerPixels
+                ? {
+                    position: "fixed",
+                    left: Number(params.get("x") ?? 16) * scale,
+                    top: Number(params.get("y") ?? 16) * scale,
+                    width: Number(params.get("width") ?? 200) * scale,
+                  }
+                : undefined
+            }
+          >
+            {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+          </MenubarTrigger>
+
           {popup}
         </MenubarMenu>
         {!native && !triggerPixels && (
@@ -1138,16 +1229,16 @@ function MenubarFixture() {
       </Menubar>
       <button
         id="menubar-outside"
-        style={{ position: "fixed", right: 8, bottom: 8 }}
-        onClick={() =>
+        style={{ bottom: 8, position: "fixed", right: 8 }}
+        onClick={() => {
           setTags(
             [
               rootRef.current?.tagName,
               trigger.current?.tagName,
               content.current?.tagName,
             ].join(",")
-          )
-        }
+          );
+        }}
       >
         Inspect menu refs
       </button>
@@ -1157,38 +1248,47 @@ function MenubarFixture() {
       <output aria-label="Menu refs">{tags}</output>
     </>
   );
-}
-function DropdownFixture() {
-  const native = params.has("native"),
-    triggerPixels = params.has("triggerPixels"),
-    [open, setOpen] = React.useState(params.has("open")),
-    [menuValue, setMenuValue] = React.useState(
-      params.has("open") ? "game" : ""
-    ),
-    [actions, setActions] = React.useState(0),
-    [checked, setChecked] = React.useState(false),
-    [radio, setRadio] = React.useState("world"),
-    [tags, setTags] = React.useState("");
-  const content = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLButtonElement>(null),
-    rootRef = React.useRef<HTMLDivElement>(null);
+};
+
+const DropdownFixture = () => {
+  const native = params.has("native");
+  const triggerPixels = params.has("triggerPixels");
+  const [open, setOpen] = React.useState(params.has("open"));
+
+  const [menuValue, setMenuValue] = React.useState(
+    params.has("open") ? "game" : ""
+  );
+
+  const [actions, setActions] = React.useState(0);
+  const [checked, setChecked] = React.useState(false);
+  const [radio, setRadio] = React.useState("world");
+  const [tags, setTags] = React.useState("");
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
   const labels: string[] = JSON.parse(
-      params.get("labels") ?? '["Game","World","More >"]'
-    ),
-    part = params.get("part"),
-    nativeLabel = params.get("label") ?? "World Settings",
-    nativeDisabled = (params.get("state") ?? "").startsWith("disabled"),
-    nativeChecked = params.get("checked") === "true";
+    params.get("labels") ?? '["Game","World","More >"]'
+  );
+
+  const part = params.get("part");
+  const nativeLabel = params.get("label") ?? "World Settings";
+  const nativeDisabled = (params.get("state") ?? "").startsWith("disabled");
+  const nativeChecked = params.get("checked") === "true";
+
   const choose = (event: {
     preventDefault(): void;
     preventBaseUIHandler?(): void;
   }) => {
     setActions((n) => n + 1);
+
     if (params.has("preventAction")) {
       event.preventDefault();
       event.preventBaseUIHandler?.();
     }
   };
+
   const nativeBody =
     part === "menu-checkbox" ? (
       <DropdownMenuCheckboxItem
@@ -1224,6 +1324,7 @@ function DropdownFixture() {
         </DropdownMenuItem>
       ))
     );
+
   const handleOpen = (
     next: boolean,
     details: { reason: string; cancel(): void }
@@ -1239,11 +1340,14 @@ function DropdownFixture() {
             params.has("preventOutside"))))
     ) {
       details.cancel();
+
       return;
     }
+
     setOpen(next);
     setMenuValue(next ? "game" : "");
   };
+
   const rows = (
     <>
       <DropdownMenuGroup>
@@ -1284,6 +1388,7 @@ function DropdownFixture() {
       </DropdownMenuSub>
     </>
   );
+
   const popup = (
     <DropdownMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1306,8 +1411,8 @@ function DropdownFixture() {
       style={
         native
           ? {
-              width: Number(params.get("width")) * scale,
               height: Number(params.get("height")) * scale,
+              width: Number(params.get("width")) * scale,
             }
           : params.has("maxHeight")
             ? { maxHeight: Number(params.get("maxHeight")) }
@@ -1325,6 +1430,7 @@ function DropdownFixture() {
       )}
     </DropdownMenuContent>
   );
+
   return (
     <>
       <DropdownMenu
@@ -1334,58 +1440,57 @@ function DropdownFixture() {
         modal={native || params.has("nonmodal") ? false : undefined}
         onOpenChange={handleOpen}
       >
-        {
-          <DropdownMenuTrigger
-            render={
-              params.has("nativeButtonChild") ? (
-                <Button scale={scale} />
-              ) : native || params.has("triggerAsChild") ? (
-                <button
-                  style={
-                    native
-                      ? {
-                          position: "fixed",
-                          left: Number(params.get("x")) * scale,
-                          top: Number(params.get("y")) * scale,
-                          width: 0,
-                          height: 0,
-                          padding: 0,
-                          border: 0,
-                        }
-                      : undefined
-                  }
-                />
-              ) : undefined
-            }
-            ref={trigger}
-            disabled={
-              params.has("disabled") ||
-              (triggerPixels && params.get("state") === "disabled")
-            }
-            style={
-              triggerPixels
-                ? {
-                    position: "fixed",
-                    left: Number(params.get("x") ?? 16) * scale,
-                    top: Number(params.get("y") ?? 16) * scale,
-                    width: Number(params.get("width") ?? 200) * scale,
-                  }
-                : undefined
-            }
-          >
-            {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
-          </DropdownMenuTrigger>
-        }
+        <DropdownMenuTrigger
+          render={
+            params.has("nativeButtonChild") ? (
+              <Button scale={scale} />
+            ) : native || params.has("triggerAsChild") ? (
+              <button
+                style={
+                  native
+                    ? {
+                        position: "fixed",
+                        left: Number(params.get("x")) * scale,
+                        top: Number(params.get("y")) * scale,
+                        width: 0,
+                        height: 0,
+                        padding: 0,
+                        border: 0,
+                      }
+                    : undefined
+                }
+              />
+            ) : undefined
+          }
+          ref={trigger}
+          disabled={
+            params.has("disabled") ||
+            (triggerPixels && params.get("state") === "disabled")
+          }
+          style={
+            triggerPixels
+              ? {
+                  position: "fixed",
+                  left: Number(params.get("x") ?? 16) * scale,
+                  top: Number(params.get("y") ?? 16) * scale,
+                  width: Number(params.get("width") ?? 200) * scale,
+                }
+              : undefined
+          }
+        >
+          {triggerPixels ? (params.get("label") ?? "Button") : "Game menu"}
+        </DropdownMenuTrigger>
+
         {popup}
       </DropdownMenu>
       <button
         id="menu-outside"
-        style={{ position: "fixed", right: 8, bottom: 8 }}
-        onClick={() =>
+        style={{ bottom: 8, position: "fixed", right: 8 }}
+        onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
-          )
-        }
+          );
+        }}
       >
         Inspect menu refs
       </button>
@@ -1395,16 +1500,19 @@ function DropdownFixture() {
       <output aria-label="Menu refs">{tags}</output>
     </>
   );
-}
-function PopoverFixture() {
-  const native = params.has("native"),
-    [open, setOpen] = React.useState(native || params.has("open")),
-    [changes, setChanges] = React.useState(0),
-    [actions, setActions] = React.useState(0),
-    [refs, setRefs] = React.useState("");
-  const content = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLButtonElement>(null),
-    anchor = React.useRef<HTMLDivElement>(null);
+};
+
+const PopoverFixture = () => {
+  const native = params.has("native");
+  const [open, setOpen] = React.useState(native || params.has("open"));
+  const [changes, setChanges] = React.useState(0);
+  const [actions, setActions] = React.useState(0);
+  const [refs, setRefs] = React.useState("");
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const anchor = React.useRef<HTMLDivElement>(null);
+
   return (
     <>
       <Popover
@@ -1417,25 +1525,30 @@ function PopoverFixture() {
             !next &&
             ((details.reason === "escape-key" && params.has("preventEscape")) ||
               ((details.reason === "outside-press" ||
-                String(details.reason) === "focus-out") &&
+                details.reason === "focus-out") &&
                 params.has("preventOutside")))
           ) {
             details.cancel();
+
             return;
           }
+
           setChanges((n) => n + 1);
-          if (!params.has("reject")) setOpen(next);
+
+          if (!params.has("reject")) {
+            setOpen(next);
+          }
         }}
       >
         {native && (
           <div
             ref={anchor}
             style={{
-              position: "fixed",
+              height: 0,
               left: Number(params.get("x") ?? 16) * scale,
+              position: "fixed",
               top: Number(params.get("y") ?? 16) * scale,
               width: 0,
-              height: 0,
             }}
           />
         )}
@@ -1462,9 +1575,9 @@ function PopoverFixture() {
           }
           sideOffset={native ? 0 : Number(params.get("sideOffset") ?? 4)}
           style={{
-            width: native ? Number(params.get("width")) * scale : undefined,
             height: native ? Number(params.get("height")) * scale : undefined,
             padding: native && !params.has("text") ? 0 : undefined,
+            width: native ? Number(params.get("width")) * scale : undefined,
           }}
           initialFocus={native ? () => content.current : undefined}
           data-subject="true"
@@ -1512,13 +1625,13 @@ function PopoverFixture() {
               {!native && (
                 <Button
                   scale={scale}
-                  onClick={() =>
+                  onClick={() => {
                     setRefs(
                       [trigger.current?.tagName, content.current?.tagName].join(
                         ","
                       )
-                    )
-                  }
+                    );
+                  }}
                 >
                   Inspect popover refs
                 </Button>
@@ -1529,7 +1642,7 @@ function PopoverFixture() {
       </Popover>
       <button
         id="popover-outside"
-        style={{ position: "fixed", right: 8, bottom: 8 }}
+        style={{ bottom: 8, position: "fixed", right: 8 }}
       >
         Outside
       </button>
@@ -1538,14 +1651,17 @@ function PopoverFixture() {
       <output aria-label="Popover refs">{refs}</output>
     </>
   );
-}
-function PopoverCompositionFixture() {
-  const [open, setOpen] = React.useState(false),
-    [actions, setActions] = React.useState(0),
-    [tags, setTags] = React.useState("");
-  const trigger = React.useRef<HTMLButtonElement>(null),
-    content = React.useRef<HTMLDivElement>(null),
-    anchor = React.useRef<HTMLDivElement>(null);
+};
+
+const PopoverCompositionFixture = () => {
+  const [open, setOpen] = React.useState(false);
+  const [actions, setActions] = React.useState(0);
+  const [tags, setTags] = React.useState("");
+
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const content = React.useRef<HTMLDivElement>(null);
+  const anchor = React.useRef<HTMLDivElement>(null);
+
   return (
     <>
       <Popover scale={scale} open={open} onOpenChange={setOpen}>
@@ -1553,15 +1669,15 @@ function PopoverCompositionFixture() {
           ref={anchor}
           id="composed-anchor"
           style={{
-            position: "fixed",
+            height: 24,
             left: 240,
+            position: "fixed",
             top: 180,
             width: 32,
-            height: 24,
           }}
         />
         <PopoverTrigger render={<Button scale={scale} />} ref={trigger}>
-          {"Composed trigger"}
+          Composed trigger
         </PopoverTrigger>
         <PopoverContent
           anchor={anchor}
@@ -1572,79 +1688,80 @@ function PopoverCompositionFixture() {
           sideOffset={0}
           style={{ width: 236 * scale }}
         >
-          {
-            <>
-              <PopoverHeader>
-                <PopoverTitle>World Settings</PopoverTitle>
-                <PopoverDescription>Configure the world.</PopoverDescription>
-              </PopoverHeader>
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setActions((n) => n + 1);
-                  setOpen(false);
-                }}
-              >
-                <label htmlFor="composed-world-name">World name</label>
-                <Input id="composed-world-name" scale={scale} />
-                <Button type="submit" scale={scale}>
-                  Save composition
-                </Button>
-              </form>
-              <Button
-                scale={scale}
-                onClick={() =>
-                  setTags(
-                    [
-                      trigger.current?.tagName,
-                      content.current?.tagName,
-                      anchor.current?.tagName,
-                    ].join(",")
-                  )
-                }
-              >
-                Inspect composition refs
+          <>
+            <PopoverHeader>
+              <PopoverTitle>World Settings</PopoverTitle>
+              <PopoverDescription>Configure the world.</PopoverDescription>
+            </PopoverHeader>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                setActions((n) => n + 1);
+                setOpen(false);
+              }}
+            >
+              <label htmlFor="composed-world-name">World name</label>
+              <Input id="composed-world-name" scale={scale} />
+              <Button type="submit" scale={scale}>
+                Save composition
               </Button>
-            </>
-          }
+            </form>
+            <Button
+              scale={scale}
+              onClick={() => {
+                setTags(
+                  [
+                    trigger.current?.tagName,
+                    content.current?.tagName,
+                    anchor.current?.tagName,
+                  ].join(",")
+                );
+              }}
+            >
+              Inspect composition refs
+            </Button>
+          </>
         </PopoverContent>
       </Popover>
       <output aria-label="Composition refs">{tags}</output>
       <output aria-label="Composition actions">{actions}</output>
     </>
   );
-}
-function AlertDialogFixture() {
-  const native = params.has("native"),
-    [open, setOpen] = React.useState(native || params.has("open")),
-    [confirmed, setConfirmed] = React.useState(0);
-  const content = React.useRef<HTMLDivElement>(null),
-    labels: string[] = JSON.parse(params.get("labels") ?? '["Yes","No"]');
+};
+
+const AlertDialogFixture = () => {
+  const native = params.has("native");
+  const [open, setOpen] = React.useState(native || params.has("open"));
+  const [confirmed, setConfirmed] = React.useState(0);
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const labels: string[] = JSON.parse(params.get("labels") ?? '["Yes","No"]');
+
   return (
     <>
       {params.has("patterned") &&
         createPortal(
           <div
             data-dialog-underlay="true"
-            style={{ position: "fixed", inset: 0 }}
+            style={{ inset: 0, position: "fixed" }}
           >
             <div
               style={{
-                position: "absolute",
-                left: 18 * scale,
-                top: 18 * scale,
-                height: 64 * scale,
                 display: "flex",
+                height: 64 * scale,
+                left: 18 * scale,
+                position: "absolute",
+                top: 18 * scale,
               }}
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
                   style={{
-                    display: "block",
-                    width: scale,
-                    height: "100%",
                     background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
+                    display: "block",
+                    height: "100%",
+                    width: scale,
                   }}
                 />
               ))}
@@ -1652,8 +1769,8 @@ function AlertDialogFixture() {
             <Button
               scale={scale}
               style={{
-                position: "absolute",
                 left: 18 * scale,
+                position: "absolute",
                 top: 100 * scale,
                 width: 140 * scale,
               }}
@@ -1671,13 +1788,17 @@ function AlertDialogFixture() {
             !next &&
             ((details.reason === "escape-key" && params.has("preventEscape")) ||
               ((details.reason === "outside-press" ||
-                String(details.reason) === "focus-out") &&
+                details.reason === "focus-out") &&
                 params.has("preventOutside")))
           ) {
             details.cancel();
+
             return;
           }
-          if (!params.has("reject")) setOpen(next);
+
+          if (!params.has("reject")) {
+            setOpen(next);
+          }
         }}
       >
         <AlertDialogTrigger>Open confirmation</AlertDialogTrigger>
@@ -1699,10 +1820,15 @@ function AlertDialogFixture() {
             <AlertDialogAction
               disabled={params.get("disabledIndex") === "0"}
               onClick={(event) => {
-                if (params.has("preventAction")) event.preventDefault();
+                if (params.has("preventAction")) {
+                  event.preventDefault();
+                }
+
                 setConfirmed((n) => n + 1);
-                if (!event.defaultPrevented && !params.has("reject"))
+
+                if (!event.defaultPrevented && !params.has("reject")) {
                   setOpen(false);
+                }
               }}
             >
               {labels[0]}
@@ -1716,83 +1842,87 @@ function AlertDialogFixture() {
       <output aria-label="Confirmations">{confirmed}</output>
     </>
   );
-}
-function AlertDialogCompositionFixture() {
-  const trigger = React.useRef<HTMLButtonElement>(null),
-    content = React.useRef<HTMLDivElement>(null),
-    action = React.useRef<HTMLButtonElement>(null),
-    cancel = React.useRef<HTMLButtonElement>(null);
-  const [refs, setRefs] = React.useState(""),
-    [submissions, setSubmissions] = React.useState(0);
+};
+
+const AlertDialogCompositionFixture = () => {
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const content = React.useRef<HTMLDivElement>(null);
+  const action = React.useRef<HTMLButtonElement>(null);
+  const cancel = React.useRef<HTMLButtonElement>(null);
+
+  const [refs, setRefs] = React.useState("");
+  const [submissions, setSubmissions] = React.useState(0);
+
   return (
     <AlertDialog>
       <AlertDialogTrigger render={<Button />} ref={trigger}>
-        {"Composed confirmation"}
+        Composed confirmation
       </AlertDialogTrigger>
       <AlertDialogContent render={<section />} ref={content}>
-        {
-          <>
-            <AlertDialogHeader>
-              <AlertDialogTitle render={<h3 />}>
-                {"Composed title"}
-              </AlertDialogTitle>
-              <AlertDialogDescription render={<div />}>
-                {"Composed description"}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                setSubmissions((n) => n + 1);
-              }}
+        <>
+          <AlertDialogHeader>
+            <AlertDialogTitle render={<h3 />}>
+              {"Composed title"}
+            </AlertDialogTitle>
+            <AlertDialogDescription render={<div />}>
+              {"Composed description"}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSubmissions((n) => n + 1);
+            }}
+          >
+            <Input name="name" aria-label="Confirmation form input" />
+            <Button type="submit">Submit</Button>
+          </form>
+          <Button
+            onClick={() => {
+              setRefs(
+                [
+                  trigger.current?.tagName,
+                  content.current?.tagName,
+                  action.current?.tagName,
+                  cancel.current?.tagName,
+                ].join(",")
+              );
+            }}
+          >
+            Inspect confirmation refs
+          </Button>
+          <output aria-label="Confirmation refs">{refs}</output>
+          <output aria-label="Confirmation submissions">{submissions}</output>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              ref={action}
+              nativeButton={false}
+              render={<a href="#confirmed" />}
             >
-              <Input name="name" aria-label="Confirmation form input" />
-              <Button type="submit">Submit</Button>
-            </form>
-            <Button
-              onClick={() =>
-                setRefs(
-                  [
-                    trigger.current?.tagName,
-                    content.current?.tagName,
-                    action.current?.tagName,
-                    cancel.current?.tagName,
-                  ].join(",")
-                )
-              }
-            >
-              Inspect confirmation refs
-            </Button>
-            <output aria-label="Confirmation refs">{refs}</output>
-            <output aria-label="Confirmation submissions">{submissions}</output>
-            <AlertDialogFooter>
-              <AlertDialogAction
-                ref={action}
-                nativeButton={false}
-                render={<a href="#confirmed" />}
-              >
-                {"Confirm link"}
-              </AlertDialogAction>
-              <AlertDialogCancel ref={cancel} render={<Button />}>
-                {"Cancel composed"}
-              </AlertDialogCancel>
-            </AlertDialogFooter>
-          </>
-        }
+              {"Confirm link"}
+            </AlertDialogAction>
+            <AlertDialogCancel ref={cancel} render={<Button />}>
+              {"Cancel composed"}
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </>
       </AlertDialogContent>
     </AlertDialog>
   );
-}
-function DialogCompositionFixture() {
-  const trigger = React.useRef<HTMLButtonElement>(null),
-    content = React.useRef<HTMLDivElement>(null),
-    overlay = React.useRef<HTMLDivElement>(null);
-  const [result, setResult] = React.useState(""),
-    [submissions, setSubmissions] = React.useState(0);
+};
+
+const DialogCompositionFixture = () => {
+  const trigger = React.useRef<HTMLButtonElement>(null);
+  const content = React.useRef<HTMLDivElement>(null);
+  const overlay = React.useRef<HTMLDivElement>(null);
+
+  const [result, setResult] = React.useState("");
+  const [submissions, setSubmissions] = React.useState(0);
+
   return (
     <Dialog>
       <DialogTrigger render={<Button />} ref={trigger}>
-        {"Composed trigger"}
+        Composed trigger
       </DialogTrigger>
       <DialogPortal>
         <DialogOverlay
@@ -1806,87 +1936,90 @@ function DialogCompositionFixture() {
         render={<section data-custom-content="true" />}
         ref={content}
       >
-        {
-          <>
-            <DialogHeader>
-              <DialogTitle render={<h3 />}>{"Composed title"}</DialogTitle>
-              <DialogDescription render={<div />}>
-                {"Composed description"}
-              </DialogDescription>
-            </DialogHeader>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                setSubmissions((n) => n + 1);
-              }}
-            >
-              <Input aria-label="Dialog form input" name="name" />
-              <Button type="submit">Submit</Button>
-            </form>
-            <Button
-              onClick={() =>
-                setResult(
-                  [
-                    trigger.current?.tagName,
-                    content.current?.tagName,
-                    overlay.current?.tagName,
-                  ].join(",")
-                )
-              }
-            >
-              Inspect refs
-            </Button>
-            <output aria-label="Dialog composed refs">{result}</output>
-            <output aria-label="Dialog submissions">{submissions}</output>
-            <DialogFooter>
-              <DialogClose render={<Button />}>{"Composed close"}</DialogClose>
-            </DialogFooter>
-          </>
-        }
+        <>
+          <DialogHeader>
+            <DialogTitle render={<h3 />}>{"Composed title"}</DialogTitle>
+            <DialogDescription render={<div />}>
+              {"Composed description"}
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSubmissions((n) => n + 1);
+            }}
+          >
+            <Input aria-label="Dialog form input" name="name" />
+            <Button type="submit">Submit</Button>
+          </form>
+          <Button
+            onClick={() => {
+              setResult(
+                [
+                  trigger.current?.tagName,
+                  content.current?.tagName,
+                  overlay.current?.tagName,
+                ].join(",")
+              );
+            }}
+          >
+            Inspect refs
+          </Button>
+          <output aria-label="Dialog composed refs">{result}</output>
+          <output aria-label="Dialog submissions">{submissions}</output>
+          <DialogFooter>
+            <DialogClose render={<Button />}>{"Composed close"}</DialogClose>
+          </DialogFooter>
+        </>
       </DialogContent>
     </Dialog>
   );
-}
-function DialogFixture() {
-  const native = params.has("native"),
-    [open, setOpen] = React.useState(params.has("open") || native),
-    [actions, setActions] = React.useState(0),
-    [changes, setChanges] = React.useState(0);
-  const content = React.useRef<HTMLDivElement>(null),
-    trigger = React.useRef<HTMLButtonElement>(null);
+};
+
+const DialogFixture = () => {
+  const native = params.has("native");
+  const [open, setOpen] = React.useState(params.has("open") || native);
+  const [actions, setActions] = React.useState(0);
+  const [changes, setChanges] = React.useState(0);
+
+  const content = React.useRef<HTMLDivElement>(null);
+  const trigger = React.useRef<HTMLButtonElement>(null);
+
   const labels: string[] = params.has("labels")
     ? JSON.parse(params.get("labels")!)
     : ["Cancel", "Continue"];
+
   const description = native
     ? params.has("text")
       ? params.get("text")
       : null
     : (params.get("text") ?? "A helpful description.");
+
   return (
     <>
       {params.has("patterned") &&
         createPortal(
           <div
             data-dialog-underlay="true"
-            style={{ position: "fixed", inset: 0 }}
+            style={{ inset: 0, position: "fixed" }}
           >
             <div
               style={{
-                position: "absolute",
-                left: 18 * scale,
-                top: 18 * scale,
-                height: 64 * scale,
                 display: "flex",
+                height: 64 * scale,
+                left: 18 * scale,
+                position: "absolute",
+                top: 18 * scale,
               }}
             >
               {Array.from({ length: 256 }, (_, i) => (
                 <i
                   key={i}
                   style={{
-                    display: "block",
-                    width: scale,
-                    height: "100%",
                     background: `rgb(${i},${255 - i},${(i * 37) % 256})`,
+                    display: "block",
+                    height: "100%",
+                    width: scale,
                   }}
                 />
               ))}
@@ -1894,8 +2027,8 @@ function DialogFixture() {
             <Button
               scale={scale}
               style={{
-                position: "absolute",
                 left: 18 * scale,
+                position: "absolute",
                 top: 100 * scale,
                 width: 140 * scale,
               }}
@@ -1915,13 +2048,18 @@ function DialogFixture() {
             !next &&
             ((details.reason === "escape-key" && params.has("preventEscape")) ||
               ((details.reason === "outside-press" ||
-                String(details.reason) === "focus-out") &&
+                details.reason === "focus-out") &&
                 params.has("preventOutside")))
           ) {
             details.cancel();
+
             return;
           }
-          if (!params.has("reject")) setOpen(next);
+
+          if (!params.has("reject")) {
+            setOpen(next);
+          }
+
           setChanges((current) => current + 1);
         }}
       >
@@ -1943,7 +2081,9 @@ function DialogFixture() {
                 key={index}
                 scale={scale}
                 disabled={Number(params.get("disabledIndex") ?? -1) === index}
-                onClick={() => setActions((current) => current + 1)}
+                onClick={() => {
+                  setActions((current) => current + 1);
+                }}
               >
                 {label}
               </Button>
@@ -1954,7 +2094,9 @@ function DialogFixture() {
       </Dialog>
       <button
         id="dialog-external"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => {
+          setOpen((current) => !current);
+        }}
       >
         Change dialog externally
       </button>
@@ -1975,99 +2117,221 @@ function DialogFixture() {
       </button>
     </>
   );
-}
-function Fixture() {
-  if (params.get("component") === "tabs-fallback")
+};
+
+const Fixture = () => {
+  if (params.get("component") === "tabs-fallback") {
     return <TabsFallbackFixture />;
-  if (params.get("component") === "base-ui-composition")
+  }
+
+  if (params.get("component") === "base-ui-composition") {
     return <BaseUICompositionFixture />;
-  if (params.get("component") === "collapsible-first-frame")
+  }
+
+  if (params.get("component") === "collapsible-first-frame") {
     return <CollapsibleFirstFrameFixture />;
-  if (params.get("component") === "badge-advancement")
+  }
+
+  if (params.get("component") === "badge-advancement") {
     return <BadgeAdvancementFixture />;
-  if (params.get("component") === "questionnaire")
+  }
+
+  if (params.get("component") === "questionnaire") {
     return <QuestionnaireFixture />;
-  if (params.get("component") === "dialog-footer")
+  }
+
+  if (params.get("component") === "dialog-footer") {
     return <DialogFooterFixture />;
-  if (params.get("component") === "alert-dialog-media")
+  }
+
+  if (params.get("component") === "alert-dialog-media") {
     return <AlertDialogMediaFixture />;
-  if (params.get("component") === "combobox") return <ComboboxFixture />;
-  if (params.get("component") === "attachment") return <AttachmentFixture />;
-  if (params.get("component") === "color-painter-stress")
+  }
+
+  if (params.get("component") === "combobox") {
+    return <ComboboxFixture />;
+  }
+
+  if (params.get("component") === "attachment") {
+    return <AttachmentFixture />;
+  }
+
+  if (params.get("component") === "color-painter-stress") {
     return <ColorPainterStressFixture />;
-  if (params.get("component") === "marker") return <MarkerFixture />;
-  if (params.get("component") === "chart") return <ChartFixture />;
+  }
+
+  if (params.get("component") === "marker") {
+    return <MarkerFixture />;
+  }
+
+  if (params.get("component") === "chart") {
+    return <ChartFixture />;
+  }
+
   if (
     ["trace", "message-scroller", "spinner"].includes(
       params.get("component") ?? ""
     )
-  )
+  ) {
     return params.has("native") ? (
       <NativeTextCompositionsFixture />
     ) : (
       <TextWidgetsFixture />
     );
-  if (params.get("component") === "native-select")
+  }
+
+  if (params.get("component") === "native-select") {
     return <NativeSelectFixture />;
-  if (params.get("component") === "code-block")
+  }
+
+  if (params.get("component") === "code-block") {
     return params.has("native") ? (
       <NativeTextCompositionsFixture />
     ) : (
       <CodeBlockFixture />
     );
-  if (params.get("component") === "input-otp") return <InputOTPFixture />;
-  if (params.get("component") === "carousel") return <CarouselFixture />;
-  if (["form", "field"].includes(params.get("component") ?? ""))
+  }
+
+  if (params.get("component") === "input-otp") {
+    return <InputOTPFixture />;
+  }
+
+  if (params.get("component") === "carousel") {
+    return <CarouselFixture />;
+  }
+
+  if (["form", "field"].includes(params.get("component") ?? "")) {
     return <FormsFixture />;
-  if (params.get("component") === "data-table") return <DataTableFixture />;
-  if (params.get("component") === "input-group") return <InputGroupFixture />;
-  if (params.get("component") === "command") return <CommandFixture />;
-  if (["calendar", "date-picker"].includes(params.get("component") ?? ""))
+  }
+
+  if (params.get("component") === "data-table") {
+    return <DataTableFixture />;
+  }
+
+  if (params.get("component") === "input-group") {
+    return <InputGroupFixture />;
+  }
+
+  if (params.get("component") === "command") {
+    return <CommandFixture />;
+  }
+
+  if (["calendar", "date-picker"].includes(params.get("component") ?? "")) {
     return <CalendarFixture />;
-  if (["message", "bubble"].includes(params.get("component") ?? ""))
+  }
+
+  if (["message", "bubble"].includes(params.get("component") ?? "")) {
     return <ChatFamilyFixture />;
-  if (params.get("component") === "resizable") return <ResizableFixture />;
-  if (params.get("component") === "sidebar") return <SidebarFixture />;
-  if (params.get("component") === "table") return <TableFixture />;
-  if (params.get("component") === "item") return <ItemFixture />;
-  if (params.get("component") === "avatar") return <AvatarFixture />;
-  if (["sonner", "sonner-strict"].includes(params.get("component") ?? ""))
+  }
+
+  if (params.get("component") === "resizable") {
+    return <ResizableFixture />;
+  }
+
+  if (params.get("component") === "sidebar") {
+    return <SidebarFixture />;
+  }
+
+  if (params.get("component") === "table") {
+    return <TableFixture />;
+  }
+
+  if (params.get("component") === "item") {
+    return <ItemFixture />;
+  }
+
+  if (params.get("component") === "avatar") {
+    return <AvatarFixture />;
+  }
+
+  if (["sonner", "sonner-strict"].includes(params.get("component") ?? "")) {
     return <ToastFixture />;
-  if (params.get("component") === "button-composition")
+  }
+
+  if (params.get("component") === "button-composition") {
     return <ButtonCompositionFixture />;
+  }
+
   if (
     ["badge", "typography", "breadcrumb", "kbd", "empty"].includes(
       params.get("component") ?? ""
     )
-  )
+  ) {
     return <TextComponentsFixture />;
-  if (["sheet", "drawer"].includes(params.get("component") ?? ""))
+  }
+
+  if (["sheet", "drawer"].includes(params.get("component") ?? "")) {
     return <OverlayFixture />;
+  }
+
   if (
     ["aspect-ratio", "button-group", "pagination"].includes(
       params.get("component") ?? ""
     )
-  )
+  ) {
     return <StructuralFixture />;
-  if (params.get("component") === "toggle-group") return <ToggleGroupFixture />;
-  if (params.get("component") === "toggle") return <ToggleFixture />;
-  if (params.get("component") === "context-menu") return <ContextFixture />;
-  if (params.get("component") === "collapsible") return <CollapsibleFixture />;
-  if (params.get("component") === "menubar") return <MenubarFixture />;
-  if (params.get("component") === "dropdown-menu") return <DropdownFixture />;
-  if (params.get("component") === "popover-composition")
+  }
+
+  if (params.get("component") === "toggle-group") {
+    return <ToggleGroupFixture />;
+  }
+
+  if (params.get("component") === "toggle") {
+    return <ToggleFixture />;
+  }
+
+  if (params.get("component") === "context-menu") {
+    return <ContextFixture />;
+  }
+
+  if (params.get("component") === "collapsible") {
+    return <CollapsibleFixture />;
+  }
+
+  if (params.get("component") === "menubar") {
+    return <MenubarFixture />;
+  }
+
+  if (params.get("component") === "dropdown-menu") {
+    return <DropdownFixture />;
+  }
+
+  if (params.get("component") === "popover-composition") {
     return <PopoverCompositionFixture />;
-  if (params.get("component") === "popover") return <PopoverFixture />;
-  if (params.get("component") === "alert-dialog-composition")
+  }
+
+  if (params.get("component") === "popover") {
+    return <PopoverFixture />;
+  }
+
+  if (params.get("component") === "alert-dialog-composition") {
     return <AlertDialogCompositionFixture />;
-  if (params.get("component") === "alert-dialog") return <AlertDialogFixture />;
-  if (params.get("component") === "dialog-composition")
+  }
+
+  if (params.get("component") === "alert-dialog") {
+    return <AlertDialogFixture />;
+  }
+
+  if (params.get("component") === "dialog-composition") {
     return <DialogCompositionFixture />;
-  if (params.get("component") === "dialog") return <DialogFixture />;
-  if (params.get("component") === "switch") return <SwitchFixture />;
-  if (params.get("component")?.startsWith("radio-group"))
+  }
+
+  if (params.get("component") === "dialog") {
+    return <DialogFixture />;
+  }
+
+  if (params.get("component") === "switch") {
+    return <SwitchFixture />;
+  }
+
+  if (params.get("component")?.startsWith("radio-group")) {
     return <RadioFixture />;
-  if (params.get("component")?.startsWith("select")) return <SelectFixture />;
+  }
+
+  if (params.get("component")?.startsWith("select")) {
+    return <SelectFixture />;
+  }
+
   const [count, setCount] = React.useState(0);
   const [commits, setCommits] = React.useState(0);
   const [refName, setRefName] = React.useState("");
@@ -2077,38 +2341,50 @@ function Fixture() {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const labelRef = React.useRef<HTMLLabelElement>(null);
   const separatorRef = React.useRef<HTMLDivElement>(null);
-  const scrollAreaRef = React.useRef<HTMLDivElement>(null),
-    viewportRef = React.useRef<HTMLDivElement>(null);
+
+  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+
   const [scrollValue, setScrollValue] = React.useState(0);
+
   const [scrollContent, setScrollContent] = React.useState(
     Number(params.get("contentHeight") ?? 480)
   );
+
   const progressRef = React.useRef<HTMLDivElement>(null);
+
   const [progressValue, setProgressValue] = React.useState<number | null>(
     params.has("unknown") ? null : Number(params.get("value") ?? 50)
   );
-  const tabsRef = React.useRef<HTMLDivElement>(null),
-    tabsListRef = React.useRef<HTMLDivElement>(null),
-    tabsTriggerRef = React.useRef<HTMLButtonElement>(null),
-    tabsContentRef = React.useRef<HTMLDivElement>(null);
+
+  const tabsRef = React.useRef<HTMLDivElement>(null);
+  const tabsListRef = React.useRef<HTMLDivElement>(null);
+  const tabsTriggerRef = React.useRef<HTMLButtonElement>(null);
+  const tabsContentRef = React.useRef<HTMLDivElement>(null);
+
   const [tabsValue, setTabsValue] = React.useState(
     `tab-${params.get("selectedIndex") ?? 0}`
   );
+
   const [inputValue, setInputValue] = React.useState(
     params.get("text") ?? "Hello Minecraft"
   );
+
   const [submitted, setSubmitted] = React.useState(0);
   const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
   const tooltipRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
-    if (params.get("component") === "textarea" && textareaRef.current)
+    if (params.get("component") === "textarea" && textareaRef.current) {
       textareaRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
+    }
   }, []);
   React.useEffect(() => {
-    if (params.get("component") === "scroll-area" && viewportRef.current)
+    if (params.get("component") === "scroll-area" && viewportRef.current) {
       viewportRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
+    }
   }, []);
-  if (params.get("component") === "tabs-trigger")
+
+  if (params.get("component") === "tabs-trigger") {
     return (
       <Tabs
         scale={scale}
@@ -2133,11 +2409,15 @@ function Fixture() {
         </TabsList>
       </Tabs>
     );
+  }
+
   if (params.get("component") === "tabs") {
     const titles: string[] = params.has("labels")
       ? JSON.parse(params.get("labels")!)
       : ["Game", "World", "More"];
+
     const panel = Number(params.get("contentHeight") ?? 0);
+
     const triggers = titles.map((title, index) => (
       <TabsTrigger
         render={
@@ -2156,6 +2436,7 @@ function Fixture() {
         {title}
       </TabsTrigger>
     ));
+
     const contents = (
       <>
         <TabsList
@@ -2190,6 +2471,7 @@ function Fixture() {
         ))}
       </>
     );
+
     return (
       <>
         <Tabs
@@ -2202,7 +2484,10 @@ function Fixture() {
           dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
           style={{ width: width * scale }}
           onValueChange={(next) => {
-            if (!params.has("reject")) setTabsValue(next);
+            if (!params.has("reject")) {
+              setTabsValue(next);
+            }
+
             setCount((current) => current + 1);
           }}
           data-subject={
@@ -2217,17 +2502,19 @@ function Fixture() {
         <output aria-label="Tab changes">{count}</output>
         <button
           id="select-last-tab"
-          onClick={() => setTabsValue(`tab-${titles.length - 1}`)}
+          onClick={() => {
+            setTabsValue(`tab-${titles.length - 1}`);
+          }}
         >
           Select last tab externally
         </button>
         <button
           id="read-ref"
-          onClick={() =>
+          onClick={() => {
             setRefName(
               `${tabsRef.current?.tagName}/${tabsListRef.current?.tagName}/${tabsTriggerRef.current?.tagName}/${tabsContentRef.current?.tagName}`
-            )
-          }
+            );
+          }}
         >
           Read refs
         </button>
@@ -2235,7 +2522,8 @@ function Fixture() {
       </>
     );
   }
-  if (params.get("component") === "progress")
+
+  if (params.get("component") === "progress") {
     return (
       <>
         <Progress
@@ -2252,7 +2540,9 @@ function Fixture() {
           color={(params.get("color") ?? "pink") as BossBarColor}
           overlay={(params.get("overlay") ?? "progress") as BossBarOverlay}
           aria-label="Test progress"
-          onClick={() => setCount((current) => current + 1)}
+          onClick={() => {
+            setCount((current) => current + 1);
+          }}
           aria-valuetext={
             params.has("customLabel")
               ? `${progressValue} of ${Number(params.get("max") ?? 100)} loaded`
@@ -2264,16 +2554,25 @@ function Fixture() {
         </Progress>
         <button
           id="update-progress"
-          onClick={() => setProgressValue(Number(params.get("next") ?? 100))}
+          onClick={() => {
+            setProgressValue(Number(params.get("next") ?? 100));
+          }}
         >
           Update progress
         </button>
-        <button id="unknown-progress" onClick={() => setProgressValue(null)}>
+        <button
+          id="unknown-progress"
+          onClick={() => {
+            setProgressValue(null);
+          }}
+        >
           Unknown progress
         </button>
         <button
           id="read-ref"
-          onClick={() => setRefName(progressRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(progressRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2281,6 +2580,8 @@ function Fixture() {
         <output aria-label="Activations">{count}</output>
       </>
     );
+  }
+
   if (params.get("component") === "scroll-area") {
     const rows = (
       <div
@@ -2291,23 +2592,27 @@ function Fixture() {
           <div
             key={index}
             style={{
-              height: 24 * scale,
-              display: "flex",
               alignItems: "flex-start",
+              display: "flex",
+              height: 24 * scale,
             }}
           >
             <Button
               scale={scale}
               style={{ width: "100%" }}
-              onClick={() => setCount((current) => current + 1)}
+              onClick={() => {
+                setCount((current) => current + 1);
+              }}
             >{`Row ${index + 1}`}</Button>
           </div>
         ))}
       </div>
     );
+
     const customBar = params.has("customBar") ? (
       <ScrollBar key="bar" data-testid="custom-scrollbar" />
     ) : null;
+
     return (
       <>
         <ScrollArea
@@ -2319,17 +2624,21 @@ function Fixture() {
           aria-label="Test scroll area"
           disabled={state === "disabled"}
           scale={scale}
-          onPointerDown={() => setCommits((current) => current + 1)}
+          onPointerDown={() => {
+            setCommits((current) => current + 1);
+          }}
           viewportProps={{
             "aria-label": "Scrollable content",
-            onScroll: (event) => setScrollValue(event.currentTarget.scrollTop),
+            onScroll: (event) => {
+              setScrollValue(event.currentTarget.scrollTop);
+            },
           }}
           style={
             params.has("defaults")
               ? undefined
               : {
-                  width: width * scale,
                   height: Number(params.get("height") ?? 80) * scale,
+                  width: width * scale,
                 }
           }
           data-subject="true"
@@ -2345,11 +2654,11 @@ function Fixture() {
         </ScrollArea>
         <button
           id="read-ref"
-          onClick={() =>
+          onClick={() => {
             setRefName(
               `${scrollAreaRef.current?.tagName}/${viewportRef.current?.tagName}`
-            )
-          }
+            );
+          }}
         >
           Read ref
         </button>
@@ -2357,16 +2666,27 @@ function Fixture() {
         <output aria-label="Scroll offset">{scrollValue}</output>
         <output aria-label="Activations">{count}</output>
         <output aria-label="Pointer events">{commits}</output>
-        <button id="shrink-content" onClick={() => setScrollContent(24)}>
+        <button
+          id="shrink-content"
+          onClick={() => {
+            setScrollContent(24);
+          }}
+        >
           Shrink content
         </button>
-        <button id="grow-content" onClick={() => setScrollContent(480)}>
+        <button
+          id="grow-content"
+          onClick={() => {
+            setScrollContent(480);
+          }}
+        >
           Grow content
         </button>
       </>
     );
   }
-  if (params.get("component") === "separator")
+
+  if (params.get("component") === "separator") {
     return (
       <>
         <button id="before">Before separator</button>
@@ -2380,7 +2700,9 @@ function Fixture() {
           aria-label={params.has("semantic") ? "Settings sections" : undefined}
           data-testid="native-separator"
           style={{ width: width * scale }}
-          onClick={() => setCount((current) => current + 1)}
+          onClick={() => {
+            setCount((current) => current + 1);
+          }}
           data-subject="true"
         >
           {undefined}
@@ -2388,7 +2710,9 @@ function Fixture() {
         <button id="after">After separator</button>
         <button
           id="read-ref"
-          onClick={() => setRefName(separatorRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(separatorRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2396,7 +2720,9 @@ function Fixture() {
         <output aria-label="Activations">{count}</output>
       </>
     );
-  if (params.get("component") === "label")
+  }
+
+  if (params.get("component") === "label") {
     return (
       <>
         <Label
@@ -2415,7 +2741,9 @@ function Fixture() {
             width: width * scale,
             height: Number(params.get("height") ?? 9) * scale,
           }}
-          onClick={() => setCount((current) => current + 1)}
+          onClick={() => {
+            setCount((current) => current + 1);
+          }}
           data-subject="true"
         >
           {params.has("rich") ? <strong>Rich label</strong> : label}
@@ -2427,7 +2755,9 @@ function Fixture() {
         />
         <button
           id="read-ref"
-          onClick={() => setRefName(labelRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(labelRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2435,7 +2765,9 @@ function Fixture() {
         <output aria-label="Activations">{count}</output>
       </>
     );
-  if (params.get("component") === "textarea")
+  }
+
+  if (params.get("component") === "textarea") {
     return (
       <>
         <form
@@ -2481,14 +2813,18 @@ function Fixture() {
         <output aria-label="Submissions">{submitted}</output>
         <button
           id="read-ref"
-          onClick={() => setRefName(textareaRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(textareaRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
         <output aria-label="Root ref">{refName}</output>
       </>
     );
-  if (params.get("component") === "card")
+  }
+
+  if (params.get("component") === "card") {
     return (
       <>
         <Card
@@ -2510,7 +2846,11 @@ function Fixture() {
                 <CardDescription>{params.get("text")}</CardDescription>
                 {params.has("action") && (
                   <CardAction>
-                    <button onClick={() => setCount((current) => current + 1)}>
+                    <button
+                      onClick={() => {
+                        setCount((current) => current + 1);
+                      }}
+                    >
                       Action
                     </button>
                   </CardAction>
@@ -2525,7 +2865,9 @@ function Fixture() {
               <CardFooter>
                 <Button
                   scale={scale}
-                  onClick={() => setCount((current) => current + 1)}
+                  onClick={() => {
+                    setCount((current) => current + 1);
+                  }}
                 >
                   Done
                 </Button>
@@ -2535,7 +2877,9 @@ function Fixture() {
         </Card>
         <button
           id="read-ref"
-          onClick={() => setRefName(cardRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(cardRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2543,7 +2887,9 @@ function Fixture() {
         <output aria-label="Activations">{count}</output>
       </>
     );
-  if (params.get("component") === "tooltip")
+  }
+
+  if (params.get("component") === "tooltip") {
     return (
       <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
         <Tooltip
@@ -2559,7 +2905,9 @@ function Fixture() {
                   marginTop: params.get("edge") === "top" ? 0 : 240,
                   marginLeft: params.get("edge") === "left" ? 0 : 300,
                 }}
-                onClick={() => setCount((current) => current + 1)}
+                onClick={() => {
+                  setCount((current) => current + 1);
+                }}
               />
             }
           >
@@ -2591,12 +2939,19 @@ function Fixture() {
           </TooltipContent>
         </Tooltip>
         <button id="next">Next focus target</button>
-        <button id="external-open" onClick={() => setTooltipOpen(true)}>
+        <button
+          id="external-open"
+          onClick={() => {
+            setTooltipOpen(true);
+          }}
+        >
           Open externally
         </button>
         <button
           id="read-ref"
-          onClick={() => setRefName(tooltipRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(tooltipRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2605,7 +2960,9 @@ function Fixture() {
         <output aria-label="Activations">{count}</output>
       </TooltipProvider>
     );
-  if (params.get("component") === "input")
+  }
+
+  if (params.get("component") === "input") {
     return (
       <>
         <form
@@ -2656,7 +3013,9 @@ function Fixture() {
         <button id="next">Next focus target</button>
         <button
           id="read-ref"
-          onClick={() => setRefName(inputRef.current?.tagName ?? "missing")}
+          onClick={() => {
+            setRefName(inputRef.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2671,17 +3030,21 @@ function Fixture() {
         </button>
       </>
     );
+  }
+
   const [checked, setChecked] = React.useState<boolean | "indeterminate">(
     params.get("checked") === "mixed"
       ? "indeterminate"
       : params.get("checked") === "true"
   );
+
   const [values, setValues] = React.useState(
     (params.get("values") ?? params.get("value") ?? "500")
       .split(",")
       .map(Number)
   );
-  if (params.get("component") === "slider")
+
+  if (params.get("component") === "slider") {
     return (
       <>
         <form id="slider-form">
@@ -2713,7 +3076,9 @@ function Fixture() {
                 ? undefined
                 : { width: width * scale }
             }
-            onValueCommitted={() => setCommits((current) => current + 1)}
+            onValueCommitted={() => {
+              setCommits((current) => current + 1);
+            }}
             onValueChange={(next) => {
               setValues(typeof next === "number" ? [next] : [...next]);
               setCount((current) => current + 1);
@@ -2728,7 +3093,9 @@ function Fixture() {
         <button id="next">Next focus target</button>
         <button
           id="read-ref"
-          onClick={() => setRefName(sliderRef.current?.id ?? "missing")}
+          onClick={() => {
+            setRefName(sliderRef.current?.id ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -2737,7 +3104,9 @@ function Fixture() {
         </button>
       </>
     );
-  if (params.get("component") === "checkbox")
+  }
+
+  if (params.get("component") === "checkbox") {
     return (
       <>
         <Checkbox
@@ -2757,6 +3126,8 @@ function Fixture() {
         <button id="next">Next focus target</button>
       </>
     );
+  }
+
   return (
     <>
       <Button
@@ -2764,14 +3135,21 @@ function Fixture() {
         scale={scale}
         disabled={state === "disabled"}
         style={params.has("width") ? { width: width * scale } : undefined}
-        onClick={() => setCount(count + 1)}
+        onClick={() => {
+          setCount(count + 1);
+        }}
         data-subject="true"
       >
         {label}
       </Button>
       <output aria-label="Activations">{count}</output>
-      <Button render={<a href="#destination" />}>{"Continue"}</Button>
-      <Button disabled onClick={() => setCount(count + 100)}>
+      <Button render={<a href="#destination" />}>Continue</Button>
+      <Button
+        disabled
+        onClick={() => {
+          setCount(count + 100);
+        }}
+      >
         Disabled
       </Button>
       <a href="#utility" className={buttonVariants()}>
@@ -2779,8 +3157,9 @@ function Fixture() {
       </a>
     </>
   );
-}
-createRoot(document.getElementById("root")!).render(
+};
+
+createRoot(document.querySelector("#root")!).render(
   params.get("component") === "custom-api" ? (
     <CustomApiFixture />
   ) : (

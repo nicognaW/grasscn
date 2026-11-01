@@ -1,6 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for (const scale of [1, 2, 3] as const)
+
+for (const scale of [1, 2, 3] as const) {
   test(`Web metrics reuse F3 bar geometry and native captions at GUI${scale}`, async ({
     page,
   }) => {
@@ -14,6 +16,7 @@ for (const scale of [1, 2, 3] as const)
     await expect(plot).toContainText("200 ms max");
     await expect(plot).toContainText("Goal");
     await expect(plot).not.toContainText("FPS");
+
     const bars = await plot
       .locator("[data-slot=chart-fps-frame]>.mc-chart-rect")
       .evaluateAll((nodes) =>
@@ -23,16 +26,17 @@ for (const scale of [1, 2, 3] as const)
               (n as HTMLElement).style.width ===
                 `${getComputedStyle(n).getPropertyValue("--mc-scale").trim()}px` &&
               (n as HTMLElement).style.background.startsWith("rgb(") &&
-              parseFloat((n as HTMLElement).style.top) +
-                parseFloat((n as HTMLElement).style.height) ===
+              Number.parseFloat((n as HTMLElement).style.top) +
+                Number.parseFloat((n as HTMLElement).style.height) ===
                 69 * Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
           )
           .map((n) => ({
-            height: parseFloat((n as HTMLElement).style.height),
-            top: parseFloat((n as HTMLElement).style.top),
             color: (n as HTMLElement).style.background,
+            height: Number.parseFloat((n as HTMLElement).style.height),
+            top: Number.parseFloat((n as HTMLElement).style.top),
           }))
       );
+
     expect(bars.map((bar) => bar.height)).toEqual(
       [0, 15, 30, 45, 60].map((height) => height * scale)
     );
@@ -45,7 +49,9 @@ for (const scale of [1, 2, 3] as const)
     await page.locator("#metric-format").click();
     await expect(plot).toContainText("125.0 req avg");
   });
-for (const scale of [2] as const)
+}
+
+for (const scale of [2] as const) {
   test(`F3 web-data demo updates native bars and browser-share 3D profiler GUI${scale}`, async ({
     page,
   }) => {
@@ -73,10 +79,12 @@ for (const scale of [2] as const)
           )
       )
     ).toBe(true);
-    const beforeBars = await metric.screenshot(),
-      beforePie = await profiler.screenshot();
+
+    const beforeBars = await metric.screenshot();
+    const beforePie = await profiler.screenshot();
+
     await section
-      .getByRole("button", { name: "Next hour", exact: true })
+      .getByRole("button", { exact: true, name: "Next hour" })
       .click();
     await expect(
       profiler.locator("[data-slot=chart-profiler-frame]")
@@ -84,10 +92,11 @@ for (const scale of [2] as const)
     expect((await metric.screenshot()).equals(beforeBars)).toBe(false);
     expect((await profiler.screenshot()).equals(beforePie)).toBe(false);
     await page
-      .getByRole("combobox", { name: "F3 metric", exact: true })
+      .getByRole("combobox", { exact: true, name: "F3 metric" })
       .click();
     await page
-      .getByRole("option", { name: "Request volume", exact: true })
+      .getByRole("option", { exact: true, name: "Request volume" })
       .click();
     await expect(metric).toContainText("req avg");
   });
+}

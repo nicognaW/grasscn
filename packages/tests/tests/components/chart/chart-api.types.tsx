@@ -1,25 +1,25 @@
 import {
   ChartContainer,
-  ChartStyle,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   ChartPixelBar,
   ChartFpsFrame,
-  ChartProfilerSector,
   ChartProfilerFrame,
-  type ChartConfig,
 } from "@grasscn/web/ui/chart";
+import type { ChartConfig } from "@grasscn/web/ui/chart";
 import * as React from "react";
 import { BarChart, Bar } from "recharts";
+
 const config: ChartConfig = {
   count: {
-    label: "世界",
-    theme: { light: "green", dark: "lime" },
     icon: () => <svg />,
+    label: "世界",
+    theme: { dark: "lime", light: "green" },
   },
 };
+
 export const api = (
   <ChartContainer
     ref={React.createRef<HTMLDivElement>()}

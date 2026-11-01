@@ -16,7 +16,7 @@ test("Page scrollbars embed the unchanged original game textures", () => {
   expect(css).toContain(minecraftTextareaAssets.scroller_background);
 });
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Document, nested and horizontal bars use Minecraft artwork at GUI scale ${scale}`, async ({
     page,
   }) => {
@@ -24,7 +24,7 @@ for (const scale of [2])
     await page.goto(origin + "docs/components/textarea");
 
     await expect
-      .poll(() =>
+      .poll(async () =>
         page.evaluate(
           () =>
             getComputedStyle(document.documentElement, "::-webkit-scrollbar")
@@ -50,6 +50,7 @@ for (const scale of [2])
         );
       }
     });
+
     for (const selector of [
       "html",
       "#scrollbar-nested-proof",
@@ -57,20 +58,22 @@ for (const scale of [2])
       ".minecraft-docs-sidebar nav",
     ]) {
       const result = await page.locator(selector).evaluate((element) => {
-        const bar = getComputedStyle(element, "::-webkit-scrollbar"),
-          track = getComputedStyle(element, "::-webkit-scrollbar-track"),
-          thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
+        const bar = getComputedStyle(element, "::-webkit-scrollbar");
+        const track = getComputedStyle(element, "::-webkit-scrollbar-track");
+        const thumb = getComputedStyle(element, "::-webkit-scrollbar-thumb");
+
         return {
-          width: bar.width,
-          height: bar.height,
-          color: getComputedStyle(element).scrollbarColor,
-          thumb: thumb.borderImageSource,
-          track: track.borderImageSource,
-          radius: thumb.borderRadius,
           buttons: getComputedStyle(element, "::-webkit-scrollbar-button")
             .display,
+          color: getComputedStyle(element).scrollbarColor,
+          height: bar.height,
+          radius: thumb.borderRadius,
+          thumb: thumb.borderImageSource,
+          track: track.borderImageSource,
+          width: bar.width,
         };
       });
+
       expect(result.width).toBe(`${6 * scale}px`);
       expect(result.height).toBe(`${6 * scale}px`);
       expect(result.color).toBe("auto");
@@ -81,6 +84,7 @@ for (const scale of [2])
       expect(result.radius).toBe("0px");
       expect(result.buttons).toBe("none");
     }
+
     const nested = page.locator("#scrollbar-nested-proof");
     await nested.focus();
     await nested.press("End");
@@ -97,6 +101,7 @@ for (const scale of [2])
         .evaluate((e) => getComputedStyle(e, "::-webkit-scrollbar").display)
     ).toBe("none");
   });
+}
 
 const componentMapCount = (text: string) => {
   const value: unknown = JSON.parse(text);
@@ -127,6 +132,7 @@ test("Retired components are absent from supported catalog and served payloads",
   const served = await (
     await request.get(new URL("r/registry.json", origin).href)
   ).json();
+
   expect(served.items).toHaveLength(registry.items.length);
   await page.goto(`${origin}docs`);
 

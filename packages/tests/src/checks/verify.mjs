@@ -185,6 +185,7 @@ if (phase !== "prepare") {
 let hosts;
 
 try {
+  /* oxlint-disable no-await-in-loop -- Build steps consume earlier outputs; save each receipt and fail before starting the next step. */
   for (const [name, args, cwd] of steps) {
     if (
       name === "production-build" &&

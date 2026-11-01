@@ -1,11 +1,17 @@
 "use client";
+
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { minecraftTabsAssets as assets } from "./minecraft-tabs-assets";
 import { tabsUnihexAtlas } from "./minecraft-tabs-atlas";
@@ -14,30 +20,40 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
+
 const ScaleContext = React.createContext(2);
+
 function useLocalRef<T extends HTMLElement>(
   forwarded: React.Ref<T> | undefined
 ) {
   const local = React.useRef<T>(null);
   const [element, setElement] = React.useState<T | null>(null);
+
   const callback = React.useCallback(
     (node: T | null) => {
       local.current = node;
       setElement(node);
+
       if (typeof forwarded === "function") {
         const cleanup = forwarded(node);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             local.current = null;
             setElement(null);
             cleanup();
           };
-      } else if (forwarded) forwarded.current = node;
+        }
+      } else if (forwarded) {
+        forwarded.current = node;
+      }
     },
     [forwarded]
   );
+
   return [local, callback, element] as const;
 }
+
 type TabsProps = Omit<
   MinecraftProps<typeof TabsPrimitive.Root>,
   "orientation"
@@ -45,7 +61,8 @@ type TabsProps = Omit<
   orientation?: "horizontal";
   scale?: 1 | 2 | 3;
 };
-function Tabs({
+
+const Tabs = ({
   className,
   scale = 2,
   orientation = "horizontal",
@@ -53,49 +70,65 @@ function Tabs({
   ref,
   onValueChange,
   ...props
-}: TabsProps) {
-  if (orientation !== "horizontal")
+}: TabsProps) => {
+  if (orientation !== "horizontal") {
     throw new Error("Minecraft menu tabs support horizontal orientation only");
+  }
+
   const [, forwarded, element] = useLocalRef(ref);
-  const requested = React.useRef<string | undefined>(undefined),
-    expiry = React.useRef(0);
+
+  const requested = React.useRef<string | undefined>(undefined);
+  const expiry = React.useRef(0);
+
   React.useLayoutEffect(() => {
     const root = element;
-    if (!root) return;
+
+    if (!root) {
+      return;
+    }
+
     const current = () =>
-      Array.from(
-        root.querySelectorAll<HTMLElement>(
+      [
+        ...root.querySelectorAll<HTMLElement>(
           '[data-slot="tabs-trigger"][data-active]'
-        )
-      ).find((tab) => tab.closest(".mc-tabs") === root)?.dataset.mcTabValue;
+        ),
+      ].find((tab) => tab.closest(".mc-tabs") === root)?.dataset.mcTabValue;
+
     let previous = current();
+
     const observer = new MutationObserver(() => {
       const next = current();
+
       if (next !== previous) {
-        if (next !== undefined && requested.current === next)
+        if (next !== undefined && requested.current === next) {
           playMinecraftClick();
+        }
+
         requested.current = undefined;
         previous = next;
       }
     });
+
     observer.observe(root, {
-      subtree: true,
-      childList: true,
-      attributes: true,
       attributeFilter: ["data-active"],
+      attributes: true,
+      childList: true,
+      subtree: true,
     });
+
     return () => {
       observer.disconnect();
       cancelAnimationFrame(expiry.current);
     };
   }, [element]);
+
   return (
     <ScaleContext.Provider value={scale}>
       <TabsPrimitive.Root
         ref={forwarded}
         data-slot="tabs"
         orientation={orientation}
-        className={cn(`mc-tabs ${""}`, className)}
+        className={cn(`mc-tabs`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -113,14 +146,17 @@ function Tabs({
       />
     </ScaleContext.Provider>
   );
-}
+};
+
 const tabsListVariants = cva("mc-tabs-list", {
-  variants: { variant: { default: "mc-tabs-list-default" } },
   defaultVariants: { variant: "default" },
+  variants: { variant: { default: "mc-tabs-list-default" } },
 });
+
 type TabsListProps = MinecraftProps<typeof TabsPrimitive.List> &
   VariantProps<typeof tabsListVariants>;
-function TabsList({
+
+const TabsList = ({
   className,
   variant = "default",
   style,
@@ -128,19 +164,27 @@ function TabsList({
   children,
   render,
   ...props
-}: TabsListProps) {
-  if (variant && variant !== "default")
+}: TabsListProps) => {
+  if (variant && variant !== "default") {
     throw new Error("Minecraft menu tabs support the default variant only");
-  const scale = React.useContext(ScaleContext),
-    [, forwarded, element] = useLocalRef(ref);
+  }
+
+  const scale = React.useContext(ScaleContext);
+  const [, forwarded, element] = useLocalRef(ref);
+
   React.useLayoutEffect(() => {
-    if (!element) return;
+    if (!element) {
+      return;
+    }
+
     const measure = () => {
       const width = Math.floor(element.clientWidth / scale);
+
       const count = Math.max(
         1,
         element.querySelectorAll(':scope > [data-slot="tabs-trigger"]').length
       );
+
       const available = Math.max(0, Math.min(400, width) - 28);
       const tabWidth = Math.ceil(Math.floor(available / count) / 2) * 2;
       const left = Math.ceil(Math.floor((width - available) / 2) / 2) * 2;
@@ -152,24 +196,29 @@ function TabsList({
       );
       element.dataset.mcTabsReady = "true";
     };
+
     measure();
-    const resize = new ResizeObserver(measure),
-      childrenObserver = new MutationObserver(measure);
+
+    const resize = new ResizeObserver(measure);
+    const childrenObserver = new MutationObserver(measure);
+
     resize.observe(element);
     childrenObserver.observe(element, { childList: true });
+
     return () => {
       resize.disconnect();
       childrenObserver.disconnect();
     };
   }, [scale, element]);
-  let content = children;
+  const content = children;
+
   return (
     <TabsPrimitive.List
       render={render}
       ref={forwarded}
       data-slot="tabs-list"
       data-variant={variant}
-      className={cn(`${tabsListVariants({ variant })} ${""}`, className)}
+      className={cn(`${tabsListVariants({ variant })} `, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -183,8 +232,9 @@ function TabsList({
       {content}
     </TabsPrimitive.List>
   );
-}
-function TabSurface({ name }: { name: keyof typeof assets.sprites }) {
+};
+
+const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => {
   return (
     <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
       {assets.sprites[name].pieces.map((image, index) => (
@@ -192,9 +242,11 @@ function TabSurface({ name }: { name: keyof typeof assets.sprites }) {
       ))}
     </span>
   );
-}
+};
+
 type TabsTriggerProps = MinecraftProps<typeof TabsPrimitive.Tab>;
-function TabsTrigger({
+
+const TabsTrigger = ({
   className,
   style,
   ref,
@@ -202,20 +254,28 @@ function TabsTrigger({
   render,
   value,
   ...props
-}: TabsTriggerProps) {
-  const scale = React.useContext(ScaleContext),
-    [, forwarded, element] = useLocalRef(ref);
-  let content = children;
+}: TabsTriggerProps) => {
+  const scale = React.useContext(ScaleContext);
+  const [, forwarded, element] = useLocalRef(ref);
+
+  const content = children;
+
   const text =
     typeof content === "string" || typeof content === "number"
       ? String(content)
       : null;
+
   React.useLayoutEffect(() => {
-    let frame = 0,
-      cancelled = false;
-    if (!element) return;
+    let cancelled = false,
+      frame = 0;
+
+    if (!element) {
+      return;
+    }
+
     const update = () => {
       const width = Math.floor(element.clientWidth / scale);
+
       const textWidth =
         text == null
           ? Math.ceil(
@@ -224,7 +284,7 @@ function TabsTrigger({
                 ?.getBoundingClientRect().width ?? 0) / scale
             )
           : Math.ceil(
-              Array.from(text).reduce(
+              [...text].reduce(
                 (sum, char) =>
                   sum +
                   (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
@@ -233,17 +293,22 @@ function TabsTrigger({
                 0
               )
             );
+
       const overflow = textWidth - (width - 2);
       let left = Math.floor(width / 2) - Math.floor(textWidth / 2);
+
       if (overflow > 0) {
-        const seconds = Date.now() / 1000,
-          period = Math.max(overflow * 0.5, 3);
+        const seconds = Date.now() / 1000;
+        const period = Math.max(overflow * 0.5, 3);
+
         const phase =
           Math.sin((Math.PI / 2) * Math.cos((Math.PI * 2 * seconds) / period)) /
             2 +
           0.5;
+
         left = 1 - Math.trunc(phase * overflow);
       }
+
       const underline = Math.min(textWidth, width - 4);
       element.style.setProperty("--mc-tab-label-x", `${(left - 1) * scale}px`);
       element.style.setProperty(
@@ -255,19 +320,28 @@ function TabsTrigger({
         `${underline * scale}px`
       );
       element.dataset.mcTabReady = "true";
-      if (!cancelled) frame = requestAnimationFrame(update);
+
+      if (!cancelled) {
+        frame = requestAnimationFrame(update);
+      }
     };
-    const unicode = text != null && /[^\x00-\x7f]/.test(text);
-    if (unicode)
-      loadUnihex().then(() => {
+
+    const unicode = text != null && /[^\x00-\x7F]/.test(text);
+
+    if (unicode) {
+      void loadUnihex().then(() => {
         if (!cancelled) update();
       });
-    else update();
+    } else {
+      update();
+    }
+
     return () => {
       cancelled = true;
       cancelAnimationFrame(frame);
     };
   }, [text, scale, element]);
+
   const artwork = (
     <>
       <TabSurface name="tab" />
@@ -284,7 +358,7 @@ function TabsTrigger({
         <span className="mc-tab-label">
           {text == null ? (
             <span data-mc-tabs-rich="">{content}</span>
-          ) : /^[\x20-\x7e]*$/.test(text) ? (
+          ) : /^[\x20-\x7E]*$/.test(text) ? (
             <MinecraftText>{text}</MinecraftText>
           ) : (
             <MinecraftUnicodeLabel text={text} atlas={tabsUnihexAtlas} />
@@ -293,6 +367,7 @@ function TabsTrigger({
       </span>
     </>
   );
+
   return (
     <TabsPrimitive.Tab
       render={render}
@@ -300,23 +375,24 @@ function TabsTrigger({
       value={value}
       data-slot="tabs-trigger"
       data-mc-tab-value={value}
-      className={cn(`mc-tabs-trigger ${""}`, className)}
+      className={cn(`mc-tabs-trigger`, className)}
       style={style}
       {...props}
     >
       {artwork}
     </TabsPrimitive.Tab>
   );
-}
-function TabsContent({
+};
+
+const TabsContent = ({
   className,
   style,
   ...props
-}: MinecraftProps<typeof TabsPrimitive.Panel>) {
+}: MinecraftProps<typeof TabsPrimitive.Panel>) => {
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-content"
-      className={cn(`mc-tabs-content ${""}`, className)}
+      className={cn(`mc-tabs-content`, className)}
       style={minecraftStyle(style, (__style) => ({
         backgroundImage: assets.textures.menu_background,
         ...__style,
@@ -324,6 +400,8 @@ function TabsContent({
       {...props}
     />
   );
-}
+};
+
 export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants };
+
 export type { TabsProps, TabsListProps, TabsTriggerProps };

@@ -1,4 +1,5 @@
 "use client";
+
 import { ContextMenu as Primitive } from "@base-ui/react/context-menu";
 import * as React from "react";
 
@@ -9,98 +10,139 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
 import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
+
 type MenuSurface = "popup" | "suggestions";
-function ContextMenu({
+
+const ContextMenu = ({
   scale = 2,
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Root {...props} />
     </MenuScaleContext.Provider>
   );
-}
-function ContextMenuPortal(props: MinecraftProps<typeof Primitive.Portal>) {
+};
+
+const ContextMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
   return <Primitive.Portal data-slot="context-menu-portal" {...props} />;
-}
-function ContextMenuTrigger(props: MinecraftProps<typeof Primitive.Trigger>) {
+};
+
+const ContextMenuTrigger = (
+  props: MinecraftProps<typeof Primitive.Trigger>
+) => {
   return <Primitive.Trigger data-slot="context-menu-trigger" {...props} />;
-}
+};
+
 function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
   scale: number,
   surface: MenuSurface
 ) {
   const [node, setNode] = React.useState<HTMLDivElement | null>(null);
+
   const forwarded = React.useCallback(
     (element: HTMLDivElement | null) => {
       setNode(element);
+
       if (typeof ref === "function") {
         const cleanup = ref(element);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             setNode(null);
             cleanup();
           };
-      } else if (ref) ref.current = element;
+        }
+      } else if (ref) {
+        ref.current = element;
+      }
     },
     [ref]
   );
+
   React.useLayoutEffect(() => {
-    if (!node) return;
-    const items = Array.from(node.children).find((child) =>
+    if (!node) {
+      return;
+    }
+
+    const items = [...node.children].find((child) =>
       child.classList.contains("mc-menu-items")
     ) as HTMLElement | undefined;
-    if (!items) return;
+
+    if (!items) {
+      return;
+    }
+
     let frame = 0;
+
     const measure = () => {
-      if (!node.clientWidth || !node.clientHeight) return;
+      if (!node.clientWidth || !node.clientHeight) {
+        return;
+      }
+
       node.dataset.mcMenuScrollable = String(
         node.scrollHeight > node.clientHeight + 0.5
       );
-      const style = getComputedStyle(node),
-        padding =
-          parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+
+      const style = getComputedStyle(node);
+
+      const padding =
+        Number.parseFloat(style.paddingTop) +
+        Number.parseFloat(style.paddingBottom);
+
       const maximum = Math.max(0, node.scrollHeight - node.clientHeight);
       node.dataset.mcMenuAbove = String(node.scrollTop > 0.5);
       node.dataset.mcMenuBelow = String(node.scrollTop < maximum - 0.5);
+
       const values = {
-        "--mc-menu-scroll-px": `${node.scrollTop}px`,
+        "--mc-menu-clip-bottom": `${Math.max(0, items.offsetHeight - node.scrollTop - (node.clientHeight - padding))}px`,
+        "--mc-menu-clip-top": `${node.scrollTop}px`,
         "--mc-menu-frame-height": `${node.clientHeight}px`,
         "--mc-menu-frame-width": `${node.clientWidth}px`,
-        "--mc-menu-clip-top": `${node.scrollTop}px`,
-        "--mc-menu-clip-bottom": `${Math.max(0, items.offsetHeight - node.scrollTop - (node.clientHeight - padding))}px`,
+        "--mc-menu-scroll-px": `${node.scrollTop}px`,
       };
-      for (const [key, value] of Object.entries(values))
-        if (node.style.getPropertyValue(key) !== value)
+
+      for (const [key, value] of Object.entries(values)) {
+        if (node.style.getPropertyValue(key) !== value) {
           node.style.setProperty(key, value);
+        }
+      }
+
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         node.dataset.mcMenuReady = "true";
       });
     };
-    const resize = new ResizeObserver(measure),
-      mutation = new MutationObserver(measure);
+
+    const resize = new ResizeObserver(measure);
+    const mutation = new MutationObserver(measure);
+
     resize.observe(node);
     resize.observe(items);
     mutation.observe(items, {
-      subtree: true,
-      childList: true,
       characterData: true,
+      childList: true,
+      subtree: true,
     });
     node.addEventListener("scroll", measure, { passive: true });
     window.addEventListener("resize", measure);
     measure();
+
     return () => {
       resize.disconnect();
       mutation.disconnect();
@@ -109,14 +151,15 @@ function useMenuFrame(
       cancelAnimationFrame(frame);
     };
   }, [node, scale, surface]);
+
   return forwarded;
 }
+
 function contentChildren(
   children: React.ReactNode,
   render: unknown,
   surface: MenuSurface
 ) {
-  const child = null;
   const content = (
     <>
       {surface === "popup" && (
@@ -137,8 +180,10 @@ function contentChildren(
       />
     </>
   );
+
   return content;
 }
+
 type ContextMenuContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
     MinecraftProps<typeof Primitive.Positioner>,
@@ -155,7 +200,8 @@ type ContextMenuContentProps = (MinecraftProps<typeof Primitive.Popup> &
   scale?: 1 | 2 | 3;
   surface?: MenuSurface;
 };
-function ContextMenuContent({
+
+const ContextMenuContent = ({
   children,
   className,
   scale: explicitScale,
@@ -172,10 +218,12 @@ function ContextMenuContent({
   collisionAvoidance,
   keepMounted,
   ...props
-}: ContextMenuContentProps) {
-  const inherited = React.useContext(MenuScaleContext),
-    scale = explicitScale ?? inherited;
+}: ContextMenuContentProps) => {
+  const inherited = React.useContext(MenuScaleContext);
+  const scale = explicitScale ?? inherited;
+
   const forwarded = useMenuFrame(ref, scale, surface);
+
   return (
     <Primitive.Portal keepMounted={keepMounted}>
       <MenuScaleContext.Provider value={scale}>
@@ -209,10 +257,12 @@ function ContextMenuContent({
       </MenuScaleContext.Provider>
     </Primitive.Portal>
   );
-}
-function ContextMenuGroup(props: MinecraftProps<typeof Primitive.Group>) {
+};
+
+const ContextMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
   return <Primitive.Group data-slot="context-menu-group" {...props} />;
-}
+};
+
 function rowChildren(
   children: React.ReactNode,
   _render: unknown,
@@ -227,11 +277,13 @@ function rowChildren(
     </>
   );
 }
+
 type ContextMenuItemProps = MinecraftProps<typeof Primitive.Item> & {
   inset?: boolean;
   variant?: "default";
 };
-function ContextMenuItem({
+
+const ContextMenuItem = ({
   children,
   className,
   inset,
@@ -239,12 +291,15 @@ function ContextMenuItem({
   render,
   style,
   ...props
-}: ContextMenuItemProps) {
+}: ContextMenuItemProps) => {
   const scale = React.useContext(MenuScaleContext);
-  if (variant !== "default")
+
+  if (variant !== "default") {
     throw new Error(
       "Minecraft menu items support the default visual variant only"
     );
+  }
+
   return (
     <Primitive.Item
       render={render}
@@ -261,11 +316,13 @@ function ContextMenuItem({
       {rowChildren(children, render)}
     </Primitive.Item>
   );
-}
+};
+
 function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
   const Indicator = radio
     ? Primitive.RadioItemIndicator
     : Primitive.CheckboxItemIndicator;
+
   return (
     <Indicator
       keepMounted
@@ -273,11 +330,11 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       className="mc-checkbox mc-menu-check"
       style={
         {
-          "--mc-scale": scale,
-          "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
           "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-          "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
           "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+          "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+          "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+          "--mc-scale": scale,
         } as React.CSSProperties
       }
     >
@@ -286,15 +343,17 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
     </Indicator>
   );
 }
-function ContextMenuCheckboxItem({
+
+const ContextMenuCheckboxItem = ({
   children,
   className,
   render,
   style,
   onCheckedChange,
   ...props
-}: MinecraftProps<typeof Primitive.CheckboxItem>) {
+}: MinecraftProps<typeof Primitive.CheckboxItem>) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.CheckboxItem
       render={render}
@@ -307,30 +366,36 @@ function ContextMenuCheckboxItem({
       )}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
-        if (!props.disabled) playMinecraftClick();
+
+        if (!props.disabled) {
+          playMinecraftClick();
+        }
       }}
       {...props}
     >
       {rowChildren(children, render, checkboxIcon(scale))}
     </Primitive.CheckboxItem>
   );
-}
-function ContextMenuRadioGroup(
+};
+
+const ContextMenuRadioGroup = (
   props: MinecraftProps<typeof Primitive.RadioGroup>
-) {
+) => {
   return (
     <Primitive.RadioGroup data-slot="context-menu-radio-group" {...props} />
   );
-}
-function ContextMenuRadioItem({
+};
+
+const ContextMenuRadioItem = ({
   children,
   className,
   render,
   style,
   onClick,
   ...props
-}: MinecraftProps<typeof Primitive.RadioItem>) {
+}: MinecraftProps<typeof Primitive.RadioItem>) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.RadioItem
       render={render}
@@ -343,15 +408,19 @@ function ContextMenuRadioItem({
       )}
       onClick={(event) => {
         onClick?.(event);
-        if (!props.disabled) playMinecraftClick();
+
+        if (!props.disabled) {
+          playMinecraftClick();
+        }
       }}
       {...props}
     >
       {rowChildren(children, render, checkboxIcon(scale, true))}
     </Primitive.RadioItem>
   );
-}
-function ContextMenuLabel({
+};
+
+const ContextMenuLabel = ({
   children,
   className,
   inset,
@@ -360,8 +429,9 @@ function ContextMenuLabel({
   ...props
 }: MinecraftProps<typeof Primitive.GroupLabel> & {
   inset?: boolean;
-}) {
+}) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.GroupLabel
       render={render}
@@ -378,15 +448,17 @@ function ContextMenuLabel({
       {rowChildren(children, render)}
     </Primitive.GroupLabel>
   );
-}
-function ContextMenuSeparator({
+};
+
+const ContextMenuSeparator = ({
   className,
   style,
   render,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Separator>) {
+}: MinecraftProps<typeof Primitive.Separator>) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Separator
       render={render}
@@ -398,12 +470,13 @@ function ContextMenuSeparator({
       {render ? children : <Separator scale={scale} role="separator" />}
     </Primitive.Separator>
   );
-}
-function ContextMenuShortcut({
+};
+
+const ContextMenuShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) {
+}: MinecraftProps<"span">) => {
   return (
     <span
       data-slot="context-menu-shortcut"
@@ -413,11 +486,15 @@ function ContextMenuShortcut({
       {menuTextNodes(children)}
     </span>
   );
-}
-function ContextMenuSub(props: MinecraftProps<typeof Primitive.SubmenuRoot>) {
+};
+
+const ContextMenuSub = (
+  props: MinecraftProps<typeof Primitive.SubmenuRoot>
+) => {
   return <Primitive.SubmenuRoot data-slot="context-menu-sub" {...props} />;
-}
-function ContextMenuSubTrigger({
+};
+
+const ContextMenuSubTrigger = ({
   children,
   className,
   inset,
@@ -426,8 +503,9 @@ function ContextMenuSubTrigger({
   ...props
 }: MinecraftProps<typeof Primitive.SubmenuTrigger> & {
   inset?: boolean;
-}) {
+}) => {
   const scale = React.useContext(MenuScaleContext);
+
   const arrow = (
     <span className="mc-menu-arrow" aria-hidden="true">
       <span className="mc-menu-arrow-ltr">
@@ -438,6 +516,7 @@ function ContextMenuSubTrigger({
       </span>
     </span>
   );
+
   return (
     <Primitive.SubmenuTrigger
       render={render}
@@ -454,7 +533,8 @@ function ContextMenuSubTrigger({
       {rowChildren(children, render, undefined, arrow)}
     </Primitive.SubmenuTrigger>
   );
-}
+};
+
 type ContextMenuSubContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
     MinecraftProps<typeof Primitive.Positioner>,
@@ -471,7 +551,8 @@ type ContextMenuSubContentProps = (MinecraftProps<typeof Primitive.Popup> &
   scale?: 1 | 2 | 3;
   surface?: MenuSurface;
 };
-function ContextMenuSubContent({
+
+const ContextMenuSubContent = ({
   children,
   className,
   scale: explicitScale,
@@ -488,10 +569,12 @@ function ContextMenuSubContent({
   collisionAvoidance,
   keepMounted,
   ...props
-}: ContextMenuSubContentProps) {
-  const inherited = React.useContext(MenuScaleContext),
-    scale = explicitScale ?? inherited;
+}: ContextMenuSubContentProps) => {
+  const inherited = React.useContext(MenuScaleContext);
+  const scale = explicitScale ?? inherited;
+
   const forwarded = useMenuFrame(ref, scale, surface);
+
   return (
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Positioner
@@ -523,7 +606,8 @@ function ContextMenuSubContent({
       </Primitive.Positioner>
     </MenuScaleContext.Provider>
   );
-}
+};
+
 export {
   ContextMenu,
   ContextMenuPortal,
@@ -541,6 +625,7 @@ export {
   ContextMenuSubTrigger,
   ContextMenuSubContent,
 };
+
 export type {
   ContextMenuContentProps,
   ContextMenuItemProps,

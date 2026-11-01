@@ -72,7 +72,7 @@ export default defineConfig({
     {
       files: [
         "**/packages/tests/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
-        "**/packages/pixel-perfect/tests/**/*.spec.{ts,tsx,js,mjs}",
+        "**/packages/pixel-perfect/tests/**/*.{test,spec}.{ts,tsx,js,mjs}",
       ],
       plugins: ["vitest"],
       // These suites import their actual Bun/Playwright APIs, not Vitest.

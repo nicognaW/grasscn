@@ -28,19 +28,25 @@ test("Grasscn project identity and native branding assets are consistent", async
     const metadata = JSON.parse(
       readFileSync(evidenceFile(file, pixelPerfectRoot), "utf-8")
     );
+
     expect(metadata.name).toBe("grasscn");
-    if (metadata.packages?.[""])
+
+    if (metadata.packages?.[""]) {
       expect(metadata.packages[""].name).toBe("grasscn");
+    }
   }
+
   const provenance = JSON.parse(
     await readFile(
       evidenceFile("preview/branding.provenance.json", pixelPerfectRoot),
       "utf8"
     )
   );
+
   expect(provenance.sourceJarSha256).toBe(
     "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
   );
+
   for (const [file, record] of Object.entries(provenance.generated) as [
     string,
     { sha256: string },
@@ -52,6 +58,7 @@ test("Grasscn project identity and native branding assets are consistent", async
       record.sha256
     );
   }
+
   for (const c of provenance.cases) {
     const one = PNG.sync.read(
       await readFile(
@@ -61,6 +68,7 @@ test("Grasscn project identity and native branding assets are consistent", async
         )
       )
     );
+
     const two = PNG.sync.read(
       await readFile(
         evidenceFile(
@@ -69,6 +77,7 @@ test("Grasscn project identity and native branding assets are consistent", async
         )
       )
     );
+
     expect(one.data.equals(two.data)).toBe(true);
     expect(c.mismatchedPixels).toBe(0);
   }

@@ -10,12 +10,12 @@ test.beforeEach(({ page }) => {
   page.on("pageerror", (error) => errors.push(error.message));
 });
 
-test.afterEach(async ({ page, browser }, info) => {
+test.afterEach(({ page, browser }, info) => {
   writeFileSync(
     info.outputPath("runtime.json"),
     JSON.stringify({
-      pageErrors: runtimeErrors.get(page) ?? [],
       browser: browser.version(),
+      pageErrors: runtimeErrors.get(page) ?? [],
     })
   );
   expect(runtimeErrors.get(page)).toEqual([]);
@@ -27,16 +27,16 @@ test("Data table recipe paginates rows and preserves rich cells and caller-owned
   await page.goto("/?component=data-table");
   await expect(page.getByRole("table", { name: "Worlds" })).toBeVisible();
   await expect(
-    page.getByRole("cell", { name: "Alpha", exact: true })
+    page.getByRole("cell", { exact: true, name: "Alpha" })
   ).toBeVisible();
   await expect(
-    page.getByRole("cell", { name: "Birch", exact: true })
+    page.getByRole("cell", { exact: true, name: "Birch" })
   ).toHaveCount(0);
   await expect(page.getByTestId("rich-cell").first()).toHaveText("4");
   await page.locator("#next").click();
   await expect(page.locator("#page")).toHaveText("2");
   await expect(
-    page.getByRole("cell", { name: "Birch", exact: true })
+    page.getByRole("cell", { exact: true, name: "Birch" })
   ).toBeVisible();
   await page.locator("#previous").click();
   await expect(page.locator("#page")).toHaveText("1");
@@ -53,7 +53,7 @@ test("DataTable sorting, filtering CJK, visibility, page size and selection rema
     page.locator("[data-slot=table-body] [data-slot=table-cell]").first()
   ).toHaveAccessibleName("Alpha");
   await expect(
-    page.getByRole("cell", { name: "Birch", exact: true })
+    page.getByRole("cell", { exact: true, name: "Birch" })
   ).toBeVisible();
   await page.locator("#sort").click();
   await expect(
@@ -63,25 +63,25 @@ test("DataTable sorting, filtering CJK, visibility, page size and selection rema
   await expect(page.getByRole("cell")).toHaveCount(8);
   await page.locator("#visibility").click();
   await expect(
-    page.getByRole("columnheader", { name: "Players", exact: true })
+    page.getByRole("columnheader", { exact: true, name: "Players" })
   ).toHaveCount(0);
   const input = page.getByRole("textbox", { name: "Filter worlds" });
   await expect(input).toHaveAttribute("spellcheck", "false");
   await input.fill("你好");
   await expect(
-    page.getByRole("cell", { name: "你好，世界", exact: true })
+    page.getByRole("cell", { exact: true, name: "你好，世界" })
   ).toBeVisible();
   await expect(page.getByRole("cell")).toHaveCount(1);
-  await page.getByRole("cell", { name: "你好，世界", exact: true }).click();
+  await page.getByRole("cell", { exact: true, name: "你好，世界" }).click();
   await expect(page.locator("#selection")).toHaveText("1");
   await expect(
     page.getByRole("row").filter({
-      has: page.getByRole("cell", { name: "你好，世界", exact: true }),
+      has: page.getByRole("cell", { exact: true, name: "你好，世界" }),
     })
   ).toHaveAttribute("aria-selected", "true");
   await input.fill("nonexistent");
   await expect(
-    page.getByRole("cell", { name: "No results.", exact: true })
+    page.getByRole("cell", { exact: true, name: "No results." })
   ).toBeVisible();
   await input.fill("");
   await expect(page.getByRole("cell")).toHaveCount(4);

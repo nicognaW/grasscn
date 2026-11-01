@@ -16,42 +16,50 @@ import {
   PaginationEllipsis,
 } from "@grasscn/web/ui/pagination";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  kind = p.get("component") ?? "button-group",
-  state = p.get("state") ?? "normal",
-  native = p.has("native"),
-  label = p.get("label") ?? "Button",
-  width = Number(p.get("width") ?? 200),
-  height = Number(p.get("height") ?? 20);
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const kind = p.get("component") ?? "button-group";
+const state = p.get("state") ?? "normal";
+const native = p.has("native");
+const label = p.get("label") ?? "Button";
+const width = Number(p.get("width") ?? 200);
+const height = Number(p.get("height") ?? 20);
+
 const position: React.CSSProperties = {
-  position: "absolute",
   left: Number(p.get("x") ?? 16) * scale,
+  position: "absolute",
   top: Number(p.get("y") ?? 16) * scale,
 };
-export function StructuralFixture() {
+
+export const StructuralFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
     document.body.style.background = p.get("background") ?? "#202020";
   }, []);
-  const [events, setEvents] = React.useState(0),
-    [page, setPage] = React.useState(1),
-    ref = React.useRef<HTMLAnchorElement>(null),
-    [tag, setTag] = React.useState("");
+
+  const [events, setEvents] = React.useState(0);
+  const [page, setPage] = React.useState(1);
+  const ref = React.useRef<HTMLAnchorElement>(null);
+  const [tag, setTag] = React.useState("");
+
   const subject = (
     <Button
       id="subject"
       scale={scale}
       disabled={state === "disabled"}
-      style={{ width: width * scale, height: height * scale }}
-      onClick={() => setEvents((v) => v + 1)}
+      style={{ height: height * scale, width: width * scale }}
+      onClick={() => {
+        setEvents((v) => v + 1);
+      }}
       data-subject="true"
     >
       {label}
     </Button>
   );
-  if (kind === "aspect-ratio")
+
+  if (kind === "aspect-ratio") {
     return (
       <>
         <div
@@ -80,7 +88,9 @@ export function StructuralFixture() {
         </div>
       </>
     );
-  if (kind === "button-group")
+  }
+
+  if (kind === "button-group") {
     return (
       <>
         <ButtonGroup
@@ -132,7 +142,9 @@ export function StructuralFixture() {
               <Button
                 scale={scale}
                 style={{ width: 80 * scale }}
-                onClick={() => setEvents((v) => v + 1)}
+                onClick={() => {
+                  setEvents((v) => v + 1);
+                }}
               >
                 Next
               </Button>
@@ -148,9 +160,12 @@ export function StructuralFixture() {
         />
       </>
     );
+  }
+
   if (kind === "pagination" && p.get("part") === "arrow") {
     const Arrow =
       p.get("checked") === "true" ? PaginationNext : PaginationPrevious;
+
     return (
       <Arrow
         id="subject"
@@ -159,7 +174,9 @@ export function StructuralFixture() {
         href="#next"
         style={position}
         onClick={(event) => {
-          if (p.has("cancel")) event.preventDefault();
+          if (p.has("cancel")) {
+            event.preventDefault();
+          }
         }}
         data-subject="true"
       >
@@ -167,7 +184,8 @@ export function StructuralFixture() {
       </Arrow>
     );
   }
-  if (kind === "pagination")
+
+  if (kind === "pagination") {
     return (
       <>
         <Pagination
@@ -198,8 +216,10 @@ export function StructuralFixture() {
                 onClick={(event) => {
                   if (p.has("cancel")) {
                     event.preventDefault();
+
                     return;
                   }
+
                   setEvents((v) => v + 1);
                   setPage(2);
                 }}
@@ -218,7 +238,9 @@ export function StructuralFixture() {
         </Pagination>
         <button
           id="read-ref"
-          onClick={() => setTag(ref.current?.tagName ?? "")}
+          onClick={() => {
+            setTag(ref.current?.tagName ?? "");
+          }}
         >
           Read ref
         </button>
@@ -227,5 +249,7 @@ export function StructuralFixture() {
         <output id="page">{page}</output>
       </>
     );
+  }
+
   return null;
-}
+};

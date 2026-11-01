@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("NativeSelect preserves native element refs, controlled options, optgroup and CJK selected text", async ({
   page,
 }) => {
@@ -17,6 +18,7 @@ test("NativeSelect preserves native element refs, controlled options, optgroup a
   await expect(control.locator("optgroup")).toHaveAttribute("label", "Worlds");
   await expect(control.locator("option[value=blocked]")).toBeDisabled();
 });
+
 test("NativeSelect submits native form values, supports multiple and excludes disabled controls", async ({
   page,
 }) => {
@@ -27,7 +29,7 @@ test("NativeSelect submits native form values, supports multiple and excludes di
   await page
     .getByRole("listbox", { name: "Multiple choices" })
     .selectOption(["b", "c"]);
-  await page.getByRole("button", { name: "Submit", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Submit" }).click();
   await expect(page.locator("#result")).toHaveText(
     JSON.stringify([
       ["choice", "one"],
@@ -38,11 +40,12 @@ test("NativeSelect submits native form values, supports multiple and excludes di
     ])
   );
 });
+
 test("NativeSelect native required validity and form reset update the skinned closed value", async ({
   page,
 }) => {
   await page.goto("/?component=native-select");
-  await page.getByRole("button", { name: "Submit", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Submit" }).click();
   expect(
     await page
       .getByRole("combobox", { name: "Required choice" })
@@ -57,7 +60,7 @@ test("NativeSelect native required validity and form reset update the skinned cl
       .nth(1)
       .locator(".mc-select-trigger-label")
   ).toHaveText("One");
-  await page.getByRole("button", { name: "Reset", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Reset" }).click();
   await expect(control).toHaveValue("two");
   await expect(
     page
@@ -66,17 +69,19 @@ test("NativeSelect native required validity and form reset update the skinned cl
       .locator(".mc-select-trigger-label")
   ).toHaveText("Two");
 });
+
 test("NativeSelect remains a real keyboard-operable select and original click voice is singular", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).voices.push({
-        volume: this.volume,
-        rate: this.playbackRate,
         original: this.src.startsWith("data:audio/ogg;base64,"),
+        rate: this.playbackRate,
+        volume: this.volume,
       });
+
       return Promise.resolve();
     };
   });
@@ -87,7 +92,7 @@ test("NativeSelect remains a real keyboard-operable select and original click vo
   await expect(control).toHaveValue("two");
   await control.dispatchEvent("pointerdown", { button: 0 });
   expect(await page.evaluate(() => (window as any).voices)).toEqual([
-    { volume: 0.25, rate: 1, original: true },
+    { original: true, rate: 1, volume: 0.25 },
   ]);
   await page
     .getByRole("combobox", { name: "Disabled choice" })

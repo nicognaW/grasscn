@@ -11,6 +11,7 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
   const scratchRoot = path.join(pixelPerfectTestRoot, "unit");
   await mkdir(scratchRoot, { recursive: true });
   const root = await mkdtemp(path.join(scratchRoot, "grasscn-evidence-"));
+
   const files = [
     "tests/reference/trading/scrollbar/manifest.json",
     "tests/reference/trading/scrollbar/interaction-repeatability.json",
@@ -21,31 +22,37 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
       "generation-repeatability.json",
       "inputs/map-world-input.json.gz",
       "map-world.colors",
-    ].map((name) => "tests/reference/map/demo-world/" + name),
+    ].map((name) => `tests/reference/map/demo-world/${name}`),
     "preview/demos/map-world-data.ts",
     "tests/reference/player-preview/custom-skins/skin-provenance.json",
     "tests/fixture/dream-skin.png",
     "tests/fixture/steve-skin.png",
   ];
+
   try {
-    for (const file of files)
+    for (const file of files) {
       await cp(evidenceFile(file), path.join(root, file), {
         recursive: true,
       });
+    }
+
     await verifyPortingEvidence(root);
+
     for (const file of [
       "tests/reference/map/demo-world/map-world.colors",
       "tests/reference/map/demo-world/inputs/map-world-input.json.gz",
       "tests/fixture/dream-skin.png",
     ]) {
-      const target = path.join(root, file),
-        original = await readFile(target),
-        changed = Buffer.from(original);
+      const target = path.join(root, file);
+      const original = await readFile(target);
+      const changed = Buffer.from(original);
+
       changed[0] ^= 1;
       await writeFile(target, changed);
       await assert.rejects(() => verifyPortingEvidence(root));
       await writeFile(target, original);
     }
+
     for (const [file, mutate] of [
       [
         "tests/reference/trading/scrollbar/interaction-repeatability.json",
@@ -60,22 +67,25 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
         },
       ],
     ]) {
-      const target = path.join(root, file),
-        original = await readFile(target),
-        data = JSON.parse(original);
+      const target = path.join(root, file);
+      const original = await readFile(target);
+      const data = JSON.parse(original);
+
       mutate(data);
       await writeFile(target, JSON.stringify(data));
       await assert.rejects(() => verifyPortingEvidence(root));
       await writeFile(target, original);
     }
-    const target = path.join(root, "preview/demos/map-world-data.ts"),
-      original = await readFile(target, "utf8");
+
+    const target = path.join(root, "preview/demos/map-world-data.ts");
+    const original = await readFile(target, "utf-8");
+
     await writeFile(
       target,
       original.replace(/(worldMapPaletteBase64\s*=\s*")[A-Za-z0-9+/]/, "$1A")
     );
     await assert.rejects(() => verifyPortingEvidence(root));
   } finally {
-    await rm(root, { recursive: true, force: true });
+    await rm(root, { force: true, recursive: true });
   }
 });

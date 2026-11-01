@@ -1,7 +1,9 @@
 import { test, expect } from "@grasscn/tests/test";
+
 const fixture =
   process.env.GRASSCN_TREE_INSTALLED_URL ??
   "http://127.0.0.1:5174/adventure.html";
+
 test.use({
   launchOptions: { args: ["--disable-gpu", "--disable-extensions"] },
 });
@@ -10,7 +12,7 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
   page,
 }, info) => {
   for (const width of [1440, 1024, 390]) {
-    await page.setViewportSize({ width, height: 1000 });
+    await page.setViewportSize({ height: 1000, width });
     await page.goto("http://127.0.0.1:5176/components/advancement-tree");
 
     const browse = page.getByRole("button", {
@@ -30,29 +32,40 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       exact: true,
       name: "Documentation",
     });
+
     await expect(
       navigation.getByRole("link", { exact: true, name: "Advancement Tree" })
     ).toBeVisible();
+
     const clipped = await navigation
       .locator("a.mc-button")
       .evaluateAll((links) =>
         links.flatMap((link) => {
           const text = link.querySelector(".mc-text-pixels");
-          if (!text) return [];
-          const a = link.getBoundingClientRect(),
-            b = text.getBoundingClientRect();
+
+          if (!text) {
+            return [];
+          }
+
+          const a = link.getBoundingClientRect();
+          const b = text.getBoundingClientRect();
+
           return b.left < a.left + 3 || b.right > a.right - 3
             ? [link.textContent?.trim()]
             : [];
         })
       );
+
     expect(clipped, `clipped component labels at ${width}px`).toEqual([]);
-    if (width === 1440)
+
+    if (width === 1440) {
       await page.screenshot({
         path: info.outputPath("advancement-navigation-fixed.png"),
       });
+    }
   }
 });
+
 test("small pointer movement still selects an advancement", async ({
   page,
 }) => {
@@ -69,13 +82,15 @@ test("small pointer movement still selects an advancement", async ({
   await expect(node).toHaveAttribute("aria-pressed", "true");
   expect(await plane.getAttribute("style")).toBe(before);
 });
+
 test("dragging from a node pans without selecting and does not block keyboard selection", async ({
   page,
 }) => {
   const warnings: string[] = [];
   page.on("console", (message) => {
-    if (message.type() === "error" || message.type() === "warning")
+    if (message.type() === "error" || message.type() === "warning") {
       warnings.push(message.text());
+    }
   });
   await page.goto(fixture + "?scale=2&mask=1");
 
@@ -120,7 +135,7 @@ test("cancelled drag permits the next click and keyboard selection", async ({
     { steps: 4 }
   );
   await expect(page.locator('[data-slot="tooltip-content"]')).toHaveCount(0);
-  await tree.dispatchEvent("pointercancel", { pointerId: 1, isPrimary: true });
+  await tree.dispatchEvent("pointercancel", { isPrimary: true, pointerId: 1 });
   await page.mouse.up();
   const pan = await plane.getAttribute("style");
   await page.mouse.move(1000, 800);

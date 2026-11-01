@@ -6,54 +6,60 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-  ChartPixelBar,
   ChartPixelSurface,
 } from "@grasscn/web/ui/chart";
 import * as React from "react";
 import { BarChart, Bar, XAxis, CartesianGrid } from "recharts";
-const p = new URLSearchParams(location.search),
-  c = JSON.parse(p.get("case") ?? "{}"),
-  scale = c.scale ?? 2;
+
+const p = new URLSearchParams(location.search);
+const c = JSON.parse(p.get("case") ?? "{}");
+const scale = c.scale ?? 2;
+
 const style = {
-  position: "fixed" as const,
   left: (c.x ?? 16) * scale,
+  position: "fixed" as const,
   top: (c.y ?? 16) * scale,
 };
-function ApiFixture() {
-  const [wide, setWide] = React.useState(false),
-    [dark, setDark] = React.useState(false),
-    [revision, setRevision] = React.useState(0);
+
+const ApiFixture = () => {
+  const [wide, setWide] = React.useState(false);
+  const [dark, setDark] = React.useState(false);
+  const [revision, setRevision] = React.useState(0);
+
   const data = React.useMemo(
-      () => [
-        { month: "Spring", desktop: 20 + revision, mobile: 12 },
-        { month: "Summer", desktop: 30, mobile: 8 },
-        { month: "Winter", desktop: 10, mobile: 15 },
-      ],
-      [revision]
-    ),
-    config = {
-      desktop: {
-        label: "世界",
-        theme: { light: "#22dd44", dark: "#00aa11" },
-        icon: () => (
-          <svg aria-label="Desktop icon" width="12" height="12">
-            <rect width="12" height="12" fill="green" />
-          </svg>
-        ),
-      },
-      mobile: { label: "Mobile", color: "#ffcc00" },
-    };
+    () => [
+      { desktop: 20 + revision, mobile: 12, month: "Spring" },
+      { desktop: 30, mobile: 8, month: "Summer" },
+      { desktop: 10, mobile: 15, month: "Winter" },
+    ],
+    [revision]
+  );
+
+  const config = {
+    desktop: {
+      icon: () => (
+        <svg aria-label="Desktop icon" width="12" height="12">
+          <rect width="12" height="12" fill="green" />
+        </svg>
+      ),
+      label: "世界",
+      theme: { dark: "#00aa11", light: "#22dd44" },
+    },
+    mobile: { color: "#ffcc00", label: "Mobile" },
+  };
+
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
+
   return (
     <>
       <ChartContainer
         id="world-activity"
         config={config}
         scale={2}
-        initialDimension={{ width: 480, height: 300 }}
-        style={{ width: wide ? 600 : 480, height: 300 }}
+        initialDimension={{ height: 300, width: 480 }}
+        style={{ height: 300, width: wide ? 600 : 480 }}
       >
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
@@ -116,7 +122,7 @@ function ApiFixture() {
         id="themed-pixels"
         config={config}
         scale={2}
-        style={{ width: 320, height: 160 }}
+        style={{ height: 160, width: 320 }}
       >
         <BarChart data={data}>
           <Bar
@@ -127,16 +133,36 @@ function ApiFixture() {
           <ChartPixelSurface />
         </BarChart>
       </ChartContainer>
-      <button id="resize" onClick={() => setWide((v) => !v)}>
+      <button
+        id="resize"
+        onClick={() => {
+          setWide((v) => !v);
+        }}
+      >
         Resize
       </button>
-      <button id="theme" onClick={() => setDark((v) => !v)}>
+      <button
+        id="theme"
+        onClick={() => {
+          setDark((v) => !v);
+        }}
+      >
         Theme
       </button>
-      <button id="update" onClick={() => setRevision((v) => v + 1)}>
+      <button
+        id="update"
+        onClick={() => {
+          setRevision((v) => v + 1);
+        }}
+      >
         Update
       </button>
-      <button id="plot-update" onClick={() => setRevision((v) => v + 1)}>
+      <button
+        id="plot-update"
+        onClick={() => {
+          setRevision((v) => v + 1);
+        }}
+      >
         Plot update
       </button>
       <ProfilerChartExample
@@ -150,10 +176,12 @@ function ApiFixture() {
       />
     </>
   );
-}
-function MetricFixture() {
-  const [changed, setChanged] = React.useState(false),
-    [custom, setCustom] = React.useState(false);
+};
+
+const MetricFixture = () => {
+  const [changed, setChanged] = React.useState(false);
+  const [custom, setCustom] = React.useState(false);
+
   return (
     <>
       <FpsChartExample
@@ -171,31 +199,45 @@ function MetricFixture() {
             : (value) => `${Math.round(value)} ms`
         }
         guides={[
-          { value: 100, label: "Goal" },
-          { value: 200, label: "Ceiling" },
+          { label: "Goal", value: 100 },
+          { label: "Ceiling", value: 200 },
         ]}
       />
-      <button id="metric-update" onClick={() => setChanged((value) => !value)}>
+      <button
+        id="metric-update"
+        onClick={() => {
+          setChanged((value) => !value);
+        }}
+      >
         Update metric
       </button>
-      <button id="metric-format" onClick={() => setCustom((value) => !value)}>
+      <button
+        id="metric-format"
+        onClick={() => {
+          setCustom((value) => !value);
+        }}
+      >
         Format metric
       </button>
     </>
   );
-}
-export function ChartFixture() {
+};
+
+export const ChartFixture = () => {
   React.useLayoutEffect(() => {
-    const bg = c.background ?? "#202020",
-      html = document.documentElement.style.background,
-      body = document.body.style.background;
+    const bg = c.background ?? "#202020";
+    const html = document.documentElement.style.background;
+    const body = document.body.style.background;
+
     document.documentElement.style.background = bg;
     document.body.style.background = bg;
+
     return () => {
       document.documentElement.style.background = html;
       document.body.style.background = body;
     };
   }, []);
+
   return p.has("metric") ? (
     <MetricFixture />
   ) : c.element === "chart-fps" ? (
@@ -219,9 +261,9 @@ export function ChartFixture() {
       scale={scale}
       rootName={c.rootName}
       data={(c.labels ?? []).map((name: string, i: number) => ({
+        globalPercentage: c.globalPercentages[i],
         name,
         percentage: c.percentages[i],
-        globalPercentage: c.globalPercentages[i],
       }))}
       style={style}
       data-subject="true"
@@ -229,4 +271,4 @@ export function ChartFixture() {
   ) : (
     <ApiFixture />
   );
-}
+};

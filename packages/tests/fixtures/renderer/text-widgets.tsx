@@ -21,21 +21,28 @@ import {
   TraceCollapsibleContent,
 } from "@grasscn/web/ui/trace";
 import * as React from "react";
+
 const readQuery = () => new URLSearchParams(location.search);
-function ScrollerFixture() {
-  const q = readQuery(),
-    api = useMessageScroller(),
-    scrollable = useMessageScrollerScrollable(),
-    visibility = useMessageScrollerVisibility(),
-    [ids, setIds] = React.useState(Array.from({ length: 30 }, (_, i) => i + 1)),
-    [tag, setTag] = React.useState(""),
-    viewport = React.useRef<HTMLDivElement>(null);
+
+const ScrollerFixture = () => {
+  const q = readQuery();
+  const api = useMessageScroller();
+  const scrollable = useMessageScrollerScrollable();
+  const visibility = useMessageScrollerVisibility();
+
+  const [ids, setIds] = React.useState(
+    Array.from({ length: 30 }, (_, i) => i + 1)
+  );
+
+  const [tag, setTag] = React.useState("");
+  const viewport = React.useRef<HTMLDivElement>(null);
+
   return (
     <>
       <MessageScroller
         scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
         id="subject"
-        style={{ width: 520, height: 200 }}
+        style={{ height: 200, width: 520 }}
         data-testid="scroller-root"
         data-subject="true"
       >
@@ -76,18 +83,24 @@ function ScrollerFixture() {
         API message
       </button>
       <button
-        onClick={() => setIds((values) => [...values, Math.max(...values) + 1])}
+        onClick={() => {
+          setIds((values) => [...values, Math.max(...values) + 1]);
+        }}
       >
         Append
       </button>
       <button
-        onClick={() => setIds((values) => [Math.min(...values) - 1, ...values])}
+        onClick={() => {
+          setIds((values) => [Math.min(...values) - 1, ...values]);
+        }}
       >
         Prepend
       </button>
       <button
         id="read-ref"
-        onClick={() => setTag(viewport.current?.tagName ?? "missing")}
+        onClick={() => {
+          setTag(viewport.current?.tagName ?? "missing");
+        }}
       >
         Read ref
       </button>
@@ -96,18 +109,20 @@ function ScrollerFixture() {
       <output data-testid="visible">{JSON.stringify(visibility)}</output>
     </>
   );
-}
-export function TextWidgetsFixture() {
-  const q = readQuery(),
-    component = q.get("component") ?? "trace",
-    [open, setOpen] = React.useState(q.has("open")),
-    [changes, setChanges] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    [events, setEvents] = React.useState(0),
-    [phase, setPhase] = React.useState(0),
-    div = React.useRef<HTMLDivElement>(null),
-    svg = React.useRef<SVGSVGElement>(null);
-  if (component === "message-scroller")
+};
+
+export const TextWidgetsFixture = () => {
+  const q = readQuery();
+  const component = q.get("component") ?? "trace";
+  const [open, setOpen] = React.useState(q.has("open"));
+  const [changes, setChanges] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const [events, setEvents] = React.useState(0);
+  const [phase, setPhase] = React.useState(0);
+  const div = React.useRef<HTMLDivElement>(null);
+  const svg = React.useRef<SVGSVGElement>(null);
+
+  if (component === "message-scroller") {
     return (
       <MessageScrollerProvider
         defaultScrollPosition={q.get("position") === "start" ? "start" : "end"}
@@ -117,7 +132,9 @@ export function TextWidgetsFixture() {
         <ScrollerFixture />
       </MessageScrollerProvider>
     );
-  if (component === "spinner")
+  }
+
+  if (component === "spinner") {
     return (
       <>
         <Spinner
@@ -126,15 +143,25 @@ export function TextWidgetsFixture() {
           aria-label="Working"
           timeMs={q.has("animate") ? undefined : phase}
           scale={Number(q.get("scale") ?? 2) as 1 | 2 | 3}
-          onClick={() => setEvents((n) => n + 1)}
+          onClick={() => {
+            setEvents((n) => n + 1);
+          }}
           data-subject="true"
         >
           <title>Original loading dots</title>
         </Spinner>
-        <button onClick={() => setPhase(phase + 300)}>Next phase</button>
+        <button
+          onClick={() => {
+            setPhase(phase + 300);
+          }}
+        >
+          Next phase
+        </button>
         <button
           id="read-ref"
-          onClick={() => setTag(svg.current?.tagName ?? "missing")}
+          onClick={() => {
+            setTag(svg.current?.tagName ?? "missing");
+          }}
         >
           Read ref
         </button>
@@ -142,6 +169,8 @@ export function TextWidgetsFixture() {
         <output id="events">{events}</output>
       </>
     );
+  }
+
   return (
     <Trace
       id="subject"
@@ -181,7 +210,9 @@ export function TextWidgetsFixture() {
       </TraceCollapsible>
       <button
         id="read-ref"
-        onClick={() => setTag(div.current?.tagName ?? "missing")}
+        onClick={() => {
+          setTag(div.current?.tagName ?? "missing");
+        }}
       >
         Read ref
       </button>
@@ -189,4 +220,4 @@ export function TextWidgetsFixture() {
       <output id="changes">{changes}</output>
     </Trace>
   );
-}
+};

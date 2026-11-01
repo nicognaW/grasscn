@@ -1,21 +1,20 @@
 "use client";
+
 import { Combobox as Primitive } from "@base-ui/react";
 import * as React from "react";
 
 import { Button } from "./button";
 import { Input } from "./input";
 import { minecraftCardSprite } from "./minecraft-card-sprite";
-import {
-  MenuScaleContext,
-  MinecraftMenuText,
-  menuTextNodes,
-} from "./minecraft-menu-text";
+import { MenuScaleContext, menuTextNodes } from "./minecraft-menu-text";
 import { MinecraftSurface } from "./minecraft-surface";
 import { Separator } from "./separator";
 
 import "./minecraft-menu.css";
 import "./minecraft-combobox.css";
+
 type Scale = 1 | 2 | 3;
+
 function classes<S>(
   base: string,
   value?: string | ((state: S) => string | undefined)
@@ -24,35 +23,39 @@ function classes<S>(
     ? (state: S) => `${base} ${value(state) ?? ""}`
     : `${base} ${value ?? ""}`;
 }
+
 function scaled<S>(
   scale: Scale,
   style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
 ) {
   const merge = (value?: React.CSSProperties) =>
     ({ "--mc-scale": scale, ...value }) as React.CSSProperties;
+
   return typeof style === "function"
     ? (state: S) => merge(style(state))
     : merge(style);
 }
-function Combobox<
+
+const Combobox = <
   Value,
   Multiple extends boolean | undefined = false,
   Item = Value,
 >({
   scale = 2,
   ...props
-}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) {
+}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) => {
   return (
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Root {...props} />
     </MenuScaleContext.Provider>
   );
-}
-function ComboboxValue({
+};
+
+const ComboboxValue = ({
   children,
   placeholder,
   ...props
-}: Primitive.Value.Props) {
+}: Primitive.Value.Props) => {
   return (
     <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
       {typeof children === "function"
@@ -62,14 +65,16 @@ function ComboboxValue({
           : menuTextNodes(children)}
     </Primitive.Value>
   );
-}
-function ComboboxTrigger({
+};
+
+const ComboboxTrigger = ({
   className,
   render,
   children,
   ...props
-}: Primitive.Trigger.Props) {
+}: Primitive.Trigger.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Trigger
       data-slot="combobox-trigger"
@@ -80,14 +85,16 @@ function ComboboxTrigger({
       {children ?? "..."}
     </Primitive.Trigger>
   );
-}
-function ComboboxClear({
+};
+
+const ComboboxClear = ({
   className,
   render,
   children,
   ...props
-}: Primitive.Clear.Props) {
+}: Primitive.Clear.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Clear
       data-slot="combobox-clear"
@@ -99,8 +106,9 @@ function ComboboxClear({
       {children ?? "X"}
     </Primitive.Clear>
   );
-}
-function ComboboxInput({
+};
+
+const ComboboxInput = ({
   className,
   children,
   disabled = false,
@@ -115,9 +123,10 @@ function ComboboxInput({
   showTrigger?: boolean;
   showClear?: boolean;
   scale?: Scale;
-}) {
-  const inherited = React.useContext(MenuScaleContext),
-    scale = explicit ?? inherited;
+}) => {
+  const inherited = React.useContext(MenuScaleContext);
+  const scale = explicit ?? inherited;
+
   return (
     <MenuScaleContext.Provider value={scale}>
       <div
@@ -142,8 +151,9 @@ function ComboboxInput({
       </div>
     </MenuScaleContext.Provider>
   );
-}
-function ComboboxContent({
+};
+
+const ComboboxContent = ({
   className,
   side = "bottom",
   sideOffset = 0,
@@ -158,9 +168,10 @@ function ComboboxContent({
   Pick<
     Primitive.Positioner.Props,
     "side" | "sideOffset" | "align" | "alignOffset" | "anchor"
-  > & { scale?: Scale }) {
-  const inherited = React.useContext(MenuScaleContext),
-    scale = explicit ?? inherited;
+  > & { scale?: Scale }) => {
+  const inherited = React.useContext(MenuScaleContext);
+  const scale = explicit ?? inherited;
+
   return (
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Portal>
@@ -184,57 +195,71 @@ function ComboboxContent({
       </Primitive.Portal>
     </MenuScaleContext.Provider>
   );
-}
-function ComboboxList({
+};
+
+const ComboboxList = ({
   className,
   children,
   style,
   ref,
   surface = "suggestions",
   ...props
-}: Primitive.List.Props & { surface?: "suggestions" | "popup" }) {
-  const scale = React.useContext(MenuScaleContext),
-    node = React.useRef<HTMLDivElement>(null);
+}: Primitive.List.Props & { surface?: "suggestions" | "popup" }) => {
+  const scale = React.useContext(MenuScaleContext);
+  const node = React.useRef<HTMLDivElement>(null);
+
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useLayoutEffect(() => {
-    const element = node.current!,
-      items = element.querySelector<HTMLElement>(".mc-menu-items")!;
+    const element = node.current!;
+    const items = element.querySelector<HTMLElement>(".mc-menu-items")!;
+
     let frame = 0;
+
     const measure = () => {
-      if (!element.clientWidth || !element.clientHeight) return;
+      if (!element.clientWidth || !element.clientHeight) {
+        return;
+      }
+
       const max = Math.max(0, element.scrollHeight - element.clientHeight);
       element.dataset.mcMenuScrollable = String(max > 0.5);
       element.dataset.mcMenuAbove = String(element.scrollTop > 0.5);
       element.dataset.mcMenuBelow = String(element.scrollTop < max - 0.5);
+
       const padding =
-        parseFloat(getComputedStyle(element).paddingTop) +
-        parseFloat(getComputedStyle(element).paddingBottom);
+        Number.parseFloat(getComputedStyle(element).paddingTop) +
+        Number.parseFloat(getComputedStyle(element).paddingBottom);
+
       for (const [key, value] of Object.entries({
-        "--mc-menu-scroll-px": `${element.scrollTop}px`,
-        "--mc-menu-frame-height": `${element.clientHeight}px`,
-        "--mc-menu-clip-top": `${element.scrollTop}px`,
         "--mc-menu-clip-bottom": `${Math.max(0, items.offsetHeight - element.scrollTop - (element.clientHeight - padding))}px`,
-      }))
+        "--mc-menu-clip-top": `${element.scrollTop}px`,
+        "--mc-menu-frame-height": `${element.clientHeight}px`,
+        "--mc-menu-scroll-px": `${element.scrollTop}px`,
+      })) {
         if (element.style.getPropertyValue(key) !== value)
           element.style.setProperty(key, value);
+      }
+
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         element.dataset.mcMenuReady = "true";
       });
     };
-    const resize = new ResizeObserver(measure),
-      mutation = new MutationObserver(measure);
+
+    const resize = new ResizeObserver(measure);
+    const mutation = new MutationObserver(measure);
+
     resize.observe(element);
     resize.observe(items);
     mutation.observe(items, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true,
       attributeFilter: ["hidden"],
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true,
     });
     element.addEventListener("scroll", measure, { passive: true });
     measure();
+
     return () => {
       resize.disconnect();
       mutation.disconnect();
@@ -242,6 +267,7 @@ function ComboboxList({
       cancelAnimationFrame(frame);
     };
   }, [scale, surface]);
+
   return (
     <Primitive.List
       data-slot="combobox-list"
@@ -275,8 +301,13 @@ function ComboboxList({
       />
     </Primitive.List>
   );
-}
-function ComboboxItem({ className, children, ...props }: Primitive.Item.Props) {
+};
+
+const ComboboxItem = ({
+  className,
+  children,
+  ...props
+}: Primitive.Item.Props) => {
   return (
     <Primitive.Item
       data-slot="combobox-item"
@@ -290,8 +321,9 @@ function ComboboxItem({ className, children, ...props }: Primitive.Item.Props) {
       />
     </Primitive.Item>
   );
-}
-function ComboboxGroup({ className, ...props }: Primitive.Group.Props) {
+};
+
+const ComboboxGroup = ({ className, ...props }: Primitive.Group.Props) => {
   return (
     <Primitive.Group
       data-slot="combobox-group"
@@ -299,12 +331,13 @@ function ComboboxGroup({ className, ...props }: Primitive.Group.Props) {
       {...props}
     />
   );
-}
-function ComboboxLabel({
+};
+
+const ComboboxLabel = ({
   className,
   children,
   ...props
-}: Primitive.GroupLabel.Props) {
+}: Primitive.GroupLabel.Props) => {
   return (
     <Primitive.GroupLabel
       data-slot="combobox-label"
@@ -314,15 +347,17 @@ function ComboboxLabel({
       {menuTextNodes(children)}
     </Primitive.GroupLabel>
   );
-}
-function ComboboxCollection(props: Primitive.Collection.Props) {
+};
+
+const ComboboxCollection = (props: Primitive.Collection.Props) => {
   return <Primitive.Collection {...props} />;
-}
-function ComboboxEmpty({
+};
+
+const ComboboxEmpty = ({
   className,
   children,
   ...props
-}: Primitive.Empty.Props) {
+}: Primitive.Empty.Props) => {
   return (
     <Primitive.Empty
       data-slot="combobox-empty"
@@ -332,9 +367,14 @@ function ComboboxEmpty({
       {menuTextNodes(children)}
     </Primitive.Empty>
   );
-}
-function ComboboxSeparator({ className, ...props }: Primitive.Separator.Props) {
+};
+
+const ComboboxSeparator = ({
+  className,
+  ...props
+}: Primitive.Separator.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Separator
       data-slot="combobox-separator"
@@ -344,9 +384,15 @@ function ComboboxSeparator({ className, ...props }: Primitive.Separator.Props) {
       <Separator scale={scale} />
     </Primitive.Separator>
   );
-}
-function ComboboxChips({ className, style, ...props }: Primitive.Chips.Props) {
+};
+
+const ComboboxChips = ({
+  className,
+  style,
+  ...props
+}: Primitive.Chips.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Chips
       data-slot="combobox-chips"
@@ -355,14 +401,16 @@ function ComboboxChips({ className, style, ...props }: Primitive.Chips.Props) {
       {...props}
     />
   );
-}
-function ComboboxChipRemove({
+};
+
+const ComboboxChipRemove = ({
   className,
   render,
   children,
   ...props
-}: Primitive.ChipRemove.Props) {
+}: Primitive.ChipRemove.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.ChipRemove
       data-slot="combobox-chip-remove"
@@ -374,13 +422,14 @@ function ComboboxChipRemove({
       {children ?? "X"}
     </Primitive.ChipRemove>
   );
-}
-function ComboboxChip({
+};
+
+const ComboboxChip = ({
   className,
   children,
   showRemove = true,
   ...props
-}: Primitive.Chip.Props & { showRemove?: boolean }) {
+}: Primitive.Chip.Props & { showRemove?: boolean }) => {
   return (
     <Primitive.Chip
       data-slot="combobox-chip"
@@ -391,15 +440,17 @@ function ComboboxChip({
       {showRemove && <ComboboxChipRemove />}
     </Primitive.Chip>
   );
-}
-function ComboboxChipsInput({
+};
+
+const ComboboxChipsInput = ({
   className,
   render,
   spellCheck = false,
   autoCorrect = "off",
   ...props
-}: Primitive.Input.Props) {
+}: Primitive.Input.Props) => {
   const scale = React.useContext(MenuScaleContext);
+
   return (
     <Primitive.Input
       data-slot="combobox-chip-input"
@@ -407,7 +458,7 @@ function ComboboxChipsInput({
         render ?? (
           <Input
             scale={scale}
-            style={{ border: 0, background: "transparent", width: 80 * scale }}
+            style={{ background: "transparent", border: 0, width: 80 * scale }}
           />
         )
       }
@@ -417,10 +468,12 @@ function ComboboxChipsInput({
       {...props}
     />
   );
-}
+};
+
 function useComboboxAnchor() {
   return React.useRef<HTMLDivElement | null>(null);
 }
+
 export {
   Combobox,
   ComboboxInput,

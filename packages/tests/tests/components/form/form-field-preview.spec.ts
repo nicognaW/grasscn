@@ -5,7 +5,7 @@ const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`, async ({
     page,
   }) => {
@@ -48,7 +48,9 @@ for (const scale of [2])
       await name.evaluate((n) =>
         (n.getAttribute("aria-describedby") ?? "")
           .split(" ")
-          .every((id) => !!document.getElementById(id))
+          .every(
+            (id) => id !== "" && !!document.querySelector(`#${CSS.escape(id)}`)
+          )
       )
     ).toBe(true);
     await name.fill("你");
@@ -76,6 +78,7 @@ for (const scale of [2])
     ).toHaveText("草地方块");
     await expect(name).toHaveAttribute("aria-invalid", "false");
     await expect(notes).toHaveValue("第一行\nSecond line\n第三行");
+
     for (const control of [name, world, notes]) {
       await expect(control).toHaveAttribute("spellcheck", "false");
       expect(
@@ -84,16 +87,20 @@ for (const scale of [2])
         )
       ).toBe(scale);
     }
+
     await card
       .getByRole("button", { exact: true, name: "Disable fields" })
       .click();
+
     for (const control of [
       name,
       world,
       notes,
       form.getByRole("button", { exact: true, name: "Save player" }),
-    ])
+    ]) {
       await expect(control).toBeDisabled();
+    }
+
     await card
       .getByRole("button", { exact: true, name: "Enable fields" })
       .click();
@@ -111,6 +118,7 @@ for (const scale of [2])
     ).toBeVisible();
     expect(errors).toEqual([]);
   });
+}
 
 test("Field is independently documented while installed through Form", async ({
   page,

@@ -1,2 +1,4 @@
 import { serveVerificationHosts } from "@grasscn/tests/hosts";
-export const serveFullHosts = (plan) => serveVerificationHosts(plan.execution);
+
+export const serveFullHosts = async (plan) =>
+  serveVerificationHosts(plan.execution);

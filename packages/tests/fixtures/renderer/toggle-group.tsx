@@ -1,31 +1,42 @@
 import { ToggleGroup, ToggleGroupItem } from "@grasscn/web/ui/toggle-group";
 import * as React from "react";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  state = p.get("state") ?? "normal";
-export function ToggleGroupFixture() {
-  const initial = p.get("checked") === "true" ? ["one"] : [],
-    [value, setValue] = React.useState(initial),
-    [events, setEvents] = React.useState(0),
-    [tag, setTag] = React.useState("");
-  const root = React.useRef<HTMLDivElement>(null),
-    item = React.useRef<HTMLButtonElement>(null),
-    native = p.has("native"),
-    multiple = p.get("type") === "multiple",
-    controlled = p.has("controlled");
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+const state = p.get("state") ?? "normal";
+
+export const ToggleGroupFixture = () => {
+  const initial = p.get("checked") === "true" ? ["one"] : [];
+  const [value, setValue] = React.useState(initial);
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+
+  const root = React.useRef<HTMLDivElement>(null);
+  const item = React.useRef<HTMLButtonElement>(null);
+  const native = p.has("native");
+  const multiple = p.get("type") === "multiple";
+  const controlled = p.has("controlled");
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
     document.body.style.margin = "0";
   }, []);
+
   function changed(next: string[]) {
     setEvents((v) => v + 1);
-    if (!p.has("reject")) setValue(next);
+
+    if (!p.has("reject")) {
+      setValue(next);
+    }
   }
+
   const singleProps = controlled
-    ? { value, onValueChange: changed }
+    ? { onValueChange: changed, value }
     : { defaultValue: value, onValueChange: changed };
+
   const multipleProps = singleProps;
+
   const items = (native ? ["one"] : ["one", "two", "three"]).map((v, index) => (
     <ToggleGroupItem
       render={p.has("asChild") ? <a href={`#${v}`} /> : undefined}
@@ -50,23 +61,25 @@ export function ToggleGroupFixture() {
       {p.has("asChild") ? <span>{p.get("text")}</span> : p.get("text")}
     </ToggleGroupItem>
   ));
+
   const props = {
-    ref: root,
-    scale,
+    "aria-label": "Recipe filters",
+    dir: p.get("dir") === "rtl" ? ("rtl" as const) : ("ltr" as const),
+    disabled: state.startsWith("disabled"),
+    loopFocus: !p.has("noLoop"),
     orientation:
       p.get("orientation") === "vertical"
         ? ("vertical" as const)
         : ("horizontal" as const),
-    dir: p.get("dir") === "rtl" ? ("rtl" as const) : ("ltr" as const),
-    loopFocus: !p.has("noLoop"),
-    disabled: state.startsWith("disabled"),
-    "aria-label": "Recipe filters",
+    ref: root,
+    scale,
     style: {
       position: "absolute",
       left: Number(p.get("x") ?? 16) * scale,
       top: Number(p.get("y") ?? 16) * scale,
     } as React.CSSProperties,
   };
+
   return (
     <>
       {multiple ? (
@@ -80,16 +93,18 @@ export function ToggleGroupFixture() {
       )}
       <button
         id="external"
-        onClick={() => setValue((v) => (v.length ? [] : ["two"]))}
+        onClick={() => {
+          setValue((v) => (v.length ? [] : ["two"]));
+        }}
         style={{ position: "absolute", top: 400 }}
       >
         External
       </button>
       <button
         id="read-ref"
-        onClick={() =>
-          setTag(`${root.current?.tagName}/${item.current?.tagName}`)
-        }
+        onClick={() => {
+          setTag(`${root.current?.tagName}/${item.current?.tagName}`);
+        }}
         style={{ position: "absolute", top: 440 }}
       >
         Read ref
@@ -105,4 +120,4 @@ export function ToggleGroupFixture() {
       </output>
     </>
   );
-}
+};

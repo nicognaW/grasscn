@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { Button } from "./button";
@@ -15,19 +16,22 @@ import {
 } from "./tooltip";
 
 import "./minecraft-trading.css";
-type TradeItem = {
+
+interface TradeItem {
   label: string;
   icon: React.ReactNode;
   count?: number;
-};
-type TradeOffer = {
+}
+
+interface TradeOffer {
   id: string;
   label: string;
   cost: TradeItem;
   secondCost?: TradeItem;
   result: TradeItem;
   inStock?: boolean;
-};
+}
+
 type TradingProps = React.ComponentProps<"div"> & {
   offers: readonly TradeOffer[];
   selectedId?: string;
@@ -41,12 +45,19 @@ type TradingProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
   inventory?: React.ReactNode;
 };
-function TradeItemGraphic({ item, scale }: { item: TradeItem; scale: number }) {
+
+const TradeItemGraphic = ({
+  item,
+  scale,
+}: {
+  item: TradeItem;
+  scale: number;
+}) => {
   return (
     <span
       className="mc-trade-item"
       aria-label={`${item.count ?? 1} ${item.label}`}
-      style={{ width: 16 * scale, height: 16 * scale }}
+      style={{ height: 16 * scale, width: 16 * scale }}
     >
       {item.icon}
       {(item.count ?? 1) > 1 && (
@@ -56,8 +67,9 @@ function TradeItemGraphic({ item, scale }: { item: TradeItem; scale: number }) {
       )}
     </span>
   );
-}
-function Trading({
+};
+
+const Trading = ({
   offers,
   selectedId,
   defaultSelectedId,
@@ -74,72 +86,106 @@ function Trading({
   ref: forwardedRef,
   onWheelCapture,
   ...props
-}: TradingProps) {
+}: TradingProps) => {
   const [current, setCurrent] = React.useState(
-      defaultSelectedId ?? offers[0]?.id
-    ),
-    [internalOffset, setInternalOffset] = React.useState(defaultScrollOffset),
-    root = React.useRef<HTMLDivElement>(null),
-    rail = React.useRef<HTMLDivElement>(null),
-    listId = React.useId(),
-    maxOffset = Math.max(0, offers.length - 7),
-    offset = Math.max(
-      0,
-      Math.min(maxOffset, Math.trunc(scrollOffset ?? internalOffset))
-    ),
-    selected = selectedId ?? current,
-    offer = offers.find((o) => o.id === selected) ?? offers[0];
+    defaultSelectedId ?? offers[0]?.id
+  );
+
+  const [internalOffset, setInternalOffset] =
+    React.useState(defaultScrollOffset);
+
+  const root = React.useRef<HTMLDivElement>(null);
+  const rail = React.useRef<HTMLDivElement>(null);
+  const listId = React.useId();
+  const maxOffset = Math.max(0, offers.length - 7);
+
+  const offset = Math.max(
+    0,
+    Math.min(maxOffset, Math.trunc(scrollOffset ?? internalOffset))
+  );
+
+  const selected = selectedId ?? current;
+  const offer = offers.find((o) => o.id === selected) ?? offers[0];
+
   const latestOffset = React.useRef(offset);
   latestOffset.current = offset;
   const cancelledWheel = React.useRef<WheelEvent | null>(null);
   React.useImperativeHandle(forwardedRef, () => root.current!, []);
+
   const choose = (id: string) => {
-      if (selectedId === undefined) setCurrent(id);
-      onSelectedIdChange?.(id);
+    if (selectedId === undefined) {
+      setCurrent(id);
+    }
+
+    onSelectedIdChange?.(id);
+  };
+
+  const changeOffset = React.useCallback(
+    (next: number) => {
+      const value = Math.max(0, Math.min(maxOffset, Math.trunc(next)));
+      latestOffset.current = value;
+
+      if (scrollOffset === undefined) {
+        setInternalOffset(value);
+      }
+
+      onScrollOffsetChange?.(value);
     },
-    changeOffset = React.useCallback(
-      (next: number) => {
-        const value = Math.max(0, Math.min(maxOffset, Math.trunc(next)));
-        latestOffset.current = value;
-        if (scrollOffset === undefined) setInternalOffset(value);
-        onScrollOffsetChange?.(value);
-      },
-      [maxOffset, scrollOffset, onScrollOffsetChange]
-    );
+    [maxOffset, scrollOffset, onScrollOffsetChange]
+  );
+
   React.useEffect(() => {
-    const node = root.current!,
-      wheel = (event: WheelEvent) => {
-        if (cancelledWheel.current === event) {
-          event.preventDefault();
-          return;
-        }
-        if (!event.defaultPrevented && event.deltaY) {
-          event.preventDefault();
-          const amount =
-            event.deltaMode === 1
-              ? event.deltaY
-              : event.deltaMode === 2
-                ? event.deltaY * 7
-                : event.deltaY / 100;
-          changeOffset(Math.trunc(latestOffset.current + amount));
-        }
-      };
+    const node = root.current!;
+
+    const wheel = (event: WheelEvent) => {
+      if (cancelledWheel.current === event) {
+        event.preventDefault();
+
+        return;
+      }
+
+      if (!event.defaultPrevented && event.deltaY) {
+        event.preventDefault();
+
+        const amount =
+          event.deltaMode === 1
+            ? event.deltaY
+            : event.deltaMode === 2
+              ? event.deltaY * 7
+              : event.deltaY / 100;
+
+        changeOffset(Math.trunc(latestOffset.current + amount));
+      }
+    };
+
     node.addEventListener("wheel", wheel, { passive: false });
-    return () => node.removeEventListener("wheel", wheel);
+
+    return () => {
+      node.removeEventListener("wheel", wheel);
+    };
   }, [changeOffset]);
-  const steps = maxOffset + 1,
-    delta = 139 - (27 + Math.trunc(((steps - 1) * 139) / steps)),
-    step = 1 + Math.trunc(delta / steps) + Math.trunc(139 / steps),
-    thumbY =
-      offset === maxOffset && maxOffset ? 113 : Math.min(113, offset * step);
+
+  const steps = maxOffset + 1;
+  const delta = 139 - (27 + Math.trunc(((steps - 1) * 139) / steps));
+  const step = 1 + Math.trunc(delta / steps) + Math.trunc(139 / steps);
+
+  const thumbY =
+    offset === maxOffset && maxOffset ? 113 : Math.min(113, offset * step);
+
   const dragThumb = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!maxOffset) return;
+    if (!maxOffset) {
+      return;
+    }
+
     const bounds = rail.current!.getBoundingClientRect();
-    const f = Math.fround,
-      y = f((event.clientY - bounds.top) / scale + 18),
-      fraction = f(f(f(y - 18) - 13.5) / 112);
+
+    const f = Math.fround;
+    const y = f((event.clientY - bounds.top) / scale + 18);
+    const fraction = f(f(f(y - 18) - 13.5) / 112);
+
     changeOffset(Math.trunc(f(f(fraction * maxOffset) + 0.5)));
   };
+
   return (
     <TooltipProvider>
       <div
@@ -154,14 +200,14 @@ function Trading({
         data-slot="trading"
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? title}
-        className={cn(`mc-trading ${""}`, className)}
+        className={cn(`mc-trading`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
             ({
               "--mc-scale": scale,
-              width: 276 * scale,
               height: 166 * scale,
+              width: 276 * scale,
               ...__style,
             }) as React.CSSProperties
         )}
@@ -169,7 +215,7 @@ function Trading({
         <AdventureImage
           texture="gui/container/villager"
           scale={scale}
-          style={{ position: "absolute", left: 0, top: 0, maxWidth: "none" }}
+          style={{ left: 0, maxWidth: "none", position: "absolute", top: 0 }}
         />
         <MinecraftDocumentText
           text="Trades"
@@ -177,7 +223,7 @@ function Trading({
           scale={scale}
           align="center"
           color="#404040"
-          style={{ position: "absolute", left: 5 * scale, top: 6 * scale }}
+          style={{ left: 5 * scale, position: "absolute", top: 6 * scale }}
         />
         <MinecraftDocumentText
           text={title}
@@ -185,14 +231,14 @@ function Trading({
           scale={scale}
           align="center"
           color="#404040"
-          style={{ position: "absolute", left: 106 * scale, top: 6 * scale }}
+          style={{ left: 106 * scale, position: "absolute", top: 6 * scale }}
         />
         <MinecraftDocumentText
           text="Inventory"
           width={162}
           scale={scale}
           color="#404040"
-          style={{ position: "absolute", left: 107 * scale, top: 72 * scale }}
+          style={{ left: 107 * scale, position: "absolute", top: 72 * scale }}
         />
         <div
           id={listId}
@@ -200,10 +246,10 @@ function Trading({
           role="group"
           aria-label="Trade offers"
           style={{
+            height: 140 * scale,
             left: 5 * scale,
             top: 18 * scale,
             width: 88 * scale,
-            height: 140 * scale,
           }}
         >
           {offers.slice(offset, offset + 7).map((item) => (
@@ -216,13 +262,15 @@ function Trading({
                     aria-label={item.label}
                     aria-pressed={offer?.id === item.id}
                     onClick={(event) => {
-                      if (!event.defaultPrevented) choose(item.id);
+                      if (!event.defaultPrevented) {
+                        choose(item.id);
+                      }
                     }}
                     className="mc-trade-offer"
                     style={{
                       display: "block",
-                      width: 88 * scale,
                       height: 20 * scale,
+                      width: 88 * scale,
                     }}
                   />
                 }
@@ -240,8 +288,8 @@ function Trading({
                     texture={`gui/sprites/container/villager/trade_arrow${item.inStock === false ? "_out_of_stock" : ""}`}
                     scale={scale}
                     style={{
-                      position: "absolute",
                       left: 55 * scale,
+                      position: "absolute",
                       top: 4 * scale,
                     }}
                   />
@@ -270,55 +318,69 @@ function Trading({
           tabIndex={maxOffset ? 0 : -1}
           className="mc-trade-scroll"
           style={{
+            height: 140 * scale,
             left: 94 * scale,
             top: 18 * scale,
             width: 6 * scale,
-            height: 140 * scale,
           }}
           onKeyDown={(event) => {
-            if (event.defaultPrevented) return;
+            if (event.defaultPrevented) {
+              return;
+            }
+
             const next = (
               {
                 ArrowDown: offset + 1,
                 ArrowUp: offset - 1,
+                End: maxOffset,
+                Home: 0,
                 PageDown: offset + 7,
                 PageUp: offset - 7,
-                Home: 0,
-                End: maxOffset,
               } as Record<string, number>
             )[event.key];
+
             if (next !== undefined) {
               event.preventDefault();
               changeOffset(next);
             }
           }}
-          onContextMenu={(event) => event.preventDefault()}
+          onContextMenu={(event) => {
+            event.preventDefault();
+          }}
           onPointerDown={(event) => {
-            if (event.defaultPrevented || !maxOffset) return;
+            if (event.defaultPrevented || !maxOffset) {
+              return;
+            }
+
             const bounds = event.currentTarget.getBoundingClientRect();
+
             if (
               event.clientX <= bounds.left ||
               event.clientX >= bounds.right ||
               event.clientY <= bounds.top ||
               event.clientY > bounds.bottom
-            )
+            ) {
               return;
+            }
+
             event.preventDefault();
             event.currentTarget.setPointerCapture(event.pointerId);
           }}
           onPointerMove={(event) => {
-            if (event.currentTarget.hasPointerCapture(event.pointerId))
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
               dragThumb(event);
+            }
           }}
           onPointerUp={(event) => {
-            if (event.currentTarget.hasPointerCapture(event.pointerId))
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
               event.currentTarget.releasePointerCapture(event.pointerId);
+            }
           }}
         >
           <AdventureImage
             texture={`gui/sprites/container/villager/scroller${maxOffset ? "" : "_disabled"}`}
             scale={scale}
-            style={{ position: "absolute", top: thumbY * scale, left: 0 }}
+            style={{ left: 0, position: "absolute", top: thumbY * scale }}
           />
         </div>
         {offer && (
@@ -352,10 +414,10 @@ function Trading({
                       }
                     }}
                     style={{
+                      height: 16 * scale,
                       left: 220 * scale,
                       top: 37 * scale,
                       width: 16 * scale,
-                      height: 16 * scale,
                     }}
                   />
                 }
@@ -373,8 +435,8 @@ function Trading({
                 texture="gui/sprites/container/villager/out_of_stock"
                 scale={scale}
                 style={{
-                  position: "absolute",
                   left: 182 * scale,
+                  position: "absolute",
                   top: 35 * scale,
                 }}
               />
@@ -384,10 +446,10 @@ function Trading({
         <div
           className="mc-trade-inventory"
           style={{
+            height: 76 * scale,
             left: 107 * scale,
             top: 83 * scale,
             width: 162 * scale,
-            height: 76 * scale,
           }}
         >
           {inventory}
@@ -395,6 +457,8 @@ function Trading({
       </div>
     </TooltipProvider>
   );
-}
+};
+
 export { Trading };
+
 export type { TradeItem, TradeOffer, TradingProps };

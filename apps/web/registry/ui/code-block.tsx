@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import "./minecraft-code-block.css";
@@ -7,22 +8,27 @@ import { ChatChildren, MessageScale } from "./message";
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { MinecraftSelectableText } from "./minecraft-selectable-text";
+
 const CodeScale = React.createContext<1 | 2 | 3>(2);
+
 type CodeBlockProps = React.ComponentProps<"div"> & {
   variant?: "default" | "destructive";
   size?: "default";
   scale?: 1 | 2 | 3;
 };
-function CodeBlock({
+
+const CodeBlock = ({
   variant = "default",
   size = "default",
   scale = 2,
   className,
   style,
   ...props
-}: CodeBlockProps) {
-  if (size !== "default" || !["default", "destructive"].includes(variant))
+}: CodeBlockProps) => {
+  if (size !== "default" || !["default", "destructive"].includes(variant)) {
     throw new Error("Unsupported Minecraft code surface variant");
+  }
+
   return (
     <CodeScale value={scale}>
       <MessageScale value={scale}>
@@ -30,7 +36,7 @@ function CodeBlock({
           data-slot="code-block"
           data-variant={variant}
           data-size={size}
-          className={cn(`mc-code-block ${""}`, className)}
+          className={cn(`mc-code-block`, className)}
           style={minecraftStyle(
             style,
             (__style) =>
@@ -41,44 +47,51 @@ function CodeBlock({
       </MessageScale>
     </CodeScale>
   );
-}
-function CodeBlockHeader({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const CodeBlockHeader = ({
+  className,
+  ...props
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="code-block-header"
-      className={cn(`mc-code-block-header ${""}`, className)}
+      className={cn(`mc-code-block-header`, className)}
       {...props}
     />
   );
-}
-function CodeBlockTitle({
+};
+
+const CodeBlockTitle = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="code-block-title"
-      className={cn(`mc-code-block-title ${""}`, className)}
+      className={cn(`mc-code-block-title`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </div>
   );
-}
-function CodeBlockActions({
+};
+
+const CodeBlockActions = ({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="code-block-actions"
-      className={cn(`mc-code-block-actions ${""}`, className)}
+      className={cn(`mc-code-block-actions`, className)}
       {...props}
     />
   );
-}
-function CodeBlockCopyButton({
+};
+
+const CodeBlockCopyButton = ({
   value,
   variant = "default",
   size = "default",
@@ -87,21 +100,32 @@ function CodeBlockCopyButton({
   ...props
 }: React.ComponentProps<typeof Button> & {
   value: string;
-}) {
-  const [copied, setCopied] = React.useState(false),
-    scale = React.useContext(CodeScale),
-    live = React.useRef(true);
+}) => {
+  const [copied, setCopied] = React.useState(false);
+  const scale = React.useContext(CodeScale);
+  const live = React.useRef(true);
+
   React.useEffect(() => {
     live.current = true;
+
     return () => {
       live.current = false;
     };
   }, []);
   React.useEffect(() => {
-    if (!copied) return;
-    const timer = setTimeout(() => setCopied(false), 2000);
-    return () => clearTimeout(timer);
+    if (!copied) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [copied]);
+
   return (
     <>
       <Button
@@ -113,10 +137,16 @@ function CodeBlockCopyButton({
         scale={scale}
         onClick={(event) => {
           onClick?.(event);
-          if (event.defaultPrevented) return;
+
+          if (event.defaultPrevented) {
+            return;
+          }
+
           Promise.resolve(navigator.clipboard?.writeText(value))
             .then(() => {
-              if (live.current && navigator.clipboard) setCopied(true);
+              if (live.current && navigator.clipboard) {
+                setCopied(true);
+              }
             })
             .catch(() => {});
         }}
@@ -129,14 +159,19 @@ function CodeBlockCopyButton({
       </span>
     </>
   );
-}
+};
+
 function selectable(value: React.ReactNode): React.ReactNode {
-  if (typeof value === "string" || typeof value === "number")
+  if (typeof value === "string" || typeof value === "number") {
     return <MinecraftSelectableText text={String(value)} />;
-  if (Array.isArray(value))
+  }
+
+  if (Array.isArray(value)) {
     return value.map((child, index) => (
       <React.Fragment key={index}>{selectable(child)}</React.Fragment>
     ));
+  }
+
   if (
     React.isValidElement<{
       children?: React.ReactNode;
@@ -144,15 +179,18 @@ function selectable(value: React.ReactNode): React.ReactNode {
     (value.type === React.Fragment ||
       (typeof value.type === "string" &&
         ["span", "a", "strong", "em", "code", "b", "i"].includes(value.type)))
-  )
+  ) {
     return React.cloneElement(
       value,
       undefined,
       selectable(value.props.children)
     );
+  }
+
   return value;
 }
-function CodeBlockContent({
+
+const CodeBlockContent = ({
   className,
   children,
   style,
@@ -164,7 +202,7 @@ function CodeBlockContent({
   wrap?: boolean;
   lineNumbers?: boolean;
   startLine?: number;
-}) {
+}) => {
   return (
     <pre
       data-slot="code-block-content"
@@ -176,7 +214,7 @@ function CodeBlockContent({
         counterReset: `line ${startLine - 1}`,
         ...__style,
       }))}
-      className={cn(`mc-code-block-content ${""}`, className)}
+      className={cn(`mc-code-block-content`, className)}
       {...props}
     >
       <code data-slot="code-block-code">
@@ -191,9 +229,11 @@ function CodeBlockContent({
       </code>
     </pre>
   );
-}
-function CodeLineMarker({ variant }: { variant: "added" | "removed" }) {
+};
+
+const CodeLineMarker = ({ variant }: { variant: "added" | "removed" }) => {
   const glyph = minecraftLoadingGlyphs[variant === "added" ? "+" : "-"];
+
   return (
     <svg
       aria-hidden="true"
@@ -207,24 +247,26 @@ function CodeLineMarker({ variant }: { variant: "added" | "removed" }) {
       </g>
     </svg>
   );
-}
-function CodeBlockLine({
+};
+
+const CodeBlockLine = ({
   className,
   variant = "default",
   children,
   ...props
 }: React.ComponentProps<"span"> & {
   variant?: "default" | "added" | "removed" | "highlighted";
-}) {
+}) => {
   const empty =
     children == null ||
     children === "" ||
     (Array.isArray(children) && children.length === 0);
+
   return (
     <span
       data-slot="code-block-line"
       data-variant={variant}
-      className={cn(`mc-code-block-line ${""}`, className)}
+      className={cn(`mc-code-block-line`, className)}
       {...props}
     >
       <span data-slot="code-block-line-content">
@@ -235,22 +277,24 @@ function CodeBlockLine({
       ) : null}
     </span>
   );
-}
-function CodeBlockFooter({
+};
+
+const CodeBlockFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="code-block-footer"
-      className={cn(`mc-code-block-footer ${""}`, className)}
+      className={cn(`mc-code-block-footer`, className)}
       {...props}
     >
       <ChatChildren>{children}</ChatChildren>
     </div>
   );
-}
+};
+
 export {
   CodeBlock,
   CodeBlockHeader,
@@ -261,4 +305,5 @@ export {
   CodeBlockLine,
   CodeBlockFooter,
 };
+
 export type { CodeBlockProps };

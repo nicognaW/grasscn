@@ -48,7 +48,8 @@ test("canonical documentation independently exposes grouped public parts and omi
   );
   await expect(page.locator("body")).not.toContainText("Real game assets");
 });
-for (const width of [320, 1440])
+
+for (const width of [320, 1440]) {
   test(`sidebar remains visible at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(origin + "docs/components/sidebar");
@@ -77,6 +78,8 @@ for (const width of [320, 1440])
       )
     ).toBe(true);
   });
+}
+
 test("new homepage examples respond to input", async ({ page }) => {
   await page.goto(origin);
   await page.getByRole("button", { exact: true, name: "Add $250" }).click();
@@ -98,6 +101,7 @@ test("new homepage examples respond to input", async ({ page }) => {
     .click();
   await expect(page.getByLabel("Review date")).toHaveText("November 3, 2026");
 });
+
 test("message combines history and composition", async ({ page }) => {
   await page.goto(`${origin}docs/components/message`);
   await page

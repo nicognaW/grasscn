@@ -3,52 +3,66 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 test.describe.configure({ mode: "parallel" });
+
 test("Empty comparator catches one changed pixel", () => {
   const manifest = JSON.parse(
-      readFileSync(
-        pixelPerfectFile("tests/reference/empty/manifest.json"),
-        "utf8"
+    readFileSync(
+      pixelPerfectFile("tests/reference/empty/manifest.json"),
+      "utf-8"
+    )
+  );
+
+  const expected = PNG.sync.read(
+    readFileSync(
+      pixelPerfectFile(
+        `tests/reference/empty/captures/${manifest.cases[0].name}`
       )
-    ),
-    expected = PNG.sync.read(
-      readFileSync(
-        pixelPerfectFile(
-          `tests/reference/empty/captures/${manifest.cases[0].name}`
-        )
-      )
-    ),
-    actual = PNG.sync.read(PNG.sync.write(expected));
+    )
+  );
+
+  const actual = PNG.sync.read(PNG.sync.write(expected));
+
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
+
 for (const [part, directory] of [
   ["default", "tests/reference/empty"],
   ["title", "tests/reference/label"],
   ["description", "tests/reference/label"],
 ]) {
   const manifest = JSON.parse(
-    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf8")
+    readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
   );
-  for (const c of manifest.cases)
+
+  for (const c of manifest.cases) {
     test(`Empty ${part} native pixels: ${c.name}`, async ({ page }, info) => {
-      await page.setViewportSize({ width: 1536, height: 900 });
+      await page.setViewportSize({ height: 900, width: 1536 });
+
       const params = new URLSearchParams({
+        align: c.alignment ?? "left",
+        background: c.background,
         component: "empty",
+        height: String(c.height),
         native: "1",
         part,
-        text: c.label ?? "",
         scale: String(c.scale),
+        text: c.label ?? "",
         width: String(c.width),
-        height: String(c.height),
         x: String(c.x),
         y: String(c.y),
-        background: c.background,
-        align: c.alignment ?? "left",
       });
-      if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+
+      const caseWrapWidth = c.wrapWidth;
+
+      if (caseWrapWidth !== null && caseWrapWidth !== undefined) {
+        params.set("wrapWidth", String(caseWrapWidth));
+      }
+
       await page.goto(`/?${params}`);
       const subject = page.locator("[data-subject]");
       await expect(subject).toHaveAttribute(
@@ -61,31 +75,44 @@ for (const [part, directory] of [
           ? subject.locator("[data-mc-label-layout-ready]")
           : subject
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
-      for (const line of await subject.locator("[data-mc-label-ready]").all())
+
+      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
         await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      }
+
       await page.evaluate(
-        () =>
+        async () =>
           new Promise<void>((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => {
+                resolve();
+              })
+            )
           )
       );
+
       const expectedBytes = readFileSync(
         pixelPerfectFile(`${directory}/captures/${c.name}`)
       );
+
       expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
         c.sha256
       );
-      const actualBytes = await subject.screenshot(),
-        { mismatchedPixels, diff } = compare(
-          PNG.sync.read(expectedBytes),
-          PNG.sync.read(actualBytes)
-        );
+
+      const actualBytes = await subject.screenshot();
+
+      const { mismatchedPixels, diff } = compare(
+        PNG.sync.read(expectedBytes),
+        PNG.sync.read(actualBytes)
+      );
+
       writeFileSync(info.outputPath("actual.png"), actualBytes);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
       writeFileSync(
         info.outputPath("metrics.json"),
-        JSON.stringify({ part, case: c.name, mismatchedPixels, tolerance: 0 })
+        JSON.stringify({ case: c.name, mismatchedPixels, part, tolerance: 0 })
       );
       expect(mismatchedPixels).toBe(0);
     });
+  }
 }

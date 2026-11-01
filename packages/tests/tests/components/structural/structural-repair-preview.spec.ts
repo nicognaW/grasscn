@@ -63,6 +63,7 @@ for (const scale of [2]) {
       exact: true,
       name: "\u4F60\u597D\uFF0C\u4E16\u754C",
     });
+
     await expect(cell).toBeVisible();
     await cell.click();
     await expect(table.getByLabel("World selection")).toContainText(
@@ -84,6 +85,7 @@ for (const scale of [2]) {
     const handle = resizable.getByRole("separator", {
       name: "Resize inventory panels",
     });
+
     await handle.focus();
     await page.keyboard.press("ArrowRight");
     await expect

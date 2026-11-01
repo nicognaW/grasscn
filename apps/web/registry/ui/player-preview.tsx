@@ -1,19 +1,20 @@
 "use client";
+
 import * as React from "react";
 
-import {
-  minecraftAvatarSkins,
-  type MinecraftAvatarSkin,
-} from "./minecraft-avatar-assets";
+import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
+import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 import { playerMeshes } from "./minecraft-player-mesh";
 import { inferPlayerSkinModel } from "./minecraft-player-skin";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-player-preview.css";
-type PlayerRotation = {
+
+interface PlayerRotation {
   pitch: number;
   yaw: number;
-};
+}
+
 type PlayerPreviewProps = React.ComponentProps<"div"> & {
   skin?: MinecraftAvatarSkin;
   src?: string;
@@ -27,8 +28,10 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
   onLoadingStatusChange?: (status: "loading" | "loaded" | "error") => void;
 };
+
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
+
 function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
   const gl = canvas.getContext("webgl2", {
     alpha: true,
@@ -36,13 +39,17 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
     premultipliedAlpha: true,
     preserveDrawingBuffer: true,
   });
-  if (!gl) throw Error("WebGL is unavailable");
+
+  if (!gl) {
+    throw new Error("WebGL is unavailable");
+  }
+
   const shader = (type: number, source: string) => {
     const result = gl.createShader(type)!;
     gl.shaderSource(
       result,
-      "#version 300 es\n" +
-        (type === gl.VERTEX_SHADER
+      `#version 300 es\n${
+        type === gl.VERTEX_SHADER
           ? source
               .replaceAll("attribute ", "in ")
               .replaceAll("varying ", "out ")
@@ -50,30 +57,43 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
               .replaceAll("varying ", "in ")
               .replaceAll("texture2D(", "texture(")
               .replace("void main()", "out vec4 fragmentColor;void main()")
-              .replaceAll("gl_FragColor", "fragmentColor"))
+              .replaceAll("gl_FragColor", "fragmentColor")
+      }`
     );
     gl.compileShader(result);
+
     if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) {
       const message = gl.getShaderInfoLog(result);
       gl.deleteShader(result);
-      throw Error(message ?? "Player shader failed");
+      throw new Error(message ?? "Player shader failed");
     }
+
     return result;
   };
-  const vertex = shader(gl.VERTEX_SHADER, vs),
-    fragment = shader(gl.FRAGMENT_SHADER, fs),
-    program = gl.createProgram()!;
+
+  const vertex = shader(gl.VERTEX_SHADER, vs);
+  const fragment = shader(gl.FRAGMENT_SHADER, fs);
+  const program = gl.createProgram();
+
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-    throw Error(gl.getProgramInfoLog(program) ?? "Player shader link failed");
+
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    throw new Error(
+      gl.getProgramInfoLog(program) ?? "Player shader link failed"
+    );
+  }
+
   gl.useProgram(program);
-  const source = playerMeshes[model],
-    data = new Float32Array((source.length / 4) * 6 * 8);
-  const buffer = gl.createBuffer()!;
+
+  const source = playerMeshes[model];
+  const data = new Float32Array((source.length / 4) * 6 * 8);
+
+  const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
+
   for (const [name, size, offset] of [
     ["position", 3, 0],
     ["uv", 2, 12],
@@ -83,7 +103,8 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
     gl.enableVertexAttribArray(location);
     gl.vertexAttribPointer(location, size, gl.FLOAT, false, 32, offset);
   }
-  const texture = gl.createTexture()!;
+
+  const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
@@ -103,14 +124,29 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
     gl.ONE,
     gl.ONE_MINUS_SRC_ALPHA
   );
-  const framebuffer = gl.createFramebuffer()!,
-    colorBuffer = gl.createRenderbuffer()!,
-    depthBuffer = gl.createRenderbuffer()!;
+
+  const framebuffer = gl.createFramebuffer();
+  const colorBuffer = gl.createRenderbuffer();
+  const depthBuffer = gl.createRenderbuffer();
+
   let loaded = false;
+
   return {
+    dispose() {
+      gl.deleteFramebuffer(framebuffer);
+      gl.deleteRenderbuffer(colorBuffer);
+      gl.deleteRenderbuffer(depthBuffer);
+      gl.deleteBuffer(buffer);
+      gl.deleteTexture(texture);
+      gl.deleteProgram(program);
+      gl.deleteShader(vertex);
+      gl.deleteShader(fragment);
+    },
     load(image: HTMLImageElement) {
-      if (image.naturalWidth !== 64 || image.naturalHeight !== 64)
+      if (image.naturalWidth !== 64 || image.naturalHeight !== 64) {
         throw Error("Player skins must be64×64 PNG images");
+      }
+
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.texImage2D(
         gl.TEXTURE_2D,
@@ -123,7 +159,10 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
       loaded = true;
     },
     paint(width: number, height: number, scale: number, pose: PlayerRotation) {
-      if (!loaded) return;
+      if (!loaded) {
+        return;
+      }
+
       canvas.width = width * scale;
       canvas.height = height * scale;
       gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
@@ -167,27 +206,31 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
         (pose.pitch * Math.PI) / 180,
         (pose.yaw * Math.PI) / 180
       );
-      const f = Math.fround,
-        half = f(f(f(-pose.yaw) * f(Math.PI / 180)) * 0.5),
-        qy = f(Math.sin(half)),
-        qw = nativeCosFromSin(qy, half),
-        cy = f(f(qw * qw) - f(qy * qy)),
-        sy = f(f(qy * qw) + f(qy * qw)),
-        yy = f(f(qw * qw) + f(qy * qy)),
-        size = f(f(f(f(0.97) * height) / 2.125) * scale),
-        a = f(size * cy),
-        b = f(size * sy),
-        c = f(size * sy),
-        d = f(-size * cy),
-        ys = f(size * yy),
-        baseY = f(f(ys * f(-1.6010001)) + canvas.height);
+
+      const f = Math.fround;
+      const half = f(f(f(-pose.yaw) * f(Math.PI / 180)) * 0.5);
+      const qy = f(Math.sin(half));
+      const qw = nativeCosFromSin(qy, half);
+      const cy = f(f(qw * qw) - f(qy * qy));
+      const sy = f(f(qy * qw) + f(qy * qw));
+      const yy = f(f(qw * qw) + f(qy * qy));
+      const size = f(f(f(f(0.97) * height) / 2.125) * scale);
+      const a = f(size * cy);
+      const b = f(size * sy);
+      const c = f(size * sy);
+      const d = f(-size * cy);
+      const ys = f(size * yy);
+      const baseY = f(f(ys * f(-1.6010001)) + canvas.height);
+
       let cursor = 0;
-      for (let q = 0; q < source.length; q += 4)
+
+      for (let q = 0; q < source.length; q += 4) {
         for (const i of [0, 1, 2, 2, 3, 0]) {
           const v = source[q + i],
             tx = f(f(a * v[8]) + f(f(b * v[10]) + canvas.width * 0.5)),
             ty = f(f(ys * v[9]) + baseY),
             tz = f(f(c * v[8]) + f(d * v[10]));
+
           data.set(
             [
               f(f(a * v[0]) + f(f(b * v[2]) + tx)),
@@ -203,25 +246,32 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
           );
           cursor += 8;
         }
+      }
+
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
       const order = Array.from({ length: source.length / 4 }, (_, i) => i).sort(
-          (a, b) =>
-            Math.fround(
-              Math.fround(data[a * 48 + 2] + data[a * 48 + 18]) * 0.5
-            ) -
-            Math.fround(Math.fround(data[b * 48 + 2] + data[b * 48 + 18]) * 0.5)
-        ),
-        sorted = new Float32Array(data.length);
-      for (const [index, q] of order.entries())
+        (a, b) =>
+          Math.fround(Math.fround(data[a * 48 + 2] + data[a * 48 + 18]) * 0.5) -
+          Math.fround(Math.fround(data[b * 48 + 2] + data[b * 48 + 18]) * 0.5)
+      );
+
+      const sorted = new Float32Array(data.length);
+
+      for (const [index, q] of order.entries()) {
         sorted.set(data.subarray(q * 48, (q + 1) * 48), index * 48);
+      }
+
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, sorted);
-      const ph = f(f(f(pose.pitch) * f(Math.PI / 180)) * 0.5),
-        qx = f(Math.sin(ph)),
-        pw = nativeCosFromSin(qx, ph),
-        xx = f(f(pw * pw) + f(qx * qx)),
-        cx = f(f(pw * pw) - f(qx * qx)),
-        sx = f(f(qx * pw) + f(qx * pw)),
-        pivot = f(size * 1.0625);
+
+      const ph = f(f(f(pose.pitch) * f(Math.PI / 180)) * 0.5);
+      const qx = f(Math.sin(ph));
+      const pw = nativeCosFromSin(qx, ph);
+      const xx = f(f(pw * pw) + f(qx * qx));
+      const cx = f(f(pw * pw) - f(qx * qx));
+      const sx = f(f(qx * pw) + f(qx * pw));
+      const pivot = f(size * 1.0625);
+
       gl.uniformMatrix4fv(
         gl.getUniformLocation(program, "modelView"),
         false,
@@ -282,30 +332,28 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
         gl.NEAREST
       );
     },
-    dispose() {
-      gl.deleteFramebuffer(framebuffer);
-      gl.deleteRenderbuffer(colorBuffer);
-      gl.deleteRenderbuffer(depthBuffer);
-      gl.deleteBuffer(buffer);
-      gl.deleteTexture(texture);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertex);
-      gl.deleteShader(fragment);
-    },
   };
 }
+
 // Match JOML's float quaternion construction, including the exact half-turn.
 function nativeCosFromSin(sine: number, angle: number) {
-  const f = Math.fround,
-    pi = f(Math.PI),
-    tau = f(Math.PI * 2),
-    shifted = f(angle + f(Math.PI / 2));
+  const f = Math.fround;
+  const pi = f(Math.PI);
+  const tau = f(Math.PI * 2);
+  const shifted = f(angle + f(Math.PI / 2));
+
   let wrapped = f(shifted - f(Math.trunc(f(shifted / tau)) * tau));
-  if (wrapped < 0) wrapped = f(tau + wrapped);
+
+  if (wrapped < 0) {
+    wrapped = f(tau + wrapped);
+  }
+
   const magnitude = f(Math.sqrt(f(1 - f(sine * sine))));
+
   return wrapped >= pi ? -magnitude : magnitude;
 }
-function PlayerPreview({
+
+const PlayerPreview = ({
   skin = "wide/steve",
   src,
   username,
@@ -325,53 +373,69 @@ function PlayerPreview({
   onPointerUp,
   onPointerCancel,
   ...props
-}: PlayerPreviewProps) {
+}: PlayerPreviewProps) => {
   const requestedModel =
-      model ??
-      (!src && !username
-        ? skin.startsWith("slim/")
-          ? "slim"
-          : "wide"
-        : undefined),
-    [resolvedModel, setResolvedModel] = React.useState<
-      "wide" | "slim" | undefined
-    >(requestedModel),
-    url =
-      src ??
-      (username
-        ? `https://mc-heads.net/skin/${encodeURIComponent(username)}`
-        : minecraftAvatarSkins[skin].png),
-    [pose, setPose] = React.useState(defaultRotation),
-    [status, setStatus] = React.useState<"loading" | "loaded" | "error">(
-      "loading"
-    ),
-    canvas = React.useRef<HTMLCanvasElement>(null),
-    renderer = React.useRef<ReturnType<typeof buildRenderer> | null>(null),
-    drag = React.useRef<{
-      x: number;
-      y: number;
-      pose: PlayerRotation;
-      id: number;
-    } | null>(null),
-    current = rotation ?? pose,
-    latest = React.useRef(current);
+    model ??
+    (!src && !username
+      ? skin.startsWith("slim/")
+        ? "slim"
+        : "wide"
+      : undefined);
+
+  const [resolvedModel, setResolvedModel] = React.useState<
+    "wide" | "slim" | undefined
+  >(requestedModel);
+
+  const url =
+    src ??
+    (username
+      ? `https://mc-heads.net/skin/${encodeURIComponent(username)}`
+      : minecraftAvatarSkins[skin].png);
+
+  const [pose, setPose] = React.useState(defaultRotation);
+
+  const [status, setStatus] = React.useState<"loading" | "loaded" | "error">(
+    "loading"
+  );
+
+  const canvas = React.useRef<HTMLCanvasElement>(null);
+  const renderer = React.useRef<ReturnType<typeof buildRenderer> | null>(null);
+
+  const drag = React.useRef<{
+    x: number;
+    y: number;
+    pose: PlayerRotation;
+    id: number;
+  } | null>(null);
+
+  const current = rotation ?? pose;
+  const latest = React.useRef(current);
+
   latest.current = current;
+
   const update = (next: PlayerRotation) => {
     const value = {
       pitch: Math.max(-50, Math.min(50, Math.fround(next.pitch))),
       yaw: Math.fround(next.yaw),
     };
-    if (rotation === undefined) setPose(value);
+
+    if (rotation === undefined) {
+      setPose(value);
+    }
+
     onRotationChange?.(value);
   };
+
   React.useEffect(() => {
     const node = canvas.current;
+
     return () => {
-      if (renderer.current)
+      if (renderer.current) {
         node
           ?.getContext("webgl2")
           ?.getExtension("WEBGL_lose_context")
           ?.loseContext();
+      }
     };
   }, []);
   const loadingCallback = React.useRef(onLoadingStatusChange);
@@ -384,7 +448,10 @@ function PlayerPreview({
     const image = new Image();
     image.crossOrigin = "anonymous";
     image.onload = () => {
-      if (!live) return;
+      if (!live) {
+        return;
+      }
+
       try {
         const actualModel = requestedModel ?? inferPlayerSkinModel(image);
         instance = buildRenderer(canvas.current!, actualModel);
@@ -399,13 +466,16 @@ function PlayerPreview({
         loadingCallback.current?.("error");
       }
     };
+
     image.onerror = () => {
       if (live) {
         setStatus("error");
         loadingCallback.current?.("error");
       }
     };
+
     image.src = url;
+
     return () => {
       live = false;
       image.onload = null;
@@ -417,13 +487,14 @@ function PlayerPreview({
   React.useLayoutEffect(() => {
     renderer.current?.paint(width, height, scale, current);
   }, [width, height, scale, current.pitch, current.yaw, status]);
+
   return (
     <div
       {...props}
       data-slot="player-preview"
       data-model={resolvedModel}
       data-ready={status === "loaded"}
-      className={cn(`mc-player-preview ${""}`, className)}
+      className={cn(`mc-player-preview`, className)}
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={
@@ -431,19 +502,24 @@ function PlayerPreview({
         `${username ?? skin.split("/")[1]} player preview`
       }
       style={minecraftStyle(style, (__style) => ({
-        width: width * scale,
         height: height * scale,
+        width: width * scale,
         ...__style,
       }))}
       onKeyDown={(event) => {
         onKeyDown?.(event);
-        if (event.defaultPrevented) return;
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
         const delta = {
+          ArrowDown: [5, 0],
           ArrowLeft: [0, -5],
           ArrowRight: [0, 5],
           ArrowUp: [-5, 0],
-          ArrowDown: [5, 0],
         }[event.key];
+
         if (delta) {
           event.preventDefault();
           update({
@@ -451,6 +527,7 @@ function PlayerPreview({
             yaw: current.yaw + delta[1],
           });
         }
+
         if (event.key === "Home") {
           event.preventDefault();
           update(defaultRotation);
@@ -458,21 +535,36 @@ function PlayerPreview({
       }}
       onPointerDown={(event) => {
         onPointerDown?.(event);
-        if (event.defaultPrevented) return;
-        if (event.button !== 0) return;
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (event.button !== 0) {
+          return;
+        }
+
         drag.current = {
+          id: event.pointerId,
+          pose: current,
           x: event.clientX,
           y: event.clientY,
-          pose: current,
-          id: event.pointerId,
         };
         event.currentTarget.setPointerCapture(event.pointerId);
       }}
       onPointerMove={(event) => {
         onPointerMove?.(event);
-        if (event.defaultPrevented) return;
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
         const start = drag.current;
-        if (!start || start.id !== event.pointerId) return;
+
+        if (!start || start.id !== event.pointerId) {
+          return;
+        }
+
         update({
           pitch: start.pose.pitch - ((event.clientY - start.y) / scale) * 2.5,
           yaw: start.pose.yaw + ((event.clientX - start.x) / scale) * 2.5,
@@ -481,8 +573,10 @@ function PlayerPreview({
       onPointerUp={(event) => {
         onPointerUp?.(event);
         drag.current = null;
-        if (event.currentTarget.hasPointerCapture(event.pointerId))
+
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
           event.currentTarget.releasePointerCapture(event.pointerId);
+        }
       }}
       onPointerCancel={(event) => {
         onPointerCancel?.(event);
@@ -495,10 +589,10 @@ function PlayerPreview({
         height={height * scale}
         aria-hidden="true"
         style={{
-          width: "100%",
           height: "100%",
           transform: "scaleY(-1)",
           visibility: status === "loaded" ? "visible" : "hidden",
+          width: "100%",
         }}
       />
       {status !== "loaded" && (
@@ -511,6 +605,8 @@ function PlayerPreview({
       </span>
     </div>
   );
-}
+};
+
 export { PlayerPreview };
+
 export type { PlayerRotation, PlayerPreviewProps };

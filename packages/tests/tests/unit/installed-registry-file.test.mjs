@@ -3,15 +3,18 @@ import assert from "node:assert/strict";
 import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
+
 const consumer = path.resolve("consumer");
+
 const settings = {
   aliases: {
-    ui: "@/components/ui",
     components: "@/components",
     hooks: "@/hooks",
     lib: "@/lib",
+    ui: "@/components/ui",
   },
 };
+
 test("installed recipes use the configured components directory and primitives use ui", () => {
   assert.equal(
     installedRegistryFile(
@@ -41,6 +44,7 @@ test("installed recipes use the configured components directory and primitives u
     path.join(consumer, "src/hooks/use-mobile.ts")
   );
 });
+
 test("nested consumer roots and custom component aliases remain independent", () => {
   const custom = { aliases: { ...settings.aliases, components: "@/features" } };
   assert.equal(

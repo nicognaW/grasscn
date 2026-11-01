@@ -3,11 +3,14 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/slider/manifest.json"), "utf8")
+  readFileSync(
+    pixelPerfectFile("tests/reference/slider/manifest.json"),
+    "utf-8"
+  )
 ) as {
   cases: {
     name: string;
@@ -24,14 +27,18 @@ const manifest = JSON.parse(
 };
 
 function compare(expected: PNG, actual: PNG) {
-  if (expected.width !== actual.width || expected.height !== actual.height)
+  if (expected.width !== actual.width || expected.height !== actual.height) {
     throw new Error("Pixel dimensions differ");
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  }
+
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !expected.data
       .subarray(i, i + 4)
       .equals(actual.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -45,7 +52,8 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
-  return { mismatchedPixels, diff };
+
+  return { diff, mismatchedPixels };
 }
 
 test("Control comparator detects one changed pixel", async () => {
@@ -56,6 +64,7 @@ test("Control comparator detects one changed pixel", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
@@ -68,22 +77,30 @@ for (const reference of manifest.cases) {
     const bytes = await readFile(
       pixelPerfectFile(`tests/reference/slider/captures/${reference.name}`)
     );
+
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       reference.sha256
     );
     await page.goto(
-      `/?${new URLSearchParams({ component: reference.element, scale: String(reference.scale), state: reference.state, value: String(Math.round(reference.value * 1000)), width: String(reference.width), label: reference.label })}`
+      `/?${new URLSearchParams({ component: reference.element, label: reference.label, scale: String(reference.scale), state: reference.state, value: String(Math.round(reference.value * 1000)), width: String(reference.width) })}`
     );
     const subject = page.locator("[data-subject]");
     await expect(subject).toBeVisible();
     await page.mouse.move(0, 0);
-    if (reference.state === "hover") await subject.hover();
+
+    if (reference.state === "hover") {
+      await subject.hover();
+    }
+
     if (reference.state.startsWith("focus")) {
       await page.keyboard.press("Tab");
       await expect(page.getByRole("slider")).toBeFocused();
-      if (reference.state === "focus-locked")
+
+      if (reference.state === "focus-locked") {
         await page.keyboard.press("Enter");
+      }
     }
+
     const actualBytes = await subject.screenshot({ animations: "disabled" });
     const expected = PNG.sync.read(bytes);
     const actual = PNG.sync.read(actualBytes);
@@ -100,8 +117,8 @@ for (const reference of manifest.cases) {
         {
           case: reference.name,
           mismatchedPixels,
-          totalPixels: expected.width * expected.height,
           tolerance: 0,
+          totalPixels: expected.width * expected.height,
         },
         null,
         2

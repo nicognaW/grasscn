@@ -16,14 +16,14 @@ import {
 export const features = tableFeatures({
   columnFilteringFeature,
   columnVisibilityFeature,
+  filterFns: { includesString: filterFn_includesString },
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
-  filteredRowModel: createFilteredRowModel(),
-  paginatedRowModel: createPaginatedRowModel(),
-  sortedRowModel: createSortedRowModel(),
-  filterFns: { includesString: filterFn_includesString },
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+  sortedRowModel: createSortedRowModel(),
 });
 
 export type DataTableFeatures = typeof features;

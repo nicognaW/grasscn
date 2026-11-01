@@ -1,101 +1,140 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { inflateRawSync } from "node:zlib";
 
 import { repoRoot, webFile } from "@ppt/paths";
-const root = repoRoot;
+
 const source = await readFile(
   webFile(path.join("registry/ui/minecraft-unifont-data.ts")),
-  "utf8"
+  "utf-8"
 );
+
 const zip = Buffer.from(
-  source.match(/export const unifontZip = "([^"]+)"/)[1],
+  /export const unifontZip = "([^"]+)"/.exec(source)[1],
   "base64"
 );
+
 const overrides = JSON.parse(
-  source.match(/export const unifontOverrides = (\[.*\]) as const/)[1]
+  /export const unifontOverrides = (\[.*\]) as const/.exec(source)[1]
 );
+
 const cjk = (code) =>
   [
-    [0x1100, 0x11ff],
-    [0x2e80, 0x9fff],
-    [0xa960, 0xa97f],
-    [0xac00, 0xd7ff],
-    [0xf900, 0xfaff],
-    [0xff01, 0xffef],
-    [0x1aff0, 0x1b2ff],
-    [0x20000, 0x323af],
+    [0x11_00, 0x11_ff],
+    [0x2e_80, 0x9f_ff],
+    [0xa9_60, 0xa9_7f],
+    [0xac_00, 0xd7_ff],
+    [0xf9_00, 0xfa_ff],
+    [0xff_01, 0xff_ef],
+    [0x1_af_f0, 0x1_b2_ff],
+    [0x2_00_00, 0x3_23_af],
   ].some(([first, last]) => code >= first && code <= last);
+
 let end = zip.length - 22;
-while (end >= 0 && zip.readUInt32LE(end) !== 0x06054b50) end--;
-if (end < 0) throw Error("Original font ZIP central directory missing");
+
+while (end >= 0 && zip.readUInt32LE(end) !== 0x06_05_4b_50) {
+  end -= 1;
+}
+
+if (end < 0) {
+  throw new Error("Original font ZIP central directory missing");
+}
+
 let position = zip.readUInt32LE(end + 16);
 const glyphs = [];
-while (zip.readUInt32LE(position) === 0x02014b50) {
-  const length = zip.readUInt32LE(position + 20),
-    nameLength = zip.readUInt16LE(position + 28),
-    extra = zip.readUInt16LE(position + 30),
-    comment = zip.readUInt16LE(position + 32),
-    name = zip.subarray(position + 46, position + 46 + nameLength).toString();
+
+while (zip.readUInt32LE(position) === 0x02_01_4b_50) {
+  const length = zip.readUInt32LE(position + 20);
+  const nameLength = zip.readUInt16LE(position + 28);
+  const extra = zip.readUInt16LE(position + 30);
+  const comment = zip.readUInt16LE(position + 32);
+
+  const name = zip
+    .subarray(position + 46, position + 46 + nameLength)
+    .toString();
+
   if (name.endsWith(".hex")) {
-    if (zip.readUInt16LE(position + 10) !== 8)
-      throw Error("Unexpected original ZIP compression");
-    const local = zip.readUInt32LE(position + 42),
-      start =
-        local +
-        30 +
-        zip.readUInt16LE(local + 26) +
-        zip.readUInt16LE(local + 28);
+    if (zip.readUInt16LE(position + 10) !== 8) {
+      throw new Error("Unexpected original ZIP compression");
+    }
+
+    const local = zip.readUInt32LE(position + 42);
+
+    const start =
+      local + 30 + zip.readUInt16LE(local + 26) + zip.readUInt16LE(local + 28);
+
     for (const line of inflateRawSync(zip.subarray(start, start + length))
       .toString()
       .trim()
       .split("\n")) {
-      const [hexCode, hex] = line.trim().split(":"),
-        code = parseInt(hexCode, 16);
-      if (!cjk(code)) continue;
-      const bitWidth = hex.length / 4,
-        rowLength = hex.length / 16,
-        rows = Array.from({ length: 16 }, (_, row) =>
-          parseInt(hex.slice(row * rowLength, (row + 1) * rowLength), 16)
-        );
-      let left = bitWidth,
-        right = -1;
-      for (let x = 0; x < bitWidth; x++)
+      const [hexCode, hex] = line.trim().split(":");
+      const code = Number.parseInt(hexCode, 16);
+
+      if (!cjk(code)) {
+        continue;
+      }
+
+      const bitWidth = hex.length / 4;
+      const rowLength = hex.length / 16;
+
+      const rows = Array.from({ length: 16 }, (_, row) =>
+        Number.parseInt(hex.slice(row * rowLength, (row + 1) * rowLength), 16)
+      );
+
+      let left = bitWidth;
+      let right = -1;
+
+      for (let x = 0; x < bitWidth; x += 1) {
         if (rows.some((row) => (row >>> (bitWidth - 1 - x)) & 1)) {
           left = Math.min(left, x);
           right = Math.max(right, x);
         }
+      }
+
       if (right < 0) {
         left = 0;
         right = bitWidth;
       }
+
       const fixed = overrides.find(
         ([first, last]) => code >= first && code <= last
       );
+
       if (fixed) {
         left = fixed[2];
         right = fixed[3];
       }
+
       glyphs.push([code, (right - left + 1) / 2 + 1]);
     }
   }
+
   position += 46 + nameLength + extra + comment;
 }
+
 glyphs.sort((a, b) => a[0] - b[0]);
+
 const ranges = [];
+
 for (const [code, advance] of glyphs) {
   const last = ranges.at(-1);
-  if (last && last[1] + 1 === code && last[2] === advance) last[1] = code;
-  else ranges.push([code, code, advance]);
+
+  if (last && last[1] + 1 === code && last[2] === advance) {
+    last[1] = code;
+  } else {
+    ranges.push([code, code, advance]);
+  }
 }
+
 const sha = createHash("sha256").update(zip).digest("hex");
 const output = `// Generated by src/native/generate/generate-disclosure-metrics.mjs from original Unihex ZIP SHA256 ${sha}.\n// Exact advances for ${glyphs.length} glyphs; unchanged original provider ranges and overrides.\nconst ranges:readonly(readonly[number,number,number])[] = ${JSON.stringify(ranges)}\nexport function disclosureAdvance(char:string){const code=char.codePointAt(0)!;let low=0,high=ranges.length-1;while(low<=high){const middle=(low+high)>>>1,[first,last,advance]=ranges[middle];if(code<first)high=middle-1;else if(code>last)low=middle+1;else return advance}return undefined}\n`;
+
 await writeFile(
   webFile(path.join("registry/ui/minecraft-disclosure-metrics.ts")),
   output
 );
+
 console.log(
   JSON.stringify({
     glyphs: glyphs.length,

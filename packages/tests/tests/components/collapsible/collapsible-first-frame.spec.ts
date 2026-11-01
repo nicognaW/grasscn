@@ -2,8 +2,8 @@ import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 
-for (const scale of [1, 2, 3])
-  for (const warm of [false, true])
+for (const scale of [1, 2, 3]) {
+  for (const warm of [false, true]) {
     for (const variant of ["ascii", "cjk", "wrapped"]) {
       test(`Collapsible first paint ${variant} GUI${scale} ${warm ? "warm" : "cold"}`, async ({
         page,
@@ -14,6 +14,7 @@ for (const scale of [1, 2, 3])
             : variant === "cjk"
               ? "你好，世界\n\nHello Minecraft"
               : "你好，世界你好，世界你好，世界\nMinecraft adventures start here.";
+
         await page.goto(
           "/?" +
             new URLSearchParams({
@@ -28,14 +29,17 @@ for (const scale of [1, 2, 3])
           "data-warm-ready",
           "true"
         );
+
         // No text/font readiness wait occurs before clicking or sampling.
         const frames = await page.evaluate(async () => {
           const trigger = document.querySelector<HTMLButtonElement>(
               '[data-slot="collapsible-trigger"]'
             )!,
             start = performance.now();
+
           trigger.click();
           const frames = [];
+
           for (const milestone of [0, 16, 32, 50, 100]) {
             await new Promise((resolve) =>
               setTimeout(
@@ -43,6 +47,7 @@ for (const scale of [1, 2, 3])
                 Math.max(0, milestone - (performance.now() - start))
               )
             );
+
             const content = document.querySelector<HTMLElement>(
                 '[data-slot="collapsible-content"]'
               )!,
@@ -51,6 +56,7 @@ for (const scale of [1, 2, 3])
               )!,
               rect = content.getBoundingClientRect(),
               style = getComputedStyle(content);
+
             const lines = Array.from(
               label.querySelectorAll<HTMLElement>(".mc-label-line")
             ).map((line) => ({
@@ -59,6 +65,7 @@ for (const scale of [1, 2, 3])
                 line.textContent,
               height: line.getBoundingClientRect().height,
             }));
+
             frames.push({
               milestone,
               elapsed: performance.now() - start,
@@ -70,8 +77,10 @@ for (const scale of [1, 2, 3])
               lines,
             });
           }
+
           return frames;
         });
+
         writeFileSync(
           info.outputPath("first-frames.json"),
           JSON.stringify({ text, scale, warm, frames }, null, 2)
@@ -79,6 +88,7 @@ for (const scale of [1, 2, 3])
         await expect(
           page.locator("[data-mc-label-layout-ready]")
         ).toHaveAttribute("data-mc-label-layout-ready", "true");
+
         const finalLines = await page
           .locator(".mc-label-line")
           .evaluateAll((lines) =>
@@ -88,19 +98,26 @@ for (const scale of [1, 2, 3])
                 line.textContent
             )
           );
+
         expect(finalLines.length).toBeGreaterThanOrEqual(
           variant === "wrapped" ? 4 : 3
         );
+
         if (variant !== "wrapped") expect(finalLines).toEqual(text.split("\n"));
+
         for (const frame of frames) {
           expect(frame.display).not.toBe("none");
           expect(frame.visibility).toBe("visible");
           expect(frame.lines.map((line) => line.text)).toEqual(finalLines);
           expect(frame.height).toBe((finalLines.length * 9 + 12) * scale);
+
           for (const line of frame.lines) expect(line.height).toBe(9 * scale);
         }
+
         await page
           .locator('[data-slot="collapsible"]')
           .screenshot({ path: info.outputPath("expanded.png") });
       });
     }
+  }
+}

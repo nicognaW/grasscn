@@ -1,7 +1,9 @@
 "use client";
+
 import * as React from "react";
 
-import { Avatar, AvatarImage, type MinecraftAvatarSkin } from "./avatar";
+import { Avatar, AvatarImage } from "./avatar";
+import type { MinecraftAvatarSkin } from "./avatar";
 import {
   MinecraftDocumentText,
   documentTextWidth,
@@ -12,7 +14,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
-type PlayerListEntry = {
+
+interface PlayerListEntry {
   id: string;
   name: string;
   skin?: MinecraftAvatarSkin;
@@ -21,7 +24,8 @@ type PlayerListEntry = {
   latency?: number;
   score?: number;
   spectator?: boolean;
-};
+}
+
 type PlayerListProps = React.ComponentProps<"div"> & {
   players: readonly PlayerListEntry[];
   header?: React.ReactNode;
@@ -30,7 +34,8 @@ type PlayerListProps = React.ComponentProps<"div"> & {
   rowWidth?: number;
   onPlayerSelect?: (id: string) => void;
 };
-function PlayerList({
+
+const PlayerList = ({
   players,
   header,
   footer,
@@ -40,53 +45,66 @@ function PlayerList({
   className,
   style,
   ...props
-}: PlayerListProps) {
-  const visible = players.slice(0, 80),
-    columns = Math.max(1, Math.ceil(visible.length / 20)),
-    rows = Math.ceil(visible.length / columns),
-    [, refresh] = React.useReducer((v) => v + 1, 0);
+}: PlayerListProps) => {
+  const visible = players.slice(0, 80);
+  const columns = Math.max(1, Math.ceil(visible.length / 20));
+  const rows = Math.ceil(visible.length / columns);
+  const [, refresh] = React.useReducer((v) => v + 1, 0);
+
   const text =
     visible.map((p) => p.name).join("") +
     (typeof header === "string" ? header : "") +
     (typeof footer === "string" ? footer : "");
+
   React.useEffect(() => {
     let live = true;
-    if (/[^\x20-\x7e\n]/.test(text))
-      loadUnihex().then(() => {
+
+    if (/[^\x20-\x7E\n]/.test(text)) {
+      void loadUnihex().then(() => {
         if (live) refresh();
       });
+    }
+
     return () => {
       live = false;
     };
   }, [text]);
+
   const nameWidth = Math.max(
-      0,
-      ...visible.map((p) => documentTextWidth(p.name))
-    ),
-    scoreWidth = Math.max(
-      0,
-      ...visible.map((p) =>
-        p.score == null
-          ? 0
-          : documentTextWidth(" ") + documentTextWidth(String(p.score))
-      )
-    ),
-    columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13),
-    bodyWidth = columns * columnWidth + (columns - 1) * 5,
-    head =
-      typeof header === "string" ? header.split("\n") : header ? [header] : [],
-    foot =
-      typeof footer === "string" ? footer.split("\n") : footer ? [footer] : [],
-    fullWidth = Math.max(
-      bodyWidth,
-      ...[...head, ...foot].map((line) =>
-        typeof line === "string" ? documentTextWidth(line) : 0
-      )
-    ),
-    width = Math.floor(fullWidth / 2) * 2 + 2,
-    headHeight = header ? head.length * 9 + 1 : 0,
-    footHeight = footer ? foot.length * 9 + 1 : 0,
-    bodyLeft = 1 + Math.floor(fullWidth / 2) - Math.floor(bodyWidth / 2);
+    0,
+    ...visible.map((p) => documentTextWidth(p.name))
+  );
+
+  const scoreWidth = Math.max(
+    0,
+    ...visible.map((p) =>
+      p.score == null
+        ? 0
+        : documentTextWidth(" ") + documentTextWidth(String(p.score))
+    )
+  );
+
+  const columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13);
+  const bodyWidth = columns * columnWidth + (columns - 1) * 5;
+
+  const head =
+    typeof header === "string" ? header.split("\n") : header ? [header] : [];
+
+  const foot =
+    typeof footer === "string" ? footer.split("\n") : footer ? [footer] : [];
+
+  const fullWidth = Math.max(
+    bodyWidth,
+    ...[...head, ...foot].map((line) =>
+      typeof line === "string" ? documentTextWidth(line) : 0
+    )
+  );
+
+  const width = Math.floor(fullWidth / 2) * 2 + 2;
+  const headHeight = header ? head.length * 9 + 1 : 0;
+  const footHeight = footer ? foot.length * 9 + 1 : 0;
+  const bodyLeft = 1 + Math.floor(fullWidth / 2) - Math.floor(bodyWidth / 2);
+
   return (
     <MenuScaleContext.Provider value={scale}>
       <div
@@ -94,15 +112,15 @@ function PlayerList({
         data-slot="player-list"
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? "Player list"}
-        className={cn(`mc-player-list ${""}`, className)}
+        className={cn(`mc-player-list`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
             ({
               "--mc-scale": scale,
+              height: (1 + headHeight + rows * 9 + footHeight) * scale,
               position: "relative",
               width: width * scale,
-              height: (1 + headHeight + rows * 9 + footHeight) * scale,
               ...__style,
             }) as React.CSSProperties
         )}
@@ -110,7 +128,7 @@ function PlayerList({
         {header && (
           <div
             className="mc-roster-heading"
-            style={{ top: scale, height: head.length * 9 * scale }}
+            style={{ height: head.length * 9 * scale, top: scale }}
           >
             {head.map((line, i) => (
               <div key={i} style={{ height: 9 * scale, position: "relative" }}>
@@ -118,12 +136,12 @@ function PlayerList({
                   style={
                     typeof line === "string"
                       ? {
-                          position: "absolute",
                           left:
                             (1 +
                               Math.floor(fullWidth / 2) -
                               Math.floor(documentTextWidth(line) / 2)) *
                             scale,
+                          position: "absolute",
                         }
                       : undefined
                   }
@@ -139,38 +157,41 @@ function PlayerList({
           aria-label="Players"
           className="mc-roster-grid"
           style={{
+            gridAutoColumns: columnWidth * scale,
+            gridTemplateRows: rows ? `repeat(${rows},${9 * scale}px)` : "none",
             left: bodyLeft * scale,
             top: (headHeight + 1) * scale,
-            gridTemplateRows: rows ? `repeat(${rows},${9 * scale}px)` : "none",
-            gridAutoColumns: columnWidth * scale,
           }}
         >
           {visible.map((player) => {
-            const latency = player.latency ?? 0,
-              bars =
-                latency < 0
-                  ? "unknown"
-                  : latency < 150
-                    ? "5"
-                    : latency < 300
-                      ? "4"
-                      : latency < 600
-                        ? "3"
-                        : latency < 1000
-                          ? "2"
-                          : "1",
-              key =
-                `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
+            const latency = player.latency ?? 0;
+
+            const bars =
+              latency < 0
+                ? "unknown"
+                : latency < 150
+                  ? "5"
+                  : latency < 300
+                    ? "4"
+                    : latency < 600
+                      ? "3"
+                      : latency < 1000
+                        ? "2"
+                        : "1";
+
+            const key =
+              `gui/sprites/icon/ping_${bars}` as keyof typeof playerListAssets;
+
             const content = (
               <>
                 <Avatar
                   scale={scale}
                   style={{
-                    position: "absolute",
+                    height: 8 * scale,
                     left: 0,
+                    position: "absolute",
                     top: 0,
                     width: 8 * scale,
-                    height: 8 * scale,
                   }}
                 >
                   <AvatarImage
@@ -191,11 +212,11 @@ function PlayerList({
                 <span
                   className="mc-roster-name"
                   style={{
+                    fontStyle: player.spectator ? "italic" : undefined,
                     left: 9 * scale,
-                    top: 0,
                     maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
                     opacity: player.spectator ? 144 / 255 : 1,
-                    fontStyle: player.spectator ? "italic" : undefined,
+                    top: 0,
                   }}
                 >
                   <MinecraftMenuText>{player.name}</MinecraftMenuText>
@@ -220,13 +241,16 @@ function PlayerList({
                 />
               </>
             );
+
             return (
               <div role="listitem" key={player.id} className="mc-roster-row">
                 {onPlayerSelect ? (
                   <button
                     type="button"
                     onClick={(event) => {
-                      if (!event.defaultPrevented) onPlayerSelect(player.id);
+                      if (!event.defaultPrevented) {
+                        onPlayerSelect(player.id);
+                      }
                     }}
                     aria-label={player.name}
                   >
@@ -243,8 +267,8 @@ function PlayerList({
           <div
             className="mc-roster-heading"
             style={{
-              top: (headHeight + rows * 9 + 2) * scale,
               height: foot.length * 9 * scale,
+              top: (headHeight + rows * 9 + 2) * scale,
             }}
           >
             {foot.map((line, i) => (
@@ -253,12 +277,12 @@ function PlayerList({
                   style={
                     typeof line === "string"
                       ? {
-                          position: "absolute",
                           left:
                             (1 +
                               Math.floor(fullWidth / 2) -
                               Math.floor(documentTextWidth(line) / 2)) *
                             scale,
+                          position: "absolute",
                         }
                       : undefined
                   }
@@ -272,73 +296,81 @@ function PlayerList({
       </div>
     </MenuScaleContext.Provider>
   );
-}
-type ScoreboardEntry = {
+};
+
+interface ScoreboardEntry {
   id: string;
   name: string;
   score: number;
-};
+}
+
 type ScoreboardProps = React.ComponentProps<"div"> & {
   title: string;
   entries: readonly ScoreboardEntry[];
   scale?: 1 | 2 | 3;
 };
-function Scoreboard({
+
+const Scoreboard = ({
   title,
   entries,
   scale = 2,
   className,
   style,
   ...props
-}: ScoreboardProps) {
-  const [, refresh] = React.useReducer((v) => v + 1, 0),
-    text = title + entries.map((entry) => entry.name).join("");
+}: ScoreboardProps) => {
+  const [, refresh] = React.useReducer((v) => v + 1, 0);
+  const text = title + entries.map((entry) => entry.name).join("");
+
   React.useEffect(() => {
     let live = true;
-    if (/[^\x20-\x7e\n]/.test(text))
-      loadUnihex().then(() => {
+
+    if (/[^\x20-\x7E\n]/.test(text)) {
+      void loadUnihex().then(() => {
         if (live) refresh();
       });
+    }
+
     return () => {
       live = false;
     };
   }, [text]);
-  const visible = entries
-      .filter((e) => !e.name.startsWith("#"))
-      .slice()
-      .sort(
-        (a, b) =>
-          b.score - a.score ||
-          (a.name.toLowerCase() < b.name.toLowerCase()
-            ? -1
-            : a.name.toLowerCase() > b.name.toLowerCase()
-              ? 1
-              : 0)
-      )
-      .slice(0, 15),
-    contentWidth = Math.max(
-      documentTextWidth(title),
-      ...visible.map(
-        (e) =>
-          documentTextWidth(e.name) +
-          documentTextWidth(": ") +
-          documentTextWidth(String(e.score))
-      )
-    );
+
+  const visible = [...entries.filter((e) => !e.name.startsWith("#"))]
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        (a.name.toLowerCase() < b.name.toLowerCase()
+          ? -1
+          : a.name.toLowerCase() > b.name.toLowerCase()
+            ? 1
+            : 0)
+    )
+    .slice(0, 15);
+
+  const contentWidth = Math.max(
+    documentTextWidth(title),
+    ...visible.map(
+      (e) =>
+        documentTextWidth(e.name) +
+        documentTextWidth(": ") +
+        documentTextWidth(String(e.score))
+    )
+  );
+
   return (
     <div
       {...props}
       data-slot="scoreboard"
       role="table"
       aria-label={title}
-      className={cn(`mc-scoreboard ${""}`, className)}
+      className={cn(`mc-scoreboard`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: (contentWidth + 4) * scale,
             height: (visible.length * 9 + 10) * scale,
+            width: (contentWidth + 4) * scale,
             ...__style,
           }) as React.CSSProperties
       )}
@@ -351,7 +383,7 @@ function Scoreboard({
         <span
           role="columnheader"
           aria-colspan={2}
-          style={{ position: "absolute", left: 2 * scale, top: scale }}
+          style={{ left: 2 * scale, position: "absolute", top: scale }}
         >
           <MinecraftDocumentText
             text={title}
@@ -365,11 +397,11 @@ function Scoreboard({
       <div
         className="mc-scoreboard-body"
         style={{
-          position: "absolute",
+          height: (visible.length * 9 + 1) * scale,
           left: 0,
+          position: "absolute",
           right: 0,
           top: 9 * scale,
-          height: (visible.length * 9 + 1) * scale,
         }}
       />
       {visible.map((entry, i) => (
@@ -378,14 +410,14 @@ function Scoreboard({
           key={entry.id}
           className="mc-scoreboard-row"
           style={{
-            position: "absolute",
+            height: 9 * scale,
             left: 0,
+            position: "absolute",
             top: (10 + i * 9) * scale,
             width: "100%",
-            height: 9 * scale,
           }}
         >
-          <span role="cell" style={{ position: "absolute", left: 2 * scale }}>
+          <span role="cell" style={{ left: 2 * scale, position: "absolute" }}>
             <MinecraftDocumentText
               text={entry.name}
               width={documentTextWidth(entry.name)}
@@ -405,8 +437,10 @@ function Scoreboard({
       ))}
     </div>
   );
-}
+};
+
 export { PlayerList, Scoreboard };
+
 export type {
   PlayerListEntry,
   PlayerListProps,

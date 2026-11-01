@@ -1,10 +1,12 @@
 import { Tabs, TabsList, TabsTrigger } from "@grasscn/web/ui/tabs";
 import * as React from "react";
 
-export function TabsFallbackFixture() {
+export const TabsFallbackFixture = () => {
   const [changed, setChanged] = React.useState(false);
+
   const remove =
     new URLSearchParams(location.search).get("reason") === "missing";
+
   return (
     <>
       <Tabs defaultValue="second">
@@ -17,7 +19,13 @@ export function TabsFallbackFixture() {
           )}
         </TabsList>
       </Tabs>
-      <button onClick={() => setChanged(true)}>Change tabs</button>
+      <button
+        onClick={() => {
+          setChanged(true);
+        }}
+      >
+        Change tabs
+      </button>
     </>
   );
-}
+};

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { AdventureImage } from "./minecraft-adventure-image";
@@ -7,6 +8,7 @@ import { MinecraftDocumentText } from "./minecraft-document-text";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-book.css";
+
 type BookProps = React.ComponentProps<"div"> & {
   pages: readonly string[];
   page?: number;
@@ -15,7 +17,8 @@ type BookProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
   turnSound?: boolean;
 };
-function Book({
+
+const Book = ({
   pages,
   page,
   defaultPage = 0,
@@ -26,24 +29,36 @@ function Book({
   style,
   onKeyDown,
   ...props
-}: BookProps) {
-  const [current, setCurrent] = React.useState(defaultPage),
-    [hover, setHover] = React.useState<"forward" | "backward" | null>(null),
-    index = Math.max(
-      0,
-      Math.min(Math.max(0, pages.length - 1), page ?? current)
-    );
+}: BookProps) => {
+  const [current, setCurrent] = React.useState(defaultPage);
+  const [hover, setHover] = React.useState<"forward" | "backward" | null>(null);
+
+  const index = Math.max(
+    0,
+    Math.min(Math.max(0, pages.length - 1), page ?? current)
+  );
+
   const change = (next: number, sound = false) => {
-    if (next < 0 || next >= pages.length || next === index) return;
-    if (page === undefined) setCurrent(next);
+    if (next < 0 || next >= pages.length || next === index) {
+      return;
+    }
+
+    if (page === undefined) {
+      setCurrent(next);
+    }
+
     onPageChange?.(next);
-    if (sound && turnSound) playBookPageTurn();
+
+    if (sound && turnSound) {
+      playBookPageTurn();
+    }
   };
+
   return (
     <div
       {...props}
       data-slot="book"
-      className={cn(`mc-book ${""}`, className)}
+      className={cn(`mc-book`, className)}
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Book"}
@@ -52,18 +67,23 @@ function Book({
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: 192 * scale,
             height: 192 * scale,
+            width: 192 * scale,
             ...__style,
           }) as React.CSSProperties
       )}
       onKeyDown={(event) => {
         onKeyDown?.(event);
-        if (event.defaultPrevented) return;
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
         if (event.key === "ArrowRight" || event.key === "PageDown") {
           event.preventDefault();
           change(index + 1);
         }
+
         if (event.key === "ArrowLeft" || event.key === "PageUp") {
           event.preventDefault();
           change(index - 1);
@@ -73,24 +93,24 @@ function Book({
       <AdventureImage
         texture="gui/book"
         scale={scale}
-        style={{ position: "absolute", left: 0, top: 0, maxWidth: "none" }}
+        style={{ left: 0, maxWidth: "none", position: "absolute", top: 0 }}
       />
       <MinecraftDocumentText
         text={`Page ${index + 1} of ${Math.max(1, pages.length)}`}
         width={114}
         scale={scale}
         align="right"
-        style={{ position: "absolute", left: 34 * scale, top: 16 * scale }}
+        style={{ left: 34 * scale, position: "absolute", top: 16 * scale }}
       />
       <div
         className="mc-book-page"
         role="document"
         aria-label={`Page ${index + 1}`}
         style={{
+          height: 128 * scale,
           left: 36 * scale,
           top: 30 * scale,
           width: 114 * scale,
-          height: 128 * scale,
         }}
       >
         <MinecraftDocumentText
@@ -102,6 +122,7 @@ function Book({
       {(["backward", "forward"] as const).map((direction) => {
         const visible =
           direction === "backward" ? index > 0 : index < pages.length - 1;
+
         return (
           visible && (
             <button
@@ -111,19 +132,28 @@ function Book({
               aria-label={
                 direction === "forward" ? "Next page" : "Previous page"
               }
-              onMouseEnter={() => setHover(direction)}
-              onMouseLeave={() => setHover(null)}
-              onFocus={() => setHover(direction)}
-              onBlur={() => setHover(null)}
+              onMouseEnter={() => {
+                setHover(direction);
+              }}
+              onMouseLeave={() => {
+                setHover(null);
+              }}
+              onFocus={() => {
+                setHover(direction);
+              }}
+              onBlur={() => {
+                setHover(null);
+              }}
               onClick={(event) => {
-                if (!event.defaultPrevented)
+                if (!event.defaultPrevented) {
                   change(index + (direction === "forward" ? 1 : -1), true);
+                }
               }}
               style={{
+                height: 13 * scale,
                 left: (direction === "forward" ? 116 : 43) * scale,
                 top: 157 * scale,
                 width: 23 * scale,
-                height: 13 * scale,
               }}
             >
               <AdventureImage
@@ -136,6 +166,8 @@ function Book({
       })}
     </div>
   );
-}
+};
+
 export { Book };
+
 export type { BookProps };

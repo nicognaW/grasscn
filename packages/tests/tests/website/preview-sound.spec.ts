@@ -1,14 +1,21 @@
-import { test, expect, type Page } from "@grasscn/tests/test";
+import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import {
   getMinecraftSoundVolume,
   setMinecraftSoundVolume,
 } from "@grasscn/web/ui/minecraft-sound";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
-type Voice = { source: string; volume: number; rate: number };
-const voices = (page: Page) =>
+interface Voice {
+  source: string;
+  volume: number;
+  rate: number;
+}
+
+const voices = async (page: Page) =>
   page.evaluate(() => (window as any).__previewVoices as Voice[]);
-const clearVoices = (page: Page) =>
+
+const clearVoices = async (page: Page) =>
   page.evaluate(() => {
     (window as any).__previewVoices = [];
   });
@@ -20,12 +27,13 @@ const origin = (
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     (window as any).__previewVoices = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__previewVoices.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
       });
+
       return Promise.resolve();
     };
   });
@@ -33,6 +41,7 @@ test.beforeEach(async ({ page }) => {
 
 test("Master volume defaults to native gain and safely clamps public settings", () => {
   expect(getMinecraftSoundVolume()).toBe(1);
+
   try {
     setMinecraftSoundVolume(-1);
     expect(getMinecraftSoundVolume()).toBe(0);
@@ -50,7 +59,7 @@ test("Master volume defaults to native gain and safely clamps public settings", 
 for (const [key, value] of [
   ["Home", "0"],
   ["End", "100"],
-] as const)
+] as const) {
   test(`Clicking the visible Volume thumb preserves endpoint ${value}`, async ({
     page,
   }) => {
@@ -69,6 +78,7 @@ for (const [key, value] of [
       .click();
     await expect(volume).toHaveAttribute("aria-valuenow", value);
   });
+}
 
 test("Preview Volume controls button, checkbox and slider sounds across pages", async ({
   page,
@@ -134,12 +144,14 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   await checkbox.check();
   const audible = await voices(page);
   expect(audible).toHaveLength(3);
-  for (const voice of audible)
+
+  for (const voice of audible) {
     expect(voice).toEqual({
+      rate: 1,
       source: minecraftClickSound,
       volume: 0.25,
-      rate: 1,
     });
+  }
 });
 
 test("Keyboard volume changes persist when the slider demo is filtered out", async ({

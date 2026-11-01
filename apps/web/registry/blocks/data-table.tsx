@@ -1,6 +1,7 @@
 "use client";
 
-import { useTable, type ColumnDef, type RowData } from "@tanstack/react-table";
+import { useTable } from "@tanstack/react-table";
+import type { ColumnDef, RowData } from "@tanstack/react-table";
 
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
 import {
@@ -12,23 +13,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { features, type DataTableFeatures } from "./data-table-features";
+import { features } from "./data-table-features";
+import type { DataTableFeatures } from "./data-table-features";
 
-type DataTableProps<TData extends RowData> = {
+interface DataTableProps<TData extends RowData> {
   columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   scale?: 1 | 2 | 3;
-};
+}
 
-export function DataTable<TData extends RowData>({
+export const DataTable = <TData extends RowData>({
   columns,
   data,
   scale = 2,
-}: DataTableProps<TData>) {
+}: DataTableProps<TData>) => {
   const table = useTable({
-    features,
-    data,
     columns,
+    data,
     defaultColumn: {
       cell: (info) => (
         <MinecraftDisclosureText scale={scale}>
@@ -36,7 +37,9 @@ export function DataTable<TData extends RowData>({
         </MinecraftDisclosureText>
       ),
     },
+    features,
   });
+
   return (
     <div data-slot="data-table" className="w-full overflow-hidden">
       <Table scale={scale}>
@@ -79,4 +82,4 @@ export function DataTable<TData extends RowData>({
       </Table>
     </div>
   );
-}
+};

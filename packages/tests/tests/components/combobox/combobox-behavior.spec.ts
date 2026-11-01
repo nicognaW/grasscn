@@ -10,11 +10,11 @@ test.beforeEach(({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
 });
 
-test.afterEach(async ({ page, browser }, info) => {
+test.afterEach(({ page, browser }, info) => {
   const errors = audits.get(page) ?? [];
   writeFileSync(
     info.outputPath("runtime.json"),
-    JSON.stringify({ pageErrors: errors, browser: browser.version() })
+    JSON.stringify({ browser: browser.version(), pageErrors: errors })
   );
   expect(errors).toEqual([]);
 });
@@ -45,10 +45,10 @@ test("Combobox skips disabled entries, honors Escape and restores focus", async 
   await input.fill("Bedrock");
   await expect(page.getByRole("option")).toHaveCount(1);
   await expect(
-    page.getByRole("option", { name: "Bedrock", exact: true })
+    page.getByRole("option", { exact: true, name: "Bedrock" })
   ).toHaveAttribute("aria-disabled", "true");
   await page
-    .getByRole("option", { name: "Bedrock", exact: true })
+    .getByRole("option", { exact: true, name: "Bedrock" })
     .dispatchEvent("click");
   await expect(page.locator("#value")).toHaveText("none");
   await input.press("ArrowDown");
@@ -141,7 +141,7 @@ test("Combobox multiple mode preserves values, collection rendering and chip rem
   await input.press("Backspace");
   await expect(page.locator("#value")).toBeEmpty();
   await page.goto("/?component=combobox&multiple=1&manualRemove=1");
-  await page.getByRole("button", { name: "Remove Stone", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Remove Stone" }).click();
   await expect(page.locator("#value")).toBeEmpty();
 });
 
@@ -150,12 +150,13 @@ test("Combobox uses original click audio for native buttons while typing and cho
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push({
+        pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        pitch: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
@@ -191,6 +192,7 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
       HTMLInputElement.prototype,
       "value"
     )!.set!;
+
     setter.call(node, "世界");
     node.dispatchEvent(
       new InputEvent("input", {
@@ -203,10 +205,10 @@ test("Combobox IME Enter cannot commit a suggestion before CJK composition compl
     );
   });
   await input.dispatchEvent("keydown", {
-    key: "Enter",
     code: "Enter",
-    keyCode: 229,
     isComposing: true,
+    key: "Enter",
+    keyCode: 229,
   });
   await expect(page.locator("#value")).toHaveText("none");
   await input.dispatchEvent("compositionend", { data: "世界" });

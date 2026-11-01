@@ -1,19 +1,20 @@
 "use client";
+
 import * as React from "react";
-import {
-  DayPicker,
-  getDefaultClassNames,
-  type DayButton,
-  type Root,
-  type Weekday,
-  type CaptionLabel,
-  type WeekNumber,
-  type Dropdown,
+import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import type {
+  DayButton,
+  Root,
+  Weekday,
+  CaptionLabel,
+  WeekNumber,
+  Dropdown,
 } from "react-day-picker";
 
 import { Button } from "./button";
 import { Card } from "./card";
-import { Label, type LabelProps } from "./label";
+import { Label } from "./label";
+import type { LabelProps } from "./label";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import {
@@ -27,13 +28,16 @@ import {
 import "./minecraft-calendar.css";
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
+
 const CalendarScaleContext = React.createContext<1 | 2 | 3>(2);
+
 type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   scale?: 1 | 2 | 3;
   buttonVariant?: "default";
   captionTextProps?: Omit<LabelProps, "children" | "scale">;
 };
-function Calendar({
+
+const Calendar = ({
   scale = 2,
   buttonVariant = "default",
   showOutsideDays = true,
@@ -43,26 +47,69 @@ function Calendar({
   components,
   captionTextProps,
   ...props
-}: CalendarProps) {
-  if (buttonVariant !== "default")
+}: CalendarProps) => {
+  if (buttonVariant !== "default") {
     throw Error(
       "Minecraft Calendar supports the native default button appearance only"
     );
-  const defaults = getDefaultClassNames(),
-    merged = Object.fromEntries(
-      Object.entries(defaults).map(([key, value]) => [
-        key,
-        `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
-      ])
-    );
+  }
+
+  const defaults = getDefaultClassNames();
+
+  const merged = Object.fromEntries(
+    Object.entries(defaults).map(([key, value]) => [
+      key,
+      `${value} ${(classNames as Record<string, string> | undefined)?.[key] ?? ""}`,
+    ])
+  );
+
   return (
     <CalendarScaleContext.Provider value={scale}>
       <DayPicker
         showOutsideDays={showOutsideDays}
         captionLayout={captionLayout}
-        className={cn(`mc-calendar ${""}`, className)}
+        className={cn(`mc-calendar`, className)}
         classNames={merged}
         components={{
+          CaptionLabel: ({
+            children,
+            ...p
+          }: React.ComponentProps<typeof CaptionLabel>) => (
+            <span {...p}>
+              <Label scale={scale} {...captionTextProps}>
+                {children}
+              </Label>
+            </span>
+          ),
+          Chevron: () => <></>,
+          DayButton: CalendarDayButton,
+          Dropdown: CalendarDropdown,
+          NextMonthButton: ({ className, onClick, ...p }) => (
+            <button
+              type="button"
+              className={cn(`mc-pagination-arrow mc-calendar-arrow`, className)}
+              data-direction="forward"
+              aria-disabled={p.disabled ?? undefined}
+              {...p}
+              onClick={(e) => {
+                if (!e.defaultPrevented) playMinecraftClick();
+                onClick?.(e);
+              }}
+            />
+          ),
+          PreviousMonthButton: ({ className, onClick, ...p }) => (
+            <button
+              type="button"
+              className={cn(`mc-pagination-arrow mc-calendar-arrow`, className)}
+              data-direction="backward"
+              aria-disabled={p.disabled ?? undefined}
+              {...p}
+              onClick={(e) => {
+                if (!e.defaultPrevented) playMinecraftClick();
+                onClick?.(e);
+              }}
+            />
+          ),
           Root: ({
             rootRef,
             ...rootProps
@@ -74,50 +121,13 @@ function Calendar({
               {...rootProps}
             />
           ),
-          PreviousMonthButton: ({ className, onClick, ...p }) => (
-            <button
-              type="button"
-              className={cn(
-                `mc-pagination-arrow mc-calendar-arrow ${""}`,
-                className
-              )}
-              data-direction="backward"
-              aria-disabled={p.disabled || undefined}
-              {...p}
-              onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
-                onClick?.(e);
-              }}
-            />
-          ),
-          NextMonthButton: ({ className, onClick, ...p }) => (
-            <button
-              type="button"
-              className={cn(
-                `mc-pagination-arrow mc-calendar-arrow ${""}`,
-                className
-              )}
-              data-direction="forward"
-              aria-disabled={p.disabled || undefined}
-              {...p}
-              onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
-                onClick?.(e);
-              }}
-            />
-          ),
-          Chevron: () => <></>,
-          DayButton: CalendarDayButton,
-          Dropdown: CalendarDropdown,
-          CaptionLabel: ({
+          WeekNumber: ({
             children,
             ...p
-          }: React.ComponentProps<typeof CaptionLabel>) => (
-            <span {...p}>
-              <Label scale={scale} {...captionTextProps}>
-                {children}
-              </Label>
-            </span>
+          }: React.ComponentProps<typeof WeekNumber>) => (
+            <td {...p}>
+              <Label scale={scale}>{children}</Label>
+            </td>
           ),
           Weekday: ({
             children,
@@ -127,22 +137,15 @@ function Calendar({
               <Label scale={scale}>{children}</Label>
             </th>
           ),
-          WeekNumber: ({
-            children,
-            ...p
-          }: React.ComponentProps<typeof WeekNumber>) => (
-            <td {...p}>
-              <Label scale={scale}>{children}</Label>
-            </td>
-          ),
           ...components,
         }}
         {...props}
       />
     </CalendarScaleContext.Provider>
   );
-}
-function CalendarDropdown({
+};
+
+const CalendarDropdown = ({
   options,
   className,
   style,
@@ -152,11 +155,12 @@ function CalendarDropdown({
   id,
   onChange,
   ...props
-}: React.ComponentProps<typeof Dropdown>) {
-  const scale = React.useContext(CalendarScaleContext),
-    native = React.useRef<HTMLSelectElement>(null);
+}: React.ComponentProps<typeof Dropdown>) => {
+  const scale = React.useContext(CalendarScaleContext);
+  const native = React.useRef<HTMLSelectElement>(null);
+
   return (
-    <span className={cn(`mc-calendar-dropdown ${""}`, className)} style={style}>
+    <span className={cn(`mc-calendar-dropdown`, className)} style={style}>
       <select
         ref={native}
         value={value}
@@ -167,11 +171,11 @@ function CalendarDropdown({
         aria-hidden="true"
         tabIndex={-1}
         style={{
-          position: "absolute",
-          width: 1,
           height: 1,
           opacity: 0,
           pointerEvents: "none",
+          position: "absolute",
+          width: 1,
         }}
       >
         {options?.map((option) => (
@@ -186,8 +190,8 @@ function CalendarDropdown({
       </select>
       <Select
         items={options?.map((option) => ({
-          value: String(option.value),
           label: option.label,
+          value: String(option.value),
         }))}
         scale={scale}
         value={value == null ? undefined : String(value)}
@@ -195,7 +199,7 @@ function CalendarDropdown({
         disabled={disabled}
         onValueChange={(next) => {
           if (native.current) {
-            native.current.value = String(next ?? "");
+            native.current.value = next ?? "";
             native.current.dispatchEvent(
               new Event("change", { bubbles: true })
             );
@@ -206,7 +210,7 @@ function CalendarDropdown({
           id={id}
           aria-label={props["aria-label"]}
           aria-labelledby={props["aria-labelledby"]}
-          style={{ width: "auto", minWidth: 40 * scale }}
+          style={{ minWidth: 40 * scale, width: "auto" }}
         >
           <SelectValue />
         </SelectTrigger>
@@ -224,8 +228,9 @@ function CalendarDropdown({
       </Select>
     </span>
   );
-}
-function CalendarDayButton({
+};
+
+const CalendarDayButton = ({
   day,
   modifiers,
   className,
@@ -233,12 +238,16 @@ function CalendarDayButton({
   style,
   onClick,
   ...props
-}: React.ComponentProps<typeof DayButton>) {
-  const scale = React.useContext(CalendarScaleContext),
-    ref = React.useRef<HTMLButtonElement>(null);
+}: React.ComponentProps<typeof DayButton>) => {
+  const scale = React.useContext(CalendarScaleContext);
+  const ref = React.useRef<HTMLButtonElement>(null);
+
   React.useEffect(() => {
-    if (modifiers.focused) ref.current?.focus();
+    if (modifiers.focused) {
+      ref.current?.focus();
+    }
   }, [modifiers.focused]);
+
   return (
     <Button
       render={
@@ -246,8 +255,10 @@ function CalendarDayButton({
           {...props}
           type={props.type ?? "button"}
           onClick={(event) => {
-            if (!event.defaultPrevented && !props.disabled)
+            if (!event.defaultPrevented && !props.disabled) {
               playMinecraftClick();
+            }
+
             onClick?.(event);
             event.preventDefault();
           }}
@@ -267,17 +278,19 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end || undefined}
       data-today={modifiers.today || undefined}
       data-outside={modifiers.outside || undefined}
-      className={cn(`mc-calendar-day ${""}`, className)}
+      className={cn(`mc-calendar-day`, className)}
       scale={scale}
       style={minecraftStyle(style, (__style) => ({
-        width: 20 * scale,
         height: 20 * scale,
+        width: 20 * scale,
         ...__style,
       }))}
     >
       {children}
     </Button>
   );
-}
+};
+
 export { Calendar, CalendarDayButton };
+
 export type { CalendarProps };

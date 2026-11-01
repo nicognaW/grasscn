@@ -15,75 +15,95 @@ import {
   setMinecraftSoundVolume,
 } from "@grasscn/web/ui/minecraft-sound";
 import * as React from "react";
-const q = new URLSearchParams(location.search),
-  scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-  state = q.get("state") ?? "normal",
-  title = q.get("label") ?? "New World",
-  id = q.get("text") ?? "world-1",
-  description = q.get("description") ?? "Survival Mode";
-if (q.has("volume")) setMinecraftSoundVolume(Number(q.get("volume")));
-function CustomAction({ onClick, ...props }: React.ComponentProps<"button">) {
+
+const q = new URLSearchParams(location.search);
+const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+const state = q.get("state") ?? "normal";
+const title = q.get("label") ?? "New World";
+const id = q.get("text") ?? "world-1";
+const description = q.get("description") ?? "Survival Mode";
+
+if (q.has("volume")) {
+  setMinecraftSoundVolume(Number(q.get("volume")));
+}
+
+const CustomAction = ({
+  onClick,
+  ...props
+}: React.ComponentProps<"button">) => {
   return (
     <button
       type="button"
       {...props}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) playMinecraftClick();
+
+        if (!event.defaultPrevented) {
+          playMinecraftClick();
+        }
       }}
     />
   );
-}
-function ItemFixture() {
+};
+
+const ItemFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       q.get("background") ?? "#202020";
     document.body.style.background = q.get("background") ?? "#202020";
   }, []);
-  const [events, setEvents] = React.useState(0),
-    [actions, setActions] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    [width, setWidth] = React.useState(Number(q.get("width") ?? 270)),
-    ref = React.useRef<any>(null),
-    part = q.get("part"),
-    rich = q.has("rich"),
-    children = (
-      <>
-        {rich ? <ItemHeader>Available worlds</ItemHeader> : null}
-        <ItemMedia>
-          {q.has("customMedia") ? (
-            <span data-testid="custom-media">Icon</span>
-          ) : undefined}
-        </ItemMedia>
-        <ItemContent>
-          <ItemTitle>
-            {q.has("richTitle") ? (
-              <strong data-testid="rich-title">{title}</strong>
-            ) : (
-              title
-            )}
-          </ItemTitle>
-          <ItemDescription>{`${id}\n${description}`}</ItemDescription>
-        </ItemContent>
-        {rich ? (
-          <>
-            <ItemActions>
-              <button onClick={() => setActions((n) => n + 1)}>
-                Item action
-              </button>
-            </ItemActions>
-            <ItemFooter>World information</ItemFooter>
-          </>
-        ) : null}
-      </>
-    );
+
+  const [events, setEvents] = React.useState(0);
+  const [actions, setActions] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const [width, setWidth] = React.useState(Number(q.get("width") ?? 270));
+  const ref = React.useRef<any>(null);
+  const part = q.get("part");
+  const rich = q.has("rich");
+
+  const children = (
+    <>
+      {rich ? <ItemHeader>Available worlds</ItemHeader> : null}
+      <ItemMedia>
+        {q.has("customMedia") ? (
+          <span data-testid="custom-media">Icon</span>
+        ) : undefined}
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>
+          {q.has("richTitle") ? (
+            <strong data-testid="rich-title">{title}</strong>
+          ) : (
+            title
+          )}
+        </ItemTitle>
+        <ItemDescription>{`${id}\n${description}`}</ItemDescription>
+      </ItemContent>
+      {rich ? (
+        <>
+          <ItemActions>
+            <button
+              onClick={() => {
+                setActions((n) => n + 1);
+              }}
+            >
+              Item action
+            </button>
+          </ItemActions>
+          <ItemFooter>World information</ItemFooter>
+        </>
+      ) : null}
+    </>
+  );
+
   const commonStyle = {
-    position: "fixed",
+    height: Number(q.get("height") ?? 36) * scale,
     left: Number(q.get("x") ?? 16) * scale,
+    position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: width * scale,
-    height: Number(q.get("height") ?? 36) * scale,
   } as React.CSSProperties;
+
   const subject =
     part === "title" ? (
       <ItemTitle
@@ -112,20 +132,20 @@ function ItemFixture() {
     ) : (
       <Item
         render={
-          !q.has("plain") ? (
-            q.has("plain") ? undefined : q.has("customAction") ? (
-              <CustomAction />
-            ) : q.has("button") ? (
-              <button type="button" />
-            ) : (
-              <a
-                href="#world"
-                onClick={(event) => {
-                  if (q.has("childCancel")) event.preventDefault();
-                }}
-              />
-            )
-          ) : undefined
+          q.has("plain") ? undefined : q.has("plain") ? undefined : q.has(
+              "customAction"
+            ) ? (
+            <CustomAction />
+          ) : q.has("button") ? (
+            <button type="button" />
+          ) : (
+            <a
+              href="#world"
+              onClick={(event) => {
+                if (q.has("childCancel")) event.preventDefault();
+              }}
+            />
+          )
         }
         id="subject"
         ref={ref}
@@ -138,45 +158,55 @@ function ItemFixture() {
         tabIndex={state === "focus" ? 0 : undefined}
         onClick={(event) => {
           setEvents((n) => n + 1);
-          if (q.has("cancel")) event.preventDefault();
+
+          if (q.has("cancel")) {
+            event.preventDefault();
+          }
         }}
         aria-disabled={q.has("disabled") ? true : undefined}
         data-subject="true"
       >
-        {!q.has("plain") ? (
-          children
-        ) : q.has("plain") ? (
-          children
-        ) : q.has("customAction") ? (
-          <CustomAction>{children}</CustomAction>
-        ) : q.has("button") ? (
-          <button type="button">{children}</button>
+        {q.has("plain") ? (
+          q.has("plain") ? (
+            children
+          ) : q.has("customAction") ? (
+            <CustomAction>{children}</CustomAction>
+          ) : q.has("button") ? (
+            <button type="button">{children}</button>
+          ) : (
+            <a
+              href="#world"
+              onClick={(event) => {
+                if (q.has("childCancel")) event.preventDefault();
+              }}
+            >
+              {children}
+            </a>
+          )
         ) : (
-          <a
-            href="#world"
-            onClick={(event) => {
-              if (q.has("childCancel")) event.preventDefault();
-            }}
-          >
-            {children}
-          </a>
+          children
         )}
       </Item>
     );
+
   return (
     <>
       {subject}
       <button
         id="read-ref"
         style={{ position: "absolute", top: 1500 }}
-        onClick={() => setTag(ref.current?.tagName ?? "")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
       <button
         id="resize"
         style={{ position: "absolute", top: 1460 }}
-        onClick={() => setWidth(340)}
+        onClick={() => {
+          setWidth(340);
+        }}
       >
         Resize
       </button>
@@ -197,5 +227,6 @@ function ItemFixture() {
       </div>
     </>
   );
-}
+};
+
 export { ItemFixture };

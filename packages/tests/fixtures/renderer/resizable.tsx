@@ -8,21 +8,27 @@ import type {
   GroupImperativeHandle,
   PanelImperativeHandle,
 } from "react-resizable-panels";
-const p = new URLSearchParams(location.search),
-  scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3,
-  orientation = p.get("orientation") === "vertical" ? "vertical" : "horizontal";
-export function ResizableFixture() {
+
+const p = new URLSearchParams(location.search);
+const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
+
+const orientation =
+  p.get("orientation") === "vertical" ? "vertical" : "horizontal";
+
+export const ResizableFixture = () => {
   React.useLayoutEffect(() => {
     document.body.style.background = p.get("background") ?? "#202020";
     document.documentElement.style.background =
       p.get("background") ?? "#202020";
   }, []);
-  const group = React.useRef<GroupImperativeHandle>(null),
-    panel = React.useRef<PanelImperativeHandle>(null),
-    element = React.useRef<HTMLDivElement>(null),
-    handle = React.useRef<HTMLDivElement>(null),
-    [layout, setLayout] = React.useState(""),
-    [refs, setRefs] = React.useState("");
+
+  const group = React.useRef<GroupImperativeHandle>(null);
+  const panel = React.useRef<PanelImperativeHandle>(null);
+  const element = React.useRef<HTMLDivElement>(null);
+  const handle = React.useRef<HTMLDivElement>(null);
+  const [layout, setLayout] = React.useState("");
+  const [refs, setRefs] = React.useState("");
+
   return (
     <>
       <ResizablePanelGroup
@@ -32,8 +38,10 @@ export function ResizableFixture() {
         elementRef={element}
         orientation={orientation}
         disabled={p.has("groupDisabled")}
-        onLayoutChanged={(value) => setLayout(JSON.stringify(value))}
-        style={{ width: 600, height: 256 }}
+        onLayoutChanged={(value) => {
+          setLayout(JSON.stringify(value));
+        }}
+        style={{ height: 256, width: 600 }}
       >
         <ResizablePanel
           id="left"
@@ -43,7 +51,7 @@ export function ResizableFixture() {
           collapsedSize="0%"
           panelRef={panel}
         >
-          <div style={{ height: "100%", background: "#555" }}>First panel</div>
+          <div style={{ background: "#555", height: "100%" }}>First panel</div>
         </ResizablePanel>
         <ResizableHandle
           id="subject"
@@ -54,7 +62,7 @@ export function ResizableFixture() {
           data-subject="true"
         />
         <ResizablePanel id="right" defaultSize="50%" minSize="10%">
-          <div style={{ height: "100%", background: "#333" }}>Second panel</div>
+          <div style={{ background: "#333", height: "100%" }}>Second panel</div>
         </ResizablePanel>
       </ResizablePanelGroup>
       <button
@@ -74,15 +82,15 @@ export function ResizableFixture() {
       </button>
       <button
         id="read-ref"
-        onClick={() =>
+        onClick={() => {
           setRefs(
             `${element.current?.tagName}/${handle.current?.tagName}/${Object.keys(
               group.current?.getLayout() ?? {}
             )
               .sort()
               .join(",")}`
-          )
-        }
+          );
+        }}
       >
         Read refs
       </button>
@@ -90,4 +98,4 @@ export function ResizableFixture() {
       <output id="refs">{refs}</output>
     </>
   );
-}
+};

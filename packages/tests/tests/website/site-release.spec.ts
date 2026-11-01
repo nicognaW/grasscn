@@ -39,6 +39,7 @@ test("all production sections share navigation and omit internal status content"
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+
   for (const path of [
     "",
     "docs",
@@ -52,10 +53,12 @@ test("all production sections share navigation and omit internal status content"
     ).toBeVisible();
     await expect(page.getByRole("contentinfo")).toBeVisible();
     await expect(page.locator("h1")).toBeVisible();
-    expect(await page.locator("body").innerText()).not.toMatch(internal);
+    expect(await page.locator("body").textContent()).not.toMatch(internal);
   }
+
   expect(errors).toEqual([]);
 });
+
 test("search shows all items, more than six matches, and nested component imports", async ({
   page,
 }) => {
@@ -82,6 +85,7 @@ test("search shows all items, more than six matches, and nested component import
   await search.fill("你好");
   await expect(page.getByRole("option")).toHaveCount(0);
 });
+
 test("component pages expose live preview, source, installation and composition", async ({
   page,
 }) => {
@@ -122,7 +126,8 @@ test("component pages expose live preview, source, installation and composition"
     "Pressed 1 time"
   );
 });
-for (const width of [320, 390, 768, 1440])
+
+for (const width of [320, 390, 768, 1440]) {
   test(`shared site navigation is usable at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(`${origin}docs/components/input`);
@@ -161,6 +166,7 @@ for (const width of [320, 390, 768, 1440])
       )
     ).toBe(true);
   });
+}
 
 test("canonical routes reload and legacy links still resolve", async ({
   page,
@@ -178,7 +184,7 @@ test("canonical routes reload and legacy links still resolve", async ({
     .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { exact: true, name: "Charts" })
     .click();
-  await expect(page).toHaveURL(origin + "charts");
+  await expect(page).toHaveURL(`${origin}charts`);
   await page.goBack();
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
     "Button"
@@ -193,11 +199,12 @@ test("canonical routes reload and legacy links still resolve", async ({
   );
 });
 
-for (const width of [320, 390])
+for (const width of [320, 390]) {
   test(`compact demos keep actions reachable at ${width}px`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width, height: 844 });
+    await page.setViewportSize({ height: 844, width });
+
     for (const name of ["button-group", "table", "pagination"]) {
       await page.goto(origin + "docs/components/" + name);
       await expect(
@@ -208,6 +215,7 @@ for (const width of [320, 390])
           () => document.documentElement.scrollWidth <= innerWidth
         )
       ).toBe(true);
+
       if (name === "button-group") {
         await page
           .locator(".documentation-playground")
@@ -240,6 +248,8 @@ for (const width of [320, 390])
       }
     }
   });
+}
+
 test("shared controls retain native rendering and the sticky header is opaque", async ({
   page,
 }) => {
@@ -265,7 +275,7 @@ test("shared controls retain native rendering and the sticky header is opaque", 
       .getByRole("banner")
       .evaluate((el) => getComputedStyle(el).backgroundColor)
   ).toBe("rgb(32, 32, 32)");
-  await page.goto(origin + "charts");
+  await page.goto(`${origin}charts`);
   await expect(
     page.getByRole("navigation", { name: "Chart types" }).getByRole("link")
   ).toHaveCount(12);
@@ -303,6 +313,7 @@ test("website code uses the shared Shiki highlighter without changing source tex
     .evaluateAll((tokens) => [
       ...new Set(tokens.map((token) => getComputedStyle(token).color)),
     ]);
+
   expect(colors).toContain("rgb(255, 85, 255)");
   expect(colors).toContain("rgb(85, 255, 85)");
 });

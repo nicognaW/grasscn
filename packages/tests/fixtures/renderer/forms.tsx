@@ -15,60 +15,76 @@ import { Input } from "@grasscn/web/ui/input";
 import { MinecraftProse } from "@grasscn/web/ui/minecraft-prose";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
-export function FormsFixture() {
-  const q = new URLSearchParams(location.search),
-    component = q.get("component") ?? "form",
-    native = q.has("native"),
-    part = q.get("part") ?? "label",
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    text = q.get("label") ?? "Player name",
-    [saved, setSaved] = React.useState(""),
-    [disabled, setDisabled] = React.useState(false),
-    ref = React.useRef<HTMLLabelElement>(null),
-    [tag, setTag] = React.useState("");
-  const form = useForm({ defaultValues: { name: "" }, mode: "onSubmit" }),
-    common = {
-      id: "subject",
-      scale,
-      maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-      align:
-        q.get("align") === "center" ? ("center" as const) : ("left" as const),
-      style: {
-        position: "fixed" as const,
-        left: Number(q.get("x") ?? 16) * scale,
-        top: Number(q.get("y") ?? 16) * scale,
-        width: Number(q.get("width") ?? 200) * scale,
-        height: Number(q.get("height") ?? 9) * scale,
-      },
-      "data-subject": "true",
-    };
+
+export const FormsFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const component = q.get("component") ?? "form";
+  const native = q.has("native");
+  const part = q.get("part") ?? "label";
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const text = q.get("label") ?? "Player name";
+  const [saved, setSaved] = React.useState("");
+  const [disabled, setDisabled] = React.useState(false);
+  const ref = React.useRef<HTMLLabelElement>(null);
+  const [tag, setTag] = React.useState("");
+
+  const form = useForm({ defaultValues: { name: "" }, mode: "onSubmit" });
+
+  const common = {
+    align:
+      q.get("align") === "center" ? ("center" as const) : ("left" as const),
+    "data-subject": "true",
+    id: "subject",
+    maxWidth: q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
+    scale,
+    style: {
+      height: Number(q.get("height") ?? 9) * scale,
+      left: Number(q.get("x") ?? 16) * scale,
+      position: "fixed" as const,
+      top: Number(q.get("y") ?? 16) * scale,
+      width: Number(q.get("width") ?? 200) * scale,
+    },
+  };
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
   }, []);
+
   if (native) {
     if (component === "field") {
       const C =
         {
+          description: FieldDescription,
           label: FieldLabel,
           legend: FieldLegend,
           title: FieldTitle,
-          description: FieldDescription,
         }[part] ?? FieldLabel;
+
       return <C {...common}>{text}</C>;
     }
-    if (part === "message")
+
+    if (part === "message") {
       return (
         <FieldError scale={scale}>
           <MinecraftProse {...common}>{text}</MinecraftProse>
         </FieldError>
       );
+    }
+
     const C = part === "label" ? FieldLabel : FieldDescription;
+
     return <C {...common}>{text}</C>;
   }
-  if (component === "form")
+
+  if (component === "form") {
     return (
-      <form noValidate onSubmit={form.handleSubmit((v) => setSaved(v.name))}>
+      <form
+        noValidate
+        onSubmit={form.handleSubmit((v) => {
+          setSaved(v.name);
+        })}
+      >
         <Controller
           name="name"
           control={form.control}
@@ -105,15 +121,27 @@ export function FormsFixture() {
         <Button scale={scale} type="submit">
           Save player
         </Button>
-        <button type="button" onClick={() => form.reset()}>
+        <button
+          type="button"
+          onClick={() => {
+            form.reset();
+          }}
+        >
           Reset
         </button>
-        <button type="button" onClick={() => setDisabled((v) => !v)}>
+        <button
+          type="button"
+          onClick={() => {
+            setDisabled((v) => !v);
+          }}
+        >
           Disable field
         </button>
         <button
           type="button"
-          onClick={() => setTag(ref.current?.tagName ?? "")}
+          onClick={() => {
+            setTag(ref.current?.tagName ?? "");
+          }}
         >
           Read ref
         </button>
@@ -121,6 +149,8 @@ export function FormsFixture() {
         <output aria-label="Label ref">{tag}</output>
       </form>
     );
+  }
+
   return (
     <FieldSet disabled={disabled}>
       <FieldLegend scale={scale}>World settings</FieldLegend>
@@ -158,13 +188,23 @@ export function FormsFixture() {
         <FieldSeparator>Or</FieldSeparator>
         <FieldTitle scale={scale}>More settings</FieldTitle>
       </FieldGroup>
-      <button type="button" onClick={() => setDisabled((v) => !v)}>
+      <button
+        type="button"
+        onClick={() => {
+          setDisabled((v) => !v);
+        }}
+      >
         Disable fields
       </button>
-      <button type="button" onClick={() => setTag(ref.current?.tagName ?? "")}>
+      <button
+        type="button"
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
+      >
         Read ref
       </button>
       <output aria-label="Label ref">{tag}</output>
     </FieldSet>
   );
-}
+};

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftCardSprite } from "./minecraft-card-sprite";
@@ -7,7 +8,8 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-card.css";
-function Card({
+
+const Card = ({
   className,
   scale = 2,
   style,
@@ -15,7 +17,7 @@ function Card({
   ...props
 }: React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   return (
     <div
       data-slot="card"
@@ -31,8 +33,9 @@ function Card({
       <CardScaleContext value={scale}>{children}</CardScaleContext>
     </div>
   );
-}
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const CardHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-header"
@@ -40,12 +43,13 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
-function CardTitle({
+};
+
+const CardTitle = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-title"
@@ -55,12 +59,13 @@ function CardTitle({
       <MinecraftCardText bold>{children}</MinecraftCardText>
     </div>
   );
-}
-function CardDescription({
+};
+
+const CardDescription = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-description"
@@ -70,8 +75,9 @@ function CardDescription({
       <MinecraftCardText>{children}</MinecraftCardText>
     </div>
   );
-}
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const CardAction = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-action"
@@ -79,8 +85,9 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const CardContent = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-content"
@@ -88,8 +95,9 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+};
+
+const CardFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-footer"
@@ -97,7 +105,8 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
       {...props}
     />
   );
-}
+};
+
 export {
   Card,
   CardHeader,

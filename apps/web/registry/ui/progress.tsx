@@ -1,13 +1,19 @@
 "use client";
+
 import { Progress as ProgressPrimitive } from "@base-ui/react/progress";
 import * as React from "react";
 
 import { minecraftProgressAssets } from "./minecraft-progress-assets";
 import { MinecraftProgressPaint } from "./minecraft-progress-paint";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-progress.css";
+
 type BossBarColor =
   | "pink"
   | "blue"
@@ -16,12 +22,14 @@ type BossBarColor =
   | "yellow"
   | "purple"
   | "white";
+
 type BossBarOverlay =
   | "progress"
   | "notched_6"
   | "notched_10"
   | "notched_12"
   | "notched_20";
+
 type ProgressProps = Omit<
   MinecraftProps<typeof ProgressPrimitive.Root>,
   "color"
@@ -30,9 +38,10 @@ type ProgressProps = Omit<
   overlay?: BossBarOverlay;
   scale?: 1 | 2 | 3;
 };
-function Progress({
+
+const Progress = ({
   className,
-  value = 0,
+  value,
   max,
   color = "pink",
   overlay = "progress",
@@ -42,37 +51,46 @@ function Progress({
   render,
   ref,
   ...props
-}: ProgressProps) {
+}: ProgressProps) => {
   const maximum =
     typeof max === "number" && !Number.isNaN(max) && max > 0 ? max : 100;
+
   const valid =
     typeof value === "number" &&
     !Number.isNaN(value) &&
     value >= 0 &&
     value <= maximum;
+
   const ratio = valid ? value / maximum : 0;
   const fraction = Number.isFinite(ratio) ? Math.fround(ratio) : 0;
   // Original Mth.lerpDiscrete uses a float product and includes the first pixel for any positive progress.
   const filled = Math.floor(Math.fround(fraction * 181)) + Number(fraction > 0);
-  const background = minecraftProgressAssets[`${color}_background`],
-    foreground = minecraftProgressAssets[`${color}_progress`];
+
+  const background = minecraftProgressAssets[`${color}_background`];
+  const foreground = minecraftProgressAssets[`${color}_progress`];
+
   const notchBackground =
     overlay === "progress"
       ? undefined
       : minecraftProgressAssets[`${overlay}_background`];
+
   const notchForeground =
     overlay === "progress"
       ? undefined
       : minecraftProgressAssets[`${overlay}_progress`];
+
   if (
     !background ||
     !foreground ||
     (overlay !== "progress" && !notchBackground)
-  )
+  ) {
     throw new Error(
       "Progress supports only original Minecraft boss-bar colors and overlays"
     );
-  let content = children;
+  }
+
+  const content = children;
+
   const artwork = (
     <>
       {overlay !== "progress" && (
@@ -101,7 +119,7 @@ function Progress({
           data-slot="progress-indicator"
           aria-hidden="true"
           className="mc-progress-indicator"
-          style={{ width: `calc(${filled} * var(--mc-pixel))`, height: "100%" }}
+          style={{ height: "100%", width: `calc(${filled} * var(--mc-pixel))` }}
         >
           <span
             className="mc-progress-surface"
@@ -118,6 +136,7 @@ function Progress({
       {content}
     </>
   );
+
   return (
     <ProgressPrimitive.Root
       render={render}
@@ -127,7 +146,7 @@ function Progress({
       data-slot="progress"
       data-color={color}
       data-overlay={overlay}
-      className={cn(`mc-progress ${""}`, className)}
+      className={cn(`mc-progress`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -138,37 +157,46 @@ function Progress({
       {artwork}
     </ProgressPrimitive.Root>
   );
-}
-function ProgressTrack({
+};
+
+const ProgressTrack = ({
   className,
   ...props
-}: MinecraftProps<typeof ProgressPrimitive.Track>) {
+}: MinecraftProps<typeof ProgressPrimitive.Track>) => {
   return (
     <ProgressPrimitive.Track
       data-slot="progress-track"
-      className={cn(`mc-progress-track ${""}`, className)}
+      className={cn(`mc-progress-track`, className)}
       {...props}
     />
   );
-}
-function ProgressIndicator({
+};
+
+const ProgressIndicator = ({
   className,
   ...props
-}: MinecraftProps<typeof ProgressPrimitive.Indicator>) {
+}: MinecraftProps<typeof ProgressPrimitive.Indicator>) => {
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
-      className={cn(`mc-progress-indicator ${""}`, className)}
+      className={cn(`mc-progress-indicator`, className)}
       {...props}
     />
   );
-}
-function ProgressLabel(props: MinecraftProps<typeof ProgressPrimitive.Label>) {
+};
+
+const ProgressLabel = (
+  props: MinecraftProps<typeof ProgressPrimitive.Label>
+) => {
   return <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
-}
-function ProgressValue(props: MinecraftProps<typeof ProgressPrimitive.Value>) {
+};
+
+const ProgressValue = (
+  props: MinecraftProps<typeof ProgressPrimitive.Value>
+) => {
   return <ProgressPrimitive.Value data-slot="progress-value" {...props} />;
-}
+};
+
 export {
   Progress,
   ProgressTrack,
@@ -176,4 +204,5 @@ export {
   ProgressLabel,
   ProgressValue,
 };
+
 export type { ProgressProps, BossBarColor, BossBarOverlay };

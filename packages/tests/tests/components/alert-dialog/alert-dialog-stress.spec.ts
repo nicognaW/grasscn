@@ -4,8 +4,8 @@ const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-for (const selection of ["alert-dialog"])
-  for (const scale of [2])
+for (const selection of ["alert-dialog"]) {
+  for (const scale of [2]) {
     test(`Long CJK confirmation keeps its GPU backdrop and readable text at mobile GUI ${scale} in ${selection}`, async ({
       page,
     }) => {
@@ -30,8 +30,10 @@ for (const selection of ["alert-dialog"])
             .join("\n")
         );
       await stage.getByRole("button", { name: "Open confirmation" }).click();
+
       const overlay = page.locator('[data-slot="alert-dialog-overlay"]'),
         dialog = page.getByRole("alertdialog");
+
       await expect(overlay).toHaveAttribute(
         "data-mc-confirmation-frame",
         /^[1-9]\d*$/
@@ -39,13 +41,17 @@ for (const selection of ["alert-dialog"])
       await expect(dialog.locator('[data-mc-label-ready="false"]')).toHaveCount(
         0
       );
+
       const state = await overlay.locator("canvas").evaluate((node) => {
         const canvas = node as HTMLCanvasElement,
           gl = canvas.getContext("webgl")!,
           pixel = new Uint8Array(4);
+
         gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+
         return { lost: gl.isContextLost(), pixel: [...pixel] };
       });
+
       expect(
         state.lost,
         "CJK text must not evict the active blur painter"
@@ -62,8 +68,10 @@ for (const selection of ["alert-dialog"])
         stage.getByRole("button", { name: "Open confirmation" })
       ).toBeFocused();
     });
+  }
+}
 
-for (const scene of ["fixed-pseudo", "nested-fixed"])
+for (const scene of ["fixed-pseudo", "nested-fixed"]) {
   test(`Scrolled confirmation preserves ${scene} viewport paint`, async ({
     page,
   }) => {
@@ -72,6 +80,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"])
     await page.evaluate((scene) => {
       const owner = document.createElement("div");
       owner.id = "snapshot-viewport-proof";
+
       if (scene === "fixed-pseudo") {
         owner.style.cssText =
           "position:absolute;top:100000px;left:0;width:10px;height:10px";
@@ -90,21 +99,24 @@ for (const scene of ["fixed-pseudo", "nested-fixed"])
           "position:fixed;top:60px;left:300px;width:80px;height:80px;background:#ff0000";
         owner.append(child);
       }
+
       document.body.append(owner);
       window.scrollTo(0, 300);
     }, scene);
     await page
-      .getByRole("button", { name: "Open confirmation", exact: true })
+      .getByRole("button", { exact: true, name: "Open confirmation" })
       .click();
     const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
     await expect(overlay).toHaveAttribute(
       "data-mc-confirmation-frame",
       /^[1-9]\d*$/
     );
+
     const pixel = await overlay.locator("canvas").evaluate((node, scene) => {
-      const canvas = node as HTMLCanvasElement,
-        gl = canvas.getContext("webgl")!,
-        rgba = new Uint8Array(4);
+      const canvas = node as HTMLCanvasElement;
+      const gl = canvas.getContext("webgl")!;
+      const rgba = new Uint8Array(4);
+
       gl.readPixels(
         scene === "fixed-pseudo" ? 30 : 315,
         canvas.height - (scene === "fixed-pseudo" ? 30 : 75),
@@ -114,12 +126,15 @@ for (const scene of ["fixed-pseudo", "nested-fixed"])
         gl.UNSIGNED_BYTE,
         rgba
       );
+
       return [...rgba];
     }, scene);
+
     expect(pixel).toEqual(
       scene === "fixed-pseudo" ? [191, 0, 153, 255] : [191, 0, 0, 255]
     );
   });
+}
 
 test("Scrolled confirmation preserves a fixed pseudo inside its transformed originating element", async ({
   page,

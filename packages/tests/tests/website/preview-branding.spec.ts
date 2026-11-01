@@ -72,7 +72,7 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
     await page.goto(`${origin}docs`);
     const logo = page
       .getByRole("banner")
-      .getByRole("link", { name: "grasscn home", exact: true })
+      .getByRole("link", { exact: true, name: "grasscn home" })
       .locator("img");
 
     await expect(logo).toHaveCSS("width", "176px");

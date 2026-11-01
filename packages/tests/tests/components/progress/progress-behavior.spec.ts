@@ -52,9 +52,11 @@ test("Progress updates and pointer events are silent", async ({ page }) => {
     const state = window as Window & {
       progressAudioPlays?: number;
     };
+
     state.progressAudioPlays = 0;
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       state.progressAudioPlays!++;
+
       return Promise.resolve();
     };
   });

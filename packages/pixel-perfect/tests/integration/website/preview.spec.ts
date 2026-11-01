@@ -10,12 +10,16 @@ const origin = (
 ).replace(/\/?$/u, "/");
 
 async function focusByKeyboard(page: Page, locator: Locator) {
-  for (let i = 0; i < 256; i++) {
+  for (let i = 0; i < 256; i += 1) {
     await page.keyboard.press("Tab");
 
-    if (await locator.evaluate((element) => element === document.activeElement))
+    if (
+      await locator.evaluate((element) => element === document.activeElement)
+    ) {
       return;
+    }
   }
+
   throw new Error("Preview control was not keyboard reachable");
 }
 
@@ -46,6 +50,7 @@ for (const scale of [2]) {
         '.documentation-playground [data-stage="button"] [data-slot="button"]'
       )
       .first();
+
     await page.mouse.move(0, 0);
     await nativePixels(
       button,
@@ -96,6 +101,7 @@ for (const scale of [2]) {
     const slider = page
       .locator('.documentation-playground [data-slot="slider"]')
       .first();
+
     await slider.hover();
     await nativePixels(
       slider,
@@ -144,6 +150,7 @@ for (const scale of [2]) {
       textarea,
       `tests/reference/textarea/captures/textarea-c18-s${scale}.png`
     );
+
     for (const name of ["Read-only demo textarea", "Disabled demo textarea"]) {
       const field = page
         .locator(".documentation-playground")
@@ -217,6 +224,7 @@ test("Preview text fields share the native focused Input pixels", async ({
     { name: "Demo input", path: "input" },
     { name: "Find a component", path: "input" },
   ];
+
   // Match a captured vanilla case so preview CSS cannot add a second focus ring.
   for (const entry of fields) {
     await page.goto(`${origin}docs/components/${entry.path}`);
@@ -241,7 +249,7 @@ test("Preview text fields share the native focused Input pixels", async ({
   }
 });
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({
     page,
   }) => {
@@ -258,8 +266,9 @@ for (const scale of [2])
       `tests/reference/tabs/captures/tabs-c136-s${scale}.png`
     );
   });
+}
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Select preview preserves native cycle button at scale ${scale}`, async ({
     page,
   }) => {
@@ -277,8 +286,9 @@ for (const scale of [2])
       `tests/reference/select/captures/select-c70-s${scale}.png`
     );
   });
+}
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Radio Group preview preserves native widget pixels at scale ${scale}`, async ({
     page,
   }) => {
@@ -295,8 +305,9 @@ for (const scale of [2])
       `tests/reference/radio-group/captures/radio-group-c8-s${scale}.png`
     );
   });
+}
 
-for (const scale of [2])
+for (const scale of [2]) {
   test(`Switch preview preserves native on/off pixels at scale ${scale}`, async ({
     page,
   }) => {
@@ -312,3 +323,4 @@ for (const scale of [2])
       `tests/reference/switch/captures/switch-c16-s${scale}.png`
     );
   });
+}

@@ -4,8 +4,10 @@ test("Tooltip supports hover, keyboard focus, Escape and trigger activation", as
   page,
 }) => {
   await page.goto("/?component=tooltip&text=Tooltip");
-  const trigger = page.locator("#tooltip-trigger"),
-    content = page.locator('[data-slot="tooltip-content"]');
+
+  const trigger = page.locator("#tooltip-trigger");
+  const content = page.locator('[data-slot="tooltip-content"]');
+
   await expect(content).toHaveCount(0);
   await trigger.hover();
   await expect(content).toBeVisible();
@@ -28,9 +30,9 @@ test("Tooltip preserves controlled state, asChild and the real content ref", asy
   await page.locator("#external-open").click();
   const content = page.locator('[data-slot="tooltip-content"]');
   await expect(content).toBeVisible();
-  await page
-    .locator("#read-ref")
-    .evaluate((element) => (element as HTMLButtonElement).click());
+  await page.locator("#read-ref").evaluate((element) => {
+    (element as HTMLButtonElement).click();
+  });
   await expect(page.getByLabel("Root ref", { exact: true })).toHaveText("DIV");
   await expect(content.locator(".mc-tooltip-line")).toHaveCount(1);
   await page.keyboard.press("Escape");
@@ -64,7 +66,8 @@ test("Tooltip honors hover delay and accepts rich children", async ({
 test("Tooltip wraps and stays inside a mobile viewport at each edge", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
+
   for (const side of ["top", "bottom", "left", "right"]) {
     await page.goto(
       `/?component=tooltip&open=1&scale=3&side=${side}&edge=${side}&text=${encodeURIComponent("Use this component to show a helpful description.")}`
@@ -74,6 +77,7 @@ test("Tooltip wraps and stays inside a mobile viewport at each edge", async ({
     await expect
       .poll(async () => {
         const box = (await content.boundingBox())!;
+
         return (
           box.x >= 0 &&
           box.y >= 0 &&

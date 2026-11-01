@@ -5,21 +5,26 @@ test("AlertDialog follows Base UI initial focus, traps focus, dismisses on Escap
   page,
 }) => {
   await page.goto("/?component=alert-dialog");
+
   const trigger = page.getByRole("button", {
-      name: "Open confirmation",
-      exact: true,
-    }),
-    dialog = page.getByRole("alertdialog", {
-      name: "Are you sure?",
-      exact: true,
-    });
+    exact: true,
+    name: "Open confirmation",
+  });
+
+  const dialog = page.getByRole("alertdialog", {
+    exact: true,
+    name: "Are you sure?",
+  });
+
   await trigger.click();
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveAccessibleDescription(
     "This action cannot be undone."
   );
-  const cancel = dialog.getByRole("button", { name: "No", exact: true }),
-    action = dialog.getByRole("button", { name: "Yes", exact: true });
+
+  const cancel = dialog.getByRole("button", { exact: true, name: "No" });
+  const action = dialog.getByRole("button", { exact: true, name: "Yes" });
+
   await expect(action).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(cancel).toBeFocused();
@@ -38,7 +43,7 @@ test("AlertDialog outside clicks retain the modal and cancel does not confirm", 
   await expect(dialog).toBeVisible();
   await page.mouse.click(5, 5);
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("button", { name: "No", exact: true }).click();
+  await dialog.getByRole("button", { exact: true, name: "No" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByLabel("Confirmations")).toHaveText("0");
 });
@@ -47,7 +52,7 @@ test("AlertDialog action confirms once and closes", async ({ page }) => {
   await page.goto("/?component=alert-dialog&open");
   await page
     .getByRole("alertdialog")
-    .getByRole("button", { name: "Yes", exact: true })
+    .getByRole("button", { exact: true, name: "Yes" })
     .click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
   await expect(page.getByLabel("Confirmations")).toHaveText("1");
@@ -57,8 +62,10 @@ test("AlertDialog disabled action is inert and consumers can prevent action dism
   page,
 }) => {
   await page.goto("/?component=alert-dialog&open&disabledIndex=0");
-  const dialog = page.getByRole("alertdialog"),
-    action = dialog.getByRole("button", { name: "Yes", exact: true });
+
+  const dialog = page.getByRole("alertdialog");
+  const action = dialog.getByRole("button", { exact: true, name: "Yes" });
+
   await expect(action).toBeDisabled();
   await action.dispatchEvent("click");
   await expect(page.getByLabel("Confirmations")).toHaveText("0");
@@ -74,7 +81,7 @@ test("AlertDialog respects a controlled parent rejecting open changes", async ({
 }) => {
   await page.goto("/?component=alert-dialog&reject");
   await page
-    .getByRole("button", { name: "Open confirmation", exact: true })
+    .getByRole("button", { exact: true, name: "Open confirmation" })
     .click();
   await expect(page.getByRole("alertdialog")).toHaveCount(0);
 });
@@ -85,37 +92,44 @@ test("AlertDialog composes elements, preserves forms and forwards DOM refs witho
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?component=alert-dialog-composition");
+
   const trigger = page.getByRole("button", {
+    exact: true,
     name: "Composed confirmation",
-    exact: true,
   });
+
   await trigger.click();
+
   const dialog = page.getByRole("alertdialog", {
-    name: "Composed title",
     exact: true,
+    name: "Composed title",
   });
+
   await expect(dialog).toHaveAccessibleDescription("Composed description");
   expect(await dialog.evaluate((node) => node.tagName)).toBe("SECTION");
   await dialog
-    .getByRole("button", { name: "Inspect confirmation refs", exact: true })
+    .getByRole("button", { exact: true, name: "Inspect confirmation refs" })
     .click();
   await expect(page.getByLabel("Confirmation refs")).toHaveText(
     "BUTTON,SECTION,A,BUTTON"
   );
   await dialog
-    .getByRole("textbox", { name: "Confirmation form input", exact: true })
+    .getByRole("textbox", { exact: true, name: "Confirmation form input" })
     .fill("World");
   await page.keyboard.press("Enter");
   await expect(page.getByLabel("Confirmation submissions")).toHaveText("1");
   await expect(dialog).toBeVisible();
+
   const link = dialog.getByRole("button", {
-      name: "Confirm link",
-      exact: true,
-    }),
-    cancel = dialog.getByRole("button", {
-      name: "Cancel composed",
-      exact: true,
-    });
+    exact: true,
+    name: "Confirm link",
+  });
+
+  const cancel = dialog.getByRole("button", {
+    exact: true,
+    name: "Cancel composed",
+  });
+
   await expect(link).toHaveCSS("height", "40px");
   await expect(link.locator(".mc-button-surface")).toHaveCount(1);
   await expect(cancel.locator(".mc-button-surface")).toHaveCount(1);
@@ -135,34 +149,39 @@ test("AlertDialog uses one original click per button activation and keeps hover 
 }) => {
   await page.addInitScript(() => {
     (window as any).__confirmationSounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).__confirmationSounds.push({
+        rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
+
       return Promise.resolve();
     };
   });
-  const sounds = () =>
+
+  const sounds = async () =>
     page.evaluate(() => (window as any).__confirmationSounds);
+
   await page.goto("/?component=alert-dialog");
+
   const trigger = page.getByRole("button", {
-    name: "Open confirmation",
     exact: true,
+    name: "Open confirmation",
   });
+
   await trigger.hover();
   expect(await sounds()).toHaveLength(0);
   await trigger.click();
   expect(await sounds()).toEqual([
-    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.keyboard.press("Escape");
   expect(await sounds()).toHaveLength(1);
   await trigger.click();
   await page
     .getByRole("alertdialog")
-    .getByRole("button", { name: "Yes", exact: true })
+    .getByRole("button", { exact: true, name: "Yes" })
     .click();
   expect(await sounds()).toHaveLength(3);
 });

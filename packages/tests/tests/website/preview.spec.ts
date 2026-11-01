@@ -106,17 +106,22 @@ test("Collapsible preview supports CJK content, line breaks and external control
     "true"
   );
   await trigger.click();
+
   const body = page.locator(
     '[data-stage="collapsible"] [data-slot="collapsible-content"]'
   );
+
   await expect(body).toBeVisible();
   await expect(body).toContainText("こんにちは\n안녕하세요");
   await expect(body.locator("[data-mc-label-layout-ready]")).toHaveAttribute(
     "data-mc-label-layout-ready",
     "true"
   );
-  for (const glyphs of await body.locator("[data-mc-label-ready]").all())
+
+  for (const glyphs of await body.locator("[data-mc-label-ready]").all()) {
     await expect(glyphs).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await trigger.press("Enter");
   await expect(
     page
@@ -176,9 +181,11 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
   await expect(
     page.getByRole("menuitem", { name: /こんにちは/ })
   ).toBeFocused();
+
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
   });
+
   await checkbox.click();
   await expect(checkbox).toBeChecked();
   const radio = page.getByRole("menuitemradio", { exact: true, name: "Game" });
@@ -241,16 +248,23 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     .getByLabel("World context menu target", { exact: true });
   const open = () =>
     trigger.click({ button: "right", position: { x: 24, y: 24 } });
+
   await open();
   const menu = page.getByRole("menu").first();
   await expect(
     menu.locator('[data-slot="context-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
-  for (const glyphs of await menu.locator("[data-mc-menu-unicode-ready]").all())
+
+  for (const glyphs of await menu
+    .locator("[data-mc-menu-unicode-ready]")
+    .all()) {
     await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+  }
+
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
   });
+
   await checkbox.click();
   await expect(checkbox).toBeChecked();
   const radio = page.getByRole("menuitemradio", { exact: true, name: "Game" });
@@ -303,14 +317,21 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
   await expect(
     menu.locator('[data-slot="dropdown-menu-label"] .mc-menu-accessible')
   ).toHaveText("你好，世界");
-  for (const glyphs of await menu.locator("[data-mc-menu-unicode-ready]").all())
+
+  for (const glyphs of await menu
+    .locator("[data-mc-menu-unicode-ready]")
+    .all()) {
     await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
+  }
+
   await expect(
     page.getByRole("menuitem", { exact: true, name: "Unavailable" })
   ).toBeDisabled();
+
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
   });
+
   await checkbox.click();
   await expect(checkbox).toBeChecked();
   const radio = page.getByRole("menuitemradio", { exact: true, name: "Game" });
@@ -403,10 +424,12 @@ test("Preview Label supports editable CJK text and focuses its associated field"
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Label text" })
     .fill("你好，世界");
+
   const label = page
     .locator('.documentation-playground [data-stage="label"] .demo-pair')
     .first()
     .locator('[data-slot="label"]');
+
   await expect(label.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -546,8 +569,9 @@ test("Release pages omit internal completion and verification counters", async (
 test("Mobile component pages contain default previews before and after paragraph layout", async ({
   page,
 }) => {
-  test.setTimeout(180000);
-  await page.setViewportSize({ width: 390, height: 844 });
+  test.setTimeout(180_000);
+  await page.setViewportSize({ height: 844, width: 390 });
+
   for (const component of catalog.components) {
     await page.goto(`${origin}docs/components/${component.name}`);
     expect(
@@ -596,7 +620,7 @@ test("Tooltip padding preserves the controls underneath it", async ({
       .equals(hidden.data.subarray(0, transparentBand))
   ).toBe(true);
   expect(
-    Array.from(hidden.data.subarray(0, transparentBand)).some(
+    [...hidden.data.subarray(0, transparentBand)].some(
       (value, index) => index % 4 !== 3 && value !== 32
     ),
     "The case must include a visible control behind the transparent padding"
@@ -622,6 +646,7 @@ test("Button label editor accepts CJK text without stripping characters", async 
         '.documentation-playground [data-stage="button"] [data-slot="button"]'
       )
       .first();
+
     await expect(button).toHaveAccessibleName(label);
     await expect(button.locator("[data-mc-label-ready]")).toHaveAttribute(
       "data-mc-label-ready",
@@ -633,7 +658,8 @@ test("Button label editor accepts CJK text without stripping characters", async 
 test("Text entry defaults disable browser spelling and correction", async ({
   page,
 }) => {
-  test.setTimeout(120000);
+  test.setTimeout(120_000);
+
   for (const component of catalog.components) {
     await page.goto(`${origin}docs/components/${component.name}`);
     for (const field of await page
@@ -664,10 +690,12 @@ test("Dialog preview supports editable CJK titles, multiline messages and footer
   const dialog = page.getByRole("dialog", { exact: true, name: "你好，世界" });
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveAccessibleDescription("Hello 世界 こんにちは");
+
   for (const line of await dialog
     .locator("[data-mc-dialog-unicode-ready]")
-    .all())
+    .all()) {
     await expect(line).toHaveAttribute("data-mc-dialog-unicode-ready", "true");
+  }
   await dialog.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(
@@ -703,15 +731,20 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open confirmation" });
   await trigger.click();
+
   const dialog = page.getByRole("alertdialog", {
     name: "你好，世界",
   });
+
   await expect(dialog).toHaveAccessibleDescription("こんにちは 안녕하세요");
   await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(3, {
     timeout: 15_000,
   });
-  for (const line of await dialog.locator("[data-mc-label-ready]").all())
+
+  for (const line of await dialog.locator("[data-mc-label-ready]").all()) {
     await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
   await expect(
     page.locator('[data-slot="alert-dialog-overlay"]')
   ).toHaveAttribute("data-mc-confirmation-gpu-ready", "true", {
@@ -763,6 +796,7 @@ test("Editable, read-only and disabled textarea examples render real line breaks
         (node as HTMLElement).style.getPropertyValue("--mc-textarea-image")
       )
     );
+
   expect(images).toHaveLength(3);
   expect(images[0]).not.toBe("");
   expect(images[1]).toBe(images[0]);
@@ -926,6 +960,7 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
       .getByLabel("Selected radio game mode", { exact: true })
   ).toHaveText("你好，世界");
   await page.keyboard.down("ArrowDown");
+
   try {
     await expect(
       group.getByRole("radio", { exact: true, name: "Creative" })
@@ -933,13 +968,16 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
   } finally {
     await page.keyboard.up("ArrowDown");
   }
+
   await expect(group.getByRole("radio", { checked: true })).toHaveCount(1);
   await page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Group: Enabled" })
     .click();
-  for (const radio of await group.getByRole("radio").all())
+
+  for (const radio of await group.getByRole("radio").all()) {
     await expect(radio).toBeDisabled();
+  }
 });
 
 test("Switch preview supports CJK labels, keyboard toggling and disabled state", async ({
@@ -1008,10 +1046,13 @@ test("Popover preview supports editable CJK text, world settings and dismissal",
   expect(
     await dialog.locator("[data-mc-popover-unicode-ready]").count()
   ).toBeGreaterThan(0);
+
   for (const line of await dialog
     .locator("[data-mc-popover-unicode-ready]")
-    .all())
+    .all()) {
     await expect(line).toHaveAttribute("data-mc-popover-unicode-ready", "true");
+  }
+
   await dialog
     .getByRole("textbox", { exact: true, name: "World name" })
     .fill("我的世界");

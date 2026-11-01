@@ -37,19 +37,21 @@ for (const scale of [2]) {
     await expect
       .poll(async () => {
         const face = (await group
-            .locator("[data-slot=avatar]")
-            .first()
-            .boundingBox())!,
-          count = (await group
-            .locator("[data-slot=avatar-group-count]")
-            .boundingBox())!;
+          .locator("[data-slot=avatar]")
+          .first()
+          .boundingBox())!;
+
+        const count = (await group
+          .locator("[data-slot=avatar-group-count]")
+          .boundingBox())!;
+
         return Math.abs(face.height - count.height);
       })
       .toBe(0);
     await expect(stage).toContainText("6 people in this workspace");
     await expect(stage.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
     await expect(
-      stage.getByRole("button", { name: "Load player", exact: true })
+      stage.getByRole("button", { exact: true, name: "Load player" })
     ).toBeVisible();
   });
   test(`Mobile AlertDialog CJK text and actions remain usable at GUI${scale}`, async ({
@@ -77,19 +79,23 @@ for (const scale of [2]) {
     await expect
       .poll(async () => {
         const r = (await dialog.boundingBox())!;
+
         return (
           r.x >= 0 && r.y >= 0 && r.x + r.width <= 390 && r.y + r.height <= 844
         );
       })
       .toBe(true);
+
     for (const name of ["Yes", "No"]) {
       const r = (await dialog
-        .getByRole("button", { name, exact: true })
+        .getByRole("button", { exact: true, name })
         .boundingBox())!;
+
       expect(r.x).toBeGreaterThanOrEqual(0);
       expect(r.x + r.width).toBeLessThanOrEqual(390);
       expect(r.y + r.height).toBeLessThanOrEqual(844);
     }
+
     if (scale > 1) {
       const header = dialog.locator("[data-slot=alert-dialog-header]");
       await header.evaluate((e) => {
@@ -97,22 +103,26 @@ for (const scale of [2]) {
       });
       await expect
         .poll(async () => {
-          const a = (await header.boundingBox())!,
-            b = (await dialog
-              .locator(".mc-alert-dialog-description .mc-card-text-line")
-              .last()
-              .boundingBox())!;
+          const a = (await header.boundingBox())!;
+
+          const b = (await dialog
+            .locator(".mc-alert-dialog-description .mc-card-text-line")
+            .last()
+            .boundingBox())!;
+
           return b.y >= a.y && b.y + b.height <= a.y + a.height + 1;
         })
         .toBe(true);
     }
-    await dialog.getByRole("button", { name: "No", exact: true }).click();
+
+    await dialog.getByRole("button", { exact: true, name: "No" }).click();
     await expect(trigger).toBeFocused();
     await trigger.click();
     await page.keyboard.press("Escape");
     await expect(dialog).toHaveCount(0);
   });
 }
+
 test("Short viewport AlertDialog layout remains stable while resizing", async ({
   page,
 }) => {
@@ -127,9 +137,10 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await expect
     .poll(async () => {
       const b = (await dialog.boundingBox())!;
+
       return b.y >= 0 && b.y + b.height <= 240;
     })
     .toBe(true);
-  await page.setViewportSize({ width: 1536, height: 1000 });
+  await page.setViewportSize({ height: 1000, width: 1536 });
   await expect(dialog).toHaveAttribute("data-mc-confirmation-compact", "false");
 });

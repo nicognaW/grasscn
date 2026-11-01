@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis } from "recharts";
 
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/chart";
 
 /** Example composition. Values and domains use ordinary application units. */
-export function FpsChartExample({
+export const FpsChartExample = ({
   data,
   dataKey,
   domain = [0, 1000 / 30],
@@ -33,15 +34,17 @@ export function FpsChartExample({
   framerateLimit?: number;
   width?: number;
   scale?: 1 | 2 | 3;
-}) {
-  const visible = data.slice(-(width - 2)),
-    values = visible.map((row) => Number(row[dataKey]));
+}) => {
+  const visible = data.slice(-(width - 2));
+  const values = visible.map((row) => Number(row[dataKey]));
+
   const rows = [
     ...visible,
     ...Array.from({ length: Math.max(0, width - 2 - visible.length) }, () => ({
       [dataKey]: null,
     })),
   ];
+
   const labels = values.length
     ? [
         Math.min(...values),
@@ -52,16 +55,17 @@ export function FpsChartExample({
           `${formatValue(value)} ${["min", "avg", "max"][index]}`
       )
     : [];
+
   return (
     <ChartContainer
       {...props}
-      config={{ [dataKey]: { label: dataKey, color: "#55ff55" } }}
+      config={{ [dataKey]: { color: "#55ff55", label: dataKey } }}
       scale={scale}
       style={{
+        aspectRatio: "auto",
+        height: 69 * scale,
         position: "relative",
         width: width * scale,
-        height: 69 * scale,
-        aspectRatio: "auto",
         ...style,
       }}
     >
@@ -69,7 +73,7 @@ export function FpsChartExample({
         accessibilityLayer
         aria-label={ariaLabel}
         data={rows}
-        margin={{ top: 9 * scale, bottom: 0, left: scale, right: scale }}
+        margin={{ bottom: 0, left: scale, right: scale, top: 9 * scale }}
         barCategoryGap={0}
         barGap={0}
       >
@@ -96,4 +100,4 @@ export function FpsChartExample({
       </BarChart>
     </ChartContainer>
   );
-}
+};

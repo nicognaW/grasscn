@@ -18,7 +18,7 @@ test("default button uses native proportions and supports keyboard activation", 
   page,
 }) => {
   await page.goto("/");
-  const button = page.getByRole("button", { name: "Button", exact: true });
+  const button = page.getByRole("button", { exact: true, name: "Button" });
   await expect(button).toHaveCSS("width", "400px");
   await expect(button).toHaveCSS("height", "40px");
   await page.keyboard.press("Tab");
@@ -28,7 +28,7 @@ test("default button uses native proportions and supports keyboard activation", 
   await page.keyboard.press("Space");
   await expect(page.getByRole("status")).toHaveText("2");
   await expect(
-    page.getByRole("button", { name: "Disabled", exact: true })
+    page.getByRole("button", { exact: true, name: "Disabled" })
   ).toBeDisabled();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Continue" })).toBeFocused();

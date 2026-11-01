@@ -10,27 +10,31 @@ import {
   AttachmentGroup,
 } from "@grasscn/web/ui/attachment";
 import * as React from "react";
-export function AttachmentFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    state = q.get("state") ?? "normal",
-    [opened, setOpened] = React.useState(0),
-    [removed, setRemoved] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<HTMLDivElement>(null);
+
+export const AttachmentFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const state = q.get("state") ?? "normal";
+  const [opened, setOpened] = React.useState(0);
+  const [removed, setRemoved] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<HTMLDivElement>(null);
+
   React.useLayoutEffect(() => {
     document.documentElement.style.background = document.body.style.background =
       q.get("background") ?? "#202020";
   }, []);
+
   const bounds = {
-    position: "fixed",
+    height: Number(q.get("height") ?? 36) * scale,
     left: Number(q.get("x") ?? 16) * scale,
+    position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: Number(q.get("width") ?? 270) * scale,
-    height: Number(q.get("height") ?? 36) * scale,
   } as React.CSSProperties;
+
   if (q.has("native")) {
-    if (q.get("part") === "action")
+    if (q.get("part") === "action") {
       return (
         <AttachmentAction
           id="subject"
@@ -42,6 +46,8 @@ export function AttachmentFixture() {
           {q.get("label") ?? "Button"}
         </AttachmentAction>
       );
+    }
+
     return (
       <Attachment
         id="subject"
@@ -60,6 +66,7 @@ export function AttachmentFixture() {
       </Attachment>
     );
   }
+
   return (
     <>
       <Attachment
@@ -75,12 +82,16 @@ export function AttachmentFixture() {
         </AttachmentContent>
         <AttachmentTrigger
           aria-label="Preview file"
-          onClick={() => setOpened((n) => n + 1)}
+          onClick={() => {
+            setOpened((n) => n + 1);
+          }}
         />
         <AttachmentActions>
           <AttachmentAction
             aria-label="Remove file"
-            onClick={() => setRemoved((n) => n + 1)}
+            onClick={() => {
+              setRemoved((n) => n + 1);
+            }}
           >
             X
           </AttachmentAction>
@@ -119,7 +130,9 @@ export function AttachmentFixture() {
       </AttachmentGroup>
       <button
         id="read-attachment-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
@@ -128,4 +141,4 @@ export function AttachmentFixture() {
       <output id="removed">{removed}</output>
     </>
   );
-}
+};

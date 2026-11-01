@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
@@ -6,7 +7,8 @@ import { attachMinecraftTextarea } from "./minecraft-textarea-paint";
 
 import "./minecraft-unifont-metrics.css";
 import "./minecraft-textarea.css";
-function Textarea({
+
+const Textarea = ({
   className,
   scale = 2,
   style,
@@ -14,7 +16,7 @@ function Textarea({
   ...props
 }: React.ComponentProps<"textarea"> & {
   scale?: 1 | 2 | 3;
-}) {
+}) => {
   const node = React.useRef<HTMLTextAreaElement>(null);
   React.useImperativeHandle(ref, () => node.current!, []);
   React.useEffect(
@@ -22,6 +24,7 @@ function Textarea({
       node.current ? attachMinecraftTextarea(node.current, scale) : undefined,
     [scale]
   );
+
   return (
     <textarea
       ref={node}
@@ -37,5 +40,6 @@ function Textarea({
       {...props}
     />
   );
-}
+};
+
 export { Textarea };

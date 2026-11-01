@@ -3,12 +3,13 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
-    "utf8"
+    "utf-8"
   )
 ) as {
   cases: {
@@ -23,17 +24,20 @@ const manifest = JSON.parse(
     sha256: string;
   }[];
 };
+
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
   ]);
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
   let mismatchedPixels = 0;
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const different = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(different);
     diff.data.set(
       different
@@ -47,8 +51,10 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
+
 test("CJK Button comparator catches one changed pixel", async () => {
   const expected = PNG.sync.read(
     await readFile(
@@ -57,15 +63,17 @@ test("CJK Button comparator catches one changed pixel", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
-for (const c of manifest.cases)
+
+for (const c of manifest.cases) {
   test(`CJK Button native pixels: ${c.name}`, async ({ page }, testInfo) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(
-      `/?${new URLSearchParams({ component: "button", label: c.label, width: String(c.width), scale: String(c.scale), state: c.state })}`
+      `/?${new URLSearchParams({ component: "button", label: c.label, scale: String(c.scale), state: c.state, width: String(c.width) })}`
     );
     await page.addStyleTag({
       content: "#root > :not([data-subject]) { visibility: hidden; }",
@@ -74,32 +82,41 @@ for (const c of manifest.cases)
     await button.evaluate(
       (node, position) => {
         Object.assign((node as HTMLElement).style, {
-          position: "fixed",
           left: `${position.x}px`,
+          position: "fixed",
           top: `${position.y}px`,
         });
       },
       { x: c.x * c.scale, y: c.y * c.scale }
     );
     await page.mouse.move(0, 0);
-    if (c.state === "hover") await button.hover();
+
+    if (c.state === "hover") {
+      await button.hover();
+    }
+
     if (c.state === "focus") {
       await page.keyboard.press("Tab");
       await expect(button).toBeFocused();
     }
+
     await expect(button.locator("[data-mc-label-ready]")).toHaveAttribute(
       "data-mc-label-ready",
       "true"
     );
+
     const expectedBytes = await readFile(
       pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
     );
+
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
     );
-    const actualBytes = await button.screenshot({ animations: "disabled" }),
-      actual = PNG.sync.read(actualBytes),
-      expected = PNG.sync.read(expectedBytes);
+
+    const actualBytes = await button.screenshot({ animations: "disabled" });
+    const actual = PNG.sync.read(actualBytes);
+    const expected = PNG.sync.read(expectedBytes);
+
     const { diff, mismatchedPixels } = compare(expected, actual);
     await writeFile(testInfo.outputPath("actual.png"), actualBytes);
     await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -109,3 +126,4 @@ for (const c of manifest.cases)
     );
     expect(mismatchedPixels).toBe(0);
   });
+}

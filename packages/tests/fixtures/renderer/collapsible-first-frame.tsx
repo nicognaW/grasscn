@@ -5,29 +5,35 @@ import {
 } from "@grasscn/web/ui/collapsible";
 import { loadUnihex } from "@grasscn/web/ui/minecraft-unifont";
 import * as React from "react";
-export function CollapsibleFirstFrameFixture() {
-  const q = new URLSearchParams(location.search),
-    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-    warm = q.has("warm"),
-    [ready, setReady] = React.useState(!warm);
+
+export const CollapsibleFirstFrameFixture = () => {
+  const q = new URLSearchParams(location.search);
+  const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+  const warm = q.has("warm");
+  const [ready, setReady] = React.useState(!warm);
+
   React.useLayoutEffect(() => {
     if (warm) {
       let live = true;
-      loadUnihex().then(() => {
-        if (live) setReady(true);
+      void loadUnihex().then(() => {
+        if (live) {
+          setReady(true);
+        }
       });
+
       return () => {
         live = false;
       };
     }
   }, [warm]);
+
   return (
     <div data-warm-ready={ready} style={{ width: "100%" }}>
       <Collapsible
         scale={scale}
         style={{
-          width: Number(q.get("width") ?? 200) * scale,
           maxWidth: "100%",
+          width: Number(q.get("width") ?? 200) * scale,
         }}
       >
         <CollapsibleTrigger disabled={!ready}>World details</CollapsibleTrigger>
@@ -37,4 +43,4 @@ export function CollapsibleFirstFrameFixture() {
       </Collapsible>
     </div>
   );
-}
+};

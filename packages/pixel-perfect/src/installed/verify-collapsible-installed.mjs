@@ -6,32 +6,46 @@ import path from "node:path";
 import { expect } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+
 export async function verifyCollapsibleCase({ page, c, manifestFile, url }) {
   const body = manifestFile === "tests/reference/label/manifest.json";
+
   const bytes = await readFile(
     pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
+
   assert.equal(sha(bytes), c.sha256);
   const expected = PNG.sync.read(bytes);
   let result;
+
   for (const expanded of body ? [true] : [false, true]) {
     const params = new URLSearchParams({
+      align: c.alignment ?? "left",
       component: "collapsible",
+      height: String(c.height ?? 20),
+      label: c.label ?? "Button",
       native: "1",
       part: body ? "body" : "header",
-      label: c.label ?? "Button",
-      text: body ? c.label : "",
-      width: String(c.width),
-      height: String(c.height ?? 20),
       scale: String(c.scale),
       state: c.state,
+      text: body ? c.label : "",
+      width: String(c.width),
       x: String(c.x ?? 16),
       y: String(c.y ?? 16),
-      align: c.alignment ?? "left",
     });
-    if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
-    if (expanded) params.set("expanded", "1");
+
+    const optionalWrapWidth = c.wrapWidth;
+
+    if (optionalWrapWidth !== null && optionalWrapWidth !== undefined) {
+      params.set("wrapWidth", String(c.wrapWidth));
+    }
+
+    if (expanded) {
+      params.set("expanded", "1");
+    }
+
     await page.goto(`${url}?${params}`);
     const subject = page.locator("#subject");
     await expect(subject).toBeVisible();
@@ -39,12 +53,16 @@ export async function verifyCollapsibleCase({ page, c, manifestFile, url }) {
       content: `html,body{background:${c.background ?? "#202020"}}#root{visibility:hidden}#subject{visibility:visible}`,
     });
     await page.mouse.move(0, 0);
-    if (body)
+
+    if (body) {
       await expect(
         subject.locator("[data-mc-label-layout-ready]")
       ).toHaveAttribute("data-mc-label-layout-ready", "true");
-    else {
-      if (c.state === "hover") await subject.hover();
+    } else {
+      if (c.state === "hover") {
+        await subject.hover();
+      }
+
       if (c.state === "focus") {
         await subject.focus();
         await page.keyboard.press("Tab");
@@ -52,10 +70,13 @@ export async function verifyCollapsibleCase({ page, c, manifestFile, url }) {
         await expect(subject).toBeFocused();
       }
     }
-    for (const label of await subject.locator("[data-mc-label-ready]").all())
+
+    for (const label of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+    }
+
     await page.evaluate(
-      () =>
+      async () =>
         new Promise((resolve) =>
           requestAnimationFrame(() => requestAnimationFrame(resolve))
         )
@@ -74,13 +95,17 @@ export async function verifyCollapsibleCase({ page, c, manifestFile, url }) {
       actual.data.equals(expected.data),
       `Installed Collapsible pixels differ: ${c.name} expanded:${expanded}`
     );
-    if (!result)
+
+    if (result) {
+      result.expandedDecodedRgbaSha256 = sha(actual.data);
+    } else {
       result = {
-        name: c.name,
-        mismatchedPixels: 0,
         decodedRgbaSha256: sha(actual.data),
+        mismatchedPixels: 0,
+        name: c.name,
       };
-    else result.expandedDecodedRgbaSha256 = sha(actual.data);
+    }
   }
+
   return result;
 }

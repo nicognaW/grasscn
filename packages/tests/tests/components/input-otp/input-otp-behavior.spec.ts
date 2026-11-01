@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+
 test("InputOTP preserves real input, CJK value, completion, form name and ref", async ({
   page,
 }) => {
@@ -9,12 +10,13 @@ test("InputOTP preserves real input, CJK value, completion, form name and ref", 
   await input.fill("世界你好中文");
   await expect(page.getByLabel("Code value")).toHaveText("世界你好中文");
   await expect(page.getByLabel("Completions")).toHaveText("1");
-  await page.getByRole("button", { name: "Save code", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Save code" }).click();
   await expect(page.getByLabel("Code output")).toHaveText("世界你好中文");
-  await page.getByRole("button", { name: "Read ref", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Read ref" }).click();
   await expect(page.getByLabel("Code output")).toHaveText("INPUT");
   await expect(page.locator("[data-slot=input-otp-slot]")).toHaveCount(6);
 });
+
 test("InputOTP edits with keyboard and moves the active slot", async ({
   page,
 }) => {
@@ -41,21 +43,26 @@ test("InputOTP edits with keyboard and moves the active slot", async ({
   await input.fill("1234567");
   await expect(input).toHaveValue("123456");
 });
+
 test("InputOTP supports disabled and readonly without changing controlled value", async ({
   page,
 }) => {
   for (const state of ["disabled", "readOnly"]) {
-    await page.goto("/?component=input-otp&text=123&" + state + "=1");
+    await page.goto(`/?component=input-otp&text=123&${state}=1`);
     const input = page.getByRole("textbox", { name: "One-time code" });
-    if (state === "disabled") await expect(input).toBeDisabled();
-    else {
+
+    if (state === "disabled") {
+      await expect(input).toBeDisabled();
+    } else {
       await expect(input).toHaveAttribute("readonly", "");
       await input.focus();
       await input.pressSequentially("4");
     }
+
     await expect(page.getByLabel("Code value")).toHaveText("123");
   }
 });
+
 test("InputOTP preserves pattern filtering and paste transformation", async ({
   page,
 }) => {
@@ -70,21 +77,23 @@ test("InputOTP preserves pattern filtering and paste transformation", async ({
     data.setData("text/plain", "123-456");
     node.dispatchEvent(
       new ClipboardEvent("paste", {
-        clipboardData: data,
         bubbles: true,
         cancelable: true,
+        clipboardData: data,
       })
     );
   });
   await expect(input).toHaveValue("123456");
 });
+
 test("InputOTP interaction stays silent and visual mirrors stay out of accessibility", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function () {
+    HTMLMediaElement.prototype.play = function play() {
       (window as any).sounds.push(this.src);
+
       return Promise.resolve();
     };
   });

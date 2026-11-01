@@ -70,9 +70,11 @@ test("Input uses the real DOM ref and repaints imperative value assignments", as
   await page.goto("/?component=input&text=Hello");
   const input = page.getByRole("textbox", { name: "Test input" });
   await expect(input).toHaveAttribute("data-mc-ready", "true");
+
   const before = await input.evaluate((element) =>
     (element as HTMLInputElement).style.getPropertyValue("--mc-input-image")
   );
+
   await page.locator("#read-ref").click();
   await expect(page.getByLabel("Root ref", { exact: true })).toHaveText(
     "INPUT"
@@ -80,7 +82,7 @@ test("Input uses the real DOM ref and repaints imperative value assignments", as
   await page.locator("#imperative").click();
   await expect(input).toHaveValue("Done");
   await expect
-    .poll(() =>
+    .poll(async () =>
       input.evaluate((element) =>
         (element as HTMLInputElement).style.getPropertyValue("--mc-input-image")
       )
@@ -129,7 +131,7 @@ test("Input pointer position uses the same original font advances", async ({
 }) => {
   await page.goto("/?component=input&text=WWWWWW");
   const input = page.getByRole("textbox", { name: "Test input" });
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () => document.fonts.ready);
   const bounds = (await input.boundingBox())!;
   await page.mouse.click(
     bounds.x + (4 + 6 * 3) * 2,

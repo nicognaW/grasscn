@@ -13,14 +13,14 @@ for (const [name, title] of [
   ["map", "Map"],
   ["trading", "Trading"],
   ["player-list", "Player List"],
-])
+]) {
   test(`local ${name} preview`, async ({ page }, info) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(`${origin}/docs/components/${name}`);
     await expect(
-      page.getByRole("heading", { name: title, exact: true })
+      page.getByRole("heading", { exact: true, name: title })
     ).toBeVisible();
     await expect(
       page.locator(`.documentation-playground [data-stage="${name}"]`)
@@ -36,6 +36,7 @@ for (const [name, title] of [
           .getByRole("document", { name: "Page 2", exact: true })
       ).toBeVisible();
     }
+
     if (name === "hotbar") {
       await page
         .locator(".documentation-playground")
@@ -47,6 +48,7 @@ for (const [name, title] of [
           .getByRole("button", { name: "Measure", exact: true })
       ).toHaveAttribute("aria-pressed", "true");
     }
+
     if (name === "hud") {
       await expect(
         page
@@ -72,6 +74,7 @@ for (const [name, title] of [
           .getByRole("meter", { name: "health", exact: true })
       ).toHaveAttribute("aria-valuenow", "20");
     }
+
     if (name === "sign") {
       await page
         .locator(".documentation-playground")
@@ -86,13 +89,14 @@ for (const [name, title] of [
         .locator(".documentation-playground")
         .getByRole("combobox", { name: "Wood type", exact: true })
         .click();
-      await page.getByRole("option", { name: "birch", exact: true }).click();
+      await page.getByRole("option", { exact: true, name: "birch" }).click();
       await expect(
         page
           .locator(".documentation-playground")
           .getByRole("group", { name: "Hanging sign", exact: true })
       ).toHaveAttribute("data-wood", "birch");
     }
+
     if (name === "player-preview") {
       await expect(
         page
@@ -109,6 +113,7 @@ for (const [name, title] of [
           .getByRole("group", { name: "Player preview", exact: true })
       ).toHaveAttribute("data-ready", "true");
     }
+
     if (name === "map") {
       await page
         .locator(".documentation-playground")
@@ -124,25 +129,28 @@ for (const [name, title] of [
         .getByRole("button", { name: "Face north", exact: true })
         .click();
     }
+
     if (name === "trading") {
       const geometry = await page
         .locator(".documentation-playground")
         .getByRole("group", { name: "Trade offers", exact: true })
         .evaluate((element) => {
           const bounds = element.getBoundingClientRect();
-          return Array.from(element.querySelectorAll("button")).map(
-            (row, i) => {
-              const r = row.getBoundingClientRect();
-              return {
-                height: r.height,
-                offset: r.top - bounds.top,
-                index: i,
-                bottom: r.bottom - bounds.bottom,
-              };
-            }
-          );
+
+          return [...element.querySelectorAll("button")].map((row, i) => {
+            const r = row.getBoundingClientRect();
+
+            return {
+              bottom: r.bottom - bounds.bottom,
+              height: r.height,
+              index: i,
+              offset: r.top - bounds.top,
+            };
+          });
         });
+
       expect(geometry).toHaveLength(7);
+
       for (const row of geometry) {
         expect(row.height).toBe(40);
         expect(row.offset).toBe(row.index * 40);
@@ -165,6 +173,7 @@ for (const [name, title] of [
         page.locator(".documentation-playground").getByRole("status")
       ).toContainText("1 trade completed.");
     }
+
     if (name === "player-list") {
       await page
         .locator(".documentation-playground")
@@ -200,6 +209,7 @@ for (const [name, title] of [
           .getByRole("table", { name: "Build points", exact: true })
       ).toContainText("169");
     }
+
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
@@ -208,8 +218,9 @@ for (const [name, title] of [
     await page.screenshot({ path: info.outputPath(`${name}-website.png`) });
     expect(errors).toEqual([]);
   });
+}
 
-for (const name of ["map", "trading", "player-list"])
+for (const name of ["map", "trading", "player-list"]) {
   test(`mobile ${name} preview fits viewport`, async ({ page }, info) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${origin}/docs/components/${name}`);
@@ -228,3 +239,4 @@ for (const name of ["map", "trading", "player-list"])
       path: info.outputPath(`${name}-website-mobile.png`),
     });
   });
+}

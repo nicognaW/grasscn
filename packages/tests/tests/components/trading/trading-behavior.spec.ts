@@ -3,19 +3,24 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
-import { testRoot, referenceFile } from "@tests/paths";
+import { referenceFile } from "@tests/paths";
+
 const base =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
+
 const url = (sample: object = {}) =>
   `${base}?scale=2&case=${encodeURIComponent(JSON.stringify({ element: "trading", value: 0, ...sample }))}`;
+
 test("trading original sound bytes decode in the browser", async ({ page }) => {
   const provenance = JSON.parse(
     readFileSync(
       referenceFile("native-expansion/trading-sound-provenance.json"),
-      "utf8"
+      "utf-8"
     )
   );
+
   expect(clips).toHaveLength(3);
+
   for (const [i, clip] of clips.entries()) {
     expect(
       createHash("sha256")
@@ -25,9 +30,12 @@ test("trading original sound bytes decode in the browser", async ({ page }) => {
     expect(clip.volume).toBe(1);
     expect(clip.pitch).toBe(1);
   }
+
   await page.goto(url());
+
   const durations = await page.evaluate(async (clips) => {
     const context = new AudioContext();
+
     try {
       return await Promise.all(
         clips.map(
@@ -43,13 +51,16 @@ test("trading original sound bytes decode in the browser", async ({ page }) => {
       await context.close();
     }
   }, clips);
+
   expect(durations.every((d) => d > 0)).toBe(true);
 });
+
 test("trading selection, result feedback and native scrollbar controls", async ({
   page,
 }) => {
   await page.addInitScript(() => {
     (window as any).tradeAudio = [];
+
     class RecordedAudio {
       src: string;
       volume = 1;
@@ -59,27 +70,29 @@ test("trading selection, result feedback and native scrollbar controls", async (
       }
       play() {
         (window as any).tradeAudio.push({
+          pitch: this.playbackRate,
           src: this.src,
           volume: this.volume,
-          pitch: this.playbackRate,
         });
-        return Promise.resolve();
+
+        return;
       }
     }
+
     (window as any).Audio = RecordedAudio;
   });
   await page.goto(url());
   await expect
-    .poll(() =>
+    .poll(async () =>
       page.evaluate(() => document.documentElement.dataset.tradingRef)
     )
     .toBe("trading");
-  await page.getByRole("button", { name: "Offer 2", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Offer 2" }).click();
   await expect(
-    page.getByRole("button", { name: "Offer 2", exact: true })
+    page.getByRole("button", { exact: true, name: "Offer 2" })
   ).toHaveAttribute("aria-pressed", "true");
   await page
-    .getByRole("button", { name: "Trade for Reward 2", exact: true })
+    .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
   let calls = await page.evaluate(() => (window as any).tradeAudio);
   expect(calls.map((c: any) => c.volume)).toEqual([0.25, 1]);
@@ -90,13 +103,15 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await scroll.press("End");
   await expect(scroll).toHaveAttribute("aria-valuenow", "2");
   await expect(
-    page.getByRole("button", { name: "Offer 1", exact: true })
+    page.getByRole("button", { exact: true, name: "Offer 1" })
   ).toHaveCount(0);
-  await page.getByRole("button", { name: "Offer 9", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Offer 9" }).click();
+
   const disabled = page.getByRole("button", {
-    name: "Trade for Reward 9",
     exact: true,
+    name: "Trade for Reward 9",
   });
+
   await expect(disabled).toBeDisabled();
   calls = await page.evaluate(() => (window as any).tradeAudio);
   expect(calls).toHaveLength(3);
@@ -115,9 +130,9 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page.mouse.up();
   await expect(scroll).toHaveAttribute("aria-valuenow", "2");
   await page.goto(url({ muted: true }));
-  await page.getByRole("button", { name: "Offer 2", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Offer 2" }).click();
   await page
-    .getByRole("button", { name: "Trade for Reward 2", exact: true })
+    .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
   expect(await page.evaluate(() => (window as any).tradeAudio)).toEqual([]);
 });

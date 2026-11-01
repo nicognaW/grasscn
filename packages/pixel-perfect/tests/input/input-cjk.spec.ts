@@ -3,13 +3,13 @@ import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const manifest = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/input-cjk/manifest.json"),
-    "utf8"
+    "utf-8"
   )
 ) as {
   cases: {
@@ -36,11 +36,13 @@ function compare(expected: PNG, actual: PNG) {
     expected.height,
   ]);
   let mismatchedPixels = 0;
-  const diff = new PNG({ width: expected.width, height: expected.height });
+  const diff = new PNG({ height: expected.height, width: expected.width });
+
   for (let i = 0; i < expected.data.length; i += 4) {
     const mismatch = !actual.data
       .subarray(i, i + 4)
       .equals(expected.data.subarray(i, i + 4));
+
     mismatchedPixels += Number(mismatch);
     diff.data.set(
       mismatch
@@ -54,6 +56,7 @@ function compare(expected: PNG, actual: PNG) {
       i
     );
   }
+
   return { diff, mismatchedPixels };
 }
 
@@ -65,32 +68,40 @@ test("Input pixel comparator detects a one-pixel change", async () => {
       )
     )
   );
+
   const actual = PNG.sync.read(PNG.sync.write(expected));
   actual.data[0] ^= 1;
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const c of manifest.cases)
+for (const c of manifest.cases) {
   test(`Input native pixels: ${c.name}`, async ({ page }, testInfo) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
     await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
+
     const query = new URLSearchParams({
       component: "input",
-      text: c.text,
       placeholder: c.placeholder ?? "",
-      state: c.state,
-      width: String(c.width),
       scale: String(c.scale),
+      state: c.state,
+      text: c.text,
+      width: String(c.width),
     });
-    if (c.maxLength != null) query.set("maxLength", String(c.maxLength));
+
+    const caseMaxLength = c.maxLength;
+
+    if (caseMaxLength !== null && caseMaxLength !== undefined) {
+      query.set("maxLength", String(caseMaxLength));
+    }
+
     await page.goto(`/?${query}`);
     const input = page.getByRole("textbox", { name: "Test input" });
     await input.evaluate(
       (node, position) => {
         Object.assign((node as HTMLElement).style, {
-          position: "fixed",
           left: `${position.x}px`,
+          position: "fixed",
           top: `${position.y}px`,
         });
       },
@@ -99,14 +110,21 @@ for (const c of manifest.cases)
     await expect(input).toBeVisible();
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     await expect(input).toHaveAttribute("data-mc-bitmap", "true");
+
     if (c.state.startsWith("focus")) {
       await page.keyboard.press("Tab");
       await expect(input).toBeFocused();
     }
-    if (c.state === "hover") await input.hover();
-    else await page.mouse.move(0, 0);
-    const cursor = c.cursor ?? c.text.length,
-      anchor = c.anchor ?? cursor;
+
+    if (c.state === "hover") {
+      await input.hover();
+    } else {
+      await page.mouse.move(0, 0);
+    }
+
+    const cursor = c.cursor ?? c.text.length;
+    const anchor = c.anchor ?? cursor;
+
     await input.evaluate(
       (node, selection) => {
         const input = node as HTMLInputElement;
@@ -116,19 +134,23 @@ for (const c of manifest.cases)
           selection.cursor < selection.anchor ? "backward" : "forward"
         );
       },
-      { cursor, anchor }
+      { anchor, cursor }
     );
     await page.clock.runFor(c.caretMs);
     await expect(input).toHaveAttribute("data-mc-ready", "true");
+
     const expectedBytes = await readFile(
       pixelPerfectFile(`tests/reference/input-cjk/captures/${c.name}`)
     );
+
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(
       c.sha256
     );
     const actualBytes = await input.screenshot({ animations: "disabled" });
-    const actual = PNG.sync.read(actualBytes),
-      expected = PNG.sync.read(expectedBytes);
+
+    const actual = PNG.sync.read(actualBytes);
+    const expected = PNG.sync.read(expectedBytes);
+
     const { diff, mismatchedPixels } = compare(expected, actual);
     await writeFile(testInfo.outputPath("actual.png"), actualBytes);
     await writeFile(testInfo.outputPath("diff.png"), PNG.sync.write(diff));
@@ -138,8 +160,8 @@ for (const c of manifest.cases)
         {
           case: c.name,
           mismatchedPixels,
-          totalPixels: expected.width * expected.height,
           tolerance: 0,
+          totalPixels: expected.width * expected.height,
         },
         null,
         2
@@ -147,3 +169,4 @@ for (const c of manifest.cases)
     );
     expect(mismatchedPixels).toBe(0);
   });
+}

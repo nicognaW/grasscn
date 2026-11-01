@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectRoot, referenceFile, pixelPerfectFile } from "@ppt/paths";
+import { referenceFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
@@ -23,20 +23,18 @@ const corpora = process.env.GRASSCN_EXPANSION_REFERENCE
       "player-list",
     ].map((name) => referenceFile(name));
 
-const reference = corpora[0];
-
 const specimens = corpora.flatMap((reference) =>
   JSON.parse(
     readFileSync(
       pixelPerfectFile(path.join(reference, "manifest.json")),
-      "utf8"
+      "utf-8"
     )
   ).cases.map((sample: any) => ({ reference, sample }))
 );
 
-for (const { reference, sample } of specimens)
+for (const { reference, sample } of specimens) {
   test(`native expansion pixels ${sample.name}`, async ({ page }, info) => {
-    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.setViewportSize({ height: 900, width: 1536 });
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(
@@ -44,15 +42,20 @@ for (const { reference, sample } of specimens)
     );
     const subject = page.locator("[data-subject]");
     await expect(subject).toBeVisible();
-    if (sample.element === "player-preview")
+
+    if (sample.element === "player-preview") {
       await expect(subject).toHaveAttribute("data-ready", "true");
-    if (sample.element === "sign" || sample.element === "hanging-sign")
+    }
+
+    if (sample.element === "sign" || sample.element === "hanging-sign") {
       await expect(subject.locator("canvas")).toHaveAttribute(
         "data-ready",
         "true"
       );
+    }
+
     await expect
-      .poll(() =>
+      .poll(async () =>
         subject
           .locator("img")
           .evaluateAll((images) =>
@@ -64,45 +67,59 @@ for (const { reference, sample } of specimens)
           )
       )
       .toBe(true);
-    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(async () => document.fonts.ready);
     await page.waitForTimeout(100);
-    const actual = await subject.screenshot(),
-      expected = readFileSync(
-        pixelPerfectFile(path.join(reference, "captures", sample.name))
-      ),
-      a = PNG.sync.read(actual),
-      b = PNG.sync.read(expected);
+
+    const actual = await subject.screenshot();
+
+    const expected = readFileSync(
+      pixelPerfectFile(path.join(reference, "captures", sample.name))
+    );
+
+    const a = PNG.sync.read(actual);
+    const b = PNG.sync.read(expected);
+
     expect([a.width, a.height]).toEqual([b.width, b.height]);
     let differences = 0;
-    const diff = new PNG({ width: a.width, height: a.height }),
-      coordinates: unknown[] = [];
+
+    const diff = new PNG({ height: a.height, width: a.width });
+    const coordinates: unknown[] = [];
+
     for (let i = 0; i < a.data.length; i += 4) {
       const same = a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4));
+
       if (!same) {
-        differences++;
-        if (coordinates.length < 20)
+        differences += 1;
+
+        if (coordinates.length < 20) {
           coordinates.push([
             (i / 4) % a.width,
             Math.floor(i / 4 / a.width),
             [...a.data.subarray(i, i + 4)],
             [...b.data.subarray(i, i + 4)],
           ]);
+        }
       }
+
       diff.data.set(same ? [0, 0, 0, 0] : [255, 0, 255, 255], i);
     }
+
     writeFileSync(
       info.outputPath("pixels.json"),
       JSON.stringify({
-        name: sample.name,
-        mismatchedPixels: differences,
-        totalPixels: a.width * a.height,
         coordinates,
+        mismatchedPixels: differences,
+        name: sample.name,
+        totalPixels: a.width * a.height,
       })
     );
+
     if (differences) {
       writeFileSync(info.outputPath("actual.png"), actual);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
     }
+
     expect(errors).toEqual([]);
     expect(differences).toBe(0);
   });
+}

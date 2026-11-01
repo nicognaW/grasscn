@@ -34,27 +34,43 @@ import {
 import * as React from "react";
 
 import "./native-reference.css";
-const q = new URLSearchParams(location.search),
-  scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
-  component = q.get("component") ?? "badge",
-  state = q.get("state") ?? "normal",
-  text = q.get("text") ?? q.get("label") ?? "Minecraft",
-  native = q.has("native"),
-  part = q.get("part") ?? "default";
-function TextComponentsFixture() {
+
+const q = new URLSearchParams(location.search);
+const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
+const component = q.get("component") ?? "badge";
+const state = q.get("state") ?? "normal";
+const text = q.get("text") ?? q.get("label") ?? "Minecraft";
+const native = q.has("native");
+const part = q.get("part") ?? "default";
+
+const TextComponentsFixture = () => {
   React.useLayoutEffect(() => {
     document.documentElement.style.background =
       q.get("background") ?? "#202020";
     document.body.style.background = q.get("background") ?? "#202020";
   }, []);
-  const [events, setEvents] = React.useState(0),
-    [tag, setTag] = React.useState(""),
-    ref = React.useRef<any>(null),
-    width = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined,
-    align = q.get("align") === "center" ? "center" : "left",
-    rich = q.has("rich") ? <strong data-testid="rich">{text}</strong> : text;
+
+  const [events, setEvents] = React.useState(0);
+  const [tag, setTag] = React.useState("");
+  const ref = React.useRef<any>(null);
+  const width = q.has("wrapWidth") ? Number(q.get("wrapWidth")) : undefined;
+  const align = q.get("align") === "center" ? "center" : "left";
+
+  const rich = q.has("rich") ? (
+    <strong data-testid="rich">{text}</strong>
+  ) : (
+    text
+  );
+
   const common = {
+    className: "native-reference-geometry",
+    "data-native-height": q.has("height") || undefined,
+    "data-native-width": q.has("width") || undefined,
+    "data-subject": "true",
     id: "subject",
+    onClick: () => {
+      setEvents((n) => n + 1);
+    },
     ref,
     style: {
       "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
@@ -66,14 +82,11 @@ function TextComponentsFixture() {
         ? Number(q.get("height")) * scale + "px"
         : undefined,
     } as React.CSSProperties,
-    className: "native-reference-geometry",
-    "data-native-width": q.has("width") || undefined,
-    "data-native-height": q.has("height") || undefined,
-    onClick: () => setEvents((n) => n + 1),
-    "data-subject": "true",
   };
+
   let subject: React.ReactNode;
-  if (component === "empty")
+
+  if (component === "empty") {
     subject = native ? (
       part === "title" ? (
         <EmptyTitle {...common} scale={scale} maxWidth={width} align={align}>
@@ -105,11 +118,17 @@ function TextComponentsFixture() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <button onClick={() => setEvents((n) => n + 1)}>Create world</button>
+          <button
+            onClick={() => {
+              setEvents((n) => n + 1);
+            }}
+          >
+            Create world
+          </button>
         </EmptyContent>
       </Empty>
     );
-  else if (component === "badge")
+  } else if (component === "badge") {
     subject = (
       <Badge
         render={q.has("asChild") ? <a href="#destination" /> : undefined}
@@ -143,7 +162,7 @@ function TextComponentsFixture() {
         {rich}
       </Badge>
     );
-  else if (component === "kbd")
+  } else if (component === "kbd") {
     subject = (
       <Kbd
         scale={scale}
@@ -154,22 +173,24 @@ function TextComponentsFixture() {
         {rich}
       </Kbd>
     );
-  else if (component === "typography") {
+  } else if (component === "typography") {
     const parts: any = {
-        default: Typography,
-        h1: TypographyH1,
-        h2: TypographyH2,
-        h3: TypographyH3,
-        h4: TypographyH4,
-        p: TypographyP,
-        small: TypographySmall,
-        blockquote: TypographyBlockquote,
-        code: TypographyInlineCode,
-        lead: TypographyLead,
-        large: TypographyLarge,
-        muted: TypographyMuted,
-      },
-      Component = parts[part] ?? Typography;
+      blockquote: TypographyBlockquote,
+      code: TypographyInlineCode,
+      default: Typography,
+      h1: TypographyH1,
+      h2: TypographyH2,
+      h3: TypographyH3,
+      h4: TypographyH4,
+      large: TypographyLarge,
+      lead: TypographyLead,
+      muted: TypographyMuted,
+      p: TypographyP,
+      small: TypographySmall,
+    };
+
+    const Component = parts[part] ?? Typography;
+
     subject = (
       <Component
         render={q.has("asChild") ? <a href="#destination" /> : undefined}
@@ -181,7 +202,7 @@ function TextComponentsFixture() {
         {rich}
       </Component>
     );
-  } else if (component === "breadcrumb" && native)
+  } else if (component === "breadcrumb" && native) {
     subject =
       part === "page" ? (
         <BreadcrumbPage
@@ -204,7 +225,7 @@ function TextComponentsFixture() {
           {text}
         </BreadcrumbLink>
       );
-  else
+  } else {
     subject = (
       <Breadcrumb scale={scale}>
         <BreadcrumbList>
@@ -228,13 +249,17 @@ function TextComponentsFixture() {
         </BreadcrumbList>
       </Breadcrumb>
     );
+  }
+
   return (
     <>
       {subject}
       <button
         id="read-ref"
         className="native-reference-read-ref"
-        onClick={() => setTag(ref.current?.tagName ?? "")}
+        onClick={() => {
+          setTag(ref.current?.tagName ?? "");
+        }}
       >
         Read ref
       </button>
@@ -250,5 +275,6 @@ function TextComponentsFixture() {
       </KbdGroup>
     </>
   );
-}
+};
+
 export { TextComponentsFixture };

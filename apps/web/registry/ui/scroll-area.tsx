@@ -1,32 +1,41 @@
 "use client";
+
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
-import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
+import {
+  minecraftClasses as cn,
+  minecraftStyle,
+  MinecraftRender,
+} from "./minecraft-render";
+import type { MinecraftProps } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-scroll-area.css";
-type Geometry = {
+
+interface Geometry {
   height: number;
   content: number;
   maximum: number;
   thumb: number;
   offset: number;
-};
+}
+
 const empty: Geometry = {
-  height: 0,
   content: 0,
+  height: 0,
   maximum: 0,
-  thumb: 32,
   offset: 0,
+  thumb: 32,
 };
+
 const ScrollContext = React.createContext<{
   viewport: React.RefObject<HTMLDivElement | null>;
   scale: number;
   disabled: boolean;
   geometry: Geometry;
 } | null>(null);
+
 type ScrollAreaProps = Omit<
   MinecraftProps<typeof ScrollAreaPrimitive.Root>,
   "type" | "scrollHideDelay"
@@ -41,7 +50,8 @@ type ScrollAreaProps = Omit<
     "children" | "ref" | "render"
   >;
 };
-function ScrollArea({
+
+const ScrollArea = ({
   children,
   className,
   scale = 2,
@@ -55,36 +65,49 @@ function ScrollArea({
   onWheelCapture,
   onKeyDownCapture,
   ...props
-}: ScrollAreaProps) {
-  if (type !== "auto")
+}: ScrollAreaProps) => {
+  if (type !== "auto") {
     throw new Error(
       "Minecraft ScrollArea shows its scrollbar whenever content overflows"
     );
+  }
+
   const viewport = React.useRef<HTMLDivElement>(null);
+
   const setViewportRef = React.useCallback(
     (element: HTMLDivElement | null) => {
       viewport.current = element;
+
       if (typeof viewportRef === "function") {
         const cleanup = viewportRef(element);
-        if (typeof cleanup === "function")
+
+        if (typeof cleanup === "function") {
           return () => {
             viewport.current = null;
             cleanup();
           };
-      } else if (viewportRef) viewportRef.current = element;
+        }
+      } else if (viewportRef) {
+        viewportRef.current = element;
+      }
     },
     [viewportRef]
   );
+
   const [geometry, setGeometry] = React.useState(empty);
   const [ready, setReady] = React.useState(false);
   React.useLayoutEffect(() => {
-    let frame = 0,
-      signature = "";
+    let frame = 0;
+    let signature = "";
+
     const measure = () => {
       const element = viewport.current!;
-      const height = element.clientHeight / scale,
-        content = element.scrollHeight / scale;
+
+      const height = element.clientHeight / scale;
+      const content = element.scrollHeight / scale;
+
       const maximum = Math.max(0, content - height);
+
       // Mth.clamp applies the upper bound last, even when height - 8 is below 32.
       const thumb = Math.min(
         height - 8,
@@ -95,6 +118,7 @@ function ScrollArea({
           )
         )
       );
+
       const offset =
         maximum > 0
           ? Math.floor(
@@ -102,18 +126,26 @@ function ScrollArea({
                 maximum
             )
           : 0;
+
       const next = JSON.stringify([height, content, maximum, thumb, offset]);
+
       if (next !== signature) {
         signature = next;
-        setGeometry({ height, content, maximum, thumb, offset });
+        setGeometry({ content, height, maximum, offset, thumb });
         setReady(true);
       }
+
       frame = requestAnimationFrame(measure);
     };
+
     frame = requestAnimationFrame(measure);
-    return () => cancelAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
   }, [scale]);
-  let content = children;
+  const content = children;
+
   const flatten = (value: React.ReactNode): React.ReactNode[] =>
     React.Children.toArray(value).flatMap((node) =>
       React.isValidElement<{
@@ -122,13 +154,17 @@ function ScrollArea({
         ? flatten(node.props.children)
         : [node]
     );
+
   const nodes = flatten(content);
+
   const customBars = nodes.filter(
     (node) => React.isValidElement(node) && node.type === ScrollBar
   );
+
   const contents = nodes.filter(
     (node) => !React.isValidElement(node) || node.type !== ScrollBar
   );
+
   const chrome = (
     <>
       <ScrollAreaPrimitive.Viewport
@@ -147,8 +183,9 @@ function ScrollArea({
       {customBars.length ? customBars : <ScrollBar />}
     </>
   );
+
   return (
-    <ScrollContext.Provider value={{ viewport, scale, disabled, geometry }}>
+    <ScrollContext.Provider value={{ disabled, geometry, scale, viewport }}>
       <ScrollAreaPrimitive.Root
         render={render}
         ref={ref}
@@ -156,7 +193,7 @@ function ScrollArea({
         data-mc-scroll-ready={ready}
         data-scrollable={geometry.maximum > 0}
         data-disabled={disabled || undefined}
-        className={cn(`mc-scroll-area ${""}`, className)}
+        className={cn(`mc-scroll-area`, className)}
         style={minecraftStyle(
           style,
           (__style) =>
@@ -164,6 +201,7 @@ function ScrollArea({
         )}
         onWheelCapture={(event) => {
           onWheelCapture?.(event);
+
           if (disabled) {
             event.preventDefault();
             event.stopPropagation();
@@ -171,6 +209,7 @@ function ScrollArea({
         }}
         onKeyDownCapture={(event) => {
           onKeyDownCapture?.(event);
+
           if (
             disabled &&
             event.target === viewport.current &&
@@ -183,8 +222,9 @@ function ScrollArea({
               "End",
               " ",
             ].includes(event.key)
-          )
+          ) {
             event.preventDefault();
+          }
         }}
         {...props}
       >
@@ -192,14 +232,16 @@ function ScrollArea({
       </ScrollAreaPrimitive.Root>
     </ScrollContext.Provider>
   );
-}
+};
+
 type ScrollBarProps = Omit<
   MinecraftProps<typeof ScrollAreaPrimitive.Scrollbar>,
   "orientation"
 > & {
   orientation?: "vertical";
 };
-function ScrollBar({
+
+const ScrollBar = ({
   children,
   render,
   className,
@@ -211,27 +253,38 @@ function ScrollBar({
   onPointerCancelCapture,
   onLostPointerCapture,
   ...props
-}: ScrollBarProps) {
-  if (orientation !== "vertical")
+}: ScrollBarProps) => {
+  if (orientation !== "vertical") {
     throw new Error("Minecraft ScrollBar supports vertical orientation only");
+  }
+
   const context = React.useContext(ScrollContext);
-  if (!context) throw new Error("ScrollBar must be rendered inside ScrollArea");
+
+  if (!context) {
+    throw new Error("ScrollBar must be rendered inside ScrollArea");
+  }
+
   const { viewport, scale, disabled, geometry } = context;
+
   const drag = React.useRef<{
     y: number;
     scroll: number;
   } | null>(null);
+
   const [dragging, setDragging] = React.useState(false);
+
   const stop = () => {
     drag.current = null;
     setDragging(false);
   };
+
   const thumb = (
     <ScrollAreaPrimitive.Thumb
       data-slot="scroll-area-thumb"
       className="mc-scroll-area-thumb"
     />
   );
+
   return (
     <ScrollAreaPrimitive.Scrollbar
       render={render}
@@ -240,31 +293,42 @@ function ScrollBar({
       data-slot="scroll-area-scrollbar"
       data-dragging={dragging || undefined}
       aria-disabled={disabled || undefined}
-      className={cn(`mc-scroll-area-scrollbar ${""}`, className)}
+      className={cn(`mc-scroll-area-scrollbar`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
           ({
-            "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
             "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
             "--mc-thumb-height": `${geometry.thumb * scale}px`,
             "--mc-thumb-offset": `${geometry.offset * scale}px`,
+            "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
             ...__style,
           }) as React.CSSProperties
       )}
       onPointerDownCapture={(event) => {
         onPointerDownCapture?.(event);
         event.preventBaseUIHandler();
-        if (event.defaultPrevented) return;
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
         if (disabled) {
           event.preventDefault();
           event.stopPropagation();
+
           return;
         }
-        if (event.button !== 0) return;
+
+        if (event.button !== 0) {
+          return;
+        }
+
         event.preventDefault();
-        const element = viewport.current!,
-          bounds = event.currentTarget.getBoundingClientRect();
+
+        const element = viewport.current!;
+        const bounds = event.currentTarget.getBoundingClientRect();
+
         if (
           !(event.target as Element).closest('[data-slot="scroll-area-thumb"]')
         ) {
@@ -278,13 +342,15 @@ function ScrollBar({
             )
           );
         }
-        drag.current = { y: event.clientY, scroll: element.scrollTop };
+
+        drag.current = { scroll: element.scrollTop, y: event.clientY };
         setDragging(true);
         event.currentTarget.setPointerCapture(event.pointerId);
       }}
       onPointerMoveCapture={(event) => {
         onPointerMoveCapture?.(event);
         event.preventBaseUIHandler();
+
         if (!event.defaultPrevented && drag.current && !disabled) {
           event.preventDefault();
           viewport.current!.scrollTop =
@@ -296,6 +362,7 @@ function ScrollBar({
       onPointerUpCapture={(event) => {
         onPointerUpCapture?.(event);
         event.preventBaseUIHandler();
+
         if (drag.current) {
           event.preventDefault();
           stop();
@@ -310,14 +377,14 @@ function ScrollBar({
         stop();
       }}
     >
-      {
-        <>
-          {thumb}
-          {children}
-        </>
-      }
+      <>
+        {thumb}
+        {children}
+      </>
     </ScrollAreaPrimitive.Scrollbar>
   );
-}
+};
+
 export { ScrollArea, ScrollBar };
+
 export type { ScrollAreaProps, ScrollBarProps };

@@ -1,4 +1,5 @@
 "use client";
+
 import { cva } from "class-variance-authority";
 import * as React from "react";
 
@@ -6,11 +7,14 @@ import { Button, buttonVariants } from "./button";
 import { Card } from "./card";
 import { Input } from "./input";
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import {
+  minecraftClasses as cn,
+  minecraftStyle,
   MinecraftRender,
-  type MinecraftProps,
-  type MinecraftPolymorphicProps,
+} from "./minecraft-render";
+import type {
+  MinecraftProps,
+  MinecraftPolymorphicProps,
 } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftText } from "./minecraft-text";
@@ -32,8 +36,10 @@ import {
 } from "./tooltip";
 
 import "./minecraft-sidebar.css";
+
 type Scale = 1 | 2 | 3;
-type SidebarState = {
+
+interface SidebarState {
   state: "expanded" | "collapsed";
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,36 +47,55 @@ type SidebarState = {
   setOpenMobile: React.Dispatch<React.SetStateAction<boolean>>;
   isMobile: boolean;
   toggleSidebar: () => void;
-};
+}
+
 type Context = SidebarState & {
   scale: Scale;
 };
+
 const SidebarContext = React.createContext<Context | null>(null);
+
 const CollapsibleContext = React.createContext<"offcanvas" | "icon" | "none">(
   "offcanvas"
 );
+
 function useSidebarContext() {
   const value = React.useContext(SidebarContext);
-  if (!value)
+
+  if (!value) {
     throw new Error("useSidebar must be used within a SidebarProvider.");
+  }
+
   return value;
 }
+
 function useSidebar(): SidebarState {
-  const { scale, ...state } = useSidebarContext();
+  const { ...state } = useSidebarContext();
+
   return state;
 }
+
 function useIsMobile() {
   const [mobile, setMobile] = React.useState(false);
   React.useEffect(() => {
-    const query = matchMedia("(max-width: 767px)"),
-      update = () => setMobile(query.matches);
+    const query = matchMedia("(max-width: 767px)");
+
+    const update = () => {
+      setMobile(query.matches);
+    };
+
     update();
     query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
+
+    return () => {
+      query.removeEventListener("change", update);
+    };
   }, []);
+
   return mobile;
 }
-function SidebarProvider({
+
+const SidebarProvider = ({
   defaultOpen = true,
   open: controlled,
   onOpenChange,
@@ -84,34 +109,44 @@ function SidebarProvider({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   scale?: Scale;
-}) {
-  const isMobile = useIsMobile(),
-    [internal, setInternal] = React.useState(defaultOpen),
-    [openMobile, setOpenMobile] = React.useState(false);
-  const open = controlled ?? internal,
-    latest = React.useRef(open);
+}) => {
+  const isMobile = useIsMobile();
+  const [internal, setInternal] = React.useState(defaultOpen);
+  const [openMobile, setOpenMobile] = React.useState(false);
+
+  const open = controlled ?? internal;
+  const latest = React.useRef(open);
+
   latest.current = open;
+
   const setOpen = React.useCallback<
     React.Dispatch<React.SetStateAction<boolean>>
   >(
     (next) => {
       const value = typeof next === "function" ? next(latest.current) : next;
+
       if (controlled === undefined) {
         latest.current = value;
         setInternal(value);
       }
+
       onOpenChange?.(value);
     },
     [controlled, onOpenChange]
   );
+
   React.useEffect(() => {
     document.cookie = `sidebar_state=${open}; path=/; max-age=${60 * 60 * 24 * 7}`;
   }, [open]);
+
   const toggleSidebar = React.useCallback(() => {
     if (isMobile) {
       setOpenMobile((value) => !value);
-    } else setOpen((value) => !value);
+    } else {
+      setOpen((value) => !value);
+    }
   }, [isMobile, setOpen]);
+
   React.useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (
@@ -123,28 +158,34 @@ function SidebarProvider({
         toggleSidebar();
       }
     };
+
     window.addEventListener("keydown", listener);
-    return () => window.removeEventListener("keydown", listener);
+
+    return () => {
+      window.removeEventListener("keydown", listener);
+    };
   }, [toggleSidebar]);
+
   const value = React.useMemo<Context>(
     () => ({
-      state: open ? "expanded" : "collapsed",
-      open,
-      setOpen,
-      openMobile,
-      setOpenMobile,
       isMobile,
-      toggleSidebar,
+      open,
+      openMobile,
       scale,
+      setOpen,
+      setOpenMobile,
+      state: open ? "expanded" : "collapsed",
+      toggleSidebar,
     }),
     [open, setOpen, openMobile, isMobile, toggleSidebar, scale]
   );
+
   return (
     <SidebarContext.Provider value={value}>
       <TooltipProvider delay={0}>
         <div
           data-slot="sidebar-wrapper"
-          className={cn(`mc-sidebar-wrapper ${""}`, className)}
+          className={cn(`mc-sidebar-wrapper`, className)}
           style={minecraftStyle(
             style,
             (__style) =>
@@ -163,13 +204,15 @@ function SidebarProvider({
       </TooltipProvider>
     </SidebarContext.Provider>
   );
-}
+};
+
 type SidebarProps = MinecraftProps<"div"> & {
   side?: "left" | "right";
   variant?: "sidebar";
   collapsible?: "offcanvas" | "icon" | "none";
 };
-function Sidebar({
+
+const Sidebar = ({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
@@ -177,19 +220,23 @@ function Sidebar({
   children,
   style,
   ...props
-}: SidebarProps) {
+}: SidebarProps) => {
   const { state, isMobile, openMobile, setOpenMobile, scale } =
     useSidebarContext();
-  if (variant !== "sidebar")
+
+  if (variant !== "sidebar") {
     throw new Error(
       "Minecraft Sidebar supports the default sidebar visual variant only"
     );
+  }
+
   const content = (
     <CollapsibleContext.Provider value={collapsible}>
       {children}
     </CollapsibleContext.Provider>
   );
-  if (collapsible === "none")
+
+  if (collapsible === "none") {
     return (
       <Card
         scale={scale}
@@ -198,14 +245,16 @@ function Sidebar({
         data-side={side}
         data-state={state}
         data-collapsible="none"
-        className={cn(`mc-sidebar mc-sidebar-static ${""}`, className)}
+        className={cn(`mc-sidebar mc-sidebar-static`, className)}
         style={style}
         {...props}
       >
         {content}
       </Card>
     );
-  if (isMobile)
+  }
+
+  if (isMobile) {
     return (
       <Sheet scale={scale} open={openMobile} onOpenChange={setOpenMobile}>
         <SheetContent
@@ -214,7 +263,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-mobile="true"
           data-state={openMobile ? "expanded" : "collapsed"}
-          className={cn(`mc-sidebar mc-sidebar-mobile ${""}`, className)}
+          className={cn(`mc-sidebar mc-sidebar-mobile`, className)}
           style={minecraftStyle(style, (__style) => ({
             width: Math.min(
               140 * scale,
@@ -233,7 +282,10 @@ function Sidebar({
         </SheetContent>
       </Sheet>
     );
+  }
+
   const closed = state === "collapsed" && collapsible === "offcanvas";
+
   return (
     <div
       data-slot="sidebar"
@@ -246,7 +298,7 @@ function Sidebar({
       <div data-slot="sidebar-gap" className="mc-sidebar-gap" />
       <div
         data-slot="sidebar-container"
-        className={cn(`mc-sidebar-container ${""}`, className)}
+        className={cn(`mc-sidebar-container`, className)}
         style={style}
         inert={closed || undefined}
         aria-hidden={closed || undefined}
@@ -263,49 +315,62 @@ function Sidebar({
       </div>
     </div>
   );
-}
+};
+
 type SidebarControlProps = MinecraftPolymorphicProps<"button"> & {
   scale?: Scale;
 };
+
 function sidebarControlLabel(children: React.ReactNode): React.ReactNode {
   const parts: React.ReactNode[] = [];
   let run = "";
+
   const flush = () => {
     if (run) {
       parts.push(run);
       run = "";
     }
   };
+
   const visit = (child: React.ReactNode) => {
-    if (child == null || typeof child === "boolean") return;
-    if (Array.isArray(child)) {
-      child.forEach(visit);
+    if (child === null || child === undefined || typeof child === "boolean") {
       return;
     }
+
+    if (Array.isArray(child)) {
+      child.forEach(visit);
+
+      return;
+    }
+
     if (
       React.isValidElement<{ children?: React.ReactNode }>(child) &&
       child.type === React.Fragment
     ) {
       visit(child.props.children);
+
       return;
     }
+
     if (
       typeof child === "string" ||
       typeof child === "number" ||
       typeof child === "bigint"
-    )
+    ) {
       run += String(child);
-    else {
+    } else {
       flush();
       parts.push(child);
     }
   };
+
   visit(children);
   flush();
+
   return parts.map((child, index) => (
     <React.Fragment key={index}>
       {typeof child === "string" ? (
-        /^[\x20-\x7e]*$/.test(child) ? (
+        /^[\u0020-\u007E]*$/.test(child) ? (
           <MinecraftText className="mc-text">{child}</MinecraftText>
         ) : (
           <MinecraftUnicodeLabel text={child} />
@@ -316,7 +381,8 @@ function sidebarControlLabel(children: React.ReactNode): React.ReactNode {
     </React.Fragment>
   ));
 }
-function SidebarControl({
+
+const SidebarControl = ({
   scale = 2,
   render,
   children,
@@ -325,11 +391,11 @@ function SidebarControl({
   onClick,
   onClickCapture,
   ...props
-}: SidebarControlProps) {
+}: SidebarControlProps) => {
   const inactive =
-    props.disabled ||
-    props["aria-disabled"] === true ||
+    (props.disabled ?? props["aria-disabled"] === true) ||
     props["aria-disabled"] === "true";
+
   return (
     <MinecraftRender
       as="button"
@@ -338,7 +404,7 @@ function SidebarControl({
       data-variant="default"
       data-size="default"
       className={cn(
-        buttonVariants({ variant: "default", size: "default" }),
+        buttonVariants({ size: "default", variant: "default" }),
         className
       )}
       style={{ "--mc-scale": scale, ...style } as React.CSSProperties}
@@ -349,17 +415,24 @@ function SidebarControl({
         if (inactive) {
           event.preventDefault();
           event.stopPropagation();
+
           return;
         }
+
         onClickCapture?.(event);
       }}
       onClick={(event) => {
         if (inactive) {
           event.preventDefault();
+
           return;
         }
+
         onClick?.(event);
-        if (!event.defaultPrevented) playMinecraftClick();
+
+        if (!event.defaultPrevented) {
+          playMinecraftClick();
+        }
       }}
     >
       <span className="mc-button-surface" aria-hidden="true">
@@ -370,20 +443,23 @@ function SidebarControl({
       <span className="mc-button-label">{sidebarControlLabel(children)}</span>
     </MinecraftRender>
   );
-}
-function SidebarActionButton({
+};
+
+const SidebarActionButton = ({
   render,
   children,
   onClick,
   onClickCapture,
   ...props
-}: MinecraftProps<typeof Button>) {
+}: MinecraftProps<typeof Button>) => {
   const inactive =
-      props.disabled ||
-      props["aria-disabled"] === true ||
-      props["aria-disabled"] === "true",
-    child = null;
+    (props.disabled ?? props["aria-disabled"] === true) ||
+    props["aria-disabled"] === "true";
+
+  const child = null;
+
   const content = children;
+
   return (
     <Button
       render={render}
@@ -394,31 +470,37 @@ function SidebarActionButton({
         if (inactive) {
           event.preventDefault();
           event.stopPropagation();
+
           return;
         }
+
         onClickCapture?.(event);
       }}
       onClick={(event) => {
         if (inactive) {
           event.preventDefault();
+
           return;
         }
+
         onClick?.(event);
       }}
     >
       {content}
     </Button>
   );
-}
-function SidebarTrigger({
+};
+
+const SidebarTrigger = ({
   className,
   onClick,
   children = "=",
   scale: explicit,
   ...props
-}: MinecraftProps<typeof Button>) {
+}: MinecraftProps<typeof Button>) => {
   const { toggleSidebar, open, openMobile, isMobile, scale } =
     useSidebarContext();
+
   return (
     <SidebarActionButton
       type="button"
@@ -427,23 +509,28 @@ function SidebarTrigger({
       aria-label="Toggle Sidebar"
       aria-expanded={isMobile ? openMobile : open}
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-trigger ${""}`, className)}
+      className={cn(`mc-sidebar-trigger`, className)}
       {...props}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) toggleSidebar();
+
+        if (!event.defaultPrevented) {
+          toggleSidebar();
+        }
       }}
     >
       {children}
     </SidebarActionButton>
   );
-}
-function SidebarRail({
+};
+
+const SidebarRail = ({
   className,
   onClick,
   ...props
-}: MinecraftProps<"button">) {
+}: MinecraftProps<"button">) => {
   const { toggleSidebar } = useSidebarContext();
+
   return (
     <button
       type="button"
@@ -452,77 +539,88 @@ function SidebarRail({
       aria-label="Toggle Sidebar"
       title="Toggle Sidebar"
       tabIndex={-1}
-      className={cn(`mc-sidebar-rail ${""}`, className)}
+      className={cn(`mc-sidebar-rail`, className)}
       {...props}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) toggleSidebar();
+
+        if (!event.defaultPrevented) {
+          toggleSidebar();
+        }
       }}
     />
   );
-}
-function SidebarInset({ className, ...props }: MinecraftProps<"main">) {
+};
+
+const SidebarInset = ({ className, ...props }: MinecraftProps<"main">) => {
   return (
     <main
       data-slot="sidebar-inset"
-      className={cn(`mc-sidebar-inset ${""}`, className)}
+      className={cn(`mc-sidebar-inset`, className)}
       {...props}
     />
   );
-}
-function SidebarInput({
+};
+
+const SidebarInput = ({
   className,
   scale: explicit,
   ...props
-}: MinecraftProps<typeof Input>) {
+}: MinecraftProps<typeof Input>) => {
   const { scale } = useSidebarContext();
+
   return (
     <Input
       data-slot="sidebar-input"
       data-sidebar="input"
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-input ${""}`, className)}
+      className={cn(`mc-sidebar-input`, className)}
       {...props}
     />
   );
-}
-function SidebarSeparator({
+};
+
+const SidebarSeparator = ({
   className,
   scale: explicit,
   ...props
-}: MinecraftProps<typeof Separator>) {
+}: MinecraftProps<typeof Separator>) => {
   const { scale } = useSidebarContext();
+
   return (
     <Separator
       data-slot="sidebar-separator"
       data-sidebar="separator"
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-separator ${""}`, className)}
+      className={cn(`mc-sidebar-separator`, className)}
       {...props}
     />
   );
-}
-function SidebarHeader({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const SidebarHeader = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn(`mc-sidebar-header ${""}`, className)}
+      className={cn(`mc-sidebar-header`, className)}
       {...props}
     />
   );
-}
-function SidebarFooter({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const SidebarFooter = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="sidebar-footer"
       data-sidebar="footer"
-      className={cn(`mc-sidebar-footer ${""}`, className)}
+      className={cn(`mc-sidebar-footer`, className)}
       {...props}
     />
   );
-}
-function SidebarContent({
+};
+
+const SidebarContent = ({
   className,
   children,
   onScroll,
@@ -532,15 +630,16 @@ function SidebarContent({
   Pick<
     MinecraftProps<typeof ScrollArea>,
     "viewportRef" | "viewportProps" | "disabled"
-  >) {
+  >) => {
   const { scale } = useSidebarContext();
+
   return (
     <ScrollArea
       data-slot="sidebar-content"
       data-sidebar="content"
       scale={scale}
-      className={cn(`mc-sidebar-content ${""}`, className)}
-      {...(props as MinecraftProps<typeof ScrollArea>)}
+      className={cn(`mc-sidebar-content`, className)}
+      {...props}
       viewportProps={{
         ...viewportProps,
         onScroll: (event) => {
@@ -553,46 +652,54 @@ function SidebarContent({
       <ScrollBar />
     </ScrollArea>
   );
-}
-function SidebarGroup({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const SidebarGroup = ({ className, ...props }: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="sidebar-group"
       data-sidebar="group"
-      className={cn(`mc-sidebar-group ${""}`, className)}
+      className={cn(`mc-sidebar-group`, className)}
       {...props}
     />
   );
-}
-function SidebarGroupContent({ className, ...props }: MinecraftProps<"div">) {
+};
+
+const SidebarGroupContent = ({
+  className,
+  ...props
+}: MinecraftProps<"div">) => {
   return (
     <div
       data-slot="sidebar-group-content"
       data-sidebar="group-content"
-      className={cn(`mc-sidebar-group-content ${""}`, className)}
+      className={cn(`mc-sidebar-group-content`, className)}
       {...props}
     />
   );
-}
+};
+
 type SidebarLabelProps = MinecraftPolymorphicProps<"div"> & {
   maxWidth?: number;
   align?: "left" | "center";
 };
-function SidebarGroupLabel({
+
+const SidebarGroupLabel = ({
   className,
   render,
   children,
   maxWidth,
   align,
   ...props
-}: SidebarLabelProps) {
+}: SidebarLabelProps) => {
   const { scale } = useSidebarContext();
+
   return render ? (
     <MinecraftRender
       render={render}
       data-slot="sidebar-group-label"
       data-sidebar="group-label"
-      className={cn(`mc-sidebar-group-label ${""}`, className)}
+      className={cn(`mc-sidebar-group-label`, className)}
       {...props}
     >
       {children}
@@ -604,27 +711,29 @@ function SidebarGroupLabel({
       scale={scale}
       maxWidth={maxWidth}
       align={align}
-      className={cn(`mc-sidebar-group-label ${""}`, className)}
+      className={cn(`mc-sidebar-group-label`, className)}
       {...props}
     >
       {children}
     </MinecraftDisclosureText>
   );
-}
-function SidebarGroupAction({
+};
+
+const SidebarGroupAction = ({
   className,
   scale: explicit,
   style,
   ...props
-}: SidebarControlProps) {
+}: SidebarControlProps) => {
   const { scale } = useSidebarContext();
+
   return (
     <SidebarControl
       type="button"
       data-slot="sidebar-group-action"
       data-sidebar="group-action"
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-group-action ${""}`, className)}
+      className={cn(`mc-sidebar-group-action`, className)}
       style={minecraftStyle(style, (__style) => ({
         position: "absolute",
         right: 4 * (explicit ?? scale),
@@ -634,27 +743,30 @@ function SidebarGroupAction({
       {...props}
     />
   );
-}
-function SidebarMenu({ className, ...props }: MinecraftProps<"ul">) {
+};
+
+const SidebarMenu = ({ className, ...props }: MinecraftProps<"ul">) => {
   return (
     <ul
       data-slot="sidebar-menu"
       data-sidebar="menu"
-      className={cn(`mc-sidebar-menu ${""}`, className)}
+      className={cn(`mc-sidebar-menu`, className)}
       {...props}
     />
   );
-}
-function SidebarMenuItem({ className, ...props }: MinecraftProps<"li">) {
+};
+
+const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => {
   return (
     <li
       data-slot="sidebar-menu-item"
       data-sidebar="menu-item"
-      className={cn(`mc-sidebar-menu-item ${""}`, className)}
+      className={cn(`mc-sidebar-menu-item`, className)}
       {...props}
     />
   );
-}
+};
+
 function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
     .map((child) =>
@@ -668,31 +780,36 @@ function plainText(children: React.ReactNode): string {
     )
     .join("");
 }
+
 function collapsedContent(children: React.ReactNode): React.ReactNode {
-  const values = React.Children.toArray(children),
-    icon = values.find(
-      (child) =>
-        React.isValidElement<{
-          children?: React.ReactNode;
-          "data-sidebar-icon"?: boolean;
-        }>(child) &&
-        (child.type === "svg" ||
-          child.props["data-sidebar-icon"] ||
-          child.props.children === undefined)
-    );
-  return icon ?? Array.from(plainText(children))[0] ?? "?";
+  const values = React.Children.toArray(children);
+
+  const icon = values.find(
+    (child) =>
+      React.isValidElement<{
+        children?: React.ReactNode;
+        "data-sidebar-icon"?: boolean;
+      }>(child) &&
+      ((child.type === "svg" || child.props["data-sidebar-icon"]) ??
+        child.props.children === undefined)
+  );
+
+  return icon ?? [...plainText(children)][0] ?? "?";
 }
+
 const sidebarMenuButtonVariants = cva("mc-sidebar-menu-button", {
-  variants: { variant: { default: "" }, size: { default: "" } },
-  defaultVariants: { variant: "default", size: "default" },
+  defaultVariants: { size: "default", variant: "default" },
+  variants: { size: { default: "" }, variant: { default: "" } },
 });
+
 type SidebarMenuButtonProps = SidebarControlProps & {
   variant?: "default";
   size?: "default";
   isActive?: boolean;
   tooltip?: string | MinecraftProps<typeof TooltipContent>;
 };
-function SidebarMenuButton({
+
+const SidebarMenuButton = ({
   className,
   render,
   isActive = false,
@@ -703,24 +820,29 @@ function SidebarMenuButton({
   onClick,
   scale: explicit,
   ...props
-}: SidebarMenuButtonProps) {
-  const { state, isMobile, scale: inherited } = useSidebarContext(),
-    mode = React.useContext(CollapsibleContext),
-    scale = explicit ?? inherited,
-    collapsed = !isMobile && state === "collapsed" && mode === "icon",
-    disabled =
-      props.disabled ||
-      props["aria-disabled"] === true ||
-      props["aria-disabled"] === "true";
-  if (variant !== "default" || size !== "default")
+}: SidebarMenuButtonProps) => {
+  const { state, isMobile, scale: inherited } = useSidebarContext();
+  const mode = React.useContext(CollapsibleContext);
+  const scale = explicit ?? inherited;
+  const collapsed = !isMobile && state === "collapsed" && mode === "icon";
+
+  const disabled =
+    (props.disabled ?? props["aria-disabled"] === true) ||
+    props["aria-disabled"] === "true";
+
+  if (variant !== "default" || size !== "default") {
     throw new Error(
       "Minecraft sidebar menu buttons support the native default visual variant and size only"
     );
-  const child = null,
-    raw = children,
-    label = props["aria-label"] ?? plainText(raw),
-    display = collapsed ? collapsedContent(raw) : raw;
+  }
+
+  const child = null;
+  const raw = children;
+  const label = props["aria-label"] ?? plainText(raw);
+  const display = collapsed ? collapsedContent(raw) : raw;
+
   const content = display;
+
   const button = (
     <SidebarControl
       render={tooltip ? <TooltipTrigger render={render} /> : render}
@@ -732,7 +854,7 @@ function SidebarMenuButton({
       data-size={size}
       aria-label={label || undefined}
       scale={scale}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      className={cn(sidebarMenuButtonVariants({ size, variant }), className)}
       {...props}
       aria-disabled={disabled || props["aria-disabled"]}
       tabIndex={disabled ? -1 : props.tabIndex}
@@ -741,8 +863,13 @@ function SidebarMenuButton({
       {content}
     </SidebarControl>
   );
-  if (!tooltip) return button;
+
+  if (!tooltip) {
+    return button;
+  }
+
   const info = typeof tooltip === "string" ? { children: tooltip } : tooltip;
+
   return (
     <Tooltip>
       {button}
@@ -755,8 +882,9 @@ function SidebarMenuButton({
       />
     </Tooltip>
   );
-}
-function SidebarMenuAction({
+};
+
+const SidebarMenuAction = ({
   className,
   showOnHover = false,
   scale: explicit,
@@ -764,8 +892,9 @@ function SidebarMenuAction({
   ...props
 }: SidebarControlProps & {
   showOnHover?: boolean;
-}) {
+}) => {
   const { scale } = useSidebarContext();
+
   return (
     <SidebarControl
       type="button"
@@ -773,7 +902,7 @@ function SidebarMenuAction({
       data-sidebar="menu-action"
       data-show-on-hover={showOnHover || undefined}
       scale={explicit ?? scale}
-      className={cn(`mc-sidebar-menu-action ${""}`, className)}
+      className={cn(`mc-sidebar-menu-action`, className)}
       style={minecraftStyle(style, (__style) => ({
         position: "absolute",
         right: 2 * (explicit ?? scale),
@@ -783,8 +912,9 @@ function SidebarMenuAction({
       {...props}
     />
   );
-}
-function SidebarMenuBadge({
+};
+
+const SidebarMenuBadge = ({
   className,
   maxWidth,
   align,
@@ -792,8 +922,9 @@ function SidebarMenuBadge({
 }: MinecraftProps<"div"> & {
   maxWidth?: number;
   align?: "left" | "center";
-}) {
+}) => {
   const { scale } = useSidebarContext();
+
   return (
     <MinecraftDisclosureText
       data-slot="sidebar-menu-badge"
@@ -801,26 +932,28 @@ function SidebarMenuBadge({
       scale={scale}
       maxWidth={maxWidth}
       align={align}
-      className={cn(`mc-sidebar-menu-badge ${""}`, className)}
+      className={cn(`mc-sidebar-menu-badge`, className)}
       {...props}
     />
   );
-}
-function SidebarMenuSkeleton({
+};
+
+const SidebarMenuSkeleton = ({
   className,
   showIcon = false,
   style,
   ...props
 }: MinecraftProps<"div"> & {
   showIcon?: boolean;
-}) {
+}) => {
   const { scale } = useSidebarContext();
+
   return (
     <div
       data-slot="sidebar-menu-skeleton"
       data-sidebar="menu-skeleton"
       aria-busy="true"
-      className={cn(`mc-sidebar-menu-skeleton ${""}`, className)}
+      className={cn(`mc-sidebar-menu-skeleton`, className)}
       style={minecraftStyle(
         style,
         (__style) =>
@@ -846,28 +979,31 @@ function SidebarMenuSkeleton({
       />
     </div>
   );
-}
-function SidebarMenuSub({ className, ...props }: MinecraftProps<"ul">) {
+};
+
+const SidebarMenuSub = ({ className, ...props }: MinecraftProps<"ul">) => {
   return (
     <ul
       data-slot="sidebar-menu-sub"
       data-sidebar="menu-sub"
-      className={cn(`mc-sidebar-menu-sub ${""}`, className)}
+      className={cn(`mc-sidebar-menu-sub`, className)}
       {...props}
     />
   );
-}
-function SidebarMenuSubItem({ className, ...props }: MinecraftProps<"li">) {
+};
+
+const SidebarMenuSubItem = ({ className, ...props }: MinecraftProps<"li">) => {
   return (
     <li
       data-slot="sidebar-menu-sub-item"
       data-sidebar="menu-sub-item"
-      className={cn(`mc-sidebar-menu-sub-item ${""}`, className)}
+      className={cn(`mc-sidebar-menu-sub-item`, className)}
       {...props}
     />
   );
-}
-function SidebarMenuSubButton({
+};
+
+const SidebarMenuSubButton = ({
   render,
   isActive = false,
   className,
@@ -877,7 +1013,7 @@ function SidebarMenuSubButton({
 }: MinecraftPolymorphicProps<"a"> & {
   isActive?: boolean;
   size?: "default";
-}) {
+}) => {
   return (
     <SidebarMenuButton
       {...(props as SidebarMenuButtonProps)}
@@ -887,12 +1023,13 @@ function SidebarMenuSubButton({
       aria-disabled={props["aria-disabled"]}
       data-slot="sidebar-menu-sub-button"
       data-sidebar="menu-sub-button"
-      className={cn(`mc-sidebar-menu-sub-button ${""}`, className)}
+      className={cn(`mc-sidebar-menu-sub-button`, className)}
     >
       {children}
     </SidebarMenuButton>
   );
-}
+};
+
 export {
   Sidebar,
   SidebarContent,

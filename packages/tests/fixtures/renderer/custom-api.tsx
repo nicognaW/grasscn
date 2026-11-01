@@ -6,18 +6,24 @@ import { PlayerList } from "@grasscn/web/ui/player-list";
 import { Trading } from "@grasscn/web/ui/trading";
 import * as React from "react";
 
-export function CustomApiFixture() {
-  const tree = React.useRef<HTMLDivElement>(null),
-    hotbar = React.useRef<HTMLDivElement>(null);
-  const [event, setEvent] = React.useState(""),
-    [cancel, setCancel] = React.useState(false);
+export const CustomApiFixture = () => {
+  const tree = React.useRef<HTMLDivElement>(null);
+  const hotbar = React.useRef<HTMLDivElement>(null);
+
+  const [event, setEvent] = React.useState("");
+  const [cancel, setCancel] = React.useState(false);
+
   return (
     <>
       <button onClick={() => tree.current?.focus()}>Focus tree by ref</button>
       <button onClick={() => hotbar.current?.querySelector("button")?.focus()}>
         Focus hotbar by ref
       </button>
-      <button onClick={() => setCancel((value) => !value)}>
+      <button
+        onClick={() => {
+          setCancel((value) => !value);
+        }}
+      >
         Toggle cancellation
       </button>
       <output id="custom-api-event">{event}</output>
@@ -26,62 +32,88 @@ export function CustomApiFixture() {
         nodes={[{ id: "root", title: "Root", x: 0, y: 0 }]}
         defaultPan={{ x: 20, y: 20 }}
         onClickCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onSelectedIdChange={(id) => setEvent(`tree:${id}`)}
+        onSelectedIdChange={(id) => {
+          setEvent(`tree:${id}`);
+        }}
       />
       <Hotbar
         ref={hotbar}
         onClickCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
         onWheelCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onValueChange={(value) => setEvent(`slot:${value}`)}
+        onValueChange={(value) => {
+          setEvent(`slot:${value}`);
+        }}
       />
       <MinecraftMap
-        pixels={new Uint8Array(16384)}
+        pixels={new Uint8Array(16_384)}
         onClick={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onMapClick={(point) => setEvent(`map:${point.x},${point.y}`)}
+        onMapClick={(point) => {
+          setEvent(`map:${point.x},${point.y}`);
+        }}
       />
       <Book
         pages={["First", "Second"]}
         turnSound={false}
         onClickCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onPageChange={(page) => setEvent(`page:${page}`)}
+        onPageChange={(page) => {
+          setEvent(`page:${page}`);
+        }}
       />
       <PlayerList
         players={[{ id: "sample", name: "Sample player" }]}
         onClickCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onPlayerSelect={(id) => setEvent(`player:${id}`)}
+        onPlayerSelect={(id) => {
+          setEvent(`player:${id}`);
+        }}
       />
       <Trading
         offers={[
           {
+            cost: { icon: null, label: "Cost" },
             id: "first",
             label: "First offer",
-            cost: { label: "Cost", icon: null },
-            result: { label: "Reward", icon: null },
+            result: { icon: null, label: "Reward" },
           },
           {
+            cost: { icon: null, label: "Cost" },
             id: "second",
             label: "Second offer",
-            cost: { label: "Cost", icon: null },
-            result: { label: "Reward", icon: null },
+            result: { icon: null, label: "Reward" },
           },
         ]}
         onClickCapture={(event) => {
-          if (cancel) event.preventDefault();
+          if (cancel) {
+            event.preventDefault();
+          }
         }}
-        onSelectedIdChange={(id) => setEvent(`trade:${id}`)}
+        onSelectedIdChange={(id) => {
+          setEvent(`trade:${id}`);
+        }}
       />
     </>
   );
-}
+};

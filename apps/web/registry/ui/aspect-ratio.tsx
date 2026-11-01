@@ -1,14 +1,15 @@
 import * as React from "react";
 
 import { minecraftStyle } from "./minecraft-render";
+
 /** Unskinned layout; original pixel artwork belongs to its children. */
-function AspectRatio({
+const AspectRatio = ({
   ratio = 1,
   style,
   ...props
 }: React.ComponentProps<"div"> & {
   ratio?: number;
-}) {
+}) => {
   return (
     <div
       data-slot="aspect-ratio"
@@ -19,5 +20,6 @@ function AspectRatio({
       {...props}
     />
   );
-}
+};
+
 export { AspectRatio };
