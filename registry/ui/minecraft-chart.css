@@ -46,35 +46,24 @@
 @layer components{.mc-chart-text>.mc-bitmap{vertical-align:top}}
 
 @layer components {
-  .mc-pixel-chart { min-width:calc(80 * var(--mc-pixel)); width:100%; color:#fff; --mc-pixel:calc(1px * var(--mc-scale,2)); }
-  .mc-pixel-chart-plot { position:relative; width:100%; outline:none; }
-  .mc-pixel-chart-plot:focus-visible { outline:var(--mc-pixel) solid white; outline-offset:calc(2 * var(--mc-pixel)); }
-  .mc-pixel-chart-plot canvas { display:block; image-rendering:pixelated; max-width:none; }
-  .mc-pixel-chart-label { position:absolute; pointer-events:none; white-space:nowrap; }
-  .mc-pixel-chart-key { display:flex; flex-wrap:wrap; gap:calc(6 * var(--mc-pixel)) calc(12 * var(--mc-pixel)); margin-top:calc(7 * var(--mc-pixel)); }
-  .mc-pixel-chart-key>span { display:flex; align-items:center; gap:calc(4 * var(--mc-pixel)); }
-  .mc-pixel-chart-key i { width:calc(5 * var(--mc-pixel)); height:calc(5 * var(--mc-pixel)); flex:none; }
-  .mc-pixel-chart-readout { min-height:calc(22 * var(--mc-pixel)); margin-top:calc(8 * var(--mc-pixel)); }
-  .mc-pixel-chart-readout .mc-label { white-space:normal; overflow-wrap:anywhere; }
-  .mc-pixel-chart-empty { position:absolute; inset:0; display:grid; place-items:center; }
-  .mc-pixel-chart-data { font-family:"Minecraft Pilot 26.2",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(12 * var(--mc-pixel)); }
-  .mc-pixel-chart-data summary { cursor:pointer; width:fit-content; }
-  .mc-pixel-chart-data>div { overflow:auto; margin-top:calc(6 * var(--mc-pixel)); }
-  .mc-pixel-chart-data table { border-collapse:collapse; width:100%; }
-  .mc-pixel-chart-data th,.mc-pixel-chart-data td { border:var(--mc-pixel) solid #555; padding:calc(3 * var(--mc-pixel)); text-align:left; }
-  .mc-pixel-chart-data caption { text-align:left; margin-bottom:calc(4 * var(--mc-pixel)); }
+  .mc-chart-data { font-family:"Minecraft Pilot 26.2",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(12 * var(--mc-pixel)); }
+  .mc-chart-data summary { cursor:pointer; width:fit-content; }
+  .mc-chart-data>div { overflow:auto; margin-top:calc(6 * var(--mc-pixel)); }
+  .mc-chart-data table { border-collapse:collapse; width:100%; }
+  .mc-chart-data th,.mc-chart-data td { border:var(--mc-pixel) solid #555; padding:calc(3 * var(--mc-pixel)); text-align:left; }
+  .mc-chart-data caption { text-align:left; margin-bottom:calc(4 * var(--mc-pixel)); }
 }
 
 @layer components {
-  :is(.mc-pixel-chart-data,.mc-chart-native-examples)>summary {
+  :is(.mc-chart-data,.mc-chart-native-examples)>summary {
     display:flex; align-items:flex-start; gap:calc(4px * var(--mc-scale,2)); list-style:none; cursor:pointer;
   }
-  :is(.mc-pixel-chart-data,.mc-chart-native-examples)>summary::marker {content:"";}
-  :is(.mc-pixel-chart-data,.mc-chart-native-examples)>summary::-webkit-details-marker {display:none;}
-  :is(.mc-pixel-chart-data,.mc-chart-native-examples)>summary::before {
+  :is(.mc-chart-data,.mc-chart-native-examples)>summary::marker {content:"";}
+  :is(.mc-chart-data,.mc-chart-native-examples)>summary::-webkit-details-marker {display:none;}
+  :is(.mc-chart-data,.mc-chart-native-examples)>summary::before {
     content:""; display:block; flex:none; width:calc(7px * var(--mc-scale,2)); height:calc(7px * var(--mc-scale,2));
     margin-top:calc(1px * var(--mc-scale,2)); image-rendering:pixelated;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath fill='white' d='M1 0h1v1h1v1h1v1h1v1H4v1H3v1H2v1H1z'/%3E%3C/svg%3E") 0 0/100% 100%;
   }
-  :is(.mc-pixel-chart-data,.mc-chart-native-examples)[open]>summary::before {transform:rotate(90deg);}
+  :is(.mc-chart-data,.mc-chart-native-examples)[open]>summary::before {transform:rotate(90deg);}
 }

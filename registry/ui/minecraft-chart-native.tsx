@@ -1,5 +1,6 @@
 "use client";
-import { minecraftStyle } from "./minecraft-render";
+import { useChartWidth, useChartHeight, useYAxisScale } from "recharts";
+import { useChartGeometry, chartColorChannels } from "./minecraft-chart-context";
 import * as React from "react";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
@@ -31,77 +32,35 @@ function NativeChartText({ text, x, y, color = 0xffffff, shadow = true, scale, }
       {/[^\x00-\x7f]/.test(text) ? (<MinecraftColorUnicodeLabel text={text}/>) : (<MinecraftText>{text}</MinecraftText>)}
     </span>);
 }
-function FpsBarColor(nanos: number) {
+/** Minecraft's frame-duration gradient; input is in nanoseconds. */
+export function chartFpsColor(nanos: number) {
     const ms = Math.max(0, Math.min(56, nanos / 1e6)), t = f(ms < 28 ? ms / 28 : (ms - 28) / 28), a = ms < 28 ? [0, 255, 0] : [255, 255, 0], b = ms < 28 ? [255, 255, 0] : [255, 0, 0];
     return `rgb(${a.map((v, i) => v + Math.floor(f(t * (b[i] - v)))).join(",")})`;
 }
-type MinecraftFpsChartProps = React.ComponentProps<"div"> & {
-    samples: readonly number[];
-    width?: number;
+/** Decoration inside a Recharts BarChart. The bar shape supplies engine geometry. */
+function ChartFpsFrame({ labels = [], guides, framerateLimit = 260 }: {
+    labels?: readonly string[];
+    guides?: readonly { label: string; value: number }[];
     framerateLimit?: number;
-    scale?: 1 | 2 | 3;
-};
-type NativeBarPresentation = {
-    visible: readonly number[];
-    labels: readonly string[];
-    guides: readonly {
-        label: string;
-        nanos: number;
-    }[];
-};
-function MinecraftFpsChart(props: MinecraftFpsChartProps) {
-    return <NativeFpsPlot {...props}/>;
-}
-function NativeFpsPlot({ presentation, samples, width = 242, framerateLimit = 260, scale = 2, style, ...props }: MinecraftFpsChartProps & {
-    presentation?: NativeBarPresentation;
 }) {
-    if (!Number.isInteger(width) || width < 3 || width > 242)
-        throw new Error("Native FPS width must be an integer from3to242");
-    const retained = samples.slice(-240);
-    if (retained.some((v) => !Number.isFinite(v) || v < 0))
-        throw new Error("Frame samples must be finite nonnegative nanoseconds");
-    const visible = presentation?.visible ?? retained.slice(Math.max(0, 240 - (width - 2))), ms = (n: number) => `${Math.floor(n / 1e6 + 0.5)} ms`, labels = presentation?.labels ?? (visible.length
-        ? [
-            `${ms(Math.min(...visible))} min`,
-            `${ms(visible.reduce((a, b) => a + b, 0) / visible.length)} avg`,
-            `${ms(Math.max(...visible))} max`,
-        ]
-        : []), line = (y: number, color: string, key: string) => (<span key={key} className="mc-chart-rect" style={{
-            left: 0,
-            top: y * scale,
-            width: width * scale,
-            height: scale,
-            background: color,
-        }}/>), shade = (text: string, y: number) => (<React.Fragment key={text}>
-        <span className="mc-chart-rect" style={{
-            left: scale,
-            top: y * scale,
-            width: (widthOf(text) + 1) * scale,
-            height: 9 * scale,
-            background: "rgba(80,80,80,0.5647058823529412)",
-        }}/>
-        {visible.map((sample, i) => {
-            const h = Math.floor(((sample / 1e6) * 60) / (1000 / 30) + 0.5), top = Math.max(y, 69 - h), bottom = Math.min(y + 9, 69);
-            if (i + 1 >= widthOf(text) + 2 || bottom <= top)
-                return null;
-            const rgb = FpsBarColor(sample).match(/\d+/g)!.map(Number), mixed = rgb.map((v) => Math.round((80 * 144) / 255 + (v * 111) / 255));
-            return (<span key={i} className="mc-chart-rect" style={{
-                    left: (i + 1) * scale,
-                    top: top * scale,
-                    width: scale,
-                    height: (bottom - top) * scale,
-                    background: `rgb(${mixed.join(",")})`,
-                }}/>);
+    const {entries,scale} = useChartGeometry();
+    const chartWidth = useChartWidth() ?? 0, chartHeight = useChartHeight() ?? 0;
+    const width = chartWidth / scale;
+    const bars = entries.filter(item => item.kind === "bar");
+    const host = React.useRef<HTMLDivElement>(null);
+    const yScale = useYAxisScale();
+    const presentation = guides ? {guides} : undefined;
+    const line = (y: number, color: string, key: string) => (<span key={key} className="mc-chart-rect" style={{left:0, top:y*scale,width:width*scale,height:scale,background:color}}/>), shade = (text: string, y: number) => (<React.Fragment key={text}>
+        <span className="mc-chart-rect" style={{left:scale,top:y*scale,width:(widthOf(text)+1)*scale,height:9*scale,background:"rgba(80,80,80,0.5647058823529412)"}}/>
+        {bars.map((bar, i) => {
+            const h = Math.round(bar.height/scale), baseline=Math.round((bar.y+bar.height)/scale), top = Math.max(y,baseline-h), bottom = Math.min(y+9,baseline), left=Math.round(bar.x/scale), width=Math.min(Math.round(bar.width/scale),widthOf(text)+2-left);
+            if (width<=0 || bottom<=top) return null;
+            const rgb = chartColorChannels(bar.fill, host.current), mixed = rgb.map(v=>Math.round((80*144)/255+(v*111)/255));
+            return <span key={i} className="mc-chart-rect" style={{left:left*scale,top:top*scale,width:width*scale,height:(bottom-top)*scale,background:`rgb(${mixed.join(",")})`}}/>;
         })}
-        <NativeChartText text={text} x={2} y={y + 1} color={0xe0e0e0} shadow={false} scale={scale}/>
+        <NativeChartText text={text} x={2} y={y+1} color={0xe0e0e0} shadow={false} scale={scale}/>
       </React.Fragment>);
-    return (<div role="img" aria-label="Frame-time chart" data-slot="minecraft-fps-chart" style={minecraftStyle(style, __style => ({
-        position: "relative",
-        width: width * scale,
-        height: 69 * scale,
-        "--mc-scale": scale,
-        ...__style
-    } as React.CSSProperties))} {...props}>
+    return <foreignObject x={0} y={0} width={chartWidth} height={chartHeight} style={{pointerEvents:"none",overflow:"visible"}}><div ref={host} data-slot="chart-fps-frame" data-mc-ready={bars.length>0} style={{position:"relative",width:chartWidth,height:chartHeight}}>
       <span className="mc-chart-rect" style={{
             left: 0,
             top: 9 * scale,
@@ -109,15 +68,9 @@ function NativeFpsPlot({ presentation, samples, width = 242, framerateLimit = 26
             height: 60 * scale,
             background: "rgba(80,80,80,0.5647058823529412)",
         }}/>
-      {visible.map((sample, i) => {
-            const h = Math.floor(((sample / 1e6) * 60) / (1000 / 30) + 0.5);
-            return (<span key={i} className="mc-chart-rect" style={{
-                    left: (i + 1) * scale,
-                    top: (69 - h) * scale,
-                    width: scale,
-                    height: h * scale,
-                    background: FpsBarColor(sample),
-                }}/>);
+      {bars.map((bar, i) => {
+            const h = Math.round(bar.height / scale);
+            return <span key={i} className="mc-chart-rect" style={{left: Math.round(bar.x / scale)*scale, top:(Math.round((bar.y+bar.height)/scale)-h)*scale,width:Math.round(bar.width/scale)*scale,height:h*scale,background:bar.fill}}/>;
         })}
       {line(9, "white", "top")}
       {line(68, "white", "bottom")}
@@ -141,72 +94,26 @@ function NativeFpsPlot({ presentation, samples, width = 242, framerateLimit = 26
                     ? Math.floor(width / 2) - Math.floor(widthOf(text) / 2)
                     : width - widthOf(text) - 2} y={0} color={0xe0e0e0} scale={scale}/>))}
       {presentation ? presentation.guides.map((guide, index) => {
-            const h = Math.floor(((guide.nanos / 1e6) * 60) / (1000 / 30) + 0.5);
-            const y = Math.max(9, Math.min(68, 69 - h));
+            const y = Math.max(9,Math.min(68,Math.round(Number(yScale?.(guide.value) ?? 9 * scale) / scale)));
             return <React.Fragment key={index}>{line(y, "white", `guide-${index}`)}{shade(guide.label, Math.min(59, y + 1))}</React.Fragment>;
         }) : <>{shade("30 FPS", 10)}{shade("60 FPS", 40)}{line(39, "white", "sixty")}</>}
       {framerateLimit > 0 && framerateLimit <= 250
             ? line(68 -
                 Math.floor(((1e9 / framerateLimit / 1e6) * 60) / (1000 / 30) + 0.5), "#00ffff", "cap")
             : null}
-    </div>);
+    </div></foreignObject>;
 }
-export type MinecraftMetricChartProps = Omit<MinecraftFpsChartProps, "samples" | "framerateLimit"> & {
-    samples: readonly number[];
-    domain: readonly [
-        number,
-        number
-    ];
-    unit?: string;
-    formatValue?: (value: number) => string;
-    guides?: readonly {
-        value: number;
-        label?: string;
-    }[];
-};
-/** Native F3 bar appearance with explicit web-metric normalization and captions. */
-function MinecraftMetricChart({ samples, domain, unit = "", formatValue, guides, width = 242, ...props }: MinecraftMetricChartProps) {
-    const [minimum, maximum] = domain, span = maximum - minimum;
-    if (!Number.isFinite(minimum) || !Number.isFinite(maximum) || span <= 0)
-        throw new Error("Metric domain must be finite and increasing");
-    if (samples.some(value => !Number.isFinite(value)))
-        throw new Error("Metric samples must be finite");
-    if (guides?.some(guide => !Number.isFinite(guide.value) || guide.value < minimum || guide.value > maximum))
-        throw new Error("Metric guides must be inside the domain");
-    const visible = samples.slice(-Math.min(240, width - 2));
-    const normalize = (value: number) => Math.max(0, Math.min(1, (value - minimum) / span)) * (1000 / 30) * 1e6;
-    const format = (value: number) => formatValue?.(value) ?? `${Math.round(value)}${unit ? ` ${unit}` : ""}`;
-    const presentation: NativeBarPresentation = {
-        visible: visible.map(normalize),
-        labels: visible.length ? [`${format(Math.min(...visible))} min`, `${format(visible.reduce((sum, value) => sum + value, 0) / visible.length)} avg`, `${format(Math.max(...visible))} max`] : [],
-        guides: (guides ?? [{ value: maximum }, { value: minimum + span / 2 }]).map(guide => ({ label: guide.label ?? format(guide.value), nanos: normalize(guide.value) })),
-    };
-    return <NativeFpsPlot aria-label="Metric chart" data-slot="minecraft-metric-chart" data-mc-domain={`${minimum},${maximum}`} {...props} width={width} samples={presentation.visible} framerateLimit={260} presentation={presentation}/>;
-}
-export { MinecraftMetricChart };
-type MinecraftProfilerDatum = {
-    name: string;
-    percentage: number;
-    globalPercentage?: number;
-    count?: number;
-};
-type MinecraftProfilerChartProps = React.ComponentProps<"div"> & {
-    data: readonly MinecraftProfilerDatum[];
-    rootName?: string;
-    globalPercentage?: number;
-    scale?: 1 | 2 | 3;
-};
-function profileColor(name: string) {
+export function chartProfilerColor(name: string) {
     let hash = 0;
     for (let i = 0; i < name.length; i++)
         hash = (Math.imul(hash, 31) + name.charCodeAt(i)) | 0;
-    return ((hash & 0xaaaaaa) + 0x444444) & 0xffffff;
+    return cssColor(((hash & 0xaaaaaa) + 0x444444) & 0xffffff);
 }
 const sin = new Float32Array(65536);
 for (let i = 0; i < sin.length; i++)
     sin[i] = Math.sin((i * Math.PI * 2) / 65536);
 const nativeSin = (angle: number) => sin[Math.trunc(angle * 10430.378350470453) & 65535], nativeCos = (angle: number) => sin[Math.trunc(angle * 10430.378350470453 + 16384) & 65535];
-function paintProfiler(canvas: HTMLCanvasElement, data: readonly MinecraftProfilerDatum[], scale: number) {
+function paintProfiler(canvas: HTMLCanvasElement, data: readonly { name:string; percentage:number; sweep:number; start:number; fill:string }[], scale: number) {
     const surface = document.createElement("canvas");
     surface.width = 260 * scale;
     surface.height = 114 * scale;
@@ -245,9 +152,9 @@ function paintProfiler(canvas: HTMLCanvasElement, data: readonly MinecraftProfil
         gl.disable(gl.BLEND);
         gl.disable(gl.CULL_FACE);
         const tops: number[] = [], sides: number[] = [];
-        let start = 0;
+
         for (const item of data) {
-            const percentage = item.percentage, steps = Math.floor(percentage / 4) + 1, color = profileColor(item.name), rgb = [(color >> 16) & 255, (color >> 8) & 255, color & 255], dark = rgb.map((v) => Math.floor((v * 128) / 255));
+            const start = item.start, percentage = item.sweep, steps = Math.floor(Math.abs(percentage) / 4) + 1, rgb = chartColorChannels(item.fill, canvas), dark = rgb.map((v) => Math.floor((v * 128) / 255));
             const point = (i: number) => {
                 const a = f(((start + (percentage * i) / steps) * 6.2831854820251465) / 100);
                 return [f(nativeSin(a) * 105), f(f(nativeCos(a) * 105) * 0.5)];
@@ -268,7 +175,7 @@ function paintProfiler(canvas: HTMLCanvasElement, data: readonly MinecraftProfil
                 triangle(sides, a, ab, bb, dark);
                 triangle(sides, a, bb, b, dark);
             }
-            start += percentage;
+
         }
         const buffer = gl.createBuffer()!;
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -314,52 +221,55 @@ function paintProfiler(canvas: HTMLCanvasElement, data: readonly MinecraftProfil
         gl.getExtension("WEBGL_lose_context")?.loseContext();
     }
 }
-function MinecraftProfilerChart({ data, rootName = "root", globalPercentage = 100, scale = 2, style, ...props }: MinecraftProfilerChartProps) {
+/** Header, legend and batched pixel surface for Recharts Pie shapes. */
+function ChartProfilerFrame({rootName="root",globalPercentage=100}: {rootName?:string;globalPercentage?:number}) {
+    const {entries,scale,revision}=useChartGeometry();
+    const sectors=entries.filter(item=>item.kind==="sector");
+    const key=JSON.stringify(sectors);
+    const data=React.useMemo(()=>sectors.map(item=>({name:item.name,percentage:item.percent*100,sweep:(item.endAngle-item.startAngle)/360*100,start:(item.startAngle+90)/360*100,globalPercentage:item.globalPercentage,fill:item.fill})),[key]);
+    const unit = sectors[0] ? sectors[0].outerRadius/105 : scale;
+    const width=useChartWidth()??0,height=useChartHeight()??0;
     const canvas = React.useRef<HTMLCanvasElement>(null), [ready, setReady] = React.useState(false);
     React.useLayoutEffect(() => {
+        if (!data.length) return;
         let disposed = false, frame = 0;
         setReady(false);
         const render = () => {
             if (disposed)
                 return;
-            if (paintProfiler(canvas.current!, data, scale))
+            if (canvas.current && paintProfiler(canvas.current, data, unit))
                 setReady(true);
             else
                 frame = requestAnimationFrame(render);
         };
         render();
         return () => { disposed = true; cancelAnimationFrame(frame); };
-    }, [data, scale]);
+    }, [data, unit, revision]);
     if (data.some((d) => !Number.isFinite(d.percentage) || d.percentage < 0))
         throw new Error("Profiler percentages must be finite and nonnegative");
-    const height = 139 + data.length * 9, percent = (v: number) => `${v.toFixed(2)}%`;
-    return (<div role="img" aria-label="Profiler chart" data-slot="minecraft-profiler-chart" data-mc-ready={ready} style={minecraftStyle(style, __style => ({
-        position: "relative",
-        width: 270 * scale,
-        height: height * scale,
-        background: "rgba(80,80,80,0.5647058823529412)",
-        "--mc-scale": scale,
-        ...__style
-    } as React.CSSProperties))} {...props}>
+    const percent = (v: number) => `${v.toFixed(2)}%`;
+    if(!sectors.length) return null;
+    const sector=sectors[0];
+    return <foreignObject x={0} y={0} width={width} height={height} style={{pointerEvents:"none",overflow:"visible"}}><div data-slot="chart-profiler-frame" data-mc-ready={ready} style={{position:"relative",width,height}}>
       <canvas key="profiler-2d-surface" ref={canvas} aria-hidden="true" style={{
             position: "absolute",
-            left: 5 * scale,
-            top: 15 * scale,
-            width: 260 * scale,
-            height: 114 * scale,
+            left: sector.cx - 130 * unit,
+            top: sector.cy - 52 * unit,
+            width: 260 * unit,
+            height: 114 * unit,
             imageRendering: "pixelated",
         }}/>
       <NativeChartText text={rootName} x={5} y={5} scale={scale}/>
       <NativeChartText text={percent(globalPercentage)} x={265 - widthOf(percent(globalPercentage))} y={5} scale={scale}/>
       {data.map((item, i) => {
-            const local = percent(item.percentage), global = percent(item.globalPercentage ?? item.percentage), y = 134 + i * 9, color = profileColor(item.name);
+            const rgb = chartColorChannels(item.fill, canvas.current), color = (rgb[0]<<16)|(rgb[1]<<8)|rgb[2];
+            const local = percent(item.percentage), global = percent(item.globalPercentage ?? item.percentage), y = 134 + i * 9;
             return (<React.Fragment key={i}>
             <NativeChartText text={`${item.name === "unspecified" ? "[?]" : `[${i + 1}]`} ${item.name}`} x={5} y={y} color={color} scale={scale}/>
             <NativeChartText text={local} x={215 - widthOf(local)} y={y} color={color} scale={scale}/>
             <NativeChartText text={global} x={265 - widthOf(global)} y={y} color={color} scale={scale}/>
           </React.Fragment>);
         })}
-    </div>);
+    </div></foreignObject>;
 }
-export { MinecraftFpsChart, MinecraftProfilerChart };
-export type { MinecraftFpsChartProps, MinecraftProfilerChartProps, MinecraftProfilerDatum, };
+export { ChartFpsFrame, ChartProfilerFrame };

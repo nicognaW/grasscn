@@ -7,8 +7,8 @@ for(const scale of [2] as const) for(const [device,width,height] of [["desktop",
   const native=page.locator('[data-chart-native-examples]'),fps=native.locator('[data-native-chart=fps]'),profiler=native.locator('[data-native-chart=profiler]');
   await expect(fps).toBeVisible();await expect(profiler).toBeVisible();
   expect(await native.locator('details').count()).toBe(0);
-  expect(await native.evaluate(n=>!!(n.compareDocumentPosition(document.querySelector('[data-slot="pixel-chart"]')!)&Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
-  await expect(profiler).toHaveAttribute('data-mc-ready','true');
+  expect(await native.evaluate(n=>!!(n.compareDocumentPosition(document.querySelector('[data-slot="chart-example"]')!)&Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+  await expect(profiler.locator('[data-slot=chart-profiler-frame]')).toHaveAttribute('data-mc-ready','true');
   const firstFps=await fps.screenshot(),firstProfiler=await profiler.screenshot();
   await native.getByRole('button',{name:'Next sample',exact:true}).click();
   await expect(page.getByLabel('Chart sample')).toHaveText('Sample 2');
@@ -35,6 +35,6 @@ for(const scale of [2] as const) for(const [device,width,height] of [["desktop",
   await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
   // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
   const after=(await popup.boundingBox())!;expect(after.y).toBeGreaterThanOrEqual(0);expect(after.y+after.height).toBeLessThanOrEqual(height);
-  await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toHaveAttribute('data-highlighted','');await page.keyboard.press('Enter');await expect(page.locator('[data-slot=pixel-chart]')).toHaveAttribute('data-chart-type','radial');
+  await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toHaveAttribute('data-highlighted','');await page.keyboard.press('Enter');await expect(page.locator('[data-slot=chart-example]')).toHaveAttribute('data-chart-type','radial');
  });
 }

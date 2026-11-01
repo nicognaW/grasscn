@@ -8,8 +8,8 @@ for (const scale of [2] as const) for (const container of ["narrow", "padded"] a
     await page.setViewportSize({width:1280,height:1000});
     await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
 
-    const chart = page.locator('[data-slot="pixel-chart"]');
-    await expect(chart).toHaveAttribute("data-mc-ready", "true");
+    const chart = page.locator('[data-slot="chart-example"]');
+    await expect(chart.locator("canvas")).toHaveAttribute("data-mc-ready", "true");
     // Isolate a real narrow/padded consumer container from unrelated page-header overflow.
     await chart.evaluate((node, {scale,container}) => {
       const wrapper = document.createElement("div");
@@ -21,7 +21,7 @@ for (const scale of [2] as const) for (const container of ["narrow", "padded"] a
       if (container === "padded") node.style.padding = `${7 * scale}px`;
     }, {scale,container});
     const canvas = chart.locator("canvas");
-    await expect.poll(async () => canvas.evaluate((node:HTMLCanvasElement) => node.width)).toBe(container === "narrow" ? 80 : 100);
+    await expect.poll(async () => canvas.evaluate((node:HTMLCanvasElement) => node.width)).toBe(container === "narrow" ? 38 : 52);
     const geometry = await canvas.evaluate((node:HTMLCanvasElement) => ({
       raster:[node.width,node.height],
       css:[node.getBoundingClientRect().width,node.getBoundingClientRect().height],

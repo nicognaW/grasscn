@@ -10,7 +10,8 @@ import { Slider } from "../registry/ui/slider";
 import { Label } from "../registry/ui/label";
 import { Avatar, AvatarImage } from "../registry/ui/avatar";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../registry/ui/select";
-import { MinecraftChart, MinecraftMetricChart, type MinecraftChartType } from "../registry/ui/chart";
+import { AnalyticsChartExample, type AnalyticsChartType } from "../registry/blocks/chart-analytics";
+import { FpsChartExample } from "../registry/blocks/chart-fps";
 import { Message, MessageContent, MessageGroup } from "../registry/ui/message";
 import { TitleScene } from "./title-scene";
 import { SyntaxCode } from "./syntax-code";
@@ -30,11 +31,11 @@ function Controls() {
  </Panel>;
 }
 function Analytics() {
-    const [type, setType] = React.useState<MinecraftChartType>("bar");
+    const [type, setType] = React.useState<AnalyticsChartType>("bar");
     return <Panel title="A good month to grow." description="Website traffic · January–June" tag="ANALYTICS">
   <div className="grass-stat-line"><strong>{traffic.reduce((sum, row) => sum + row.visitors, 0).toLocaleString("en-US")}</strong><span className="grass-positive">+18.6%</span></div>
   <div className="grass-inline grass-chart-tabs" aria-label="Traffic chart type">{(["bar", "area", "line"] as const).map(v => <Button key={v} scale={1} aria-pressed={type === v} onClick={() => setType(v)}>{(typeof v === "number" ? v : v[0]).toUpperCase() + v.slice(1)}</Button>)}</div>
-  <MinecraftChart aria-label="Website traffic" type={type} data={traffic} config={chartConfig} series={["visitors", "returning"]} scale={1} height={160}/>
+  <AnalyticsChartExample aria-label="Website traffic" type={type} data={traffic} config={chartConfig} series={["visitors", "returning"]} scale={1} height={160}/>
   <div className="grass-two-stats"><div><span>Conversion rate</span><strong>4.28%</strong></div><div><span>Avg. session</span><strong>3m 42s</strong></div></div>
   <a href="/charts" className="grass-text-link">Explore all charts</a>
  </Panel>;
@@ -90,7 +91,7 @@ function Performance() {
     const data = React.useMemo(() => Array.from({ length: 180 }, (_, i) => [42, 64, 53, 88, 69, 57, 82, 103, 71, 49, 60, 76][(i + sample) % 12]), [sample]);
     const container = React.useRef<HTMLDivElement>(null), [width, setWidth] = React.useState(140);
     React.useLayoutEffect(() => { const el = container.current!; const measure = () => setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth)))); measure(); const o = new ResizeObserver(measure); o.observe(el); return () => o.disconnect(); }, []);
-    return <Panel title="Old-school pixels. Live insights." description="API response time · last 180 requests" tag="VANILLA F3, REIMAGINED"><div className="grass-native-chart" ref={container}><MinecraftMetricChart aria-label="API response time example" samples={data} domain={[0, 150]} unit="ms" width={width} scale={1}/></div><div className="grass-panel-foot"><span className="grass-positive">All systems operational</span><button className="grass-text-link" onClick={() => setSample(v => v + 1)}>Refresh sample</button></div></Panel>;
+    return <Panel title="Old-school pixels. Live insights." description="API response time · last 180 requests" tag="VANILLA F3, REIMAGINED"><div className="grass-native-chart" ref={container}><FpsChartExample aria-label="API response time example" data={data.map(value=>({value}))} dataKey="value" domain={[0, 150]} formatValue={v=>`${Math.round(v)} ms`} guides={[{value:150,label:"150 ms"},{value:75,label:"75 ms"}]} width={width} scale={1}/></div><div className="grass-panel-foot"><span className="grass-positive">All systems operational</span><button className="grass-text-link" onClick={() => setSample(v => v + 1)}>Refresh sample</button></div></Panel>;
 }
 function Payout() {
     const [amount, setAmount] = React.useState(250), [saved, setSaved] = React.useState(false);

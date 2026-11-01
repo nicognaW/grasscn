@@ -1,6 +1,6 @@
 {
   "command": "shadcn add http://127.0.0.1:5173/r/trading.json --yes --overwrite",
-  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\base-ui-consumer",
+  "consumer": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\work\\upstream-alignment-consumer",
   "consumerRsc": false,
   "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
@@ -175,14 +175,14 @@
     {
       "path": "minecraft-trading.css",
       "sourcePath": "registry/ui/minecraft-trading.css",
-      "sourceSha256": "aaa6190c24580d194455f6793643baaffbf5e246f8ed55d5cad936d2d1476842",
-      "installedSha256": "aaa6190c24580d194455f6793643baaffbf5e246f8ed55d5cad936d2d1476842"
+      "sourceSha256": "5547f0f6e26657e7346ce9f341fab5fa0bd65ceb4c66d3729332b8ba5f067352",
+      "installedSha256": "5547f0f6e26657e7346ce9f341fab5fa0bd65ceb4c66d3729332b8ba5f067352"
     },
     {
       "path": "trading.tsx",
       "sourcePath": "registry/ui/trading.tsx",
-      "sourceSha256": "bb442c3cc668acfab182fffef40b3c2fd0706cb11442578d1ecc53ff4a53fa0b",
-      "installedSha256": "bb442c3cc668acfab182fffef40b3c2fd0706cb11442578d1ecc53ff4a53fa0b"
+      "sourceSha256": "a4089c33d30fab16bc66e2238f91ba66ce3cfca27f35f5e380675317fc780d35",
+      "installedSha256": "a4089c33d30fab16bc66e2238f91ba66ce3cfca27f35f5e380675317fc780d35"
     },
     {
       "path": "minecraft-render.tsx",
@@ -483,11 +483,11 @@
     "passed": true
   },
   "negativeControlMismatchedPixels": 1,
-  "browser": "156.0.4314.50",
+  "browser": "156.0.4314.58",
   "devicePixelRatio": 1,
   "viewport": [
     1536,
     900
   ],
-  "fixtureSha256": "342ad6219388794c21f428240bcec0bcbd4876963da009fc9d8478de2e06431f"
+  "fixtureSha256": "25a21c84e1dbfcb389a4e0313f4ae99c1cb9042fc6b0c1563a28eff50e08588d"
 }

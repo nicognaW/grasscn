@@ -5,7 +5,7 @@ for(const width of [320,390,768,1024,1565])test(`homepage examples render withou
  await page.setViewportSize({width,height:951});await page.goto(origin)
  await expect(page.getByRole('heading',{level:1})).toHaveText('grasscn')
  await expect(page.getByRole('region',{name:'Interactive application examples'}).getByRole('region')).toHaveCount(14)
- await expect(page.getByRole('img',{name:'API response time example',exact:true})).toBeVisible()
+ await expect(page.getByRole('application',{name:'API response time example',exact:true})).toBeVisible()
  await expect(page.getByRole('img',{name:'Sam Rivera',exact:true})).toBeVisible()
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
  const escaped=await page.locator('.grass-panel').evaluateAll(panels=>panels.flatMap(panel=>Array.from(panel.querySelectorAll('input:not([type=hidden]):not([aria-hidden=true]),textarea,button[data-slot]')).filter(el=>{
@@ -68,5 +68,5 @@ test('Minecraft-style title has a yellow splash and respects reduced motion',asy
  await expect(page.getByRole('heading',{level:1})).toHaveText('grasscn')
  await expect(page.locator('.grass-title-splash')).toHaveText('Now with components!')
  await expect(page.locator('.grass-title-splash')).toHaveAttribute('data-motion','paused')
- expect(await page.locator('.grass-title-splash .mc-bitmap').evaluate(el=>getComputedStyle(el).getPropertyValue('--mc-ink').trim())).toBe('#ffff00')
+ await expect(page.locator('.grass-title-splash .mc-glyph').first()).toHaveCSS('background-color','rgb(255, 255, 0)')
 })

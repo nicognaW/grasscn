@@ -18,7 +18,7 @@ for(const scale of [2])test(`Form embeds Field with accessible validation, CJK, 
  await name.fill('你');await form.getByRole('button',{name:'Save player',exact:true}).click();await expect(form.getByRole('alert').filter({hasText:'Use at least two characters'})).toBeVisible()
  await name.fill('你好世界');await world.fill('草地方块');await notes.fill('第一行\nSecond line\n第三行')
  await form.getByRole('button',{name:'Save player',exact:true}).click()
- await expect(card.getByLabel('Saved player')).toHaveText('你好世界');await expect(card.getByLabel('Saved world')).toHaveText('草地方块');await expect(name).toHaveAttribute('aria-invalid','false')
+ await expect(card.getByLabel('Saved player').locator(':scope > [data-slot=label] > .mc-text-accessible')).toHaveText('你好世界');await expect(card.getByLabel('Saved world').locator(':scope > [data-slot=label] > .mc-text-accessible')).toHaveText('草地方块');await expect(name).toHaveAttribute('aria-invalid','false')
  await expect(notes).toHaveValue('第一行\nSecond line\n第三行')
  for(const control of [name,world,notes]){await expect(control).toHaveAttribute('spellcheck','false');expect(await control.evaluate(n=>Number(getComputedStyle(n).getPropertyValue('--mc-scale')))).toBe(scale)}
  await card.getByRole('button',{name:'Disable fields',exact:true}).click()

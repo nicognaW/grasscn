@@ -1,3 +1,4 @@
+import {installedRegistryFile} from "./installed-registry-file.mjs"
 // The CLI may convert LF/CRLF on Windows; raw source and installed hashes remain recorded.
 import assert from "node:assert/strict"
 import { createHash } from "node:crypto"
@@ -30,10 +31,10 @@ const canonical = bytes => {
 const files = []
 for (const entry of item.files) {
   const filename = path.basename(entry.path)
-  const installed = await readFile(path.resolve(consumerDir, uiDirectory, filename))
+  const installed = await readFile(installedRegistryFile(entry, consumerDir, consumerSettings, uiDirectory))
   const source = await readFile(path.join(repo, entry.path))
   assert.ok(canonical(installed) === canonical(source), `${filename} changed beyond permitted CLI transforms`)
-  files.push({ path: filename, installedSha256: sha(installed), sourceSha256: sha(source), comparison: "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged" })
+  files.push({ path: filename, sourcePath: entry.path, installedSha256: sha(installed), sourceSha256: sha(source), comparison: "Equal except CLI line-ending conversion, comment removal and use-client removal for rsc:false; data URIs unchanged" })
 }
 let browser = await chromium.launch({ channel: "msedge" })
 const browserVersion = await browser.version()

@@ -22,7 +22,7 @@ type AdvancementPan = {
     x: number;
     y: number;
 };
-type AdvancementTreeProps = Omit<React.ComponentProps<"div">, "onSelect"> & {
+type AdvancementTreeProps = React.ComponentProps<"div"> & {
     nodes: readonly AdvancementNode[];
     scale?: 1 | 2 | 3;
     selectedId?: string;
@@ -35,7 +35,7 @@ type AdvancementTreeProps = Omit<React.ComponentProps<"div">, "onSelect"> & {
     height?: number;
     background?: string;
 };
-function AdvancementTree({ nodes, scale = 2, selectedId, defaultSelectedId, onSelectedIdChange, pan, defaultPan, onPanChange, width = 234, height = 113, background = advancementBackground, className, style, onKeyDown, onPointerDown, onPointerMove, onPointerUp, onPointerCancel, onLostPointerCapture, onClickCapture, onDragStart, ...props }: AdvancementTreeProps) {
+function AdvancementTree({ nodes, scale = 2, selectedId, defaultSelectedId, onSelectedIdChange, pan, defaultPan, onPanChange, width = 234, height = 113, background = advancementBackground, className, style, ref: forwardedRef, onKeyDown, onPointerDown, onPointerMove, onPointerUp, onPointerCancel, onLostPointerCapture, onClickCapture, onDragStart, ...props }: AdvancementTreeProps) {
     const ids = new Set<string>();
     for (const node of nodes) {
         if (ids.has(node.id))
@@ -71,6 +71,7 @@ function AdvancementTree({ nodes, scale = 2, selectedId, defaultSelectedId, onSe
         pan: AdvancementPan;
         id: number;
     } | null>(null), suppressClick = React.useRef(false), [isDragging, setIsDragging] = React.useState(false), [tooltipId, setTooltipId] = React.useState<string | null>(null);
+    React.useImperativeHandle(forwardedRef, () => root.current!, []);
     const position = pan ?? offset, current = selectedId ?? selection;
     const updatePan = (next: AdvancementPan) => {
         const value = { x: Math.floor(next.x), y: Math.floor(next.y) };
@@ -158,7 +159,7 @@ function AdvancementTree({ nodes, scale = 2, selectedId, defaultSelectedId, onSe
         }} onDragStart={event => { onDragStart?.(event); event.preventDefault(); }}>
   <div className="mc-advancement-plane" style={{ transform: `translate(${Math.floor(position.x) * scale}px,${Math.floor(position.y) * scale}px)` }}>
    <svg className="mc-advancement-links" aria-hidden="true" width={1} height={1}>{[true, false].map(outline => <g key={String(outline)} fill={outline ? "#000" : "#fff"}>{paths(outline).map((line, index) => <rect key={index} x={line.x * scale} y={line.y * scale} width={line.w * scale} height={line.h * scale}/>)}</g>)}</svg>
-   {visible.map(node => <Tooltip key={node.id} open={!isDragging && tooltipId === node.id} onOpenChange={open => setTooltipId(current => open ? node.id : current === node.id ? null : current)}><TooltipTrigger render={<button type="button" data-slot="advancement-node" data-completed={String(!!node.completed)} aria-label={`${node.title}${node.completed ? ", completed" : ""}`} aria-pressed={current === node.id} className="mc-advancement-node" style={{ left: node.px * scale, top: node.py * scale }} onClick={() => choose(node.id)} onKeyDown={event => {
+   {visible.map(node => <Tooltip key={node.id} open={!isDragging && tooltipId === node.id} onOpenChange={open => setTooltipId(current => open ? node.id : current === node.id ? null : current)}><TooltipTrigger render={<button type="button" data-slot="advancement-node" data-completed={String(!!node.completed)} aria-label={`${node.title}${node.completed ? ", completed" : ""}`} aria-pressed={current === node.id} className="mc-advancement-node" style={{ left: node.px * scale, top: node.py * scale }} onClick={event => { if (!event.defaultPrevented) choose(node.id); }} onKeyDown={event => {
                     const index = visible.findIndex(n => n.id === node.id);
                     let next = index;
                     if (event.key === "ArrowRight" || event.key === "ArrowDown")

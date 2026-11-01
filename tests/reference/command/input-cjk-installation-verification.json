@@ -2,134 +2,26 @@
   "command": "shadcn add http://127.0.0.1:5173/r/command.json --yes --overwrite",
   "consumer": "Separate initialized shadcn consumer with independent node_modules",
   "consumerRsc": false,
-  "browser": "156.0.4314.50",
+  "browser": "156.0.4314.58",
   "devicePixelRatio": 1,
   "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
   "files": [
     {
-      "path": "button.tsx",
-      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
-      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
       "path": "command.tsx",
-      "sourceSha256": "8b431645312a88de059051071d15872fad82410d7463a217d5e90e8421a45e16",
-      "installedSha256": "8b431645312a88de059051071d15872fad82410d7463a217d5e90e8421a45e16",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "dialog.tsx",
-      "sourceSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
-      "installedSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "input.tsx",
-      "sourceSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
-      "installedSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-assets.css",
-      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
-      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-button.css",
-      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-card-sprite.ts",
-      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
-      "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-card.css",
-      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
-      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "sourceSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+      "installedSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
       "path": "minecraft-command.css",
-      "sourceSha256": "c9adf1dc5d406fd45c7e23a802bf170d8286014f7114d580433f5f5511387d19",
-      "installedSha256": "c9adf1dc5d406fd45c7e23a802bf170d8286014f7114d580433f5f5511387d19",
+      "sourceSha256": "6a598b1d4aa05938bd142a5a426c2f2cfddeb83afada3767816719f04dbd3b69",
+      "installedSha256": "6a598b1d4aa05938bd142a5a426c2f2cfddeb83afada3767816719f04dbd3b69",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-dialog-atlas.ts",
-      "sourceSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
-      "installedSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-dialog-backdrop.tsx",
-      "sourceSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
-      "installedSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-dialog-gpu.ts",
-      "sourceSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
-      "installedSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-dialog-text.tsx",
-      "sourceSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
-      "installedSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-dialog-unicode.tsx",
-      "sourceSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
-      "installedSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-dialog.css",
-      "sourceSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
-      "installedSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-font.ts",
-      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
-      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-input-assets.ts",
-      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
-      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-input-paint.ts",
-      "sourceSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
-      "installedSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-input.css",
-      "sourceSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
-      "installedSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-menu-atlas.ts",
-      "sourceSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
-      "installedSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-menu-gpu.ts",
-      "sourceSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
-      "installedSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "path": "minecraft-menu.css",
+      "sourceSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "installedSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
@@ -145,81 +37,21 @@
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-menu.css",
-      "sourceSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
-      "installedSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "path": "minecraft-menu-gpu.ts",
+      "sourceSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "installedSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-separator-assets.ts",
-      "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
-      "installedSha256": "295c0a522e9adf21e9deafcaeda75b81d0ff4d28ae733d1c8d67e3c119d3347f",
+      "path": "minecraft-menu-atlas.ts",
+      "sourceSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
+      "installedSha256": "6a38e301fb52e739aba22d949addbc8d49a8d1ee48df82b40e2ec6cd18a7a44d",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-separator.css",
-      "sourceSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
-      "installedSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-sound-assets.ts",
-      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
-      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-sound.ts",
-      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-surface.css",
-      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-surface.tsx",
-      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
-      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-text-assets.css",
-      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-text.css",
-      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-text.tsx",
-      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
-      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-textarea-assets.ts",
-      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
-      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-unicode-label.tsx",
-      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
-      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
-      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
-    },
-    {
-      "path": "minecraft-unifont-atlas.ts",
-      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
-      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
+      "path": "minecraft-unifont.ts",
+      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
@@ -235,21 +67,39 @@
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-unifont-metrics.css",
-      "sourceSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
-      "installedSha256": "0f3b416997c0d0f9d8a10af97f9e9a7edceea3d3cf898e5bcea7661a014ce711",
+      "path": "minecraft-unifont-atlas.ts",
+      "sourceSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "installedSha256": "dc1a381d3d3ffc5fb86eb808d05817e6dd699e99995c2812ee71eafa6b82105a",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-unifont.ts",
-      "sourceSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
-      "installedSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "path": "minecraft-input-assets.ts",
+      "sourceSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "installedSha256": "cc06088daf9e8896d79b78cebd6bd4ab044cdbcad5ecc4c8818bc67ab77fae06",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "separator.tsx",
-      "sourceSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
-      "installedSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "path": "minecraft-font.ts",
+      "sourceSha256": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+      "installedSha256": "4454fccf812531f6dd7a1993ac1bdf3171316f62ce05a146da45133a482dbcbe",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.tsx",
+      "sourceSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "installedSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text.css",
+      "sourceSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "installedSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-text-assets.css",
+      "sourceSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "installedSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
@@ -259,9 +109,147 @@
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     },
     {
-      "path": "minecraft-base-command.tsx",
-      "sourceSha256": "c82287e030bfbc7982799928c73be913ad10cd06f7f5c08fd96444604eeb224f",
-      "installedSha256": "c82287e030bfbc7982799928c73be913ad10cd06f7f5c08fd96444604eeb224f",
+      "path": "minecraft-card-sprite.ts",
+      "sourceSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "installedSha256": "133e776f4ffd46af369631f8fcc94c5b0d7e4033f19f2783178335eff012d9cf",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.tsx",
+      "sourceSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "installedSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-surface.css",
+      "sourceSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "installedSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "separator.tsx",
+      "sourceSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "installedSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-separator.css",
+      "sourceSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "installedSha256": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-separator-assets.ts",
+      "sourceSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
+      "installedSha256": "295c0a522e9adf21e9deafcaeda75b81d0ff4d28ae733d1c8d67e3c119d3347f",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "button.tsx",
+      "sourceSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "installedSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unicode-label.tsx",
+      "sourceSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "installedSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound.ts",
+      "sourceSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "installedSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-sound-assets.ts",
+      "sourceSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "installedSha256": "b821515d8b222d05654cbd963e26adb7ea4f091e62378490d6f3e24215330673",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-button.css",
+      "sourceSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "installedSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-assets.css",
+      "sourceSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "installedSha256": "4b858520e6f3926c948be4f14be953a0f8e0f65151a093298f9f2b2a69d4ea6a",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "dialog.tsx",
+      "sourceSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
+      "installedSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog.css",
+      "sourceSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "installedSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-card.css",
+      "sourceSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "installedSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-textarea-assets.ts",
+      "sourceSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "installedSha256": "085e4535e78b6d26100fcd858844da06c59cdfb347042927567d36273a6abe33",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-backdrop.tsx",
+      "sourceSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "installedSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-text.tsx",
+      "sourceSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "installedSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-unicode.tsx",
+      "sourceSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "installedSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-atlas.ts",
+      "sourceSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "installedSha256": "392792832a2bf1c6a3b30817e9f75bb6cd60cddf9322382d890600645644a57e",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-dialog-gpu.ts",
+      "sourceSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "installedSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input.css",
+      "sourceSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "installedSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-unifont-metrics.css",
+      "sourceSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
+      "installedSha256": "0f3b416997c0d0f9d8a10af97f9e9a7edceea3d3cf898e5bcea7661a014ce711",
+      "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
+    },
+    {
+      "path": "minecraft-input-paint.ts",
+      "sourceSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+      "installedSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
       "comparison": "Canonical equality except CLI comment/use-client removal; original embedded asset bytes unchanged"
     }
   ],
