@@ -4,6 +4,8 @@ import path from "node:path";
 
 import { test as base } from "@playwright/test";
 import { PNG } from "pngjs";
+
+import { parseProductionIdentity } from "@grasscn/tests/verification-types";
 export * from "@playwright/test";
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -60,9 +62,9 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
             outputDirectory: info.outputDir,
             fixtureUrl: process.env.GRASSCN_FIXTURE_URL,
             previewUrl: process.env.GRASSCN_PREVIEW_URL,
-            websiteIdentity: process.env.GRASSCN_WEBSITE_IDENTITY
-              ? JSON.parse(process.env.GRASSCN_WEBSITE_IDENTITY)
-              : null,
+            websiteIdentity: process.env.GRASSCN_WEBSITE_IDENTITY === undefined
+              ? null
+              : parseProductionIdentity(process.env.GRASSCN_WEBSITE_IDENTITY),
             bundleSha256: process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,
             renderedUrl,
             subjectSlot,

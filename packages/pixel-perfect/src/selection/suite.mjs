@@ -14,7 +14,7 @@ export const caseKey = test => JSON.stringify([test.file, test.titlePath])
 
 /** @typedef {{file:string, titlePath:string[], package:string, projectName:string, id?:string}} BrowserCase */
 /** @typedef {{file:string, title:string, titlePath:string[], components:string[], evidence:{kind:string, reason:string, route?:string, url?:string, upstreamTest?:string}}} BaseCase */
-/** @returns {BaseCase[]} */
+/** @returns {BaseCase[]} Source-qualified default PPT catalogue. */
 export function baseCatalogue() {
   const data = JSON.parse(fs.readFileSync(catalogueFile, 'utf8'))
   if (data.schemaVersion !== 1 || !Array.isArray(data.cases) || !data.cases.length) throw Error('Invalid or empty Base catalogue')

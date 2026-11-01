@@ -1,7 +1,9 @@
 import { test, expect, type Locator, type Page } from "@grasscn/tests/test";
+
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 async function open(page: Page, name: string) {
   await page.goto(`${origin}docs/components/${name}`);
   return page.locator(".documentation-playground");

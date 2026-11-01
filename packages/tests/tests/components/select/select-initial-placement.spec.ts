@@ -10,7 +10,7 @@ for (const scale of [2] as const)
           height = mobile ? 844 : 955;
         await page.setViewportSize({ width, height });
         await page.goto(
-          `${preview.replace(/\/$/, "")}/docs/components/${route}`
+          `${preview.replace(/\/$/u, "")}/docs/components/${route}`
         );
         if (route === "date-picker")
           await page

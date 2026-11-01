@@ -15,9 +15,11 @@
     "types": [
       "node"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true
   },
   "include": [
-    "*.config.ts"
+    "*.config.ts",
+    "workspace-paths.mjs"
   ]
 }

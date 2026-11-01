@@ -7,6 +7,7 @@ import { testRoot, packageBin } from "@tests/paths";
 
 const args = process.argv.slice(2);
 const releaseForeground = foregroundLease();
+
 const execute = (command) => {
   const result = spawnSync(process.execPath, command, {
     cwd: testRoot,
@@ -19,7 +20,7 @@ const execute = (command) => {
 try {
   const units = fs
     .readdirSync(path.join(testRoot, "tests/unit"))
-    .filter((name) => /\.test\.[cm]?[jt]sx?$/.test(name))
+    .filter((name) => /\.test\.[cm]?[jt]sx?$/u.test(name))
     .map((name) => path.join(testRoot, "tests/unit", name));
   const unitStatus = args.includes("--list")
     ? 0

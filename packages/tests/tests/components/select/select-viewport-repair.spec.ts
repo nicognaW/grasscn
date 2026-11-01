@@ -10,7 +10,7 @@ for (const scale of [2] as const)
           height = short ? 280 : 844;
         await page.setViewportSize({ width, height });
         await page.goto(
-          `${preview.replace(/\/$/, "")}/docs/components/${position === "default" ? "chart" : "select"}`
+          `${preview.replace(/\/$/u, "")}/docs/components/${position === "default" ? "chart" : "select"}`
         );
         const trigger = page.locator(
           `[data-slot=select-trigger][aria-label="${position === "default" ? "Chart type" : "Demo game mode"}"]`

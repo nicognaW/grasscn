@@ -3,11 +3,11 @@ import path from "node:path"
 
 // Resolve CLI target placeholders using the fixture's configured UI location.
 /**
- * @param {{path: string, target?: string, type?: string}} entry
- * @param {string} consumer
- * @param {{aliases: Record<string,string>}} settings
- * @param {string} [uiDirectory]
- * @returns {string}
+ * @param {{path: string, target?: string, type?: string}} entry - Validated registry file definition.
+ * @param {string} consumer - Independent consumer project root.
+ * @param {{aliases: Record<string,string>}} settings - Consumer component aliases.
+ * @param {string} [uiDirectory] - Consumer UI output directory.
+ * @returns {string} Physical installed destination.
  */
 export function installedRegistryFile(entry, consumer, settings, uiDirectory = "src/components/ui") {
   const root = path.resolve(consumer)

@@ -14,6 +14,7 @@ export const pixelPerfectTestRoot = path.join(repoRoot, ".pixel-perfect-test");
 
 // Manifests keep their historical names; moving files does not change provenance.
 // Explicit fixture roots are isolated and must never fall back to repository files.
+/** @param {string} name - Historical repository-relative path. @param {string} [base] - Owning workspace root. @returns {string} Resolved absolute path. */
 export function resolveRepositoryPath(name, base = repoRoot) {
   if (path.isAbsolute(name)) return name;
   if (![repoRoot, testRoot, pixelPerfectRoot].includes(path.resolve(base)))
@@ -37,7 +38,9 @@ export function resolveRepositoryPath(name, base = repoRoot) {
     logical.startsWith("dist/")
   )
     return path.resolve(webRoot, logical);
-  if (logical === "scripts/serve.mjs") return path.resolve(webRoot, logical);
+  if (logical === "scripts/serve.mjs") {
+    return path.resolve(webRoot, logical);
+  }
   if (logical === "tests/fixture" || logical.startsWith("tests/fixture/"))
     return path.resolve(
       fixtureRoot,
