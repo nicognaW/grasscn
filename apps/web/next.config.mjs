@@ -19,4 +19,9 @@ export default withMDX({
   },
   turbopack: { root: workspaceRoot },
   outputFileTracingRoot: workspaceRoot,
+  webpack(config, { dev }) {
+    // Serializing the large development pack retains duplicate source buffers.
+    if (dev) config.cache = false;
+    return config;
+  },
 });
