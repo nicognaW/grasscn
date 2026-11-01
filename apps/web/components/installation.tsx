@@ -26,7 +26,11 @@ export async function Installation({
       <InstallationTabs
         cli={<InstallationCommand name={name} />}
         manual={
-          <ManualInstallation manifest={manifest} initialFile={initialFile} />
+          <ManualInstallation
+            key={`${name}:${initialFile ?? ""}`}
+            manifest={manifest}
+            initialFile={initialFile}
+          />
         }
       />
     </section>
