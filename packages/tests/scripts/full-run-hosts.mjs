@@ -4,21 +4,20 @@ import {readFile} from 'node:fs/promises'
 import {createConnection} from 'node:net'
 import {serveProductionFixture} from './production-fixture.mjs'
 import {webRoot} from '../../../workspace-paths.mjs'
+import {serveNextProduction} from './next-production.mjs'
+import {isolatedHttpTarget,isolatedTunnelTarget} from './isolated-host-routing.mjs'
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
 export async function serveFullHosts(plan) {
   const {fixturePort, previewPort, proxyPort} = plan.execution
-  const owned = new Set([fixturePort, previewPort])
-  const map = new Map([[5174, fixturePort], [5178, fixturePort], [5176, previewPort]])
   const sockets = new Set()
   const track = socket => { sockets.add(socket); socket.once('close', () => sockets.delete(socket)); return socket }
   const closeSockets = () => { for (const socket of sockets) socket.destroy() }
   let fixture, preview, proxy
   try {
     fixture = await serveProductionFixture({port: fixturePort})
-    const {preview: startPreview} = await import('vite')
-    preview = await startPreview({configFile: path.join(webRoot, 'vite.config.ts'), preview: {host: '127.0.0.1', port: previewPort, strictPort: true}})
+    preview = await serveNextProduction({port:previewPort})
     proxy = http.createServer(async (request, response) => {
       let target
       try {
@@ -37,9 +36,7 @@ export async function serveFullHosts(plan) {
           }
           return
         }
-        const port = map.get(Number(target.port)) ?? Number(target.port)
-        if (!owned.has(port)) throw Error('Unowned browser port')
-        target.hostname = '127.0.0.1'; target.port = String(port)
+        target=isolatedHttpTarget(request.url,request.headers.host,plan.execution)
       } catch { response.writeHead(502); response.end('Full run only serves its isolated snapshot'); return }
       const upstream = http.request(target, {method: request.method, headers: {...request.headers, host: target.host}}, incoming => {
         response.writeHead(incoming.statusCode ?? 502, incoming.headers); incoming.pipe(response)
@@ -53,10 +50,7 @@ export async function serveFullHosts(plan) {
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
       let port
       try {
-        const target = new URL(`http://${request.url}`)
-        if (!['127.0.0.1', 'localhost'].includes(target.hostname) || target.host !== request.url) throw Error('Unowned tunnel')
-        port = target.port === '5173' ? proxyPort : map.get(Number(target.port)) ?? Number(target.port)
-        if (target.port !== '5173' && !owned.has(port)) throw Error('Unowned tunnel port')
+        port=isolatedTunnelTarget(request.url,plan.execution)
       } catch { socket.end('HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n'); return }
       const upstream = track(createConnection({host: '127.0.0.1', port}, () => {
         socket.write('HTTP/1.1 200 Connection Established\r\n\r\n')
@@ -69,13 +63,13 @@ export async function serveFullHosts(plan) {
       upstream.once('close', () => socket.destroy())
     })
     await new Promise((resolve, reject) => { proxy.once('error', reject); proxy.listen(proxyPort, '127.0.0.1', resolve) })
-    return {fixtureBundleUrl: fixture.url, close: async () => {
+    return {fixtureBundleUrl: fixture.url,websiteIdentity:preview.identity, close: async () => {
       closeSockets(); proxy.closeAllConnections(); await new Promise(resolve => proxy.close(resolve))
-      await new Promise(resolve => preview.httpServer.close(resolve)); await fixture.close()
+      await preview.close(); await fixture.close()
     }}
   } catch (error) {
     closeSockets(); proxy?.closeAllConnections(); proxy?.close()
-    if (preview) await new Promise(resolve => preview.httpServer.close(resolve))
+    await preview?.close()
     await fixture?.close(); throw error
   }
 }

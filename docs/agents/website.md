@@ -1,0 +1,13 @@
+# Website architecture and acceptance
+
+The supported website is the Next.js App Router application in `apps/web`, running under pinned Bun. Headless Fumadocs MDX owns authored content, page metadata/tree, headings/TOC and search. Author explanations in `content/docs`; maintain runnable consumer examples in `examples`. Preview code is example code; implementation and manual files come from authoritative registry metadata. Registry symbol and evidence adapters have separate authoritative inputs.
+
+The Vite application in `packages/tests/tests/fixture` remains an independent component fixture. Retained `apps/web/demos` are additional interactive playgrounds rendered by canonical documentation pages. Preserve their support data, resource provenance and public behavior. Use current package scripts for generation, development, build and production commands; Turbo orders generation and registry delivery before Next output, while direct Uncheck discovers workspace checks after generation.
+
+Maintainer verification owns a Bun Next production process, rejects occupied ports and binds its source/build/public-registry identity separately from the fixture bundle. `next-production.mjs` stamps a completed build and starts only unchanged source/output. Source, dependency, content/config and artifact changes invalidate matching checkpoints. Verification tasks are uncached; deterministic Turbo outputs may restore from matching cache keys.
+
+Manual-consumer verification uses fresh projects physically outside the repository and its workspace ancestors. Copy actual visitor-visible examples and download every required manual file; observe composed interactions, loaded resources and WebGL readiness in both Next and Vite. The separate all-item shadcn CLI check starts its own external consumer and installs actual current public `/r` URLs. Check dependency realpaths and installed bytes to exclude inherited repository modules.
+
+Read `test-classification.md` before changing case mappings. Ordinary browser execution is the exact Base selection; complete inventory listing is read-only. Full authorization, independent execution and nonblocking results remain unchanged. Captured-reference bytes and declared native conditions remain authoritative; page composition screenshots and fixture/consumer/site evidence have distinct scopes.
+
+Before presenting acceptance, serve the actual proposed snapshot at `http://127.0.0.1:5176/` and provide direct homepage/charts/docs/control links. Keep process and source identity in verification artifacts rather than product UI. A build or draft PR alone does not replace a running acceptance preview.

@@ -2,7 +2,7 @@
 
 GitHub Actions is disabled. Maintainers run this workflow locally before merging pull requests; contributors are not required to reproduce the maintainer workstation setup. Verify the proposed merge result and intended base. Recheck when either changes; receipts apply only to recorded source and environment. These commands do not merge or publish:
 
-- `bun run porting:check`: types, committed evidence integrity, preview preparation and Base Pixel Perfect Tests, website tests and component behavior tests.
+- `bun run porting:check`: generated Next/Fumadocs inputs, workspace types, evidence integrity, production builds and Base Pixel Perfect Tests, website tests and component behavior tests.
 - `bun run check:pr`: prechecks, production builds and Base Pixel Perfect Tests, website tests and component behavior tests.
 
 Cases in the shared suite are classified individually by `packages/tests/scripts/browser-base-cases.json`. Base entries record an actual website-default path or a pinned shadcn-owned test. Full tests are the remaining cases; choosing one Base case does not select the rest of its file or matrix. The selection is not a sample or a count/time target. Mixed edge/primary cases remain Full and gaps are reported in `docs/audits/base-selection.md` rather than filled with new tests.
