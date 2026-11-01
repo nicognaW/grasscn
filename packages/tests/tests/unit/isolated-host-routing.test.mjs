@@ -7,6 +7,7 @@ import {
 } from "@grasscn/tests/isolated-host-routing";
 
 const execution = { fixturePort: 5394, previewPort: 5396, proxyPort: 5397 };
+
 test("isolated host routing preserves the snapshot and rejects arbitrary HTTP and CONNECT destinations", () => {
   assert.equal(
     isolatedHttpTarget(
@@ -18,20 +19,24 @@ test("isolated host routing preserves the snapshot and rejects arbitrary HTTP an
   );
   assert.equal(isolatedTunnelTarget("localhost:5178", execution), 5394);
   assert.equal(isolatedTunnelTarget("127.0.0.1:5173", execution), 5397);
+
   for (const target of [
     "http://example.com:5176/",
     "https://127.0.0.1:5176/",
     "http://127.0.0.1:5300/",
-  ])
+  ]) {
     assert.throws(
       () => isolatedHttpTarget(target, "localhost:5176", execution),
-      /owned/i
+      /owned/iu
     );
+  }
+
   for (const target of [
     "example.com:5176",
     "127.0.0.1:5300",
     "localhost:5176/private",
     "user@localhost:5176",
-  ])
-    assert.throws(() => isolatedTunnelTarget(target, execution), /owned/i);
+  ]) {
+    assert.throws(() => isolatedTunnelTarget(target, execution), /owned/iu);
+  }
 });
