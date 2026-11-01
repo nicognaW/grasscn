@@ -1,13 +1,16 @@
-import { createMDX } from "fumadocs-mdx/next"
-import { fileURLToPath } from "node:url"
+import { fileURLToPath } from "node:url";
 
-const withMDX = createMDX({})
-const workspaceRoot = fileURLToPath(new URL("../../", import.meta.url))
+import { createMDX } from "fumadocs-mdx/next";
+
+const withMDX = createMDX({});
+const workspaceRoot = fileURLToPath(new URL("../../", import.meta.url));
 
 export default withMDX({
   agentRules: false,
   devIndicators: false,
+  // Shiki is used by the client code viewer; bundle it rather than externalizing Bun's isolated package alias.
+  transpilePackages: ["shiki"],
   experimental: { cpus: 1 },
   turbopack: { root: workspaceRoot },
   outputFileTracingRoot: workspaceRoot,
-})
+});

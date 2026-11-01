@@ -1,0 +1,99 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "bd0b093e0299b7f4f3912cc1ae6a0cb108a35aae0cd786f219134ef1291ec92c",
+  "caseDefinitionSha256": "8a19f87d19dcfad095c056187d331f178392f58b8dce4e8ccd5ee874fa416184",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "2477aaa5902faea29e76e8c9150b0318736432c53177efc8cfdddcc3f3eb9747"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "edb16c57eadcae26ff0be0cf2aa62bf0b0b26a4687b37615fa1563877333d0ff"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "5661137c5d17715300651fdb5ca08138b81388cdbd897eed041650f3c0fb99fb"
+    }
+  ],
+  "cases": [
+    {
+      "name": "docs-code-directive-semicolon-s1.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "text": ";",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\";"
+      ],
+      "scale": 1,
+      "sha256": "14716b7b7dc66e7171d7a14c46ef5c0b90aee6b8a4db303239212854a2dbd2cc"
+    },
+    {
+      "name": "docs-code-directive-semicolon-s2.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "text": ";",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\";"
+      ],
+      "scale": 2,
+      "sha256": "dd1f89fe84e02b5425d95429a38e92f6f17565b28b13d0cc1e6fdd89c1b2f334"
+    },
+    {
+      "name": "docs-code-directive-semicolon-s3.png",
+      "element": "label",
+      "label": "\"use client\"",
+      "text": ";",
+      "color": "#55FF55",
+      "wrapWidth": 100,
+      "state": "normal",
+      "width": 100,
+      "height": 9,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "\"use client\";"
+      ],
+      "scale": 3,
+      "sha256": "2413c92c034a471c9454bb2778343c0d8c8c5a5def767e4098a081a7897bfcb1"
+    }
+  ],
+  "sourceDirectory": "source"
+}
