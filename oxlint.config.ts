@@ -30,19 +30,10 @@ const jsPlugins = selectJsPlugins(["react-doctor"]);
 
 export default defineConfig({
   env: core.env,
-  extends: [
-    core,
-    playwright,
-    react,
-    testRules,
-    shadcn,
-    antiSlop,
-    jsPlugins,
-  ],
+  extends: [core, playwright, react, testRules, shadcn, antiSlop, jsPlugins],
   ignorePatterns: [...(core.ignorePatterns ?? []), ...generatedCode],
   jsPlugins: [...jsPlugins.jsPlugins, ...shadcn.jsPlugins],
   options: { typeAware: true },
-  settings: jsPluginSettings,
   overrides: [
     {
       // Compile-only contracts test accepted public props, not rendered styles.
@@ -113,4 +104,5 @@ export default defineConfig({
       },
     },
   ],
+  settings: jsPluginSettings,
 });

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baseline": "4cafcbd89a3bcdf6ded4e9c9455cec167e3ed57f",
+  "baseline": "e0096658af7d9898dbd018abf3b39ef4d24b7d01",
   "authoredFiles": [
     "apps/web/app/api/installation/[name]/[file]/route.ts",
     "apps/web/app/api/installation/[name]/route.ts",
@@ -506,7 +506,7 @@
       "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
     }
   ],
-  "attribution": "Committed-main source and exact offending statements, with quotes/semicolons/line wrapping normalized; copied declarations, native CSS/geometry and unchanged test assertions retain their baseline diagnostics. New URL helpers, host/source/API metadata contracts and genuinely new callback/comparator/assertion hunks are repaired explicitly.",
+  "attribution": "Latest main e0096658 is the current baseline. Only exact unchanged baseline statements retain debt; new/modified migration hunks remain diagnostic-free. Older4caf/bb audits retain historical meaning only, not current acceptance.",
   "readOnlyAudits": [
     "test-results/22-main29-lint/rest-attribution.json",
     "test-results/22-main29-lint/inherited-app-ledger.json",

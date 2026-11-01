@@ -4,6 +4,24 @@
   "scope": "Recognized current source drift only; no pixel-verification grant.",
   "files": [
     {
+      "sourcePath": "registry/ui/command.tsx",
+      "historicalSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+      "currentSha256": "8b7eb8000c37ba8c74f16c92a3dfbc5fc7c88fdbf6c3d392f6734d9581612183",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 replaces the paired functional command-items class and query with data-mc-command-items. CSS artwork remains separately owned. Current interactions/rendering require fresh checks; no historical verification grant.",
+      "introducedBy": "20e95bf08309737732ea64a052c612215cc6edff",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
+    },
+    {
+      "sourcePath": "registry/ui/input.tsx",
+      "historicalSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "currentSha256": "e4e8fe38872b64e4a0e3b23fc15e3e5cd5033c1f3bc3d86a89aa7c89da7a732f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 explicitly imports Unicode metrics CSS from Input TSX instead of its component stylesheet. Current installation/rendering require fresh checks; no historical verification grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
+    },
+    {
       "sourcePath": "registry/ui/minecraft-alert-dialog.css",
       "historicalSha256": "dba513f92ab8923c54103f3360586f9cf0b84ef5cd754001bca1eacc9f0bd199",
       "currentSha256": "4d79e2adc8b95dfa75cf8bb10afaecc8d46f272f9385476d1b8af9118468c435",
@@ -118,10 +136,12 @@
     {
       "sourcePath": "registry/ui/minecraft-input.css",
       "historicalSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
-      "currentSha256": "63c5b1605632b719a575d53132b4ad882e7d914f9695cd9731704b0446acab56",
+      "currentSha256": "91ba967334ac7c5b454676c0cc7ddba74d11fdeb2f07439e4f6e31d1d734a83f",
       "classification": "preexisting-main-source-drift",
-      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
-      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+      "reason": "PR34 moves the Unicode metrics import from Input CSS to its TSX owner, in addition to earlier generic-name drift. No current rendering-verification grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "previousAcceptedCurrentSha256": "63c5b1605632b719a575d53132b4ad882e7d914f9695cd9731704b0446acab56",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
     },
     {
       "sourcePath": "registry/ui/minecraft-item.css",
@@ -230,10 +250,21 @@
     {
       "sourcePath": "registry/ui/minecraft-selectable-text.css",
       "historicalSha256": "3f6912d9f184bc7fc1edfc9b971eed6241cfabf70f0819f9808d3273ddde92ff",
-      "currentSha256": "33a4c7b458b63d8c7a32bda63cf013c39f3b0efe2de53a482b440870b3c53056",
+      "currentSha256": "9f8e086cb3f8248bc9196c4073de5fbdabf19579b90fe2fdd3990550fa21b3c7",
       "classification": "preexisting-main-source-drift",
-      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
-      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+      "reason": "PR34 moves the Unicode metrics import from SelectableText CSS to its TSX owner, in addition to earlier generic-name drift. No current rendering-verification grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "previousAcceptedCurrentSha256": "33a4c7b458b63d8c7a32bda63cf013c39f3b0efe2de53a482b440870b3c53056",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-selectable-text.tsx",
+      "historicalSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+      "currentSha256": "e9e003a42a8b3fdb72d729ffa8f92f58b6d15052cd8522e5b6a97e46c6510019",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 moves the Unicode metrics import into SelectableText TSX, paired with removing its nested CSS import. Source-version transition only; no rendering-equivalence grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
     },
     {
       "sourcePath": "registry/ui/minecraft-separator-assets.ts",
@@ -302,10 +333,12 @@
     {
       "sourcePath": "registry/ui/minecraft-textarea.css",
       "historicalSha256": "15af273be70afd4580ad46b6d65a721340d839bbf48a9835aed9705356e923f4",
-      "currentSha256": "d4df6c6414f2a37c1f73f51ac4c49a001c5a8fd00d65f51bbeda5647c6612b2d",
+      "currentSha256": "dcd0e1c234c468fc8f9d499c161b262cb9a583f4c0b12fcb4a18ed09d890d942",
       "classification": "preexisting-main-source-drift",
-      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
-      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+      "reason": "PR34 moves the Unicode metrics import from Textarea CSS to its TSX owner, in addition to earlier generic-name drift. No current rendering-verification grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "previousAcceptedCurrentSha256": "d4df6c6414f2a37c1f73f51ac4c49a001c5a8fd00d65f51bbeda5647c6612b2d",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
     },
     {
       "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
@@ -338,6 +371,33 @@
       "classification": "preexisting-main-source-drift",
       "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
       "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/sonner.tsx",
+      "historicalSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76",
+      "currentSha256": "727c69487a6175636d76cc86d1f15ef71207b843282cc64ca76cae54b84cea60",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 replaces paired functional Sonner artwork classes and runtime queries with data attributes. Current behavior/pixels require fresh checks; no historical verification grant.",
+      "introducedBy": "20e95bf08309737732ea64a052c612215cc6edff",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
+    },
+    {
+      "sourcePath": "registry/ui/tabs.tsx",
+      "historicalSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+      "currentSha256": "3498be60365ff5f8a56e0a396337b04a6cba66d164f800025d51c078a2b1d5e4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 replaces the paired rich-child measurement class/query with data-mc-tabs-rich and normalizes line endings. Current rich-label sizing/interaction require fresh checks; no historical verification grant.",
+      "introducedBy": "20e95bf08309737732ea64a052c612215cc6edff",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
+    },
+    {
+      "sourcePath": "registry/ui/textarea.tsx",
+      "historicalSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+      "currentSha256": "b10d5ae2b9b66d6964e549ddd7eb98f1df53887add8a330cf5103c85f04d6d5a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "PR34 explicitly imports Unicode metrics CSS from Textarea TSX instead of its component stylesheet. Current installation/rendering require fresh checks; no historical verification grant.",
+      "introducedBy": "3c3d21e1e32bdd32b6d94233ab52e748ace81dbc",
+      "acceptedMainSnapshot": "e0096658af7d9898dbd018abf3b39ef4d24b7d01"
     }
   ]
 }
