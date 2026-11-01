@@ -15,7 +15,12 @@ const testRules = defineConfig({
   ...vitest,
   overrides: vitest.overrides?.map((override) => ({
     ...override,
-    rules: { ...override.rules, "vitest/prefer-importing-vitest-globals": "off" },
+    // Browser specs use Playwright's own preset and naming convention.
+    excludeFiles: ["**/*.spec.ts", "**/*.spec.tsx"],
+    rules: {
+      ...override.rules,
+      "vitest/prefer-importing-vitest-globals": "off",
+    },
   })),
 });
 
