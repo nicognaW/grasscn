@@ -1271,4 +1271,3 @@ try {
     JSON.stringify({ error: report.error, output, status: report.status })
   );
 }
-

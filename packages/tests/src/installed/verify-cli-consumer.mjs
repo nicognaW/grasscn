@@ -307,8 +307,9 @@ try {
       settings
     );
     report.dependencyIdentity = await assertIndependentDependencies(consumer);
-    report.installedBytes = installedDependencyIdentity(consumer);
-    assert.ok(report.installedBytes);
+    const installedBytes = installedDependencyIdentity(consumer);
+    assert.ok(installedBytes !== null);
+    report.installedBytes = installedBytes;
     await run(["--bun", "node_modules/typescript/bin/tsc", "--noEmit"]);
     report.steps.push(
       "All installed TypeScript files typecheck in the external consumer"
