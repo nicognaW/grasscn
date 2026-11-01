@@ -1,4 +1,4 @@
-import { serveNextProduction, sourceIdentity } from "./next-production.mjs";
+import { serveNextProduction, sourceIdentity } from "@grasscn/tests/next-production";
 
 // Run in the resource guard after the final root Turbo build. The caller owns
 // the lifetime; Ctrl+C closes this snapshot rather than leaving a stale server.

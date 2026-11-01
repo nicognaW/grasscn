@@ -14,19 +14,19 @@ import path from "node:path";
 import {
   repoRoot,
   webRoot,
-  pixelPerfectTestRoot,
   packageBin,
-} from "../../../workspace-paths.mjs";
+} from "@tests/paths";
 import {
   sourceIdentity,
   productionBuildIdentity,
   stampProductionBuild,
-} from "./next-production.mjs";
+} from "@grasscn/tests/next-production";
 
 // Execute once sources are frozen, through the 4% build guard. Backups are kept;
 // generated-output restoration and source probes never touch another worktree.
 const directory = path.join(
-  pixelPerfectTestRoot,
+  repoRoot,
+  "test-results",
   "next-workflow",
   randomUUID()
 );

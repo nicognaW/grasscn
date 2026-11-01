@@ -7,7 +7,7 @@ import path from "node:path";
 import {
   productionBuildIdentity,
   assertProductionSource,
-} from "../scripts/next-production.mjs";
+} from "@grasscn/tests/next-production";
 
 test("production identity rejects another source and detects changed delivered registry bytes", async () => {
   const directory = fs.mkdtempSync(

@@ -22,6 +22,6 @@ export const test=base.extend<{grasscnVerificationArtifacts:void}>({
    const subject=page.locator('[data-subject]')
    if(await subject.count()===1){subjectSlot=await subject.getAttribute('data-slot');subjectElement=await subject.evaluate(element=>element.tagName)}
   }
-  await info.attach('grasscn-verification-artifacts',{body:Buffer.from(JSON.stringify({testId:info.testId,titlePath:info.titlePath,outputDirectory:info.outputDir,fixtureUrl:process.env.GRASSCN_FIXTURE_URL,previewUrl:process.env.GRASSCN_PREVIEW_URL,bundleSha256:process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,renderedUrl,subjectSlot,subjectElement,artifacts,metrics})),contentType:'application/json'})
+  await info.attach('grasscn-verification-artifacts',{body:Buffer.from(JSON.stringify({testId:info.testId,titlePath:info.titlePath,outputDirectory:info.outputDir,fixtureUrl:process.env.GRASSCN_FIXTURE_URL,previewUrl:process.env.GRASSCN_PREVIEW_URL,websiteIdentity:process.env.GRASSCN_WEBSITE_IDENTITY?JSON.parse(process.env.GRASSCN_WEBSITE_IDENTITY):null,bundleSha256:process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,renderedUrl,subjectSlot,subjectElement,artifacts,metrics})),contentType:'application/json'})
  },{auto:true}],
 })

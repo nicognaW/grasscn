@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "bun cli/test.mjs",
-    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.mjs",
+    "test:unit": "bun test --timeout 120000 ./tests/unit",
     "dev": "bun --bun vite --config vite.config.ts",
     "fixture:build": "bun cli/build-fixture.mjs"
   },
@@ -47,6 +47,11 @@
     "./windows-budget": "./src/runtime/windows-budget.ps1",
     "./case-paths": "./src/runtime/case-paths.mjs",
     "./run-workload": "./src/runtime/run-workload.ps1",
-    "./hosts": "./src/runtime/hosts.mjs"
+    "./hosts": "./src/runtime/hosts.mjs",
+    "./next-production": "./src/runtime/next-production.mjs",
+    "./isolated-host-routing": "./src/runtime/isolated-host-routing.mjs"
+    ,"./consumer-boundary": "./src/installed/consumer-boundary.mjs"
+    ,"./consumer-registry": "./src/installed/consumer-registry.mjs"
+    ,"./prepared-consumers": "./src/installed/prepared-consumers.mjs"
   }
 }

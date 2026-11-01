@@ -21,7 +21,7 @@ export function resolveRepositoryPath(name, base = repoRoot) {
   if (logical === 'registry.json' || logical === 'registry' || logical.startsWith('registry/')) return path.resolve(webRoot, logical)
   if (logical === 'preview' || logical.startsWith('preview/')) return path.resolve(webRoot, logical.slice('preview'.length).replace(/^\//, ''))
   if (logical === 'public' || logical.startsWith('public/') || logical === 'dist' || logical.startsWith('dist/')) return path.resolve(webRoot, logical)
-  if (/^scripts\/(prepare-preview|serve)\.mjs$/.test(logical)) return path.resolve(webRoot, logical)
+  if (logical === 'scripts/serve.mjs') return path.resolve(webRoot, logical)
   if (logical === 'tests/fixture' || logical.startsWith('tests/fixture/')) return path.resolve(fixtureRoot, logical.slice('tests/fixture'.length).replace(/^\//, ''))
   if (logical === 'tests/reference' || logical.startsWith('tests/reference/')) {
     const shared = path.resolve(referenceRoot, logical.slice('tests/reference'.length).replace(/^\//, ''))
@@ -34,7 +34,6 @@ export function resolveRepositoryPath(name, base = repoRoot) {
     return fs.existsSync(pixelFile) ? pixelFile : path.resolve(testRoot, logical)
   }
   if (logical === 'playwright.config.ts' || logical === 'vite.config.ts') return path.join(pixelPerfectRoot, logical)
-  if (logical === 'vite.preview.config.ts') return path.join(webRoot, 'vite.config.ts')
   return path.resolve(base, logical)
 }
 

@@ -8,8 +8,7 @@ import {
   repoRoot,
   webRoot,
   packageBin,
-  pixelPerfectTestRoot,
-} from "../../../workspace-paths.mjs";
+} from "@tests/paths";
 
 const digest = (value) => createHash("sha256").update(value).digest("hex");
 export async function sourceIdentity(directory = repoRoot) {
@@ -94,7 +93,7 @@ export function assertProductionSource(identity, source) {
     "Production build source does not match current snapshot"
   );
 }
-const receipt = path.join(pixelPerfectTestRoot, "next-production-build.json");
+const receipt = path.join(repoRoot, "test-results", "next-production-build.json");
 export async function stampProductionBuild(options = {}) {
   const source = options.source ?? (await sourceIdentity());
   const identity = await productionBuildIdentity({ source });

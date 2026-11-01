@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import {
   isolatedHttpTarget,
   isolatedTunnelTarget,
-} from "../scripts/isolated-host-routing.mjs";
+} from "@grasscn/tests/isolated-host-routing";
 
 const execution = { fixturePort: 5394, previewPort: 5396, proxyPort: 5397 };
 test("isolated host routing preserves the snapshot and rejects arbitrary HTTP and CONNECT destinations", () => {
