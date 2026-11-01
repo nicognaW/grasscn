@@ -2,20 +2,12 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import { tradingSounds as clips } from "@grasscn/web/ui/minecraft-trading-sound-assets";
 import { resolveRepositoryPath, testRoot } from "@tests/paths";
 const base =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 const url = (sample: object = {}) =>
   `${base}?scale=2&case=${encodeURIComponent(JSON.stringify({ element: "trading", value: 0, ...sample }))}`;
-const clips = JSON.parse(
-  readFileSync(
-    resolveRepositoryPath(
-      "registry/ui/minecraft-trading-sound-assets.ts",
-      testRoot
-    ),
-    "utf8"
-  ).match(/export const tradingSounds = (\[[\s\S]+\]) as const/)![1]
-) as { src: string; volume: number; pitch: number }[];
 test("trading original sound bytes decode in the browser", async ({ page }) => {
   const provenance = JSON.parse(
     readFileSync(
