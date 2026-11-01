@@ -22,9 +22,7 @@
         "net.minecraft.client.gui.components.StringWidget",
         "net.minecraft.client.gui.components.MultiLineLabel"
       ],
-      "assets": [
-        "assets/minecraft/textures/font/ascii.png"
-      ],
+      "assets": ["assets/minecraft/textures/font/ascii.png"],
       "observations": [
         "The existing bitmap font port covers printable ASCII; full Minecraft font providers are outside that claim."
       ],
@@ -58,9 +56,7 @@
     },
     "checkbox": {
       "target": "Checkbox",
-      "classes": [
-        "net.minecraft.client.gui.components.Checkbox"
-      ],
+      "classes": ["net.minecraft.client.gui.components.Checkbox"],
       "assets": [
         "assets/minecraft/textures/gui/sprites/widget/checkbox.png",
         "assets/minecraft/textures/gui/sprites/widget/checkbox_highlighted.png",
@@ -79,9 +75,7 @@
     },
     "slider": {
       "target": "AbstractSliderButton",
-      "classes": [
-        "net.minecraft.client.gui.components.AbstractSliderButton"
-      ],
+      "classes": ["net.minecraft.client.gui.components.AbstractSliderButton"],
       "assets": [
         "assets/minecraft/textures/gui/sprites/widget/slider.png",
         "assets/minecraft/textures/gui/sprites/widget/slider_handle.png",
@@ -177,9 +171,7 @@
         "assets/minecraft/textures/gui/menu_background.png",
         "assets/minecraft/textures/gui/header_separator.png"
       ],
-      "observations": [
-        "Four widget/tab state sprites exist."
-      ],
+      "observations": ["Four widget/tab state sprites exist."],
       "remainingNativeProbes": [
         "Inspect sprite use in navigation bar, selected/focus/hover precedence and selected-tab geometry."
       ],
@@ -204,12 +196,8 @@
     },
     "popup": {
       "target": "PopupScreen",
-      "classes": [
-        "net.minecraft.client.gui.components.PopupScreen"
-      ],
-      "assets": [
-        "assets/minecraft/textures/gui/sprites/popup/background.png"
-      ],
+      "classes": ["net.minecraft.client.gui.components.PopupScreen"],
+      "assets": ["assets/minecraft/textures/gui/sprites/popup/background.png"],
       "observations": [
         "PopupScreen references popup/background and draws around its layout with 18 logical pixels on each side."
       ],
@@ -250,9 +238,7 @@
         "assets/minecraft/textures/gui/sprites/toast/system.png",
         "assets/minecraft/textures/gui/sprites/toast/tutorial.png"
       ],
-      "observations": [
-        "SystemToast references toast/system."
-      ],
+      "observations": ["SystemToast references toast/system."],
       "remainingNativeProbes": [
         "Freeze entry/exit time; capture multiline sizing, stacking, clipping and alpha."
       ],
@@ -260,9 +246,7 @@
     },
     "progress": {
       "target": "BossHealthOverlay",
-      "classes": [
-        "net.minecraft.client.gui.components.BossHealthOverlay"
-      ],
+      "classes": ["net.minecraft.client.gui.components.BossHealthOverlay"],
       "assets": [
         "assets/minecraft/textures/gui/sprites/boss_bar/blue_background.png",
         "assets/minecraft/textures/gui/sprites/boss_bar/blue_progress.png",
@@ -318,9 +302,7 @@
         "net.minecraft.client.gui.components.PlayerFaceWidget",
         "net.minecraft.client.gui.components.PlayerFaceExtractor"
       ],
-      "assets": [
-        "assets/minecraft/textures/entity/player/wide/steve.png"
-      ],
+      "assets": ["assets/minecraft/textures/entity/player/wide/steve.png"],
       "observations": [
         "Player-face rendering classes exist; appearance depends on a skin texture and hat layer."
       ],
@@ -356,9 +338,7 @@
         "net.minecraft.client.gui.screens.options.LanguageSelectScreen$LanguageSelectionList",
         "net.minecraft.client.gui.components.ObjectSelectionList$Entry"
       ],
-      "assets": [
-        "assets/minecraft/textures/gui/menu_list_background.png"
-      ],
+      "assets": ["assets/minecraft/textures/gui/menu_list_background.png"],
       "observations": [
         "Selection-list classes exist.",
         "Select uses original LanguageSelectionList and original Entry rendering: row width270, row height18, viewport padding2, selected fill black and outline1 white when the list has a focused entry or808080 when unfocused; original menu-list background and header/footer separator textures. Disabled web options supply the native text component colorA0A0A0. Hover-to-focus remains Base UI behavior."
@@ -370,9 +350,7 @@
     },
     "suggestions": {
       "target": "CommandSuggestions",
-      "classes": [
-        "net.minecraft.client.gui.components.CommandSuggestions"
-      ],
+      "classes": ["net.minecraft.client.gui.components.CommandSuggestions"],
       "assets": [],
       "observations": [
         "The original nested SuggestionsList uses12-pixel rows and text inset(1,2).",
@@ -427,12 +405,8 @@
     },
     "item": {
       "target": "ItemDisplayWidget",
-      "classes": [
-        "net.minecraft.client.gui.components.ItemDisplayWidget"
-      ],
-      "assets": [
-        "assets/minecraft/textures/gui/sprites/container/slot.png"
-      ],
+      "classes": ["net.minecraft.client.gui.components.ItemDisplayWidget"],
+      "assets": ["assets/minecraft/textures/gui/sprites/container/slot.png"],
       "observations": [
         "A native item display widget and original container slot sprite exist."
       ],
@@ -467,9 +441,7 @@
     },
     "chat": {
       "target": "ChatComponent",
-      "classes": [
-        "net.minecraft.client.gui.components.ChatComponent"
-      ],
+      "classes": ["net.minecraft.client.gui.components.ChatComponent"],
       "assets": [],
       "observations": [
         "The vanilla chat HUD provides a text/message composition."
@@ -517,9 +489,7 @@
     },
     "menu": {
       "target": "Screen background and separators",
-      "classes": [
-        "net.minecraft.client.gui.screens.Screen"
-      ],
+      "classes": ["net.minecraft.client.gui.screens.Screen"],
       "assets": [
         "assets/minecraft/textures/gui/menu_background.png",
         "assets/minecraft/textures/gui/header_separator.png",
@@ -541,9 +511,7 @@
         "net.minecraft.client.gui.screens.advancements.AdvancementTabType",
         "net.minecraft.client.gui.screens.advancements.AdvancementsScreen"
       ],
-      "assets": [
-        "assets/minecraft/textures/block/stone.png"
-      ],
+      "assets": ["assets/minecraft/textures/block/stone.png"],
       "observations": [
         "Node coordinates floor(x*28), floor(y*27); clipped234x113 viewport, scroll-aligned background, two-pass connectors."
       ],
@@ -551,9 +519,7 @@
     },
     "hotbar": {
       "target": "Hud.extractItemHotbar",
-      "classes": [
-        "net.minecraft.client.gui.Hud"
-      ],
+      "classes": ["net.minecraft.client.gui.Hud"],
       "assets": [
         "assets/minecraft/textures/gui/sprites/hud/hotbar.png",
         "assets/minecraft/textures/gui/sprites/hud/hotbar_selection.png"
@@ -812,11 +778,7 @@
       "mapping": {
         "kind": "native-layout",
         "target": "ConfirmScreen confirmation content with web AlertDialog semantics",
-        "families": [
-          "dialog",
-          "button",
-          "text"
-        ],
+        "families": ["dialog", "button", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Capture confirmation content and modal background in a declared context."
       },
@@ -862,12 +824,7 @@
       },
       "referenceCases": {
         "status": "web-behavior-verified",
-        "requiredDimensions": [
-          "1:1",
-          "4:3",
-          "16:9",
-          "clipping"
-        ],
+        "requiredDimensions": ["1:1", "4:3", "16:9", "clipping"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
       },
       "implementation": {
@@ -893,12 +850,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original WorldListEntry row, original thumbnail/hover-arrow/text constituents and native Button actions",
-        "families": [
-          "item",
-          "list",
-          "text",
-          "button"
-        ],
+        "families": ["item", "list", "text", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "No native file-attachment widget is asserted. File previews, upload/error states, arbitrary media/rich content, grouping and vertical layout are web compositions. Native row constituent equality uses the actual established WorldListEntry reference, not an unproven ItemDisplayWidget analogy."
       },
@@ -946,10 +898,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "PlayerFaceWidget / PlayerFaceExtractor original default-skin head and optional hat",
-        "families": [
-          "avatar",
-          "text"
-        ],
+        "families": ["avatar", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Original square player faces only. Arbitrary image sources, textual/custom fallbacks, badges and groups are explicit web compositions; fallback text uses verified original Label constituents. No invented round avatar skin or avatar interaction sound."
       },
@@ -974,9 +923,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/avatar/manifest.json",
-        "additionalManifests": [
-          "tests/reference/label/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/label/manifest.json"],
         "installationReport": "tests/reference/avatar/installation-verification.json",
         "repeatabilityReport": "tests/reference/avatar/repeatability.json",
         "additionalInstallationReports": {
@@ -996,10 +943,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original advancement challenge/goal/task frame, hover panel, diamond item and title",
-        "families": [
-          "text",
-          "tooltip"
-        ],
+        "families": ["text", "tooltip"],
         "authority": "analyst-designed-composition",
         "limitation": "Native advancement appearance is verified at117x26 logical geometry. Content-sized compact badges, CJK/long title wrapping and custom icons are web adaptations using original artwork, rather than a native generic Badge widget."
       },
@@ -1046,10 +990,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Vanilla text plus page/navigation controls",
-        "families": [
-          "text",
-          "pagination"
-        ],
+        "families": ["text", "pagination"],
         "authority": "analyst-designed-composition",
         "limitation": "Original nativeLabel glyphs in accessible anchors andcurrentpage spans. Orderedpath, separator,ellipsis andkeyboardfocusring arewebcomposition; no nativebreadcrumb isclaimed."
       },
@@ -1094,10 +1035,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Minecraft Button",
-        "families": [
-          "button",
-          "text"
-        ],
+        "families": ["button", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Only the native default visual variant and size preset are exposed. Other glyphs, fractional scales, rich children and browser environments are unverified."
       },
@@ -1121,9 +1059,7 @@
         "scope": "162 native Button cases: 66 ASCII cases plus 96 fixed Chinese/Japanese/Korean/mixed-label cases, widths 103/200 and normal/hover/focus/disabled states, at scales 1\u20133. Default visual variant and size only. CJK cases pin 16 observed glyph UVs, en_us font options, viewport 1536x900 and native screen positions; Edge/DPR 1 with WebGL. Other glyphs, long scrolling labels, fractional scales and rich children are unverified.",
         "installationReport": "tests/reference/installation-verification.json",
         "repeatabilityReport": "tests/reference/repeatability.json",
-        "additionalManifests": [
-          "tests/reference/button-cjk/manifest.json"
-        ]
+        "additionalManifests": ["tests/reference/button-cjk/manifest.json"]
       },
       "nextStep": "Preserve both native matrices and installed-consumer proofs; extend independent cases before claiming other glyphs or long-label scrolling."
     },
@@ -1137,9 +1073,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Adjacent original Button components",
-        "families": [
-          "button"
-        ],
+        "families": ["button"],
         "authority": "analyst-designed-composition",
         "limitation": "Group arrangement, padding and vertical rotation of the native horizontal separator are designed web compositions. Exact native constituent scope covers each Button in both group orientations, scalar text and horizontal separators only."
       },
@@ -1295,20 +1229,13 @@
       "mapping": {
         "kind": "composition",
         "target": "PopupScreen panel surface with title/body/action layout",
-        "families": [
-          "popup",
-          "text",
-          "button"
-        ],
+        "families": ["popup", "text", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "Reusing panel texture preserves its pixels; arbitrary card layout is not a native PopupScreen match."
       },
       "referenceCases": {
         "status": "captured-repeatable",
-        "requiredDimensions": [
-          "title/body/footer",
-          "compact/wrapped content"
-        ],
+        "requiredDimensions": ["title/body/footer", "compact/wrapped content"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
       },
       "implementation": {
@@ -1334,10 +1261,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original recipe-book ImageButton arrows in Embla Carousel navigation",
-        "families": [
-          "button",
-          "pagination"
-        ],
+        "families": ["button", "pagination"],
         "authority": "analyst-designed-composition",
         "limitation": "No native sliding Carousel widget asserted. Embla gestures, slide layout, responsive behavior, RTL and vertical arrow rotation are web compositions. Exact comparisons cover only original horizontal recipe-book arrow constituent states."
       },
@@ -1374,10 +1298,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original FpsDebugChart histogram and ProfilerPieChart with complete standard Recharts/config/tooltip/legend API",
-        "families": [
-          "chart",
-          "text"
-        ],
+        "families": ["chart", "text"],
         "authority": "original-native-renderer-with-web-extensions",
         "limitation": "Exact native pixel claims cover only declared FPS and profiler plot inputs at scales1\u20133, two backgrounds, fixed text/geometry and DPR1. Generic Recharts bar/line/area/radar layouts, responsive interaction, tooltip/legend composition and arbitrary labels are web extensions. Native FPS spike bars intentionally extend outside the69logical-pixel plot envelope; declared comparisons crop that envelope."
       },
@@ -1400,9 +1321,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/chart-fps/manifest.json",
-        "additionalManifests": [
-          "tests/reference/chart-pie/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/chart-pie/manifest.json"],
         "installationReport": "tests/reference/chart/chart-fps-installation-verification.json",
         "additionalInstallationReports": {
           "tests/reference/chart-pie/manifest.json": "tests/reference/chart/chart-pie-installation-verification.json"
@@ -1422,10 +1341,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Checkbox sprites and native label placement",
-        "families": [
-          "checkbox",
-          "text"
-        ],
+        "families": ["checkbox", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Vanilla mixed-state appearance is absent from the inspected sprite family; do not fabricate a pixel-perfect claim for it."
       },
@@ -1461,11 +1377,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original native chat bitmap text and16-color palette composed as standard shadcn CodeBlock",
-        "families": [
-          "text",
-          "chat",
-          "button"
-        ],
+        "families": ["text", "chat", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "168 original ChatComponent foreground text/palette cases through the public CodeBlockContent with explicitly matching supplied chat-envelope geometry: ASCII/CJK, explicit newlines, all16 native colors, two widths/backgrounds, GUI1\u20133. File/header/footer/line-number/diff/wrap layout and syntax classification are web compositions, not a native code-editor claim. Real DOM text preserves multiline selection; full current streaming highlighter hook/lib and eight exports retained."
       },
@@ -1504,20 +1416,13 @@
       "mapping": {
         "kind": "composition",
         "target": "Vanilla Button trigger and shown/hidden content",
-        "families": [
-          "button",
-          "text"
-        ],
+        "families": ["button", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Open-content geometry and animations require a declared composition."
       },
       "referenceCases": {
         "status": "captured-repeatable",
-        "requiredDimensions": [
-          "open/closed",
-          "focus",
-          "disabled"
-        ],
+        "requiredDimensions": ["open/closed", "focus", "disabled"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
       },
       "implementation": {
@@ -1563,12 +1468,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original EditBox and command-suggestion/menu constituents through standard Base UI Combobox semantics",
-        "families": [
-          "input",
-          "suggestions",
-          "menu",
-          "text"
-        ],
+        "families": ["input", "suggestions", "menu", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Minecraft has no equivalent generic editable single/multiple combobox or removable chips. Base UI generic values, filtering, render functions, popup positioning, chip keyboard state and accessible form behavior are web compositions. Exact comparisons cover declared native input and suggestion/menu list constituents; trigger/clear/chip layout is not a native widget claim."
       },
@@ -1614,11 +1514,7 @@
       "mapping": {
         "kind": "native-layout",
         "target": "CommandSuggestions list with EditBox query",
-        "families": [
-          "suggestions",
-          "input",
-          "text"
-        ],
+        "families": ["suggestions", "input", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Command palette grouping, shortcuts and dialog layout are composed extensions."
       },
@@ -1665,12 +1561,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Command-suggestion row treatment on a popup surface",
-        "families": [
-          "suggestions",
-          "popup",
-          "text",
-          "checkbox"
-        ],
+        "families": ["suggestions", "popup", "text", "checkbox"],
         "authority": "analyst-designed-composition",
         "limitation": "No general right-click menu renderer established; submenu geometry and checks are composed."
       },
@@ -1693,9 +1584,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/suggestions/manifest.json",
-        "additionalManifests": [
-          "tests/reference/menu-parts/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/menu-parts/manifest.json"],
         "repeatabilityReport": "tests/reference/suggestions/repeatability.json",
         "installationReport": "tests/reference/context-menu/installation-verification.json",
         "additionalInstallationReports": {
@@ -1724,10 +1613,7 @@
       "mapping": {
         "kind": "composition",
         "target": "TanStack v9 server-list-style data browsing over original Table constituents",
-        "families": [
-          "text",
-          "list"
-        ],
+        "families": ["text", "list"],
         "authority": "analyst-designed-composition",
         "limitation": "Sorting, pagination, filtering, visibility, selection and generic columns/data are web compositions. Native exact comparisons here cover declared header/cell text constituents; Table separately verifies native list-background and separators. No original native DataTable widget asserted."
       },
@@ -1872,12 +1758,7 @@
       "mapping": {
         "kind": "native-layout",
         "target": "PopupScreen / dialog-screen title, body and buttons",
-        "families": [
-          "popup",
-          "dialog",
-          "button",
-          "text"
-        ],
+        "families": ["popup", "dialog", "button", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Select PopupScreen as the panel reference; capture its total bounds and composited backdrop."
       },
@@ -1899,9 +1780,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/dialog/manifest.json",
-        "additionalManifests": [
-          "tests/reference/dialog-extra/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/dialog-extra/manifest.json"],
         "repeatabilityReport": "tests/reference/dialog/repeatability.json",
         "scope": "186 original PopupScreen full-viewport cases: title/body layout, empty/absent/multiple messages, wrapping, 1/2/3 footer buttons, hover/focus/disabled actions, two backgrounds, colored spectrum and original Button underlay, fixed Chinese/Japanese/Korean/mixed bold titles and multiline body, GUI scales1-3. Edge/DPR1, viewport1536x900. Fifteen observed Unihex glyph UVs and original bold expansion. Responsive overflow, rich content and additional glyphs are web composition or unverified.",
         "installationReport": "tests/reference/dialog/installation-verification.json"
@@ -1918,12 +1797,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Popup panel in a screen-edge drawer arrangement",
-        "families": [
-          "popup",
-          "text",
-          "button",
-          "scroll"
-        ],
+        "families": ["popup", "text", "button", "scroll"],
         "authority": "analyst-designed-composition",
         "limitation": "Minecraft PopupScreen does not prove a sliding edge drawer or drag animation."
       },
@@ -1953,9 +1827,7 @@
         "installationReport": "tests/reference/drawer/panel-installation-verification.json",
         "repeatabilityReport": "tests/reference/card/repeatability.json",
         "scope": "96 original PopupScreen panel constituents:72 bare surfaces +24 ASCII title/body/wrapping/button cases, scales1\u20133 and two backgrounds. Additional84 native Label cases each tested through Title and Description (168 appearances), including CJK, wrapping, alignment and disabled label colors. Drawer arrangement/semantics are a designed web composition. Edge placement, overlay, drag, snaps and motion are web composition; no original Minecraft edge drawer/sheet is claimed. Edge/DPR1; fixed reference sizes, backgrounds and native font loading context. Other contents and environments remain unverified.",
-        "additionalManifests": [
-          "tests/reference/label/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/label/manifest.json"],
         "additionalInstallationReports": {
           "tests/reference/label/manifest.json": "tests/reference/drawer/text-installation-verification.json"
         },
@@ -1979,13 +1851,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Button trigger with native suggestion/list row surfaces",
-        "families": [
-          "button",
-          "suggestions",
-          "popup",
-          "text",
-          "checkbox"
-        ],
+        "families": ["button", "suggestions", "popup", "text", "checkbox"],
         "authority": "analyst-designed-composition",
         "limitation": "General menu and submenu geometry are designed compositions."
       },
@@ -2007,9 +1873,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/suggestions/manifest.json",
-        "additionalManifests": [
-          "tests/reference/menu-parts/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/menu-parts/manifest.json"],
         "repeatabilityReport": "tests/reference/suggestions/repeatability.json",
         "installationReport": "tests/reference/dropdown-menu/installation-verification.json",
         "additionalInstallationReports": {
@@ -2038,21 +1902,13 @@
       "mapping": {
         "kind": "native-layout",
         "target": "Original WorldSelectionList.NoWorldsEntry scalar layout, with native text in Empty composition slots",
-        "families": [
-          "list",
-          "text",
-          "button"
-        ],
+        "families": ["list", "text", "button"],
         "authority": "analyst-selected-native-reference",
         "limitation": "96 native ASCII empty-row cases: four labels including blank/overflow, widths101/200, heights20/41, two backgrounds and GUI scales1\u20133. Additional84 originalLabelcases are compared through each Title/Description slot, including CJK, wrapping and alignment. Whole composed empty-state screens and arbitrary rich children do not have a native equality claim."
       },
       "referenceCases": {
         "status": "captured-repeatable",
-        "requiredDimensions": [
-          "no entries",
-          "optional icon",
-          "action focus"
-        ],
+        "requiredDimensions": ["no entries", "optional icon", "action focus"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults.",
         "caseCount": 180
       },
@@ -2065,9 +1921,7 @@
         "manifest": "tests/reference/empty/manifest.json",
         "installationReport": "tests/reference/empty/installation-verification.json",
         "repeatabilityReport": "tests/reference/empty/repeatability.json",
-        "additionalManifests": [
-          "tests/reference/label/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/label/manifest.json"],
         "additionalInstallationReports": {
           "tests/reference/label/manifest.json": "tests/reference/empty/text-installation-verification.json"
         },
@@ -2092,9 +1946,7 @@
       "mapping": {
         "kind": "behavior",
         "target": "Unskinned form integration with Minecraft Field/Input appearances",
-        "families": [
-          "text"
-        ],
+        "families": ["text"],
         "authority": "analyst-designed-composition",
         "limitation": "Form has no independent surface. Verify dependent fields visually and form behavior separately."
       },
@@ -2145,10 +1997,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "EditBox border, text, caret and selection",
-        "families": [
-          "input",
-          "text"
-        ],
+        "families": ["input", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Input types password/search/number and browser decorations require explicit treatment."
       },
@@ -2173,9 +2022,7 @@
         "scope": "378 native cases: 306 ASCII text-input cases including caret/selection/scrolling, plus 72 fixed Chinese/Japanese/Korean/mixed-text cases covering 16 CJK glyphs, at integer scales 1\u20133. CJK pixels pin en_us font options, observed glyph UVs, 1536x900 viewport and native screen positions. Edge/DPR 1 with WebGL. Other CJK glyphs retain original Unihex pixels but their sampling is unverified; password, unsupported glyphs, RTL and specialized types use browser rendering.",
         "installationReport": "tests/reference/input/installation-verification.json",
         "repeatabilityReport": "tests/reference/input/repeatability.json",
-        "additionalManifests": [
-          "tests/reference/input-cjk/manifest.json"
-        ]
+        "additionalManifests": ["tests/reference/input-cjk/manifest.json"]
       },
       "nextStep": "Preserve both native matrices and installed-consumer reports; extend captures before claiming additional glyphs or environments."
     },
@@ -2189,11 +2036,7 @@
       "mapping": {
         "kind": "composition",
         "target": "EditBox with vanilla text/icon/button addons",
-        "families": [
-          "input",
-          "text",
-          "button"
-        ],
+        "families": ["input", "text", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "No native input-group counterpart established; addon borders and spacing are designed."
       },
@@ -2247,10 +2090,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original EditBox single-character text-field cells composed with standard shadcn InputOTP behavior",
-        "families": [
-          "input",
-          "text"
-        ],
+        "families": ["input", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "180 original EditBox single-character cell cases: empty,!,1,A,\u4e16,\u754c; normal,focus-caret-on,focus-caret-off,readonly,disabled;20x20 logical cells,two backgrounds,GUI1\u20133,ten horizontal positions per page. Actual public InputOTPSlot uses original normal/highlighted text-field PNG bytes and independently observed native glyph sampling. Segmented groups, separators, completion/paste/pattern/form behavior are shadcn compositions; Minecraft has no OTP widget. Other glyphs/layouts/raster environments remain outside this exact matrix."
       },
@@ -2288,12 +2128,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "Original compatible-world WorldSelectionList.WorldListEntry content, selection frames and media",
-        "families": [
-          "item",
-          "list",
-          "text",
-          "tooltip"
-        ],
+        "families": ["item", "list", "text", "tooltip"],
         "authority": "analyst-selected-native-reference",
         "limitation": "180 compatible-world row cases: six ASCII/Chinese/Japanese/Korean/mixed/overflow contents, normal/body-hover/icon-hover/selected/focused states, two backgrounds and GUI scales1\u20133. Whole-row links and buttons match all180 cases; passive div aliases match the108 non-hover cases. Additional84 Label cases through standalone ItemTitle and108 Separator cases through ItemSeparator. Arbitrary content, custom media, locked/incompatible world states, rich composed layouts, other glyphs and raster environments remain outside this exact matrix."
       },
@@ -2367,10 +2202,7 @@
       "mapping": {
         "kind": "composition",
         "target": "KeyBindsList key-label/button treatment",
-        "families": [
-          "keybinds",
-          "text"
-        ],
+        "families": ["keybinds", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Original Button surface andglyphs reused aspassive keyboard-key labels. Semantic kbd has noactivationhandlers orclickaudio; chordgrouping iswebcomposition. Nativehover/focus/disabled appearance followsoriginalbutton skin."
       },
@@ -2395,9 +2227,7 @@
         "installationReport": "tests/reference/kbd/installation-verification.json",
         "repeatabilityReport": "tests/reference/repeatability.json",
         "scope": "Original Button surface andglyphs reused aspassive keyboard-key labels. Semantic kbd has noactivationhandlers orclickaudio; chordgrouping iswebcomposition. Nativehover/focus/disabled appearance followsoriginalbutton skin. Edge156.0.4314.50,1536\u00d7900,DPR1; original native references repeated in separate launches. Optional richer layouts outside these matrices remain compositions.",
-        "additionalManifests": [
-          "tests/reference/button-cjk/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/button-cjk/manifest.json"],
         "additionalInstallationReports": {
           "tests/reference/button-cjk/manifest.json": "tests/reference/kbd/cjk-installation-verification.json"
         }
@@ -2414,9 +2244,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "StringWidget single-line text and MultiLineTextWidget wrapping, spacing and centering",
-        "families": [
-          "text"
-        ],
+        "families": ["text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Form association and disabled control semantics are web behavior; vanilla static labels do not automatically dim when inactive. Rich children, arbitrary glyphs and other font environments are unverified."
       },
@@ -2452,10 +2280,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original StringWidget/Label text and native screen-header/footer separator textures",
-        "families": [
-          "text",
-          "menu"
-        ],
+        "families": ["text", "menu"],
         "authority": "analyst-designed-composition",
         "limitation": "No vanilla Marker widget is asserted. Default text and border-line constituents are pixel-verified; the separator layout, links, custom icons and marker arrangement remain designed web composition. Native palette and exact original separator PNGs are retained."
       },
@@ -2478,9 +2303,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/label/manifest.json",
-        "additionalManifests": [
-          "tests/reference/separator/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/separator/manifest.json"],
         "installationReport": "tests/reference/marker/text-installation-verification.json",
         "repeatabilityReport": "tests/reference/label/repeatability.json",
         "additionalInstallationReports": {
@@ -2500,13 +2323,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original Button triggers with native suggestion rows, checkbox/radio caption sprites, separators and popup compositions",
-        "families": [
-          "button",
-          "text",
-          "popup",
-          "suggestions",
-          "checkbox"
-        ],
+        "families": ["button", "text", "popup", "suggestions", "checkbox"],
         "authority": "analyst-designed-composition",
         "limitation": "No desktop menubar counterpart established."
       },
@@ -2576,10 +2393,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "Original ChatComponent foreground text and translucent row backdrop with standard shadcn message composition slots",
-        "families": [
-          "chat",
-          "text"
-        ],
+        "families": ["chat", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "168 original ChatComponent foreground row cases: ASCII/Chinese/Japanese/Korean/mixed text and explicit multiline, text widths160/240 (surface widths172/252), two backgrounds, all16 Minecraft text colors, GUI scales1\u20133. Default scalar MessageContent matches every case. Conversation arrangement, avatars, reactions, custom rich content, fading, interactive message tags, other glyphs and raster environments remain compositions or outside this exact matrix."
       },
@@ -2619,10 +2433,7 @@
       "mapping": {
         "kind": "platform-limited",
         "target": "Original CycleButton closed skin over a real HTMLSelectElement",
-        "families": [
-          "cycle",
-          "text"
-        ],
+        "families": ["cycle", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "The actual accessible/form/keyboard control remains a real HTML select. The decorative closed skin uses original CycleButton assets and sampled fonts; browser/OS open popup and multiple-selection listbox are platform-controlled and have no asserted Minecraft pixel equality."
       },
@@ -2667,11 +2478,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original recipe-book page arrows with original Button-skinned numeric links",
-        "families": [
-          "pagination",
-          "button",
-          "text"
-        ],
+        "families": ["pagination", "button", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Original RecipeBookPage hides unavailable first/last arrows; web callers control hidden/aria-disabled. Numeric page links, active-page highlight reuse, ellipsis, custom children and web arrangement extend the original arrow/count layout. Pixel equality is restricted to the declared native constituent cases; a native full pagination widget is not asserted."
       },
@@ -2747,10 +2554,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "PopupScreen surface and vanilla typography",
-        "families": [
-          "popup",
-          "text"
-        ],
+        "families": ["popup", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Anchoring and collision behavior are web behavior; only declared native panel/crop appearances can match."
       },
@@ -2771,9 +2575,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/card/manifest.json",
-        "additionalManifests": [
-          "tests/reference/popover/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/popover/manifest.json"],
         "repeatabilityReport": "tests/reference/card/repeatability.json",
         "installationReport": "tests/reference/popover/surface-installation-verification.json",
         "scope": "156 native appearances: 96 original popup surface/ASCII layouts and 60 original bold title/normal multiline body cases including empty, Chinese/Japanese/Korean/mixed labels, wrapping, printable ASCII and two backgrounds at scales1-3. Original baked geometry and 109 observed glyph coordinates. Edge/DPR1, viewport1536x900, en_us. Anchoring, collision, forms and rich children are web behavior. Other glyphs/environments are unverified."
@@ -2790,9 +2592,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "BossHealthOverlay bar fill, background and notches",
-        "families": [
-          "progress"
-        ],
+        "families": ["progress"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Native182x5 bar only. Base UI unknown semantics reuse the native empty surface without adding an animated visual variant. Steady-state captures do not establish native lerping transitions or arbitrary resizing."
       },
@@ -2831,12 +2631,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original StringWidget text, Checkbox graphics, EditBox and Button constituents with the genuine @shadcn/react Questionnaire state machine",
-        "families": [
-          "text",
-          "checkbox",
-          "input",
-          "button"
-        ],
+        "families": ["text", "checkbox", "input", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "Vanilla has no questionnaire widget. The actual @shadcn/react0.3.1 primitive owns ordered items, single/multiple/freeform answers, validation, skipping, navigation, shortcuts and submission. Checkbox artwork intentionally skins both native radio and checkbox semantics. Full questionnaire layout, compact action arrangement, arbitrary render callbacks and other input types are web compositions."
       },
@@ -2940,10 +2735,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Exclusive-selection group using vanilla Checkbox appearances",
-        "families": [
-          "checkbox",
-          "text"
-        ],
+        "families": ["checkbox", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Exclusive selection and group layout are web composition. The item uses the original square Checkbox surface and21x17 empty-label widget bounds, including its4-pixel label gap. No native circular radio sprite or exclusive-selection group is claimed."
       },
@@ -2980,9 +2772,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Opposing original recipe-book page arrows on web split-panel controls",
-        "families": [
-          "scroll"
-        ],
+        "families": ["scroll"],
         "authority": "analyst-designed-composition",
         "limitation": "Original ImageButton arrow constituents are native-verified. The opposing-arrow divider, enlarged drag target, percentage display, keyboard/focus controls and vertical rotation are web compositions; no native resizable split-pane widget is claimed."
       },
@@ -3029,9 +2819,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Borderless AbstractTextAreaWidget viewport/scissor and AbstractScrollArea vertical scrollbar",
-        "families": [
-          "scroll"
-        ],
+        "families": ["scroll"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Native renderer uses a test-supplied zero-padding button-row layout; arbitrary content remains web composition. Horizontal scrollbars, hover-only visibility, fractional scroll offsets, RTL and other raster environments are outside this matrix."
       },
@@ -3070,13 +2858,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original CycleButton trigger and LanguageSelectionList popup surface",
-        "families": [
-          "cycle",
-          "list",
-          "popup",
-          "scroll",
-          "text"
-        ],
+        "families": ["cycle", "list", "popup", "scroll", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Vanilla CycleButton cycles directly; opening its original language-list appearance as a dropdown is a web composition. Labels and grouping are optional web composition; no invented checkmark or chevron."
       },
@@ -3099,9 +2881,7 @@
         "status": "verified-declared-cases",
         "manifest": "tests/reference/select/manifest.json",
         "scope": "942 native surface cases: original CycleButton sprites and timed scrolling labels; original LanguageSelectionList rows270x18, focus/selection outline, disabled text color, empty/fitting/overflow and integer scrolling, original menu-list background/separators and scrollbar. Two backgrounds, widths16-385, GUI scales1-3. Fixed Chinese/Japanese/Korean/mixed labels pin16 observed glyph UVs and native screen positions in Edge/DPR1, viewport1536x900. Dropdown, pointer-to-focus, optional grouping and placement are web composition. Native pure-hover cases hold focus through a public pointer-move override. Additional glyphs, rich content, RTL raster, fractional scales and other environments remain unverified. Default pointer and keyboard focus additionally match native focused-row captures at all three scales.",
-        "additionalManifests": [
-          "tests/reference/select-extra/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/select-extra/manifest.json"],
         "installationReport": "tests/reference/select/installation-verification.json",
         "repeatabilityReport": "tests/reference/select/repeatability.json"
       },
@@ -3117,9 +2897,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Original AbstractSelectionList.extractListSeparators header/footer strips",
-        "families": [
-          "menu"
-        ],
+        "families": ["menu"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Horizontal only. In-world PNGs are byte-identical to menu textures; captures exercise original separators without a loaded world. Web semantic/decorative association and render composition are Base UI behavior."
       },
@@ -3156,11 +2934,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Popup panel anchored to a viewport edge",
-        "families": [
-          "popup",
-          "text",
-          "button"
-        ],
+        "families": ["popup", "text", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "No edge-sheet renderer established; geometry and transitions are designed."
       },
@@ -3188,9 +2962,7 @@
         "installationReport": "tests/reference/sheet/panel-installation-verification.json",
         "repeatabilityReport": "tests/reference/card/repeatability.json",
         "scope": "96 original PopupScreen panel constituents:72 bare surfaces +24 ASCII title/body/wrapping/button cases, scales1\u20133 and two backgrounds. Additional84 native Label cases each tested through Title and Description (168 appearances), including CJK, wrapping, alignment and disabled label colors. Sheet arrangement/semantics are a designed web composition. Edge placement, overlay, drag, snaps and motion are web composition; no original Minecraft edge drawer/sheet is claimed. Edge/DPR1; fixed reference sizes, backgrounds and native font loading context. Other contents and environments remain unverified.",
-        "additionalManifests": [
-          "tests/reference/label/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/label/manifest.json"],
         "additionalInstallationReports": {
           "tests/reference/label/manifest.json": "tests/reference/sheet/text-installation-verification.json"
         },
@@ -3214,14 +2986,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original Button/Input/Popup/Label/Separator/ScrollArea artwork in web sidebar navigation",
-        "families": [
-          "button",
-          "input",
-          "popup",
-          "text",
-          "scroll",
-          "menu"
-        ],
+        "families": ["button", "input", "popup", "text", "scroll", "menu"],
         "authority": "analyst-designed-composition",
         "limitation": "No native desktop/mobile Sidebar widget is claimed. Collapse modes, shortcut/cookie state, row layout, icon abbreviations, loading placeholders and mobile Sheet anchoring are web compositions. Exact native comparisons cover only the declared constituent slots/states."
       },
@@ -3399,10 +3164,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "AbstractSliderButton track, handle, label and focus mode",
-        "families": [
-          "slider",
-          "text"
-        ],
+        "families": ["slider", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Range/multi-thumb and vertical sliders are extensions. Capture rounding at non-divisible widths."
       },
@@ -3440,11 +3202,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "SystemToast skin over Sonner web behavior",
-        "families": [
-          "toast",
-          "text",
-          "button"
-        ],
+        "families": ["toast", "text", "button"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Original SystemToast skin and sampled motion only. Actions, dismiss controls, rich HTML, library timers, swiping and alternate web positioning are compositions. Unsupported severity palettes and collapsed Sonner appearance are removed."
       },
@@ -3485,10 +3243,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "Original LoadingDotsWidget dots row and LoadingDotsText four-frame phase sequence",
-        "families": [
-          "loading",
-          "text"
-        ],
+        "families": ["loading", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "108 original LoadingDotsWidget dots-row cases: full original O o o / o O o / o o O / o O o sequence,300ms boundaries at0/299/300/599/600/899/900/1199/1200,logical widths26/34,two backgrounds,GUI1\u20133. Default SVG preserves native gray/shadow pixels through exact original ASCII alpha masks; full SVG props/refs/status semantics retained. Arbitrary SVG rescaling/viewBox overrides and other raster environments remain outside this exact matrix; web reduced motion pauses the sequence."
       },
@@ -3526,19 +3281,13 @@
       "mapping": {
         "kind": "native-subset",
         "target": "CycleButton.onOffBuilder two labeled states",
-        "families": [
-          "cycle",
-          "text"
-        ],
+        "families": ["cycle", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Use web switch semantics with vanilla on/off-button appearance; a sliding thumb would be a designed alternative."
       },
       "referenceCases": {
         "status": "captured",
-        "requiredDimensions": [
-          "on/off",
-          "normal/hover/focus/disabled"
-        ],
+        "requiredDimensions": ["on/off", "normal/hover/focus/disabled"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults."
       },
       "implementation": {
@@ -3564,10 +3313,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original menu-list background, header/footer separators and native bitmap labels in semantic HTML tables",
-        "families": [
-          "text",
-          "list"
-        ],
+        "families": ["text", "list"],
         "authority": "analyst-designed-composition",
         "limitation": "Minecraft has no equivalent general-purpose HTML table. Row/cell layout, overflow and selected-row treatment are web compositions. Exact comparison claims cover declared text, separator and text-free list-background slots only."
       },
@@ -3625,10 +3371,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "TabButton/TabNavigationBar selected and unselected tabs",
-        "families": [
-          "tabs",
-          "text"
-        ],
+        "families": ["tabs", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Vertical orientation, arbitrary content and disabled treatment need their own cases."
       },
@@ -3648,9 +3391,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/tabs/manifest.json",
-        "additionalManifests": [
-          "tests/reference/tabs-extra/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/tabs-extra/manifest.json"],
         "scope": "822 native cases: four original MenuTabBar tab sprites, selected underline and menu panel texture; selected/unselected, hover/focus/disabled, widths46-450, 2/3/5 tabs, timed long titles, 16 observed Chinese/Japanese/Korean/mixed glyphs, two backgrounds, GUI scales1-3. Edge/DPR1, viewport1536x900 and native screen positions. Horizontal/default variant only. Arbitrary rich panel content, additional glyphs, RTL raster and other environments remain unverified.",
         "installationReport": "tests/reference/tabs/installation-verification.json",
         "repeatabilityReport": "tests/reference/tabs/repeatability.json"
@@ -3667,11 +3408,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "MultiLineEditBox text, selection and scroll viewport",
-        "families": [
-          "textarea",
-          "scroll",
-          "text"
-        ],
+        "families": ["textarea", "scroll", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Web forms, read-only and disabled semantics remain native textarea behavior. Other glyphs, RTL and native character-limit decorations are outside the verified matrices."
       },
@@ -3694,9 +3431,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/textarea/manifest.json",
-        "additionalManifests": [
-          "tests/reference/textarea-cjk/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/textarea-cjk/manifest.json"],
         "scope": "114 native cases: 72 ASCII and 42 fixed Chinese/Japanese/Korean/mixed multiline cases covering empty/placeholder, focus/caret phases, selection, wrapping, disabled and scrolling at scales 1\u20133. Real textarea and original 6-pixel scrollbar surface. Edge/DPR 1; CJK pins en_us font options, observed glyph UVs, native screen positions and viewport1536x900. Other glyphs, RTL, character-limit decorations and additional raster environments are unverified.",
         "installationReport": "tests/reference/textarea/installation-verification.json",
         "repeatabilityReport": "tests/reference/textarea/repeatability.json"
@@ -3713,19 +3448,13 @@
       "mapping": {
         "kind": "native-subset",
         "target": "Vanilla recipe-filter CycleButton treatment",
-        "families": [
-          "toggle",
-          "text"
-        ],
+        "families": ["toggle", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Original filter is an icon control; generic pressed text button layout is a composition."
       },
       "referenceCases": {
         "status": "captured-repeatable",
-        "requiredDimensions": [
-          "pressed/unpressed",
-          "hover/focus/disabled"
-        ],
+        "requiredDimensions": ["pressed/unpressed", "hover/focus/disabled"],
         "settings": "Cases must pin actual content/value, geometry, GUI scale, locale/font/background, browser/DPR/zoom and time where applicable. Do not inherit Button defaults.",
         "caseCount": 60
       },
@@ -3752,10 +3481,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Exclusive or multiple vanilla filter/toggle controls",
-        "families": [
-          "toggle",
-          "text"
-        ],
+        "families": ["toggle", "text"],
         "authority": "analyst-designed-composition",
         "limitation": "Group geometry and mutual exclusion remain web semantics; individual toggle skin reference is pending."
       },
@@ -3799,10 +3525,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "TooltipRenderUtil background/frame with native text",
-        "families": [
-          "tooltip",
-          "text"
-        ],
+        "families": ["tooltip", "text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Capture total painted extent including outer frame/shadow, not only content bounds."
       },
@@ -3839,11 +3562,7 @@
       "mapping": {
         "kind": "composition",
         "target": "Original native colored chat text and disclosure controls composed as standard Trace",
-        "families": [
-          "text",
-          "list",
-          "button"
-        ],
+        "families": ["text", "list", "button"],
         "authority": "analyst-designed-composition",
         "limitation": "168 original native ChatComponent text/palette cases through public TraceLine/TraceTitle at explicitly supplied matching native row geometry: ASCII/CJK, multiline, all16 original named colors, two widths/backgrounds, GUI1\u20133. Running/error/pending use native white/red/dark-gray; trace viewer, indentation, disclosure and timing are web compositions. All8 exports, refs/HTML events, controlled callback contract and content-inner className semantics retained."
       },
@@ -3881,9 +3600,7 @@
       "mapping": {
         "kind": "native-subset",
         "target": "Vanilla font providers, colors, shadows and wrapping",
-        "families": [
-          "text"
-        ],
+        "families": ["text"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Original StringWidget and MultiLineTextWidget glyphs, shadow,9pixel lineheight, wrapping andalignment atGuiScale1\u20133 across semanticHTMLheadings andprose. HTMLhierarchy andlayout are websemantics; nativeheading scale isnotinvented."
       },
@@ -3974,9 +3691,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "AdvancementTab.extractContents with four connected AdvancementWidget nodes",
-        "families": [
-          "advancement-tree"
-        ],
+        "families": ["advancement-tree"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Four fixed graph states, original diamond icons, fixed pan, viewport234x113, scales1\u20133, DPR1. Hover details, focus and arbitrary data are web extensions."
       },
@@ -4005,9 +3720,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "BookViewScreen and PageButton",
-        "families": [
-          "book"
-        ],
+        "families": ["book"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Book reader with fixed ASCII pages, eight paging/background cases, scales 1-3. Editing and arbitrary glyph layout are outside the pixel matrix."
       },
@@ -4037,9 +3750,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Hud.extractItemHotbar",
-        "families": [
-          "hotbar"
-        ],
+        "families": ["hotbar"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Nine empty slots and each selected position, scales 1-3, explicit #202020 uniform compositing surface. Arbitrary icons, focus and transparent browser compositing are outside the pixel matrix."
       },
@@ -4069,9 +3780,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Vanilla HUD meters",
-        "families": [
-          "hud"
-        ],
+        "families": ["hud"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Static values in the declared matrices. Animated/flashing, hardcore, mount and hunger-effect states are unverified."
       },
@@ -4091,9 +3800,7 @@
       "pixelVerification": {
         "status": "verified-declared-cases",
         "manifest": "tests/reference/hud/manifest.json",
-        "additionalManifests": [
-          "tests/reference/hud/meters/manifest.json"
-        ],
+        "additionalManifests": ["tests/reference/hud/meters/manifest.json"],
         "installationReport": "tests/reference/hud/installation-verification.json",
         "repeatabilityReport": "tests/reference/hud/repeatability.json",
         "scope": "84 zero-difference installed-consumer cases, each repeated in two native launches."
@@ -4104,9 +3811,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Vanilla standing and hanging sign display",
-        "families": [
-          "sign"
-        ],
+        "families": ["sign"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Standing/hanging sign display, all 12 woods, black regular/glowing ASCII text, scales 1-3, fixed viewport1536x900 and integer positions. Other glyphs, colours and raster environments are outside the pixel matrix."
       },
@@ -4137,9 +3842,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Original PlayerSkinWidget",
-        "families": [
-          "player-preview"
-        ],
+        "families": ["player-preview"],
         "authority": "analyst-selected-native-reference",
         "limitation": "80x120 logical viewport, scales 1-3, Edge/DPR1 hardware WebGL2: original wide Steve/slim Alex default, front and side poses; frozen Dream slim front, back, angled-back and side; custom wide Steve back and angled-back; builtin Steve/Alex back and angled-back. Other skins, dimensions, poses and raster environments are outside the exact pixel matrix."
       },
@@ -4175,9 +3878,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "MapRenderer and LocatorBar",
-        "families": [
-          "map"
-        ],
+        "families": ["map"],
         "authority": "analyst-selected-native-reference",
         "limitation": "63 declared cases at scales 1-3 in Edge/DPR1: terrain, all 256 palette indices, transparent map, frame/village decorations at rotations 0/4/7; white/green locator dots at seven bearings and empty locator. Other marker types, altitude arrows, distance shapes, viewports and raster environments are outside this exact matrix."
       },
@@ -4211,9 +3912,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Original MerchantScreen and MerchantMenu",
-        "families": [
-          "trading"
-        ],
+        "families": ["trading"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Nine declared MerchantScreen cases: nine diamond offers, selected offers 1/4/9, stock/out-of-stock and scroll offsets 0/2, empty player inventory, scales1-3, Edge/DPR1. Other item icons/counts, second inputs, discounts, merchant level/XP and raster environments are outside this exact pixel matrix."
       },
@@ -4247,9 +3946,7 @@
       "mapping": {
         "kind": "native-element",
         "target": "Original PlayerTabOverlay and Hud.displayScoreboardSidebar",
-        "families": [
-          "player-list"
-        ],
+        "families": ["player-list"],
         "authority": "analyst-selected-native-reference",
         "limitation": "Thirty declared cases: player rosters with3/7/22/41/80 entries, no score and integer scores, builtin Alex/Steve/Kai heads, eight latency thresholds, single-line header/footer; scoreboards with0/3/18 input entries and top15, scales1-3, Edge/DPR1. Spectators, teams, hearts, custom skins, multiline headers/footers, arbitrary glyphs and raster environments are outside this exact pixel matrix."
       },

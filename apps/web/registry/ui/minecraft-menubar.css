@@ -1,7 +1,22 @@
 @layer components {
-  .mc-menubar { --mc-pixel: calc(1px * var(--mc-scale, 2)); display: inline-flex; flex-wrap: wrap; align-items: flex-start; gap: calc(2 * var(--mc-pixel)); max-width: 100%; padding: 0; border: 0; margin: 0; }
-  .mc-menubar-trigger { width: calc(103 * var(--mc-pixel, 2px)); }
-  .mc-menubar-trigger:is([data-open],[data-popup-open]):not(:disabled, [aria-disabled="true"]) {
+  .mc-menubar {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: calc(2 * var(--mc-pixel));
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+  .mc-menubar-trigger {
+    width: calc(103 * var(--mc-pixel, 2px));
+  }
+  .mc-menubar-trigger:is([data-open], [data-popup-open]):not(
+      :disabled,
+      [aria-disabled="true"]
+    ) {
     --mc-image: var(--mc-highlighted-image);
     --mc-piece-0: var(--mc-highlighted-0);
     --mc-piece-1: var(--mc-highlighted-1);

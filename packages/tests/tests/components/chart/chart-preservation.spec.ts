@@ -1,40 +1,104 @@
 import { test, expect } from "@grasscn/tests/test";
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-for(const scale of [2] as const) for(const [device,width,height] of [["desktop",1440,955],["mobile",390,844],["short mobile",390,300]] as const) {
- test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`,async({page})=>{
-  await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,"")}/#/components/chart`);
+for (const scale of [2] as const)
+  for (const [device, width, height] of [
+    ["desktop", 1440, 955],
+    ["mobile", 390, 844],
+    ["short mobile", 390, 300],
+  ] as const) {
+    test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
 
-  const native=page.locator('[data-chart-native-examples]'),fps=native.locator('[data-native-chart=fps]'),profiler=native.locator('[data-native-chart=profiler]');
-  await expect(fps).toBeVisible();await expect(profiler).toBeVisible();
-  expect(await native.locator('details').count()).toBe(0);
-  expect(await native.evaluate(n=>!!(n.compareDocumentPosition(document.querySelector('[data-slot="chart-example"]')!)&Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
-  await expect(profiler.locator('[data-slot=chart-profiler-frame]')).toHaveAttribute('data-mc-ready','true');
-  const firstFps=await fps.screenshot(),firstProfiler=await profiler.screenshot();
-  await native.getByRole('button',{name:'Next sample',exact:true}).click();
-  await expect(page.getByLabel('Chart sample')).toHaveText('Sample 2');
-  expect((await fps.screenshot()).equals(firstFps)).toBe(false);expect((await profiler.screenshot()).equals(firstProfiler)).toBe(false);
-  await native.getByRole('button',{name:'120 FPS cap',exact:true}).click();await expect(native.getByRole('button',{name:'Unlimited',exact:true})).toBeVisible();
-  const trigger=page.locator('[data-slot=select-trigger][aria-label="Chart type"]');
-  await trigger.evaluate(n=>scrollBy(0,n.getBoundingClientRect().top-80));await trigger.click();
-  const popup=page.locator('[data-slot=select-content]');await expect(popup).toBeVisible();
-  const before=(await popup.boundingBox())!;expect(before.x).toBeGreaterThanOrEqual(0);expect(before.x+before.width).toBeLessThanOrEqual(width);expect(before.y).toBeGreaterThanOrEqual(0);expect(before.y+before.height).toBeLessThanOrEqual(height);
-  const viewport=popup.locator('[data-slot=select-viewport]');
-  const scroll=await viewport.evaluate(n=>({top:n.scrollTop,maximum:n.scrollHeight-n.clientHeight}));
-  if(height===300) expect(scroll.maximum).toBeGreaterThan(0);
-  await viewport.hover();await page.mouse.wheel(0,scroll.top>0?-150:150);
-  if(scroll.maximum>0) {
-   await expect.poll(()=>viewport.evaluate(n=>n.scrollTop)).not.toBe(scroll.top);
-  } else {
-   // Base UI may show the entire list when item alignment has enough room.
-   for(const option of await popup.getByRole('option').all()) {
-    const bounds=(await option.boundingBox())!;
-    expect(bounds.y).toBeGreaterThanOrEqual(before.y);
-    expect(bounds.y+bounds.height).toBeLessThanOrEqual(before.y+before.height);
-   }
+      const native = page.locator("[data-chart-native-examples]"),
+        fps = native.locator("[data-native-chart=fps]"),
+        profiler = native.locator("[data-native-chart=profiler]");
+      await expect(fps).toBeVisible();
+      await expect(profiler).toBeVisible();
+      expect(await native.locator("details").count()).toBe(0);
+      expect(
+        await native.evaluate(
+          (n) =>
+            !!(
+              n.compareDocumentPosition(
+                document.querySelector('[data-slot="chart-example"]')!
+              ) & Node.DOCUMENT_POSITION_FOLLOWING
+            )
+        )
+      ).toBe(true);
+      await expect(
+        profiler.locator("[data-slot=chart-profiler-frame]")
+      ).toHaveAttribute("data-mc-ready", "true");
+      const firstFps = await fps.screenshot(),
+        firstProfiler = await profiler.screenshot();
+      await native
+        .getByRole("button", { name: "Next sample", exact: true })
+        .click();
+      await expect(page.getByLabel("Chart sample")).toHaveText("Sample 2");
+      expect((await fps.screenshot()).equals(firstFps)).toBe(false);
+      expect((await profiler.screenshot()).equals(firstProfiler)).toBe(false);
+      await native
+        .getByRole("button", { name: "120 FPS cap", exact: true })
+        .click();
+      await expect(
+        native.getByRole("button", { name: "Unlimited", exact: true })
+      ).toBeVisible();
+      const trigger = page.locator(
+        '[data-slot=select-trigger][aria-label="Chart type"]'
+      );
+      await trigger.evaluate((n) =>
+        scrollBy(0, n.getBoundingClientRect().top - 80)
+      );
+      await trigger.click();
+      const popup = page.locator("[data-slot=select-content]");
+      await expect(popup).toBeVisible();
+      const before = (await popup.boundingBox())!;
+      expect(before.x).toBeGreaterThanOrEqual(0);
+      expect(before.x + before.width).toBeLessThanOrEqual(width);
+      expect(before.y).toBeGreaterThanOrEqual(0);
+      expect(before.y + before.height).toBeLessThanOrEqual(height);
+      const viewport = popup.locator("[data-slot=select-viewport]");
+      const scroll = await viewport.evaluate((n) => ({
+        top: n.scrollTop,
+        maximum: n.scrollHeight - n.clientHeight,
+      }));
+      if (height === 300) expect(scroll.maximum).toBeGreaterThan(0);
+      await viewport.hover();
+      await page.mouse.wheel(0, scroll.top > 0 ? -150 : 150);
+      if (scroll.maximum > 0) {
+        await expect
+          .poll(() => viewport.evaluate((n) => n.scrollTop))
+          .not.toBe(scroll.top);
+      } else {
+        // Base UI may show the entire list when item alignment has enough room.
+        for (const option of await popup.getByRole("option").all()) {
+          const bounds = (await option.boundingBox())!;
+          expect(bounds.y).toBeGreaterThanOrEqual(before.y);
+          expect(bounds.y + bounds.height).toBeLessThanOrEqual(
+            before.y + before.height
+          );
+        }
+      }
+      await page.evaluate(
+        () =>
+          new Promise<void>((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => r()))
+          )
+      );
+      // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
+      const after = (await popup.boundingBox())!;
+      expect(after.y).toBeGreaterThanOrEqual(0);
+      expect(after.y + after.height).toBeLessThanOrEqual(height);
+      await page.keyboard.press("End");
+      await expect(
+        page.getByRole("option", { name: "Radial", exact: true })
+      ).toHaveAttribute("data-highlighted", "");
+      await page.keyboard.press("Enter");
+      await expect(page.locator("[data-slot=chart-example]")).toHaveAttribute(
+        "data-chart-type",
+        "radial"
+      );
+    });
   }
-  await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
-  // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
-  const after=(await popup.boundingBox())!;expect(after.y).toBeGreaterThanOrEqual(0);expect(after.y+after.height).toBeLessThanOrEqual(height);
-  await page.keyboard.press('End');await expect(page.getByRole('option',{name:'Radial',exact:true})).toHaveAttribute('data-highlighted','');await page.keyboard.press('Enter');await expect(page.locator('[data-slot=chart-example]')).toHaveAttribute('data-chart-type','radial');
- });
-}

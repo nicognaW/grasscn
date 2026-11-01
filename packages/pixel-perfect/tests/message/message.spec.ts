@@ -1,2 +1,2 @@
-import {nativeChatTests} from "@ppt/harness/families/chat-family-test-utils"
-nativeChatTests("message")
+import { nativeChatTests } from "@ppt/harness/families/chat-family-test-utils";
+nativeChatTests("message");

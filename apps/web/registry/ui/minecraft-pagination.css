@@ -1,16 +1,64 @@
 @layer components {
- .mc-pagination { display:flex; justify-content:center; width:100%; }
- .mc-pagination-content { display:flex; align-items:center; gap:4px; list-style:none; padding:0; margin:0; }
- .mc-pagination-ellipsis { display:inline-flex; align-items:center; justify-content:center; min-width:calc(20px * var(--mc-scale,2)); color:white; }
- .mc-pagination-link[data-active="true"]:not([aria-disabled="true"]) {
-   --mc-image:var(--mc-highlighted-image);
-   --mc-piece-0:var(--mc-highlighted-0); --mc-piece-1:var(--mc-highlighted-1); --mc-piece-2:var(--mc-highlighted-2);
-   --mc-piece-3:var(--mc-highlighted-3); --mc-piece-4:var(--mc-highlighted-4); --mc-piece-5:var(--mc-highlighted-5);
-   --mc-piece-6:var(--mc-highlighted-6); --mc-piece-7:var(--mc-highlighted-7); --mc-piece-8:var(--mc-highlighted-8);
- }
- .mc-pagination-link[aria-disabled="true"] { cursor:default; }
- .mc-pagination-arrow { display:inline-flex; align-items:center; gap:calc(4px * var(--mc-scale,2)); min-width:calc(12px * var(--mc-scale,2)); min-height:calc(17px * var(--mc-scale,2)); color:white; outline:none; cursor:pointer; text-decoration:none; image-rendering:pixelated; }
- .mc-pagination-arrow::before { content:""; display:block; flex-shrink:0; width:calc(12px * var(--mc-scale,2)); height:calc(17px * var(--mc-scale,2)); background:var(--mc-pagination-arrow) center/100% 100% no-repeat; image-rendering:pixelated; }
- .mc-pagination-arrow:is(:hover,:focus-visible)::before { background-image:var(--mc-pagination-arrow-highlighted); }
- .mc-pagination-arrow[aria-disabled="true"] { cursor:default; }
+  .mc-pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .mc-pagination-content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mc-pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: calc(20px * var(--mc-scale, 2));
+    color: white;
+  }
+  .mc-pagination-link[data-active="true"]:not([aria-disabled="true"]) {
+    --mc-image: var(--mc-highlighted-image);
+    --mc-piece-0: var(--mc-highlighted-0);
+    --mc-piece-1: var(--mc-highlighted-1);
+    --mc-piece-2: var(--mc-highlighted-2);
+    --mc-piece-3: var(--mc-highlighted-3);
+    --mc-piece-4: var(--mc-highlighted-4);
+    --mc-piece-5: var(--mc-highlighted-5);
+    --mc-piece-6: var(--mc-highlighted-6);
+    --mc-piece-7: var(--mc-highlighted-7);
+    --mc-piece-8: var(--mc-highlighted-8);
+  }
+  .mc-pagination-link[aria-disabled="true"] {
+    cursor: default;
+  }
+  .mc-pagination-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(4px * var(--mc-scale, 2));
+    min-width: calc(12px * var(--mc-scale, 2));
+    min-height: calc(17px * var(--mc-scale, 2));
+    color: white;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    image-rendering: pixelated;
+  }
+  .mc-pagination-arrow::before {
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    width: calc(12px * var(--mc-scale, 2));
+    height: calc(17px * var(--mc-scale, 2));
+    background: var(--mc-pagination-arrow) center/100% 100% no-repeat;
+    image-rendering: pixelated;
+  }
+  .mc-pagination-arrow:is(:hover, :focus-visible)::before {
+    background-image: var(--mc-pagination-arrow-highlighted);
+  }
+  .mc-pagination-arrow[aria-disabled="true"] {
+    cursor: default;
+  }
 }

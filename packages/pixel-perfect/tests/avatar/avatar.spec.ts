@@ -1,5 +1,166 @@
-import {resolveRepositoryPath, pixelPerfectRoot} from '@ppt/paths'
-import{pixelPerfectTest as test,expect}from'@grasscn/pixel-perfect/test';import{readFileSync,writeFileSync}from'node:fs';import{createHash}from'node:crypto';import{PNG}from'pngjs';const dir='tests/reference/avatar',manifest=JSON.parse(readFileSync(resolveRepositoryPath(dir+'/manifest.json', pixelPerfectRoot),'utf8'));function difference(a:PNG,b:PNG){expect([a.width,a.height]).toEqual([b.width,b.height]);let count=0;for(let i=0;i<a.data.length;i+=4)count+=Number(!a.data.subarray(i,i+4).equals(b.data.subarray(i,i+4)));return count}
-test('Avatar comparator catches a changed pixel',()=>{const a=PNG.sync.read(readFileSync(resolveRepositoryPath(dir+'/captures/'+manifest.cases[0].name, pixelPerfectRoot))),b=PNG.sync.read(PNG.sync.write(a));b.data[0]^=1;expect(difference(a,b)).toBe(1)});test.describe('Actual original PlayerFaceExtractor',()=>{test.describe.configure({mode:'parallel'});for(const c of manifest.cases)test(c.name,async({page},info)=>{await page.setViewportSize({width:1536,height:900});const q=new URLSearchParams({component:'avatar',native:'1',label:c.label,checked:String(c.checked),selected:String(c.selected),scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y),background:c.background});await page.goto('/?'+q);await expect(page.locator('[data-mc-avatar-face]')).toHaveAttribute('data-ready','true');await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));const expected=readFileSync(resolveRepositoryPath(dir+'/captures/'+c.name, pixelPerfectRoot));expect(createHash('sha256').update(expected).digest('hex')).toBe(c.sha256);const actual=await page.locator('[data-subject]').screenshot({animations:'disabled'}),mismatchedPixels=difference(PNG.sync.read(expected),PNG.sync.read(actual));writeFileSync(info.outputPath('metrics.json'),JSON.stringify({component:'avatar',manifest:dir+'/manifest.json',part:'face',alias:'base',case:c.name,mismatchedPixels,tolerance:0}));writeFileSync(info.outputPath('actual.png'),actual);expect(mismatchedPixels).toBe(0)})});
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 
-const labels=JSON.parse(readFileSync(resolveRepositoryPath('tests/reference/label/manifest.json', pixelPerfectRoot),'utf8'));test.describe('AvatarFallback original Label constituents',()=>{test.describe.configure({mode:'parallel'});for(const c of labels.cases)test('avatar fallback '+c.name,async({page},info)=>{await page.setViewportSize({width:1536,height:900});const q=new URLSearchParams({component:'avatar',native:'1',part:'label',label:c.label,scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y),background:c.background,align:c.alignment??'left'});if(c.wrapWidth)q.set('wrapWidth',String(c.wrapWidth));await page.goto('/?'+q);await expect(page.locator('[data-mc-label-layout-ready]')).toHaveAttribute('data-mc-label-layout-ready','true');for(const canvas of await page.locator('[data-mc-label-ready]').all())await expect(canvas).toHaveAttribute('data-mc-label-ready','true');await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));const expected=readFileSync(resolveRepositoryPath('tests/reference/label/captures/'+c.name, pixelPerfectRoot)),actual=await page.locator('[data-subject]').screenshot({animations:'disabled'});expect(createHash('sha256').update(expected).digest('hex')).toBe(c.sha256);const mismatchedPixels=difference(PNG.sync.read(expected),PNG.sync.read(actual));writeFileSync(info.outputPath('actual.png'),actual);writeFileSync(info.outputPath('metrics.json'),JSON.stringify({component:'avatar',manifest:'tests/reference/label/manifest.json',part:'label',alias:'base',case:c.name,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)})});
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { PNG } from "pngjs";
+const dir = "tests/reference/avatar",
+  manifest = JSON.parse(
+    readFileSync(
+      resolveRepositoryPath(dir + "/manifest.json", pixelPerfectRoot),
+      "utf8"
+    )
+  );
+function difference(a: PNG, b: PNG) {
+  expect([a.width, a.height]).toEqual([b.width, b.height]);
+  let count = 0;
+  for (let i = 0; i < a.data.length; i += 4)
+    count += Number(
+      !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
+    );
+  return count;
+}
+test("Avatar comparator catches a changed pixel", () => {
+  const a = PNG.sync.read(
+      readFileSync(
+        resolveRepositoryPath(
+          dir + "/captures/" + manifest.cases[0].name,
+          pixelPerfectRoot
+        )
+      )
+    ),
+    b = PNG.sync.read(PNG.sync.write(a));
+  b.data[0] ^= 1;
+  expect(difference(a, b)).toBe(1);
+});
+test.describe("Actual original PlayerFaceExtractor", () => {
+  test.describe.configure({ mode: "parallel" });
+  for (const c of manifest.cases)
+    test(c.name, async ({ page }, info) => {
+      await page.setViewportSize({ width: 1536, height: 900 });
+      const q = new URLSearchParams({
+        component: "avatar",
+        native: "1",
+        label: c.label,
+        checked: String(c.checked),
+        selected: String(c.selected),
+        scale: String(c.scale),
+        width: String(c.width),
+        height: String(c.height),
+        x: String(c.x),
+        y: String(c.y),
+        background: c.background,
+      });
+      await page.goto("/?" + q);
+      await expect(page.locator("[data-mc-avatar-face]")).toHaveAttribute(
+        "data-ready",
+        "true"
+      );
+      await page.evaluate(
+        () =>
+          new Promise((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(r))
+          )
+      );
+      const expected = readFileSync(
+        resolveRepositoryPath(dir + "/captures/" + c.name, pixelPerfectRoot)
+      );
+      expect(createHash("sha256").update(expected).digest("hex")).toBe(
+        c.sha256
+      );
+      const actual = await page
+          .locator("[data-subject]")
+          .screenshot({ animations: "disabled" }),
+        mismatchedPixels = difference(
+          PNG.sync.read(expected),
+          PNG.sync.read(actual)
+        );
+      writeFileSync(
+        info.outputPath("metrics.json"),
+        JSON.stringify({
+          component: "avatar",
+          manifest: dir + "/manifest.json",
+          part: "face",
+          alias: "base",
+          case: c.name,
+          mismatchedPixels,
+          tolerance: 0,
+        })
+      );
+      writeFileSync(info.outputPath("actual.png"), actual);
+      expect(mismatchedPixels).toBe(0);
+    });
+});
+
+const labels = JSON.parse(
+  readFileSync(
+    resolveRepositoryPath(
+      "tests/reference/label/manifest.json",
+      pixelPerfectRoot
+    ),
+    "utf8"
+  )
+);
+test.describe("AvatarFallback original Label constituents", () => {
+  test.describe.configure({ mode: "parallel" });
+  for (const c of labels.cases)
+    test("avatar fallback " + c.name, async ({ page }, info) => {
+      await page.setViewportSize({ width: 1536, height: 900 });
+      const q = new URLSearchParams({
+        component: "avatar",
+        native: "1",
+        part: "label",
+        label: c.label,
+        scale: String(c.scale),
+        width: String(c.width),
+        height: String(c.height),
+        x: String(c.x),
+        y: String(c.y),
+        background: c.background,
+        align: c.alignment ?? "left",
+      });
+      if (c.wrapWidth) q.set("wrapWidth", String(c.wrapWidth));
+      await page.goto("/?" + q);
+      await expect(
+        page.locator("[data-mc-label-layout-ready]")
+      ).toHaveAttribute("data-mc-label-layout-ready", "true");
+      for (const canvas of await page.locator("[data-mc-label-ready]").all())
+        await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
+      await page.evaluate(
+        () =>
+          new Promise((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(r))
+          )
+      );
+      const expected = readFileSync(
+          resolveRepositoryPath(
+            "tests/reference/label/captures/" + c.name,
+            pixelPerfectRoot
+          )
+        ),
+        actual = await page
+          .locator("[data-subject]")
+          .screenshot({ animations: "disabled" });
+      expect(createHash("sha256").update(expected).digest("hex")).toBe(
+        c.sha256
+      );
+      const mismatchedPixels = difference(
+        PNG.sync.read(expected),
+        PNG.sync.read(actual)
+      );
+      writeFileSync(info.outputPath("actual.png"), actual);
+      writeFileSync(
+        info.outputPath("metrics.json"),
+        JSON.stringify({
+          component: "avatar",
+          manifest: "tests/reference/label/manifest.json",
+          part: "label",
+          alias: "base",
+          case: c.name,
+          mismatchedPixels,
+          tolerance: 0,
+        })
+      );
+      expect(mismatchedPixels).toBe(0);
+    });
+});

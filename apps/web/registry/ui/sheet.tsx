@@ -1,46 +1,215 @@
 "use client";
+import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
+import * as React from "react";
+
+import { Button } from "./button";
+import { minecraftCardSprite } from "./minecraft-card-sprite";
+import { CardScaleContext } from "./minecraft-card-text";
+import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
+import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import { MinecraftRender, type MinecraftProps } from "./minecraft-render";
-import * as React from "react";
-import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
-import { Button } from "./button";
-import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
 import { MinecraftSurface } from "./minecraft-surface";
-import { CardScaleContext } from "./minecraft-card-text";
-import { minecraftCardSprite } from "./minecraft-card-sprite";
-import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
+
 import "./minecraft-card.css";
 import "./minecraft-sheet.css";
 const SheetScale = React.createContext<1 | 2 | 3>(2);
-function Sheet({ scale = 2, ...props }: MinecraftProps<typeof SheetPrimitive.Root> & {
-    scale?: 1 | 2 | 3;
-}) { return <SheetScale.Provider value={scale}><SheetPrimitive.Root {...props}/></SheetScale.Provider>; }
-function SheetTrigger({render,children,...props}:MinecraftProps<typeof SheetPrimitive.Trigger>){const scale=React.useContext(SheetScale);return <SheetPrimitive.Trigger data-slot="sheet-trigger" render={render??<Button scale={scale}/>} {...props}>{children}</SheetPrimitive.Trigger>;}
+function Sheet({
+  scale = 2,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Root> & {
+  scale?: 1 | 2 | 3;
+}) {
+  return (
+    <SheetScale.Provider value={scale}>
+      <SheetPrimitive.Root {...props} />
+    </SheetScale.Provider>
+  );
+}
+function SheetTrigger({
+  render,
+  children,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Trigger>) {
+  const scale = React.useContext(SheetScale);
+  return (
+    <SheetPrimitive.Trigger
+      data-slot="sheet-trigger"
+      render={render ?? <Button scale={scale} />}
+      {...props}
+    >
+      {children}
+    </SheetPrimitive.Trigger>
+  );
+}
 
-function SheetClose({render,children,...props}:MinecraftProps<typeof SheetPrimitive.Close>){const scale=React.useContext(SheetScale);return <SheetPrimitive.Close data-slot="sheet-close" render={render??<Button scale={scale}/>} {...props}>{children}</SheetPrimitive.Close>;}
+function SheetClose({
+  render,
+  children,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Close>) {
+  const scale = React.useContext(SheetScale);
+  return (
+    <SheetPrimitive.Close
+      data-slot="sheet-close"
+      render={render ?? <Button scale={scale} />}
+      {...props}
+    >
+      {children}
+    </SheetPrimitive.Close>
+  );
+}
 
-function SheetPortal(props: MinecraftProps<typeof SheetPrimitive.Portal>) { return <SheetPrimitive.Portal {...props}/>; }
-function SheetOverlay({ className, render, children, ...props }: MinecraftProps<typeof SheetPrimitive.Backdrop>) {
-    const child = null;
-    const content = <><MinecraftDialogBackdrop />{children}</>;
-    return <SheetPrimitive.Backdrop render={render} data-slot="sheet-overlay" className={cn(`mc-sheet-overlay ${""}`, className)} {...props}>{content}</SheetPrimitive.Backdrop>;
+function SheetPortal(props: MinecraftProps<typeof SheetPrimitive.Portal>) {
+  return <SheetPrimitive.Portal {...props} />;
+}
+function SheetOverlay({
+  className,
+  render,
+  children,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Backdrop>) {
+  const child = null;
+  const content = (
+    <>
+      <MinecraftDialogBackdrop />
+      {children}
+    </>
+  );
+  return (
+    <SheetPrimitive.Backdrop
+      render={render}
+      data-slot="sheet-overlay"
+      className={cn(`mc-sheet-overlay ${""}`, className)}
+      {...props}
+    >
+      {content}
+    </SheetPrimitive.Backdrop>
+  );
 }
 type SheetContentProps = MinecraftProps<typeof SheetPrimitive.Popup> & {
-    side?: "top" | "right" | "bottom" | "left";
-    scale?: 1 | 2 | 3;
-    showCloseButton?: boolean;
+  side?: "top" | "right" | "bottom" | "left";
+  scale?: 1 | 2 | 3;
+  showCloseButton?: boolean;
 };
-function SheetContent({ side = "right", scale: explicit, showCloseButton = true, render, children, className, style, ...props }: SheetContentProps) {
-    const inherited = React.useContext(SheetScale), scale = explicit ?? inherited;
-    const child = null;
-    const content = <><MinecraftSurface sprite={minecraftCardSprite}/>{children}{showCloseButton && <SheetClose className="mc-sheet-default-close"/>}</>;
-    return <SheetPortal><SheetOverlay /><SheetScale.Provider value={scale}><CardScaleContext.Provider value={scale}><SheetPrimitive.Popup render={render} data-slot="sheet-content" data-side={side} className={cn(`mc-card mc-sheet-content ${""}`, className)} style={minecraftStyle(style, __style => ({ "--mc-scale": scale, ...__style } as React.CSSProperties))} {...props}>{content}</SheetPrimitive.Popup></CardScaleContext.Provider></SheetScale.Provider></SheetPortal>;
+function SheetContent({
+  side = "right",
+  scale: explicit,
+  showCloseButton = true,
+  render,
+  children,
+  className,
+  style,
+  ...props
+}: SheetContentProps) {
+  const inherited = React.useContext(SheetScale),
+    scale = explicit ?? inherited;
+  const child = null;
+  const content = (
+    <>
+      <MinecraftSurface sprite={minecraftCardSprite} />
+      {children}
+      {showCloseButton && <SheetClose className="mc-sheet-default-close" />}
+    </>
+  );
+  return (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetScale.Provider value={scale}>
+        <CardScaleContext.Provider value={scale}>
+          <SheetPrimitive.Popup
+            render={render}
+            data-slot="sheet-content"
+            data-side={side}
+            className={cn(`mc-card mc-sheet-content ${""}`, className)}
+            style={minecraftStyle(
+              style,
+              (__style) =>
+                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            )}
+            {...props}
+          >
+            {content}
+          </SheetPrimitive.Popup>
+        </CardScaleContext.Provider>
+      </SheetScale.Provider>
+    </SheetPortal>
+  );
 }
-function SheetHeader({ className, ...props }: MinecraftProps<"div">) { return <div data-slot="sheet-header" className={cn(`mc-sheet-header ${""}`, className)} {...props}/>; }
-function SheetFooter({ className, ...props }: MinecraftProps<"div">) { return <div data-slot="sheet-footer" className={cn(`mc-sheet-footer ${""}`, className)} {...props}/>; }
-function SheetTitle({render,children,className,...props}:MinecraftProps<typeof SheetPrimitive.Title>){const scale=React.useContext(SheetScale);return <SheetPrimitive.Title data-slot="sheet-title" className={className} render={render??<MinecraftDisclosureText role="heading" aria-level={2} scale={scale}/>} {...props}>{children}</SheetPrimitive.Title>;}
+function SheetHeader({ className, ...props }: MinecraftProps<"div">) {
+  return (
+    <div
+      data-slot="sheet-header"
+      className={cn(`mc-sheet-header ${""}`, className)}
+      {...props}
+    />
+  );
+}
+function SheetFooter({ className, ...props }: MinecraftProps<"div">) {
+  return (
+    <div
+      data-slot="sheet-footer"
+      className={cn(`mc-sheet-footer ${""}`, className)}
+      {...props}
+    />
+  );
+}
+function SheetTitle({
+  render,
+  children,
+  className,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Title>) {
+  const scale = React.useContext(SheetScale);
+  return (
+    <SheetPrimitive.Title
+      data-slot="sheet-title"
+      className={className}
+      render={
+        render ?? (
+          <MinecraftDisclosureText
+            role="heading"
+            aria-level={2}
+            scale={scale}
+          />
+        )
+      }
+      {...props}
+    >
+      {children}
+    </SheetPrimitive.Title>
+  );
+}
 
-function SheetDescription({render,children,className,...props}:MinecraftProps<typeof SheetPrimitive.Description>){const scale=React.useContext(SheetScale);return <SheetPrimitive.Description data-slot="sheet-description" className={className} render={render??<MinecraftDisclosureText  scale={scale}/>} {...props}>{children}</SheetPrimitive.Description>;}
+function SheetDescription({
+  render,
+  children,
+  className,
+  ...props
+}: MinecraftProps<typeof SheetPrimitive.Description>) {
+  const scale = React.useContext(SheetScale);
+  return (
+    <SheetPrimitive.Description
+      data-slot="sheet-description"
+      className={className}
+      render={render ?? <MinecraftDisclosureText scale={scale} />}
+      {...props}
+    >
+      {children}
+    </SheetPrimitive.Description>
+  );
+}
 
-export { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, SheetPortal, SheetOverlay };
+export {
+  Sheet,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+  SheetPortal,
+  SheetOverlay,
+};
 export type { SheetContentProps };

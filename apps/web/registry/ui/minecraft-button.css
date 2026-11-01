@@ -75,22 +75,45 @@
     position: absolute;
     inset: 0;
     display: grid;
-    grid-template-columns: var(--mc-border-px) minmax(0, 1fr) var(--mc-border-px);
+    grid-template-columns: var(--mc-border-px) minmax(0, 1fr) var(
+        --mc-border-px
+      );
     grid-template-rows: var(--mc-border-px) minmax(0, 1fr) var(--mc-border-px);
     pointer-events: none;
     text-shadow: none;
   }
-  .mc-button-surface > span { background-repeat: repeat; }
-  .mc-button-surface > :nth-child(1) { background-image: var(--mc-piece-0); }
-  .mc-button-surface > :nth-child(2) { background-image: var(--mc-piece-1); }
-  .mc-button-surface > :nth-child(3) { background-image: var(--mc-piece-2); }
-  .mc-button-surface > :nth-child(4) { background-image: var(--mc-piece-3); }
-  .mc-button-surface > :nth-child(5) { background-image: var(--mc-piece-4); }
-  .mc-button-surface > :nth-child(6) { background-image: var(--mc-piece-5); }
-  .mc-button-surface > :nth-child(7) { background-image: var(--mc-piece-6); }
-  .mc-button-surface > :nth-child(8) { background-image: var(--mc-piece-7); }
-  .mc-button-surface > :nth-child(9) { background-image: var(--mc-piece-8); }
-  .mc-button-surface > :is(:nth-child(1), :nth-child(3), :nth-child(7), :nth-child(9)) {
+  .mc-button-surface > span {
+    background-repeat: repeat;
+  }
+  .mc-button-surface > :nth-child(1) {
+    background-image: var(--mc-piece-0);
+  }
+  .mc-button-surface > :nth-child(2) {
+    background-image: var(--mc-piece-1);
+  }
+  .mc-button-surface > :nth-child(3) {
+    background-image: var(--mc-piece-2);
+  }
+  .mc-button-surface > :nth-child(4) {
+    background-image: var(--mc-piece-3);
+  }
+  .mc-button-surface > :nth-child(5) {
+    background-image: var(--mc-piece-4);
+  }
+  .mc-button-surface > :nth-child(6) {
+    background-image: var(--mc-piece-5);
+  }
+  .mc-button-surface > :nth-child(7) {
+    background-image: var(--mc-piece-6);
+  }
+  .mc-button-surface > :nth-child(8) {
+    background-image: var(--mc-piece-7);
+  }
+  .mc-button-surface > :nth-child(9) {
+    background-image: var(--mc-piece-8);
+  }
+  .mc-button-surface
+    > :is(:nth-child(1), :nth-child(3), :nth-child(7), :nth-child(9)) {
     background-size: var(--mc-border-px) var(--mc-border-px);
   }
   .mc-button-surface > :is(:nth-child(2), :nth-child(8)) {
@@ -111,11 +134,19 @@
   .mc-button > .mc-button-label {
     position: absolute;
     left: round(down, 50%, var(--mc-pixel));
-    top: calc(round(down, (100% - 9 * var(--mc-pixel)) / 2, var(--mc-pixel)) + var(--mc-pixel));
+    top: calc(
+      round(down, (100% - 9 * var(--mc-pixel)) / 2, var(--mc-pixel)) +
+        var(--mc-pixel)
+    );
     transform: translateX(round(up, -50%, var(--mc-pixel)));
   }
-  .mc-text, .mc-text-pixels { display: inline-flex; }
-  .mc-text-pixels { filter: drop-shadow(var(--mc-pixel) var(--mc-pixel) 0 var(--mc-shadow)); }
+  .mc-text,
+  .mc-text-pixels {
+    display: inline-flex;
+  }
+  .mc-text-pixels {
+    filter: drop-shadow(var(--mc-pixel) var(--mc-pixel) 0 var(--mc-shadow));
+  }
   .mc-glyph {
     display: block;
     width: calc(var(--mc-advance) * var(--mc-pixel));
@@ -123,8 +154,10 @@
     flex-shrink: 0;
     background-color: var(--mc-ink);
     mask-image: var(--mc-ascii-atlas);
-    mask-size: calc(var(--mc-atlas-size) * var(--mc-pixel)) calc(var(--mc-atlas-size) * var(--mc-pixel));
-    mask-position: calc(-1 * var(--mc-glyph-x) * var(--mc-pixel)) calc(-1 * var(--mc-glyph-y) * var(--mc-pixel));
+    mask-size: calc(var(--mc-atlas-size) * var(--mc-pixel))
+      calc(var(--mc-atlas-size) * var(--mc-pixel));
+    mask-position: calc(-1 * var(--mc-glyph-x) * var(--mc-pixel))
+      calc(-1 * var(--mc-glyph-y) * var(--mc-pixel));
     mask-repeat: no-repeat;
   }
   .mc-text-accessible {

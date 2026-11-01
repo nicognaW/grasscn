@@ -1,46 +1,126 @@
-import {resolveRepositoryPath, testRoot} from '@tests/paths'
-import {test,expect} from '@grasscn/tests/test'
-import {readFileSync} from 'node:fs'
-const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
+import { readFileSync } from "node:fs";
 
-for(const scale of [2])test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`,async({page})=>{
- const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
- await page.goto(`${origin}#field`)
- await expect(page.locator('.component-card')).toHaveCount(1)
- const card=page.locator('#component-form');await expect(card).toBeVisible()
- await expect(page.locator('h1')).toHaveText('Form')
- const form=card.getByRole('form',{name:'Player and world settings'}),name=form.getByRole('textbox',{name:'Player name',exact:true}),world=form.getByRole('textbox',{name:'World name',exact:true}),notes=form.getByRole('textbox',{name:'Journey notes',exact:true})
- await expect(form.locator('[data-slot=field-set]')).toHaveCount(1)
- await expect(form.locator('[data-slot=field]')).toHaveCount(3)
- await form.getByRole('button',{name:'Save player',exact:true}).click()
- await expect(name).toBeFocused();await expect(name).toHaveAttribute('aria-invalid','true')
- await expect(form.getByRole('alert').filter({hasText:'Enter your player name'})).toBeVisible()
- expect(await name.evaluate(n=>(n.getAttribute('aria-describedby')??'').split(' ').every(id=>!!document.getElementById(id)))).toBe(true)
- await name.fill('你');await form.getByRole('button',{name:'Save player',exact:true}).click();await expect(form.getByRole('alert').filter({hasText:'Use at least two characters'})).toBeVisible()
- await name.fill('你好世界');await world.fill('草地方块');await notes.fill('第一行\nSecond line\n第三行')
- await form.getByRole('button',{name:'Save player',exact:true}).click()
- await expect(card.getByLabel('Saved player').locator(':scope > [data-slot=label] > .mc-text-accessible')).toHaveText('你好世界');await expect(card.getByLabel('Saved world').locator(':scope > [data-slot=label] > .mc-text-accessible')).toHaveText('草地方块');await expect(name).toHaveAttribute('aria-invalid','false')
- await expect(notes).toHaveValue('第一行\nSecond line\n第三行')
- for(const control of [name,world,notes]){await expect(control).toHaveAttribute('spellcheck','false');expect(await control.evaluate(n=>Number(getComputedStyle(n).getPropertyValue('--mc-scale')))).toBe(scale)}
- await card.getByRole('button',{name:'Disable fields',exact:true}).click()
- for(const control of [name,world,notes,form.getByRole('button',{name:'Save player',exact:true})])await expect(control).toBeDisabled()
- await card.getByRole('button',{name:'Enable fields',exact:true}).click()
- await form.getByRole('button',{name:'Reset',exact:true}).click()
- await expect(name).toHaveValue('');await expect(world).toHaveValue('My world');await expect(notes).toHaveValue('');await expect(card.getByLabel('Saved player')).toHaveCount(0)
- await world.fill('');await form.getByRole('button',{name:'Save player',exact:true}).click();await expect(form.getByRole('alert').filter({hasText:'Enter a world name'})).toBeVisible()
- expect(errors).toEqual([])
-})
+import { test, expect } from "@grasscn/tests/test";
+import { resolveRepositoryPath, testRoot } from "@tests/paths";
+const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
-test('Field is consolidated into Form',async({page})=>{
- await page.goto(`${origin}#/components/field`)
- await expect(page.locator('[data-stage=form]')).toHaveCount(1)
- await expect(page.locator('[data-stage=field]')).toHaveCount(1)
- await expect(page.locator('#component-field')).toHaveCount(0)
- const nav=page.getByRole('navigation',{name:'Components'})
- await expect(nav.getByRole('link',{name:'Form',exact:true})).toHaveCount(1)
- await expect(nav.getByRole('link',{name:'Field',exact:true})).toHaveCount(0)
- const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json', testRoot),'utf8'))
- const form=registry.items.find((item:{name:string})=>item.name==='form')
- expect(form.files.some((file:{path:string})=>file.path==='registry/ui/field.tsx')).toBe(true)
- expect(registry.items.some((item:{name:string})=>item.name==='field')).toBe(false)
-})
+for (const scale of [2])
+  test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`, async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    await page.goto(`${origin}#field`);
+    await expect(page.locator(".component-card")).toHaveCount(1);
+    const card = page.locator("#component-form");
+    await expect(card).toBeVisible();
+    await expect(page.locator("h1")).toHaveText("Form");
+    const form = card.getByRole("form", { name: "Player and world settings" }),
+      name = form.getByRole("textbox", { name: "Player name", exact: true }),
+      world = form.getByRole("textbox", { name: "World name", exact: true }),
+      notes = form.getByRole("textbox", { name: "Journey notes", exact: true });
+    await expect(form.locator("[data-slot=field-set]")).toHaveCount(1);
+    await expect(form.locator("[data-slot=field]")).toHaveCount(3);
+    await form
+      .getByRole("button", { name: "Save player", exact: true })
+      .click();
+    await expect(name).toBeFocused();
+    await expect(name).toHaveAttribute("aria-invalid", "true");
+    await expect(
+      form.getByRole("alert").filter({ hasText: "Enter your player name" })
+    ).toBeVisible();
+    expect(
+      await name.evaluate((n) =>
+        (n.getAttribute("aria-describedby") ?? "")
+          .split(" ")
+          .every((id) => !!document.getElementById(id))
+      )
+    ).toBe(true);
+    await name.fill("你");
+    await form
+      .getByRole("button", { name: "Save player", exact: true })
+      .click();
+    await expect(
+      form.getByRole("alert").filter({ hasText: "Use at least two characters" })
+    ).toBeVisible();
+    await name.fill("你好世界");
+    await world.fill("草地方块");
+    await notes.fill("第一行\nSecond line\n第三行");
+    await form
+      .getByRole("button", { name: "Save player", exact: true })
+      .click();
+    await expect(
+      card
+        .getByLabel("Saved player")
+        .locator(":scope > [data-slot=label] > .mc-text-accessible")
+    ).toHaveText("你好世界");
+    await expect(
+      card
+        .getByLabel("Saved world")
+        .locator(":scope > [data-slot=label] > .mc-text-accessible")
+    ).toHaveText("草地方块");
+    await expect(name).toHaveAttribute("aria-invalid", "false");
+    await expect(notes).toHaveValue("第一行\nSecond line\n第三行");
+    for (const control of [name, world, notes]) {
+      await expect(control).toHaveAttribute("spellcheck", "false");
+      expect(
+        await control.evaluate((n) =>
+          Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
+        )
+      ).toBe(scale);
+    }
+    await card
+      .getByRole("button", { name: "Disable fields", exact: true })
+      .click();
+    for (const control of [
+      name,
+      world,
+      notes,
+      form.getByRole("button", { name: "Save player", exact: true }),
+    ])
+      await expect(control).toBeDisabled();
+    await card
+      .getByRole("button", { name: "Enable fields", exact: true })
+      .click();
+    await form.getByRole("button", { name: "Reset", exact: true }).click();
+    await expect(name).toHaveValue("");
+    await expect(world).toHaveValue("My world");
+    await expect(notes).toHaveValue("");
+    await expect(card.getByLabel("Saved player")).toHaveCount(0);
+    await world.fill("");
+    await form
+      .getByRole("button", { name: "Save player", exact: true })
+      .click();
+    await expect(
+      form.getByRole("alert").filter({ hasText: "Enter a world name" })
+    ).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+test("Field is consolidated into Form", async ({ page }) => {
+  await page.goto(`${origin}#/components/field`);
+  await expect(page.locator("[data-stage=form]")).toHaveCount(1);
+  await expect(page.locator("[data-stage=field]")).toHaveCount(1);
+  await expect(page.locator("#component-field")).toHaveCount(0);
+  const nav = page.getByRole("navigation", { name: "Components" });
+  await expect(
+    nav.getByRole("link", { name: "Form", exact: true })
+  ).toHaveCount(1);
+  await expect(
+    nav.getByRole("link", { name: "Field", exact: true })
+  ).toHaveCount(0);
+  const registry = JSON.parse(
+    readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
+  );
+  const form = registry.items.find(
+    (item: { name: string }) => item.name === "form"
+  );
+  expect(
+    form.files.some(
+      (file: { path: string }) => file.path === "registry/ui/field.tsx"
+    )
+  ).toBe(true);
+  expect(
+    registry.items.some((item: { name: string }) => item.name === "field")
+  ).toBe(false);
+});

@@ -1,5 +1,26 @@
 @layer components {
- .mc-kbd { position:relative; display:inline-flex; flex-shrink:0; align-items:center; justify-content:center; width:auto; min-width:calc(20px * var(--mc-scale,2)); padding-inline:calc(5px * var(--mc-scale,2)); cursor:default; vertical-align:middle; }
- .mc-kbd-intrinsic { display:block; height:0; min-width:0; flex-shrink:1; pointer-events:none; }
- .mc-kbd-group { display:inline-flex; align-items:center; gap:calc(2px * var(--mc-scale,2)); }
+  .mc-kbd {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: calc(20px * var(--mc-scale, 2));
+    padding-inline: calc(5px * var(--mc-scale, 2));
+    cursor: default;
+    vertical-align: middle;
+  }
+  .mc-kbd-intrinsic {
+    display: block;
+    height: 0;
+    min-width: 0;
+    flex-shrink: 1;
+    pointer-events: none;
+  }
+  .mc-kbd-group {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(2px * var(--mc-scale, 2));
+  }
 }
