@@ -43,12 +43,12 @@ const steps = [
   ],
   [
     "primitives",
-    [path.join(testRoot, "src/checks/check-primitives.mjs")],
+    [path.join(testRoot, "src/checks/check-primitives.ts")],
     testRoot,
   ],
   [
     "registry-closure",
-    [path.join(testRoot, "src/checks/check-registry-closure.mjs")],
+    [path.join(testRoot, "src/checks/check-registry-closure.ts")],
     testRoot,
   ],
   [
@@ -58,7 +58,7 @@ const steps = [
   ],
   [
     "built-primitives",
-    [path.join(testRoot, "src/checks/check-primitives.mjs"), "--built"],
+    [path.join(testRoot, "src/checks/check-primitives.ts"), "--built"],
     testRoot,
   ],
   [

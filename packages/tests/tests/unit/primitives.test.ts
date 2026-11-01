@@ -51,7 +51,7 @@ async function fixture(
       spawnSync(
         process.execPath,
         [
-          path.join(root, "src/checks/check-primitives.mjs"),
+          path.join(root, "src/checks/check-primitives.ts"),
           "--root",
           directory,
           ...args,
