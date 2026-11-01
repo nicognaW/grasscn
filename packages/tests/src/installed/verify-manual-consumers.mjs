@@ -968,18 +968,34 @@ try {
           async () =>
             await trading
               .locator("img")
-              .evaluateAll(
-                (images) =>
-                  images.length > 0 &&
-                  images.every(
-                    (image) =>
-                      image instanceof HTMLImageElement &&
-                      image.complete &&
-                      image.naturalWidth === 16
+              .evaluateAll((images) =>
+                images
+                  .map((image) =>
+                    image instanceof HTMLImageElement
+                      ? [
+                          image.naturalWidth,
+                          image.naturalHeight,
+                          image.complete,
+                          image.closest(".mc-trade-item") !== null,
+                        ]
+                      : null
+                  )
+                  .toSorted((first, second) =>
+                    String(first).localeCompare(String(second))
                   )
               )
         )
-        .toBe(true);
+        // adventureAssets declares villager 512x256, trade_arrow 10x9 and
+        // scroller_disabled 6x27; the example supplies four 16x16 item icons.
+        .toEqual([
+          [10, 9, true, false],
+          [16, 16, true, true],
+          [16, 16, true, true],
+          [16, 16, true, true],
+          [16, 16, true, true],
+          [512, 256, true, false],
+          [6, 27, true, false],
+        ]);
       await trading
         .getByRole("button", { exact: true, name: "Trade for Bread" })
         .click();
