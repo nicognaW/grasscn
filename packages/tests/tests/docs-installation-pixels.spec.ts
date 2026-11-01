@@ -139,12 +139,24 @@ test("default installation controls match their captured Minecraft content and s
     if (!visible || !bounds) throw Error("Manual file row is not visible");
     // Browser scroll-into-view ignores the native viewport's 2px paint inset.
     // Wheel the row into its interior, as a visitor does when browsing the list.
-    await page.mouse.move(visible.x + visible.width - 20, visible.y + visible.height / 2);
-    await page.mouse.wheel(0, Math.round(bounds.y + bounds.height / 2 - visible.y - visible.height / 2));
-    await expect.poll(async () => {
-      const row = await button.boundingBox();
-      return Boolean(row && row.y >= visible.y + 2 && row.y + row.height <= visible.y + visible.height - 2);
-    }).toBe(true);
+    await page.mouse.move(
+      visible.x + visible.width - 20,
+      visible.y + visible.height / 2
+    );
+    await page.mouse.wheel(
+      0,
+      Math.round(bounds.y + bounds.height / 2 - visible.y - visible.height / 2)
+    );
+    await expect
+      .poll(async () => {
+        const row = await button.boundingBox();
+        return Boolean(
+          row &&
+          row.y >= visible.y + 2 &&
+          row.y + row.height <= visible.y + visible.height - 2
+        );
+      })
+      .toBe(true);
     await page.mouse.move(0, 0);
     await pixels(await button.screenshot(), reference.name);
   }
