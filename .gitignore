@@ -19,3 +19,6 @@ coverage/
 *.tsbuildinfo
 __pycache__/
 *.py[cod]
+
+# Turborepo task cache.
+.turbo/
