@@ -72,7 +72,9 @@ const CalendarMonthButton = ({
     aria-disabled={props.disabled ?? undefined}
     {...props}
     onClick={(event) => {
-      if (!event.defaultPrevented) playMinecraftClick();
+      if (!event.defaultPrevented) {
+        playMinecraftClick();
+      }
       onClick?.(event);
     }}
   />

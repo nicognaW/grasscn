@@ -56,10 +56,11 @@ const HotbarPaint = ({
             to = ((y + top) * 184 + x + left) * 4,
             alpha = bytes[from + 3] / 255;
 
-          for (let k = 0; k < 3; k++)
+          for (let k = 0; k < 3; k++) {
             image.data[to + k] = Math.round(
               bytes[from + k] * alpha + image.data[to + k] * (1 - alpha)
             );
+          }
         }
       }
     }

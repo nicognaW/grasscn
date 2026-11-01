@@ -325,7 +325,9 @@ const TabsTrigger = ({
 
     if (unicode) {
       void loadUnihex().then(() => {
-        if (!cancelled) update();
+        if (!cancelled) {
+          update();
+        }
       });
     } else {
       update();

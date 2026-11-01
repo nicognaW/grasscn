@@ -94,17 +94,20 @@ export const DialogUnicodeLine = ({
 
                 if (ascii) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++)
-                      for (let px = 0; px < 8; px++)
+                    for (let y = 0; y < 8; y++) {
+                      for (let px = 0; px < 8; px++) {
                         if (
                           pixels[((ascii[1] + y) * 128 + ascii[0] + px) * 4 + 3]
-                        )
+                        ) {
                           context.fillRect(
                             (dx + px) * scale,
                             (dy + y) * scale,
                             scale,
                             scale
                           );
+                        }
+                      }
+                    }
                   }
                 } else if (uni) {
                   paintUnihexGPU(context, uni, dx, dy, scale, bold ? 0.1 : 0);

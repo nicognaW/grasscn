@@ -124,7 +124,9 @@ const MinecraftMap = ({
         )
       )
         .then((images) => {
-          if (!live) return;
+          if (!live) {
+            return;
+          }
 
           const bounds = canvas.getBoundingClientRect(),
             output = mapGpuPixels(

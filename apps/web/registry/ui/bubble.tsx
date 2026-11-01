@@ -198,7 +198,9 @@ const BubbleContent = ({
 
     if (unicode) {
       void loadUnihex().then(() => {
-        if (live) setFontReady(true);
+        if (live) {
+          setFontReady(true);
+        }
       });
     }
 

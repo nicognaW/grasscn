@@ -183,7 +183,7 @@ export function gpuTooltipPixels(
             sizes[row]
           );
         } else {
-          for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale)
+          for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale) {
             for (let dx = 0; dx < widths[col]; dx += sizes[col] * scale) {
               const w = Math.min(sizes[col] * scale, widths[col] - dx),
                 h = Math.min(sizes[row] * scale, heights[row] - dy);
@@ -199,6 +199,7 @@ export function gpuTooltipPixels(
                 h / scale
               );
             }
+          }
         }
       }
     }

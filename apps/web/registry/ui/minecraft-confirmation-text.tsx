@@ -95,7 +95,9 @@ export const MinecraftConfirmationText = ({
 
     if (unicode) {
       void loadUnihex().then(() => {
-        if (active) loaded();
+        if (active) {
+          loaded();
+        }
       });
     }
 
