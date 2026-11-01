@@ -546,7 +546,7 @@
       "components": ["slider"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/slider",
+        "route": "/docs/components/slider",
         "reason": "Dragging the ordinary single-thumb value control and committing it on release."
       },
       "titlePath": ["Slider pointer drag changes value and commits on release"]
@@ -557,7 +557,7 @@
       "components": ["input"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/input",
+        "route": "/docs/components/input",
         "reason": "Ordinary editing and keyboard deletion in the default editable input."
       },
       "titlePath": [
@@ -570,7 +570,7 @@
       "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/textarea",
+        "route": "/docs/components/textarea",
         "reason": "Ordinary multiline editing in the default editable textarea."
       },
       "titlePath": [
@@ -754,19 +754,8 @@
       "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/checkbox",
+        "route": "/docs/components/checkbox",
         "reason": "Default website Enable shadows checkbox: unchecked normal GUI2; the existing preview pixel check uses this exact reference."
-      }
-    },
-    {
-      "file": "slider.spec.ts",
-      "title": "Control native pixels: slider-w200-v500-normal-s2.png",
-      "titlePath": ["Control native pixels: slider-w200-v500-normal-s2.png"],
-      "components": ["slider"],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/components/slider",
-        "reason": "Default website Volume slider: 200 logical pixels, 50% value, normal GUI2."
       }
     },
     {
@@ -776,7 +765,7 @@
       "components": ["input"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/input",
+        "route": "/docs/components/input",
         "reason": "Unedited default website input at GUI2; the existing preview pixel check uses this exact reference."
       }
     },
@@ -787,7 +776,7 @@
       "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/textarea",
+        "route": "/docs/components/textarea",
         "reason": "Unedited default website textarea at GUI2; the existing preview pixel check uses this exact reference."
       }
     },
@@ -976,10 +965,7 @@
       "titlePath": [
         "layout documentation exposes its actual examples and complete source"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/card",
@@ -992,10 +978,7 @@
       "titlePath": [
         "default composed documentation examples retain their owned state and callbacks"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/card",
@@ -1008,10 +991,7 @@
       "titlePath": [
         "documentation prose styles preserve native breadcrumb ink and keyboard focus"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/breadcrumb",
@@ -1024,10 +1004,7 @@
       "titlePath": [
         "default code renderer copies its own complete source and Sonner uses one host"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/code-block",
@@ -1040,10 +1017,7 @@
       "titlePath": [
         "default layout documentation Separator and Progress match retained native cases"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/separator",
@@ -1056,14 +1030,197 @@
       "titlePath": [
         "default responsive Sidebar composition toggles within its desktop context and mobile portal"
       ],
-      "components": [
-        "sidebar",
-        "website"
-      ],
+      "components": ["sidebar", "website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/sidebar",
         "reason": "The named default responsive Sidebar example visibly demonstrates its actual offcanvas control at desktop and mobile widths; one ordinary trigger and Escape-close path, no icon or edge-state matrix."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Slider docs default edits one controlled thumb",
+      "titlePath": ["Slider docs default edits one controlled thumb"],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/slider",
+        "reason": "Primary Volume example explicitly starts at [50]; keyboard editing changes its sole thumb to 51."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input docs defaults preserve editing and associated control state",
+      "titlePath": [
+        "Input docs defaults preserve editing and associated control state"
+      ],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/input",
+        "reason": "Primary checkbox, input, textarea, label, radio-group, switch, toggle, native-select and input-group paths: activate labels, edit fields, choose values, toggle state and submit the visible chat action."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Selection docs defaults resolve labels arrays and suggestions",
+      "titlePath": [
+        "Selection docs defaults resolve labels arrays and suggestions"
+      ],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/select",
+        "reason": "Primary Select items resolve Creative; primary single ToggleGroup uses arrays and permits deselection; primary Combobox filters, selects and clears Birch Forest."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "OTP docs default completes the real six-character input",
+      "titlePath": ["OTP docs default completes the real six-character input"],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/input-otp",
+        "reason": "Primary input-otp has six text slots and an accessible input; filling ABC123 updates its visible completed-code output."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Field docs implementation and manual copy select the owned file",
+      "titlePath": [
+        "Field docs implementation and manual copy select the owned file"
+      ],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/field",
+        "reason": "Field primary label focuses its described input; its source and Manual choices select registry/ui/field.tsx through the actual owning form item and copy identical full source."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Form docs block validates saves and resets",
+      "titlePath": ["Form docs block validates saves and resets"],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/form",
+        "reason": "Primary installed FormExample validates its initially empty player name, saves Alex and resets via the displayed controls."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Questionnaire docs default submits ordered answers",
+      "titlePath": ["Questionnaire docs default submits ordered answers"],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/questionnaire",
+        "reason": "Primary two-step questionnaire selects Survival, advances, enters My world and submits through its displayed form."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input family docs copy complete executable primary examples",
+      "titlePath": [
+        "Input family docs copy complete executable primary examples"
+      ],
+      "components": ["inputs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/input",
+        "reason": "Every input-family canonical page opens its ordinary primary example Code tab and copies the entire exact executable file, including imports/client directives."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: checkbox",
+      "titlePath": ["Input docs native default: checkbox"],
+      "components": ["checkbox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/checkbox",
+        "reason": "Unchecked Enable shadows Checkbox 17x17 logical, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: input",
+      "titlePath": ["Input docs native default: input"],
+      "components": ["input"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/input",
+        "reason": "Unfocused Hello Minecraft input 200x20 logical, normal GUI2. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: textarea",
+      "titlePath": ["Input docs native default: textarea"],
+      "components": ["textarea"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/textarea",
+        "reason": "Unfocused Line one/newline/Line two/newline/Line three textarea 200x80 logical, normal GUI2. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: select",
+      "titlePath": ["Input docs native default: select"],
+      "components": ["select"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/select",
+        "reason": "Closed Survival trigger 200x20 logical, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: radio-group",
+      "titlePath": ["Input docs native default: radio-group"],
+      "components": ["radio-group"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/radio-group",
+        "reason": "Selected Survival square radio widget, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: switch",
+      "titlePath": ["Input docs native default: switch"],
+      "components": ["switch"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/switch",
+        "reason": "Unchecked Enable clouds OFF control, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: slider",
+      "titlePath": ["Input docs native default: slider"],
+      "components": ["slider"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/slider",
+        "reason": "Actual primary Volume: 50% single thumb, value50/min0/max100, 200x20 logical, normal GUI2, #202020. New two-launch native case replaces invalid old iIl! MW@09 label mapping; GUI1/3 native provenance does not select browser variants. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input docs default layouts fit desktop and narrow viewports",
+      "titlePath": [
+        "Input docs default layouts fit desktop and narrow viewports"
+      ],
+      "components": ["form", "combobox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/form",
+        "reason": "Actual primary Form and Combobox pages at ordinary desktop1536 and narrow390 viewport widths, preserving page bounds and default visible composition for review. This is composition evidence rather than native whole-page identity or a component variant matrix."
       }
     }
   ]

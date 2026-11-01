@@ -1,0 +1,49 @@
+---
+title: Input
+description: Native input semantics with Minecraft text, border and caret.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Native input semantics with Minecraft text, border and caret.
+
+## Preview
+
+<ComponentExample name="input-example" />
+
+## Usage
+
+Import `Input` from `@/components/ui/input`. The example uses `value` and `onChange(event)`; use `defaultValue` for uncontrolled editing. It defaults to `type="text"`, `spellCheck={false}` and `autoCorrect="off"`, preserving explicit overrides.
+
+## Composition
+
+Use a [Label](/docs/components/label) or `aria-label` on the real input. `name`, `required`, `maxLength`, `readOnly`, `disabled` and the imperative ref retain native input behavior. Group supporting text and validation with [Field](/docs/components/field), or actions with [Input Group](/docs/components/input-group).
+
+## API and accessibility
+
+The default geometry is 200 by 20 logical pixels at scale 2. Border, glyphs, caret and selection use the painter and delivered font resources. Password/special input types, unsupported glyphs and RTL may use browser text rendering; native pixel coverage is limited to recorded glyphs and conditions.
+
+See the [underlying API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input) for shared semantics.
+
+## Read only
+
+<ComponentExample name="input-readonly-example" title="Read only" />
+
+## Disabled
+
+<ComponentExample name="input-disabled-example" title="Disabled" />
+
+## Installation
+
+<Installation name="input" title="Input" />
+
+## Component source
+
+<ComponentSource name="input" title="Input" />
+
+## Interactive playground
+
+<InputPlayground name="input" />

@@ -1,0 +1,41 @@
+---
+title: Input Group
+description: Text fields and actions in a shared Minecraft surface.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Text fields and actions in a shared Minecraft surface.
+
+## Preview
+
+<ComponentExample name="input-group-example" />
+
+## Usage
+
+Import `InputGroup`, `InputGroupInput`, `InputGroupAddon` and `InputGroupButton` from `@/components/ui/input-group`. The example submits a controlled chat field, shows the sent text and clears the input.
+
+## Composition
+
+The root provides scale context and `role="group"`. Name the actual input; addon text is not automatically a label. Addon `align` supports `inline-start`, `inline-end`, `block-start` and `block-end`. Use `InputGroupTextarea` for multiline content, `InputGroupText` for static addons and an explicit `type="submit"` on send buttons.
+
+## API and accessibility
+
+Buttons default to `type="button"` and 40 logical pixels wide. Clicking a noninteractive addon focuses the first input/textarea; buttons and links keep their own actions. The shared layout is a web adaptation composed of native text/control constituents.
+
+See the [underlying API](https://base-ui.com/react/components/input) for shared semantics.
+
+## Installation
+
+<Installation name="input-group" title="Input Group" />
+
+## Component source
+
+<ComponentSource name="input-group" title="Input Group" />
+
+## Interactive playground
+
+<InputPlayground name="input-group" />

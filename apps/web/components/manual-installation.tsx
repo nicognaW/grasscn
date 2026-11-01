@@ -177,7 +177,9 @@ export function ManualInstallation({
   const [selected, setSelected] = useState(
     () =>
       manifest.files.find(
-        (file) => file.source.split("/").at(-1) === initialFile
+        (file) =>
+          file.source === initialFile ||
+          file.source.split("/").at(-1) === initialFile
       ) ?? manifest.files[0]
   );
   return (

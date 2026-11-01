@@ -1,0 +1,48 @@
+---
+title: Select
+description: Minecraft cycle-button trigger with a selectable popup list.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Minecraft cycle-button trigger with a selectable popup list.
+
+## Preview
+
+<ComponentExample name="select-example" />
+
+## Usage
+
+Import `Select`, `SelectTrigger`, `SelectValue`, `SelectContent` and `SelectItem` from `@/components/ui/select`. Supply Root `items` with matching value/label pairs so `SelectValue` resolves the selected label. Use `value`/`onValueChange(next, details)` or `defaultValue`.
+
+## Composition
+
+Place `SelectValue` inside the accessible trigger and items inside the portaled `SelectContent`. The example uses `alignItemWithTrigger={false}` and `sideOffset={4}` at scale 2. `SelectGroup`, `SelectLabel` and `SelectSeparator` organize longer menus; scroll buttons are available for constrained popup height. [Native Select](/docs/components/native-select) offers a real HTML select when platform popup behavior is preferable.
+
+## API and accessibility
+
+The trigger supports only `size="default"` and long text scrolls. The default popup aligns its selected item with the trigger; content defaults to bottom/start with collision padding 10. Cycle-button artwork and native language-list constituents are reused in a web dropdown composition. No chevron/checkmark variant or working `keepMounted` behavior is promised by this wrapper.
+
+See the [underlying API](https://base-ui.com/react/components/select) for shared semantics.
+
+## Placeholder and disabled choice
+
+<ComponentExample
+  name="select-placeholder-example"
+  title="Placeholder and disabled choice"
+/>
+
+## Installation
+
+<Installation name="select" title="Select" />
+
+## Component source
+
+<ComponentSource name="select" title="Select" />
+
+## Interactive playground
+
+<InputPlayground name="select" />

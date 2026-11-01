@@ -13,6 +13,7 @@
       "@/lib/utils": ["./utils.ts"],
       "@/components/ui/*": ["./registry/ui/*"],
       "@/*": ["./*"],
+      "@/components/form": ["./registry/blocks/form.tsx"],
       "@/components/chart-fps": ["./registry/blocks/chart-fps.tsx"],
       "@/components/chart-profiler": ["./registry/blocks/chart-profiler.tsx"],
       "@/components/chart-analytics": ["./registry/blocks/chart-analytics.tsx"]

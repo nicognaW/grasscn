@@ -1,0 +1,45 @@
+---
+title: Checkbox
+description: Boolean Checkbox state with Minecraft artwork.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Boolean Checkbox state with Minecraft artwork.
+
+## Preview
+
+<ComponentExample name="checkbox-example" />
+
+## Usage
+
+Import `Checkbox` from `@/components/ui/checkbox`. Use `checked` and `onCheckedChange(next, details)` for controlled state, or `defaultChecked` for an uncontrolled field. The primary example starts unchecked at scale 2.
+
+## Composition
+
+Associate `Checkbox` with [Label](/docs/components/label) using `id` and `htmlFor`. Supply `name` and `value` when the checked value belongs in a native form. Use `disabled` to prevent activation; the playground also shows a checked disabled field.
+
+## API and accessibility
+
+`scale` accepts 1, 2 or 3 and defaults to 2. The native sprites cover boolean states. Indeterminate semantics inherited from Base UI are a web behavior; they do not establish a native mixed-state appearance.
+
+See the [underlying API](https://base-ui.com/react/components/checkbox) for shared semantics.
+
+## Disabled
+
+<ComponentExample name="checkbox-disabled-example" title="Disabled" />
+
+## Installation
+
+<Installation name="checkbox" title="Checkbox" />
+
+## Component source
+
+<ComponentSource name="checkbox" title="Checkbox" />
+
+## Interactive playground
+
+<InputPlayground name="checkbox" />
