@@ -84,6 +84,8 @@ const steps = [
 if (suite === 'all'||fullMode) steps.push(['registry-build',['node_modules/shadcn/dist/index.js','build']], ['built-primitives',['scripts/check-primitives.mjs','--built']], ['preview-build',['node_modules/vite/bin/vite.js','build','--config','vite.preview.config.ts']])
 if(managedFixture)steps.push(['fixture-build',['scripts/production-fixture.mjs']])
 const selectedCases=fullMode?classifyBrowserCases(collectBrowserCases()).full:null
+// Retain exact case identities for historical reporting, independently of future source.
+if(fullMode){report.fullCases=selectedCases;await save()}
 const browserFiles=[...new Set((selectedCases??baseCatalogue()).map(test=>test.file))].sort()
 for(const file of browserFiles) steps.push([`browser:${file}`, ['node_modules/@playwright/test/cli.js','test',browserFilePattern(file),`--workers=${workers}`,...(workers>1?['--fully-parallel']:[]),`--output=${path.join(output,'browser',file)}`]])
 let fixtureHost,previewHost,fullHosts
