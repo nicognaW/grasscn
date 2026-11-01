@@ -20,8 +20,9 @@ test("Field source selects its owned implementation and rejects files outside Fo
     );
 
     assert.ok(html.includes("components/ui/field.tsx"));
-    assert.ok(html.includes("FieldSet"));
-    assert.ok(!html.includes("function FormExample"));
+    // SSR shows only the first twelve source lines; FieldSet follows the imports.
+    assert.ok(html.includes("MinecraftProse"));
+    assert.ok(!html.includes("FormExample"));
 
     const unavailable = renderToStaticMarkup(
       await ComponentSource({

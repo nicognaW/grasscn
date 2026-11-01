@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import { webFile } from "@grasscn/tests/paths";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 
@@ -171,8 +172,10 @@ test("Field docs implementation and manual copy select the owned file", async ({
 
   const copied = await page.evaluate(() => window.copied);
 
-  expect(copied).toContain("function Field(");
-  expect(copied).not.toContain("function FormExample(");
+  expect(copied).toBe(
+    await readFile(webFile("registry/ui/field.tsx"), "utf-8")
+  );
+  expect(copied).not.toContain("FormExample");
 
   const install = page.getByRole("region", {
     exact: true,

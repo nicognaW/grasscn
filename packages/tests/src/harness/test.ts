@@ -78,19 +78,10 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
             subjectSlot,
             testId: info.testId,
             titlePath: info.titlePath,
-            outputDirectory: info.outputDir,
-            fixtureUrl: process.env.GRASSCN_FIXTURE_URL,
-            previewUrl: process.env.GRASSCN_PREVIEW_URL,
             websiteIdentity:
               process.env.GRASSCN_WEBSITE_IDENTITY === undefined
                 ? null
                 : parseWebsiteIdentity(process.env.GRASSCN_WEBSITE_IDENTITY),
-            bundleSha256: process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,
-            renderedUrl,
-            subjectSlot,
-            subjectElement,
-            artifacts,
-            metrics,
           })
         ),
         contentType: "application/json",
