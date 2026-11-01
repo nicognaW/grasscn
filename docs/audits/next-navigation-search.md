@@ -25,4 +25,20 @@ The separate `tests/reference/next-docs-navigation` family retains two independe
 
 Sidebar/TOC Button rows at scale 1/logical width 200 have a textured compositing context that this solid-#202020 family does not establish. Their exact native comparison, mobile control dimensions/new disclosure label, additional header link states and suggestion-result constituent comparisons remain explicit acceptance gaps. Additional old bare/path hash syntaxes are implemented but lack a qualifying default-path mapping and were not promoted into Base. No Full cases were executed and no whole-page native identity is claimed.
 
-Final verification after merging the current integration tip is pending at this implementation checkpoint.
+## Final integrated checkpoint
+
+The branch merged integration `b503368` (including #14) as `0057144`. The sole MDX conflict retained the complete Button exemplar, the authored alias and its actual Usage search sentence. The following checks completed against that combined application plus the scoped source formatting changes:
+
+- Forced Turbo generation, including the Fumadocs pipeline and registry-only symbol metadata, passed. Direct Uncheck typechecking passed all three projects. Scoped Oxfmt passed 18 changed source/config/test files.
+- Resolved primitive policy and registry closure passed. No registry implementation/resource bytes or existing captured references were changed.
+- Browser inventory resolved every catalogue entry once: 70 Base + 30,842 Full = 30,912 cases. This was listing only; Full was not executed. Legacy metadata was prepared only for old inventory readers, never for Next runtime discovery.
+- Production build/start under Bun passed. Thirteen individually catalogued Base cases passed in 37.7 seconds: the ten navigation/search/compatibility/mobile/native cases plus the existing example, code-control and default Button journeys.
+- Header Components matched 0/8000 pixels; normal search placeholder and focused `hear` each matched 0/16000. The retained default Button matched 0/16000 and #14's six declared code-control/text constituents also matched zero. The actual integrated header comparator rejected a temporary one-pixel corruption with exactly one mismatched pixel; the precise original formatted test bytes were restored before the final run.
+- HTTP checks observed proper 404 responses for missing canonical and legacy docs, 308 redirects preserving repeated query parameters, grouped FieldLabel redirection, an empty search response and discovery of FieldLabel on the newly authored real Field page. The original logo returned 200.
+- Desktop 1280x900 and mobile 390x844 composition images were inspected. They show website compositions, not native whole-page identity. Existing local overflow around wide code/example content remains contained; mobile page width stayed 390.
+
+The full Uncheck command is **not clean**: the existing GitHub lint plugin fails to load against TypeScript 7 (`TypeFlags.Intrinsic`), and the repository-wide formatter reports existing source debt and byte-pinned capture artifacts. Frozen evidence was not reformatted to satisfy it. This is distinct from the passing all-project type checks and scoped source formatting.
+
+Local evidence is under `.pixel-perfect-test/next-navigation-final/`, `.pixel-perfect-test/next-navigation-negative-control/` and `.pixel-perfect-test/browser/`; guard logs are `nx-tools/logs/final16.*` and `probe16.*` in the parent's temporary coordination directory. The final guarded job exited 0, with a 4% owned CPU cap, peak system CPU 42.19% and RAM 77.47%. The temporary 5186 server was stopped. A running final acceptance preview at 5176 remains the integration owner's responsibility under ADR 0004.
+
+Two mistakenly copied native runtime caches remain local and narrowly ignored after automatic approval review rejected deletion. Only the declared capture cases, sources, manifests, frames, repeat proof and runtime receipt are committed.

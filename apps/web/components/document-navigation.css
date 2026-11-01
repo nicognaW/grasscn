@@ -1,27 +1,102 @@
-.minecraft-docs-layout { display: grid; grid-template-columns: 224px minmax(0, 1fr) 224px; align-items: start; max-width: 1600px; margin: 0 auto; background: #0009; }
-.minecraft-docs-layout > .minecraft-document { width: 100%; max-width: none; background: transparent; min-width: 0; padding: 40px 24px 64px; }
-.minecraft-docs-sidebar, .minecraft-docs-toc { position: sticky; top: 0; padding: 24px 12px; max-height: 100dvh; overflow: auto; --mc-scale: 1; }
-.minecraft-docs-layout nav ul { list-style: none; margin: 0; padding: 0; }
-.minecraft-docs-layout nav li { margin: 0 0 4px; }
-.minecraft-docs-layout nav .mc-button { width: 200px; max-width: 100%; }
-.minecraft-nav-heading { display: block; padding: 12px 0 8px; }
-.minecraft-docs-mobile-toggle { display: none; }
-.minecraft-docs-toc nav > .mc-bitmap { margin-bottom: 12px; }
-.minecraft-docs-toc [data-depth="3"] { padding-left: 8px; }
-.minecraft-docs-toc [data-depth="4"] { padding-left: 16px; }
-.minecraft-prose [id] { scroll-margin-top: 24px; }
+.minecraft-docs-layout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr) 224px;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  background: #0009;
+}
+.minecraft-docs-layout > .minecraft-document {
+  width: 100%;
+  max-width: none;
+  background: transparent;
+  min-width: 0;
+  padding: 40px 24px 64px;
+}
+.minecraft-docs-sidebar,
+.minecraft-docs-toc {
+  position: sticky;
+  top: 0;
+  padding: 24px 12px;
+  max-height: 100dvh;
+  overflow: auto;
+  --mc-scale: 1;
+}
+.minecraft-docs-layout nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.minecraft-docs-layout nav li {
+  margin: 0 0 4px;
+}
+.minecraft-docs-layout nav .mc-button {
+  width: 200px;
+  max-width: 100%;
+}
+.minecraft-nav-heading {
+  display: block;
+  padding: 12px 0 8px;
+}
+.minecraft-docs-mobile-toggle {
+  display: none;
+}
+.minecraft-docs-toc nav > .mc-bitmap {
+  margin-bottom: 12px;
+}
+.minecraft-docs-toc [data-depth="3"] {
+  padding-left: 8px;
+}
+.minecraft-docs-toc [data-depth="4"] {
+  padding-left: 16px;
+}
+.minecraft-prose [id] {
+  scroll-margin-top: 24px;
+}
 @media (max-width: 1100px) {
-  .minecraft-docs-layout { grid-template-columns: 224px minmax(0, 1fr); }
-  .minecraft-docs-toc { grid-column: 2; position: static; padding: 0 24px 24px; }
+  .minecraft-docs-layout {
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+  .minecraft-docs-toc {
+    grid-column: 2;
+    position: static;
+    padding: 0 24px 24px;
+  }
 }
 @media (max-width: 720px) {
-  .minecraft-docs-layout { display: flex; flex-direction: column; }
-  .minecraft-docs-sidebar { width: 100%; position: static; max-height: 160px; border-bottom: 2px solid #555; }
-  .minecraft-docs-mobile-toggle { display: inline-flex; margin-bottom: 4px; }
-  .minecraft-docs-sidebar nav[data-mobile-open="false"] { display: none; }
-  .minecraft-docs-sidebar nav > ul, .minecraft-docs-sidebar nav li > ul { display: flex; flex-wrap: wrap; gap: 4px; }
-  .minecraft-docs-sidebar nav li { margin: 0; }
-  .minecraft-docs-sidebar nav li:has(> ul) { width: 100%; }
-  .minecraft-docs-layout > .minecraft-document { padding: 32px 20px; }
-  .minecraft-docs-toc { width: 100%; }
+  .minecraft-docs-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .minecraft-docs-sidebar {
+    width: 100%;
+    position: static;
+    max-height: 160px;
+    border-bottom: 2px solid #555;
+  }
+  .minecraft-docs-mobile-toggle {
+    display: inline-flex;
+    margin-bottom: 4px;
+  }
+  .minecraft-docs-sidebar nav[data-mobile-open="false"] {
+    display: none;
+  }
+  .minecraft-docs-sidebar nav > ul,
+  .minecraft-docs-sidebar nav li > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .minecraft-docs-sidebar nav li {
+    margin: 0;
+  }
+  .minecraft-docs-sidebar nav li:has(> ul) {
+    width: 100%;
+  }
+  .minecraft-docs-layout > .minecraft-document {
+    padding: 32px 20px;
+  }
+  .minecraft-docs-toc {
+    width: 100%;
+  }
 }
