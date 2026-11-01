@@ -101,3 +101,32 @@
     width: 100%;
   }
 }
+
+/* Documentation chrome uses GUI 2 scrollbar pixels around GUI 1 labels. */
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-track,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-thumb,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-button,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-corner {
+  --mc-scale: 2;
+}

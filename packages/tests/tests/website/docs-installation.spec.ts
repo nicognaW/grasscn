@@ -13,7 +13,10 @@ declare global {
 test("Button installation copies and remembers the visitor package manager", async ({
   page,
 }) => {
-  const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
+  const { origin } = new URL(
+    process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
+  );
+
   await page.goto(`${origin}/docs/components/button`);
 
   const installation = page.getByRole("region", {
@@ -67,7 +70,10 @@ test("Button installation copies and remembers the visitor package manager", asy
 test("Button manual installation exposes complete files and defers large resources", async ({
   page,
 }, info) => {
-  const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
+  const { origin } = new URL(
+    process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
+  );
+
   const sourceRequests: string[] = [];
   page.on("request", (request) => {
     if (

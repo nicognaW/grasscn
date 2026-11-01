@@ -23,7 +23,9 @@ test("canonical documentation independently exposes grouped public parts and omi
     // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await page.goto(`${origin}docs/components/${name}`);
     // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      title
+    );
     // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await expect(
       page.getByRole("heading", { exact: true, name: "Installation" })
@@ -64,11 +66,11 @@ for (const width of [320, 1440])
     await stage
       .getByRole("textbox", { name: "Find sidebar worlds" })
       .fill("Creative");
-    await stage.getByRole("button", { name: "Creative", exact: true }).click();
+    await stage.getByRole("button", { exact: true, name: "Creative" }).click();
     await expect(page.getByLabel("Sidebar selection")).toHaveText("Creative");
     await page.keyboard.press("Control+b");
     await expect(
-      stage.getByRole("button", { name: "Creative", exact: true })
+      stage.getByRole("button", { exact: true, name: "Creative" })
     ).toBeVisible();
     expect(
       await page.evaluate(
@@ -78,22 +80,22 @@ for (const width of [320, 1440])
   });
 test("new homepage examples respond to input", async ({ page }) => {
   await page.goto(origin);
-  await page.getByRole("button", { name: "Add $250", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Add $250" }).click();
   await expect(page.getByLabel("Savings percentage")).toHaveText("70% saved");
   await page
-    .getByRole("textbox", { name: "Product feedback", exact: true })
+    .getByRole("textbox", { exact: true, name: "Product feedback" })
     .fill("支持中文反馈");
   await page
-    .getByRole("button", { name: "Save feedback", exact: true })
+    .getByRole("button", { exact: true, name: "Save feedback" })
     .click();
   await expect(page.getByLabel("Feedback status")).toContainText("saved");
   await page
-    .getByRole("radio", { name: "Annual · $120 / year", exact: true })
+    .getByRole("radio", { exact: true, name: "Annual · $120 / year" })
     .check();
-  await page.getByRole("button", { name: "Save plan", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Save plan" }).click();
   await expect(page.getByLabel("Plan status")).toContainText("Annual");
   await page
-    .getByRole("button", { name: "Tuesday, November 3rd, 2026", exact: true })
+    .getByRole("button", { exact: true, name: "Tuesday, November 3rd, 2026" })
     .click();
   await expect(page.getByLabel("Review date")).toHaveText("November 3, 2026");
 });
@@ -101,11 +103,11 @@ test("message combines history and composition", async ({ page }) => {
   await page.goto(`${origin}docs/components/message`);
   await page
     .locator(".documentation-playground")
-    .getByRole("textbox", { name: "Message text", exact: true })
+    .getByRole("textbox", { exact: true, name: "Message text" })
     .fill("你好，团队！");
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Send", exact: true })
+    .getByRole("button", { exact: true, name: "Send" })
     .click();
   await expect(
     page.locator(".documentation-playground").getByLabel("Message count")
@@ -115,7 +117,7 @@ test("message combines history and composition", async ({ page }) => {
   ).toContainText("你好，团队！");
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "First", exact: true })
+    .getByRole("button", { exact: true, name: "First" })
     .click();
   await page
     .locator(".documentation-playground")

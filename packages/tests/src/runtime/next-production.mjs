@@ -91,6 +91,7 @@ export const productionBuildIdentity = async ({
 
       if (
         relative === ".next/cache" ||
+        relative === ".next/server/route-cache" ||
         relative === ".next/dev" ||
         relative === ".next/trace" ||
         relative === ".next/trace-build"

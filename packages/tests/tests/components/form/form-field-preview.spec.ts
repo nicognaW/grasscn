@@ -15,15 +15,29 @@ for (const scale of [2])
     await expect(page.locator(".documentation-playground")).toHaveCount(1);
     const card = page.locator(".documentation-playground");
     await expect(card).toBeVisible();
-    await expect(page.locator("h1")).toHaveText("Form");
-    const form = card.getByRole("form", { name: "Player and world settings" }),
-      name = form.getByRole("textbox", { name: "Player name", exact: true }),
-      world = form.getByRole("textbox", { name: "World name", exact: true }),
-      notes = form.getByRole("textbox", { name: "Journey notes", exact: true });
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Form"
+    );
+    const form = card.getByRole("form", { name: "Player and world settings" });
+
+    const name = form.getByRole("textbox", {
+      exact: true,
+      name: "Player name",
+    });
+
+    const world = form.getByRole("textbox", {
+      exact: true,
+      name: "World name",
+    });
+
+    const notes = form.getByRole("textbox", {
+      exact: true,
+      name: "Journey notes",
+    });
     await expect(form.locator("[data-slot=field-set]")).toHaveCount(1);
     await expect(form.locator("[data-slot=field]")).toHaveCount(3);
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(name).toBeFocused();
     await expect(name).toHaveAttribute("aria-invalid", "true");
@@ -39,7 +53,7 @@ for (const scale of [2])
     ).toBe(true);
     await name.fill("你");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       form.getByRole("alert").filter({ hasText: "Use at least two characters" })
@@ -48,7 +62,7 @@ for (const scale of [2])
     await world.fill("草地方块");
     await notes.fill("第一行\nSecond line\n第三行");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       card
@@ -71,26 +85,26 @@ for (const scale of [2])
       ).toBe(scale);
     }
     await card
-      .getByRole("button", { name: "Disable fields", exact: true })
+      .getByRole("button", { exact: true, name: "Disable fields" })
       .click();
     for (const control of [
       name,
       world,
       notes,
-      form.getByRole("button", { name: "Save player", exact: true }),
+      form.getByRole("button", { exact: true, name: "Save player" }),
     ])
       await expect(control).toBeDisabled();
     await card
-      .getByRole("button", { name: "Enable fields", exact: true })
+      .getByRole("button", { exact: true, name: "Enable fields" })
       .click();
-    await form.getByRole("button", { name: "Reset", exact: true }).click();
+    await form.getByRole("button", { exact: true, name: "Reset" }).click();
     await expect(name).toHaveValue("");
     await expect(world).toHaveValue("My world");
     await expect(notes).toHaveValue("");
     await expect(card.getByLabel("Saved player")).toHaveCount(0);
     await world.fill("");
     await form
-      .getByRole("button", { name: "Save player", exact: true })
+      .getByRole("button", { exact: true, name: "Save player" })
       .click();
     await expect(
       form.getByRole("alert").filter({ hasText: "Enter a world name" })
@@ -102,7 +116,9 @@ test("Field is independently documented while installed through Form", async ({
   page,
 }) => {
   await page.goto(`${origin}docs/components/field`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Field");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Field"
+  );
   const nav = page.getByRole("navigation", { name: "Documentation" });
   await expect(
     nav.getByRole("link", { exact: true, name: "Form" })

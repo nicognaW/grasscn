@@ -183,7 +183,14 @@ export const TableOfContents = ({ items }: { items: TOCItemType[] }) => {
               {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
               <Button
                 nativeButton={false}
-                render={<a href={item.url} />}
+                render={
+                  <a
+                    href={item.url}
+                    /* eslint-disable jsx-a11y/prefer-tag-over-role, jsx-a11y/no-redundant-roles -- Base UI Button supplies button semantics unless its anchor render explicitly restores the link role. */
+                    role="link"
+                    /* eslint-enable jsx-a11y/prefer-tag-over-role, jsx-a11y/no-redundant-roles */
+                  />
+                }
                 scale={1}
               >
                 {item.title}

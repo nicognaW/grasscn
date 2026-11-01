@@ -235,7 +235,9 @@
     "packages/tests/tests/website/layout-documentation.spec.ts",
     "packages/tests/tests/website/minecraft-documentation.spec.ts",
     "packages/tests/tests/website/next-showcase.spec.ts",
-    "packages/tests/tests/website/overlay-documentation.spec.ts"
+    "packages/tests/tests/website/overlay-documentation.spec.ts",
+    "packages/pixel-perfect/src/runtime/historical-evidence.ts",
+    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts"
   ],
   "immutableSourceInputs": [
     {
@@ -346,7 +348,7 @@
     {
       "file": "packages/tests/tests/components/alert-dialog/alert-dialog-stress.spec.ts",
       "baseline": "packages/tests/tests/components/alert-dialog/alert-dialog-stress.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/components/badge/badge-advancement-behavior.spec.ts",
@@ -376,7 +378,7 @@
     {
       "file": "packages/tests/tests/components/form/form-field-preview.spec.ts",
       "baseline": "packages/tests/tests/components/form/form-field-preview.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/components/overlays/overlay-gallery-repair.spec.ts",
@@ -391,12 +393,12 @@
     {
       "file": "packages/tests/tests/components/select/select-viewport-repair.spec.ts",
       "baseline": "packages/tests/tests/components/select/select-viewport-repair.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/components/structural/structural-repair-preview.spec.ts",
       "baseline": "packages/tests/tests/components/structural/structural-repair-preview.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/website/gallery-integration.spec.ts",
@@ -421,7 +423,7 @@
     {
       "file": "packages/tests/tests/website/preview-responsive-audit.spec.ts",
       "baseline": "packages/tests/tests/website/preview-responsive-audit.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/website/preview-scrollbars.spec.ts",
@@ -431,7 +433,7 @@
     {
       "file": "packages/tests/tests/website/preview-sound.spec.ts",
       "baseline": "packages/tests/tests/website/preview-sound.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/website/preview-text-style-repair.spec.ts",
@@ -441,29 +443,77 @@
     {
       "file": "packages/tests/tests/website/preview.spec.ts",
       "baseline": "packages/tests/tests/website/preview.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/website/site-cleanup.spec.ts",
       "baseline": "packages/tests/tests/website/site-cleanup.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "packages/tests/tests/website/site-release.spec.ts",
       "baseline": "packages/tests/tests/website/site-release.spec.ts",
-      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
     },
     {
       "file": "workspace-paths.mjs",
       "baseline": "workspace-paths.mjs",
       "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/demos/data-table.tsx",
+      "baseline": "apps/web/demos/data-table.tsx",
+      "reason": "Owned aria-sort mapping and header semantics; inherited TanStack renderers and native geometry retain exact baseline statements."
+    },
+    {
+      "file": "apps/web/demos/resizable.tsx",
+      "baseline": "apps/web/demos/resizable.tsx",
+      "reason": "Owned per-instance IDs and layout keys; inherited native panel and Card geometry remains unchanged."
+    },
+    {
+      "file": "apps/web/registry/ui/minecraft-confirmation-snapshot.ts",
+      "baseline": "apps/web/registry/ui/minecraft-confirmation-snapshot.ts",
+      "reason": "Owned fixed-pseudo containing-block and clone-only offset repair; existing snapshot renderer statements remain baseline debt. This is owned implementation, not immutable source-input."
+    },
+    {
+      "file": "packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts",
+      "baseline": "packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/advancement-tree/adventure.spec.ts",
+      "baseline": "packages/tests/tests/components/advancement-tree/adventure.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/drawer/drawer-opening-timing.spec.ts",
+      "baseline": "packages/tests/tests/components/drawer/drawer-opening-timing.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/overlays/overlay-behavior.spec.ts",
+      "baseline": "packages/tests/tests/components/overlays/overlay-behavior.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/pixel-perfect/src/runtime/check-map.mjs",
+      "baseline": "packages/pixel-perfect/src/runtime/check-map.mjs",
+      "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
+    },
+    {
+      "file": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
+      "baseline": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
+      "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
     }
   ],
   "attribution": "Committed-main source and exact offending statements, with quotes/semicolons/line wrapping normalized; copied declarations, native CSS/geometry and unchanged test assertions retain their baseline diagnostics. New URL helpers, host/source/API metadata contracts and genuinely new callback/comparator/assertion hunks are repaired explicitly.",
   "readOnlyAudits": [
     "test-results/22-main29-lint/rest-attribution.json",
     "test-results/22-main29-lint/inherited-app-ledger.json",
-    "test-results/22-main29-lint/inherited-app-unmapped-audit.json"
+    "test-results/22-main29-lint/inherited-app-unmapped-audit.json",
+    "test-results/22-batch-repair/attribution-current.json",
+    "test-results/22-batch-repair/exact-baseline-statements.json",
+    "test-results/22-batch-repair/data-table-unchanged-renderers.json"
   ],
   "limits": "The authored source scope must actually pass Uncheck. Neither a baseline attribution nor a formatter pass establishes runtime behavior or PPT acceptance. Captured source-input bytes are never rewritten.",
   "hunkCorrections": [
@@ -474,6 +524,19 @@
     "Checked Next static image metadata without global SVG casts",
     "Home dictionary/callback adapters and required Next Link roles",
     "New search requests run independently; single-page document checks remain ordered",
-    "Full-only source branding comparator retains every RGBA/negative-control assertion and is not executed"
+    "Full-only source branding comparator retains every RGBA/negative-control assertion and is not executed",
+    "Per-instance retained Resizable identities and layout keys",
+    "Truthful retained DataTable header sort semantics",
+    "Viewport-fixed pseudo clone offsets preserve original exact RGBA assertions",
+    "Runtime response cache is excluded narrowly while compiled/public output remains immutable",
+    "Executable example metadata resolves only within its owning examples directory",
+    "Immediate and ready paragraph overflow invariants preserve native bitmap rendering"
+  ],
+  "authoredFormattingFiles": [
+    "apps/web/app/globals.css",
+    "apps/web/components/document-navigation.css",
+    "apps/web/components/documentation.css",
+    "packages/pixel-perfect/evidence/historical-installed-977f538/manifest.json",
+    "packages/pixel-perfect/evidence/historical-installed-977f538/current-transitions.json"
   ]
 }
