@@ -18,19 +18,40 @@
       ],
       "@/components/ui/*": [
         "./registry/ui/*"
+      ],
+      "@/*": [
+        "./*"
       ]
     },
     "types": [
-      "node",
-      "vite/client"
+      "node"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "incremental": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "isolatedModules": true
   },
   "include": [
-    "*.ts",
-    "*.tsx",
-    "demos/**/*.tsx",
+    "next-env.d.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "components/**/*.tsx",
+    "lib/**/*.ts",
+    "mdx-components.tsx",
+    "source.config.ts",
+    ".source/**/*.ts",
+    ".next/types/**/*.ts",
     "registry/**/*.ts",
-    "registry/**/*.tsx"
+    "registry/**/*.tsx",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "bun scripts/prepare-preview.mjs",
-    "dev": "bun scripts/prepare-preview.mjs && bun --bun vite --config vite.config.ts",
-    "build": "bun --bun vite build --config vite.config.ts",
+    "generate": "bunx --bun --no-install fumadocs-mdx && bun --bun next typegen",
+    "dev": "bun --bun next dev --hostname 127.0.0.1 --port 5176",
+    "build": "bun --bun next build",
     "registry:build": "bunx --bun --no-install shadcn build",
-    "registry:serve": "bun run registry:build && bun scripts/serve.mjs"
+    "registry:serve": "bun run registry:build && bun scripts/serve.mjs",
+    "start": "bun --bun next start --hostname 127.0.0.1 --port 5176"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -31,7 +32,10 @@
     "shiki": "4.5.0",
     "sonner": "2.0.8",
     "tailwind-merge": "^3.7.0",
-    "zod": "^4.6.7"
+    "zod": "^4.6.7",
+    "next": "16.4.2",
+    "fumadocs-core": "16.10.7",
+    "fumadocs-mdx": "15.0.13"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -41,6 +45,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
-    "shadcn": "4.23.0"
+    "shadcn": "4.23.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/mdx": "2.0.13"
   }
 }

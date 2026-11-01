@@ -5,14 +5,17 @@
   "tasks": {
     "generate": {
       "inputs": [
-        "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/workspace-paths.mjs",
-        "$TURBO_ROOT$/packages/tests/tests/reference/**/*.json"
+        "content/docs/**",
+        "source.config.ts",
+        "package.json",
+        "app/**",
+        "next.config.mjs",
+        "tsconfig.json"
       ],
       "outputs": [
-        "catalog.generated.json",
-        "search.generated.json",
-        "component-sources.generated.ts"
+        ".source/**",
+        ".next/types/**",
+        "next-env.d.ts"
       ]
     },
     "registry:build": {
@@ -31,7 +34,9 @@
         "registry:build"
       ],
       "outputs": [
-        "dist/**"
+        ".next/**",
+        "!.next/cache/**",
+        "!.next/types/**"
       ]
     }
   }
