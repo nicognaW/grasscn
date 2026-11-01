@@ -142,6 +142,7 @@ export const issueNumber = (value: string | number | undefined) => {
 
 export const repository = () => {
   const remote = git(["remote", "get-url", "origin"]);
+
   const match = /github\.com[:/](?<repository>[^/]+\/[^/]+?)(?:\.git)?$/u.exec(
     remote
   );
@@ -179,6 +180,7 @@ export const readRunIssue = (number: string | number | undefined) => {
   const issue = JSON.parse(
     github(["api", `repos/${repo}/issues/${n}`])
   ) as GitHubRunIssue;
+
   const [owner, name] = repo.split("/");
 
   // SAFETY: the fixed GraphQL query selects exactly these edit timestamps.
@@ -197,6 +199,7 @@ export const readRunIssue = (number: string | number | undefined) => {
       `number=${n}`,
     ])
   ) as GitHubIssueEdits;
+
   const edit = response.data.repository.issue;
 
   // SAFETY: --paginate --slurp returns pages of the REST issue-event records.
@@ -204,6 +207,7 @@ export const readRunIssue = (number: string | number | undefined) => {
   const eventPages = JSON.parse(
     github(["api", "--paginate", "--slurp", `repos/${repo}/issues/${n}/events`])
   ) as GitHubIssueEvent[][];
+
   const events = eventPages.flat();
 
   // SAFETY: --paginate --slurp returns pages of the REST issue-comment records.
@@ -216,6 +220,7 @@ export const readRunIssue = (number: string | number | undefined) => {
       `repos/${repo}/issues/${n}/comments`,
     ])
   ) as GitHubIssueComment[][];
+
   const comments = commentPages.flat();
 
   return { comments, edit, events, issue, number: n, repo };
@@ -249,6 +254,7 @@ export const readRunState = (number: string | number | undefined) => {
   const state = JSON.parse(
     fs.readFileSync(paths.state, "utf-8")
   ) as FullRunState;
+
   return state;
 };
 
@@ -259,44 +265,60 @@ const readAttemptText = (file: string) =>
 
 const readAttemptReceipt = (file: string) => {
   const text = readAttemptText(file);
+
   if (text === null) {
     return null;
   }
+
   // SAFETY: verify-porting writes the receipt; reporting retains all original
   // completion, scope, source, environment and journal checks before reuse.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Verification receipt producer contract.
   const receipt = JSON.parse(text) as FullVerificationReceipt;
+
   return receipt;
 };
 
 const readAttemptResources = (file: string) => {
   const text = readAttemptText(file);
+
   if (text === null) {
     return null;
   }
+
   // SAFETY: run-workload writes these named resource-summary fields.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Guarded workload resource-summary producer contract.
   const resources = JSON.parse(text) as FullRunResources;
+
   return resources;
 };
 
 export const readRunAttempts = (number: string | number | undefined) => {
   const paths = fullRunPaths(number);
+
   if (!fs.existsSync(paths.attempts)) {
     return [];
   }
+
   return fs
     .readdirSync(paths.attempts, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => {
+    .flatMap((entry) => {
+      if (!entry.isDirectory()) {
+        return [];
+      }
+
       const directory = path.join(paths.attempts, entry.name);
-      return {
-        directory,
-        receipt: readAttemptReceipt(path.join(directory, "verification.json")),
-        resources: readAttemptResources(
-          path.join(directory, "resource-summary.json")
-        ),
-      };
+
+      return [
+        {
+          directory,
+          receipt: readAttemptReceipt(
+            path.join(directory, "verification.json")
+          ),
+          resources: readAttemptResources(
+            path.join(directory, "resource-summary.json")
+          ),
+        },
+      ];
     });
 };
 

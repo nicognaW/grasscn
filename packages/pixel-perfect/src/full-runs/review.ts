@@ -57,15 +57,15 @@ export interface FindingReview {
 const hash = (value: string) =>
   createHash("sha256").update(value).digest("hex");
 
+// No GitHub read or authorization needed to locate durable local reporting artifacts.
+export const readRunPlanPaths = (number: string | number | undefined) =>
+  path.join(fullRunPaths(number).directory, "reporting");
+
 export const evidenceLocation = (report: CompletedReport) =>
   path.join(
     readRunPlanPaths(report.runIssue),
     `report-${report.evidenceHash}.json`
   );
-
-// No GitHub read or authorization needed to locate durable local reporting artifacts.
-export const readRunPlanPaths = (number: string | number | undefined) =>
-  path.join(fullRunPaths(number).directory, "reporting");
 
 const assertReviewBinding = (
   report: CompletedReport,
@@ -147,15 +147,16 @@ export const validateReview = (
 };
 
 export const findingBody = (report: CompletedReport, group: FindingGroup) => {
+  const memberCaseKeys = new Set(group.cases);
   const failures = report.failures.filter((test) =>
-    group.cases.includes(test.key)
+    memberCaseKeys.has(test.key)
   );
 
   return `Full finding from ${report.issueUrl}\n\nTested local commit: ${report.testedCommit}\nPlan: ${report.planHash}\nEvidence identity: ${report.evidenceHash}\nExecution session: ${String(report.executionSession ?? report.executionThread)}\nEnvironment: ${JSON.stringify(report.environment)}\n\nCause hypothesis: ${group.hypothesis}\n\nReviewed evidence: ${group.evidence}\n\nRepair context: ${group.context}\n\n${failures.length} affected cases; first 10:\n${failures
     .slice(0, 10)
     .map(
       (test) =>
-        `- ${test.key}: expected ${test.expectedStatus}, observed ${test.status}; retry ${test.retry}. Errors: ${String(JSON.stringify(test.errors)?.slice(0, 1000))}\n  Local journal: ${test.journal}\n${test.artifacts
+        `- ${test.key}: expected ${test.expectedStatus}, observed ${test.status}; retry ${test.retry}. Errors: ${JSON.stringify(test.errors)?.slice(0, 1000)}\n  Local journal: ${test.journal}\n${test.artifacts
           .slice(0, 3)
           .map(
             (artifact) =>
