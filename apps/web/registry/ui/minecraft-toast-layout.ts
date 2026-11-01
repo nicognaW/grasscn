@@ -3,16 +3,17 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { toastGlyphAtlas } from "./minecraft-toast-atlas";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
-export type ToastGlyph = {
+export interface ToastGlyph {
   code: number;
   pixels: Uint8Array;
   width: number;
   height: number;
   advance: number;
-};
+}
 
 let source: Promise<Uint8ClampedArray> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function alpha() {
   return (source ??= new Promise((resolve, reject) => {
     const image = new Image();
@@ -65,7 +66,8 @@ export async function toastLayout(title: string, message: string | null) {
         const on = ascii
           ? bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
           : uni
-            ? ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
+            ? // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+              ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
             : 0;
 
         pixels.set([255, 255, 255, on], (y * width + x) * 4);
