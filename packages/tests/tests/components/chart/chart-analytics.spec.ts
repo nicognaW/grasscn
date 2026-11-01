@@ -1,6 +1,5 @@
-import { PNG } from "pngjs";
-
 import { test, expect } from "@grasscn/tests/test";
+import { PNG } from "pngjs";
 const types = [
   ["bar", "Bar"],
   ["stacked-bar", "Stacked bar"],

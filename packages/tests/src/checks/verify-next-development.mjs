@@ -5,20 +5,22 @@ import { mkdir, rename, realpath, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 
-import {
-  repoRoot,
-  webRoot,
-  testRoot,
-} from "@tests/paths";
+import { sourceIdentity } from "@grasscn/tests/next-production";
+import { repoRoot, webRoot, testRoot } from "@tests/paths";
+
 import { assertConsumerPortAvailable } from "../installed/consumer-boundary.mjs";
 import { documentationInventory } from "./documentation-inventory.mjs";
-import { sourceIdentity } from "@grasscn/tests/next-production";
 
 // Ordinary root dev command, fresh generated inputs, expanded public routes.
 // Run through the shared 10% browser guard; this is not a Full test matrix.
 await assertConsumerPortAvailable(5176);
 const source = await sourceIdentity(),
-  directory = path.join(repoRoot, "test-results", "next-development", randomUUID());
+  directory = path.join(
+    repoRoot,
+    "test-results",
+    "next-development",
+    randomUUID()
+  );
 await mkdir(directory, { recursive: true });
 const report = {
   source,

@@ -3,7 +3,14 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import {repoRoot,testRoot,packageBin} from "@grasscn/tests/paths";
+
+import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
+import {
+  sourceIdentity,
+  assertProductionSource,
+  productionBuildIdentity,
+} from "@grasscn/tests/next-production";
+import { repoRoot, testRoot, packageBin } from "@grasscn/tests/paths";
 
 import {
   assertExternalProject,
@@ -17,12 +24,6 @@ import {
   fetchPublicRegistry,
   assertRegistryInstallation,
 } from "./consumer-registry.mjs";
-import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import {
-  sourceIdentity,
-  assertProductionSource,
-  productionBuildIdentity,
-} from "@grasscn/tests/next-production";
 
 // Run only under the shared resource guard with an already owned production website.
 // This is deliberately separate from manual projects: shadcn is the only Grasscn writer here.
@@ -228,8 +229,9 @@ try {
       ])
     );
     report.currentItemNames = registry.items.map((item) => item.name).sort();
-    const initializedDependencies=await assertIndependentDependencies(consumer);
-    const cli=packageBin('shadcn','shadcn',consumer);
+    const initializedDependencies =
+      await assertIndependentDependencies(consumer);
+    const cli = packageBin("shadcn", "shadcn", consumer);
     report.cli = {
       version: initializedDependencies.shadcn.version,
       path: cli,
@@ -327,9 +329,7 @@ try {
       assert(attempt < 120, "CLI consumer production host readiness timeout");
       await Bun.sleep(500);
     }
-    const observerRequire = createRequire(
-      path.join(testRoot, "package.json")
-    );
+    const observerRequire = createRequire(path.join(testRoot, "package.json"));
     const { chromium } = observerRequire("@playwright/test");
     browser = await chromium.launch({ headless: true, channel: "msedge" });
     report.browserVersion = browser.version();
@@ -346,7 +346,7 @@ try {
     const actualBytes = await subject.screenshot();
     await writeFile(path.join(output, "button-actual.png"), actualBytes);
     await subject.click();
-    report.runtime = {buttonVisibleAndActivatable: "passed"};
+    report.runtime = { buttonVisibleAndActivatable: "passed" };
     assert.deepEqual(errors, []);
     report.inputs = await directoryIdentity(consumer);
     report.artifacts = await directoryIdentity(

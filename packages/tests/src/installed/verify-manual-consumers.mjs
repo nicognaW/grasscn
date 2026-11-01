@@ -11,7 +11,14 @@ import {
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import {repoRoot,testRoot} from "@grasscn/tests/paths";
+
+import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
+import {
+  sourceIdentity,
+  assertProductionSource,
+  productionBuildIdentity,
+} from "@grasscn/tests/next-production";
+import { repoRoot, testRoot } from "@grasscn/tests/paths";
 
 import {
   assertExternalProject,
@@ -20,12 +27,6 @@ import {
   consumerEnvironment,
   directoryIdentity,
 } from "./consumer-boundary.mjs";
-import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import {
-  sourceIdentity,
-  assertProductionSource,
-  productionBuildIdentity,
-} from "@grasscn/tests/next-production";
 
 // Run through the workspace resource guard with an owned production website already available.
 // These consumers start empty: no CLI-installed Grasscn files, developer aliases or fixture imports.
@@ -169,9 +170,7 @@ async function run(args, cwd) {
   });
   assert.equal(await child.exited, 0, `Bun ${args.join(" ")}`);
 }
-const sourceRequire = createRequire(
-  path.join(testRoot, "package.json")
-);
+const sourceRequire = createRequire(path.join(testRoot, "package.json"));
 const { chromium, expect } = sourceRequire("@playwright/test");
 const browser =
   phase === "prepare"
@@ -193,7 +192,9 @@ try {
       viewport: { width: 1280, height: 900 },
       deviceScaleFactor: 1,
     });
-    await page.context().grantPermissions(['clipboard-read','clipboard-write'],{origin});
+    await page
+      .context()
+      .grantPermissions(["clipboard-read", "clipboard-write"], { origin });
     await page.goto(`${origin}/docs/components/button`);
     const example = page.getByRole("region", {
       name: "Button example",
@@ -202,7 +203,9 @@ try {
     await example.getByRole("tab", { name: "Code", exact: true }).click();
     await example.getByRole("button", { name: "Copy", exact: true }).click();
     await example.getByRole("status").filter({ hasText: "Copied" }).waitFor();
-    const exampleCode = await page.evaluate(() => navigator.clipboard.readText());
+    const exampleCode = await page.evaluate(() =>
+      navigator.clipboard.readText()
+    );
     assert(
       exampleCode.includes('import { Button } from "@/components/ui/button"')
     );
@@ -603,7 +606,11 @@ try {
         viewport: { width: 1280, height: 900 },
         deviceScaleFactor: 1,
       });
-      await consumerPage.context().grantPermissions(['clipboard-read','clipboard-write'],{origin:`http://127.0.0.1:${port}`});
+      await consumerPage
+        .context()
+        .grantPermissions(["clipboard-read", "clipboard-write"], {
+          origin: `http://127.0.0.1:${port}`,
+        });
       consumerPage.on("pageerror", (error) => errors.push(error.message));
       await consumerPage.goto(`http://127.0.0.1:${port}`);
       await consumerPage.mouse.move(1000, 800);
@@ -613,7 +620,9 @@ try {
       });
       await button.waitFor();
       await expect(button).toBeVisible();
-      await button.screenshot({path:path.join(output, `${framework}-button-runtime.png`)});
+      await button.screenshot({
+        path: path.join(output, `${framework}-button-runtime.png`),
+      });
       const form = consumerPage.getByRole("region", {
         name: "Consumer form",
         exact: true,
@@ -660,7 +669,9 @@ try {
       await codeBlock
         .getByRole("button", { name: "Copy", exact: true })
         .click();
-      await expect(codeBlock.getByRole('button',{name:'Copied',exact:true})).toHaveAttribute('data-copied','true');
+      await expect(
+        codeBlock.getByRole("button", { name: "Copied", exact: true })
+      ).toHaveAttribute("data-copied", "true");
       assert.equal(
         await consumerPage.evaluate(() => navigator.clipboard.readText()),
         'const world = "Minecraft";'
@@ -674,7 +685,11 @@ try {
         exact: true,
       });
       const webgl = [];
-      await expect(consumerPage.getByRole('region',{name:'Consumer player-preview',exact:true}).getByText('Skin ready',{exact:true})).toBeVisible();
+      await expect(
+        consumerPage
+          .getByRole("region", { name: "Consumer player-preview", exact: true })
+          .getByText("Skin ready", { exact: true })
+      ).toBeVisible();
       for (const [index, preview] of [steve, alex].entries()) {
         await preview.scrollIntoViewIfNeeded();
         await preview.locator("canvas").waitFor({ state: "visible" });

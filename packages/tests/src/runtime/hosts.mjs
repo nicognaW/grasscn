@@ -3,13 +3,14 @@ import http from "node:http";
 import { createConnection } from "node:net";
 import path from "node:path";
 
+import { serveProductionFixture } from "@grasscn/tests/fixture";
 import { webRoot } from "@tests/paths";
+
 import {
   isolatedHttpTarget,
   isolatedTunnelTarget,
 } from "./isolated-host-routing.mjs";
 import { serveNextProduction } from "./next-production.mjs";
-import { serveProductionFixture } from "@grasscn/tests/fixture";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.

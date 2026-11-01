@@ -3,6 +3,23 @@ import { mkdir, readFile, writeFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
 import {
+  reusableBrowserTests,
+  browserFilePattern,
+} from "@grasscn/tests/checkpoints";
+import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
+import {
+  fixtureManifest,
+  serveProductionFixture,
+} from "@grasscn/tests/fixture";
+import {
+  stampProductionBuild,
+  serveNextProduction,
+  sourceIdentity,
+  productionBuildIdentity,
+} from "@grasscn/tests/next-production";
+import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
+import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
+import {
   repoRoot,
   webRoot,
   testRoot,
@@ -11,27 +28,10 @@ import {
   packageBin,
 } from "@ppt/paths";
 import {
-  reusableBrowserTests,
-  browserFilePattern,
-} from "@grasscn/tests/checkpoints";
-import {
   baseCatalogue,
   collectBrowserCases,
   classifyBrowserCases,
 } from "@ppt/selection/suite.mjs";
-import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
-import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
-import {
-  stampProductionBuild,
-  serveNextProduction,
-  sourceIdentity,
-  productionBuildIdentity,
-} from "@grasscn/tests/next-production";
-import {
-  fixtureManifest,
-  serveProductionFixture,
-} from "@grasscn/tests/fixture";
 
 const root = repoRoot;
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);
@@ -123,7 +123,7 @@ async function installedDependencyState() {
 
 environment.installedDependencies = await installedDependencyState();
 environment.browserSelection = fullMode ? "full" : "base";
-environment.nonPptIncluded=false;
+environment.nonPptIncluded = false;
 if (fullMode)
   environment.fullRun = {
     issue: fullRun.number,
@@ -136,7 +136,7 @@ environment.fixtureMode = managedFixture
 environment.websiteMode = "owned-bun-next-production";
 const report = {
   suite,
-  pptOnly:true,
+  pptOnly: true,
   browserScope: fullMode ? "full" : "base",
   startedAt: new Date().toISOString(),
   source: before,
@@ -191,19 +191,28 @@ const steps = [
       repoRoot,
     ],
   ],
-  ["primitives", [path.join(testRoot,"src/checks/check-primitives.mjs")]],
-  ["registry-closure", [path.join(testRoot,"src/checks/check-registry-closure.mjs")]],
-  ["evidence", [path.join(pixelPerfectRoot,"src/runtime/check-map.mjs")]],
-  ["porting-evidence", [path.join(pixelPerfectRoot,"src/runtime/check-porting-evidence.mjs")]],
+  ["primitives", [path.join(testRoot, "src/checks/check-primitives.mjs")]],
+  [
+    "registry-closure",
+    [path.join(testRoot, "src/checks/check-registry-closure.mjs")],
+  ],
+  ["evidence", [path.join(pixelPerfectRoot, "src/runtime/check-map.mjs")]],
+  [
+    "porting-evidence",
+    [path.join(pixelPerfectRoot, "src/runtime/check-porting-evidence.mjs")],
+  ],
   ["unit-contracts", ["run", "test:unit"]],
   [
     "production-build",
     [packageBin("turbo", "turbo", repoRoot), "run", "build"],
   ],
-  ["built-primitives", [path.join(testRoot,"src/checks/check-primitives.mjs"), "--built"]],
+  [
+    "built-primitives",
+    [path.join(testRoot, "src/checks/check-primitives.mjs"), "--built"],
+  ],
 ];
 if (managedFixture)
-  steps.push(["fixture-build", [path.join(testRoot,"cli/build-fixture.mjs")]]);
+  steps.push(["fixture-build", [path.join(testRoot, "cli/build-fixture.mjs")]]);
 if (phase === "browser") {
   const prepared = JSON.parse(
     await readFile(path.join(output, "prepared.json"), "utf8")
@@ -226,8 +235,8 @@ if (phase === "browser") {
   report.preparation = prepared;
   report.websiteBuild = prepared.websiteBuild;
 }
-const classifiedCases=classifyBrowserCases(collectBrowserCases());
-const selectedCases=fullMode?classifiedCases.full:classifiedCases.base;
+const classifiedCases = classifyBrowserCases(collectBrowserCases());
+const selectedCases = fullMode ? classifiedCases.full : classifiedCases.base;
 // Retain exact case identities for historical reporting, independently of future source.
 if (fullMode) {
   report.fullCases = selectedCases;
@@ -241,9 +250,10 @@ if (phase !== "prepare")
     steps.push([
       `browser:${file}`,
       [
-        packageBin("@playwright/test", "playwright",pixelPerfectRoot),
+        packageBin("@playwright/test", "playwright", pixelPerfectRoot),
         "test",
-        "--config",path.join(pixelPerfectRoot,"playwright.config.ts"),
+        "--config",
+        path.join(pixelPerfectRoot, "playwright.config.ts"),
         browserFilePattern(file),
         `--workers=${workers}`,
         ...(workers > 1 ? ["--fully-parallel"] : []),
@@ -326,9 +336,9 @@ try {
         `--reporter=list,json,${path.join(testRoot, "src/runtime/checkpoint-reporter.mjs")}`
       );
       browserEnvironment.PLAYWRIGHT_JSON_OUTPUT_NAME = path.join(
-          directory,
-          "playwright.json"
-        );
+        directory,
+        "playwright.json"
+      );
       browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR = directory;
     }
     const code = await new Promise((resolve, reject) => {

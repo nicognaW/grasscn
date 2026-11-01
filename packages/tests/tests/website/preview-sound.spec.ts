@@ -1,9 +1,9 @@
+import { test, expect, type Page } from "@grasscn/tests/test";
 import {
   getMinecraftSoundVolume,
   setMinecraftSoundVolume,
 } from "@grasscn/web/ui/minecraft-sound";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-import { test, expect, type Page } from "@grasscn/tests/test";
 
 type Voice = { source: string; volume: number; rate: number };
 const voices = (page: Page) =>

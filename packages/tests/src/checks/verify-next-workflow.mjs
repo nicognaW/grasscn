@@ -12,15 +12,11 @@ import {
 import path from "node:path";
 
 import {
-  repoRoot,
-  webRoot,
-  packageBin,
-} from "@tests/paths";
-import {
   sourceIdentity,
   productionBuildIdentity,
   stampProductionBuild,
 } from "@grasscn/tests/next-production";
+import { repoRoot, webRoot, packageBin } from "@tests/paths";
 
 // Execute once sources are frozen, through the 4% build guard. Backups are kept;
 // generated-output restoration and source probes never touch another worktree.

@@ -1,6 +1,5 @@
-import { PNG } from "pngjs";
-
 import { test, expect } from "@grasscn/tests/test";
+import { PNG } from "pngjs";
 
 // Explicit preview origin: the main suite's baseURL is the installed fixture.
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";

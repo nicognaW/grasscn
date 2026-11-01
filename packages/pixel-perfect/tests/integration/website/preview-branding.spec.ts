@@ -1,14 +1,12 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 
-import { PNG } from "pngjs";
-
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { PNG } from "pngjs";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
-
 
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
@@ -21,7 +19,10 @@ test("Grasscn project identity and native branding assets are consistent", async
   }
   const provenance = JSON.parse(
     await readFile(
-      resolveRepositoryPath("preview/branding.provenance.json", pixelPerfectRoot),
+      resolveRepositoryPath(
+        "preview/branding.provenance.json",
+        pixelPerfectRoot
+      ),
       "utf8"
     )
   );
@@ -112,4 +113,3 @@ test("Branding source grass matches its native scale3 capture independently of w
     "Source asset composited on the declared black background must match original Minecraft scale3 pixels"
   ).toBe(0);
 });
-

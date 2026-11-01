@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 import { test, expect } from "@grasscn/tests/test";
+import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { resolveRepositoryPath, testRoot } from "@tests/paths";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");

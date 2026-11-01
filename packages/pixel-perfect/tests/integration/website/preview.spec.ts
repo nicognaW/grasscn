@@ -1,26 +1,42 @@
-import { referenceFile } from '@ppt/paths';
-
-import { pixelPerfectTest as test, expect, type Locator, type Page } from "@grasscn/pixel-perfect/test";
-
 import { readFile } from "node:fs/promises";
 
+import {
+  pixelPerfectTest as test,
+  expect,
+  type Locator,
+  type Page,
+} from "@grasscn/pixel-perfect/test";
+import { referenceFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const origin = (process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/").replace(/\/?$/, "/")
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/, "/");
 
 async function focusByKeyboard(page: Page, locator: Locator) {
   for (let i = 0; i < 256; i++) {
-    await page.keyboard.press("Tab")
-    if (await locator.evaluate(element => element === document.activeElement)) return
+    await page.keyboard.press("Tab");
+    if (await locator.evaluate((element) => element === document.activeElement))
+      return;
   }
-  throw new Error("Preview control was not keyboard reachable")
+  throw new Error("Preview control was not keyboard reachable");
 }
 
 async function nativePixels(locator: Locator, file: string) {
-  const actual = PNG.sync.read(await locator.screenshot({ animations: "disabled" }))
-  const expected = PNG.sync.read(await readFile(referenceFile(file.replace(/^tests\/reference\//, ""))))
-  expect([actual.width, actual.height]).toEqual([expected.width, expected.height])
-  expect(actual.data.equals(expected.data), "Preview chrome must preserve native pixels").toBe(true)
+  const actual = PNG.sync.read(
+    await locator.screenshot({ animations: "disabled" })
+  );
+  const expected = PNG.sync.read(
+    await readFile(referenceFile(file.replace(/^tests\/reference\//, "")))
+  );
+  expect([actual.width, actual.height]).toEqual([
+    expected.width,
+    expected.height,
+  ]);
+  expect(
+    actual.data.equals(expected.data),
+    "Preview chrome must preserve native pixels"
+  ).toBe(true);
 }
 
 for (const scale of [2]) {
@@ -224,41 +240,74 @@ test("Preview text fields share the native focused Input pixels", async ({
   }
 });
 
-for (const scale of [2]) test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({ page }) => {
-  await page.setViewportSize({ width: 1536, height: 900 })
-  await page.goto(`${origin}docs/components/tabs`)
+for (const scale of [2])
+  test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.goto(`${origin}docs/components/tabs`);
 
-  const list = page.locator(".documentation-playground").getByRole("tablist", { name: "World settings", exact: true })
-  await expect(list).toHaveAttribute("data-mc-tabs-ready", "true")
-  await page.mouse.move(0, 0)
-  await nativePixels(list, `tests/reference/tabs/captures/tabs-c136-s${scale}.png`)
-})
+    const list = page
+      .locator(".documentation-playground")
+      .getByRole("tablist", { name: "World settings", exact: true });
+    await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
+    await page.mouse.move(0, 0);
+    await nativePixels(
+      list,
+      `tests/reference/tabs/captures/tabs-c136-s${scale}.png`
+    );
+  });
 
-for (const scale of [2]) test(`Select preview preserves native cycle button at scale ${scale}`, async ({ page }) => {
-  await page.setViewportSize({ width: 1536, height: 900 })
-  await page.goto(`${origin}docs/components/select`)
+for (const scale of [2])
+  test(`Select preview preserves native cycle button at scale ${scale}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.goto(`${origin}docs/components/select`);
 
-  const trigger = page.locator(".documentation-playground").getByRole("combobox", { name: "Demo game mode", exact: true })
-  await expect(trigger).toHaveText("Survival")
-  await expect(trigger).toHaveAttribute("data-mc-select-ready", "true")
-  await page.mouse.move(0, 0)
-  await nativePixels(trigger, `tests/reference/select/captures/select-c70-s${scale}.png`)
-})
+    const trigger = page
+      .locator(".documentation-playground")
+      .getByRole("combobox", { name: "Demo game mode", exact: true });
+    await expect(trigger).toHaveText("Survival");
+    await expect(trigger).toHaveAttribute("data-mc-select-ready", "true");
+    await page.mouse.move(0, 0);
+    await nativePixels(
+      trigger,
+      `tests/reference/select/captures/select-c70-s${scale}.png`
+    );
+  });
 
-for (const scale of [2]) test(`Radio Group preview preserves native widget pixels at scale ${scale}`, async ({ page }) => {
-  await page.goto(`${origin}docs/components/radio-group`)
+for (const scale of [2])
+  test(`Radio Group preview preserves native widget pixels at scale ${scale}`, async ({
+    page,
+  }) => {
+    await page.goto(`${origin}docs/components/radio-group`);
 
-  const radio = page.locator(".documentation-playground").getByRole("radiogroup", { name: "Demo radio game mode", exact: true }).getByRole("radio", { name: "Survival", exact: true })
-  await expect(radio).toBeChecked()
-  await page.mouse.move(0, 0)
-  await nativePixels(radio, `tests/reference/radio-group/captures/radio-group-c8-s${scale}.png`)
-})
+    const radio = page
+      .locator(".documentation-playground")
+      .getByRole("radiogroup", { name: "Demo radio game mode", exact: true })
+      .getByRole("radio", { name: "Survival", exact: true });
+    await expect(radio).toBeChecked();
+    await page.mouse.move(0, 0);
+    await nativePixels(
+      radio,
+      `tests/reference/radio-group/captures/radio-group-c8-s${scale}.png`
+    );
+  });
 
-for (const scale of [2]) test(`Switch preview preserves native on/off pixels at scale ${scale}`, async ({ page }) => {
-  await page.goto(`${origin}docs/components/switch`)
+for (const scale of [2])
+  test(`Switch preview preserves native on/off pixels at scale ${scale}`, async ({
+    page,
+  }) => {
+    await page.goto(`${origin}docs/components/switch`);
 
-  const control = page.locator(".documentation-playground").getByRole("switch", { name: "Enable clouds", exact: true })
-  await expect(control).not.toBeChecked()
-  await page.mouse.move(0, 0)
-  await nativePixels(control, `tests/reference/switch/captures/switch-c16-s${scale}.png`)
-})
+    const control = page
+      .locator(".documentation-playground")
+      .getByRole("switch", { name: "Enable clouds", exact: true });
+    await expect(control).not.toBeChecked();
+    await page.mouse.move(0, 0);
+    await nativePixels(
+      control,
+      `tests/reference/switch/captures/switch-c16-s${scale}.png`
+    );
+  });

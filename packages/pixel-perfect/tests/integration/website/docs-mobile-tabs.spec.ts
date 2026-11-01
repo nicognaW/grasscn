@@ -1,9 +1,8 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { PNG } from "pngjs";
-
 import { test, expect } from "@grasscn/pixel-perfect/test";
+import { PNG } from "pngjs";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
@@ -37,7 +36,10 @@ test("mobile documentation Preview and Code remain visible and match compact nat
     scroll: 0,
     background: "rgb(32, 32, 32)",
   });
-  const family = new URL("../../reference/showcase-code-tabs/", import.meta.url);
+  const family = new URL(
+    "../../reference/showcase-code-tabs/",
+    import.meta.url
+  );
   const manifest = JSON.parse(
     await readFile(new URL("manifest.json", family), "utf8")
   );

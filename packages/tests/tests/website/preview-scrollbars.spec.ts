@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 
+import { test, expect } from "@grasscn/tests/test";
 import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-assets";
 import { resolveRepositoryPath, testRoot } from "@tests/paths";
-import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");

@@ -2,8 +2,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { chromium, expect } from "@playwright/test";
-
 import { repoRoot } from "@tests/paths";
+
 import { documentationInventory } from "./documentation-inventory.mjs";
 const origin = (process.argv[2] ?? "http://127.0.0.1:5176").replace(/\/$/, "");
 const out = path.resolve(

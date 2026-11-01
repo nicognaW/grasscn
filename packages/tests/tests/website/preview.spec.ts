@@ -1,13 +1,12 @@
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
-
 import { test, expect } from "@grasscn/tests/test";
-
+import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 import { PNG } from "pngjs";
 
+const catalog = { components: documentationInventory().playgrounds };
 
-const catalog = { components: documentationInventory().playgrounds }
-
-const origin = (process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/").replace(/\/?$/, "/")
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/, "/");
 
 test("Toggle preview supports CJK labels, native pressed state and disabling", async ({
   page,

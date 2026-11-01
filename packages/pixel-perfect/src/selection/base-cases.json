@@ -5,39 +5,29 @@
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Tabs preview preserves native tab bar at scale 2",
-      "components": [
-        "tabs"
-      ],
+      "components": ["tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/tabs#interactive-playground",
         "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
-      "titlePath": [
-        "Tabs preview preserves native tab bar at scale 2"
-      ]
+      "titlePath": ["Tabs preview preserves native tab bar at scale 2"]
     },
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Select preview preserves native cycle button at scale 2",
-      "components": [
-        "select"
-      ],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/select#interactive-playground",
         "reason": "Default Survival cycle button at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
-      "titlePath": [
-        "Select preview preserves native cycle button at scale 2"
-      ]
+      "titlePath": ["Select preview preserves native cycle button at scale 2"]
     },
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Radio Group preview preserves native widget pixels at scale 2",
-      "components": [
-        "radio-group"
-      ],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/radio-group#interactive-playground",
@@ -50,27 +40,19 @@
     {
       "file": "integration/website/preview.spec.ts",
       "title": "Switch preview preserves native on/off pixels at scale 2",
-      "components": [
-        "switch"
-      ],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/switch#interactive-playground",
         "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
-      "titlePath": [
-        "Switch preview preserves native on/off pixels at scale 2"
-      ]
+      "titlePath": ["Switch preview preserves native on/off pixels at scale 2"]
     },
     {
       "file": "button/pixels.spec.ts",
       "title": "vanilla pixels: normal-w200-s2.png",
-      "titlePath": [
-        "vanilla pixels: normal-w200-s2.png"
-      ],
-      "components": [
-        "button"
-      ],
+      "titlePath": ["vanilla pixels: normal-w200-s2.png"],
+      "components": ["button"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/button",
@@ -80,12 +62,8 @@
     {
       "file": "checkbox/controls.spec.ts",
       "title": "Control native pixels: checkbox-unchecked-normal-s2.png",
-      "titlePath": [
-        "Control native pixels: checkbox-unchecked-normal-s2.png"
-      ],
-      "components": [
-        "checkbox"
-      ],
+      "titlePath": ["Control native pixels: checkbox-unchecked-normal-s2.png"],
+      "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/checkbox",
@@ -95,12 +73,8 @@
     {
       "file": "input/input.spec.ts",
       "title": "Input native pixels: input-w200-normal-c39-s2.png",
-      "titlePath": [
-        "Input native pixels: input-w200-normal-c39-s2.png"
-      ],
-      "components": [
-        "input"
-      ],
+      "titlePath": ["Input native pixels: input-w200-normal-c39-s2.png"],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/input",
@@ -110,12 +84,8 @@
     {
       "file": "textarea/textarea.spec.ts",
       "title": "Textarea native pixels: textarea-c18-s2.png",
-      "titlePath": [
-        "Textarea native pixels: textarea-c18-s2.png"
-      ],
-      "components": [
-        "textarea"
-      ],
+      "titlePath": ["Textarea native pixels: textarea-c18-s2.png"],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/textarea",
@@ -125,12 +95,8 @@
     {
       "file": "separator/separator.spec.ts",
       "title": "Separator native pixels (div): separator-c6-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c6-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c6-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -140,12 +106,8 @@
     {
       "file": "separator/separator.spec.ts",
       "title": "Separator native pixels (div): separator-c24-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c24-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c24-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -159,9 +121,7 @@
         "Progress native matrix",
         "Progress native pixels: progress-c6-s2.png"
       ],
-      "components": [
-        "progress"
-      ],
+      "components": ["progress"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/progress",
@@ -174,9 +134,7 @@
       "titlePath": [
         "documentation header Components matches its captured Minecraft Button"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -189,9 +147,7 @@
       "titlePath": [
         "documentation search placeholder matches its captured Minecraft input"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -204,9 +160,7 @@
       "titlePath": [
         "documentation prose search typing matches its captured Minecraft input"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -216,9 +170,7 @@
     {
       "file": "integration/website/next-foundation.spec.ts",
       "title": "the default MDX component page renders within the Minecraft website shell",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -234,11 +186,7 @@
       "titlePath": [
         "default documentation code controls match their Minecraft reference cases"
       ],
-      "components": [
-        "website",
-        "button",
-        "tabs"
-      ],
+      "components": ["website", "button", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -251,11 +199,7 @@
       "titlePath": [
         "default installation controls match their captured Minecraft content and states"
       ],
-      "components": [
-        "website",
-        "button",
-        "tabs"
-      ],
+      "components": ["website", "button", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -268,10 +212,7 @@
       "titlePath": [
         "homepage default checkbox retains its captured Minecraft pixels"
       ],
-      "components": [
-        "website",
-        "checkbox"
-      ],
+      "components": ["website", "checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -284,10 +225,7 @@
       "titlePath": [
         "chart showcase default frame timing matches its original Minecraft renderer"
       ],
-      "components": [
-        "website",
-        "chart"
-      ],
+      "components": ["website", "chart"],
       "evidence": {
         "kind": "website-default",
         "route": "/charts",
@@ -300,11 +238,7 @@
       "titlePath": [
         "chart example tabs remain visible and match their Minecraft modes"
       ],
-      "components": [
-        "website",
-        "chart",
-        "tabs"
-      ],
+      "components": ["website", "chart", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/charts",
@@ -317,10 +251,7 @@
       "titlePath": [
         "default layout documentation Separator and Progress match retained native cases"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/separator",
@@ -330,12 +261,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: checkbox",
-      "titlePath": [
-        "Input docs native default: checkbox"
-      ],
-      "components": [
-        "checkbox"
-      ],
+      "titlePath": ["Input docs native default: checkbox"],
+      "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/checkbox",
@@ -345,12 +272,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: input",
-      "titlePath": [
-        "Input docs native default: input"
-      ],
-      "components": [
-        "input"
-      ],
+      "titlePath": ["Input docs native default: input"],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -360,12 +283,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: textarea",
-      "titlePath": [
-        "Input docs native default: textarea"
-      ],
-      "components": [
-        "textarea"
-      ],
+      "titlePath": ["Input docs native default: textarea"],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/textarea",
@@ -375,12 +294,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: select",
-      "titlePath": [
-        "Input docs native default: select"
-      ],
-      "components": [
-        "select"
-      ],
+      "titlePath": ["Input docs native default: select"],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/select",
@@ -390,12 +305,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: radio-group",
-      "titlePath": [
-        "Input docs native default: radio-group"
-      ],
-      "components": [
-        "radio-group"
-      ],
+      "titlePath": ["Input docs native default: radio-group"],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/radio-group",
@@ -405,12 +316,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: switch",
-      "titlePath": [
-        "Input docs native default: switch"
-      ],
-      "components": [
-        "switch"
-      ],
+      "titlePath": ["Input docs native default: switch"],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/switch",
@@ -420,12 +327,8 @@
     {
       "file": "integration/website/docs-input-pixels.spec.ts",
       "title": "Input docs native default: slider",
-      "titlePath": [
-        "Input docs native default: slider"
-      ],
-      "components": [
-        "slider"
-      ],
+      "titlePath": ["Input docs native default: slider"],
+      "components": ["slider"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/slider",
@@ -438,9 +341,7 @@
       "titlePath": [
         "documentation empty Hotbar matches native selection zero on explicit backdrop"
       ],
-      "components": [
-        "hotbar"
-      ],
+      "components": ["hotbar"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/hotbar",
@@ -453,9 +354,7 @@
       "titlePath": [
         "default documentation packaged avatar faces match native PlayerFaceExtractor"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/avatar",
@@ -468,9 +367,7 @@
       "titlePath": [
         "mobile documentation Preview and Code remain visible and match compact native tabs"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -483,9 +380,7 @@
       "titlePath": [
         "default header grass at intrinsic SVG size matches original Minecraft GUI3"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",

@@ -1,13 +1,11 @@
 import { readFile } from "node:fs/promises";
 
-import { PNG } from "pngjs";
-
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
 import { test, expect } from "@grasscn/tests/test";
+import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { PNG } from "pngjs";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
-
 
 test("Header serves the preserved branding source at its actual production geometry", async ({
   page,
@@ -85,4 +83,3 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
     ).toBe(true);
   }
 });
-
