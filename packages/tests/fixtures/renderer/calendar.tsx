@@ -1,47 +1,303 @@
-import * as React from 'react';
-import { Calendar, CalendarDayButton, type CalendarProps } from '@grasscn/web/ui/calendar';
-import { CardHeader, CardTitle, CardDescription, CardFooter } from '@grasscn/web/ui/card';
-import { Button } from '@grasscn/web/ui/button';
-import {DatePickerDemo} from '@grasscn/web/blocks/date-picker';
-import {Popover,PopoverTrigger,PopoverContent} from '@grasscn/web/ui/popover';
-import {format} from 'date-fns';
+import { DatePickerDemo } from "@grasscn/web/blocks/date-picker";
+import { Button } from "@grasscn/web/ui/button";
+import {
+  Calendar,
+  CalendarDayButton,
+  type CalendarProps,
+} from "@grasscn/web/ui/calendar";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@grasscn/web/ui/card";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@grasscn/web/ui/popover";
+import { format } from "date-fns";
+import * as React from "react";
+
+import "./native-reference.css";
 export function CalendarFixture() {
-    const q = new URLSearchParams(location.search), component = q.get('component') ?? 'calendar', part = q.get('part') ?? 'cell', scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, width = Number(q.get('width') ?? 20), height = Number(q.get('height') ?? 20), x = Number(q.get('x') ?? 8) * scale, y = Number(q.get('y') ?? 8) * scale, state = q.get('state') ?? 'normal', label = q.get('label') ?? '1';
-    const [selected, setSelected] = React.useState<Date>();
-    const [dateOpen,setDateOpen]=React.useState(false);
-    const [multiple, setMultiple] = React.useState<Date[] | undefined>();
-    React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);
-    React.useLayoutEffect(() => {
-        if (q.get('native') !== '1')
-            return;
-        const style = document.createElement('style');
-        style.textContent = '#root,[data-slot=date-picker-content]{visibility:hidden}#subject{visibility:visible}[data-mc-positioner]{transform:none!important;left:0!important;top:0!important}';
-        document.head.append(style);
-        let frame = 0;
-        const place = () => {
-            if (part === 'arrow') {
-                const button = document.querySelector<HTMLButtonElement>(q.get('checked') === 'true' ? '.rdp-button_next' : '.rdp-button_previous');
-                if (button) {
-                    button.id = 'subject';
-                    button.dataset.subject = "true";
-                    Object.assign(button.style, { position: 'fixed', left: x + 'px', top: y + 'px', width: width * scale + 'px', height: height * scale + 'px', margin: '0', padding: '0' });
-                }
-                else
-                    frame = requestAnimationFrame(place);
-            }
-        };
-        place();
-        return () => { cancelAnimationFrame(frame); style.remove(); };
-    }, [component, part, scale, width, height, x, y, state, label]);
-    if (q.get('native') === '1' && part.startsWith('trigger'))
-        return <Popover scale={scale} open={false}><PopoverTrigger render={<Button id="subject" data-subject="true" scale={scale} disabled={state.startsWith('disabled')} style={{position:'fixed',left:x,top:y,width:width*scale,height:height*scale}}/>}>{label}</PopoverTrigger></Popover>;
-    if (q.get('native') === '1') {
-        const props: CalendarProps = { scale, mode: "single", defaultMonth: new Date(2026, 9), showOutsideDays: false, disableNavigation: state.startsWith('disabled'), style: part === 'surface' ? { position: 'fixed', left: x, top: y, width: width * scale, height: height * scale, padding: q.has('text') ? 18 * scale : 0 } : undefined, id: part === 'surface' ? 'subject' : undefined, ...(part === 'surface' ? { 'data-subject': 'true' } : {}), classNames: part === 'surface' ? { months: 'mc-native-hidden', nav: 'mc-native-hidden' } : undefined, ...(part === 'label' ? { formatters: { formatCaption: () => label }, captionTextProps: { id: 'subject', maxWidth: q.has('wrapWidth') ? Number(q.get('wrapWidth')) : undefined, align: (q.get('align') ?? 'left') as 'left' | 'center', style: { position: 'fixed', left: x, top: y, width: width * scale, height: height * scale }, ...{"data-subject": "true"} } } : {}), ...(part === 'surface' && q.has('text') ? { components: { Nav: () => <></>, Months: () => <><CardHeader><CardTitle>{label}</CardTitle><CardDescription>{q.get('text')}</CardDescription></CardHeader><CardFooter><Button scale={scale}>Done</Button></CardFooter></> } } : {}), ...(part === 'cell' ? { components: { DayButton: ({ day, modifiers, ...p }) => <CalendarDayButton {...p} day={day} modifiers={{ ...modifiers, focused: state === 'focus' && day.date.getDate() === Number(label) && day.date.getDate() === Number(label), selected: q.get('selected') === 'true', today: q.get('today') === 'true', range_start: q.get('range') === 'start', range_middle: q.get('range') === 'middle', range_end: q.get('range') === 'end' }} id={day.date.getDate() === Number(label) ? 'subject' : undefined} disabled={state.startsWith('disabled')} style={{ position: 'fixed', left: x, top: y, width: width * scale, height: height * scale }} data-subject={(day.date.getDate() === Number(label) ? 'subject' : undefined) === "subject" ? "true" : undefined}>{label}</CalendarDayButton> } } : {}) };
-        return <><style>{'.mc-native-hidden{visibility:hidden}'}</style>{component === 'date-picker' ? <Popover scale={scale} open><PopoverTrigger render={<Button scale={scale}/>}>Pick a date</PopoverTrigger><PopoverContent data-slot="date-picker-content" initialFocus={false} style={{overflow:"visible",maxHeight:"none",width:"fit-content",padding:0}}><Calendar {...props}/></PopoverContent></Popover> : <Calendar {...props}/>}</>;
-    }
-    if (q.get('scenario') === 'disabled')
-        return <Popover><PopoverTrigger render={<Button disabled aria-label="Disabled date"/>}>Pick a date</PopoverTrigger></Popover>;
-    if (q.get('scenario') === 'uncontrolled')
-        return <DatePickerDemo scale={scale}/>;
-    return <><Calendar mode="single" defaultMonth={new Date(2026, 9)} selected={selected} onSelect={setSelected} disabled={{ before: new Date(2026, 9, 3) }}/><Popover scale={scale} open={dateOpen} onOpenChange={setDateOpen}><PopoverTrigger render={<Button scale={scale} data-slot="date-picker-trigger"/>}>{selected?format(selected,'PPP'):'Pick a date'}</PopoverTrigger><PopoverContent data-slot="date-picker-content" align="start" style={{width:'fit-content',padding:0}}><Calendar scale={scale} mode="single" defaultMonth={new Date(2026,9)} selected={selected} onSelect={date=>{setSelected(date);setDateOpen(false)}} autoFocus/></PopoverContent></Popover><input type="hidden" name="date" value={selected?format(selected,'yyyy-MM-dd'):''}/><output id="selected">{selected?.toLocaleDateString()}</output><Calendar mode="range" numberOfMonths={2} defaultMonth={new Date(2026, 9)}/><Calendar aria-label="Multiple dates" mode="multiple" selected={multiple} onSelect={setMultiple} defaultMonth={new Date(2026, 9)}/><output id="multiple">{multiple?.length ?? 0}</output><Calendar aria-label="Dropdown calendar" captionLayout="dropdown" defaultMonth={new Date(2026, 9)} startMonth={new Date(2020, 0)} endMonth={new Date(2030, 11)}/></>;
+  const q = new URLSearchParams(location.search),
+    component = q.get("component") ?? "calendar",
+    part = q.get("part") ?? "cell",
+    scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3,
+    width = Number(q.get("width") ?? 20),
+    height = Number(q.get("height") ?? 20),
+    x = Number(q.get("x") ?? 8) * scale,
+    y = Number(q.get("y") ?? 8) * scale,
+    state = q.get("state") ?? "normal",
+    label = q.get("label") ?? "1";
+  const [selected, setSelected] = React.useState<Date>();
+  const [dateOpen, setDateOpen] = React.useState(false);
+  const [multiple, setMultiple] = React.useState<Date[] | undefined>();
+  React.useLayoutEffect(() => {
+    document.documentElement.style.background = document.body.style.background =
+      q.get("background") ?? "#202020";
+  }, []);
+  React.useLayoutEffect(() => {
+    if (q.get("native") !== "1") return;
+    document.documentElement.classList.add("native-reference-calendar");
+    let frame = 0;
+    const place = () => {
+      if (part === "arrow") {
+        const button = document.querySelector<HTMLButtonElement>(
+          q.get("checked") === "true"
+            ? ".rdp-button_next"
+            : ".rdp-button_previous"
+        );
+        if (button) {
+          button.id = "subject";
+          button.dataset.subject = "true";
+          button.classList.add(
+            "native-reference-geometry",
+            "native-reference-size",
+            "native-reference-arrow"
+          );
+          button.style.setProperty("--reference-x", x + "px");
+          button.style.setProperty("--reference-y", y + "px");
+          button.style.setProperty("--reference-width", width * scale + "px");
+          button.style.setProperty("--reference-height", height * scale + "px");
+        } else frame = requestAnimationFrame(place);
+      }
+    };
+    place();
+    return () => {
+      cancelAnimationFrame(frame);
+      document.documentElement.classList.remove("native-reference-calendar");
+    };
+  }, [component, part, scale, width, height, x, y, state, label]);
+  if (q.get("native") === "1" && part.startsWith("trigger"))
+    return (
+      <Popover scale={scale} open={false}>
+        <PopoverTrigger
+          render={
+            <Button
+              id="subject"
+              data-subject="true"
+              scale={scale}
+              disabled={state.startsWith("disabled")}
+              className="native-reference-geometry native-reference-size"
+              style={
+                {
+                  "--reference-x": x + "px",
+                  "--reference-y": y + "px",
+                  "--reference-width": width * scale + "px",
+                  "--reference-height": height * scale + "px",
+                } as React.CSSProperties
+              }
+            />
+          }
+        >
+          {label}
+        </PopoverTrigger>
+      </Popover>
+    );
+  if (q.get("native") === "1") {
+    const props: CalendarProps = {
+      scale,
+      mode: "single",
+      defaultMonth: new Date(2026, 9),
+      showOutsideDays: false,
+      disableNavigation: state.startsWith("disabled"),
+      className:
+        part === "surface"
+          ? "native-reference-geometry native-reference-size native-reference-calendar-surface"
+          : undefined,
+      id: part === "surface" ? "subject" : undefined,
+      ...(part === "surface" ? { "data-subject": "true" } : {}),
+      classNames:
+        part === "surface"
+          ? { months: "mc-native-hidden", nav: "mc-native-hidden" }
+          : undefined,
+      ...(part === "label"
+        ? {
+            formatters: { formatCaption: () => label },
+            captionTextProps: {
+              id: "subject",
+              maxWidth: q.has("wrapWidth")
+                ? Number(q.get("wrapWidth"))
+                : undefined,
+              align: (q.get("align") ?? "left") as "left" | "center",
+              className: "native-reference-geometry native-reference-size",
+              style: {
+                "--reference-x": x + "px",
+                "--reference-y": y + "px",
+                "--reference-width": width * scale + "px",
+                "--reference-height": height * scale + "px",
+              } as React.CSSProperties,
+              ...{ "data-subject": "true" },
+            },
+          }
+        : {}),
+      ...(part === "surface" && q.has("text")
+        ? {
+            components: {
+              Nav: () => <></>,
+              Months: () => (
+                <>
+                  <CardHeader>
+                    <CardTitle>{label}</CardTitle>
+                    <CardDescription>{q.get("text")}</CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button scale={scale}>Done</Button>
+                  </CardFooter>
+                </>
+              ),
+            },
+          }
+        : {}),
+      ...(part === "cell"
+        ? {
+            components: {
+              DayButton: ({ day, modifiers, ...p }) => (
+                <CalendarDayButton
+                  {...p}
+                  day={day}
+                  modifiers={{
+                    ...modifiers,
+                    focused:
+                      state === "focus" &&
+                      day.date.getDate() === Number(label) &&
+                      day.date.getDate() === Number(label),
+                    selected: q.get("selected") === "true",
+                    today: q.get("today") === "true",
+                    range_start: q.get("range") === "start",
+                    range_middle: q.get("range") === "middle",
+                    range_end: q.get("range") === "end",
+                  }}
+                  id={
+                    day.date.getDate() === Number(label) ? "subject" : undefined
+                  }
+                  disabled={state.startsWith("disabled")}
+                  className={`${p.className ?? ""} native-reference-geometry native-reference-size`}
+                  style={
+                    {
+                      "--reference-x": x + "px",
+                      "--reference-y": y + "px",
+                      "--reference-width": width * scale + "px",
+                      "--reference-height": height * scale + "px",
+                    } as React.CSSProperties
+                  }
+                  data-subject={
+                    (day.date.getDate() === Number(label)
+                      ? "subject"
+                      : undefined) === "subject"
+                      ? "true"
+                      : undefined
+                  }
+                >
+                  {label}
+                </CalendarDayButton>
+              ),
+            },
+          }
+        : {}),
+      style:
+        part === "surface"
+          ? ({
+              "--reference-x": x + "px",
+              "--reference-y": y + "px",
+              "--reference-width": width * scale + "px",
+              "--reference-height": height * scale + "px",
+              "--reference-padding": (q.has("text") ? 18 * scale : 0) + "px",
+            } as React.CSSProperties)
+          : undefined,
+    };
+    return (
+      <>
+        {component === "date-picker" ? (
+          <Popover scale={scale} open>
+            <PopoverTrigger render={<Button scale={scale} />}>
+              Pick a date
+            </PopoverTrigger>
+            <PopoverContent
+              data-slot="date-picker-content"
+              initialFocus={false}
+              className="native-reference-popover native-reference-popover-native"
+            >
+              <Calendar {...props} />
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Calendar {...props} />
+        )}
+      </>
+    );
+  }
+  if (q.get("scenario") === "disabled")
+    return (
+      <Popover>
+        <PopoverTrigger render={<Button disabled aria-label="Disabled date" />}>
+          Pick a date
+        </PopoverTrigger>
+      </Popover>
+    );
+  if (q.get("scenario") === "uncontrolled")
+    return <DatePickerDemo scale={scale} />;
+  return (
+    <>
+      <Calendar
+        mode="single"
+        defaultMonth={new Date(2026, 9)}
+        selected={selected}
+        onSelect={setSelected}
+        disabled={{ before: new Date(2026, 9, 3) }}
+      />
+      <Popover scale={scale} open={dateOpen} onOpenChange={setDateOpen}>
+        <PopoverTrigger
+          render={<Button scale={scale} data-slot="date-picker-trigger" />}
+        >
+          {selected ? format(selected, "PPP") : "Pick a date"}
+        </PopoverTrigger>
+        <PopoverContent
+          data-slot="date-picker-content"
+          align="start"
+          className="native-reference-popover"
+        >
+          <Calendar
+            scale={scale}
+            mode="single"
+            defaultMonth={new Date(2026, 9)}
+            selected={selected}
+            onSelect={(date) => {
+              setSelected(date);
+              setDateOpen(false);
+            }}
+            autoFocus
+          />
+        </PopoverContent>
+      </Popover>
+      <input
+        type="hidden"
+        name="date"
+        value={selected ? format(selected, "yyyy-MM-dd") : ""}
+      />
+      <output id="selected">{selected?.toLocaleDateString()}</output>
+      <Calendar
+        mode="range"
+        numberOfMonths={2}
+        defaultMonth={new Date(2026, 9)}
+      />
+      <Calendar
+        aria-label="Multiple dates"
+        mode="multiple"
+        selected={multiple}
+        onSelect={setMultiple}
+        defaultMonth={new Date(2026, 9)}
+      />
+      <output id="multiple">{multiple?.length ?? 0}</output>
+      <Calendar
+        aria-label="Dropdown calendar"
+        captionLayout="dropdown"
+        defaultMonth={new Date(2026, 9)}
+        startMonth={new Date(2020, 0)}
+        endMonth={new Date(2030, 11)}
+      />
+    </>
+  );
 }

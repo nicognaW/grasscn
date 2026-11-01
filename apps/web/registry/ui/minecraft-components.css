@@ -1,7 +1,6 @@
 /* Runtime host registration for component-owned styles.
  * Keep standalone component imports and registry delivery self-contained. */
 @import "./minecraft-button.css";
-@import "./minecraft-accordion.css";
 @import "./minecraft-advancement-tree.css";
 @import "./minecraft-alert-dialog.css";
 @import "./minecraft-attachment.css";
@@ -25,7 +24,6 @@
 @import "./minecraft-empty.css";
 @import "./minecraft-field.css";
 @import "./minecraft-hotbar.css";
-@import "./minecraft-hover-card.css";
 @import "./minecraft-hud.css";
 @import "./minecraft-input-group.css";
 @import "./minecraft-input-otp.css";
@@ -40,7 +38,6 @@
 @import "./minecraft-message-scroller.css";
 @import "./minecraft-message.css";
 @import "./minecraft-native-select.css";
-@import "./minecraft-navigation-menu.css";
 @import "./minecraft-pagination-assets.css";
 @import "./minecraft-pagination.css";
 @import "./minecraft-player-list.css";

@@ -4,8 +4,7 @@ import {readFileSync} from 'node:fs'
 const index=JSON.parse(readFileSync(resolveRepositoryPath('preview/search.generated.json', testRoot),'utf8')) as {name:string;title:string;exports:string[]}[]
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
 test('catalog consolidates pages and removes discarded controls and copy',async({page})=>{
- expect(index.map(i=>i.name)).not.toEqual(expect.arrayContaining(['skeleton']))
- for(const name of ['field','bubble','message-scroller','skeleton'])expect(index.some(i=>i.name===name)).toBe(false)
+ for(const name of ['field','bubble','message-scroller'])expect(index.some(i=>i.name===name)).toBe(false)
  await page.goto(origin+'components/avatar')
  await expect(page.getByRole('group',{name:'Preview scale'})).toHaveCount(0)
  await expect(page.getByRole('button',{name:/Hat:/})).toHaveCount(0)

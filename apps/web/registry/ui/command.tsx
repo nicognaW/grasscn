@@ -53,7 +53,7 @@ function CommandList({ className, ref, children, style, surface = "suggestions",
     const child = null;
     React.useImperativeHandle(ref, () => node.current!, []);
     React.useLayoutEffect(() => {
-        const element = node.current!, items = element.querySelector<HTMLElement>('.mc-command-items');
+        const element = node.current!, items = element.querySelector<HTMLElement>('[data-mc-command-items]');
         if (!items)
             return;
         let frame = 0;
@@ -79,7 +79,7 @@ function CommandList({ className, ref, children, style, surface = "suggestions",
         measure();
         return () => { resize.disconnect(); mutation.disconnect(); element.removeEventListener('scroll', measure); cancelAnimationFrame(frame); };
     }, [scale, surface]);
-    const contents = <>{surface === "popup" && <span className="mc-menu-background" aria-hidden="true"><MinecraftSurface sprite={minecraftCardSprite}/></span>}<div className="mc-menu-items mc-command-items">{children}</div><span className="mc-menu-scroll-hint" data-edge="top" aria-hidden="true"/><span className="mc-menu-scroll-hint" data-edge="bottom" aria-hidden="true"/></>;
+    const contents = <>{surface === "popup" && <span className="mc-menu-background" aria-hidden="true"><MinecraftSurface sprite={minecraftCardSprite}/></span>}<div className="mc-menu-items" data-mc-command-items="">{children}</div><span className="mc-menu-scroll-hint" data-edge="top" aria-hidden="true"/><span className="mc-menu-scroll-hint" data-edge="bottom" aria-hidden="true"/></>;
     return <CommandPrimitive.List data-slot="command-list" data-surface={surface} ref={node} className={cn(`mc-menu-content mc-command-list ${""}`, className)} style={{ "--mc-scale": scale, ...style } as React.CSSProperties} {...props}>{contents}</CommandPrimitive.List>;
 }
 function CommandEmpty({ children, className, ...props }: MinecraftProps<typeof CommandPrimitive.Empty>) { return <CommandPrimitive.Empty data-slot="command-empty" className={cn(`mc-command-empty ${""}`, className)} {...props}>{menuTextNodes(children)}</CommandPrimitive.Empty>; }

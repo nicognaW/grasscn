@@ -8,8 +8,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { chromium, expect } from "@playwright/test"
 import { PNG } from "pngjs"
-import {verifyNavigationCase} from "@ppt/installed/verify-navigation-installed.mjs"
-import {verifyAccordionCase} from "@ppt/installed/verify-accordion-installed.mjs"
+import {verifyCollapsibleCase} from "@ppt/installed/verify-collapsible-installed.mjs"
 
 const [consumerDir, name, url, uiDirectory = "src/components/ui", referenceManifest] = process.argv.slice(2)
 if (!consumerDir || !name || !url) throw new Error("Usage: bun src/installed/verify-installed.mjs <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]")
@@ -44,12 +43,12 @@ const pageErrors = [], cases = []
 async function preparePage() {
   page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1 })
   page.on("pageerror", error => pageErrors.push(error.message))
-  if (["tabs", "select", "navigation-menu"].includes(name)) await page.addInitScript(() => { Date.now = () => Number(new URLSearchParams(location.search).get("timeMs") ?? 0) })
+  if (["tabs", "select"].includes(name)) await page.addInitScript(() => { Date.now = () => Number(new URLSearchParams(location.search).get("timeMs") ?? 0) })
   if (name === "input" || name === "textarea") {
     await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") })
     await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"))
   }
-  if (name === "collapsible" || name === "accordion" || name === "navigation-menu" || name === "menubar" || name === "context-menu" || name === "dropdown-menu" || name === "hover-card" || name === "popover" || name === "alert-dialog" || name === "dialog" || name === "tooltip" || name === "tabs" || name === "select" || name === "radio-group" || name === "switch" || manifest.effectiveAssets) await page.setViewportSize({ width: 1536, height: 900 })
+  if (name === "collapsible" || name === "menubar" || name === "context-menu" || name === "dropdown-menu" || name === "popover" || name === "alert-dialog" || name === "dialog" || name === "tooltip" || name === "tabs" || name === "select" || name === "radio-group" || name === "switch" || manifest.effectiveAssets) await page.setViewportSize({ width: 1536, height: 900 })
 }
 try {
   await preparePage()
@@ -87,12 +86,8 @@ try {
       }
       await preparePage()
     }
-    if(name === "accordion" || name === "collapsible"){
-      cases.push(await verifyAccordionCase({page,c,manifestFile,url,repo,componentName:name}))
-      continue
-    }
-    if(name === "navigation-menu"){
-      cases.push(await verifyNavigationCase({page,c,manifestFile,url,repo}))
+    if(name === "collapsible"){
+      cases.push(await verifyCollapsibleCase({page,c,manifestFile,url}))
       continue
     }
     if (name === "dropdown-menu" || name === "context-menu" || (name === "menubar" && !["tests/reference/manifest.json","tests/reference/button-cjk/manifest.json"].includes(manifestFile))) {
@@ -147,29 +142,6 @@ try {
         else result.openDecodedRgbaSha256=sha(actual.data)
       }
       cases.push(result);continue
-    }
-    if (name === "hover-card") {
-      const params=new URLSearchParams({component:name,native:"1",text:c.text,wrapWidth:String(c.wrapWidth),scale:String(c.scale),x:String(c.x),y:String(c.y)})
-      await page.goto(`${url}?${params}`)
-      await page.addStyleTag({content:`html,body{background:${c.background}} #root{visibility:hidden}`})
-      const subject=page.locator('[data-slot="hover-card-content"]')
-      await expect(subject).toHaveAttribute("data-mc-hover-card-ready","true")
-      await expect(subject).toHaveAttribute("data-mc-hover-card-text-ready","true")
-      const painter=subject.locator('canvas[data-mc-tooltip-painted]')
-      await expect(painter).toHaveAttribute("data-mc-tooltip-painted","true")
-      await expect(painter).toHaveAttribute("data-mc-backdrop",[1,3,5].map(start=>parseInt(c.background.slice(start,start+2),16)).join(","))
-      await expect(painter).toHaveAttribute("data-mc-location",`${c.x*c.scale},${c.y*c.scale}`)
-      for(const line of await subject.locator('[data-mc-hover-card-unicode-ready]').all())await expect(line).toHaveAttribute("data-mc-hover-card-unicode-ready","true")
-      await page.mouse.move(0,0)
-      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
-      const bounds=await subject.boundingBox()
-      assert.equal(bounds.x,c.x*c.scale);assert.equal(bounds.y,c.y*c.scale)
-      const bytes=await readFile(resolveRepositoryPath(path.join(path.dirname(manifestFile),"captures",c.name)));assert.equal(sha(bytes),c.sha256)
-      const expected=PNG.sync.read(bytes),actual=PNG.sync.read(await subject.screenshot())
-      assert.deepEqual([actual.width,actual.height],[expected.width,expected.height])
-      assert.ok(actual.data.equals(expected.data),`Installed Hover Card pixels differ: ${c.name}`)
-      cases.push({name:c.name,mismatchedPixels:0,decodedRgbaSha256:sha(actual.data)})
-      continue
     }
     if (name === "popover") {
       const params=new URLSearchParams({component:"popover",native:"1",scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y)})

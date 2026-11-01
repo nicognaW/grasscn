@@ -13,7 +13,6 @@ export const generatedCode = [
   "apps/web/registry/ui/minecraft-disclosure-metrics.ts",
   "apps/web/registry/ui/minecraft-font.ts",
   "apps/web/registry/ui/minecraft-hotbar-rgba.ts",
-  "apps/web/registry/ui/minecraft-hover-card-atlas.ts",
   "apps/web/registry/ui/minecraft-input-assets.ts",
   "apps/web/registry/ui/minecraft-item-atlas.ts",
   "apps/web/registry/ui/minecraft-label-atlas.ts",

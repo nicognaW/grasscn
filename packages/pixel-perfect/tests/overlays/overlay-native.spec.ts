@@ -8,9 +8,9 @@ function compare(expected:PNG,actual:PNG){
  for(let i=0;i<expected.data.length;i+=4){const mismatch=!expected.data.subarray(i,i+4).equals(actual.data.subarray(i,i+4));mismatchedPixels+=Number(mismatch);diff.data.set(mismatch?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
  return {mismatchedPixels,diff}
 }
-for(const component of ["sheet","drawer","alert"]){
+for(const component of ["sheet","drawer"]){
  test(`${component} pixel comparator rejects a changed pixel`,()=>{const manifest=JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/card/manifest.json", pixelPerfectRoot),"utf8")),expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/card/captures/${manifest.cases[0].name}`, pixelPerfectRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
- for(const directory of component==="alert"?["card"]:["card","label"]){
+ for(const directory of ["card","label"]){
   const folder=`tests/reference/${directory}`,manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${folder}/manifest.json`, pixelPerfectRoot),"utf8"))
   test.describe(`${component} native constituents ${directory}`,()=>{
    test.describe.configure({mode:"parallel"})
@@ -21,8 +21,8 @@ for(const component of ["sheet","drawer","alert"]){
      if(c.label!=null)q.set("label",c.label);if(c.text!=null)q.set("text",c.text);if(c.wrapWidth!=null)q.set("wrapWidth",String(c.wrapWidth))
      await page.goto(`/?${q}`)
      const subject=page.locator("[data-subject]");await expect(subject).toBeVisible()
-     await expect(subject).toHaveAttribute("data-slot",component==="alert"?"alert":`${component}-${part==="surface"?"content":part}`)
-     await page.addStyleTag({content:`#root{visibility:hidden}[data-subject]{visibility:visible}[data-slot="${component}-overlay"]{visibility:hidden!important}${component==="alert"?"":`[data-slot="${component}-content"]{visibility:hidden}[data-subject]{visibility:visible}`}`})
+     await expect(subject).toHaveAttribute("data-slot",`${component}-${part==="surface"?"content":part}`)
+     await page.addStyleTag({content:`#root{visibility:hidden}[data-subject]{visibility:visible}[data-slot="${component}-overlay"]{visibility:hidden!important}[data-slot="${component}-content"]{visibility:hidden}[data-subject]{visibility:visible}`})
      await page.mouse.move(0,0)
      if(directory==="label"){await expect(subject).toHaveAttribute("data-mc-label-layout-ready","true");for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute("data-mc-label-ready","true")}
      await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))

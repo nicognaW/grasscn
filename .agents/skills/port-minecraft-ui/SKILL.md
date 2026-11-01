@@ -71,6 +71,8 @@ Render using the recovered rules. Use integer coordinate arithmetic and nearest-
 
 For text-entry primitives, default to `spellCheck={false}` and `autoCorrect="off"`, while preserving explicit consumer overrides. Native browser spelling/correction decorations must not paint over the game glyphs. Supply multiline demo values through JavaScript strings or expressions; quoted JSX attributes preserve literal backslash-n characters. Verify read-only and disabled demos as well as editable ones.
 
+Add styles that define component classes to the shared runtime stylesheet, `apps/web/registry/ui/minecraft-components.css`, imported by the website and test fixture. Load shared fonts from the component modules that need them so bundlers can deduplicate them. Check compiled CSS and relevant Base PPTs after changing stylesheet loading.
+
 Make the installed item self-contained: include required styles, metrics, and textures/fonts through supported registry files or embedded data. Consumer rendering must not depend on the developer's Minecraft path, test fixture, or a hidden external asset server. Update the registry item and generated JSON together.
 
 **Ready when:** the actual public component renders each agreed case, and all appearance resources are included in its installable registry payload.
