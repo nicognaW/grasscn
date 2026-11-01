@@ -123,7 +123,12 @@ const InputOTPSeparator = ({
   const { scale } = React.useContext(OTPStyle);
 
   return (
-    <div data-slot="input-otp-separator" role="separator" {...props}>
+    <div
+      data-slot="input-otp-separator"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputOTPSeparator's div separator and composition contract.
+      role="separator"
+      {...props}
+    >
       <MinecraftProse scale={scale}>{children}</MinecraftProse>
     </div>
   );

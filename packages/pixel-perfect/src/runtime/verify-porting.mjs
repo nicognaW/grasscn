@@ -266,10 +266,10 @@ const steps = [
       repoRoot,
     ],
   ],
-  ["primitives", [path.join(testRoot, "src/checks/check-primitives.mjs")]],
+  ["primitives", [path.join(testRoot, "src/checks/check-primitives.ts")]],
   [
     "registry-closure",
-    [path.join(testRoot, "src/checks/check-registry-closure.mjs")],
+    [path.join(testRoot, "src/checks/check-registry-closure.ts")],
   ],
   ["evidence", [path.join(pixelPerfectRoot, "src/runtime/check-map.mjs")]],
   [
@@ -294,7 +294,7 @@ if (suite === "all" || fullMode) {
     ["registry-build", [packageBin("shadcn", "shadcn", webRoot), "build"]],
     [
       "built-primitives",
-      [path.join(testRoot, "src/checks/check-primitives.mjs"), "--built"],
+      [path.join(testRoot, "src/checks/check-primitives.ts"), "--built"],
     ],
     [
       "preview-build",

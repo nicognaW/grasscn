@@ -9,6 +9,7 @@ import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 
 let bitmap: Promise<HTMLImageElement> | undefined;
 
+// oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 function fontImage() {
   return (bitmap ??= new Promise((resolve, reject) => {
     const image = new Image();

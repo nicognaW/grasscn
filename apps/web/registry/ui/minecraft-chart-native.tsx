@@ -27,6 +27,7 @@ const widthOf = (value: string) =>
   }, 0);
 
 const cssColor = (value: number) =>
+  // oxlint-disable-next-line no-bitwise -- CSS receives only the low 24 RGB bits of the native packed color.
   `#${(value & 0xff_ff_ff).toString(16).padStart(6, "0")}`;
 
 const NativeChartText = ({
@@ -48,9 +49,11 @@ const NativeChartText = ({
 
   const shade = shadow
     ? cssColor(
+        /* oxlint-disable no-bitwise -- Quarter the packed RGB bytes and reassemble the native chart text shadow color. */
         ((((color >> 16) & 255) >> 2) << 16) |
           ((((color >> 8) & 255) >> 2) << 8) |
           ((color & 255) >> 2)
+        /* oxlint-enable no-bitwise */
       )
     : "transparent";
 
@@ -305,6 +308,7 @@ export function chartProfilerColor(name: string) {
     hash = Math.trunc(Math.imul(hash, 31) + name.charCodeAt(i));
   }
 
+  // oxlint-disable-next-line no-bitwise -- The native profiler derives its packed RGB color with these exact hash masks.
   return cssColor(((hash & 0xaa_aa_aa) + 0x44_44_44) & 0xff_ff_ff);
 }
 
@@ -315,9 +319,11 @@ for (let i = 0; i < sin.length; i += 1) {
 }
 
 const nativeSin = (angle: number) =>
+  // oxlint-disable-next-line no-bitwise -- Native trigonometry table addresses wrap to their low 16 bits.
   sin[Math.trunc(angle * 10_430.378350470453) & 65_535];
 
 const nativeCos = (angle: number) =>
+  // oxlint-disable-next-line no-bitwise -- Native trigonometry table addresses wrap to their low 16 bits after the cosine offset.
   sin[Math.trunc(angle * 10_430.378350470453 + 16_384) & 65_535];
 
 function paintProfiler(
@@ -646,6 +652,7 @@ const ChartProfilerFrame = ({
         />
         {data.map((item, i) => {
           const rgb = chartColorChannels(item.fill, canvas.current);
+          // oxlint-disable-next-line no-bitwise -- Pack the resolved chart RGB bytes into the native color word.
           const color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 
           const local = percent(item.percentage);
