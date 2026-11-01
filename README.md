@@ -30,6 +30,8 @@ export default function Example() {
 }
 ```
 
+![Grasscn Minecraft button labeled Back to Game](./docs/images/back-to-game.png)
+
 ### Custom folder
 
 To install into a separate folder, add `--path`:
