@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import {readFile,writeFile} from 'node:fs/promises'
 import {inflateRawSync} from 'node:zlib'
 import {createHash} from 'node:crypto'

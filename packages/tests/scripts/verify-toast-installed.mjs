@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import{chromium,expect}from"@playwright/test"
 import fs from"node:fs"
 import path from"node:path"

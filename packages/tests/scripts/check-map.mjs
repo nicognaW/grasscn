@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import assert from "node:assert/strict"
 import { createHash } from "node:crypto"
 import { readFile } from "node:fs/promises"
@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url"
 import { PNG } from "pngjs"
 
 const root = repoRoot
-const json = async file => JSON.parse(await readFile(resolveRepositoryPath(path.join( file)), "utf8"))
+const json = async file => JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"))
 const args = process.argv.slice(2)
 const mapArg = args.indexOf("--map")
 const map = await json(mapArg < 0 ? "registry/minecraft-map.json" : args[mapArg + 1])
@@ -101,17 +101,17 @@ for (const component of map.components) {
     assert.ok(manifest.cases.length, `${component.name}: empty reference matrix`)
     if (manifest.sourceDirectory) {
       const source = path.join(path.dirname(manifestFile), manifest.sourceDirectory, "ControlsReferenceMain.java")
-      assert.equal(digest(await readFile(resolveRepositoryPath(path.join( source)))), manifest.captureSourceSha256, `Native harness snapshot integrity: ${source}`)
+      assert.equal(digest(await readFile(resolveRepositoryPath(source))), manifest.captureSourceSha256, `Native harness snapshot integrity: ${source}`)
       const casesFile = path.join(path.dirname(manifestFile), "cases.json")
-      assert.equal(digest(await readFile(resolveRepositoryPath(path.join( casesFile)))), manifest.caseDefinitionSha256, `Native case definition integrity: ${casesFile}`)
+      assert.equal(digest(await readFile(resolveRepositoryPath(casesFile))), manifest.caseDefinitionSha256, `Native case definition integrity: ${casesFile}`)
     }
     for (const reference of manifest.cases) {
       const file = path.join(path.dirname(manifestFile), "captures", reference.name)
-      assert.equal(digest(await readFile(resolveRepositoryPath(path.join( file)))), reference.sha256, `Reference integrity: ${file}`)
+      assert.equal(digest(await readFile(resolveRepositoryPath(file))), reference.sha256, `Reference integrity: ${file}`)
     }
     if (manifest.framesDirectory) for (const frame of manifest.frames) {
       const file = path.join(path.dirname(manifestFile), manifest.framesDirectory, frame.name)
-      assert.equal(digest(await readFile(resolveRepositoryPath(path.join( file)))), frame.sha256, `Full-frame integrity: ${file}`)
+      assert.equal(digest(await readFile(resolveRepositoryPath(file))), frame.sha256, `Full-frame integrity: ${file}`)
     }
     if (component.pixelVerification.status === "verified-declared-cases") {
       const primary = manifestFile === component.pixelVerification.manifest
@@ -127,7 +127,7 @@ for (const component of map.components) {
       for (const file of report.files) {
         const sourcePath=file.sourcePath??path.posix.join("registry/ui",file.path)
         assert.ok(registry.items.find(item=>item.name===component.implementation.registryItem).files.some(entry=>entry.path===sourcePath),`Installed proof source is not part of the item: ${sourcePath}`)
-        assert.equal(digest(await readFile(resolveRepositoryPath(path.join(sourcePath)))), file.sourceSha256, `Installed proof is stale: ${sourcePath}`)
+        assert.equal(digest(await readFile(resolveRepositoryPath(sourcePath))), file.sourceSha256, `Installed proof is stale: ${sourcePath}`)
       }
       for (const reference of manifest.cases) {
         const installed = report.cases.find(c => c.name === reference.name)
@@ -140,7 +140,7 @@ for (const component of map.components) {
           assert.equal(installed[reuse.reportField], repeated.decodedRgbaSha256, `${component.name}: missing or unequal ${reuse.reportField}: ${reference.name}`)
         }
         const referenceFile = path.join(path.dirname(manifestFile), "captures", reference.name)
-        assert.equal(digest(PNG.sync.read(await readFile(resolveRepositoryPath(path.join( referenceFile)))).data), repeated.decodedRgbaSha256)
+        assert.equal(digest(PNG.sync.read(await readFile(resolveRepositoryPath(referenceFile))).data), repeated.decodedRgbaSha256)
         assert.equal(repeated.runOnePngSha256, reference.sha256)
         assert.equal(repeated.runTwoPngSha256, reference.sha256)
       }
@@ -169,16 +169,16 @@ for (const component of map.components) {
       }
       if (provenance.glyphAtlasCaptureManifest) {
         const observationPath = path.join(path.dirname(manifestFile), provenance.glyphAtlasCaptureManifest)
-        assert.equal(digest(await readFile(resolveRepositoryPath(path.join( observationPath)))), provenance.glyphAtlasCaptureManifestSha256)
+        assert.equal(digest(await readFile(resolveRepositoryPath(observationPath))), provenance.glyphAtlasCaptureManifestSha256)
         const observation = await json(observationPath)
         const observedAtlasPath = path.join(path.dirname(manifestFile), provenance.glyphAtlasObservationFile)
-        assert.equal(digest(await readFile(resolveRepositoryPath(path.join( observedAtlasPath)))), provenance.glyphAtlasSha256)
+        assert.equal(digest(await readFile(resolveRepositoryPath(observedAtlasPath))), provenance.glyphAtlasSha256)
         assert.equal(observation.captureSourceSha256, provenance.glyphProbeSourceSha256)
         assert.equal(observation.sourceJarSha256, manifest.sourceJarSha256)
         assert.equal(observation.caseDefinitionSha256, manifest.caseDefinitionSha256)
         for (const frame of observation.frames) {
           const framePath = path.join(path.dirname(observationPath), observation.framesDirectory, frame.name)
-          assert.equal(digest(await readFile(resolveRepositoryPath(path.join( framePath)))), frame.sha256)
+          assert.equal(digest(await readFile(resolveRepositoryPath(framePath))), frame.sha256)
         }
         for (const reference of manifest.cases) {
           const observed = observation.cases.find(c => c.name === reference.name)

@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import {installedRegistryFile} from "./installed-registry-file.mjs"
 // The CLI may convert LF/CRLF on Windows; raw source and installed hashes remain recorded.
 import assert from "node:assert/strict"
@@ -14,7 +14,7 @@ import {verifyAccordionCase} from "./verify-accordion-installed.mjs"
 const [consumerDir, name, url, uiDirectory = "src/components/ui", referenceManifest] = process.argv.slice(2)
 if (!consumerDir || !name || !url) throw new Error("Usage: bun scripts/verify-installed.mjs <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]")
 const repo = repoRoot
-const json = async file => JSON.parse(await readFile(resolveRepositoryPath(path.join( file)), "utf8"))
+const json = async file => JSON.parse(await readFile(resolveRepositoryPath(file), "utf8"))
 const map = await json("registry/minecraft-map.json")
 const component = map.components.find(c => c.name === name)
 const item = (await json("registry.json")).items.find(item => item.name === name)
@@ -356,6 +356,6 @@ try {
   const report = { command: `shadcn add http://localhost:5173/r/${name}.json --yes --overwrite`, consumer: "separate initialized shadcn Vite/React consumer", consumerRsc: consumerSettings.rsc, browser: browserVersion, caseIsolation: "Fresh page/context every64 cases; browser restarted every256 cases", devicePixelRatio: 1, sourceJarSha256: manifest.sourceJarSha256, files, cases, pageErrors }
   const reportFile=manifestFile===component.pixelVerification.manifest && component.pixelVerification.installationReport
     ? component.pixelVerification.installationReport : component.pixelVerification.additionalInstallationReports?.[manifestFile] ?? path.join(path.dirname(manifestFile), "installation-verification.json")
-  await writeFile(resolveRepositoryPath(path.join( reportFile)), JSON.stringify(report, null, 2) + "\n")
+  await writeFile(resolveRepositoryPath(reportFile), JSON.stringify(report, null, 2) + "\n")
   console.log(`Installed ${name}: ${cases.length} native cases match exactly; ${files.length} sources match permitted CLI transforms; no browser errors`)
 } finally { await browser.close() }

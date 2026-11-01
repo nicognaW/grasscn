@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import {installedRegistryFile} from "./installed-registry-file.mjs"
 import {installedCaseCache,installedConsumerIdentity} from './installed-case-cache.mjs'
 // The CLI may convert LF/CRLF on Windows; raw source and installed hashes remain recorded.

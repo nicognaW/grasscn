@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import assert from "node:assert/strict"
 import {fileURLToPath} from "node:url"
 import {chromium,expect} from "@playwright/test"

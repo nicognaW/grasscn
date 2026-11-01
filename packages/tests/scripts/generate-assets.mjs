@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {resolveRepositoryPath} from '../../../workspace-paths.mjs'
 // Input: unchanged PNGs and font/include/default.json extracted from the supplied game JAR.
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"

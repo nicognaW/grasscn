@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import { spawnSync } from "node:child_process"
 import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"

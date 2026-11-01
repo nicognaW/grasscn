@@ -42,7 +42,7 @@ async function identity() {
   const hash = createHash('sha256')
   for (const name of names) {
     let bytes
-    try { bytes = await readFile(resolveRepositoryPath(path.join(name))) } catch (error) { if(error.code !== 'ENOENT') throw error; bytes = Buffer.from('<deleted>') }
+    try { bytes = await readFile(resolveRepositoryPath(name)) } catch (error) { if(error.code !== 'ENOENT') throw error; bytes = Buffer.from('<deleted>') }
     hash.update(name).update('\0').update(createHash('sha256').update(bytes).digest()).update('\0')
   }
   return {commit:git(['rev-parse','HEAD']), treeSha256:hash.digest('hex'), status:git(['status','--porcelain=v1'])}

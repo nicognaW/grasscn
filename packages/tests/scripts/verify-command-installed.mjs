@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
 import assert from "node:assert/strict"
 import path from "node:path"
 import {readFile,writeFile,mkdir} from "node:fs/promises"

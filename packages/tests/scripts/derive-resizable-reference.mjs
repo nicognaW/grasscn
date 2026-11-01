@@ -1,4 +1,4 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import{createHash}from'node:crypto';import{PNG}from'pngjs';import{fileURLToPath}from'node:url';
 const repo=repoRoot,primary=resolveRepositoryPath(path.join('tests/reference/scroll-area')),repeat=path.resolve(process.argv[2]??'work/scroll-area-repeat'),dest=resolveRepositoryPath(path.join('tests/reference/resizable')),manifest=JSON.parse(fs.readFileSync(path.join(primary,'manifest.json'))),again=JSON.parse(fs.readFileSync(path.join(repeat,'manifest.json'))),hash=b=>createHash('sha256').update(b).digest('hex');fs.mkdirSync(path.join(dest,'captures'),{recursive:true});fs.mkdirSync(path.join(dest,'repeat-crops'),{recursive:true});const cases=[],repeated=[],frames=[],derivations=[];
 assert.equal(manifest.sourceJarSha256,again.sourceJarSha256);assert.equal(manifest.captureSourceSha256,again.captureSourceSha256);assert.equal(manifest.caseDefinitionSha256,again.caseDefinitionSha256);
