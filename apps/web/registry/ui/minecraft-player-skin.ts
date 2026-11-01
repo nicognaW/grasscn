@@ -19,8 +19,11 @@ export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
     [46, 52, 2, 12],
   ]) {
     for (let row = y; row < y + height; row += 1) {
-      for (let column = x; column < x + width; column++)
-        if (data[(row * 64 + column) * 4 + 3] !== 0) return "wide";
+      for (let column = x; column < x + width; column++) {
+        if (data[(row * 64 + column) * 4 + 3] !== 0) {
+          return "wide";
+        }
+      }
     }
   }
 

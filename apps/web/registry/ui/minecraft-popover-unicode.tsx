@@ -124,7 +124,7 @@ export const PopoverUnicodeLine = ({
               context.fillStyle = shadow ? "#3f3f3f" : "#ffffff";
 
               if (glyph.char !== " ") {
-                for (let copy = 0; copy < (bold ? 2 : 1); copy++)
+                for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
                   supported =
                     paintPopoverGlyph(
                       context,
@@ -139,6 +139,7 @@ export const PopoverUnicodeLine = ({
                       scale,
                       bold
                     ) && supported;
+                }
               }
             }
 

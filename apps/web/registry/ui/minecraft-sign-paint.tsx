@@ -132,10 +132,13 @@ export const MinecraftSignPaint = ({
                 j = (y * width + x) * 4,
                 alpha = source.data[i + 3] / 255;
 
-              if (!alpha) continue;
+              if (!alpha) {
+                continue;
+              }
 
-              for (let k = 0; k < 3; k++)
+              for (let k = 0; k < 3; k++) {
                 output.data[j + k] = source.data[i + k];
+              }
               output.data[j + 3] = source.data[i + 3];
             }
           }
