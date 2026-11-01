@@ -6,11 +6,9 @@ import { readFileSync } from "node:fs";
 import { referenceFile } from "@grasscn/tests/paths";
 import { splashMotion, splashTransform } from "@grasscn/web/splash-motion";
 
-const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
+import provenance from "../../fixtures/reference/title-splash/provenance.json";
 
-const provenance = JSON.parse(
-  readFileSync(referenceFile("title-splash/provenance.json"), "utf-8")
-);
+const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
 
 const rows = bytes
   .toString("utf-8")
@@ -21,7 +19,7 @@ const rows = bytes
 
 const buffer = new DataView(new ArrayBuffer(4));
 
-const bits = (value) => {
+const bits = (value: number) => {
   buffer.setFloat32(0, value);
 
   return buffer.getInt32(0);

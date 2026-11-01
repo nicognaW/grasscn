@@ -20,15 +20,13 @@ type MessageProps = React.ComponentProps<"div"> & {
   kind?: "chat" | "system";
 };
 
-const MessageGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-group"
-      className={cn(`mc-message-group`, className)}
-      {...props}
-    />
-  );
-};
+const MessageGroup = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-group"
+    className={cn(`mc-message-group`, className)}
+    {...props}
+  />
+);
 
 const Message = ({
   className,
@@ -70,15 +68,13 @@ const Message = ({
 const MessageAvatar = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-avatar"
-      className={cn(`mc-message-avatar`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-avatar"
+    className={cn(`mc-message-avatar`, className)}
+    {...props}
+  />
+);
 
 function isChatInline(value: React.ReactNode): boolean {
   if (
@@ -192,33 +188,29 @@ const MessageHeader = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-header"
-      className={cn(`mc-message-header`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-header"
+    className={cn(`mc-message-header`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 const MessageFooter = ({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="message-footer"
-      className={cn(`mc-message-footer`, className)}
-      {...props}
-    >
-      <ChatChildren>{children}</ChatChildren>
-    </div>
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="message-footer"
+    className={cn(`mc-message-footer`, className)}
+    {...props}
+  >
+    <ChatChildren>{children}</ChatChildren>
+  </div>
+);
 
 export {
   MessageGroup,

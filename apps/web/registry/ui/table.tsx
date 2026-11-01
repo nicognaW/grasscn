@@ -94,81 +94,71 @@ const Table = ({
   ...props
 }: React.ComponentProps<"table"> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <TableScale.Provider value={scale}>
-      <div
-        data-slot="table-container"
-        className="mc-table-container"
-        style={{ "--mc-scale": scale } as React.CSSProperties}
-      >
-        <table
-          data-slot="table"
-          className={cn(`mc-table`, className)}
-          style={minecraftStyle(
-            style,
-            (__style) =>
-              ({
-                "--mc-scale": scale,
-                "--mc-table-background":
-                  minecraftSelectAssets.menu_list_background,
-                "--mc-table-footer": minecraftSelectAssets.footer_separator,
-                "--mc-table-header": minecraftSelectAssets.header_separator,
-                ...__style,
-              }) as React.CSSProperties
-          )}
-          {...props}
-        />
-      </div>
-    </TableScale.Provider>
-  );
-};
+}) => (
+  <TableScale.Provider value={scale}>
+    <div
+      data-slot="table-container"
+      className="mc-table-container"
+      style={{ "--mc-scale": scale } as React.CSSProperties}
+    >
+      <table
+        data-slot="table"
+        className={cn(`mc-table`, className)}
+        style={minecraftStyle(
+          style,
+          (__style) =>
+            ({
+              "--mc-scale": scale,
+              "--mc-table-background":
+                minecraftSelectAssets.menu_list_background,
+              "--mc-table-footer": minecraftSelectAssets.footer_separator,
+              "--mc-table-header": minecraftSelectAssets.header_separator,
+              ...__style,
+            }) as React.CSSProperties
+        )}
+        {...props}
+      />
+    </div>
+  </TableScale.Provider>
+);
 
 const TableHeader = ({
   className,
   ...props
-}: React.ComponentProps<"thead">) => {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cn(`mc-table-header`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"thead">) => (
+  <thead
+    data-slot="table-header"
+    className={cn(`mc-table-header`, className)}
+    {...props}
+  />
+);
 
-const TableBody = ({ className, ...props }: React.ComponentProps<"tbody">) => {
-  return (
-    <tbody
-      data-slot="table-body"
-      className={cn(`mc-table-body`, className)}
-      {...props}
-    />
-  );
-};
+const TableBody = ({ className, ...props }: React.ComponentProps<"tbody">) => (
+  <tbody
+    data-slot="table-body"
+    className={cn(`mc-table-body`, className)}
+    {...props}
+  />
+);
 
 const TableFooter = ({
   className,
   ...props
-}: React.ComponentProps<"tfoot">) => {
-  return (
-    <tfoot
-      data-slot="table-footer"
-      className={cn(`mc-table-footer`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"tfoot">) => (
+  <tfoot
+    data-slot="table-footer"
+    className={cn(`mc-table-footer`, className)}
+    {...props}
+  />
+);
 
-const TableRow = ({ className, ...props }: React.ComponentProps<"tr">) => {
-  return (
-    <tr
-      data-slot="table-row"
-      className={cn(`mc-table-row`, className)}
-      {...props}
-    />
-  );
-};
+const TableRow = ({ className, ...props }: React.ComponentProps<"tr">) => (
+  <tr
+    data-slot="table-row"
+    className={cn(`mc-table-row`, className)}
+    {...props}
+  />
+);
 
 const TableHead = ({
   className,
@@ -176,20 +166,18 @@ const TableHead = ({
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"th"> & TextLayout) => {
-  return (
-    <th
-      data-slot="table-head"
-      scope="col"
-      className={cn(`mc-table-head`, className)}
-      {...props}
-    >
-      <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
-        {children}
-      </TableText>
-    </th>
-  );
-};
+}: React.ComponentProps<"th"> & TextLayout) => (
+  <th
+    data-slot="table-head"
+    scope="col"
+    className={cn(`mc-table-head`, className)}
+    {...props}
+  >
+    <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
+      {children}
+    </TableText>
+  </th>
+);
 
 const TableCell = ({
   className,
@@ -197,19 +185,17 @@ const TableCell = ({
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"td"> & TextLayout) => {
-  return (
-    <td
-      data-slot="table-cell"
-      className={cn(`mc-table-cell`, className)}
-      {...props}
-    >
-      <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
-        {children}
-      </TableText>
-    </td>
-  );
-};
+}: React.ComponentProps<"td"> & TextLayout) => (
+  <td
+    data-slot="table-cell"
+    className={cn(`mc-table-cell`, className)}
+    {...props}
+  >
+    <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
+      {children}
+    </TableText>
+  </td>
+);
 
 const TableCaption = ({
   className,
@@ -217,19 +203,17 @@ const TableCaption = ({
   maxTextWidth,
   textAlign,
   ...props
-}: React.ComponentProps<"caption"> & TextLayout) => {
-  return (
-    <caption
-      data-slot="table-caption"
-      className={cn(`mc-table-caption`, className)}
-      {...props}
-    >
-      <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
-        {children}
-      </TableText>
-    </caption>
-  );
-};
+}: React.ComponentProps<"caption"> & TextLayout) => (
+  <caption
+    data-slot="table-caption"
+    className={cn(`mc-table-caption`, className)}
+    {...props}
+  >
+    <TableText maxTextWidth={maxTextWidth} textAlign={textAlign}>
+      {children}
+    </TableText>
+  </caption>
+);
 
 export {
   Table,

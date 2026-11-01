@@ -91,13 +91,9 @@ const SignBoard = ({
   );
 };
 
-const Sign = (props: SignProps) => {
-  return <SignBoard {...props} />;
-};
+const Sign = (props: SignProps) => <SignBoard {...props} />;
 
-const HangingSign = (props: SignProps) => {
-  return <SignBoard {...props} hanging />;
-};
+const HangingSign = (props: SignProps) => <SignBoard {...props} hanging />;
 
 export { Sign, HangingSign };
 

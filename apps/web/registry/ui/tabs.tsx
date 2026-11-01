@@ -234,15 +234,13 @@ const TabsList = ({
   );
 };
 
-const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => {
-  return (
-    <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
-      {assets.sprites[name].pieces.map((image, index) => (
-        <i key={index} style={{ backgroundImage: image }} />
-      ))}
-    </span>
-  );
-};
+const TabSurface = ({ name }: { name: keyof typeof assets.sprites }) => (
+  <span className="mc-tab-surface" data-sprite={name} aria-hidden="true">
+    {assets.sprites[name].pieces.map((image, index) => (
+      <i key={index} style={{ backgroundImage: image }} />
+    ))}
+  </span>
+);
 
 type TabsTriggerProps = MinecraftProps<typeof TabsPrimitive.Tab>;
 
@@ -385,19 +383,17 @@ const TabsContent = ({
   className,
   style,
   ...props
-}: MinecraftProps<typeof TabsPrimitive.Panel>) => {
-  return (
-    <TabsPrimitive.Panel
-      data-slot="tabs-content"
-      className={cn(`mc-tabs-content`, className)}
-      style={minecraftStyle(style, (__style) => ({
-        backgroundImage: assets.textures.menu_background,
-        ...__style,
-      }))}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof TabsPrimitive.Panel>) => (
+  <TabsPrimitive.Panel
+    data-slot="tabs-content"
+    className={cn(`mc-tabs-content`, className)}
+    style={minecraftStyle(style, (__style) => ({
+      backgroundImage: assets.textures.menu_background,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
 export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants };
 

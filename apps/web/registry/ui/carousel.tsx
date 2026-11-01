@@ -186,17 +186,15 @@ const CarouselContent = ({
   );
 };
 
-const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      role="group"
-      aria-roledescription="slide"
-      data-slot="carousel-item"
-      className={cn(`mc-carousel-item`, className)}
-      {...props}
-    />
-  );
-};
+const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    role="group"
+    aria-roledescription="slide"
+    data-slot="carousel-item"
+    className={cn(`mc-carousel-item`, className)}
+    {...props}
+  />
+);
 
 type CarouselArrowProps = React.ComponentProps<"button"> & {
   scale?: 1 | 2 | 3;
@@ -265,13 +263,13 @@ const CarouselArrow = ({
   );
 };
 
-const CarouselPrevious = (props: CarouselArrowProps) => {
-  return <CarouselArrow direction="backward" {...props} />;
-};
+const CarouselPrevious = (props: CarouselArrowProps) => (
+  <CarouselArrow direction="backward" {...props} />
+);
 
-const CarouselNext = (props: CarouselArrowProps) => {
-  return <CarouselArrow direction="forward" {...props} />;
-};
+const CarouselNext = (props: CarouselArrowProps) => (
+  <CarouselArrow direction="forward" {...props} />
+);
 
 export {
   Carousel,

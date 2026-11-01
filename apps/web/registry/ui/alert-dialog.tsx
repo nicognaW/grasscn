@@ -56,9 +56,9 @@ const AlertDialogTrigger = ({
   );
 };
 
-const AlertDialogPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal {...props} />;
-};
+const AlertDialogPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal {...props} />
+);
 
 const AlertDialogOverlay = ({
   className,
@@ -344,27 +344,23 @@ const AlertDialogHeader = ({
   );
 };
 
-const AlertDialogMedia = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="alert-dialog-media"
-      data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-media`, className)}
-      {...props}
-    />
-  );
-};
+const AlertDialogMedia = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="alert-dialog-media"
+    data-mc-confirmation-item="true"
+    className={cn(`mc-alert-dialog-media`, className)}
+    {...props}
+  />
+);
 
-const AlertDialogFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="alert-dialog-footer"
-      data-mc-confirmation-item="true"
-      className={cn(`mc-alert-dialog-footer`, className)}
-      {...props}
-    />
-  );
-};
+const AlertDialogFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="alert-dialog-footer"
+    data-mc-confirmation-item="true"
+    className={cn(`mc-alert-dialog-footer`, className)}
+    {...props}
+  />
+);
 
 const AlertDialogTitle = ({
   children,

@@ -30,48 +30,46 @@ export const ProfilerChartExample = ({
   rootName?: string;
   globalPercentage?: number;
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ChartContainer
-      {...props}
-      config={{ [dataKey]: { label: dataKey } }}
-      scale={scale}
-      style={{
-        aspectRatio: "auto",
-        background: "rgba(80,80,80,0.5647058823529412)",
-        height: (139 + data.length * 9) * scale,
-        position: "relative",
-        width: 270 * scale,
-        ...style,
-      }}
+}) => (
+  <ChartContainer
+    {...props}
+    config={{ [dataKey]: { label: dataKey } }}
+    scale={scale}
+    style={{
+      aspectRatio: "auto",
+      background: "rgba(80,80,80,0.5647058823529412)",
+      height: (139 + data.length * 9) * scale,
+      position: "relative",
+      width: 270 * scale,
+      ...style,
+    }}
+  >
+    <PieChart
+      accessibilityLayer
+      aria-label={ariaLabel}
+      margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
     >
-      <PieChart
-        accessibilityLayer
-        aria-label={ariaLabel}
-        margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
+      <Pie
+        data={data}
+        dataKey={dataKey}
+        nameKey={nameKey}
+        cx={135 * scale}
+        cy={67 * scale}
+        outerRadius={105 * scale}
+        startAngle={-90}
+        endAngle={270}
+        isAnimationActive={false}
+        shape={ChartProfilerSector}
       >
-        <Pie
-          data={data}
-          dataKey={dataKey}
-          nameKey={nameKey}
-          cx={135 * scale}
-          cy={67 * scale}
-          outerRadius={105 * scale}
-          startAngle={-90}
-          endAngle={270}
-          isAnimationActive={false}
-          shape={ChartProfilerSector}
-        >
-          {data.map((row, index) => (
-            <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
-          ))}
-        </Pie>
-        <ChartProfilerFrame
-          rootName={rootName}
-          globalPercentage={globalPercentage}
-        />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-      </PieChart>
-    </ChartContainer>
-  );
-};
+        {data.map((row, index) => (
+          <Cell key={index} fill={chartProfilerColor(String(row[nameKey]))} />
+        ))}
+      </Pie>
+      <ChartProfilerFrame
+        rootName={rootName}
+        globalPercentage={globalPercentage}
+      />
+      <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+    </PieChart>
+  </ChartContainer>
+);

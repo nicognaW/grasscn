@@ -547,15 +547,13 @@ const SidebarRail = ({
   );
 };
 
-const SidebarInset = ({ className, ...props }: MinecraftProps<"main">) => {
-  return (
-    <main
-      data-slot="sidebar-inset"
-      className={cn(`mc-sidebar-inset`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarInset = ({ className, ...props }: MinecraftProps<"main">) => (
+  <main
+    data-slot="sidebar-inset"
+    className={cn(`mc-sidebar-inset`, className)}
+    {...props}
+  />
+);
 
 const SidebarInput = ({
   className,
@@ -593,27 +591,23 @@ const SidebarSeparator = ({
   );
 };
 
-const SidebarHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sidebar-header"
-      data-sidebar="header"
-      className={cn(`mc-sidebar-header`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sidebar-header"
+    data-sidebar="header"
+    className={cn(`mc-sidebar-header`, className)}
+    {...props}
+  />
+);
 
-const SidebarFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sidebar-footer"
-      data-sidebar="footer"
-      className={cn(`mc-sidebar-footer`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sidebar-footer"
+    data-sidebar="footer"
+    className={cn(`mc-sidebar-footer`, className)}
+    {...props}
+  />
+);
 
 const SidebarContent = ({
   className,
@@ -649,30 +643,26 @@ const SidebarContent = ({
   );
 };
 
-const SidebarGroup = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sidebar-group"
-      data-sidebar="group"
-      className={cn(`mc-sidebar-group`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarGroup = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="sidebar-group"
+    data-sidebar="group"
+    className={cn(`mc-sidebar-group`, className)}
+    {...props}
+  />
+);
 
 const SidebarGroupContent = ({
   className,
   ...props
-}: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="sidebar-group-content"
-      data-sidebar="group-content"
-      className={cn(`mc-sidebar-group-content`, className)}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<"div">) => (
+  <div
+    data-slot="sidebar-group-content"
+    data-sidebar="group-content"
+    className={cn(`mc-sidebar-group-content`, className)}
+    {...props}
+  />
+);
 
 type SidebarLabelProps = MinecraftPolymorphicProps<"div"> & {
   maxWidth?: number;
@@ -740,27 +730,23 @@ const SidebarGroupAction = ({
   );
 };
 
-const SidebarMenu = ({ className, ...props }: MinecraftProps<"ul">) => {
-  return (
-    <ul
-      data-slot="sidebar-menu"
-      data-sidebar="menu"
-      className={cn(`mc-sidebar-menu`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarMenu = ({ className, ...props }: MinecraftProps<"ul">) => (
+  <ul
+    data-slot="sidebar-menu"
+    data-sidebar="menu"
+    className={cn(`mc-sidebar-menu`, className)}
+    {...props}
+  />
+);
 
-const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => {
-  return (
-    <li
-      data-slot="sidebar-menu-item"
-      data-sidebar="menu-item"
-      className={cn(`mc-sidebar-menu-item`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => (
+  <li
+    data-slot="sidebar-menu-item"
+    data-sidebar="menu-item"
+    className={cn(`mc-sidebar-menu-item`, className)}
+    {...props}
+  />
+);
 
 function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
@@ -975,27 +961,23 @@ const SidebarMenuSkeleton = ({
   );
 };
 
-const SidebarMenuSub = ({ className, ...props }: MinecraftProps<"ul">) => {
-  return (
-    <ul
-      data-slot="sidebar-menu-sub"
-      data-sidebar="menu-sub"
-      className={cn(`mc-sidebar-menu-sub`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarMenuSub = ({ className, ...props }: MinecraftProps<"ul">) => (
+  <ul
+    data-slot="sidebar-menu-sub"
+    data-sidebar="menu-sub"
+    className={cn(`mc-sidebar-menu-sub`, className)}
+    {...props}
+  />
+);
 
-const SidebarMenuSubItem = ({ className, ...props }: MinecraftProps<"li">) => {
-  return (
-    <li
-      data-slot="sidebar-menu-sub-item"
-      data-sidebar="menu-sub-item"
-      className={cn(`mc-sidebar-menu-sub-item`, className)}
-      {...props}
-    />
-  );
-};
+const SidebarMenuSubItem = ({ className, ...props }: MinecraftProps<"li">) => (
+  <li
+    data-slot="sidebar-menu-sub-item"
+    data-sidebar="menu-sub-item"
+    className={cn(`mc-sidebar-menu-sub-item`, className)}
+    {...props}
+  />
+);
 
 const SidebarMenuSubButton = ({
   render,
@@ -1007,22 +989,20 @@ const SidebarMenuSubButton = ({
 }: MinecraftPolymorphicProps<"a"> & {
   isActive?: boolean;
   size?: "default";
-}) => {
-  return (
-    <SidebarMenuButton
-      {...(props as SidebarMenuButtonProps)}
-      render={render ?? <a />}
-      isActive={isActive}
-      size={size}
-      aria-disabled={props["aria-disabled"]}
-      data-slot="sidebar-menu-sub-button"
-      data-sidebar="menu-sub-button"
-      className={cn(`mc-sidebar-menu-sub-button`, className)}
-    >
-      {children}
-    </SidebarMenuButton>
-  );
-};
+}) => (
+  <SidebarMenuButton
+    {...(props as SidebarMenuButtonProps)}
+    render={render ?? <a />}
+    isActive={isActive}
+    size={size}
+    aria-disabled={props["aria-disabled"]}
+    data-slot="sidebar-menu-sub-button"
+    data-sidebar="menu-sub-button"
+    className={cn(`mc-sidebar-menu-sub-button`, className)}
+  >
+    {children}
+  </SidebarMenuButton>
+);
 
 export {
   Sidebar,

@@ -18,15 +18,13 @@ import { Separator } from "./separator";
 const FieldSet = ({
   className,
   ...props
-}: React.ComponentProps<"fieldset">) => {
-  return (
-    <fieldset
-      data-slot="field-set"
-      className={cn("mc-field-set", className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"fieldset">) => (
+  <fieldset
+    data-slot="field-set"
+    className={cn("mc-field-set", className)}
+    {...props}
+  />
+);
 
 const FieldLegend = ({
   className,
@@ -34,27 +32,23 @@ const FieldLegend = ({
   ...props
 }: MinecraftProseProps & {
   variant?: "legend" | "label";
-}) => {
-  return (
-    <MinecraftProse
-      as="legend"
-      data-slot="field-legend"
-      data-variant={variant}
-      className={cn("mc-field-legend", className)}
-      {...props}
-    />
-  );
-};
+}) => (
+  <MinecraftProse
+    as="legend"
+    data-slot="field-legend"
+    data-variant={variant}
+    className={cn("mc-field-legend", className)}
+    {...props}
+  />
+);
 
-const FieldGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="field-group"
-      className={cn("mc-field-group", className)}
-      {...props}
-    />
-  );
-};
+const FieldGroup = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="field-group"
+    className={cn("mc-field-group", className)}
+    {...props}
+  />
+);
 
 const fieldVariants = cva("mc-field", {
   defaultVariants: { orientation: "vertical" },
@@ -71,62 +65,52 @@ const Field = ({
   className,
   orientation = "vertical",
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) => {
-  return (
-    <div
-      role="group"
-      data-slot="field"
-      data-orientation={orientation}
-      className={cn(fieldVariants({ orientation }), className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) => (
+  <div
+    role="group"
+    data-slot="field"
+    data-orientation={orientation}
+    className={cn(fieldVariants({ orientation }), className)}
+    {...props}
+  />
+);
 
-const FieldContent = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="field-content"
-      className={cn("mc-field-content", className)}
-      {...props}
-    />
-  );
-};
+const FieldContent = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="field-content"
+    className={cn("mc-field-content", className)}
+    {...props}
+  />
+);
 
 const FieldLabel = ({
   className,
   ...props
-}: React.ComponentProps<typeof Label>) => {
-  return (
-    <Label
-      data-slot="field-label"
-      className={cn("mc-field-label", className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Label>) => (
+  <Label
+    data-slot="field-label"
+    className={cn("mc-field-label", className)}
+    {...props}
+  />
+);
 
-const FieldTitle = ({ className, ...props }: MinecraftProseProps) => {
-  return (
-    <MinecraftProse
-      as="div"
-      data-slot="field-label"
-      className={cn("mc-field-label", className)}
-      {...props}
-    />
-  );
-};
+const FieldTitle = ({ className, ...props }: MinecraftProseProps) => (
+  <MinecraftProse
+    as="div"
+    data-slot="field-label"
+    className={cn("mc-field-label", className)}
+    {...props}
+  />
+);
 
-const FieldDescription = ({ className, ...props }: MinecraftProseProps) => {
-  return (
-    <MinecraftProse
-      as="p"
-      data-slot="field-description"
-      className={cn("mc-field-description", className)}
-      {...props}
-    />
-  );
-};
+const FieldDescription = ({ className, ...props }: MinecraftProseProps) => (
+  <MinecraftProse
+    as="p"
+    data-slot="field-description"
+    className={cn("mc-field-description", className)}
+    {...props}
+  />
+);
 
 const FieldSeparator = ({
   children,
@@ -134,26 +118,24 @@ const FieldSeparator = ({
   ...props
 }: React.ComponentProps<"div"> & {
   children?: React.ReactNode;
-}) => {
-  return (
-    <div
-      data-slot="field-separator"
-      data-content={!!children}
-      className={cn("mc-field-separator", className)}
-      {...props}
-    >
-      <Separator className="mc-field-divider" />
-      {children && (
-        <span
-          className="mc-field-divider-content"
-          data-slot="field-separator-content"
-        >
-          <MinecraftProse>{children}</MinecraftProse>
-        </span>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div
+    data-slot="field-separator"
+    data-content={!!children}
+    className={cn("mc-field-separator", className)}
+    {...props}
+  >
+    <Separator className="mc-field-divider" />
+    {children && (
+      <span
+        className="mc-field-divider-content"
+        data-slot="field-separator-content"
+      >
+        <MinecraftProse>{children}</MinecraftProse>
+      </span>
+    )}
+  </div>
+);
 
 const FieldError = ({
   className,

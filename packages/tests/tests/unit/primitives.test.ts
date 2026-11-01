@@ -1,6 +1,7 @@
 import { test } from "bun:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import type { SpawnSyncReturns } from "node:child_process";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -8,11 +9,19 @@ import { testRoot as root } from "@grasscn/tests/paths";
 
 const output = path.join(root, "test-results");
 
-async function fixture(run) {
+interface PrimitivePolicyFixture {
+  check: (...args: string[]) => SpawnSyncReturns<string>;
+  directory: string;
+  json: (name: string, value: object) => Promise<void>;
+}
+
+async function fixture(
+  run: (context: PrimitivePolicyFixture) => Promise<void>
+) {
   await mkdir(output, { recursive: true });
   const directory = await mkdtemp(path.join(output, "primitives-"));
 
-  const json = async (name, value) =>
+  const json = async (name: string, value: object) =>
     writeFile(path.join(directory, name), JSON.stringify(value));
 
   try {
@@ -38,11 +47,11 @@ async function fixture(run) {
     });
     await json("public/r/registry.json", { items: [] });
 
-    const check = (...args) =>
+    const check = (...args: string[]) =>
       spawnSync(
         process.execPath,
         [
-          path.join(root, "src/checks/check-primitives.mjs"),
+          path.join(root, "src/checks/check-primitives.ts"),
           "--root",
           directory,
           ...args,

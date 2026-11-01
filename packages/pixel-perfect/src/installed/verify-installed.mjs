@@ -6,7 +6,7 @@ import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 import { chromium, expect } from "@playwright/test";
-import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed.mjs";
+import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed";
 import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";

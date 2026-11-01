@@ -18,7 +18,7 @@ interface ReportSpec extends Omit<JSONReportSuite["specs"][number], "tests"> {
 
 interface ReportSuite extends Omit<JSONReportSuite, "specs" | "suites"> {
   specs: ReportSpec[];
-  suites: ReportSuite[];
+  suites?: ReportSuite[];
 }
 
 interface CollectionReport extends Omit<JSONReport, "suites"> {
@@ -165,14 +165,20 @@ export const flattenBrowserReport = (report: CollectionReport) => {
 
   const appendSpecs = (
     suite: ReportSuite,
-    currentFile: string,
+    currentFile: string | undefined,
     currentTitles: string[]
   ) => {
     for (const spec of suite.specs ?? []) {
       for (const test of spec.tests ?? []) {
+        // SAFETY: Playwright emits specs beneath a file suite. Intermediate
+        // suites may omit a file and have no specs; traversal inherits the
+        // enclosing file before any test is appended.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Playwright JSON reporter's enclosing file contract.
+        const ownerFile = currentFile as string;
+
         const source = path.resolve(
           report.config?.rootDir ?? path.join(browserRoot, "tests"),
-          currentFile
+          ownerFile
         );
 
         const relative = path.relative(path.join(browserRoot, "tests"), source);
@@ -186,7 +192,7 @@ export const flattenBrowserReport = (report: CollectionReport) => {
             : "tests";
 
         cases.push({
-          file: currentFile,
+          file: ownerFile,
           id: test.testId ?? spec.id,
           package: owner,
           projectName: test.projectName ?? "",

@@ -27,23 +27,21 @@ const Drawer = ({
   ...props
 }: MinecraftProps<typeof DrawerPrimitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <DrawerScale.Provider value={scale}>
-      <DrawerDirection.Provider
-        value={
-          swipeDirection === "down"
-            ? "bottom"
-            : swipeDirection === "up"
-              ? "top"
-              : swipeDirection
-        }
-      >
-        <DrawerPrimitive.Root swipeDirection={swipeDirection} {...props} />
-      </DrawerDirection.Provider>
-    </DrawerScale.Provider>
-  );
-};
+}) => (
+  <DrawerScale.Provider value={scale}>
+    <DrawerDirection.Provider
+      value={
+        swipeDirection === "down"
+          ? "bottom"
+          : swipeDirection === "up"
+            ? "top"
+            : swipeDirection
+      }
+    >
+      <DrawerPrimitive.Root swipeDirection={swipeDirection} {...props} />
+    </DrawerDirection.Provider>
+  </DrawerScale.Provider>
+);
 
 const DrawerTrigger = ({
   render,
@@ -81,9 +79,9 @@ const DrawerClose = ({
   );
 };
 
-const DrawerPortal = (props: MinecraftProps<typeof DrawerPrimitive.Portal>) => {
-  return <DrawerPrimitive.Portal {...props} />;
-};
+const DrawerPortal = (props: MinecraftProps<typeof DrawerPrimitive.Portal>) => (
+  <DrawerPrimitive.Portal {...props} />
+);
 
 const DrawerOverlay = ({
   className,
@@ -179,25 +177,21 @@ const DrawerContent = ({
   );
 };
 
-const DrawerHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="drawer-header"
-      className={cn(`mc-drawer-header`, className)}
-      {...props}
-    />
-  );
-};
+const DrawerHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="drawer-header"
+    className={cn(`mc-drawer-header`, className)}
+    {...props}
+  />
+);
 
-const DrawerFooter = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="drawer-footer"
-      className={cn(`mc-drawer-footer`, className)}
-      {...props}
-    />
-  );
-};
+const DrawerFooter = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="drawer-footer"
+    className={cn(`mc-drawer-footer`, className)}
+    {...props}
+  />
+);
 
 const DrawerTitle = ({
   render,

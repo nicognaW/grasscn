@@ -158,40 +158,32 @@ const Progress = ({
 const ProgressTrack = ({
   className,
   ...props
-}: MinecraftProps<typeof ProgressPrimitive.Track>) => {
-  return (
-    <ProgressPrimitive.Track
-      data-slot="progress-track"
-      className={cn(`mc-progress-track`, className)}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof ProgressPrimitive.Track>) => (
+  <ProgressPrimitive.Track
+    data-slot="progress-track"
+    className={cn(`mc-progress-track`, className)}
+    {...props}
+  />
+);
 
 const ProgressIndicator = ({
   className,
   ...props
-}: MinecraftProps<typeof ProgressPrimitive.Indicator>) => {
-  return (
-    <ProgressPrimitive.Indicator
-      data-slot="progress-indicator"
-      className={cn(`mc-progress-indicator`, className)}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof ProgressPrimitive.Indicator>) => (
+  <ProgressPrimitive.Indicator
+    data-slot="progress-indicator"
+    className={cn(`mc-progress-indicator`, className)}
+    {...props}
+  />
+);
 
 const ProgressLabel = (
   props: MinecraftProps<typeof ProgressPrimitive.Label>
-) => {
-  return <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
-};
+) => <ProgressPrimitive.Label data-slot="progress-label" {...props} />;
 
 const ProgressValue = (
   props: MinecraftProps<typeof ProgressPrimitive.Value>
-) => {
-  return <ProgressPrimitive.Value data-slot="progress-value" {...props} />;
-};
+) => <ProgressPrimitive.Value data-slot="progress-value" {...props} />;
 
 export {
   Progress,

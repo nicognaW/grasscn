@@ -95,15 +95,13 @@ const Empty = ({
   );
 };
 
-const EmptyHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="empty-header"
-      className={cn(`mc-empty-header`, className)}
-      {...props}
-    />
-  );
-};
+const EmptyHeader = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="empty-header"
+    className={cn(`mc-empty-header`, className)}
+    {...props}
+  />
+);
 
 const emptyMediaVariants = cva("mc-empty-media", {
   defaultVariants: { variant: "default" },
@@ -162,15 +160,13 @@ const EmptyDescription = ({
   );
 };
 
-const EmptyContent = ({ className, ...props }: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="empty-content"
-      className={cn(`mc-empty-content`, className)}
-      {...props}
-    />
-  );
-};
+const EmptyContent = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="empty-content"
+    className={cn(`mc-empty-content`, className)}
+    {...props}
+  />
+);
 
 export {
   Empty,

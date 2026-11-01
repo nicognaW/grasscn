@@ -29,13 +29,11 @@ const Popover = ({
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </ScaleContext.Provider>
-  );
-};
+}) => (
+  <ScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </ScaleContext.Provider>
+);
 
 const PopoverTrigger = ({
   render,
@@ -229,47 +227,41 @@ const PopoverContent = ({
   );
 };
 
-const PopoverHeader = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="popover-header"
-      className={cn(`mc-card-header`, className)}
-      {...props}
-    />
-  );
-};
+const PopoverHeader = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="popover-header"
+    className={cn(`mc-card-header`, className)}
+    {...props}
+  />
+);
 
 const PopoverTitle = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Title>) => {
-  return (
-    <Primitive.Title
-      data-slot="popover-title"
-      className={cn(`mc-card-title mc-popover-title`, className)}
-      {...props}
-    >
-      <MinecraftPopoverText bold>{children}</MinecraftPopoverText>
-    </Primitive.Title>
-  );
-};
+}: MinecraftProps<typeof Primitive.Title>) => (
+  <Primitive.Title
+    data-slot="popover-title"
+    className={cn(`mc-card-title mc-popover-title`, className)}
+    {...props}
+  >
+    <MinecraftPopoverText bold>{children}</MinecraftPopoverText>
+  </Primitive.Title>
+);
 
 const PopoverDescription = ({
   className,
   children,
   ...props
-}: MinecraftProps<typeof Primitive.Description>) => {
-  return (
-    <Primitive.Description
-      data-slot="popover-description"
-      className={cn(`mc-card-description mc-popover-description`, className)}
-      {...props}
-    >
-      <MinecraftPopoverText>{children}</MinecraftPopoverText>
-    </Primitive.Description>
-  );
-};
+}: MinecraftProps<typeof Primitive.Description>) => (
+  <Primitive.Description
+    data-slot="popover-description"
+    className={cn(`mc-card-description mc-popover-description`, className)}
+    {...props}
+  >
+    <MinecraftPopoverText>{children}</MinecraftPopoverText>
+  </Primitive.Description>
+);
 
 const PopoverClose = ({
   render,

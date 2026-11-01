@@ -53,29 +53,25 @@ const Combobox = <
 >({
   scale = 2,
   ...props
-}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </MenuScaleContext.Provider>
-  );
-};
+}: Primitive.Root.Props<Value, Multiple, Item> & { scale?: Scale }) => (
+  <MenuScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </MenuScaleContext.Provider>
+);
 
 const ComboboxValue = ({
   children,
   placeholder,
   ...props
-}: Primitive.Value.Props) => {
-  return (
-    <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
-      {typeof children === "function"
-        ? (value) => menuTextNodes(children(value))
-        : children == null
-          ? undefined
-          : menuTextNodes(children)}
-    </Primitive.Value>
-  );
-};
+}: Primitive.Value.Props) => (
+  <Primitive.Value {...props} placeholder={menuTextNodes(placeholder)}>
+    {typeof children === "function"
+      ? (value) => menuTextNodes(children(value))
+      : children == null
+        ? undefined
+        : menuTextNodes(children)}
+  </Primitive.Value>
+);
 
 const ComboboxTrigger = ({
   className,
@@ -317,67 +313,59 @@ const ComboboxItem = ({
   className,
   children,
   ...props
-}: Primitive.Item.Props) => {
-  return (
-    <Primitive.Item
-      data-slot="combobox-item"
-      className={classes("mc-menu-item mc-combobox-item", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-      <Primitive.ItemIndicator
-        data-slot="combobox-item-indicator"
-        className="mc-combobox-item-indicator"
-      />
-    </Primitive.Item>
-  );
-};
-
-const ComboboxGroup = ({ className, ...props }: Primitive.Group.Props) => {
-  return (
-    <Primitive.Group
-      data-slot="combobox-group"
-      className={classes("mc-combobox-group", className)}
-      {...props}
+}: Primitive.Item.Props) => (
+  <Primitive.Item
+    data-slot="combobox-item"
+    className={classes("mc-menu-item mc-combobox-item", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+    <Primitive.ItemIndicator
+      data-slot="combobox-item-indicator"
+      className="mc-combobox-item-indicator"
     />
-  );
-};
+  </Primitive.Item>
+);
+
+const ComboboxGroup = ({ className, ...props }: Primitive.Group.Props) => (
+  <Primitive.Group
+    data-slot="combobox-group"
+    className={classes("mc-combobox-group", className)}
+    {...props}
+  />
+);
 
 const ComboboxLabel = ({
   className,
   children,
   ...props
-}: Primitive.GroupLabel.Props) => {
-  return (
-    <Primitive.GroupLabel
-      data-slot="combobox-label"
-      className={classes("mc-menu-label mc-combobox-label", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </Primitive.GroupLabel>
-  );
-};
+}: Primitive.GroupLabel.Props) => (
+  <Primitive.GroupLabel
+    data-slot="combobox-label"
+    className={classes("mc-menu-label mc-combobox-label", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </Primitive.GroupLabel>
+);
 
-const ComboboxCollection = (props: Primitive.Collection.Props) => {
-  return <Primitive.Collection {...props} />;
-};
+const ComboboxCollection = (props: Primitive.Collection.Props) => (
+  <Primitive.Collection {...props} />
+);
 
 const ComboboxEmpty = ({
   className,
   children,
   ...props
-}: Primitive.Empty.Props) => {
-  return (
-    <Primitive.Empty
-      data-slot="combobox-empty"
-      className={classes("mc-combobox-empty", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </Primitive.Empty>
-  );
-};
+}: Primitive.Empty.Props) => (
+  <Primitive.Empty
+    data-slot="combobox-empty"
+    className={classes("mc-combobox-empty", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </Primitive.Empty>
+);
 
 const ComboboxSeparator = ({
   className,
@@ -439,18 +427,16 @@ const ComboboxChip = ({
   children,
   showRemove = true,
   ...props
-}: Primitive.Chip.Props & { showRemove?: boolean }) => {
-  return (
-    <Primitive.Chip
-      data-slot="combobox-chip"
-      className={classes("mc-combobox-chip", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-      {showRemove && <ComboboxChipRemove />}
-    </Primitive.Chip>
-  );
-};
+}: Primitive.Chip.Props & { showRemove?: boolean }) => (
+  <Primitive.Chip
+    data-slot="combobox-chip"
+    className={classes("mc-combobox-chip", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+    {showRemove && <ComboboxChipRemove />}
+  </Primitive.Chip>
+);
 
 const ComboboxChipsInput = ({
   className,

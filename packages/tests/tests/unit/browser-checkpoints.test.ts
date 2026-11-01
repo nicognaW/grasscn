@@ -6,6 +6,11 @@ import { mkdtemp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type {
+  CheckpointCandidate,
+  CheckpointCatalogue,
+  CheckpointDeclaration,
+} from "@grasscn/tests/checkpoints";
 import {
   browserFilePattern,
   reusableBrowserTests,
@@ -21,7 +26,29 @@ test("browser file filters select exact basenames on Windows and POSIX", () => {
   assert.equal(pattern.test("/repo/tests/selectXspec.ts"), false);
 });
 
-async function fixture(run) {
+interface BrowserCacheFixture {
+  candidate: CheckpointCandidate;
+  file: string;
+  journal: string;
+  output: string;
+  record: {
+    expectedStatus: string;
+    file: string;
+    id: string;
+    retry: number;
+    sourceChanged: boolean;
+    status: string;
+    title: string[];
+    verification: {
+      artifacts: { file: string; pngSha256: string }[];
+      outputDirectory: string;
+    };
+  };
+  root: string;
+  save: (records: object[]) => Promise<void>;
+}
+
+async function fixture(run: (context: BrowserCacheFixture) => Promise<void>) {
   const parent = path.join(testRoot, "test-results", "unit");
   await mkdir(parent, { recursive: true });
 
@@ -36,7 +63,8 @@ async function fixture(run) {
     await mkdir(path.join(root, "tests"));
     await writeFile(path.join(root, "tests", file), "stable source");
 
-    const hash = (value) => createHash("sha256").update(value).digest("hex");
+    const hash = (value: string) =>
+      createHash("sha256").update(value).digest("hex");
     const id = "test-id";
 
     const record = {
@@ -70,7 +98,7 @@ async function fixture(run) {
       report: { startedAt: "2026-10-31T00:00:00Z" },
     };
 
-    const save = async (records) =>
+    const save = async (records: object[]) =>
       writeFile(
         journal,
         `${records.map((record) => JSON.stringify(record)).join("\n")}\n`
@@ -160,7 +188,7 @@ test("Playwright can retain a complete file without repeating its tests", async 
       'import {test,expect} from "@playwright/test";import {appendFileSync} from "node:fs";for(const name of ["first","second"])test(name,()=>{appendFileSync("runs.txt",name+"\\n");expect(name.length).toBeGreaterThan(0)});'
     );
 
-    const run = (args, env = {}) => {
+    const run = (args: string[], env: NodeJS.ProcessEnv = {}) => {
       const result = spawnSync(
         process.execPath,
         [
@@ -226,7 +254,8 @@ test("nested helper-defined checkpoints retain only both source-identical inputs
     await mkdir(path.join(root, "src"));
     await writeFile(path.join(root, owner), "wrapper source");
     await writeFile(path.join(root, definition), "helper source");
-    const hash = (value) => createHash("sha256").update(value).digest("hex");
+    const hash = (value: string) =>
+      createHash("sha256").update(value).digest("hex");
 
     const sourceFiles = [
       { file: owner, sha256: hash("wrapper source") },
@@ -315,9 +344,13 @@ test("Playwright checkpoints bind a nested owning file separately from its decla
 
     assert.equal(result.status, 0, result.stdout + result.stderr);
 
+    // SAFETY: this fixture runs our current reporter, which emits complete v3 declarations.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Metadata is the actual output of CheckpointReporter in this test.
     const metadata = JSON.parse(
       await readFile(path.join(directory, "expected.json"), "utf-8")
-    );
+    ) as Omit<CheckpointCatalogue, "tests"> & {
+      tests: Required<CheckpointDeclaration>[];
+    };
 
     const decl = metadata.tests[0];
 

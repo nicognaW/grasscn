@@ -38,22 +38,20 @@ const Command = ({
   ...props
 }: MinecraftProps<typeof CommandPrimitive> & {
   scale?: Scale;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <CommandPrimitive
-        data-slot="command"
-        className={cn(`mc-command`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <CommandPrimitive
+      data-slot="command"
+      className={cn(`mc-command`, className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </MenuScaleContext.Provider>
+);
 
 const CommandDialog = ({
   title = "Command Palette",
@@ -257,52 +255,46 @@ const CommandEmpty = ({
   children,
   className,
   ...props
-}: MinecraftProps<typeof CommandPrimitive.Empty>) => {
-  return (
-    <CommandPrimitive.Empty
-      data-slot="command-empty"
-      className={cn(`mc-command-empty`, className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </CommandPrimitive.Empty>
-  );
-};
+}: MinecraftProps<typeof CommandPrimitive.Empty>) => (
+  <CommandPrimitive.Empty
+    data-slot="command-empty"
+    className={cn(`mc-command-empty`, className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </CommandPrimitive.Empty>
+);
 
 const CommandGroup = ({
   heading,
   className,
   ...props
-}: MinecraftProps<typeof CommandPrimitive.Group>) => {
-  return (
-    <CommandPrimitive.Group
-      data-slot="command-group"
-      className={cn(`mc-command-group`, className)}
-      heading={
-        heading == null ? undefined : (
-          <MinecraftMenuText>{heading}</MinecraftMenuText>
-        )
-      }
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof CommandPrimitive.Group>) => (
+  <CommandPrimitive.Group
+    data-slot="command-group"
+    className={cn(`mc-command-group`, className)}
+    heading={
+      heading == null ? undefined : (
+        <MinecraftMenuText>{heading}</MinecraftMenuText>
+      )
+    }
+    {...props}
+  />
+);
 
 const CommandItem = ({
   children,
   className,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) => {
-  return (
-    <CommandPrimitive.Item
-      data-slot="command-item"
-      className={cn("mc-command-item", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </CommandPrimitive.Item>
-  );
-};
+}: React.ComponentProps<typeof CommandPrimitive.Item>) => (
+  <CommandPrimitive.Item
+    data-slot="command-item"
+    className={cn("mc-command-item", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </CommandPrimitive.Item>
+);
 
 const CommandSeparator = ({
   className,
@@ -326,17 +318,15 @@ const CommandShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(`mc-command-shortcut`, className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="command-shortcut"
+    className={cn(`mc-command-shortcut`, className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
 export {
   Command,

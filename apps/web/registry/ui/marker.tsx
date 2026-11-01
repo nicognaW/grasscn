@@ -88,16 +88,14 @@ const Marker = ({
   );
 };
 
-const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="marker-icon"
-      aria-hidden="true"
-      className={cn(`mc-marker-icon`, className)}
-      {...props}
-    />
-  );
-};
+const MarkerIcon = ({ className, ...props }: MinecraftProps<"span">) => (
+  <span
+    data-slot="marker-icon"
+    aria-hidden="true"
+    className={cn(`mc-marker-icon`, className)}
+    {...props}
+  />
+);
 
 const MarkerContent = ({
   className,

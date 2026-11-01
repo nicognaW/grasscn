@@ -10,16 +10,33 @@ const out = path.resolve(
   process.argv[3] ?? path.join(repoRoot, ".pixel-perfect-test/preview-audit")
 );
 
+interface PreviewAuditCatalogue {
+  completedCount: number;
+  components: { name: string; title: string }[];
+}
+
+interface ComponentAuditRow {
+  component: string;
+  visible: boolean;
+}
+
+interface ViewportAuditRow {
+  viewport: { height: number; width: number };
+  width: { scroll: number; viewport: number };
+}
+
+// SAFETY: prepare-preview produces this catalogue; the audit consumes its actual component names and counts.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve generated catalogue loading and every existing browser assertion.
 const catalog = JSON.parse(
   await readFile(webFile("catalog.generated.json"), "utf-8")
-);
+) as PreviewAuditCatalogue;
 
 await mkdir(out, { recursive: true });
 
 const browser = await chromium.launch({ channel: "msedge" });
 const page = await browser.newPage({ viewport: { height: 1000, width: 1440 } });
-const errors = [];
-const rows = [];
+const errors: string[] = [];
+const rows: (ComponentAuditRow | ViewportAuditRow)[] = [];
 
 page.on("pageerror", (e) => errors.push(e.message));
 
@@ -33,8 +50,8 @@ try {
   ).toHaveCount(catalog.components.length);
 
   const duplicates = await page.evaluate(() => {
-    const seen = new Set();
-    const duplicates = [];
+    const seen = new Set<string>();
+    const duplicates: string[] = [];
 
     for (const n of document.querySelectorAll("[id]")) {
       if (seen.has(n.id)) {

@@ -21,23 +21,21 @@ const InputGroup = ({
   ...props
 }: React.ComponentProps<"div"> & {
   scale?: Scale;
-}) => {
-  return (
-    <InputGroupScale.Provider value={scale}>
-      <div
-        data-slot="input-group"
-        role="group"
-        className={cn(`mc-input-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </InputGroupScale.Provider>
-  );
-};
+}) => (
+  <InputGroupScale.Provider value={scale}>
+    <div
+      data-slot="input-group"
+      role="group"
+      className={cn(`mc-input-group`, className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </InputGroupScale.Provider>
+);
 
 const InputGroupAddon = ({
   align = "inline-start",
@@ -46,35 +44,33 @@ const InputGroupAddon = ({
   ...props
 }: React.ComponentProps<"div"> & {
   align?: "inline-start" | "inline-end" | "block-start" | "block-end";
-}) => {
-  return (
-    <div
-      data-slot="input-group-addon"
-      data-align={align}
-      role="group"
-      className={cn(`mc-input-group-addon`, className)}
-      {...props}
-      onClick={(event) => {
-        onClick?.(event);
+}) => (
+  <div
+    data-slot="input-group-addon"
+    data-align={align}
+    role="group"
+    className={cn(`mc-input-group-addon`, className)}
+    {...props}
+    onClick={(event) => {
+      onClick?.(event);
 
-        if (
-          event.defaultPrevented ||
-          (event.target as Element).closest(
-            'button,a,input,textarea,[role="button"]'
-          )
-        ) {
-          return;
-        }
+      if (
+        event.defaultPrevented ||
+        (event.target as Element).closest(
+          'button,a,input,textarea,[role="button"]'
+        )
+      ) {
+        return;
+      }
 
-        event.currentTarget.parentElement
-          ?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
-            "input,textarea"
-          )
-          ?.focus();
-      }}
-    />
-  );
-};
+      event.currentTarget.parentElement
+        ?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+          "input,textarea"
+        )
+        ?.focus();
+    }}
+  />
+);
 
 const InputGroupButton = ({
   scale: explicit,
