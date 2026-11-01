@@ -1,0 +1,21 @@
+---
+status: accepted
+---
+
+# Select Base tests by importance and track approved Full test runs
+
+The large reference-case matrix repeatedly delayed development and merging. This change classifies the existing browser-test pool into Base tests and Full tests. Base tests protect the website's default usage paths or correspond to actual upstream shadcn tests; selection is based on importance, without a runtime target or test-count quota. Full tests are the remaining cases, including additional variants and edge cases.
+
+If shadcn has no corresponding test, the upstream-mapping rule does not apply; selection can still use the website-default rule. Do not substitute tests from Base UI, DayPicker or other engines, or recreate coverage already owned by dependencies. No new tests may be added while implementing this specific cleanup specification, including tests for its workflow machinery. This restriction does not apply to future features, components, UI ports or other work outside this spec, which should have appropriate meaningful tests. Typechecking, production builds and checks outside the browser-test pool remain unchanged.
+
+Select individual existing cases with a recorded website-default or actual shadcn-test mapping. Selecting one case must not pull in its entire file, component family or generated matrix. Existing cases combining a primary path with deliberate edge/variant checks belong in Full tests; choose another existing primary-path case where available. Report selection gaps rather than adding, duplicating or splitting tests to fill them. Review an unexpectedly broad Base selection against its mappings; do not impose a time/count quota or use generic sampling to shrink it.
+
+Each Full test run is bound to a GitHub issue recording its fixed source snapshot, test scope, environment, approval, progress and result. A human maintainer authorizes the run by applying `full-tests:approved` to that issue; approval in Codex alone or an issue comment alone is insufficient. Executors must not apply or reapply that authorization label themselves. An interrupted run can resume under the same approval and issue when its source and environment are unchanged. A run against changed inputs needs new approval and its own run issue. Editing the approved run plan must not silently carry authorization to different inputs, and an already completed run issue cannot authorize another execution.
+
+After observing maintainer authorization on the run issue, the coordinating session dispatches execution to a brand-new Codex session with a handoff referencing the issue, approved snapshot, environment and commands. The execution session owns the run and its issue updates against an isolated snapshot; it is not a subagent whose work depends on the initiating session remaining active. The initiating session continues normal work without waiting for completion. Record the execution session on the run issue.
+
+Base tests and normal work have resource priority; a Full test run must checkpoint and yield rather than monopolize a shared guard that blocks foreground work. Collect failures through completion before making fixes or rerunning; Full test results do not block merging. On completion, report the results and create or link one follow-up issue per distinct problem, avoiding duplicate issues.
+
+Failure ownership is independent of the run's initiating and execution sessions. Any suitable session can handle a follow-up issue after the run finishes. Use the main session when its context fits the fix; when a separate session is more appropriate, provide a handoff referencing the issue, tested snapshot, failure evidence and relevant context. Do not force all repairs into the main session or create a new repair session for every failure. Fixes enter the normal work queue; reruns require approval and a new run issue.
+
+The policy was accepted through the design interview, including the amendment requiring independent execution sessions. Implementation is pending: no test commands or approval gates have been changed yet. Existing source-bound receipts establish only their recorded reference cases and snapshots; a Base pass must not be described as verification of the entire Full test matrix.
