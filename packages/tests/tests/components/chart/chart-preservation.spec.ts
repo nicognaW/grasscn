@@ -48,9 +48,9 @@ for (const scale of [2] as const)
       const trigger = page.locator(
         '[data-slot=select-trigger][aria-label="Chart type"]'
       );
-      await trigger.evaluate((n) =>
-        scrollBy(0, n.getBoundingClientRect().top - 80)
-      );
+      await trigger.evaluate((n) => {
+        scrollBy(0, n.getBoundingClientRect().top - 80);
+      });
       await trigger.click();
       const popup = page.locator("[data-slot=select-content]");
       await expect(popup).toBeVisible();
@@ -69,7 +69,7 @@ for (const scale of [2] as const)
       await page.mouse.wheel(0, scroll.top > 0 ? -150 : 150);
       if (scroll.maximum > 0) {
         await expect
-          .poll(() => viewport.evaluate((n) => n.scrollTop))
+          .poll(async () => viewport.evaluate((n) => n.scrollTop))
           .not.toBe(scroll.top);
       } else {
         // Base UI may show the entire list when item alignment has enough room.

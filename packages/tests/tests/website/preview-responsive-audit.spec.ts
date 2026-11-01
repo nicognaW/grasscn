@@ -105,7 +105,9 @@ test("calendar family and native select have inset preview stages", async ({
       stage = card.locator(`[data-stage="${name}"]`);
     await expect(stage).toHaveClass(/demo-stage/);
     expect(
-      await stage.evaluate((el) => parseFloat(getComputedStyle(el).paddingLeft))
+      await stage.evaluate((el) =>
+        Number.parseFloat(getComputedStyle(el).paddingLeft)
+      )
     ).toBeGreaterThan(0);
   }
 });

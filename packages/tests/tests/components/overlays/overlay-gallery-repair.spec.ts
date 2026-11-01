@@ -3,20 +3,23 @@ import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 for (const scale of [2]) {
   test(`Drawer fitting content has no phantom scroll extent at GUI${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto(origin + "docs/components/drawer");
+    await page.setViewportSize({ height: 1000, width: 1440 });
+    await page.goto(`${origin}docs/components/drawer`);
+
     const trigger = page
       .locator(".documentation-playground")
       .getByRole("button", { name: "Open drawer" });
+
     await trigger.click();
     const panel = page.locator("[data-slot=drawer-content]");
     await expect(panel).toBeVisible();
     await expect
-      .poll(() => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
+      .poll(async () => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
       .toBeLessThanOrEqual(2);
     await page.getByRole("button", { name: "Done", exact: true }).click();
     await expect(trigger).toBeFocused();
@@ -24,10 +27,12 @@ for (const scale of [2]) {
   test(`Avatar group count follows native face size and GUI${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(origin + "docs/components/avatar");
-    const stage = page.locator("[data-stage=avatar]"),
-      group = stage.locator("[data-slot=avatar-group]");
+    await page.setViewportSize({ height: 844, width: 390 });
+    await page.goto(`${origin}docs/components/avatar`);
+
+    const stage = page.locator("[data-stage=avatar]");
+    const group = stage.locator("[data-slot=avatar-group]");
+
     await group.scrollIntoViewIfNeeded();
     await expect
       .poll(async () => {
@@ -50,8 +55,8 @@ for (const scale of [2]) {
   test(`Mobile AlertDialog CJK text and actions remain usable at GUI${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(origin + "docs/components/alert-dialog");
+    await page.setViewportSize({ height: 844, width: 390 });
+    await page.goto(`${origin}docs/components/alert-dialog`);
     const stage = page.locator("[data-stage=alert-dialog]");
     await stage.scrollIntoViewIfNeeded();
     await page
@@ -111,8 +116,8 @@ for (const scale of [2]) {
 test("Short viewport AlertDialog layout remains stable while resizing", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 240 });
-  await page.goto(origin + "docs/components/alert-dialog");
+  await page.setViewportSize({ height: 240, width: 1440 });
+  await page.goto(`${origin}docs/components/alert-dialog`);
   await page
     .getByLabel("Alert dialog message", { exact: true })
     .fill(Array(14).fill("Long description 世界").join("\n"));

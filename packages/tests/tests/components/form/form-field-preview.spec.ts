@@ -110,8 +110,9 @@ test("Field is independently documented while installed through Form", async ({
     nav.getByRole("link", { name: "Form", exact: true })
   ).toHaveCount(1);
   await expect(
-    nav.getByRole("link", { name: "Field", exact: true })
+    nav.getByRole("link", { exact: true, name: "Field" })
   ).toHaveCount(1);
+
   const registry = JSON.parse(
     readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
   );
@@ -127,8 +128,8 @@ test("Field is independently documented while installed through Form", async ({
   ).toBe(false);
   await expect(
     page.getByRole("region", {
-      name: "Field implementation source",
       exact: true,
+      name: "Field implementation source",
     })
   ).toContainText("components/ui/field.tsx");
 });

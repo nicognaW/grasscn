@@ -3,6 +3,7 @@ import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 for (const selection of ["alert-dialog"])
   for (const scale of [2])
     test(`Long CJK confirmation keeps its GPU backdrop and readable text at mobile GUI ${scale} in ${selection}`, async ({

@@ -1,13 +1,16 @@
 import { test, expect } from "@grasscn/tests/test";
 import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 test("canonical documentation independently exposes grouped public parts and omits discarded controls", async ({
   page,
 }) => {
   const inventory = documentationInventory();
   expect(inventory.pages.map((item) => item.name)).not.toContain("skeleton");
+
   for (const [name, title, owner] of [
     ["field", "Field", "form"],
     ["bubble", "Bubble", "message"],
@@ -17,13 +20,14 @@ test("canonical documentation independently exposes grouped public parts and omi
       inventory.pages.find((item) => item.name === name)?.registryItem
     ).toBe(owner);
     expect(inventory.items).not.toContain(name);
-    await page.goto(origin + "docs/components/" + name);
+    await page.goto(`${origin}docs/components/${name}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
     await expect(
-      page.getByRole("heading", { name: "Installation", exact: true })
+      page.getByRole("heading", { exact: true, name: "Installation" })
     ).toBeVisible();
   }
-  await page.goto(origin + "docs/components/avatar");
+
+  await page.goto(`${origin}docs/components/avatar`);
   await expect(page.getByRole("group", { name: "Preview scale" })).toHaveCount(
     0
   );
@@ -91,7 +95,7 @@ test("new homepage examples respond to input", async ({ page }) => {
   await expect(page.getByLabel("Review date")).toHaveText("November 3, 2026");
 });
 test("message combines history and composition", async ({ page }) => {
-  await page.goto(origin + "docs/components/message");
+  await page.goto(`${origin}docs/components/message`);
   await page
     .locator(".documentation-playground")
     .getByRole("textbox", { name: "Message text", exact: true })
@@ -112,6 +116,6 @@ test("message combines history and composition", async ({ page }) => {
     .click();
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Latest", exact: true })
+    .getByRole("button", { exact: true, name: "Latest" })
     .click();
 });

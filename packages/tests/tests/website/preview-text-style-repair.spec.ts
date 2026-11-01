@@ -6,6 +6,7 @@ const origin = (
 
 async function open(page: Page, name: string) {
   await page.goto(`${origin}docs/components/${name}`);
+
   return page.locator(".documentation-playground");
 }
 async function labelFits(button: Locator) {
@@ -172,6 +173,8 @@ test("MessageScroller footer texture stays bound to its button and never covers 
   await card
     .getByRole("textbox", { name: "Message text", exact: true })
     .fill("Keep reading older messages");
-  await card.getByRole("button", { name: "Send", exact: true }).click();
-  await expect.poll(() => viewport.evaluate((node) => node.scrollTop)).toBe(0);
+  await card.getByRole("button", { exact: true, name: "Send" }).click();
+  await expect
+    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .toBe(0);
 });

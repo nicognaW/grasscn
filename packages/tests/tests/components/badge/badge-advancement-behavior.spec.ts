@@ -3,6 +3,7 @@ import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 for (const scale of [2])
   for (const width of [390, 1440])
     test(`Advancement Badge compact/CJK/link/state at ${width} GUI${scale}`, async ({

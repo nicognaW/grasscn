@@ -38,9 +38,9 @@ for (const scale of [2] as const)
               )
             )
             .toBe(String(scale));
-          await trigger.evaluate((n) =>
-            scrollBy(0, n.getBoundingClientRect().top - 160)
-          );
+          await trigger.evaluate((n) => {
+            scrollBy(0, n.getBoundingClientRect().top - 160);
+          });
           await trigger.click();
           const popup = page.locator("[data-slot=select-content][data-open]");
           await expect(popup).toBeVisible();

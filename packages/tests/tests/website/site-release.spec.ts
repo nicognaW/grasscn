@@ -3,29 +3,34 @@ import { readFileSync } from "node:fs";
 import { test, expect } from "@grasscn/tests/test";
 import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 import { resolveRepositoryPath, testRoot } from "@tests/paths";
+
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 const index = documentationInventory().pages;
 
 const internal = /work in progress|\bWIP\b|LOCAL PREVIEW|still being verified/i;
+
 test("search index covers every published item and its named exports", async ({
   request,
 }) => {
-  for (const name of documentationInventory().items)
+  for (const name of documentationInventory().items) {
     expect(index.some((page) => page.name === name)).toBe(true);
+  }
   for (const [query, name] of [
     ["CardHeader", "card"],
     ["FieldLabel", "field"],
     ["ChartProfilerFrame", "chart"],
   ]) {
-    const response = await request.get(origin + "api/search?query=" + query);
+    const response = await request.get(`${origin}api/search?query=${query}`);
     expect(response.ok()).toBe(true);
     expect(JSON.stringify(await response.json())).toContain(
-      "/docs/components/" + name
+      `/docs/components/${name}`
     );
   }
 });
+
 test("all production sections share navigation and omit internal status content", async ({
   page,
 }) => {
@@ -53,45 +58,52 @@ test("search shows all items, more than six matches, and nested component import
 }) => {
   await page.goto(origin);
   const search = page.getByRole("combobox", {
-    name: "Search documentation",
     exact: true,
+    name: "Search documentation",
   });
+
   await search.click();
   await search.fill("field");
-  await expect.poll(() => page.getByRole("option").count()).toBeGreaterThan(6);
+  await expect
+    .poll(async () => page.getByRole("option").count())
+    .toBeGreaterThan(6);
   await expect(
     page.getByRole("option", { name: "FieldLabel", exact: true })
   ).toBeVisible();
   await search.fill("CardHeader");
-  await page.getByRole("option", { name: "CardHeader", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "CardHeader" }).click();
   await expect(page.locator("h1")).toHaveText("Card");
-  await expect(page).toHaveURL(origin + "docs/components/card#usage");
+  await expect(page).toHaveURL(`${origin}docs/components/card#usage`);
   await search.fill("你好");
   await expect(page.getByRole("option")).toHaveCount(0);
 });
 test("component pages expose live preview, source, installation and composition", async ({
   page,
 }) => {
-  await page.goto(origin + "docs/components/button");
+  await page.goto(`${origin}docs/components/button`);
+
   const example = page.getByRole("region", {
-    name: "Button example",
     exact: true,
+    name: "Button example",
   });
-  await example.getByRole("button", { name: "Button", exact: true }).click();
-  await example.getByRole("tab", { name: "Code", exact: true }).click();
+
+  await example.getByRole("button", { exact: true, name: "Button" }).click();
+  await example.getByRole("tab", { exact: true, name: "Code" }).click();
   await expect(example.locator("pre")).toContainText("function ButtonExample");
   await expect(example.locator("pre")).not.toContainText("function Button({");
+
   const implementation = page.getByRole("region", {
-    name: "Button implementation source",
     exact: true,
+    name: "Button implementation source",
   });
+
   await expect(implementation).toContainText("Component implementation");
   await expect(implementation).toContainText("components/ui/button.tsx");
   await expect(
-    page.getByRole("heading", { name: "Installation", exact: true })
+    page.getByRole("heading", { exact: true, name: "Installation" })
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Composition", exact: true })
+    page.getByRole("heading", { exact: true, name: "Composition" })
   ).toBeVisible();
   const playground = page.locator(".documentation-playground");
   await playground
@@ -136,7 +148,7 @@ for (const width of [320, 390, 768, 1440])
 test("canonical routes reload and legacy links still resolve", async ({
   page,
 }) => {
-  await page.goto(origin + "docs/components/button");
+  await page.goto(`${origin}docs/components/button`);
   await expect(page.locator("h1")).toHaveText("Button");
   await page.reload();
   await expect(page.locator("h1")).toHaveText("Button");
@@ -148,9 +160,9 @@ test("canonical routes reload and legacy links still resolve", async ({
   await expect(page).toHaveURL(origin + "charts");
   await page.goBack();
   await expect(page.locator("h1")).toHaveText("Button");
-  await page.goto(origin + "components/button?ref=bookmark#component-import");
+  await page.goto(`${origin}components/button?ref=bookmark#component-import`);
   await expect(page.locator("h1")).toHaveText("Button");
-  await page.goto(origin + "charts/line");
+  await page.goto(`${origin}charts/line`);
   await expect(page.locator("h1")).toHaveText("Line charts");
 });
 
@@ -204,19 +216,22 @@ for (const width of [320, 390])
 test("shared controls retain native rendering and the sticky header is opaque", async ({
   page,
 }) => {
-  await page.goto(origin + "docs/components/button");
+  await page.goto(`${origin}docs/components/button`);
+
   const views = page.getByRole("region", {
-    name: "Button example",
     exact: true,
+    name: "Button example",
   });
-  for (const label of ["Preview", "Code"])
+
+  for (const label of ["Preview", "Code"]) {
     await expect(
       views.getByRole("tab", { name: label, exact: true })
     ).toHaveAttribute("data-slot", "tabs-trigger");
+  }
   await expect(
     page
-      .getByRole("navigation", { name: "Documentation", exact: true })
-      .getByRole("link", { name: "Button", exact: true })
+      .getByRole("navigation", { exact: true, name: "Documentation" })
+      .getByRole("link", { exact: true, name: "Button" })
   ).toHaveAttribute("data-slot", "button");
   expect(
     await page
@@ -229,31 +244,37 @@ test("shared controls retain native rendering and the sticky header is opaque", 
   ).toHaveCount(12);
   await expect(
     page
-      .getByRole("region", { name: "API response time", exact: true })
-      .getByRole("tab", { name: "Code", exact: true })
+      .getByRole("region", { exact: true, name: "API response time" })
+      .getByRole("tab", { exact: true, name: "Code" })
   ).toHaveAttribute("data-slot", "tabs-trigger");
 });
 
 test("website code uses the shared Shiki highlighter without changing source text", async ({
   page,
 }) => {
-  await page.goto(origin + "docs/components/button");
+  await page.goto(`${origin}docs/components/button`);
+
   const implementation = page.getByRole("region", {
-    name: "Button implementation source",
     exact: true,
+    name: "Button implementation source",
   });
+
   await implementation
-    .getByRole("button", { name: "Expand", exact: true })
+    .getByRole("button", { exact: true, name: "Expand" })
     .click();
   await expect(implementation.locator(".mc-code-token").first()).toBeVisible();
   expect(
-    (await implementation.locator("code").textContent())?.replace(/\r\n/g, "\n")
+    (await implementation.locator("code").textContent())?.replaceAll(
+      "\r\n",
+      "\n"
+    )
   ).toBe(
     readFileSync(
       resolveRepositoryPath("registry/ui/button.tsx", testRoot),
       "utf8"
     ).replace(/\r\n/g, "\n")
   );
+
   const colors = await implementation
     .locator(".mc-code-token")
     .evaluateAll((tokens) => [

@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
@@ -65,8 +66,9 @@ test("Grasscn project identity and native branding assets are consistent", async
 test("Branding source grass matches its native scale3 capture independently of website geometry", async () => {
   const svg = await readFile(
     resolveRepositoryPath("preview/assets/grasscn-logo.svg", pixelPerfectRoot),
-    "utf8"
+    "utf-8"
   );
+
   const encoded =
     /<image href="data:image\/png;base64,([^"]+)" x="0" y="8" width="48" height="48"\/>/.exec(
       svg

@@ -22,9 +22,9 @@ for (const scale of [2] as const)
             )
           )
           .toBe(String(scale));
-        await trigger.evaluate((n) =>
-          scrollBy(0, n.getBoundingClientRect().top - 80)
-        );
+        await trigger.evaluate((n) => {
+          scrollBy(0, n.getBoundingClientRect().top - 80);
+        });
         await trigger.click();
         const popup = page.locator("[data-slot=select-content]");
         await expect(popup).toBeVisible();
@@ -47,11 +47,11 @@ for (const scale of [2] as const)
         await page.mouse.wheel(0, scroll.top > 0 ? -1000 : 1000);
         if (scroll.maximum > 0)
           await expect
-            .poll(() => viewport.evaluate((n) => n.scrollTop))
+            .poll(async () => viewport.evaluate((n) => n.scrollTop))
             .not.toBe(scroll.top);
         else
           await expect
-            .poll(() => viewport.evaluate((n) => n.scrollTop))
+            .poll(async () => viewport.evaluate((n) => n.scrollTop))
             .toBe(0);
         await page.evaluate(
           () =>

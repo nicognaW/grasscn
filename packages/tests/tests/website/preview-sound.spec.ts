@@ -12,6 +12,7 @@ const clearVoices = (page: Page) =>
   page.evaluate(() => {
     (window as any).__previewVoices = [];
   });
+
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
@@ -23,7 +24,6 @@ test.beforeEach(async ({ page }) => {
       (window as any).__previewVoices.push({
         source: this.src,
         volume: this.volume,
-        rate: this.playbackRate,
       });
       return Promise.resolve();
     };
@@ -75,8 +75,8 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   const navigate = async (name: string) => {
     const previous = await voices(page);
     await page
-      .getByRole("navigation", { name: "Documentation", exact: true })
-      .getByRole("link", { name, exact: true })
+      .getByRole("navigation", { exact: true, name: "Documentation" })
+      .getByRole("link", { exact: true, name })
       .click();
     await page.evaluate((previous) => {
       (window as any).__previewVoices = previous;
@@ -84,23 +84,24 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
   };
   const volume = page
     .locator(".documentation-playground")
-    .getByRole("slider", { name: "Volume", exact: true });
+    .getByRole("slider", { exact: true, name: "Volume" });
+
   const button = page
     .locator(
       '.documentation-playground [data-stage="button"] [data-slot="button"]'
     )
     .first();
+
   const checkbox = page
     .locator(".documentation-playground")
     .getByRole("checkbox", {
       name: "Enable shadows",
-      exact: true,
     });
   await expect(volume).toHaveAttribute("aria-valuenow", "50");
   await navigate("Button");
   await button.click();
   expect(await voices(page)).toEqual([
-    { source: minecraftClickSound, volume: 0.125, rate: 1 },
+    { rate: 1, source: minecraftClickSound, volume: 0.125 },
   ]);
   await clearVoices(page);
   await navigate("Slider");
@@ -142,6 +143,7 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
   page,
 }) => {
   await page.goto(`${origin}docs/components/slider`);
+
   const volume = page
     .locator(".documentation-playground")
     .getByRole("slider", { name: "Volume", exact: true });
@@ -151,8 +153,8 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
     "51%"
   );
   await page
-    .getByRole("navigation", { name: "Documentation", exact: true })
-    .getByRole("link", { name: "Button", exact: true })
+    .getByRole("navigation", { exact: true, name: "Documentation" })
+    .getByRole("link", { exact: true, name: "Button" })
     .click();
   await clearVoices(page);
   await page
@@ -167,8 +169,8 @@ test("Keyboard volume changes persist when the slider demo is filtered out", asy
   expect(played[0].source).toBe(minecraftClickSound);
   expect(played[0].rate).toBe(1);
   await page
-    .getByRole("navigation", { name: "Documentation", exact: true })
-    .getByRole("link", { name: "Slider", exact: true })
+    .getByRole("navigation", { exact: true, name: "Documentation" })
+    .getByRole("link", { exact: true, name: "Slider" })
     .click();
   await expect(volume).toHaveAttribute("aria-valuenow", "51");
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText(

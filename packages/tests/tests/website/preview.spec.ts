@@ -43,6 +43,7 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
   page,
 }) => {
   await page.goto(`${origin}docs/components/toggle-group`);
+
   const single = page
       .locator(".documentation-playground")
       .getByRole("group", { name: "One recipe station" }),
@@ -69,7 +70,7 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
   await expect(multiple.getByRole("button").first()).toBeDisabled();
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Reset filters", exact: true })
+    .getByRole("button", { exact: true, name: "Reset filters" })
     .click();
   await expect(
     page
@@ -151,12 +152,12 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
     .fill("こんにちは");
   const bar = page.getByRole("menubar", {
     name: "World command bar",
-    exact: true,
   });
+
   const trigger = bar.getByRole("menuitem", {
-    name: "你好，世界",
     exact: true,
   });
+
   await expect(trigger.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -170,7 +171,6 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
   ).toBeFocused();
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
-    exact: true,
   });
   await checkbox.click();
   await expect(checkbox).toBeChecked();
@@ -243,7 +243,6 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     await expect(glyphs).toHaveAttribute("data-mc-menu-unicode-ready", "true");
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
-    exact: true,
   });
   await checkbox.click();
   await expect(checkbox).toBeChecked();
@@ -304,7 +303,6 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
   ).toBeDisabled();
   const checkbox = page.getByRole("menuitemcheckbox", {
     name: "Show coordinates",
-    exact: true,
   });
   await checkbox.click();
   await expect(checkbox).toBeChecked();
@@ -341,17 +339,21 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
 test("Every component has a working dedicated preview and navigation", async ({
   page,
 }) => {
-  test.setTimeout(300000);
+  test.setTimeout(300_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
+
   for (const component of documentationInventory().pages) {
     await page.goto(`${origin}${component.route.slice(1)}`);
     await expect(
-      page.getByRole("heading", { name: component.title, exact: true }).first()
+      page.getByRole("heading", { exact: true, name: component.title }).first()
     ).toBeVisible();
-    if (component.playground)
+
+    if (component.playground) {
       await expect(page.locator(".documentation-playground")).toBeVisible();
+    }
   }
+
   await page.goto(`${origin}docs/components/button`);
   await page
     .locator(
@@ -363,23 +365,25 @@ test("Every component has a working dedicated preview and navigation", async ({
     "Pressed 1 time"
   );
   await page
-    .getByRole("navigation", { name: "Documentation", exact: true })
-    .getByRole("link", { name: "Checkbox", exact: true })
+    .getByRole("navigation", { exact: true, name: "Documentation" })
+    .getByRole("link", { exact: true, name: "Checkbox" })
     .click();
   const playground = page.locator(".documentation-playground");
   await playground.getByRole("checkbox", { name: "Enable shadows" }).check();
   await expect(playground.getByLabel("Checkbox value")).toHaveText("Checked");
+
   const search = page.getByRole("combobox", {
-    name: "Search documentation",
     exact: true,
+    name: "Search documentation",
   });
+
   await search.fill("Slider");
   await page
-    .getByRole("option", { name: "Slider", exact: true })
+    .getByRole("option", { exact: true, name: "Slider" })
     .first()
     .click();
   await expect(
-    page.getByRole("heading", { name: "Slider", exact: true }).first()
+    page.getByRole("heading", { exact: true, name: "Slider" }).first()
   ).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -403,13 +407,13 @@ test("Preview Label supports editable CJK text and focuses its associated field"
   await expect(
     page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "你好，世界", exact: true })
+      .getByRole("textbox", { exact: true, name: "你好，世界" })
   ).toBeVisible();
   await label.click();
   await expect(
     page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "你好，世界", exact: true })
+      .getByRole("textbox", { exact: true, name: "你好，世界" })
   ).toBeFocused();
 });
 
@@ -430,7 +434,7 @@ test("Preview Separator width control updates both original surfaces", async ({
     await expect(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name, exact: true })
+        .getByRole("separator", { exact: true, name })
     ).toHaveCSS("width", "514px");
     await expect(
       page
@@ -462,7 +466,7 @@ test("Preview ScrollArea scrolls, selects rows and locks scrolling", async ({
   ).toBeVisible();
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Scroll to top", exact: true })
+    .getByRole("button", { exact: true, name: "Scroll to top" })
     .click();
   await expect(
     page
@@ -490,6 +494,7 @@ test("Preview Progress adjusts value, original color and notch style", async ({
   page,
 }) => {
   await page.goto(`${origin}docs/components/progress`);
+
   const progress = page
     .locator(".documentation-playground")
     .getByRole("progressbar", { name: "Demo progress", exact: true });
@@ -684,7 +689,6 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
   await trigger.click();
   const dialog = page.getByRole("alertdialog", {
     name: "你好，世界",
-    exact: true,
   });
   await expect(dialog).toHaveAccessibleDescription("こんにちは 안녕하세요");
   await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(3, {
@@ -752,6 +756,7 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   page,
 }) => {
   await page.goto(`${origin}docs/components/tabs`);
+
   const world = page
     .locator(".documentation-playground")
     .getByRole("tab", { name: "World", exact: true });
@@ -763,7 +768,7 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   await expect(world).toHaveAttribute("aria-selected", "true");
   await page
     .locator(".documentation-playground")
-    .getByRole("checkbox", { name: "Generate structures", exact: true })
+    .getByRole("checkbox", { exact: true, name: "Generate structures" })
     .uncheck();
   await page
     .locator(".documentation-playground")
@@ -781,7 +786,7 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   await expect(
     page
       .locator(".documentation-playground")
-      .getByRole("tab", { name: "Game", exact: true })
+      .getByRole("tab", { exact: true, name: "Game" })
   ).toBeFocused();
   await expect(
     page
@@ -806,6 +811,7 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   page,
 }) => {
   await page.goto(`${origin}docs/components/select`);
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("combobox", { name: "Demo game mode", exact: true });
@@ -848,7 +854,7 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   );
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Select: Enabled", exact: true })
+    .getByRole("button", { exact: true, name: "Select: Enabled" })
     .click();
   await expect(trigger).toBeDisabled();
   await page
@@ -859,7 +865,7 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   await expect(
     page
       .locator(".documentation-playground")
-      .getByRole("combobox", { name: "Empty game mode", exact: true })
+      .getByRole("combobox", { exact: true, name: "Empty game mode" })
   ).toHaveText("Creative");
 });
 
@@ -867,6 +873,7 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
   page,
 }) => {
   await page.goto(`${origin}docs/components/radio-group`);
+
   const group = page
     .locator(".documentation-playground")
     .getByRole("radiogroup", { name: "Demo radio game mode", exact: true });
@@ -911,7 +918,7 @@ test("Radio Group preview supports exclusive selection, CJK labels and disabled 
   await expect(group.getByRole("radio", { checked: true })).toHaveCount(1);
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Group: Enabled", exact: true })
+    .getByRole("button", { exact: true, name: "Group: Enabled" })
     .click();
   for (const radio of await group.getByRole("radio").all())
     await expect(radio).toBeDisabled();
@@ -921,6 +928,7 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   page,
 }) => {
   await page.goto(`${origin}docs/components/switch`);
+
   const control = page
     .locator(".documentation-playground")
     .getByRole("switch", { name: "Enable clouds", exact: true });
@@ -946,13 +954,13 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   await expect(renamed).toBeChecked();
   await page
     .locator(".documentation-playground")
-    .getByRole("button", { name: "Switch: Enabled", exact: true })
+    .getByRole("button", { exact: true, name: "Switch: Enabled" })
     .click();
   await expect(renamed).toBeDisabled();
   await expect(
     page
       .locator(".documentation-playground")
-      .getByRole("switch", { name: "Locked setting", exact: true })
+      .getByRole("switch", { exact: true, name: "Locked setting" })
   ).toBeDisabled();
 });
 

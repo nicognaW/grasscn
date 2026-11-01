@@ -3,6 +3,7 @@ import { test, expect } from "@grasscn/tests/test";
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/, "/");
+
 for (const width of [320, 390, 768, 1024, 1565])
   test(`homepage examples render without overflow or runtime errors at ${width}px`, async ({
     page,
@@ -60,16 +61,17 @@ test("homepage links, search and component gallery remain connected", async ({
 }) => {
   await page.goto(origin);
   const search = page.getByRole("combobox", {
-    name: "Search documentation",
     exact: true,
+    name: "Search documentation",
   });
+
   await search.fill("Textarea");
   await page
-    .getByRole("option", { name: "Textarea", exact: true })
+    .getByRole("option", { exact: true, name: "Textarea" })
     .first()
     .click();
   await expect(
-    page.getByRole("heading", { name: "Textarea", exact: true })
+    page.getByRole("heading", { exact: true, name: "Textarea" })
   ).toBeVisible();
   await page
     .getByRole("banner")
@@ -81,8 +83,8 @@ test("homepage links, search and component gallery remain connected", async ({
     .click();
   await expect(
     page
-      .getByRole("navigation", { name: "Documentation", exact: true })
-      .getByRole("link", { name: "Button", exact: true })
+      .getByRole("navigation", { exact: true, name: "Documentation" })
+      .getByRole("link", { exact: true, name: "Button" })
   ).toBeVisible();
   await page.goBack();
   await expect(search).toBeVisible();
@@ -138,8 +140,8 @@ test("chat sends CJK, charts switch, and payout threshold can be saved", async (
   ).toHaveAttribute("aria-pressed", "true");
   const slider = page.getByRole("slider", {
     name: "Payout threshold",
-    exact: true,
   });
+
   await slider.focus();
   await slider.press("ArrowRight");
   await page
@@ -161,7 +163,7 @@ test("installation picker copies the selected real registry command", async ({
   await page.getByRole("option", { name: "card", exact: true }).click();
   await page
     .locator(".grass-install")
-    .getByRole("button", { name: "Copy", exact: true })
+    .getByRole("button", { exact: true, name: "Copy" })
     .click();
   await expect(page.locator(".grass-install").getByRole("status")).toHaveText(
     "Copied"

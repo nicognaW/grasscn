@@ -1,11 +1,7 @@
 import { readFile } from "node:fs/promises";
 
-import {
-  pixelPerfectTest as test,
-  expect,
-  type Locator,
-  type Page,
-} from "@grasscn/pixel-perfect/test";
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { Locator, Page } from "@grasscn/pixel-perfect/test";
 import { referenceFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -16,6 +12,7 @@ const origin = (
 async function focusByKeyboard(page: Page, locator: Locator) {
   for (let i = 0; i < 256; i++) {
     await page.keyboard.press("Tab");
+
     if (await locator.evaluate((element) => element === document.activeElement))
       return;
   }
@@ -121,7 +118,8 @@ for (const scale of [2]) {
     );
     const readonly = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Read-only demo input", exact: true });
+      .getByRole("textbox", { exact: true, name: "Read-only demo input" });
+
     await expect(readonly).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       readonly,
@@ -149,13 +147,15 @@ for (const scale of [2]) {
     for (const name of ["Read-only demo textarea", "Disabled demo textarea"]) {
       const field = page
         .locator(".documentation-playground")
-        .getByRole("textbox", { name, exact: true });
+        .getByRole("textbox", { exact: true, name });
+
       await expect(field).toHaveAttribute("data-mc-ready", "true");
       await nativePixels(
         field,
         `tests/reference/textarea/captures/textarea-c18-s${scale}.png`
       );
     }
+
     await page.goto(`${origin}docs/components/separator`);
 
     await nativePixels(
@@ -167,7 +167,7 @@ for (const scale of [2]) {
     await nativePixels(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name: "Menu footer separator", exact: true }),
+        .getByRole("separator", { exact: true, name: "Menu footer separator" }),
       `tests/reference/separator/captures/separator-c24-s${scale}.png`
     );
     await page.goto(`${origin}docs/components/scroll-area`);
@@ -213,13 +213,14 @@ test("Preview text fields share the native focused Input pixels", async ({
   await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
   await page.goto(`${origin}docs/components/button`);
   const fields = [
-    { path: "button", name: "Button label" },
-    { path: "input", name: "Demo input" },
-    { path: "input", name: "Find a component" },
+    { name: "Button label", path: "button" },
+    { name: "Demo input", path: "input" },
+    { name: "Find a component", path: "input" },
   ];
   // Match a captured vanilla case so preview CSS cannot add a second focus ring.
   for (const entry of fields) {
     await page.goto(`${origin}docs/components/${entry.path}`);
+
     const field = page
       .locator(".documentation-playground")
       .getByLabel(entry.name, { exact: true });

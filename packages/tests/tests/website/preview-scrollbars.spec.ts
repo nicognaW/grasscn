@@ -86,7 +86,7 @@ for (const scale of [2])
     await nested.focus();
     await nested.press("End");
     await expect
-      .poll(() => nested.evaluate((e) => e.scrollTop))
+      .poll(async () => nested.evaluate((e) => e.scrollTop))
       .toBeGreaterThan(0);
     const nav = page.locator(".minecraft-docs-sidebar nav");
     await expect(nav).toBeAttached();
@@ -117,7 +117,8 @@ test("Retired components are absent from supported catalog and served payloads",
     await request.get(new URL("r/registry.json", origin).href)
   ).json();
   expect(served.items).toHaveLength(registry.items.length);
-  await page.goto(origin + "docs");
+  await page.goto(`${origin}docs`);
+
   for (const name of [
     "Direction",
     "Toast",
