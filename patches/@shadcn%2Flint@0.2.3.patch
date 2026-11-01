@@ -1,0 +1,13 @@
+diff --git a/dist/similar.js b/dist/similar.js
+index 44b944892aa92f07a74436fd794619614fada69f..bd10b0973c481ed488a99c358b08d8b8f6abb1ea 100644
+--- a/dist/similar.js
++++ b/dist/similar.js
+@@ -1524,7 +1524,7 @@ function ownPackageOf(spec, target, imports, current) {
+ 	return dir === current ? dir : null;
+ }
+ function readTheme(cssFile, seen, read, imports, fromPackage = false, ownPackage = null) {
+-	if (seen.has(cssFile) || seen.size > 64) return;
++	if (seen.has(cssFile) || seen.size > 256) return;
+ 	seen.add(cssFile);
+ 	read.files.push(cssFile);
+ 	let css;
