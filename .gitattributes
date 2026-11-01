@@ -4,3 +4,5 @@
 # Native evidence and installation receipts pin exact file bytes.
 registry/** -text
 tests/reference/** -text
+apps/web/registry/** -text
+packages/tests/tests/reference/** -text
