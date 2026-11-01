@@ -1,0 +1,45 @@
+---
+title: Native Select
+description: A real HTML select beneath a Minecraft closed-control surface.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+A real HTML select beneath a Minecraft closed-control surface.
+
+## Preview
+
+<ComponentExample name="native-select-example" />
+
+## Usage
+
+Import `NativeSelect`, `NativeSelectOption` and `NativeSelectOptGroup` from `@/components/ui/native-select`. Use native `value`/`defaultValue` and `onChange(event)`; read `event.target.value`. The accessible name belongs on the real select.
+
+## Composition
+
+Use optgroups for related options and `name`/`required` for form submission. The ref points to the HTMLSelectElement. `wrapperProps` targets the surrounding div; native numeric `size` is excluded and only the wrapper's `size="default"` is supported. Use [Select](/docs/components/select) when a composed popup is needed.
+
+## API and accessibility
+
+The closed-control decoration is inert and aria-hidden. The OS popup and `multiple` listbox are platform UI outside Minecraft pixel claims. Scale defaults to 2; native form and keyboard behavior remain intact.
+
+See the [underlying API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select) for shared semantics.
+
+## Disabled
+
+<ComponentExample name="native-select-disabled-example" title="Disabled" />
+
+## Installation
+
+<Installation name="native-select" title="Native Select" />
+
+## Component source
+
+<ComponentSource name="native-select" title="Native Select" />
+
+## Interactive playground
+
+<InputPlayground name="native-select" />

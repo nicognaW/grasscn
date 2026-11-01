@@ -1,0 +1,45 @@
+---
+title: Slider
+description: Single-thumb volume editing with the Minecraft slider.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Single-thumb volume editing with the Minecraft slider.
+
+## Preview
+
+<ComponentExample name="slider-example" />
+
+## Usage
+
+Import `Slider` from `@/components/ui/slider`. Set `value={[50]}` or `defaultValue={[50]}` for one thumb. With neither prop, the wrapper defaults to `[min, max]`, producing two thumbs. `min` and `max` default to 0 and 100.
+
+## Composition
+
+`label` paints visible text inside the track. Also supply an accessible name with `aria-label` or `aria-labelledby`; the wrapper forwards that name to a single thumb. The example normalizes the `onValueChange(next, details)` number-or-array result into controlled array state. Honor event cancellation if adding validation. Use `onValueCommitted` for work that should happen after editing.
+
+## API and accessibility
+
+Enter or Space switches the focused handle's editing mode. Native form reset restores uncontrolled bitmap state. The retained playground exercises drag/commit and disabled state. Multi-thumb ranges and multiple accessible thumb names are web extensions outside the single-thumb native reference claim. `scale` defaults to 2.
+
+See the [underlying API](https://base-ui.com/react/components/slider) for shared semantics.
+
+## Locked volume
+
+<ComponentExample name="slider-disabled-example" title="Locked volume" />
+
+## Installation
+
+<Installation name="slider" title="Slider" />
+
+## Component source
+
+<ComponentSource name="slider" title="Slider" />
+
+## Interactive playground
+
+<InputPlayground name="slider" />

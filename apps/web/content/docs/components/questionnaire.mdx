@@ -1,0 +1,41 @@
+---
+title: Questionnaire
+description: Ordered world setup with validation, choices and submission.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Ordered world setup with validation, choices and submission.
+
+## Preview
+
+<ComponentExample name="questionnaire-example" />
+
+## Usage
+
+Import the Questionnaire parts from `@/components/ui/questionnaire`. Declare ordered `items` on the root and matching `QuestionnaireItem` names, required flags and choices. The primary example uses required single-choice mode followed by a required text answer, then reads native FormData on submit.
+
+## Composition
+
+Compose titles, choices/input, errors and navigation inside the root. `QuestionnairePrevious`, `QuestionnaireNext`, `QuestionnaireSkip` and `QuestionnaireSubmit` coordinate the primitive's active step. Set `multiple` on a choice step for checkbox answers; optional steps can be skipped. The retained world-setup playground includes optional multiple features and a freeform alternative. `shortcuts="numbers"` enables numbered choices.
+
+## API and accessibility
+
+The installed primitive is pinned to `@shadcn/react@0.3.1`; do not substitute unrelated questionnaire APIs. The root ref is an HTMLFormElement and `onSubmit` receives the native form event. Text parts accept logical `maxWidth` and alignment, scale defaults to 2. Numbered navigation and the questionnaire arrangement are web adaptations; appearance claims apply only to recorded native constituents.
+
+See the [underlying API](https://www.npmjs.com/package/@shadcn/react) for shared semantics.
+
+## Installation
+
+<Installation name="questionnaire" title="Questionnaire" />
+
+## Component source
+
+<ComponentSource name="questionnaire" title="Questionnaire" />
+
+## Interactive playground
+
+<InputPlayground name="questionnaire" />

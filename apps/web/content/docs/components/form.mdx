@@ -1,0 +1,48 @@
+---
+title: Form
+description: A copyable player/world form block with validation and reset.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+A copyable player/world form block with validation and reset.
+
+## Preview
+
+<ComponentExample name="form-example" />
+
+## Usage
+
+Install the `form` item and import its actual `FormExample` export from `@/components/form`. This is a registry block, not a library of `Form`, `FormField` or `FormProvider` primitives. The primary example runs that block, including its real validation, disabled state, save result and reset action.
+
+## Composition
+
+The block composes React Hook Form `Controller`, `zodResolver`, Zod, [Field](/docs/components/field), [Input](/docs/components/input), [Textarea](/docs/components/textarea) and Button. Keep Controller's value/onChange/ref on the input, connect error IDs with `aria-describedby` and set `aria-invalid` explicitly. It uses `noValidate` so the schema owns validation.
+
+## API and accessibility
+
+The schema requires a player name of at least two characters and a world name; notes are a string. `FieldSet` and the actual controls are both disabled. Reset uses `form.reset`. `scale` defaults to 2. Field layout, validation and save feedback are web adaptations, not a native Minecraft form screen. Manual installation includes the block and its complete helpers/resources; dependencies include react-hook-form, @hookform/resolvers and zod.
+
+See the [underlying API](https://react-hook-form.com/docs/usecontroller/controller) for shared semantics.
+
+## Validation composition
+
+<ComponentExample
+  name="field-validation-example"
+  title="Validation composition"
+/>
+
+## Installation
+
+<Installation name="form" title="Form" />
+
+## Component source
+
+<ComponentSource name="form" title="Form" />
+
+## Interactive playground
+
+<InputPlayground name="form" />

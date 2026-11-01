@@ -1,0 +1,84 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197",
+  "caseDefinitionSha256": "4e6ca061410c30339f228d7f2de42770d2e01426a1d3fc95849f5cf87fecf2fe",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "8768f07b8e9eaa6e270e9eb2d188a855220bbd56ca9e26315e8618d14c00a878"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "05706f44213350d824fd4ef77ef19b78c298bea031c6e6ed09919c09f4747174"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "ccb8a4dd5e0c66c0b2bd79789edf84f4f4b426fd947b3a59c57689f8815ff4d7"
+    }
+  ],
+  "cases": [
+    {
+      "name": "docs-slider-volume-50-s1.png",
+      "element": "slider",
+      "label": "Volume: 50%",
+      "state": "normal",
+      "value": 0.5,
+      "width": 200,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "40f5d143520e4af7a5fc327aad2cf037ed2811fda769a0ee89fdd3030c8ca944"
+    },
+    {
+      "name": "docs-slider-volume-50-s2.png",
+      "element": "slider",
+      "label": "Volume: 50%",
+      "state": "normal",
+      "value": 0.5,
+      "width": 200,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "17568a15305c6dce6430d321831d9e3dc9a96b4ae6cf21580f5966f53abcda5d"
+    },
+    {
+      "name": "docs-slider-volume-50-s3.png",
+      "element": "slider",
+      "label": "Volume: 50%",
+      "state": "normal",
+      "value": 0.5,
+      "width": 200,
+      "height": 20,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "2d8c797ea2c0558426213828fe0527c57d7de0e72fb4da51ecdcab4a904e0656"
+    }
+  ],
+  "sourceDirectory": "source"
+}

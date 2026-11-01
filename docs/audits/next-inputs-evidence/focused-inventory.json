@@ -1,0 +1,70 @@
+{
+  "collected": 16,
+  "mappedBase": 16,
+  "cases": [
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: slider"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: checkbox"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: input"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: textarea"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: select"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: radio-group"
+    },
+    {
+      "file": "docs-input-pixels.spec.ts",
+      "title": "Input docs native default: switch"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Slider docs default edits one controlled thumb"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input docs defaults preserve editing and associated control state"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Selection docs defaults resolve labels arrays and suggestions"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "OTP docs default completes the real six-character input"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Field docs implementation and manual copy select the owned file"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Form docs block validates saves and resets"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Questionnaire docs default submits ordered answers"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input family docs copy complete executable primary examples"
+    },
+    {
+      "file": "docs-inputs.spec.ts",
+      "title": "Input docs default layouts fit desktop and narrow viewports"
+    }
+  ]
+}

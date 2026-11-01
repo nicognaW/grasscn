@@ -1,0 +1,16 @@
+[
+  {
+    "name": "docs-slider-volume-50",
+    "element": "slider",
+    "label": "Volume: 50%",
+    "state": "normal",
+    "value": 0.5,
+    "width": 200,
+    "height": 20,
+    "x": 16,
+    "y": 16,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  }
+]

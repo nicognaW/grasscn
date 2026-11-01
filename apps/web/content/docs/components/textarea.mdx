@@ -1,0 +1,45 @@
+---
+title: Textarea
+description: Multiline Minecraft text entry with native textarea semantics.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Multiline Minecraft text entry with native textarea semantics.
+
+## Preview
+
+<ComponentExample name="textarea-example" />
+
+## Usage
+
+Import `Textarea` from `@/components/ui/textarea`. Use a JavaScript string containing newlines for initial multiline content. The primary example controls `value` through `onChange(event)`; `defaultValue` also works.
+
+## Composition
+
+Pair the real textarea with [Label](/docs/components/label) and connect hints/errors using `aria-describedby`. `readOnly` permits selection without editing; `disabled` prevents interaction. For a send action alongside a multiline field, use `InputGroupTextarea` with a block-end addon in [Input Group](/docs/components/input-group).
+
+## API and accessibility
+
+The default size is 200 by 80 logical pixels with vertical resizing and the original six-pixel scrollbar appearance. `spellCheck` defaults false and `autoCorrect` off. Fixed ASCII/CJK coverage does not promise arbitrary glyph or RTL fidelity; retain the complete painter/font installation.
+
+See the [underlying API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea) for shared semantics.
+
+## Read only
+
+<ComponentExample name="textarea-readonly-example" title="Read only" />
+
+## Installation
+
+<Installation name="textarea" title="Textarea" />
+
+## Component source
+
+<ComponentSource name="textarea" title="Textarea" />
+
+## Interactive playground
+
+<InputPlayground name="textarea" />
