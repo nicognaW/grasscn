@@ -220,12 +220,16 @@ test("documentation tooltip and popover open from their real focusable triggers"
   let example = page.locator(".documentation-example").first();
   await example.getByRole("tab", { name: "Preview", exact: true }).click();
   await page.keyboard.press("Tab");
+  await expect(example.getByRole("tabpanel")).toBeFocused();
+  await page.keyboard.press("Tab");
   await expect(
     example.getByRole("button", { name: "Inspect pickaxe", exact: true })
   ).toBeFocused();
-  await expect(page.getByRole("tooltip")).toContainText("Diamond Pickaxe");
+  await expect(page.locator('[data-slot="tooltip-content"]')).toContainText(
+    "Diamond Pickaxe"
+  );
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("tooltip")).toHaveCount(0);
+  await expect(page.locator('[data-slot="tooltip-content"]')).toHaveCount(0);
   await page.goto(`${origin}/docs/components/popover`);
   example = page.locator(".documentation-example").first();
   const trigger = example.getByRole("button", {
