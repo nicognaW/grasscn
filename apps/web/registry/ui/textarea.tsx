@@ -2,6 +2,7 @@
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import * as React from "react";
 import { attachMinecraftTextarea } from "./minecraft-textarea-paint";
+import "./minecraft-unifont-metrics.css";
 import "./minecraft-textarea.css";
 function Textarea({ className, scale = 2, style, ref, ...props }: React.ComponentProps<"textarea"> & {
     scale?: 1 | 2 | 3;

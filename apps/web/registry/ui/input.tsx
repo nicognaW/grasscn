@@ -3,6 +3,7 @@ import { Input as InputPrimitive } from "@base-ui/react/input";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import * as React from "react";
 import { attachMinecraftInput } from "./minecraft-input-paint";
+import "./minecraft-unifont-metrics.css";
 import "./minecraft-input.css";
 function Input({ className, type = "text", scale = 2, style, ref, ...props }: React.ComponentProps<"input"> & {
     scale?: 1 | 2 | 3;
