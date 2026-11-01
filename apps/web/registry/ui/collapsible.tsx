@@ -26,22 +26,20 @@ const Collapsible = ({
   className,
   style,
   ...props
-}: CollapsibleProps) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <Primitive.Root
-        data-slot="collapsible"
-        className={cn("mc-collapsible", className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </ScaleContext.Provider>
-  );
-};
+}: CollapsibleProps) => (
+  <ScaleContext.Provider value={scale}>
+    <Primitive.Root
+      data-slot="collapsible"
+      className={cn("mc-collapsible", className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </ScaleContext.Provider>
+);
 
 const CollapsibleTrigger = ({
   children,

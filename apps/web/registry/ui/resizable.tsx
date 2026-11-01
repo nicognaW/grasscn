@@ -17,35 +17,31 @@ const ResizablePanelGroup = ({
   ...props
 }: ResizablePrimitive.GroupProps & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <ScaleContext.Provider value={scale}>
-      <ResizablePrimitive.Group
-        data-slot="resizable-panel-group"
-        className={cn(`mc-resizable-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </ScaleContext.Provider>
-  );
-};
+}) => (
+  <ScaleContext.Provider value={scale}>
+    <ResizablePrimitive.Group
+      data-slot="resizable-panel-group"
+      className={cn(`mc-resizable-group`, className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </ScaleContext.Provider>
+);
 
 const ResizablePanel = ({
   className,
   ...props
-}: ResizablePrimitive.PanelProps) => {
-  return (
-    <ResizablePrimitive.Panel
-      data-slot="resizable-panel"
-      className={cn(`mc-resizable-panel`, className)}
-      {...props}
-    />
-  );
-};
+}: ResizablePrimitive.PanelProps) => (
+  <ResizablePrimitive.Panel
+    data-slot="resizable-panel"
+    className={cn(`mc-resizable-panel`, className)}
+    {...props}
+  />
+);
 
 const ResizableHandle = ({
   withHandle = false,

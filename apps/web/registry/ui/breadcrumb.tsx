@@ -16,48 +16,42 @@ const Breadcrumb = ({
   ...props
 }: React.ComponentProps<"nav"> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <BreadcrumbScale value={scale}>
-      <nav
-        aria-label="Breadcrumb"
-        data-slot="breadcrumb"
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </BreadcrumbScale>
-  );
-};
+}) => (
+  <BreadcrumbScale value={scale}>
+    <nav
+      aria-label="Breadcrumb"
+      data-slot="breadcrumb"
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </BreadcrumbScale>
+);
 
 const BreadcrumbList = ({
   className,
   ...props
-}: React.ComponentProps<"ol">) => {
-  return (
-    <ol
-      data-slot="breadcrumb-list"
-      className={cn(`mc-breadcrumb-list`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"ol">) => (
+  <ol
+    data-slot="breadcrumb-list"
+    className={cn(`mc-breadcrumb-list`, className)}
+    {...props}
+  />
+);
 
 const BreadcrumbItem = ({
   className,
   ...props
-}: React.ComponentProps<"li">) => {
-  return (
-    <li
-      data-slot="breadcrumb-item"
-      className={cn(`mc-breadcrumb-item`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"li">) => (
+  <li
+    data-slot="breadcrumb-item"
+    className={cn(`mc-breadcrumb-item`, className)}
+    {...props}
+  />
+);
 
 type BreadcrumbLinkProps = MinecraftPolymorphicProps<"a"> & {
   scale?: 1 | 2 | 3;

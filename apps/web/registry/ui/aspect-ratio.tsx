@@ -9,17 +9,15 @@ const AspectRatio = ({
   ...props
 }: React.ComponentProps<"div"> & {
   ratio?: number;
-}) => {
-  return (
-    <div
-      data-slot="aspect-ratio"
-      style={minecraftStyle(style, (__style) => ({
-        aspectRatio: ratio,
-        ...__style,
-      }))}
-      {...props}
-    />
-  );
-};
+}) => (
+  <div
+    data-slot="aspect-ratio"
+    style={minecraftStyle(style, (__style) => ({
+      aspectRatio: ratio,
+      ...__style,
+    }))}
+    {...props}
+  />
+);
 
 export { AspectRatio };

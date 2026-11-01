@@ -115,15 +115,13 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
   );
 };
 
-const KbdGroup = ({ className, ...props }: React.ComponentProps<"span">) => {
-  return (
-    <span
-      data-slot="kbd-group"
-      className={cn(`mc-kbd-group`, className)}
-      {...props}
-    />
-  );
-};
+const KbdGroup = ({ className, ...props }: React.ComponentProps<"span">) => (
+  <span
+    data-slot="kbd-group"
+    className={cn(`mc-kbd-group`, className)}
+    {...props}
+  />
+);
 
 export { Kbd, KbdGroup };
 

@@ -26,22 +26,20 @@ const Questionnaire = ({
   ...props
 }: React.ComponentProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <QuestionnaireScale value={scale}>
-      <Primitive.Root
-        data-slot="questionnaire"
-        className={cn(`mc-questionnaire`, className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </QuestionnaireScale>
-  );
-};
+}) => (
+  <QuestionnaireScale value={scale}>
+    <Primitive.Root
+      data-slot="questionnaire"
+      className={cn(`mc-questionnaire`, className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </QuestionnaireScale>
+);
 
 const QuestionnaireProgress = ({
   className,
@@ -74,15 +72,13 @@ const QuestionnaireProgress = ({
 const QuestionnaireItem = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Item>) => {
-  return (
-    <Primitive.Item
-      data-slot="questionnaire-item"
-      className={cn(`mc-questionnaire-item`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Item>) => (
+  <Primitive.Item
+    data-slot="questionnaire-item"
+    className={cn(`mc-questionnaire-item`, className)}
+    {...props}
+  />
+);
 
 const QuestionnaireTitle = ({
   className,
@@ -143,15 +139,13 @@ const QuestionnaireDescription = ({
 const QuestionnaireChoices = ({
   className,
   ...props
-}: React.ComponentProps<typeof Primitive.Choices>) => {
-  return (
-    <Primitive.Choices
-      data-slot="questionnaire-choices"
-      className={cn(`mc-questionnaire-choices`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<typeof Primitive.Choices>) => (
+  <Primitive.Choices
+    data-slot="questionnaire-choices"
+    className={cn(`mc-questionnaire-choices`, className)}
+    {...props}
+  />
+);
 
 const QuestionnaireChoice = ({
   children,
@@ -284,15 +278,13 @@ const QuestionnaireError = ({
 const QuestionnaireActions = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="questionnaire-actions"
-      className={cn(`mc-questionnaire-actions`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="questionnaire-actions"
+    className={cn(`mc-questionnaire-actions`, className)}
+    {...props}
+  />
+);
 
 type NavigationSkin = Pick<
   React.ComponentProps<typeof Button>,

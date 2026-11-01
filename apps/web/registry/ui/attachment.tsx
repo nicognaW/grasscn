@@ -217,15 +217,13 @@ const AttachmentDescription = ({
   );
 };
 
-const AttachmentActions = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="attachment-actions"
-      className={cn(`mc-item-actions mc-attachment-actions`, className)}
-      {...props}
-    />
-  );
-};
+const AttachmentActions = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="attachment-actions"
+    className={cn(`mc-item-actions mc-attachment-actions`, className)}
+    {...props}
+  />
+);
 
 const AttachmentAction = ({
   className,
@@ -304,15 +302,13 @@ const AttachmentTrigger = ({
   );
 };
 
-const AttachmentGroup = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="attachment-group"
-      className={cn(`mc-attachment-group`, className)}
-      {...props}
-    />
-  );
-};
+const AttachmentGroup = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="attachment-group"
+    className={cn(`mc-attachment-group`, className)}
+    {...props}
+  />
+);
 
 export {
   Attachment,

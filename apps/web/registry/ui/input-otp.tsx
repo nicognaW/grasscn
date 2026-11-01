@@ -31,35 +31,31 @@ const InputOTP = ({
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   scale?: Scale;
-}) => {
-  return (
-    <OTPStyle.Provider
-      value={{ disabled: !!props.disabled, readOnly: !!props.readOnly, scale }}
-    >
-      <OTPInput
-        spellCheck={spellCheck}
-        autoCorrect={autoCorrect}
-        data-slot="input-otp"
-        containerClassName={`mc-otp ${containerClassName ?? ""}`}
-        className={className}
-        {...props}
-      />
-    </OTPStyle.Provider>
-  );
-};
+}) => (
+  <OTPStyle.Provider
+    value={{ disabled: !!props.disabled, readOnly: !!props.readOnly, scale }}
+  >
+    <OTPInput
+      spellCheck={spellCheck}
+      autoCorrect={autoCorrect}
+      data-slot="input-otp"
+      containerClassName={`mc-otp ${containerClassName ?? ""}`}
+      className={className}
+      {...props}
+    />
+  </OTPStyle.Provider>
+);
 
 const InputOTPGroup = ({
   className,
   ...props
-}: React.ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="input-otp-group"
-      className={cn(`mc-otp-group`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"div">) => (
+  <div
+    data-slot="input-otp-group"
+    className={cn(`mc-otp-group`, className)}
+    {...props}
+  />
+);
 
 const InputOTPSlot = ({
   index,

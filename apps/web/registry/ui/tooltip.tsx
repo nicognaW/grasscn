@@ -24,25 +24,21 @@ import "./minecraft-tooltip.css";
 const TooltipProvider = ({
   delay = 0,
   ...props
-}: MinecraftProps<typeof TooltipPrimitive.Provider>) => {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delay={delay}
-      {...props}
-    />
-  );
-};
+}: MinecraftProps<typeof TooltipPrimitive.Provider>) => (
+  <TooltipPrimitive.Provider
+    data-slot="tooltip-provider"
+    delay={delay}
+    {...props}
+  />
+);
 
-const Tooltip = (props: MinecraftProps<typeof TooltipPrimitive.Root>) => {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
-};
+const Tooltip = (props: MinecraftProps<typeof TooltipPrimitive.Root>) => (
+  <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+);
 
 const TooltipTrigger = (
   props: MinecraftProps<typeof TooltipPrimitive.Trigger>
-) => {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
-};
+) => <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 
 const TooltipContent = ({
   className,

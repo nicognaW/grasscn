@@ -31,17 +31,15 @@ const DropdownMenu = ({
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </MenuScaleContext.Provider>
+);
 
-const DropdownMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal data-slot="dropdown-menu-portal" {...props} />;
-};
+const DropdownMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal data-slot="dropdown-menu-portal" {...props} />
+);
 
 const DropdownMenuTrigger = ({
   render,
@@ -272,9 +270,9 @@ const DropdownMenuContent = ({
   );
 };
 
-const DropdownMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
-  return <Primitive.Group data-slot="dropdown-menu-group" {...props} />;
-};
+const DropdownMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
+  <Primitive.Group data-slot="dropdown-menu-group" {...props} />
+);
 
 function rowChildren(
   children: React.ReactNode,
@@ -393,11 +391,7 @@ const DropdownMenuCheckboxItem = ({
 
 const DropdownMenuRadioGroup = (
   props: MinecraftProps<typeof Primitive.RadioGroup>
-) => {
-  return (
-    <Primitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />
-  );
-};
+) => <Primitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 
 const DropdownMenuRadioItem = ({
   children,
@@ -489,23 +483,19 @@ const DropdownMenuShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="dropdown-menu-shortcut"
-      className={cn("mc-menu-shortcut", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="dropdown-menu-shortcut"
+    className={cn("mc-menu-shortcut", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
 const DropdownMenuSub = (
   props: MinecraftProps<typeof Primitive.SubmenuRoot>
-) => {
-  return <Primitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
-};
+) => <Primitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
 
 const DropdownMenuSubTrigger = ({
   children,

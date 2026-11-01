@@ -319,15 +319,13 @@ const ItemDescription = ({
   );
 };
 
-const ItemActions = ({ className, ...props }: MinecraftProps<"div">) => {
-  return (
-    <div
-      data-slot="item-actions"
-      className={cn(`mc-item-actions`, className)}
-      {...props}
-    />
-  );
-};
+const ItemActions = ({ className, ...props }: MinecraftProps<"div">) => (
+  <div
+    data-slot="item-actions"
+    className={cn(`mc-item-actions`, className)}
+    {...props}
+  />
+);
 
 const ItemHeader = ({
   className,

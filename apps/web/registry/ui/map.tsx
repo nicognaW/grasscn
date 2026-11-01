@@ -328,79 +328,76 @@ const LocatorBar = ({
   className,
   style,
   ...props
-}: LocatorBarProps) => {
-  return (
-    <div
-      {...props}
-      data-slot="locator-bar"
-      role={props.role ?? "group"}
-      aria-label={props["aria-label"] ?? "Locator bar"}
-      className={cn(`mc-locator-bar`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            borderImageRepeat: "repeat",
-            borderImageSlice: "1 5 fill",
-            borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
-            borderImageWidth: `${scale}px ${5 * scale}px`,
-            height: 5 * scale,
-            width: 182 * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
-    >
-      {markers.map((marker) => {
-        const relative =
-          ((((marker.bearing - heading) % 360) + 540) % 360) - 180;
+}: LocatorBarProps) => (
+  <div
+    {...props}
+    data-slot="locator-bar"
+    role={props.role ?? "group"}
+    aria-label={props["aria-label"] ?? "Locator bar"}
+    className={cn(`mc-locator-bar`, className)}
+    style={minecraftStyle(
+      style,
+      (__style) =>
+        ({
+          "--mc-scale": scale,
+          borderImageRepeat: "repeat",
+          borderImageSlice: "1 5 fill",
+          borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
+          borderImageWidth: `${scale}px ${5 * scale}px`,
+          height: 5 * scale,
+          width: 182 * scale,
+          ...__style,
+        }) as React.CSSProperties
+    )}
+  >
+    {markers.map((marker) => {
+      const relative = ((((marker.bearing - heading) % 360) + 540) % 360) - 180;
 
-        if (relative <= -60 || relative > 60) {
-          return null;
-        }
+      if (relative <= -60 || relative > 60) {
+        return null;
+      }
 
-        const x = 87 + Math.floor((relative * 173) / 120);
+      const x = 87 + Math.floor((relative * 173) / 120);
 
-        return (
-          <button
-            type="button"
-            key={marker.id}
-            aria-label={marker.label}
-            onClick={(event) => {
-              if (!event.defaultPrevented) {
-                onMarkerSelect?.(marker.id);
-              }
-            }}
-            className="mc-locator-marker"
-            style={{
-              height: 9 * scale,
-              left: x * scale,
-              top: -2 * scale,
-              width: 9 * scale,
-            }}
-          >
-            <LocatorDot
-              shape={marker.shape ?? "default_0"}
-              color={marker.color ?? "#ffffff"}
+      return (
+        <button
+          type="button"
+          key={marker.id}
+          aria-label={marker.label}
+          onClick={(event) => {
+            if (!event.defaultPrevented) {
+              onMarkerSelect?.(marker.id);
+            }
+          }}
+          className="mc-locator-marker"
+          style={{
+            height: 9 * scale,
+            left: x * scale,
+            top: -2 * scale,
+            width: 9 * scale,
+          }}
+        >
+          <LocatorDot
+            shape={marker.shape ?? "default_0"}
+            color={marker.color ?? "#ffffff"}
+            scale={scale}
+          />
+          {marker.direction && (
+            <AdventureImage
+              texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
               scale={scale}
+              style={{
+                left: scale,
+                position: "absolute",
+                top: (marker.direction === "up" ? -4 : 8) * scale,
+              }}
             />
-            {marker.direction && (
-              <AdventureImage
-                texture={`gui/sprites/hud/locator_bar_arrow_${marker.direction}`}
-                scale={scale}
-                style={{
-                  left: scale,
-                  position: "absolute",
-                  top: (marker.direction === "up" ? -4 : 8) * scale,
-                }}
-              />
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+          )}
+        </button>
+      );
+    })}
+  </div>
+);
 
 export { MinecraftMap, LocatorBar };
 

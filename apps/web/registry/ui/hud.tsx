@@ -123,21 +123,17 @@ const HealthMeter = (
   props: MeterProps & {
     condition?: "normal" | "poisoned" | "withered" | "frozen" | "absorbing";
   }
-) => {
-  return <IconMeter {...props} kind="health" />;
-};
+) => <IconMeter {...props} kind="health" />;
 
-const ArmorMeter = (props: MeterProps) => {
-  return <IconMeter {...props} kind="armor" />;
-};
+const ArmorMeter = (props: MeterProps) => <IconMeter {...props} kind="armor" />;
 
-const HungerMeter = (props: MeterProps) => {
-  return <IconMeter {...props} kind="hunger" />;
-};
+const HungerMeter = (props: MeterProps) => (
+  <IconMeter {...props} kind="hunger" />
+);
 
-const AirMeter = (props: MeterProps) => {
-  return <IconMeter max={10} {...props} kind="air" />;
-};
+const AirMeter = (props: MeterProps) => (
+  <IconMeter max={10} {...props} kind="air" />
+);
 
 const ExperienceBar = ({
   value,

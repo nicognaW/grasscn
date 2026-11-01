@@ -35,30 +35,28 @@ const Menubar = ({
   ...props
 }: MinecraftProps<typeof MenubarPrimitive> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <MenubarPrimitive
-        data-slot="menubar"
-        className={cn("mc-menubar", className)}
-        style={minecraftStyle(
-          style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-        )}
-        {...props}
-      />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <MenubarPrimitive
+      data-slot="menubar"
+      className={cn("mc-menubar", className)}
+      style={minecraftStyle(
+        style,
+        (__style) =>
+          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      )}
+      {...props}
+    />
+  </MenuScaleContext.Provider>
+);
 
-const MenubarMenu = (props: MinecraftProps<typeof Primitive.Root>) => {
-  return <Primitive.Root {...props} />;
-};
+const MenubarMenu = (props: MinecraftProps<typeof Primitive.Root>) => (
+  <Primitive.Root {...props} />
+);
 
-const MenubarPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal data-slot="menubar-portal" {...props} />;
-};
+const MenubarPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal data-slot="menubar-portal" {...props} />
+);
 
 const MenubarTrigger = ({
   render,
@@ -290,9 +288,9 @@ const MenubarContent = ({
   );
 };
 
-const MenubarGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
-  return <Primitive.Group data-slot="menubar-group" {...props} />;
-};
+const MenubarGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
+  <Primitive.Group data-slot="menubar-group" {...props} />
+);
 
 function rowChildren(
   children: React.ReactNode,
@@ -411,9 +409,7 @@ const MenubarCheckboxItem = ({
 
 const MenubarRadioGroup = (
   props: MinecraftProps<typeof Primitive.RadioGroup>
-) => {
-  return <Primitive.RadioGroup data-slot="menubar-radio-group" {...props} />;
-};
+) => <Primitive.RadioGroup data-slot="menubar-radio-group" {...props} />;
 
 const MenubarRadioItem = ({
   children,
@@ -505,21 +501,19 @@ const MenubarShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="menubar-shortcut"
-      className={cn("mc-menu-shortcut", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="menubar-shortcut"
+    className={cn("mc-menu-shortcut", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
-const MenubarSub = (props: MinecraftProps<typeof Primitive.SubmenuRoot>) => {
-  return <Primitive.SubmenuRoot data-slot="menubar-sub" {...props} />;
-};
+const MenubarSub = (props: MinecraftProps<typeof Primitive.SubmenuRoot>) => (
+  <Primitive.SubmenuRoot data-slot="menubar-sub" {...props} />
+);
 
 const MenubarSubTrigger = ({
   children,

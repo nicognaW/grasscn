@@ -10,15 +10,13 @@ import "./minecraft-typography.css";
 
 type TypographyProps = MinecraftProseProps;
 
-const Typography = ({ className, ...props }: TypographyProps) => {
-  return (
-    <MinecraftProse
-      data-slot="typography"
-      className={cn(`mc-typography`, className)}
-      {...props}
-    />
-  );
-};
+const Typography = ({ className, ...props }: TypographyProps) => (
+  <MinecraftProse
+    data-slot="typography"
+    className={cn(`mc-typography`, className)}
+    {...props}
+  />
+);
 
 const textElement = (as: keyof React.JSX.IntrinsicElements, slot: string) =>
   function Text({ className, ...props }: TypographyProps) {
@@ -44,28 +42,24 @@ const TypographyMuted = textElement("p", "typography-muted");
 const TypographyList = ({
   className,
   ...props
-}: React.ComponentProps<"ul">) => {
-  return (
-    <ul
-      data-slot="typography-list"
-      className={cn(`mc-typography-list`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"ul">) => (
+  <ul
+    data-slot="typography-list"
+    className={cn(`mc-typography-list`, className)}
+    {...props}
+  />
+);
 
 const TypographyTable = ({
   className,
   ...props
-}: React.ComponentProps<"table">) => {
-  return (
-    <table
-      data-slot="typography-table"
-      className={cn(`mc-typography-table`, className)}
-      {...props}
-    />
-  );
-};
+}: React.ComponentProps<"table">) => (
+  <table
+    data-slot="typography-table"
+    className={cn(`mc-typography-table`, className)}
+    {...props}
+  />
+);
 
 export {
   Typography,

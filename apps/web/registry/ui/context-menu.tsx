@@ -30,23 +30,19 @@ const ContextMenu = ({
   ...props
 }: MinecraftProps<typeof Primitive.Root> & {
   scale?: 1 | 2 | 3;
-}) => {
-  return (
-    <MenuScaleContext.Provider value={scale}>
-      <Primitive.Root {...props} />
-    </MenuScaleContext.Provider>
-  );
-};
+}) => (
+  <MenuScaleContext.Provider value={scale}>
+    <Primitive.Root {...props} />
+  </MenuScaleContext.Provider>
+);
 
-const ContextMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => {
-  return <Primitive.Portal data-slot="context-menu-portal" {...props} />;
-};
+const ContextMenuPortal = (props: MinecraftProps<typeof Primitive.Portal>) => (
+  <Primitive.Portal data-slot="context-menu-portal" {...props} />
+);
 
 const ContextMenuTrigger = (
   props: MinecraftProps<typeof Primitive.Trigger>
-) => {
-  return <Primitive.Trigger data-slot="context-menu-trigger" {...props} />;
-};
+) => <Primitive.Trigger data-slot="context-menu-trigger" {...props} />;
 
 function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
@@ -259,9 +255,9 @@ const ContextMenuContent = ({
   );
 };
 
-const ContextMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
-  return <Primitive.Group data-slot="context-menu-group" {...props} />;
-};
+const ContextMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
+  <Primitive.Group data-slot="context-menu-group" {...props} />
+);
 
 function rowChildren(
   children: React.ReactNode,
@@ -380,11 +376,7 @@ const ContextMenuCheckboxItem = ({
 
 const ContextMenuRadioGroup = (
   props: MinecraftProps<typeof Primitive.RadioGroup>
-) => {
-  return (
-    <Primitive.RadioGroup data-slot="context-menu-radio-group" {...props} />
-  );
-};
+) => <Primitive.RadioGroup data-slot="context-menu-radio-group" {...props} />;
 
 const ContextMenuRadioItem = ({
   children,
@@ -476,23 +468,19 @@ const ContextMenuShortcut = ({
   children,
   className,
   ...props
-}: MinecraftProps<"span">) => {
-  return (
-    <span
-      data-slot="context-menu-shortcut"
-      className={cn("mc-menu-shortcut", className)}
-      {...props}
-    >
-      {menuTextNodes(children)}
-    </span>
-  );
-};
+}: MinecraftProps<"span">) => (
+  <span
+    data-slot="context-menu-shortcut"
+    className={cn("mc-menu-shortcut", className)}
+    {...props}
+  >
+    {menuTextNodes(children)}
+  </span>
+);
 
 const ContextMenuSub = (
   props: MinecraftProps<typeof Primitive.SubmenuRoot>
-) => {
-  return <Primitive.SubmenuRoot data-slot="context-menu-sub" {...props} />;
-};
+) => <Primitive.SubmenuRoot data-slot="context-menu-sub" {...props} />;
 
 const ContextMenuSubTrigger = ({
   children,
