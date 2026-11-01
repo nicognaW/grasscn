@@ -18,7 +18,7 @@ interface ReportSpec extends Omit<JSONReportSuite["specs"][number], "tests"> {
 
 interface ReportSuite extends Omit<JSONReportSuite, "specs" | "suites"> {
   specs: ReportSpec[];
-  suites: ReportSuite[];
+  suites?: ReportSuite[];
 }
 
 interface CollectionReport extends Omit<JSONReport, "suites"> {
