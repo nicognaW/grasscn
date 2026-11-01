@@ -20,11 +20,15 @@ const isTitleImage = (value: unknown): value is StaticImageData =>
   "height" in value &&
   typeof value.height === "number";
 
-const titleSource: unknown = title;
+const titleSource = (() => {
+  const asset: unknown = title;
 
-if (!isTitleImage(titleSource)) {
-  throw new Error("Bundled title image metadata required");
-}
+  if (!isTitleImage(asset)) {
+    throw new Error("Bundled title image metadata required");
+  }
+
+  return asset;
+})();
 
 const splash = "Now with components!";
 const splashWidth = Array.from(splash).reduce(
