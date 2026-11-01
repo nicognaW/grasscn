@@ -5,7 +5,13 @@ import { createRequire } from "node:module";
 import { createServer } from "node:net";
 import path from "node:path";
 
-/** @param {import("node:crypto").BinaryLike} bytes */
+import {
+  isPackageMetadata,
+  isInstalledMetadata,
+  isMissingFileError,
+} from "./consumer-metadata.ts";
+
+/** @param {import("node:crypto").BinaryLike} bytes - Exact bytes to hash. */
 export const sha256 = (bytes) =>
   createHash("sha256").update(bytes).digest("hex");
 
@@ -22,10 +28,11 @@ const within = (child, parent) => {
 };
 
 /** @param {string} project @param {string[]} excludedRoots */
-export async function assertExternalProject(project, excludedRoots) {
+export const assertExternalProject = async (project, excludedRoots) => {
   const resolved = await realpath(project);
 
   for (const root of excludedRoots) {
+    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const excluded = await realpath(root);
     assert.ok(
       !within(resolved, excluded) && !within(excluded, resolved),
@@ -39,28 +46,28 @@ export async function assertExternalProject(project, excludedRoots) {
   );
 
   return resolved;
-}
+};
 
 /** @param {NodeJS.ProcessEnv} [environment] @returns {NodeJS.ProcessEnv} */
-export function consumerEnvironment(environment = process.env) {
-  return {
-    ...environment,
-    CI: "true",
-    NEXT_TELEMETRY_DISABLED: "1",
-    NODE_PATH: "",
-    SHADCN_TELEMETRY_DISABLED: "1",
-  };
-}
+export const consumerEnvironment = (environment = process.env) => ({
+  ...environment,
+  CI: "true",
+  NEXT_TELEMETRY_DISABLED: "1",
+  NODE_PATH: "",
+  SHADCN_TELEMETRY_DISABLED: "1",
+});
 
-/** @param {number} port */
-export async function assertConsumerPortAvailable(port) {
+/** @param {number} port - Required unoccupied loopback port. */
+export const assertConsumerPortAvailable = async (port) => {
   const probe = createServer();
+  // oxlint-disable-next-line promise/avoid-new -- Bridge the callback-only net.Server lifecycle without leaving an occupied test port.
   await new Promise((resolve, reject) => {
     probe.once("error", reject);
     probe.listen(port, "127.0.0.1", () => {
       resolve(undefined);
     });
   });
+  // oxlint-disable-next-line promise/avoid-new -- Bridge the callback-only net.Server lifecycle without leaving an occupied test port.
   await new Promise((resolve, reject) => {
     probe.close((error) => {
       if (error) {
@@ -70,10 +77,10 @@ export async function assertConsumerPortAvailable(port) {
       }
     });
   });
-}
+};
 
 /** @param {string} project @returns {Promise<Record<string, {path: string, version: string, packageSha256: string}>>} */
-export async function assertIndependentDependencies(project) {
+export const assertIndependentDependencies = async (project) => {
   const consumer = await realpath(project);
 
   /** @type {unknown} */
@@ -82,23 +89,10 @@ export async function assertIndependentDependencies(project) {
   );
 
   assert.ok(
-    packageData !== null && typeof packageData === "object",
-    "Consumer package metadata must be an object"
+    isPackageMetadata(packageData),
+    "Consumer package dependencies must map package names to versions"
   );
-  const dependencies =
-    "dependencies" in packageData ? packageData.dependencies : undefined;
-  const devDependencies =
-    "devDependencies" in packageData ? packageData.devDependencies : undefined;
-  assert.ok(
-    dependencies === undefined ||
-      (dependencies !== null && typeof dependencies === "object"),
-    "Consumer dependencies must be an object"
-  );
-  assert.ok(
-    devDependencies === undefined ||
-      (devDependencies !== null && typeof devDependencies === "object"),
-    "Consumer devDependencies must be an object"
-  );
+  const { dependencies, devDependencies } = packageData;
   const require = createRequire(path.join(consumer, "package.json"));
   const ownedModules = path.join(consumer, "node_modules");
 
@@ -110,16 +104,11 @@ export async function assertIndependentDependencies(project) {
     let ancestorModules = false;
 
     try {
-      ancestorModules = (
-        await stat(path.join(ancestor, "node_modules"))
-      ).isDirectory();
+      // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+      const ancestorStat = await stat(path.join(ancestor, "node_modules"));
+      ancestorModules = ancestorStat.isDirectory();
     } catch (error) {
-      if (
-        typeof error !== "object" ||
-        error === null ||
-        !("code" in error) ||
-        error.code !== "ENOENT"
-      ) {
+      if (!isMissingFileError(error)) {
         throw error;
       }
     }
@@ -140,7 +129,7 @@ export async function assertIndependentDependencies(project) {
   for (const name of Object.keys({
     ...dependencies,
     ...devDependencies,
-  }).sort()) {
+  }).toSorted()) {
     let resolved;
 
     try {
@@ -149,6 +138,7 @@ export async function assertIndependentDependencies(project) {
       resolved = require.resolve(name);
     }
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const physical = await realpath(resolved);
     assert.ok(
       within(physical, ownedModules),
@@ -158,20 +148,12 @@ export async function assertIndependentDependencies(project) {
 
     while (within(directory, ownedModules)) {
       try {
+        // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
         const bytes = await readFile(path.join(directory, "package.json"));
         /** @type {unknown} */
         const installed = JSON.parse(bytes.toString("utf-8"));
 
-        if (
-          installed !== null &&
-          typeof installed === "object" &&
-          "name" in installed &&
-          installed.name === name
-        ) {
-          assert.ok(
-            "version" in installed && typeof installed.version === "string",
-            "Installed package version must be a string"
-          );
+        if (isInstalledMetadata(installed) && installed.name === name) {
           identities[name] = {
             packageSha256: sha256(bytes),
             path: physical,
@@ -179,7 +161,9 @@ export async function assertIndependentDependencies(project) {
           };
           break;
         }
-      } catch {}
+      } catch {
+        /* Missing candidates are expected while walking package/import resolution. */
+      }
 
       directory = path.dirname(directory);
     }
@@ -191,24 +175,25 @@ export async function assertIndependentDependencies(project) {
   }
 
   return identities;
-}
+};
 
 /** @param {string} directory @param {Set<string>} [skipped] @returns {Promise<{sha256: string, files: Record<string, string>}>} */
-export async function directoryIdentity(
+export const directoryIdentity = async (
   directory,
   skipped = new Set(["node_modules", ".next", "dist", ".git"])
-) {
+) => {
   /** @type {Record<string,string>} */
   const files = {};
 
   /** @param {string} relative @returns {Promise<void>} */
-  async function visit(relative) {
+  const visit = async (relative) => {
     for (const entry of await readdir(path.join(directory, relative), {
       withFileTypes: true,
     })) {
       if (skipped.has(entry.name)) {
         continue;
       }
+
       const filename = path.join(relative, entry.name);
       assert.ok(
         !entry.isSymbolicLink(),
@@ -216,19 +201,28 @@ export async function directoryIdentity(
       );
 
       if (entry.isDirectory()) {
+        // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
         await visit(filename);
       } else if (entry.isFile()) {
         files[filename.replaceAll(path.sep, "/")] = sha256(
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
           await readFile(path.join(directory, filename))
         );
       }
     }
-  }
+  };
 
   await visit("");
 
   return {
     files,
-    sha256: sha256(JSON.stringify(Object.entries(files).toSorted(([first], [second]) => first.localeCompare(second)))),
+    sha256: sha256(
+      JSON.stringify(
+        Object.entries(files).toSorted(([first], [second]) => {
+          if (first < second) return -1;
+          return Number(first > second);
+        })
+      )
+    ),
   };
-}
+};
