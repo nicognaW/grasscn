@@ -1,4 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordAudioSources,
+  recordedAudioSources,
+} from "@tests/harness/audio-playback";
 
 test("Command filters keywords and CJK while preserving real input and refs", async ({
   page,
@@ -87,19 +91,12 @@ test("Command Dialog has accessible text, modal focus and Escape dismissal", asy
 test("Command input and selection stay silent like native command suggestions", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioSources(page);
   await page.goto("/?component=command");
   const input = page.getByRole("combobox");
   await input.fill("stone");
   await input.press("Enter");
   await page.getByRole("option").hover();
   await page.getByRole("option").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await recordedAudioSources(page)).toEqual([]);
 });

@@ -30,6 +30,10 @@ interface PitchedPlaybackFixture {
   sounds: RecordedPitchedPlayback[];
 }
 
+interface AudioSourceFixture {
+  sounds: string[];
+}
+
 /** Register before navigation so every document starts with an empty audio trace. */
 export const recordAudioPlayback = async (page: Page) => {
   await page.addInitScript(() => {
@@ -108,6 +112,29 @@ export const recordedPitchedPlayback = async (page: Page) =>
     // SAFETY: recordPitchedPlayback installs this pitch/source/volume trace on each document.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned pitched-playback installation.
     const fixture = window as Window & PitchedPlaybackFixture;
+
+    return fixture.sounds;
+  });
+
+/** Source-only traces retain the silence assertions without inventing media fields. */
+export const recordAudioSources = async (page: Page) => {
+  await page.addInitScript(() => {
+    const recordings: string[] = [];
+    const fixture = Object.assign(window, { sounds: recordings });
+
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      fixture.sounds.push(this.src);
+
+      return Promise.resolve();
+    };
+  });
+};
+
+export const recordedAudioSources = async (page: Page) =>
+  await page.evaluate(() => {
+    // SAFETY: recordAudioSources installs this source-only trace before the tested document loads.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned source trace.
+    const fixture = window as Window & AudioSourceFixture;
 
     return fixture.sounds;
   });
