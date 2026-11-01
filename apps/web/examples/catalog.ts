@@ -1,3 +1,4 @@
+import { minecraftExamples } from "./minecraft/catalog";
 import { buttonExamples } from "./button/catalog";
 import { chartExamples } from "./charts/catalog";
 import type { ExampleDefinition } from "./definition";
@@ -12,4 +13,5 @@ export const examples: Readonly<Record<string, ExampleDefinition>> = {
   ...chartExamples,
   ...layoutExamples,
   ...overlayExamples,
+  ...minecraftExamples,
 };

@@ -1,0 +1,46 @@
+---
+title: Trading
+description: Selectable merchant offers with caller-owned trade effects.
+aliases: [Trading, TradeItem, TradeOffer, TradingProps]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Selectable merchant offers with caller-owned trade effects.
+
+## Preview
+
+<ComponentExample name="trading-example" />
+
+## Usage
+
+Import `Trading` and `TradeOffer` from `@/components/ui/trading`. Every offer needs `id`, `label`, `cost` and `result`; each item supplies its own `label` and `icon`, with optional `count`. The primary example embeds the original 16 by 16 emerald and bread PNGs as data URLs, with explicit pixelated sizing. No hidden demo asset helper or network icon service is required.
+
+`onTrade` receives the selected offer ID. The example increments an application counter; the component does not subtract currency, transfer inventory, enforce ownership or persist transactions.
+
+## Composition
+
+Use `secondCost` for another input and `inStock={false}` to disable the result. Selection uses `selectedId`/`onSelectedIdChange` or `defaultSelectedId`. Scrolling uses `scrollOffset`/`onScrollOffsetChange` or `defaultScrollOffset`; at most seven offer rows are visible. Provide your own `inventory` React content for the inventory area.
+
+Offer buttons expose pressed selection and result buttons have item names. The scrollbar supports arrows, PageUp/PageDown, Home/End and pointer drag; the root normalizes wheel input. Successful result activation requests the retained trade sound. At scale 2 the 276 by 166 logical-pixel screen needs 552 browser pixels; keep the supplied overflow wrapper in narrow layouts.
+
+## Installation
+
+<Installation name="trading" title="Trading" />
+
+## Component source
+
+<ComponentSource name="trading" title="Trading" />
+
+## Interactive playground
+
+<MinecraftPlayground name="trading" />
+
+## Verified coverage and limitations
+
+The one-offer Bread example is different content from the nine-diamond native reference. Original screen assets and declared scrollbar rules are retained, but arbitrary icons, quantities, second inputs, inventory content, discounts and merchant progression need their own matching evidence. Inventory mutation is application behavior.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.
