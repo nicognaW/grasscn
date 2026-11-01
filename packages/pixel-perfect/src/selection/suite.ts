@@ -5,17 +5,121 @@ import { fileURLToPath } from "node:url";
 
 import { normalizeCasePath, relativeCaseFile } from "@grasscn/tests/case-paths";
 import { packageBin } from "@grasscn/tests/tooling";
+import type { JSONReport, JSONReportSuite } from "@playwright/test/reporter";
 import { repoRoot } from "@ppt/paths";
+
+type ReportTest = JSONReportSuite["specs"][number]["tests"][number] & {
+  testId?: string;
+};
+
+interface ReportSpec extends Omit<JSONReportSuite["specs"][number], "tests"> {
+  tests: ReportTest[];
+}
+
+interface ReportSuite extends Omit<JSONReportSuite, "specs" | "suites"> {
+  specs: ReportSpec[];
+  suites: ReportSuite[];
+}
+
+interface CollectionReport extends Omit<JSONReport, "suites"> {
+  suites: ReportSuite[];
+}
+
+export interface CaseIdentity {
+  file: string;
+  titlePath: string[];
+}
+
+export interface BrowserCase extends CaseIdentity {
+  id: string;
+  package: "pixel-perfect" | "tests";
+  projectName: string;
+}
+
+interface BaseEvidence {
+  kind: string;
+  reason: string;
+  route?: string;
+  url?: string;
+  upstreamTest?: string;
+}
+
+export interface BaseCase extends CaseIdentity {
+  title: string;
+  components: string[];
+  evidence: BaseEvidence;
+}
+
+interface BaseCatalogue {
+  schemaVersion: number;
+  cases: BaseCase[];
+}
 
 export const browserRoot = fileURLToPath(new URL("../..", import.meta.url));
 const suiteConfig = path.join(browserRoot, "playwright.config.ts");
 const cli = packageBin("@playwright/test", "playwright");
 const catalogueFile = path.join(browserRoot, "src/selection/base-cases.json");
-const escape = (value) => value.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
-export const caseKey = (test) => JSON.stringify([test.file, test.titlePath]);
 
-export function baseCatalogue() {
-  const data = JSON.parse(fs.readFileSync(catalogueFile, "utf-8"));
+const isBaseTitle = (title: unknown): title is string =>
+  typeof title === "string" && !/[\r\n]/u.test(title);
+
+const escape = (value: string) =>
+  value.replaceAll(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+
+export const caseKey = (test: CaseIdentity) =>
+  JSON.stringify([test.file, test.titlePath]);
+
+const assertBaseIdentity = (test: BaseCase) => {
+  if (
+    normalizeCasePath(test.file) !== test.file ||
+    !/\.spec\.(?:ts|js)$/u.test(test.file) ||
+    !test.title ||
+    !Array.isArray(test.titlePath) ||
+    !test.titlePath.length ||
+    test.titlePath.some((title) => !isBaseTitle(title)) ||
+    test.titlePath.at(-1) !== test.title
+  ) {
+    throw new Error("Invalid Base case identity");
+  }
+};
+
+const assertBaseEvidence = (test: BaseCase) => {
+  const { evidence } = test;
+
+  if (
+    !evidence?.reason ||
+    !test.components?.length ||
+    !["website-default", "shadcn-test"].includes(evidence.kind)
+  ) {
+    throw new Error(`Missing Base evidence: ${test.title}`);
+  }
+
+  if (
+    evidence.kind === "website-default" &&
+    evidence.route?.startsWith("/") !== true
+  ) {
+    throw new Error(`Missing website route: ${test.title}`);
+  }
+
+  if (
+    evidence.kind === "shadcn-test" &&
+    (!/^https:\/\/github\.com\/shadcn-ui\/ui\/blob\/[a-f0-9]{40}\//u.test(
+      evidence.url ?? ""
+    ) ||
+      evidence.upstreamTest === undefined ||
+      evidence.upstreamTest === "")
+  ) {
+    throw new Error(`Missing actual shadcn-test mapping: ${test.title}`);
+  }
+};
+
+export const baseCatalogue = () => {
+  // SAFETY: this owner reads its versioned Base catalogue and retains every
+  // existing identity/evidence check below; the assertion adds no runtime parsing.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Owner catalogue contract; existing checks are preserved.
+  const data = JSON.parse(
+    fs.readFileSync(catalogueFile, "utf-8")
+  ) as BaseCatalogue;
 
   if (
     data.schemaVersion !== 1 ||
@@ -28,19 +132,7 @@ export function baseCatalogue() {
   const keys = new Set();
 
   for (const test of data.cases) {
-    if (
-      normalizeCasePath(test.file) !== test.file ||
-      !/\.spec\.(ts|js)$/.test(test.file) ||
-      !test.title ||
-      !Array.isArray(test.titlePath) ||
-      !test.titlePath.length ||
-      test.titlePath.some(
-        (title) => typeof title !== "string" || /[\r\n]/.test(title)
-      ) ||
-      test.titlePath.at(-1) !== test.title
-    ) {
-      throw new Error("Invalid Base case identity");
-    }
+    assertBaseIdentity(test);
 
     const key = caseKey(test);
 
@@ -49,70 +141,33 @@ export function baseCatalogue() {
     }
 
     keys.add(key);
-    const { evidence } = test;
-
-    if (
-      !evidence?.reason ||
-      !test.components?.length ||
-      !["website-default", "shadcn-test"].includes(evidence.kind)
-    ) {
-      throw new Error(`Missing Base evidence: ${test.title}`);
-    }
-
-    if (
-      evidence.kind === "website-default" &&
-      !evidence.route?.startsWith("/")
-    ) {
-      throw new Error(`Missing website route: ${test.title}`);
-    }
-
-    if (
-      evidence.kind === "shadcn-test" &&
-      (!/^https:\/\/github\.com\/shadcn-ui\/ui\/blob\/[a-f0-9]{40}\//.test(
-        evidence.url ?? ""
-      ) ||
-        !evidence.upstreamTest)
-    ) {
-      throw new Error(`Missing actual shadcn-test mapping: ${test.title}`);
-    }
+    assertBaseEvidence(test);
   }
 
   return data.cases;
-}
+};
 
-export function baseGrep() {
-  // Playwright's grep subject is project, file, describe titles and test title,
-  // separated by spaces. The catalogue selects leaf cases, never whole files.
-  return new RegExp(
+// Playwright's grep subject is project, file, describe titles and test title,
+// separated by spaces. The catalogue selects leaf cases, never whole files.
+export const baseGrep = () =>
+  new RegExp(
     baseCatalogue()
       .map(
         (test) =>
           `(?:^|[ /\\\\])${test.file.split("/").map(escape).join("[\\\\/]")} ${escape(test.titlePath.join(" "))}$`
       )
-      .join("|")
+      .join("|"),
+    "u"
   );
-}
 
-export function flattenBrowserReport(report) {
-  const cases = [];
+export const flattenBrowserReport = (report: CollectionReport) => {
+  const cases: BrowserCase[] = [];
 
-  function visit(suite, file, titles) {
-    const isFile = Boolean(suite.file) && !file;
-
-    const currentFile = isFile
-      ? relativeCaseFile(
-          report.config?.rootDir ?? path.join(browserRoot, "tests"),
-          path.resolve(
-            report.config?.rootDir ?? path.join(browserRoot, "tests"),
-            suite.file
-          )
-        )
-      : file;
-
-    const currentTitles = isFile
-      ? []
-      : [...titles, ...(suite.title ? [suite.title] : [])];
-
+  const appendSpecs = (
+    suite: ReportSuite,
+    currentFile: string,
+    currentTitles: string[]
+  ) => {
     for (const spec of suite.specs ?? []) {
       for (const test of spec.tests ?? []) {
         const source = path.resolve(
@@ -139,20 +194,44 @@ export function flattenBrowserReport(report) {
         });
       }
     }
+  };
+
+  const visit = (
+    suite: ReportSuite,
+    file: string | undefined,
+    titles: string[]
+  ) => {
+    const isFile = suite.file !== "" && (file === undefined || file === "");
+
+    const currentFile = isFile
+      ? relativeCaseFile(
+          report.config?.rootDir ?? path.join(browserRoot, "tests"),
+          path.resolve(
+            report.config?.rootDir ?? path.join(browserRoot, "tests"),
+            suite.file
+          )
+        )
+      : file;
+
+    const currentTitles = isFile
+      ? []
+      : [...titles, ...(suite.title ? [suite.title] : [])];
+
+    appendSpecs(suite, currentFile, currentTitles);
 
     for (const child of suite.suites ?? []) {
       visit(child, currentFile, currentTitles);
     }
-  }
+  };
 
   for (const suite of report.suites ?? []) {
     visit(suite, undefined, []);
   }
 
   return cases;
-}
+};
 
-function withoutReporter(args) {
+const withoutReporter = (args: string[]) => {
   const result = [];
 
   for (let index = 0; index < args.length; index += 1) {
@@ -169,7 +248,7 @@ function withoutReporter(args) {
       continue;
     }
 
-    if (/^--(ui|debug)(=|$)/.test(args[index])) {
+    if (/^--(?:ui|debug)(?:=|$)/u.test(args[index])) {
       throw new Error(
         "Interactive execution is not supported by the browser selection guard"
       );
@@ -179,12 +258,12 @@ function withoutReporter(args) {
   }
 
   return result;
-}
+};
 
-export function collectBrowserCases(
-  args = [],
-  { effectiveSelection = false } = {}
-) {
+export const collectBrowserCases = (
+  args: string[] = [],
+  { effectiveSelection = false }: { effectiveSelection?: boolean } = {}
+) => {
   const result = spawnSync(
     process.execPath,
     [
@@ -216,10 +295,13 @@ export function collectBrowserCases(
     throw result.error;
   }
 
-  let report;
+  let report: CollectionReport;
 
   try {
-    report = JSON.parse(result.stdout);
+    // SAFETY: stdout is produced by this invocation's Playwright JSON reporter;
+    // parse failures and reporter errors retain their existing failure paths.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Playwright JSON reporter contract.
+    report = JSON.parse(result.stdout) as CollectionReport;
   } catch {
     throw new Error(
       `Browser collection failed: ${result.stderr || result.stdout}`
@@ -233,9 +315,9 @@ export function collectBrowserCases(
   }
 
   return flattenBrowserReport(report);
-}
+};
 
-export function classifyBrowserCases(cases) {
+export const classifyBrowserCases = (cases: BrowserCase[]) => {
   if (cases.some((test) => test.package !== "pixel-perfect")) {
     throw new Error(
       "Base/Full classification accepts only PPT cases; non-PPT tests run normally"
@@ -243,7 +325,7 @@ export function classifyBrowserCases(cases) {
   }
 
   const catalogue = baseCatalogue();
-  const selected = new Map();
+  const selected = new Map<string, BaseCase>();
 
   for (const entry of catalogue) {
     const matches = cases.filter((test) => caseKey(test) === caseKey(entry));
@@ -262,9 +344,9 @@ export function classifyBrowserCases(cases) {
     evidence: selected,
     full: cases.filter((test) => !selected.has(caseKey(test))),
   };
-}
+};
 
-export function assertBaseExecution(cases) {
+export const assertBaseExecution = (cases: BrowserCase[]) => {
   if (cases.some((test) => test.package !== "pixel-perfect")) {
     throw new Error(
       "The PPT selector cannot execute non-PPT cases; use packages/tests"
@@ -279,9 +361,10 @@ export function assertBaseExecution(cases) {
       `Full PPTs are not authorized by an ordinary PPT command (${full.length} selected). Use an approved Full run issue and its independent execution session.`
     );
   }
-}
+};
 
-export async function main(args = process.argv.slice(2)) {
+export const main = async (inputArgs = process.argv.slice(2)) => {
+  let args = inputArgs;
   const command = args.shift() ?? "run";
 
   if (args.includes("--behavior")) {
@@ -300,12 +383,13 @@ export async function main(args = process.argv.slice(2)) {
     const pool = collectBrowserCases();
     const partition = classifyBrowserCases(pool);
 
-    const cases =
-      mode === "--all"
-        ? pool
-        : mode === "--full"
-          ? partition.full
-          : partition.base;
+    let cases = partition.base;
+
+    if (mode === "--all") {
+      cases = pool;
+    } else if (mode === "--full") {
+      cases = partition.full;
+    }
 
     const summary = {
       base: partition.base.length,
@@ -335,7 +419,7 @@ export async function main(args = process.argv.slice(2)) {
     );
   }
 
-  if (args.some((arg) => /^--test-list(?:=|$)/.test(arg))) {
+  if (args.some((arg) => /^--test-list(?:=|$)/u.test(arg))) {
     throw new Error(
       "The Base runner owns --test-list; use file or --grep filters within Base tests"
     );
@@ -343,7 +427,7 @@ export async function main(args = process.argv.slice(2)) {
 
   const { foregroundLease } = await import("@grasscn/tests/coordination");
   const releaseForeground = foregroundLease();
-  let selection;
+  let selection: string | undefined;
 
   try {
     const { base } = classifyBrowserCases(collectBrowserCases());
@@ -383,17 +467,22 @@ export async function main(args = process.argv.slice(2)) {
 
     process.exitCode = result.status ?? 1;
   } finally {
-    if (selection) {
+    if (selection !== undefined && selection !== "") {
       fs.rmSync(selection, { force: true });
     }
 
     releaseForeground();
   }
-}
+};
 
 if (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename) {
-  main().catch((error) => {
-    console.error(error.message);
+  try {
+    await main();
+  } catch (error) {
+    // SAFETY: main's failure paths throw Error instances from owned checks or Node APIs.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Owned CLI Error contract.
+    const failure = error as Error;
+    console.error(failure.message);
     process.exitCode = 1;
-  });
+  }
 }

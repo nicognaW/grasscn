@@ -36,9 +36,13 @@ function compare(expected: PNG, actual: PNG) {
     const mismatch = left[i] !== right[i];
     mismatchedPixels += Number(mismatch);
     const offset = i * 4;
-    diff.data[offset] = mismatch ? 255 : expected.data[offset] >> 2;
-    diff.data[offset + 1] = mismatch ? 0 : expected.data[offset + 1] >> 2;
-    diff.data[offset + 2] = mismatch ? 255 : expected.data[offset + 2] >> 2;
+    diff.data[offset] = mismatch ? 255 : Math.floor(expected.data[offset] / 4);
+    diff.data[offset + 1] = mismatch
+      ? 0
+      : Math.floor(expected.data[offset + 1] / 4);
+    diff.data[offset + 2] = mismatch
+      ? 255
+      : Math.floor(expected.data[offset + 2] / 4);
     diff.data[offset + 3] = 255;
   }
 

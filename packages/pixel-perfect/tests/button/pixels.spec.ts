@@ -73,9 +73,9 @@ for (const reference of manifest.cases) {
         differs
           ? [255, 0, 255, 255]
           : [
-              expected.data[i] >> 2,
-              expected.data[i + 1] >> 2,
-              expected.data[i + 2] >> 2,
+              Math.floor(expected.data[i] / 4),
+              Math.floor(expected.data[i + 1] / 4),
+              Math.floor(expected.data[i + 2] / 4),
               255,
             ],
         i

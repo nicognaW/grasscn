@@ -1,4 +1,4 @@
-import { main } from "@ppt/selection/suite.mjs";
+import { main } from "@ppt/selection/suite";
 
 main(["run", ...process.argv.slice(2)]).catch((error) => {
   console.error(error.message);

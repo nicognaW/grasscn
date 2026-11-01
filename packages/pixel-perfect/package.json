@@ -5,7 +5,7 @@
   "type": "module",
   "exports": {
     "./test": "./src/harness/test.ts",
-    "./suite": "./src/selection/suite.mjs"
+    "./suite": "./src/selection/suite.ts"
   },
   "scripts": {
     "test": "bun cli/test.mjs",

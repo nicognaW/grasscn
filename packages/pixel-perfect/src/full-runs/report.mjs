@@ -12,7 +12,7 @@ import {
   readRunState,
   readRunAttempts,
 } from "@ppt/full-runs/run.mjs";
-import { caseKey } from "@ppt/selection/suite.mjs";
+import { caseKey } from "@ppt/selection/suite";
 
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;

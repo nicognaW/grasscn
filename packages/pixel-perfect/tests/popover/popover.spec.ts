@@ -23,9 +23,9 @@ function compare(expected: PNG, actual: PNG) {
       mismatch
         ? [255, 0, 255, 255]
         : [
-            expected.data[at] >> 2,
-            expected.data[at + 1] >> 2,
-            expected.data[at + 2] >> 2,
+            Math.floor(expected.data[at] / 4),
+            Math.floor(expected.data[at + 1] / 4),
+            Math.floor(expected.data[at + 2] / 4),
             255,
           ],
       at
