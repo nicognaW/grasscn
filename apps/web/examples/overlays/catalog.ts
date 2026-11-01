@@ -1,5 +1,4 @@
 import type { ExampleDefinition } from "../definition";
-import CommandPaletteExample from "./command-palette-example";
 import Example2 from "./alert-dialog-example";
 import Example22 from "./attachment-example";
 import Example10 from "./avatar-example";
@@ -7,6 +6,7 @@ import Example20 from "./bubble-example";
 import Example12 from "./calendar-example";
 import Example18 from "./carousel-example";
 import Example9 from "./command-example";
+import CommandPaletteExample from "./command-palette-example";
 import Example5 from "./context-menu-example";
 import Example16 from "./data-table-example";
 import Example17 from "./data-table-features-example";

@@ -8,9 +8,7 @@
       "titlePath": [
         "documentation header Components matches its captured Minecraft Button"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -23,9 +21,7 @@
       "titlePath": [
         "documentation search placeholder matches its captured Minecraft input"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -38,9 +34,7 @@
       "titlePath": [
         "documentation prose search typing matches its captured Minecraft input"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs",
@@ -53,9 +47,7 @@
       "titlePath": [
         "mobile documentation navigation opens the page tree without page overflow"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -68,9 +60,7 @@
       "titlePath": [
         "the legacy Field export result reaches independently discoverable Field documentation"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/form?part=FieldLabel#component-import",
@@ -83,9 +73,7 @@
       "titlePath": [
         "the legacy Button link retains its query and reaches the usage section"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/button?ref=bookmark#component-import",
@@ -95,12 +83,8 @@
     {
       "file": "docs-navigation.spec.ts",
       "title": "documentation search discovers a component alias",
-      "titlePath": [
-        "documentation search discovers a component alias"
-      ],
-      "components": [
-        "website"
-      ],
+      "titlePath": ["documentation search discovers a component alias"],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#usage",
@@ -113,9 +97,7 @@
       "titlePath": [
         "documentation search discovers the public component export"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#usage",
@@ -128,9 +110,7 @@
       "titlePath": [
         "documentation search finds authored prose and follows its section"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#usage",
@@ -143,9 +123,7 @@
       "titlePath": [
         "documentation sidebar and heading links follow the authored page tree"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -155,9 +133,7 @@
     {
       "file": "home.spec.ts",
       "title": "homepage links, search and component gallery remain connected",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -170,9 +146,7 @@
     {
       "file": "home.spec.ts",
       "title": "installation picker copies the selected real registry command",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/#install",
@@ -185,9 +159,7 @@
     {
       "file": "site-release.spec.ts",
       "title": "all production sections share navigation and omit internal status content",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -200,10 +172,7 @@
     {
       "file": "site-release.spec.ts",
       "title": "component pages expose live preview, source, installation and composition",
-      "components": [
-        "website",
-        "button"
-      ],
+      "components": ["website", "button"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/button",
@@ -216,11 +185,7 @@
     {
       "file": "preview.spec.ts",
       "title": "Every component has a working dedicated preview and navigation",
-      "components": [
-        "website",
-        "button",
-        "checkbox"
-      ],
+      "components": ["website", "button", "checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/components",
@@ -233,9 +198,7 @@
     {
       "file": "preview.spec.ts",
       "title": "Release pages omit internal completion and verification counters",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -248,39 +211,29 @@
     {
       "file": "preview.spec.ts",
       "title": "Tabs preview preserves native tab bar at scale 2",
-      "components": [
-        "tabs"
-      ],
+      "components": ["tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/tabs",
         "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced."
       },
-      "titlePath": [
-        "Tabs preview preserves native tab bar at scale 2"
-      ]
+      "titlePath": ["Tabs preview preserves native tab bar at scale 2"]
     },
     {
       "file": "preview.spec.ts",
       "title": "Select preview preserves native cycle button at scale 2",
-      "components": [
-        "select"
-      ],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/select",
         "reason": "Default Survival cycle button at the website fixed GUI scale."
       },
-      "titlePath": [
-        "Select preview preserves native cycle button at scale 2"
-      ]
+      "titlePath": ["Select preview preserves native cycle button at scale 2"]
     },
     {
       "file": "preview.spec.ts",
       "title": "Radio Group preview preserves native widget pixels at scale 2",
-      "components": [
-        "radio-group"
-      ],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/radio-group",
@@ -293,129 +246,95 @@
     {
       "file": "preview.spec.ts",
       "title": "Switch preview preserves native on/off pixels at scale 2",
-      "components": [
-        "switch"
-      ],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/switch",
         "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale."
       },
-      "titlePath": [
-        "Switch preview preserves native on/off pixels at scale 2"
-      ]
+      "titlePath": ["Switch preview preserves native on/off pixels at scale 2"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local book preview",
-      "components": [
-        "book"
-      ],
+      "components": ["book"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/book",
         "reason": "Default book page navigation."
       },
-      "titlePath": [
-        "local book preview"
-      ]
+      "titlePath": ["local book preview"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local hotbar preview",
-      "components": [
-        "hotbar"
-      ],
+      "components": ["hotbar"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/hotbar",
         "reason": "Default toolbar selection using its Measure action."
       },
-      "titlePath": [
-        "local hotbar preview"
-      ]
+      "titlePath": ["local hotbar preview"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local hud preview",
-      "components": [
-        "hud"
-      ],
+      "components": ["hud"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/hud",
         "reason": "Default health display and its Take damage/Heal actions."
       },
-      "titlePath": [
-        "local hud preview"
-      ]
+      "titlePath": ["local hud preview"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local advancement-tree preview",
-      "components": [
-        "advancement-tree"
-      ],
+      "components": ["advancement-tree"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/advancement-tree",
         "reason": "The default advancement tree loads its heading and stage."
       },
-      "titlePath": [
-        "local advancement-tree preview"
-      ]
+      "titlePath": ["local advancement-tree preview"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local map preview",
-      "components": [
-        "map"
-      ],
+      "components": ["map"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/map",
         "reason": "Default map waypoint selection and facing controls."
       },
-      "titlePath": [
-        "local map preview"
-      ]
+      "titlePath": ["local map preview"]
     },
     {
       "file": "native-expansion-preview.spec.ts",
       "title": "local trading preview",
-      "components": [
-        "trading"
-      ],
+      "components": ["trading"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/trading",
         "reason": "Default visible offers and the Bread trade action."
       },
-      "titlePath": [
-        "local trading preview"
-      ]
+      "titlePath": ["local trading preview"]
     },
     {
       "file": "collapsible-behavior.spec.ts",
       "title": "Collapsible toggles with mouse and keyboard",
-      "components": [
-        "collapsible"
-      ],
+      "components": ["collapsible"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/collapsible",
         "reason": "The World details disclosure opens and closes through its ordinary trigger."
       },
-      "titlePath": [
-        "Collapsible toggles with mouse and keyboard"
-      ]
+      "titlePath": ["Collapsible toggles with mouse and keyboard"]
     },
     {
       "file": "tooltip.spec.ts",
       "title": "Tooltip supports hover, keyboard focus, Escape and trigger activation",
-      "components": [
-        "tooltip"
-      ],
+      "components": ["tooltip"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/tooltip",
@@ -428,9 +347,7 @@
     {
       "file": "alert-dialog-behavior.spec.ts",
       "title": "AlertDialog follows Base UI initial focus, traps focus, dismisses on Escape and restores its trigger",
-      "components": [
-        "alert-dialog"
-      ],
+      "components": ["alert-dialog"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/alert-dialog",
@@ -443,24 +360,18 @@
     {
       "file": "alert-dialog-behavior.spec.ts",
       "title": "AlertDialog action confirms once and closes",
-      "components": [
-        "alert-dialog"
-      ],
+      "components": ["alert-dialog"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/alert-dialog",
         "reason": "The default confirmation action completes and closes the modal."
       },
-      "titlePath": [
-        "AlertDialog action confirms once and closes"
-      ]
+      "titlePath": ["AlertDialog action confirms once and closes"]
     },
     {
       "file": "dialog-behavior.spec.ts",
       "title": "Dialog opens, traps keyboard focus, closes with Escape and restores its trigger",
-      "components": [
-        "dialog"
-      ],
+      "components": ["dialog"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/dialog",
@@ -473,9 +384,7 @@
     {
       "file": "dialog-behavior.spec.ts",
       "title": "Dialog footer actions and close preserve their public behavior",
-      "components": [
-        "dialog"
-      ],
+      "components": ["dialog"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/dialog",
@@ -488,39 +397,29 @@
     {
       "file": "context-menu-behavior.spec.ts",
       "title": "Context Menu invokes an action once and closes",
-      "components": [
-        "context-menu"
-      ],
+      "components": ["context-menu"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/context-menu",
         "reason": "The default right-click menu action commits once and dismisses."
       },
-      "titlePath": [
-        "Context Menu invokes an action once and closes"
-      ]
+      "titlePath": ["Context Menu invokes an action once and closes"]
     },
     {
       "file": "dropdown-menu-behavior.spec.ts",
       "title": "Dropdown Menu typeahead focuses a matching action",
-      "components": [
-        "dropdown-menu"
-      ],
+      "components": ["dropdown-menu"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/dropdown-menu",
         "reason": "Keyboard choice of an existing action in the default menu."
       },
-      "titlePath": [
-        "Dropdown Menu typeahead focuses a matching action"
-      ]
+      "titlePath": ["Dropdown Menu typeahead focuses a matching action"]
     },
     {
       "file": "menubar-behavior.spec.ts",
       "title": "Menubar submenu navigation restores focus and Escape returns to its trigger",
-      "components": [
-        "menubar"
-      ],
+      "components": ["menubar"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/menubar",
@@ -533,24 +432,18 @@
     {
       "file": "menubar-behavior.spec.ts",
       "title": "Menubar preserves checkbox and radio state",
-      "components": [
-        "menubar"
-      ],
+      "components": ["menubar"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/menubar",
         "reason": "The checkbox and radio controls presented by the default menu."
       },
-      "titlePath": [
-        "Menubar preserves checkbox and radio state"
-      ]
+      "titlePath": ["Menubar preserves checkbox and radio state"]
     },
     {
       "file": "popover-behavior.spec.ts",
       "title": "Popover opens from the keyboard, names its dialog and restores focus",
-      "components": [
-        "popover"
-      ],
+      "components": ["popover"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/popover",
@@ -563,9 +456,7 @@
     {
       "file": "popover-behavior.spec.ts",
       "title": "Popover outside interaction dismisses without activating an action",
-      "components": [
-        "popover"
-      ],
+      "components": ["popover"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/popover",
@@ -578,24 +469,18 @@
     {
       "file": "tabs-behavior.spec.ts",
       "title": "Tabs switch panels and retain tab/panel associations",
-      "components": [
-        "tabs"
-      ],
+      "components": ["tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/tabs",
         "reason": "Ordinary selection of the displayed settings tabs."
       },
-      "titlePath": [
-        "Tabs switch panels and retain tab/panel associations"
-      ]
+      "titlePath": ["Tabs switch panels and retain tab/panel associations"]
     },
     {
       "file": "switch-behavior.spec.ts",
       "title": "Switch toggles with pointer, Space and Enter, preserving role and native words",
-      "components": [
-        "switch"
-      ],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/switch",
@@ -608,9 +493,7 @@
     {
       "file": "radio-group-behavior.spec.ts",
       "title": "Radio Group supports none/one selected and cannot uncheck the selected item",
-      "components": [
-        "radio-group"
-      ],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/radio-group",
@@ -623,9 +506,7 @@
     {
       "file": "toggle-behavior.spec.ts",
       "title": "Toggle supports pointer, Space and Enter with pressed semantics",
-      "components": [
-        "toggle"
-      ],
+      "components": ["toggle"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/toggle",
@@ -638,24 +519,18 @@
     {
       "file": "toggle-group-behavior.spec.ts",
       "title": "Toggle Group single selection and deselection",
-      "components": [
-        "toggle-group"
-      ],
+      "components": ["toggle-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/toggle-group",
         "reason": "The single-selection station group is shown by the default website example."
       },
-      "titlePath": [
-        "Toggle Group single selection and deselection"
-      ]
+      "titlePath": ["Toggle Group single selection and deselection"]
     },
     {
       "file": "toggle-group-behavior.spec.ts",
       "title": "Toggle Group multiple preserves independent pressed values",
-      "components": [
-        "toggle-group"
-      ],
+      "components": ["toggle-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/toggle-group",
@@ -668,24 +543,18 @@
     {
       "file": "slider.spec.ts",
       "title": "Slider pointer drag changes value and commits on release",
-      "components": [
-        "slider"
-      ],
+      "components": ["slider"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/slider",
         "reason": "Dragging the ordinary single-thumb value control and committing it on release."
       },
-      "titlePath": [
-        "Slider pointer drag changes value and commits on release"
-      ]
+      "titlePath": ["Slider pointer drag changes value and commits on release"]
     },
     {
       "file": "input.spec.ts",
       "title": "Input preserves controlled editing, selection, keyboard deletion and change events",
-      "components": [
-        "input"
-      ],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -698,9 +567,7 @@
     {
       "file": "textarea.spec.ts",
       "title": "Textarea preserves controlled multiline editing, events and Enter behavior",
-      "components": [
-        "textarea"
-      ],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/textarea",
@@ -713,9 +580,7 @@
     {
       "file": "native-select-behavior.spec.ts",
       "title": "NativeSelect opens the platform popup and commits a keyboard option without claiming its pixels",
-      "components": [
-        "native-select"
-      ],
+      "components": ["native-select"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/native-select",
@@ -728,9 +593,7 @@
     {
       "file": "select-behavior.spec.ts",
       "title": "Select pointer focus does not commit before activation, and Escape cancels",
-      "components": [
-        "select"
-      ],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/select",
@@ -743,9 +606,7 @@
     {
       "file": "label.spec.ts",
       "title": "Label associates its input, forwards its ref and preserves events",
-      "components": [
-        "label"
-      ],
+      "components": ["label"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/label",
@@ -758,9 +619,7 @@
     {
       "file": "text-components-behavior.spec.ts",
       "title": "Breadcrumb supplies nav, ordered list, link destinations and a current page",
-      "components": [
-        "breadcrumb"
-      ],
+      "components": ["breadcrumb"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/breadcrumb",
@@ -773,9 +632,7 @@
     {
       "file": "text-components-behavior.spec.ts",
       "title": "Kbd exposes keyboard semantics and refs without inventing button semantics",
-      "components": [
-        "kbd"
-      ],
+      "components": ["kbd"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/kbd",
@@ -788,9 +645,7 @@
     {
       "file": "empty-behavior.spec.ts",
       "title": "Empty supports Header, Media, Title, Description and Content composition",
-      "components": [
-        "empty"
-      ],
+      "components": ["empty"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/empty",
@@ -803,9 +658,7 @@
     {
       "file": "resizable.spec.ts",
       "title": "Resizable responds to pointer dragging and reports layouts",
-      "components": [
-        "resizable"
-      ],
+      "components": ["resizable"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/resizable",
@@ -818,9 +671,7 @@
     {
       "file": "calendar-behavior.spec.ts",
       "title": "DatePicker opens by keyboard, selects value, submits form text and restores focus",
-      "components": [
-        "date-picker"
-      ],
+      "components": ["date-picker"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/date-picker",
@@ -833,9 +684,7 @@
     {
       "file": "progress-behavior.spec.ts",
       "title": "Progress exposes controlled values and completion semantics",
-      "components": [
-        "progress"
-      ],
+      "components": ["progress"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/progress",
@@ -848,9 +697,7 @@
     {
       "file": "questionnaire-behavior.spec.ts",
       "title": "Questionnaire uses the official ordered items, validation and previous/next navigation",
-      "components": [
-        "questionnaire"
-      ],
+      "components": ["questionnaire"],
       "evidence": {
         "kind": "shadcn-test",
         "url": "https://github.com/shadcn-ui/ui/blob/c0d63c339d6cd2fc26135590a54cf1f362269451/packages/react/src/questionnaire/questionnaire.browser.test.tsx",
@@ -864,9 +711,7 @@
     {
       "file": "questionnaire-behavior.spec.ts",
       "title": "Questionnaire forwards actual form refs and supports numbered shortcuts",
-      "components": [
-        "questionnaire"
-      ],
+      "components": ["questionnaire"],
       "evidence": {
         "kind": "shadcn-test",
         "url": "https://github.com/shadcn-ui/ui/blob/c0d63c339d6cd2fc26135590a54cf1f362269451/packages/react/src/questionnaire/questionnaire.browser.test.tsx",
@@ -880,9 +725,7 @@
     {
       "file": "text-widgets-behavior.spec.ts",
       "title": "MessageScroller native buttons and auto-scroll retain keyboard/manual control",
-      "components": [
-        "message-scroller"
-      ],
+      "components": ["message-scroller"],
       "evidence": {
         "kind": "shadcn-test",
         "url": "https://github.com/shadcn-ui/ui/blob/c0d63c339d6cd2fc26135590a54cf1f362269451/packages/react/src/message-scroller/message-scroller.browser.test.tsx",
@@ -896,12 +739,8 @@
     {
       "file": "pixels.spec.ts",
       "title": "vanilla pixels: normal-w200-s2.png",
-      "titlePath": [
-        "vanilla pixels: normal-w200-s2.png"
-      ],
-      "components": [
-        "button"
-      ],
+      "titlePath": ["vanilla pixels: normal-w200-s2.png"],
+      "components": ["button"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/button",
@@ -911,12 +750,8 @@
     {
       "file": "controls.spec.ts",
       "title": "Control native pixels: checkbox-unchecked-normal-s2.png",
-      "titlePath": [
-        "Control native pixels: checkbox-unchecked-normal-s2.png"
-      ],
-      "components": [
-        "checkbox"
-      ],
+      "titlePath": ["Control native pixels: checkbox-unchecked-normal-s2.png"],
+      "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/checkbox",
@@ -926,12 +761,8 @@
     {
       "file": "input.spec.ts",
       "title": "Input native pixels: input-w200-normal-c39-s2.png",
-      "titlePath": [
-        "Input native pixels: input-w200-normal-c39-s2.png"
-      ],
-      "components": [
-        "input"
-      ],
+      "titlePath": ["Input native pixels: input-w200-normal-c39-s2.png"],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -941,12 +772,8 @@
     {
       "file": "textarea.spec.ts",
       "title": "Textarea native pixels: textarea-c18-s2.png",
-      "titlePath": [
-        "Textarea native pixels: textarea-c18-s2.png"
-      ],
-      "components": [
-        "textarea"
-      ],
+      "titlePath": ["Textarea native pixels: textarea-c18-s2.png"],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/textarea",
@@ -956,12 +783,8 @@
     {
       "file": "separator.spec.ts",
       "title": "Separator native pixels (div): separator-c6-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c6-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c6-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -971,12 +794,8 @@
     {
       "file": "separator.spec.ts",
       "title": "Separator native pixels (div): separator-c24-s2.png",
-      "titlePath": [
-        "Separator native pixels (div): separator-c24-s2.png"
-      ],
-      "components": [
-        "separator"
-      ],
+      "titlePath": ["Separator native pixels (div): separator-c24-s2.png"],
+      "components": ["separator"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/separator",
@@ -990,9 +809,7 @@
         "Progress native matrix",
         "Progress native pixels: progress-c6-s2.png"
       ],
-      "components": [
-        "progress"
-      ],
+      "components": ["progress"],
       "evidence": {
         "kind": "website-default",
         "route": "/components/progress",
@@ -1002,9 +819,7 @@
     {
       "file": "next-foundation.spec.ts",
       "title": "the default MDX component page renders within the Minecraft website shell",
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -1020,10 +835,7 @@
       "titlePath": [
         "Button documentation connects its executable example, complete code and implementation source"
       ],
-      "components": [
-        "website",
-        "button"
-      ],
+      "components": ["website", "button"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -1036,11 +848,7 @@
       "titlePath": [
         "default documentation code controls match their Minecraft reference cases"
       ],
-      "components": [
-        "website",
-        "button",
-        "tabs"
-      ],
+      "components": ["website", "button", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
@@ -1053,9 +861,7 @@
       "titlePath": [
         "Button installation copies and remembers the visitor package manager"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -1068,9 +874,7 @@
       "titlePath": [
         "Button manual installation exposes complete files and defers large resources"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -1083,11 +887,7 @@
       "titlePath": [
         "default installation controls match their captured Minecraft content and states"
       ],
-      "components": [
-        "website",
-        "button",
-        "tabs"
-      ],
+      "components": ["website", "button", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -1100,10 +900,7 @@
       "titlePath": [
         "homepage application examples keep their default public interactions"
       ],
-      "components": [
-        "website",
-        "chart"
-      ],
+      "components": ["website", "chart"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -1116,10 +913,7 @@
       "titlePath": [
         "chart showcase exposes the complete executable example and chart destinations"
       ],
-      "components": [
-        "website",
-        "chart"
-      ],
+      "components": ["website", "chart"],
       "evidence": {
         "kind": "website-default",
         "route": "/charts",
@@ -1132,10 +926,7 @@
       "titlePath": [
         "homepage default checkbox retains its captured Minecraft pixels"
       ],
-      "components": [
-        "website",
-        "checkbox"
-      ],
+      "components": ["website", "checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/",
@@ -1148,10 +939,7 @@
       "titlePath": [
         "chart showcase default frame timing matches its original Minecraft renderer"
       ],
-      "components": [
-        "website",
-        "chart"
-      ],
+      "components": ["website", "chart"],
       "evidence": {
         "kind": "website-default",
         "route": "/charts",
@@ -1164,11 +952,7 @@
       "titlePath": [
         "chart example tabs remain visible and match their Minecraft modes"
       ],
-      "components": [
-        "website",
-        "chart",
-        "tabs"
-      ],
+      "components": ["website", "chart", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/charts",
@@ -1181,10 +965,7 @@
       "titlePath": [
         "layout documentation exposes its actual examples and complete source"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/card",
@@ -1197,10 +978,7 @@
       "titlePath": [
         "default composed documentation examples retain their owned state and callbacks"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/card",
@@ -1213,10 +991,7 @@
       "titlePath": [
         "documentation prose styles preserve native breadcrumb ink and keyboard focus"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/breadcrumb",
@@ -1229,10 +1004,7 @@
       "titlePath": [
         "default code renderer copies its own complete source and Sonner uses one host"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/code-block",
@@ -1245,10 +1017,7 @@
       "titlePath": [
         "default layout documentation Separator and Progress match retained native cases"
       ],
-      "components": [
-        "website",
-        "layout"
-      ],
+      "components": ["website", "layout"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/separator",
@@ -1261,10 +1030,7 @@
       "titlePath": [
         "default responsive Sidebar composition toggles within its desktop context and mobile portal"
       ],
-      "components": [
-        "sidebar",
-        "website"
-      ],
+      "components": ["sidebar", "website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/sidebar",
@@ -1274,12 +1040,8 @@
     {
       "file": "docs-inputs.spec.ts",
       "title": "Slider docs default edits one controlled thumb",
-      "titlePath": [
-        "Slider docs default edits one controlled thumb"
-      ],
-      "components": [
-        "inputs"
-      ],
+      "titlePath": ["Slider docs default edits one controlled thumb"],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/slider",
@@ -1292,9 +1054,7 @@
       "titlePath": [
         "Input docs defaults preserve editing and associated control state"
       ],
-      "components": [
-        "inputs"
-      ],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -1307,9 +1067,7 @@
       "titlePath": [
         "Selection docs defaults resolve labels arrays and suggestions"
       ],
-      "components": [
-        "inputs"
-      ],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/select",
@@ -1319,12 +1077,8 @@
     {
       "file": "docs-inputs.spec.ts",
       "title": "OTP docs default completes the real six-character input",
-      "titlePath": [
-        "OTP docs default completes the real six-character input"
-      ],
-      "components": [
-        "inputs"
-      ],
+      "titlePath": ["OTP docs default completes the real six-character input"],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input-otp",
@@ -1337,9 +1091,7 @@
       "titlePath": [
         "Field docs implementation and manual copy select the owned file"
       ],
-      "components": [
-        "inputs"
-      ],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/field",
@@ -1349,12 +1101,8 @@
     {
       "file": "docs-inputs.spec.ts",
       "title": "Form docs block validates saves and resets",
-      "titlePath": [
-        "Form docs block validates saves and resets"
-      ],
-      "components": [
-        "inputs"
-      ],
+      "titlePath": ["Form docs block validates saves and resets"],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/form",
@@ -1364,12 +1112,8 @@
     {
       "file": "docs-inputs.spec.ts",
       "title": "Questionnaire docs default submits ordered answers",
-      "titlePath": [
-        "Questionnaire docs default submits ordered answers"
-      ],
-      "components": [
-        "inputs"
-      ],
+      "titlePath": ["Questionnaire docs default submits ordered answers"],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/questionnaire",
@@ -1382,9 +1126,7 @@
       "titlePath": [
         "Input family docs copy complete executable primary examples"
       ],
-      "components": [
-        "inputs"
-      ],
+      "components": ["inputs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -1394,12 +1136,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: checkbox",
-      "titlePath": [
-        "Input docs native default: checkbox"
-      ],
-      "components": [
-        "checkbox"
-      ],
+      "titlePath": ["Input docs native default: checkbox"],
+      "components": ["checkbox"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/checkbox",
@@ -1409,12 +1147,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: input",
-      "titlePath": [
-        "Input docs native default: input"
-      ],
-      "components": [
-        "input"
-      ],
+      "titlePath": ["Input docs native default: input"],
+      "components": ["input"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/input",
@@ -1424,12 +1158,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: textarea",
-      "titlePath": [
-        "Input docs native default: textarea"
-      ],
-      "components": [
-        "textarea"
-      ],
+      "titlePath": ["Input docs native default: textarea"],
+      "components": ["textarea"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/textarea",
@@ -1439,12 +1169,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: select",
-      "titlePath": [
-        "Input docs native default: select"
-      ],
-      "components": [
-        "select"
-      ],
+      "titlePath": ["Input docs native default: select"],
+      "components": ["select"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/select",
@@ -1454,12 +1180,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: radio-group",
-      "titlePath": [
-        "Input docs native default: radio-group"
-      ],
-      "components": [
-        "radio-group"
-      ],
+      "titlePath": ["Input docs native default: radio-group"],
+      "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/radio-group",
@@ -1469,12 +1191,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: switch",
-      "titlePath": [
-        "Input docs native default: switch"
-      ],
-      "components": [
-        "switch"
-      ],
+      "titlePath": ["Input docs native default: switch"],
+      "components": ["switch"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/switch",
@@ -1484,12 +1202,8 @@
     {
       "file": "docs-input-pixels.spec.ts",
       "title": "Input docs native default: slider",
-      "titlePath": [
-        "Input docs native default: slider"
-      ],
-      "components": [
-        "slider"
-      ],
+      "titlePath": ["Input docs native default: slider"],
+      "components": ["slider"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/slider",
@@ -1502,10 +1216,7 @@
       "titlePath": [
         "Input docs default layouts fit desktop and narrow viewports"
       ],
-      "components": [
-        "form",
-        "combobox"
-      ],
+      "components": ["form", "combobox"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/form",
@@ -1518,9 +1229,7 @@
       "titlePath": [
         "Minecraft documentation delivers maintained examples for all nine installable items"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/book",
@@ -1533,9 +1242,7 @@
       "titlePath": [
         "Minecraft primary examples expose paging selection status and trade callbacks"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/book",
@@ -1548,9 +1255,7 @@
       "titlePath": [
         "documentation empty Hotbar matches native selection zero on explicit backdrop"
       ],
-      "components": [
-        "hotbar"
-      ],
+      "components": ["hotbar"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/hotbar",
@@ -1563,9 +1268,7 @@
       "titlePath": [
         "overlay documentation exposes exact examples, own grouped source and retained playgrounds"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/bubble",
@@ -1578,9 +1281,7 @@
       "titlePath": [
         "documentation confirmation callbacks update once and close their actual modal"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/alert-dialog",
@@ -1590,12 +1291,8 @@
     {
       "file": "overlay-documentation.spec.ts",
       "title": "documentation edge panels expose labelled Done actions",
-      "titlePath": [
-        "documentation edge panels expose labelled Done actions"
-      ],
-      "components": [
-        "website"
-      ],
+      "titlePath": ["documentation edge panels expose labelled Done actions"],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/sheet",
@@ -1608,9 +1305,7 @@
       "titlePath": [
         "documentation menu and command examples dispatch real selections"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/dropdown-menu",
@@ -1623,9 +1318,7 @@
       "titlePath": [
         "documentation world browser filters and pages through TanStack Table 9"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/data-table",
@@ -1638,9 +1331,7 @@
       "titlePath": [
         "documentation message scroller appends messages and navigates its bounded history"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/message-scroller",
@@ -1653,9 +1344,7 @@
       "titlePath": [
         "documentation bubble reactions and attachment actions retain local state"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/attachment",
@@ -1668,9 +1357,7 @@
       "titlePath": [
         "overlay documentation remains usable at its default mobile width"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/dialog",
@@ -1683,9 +1370,7 @@
       "titlePath": [
         "default documentation packaged avatar faces match native PlayerFaceExtractor"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/avatar",
@@ -1698,9 +1383,7 @@
       "titlePath": [
         "documentation tooltip and popover open from their real focusable triggers"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/tooltip",
@@ -1713,9 +1396,7 @@
       "titlePath": [
         "documentation Calendar and Date Picker select with their actual DayPicker 10 APIs"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/date-picker",
