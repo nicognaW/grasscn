@@ -1,5 +1,6 @@
 import { paintUnihexGPU } from "./minecraft-unifont-gpu";
 
+// oxlint-disable-next-line typescript/consistent-type-definitions -- This public alias preserves implicit index-signature compatibility for glyph consumers.
 export type UnihexGlyph = {
   code: number;
   rows: number[];
