@@ -1,4 +1,7 @@
 import { defineConfig } from "@playwright/test"
+import {baseGrep} from './scripts/browser-suite.mjs'
+
+const inventory = process.argv.includes('--list') && process.env.GRASSCN_BROWSER_GUARD_COLLECTION !== '1'
 
 export default defineConfig({
   testDir: "./tests",
@@ -6,6 +9,8 @@ export default defineConfig({
   testMatch: ["*.spec.ts", "*.spec.js"],
   fullyParallel: false,
   workers: 8,
+  grep: inventory ? undefined : baseGrep(),
+  globalSetup: './scripts/browser-selection-guard.mjs',
   use: {
     baseURL: process.env.GRASSCN_FIXTURE_URL ?? "http://127.0.0.1:5174",
     browserName: "chromium",

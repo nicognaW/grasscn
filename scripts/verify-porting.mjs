@@ -5,12 +5,14 @@ import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {reusableBrowserTests,browserFilePattern} from './browser-checkpoints.mjs'
 import {fixtureManifest,serveProductionFixture} from './production-fixture.mjs'
+import {baseCatalogue} from './browser-suite.mjs'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const [suite, output, workerArgument='1'] = process.argv.slice(2)
 const workers=Number(workerArgument)
 if(!Number.isInteger(workers)||workers<1||workers>8)throw Error('Use 1-8 browser workers')
 if (!['regressions', 'pixels', 'all'].includes(suite) || !output) throw Error('Use the guarded package commands')
+if (suite === 'pixels') throw Error('Matrix pixel audits are Full tests and require an approved run issue. Use the ordinary Base commands.')
 const managedFixture=suite==='all'&&!['GRASSCN_FIXTURE_URL','GRASSCN_EXPANSION_URL','GRASSCN_EXPANSION_REFERENCE','GRASSCN_TREE_INSTALLED_URL','GRASSCN_INSTALLED_BUNDLE_SHA256'].some(name=>process.env[name])
 if(managedFixture){
   process.env.GRASSCN_FIXTURE_URL='http://127.0.0.1:5178'
@@ -40,9 +42,10 @@ async function installedDependencyState() {
   catch(error) { if(error.code!=='ENOENT')throw error;return null }
 }
 environment.installedDependencies=await installedDependencyState()
+environment.browserSelection='base'
 environment.fixtureMode=managedFixture?'production':'provided-or-development'
-const report = {suite, startedAt:new Date().toISOString(), source:before, environment, checks:[], passed:false,
-  scope:'Local suite only. No fresh native launch or shadcn CLI installation; no merge performed.'}
+const report = {suite, browserScope:'base', startedAt:new Date().toISOString(), source:before, environment, checks:[], passed:false,
+  scope:'Base browser selection only. No fresh native launch or shadcn CLI installation; no merge performed.'}
 const receipt = path.join(output,'verification.json')
 const save = () => writeFile(receipt, JSON.stringify(report,null,2)+'\n')
 const cacheAllowed=environment.installedDependencies!==null&&(managedFixture||(!process.env.GRASSCN_EXPANSION_REFERENCE&&!process.env.GRASSCN_EXPANSION_URL&&!process.env.GRASSCN_TREE_INSTALLED_URL&&(!process.env.GRASSCN_FIXTURE_URL||/^http:\/\/127\.0\.0\.1:5174\/?$/.test(process.env.GRASSCN_FIXTURE_URL))))
@@ -54,7 +57,6 @@ for(const folder of await readdir(path.dirname(output))) {
   } catch(error) { if(error.code!=='ENOENT' && !(error instanceof SyntaxError))throw error }
 }
 await save()
-const regressionFiles = ['advancement-gestures','player-custom-skin','trading-scroll','player-list-behavior','native-expansion-preview'].map(name=>name+'.spec.ts')
 const steps = [
   ['prepare-preview', ['scripts/prepare-preview.mjs']],
   ['types', ['node_modules/typescript/bin/tsc','--noEmit']],
@@ -66,7 +68,7 @@ const steps = [
 ]
 if (suite === 'all') steps.push(['registry-build',['node_modules/shadcn/dist/index.js','build']], ['built-primitives',['scripts/check-primitives.mjs','--built']], ['preview-build',['node_modules/vite/bin/vite.js','build','--config','vite.preview.config.ts']])
 if(managedFixture)steps.push(['fixture-build',['scripts/production-fixture.mjs']])
-const browserFiles=suite==='all'?(await readdir(path.join(root,'tests'))).filter(name=>/\.spec\.(ts|js)$/.test(name)).sort():suite==='pixels'?['adventure.spec.ts','native-expansion.spec.ts']:regressionFiles
+const browserFiles=[...new Set(baseCatalogue().map(test=>test.file))].sort()
 for(const file of browserFiles) steps.push([`browser:${file}`, ['node_modules/@playwright/test/cli.js','test',browserFilePattern(file),`--workers=${workers}`,...(workers>1?['--fully-parallel']:[]),`--output=${path.join(output,'browser',file)}`]])
 let fixtureHost,previewHost
 try {
