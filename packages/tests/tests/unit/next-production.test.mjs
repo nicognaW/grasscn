@@ -7,7 +7,138 @@ import path from "node:path";
 import {
   productionBuildIdentity,
   assertProductionSource,
+  stampProductionBuild,
+  readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
+
+test("prepared production requires a completed matching build instead of silently accepting existing output", async () => {
+  const root = fs.mkdtempSync(
+    path.join(os.tmpdir(), "grasscn-prepared-build-")
+  );
+  const directory = path.join(root, "web"),
+    receiptPath = path.join(root, "completed.json");
+  const source = {
+    commit: "completed-source",
+    treeSha256: "completed-tree",
+    status: "",
+  };
+  try {
+    for (const name of [
+      "web/.next/server",
+      "web/.next/types",
+      "web/.source",
+      "web/public/r",
+      "node_modules/tool",
+    ])
+      fs.mkdirSync(path.join(root, name), { recursive: true });
+    fs.writeFileSync(path.join(root, "bun.lock"), '{"workspaces":{}}');
+    fs.writeFileSync(
+      path.join(root, "node_modules/tool/index.js"),
+      "installed tool bytes"
+    );
+    fs.writeFileSync(
+      path.join(directory, ".next/BUILD_ID"),
+      "known-completed-build"
+    );
+    fs.writeFileSync(
+      path.join(directory, ".next/server/page.js"),
+      "built page"
+    );
+    fs.writeFileSync(
+      path.join(directory, ".next/types/routes.d.ts"),
+      "generated route types"
+    );
+    fs.writeFileSync(
+      path.join(directory, ".source/server.ts"),
+      "generated MDX source"
+    );
+    fs.writeFileSync(
+      path.join(directory, "next-env.d.ts"),
+      "generated Next environment"
+    );
+    fs.writeFileSync(
+      path.join(directory, "public/r/button.json"),
+      "delivered registry"
+    );
+    const options = { root, directory, receiptPath, source };
+    await assert.rejects(() => readPreparedProductionBuild(options), /ENOENT/);
+    await stampProductionBuild(options);
+    await assert.rejects(
+      () => readPreparedProductionBuild(options),
+      /completed build/i
+    );
+    await assert.rejects(
+      () =>
+        stampProductionBuild({
+          ...options,
+          verifiedCommand: [process.execPath, "run", "build"],
+          verifiedExitCode: 9,
+        }),
+      /completed|exit/i
+    );
+    await assert.rejects(
+      () =>
+        stampProductionBuild({
+          ...options,
+          verifiedCommand: [process.execPath, "run", "build", "--dry=json"],
+          verifiedExitCode: 0,
+        }),
+      /root build|command/i
+    );
+    await stampProductionBuild({
+      ...options,
+      verifiedCommand: [process.execPath, "run", "build"],
+      verifiedExitCode: 0,
+    });
+    const prepared = await readPreparedProductionBuild(options);
+    assert.equal(prepared.buildId, "known-completed-build");
+    assert.deepEqual(prepared.verifiedCommand, [
+      process.execPath,
+      "run",
+      "build",
+    ]);
+    await assert.rejects(
+      () =>
+        readPreparedProductionBuild({
+          ...options,
+          source: { ...source, treeSha256: "another-tree" },
+        }),
+      /source/i
+    );
+    for (const filename of [
+      path.join(root, "node_modules/tool/index.js"),
+      path.join(directory, ".source/server.ts"),
+      path.join(directory, "next-env.d.ts"),
+      path.join(directory, ".next/types/routes.d.ts"),
+      path.join(directory, "public/r/button.json"),
+      path.join(directory, ".next/server/page.js"),
+    ]) {
+      const original = fs.readFileSync(filename);
+      fs.writeFileSync(filename, "changed bytes");
+      await assert.rejects(
+        () => readPreparedProductionBuild(options),
+        /changed/i
+      );
+      fs.writeFileSync(filename, original);
+    }
+    const originalReceipt = fs.readFileSync(receiptPath, "utf8");
+    const differentEnvironment = JSON.parse(originalReceipt);
+    differentEnvironment.preparation.environment.bun = "different-runtime";
+    fs.writeFileSync(receiptPath, JSON.stringify(differentEnvironment));
+    await assert.rejects(
+      () => readPreparedProductionBuild(options),
+      /environment changed/i
+    );
+    fs.writeFileSync(receiptPath, originalReceipt);
+    assert.equal(
+      (await readPreparedProductionBuild(options)).buildId,
+      "known-completed-build"
+    );
+  } finally {
+    assert.ok(path.basename(root).startsWith("grasscn-prepared-build-"));
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
 
 test("production identity rejects another source and detects changed delivered registry bytes", async () => {
   const directory = fs.mkdtempSync(

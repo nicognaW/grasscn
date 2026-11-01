@@ -289,7 +289,11 @@ try {
     "Workflow probes changed source"
   );
   assert.equal(report.sourceAfter.commit, source.commit);
-  await stampProductionBuild({ source });
+  await stampProductionBuild({
+    source,
+    verifiedCommand: [process.execPath, turbo, "run", "build"],
+    verifiedExitCode: 0,
+  });
   report.build = {
     buildId: final.buildId,
     outputSha256: final.outputSha256,

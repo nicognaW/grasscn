@@ -500,22 +500,28 @@ try {
           ["--bun", "node_modules/typescript/bin/tsc", "--noEmit"],
           consumer
         );
-        await run(
-          [
-            "--bun",
-            framework === "vite"
-              ? "node_modules/vite/bin/vite.js"
-              : "node_modules/next/dist/bin/next",
-            "build",
-          ],
-          consumer
-        );
+        const buildCommand = [
+          ...(framework === "next" ? ["--smol"] : []),
+          "--bun",
+          framework === "vite"
+            ? "node_modules/vite/bin/vite.js"
+            : "node_modules/next/dist/bin/next",
+          "build",
+          ...(framework === "next" ? ["--webpack"] : []),
+        ];
+        await run(buildCommand, consumer);
         const buildOutput = await directoryIdentity(
           path.join(consumer, framework === "vite" ? "dist" : ".next"),
           new Set(["cache", "trace", "trace-build"])
         );
         report.consumers.push({
           framework,
+          buildCommand: [process.execPath, ...buildCommand],
+          buildSettings: {
+            bun: Bun.version,
+            bundler: framework === "next" ? "webpack" : "vite",
+            ...(framework === "next" ? { smol: true, cpus: 1 } : {}),
+          },
           directory: consumer,
           dependencyIdentity,
           installedBytes,

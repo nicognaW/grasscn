@@ -16,6 +16,7 @@ import {
   serveNextProduction,
   sourceIdentity,
   productionBuildIdentity,
+  readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
 import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
 import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
@@ -264,6 +265,22 @@ let fixtureHost, previewHost, fullHosts;
 let testFailures = false;
 try {
   for (const [name, args] of steps) {
+    if (
+      name === "production-build" &&
+      process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
+    ) {
+      report.websiteBuild = await readPreparedProductionBuild({
+        source: before,
+      });
+      report.checks.push({
+        name,
+        exitCode: 0,
+        reusedCompletedBuild: true,
+        verifiedCommand: report.websiteBuild.verifiedCommand,
+      });
+      await save();
+      continue;
+    }
     // Rebuild generated outputs and rerun prechecks. Browser passes are reused
     // individually below, with current test status and artifact hashes checked.
     console.log(`\nLocal verification: ${name}`);
@@ -368,7 +385,11 @@ try {
     });
     await save();
     if (name === "production-build" && code === 0) {
-      report.websiteBuild = await stampProductionBuild({ source: before });
+      report.websiteBuild = await stampProductionBuild({
+        source: before,
+        verifiedCommand: [process.execPath, ...args],
+        verifiedExitCode: code,
+      });
       await save();
     }
     if (name === "fixture-build" && code === 0) {

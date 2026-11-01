@@ -10,6 +10,7 @@ import {
   sourceIdentity,
   stampProductionBuild,
   productionBuildIdentity,
+  readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot, packageBin } from "@tests/paths";
 
@@ -153,6 +154,20 @@ if (phase !== "prepare")
 let hosts;
 try {
   for (const [name, args, cwd] of steps) {
+    if (
+      name === "production-build" &&
+      process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
+    ) {
+      report.websiteBuild = await readPreparedProductionBuild({ source });
+      report.checks.push({
+        name,
+        exitCode: 0,
+        reusedCompletedBuild: true,
+        verifiedCommand: report.websiteBuild.verifiedCommand,
+      });
+      await save();
+      continue;
+    }
     let browserEnvironment = {};
     if (name === "normal-browser") {
       await writeFile(
@@ -211,7 +226,11 @@ try {
     await save();
     assert.equal(code, 0, `${name} failed`);
     if (name === "production-build")
-      report.websiteBuild = await stampProductionBuild({ source });
+      report.websiteBuild = await stampProductionBuild({
+        source,
+        verifiedCommand: [process.execPath, ...args],
+        verifiedExitCode: code,
+      });
     if (name === "fixture-build") report.fixtureBundle = fixtureManifest();
   }
   report.sourceAfter = await sourceIdentity();

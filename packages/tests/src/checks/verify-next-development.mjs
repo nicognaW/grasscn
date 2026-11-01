@@ -34,6 +34,7 @@ const report = {
   pages: [],
   passed: false,
 };
+const preservedInputs = [];
 for (const [index, name] of [
   ".source",
   "next-env.d.ts",
@@ -45,6 +46,7 @@ for (const [index, name] of [
       (await realpath(target)).startsWith((await realpath(webRoot)) + path.sep)
     );
     await rename(target, path.join(directory, "generated-backup-" + index));
+    if (index < 2) preservedInputs.push({ index, name });
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
@@ -149,6 +151,30 @@ try {
       stop.once("error", resolve);
     });
   else child.kill("SIGTERM");
+  // Dev owns fresh inputs during the check; restore the prior production/type
+  // inputs afterward while retaining the generated dev versions for inspection.
+  for (const { index, name } of preservedInputs) {
+    const target = path.resolve(webRoot, name);
+    try {
+      assert.ok(
+        (await realpath(target)).startsWith(
+          (await realpath(webRoot)) + path.sep
+        )
+      );
+      await rename(
+        target,
+        path.join(directory, "generated-dev-after-" + index)
+      );
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    const saved = path.join(directory, "generated-backup-" + index);
+    assert.ok(
+      (await realpath(saved)).startsWith((await realpath(directory)) + path.sep)
+    );
+    await rename(saved, target);
+  }
+  report.generatedInputsRestored = true;
   await writeFile(path.join(directory, "stdout.log"), logs);
   report.finishedAt = new Date().toISOString();
   await writeFile(
