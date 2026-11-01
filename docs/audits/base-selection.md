@@ -60,3 +60,11 @@ Use browser-suite inventory commands to check the current counts and partition. 
 Spec #12 adds one independently classified Base case: `next-foundation.spec.ts` / `the default MDX component page renders within the Minecraft website shell`. Its website-default mapping is the new `/docs/components/button` route: authored MDX content, the shared navigation, Minecraft typography and the displayed default Button at its retained `normal-w200-s2.png` reference conditions. The case compares the actual integrated Button against that independent captured reference; it does not promote further Button variants, scales or the rest of the file into Base.
 
 This is new feature coverage outside cleanup spec #1. Earlier partition counts above describe that cleanup snapshot; use the current inventory for the new total. New or revised primary examples elsewhere must receive their own case-by-case mapping review.
+
+## Matching example and source experience
+
+Ticket #14 adds two individually mapped Base cases on `/docs/components/button`: `docs-examples.spec.ts` / `Button documentation connects its executable example, complete code and implementation source`, and `docs-example-pixels.spec.ts` / `default documentation code controls match their Minecraft reference cases`.
+
+The first follows the ordinary primary example through keyboard Preview/Code selection, complete example copying and the separately labelled implementation's collapsed Copy and Expand/Collapse controls. The second selects only six scale-2 native constituents encountered by that default journey: normal Preview strip, keyboard-focused Code strip, normal Copy, the actual highlighted client directive, normal Expand and normal Collapse. Other captured scales/states are not selected by these entries.
+
+The existing foundation case now scopes its retained normal Button comparison to the primary example because the playground remains as an additional example. Its existing 390px mobile composition also asserts that code overflow remains inside the code view rather than extending the page. These changes preserve an actual default path and its native geometry without promoting a component matrix. See [the evidence record](docs-examples-2026-11-01.md) for exact cases and remaining integration gates.

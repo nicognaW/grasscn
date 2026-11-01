@@ -873,11 +873,44 @@
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button",
-        "reason": "Default authored MDX component page, shared navigation, Minecraft typography and displayed Button at the retained normal-w200-s2 native reference conditions."
+        "reason": "Default authored MDX component page, shared navigation, Minecraft typography, retained normal-w200-s2 Button, and existing 390px mobile composition with source overflow contained within its code view."
       },
       "titlePath": [
         "the default MDX component page renders within the Minecraft website shell"
       ]
+    },
+    {
+      "file": "docs-examples.spec.ts",
+      "title": "Button documentation connects its executable example, complete code and implementation source",
+      "titlePath": [
+        "Button documentation connects its executable example, complete code and implementation source"
+      ],
+      "components": [
+        "website",
+        "button"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Default primary Button preview, keyboard Preview/Code switching, complete example and collapsed implementation copying, source expansion and separately labelled implementation source."
+      }
+    },
+    {
+      "file": "docs-example-pixels.spec.ts",
+      "title": "default documentation code controls match their Minecraft reference cases",
+      "titlePath": [
+        "default documentation code controls match their Minecraft reference cases"
+      ],
+      "components": [
+        "website",
+        "button",
+        "tabs"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Scale2 default primary Preview tab, keyboard-selected Code tab, normal Copy button, actual highlighted directive, and default implementation Expand/Collapse buttons. Only these6 declared cases are selected; extra captured scales/states remain outside this case."
+      }
     }
   ]
 }

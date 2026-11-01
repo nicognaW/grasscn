@@ -1,26 +1,48 @@
-import type { MDXComponents } from "mdx/types"
-import { DocumentParagraph } from "./components/document-paragraph"
-import { DocumentLink } from "./components/document-link"
-import {
-  TypographyH1, TypographyH2, TypographyH3, TypographyH4,
-  TypographyBlockquote, TypographyInlineCode,
-  TypographyList, TypographyTable,
-} from "./registry/ui/typography"
+import type { MDXComponents } from "mdx/types";
 
-export function getMDXComponents(components: MDXComponents = {}): MDXComponents {
+import { DocumentCodeBlock } from "./components/document-code-block";
+import {
+  DocumentH1,
+  DocumentH2,
+  DocumentH3,
+  DocumentH4,
+  DocumentH5,
+  DocumentH6,
+  DocumentListItem,
+  DocumentTableCell,
+  DocumentTableHeader,
+  DocumentInlineCode,
+} from "./components/document-elements";
+import { DocumentLink } from "./components/document-link";
+import { DocumentParagraph } from "./components/document-paragraph";
+import {
+  TypographyBlockquote,
+  TypographyList,
+  TypographyTable,
+} from "./registry/ui/typography";
+
+export function getMDXComponents(
+  components: MDXComponents = {}
+): MDXComponents {
   return {
     a: DocumentLink,
-    h1: TypographyH1,
-    h2: TypographyH2,
-    h3: TypographyH3,
-    h4: TypographyH4,
+    h1: DocumentH1,
+    h2: DocumentH2,
+    h3: DocumentH3,
+    h4: DocumentH4,
+    h5: DocumentH5,
+    h6: DocumentH6,
     p: DocumentParagraph,
     blockquote: TypographyBlockquote,
-    code: TypographyInlineCode,
+    code: DocumentInlineCode,
+    pre: DocumentCodeBlock,
+    li: DocumentListItem,
+    th: DocumentTableHeader,
+    td: DocumentTableCell,
     ul: TypographyList,
     table: TypographyTable,
     ...components,
-  }
+  };
 }
 
-export const useMDXComponents = getMDXComponents
+export const useMDXComponents = getMDXComponents;
