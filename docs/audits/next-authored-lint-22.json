@@ -447,7 +447,7 @@
     {
       "file": "packages/tests/tests/website/preview.spec.ts",
       "baseline": "packages/tests/tests/website/preview.spec.ts",
-      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+      "reason": "Owned migration assertions, retained-playground locators and Menubar close/reopen/focus readiness boundaries require zero new-hunk diagnostics. Exact unchanged statements retain only attributed debt; this owner is not a full-file clean claim."
     },
     {
       "file": "packages/tests/tests/website/site-cleanup.spec.ts",
