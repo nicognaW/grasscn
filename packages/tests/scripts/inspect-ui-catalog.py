@@ -16,7 +16,7 @@ args = parser.parse_args()
 sha = lambda data: hashlib.sha256(data).hexdigest()
 digest = sha(args.jar.read_bytes())
 if digest != "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290":
-    raise SystemExit("Artifact digest differs from the agreed Java 26.2 reference")
+    raise SystemExit("Artifact digest differs from the agreed Minecraft reference")
 selected = set("""Font AbstractButton AbstractScrollArea AbstractSelectionList AbstractSliderButton AbstractTextAreaWidget
 BossHealthOverlay Button ChatComponent Checkbox CommandSuggestions CycleButton CycleButton$Builder EditBox ItemDisplayWidget
 LoadingDotsWidget MultiLineEditBox MultiLineLabel PlayerFaceExtractor PlayerFaceWidget PlayerTabOverlay PopupScreen

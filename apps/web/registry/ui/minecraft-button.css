@@ -29,7 +29,7 @@
     border-radius: 0;
     background: var(--mc-image) center / 100% 100% no-repeat;
     color: var(--mc-ink);
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     font-size: calc(8 * var(--mc-pixel));
     font-weight: 400;
     font-style: normal;

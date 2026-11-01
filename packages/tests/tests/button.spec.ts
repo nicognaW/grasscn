@@ -6,7 +6,7 @@ test("buttonVariants styles a standalone link with the Minecraft skin", async ({
   await expect(link).toHaveCSS("width", "400px")
   await expect(link).toHaveCSS("height", "40px")
   await expect(link).not.toHaveCSS("background-image", "none")
-  await expect(link).toHaveCSS("font-family", '"Minecraft Pilot 26.2", monospace')
+  await expect(link).toHaveCSS("font-family", '"Minecraft Bitmap", monospace')
   await link.focus()
   await page.keyboard.press("Enter")
   await expect(page).toHaveURL(/#utility$/)

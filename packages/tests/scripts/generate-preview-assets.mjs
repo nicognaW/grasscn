@@ -5,7 +5,7 @@ import path from "node:path"
 const input = process.argv[2]
 if (!input) throw new Error("Pass the directory containing original menu-background and separator textures")
 const inventory = JSON.parse(await readFile(resolveRepositoryPath("tests/reference/catalog/native-inventory.json"), "utf8"))
-const css = ["/* Original Minecraft Java 26.2 menu textures: Mojang Studios. Embedded unchanged. */", ":root {"]
+const css = ["/* Original Minecraft menu textures: Mojang Studios. Embedded unchanged. */", ":root {"]
 const sources = {}
 for (const [variable, filename] of [["menu", "menu_background.png"], ["header", "header_separator.png"], ["footer", "footer_separator.png"]]) {
   const member = `assets/minecraft/textures/gui/${filename}`

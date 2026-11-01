@@ -1,5 +1,5 @@
 // Direct port of SplashRenderer.extractRenderState and Mth.sin from the pinned JAR.
-// JOML 1.10.8's default (FASTMATH=false) rotation is rounded to Java floats.
+// JOML 1.10.8's default (FASTMATH=false) rotation is rounded to native single-precision values.
 const f=Math.fround
 const sineIndexScale=10430.378350470453
 const angle=f(-0.34906584)

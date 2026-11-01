@@ -11,7 +11,7 @@
   --mc-pixel: calc(1px * var(--mc-scale, 2));
     font-size: calc(8px * var(--mc-scale, 2));
     line-height: calc(9px * var(--mc-scale, 2));
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     height: calc(9px * var(--mc-scale, 2));
     white-space: nowrap;
   }
@@ -31,13 +31,13 @@
     gap: 16px;
   }
   .mc-chart {
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
   }
   .mc-chart :is(.recharts-layer, .recharts-surface) {
     outline: none;
   }
   .mc-chart svg text {
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     font-size: 16px;
     fill: white;
   }
@@ -46,7 +46,7 @@
 @layer components{.mc-chart-text>.mc-bitmap{vertical-align:top}}
 
 @layer components {
-  .mc-chart-data { font-family:"Minecraft Pilot 26.2",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(12 * var(--mc-pixel)); }
+  .mc-chart-data { font-family:"Minecraft Bitmap",monospace; font-size:calc(8 * var(--mc-pixel)); line-height:calc(12 * var(--mc-pixel)); }
   .mc-chart-data summary { cursor:pointer; width:fit-content; }
   .mc-chart-data>div { overflow:auto; margin-top:calc(6 * var(--mc-pixel)); }
   .mc-chart-data table { border-collapse:collapse; width:100%; }

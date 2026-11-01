@@ -24,7 +24,7 @@ Responsive checks included 320, 390, 768 and 1440 CSS pixels. Full-page captures
 - Components and charts were detached galleries. Both now share the website header, search, footer and canonical navigation. Components use a sidebar, breadcrumbs, preview/source tabs, installation/import/composition and adjacent links. Charts use a type sidebar, working examples, code and installation.
 - The plain background lacked Minecraft identity. The original dirt PNG is tiled at an integer scale, with dark tinting for readable page content. Asset provenance and SHA256 are recorded in preview/background.provenance.json.
 - Search hid results after six matches and missed nested exports. The generated index covers all 62 published items and 370 named exports. Field produces 11 matches; CardHeader opens the Card import. Unicode queries retain their characters rather than matching everything. Keyboard selection, Escape and Ctrl+K remain available.
-- Internal Java version, completion totals, native-case counts and local-preview labels were removed from visible production content. Realistic example data and working local installation commands remain.
+- Internal game version, completion totals, native-case counts and local-preview labels were removed from visible production content. Realistic example data and working local installation commands remain.
 - Mobile navigation stayed expanded after selecting a page. Hash and popstate navigation now close the rail. Checked after selecting an F3 breakdown chart at 390px.
 - Native F3 charts could exceed narrow cards at scale 2. A measured integer scale selects 1 or 2; the original renderer remains intact. The F3 browser-share example fits at 390px.
 

@@ -7,7 +7,7 @@ const root=new URL('./reference/title-splash/',import.meta.url)
 const bytes=readFileSync(new URL('oracle-104.csv',root)),provenance=JSON.parse(readFileSync(new URL('provenance.json',root),'utf8'))
 const rows=bytes.toString('utf8').trim().split(/\r?\n/).filter(line=>!line.startsWith('#')).map(line=>line.split(',').map(Number))
 const buffer=new DataView(new ArrayBuffer(4)),bits=value=>{buffer.setFloat32(0,value);return buffer.getInt32(0)}
-test('all 1000 splash phases match the independent Java float and shipped JOML oracle',()=>{
+test('all 1000 splash phases match the independent native single-precision and shipped JOML oracle',()=>{
  assert.equal(createHash('sha256').update(bytes).digest('hex'),provenance.expectedSha256)
  assert.equal(rows.length,1000)
  for(const[time,...expected]of rows){
@@ -15,7 +15,7 @@ test('all 1000 splash phases match the independent Java float and shipped JOML o
   assert.deepEqual([actual.pulse,actual.scale,actual.a,actual.b,actual.c,actual.d].map(bits),expected,`Time ${time}ms`)
  }
 })
-test('the glyph origin uses Java integer centering and the native -8 baseline',()=>{
+test('the glyph origin uses native integer centering and the native -8 baseline',()=>{
  assert.equal(splashMotion(0,105).originX,-52)
  assert.equal(splashMotion(0,105).originY,-8)
  const frame=splashMotion(0,104)

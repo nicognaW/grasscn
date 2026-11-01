@@ -4,7 +4,7 @@
 @import "./minecraft-scrollbars.css";
 @source "./registry/ui";
 @source "./";
-:root { font-family: "Minecraft Pilot 26.2", monospace; font-size: 16px; line-height: 24px; font-weight: 400; font-synthesis: none; color: #fff; color-scheme: dark; background: #202020; image-rendering: pixelated; }
+:root { font-family: "Minecraft Bitmap", monospace; font-size: 16px; line-height: 24px; font-weight: 400; font-synthesis: none; color: #fff; color-scheme: dark; background: #202020; image-rendering: pixelated; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--preview-menu) repeat; background-size: 32px 32px; }
 .site-shell { min-height: 100vh; text-shadow: 2px 2px #3f3f3f; }

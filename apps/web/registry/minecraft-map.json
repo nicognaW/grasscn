@@ -1025,7 +1025,7 @@
         "manifest": "tests/reference/badge-advancement/manifest.json",
         "installationReport": "tests/reference/badge-advancement/installation-verification.json",
         "repeatabilityReport": "tests/reference/badge-advancement/repeatability.json",
-        "scope": "18 exact original Minecraft Java26.2 AdvancementWidget.extractHover cases: challenge/goal/task, obtained/unobtained, original diamond item and ASCII title Diamonds!, GUI scales1\u20133, native117x26 logical geometry, Edge/DPR1 viewport1536x900 on #202020. Two separate isolated original client launches retain full frames and original source/asset hashes. Default content-sized widths, long/CJK title wrapping, responsive layouts, arbitrary icon composition and link focus are web adaptations tested separately; they are not asserted to be native advancement geometry. Prior Tooltip180 Badge corpus is historical and does not verify this new appearance."
+        "scope": "18 exact original Minecraft AdvancementWidget.extractHover cases: challenge/goal/task, obtained/unobtained, original diamond item and ASCII title Diamonds!, GUI scales1\u20133, native117x26 logical geometry, Edge/DPR1 viewport1536x900 on #202020. Two separate isolated original client launches retain full frames and original source/asset hashes. Default content-sized widths, long/CJK title wrapping, responsive layouts, arbitrary icon composition and link focus are web adaptations tested separately; they are not asserted to be native advancement geometry. Prior Tooltip180 Badge corpus is historical and does not verify this new appearance."
       },
       "nextStep": "Retain captured reference integrity, actual CLI source equivalence, semantic behavior checks, and working local-only gallery demo when extending appearance scope.",
       "historicalPixelVerification": {
@@ -1185,7 +1185,7 @@
             "reportField": "verticalDecodedRgbaSha256"
           }
         ],
-        "scope": "516 exact native constituent comparisons from354 repeatable Java26.2 references:66ASCII Buttons and96CJK Buttons each in horizontal/vertical groups,84scalarLabel appearances and108horizontalSeparator appearances. GUI scales1\u20133, Edge/DPR1, viewport1536\u00d7900, pinned native positions. Web grouping geometry and rotated vertical separators are designed compositions outside the native pixel claim."
+        "scope": "516 exact native constituent comparisons from354 repeatable Minecraft references:66ASCII Buttons and96CJK Buttons each in horizontal/vertical groups,84scalarLabel appearances and108horizontalSeparator appearances. GUI scales1\u20133, Edge/DPR1, viewport1536\u00d7900, pinned native positions. Web grouping geometry and rotated vertical separators are designed compositions outside the native pixel claim."
       },
       "nextStep": "Maintain group layout and native constituent verification; custom rich children and vertical separator rotation remain web compositions."
     },
@@ -2161,7 +2161,7 @@
           "forward/backward selection; blurred selection; horizontal scrolling; maxLength",
           "scales1,2,3"
         ],
-        "settings": "Original Java26.2 EditBox GPU renderer; caret phase controlled through focusedTime only; en_us; #202020; Edge/DPR1/zoom100%."
+        "settings": "Original Minecraft EditBox GPU renderer; caret phase controlled through focusedTime only; en_us; #202020; Edge/DPR1/zoom100%."
       },
       "implementation": {
         "status": "implemented-and-install-verified",
@@ -2733,7 +2733,7 @@
             "reportField": "activeDecodedRgbaSha256"
           }
         ],
-        "scope": "294 exact native constituent comparisons from222 repeatable Java26.2 references:60 recipe-book12\u00d717 ImageButton arrows covering both directions, normal/hover/keyboardfocus/disabled/disabled-hover, two gray backdrops and GUI scales1\u20133;66ASCII+96CJK native Button appearances for numeric link skins, plus72 current-page highlighted aliases. Edge/DPR1, viewport1536\u00d7900 and pinned native positions. Numeric40-pixel default arrangement, ellipsis and custom content are web compositions outside the fixed-case pixel claim."
+        "scope": "294 exact native constituent comparisons from222 repeatable Minecraft references:60 recipe-book12\u00d717 ImageButton arrows covering both directions, normal/hover/keyboardfocus/disabled/disabled-hover, two gray backdrops and GUI scales1\u20133;66ASCII+96CJK native Button appearances for numeric link skins, plus72 current-page highlighted aliases. Edge/DPR1, viewport1536\u00d7900 and pinned native positions. Numeric40-pixel default arrangement, ellipsis and custom content are web compositions outside the fixed-case pixel claim."
       },
       "nextStep": "Maintain web pagination semantics and verified native arrow/numeric constituent cases; expand default numeric-page/ellipsis native cases when extending the exact scope."
     },
@@ -3008,7 +3008,7 @@
         "manifest": "tests/reference/pagination-arrow/manifest.json",
         "installationReport": "tests/reference/resizable/installation-verification.json",
         "repeatabilityReport": "tests/reference/pagination-arrow/repeatability.json",
-        "scope": "60 exact original Minecraft Java26.2 recipe-book ImageButton arrow constituents: backward/forward, normal/hover/focus/disabled/disabled-hover, #202020/#808080, GUI scales1\u20133. Original page-arrow PNG bytes, integer-aligned rendering, Edge/DPR1. This is a web resizable split-pane composition: overall divider/track, opposing-arrow arrangement, enlarged drag hitbox, layout percentages, constraints, keyboard/focus controls and90degree rotation for vertical panel groups have no native resizable-widget counterpart. Original scrollbar-grip3 corpus is historical and does not verify the new arrow grip."
+        "scope": "60 exact original Minecraft recipe-book ImageButton arrow constituents: backward/forward, normal/hover/focus/disabled/disabled-hover, #202020/#808080, GUI scales1\u20133. Original page-arrow PNG bytes, integer-aligned rendering, Edge/DPR1. This is a web resizable split-pane composition: overall divider/track, opposing-arrow arrangement, enlarged drag hitbox, layout percentages, constraints, keyboard/focus controls and90degree rotation for vertical panel groups have no native resizable-widget counterpart. Original scrollbar-grip3 corpus is historical and does not verify the new arrow grip."
       },
       "nextStep": "Preserve original arrow artwork and native constituent equality while retaining accessible split-pane drag and keyboard controls.",
       "historicalPixelVerification": {
@@ -3385,7 +3385,7 @@
             "reportField": "badgeDecodedRgbaSha256"
           }
         ],
-        "scope": "1587 exact native constituent comparisons from1125 repeatable Java26.2 references:162 Button references through both menu/submenu link slots plus144 active-page aliases and72 trigger/group-action/menu-action cases,378 ASCII/CJK Input states,96 native Popup panels,84 Label appearances through both group label/badge slots,108 Separator cases and297 ScrollArea cases. GUI scales1\u20133, Edge/DPR1 viewport1536\u00d7900, pinned native positions/locale/font-atlas context. Sidebar layout/responsiveness/icon mode/placeholders are designed web compositions outside the native full-widget pixel claim."
+        "scope": "1587 exact native constituent comparisons from1125 repeatable Minecraft references:162 Button references through both menu/submenu link slots plus144 active-page aliases and72 trigger/group-action/menu-action cases,378 ASCII/CJK Input states,96 native Popup panels,84 Label appearances through both group label/badge slots,108 Separator cases and297 ScrollArea cases. GUI scales1\u20133, Edge/DPR1 viewport1536\u00d7900, pinned native positions/locale/font-atlas context. Sidebar layout/responsiveness/icon mode/placeholders are designed web compositions outside the native full-widget pixel claim."
       },
       "nextStep": "Maintain all25 public exports, web navigation/controlled/keyboard/mobile behavior and the declared original native constituent cases."
     },
@@ -3415,7 +3415,7 @@
           "scales 1,2,3",
           "empty label or printable ASCII sample"
         ],
-        "settings": "Native Java 26.2; original atlas/font; en_us; #202020; web Edge/DPR 1/zoom 100%; manifest is authoritative."
+        "settings": "Native Minecraft; original atlas/font; en_us; #202020; web Edge/DPR 1/zoom 100%; manifest is authoritative."
       },
       "implementation": {
         "status": "implemented-and-install-verified",
@@ -3471,7 +3471,7 @@
         "manifest": "tests/reference/toast/manifest.json",
         "installationReport": "tests/reference/sonner/installation-verification.json",
         "repeatabilityReport": "tests/reference/toast/repeatability.json",
-        "scope": "528 original Java26.2 SystemToast frames:8 title/body/ASCII/CJK/wrapping/three-toast patterns \u00d711 fixed shown/enter/exit phases \u00d72 backgrounds \u00d7GUIscales1\u20133. Original opaque160\u00d764 PNG, asymmetric tiled nine-slice, no-shadow yellow title/white body, original600ms squared motion. Native font context normalized via original FontManager.updateOptions before test-screen installation; glyph observation only after every screenshot. Edge/DPR1/1536\u00d7900, localeen_us and original indexed font resources. Actions, dismiss buttons, arbitrary rich ReactNode layouts and alternate web placement are compositions; other glyph/loading contexts and arbitrary times are not universally verified."
+        "scope": "528 original Minecraft SystemToast frames:8 title/body/ASCII/CJK/wrapping/three-toast patterns \u00d711 fixed shown/enter/exit phases \u00d72 backgrounds \u00d7GUIscales1\u20133. Original opaque160\u00d764 PNG, asymmetric tiled nine-slice, no-shadow yellow title/white body, original600ms squared motion. Native font context normalized via original FontManager.updateOptions before test-screen installation; glyph observation only after every screenshot. Edge/DPR1/1536\u00d7900, localeen_us and original indexed font resources. Actions, dismiss buttons, arbitrary rich ReactNode layouts and alternate web placement are compositions; other glyph/loading contexts and arbitrary times are not universally verified."
       },
       "nextStep": "Maintain original font-context normalization, source/asset integrity, all declared native frames, web/API behavior, fresh shadcn CLI install proofs and local preview after changes."
     },

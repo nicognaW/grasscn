@@ -23,5 +23,5 @@ for (const [key, file, member] of [
     provenance[member].metadataSha256 = hash(metadata)
   }
 }
-await writeFile(resolveRepositoryPath("registry/ui/minecraft-input-assets.ts"), `// Original Minecraft Java 26.2 artwork: Mojang Studios. PNG bytes embedded unchanged.\nexport const minecraftInputAssets = ${JSON.stringify(assets)} as const\n`)
+await writeFile(resolveRepositoryPath("registry/ui/minecraft-input-assets.ts"), `// Original Minecraft artwork: Mojang Studios. PNG bytes embedded unchanged.\nexport const minecraftInputAssets = ${JSON.stringify(assets)} as const\n`)
 await writeFile(resolveRepositoryPath("tests/reference/input/asset-provenance.json"), JSON.stringify({ sourceJarSha256: inventory.jarSha256, assets: provenance, rendering: "Software raster from original textures and glyph alpha; expected pixels come independently from the original EditBox GPU renderer." }, null, 2) + "\n")

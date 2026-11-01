@@ -31,9 +31,9 @@ Button remains a reusable component example, with its current case list and guar
 
 ## Versions and environment
 
-Current captured references identify Minecraft Java Edition 26.2 from the artifact's own metadata. The supplied installation includes Fabric/mods; captures launch the original game entry point with controlled resources. These are source-provenance facts, not a restriction of the project's broader supported-version scope.
+Captured references record the game version from the source artifact's own metadata. The supplied installation includes Fabric/mods; captures launch the original game entry point with controlled resources. These are source-provenance facts, not a restriction of the project's broader supported-version scope.
 
-Capture commands accept the selected version and Java directories through arguments or environment variables. Read the relevant launcher before use. Keep runtime/output directories isolated and preserve the source artifact pin. Extending verified coverage to another version requires inspected resources and new captured references rather than bypassing an existing pin.
+Capture commands accept the selected version and runtime directories through arguments or environment variables. Read the relevant launcher before use. Keep runtime/output directories isolated and preserve the source artifact pin. Extending verified coverage to another version requires inspected resources and new captured references rather than bypassing an existing pin.
 
 Consumer installation and ordinary browser regressions use the packaged assets and committed captured references. They do not require the developer's Minecraft path.
 

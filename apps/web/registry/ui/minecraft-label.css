@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: stretch;
     color: #fff;
-    font-family: "Minecraft Pilot 26.2", monospace;
+    font-family: "Minecraft Bitmap", monospace;
     font-size: calc(8 * var(--mc-pixel));
     font-weight: normal;
     line-height: calc(9 * var(--mc-pixel));

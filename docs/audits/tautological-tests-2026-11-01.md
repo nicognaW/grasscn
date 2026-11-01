@@ -30,7 +30,7 @@ Comparator controls that call the same comparison function as the browser accept
 
 ## Spec findings
 
-No additional high-confidence tautological tests were identified outside these controls. Node cache, launch-guard, serving, and path-resolution tests call production code with independent contract expectations. Splash motion compares production output against retained Java/JOML evidence. Behavior tests observe production components through selection, focus, refs, events, forms, rendering, and sound.
+No additional high-confidence tautological tests were identified outside these controls. Node cache, launch-guard, serving, and path-resolution tests call production code with independent contract expectations. Splash motion compares production output against retained native rendering evidence. Behavior tests observe production components through selection, focus, refs, events, forms, rendering, and sound.
 
 Duplicate cases, tests with no recorded failures, artifact integrity checks, and fixtures supplying input values are not sufficient grounds for removal. All captured references, pixel-matrix cases, workflow commands, resource defaults and behavior tests are retained. No sampling or infrequent-test profile was introduced.
 

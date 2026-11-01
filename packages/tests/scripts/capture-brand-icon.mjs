@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url"
 
 const root = repoRoot
 const [version, java, work, output] = process.argv.slice(2).map(value => path.resolve(value))
-if (!version || !java || !work || !output) throw new Error("Pass version directory, Java 25 bin, fresh isolated work directory and output directory")
+if (!version || !java || !work || !output) throw new Error("Pass version directory, runtime binary directory, fresh isolated work directory and output directory")
 const instance = path.basename(version), minecraftRoot = path.resolve(version, "../.."), jar = path.join(version, `${instance}.jar`)
 const hash = bytes => createHash("sha256").update(bytes).digest("hex")
 const sourceJarSha256 = hash(await readFile(jar))

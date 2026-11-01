@@ -1,6 +1,6 @@
 @layer theme,base,components,utilities;
 @layer components {
- .mc-code-block{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;position:relative;flex-direction:column;width:100%;min-width:0;border:var(--mc-pixel) solid #a0a0a0;background:#000;color:#fff;font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel))}
+ .mc-code-block{--mc-pixel:calc(1px * var(--mc-scale,2));display:flex;position:relative;flex-direction:column;width:100%;min-width:0;border:var(--mc-pixel) solid #a0a0a0;background:#000;color:#fff;font-family:"Minecraft Bitmap",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel))}
  .mc-code-block[data-variant=destructive]{color:#f55}
  .mc-code-block-header,.mc-code-block-footer{display:flex;align-items:center;min-width:0;gap:calc(2 * var(--mc-pixel));padding:calc(4 * var(--mc-pixel));color:#aaa}
  .mc-code-block-title{min-width:0;overflow:hidden;white-space:nowrap;color:#fff}

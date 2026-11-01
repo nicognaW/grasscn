@@ -1,5 +1,5 @@
 @layer components {
-  .mc-tabs { --mc-pixel: calc(1px * var(--mc-scale, 2)); width: calc(400 * var(--mc-pixel)); display: flex; flex-direction: column; gap: 0; color: #fff; font-family: "Minecraft Pilot 26.2", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); image-rendering: pixelated; }
+  .mc-tabs { --mc-pixel: calc(1px * var(--mc-scale, 2)); width: calc(400 * var(--mc-pixel)); display: flex; flex-direction: column; gap: 0; color: #fff; font-family: "Minecraft Bitmap", monospace; font-size: calc(8 * var(--mc-pixel)); line-height: calc(9 * var(--mc-pixel)); image-rendering: pixelated; }
   .mc-navigation-list { --mc-pixel: calc(1px * var(--mc-scale, 2)); position: relative; box-sizing: border-box; display: flex; flex-shrink: 0; align-items: flex-start; justify-content: flex-start; gap: 0; width: 100%; height: calc(24 * var(--mc-pixel)); padding: 0 0 0 var(--mc-tabs-left, calc(14 * var(--mc-pixel))); margin: 0; border: 0; background: transparent; overflow: hidden; }
   .mc-navigation-list::before, .mc-navigation-list::after { content: ""; position: absolute; bottom: 0; height: calc(2 * var(--mc-pixel)); background-image: var(--mc-tab-header); background-size: calc(32 * var(--mc-pixel)) calc(2 * var(--mc-pixel)); background-repeat: repeat-x; pointer-events: none; }
   .mc-navigation-list::before { left: 0; width: var(--mc-tabs-left); }
@@ -26,7 +26,7 @@
 }
 
 @layer components {
- .mc-navigation-menu {image-rendering:pixelated;--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;display:block;width:calc(400 * var(--mc-pixel));max-width:100%;color:#fff;font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel));}
+ .mc-navigation-menu {image-rendering:pixelated;--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;display:block;width:calc(400 * var(--mc-pixel));max-width:100%;color:#fff;font-family:"Minecraft Bitmap",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(9 * var(--mc-pixel));}
  .mc-navigation-item {display:contents;list-style:none;margin:0;padding:0;}
  .mc-navigation-menu > div:first-child {width:100%;}
  .mc-navigation-content {position:relative;z-index:50;width:calc(250 * var(--mc-pixel));max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);margin:0;outline:none;overflow:auto;transform:translateZ(0);}
@@ -67,7 +67,7 @@
 }
 
 @layer components {
-.mc-navigation-tab:not(:has(> .mc-tab-surface)){display:flex;align-items:center;justify-content:center;font-family:"Minecraft Pilot 26.2",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(8 * var(--mc-pixel));text-shadow:var(--mc-pixel) var(--mc-pixel) #3f3f3f;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAAQ0lEQVR42u3YMRUAIAxDwXjC/6sQxJSFhZG59+PgxkSSnsqS6jV7FyF77iBAgAABAgQIECBAgAABAgQI/wi9zL1WqQPdsfMXduQ/9gAAAABJRU5ErkJggg==");background-size:100% 100%;}
+.mc-navigation-tab:not(:has(> .mc-tab-surface)){display:flex;align-items:center;justify-content:center;font-family:"Minecraft Bitmap",monospace;font-size:calc(8 * var(--mc-pixel));line-height:calc(8 * var(--mc-pixel));text-shadow:var(--mc-pixel) var(--mc-pixel) #3f3f3f;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAAQ0lEQVR42u3YMRUAIAxDwXjC/6sQxJSFhZG59+PgxkSSnsqS6jV7FyF77iBAgAABAgQIECBAgAABAgQI/wi9zL1WqQPdsfMXduQ/9gAAAABJRU5ErkJggg==");background-size:100% 100%;}
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is([data-open],[data-popup-open],[data-active]){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARklEQVR42u3QMRHAQAwDQXEy/xE0pwmDL713DDapk+7c/kfI4SBAgAABAgQIECBAgAABAgQIECBAgPCGsHMdYSdpmss1/QBhElD4UGBDWwAAAABJRU5ErkJggg==");}
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is(:hover,:focus){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARUlEQVR42u3YMRGAQAADwXjC/0QIYkJDQ0f/e3GwZSJJn2pJd3gvQu5zBwECBAgQIECAAAECBAgQIPzf5k/YlmaXudeaPk6VAe87go/vAAAAAElFTkSuQmCC");}
 .mc-navigation-tab:not(:has(> .mc-tab-surface)):is([data-open],[data-popup-open],[data-active]):is(:hover,:focus){background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAQAAACc9+1TAAAARUlEQVR42u3QMREAMAzDQHMq/zO0dCmDjnmJwSd10lneQ8jiIECAAAECBAgQIECAAAECBAgQIECA8IcwZzvCnKRpNtf0Avje2HBXG7vAAAAAAElFTkSuQmCC");}
