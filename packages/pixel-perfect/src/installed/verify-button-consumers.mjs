@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 
 import { sha256 } from "@grasscn/tests/consumer-boundary";
+import { parseWebsiteIdentity } from "@grasscn/tests/consumer-validation";
 import {
   sourceIdentity,
   assertProductionSource,
@@ -16,12 +17,11 @@ import {
   consumerVerificationEnvironment,
 } from "@grasscn/tests/prepared-consumers";
 
+import { referenceFile } from "../paths.ts";
 import {
-  parseWebsiteIdentity,
   parseNativeManifest,
   parseBaseCatalogue,
-} from "@grasscn/tests/consumer-validation";
-import { referenceFile } from "../paths.ts";
+} from "./button-consumer-types.ts";
 
 // The caller explicitly selects this one existing website-default Base case.
 assert.equal(
@@ -303,4 +303,3 @@ try {
     JSON.stringify(report, null, 2)
   );
 }
-

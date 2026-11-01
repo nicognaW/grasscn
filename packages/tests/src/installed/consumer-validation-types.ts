@@ -101,21 +101,6 @@ export interface CliReport {
   websiteIdentity: WebsiteIdentity;
 }
 
-export interface NativeButtonCase {
-  height: number;
-  label: string;
-  name: string;
-  scale: number;
-  sha256: string;
-  state: string;
-  width: number;
-}
-
-export interface NativeButtonManifest {
-  cases: NativeButtonCase[];
-  sourceJarSha256: string;
-}
-
 // JSON parsing yields unknown until each consumed protocol field is checked.
 // eslint-disable-next-line anti-slop/no-runtime-typeof -- JSON string fields are checked at the external protocol boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
@@ -212,28 +197,6 @@ const isCliReceipt = (value: unknown): value is CliReport =>
   Array.isArray(value.steps) &&
   value.steps.every(isString);
 
-const isNativeCase = (value: unknown): value is NativeButtonCase =>
-  isRecord(value) &&
-  [value.height, value.width, value.scale].every(Number.isFinite) &&
-  [value.label, value.name, value.sha256, value.state].every(isString);
-
-const isNativeManifest = (value: unknown): value is NativeButtonManifest =>
-  isRecord(value) &&
-  isString(value.sourceJarSha256) &&
-  Array.isArray(value.cases) &&
-  value.cases.every(isNativeCase);
-
-const isCatalogue = (
-  value: unknown
-): value is { cases: { file: string; title: string }[] } =>
-  isRecord(value) &&
-  Array.isArray(value.cases) &&
-  value.cases.every(
-    // eslint-disable-next-line anti-slop/no-unknown-parameters -- Validate each raw external JSON array member before accepting its domain shape.
-    (entry: unknown) =>
-      isRecord(entry) && isString(entry.file) && isString(entry.title)
-  );
-
 const isRegistry = (value: unknown): value is { items: { name: string }[] } =>
   isRecord(value) &&
   Array.isArray(value.items) &&
@@ -279,25 +242,6 @@ export const parseCliReceipt = (text: string): CliReport => {
 // eslint-disable-next-line anti-slop/no-unknown-parameters -- This is the HTTP JSON boundary and returns a validated manifest.
 export const parseManualManifest = (value: unknown): ManualManifest => {
   assert.ok(isManifest(value), "Complete public manual manifest required");
-
-  return value;
-};
-
-export const parseNativeManifest = (text: string): NativeButtonManifest => {
-  const value: unknown = JSON.parse(text);
-  assert.ok(
-    isNativeManifest(value),
-    "Complete native Button manifest required"
-  );
-
-  return value;
-};
-
-export const parseBaseCatalogue = (
-  text: string
-): { cases: { file: string; title: string }[] } => {
-  const value: unknown = JSON.parse(text);
-  assert.ok(isCatalogue(value), "Base catalogue entries required");
 
   return value;
 };
