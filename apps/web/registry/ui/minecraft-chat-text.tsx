@@ -106,7 +106,9 @@ const MinecraftChatText = ({
     text = text
       .split("\n")
       .map((line) => {
-        if (textWidth(line) <= clipWidth) return line;
+        if (textWidth(line) <= clipWidth) {
+          return line;
+        }
 
         let value = "",
           used = 0;
@@ -114,7 +116,9 @@ const MinecraftChatText = ({
         for (const char of Array.from(line)) {
           const next = advance(char);
 
-          if (used + next > clipWidth - textWidth("...")) break;
+          if (used + next > clipWidth - textWidth("...")) {
+            break;
+          }
           value += char;
           used += next;
         }

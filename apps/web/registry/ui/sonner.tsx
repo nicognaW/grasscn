@@ -217,7 +217,9 @@ function Toaster({
   React.useLayoutEffect(
     () => () => {
       for (const model of entriesRef.current.values()) {
-        if (model.timer) clearTimeout(model.timer);
+        if (model.timer) {
+          clearTimeout(model.timer);
+        }
       }
 
       entriesRef.current.clear();
@@ -425,7 +427,9 @@ function Toaster({
 
       if (button && !button.disabled) {
         queueMicrotask(() => {
-          if (!event.defaultPrevented) playMinecraftClick();
+          if (!event.defaultPrevented) {
+            playMinecraftClick();
+          }
         });
       }
     };

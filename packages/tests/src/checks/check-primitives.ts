@@ -3,6 +3,42 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 import { repoRoot, webRoot } from "@tests/paths";
+import { JSON5 } from "bun";
+
+interface DependencyFields {
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
+
+interface PackageManifest extends DependencyFields {
+  name?: string;
+}
+
+interface PrimitiveLockfile {
+  lockfileVersion: number;
+  packages?: Record<
+    string,
+    [
+      identity: string,
+      location?: string,
+      metadata?: DependencyFields,
+      integrity?: string,
+    ]
+  >;
+  workspaces?: Record<string, DependencyFields>;
+}
+
+interface PrimitiveRegistryItem {
+  dependencies?: string[];
+  files?: { content?: string; path: string }[];
+  name: string;
+}
+
+interface PrimitiveRegistry {
+  items: PrimitiveRegistryItem[];
+}
 
 const rootArgument = process.argv.indexOf("--root");
 
@@ -10,28 +46,43 @@ const root =
   rootArgument === -1 ? repoRoot : path.resolve(process.argv[rootArgument + 1]);
 
 const sourceRoot = rootArgument === -1 ? webRoot : root;
-const resolve = (...names) => path.resolve(root, ...names);
+const resolve = (...names: string[]) => path.resolve(root, ...names);
 
-const json = async (name, directory = root) =>
-  JSON.parse(await readFile(path.resolve(directory, name), "utf-8"));
+const readManifest = async (name: string, directory = root) => {
+  // SAFETY: these files are the selected workspace package manifests; only standard dependency fields are consumed.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the actual manifest bytes and existing dependency policy checks.
+  return JSON.parse(
+    await readFile(path.resolve(directory, name), "utf-8")
+  ) as PackageManifest;
+};
 
-const radix = (name) => /^(?:@radix-ui\/|radix-ui(?:@|\/|$))/.test(name);
-const cmdk = (name) => /^cmdk(?:@|\/|$)/.test(name);
-const vaul = (name) => /^vaul(?:@|\/|$)/.test(name);
-const banned = (name) => radix(name) || vaul(name);
-const manifest = await json("package.json");
-const lock = Bun.JSON5.parse(await readFile(resolve("bun.lock"), "utf-8"));
+const radix = (name: string) =>
+  /^(?:@radix-ui\/|radix-ui(?:@|\/|$))/u.test(name);
+const cmdk = (name: string) => /^cmdk(?:@|\/|$)/u.test(name);
+const vaul = (name: string) => /^vaul(?:@|\/|$)/u.test(name);
+const banned = (name: string) => radix(name) || vaul(name);
+const manifest = await readManifest("package.json");
+// SAFETY: the pinned Bun lockfile defines dependency package tuples and workspace roots.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing lockfile-version and dependency-route assertions remain intact.
+const lock = JSON5.parse(
+  await readFile(resolve("bun.lock"), "utf-8")
+) as PrimitiveLockfile;
 
 assert.equal(lock.lockfileVersion, 2, "Unsupported Bun lockfile format");
 
-const registry = await json("registry.json", sourceRoot);
-const failures = [];
+// SAFETY: this authored registry controls the item dependency and source-file declarations checked below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keep all registry primitive and closure checks on the original parsed object.
+const registry = JSON.parse(
+  await readFile(path.join(sourceRoot, "registry.json"), "utf-8")
+) as PrimitiveRegistry;
+const failures: string[] = [];
 const packages = lock.packages ?? {};
-const metadata = (location) => packages[location]?.[2] ?? {};
+const metadata = (location: string): DependencyFields =>
+  packages[location]?.[2] ?? {};
 
 // Bun records nested resolutions under parent/package keys. Walk ancestors,
 // retaining package identity instead of relying on the developer's node_modules.
-function resolveDependency(location, name) {
+function resolveDependency(location: string, name: string) {
   let base = location;
 
   for (;;) {
@@ -50,7 +101,7 @@ function resolveDependency(location, name) {
   }
 }
 
-const packageName = (location) => {
+const packageName = (location: string) => {
   const identity = packages[location]?.[0] ?? location;
   const version = identity.lastIndexOf("@");
 
@@ -62,19 +113,19 @@ const fields = [
   "devDependencies",
   "optionalDependencies",
   "peerDependencies",
-];
+] as const;
 
 const transitiveFields = [
   "dependencies",
   "optionalDependencies",
   "peerDependencies",
-];
+] as const;
 
 const manifests = [manifest];
 
 for (const directory of Object.keys(lock.workspaces ?? {})) {
   if (directory) {
-    manifests.push(await json(`${directory}/package.json`));
+    manifests.push(await readManifest(`${directory}/package.json`));
   }
 }
 
@@ -87,16 +138,21 @@ const roots = manifests.flatMap((pkg) =>
   )
 );
 
-const cmdkClosure = new Set();
+const cmdkClosure = new Set<string>();
 
 const pending = roots
   .filter((root) => cmdk(root.name))
   .map((root) => root.location)
-  .filter(Boolean);
+  .filter(
+    (location): location is string =>
+      location !== undefined && location.length > 0
+  );
 
-while (pending.length) {
-  const location = pending.pop();
-
+for (
+  let location = pending.pop();
+  location !== undefined;
+  location = pending.pop()
+) {
   if (cmdkClosure.has(location)) {
     continue;
   }
@@ -114,16 +170,21 @@ while (pending.length) {
   }
 }
 
-const outsideCmdk = new Set();
+const outsideCmdk = new Set<string>();
 
 const outsidePending = roots
   .filter((root) => !cmdk(root.name))
   .map((root) => root.location)
-  .filter(Boolean);
+  .filter(
+    (location): location is string =>
+      location !== undefined && location.length > 0
+  );
 
-while (outsidePending.length) {
-  const location = outsidePending.pop();
-
+for (
+  let location = outsidePending.pop();
+  location !== undefined;
+  location = outsidePending.pop()
+) {
   if (outsideCmdk.has(location)) {
     continue;
   }
@@ -141,8 +202,13 @@ while (outsidePending.length) {
   }
 }
 
-const includesCommand = (item) =>
-  item.files?.some((file) => /(?:^|\/)command\.tsx$/.test(file.path));
+const dependencyIsInCommandClosure = (location: string, name: string) => {
+  const dependency = resolveDependency(location, name);
+  return dependency !== undefined && cmdkClosure.has(dependency);
+};
+
+const includesCommand = (item: PrimitiveRegistryItem) =>
+  item.files?.some((file) => /(?:^|\/)command\.tsx$/u.test(file.path)) === true;
 
 for (const current of manifests) {
   for (const field of fields) {
@@ -165,17 +231,13 @@ for (const location of Object.keys(packages)) {
     failures.push(`lockfile: ${location}`);
   }
 
-  for (const field of [
-    "dependencies",
-    "optionalDependencies",
-    "peerDependencies",
-  ]) {
+  for (const field of transitiveFields) {
     for (const name of Object.keys(pkg[field] ?? {})) {
       if (
         vaul(name) ||
         (radix(name) &&
           (!cmdkClosure.has(location) ||
-            !cmdkClosure.has(resolveDependency(location, name))))
+            !dependencyIsInCommandClosure(location, name)))
       ) {
         failures.push(`transitive ${field}: ${location} -> ${name}`);
       }
@@ -191,7 +253,7 @@ for (const item of registry.items) {
   }
 }
 
-async function inspect(directory, absolute) {
+async function inspect(directory: string, absolute: string) {
   for (const entry of await readdir(absolute, {
     withFileTypes: true,
   })) {
@@ -208,11 +270,11 @@ async function inspect(directory, absolute) {
       }
 
       await inspect(relative, path.join(absolute, entry.name));
-    } else if (/\.[cm]?[jt]sx?$/.test(entry.name)) {
+    } else if (/\.[cm]?[jt]sx?$/u.test(entry.name)) {
       const source = await readFile(path.join(absolute, entry.name), "utf-8");
 
       for (const match of source.matchAll(
-        /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["']([^"']+)["']/g
+        /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["'](?<specifier>[^"']+)["']/gu
       )) {
         if (
           banned(match[1]) ||
@@ -245,7 +307,14 @@ if (process.argv.includes("--built")) {
   }
 
   for (const item of registry.items) {
-    const payload = await json(`public/r/${item.name}.json`, sourceRoot);
+    // SAFETY: shadcn build emits the registry item payload being verified here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve dependency and source checks on the built registry payload.
+    const payload = JSON.parse(
+      await readFile(
+        path.join(sourceRoot, `public/r/${item.name}.json`),
+        "utf-8"
+      )
+    ) as PrimitiveRegistryItem;
 
     for (const name of payload.dependencies ?? []) {
       if (banned(name) || (cmdk(name) && !includesCommand(item))) {
@@ -255,11 +324,11 @@ if (process.argv.includes("--built")) {
 
     for (const file of payload.files ?? []) {
       for (const match of (file.content ?? "").matchAll(
-        /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["']([^"']+)["']/g
+        /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?|\brequire\s*\(\s*)["'](?<specifier>[^"']+)["']/gu
       )) {
         if (
           banned(match[1]) ||
-          (cmdk(match[1]) && !/(?:^|\/)command\.tsx$/.test(file.path))
+          (cmdk(match[1]) && !/(?:^|\/)command\.tsx$/u.test(file.path))
         ) {
           failures.push(`built ${item.name}/${file.path}: ${match[1]}`);
         }

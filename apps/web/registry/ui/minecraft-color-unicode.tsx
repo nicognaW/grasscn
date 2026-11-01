@@ -132,17 +132,20 @@ export const MinecraftColorUnicodeLabel = ({
 
                 if (glyph) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++)
-                      for (let px = 0; px < 8; px++)
+                    for (let y = 0; y < 8; y++) {
+                      for (let px = 0; px < 8; px++) {
                         if (
                           pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]
-                        )
+                        ) {
                           context.fillRect(
                             (x + px + Number(shadow)) * scale,
                             (y + Number(shadow)) * scale,
                             scale,
                             scale
                           );
+                        }
+                      }
+                    }
                   }
                 } else {
                   const glyph = getUnihexGlyph(char)!;

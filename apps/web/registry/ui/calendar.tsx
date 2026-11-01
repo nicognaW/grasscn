@@ -92,7 +92,9 @@ const Calendar = ({
               aria-disabled={p.disabled ?? undefined}
               {...p}
               onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
+                if (!e.defaultPrevented) {
+                  playMinecraftClick();
+                }
                 onClick?.(e);
               }}
             />
@@ -105,7 +107,9 @@ const Calendar = ({
               aria-disabled={p.disabled ?? undefined}
               {...p}
               onClick={(e) => {
-                if (!e.defaultPrevented) playMinecraftClick();
+                if (!e.defaultPrevented) {
+                  playMinecraftClick();
+                }
                 onClick?.(e);
               }}
             />

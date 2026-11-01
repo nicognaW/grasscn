@@ -132,7 +132,7 @@ export const MenuUnicodeLine = ({
               context.fillStyle = shadow ? shade : ink;
 
               if (glyph.char !== " ") {
-                for (let copy = 0; copy < (bold ? 2 : 1); copy++)
+                for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
                   supported =
                     paintMenuGlyph(
                       context,
@@ -147,6 +147,7 @@ export const MenuUnicodeLine = ({
                       scale,
                       bold
                     ) && supported;
+                }
               }
             }
 

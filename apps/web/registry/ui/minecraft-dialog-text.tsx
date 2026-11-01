@@ -80,7 +80,9 @@ export const MinecraftDialogText = ({
 
     if (unicode) {
       void loadUnihex().then(() => {
-        if (active) loaded();
+        if (active) {
+          loaded();
+        }
       });
     }
 

@@ -2,14 +2,20 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, webFile } from "@tests/paths";
+import { webFile } from "@tests/paths";
 
+interface SourceRegistry {
+  items: { name: string; files: { path: string }[] }[];
+}
+
+// SAFETY: this is the authored registry catalogue, whose item file paths define installation closure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Consume the registry producer contract and retain all closure assertions.
 const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
-);
+) as SourceRegistry;
 
-const errors = [];
-const sources = new Map();
+const errors: string[] = [];
+const sources = new Map<string, string>();
 
 for (const item of registry.items) {
   const included = new Set(
@@ -19,14 +25,11 @@ for (const item of registry.items) {
   for (const file of item.files) {
     const absolute = webFile(path.join(file.path));
 
-    if (!sources.has(absolute)) {
-      sources.set(absolute, await readFile(absolute, "utf-8"));
-    }
-
-    const source = sources.get(absolute);
+    const source = sources.get(absolute) ?? (await readFile(absolute, "utf-8"));
+    sources.set(absolute, source);
 
     for (const match of source.matchAll(
-      /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)(["'])(\.[^"']+|@\/components\/ui\/[^"']+)\1/g
+      /(?:\bfrom\s*|\bimport\s*(?:\(\s*)?)(?<quote>["'])(?<specifier>\.[^"']+|@\/components\/ui\/[^"']+)\1/gu
     )) {
       const target = match[2].startsWith("@/components/ui/")
         ? webFile(

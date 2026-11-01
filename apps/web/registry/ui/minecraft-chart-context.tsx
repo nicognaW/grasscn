@@ -175,7 +175,9 @@ export const ChartAxisTick = ({
 
     if (/[^\u0020-\u007E]/u.test(text)) {
       void loadUnihex().then(() => {
-        if (live) refresh();
+        if (live) {
+          refresh();
+        }
       });
     }
 

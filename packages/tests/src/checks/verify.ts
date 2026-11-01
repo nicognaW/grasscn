@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { once } from "node:events";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -15,7 +16,19 @@ if (!output || !Number.isInteger(workers) || workers < 1 || workers > 8) {
 
 await fs.mkdir(output, { recursive: true });
 
-const report = {
+interface VerificationReceipt {
+  checks: { exitCode: number; name: string }[];
+  completed: boolean;
+  error?: string;
+  finishedAt?: string;
+  passed: boolean;
+  scope: "normal";
+  startedAt: string;
+}
+
+type VerificationStep = [name: string, args: string[], directory: string];
+
+const report: VerificationReceipt = {
   checks: [],
   completed: false,
   passed: false,
@@ -29,7 +42,7 @@ const save = async () =>
     `${JSON.stringify(report, null, 2)}\n`
   );
 
-const steps = [
+const steps: VerificationStep[] = [
   ["generate", [path.join(webRoot, "scripts/prepare-preview.mjs")], repoRoot],
   [
     "types",
@@ -43,12 +56,12 @@ const steps = [
   ],
   [
     "primitives",
-    [path.join(testRoot, "src/checks/check-primitives.mjs")],
+    [path.join(testRoot, "src/checks/check-primitives.ts")],
     testRoot,
   ],
   [
     "registry-closure",
-    [path.join(testRoot, "src/checks/check-registry-closure.mjs")],
+    [path.join(testRoot, "src/checks/check-registry-closure.ts")],
     testRoot,
   ],
   [
@@ -58,7 +71,7 @@ const steps = [
   ],
   [
     "built-primitives",
-    [path.join(testRoot, "src/checks/check-primitives.mjs"), "--built"],
+    [path.join(testRoot, "src/checks/check-primitives.ts"), "--built"],
     testRoot,
   ],
   [
@@ -71,11 +84,11 @@ const steps = [
     ],
     webRoot,
   ],
-  ["fixture-build", [path.join(testRoot, "cli/build-fixture.mjs")], testRoot],
+  ["fixture-build", [path.join(testRoot, "cli/build-fixture.ts")], testRoot],
   [
     "normal-tests",
     [
-      path.join(testRoot, "cli/test.mjs"),
+      path.join(testRoot, "cli/test.ts"),
       `--workers=${workers}`,
       `--output=${path.join(output, "browser")}`,
     ],
@@ -83,7 +96,7 @@ const steps = [
   ],
 ];
 
-let hosts;
+let hosts: Awaited<ReturnType<typeof serveVerificationHosts>> | undefined;
 
 try {
   /* oxlint-disable no-await-in-loop -- Build steps consume earlier outputs; save each receipt and fail before starting the next step. */
@@ -114,18 +127,18 @@ try {
 
     console.log(`Normal verification: ${name}`);
 
-    const code = await new Promise((resolve, reject) => {
-      const child = spawn(process.execPath, args, {
-        cwd,
-        env,
-        stdio: "inherit",
-      });
-
-      child.on("error", reject);
-      child.on("exit", (code, signal) => {
-        resolve(code ?? (signal ? 1 : 0));
-      });
+    const child = spawn(process.execPath, args, {
+      cwd,
+      env,
+      stdio: "inherit",
     });
+    // SAFETY: Node's ChildProcess exit event provides (code, signal); events.once rejects on spawn errors.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This owned child has no callers operating on its handle after exit.
+    const [exitCode, signal] = (await once(child, "exit")) as [
+      number | null,
+      NodeJS.Signals | null,
+    ];
+    const code = exitCode ?? (signal === null ? 0 : 1);
 
     report.checks.push({ exitCode: code, name });
     await save();
@@ -139,7 +152,9 @@ try {
   report.completed = true;
   report.passed = true;
 } catch (error) {
-  report.error = error.message;
+  // SAFETY: owned verification operations report native/explicit failures through their optional message property.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the original message projection, without converting errors or adding guards.
+  report.error = (error as { message?: string }).message;
   process.exitCode = 1;
 } finally {
   await hosts?.close();
