@@ -19,6 +19,13 @@ import {
 } from "@grasscn/tests/next-production";
 import { repoRoot, webRoot, packageBin } from "@tests/paths";
 
+import {
+  workspaceNames,
+  packageManager,
+  taskHashes as parseTaskHashes,
+  registryDocument,
+} from "../runtime/verification-types.ts";
+
 // Execute once sources are frozen, through the 4% build guard. Backups are kept;
 // generated-output restoration and source probes never touch another worktree.
 const directory = path.join(
@@ -39,6 +46,7 @@ assert.ok(
 
 const source = await sourceIdentity();
 
+/** @type {import("../runtime/verification-types.ts").WorkflowReport} */
 const report = {
   bun: Bun.version,
   passed: false,
@@ -47,6 +55,16 @@ const report = {
   steps: [],
 };
 
+/** @param {Buffer} value - Owned process error output. */
+const onStderr = (value) => {
+  process.stderr.write(value);
+};
+
+/**
+ * @param {string} name - Receipt step.
+ * @param {string[]} args - Owned command arguments.
+ * @param {{capture?: boolean}} [options] - Capture output without echoing it.
+ */
 const run = async (name, args, { capture = false } = {}) => {
   let stdout = "";
 
@@ -61,21 +79,27 @@ const run = async (name, args, { capture = false } = {}) => {
     stdio: ["ignore", "pipe", "pipe"],
   });
 
-  child.stdout.on("data", (value) => {
-    stdout += value;
+  /** @param {Buffer} value - Owned process output. */
+  const onStdout = (value) => {
+    stdout += value.toString("utf-8");
 
     if (!capture) {
       process.stdout.write(value);
     }
-  });
-  child.stderr.on("data", (value) => process.stderr.write(value));
+  };
+
+  child.stdout.on("data", onStdout);
+  child.stderr.on("data", onStderr);
+
+  /** @type {Promise<number | null>} */
 
   // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-  const code = await new Promise((resolve, reject) => {
+  const completion = new Promise((resolve, reject) => {
     child.once("error", reject);
     child.once("exit", resolve);
   });
 
+  const code = await completion;
   await writeFile(path.join(directory, `${name}.log`), stdout);
   report.steps.push({ exitCode: code, name });
   assert.equal(code, 0, `${name} failed`);
@@ -83,21 +107,20 @@ const run = async (name, args, { capture = false } = {}) => {
   return stdout;
 };
 
+/** @type {string} */
 let turbo;
 
 const preserveInstalledDependencies = async () => {
   const root = await realpath(repoRoot);
 
-  const lock = Bun.JSON5.parse(
+  const workspaces = workspaceNames(
     await readFile(path.join(repoRoot, "bun.lock"), "utf-8")
   );
 
+  /** @type {{target: string, relative: string, physical: string}[]} */
   const targets = [];
 
-  for (const workspace of new Set([
-    "",
-    ...Object.keys(lock.workspaces ?? {}),
-  ])) {
+  for (const workspace of new Set(["", ...workspaces])) {
     const target = path.resolve(repoRoot, workspace, "node_modules");
     const relative = path.relative(repoRoot, target);
 
@@ -152,6 +175,7 @@ const preserveInstalledDependencies = async () => {
 const generatedDocsIdentity = async () => {
   const hash = createHash("sha256");
 
+  /** @param {string} folder - Generated source folder. */
   const visit = async (folder) => {
     const entries = await readdir(folder, { withFileTypes: true });
 
@@ -178,18 +202,16 @@ const generatedDocsIdentity = async () => {
   return hash.digest("hex");
 };
 
-const taskHashes = async (name) => {
-  const data = JSON.parse(
+/** @param {string} name - Task-hash receipt step. */
+const taskHashes = async (name) =>
+  parseTaskHashes(
     await run(name, [turbo, "run", "build", "--dry=json"], { capture: true })
   );
 
-  return Object.fromEntries(data.tasks.map((task) => [task.taskId, task.hash]));
-};
-
 try {
-  const expectedBun = JSON.parse(
+  const expectedBun = packageManager(
     await readFile(path.join(repoRoot, "package.json"), "utf-8")
-  ).packageManager;
+  );
 
   assert.equal(
     `bun@${Bun.version}`,
@@ -271,6 +293,7 @@ try {
     "--require=tsc",
   ]);
 
+  /** @type {{name: string, file: string, task: string, change: (bytes: Buffer) => Buffer, run: string[]}[]} */
   const probes = [
     {
       change: (bytes) =>
@@ -285,9 +308,10 @@ try {
     },
     {
       change: (bytes) => {
-        const json = JSON.parse(bytes);
-        json.items.find((item) => item.name === "button").description =
-          "Workflow invalidation sentinel";
+        const json = registryDocument(bytes.toString("utf-8"));
+        const button = json.items.find((item) => item.name === "button");
+        assert.ok(button, "Authored Button registry item required");
+        button.description = "Workflow invalidation sentinel";
 
         return Buffer.from(`${JSON.stringify(json, null, 2)}\n`);
       },

@@ -14,6 +14,8 @@ import {
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot, packageBin } from "@tests/paths";
 
+import { readVerificationState } from "../runtime/verification-types.ts";
+
 const [output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
 
@@ -69,6 +71,7 @@ for (const executable of [
   }
 }
 
+/** @type {import("../runtime/verification-types.ts").VerificationReport} */
 const report = {
   checks: [],
   completed: false,
@@ -88,6 +91,7 @@ const save = async () => {
   );
 };
 
+/** @type {[string, string[], string][]} */
 const steps = [
   [
     "generate",
@@ -130,10 +134,14 @@ const steps = [
 ];
 
 if (phase === "browser") {
-  const prepared = JSON.parse(
+  const prepared = readVerificationState(
     await readFile(path.join(output, "prepared.json"), "utf-8")
   );
 
+  assert.ok(
+    prepared?.websiteBuild && prepared.fixtureBundle,
+    "Complete prepared normal verification required"
+  );
   assert.deepEqual(prepared.source, source, "Prepared normal source changed");
   assert.deepEqual(
     prepared.environment,
@@ -172,6 +180,7 @@ if (phase !== "prepare") {
   ]);
 }
 
+/** @type {Awaited<ReturnType<typeof serveVerificationHosts>> | undefined} */
 let hosts;
 
 try {
@@ -238,8 +247,10 @@ try {
 
     console.log(`Normal verification: ${name}`);
 
+    /** @type {Promise<number>} */
+
     // eslint-disable-next-line no-await-in-loop, promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-    const code = await new Promise((resolve, reject) => {
+    const completion = new Promise((resolve, reject) => {
       const child = spawn(process.execPath, args, {
         cwd,
         env: {
@@ -259,6 +270,8 @@ try {
       });
     });
 
+    // eslint-disable-next-line no-await-in-loop -- Observe the current stage exit before recording it or starting the next stage.
+    const code = await completion;
     report.checks.push({ exitCode: code, name });
     // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     await save();

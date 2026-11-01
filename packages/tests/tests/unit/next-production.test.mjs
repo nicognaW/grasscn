@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { parseProductionIdentity } from "../../src/runtime/verification-types.ts";
 
 import {
   productionBuildIdentity,
@@ -11,7 +10,8 @@ import {
   stampProductionBuild,
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
-import { test } from "vitest";
+
+import { parseProductionIdentity } from "../../src/runtime/verification-types.ts";
 
 test("prepared production requires a completed matching build instead of silently accepting existing output", async () => {
   const root = fs.mkdtempSync(

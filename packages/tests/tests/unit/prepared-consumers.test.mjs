@@ -1,4 +1,5 @@
 import { test, expect } from "bun:test";
+import assert from "node:assert/strict";
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -83,7 +84,7 @@ test("prepared consumer refuses another source or production build", () => {
 });
 
 test("ordinary prepared consumers reject historical PPT-owned receipts", async () => {
-  await expect(
+  await assert.rejects(
     readPreparedConsumerProjects({
       artifactDirectory: path.join(
         repoRoot,
@@ -92,8 +93,9 @@ test("ordinary prepared consumers reject historical PPT-owned receipts", async (
       kind: "manual",
       source,
       websiteIdentity,
-    })
-  ).rejects.toThrow("ordinary test-results owner");
+    }),
+    /ordinary test-results owner/u
+  );
 });
 
 test("prepared build alone cannot substitute for passed ordinary runtime", async () => {
@@ -112,12 +114,13 @@ test("prepared build alone cannot substitute for passed ordinary runtime", async
     path.join(directory, "prepared.json"),
     JSON.stringify({ ...prepared, publicInputsSha256: sha256(publicBytes) })
   );
-  await expect(
+  await assert.rejects(
     readPreparedConsumerProjects({
       artifactDirectory: directory,
       kind: "manual",
       source,
       websiteIdentity,
-    })
-  ).rejects.toThrow("report.json");
+    }),
+    /report\.json/u
+  );
 });

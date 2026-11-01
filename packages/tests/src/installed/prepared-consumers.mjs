@@ -11,6 +11,7 @@ import {
   parseCollectedSnapshot,
   preparedProject,
   retainedArtifacts,
+  retainedBrowserVersion,
 } from "../runtime/verification-types.ts";
 /** @typedef {import("../runtime/verification-types.ts").PreparedProject} PreparedProject */
 /** @typedef {import("../runtime/verification-types.ts").SourceIdentity} SourceIdentity */
@@ -185,14 +186,12 @@ export const readPreparedConsumerProjects = async ({
       websiteIdentity,
     });
     const artifacts = retainedArtifacts(runtime.artifacts);
-    // eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate the persisted browser runtime identity before consuming it.
+    browserVersion = retainedBrowserVersion(runtime.browserVersion);
+
     assert.ok(
-      typeof runtime.browserVersion === "string" &&
-        runtime.browserVersion.length > 0 &&
-        Object.keys(artifacts.files).length > 0,
+      Object.keys(artifacts.files).length > 0,
       "Passed ordinary runtime must retain browser and artifact identities"
     );
-    ({ browserVersion } = runtime);
 
     if (kind === "manual") {
       assert.equal(runtime.publicInputsSha256, prepared.publicInputsSha256);
@@ -217,10 +216,12 @@ export const readPreparedConsumerProjects = async ({
     kind === "manual"
       ? prepared.consumers
       : [{ ...prepared, directory: prepared.consumer, framework: "vite" }];
+
   assert.ok(Array.isArray(rawProjects), "Prepared manual consumers required");
 
   const projects = rawProjects.map((entry) => {
     const project = preparedProject(entry);
+
     return {
       ...project,
       id: kind === "manual" ? `manual-${project.framework}` : "cli-vite",
@@ -240,6 +241,7 @@ export const readPreparedConsumerProjects = async ({
   // Reverse before constructing the map to preserve the first matching runtime entry.
   /** @type {Map<string, PreparedProject>} */
   const observedByFramework = new Map();
+
   for (const entry of rawObserved.toReversed()) {
     const project = preparedProject(entry);
     observedByFramework.set(project.framework, project);

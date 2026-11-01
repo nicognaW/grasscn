@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import { workspaceNames } from "./verification-types.ts";
+
 /** @param {string | Uint8Array} bytes - Verification input. */
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
@@ -76,11 +78,9 @@ export const installedDependencyIdentity = (root) => {
 
   visit(modules, "node_modules");
 
-  const lockData = Bun.JSON5.parse(fs.readFileSync(lock, "utf-8"));
+  const workspaces = workspaceNames(fs.readFileSync(lock, "utf-8"));
 
-  const workspaces = lockData.workspaces ?? {};
-
-  for (const workspace of Object.keys(workspaces).toSorted()) {
+  for (const workspace of workspaces.toSorted()) {
     if (!workspace) {
       continue;
     }
