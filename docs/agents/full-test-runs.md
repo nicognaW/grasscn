@@ -1,6 +1,6 @@
 # Full test run lifecycle
 
-Before GitHub writes, read [issue-tracker.md](issue-tracker.md). For choosing Base and Full cases, read [the classification guide](test-classification.md); definitions and policy are in [the accepted ADR](../adr/0002-base-and-full-tests.md). This workflow changes execution of the existing browser pool; ordinary type checks, builds and integrity checks retain their existing behavior.
+Before GitHub writes, read [issue-tracker.md](issue-tracker.md). For choosing Base and Full cases, read [the classification guide](test-classification.md); definitions and policy are in [the accepted ADR](../adr/0002-base-and-full-tests.md). This workflow changes execution of the shared suite of Pixel Perfect Tests, website tests and component behavior tests; ordinary type checks, builds and integrity checks retain their existing behavior.
 
 ## Plan and approval
 
@@ -26,7 +26,7 @@ An executor crash can leave a claim. Inspect the recorded PID and process-start 
 
 `bun run full-tests status --issue N` is read-only and works for closed or completed issues without a current approval label. Durable state, attempts, verification receipts, resource summaries and per-case checkpoint journals live under `<git-common-dir>/grasscn-verification/full-runs/N/`. Each attempt has a distinct directory; progress comments bind the issue, plan hash, commit and independent execution session. Preserve these artifacts across worktree cleanup.
 
-Browser test failures are collected across the remaining files before repairs. An interrupted journal, global Playwright error, failed precheck or changed source/environment remains incomplete. Only complete collection produces a completed passed/failed result. Finding review and repair handoffs follow the reporting workflow; Full failures are never a merge gate. An execution session can hand repair work to whichever existing or new session fits the problem, carrying the run issue and evidence.
+Full test failures are collected across the remaining files before repairs. An interrupted journal, global Playwright error, failed precheck or changed source/environment remains incomplete. Only complete collection produces a completed passed/failed result. Finding review and repair handoffs follow the reporting workflow; Full failures are never a merge gate. An execution session can hand repair work to whichever existing or new session fits the problem, carrying the run issue and evidence.
 
 For reporting integrations, `packages/tests/scripts/full-run.mjs` exports read-only `readRunIssue`, `readRunPlan`, `readRunState`, `readRunAttempts` and `parseStateComment`. These readers inspect historical runs without granting execution authorization.
 

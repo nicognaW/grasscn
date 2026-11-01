@@ -1,15 +1,15 @@
 # Choosing Base and Full tests
 
-Use this guide when adding, reviewing or reclassifying browser tests. The [accepted decision](../adr/0002-base-and-full-tests.md) defines the policy; [CODING_STANDARDS.md](../../CODING_STANDARDS.md) determines whether a test is worth retaining at all. A tautological or redundant test needs removal or improvement, not a place in Full.
+Use this guide when adding, reviewing or reclassifying Pixel Perfect Tests, website tests or component behavior tests in the shared suite. The [accepted decision](../adr/0002-base-and-full-tests.md) defines the policy; [CODING_STANDARDS.md](../../CODING_STANDARDS.md) determines whether a test is worth retaining at all. A tautological or redundant test needs removal or improvement, not a place in Full.
 
-Pixel Perfect Tests use the same Base and Full classification rules; their purpose does not select a suite.
+Use Pixel Perfect Test for comparisons with captured Minecraft references; name website and component behavior tests by their purpose. Browser describes the execution environment, not the purpose of a test. Base and Full classify individual cases across this shared suite.
 
 ## Decide one case at a time
 
 1. Read the whole case, including helpers, inputs and assertions. Its title alone does not establish coverage.
 2. Identify a concrete Base mapping: either the default usage shown in a website demo, or an actual test owned by upstream shadcn. Record the website route and relevant behavior, or a commit-pinned shadcn test URL and test title.
 3. Keep cases combining that primary behavior with deliberate edge cases or additional variants in Full. Choose another existing pure primary-path case where available; otherwise record the focused coverage gap.
-4. Add qualifying cases individually to `packages/tests/scripts/browser-base-cases.json`, with their exact file/title path and mapping evidence. Every browser case outside that catalogue is Full. Selecting one case does not select its file, component family or generated matrix.
+4. Add qualifying cases individually to `packages/tests/scripts/browser-base-cases.json`, with their exact file/title path and mapping evidence. Every case in the shared suite outside that catalogue is Full. Selecting one case does not select its file, component family or generated matrix.
 
 When shadcn has no corresponding test, use only the website-default rule. Base UI, DayPicker and other dependency tests are not substitutes for shadcn-owned tests; avoid recreating coverage already owned by those dependencies.
 
@@ -32,6 +32,6 @@ Select by importance, without a runtime target, count quota or per-component all
 
 For this cleanup spec (#1), preserve existing cases: do not add, duplicate, split or rewrite tests to manufacture Base coverage. Future features, components and ports should have meaningful new tests; classify each by the same rules and review distinct coverage under the coding standards.
 
-After a catalogue change, use `bun packages/tests/scripts/browser-suite.mjs list --all --json` to check that every mapping resolves once and Base plus Full preserves the inventory. Listing does not execute Full tests. Type checks, builds and non-browser checks remain outside this classification.
+After a catalogue change, use `bun packages/tests/scripts/browser-suite.mjs list --all --json` to check that every mapping resolves once and Base plus Full preserves the inventory. Listing does not execute Full tests. Type checks, builds and tooling unit tests remain outside this classification.
 
 For execution, approval and reporting, use [the Full-run lifecycle](full-test-runs.md). Full results do not block merging.
