@@ -1,0 +1,171 @@
+{
+  "exampleRoot": "apps/web/examples/overlays",
+  "examples": [
+    {
+      "file": "apps/web/examples/overlays/tooltip-example.tsx",
+      "installItems": [
+        "tooltip",
+        "button"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/dialog-example.tsx",
+      "installItems": [
+        "dialog"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/alert-dialog-example.tsx",
+      "installItems": [
+        "alert-dialog"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/popover-example.tsx",
+      "installItems": [
+        "popover"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/dropdown-menu-example.tsx",
+      "installItems": [
+        "dropdown-menu"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/context-menu-example.tsx",
+      "installItems": [
+        "context-menu"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/menubar-example.tsx",
+      "installItems": [
+        "menubar"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/sheet-example.tsx",
+      "installItems": [
+        "sheet"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/drawer-example.tsx",
+      "installItems": [
+        "drawer"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/command-example.tsx",
+      "installItems": [
+        "command"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/command-palette-example.tsx",
+      "installItems": [
+        "command"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/avatar-example.tsx",
+      "installItems": [
+        "avatar"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/table-example.tsx",
+      "installItems": [
+        "table"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/calendar-example.tsx",
+      "installItems": [
+        "calendar"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/date-picker-example.tsx",
+      "installItems": [
+        "date-picker"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/date-picker-range-example.tsx",
+      "installItems": [
+        "date-picker"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/item-example.tsx",
+      "installItems": [
+        "item",
+        "button"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/data-table-example.tsx",
+      "installItems": [
+        "data-table"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/data-table-features-example.tsx",
+      "installItems": [
+        "data-table",
+        "button",
+        "input"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/carousel-example.tsx",
+      "installItems": [
+        "carousel",
+        "card"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/message-example.tsx",
+      "installItems": [
+        "message"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/bubble-example.tsx",
+      "installItems": [
+        "message"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/message-scroller-example.tsx",
+      "installItems": [
+        "message",
+        "input"
+      ]
+    },
+    {
+      "file": "apps/web/examples/overlays/attachment-example.tsx",
+      "installItems": [
+        "attachment"
+      ]
+    }
+  ],
+  "publicDelivery": "These examples use standard installed components/ui and components block destinations. They contain no site helper imports or undeclared external assets. Use the authoritative complete registry payload for each item, not its main TSX file only.",
+  "chartReuse": [
+    "apps/web/examples/charts/fps-example.tsx",
+    "apps/web/examples/charts/profiler-example.tsx",
+    "apps/web/examples/charts/metric-example.tsx"
+  ],
+  "runtimeAssertions": {
+    "alert-dialog": "Delete world opens named alertdialog; Yes increments once, explicitly closes and returns trigger focus.",
+    "command-palette": "Open command palette; choose Save world; output save, dialog closes and trigger regains focus. CommandDialog owns its Command root.",
+    "data-table-features": "Page1/2 \u2192 Next \u2192 Page2/2; filter Grasslands resets visible rows; select row; filter missing world \u2192 No results. Engine is TanStack9/useTable/table.FlexRender. Install data-table-features.ts as well as block TSX.",
+    "date-picker": "Pick a day \u2192 October15,2026; trigger formats October15th,2026; installed block remains open until Escape. No hidden input/name or auto-close contract. Range is the actual two-month installed block.",
+    "message-scroller": "12 stable append-only messageIds; First \u2192 scrollTop0; send Bring torches \u219213 messages; Latest \u2192 end gap<2. Provider wraps useMessageScroller; explicit bounded Viewport; rolelog/aria-live chosen by example.",
+    "tooltip": "Actual keyboard path Preview \u2192 tabpanel \u2192 Inspect trigger. Focus shows data-slot tooltip-content; Escape removes it. Existing Popup has no roletooltip or automatic aria-describedby connection; do not assume those semantics.",
+    "avatar": "Packaged wide/steve and slim/alex, hat=true,16logical atscale2. Both exact native faces0/2048 total; grouping/count are web adaptation.",
+    "chart": "Use #17 maintained actual Recharts3 modules and installed helpers. Container config/colors, packaged text/GPU resources, responsive runtime and frame/profiler data must resolve in external consumer."
+  }
+}

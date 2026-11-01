@@ -1,0 +1,19 @@
+bun install v1.4.4 (38afee6c8)
+✔ pre-commit .githooks\pre-commit created
+
+The hook runs bunx --bun --no-install uncheck staged --fix before every commit, `git commit --no-verify` skips it.
+
++ @shadcn/lint@0.2.3
++ @types/node@26.6.5
++ eslint-plugin-github@6.1.2
++ oxfmt@0.74.0
++ oxlint@1.90.0
++ oxlint-plugin-react-doctor@0.9.21
++ oxlint-tsgolint@7.0.2005
++ turbo@2.11.10
++ typescript@7.0.2
++ ultracite@8.1.0
++ uncheck@0.1.1
+
+816 packages installed [93.69s]
+bun test v1.4.4 (38afee6c8)

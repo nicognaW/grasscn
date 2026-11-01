@@ -1,0 +1,10 @@
+1 | console.log(JSON.stringify({serverLocale:Intl.DateTimeFormat().resolvedOptions().locale,serverDefaultDate:new Date(2026,9,30).toLocaleDateString(),serverExplicitDate:new Date(2026,9,30).toLocaleDateString('en-US')}));
+2 | process.env.GOMEMLIMIT='768MiB';
+3 | import {mkdir,writeFile} from 'node:fs/promises';
+4 | const root=process.cwd();
+5 | const run=async(args,cwd=root)=>{const p=Bun.spawn(['bun',...args],{cwd,stdout:'inherit',stderr:'inherit',env:process.env});if(await p.exited)throw Error(args.join(' '))};
+                                                                                                                                                        ^
+error: --bun ../../node_modules/@playwright/test/cli.js test overlay-documentation.spec.ts --reporter=line --output C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-20/.pixel-perfect-test/overlays20c/browser
+      at <anonymous> (C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-tools\build20c.mjs:5:149)
+
+Bun v1.4.4 (Windows x64)
