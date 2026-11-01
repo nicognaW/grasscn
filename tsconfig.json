@@ -12,27 +12,12 @@
     "noEmit": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "paths": {
-      "@/lib/utils": [
-        "./tests/fixture/utils.ts"
-      ],
-      "@/components/ui/*": [
-        "./registry/ui/*"
-      ]
-    },
     "types": [
-      "node",
-      "vite/client"
+      "node"
     ],
     "resolveJsonModule": true
   },
   "include": [
-    "registry/**/*.tsx",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "*.config.ts",
-    "preview/**/*.ts",
-    "preview/**/*.tsx",
-    "registry/**/*.ts"
+    "*.config.ts"
   ]
 }

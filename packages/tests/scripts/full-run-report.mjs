@@ -50,8 +50,8 @@ export function completedRunReport(number) {
     }
     const binding = receipt.environment?.fullRun
     if (receipt.source?.commit !== run.plan.commit || receipt.browserScope !== 'full' || binding?.issue !== run.number || binding?.planHash !== run.planHash || binding?.approvalEvent !== state.approval.eventId) throw Error('Attempt belongs to different source, scope or authorization')
-    for (const field of ['node', 'platform', 'arch', 'timezone', 'locale', 'ci', 'webgl', 'edge']) if (!same(receipt.environment[field], run.plan.environment[field])) throw Error(`Receipt environment differs from approved ${field}`)
-    if (receipt.environment.workers !== run.plan.execution.workers || receipt.environment.installedDependencies?.sha256 !== run.plan.environment.installedDependenciesSha256) throw Error('Receipt workers/dependencies differ from approved environment')
+    for (const field of ['bun', 'platform', 'arch', 'timezone', 'locale', 'ci', 'webgl', 'edge']) if (!same(receipt.environment[field], run.plan.environment[field])) throw Error(`Receipt environment differs from approved ${field}`)
+    if (receipt.environment.workers !== run.plan.execution.workers || receipt.environment.installedDependencies?.installedSha256 !== run.plan.environment.installedDependenciesSha256 || receipt.environment.installedDependencies?.lockSha256 !== run.plan.environment.bunLockSha256) throw Error('Receipt workers/dependencies differ from approved environment')
     if (environment && (!same(environment, receipt.environment) || receipt.source.treeSha256 !== last.source.treeSha256)) throw Error('Attempt environment/tree changed across resumes')
     environment = receipt.environment
     if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source)) throw Error('Source changed during collection')
@@ -73,7 +73,7 @@ export function completedRunReport(number) {
       const journal = lines.filter(Boolean).map(line => JSON.parse(line))
       const declarations = new Map(expected.tests.map(test => [test.id, test]))
       if (!sourceHashes.has(file)) {
-        const bytes = execFileSync('git', ['show', `${run.plan.commit}:tests/${file}`], {cwd: fullRoot, maxBuffer: 16 * 1024 * 1024})
+        const bytes = execFileSync('git', ['show', `${run.plan.commit}:packages/tests/tests/${file}`], {cwd: fullRoot, maxBuffer: 16 * 1024 * 1024})
         // Windows core.autocrlf checks out committed text with CRLF; both byte
         // representations identify the same committed source, not changed logic.
         sourceHashes.set(file, new Set([hash(bytes), hash(bytes.toString('utf8').replace(/\r?\n/g, '\r\n'))]))

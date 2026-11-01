@@ -63,7 +63,7 @@ function withoutReporter(args) {
 export function collectBrowserCases(args = [], {effectiveSelection = false} = {}) {
   const result = spawnSync(process.execPath, [cli, 'test', ...withoutReporter(args), '--list', '--reporter=json'], {
     cwd: browserRoot, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024,
-    env: {...process.env, GOMAXPROCS: '1', RAYON_NUM_THREADS: '1', GRASSCN_BROWSER_GUARD_COLLECTION: effectiveSelection ? '1' : ''},
+    env: {...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: '', PLAYWRIGHT_JSON_OUTPUT_DIR: '', PLAYWRIGHT_JSON_OUTPUT_FILE: '', GOMAXPROCS: '1', RAYON_NUM_THREADS: '1', GRASSCN_BROWSER_GUARD_COLLECTION: effectiveSelection ? '1' : ''},
   })
   if (result.error) throw result.error
   let report

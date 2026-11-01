@@ -14,6 +14,10 @@ Use the five default triage roles. Before classifying or labeling issues, read `
 
 Use the single-context layout: root `GLOSSARY.md` and `docs/adr/`. Before codebase exploration, read `docs/agents/domain.md`.
 
+## Workspace commands
+
+Use the pinned Bun package manager and runtime. The website and authored registry live in `apps/web`; fixtures and verification tooling live in `packages/tests`. Run `bunx turbo run generate` before `bunx --bun uncheck` on a fresh checkout. Uncheck owns linting, formatting and typechecking; Turbo owns generation, builds and tests.
+
 ## Minecraft UI work
 
 Before porting UI or changing its verified appearance, read `.agents/skills/port-minecraft-ui/SKILL.md`.

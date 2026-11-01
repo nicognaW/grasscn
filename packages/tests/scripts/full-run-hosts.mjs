@@ -3,6 +3,7 @@ import path from 'node:path'
 import {readFile} from 'node:fs/promises'
 import {createConnection} from 'node:net'
 import {serveProductionFixture} from './production-fixture.mjs'
+import {webRoot} from '../../../workspace-paths.mjs'
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
