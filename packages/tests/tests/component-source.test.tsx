@@ -1,4 +1,5 @@
-import { test, expect } from "bun:test";
+import assert from "node:assert/strict";
+import { test } from "node:test";
 
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -12,16 +13,16 @@ test("Field source selects its owned implementation and rejects files outside Fo
       initialFile: "registry/ui/field.tsx",
     })
   );
-  expect(html).toContain("components/ui/field.tsx");
-  expect(html).toContain("FieldSet");
-  expect(html).not.toContain("function FormExample");
+  assert.ok(html.includes("components/ui/field.tsx"));
+  assert.ok(html.includes("FieldSet"));
+  assert.ok(!html.includes("function FormExample"));
   const unavailable = renderToStaticMarkup(
     await ComponentSource({
       name: "form",
       initialFile: "registry/ui/not-owned.tsx",
     })
   );
-  expect(unavailable.replace(/<[^>]*>/g, "")).toContain(
-    "Component source unavailable"
+  assert.ok(
+    unavailable.replace(/<[^>]*>/g, "").includes("Component source unavailable")
   );
 });
