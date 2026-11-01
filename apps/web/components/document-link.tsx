@@ -7,11 +7,16 @@ import { DocumentText } from "./document-text";
 
 export function DocumentLink({
   children,
+  className,
   href = "#",
   ...props
 }: ComponentProps<"a">) {
   return (
-    <Link href={href} {...props}>
+    <Link
+      href={href}
+      className={["minecraft-prose-link", className].filter(Boolean).join(" ")}
+      {...props}
+    >
       <DocumentText>{children}</DocumentText>
     </Link>
   );

@@ -55,10 +55,12 @@
   overflow-x: auto;
   background: #202020;
 }
-.documentation-tabs-scroll [data-slot="tabs-list"] {
+.documentation-tabs-scroll > [data-slot="tabs-list"] {
   width: 606px;
 }
-.documentation-example [data-slot="tabs-content"] {
+.documentation-example
+  > .documentation-example-tabs
+  > [data-slot="tabs-content"] {
   width: 100%;
 }
 .documentation-code {

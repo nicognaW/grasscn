@@ -1,0 +1,37 @@
+---
+title: Tabs
+description: Native horizontal world-setting tabs with accessible panels.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Native horizontal world-setting tabs with accessible panels.
+
+## Preview
+
+<ComponentExample name="tabs-example" />
+
+## Usage
+
+Use matching stable values on TabsTrigger and TabsContent. The example controls value through onValueChange and selects Game initially; the root does not invent a default selection. Only horizontal orientation and the default TabsList variant are supported. activateOnFocus lets arrow-key focus select a panel.
+
+## Composition
+
+TabsList measures available width, caps the native layout at 400 logical pixels, and distributes trigger widths. Give the root usable width; do not force arbitrary fractional native geometry. Trigger/Panel associations and Base UI keyboard behavior are retained. Rich children and different glyph-loading contexts are outside the fixed label matrix.
+
+## Installation
+
+<Installation name="tabs" title="Tabs" />
+
+## Component source
+
+<ComponentSource name="tabs" title="Tabs" />
+
+## Interactive playground
+
+<LayoutPlayground name="tabs" />
+
+For the inherited interaction contract, see [Base UI Tabs](https://base-ui.com/react/components/tabs). The restrictions above describe the installed Grasscn implementation.
