@@ -55,7 +55,7 @@ test("overlay documentation exposes exact examples, own grouped source and retai
 }, info) => {
   test.setTimeout(180_000);
   const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("pageerror", (error) => errors.push(`${page.url()}: ${error.message}`));
   for (const slug of slugs) {
     await page.goto(`${origin}/docs/components/${slug}`);
     for (const id of ["preview", "usage", "composition", "installation"])
@@ -182,6 +182,49 @@ test("documentation menu and command examples dispatch real selections", async (
   await example.getByRole("combobox").fill("creative");
   await example.getByRole("option", { name: "Creative", exact: true }).click();
   await expect(example.getByLabel("Selected command")).toHaveText("creative");
+  const palette = page.locator(".documentation-example").nth(1);
+  const paletteTrigger = palette.getByRole("button", { name: "Open command palette", exact: true });
+  await paletteTrigger.click();
+  const dialog = page.getByRole("dialog", { name: "World commands", exact: true });
+  await dialog.getByRole("option", { name: "Save world", exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(palette.getByLabel("Palette selection")).toHaveText("save");
+  await expect(paletteTrigger).toBeFocused();
+});
+
+test("documentation tooltip and popover open from their real focusable triggers", async ({ page }) => {
+  await page.goto(`${origin}/docs/components/tooltip`);
+  let example = page.locator(".documentation-example").first();
+  await example.getByRole("button", { name: "Inspect pickaxe", exact: true }).focus();
+  await expect(page.getByRole("tooltip")).toContainText("Diamond Pickaxe");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("tooltip")).toHaveCount(0);
+  await page.goto(`${origin}/docs/components/popover`);
+  example = page.locator(".documentation-example").first();
+  const trigger = example.getByRole("button", { name: "World options", exact: true });
+  await trigger.click();
+  const popover = page.getByRole("dialog", { name: "World settings", exact: true });
+  await expect(popover).toHaveAccessibleDescription("Configure your world.");
+  await page.keyboard.press("Escape");
+  await expect(popover).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test("documentation Calendar and Date Picker select with their actual DayPicker 10 APIs", async ({ page }) => {
+  await page.goto(`${origin}/docs/components/calendar`);
+  let example = page.locator(".documentation-example").first();
+  await example.getByRole("button", { name: /October 15.*2026/ }).click();
+  await expect(example.getByLabel("Selected date")).toHaveText("10/15/2026");
+  await page.goto(`${origin}/docs/components/date-picker`);
+  example = page.locator(".documentation-example").first();
+  const trigger = example.getByRole("button", { name: "Pick a day", exact: true });
+  await trigger.click();
+  const popup = page.locator('[data-slot="date-picker-content"]');
+  await popup.getByRole("button", { name: /October 15.*2026/ }).click();
+  await expect(example.getByRole("button", { name: "October 15th, 2026", exact: true })).toBeVisible();
+  await expect(popup).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(popup).toHaveCount(0);
 });
 
 test("documentation world browser filters and pages through TanStack Table 9", async ({
