@@ -25,6 +25,7 @@ import {
   taskHashes as parseTaskHashes,
   registryDocument,
 } from "../runtime/verification-types.ts";
+import { verifyGenerationCacheOwnership } from "./verify-generation-cache-ownership.ts";
 
 // Execute once sources are frozen, through the 4% build guard. Backups are kept;
 // generated-output restoration and source probes never touch another worktree.
@@ -249,6 +250,20 @@ try {
   await run("root-build", [turbo, "run", "build"]);
 
   const baseline = await productionBuildIdentity({ source });
+  report.generationOwnership = await verifyGenerationCacheOwnership({
+    artifactDirectory: directory,
+    hashes: taskHashes,
+    run,
+    turbo,
+    webRoot,
+  });
+  const afterOwnership = await productionBuildIdentity({ source });
+
+  assert.equal(
+    afterOwnership.outputSha256,
+    baseline.outputSha256,
+    "Generation ownership probe must preserve the exact prepared production output"
+  );
   const generated = await generatedDocsIdentity();
   const hashes = await taskHashes("baseline-hashes");
 
