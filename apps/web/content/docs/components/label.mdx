@@ -1,0 +1,45 @@
+---
+title: Label
+description: Associated labels and wrapped Minecraft text.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Associated labels and wrapped Minecraft text.
+
+## Preview
+
+<ComponentExample name="label-example" />
+
+## Usage
+
+Import `Label` from `@/components/ui/label`. Link `htmlFor` to the input's `id`. Activating the primary label focuses its associated input. `scale` accepts 1, 2 or 3 and defaults to 2.
+
+## Composition
+
+String and number children use the native glyph renderer. For wrapping, set `maxWidth` in logical pixels and choose `align="left"` or `align="center"`; explicit newlines are supported. Use [FieldLabel](/docs/components/field) inside Field compositions for the same association with field layout.
+
+## API and accessibility
+
+A disabled input does not automatically dim a static Label. Rich children render as supplied and are outside the native-text guarantee. Unicode atlas loading is asynchronous, and verified glyph coverage remains limited to declared reference cases.
+
+See the [underlying API](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label) for shared semantics.
+
+## Wrapped and centered
+
+<ComponentExample name="label-wrapped-example" title="Wrapped and centered" />
+
+## Installation
+
+<Installation name="label" title="Label" />
+
+## Component source
+
+<ComponentSource name="label" title="Label" />
+
+## Interactive playground
+
+<InputPlayground name="label" />

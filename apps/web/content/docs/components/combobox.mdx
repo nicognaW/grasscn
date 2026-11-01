@@ -1,0 +1,48 @@
+---
+title: Combobox
+description: Searchable Minecraft suggestions with single and multiple choices.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Searchable Minecraft suggestions with single and multiple choices.
+
+## Preview
+
+<ComponentExample name="combobox-example" />
+
+## Usage
+
+Import `Combobox`, `ComboboxInput`, `ComboboxContent`, `ComboboxList`, `ComboboxItem` and `ComboboxEmpty` from `@/components/ui/combobox`. Supply `items` and the List render callback. The primary example controls a `string | null` value and exposes clearing with `showClear`.
+
+## Composition
+
+For multiple values, set `multiple`, use a string array and render chips through `ComboboxValue`. Create a ref with `useComboboxAnchor`, attach it to `ComboboxChips` and pass it to `ComboboxContent` as `anchor`. `ComboboxChipsInput` needs its own accessible name. The named example disables Bedrock without hiding it.
+
+## API and accessibility
+
+Input defaults to `showTrigger={true}` and `showClear={false}`. List `surface` is suggestions or popup; Content defaults bottom/start with zero offsets. Chips show removal by default, and Clear/ChipRemove supply accessible names. Filtering and keyboard semantics come from Base UI. Popup positioning, chips and the combined widget are web adaptations; native coverage applies to declared input/list constituents.
+
+See the [underlying API](https://base-ui.com/react/components/combobox) for shared semantics.
+
+## Multiple inventory chips
+
+<ComponentExample
+  name="combobox-multiple-example"
+  title="Multiple inventory chips"
+/>
+
+## Installation
+
+<Installation name="combobox" title="Combobox" />
+
+## Component source
+
+<ComponentSource name="combobox" title="Combobox" />
+
+## Interactive playground
+
+<InputPlayground name="combobox" />

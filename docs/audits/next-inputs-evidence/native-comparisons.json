@@ -1,0 +1,51 @@
+[
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\controls\\captures\\checkbox-unchecked-normal-s2.png",
+    "referenceSha256": "d9f3684d7992a51c0eccfdb05b7461e7d7997e6fd9767076b3b5b816a4d12795",
+    "mismatchedPixels": 0,
+    "totalPixels": 1156,
+    "case": "checkbox"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\input\\captures\\input-w200-normal-c39-s2.png",
+    "referenceSha256": "8e1924ca155bf9e6fa5261c7d1cb11b6aa19554e48ffa5257d88511cad2da710",
+    "mismatchedPixels": 0,
+    "totalPixels": 16000,
+    "case": "input"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\radio-group\\captures\\radio-group-c8-s2.png",
+    "referenceSha256": "a27abad305244d487d73fab5eca3955900f894e6d9a394f0a5300e1ef2f7f2bb",
+    "mismatchedPixels": 0,
+    "totalPixels": 1428,
+    "case": "radio-group"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\select\\captures\\select-c70-s2.png",
+    "referenceSha256": "f6528ed35b613c73c3554db16dfcf8f659ae7b23d3cbe015d9cd348796407d4c",
+    "mismatchedPixels": 0,
+    "totalPixels": 16000,
+    "case": "select"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\docs-input-defaults\\native-a\\captures\\docs-slider-volume-50-s2.png",
+    "referenceSha256": "17568a15305c6dce6430d321831d9e3dc9a96b4ae6cf21580f5966f53abcda5d",
+    "mismatchedPixels": 0,
+    "totalPixels": 16000,
+    "case": "slider"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\switch\\captures\\switch-c16-s2.png",
+    "referenceSha256": "c9ffee7656e488b0ef7d5ce7e2ccd0dd00d59072f229b6e60813648aeb6283e8",
+    "mismatchedPixels": 0,
+    "totalPixels": 12000,
+    "case": "switch"
+  },
+  {
+    "referencePath": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-18\\packages\\tests\\tests\\reference\\textarea\\captures\\textarea-c18-s2.png",
+    "referenceSha256": "0a2f8f06b8ba94a93cd6cbfe1784e4142ea0b62a82bcab772bba6c5f94132e58",
+    "mismatchedPixels": 0,
+    "totalPixels": 64000,
+    "case": "textarea"
+  }
+]
