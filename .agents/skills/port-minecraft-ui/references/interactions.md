@@ -6,7 +6,7 @@ Choose sequences applicable to the element. Separate native behavior, browser no
 
 Exercise click without motion, jitter below threshold, drag starting on a child, release outside, pointer cancellation, subsequent click, keyboard selection after drag, and tooltip visibility. Verify callbacks as well as visible state. A web drag threshold is not a native guarantee without evidence.
 
-Advancement Tree passed 12 pixel cases before selection/panning conflicts surfaced. `packages/tests/tests/advancement-gestures.spec.ts` retains the regressions.
+Advancement Tree passed 12 Pixel Perfect Tests before selection/panning conflicts surfaced. `packages/tests/tests/advancement-gestures.spec.ts` retains the regressions.
 
 ## Scroll controls
 

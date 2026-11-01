@@ -1,3 +1,4 @@
+import {pixelPerfectTestRoot} from '../../../../workspace-paths.mjs'
 import { spawnSync } from "node:child_process"
 import { createHash } from "node:crypto"
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises"
@@ -13,7 +14,7 @@ const instanceName = path.basename(versionDir)
 const metadata = JSON.parse(await readFile(path.join(versionDir, `${instanceName}.json`), "utf8"))
 const minecraftRoot = path.resolve(versionDir, "../..")
 const jar = path.join(versionDir, `${instanceName}.jar`)
-const runtime = path.resolve(process.env.MINECRAFT_REFERENCE_WORK_DIR ?? path.join(here, "../../test-results/native-reference"))
+const runtime = path.resolve(process.env.MINECRAFT_REFERENCE_WORK_DIR ?? path.join(pixelPerfectTestRoot, "native-runtime/native-reference"))
 const gameDir = path.join(runtime, "game")
 const classes = path.join(runtime, "classes")
 const outputDir = path.resolve(process.env.MINECRAFT_REFERENCE_OUTPUT_DIR ?? here)

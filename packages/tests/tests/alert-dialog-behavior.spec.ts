@@ -1,5 +1,5 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
-import {test,expect} from "./verified-test"
+import {pixelPerfectTest as test,expect} from "./verified-test"
 import {readFileSync} from "node:fs"
 import {PNG} from "pngjs"
 import {minecraftClickSound} from "../../../apps/web/registry/ui/minecraft-sound-assets"

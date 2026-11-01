@@ -1,3 +1,4 @@
+import {pixelPerfectTestRoot} from '../../../workspace-paths.mjs'
 import {packageBin} from '../../../workspace-paths.mjs'
 import {test} from "bun:test"
 import assert from "node:assert/strict"
@@ -17,7 +18,7 @@ test("browser file filters select exact basenames on Windows and POSIX",()=>{
 })
 
 async function fixture(run){
-  const parent=path.resolve("test-results");await mkdir(parent,{recursive:true})
+  const parent=path.join(pixelPerfectTestRoot,"unit");await mkdir(parent,{recursive:true})
   const root=await mkdtemp(path.join(parent,"browser-cache-")),file="sample.spec.ts",directory=path.join(root,"prior/checkpoints",file),output=path.join(root,"prior/browser/sample")
   try{
     await mkdir(directory,{recursive:true});await mkdir(output,{recursive:true});await mkdir(path.join(root,"tests"))

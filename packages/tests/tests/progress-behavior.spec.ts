@@ -1,5 +1,5 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
-import { test, expect } from "./verified-test";
+import { pixelPerfectTest as test, expect } from "./verified-test";
 import { readFile } from "node:fs/promises";
 import { PNG } from "pngjs";
 test("Progress exposes controlled values and completion semantics", async ({ page }) => {

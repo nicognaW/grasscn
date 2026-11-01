@@ -1,13 +1,14 @@
-import {resolveRepositoryPath} from '../../../workspace-paths.mjs'
+import {pixelPerfectTestRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
 import {test} from 'bun:test'
 import assert from 'node:assert/strict'
-import {cp, mkdtemp, readFile, writeFile, rm} from 'node:fs/promises'
-import os from 'node:os'
+import {mkdir, cp, mkdtemp, readFile, writeFile, rm} from 'node:fs/promises'
 import path from 'node:path'
 import {verifyPortingEvidence} from '../scripts/check-porting-evidence.mjs'
 
 test('evidence chain rejects corrupted inputs, generated outputs and stale trace identity', async()=>{
-  const root = await mkdtemp(path.join(os.tmpdir(),'grasscn-evidence-'))
+  const scratchRoot=path.join(pixelPerfectTestRoot,'unit')
+  await mkdir(scratchRoot,{recursive:true})
+  const root = await mkdtemp(path.join(scratchRoot,'grasscn-evidence-'))
   const files = [
     'tests/reference/trading/scrollbar/manifest.json', 'tests/reference/trading/scrollbar/interaction-repeatability.json', 'tests/reference/trading/scrollbar/trading-scroll-events.json',
     ...['terrain-provenance.json','map-world-generation.json','generation-repeatability.json','inputs/map-world-input.json.gz','map-world.colors'].map(name=>'tests/reference/map/demo-world/'+name),

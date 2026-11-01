@@ -1,4 +1,4 @@
-import {test,expect} from "./verified-test"
+import {pixelPerfectTest as test,expect} from "./verified-test"
 import assert from "node:assert/strict"
 import path from "node:path"
 import {readFileSync,writeFileSync} from "node:fs"
