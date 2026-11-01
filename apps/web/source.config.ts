@@ -14,4 +14,5 @@ export const docs = defineDocs({
     }),
   },
 });
-export default defineConfig();
+// Grasscn's CodeView highlights the preserved fence text with its Minecraft palette.
+export default defineConfig({ mdxOptions: { rehypeCodeOptions: false } });
