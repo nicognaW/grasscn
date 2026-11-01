@@ -230,6 +230,7 @@
     "packages/tests/tests/unit/owned-http-process.test.mjs",
     "packages/tests/tests/unit/prepared-consumers.test.mjs",
     "packages/tests/tests/unit/verification-summary.test.mjs",
+    "packages/tests/tests/unit/workspace-type-ownership.test.ts",
     "packages/tests/tests/website/docs-examples.spec.ts",
     "packages/tests/tests/website/docs-inputs.spec.ts",
     "packages/tests/tests/website/docs-installation.spec.ts",
