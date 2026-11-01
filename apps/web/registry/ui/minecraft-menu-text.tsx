@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import { MenuUnicodeLine } from "./minecraft-menu-unicode";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
@@ -15,10 +16,10 @@ export const MinecraftMenuText = ({
   const scale = React.useContext(MenuScaleContext);
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
 
   const text = scalar ? String(children) : "";
-  const unicode = /[^\x20-\x7E]/.test(text);
+  const unicode = /[^\u0020-\u007E]/u.test(text);
 
   React.useEffect(() => {
     let active = true;
@@ -48,7 +49,7 @@ export const MinecraftMenuText = ({
 
   if (
     ![...text].every(
-      (char) => /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+      (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
     return (
@@ -81,7 +82,7 @@ export const MinecraftMenuText = ({
 
 export function menuTextNodes(children: React.ReactNode) {
   return React.Children.map(children, (child) =>
-    typeof child === "string" || typeof child === "number" ? (
+    isMinecraftTextContent(child) ? (
       <MinecraftMenuText>{child}</MinecraftMenuText>
     ) : (
       child

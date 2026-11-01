@@ -6,6 +6,7 @@ import * as React from "react";
 import { Button } from "./button";
 import { MinecraftCollapsibleText } from "./minecraft-collapsible-text";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -151,7 +152,7 @@ const CollapsibleContent = ({
       resize.disconnect();
     };
   }, [element, scale]);
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
 
   return (
     <Primitive.Panel

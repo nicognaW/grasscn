@@ -3,6 +3,7 @@ import * as React from "react";
 import { MinecraftCardText } from "./minecraft-card-text";
 import { minecraftGlyphs } from "./minecraft-font";
 import { PopoverUnicodeLine } from "./minecraft-popover-unicode";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 export const PopoverTextContext = React.createContext({ scale: 2, width: 214 });
@@ -66,9 +67,9 @@ export const MinecraftPopoverText = ({
   const { scale, width } = React.useContext(PopoverTextContext);
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
-  const scalar = typeof children === "string" || typeof children === "number";
+  const scalar = isMinecraftTextContent(children);
   const text = scalar ? String(children) : "";
-  const unicode = /[^\x20-\x7E\n]/.test(text);
+  const unicode = /[^\u0020-\u007E\n]/u.test(text);
 
   React.useEffect(() => {
     let active = true;
@@ -105,7 +106,7 @@ export const MinecraftPopoverText = ({
 
   if (
     ![...text].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
+      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
     return <span data-mc-popover-text-ready="false">{text}</span>;

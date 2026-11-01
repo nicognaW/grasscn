@@ -13,7 +13,11 @@ import * as React from "react";
 
 import { Button } from "./button";
 import { MessageContent, MessageScale } from "./message";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 const ScrollerScale = React.createContext<1 | 2 | 3>(2);
@@ -94,7 +98,7 @@ function MessageScrollerItem({
       className={cn(`mc-message-scroller-item`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <MessageContent>{children}</MessageContent>
       ) : (
         children

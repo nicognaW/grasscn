@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -57,10 +58,10 @@ function textSkin(children: React.ReactNode): React.ReactNode {
     ));
   }
 
-  if (typeof children === "string" || typeof children === "number") {
+  if (isMinecraftTextContent(children)) {
     const text = String(children);
 
-    return /^[\u0020-\u007E]*$/.test(text) ? (
+    return /^[\u0020-\u007E]*$/u.test(text) ? (
       <MinecraftText>{text}</MinecraftText>
     ) : (
       <MinecraftUnicodeLabel text={text} atlas={selectUnihexAtlas} />
@@ -207,7 +208,7 @@ const SelectTrigger = ({
 
       const text = label.textContent ?? "";
 
-      if (/[^\x00-\x7F]/.test(text) && !loading) {
+      if (/[^\u0000-\u007F]/u.test(text) && !loading) {
         loading = true;
         void loadUnihex().then(() => {
           if (!stopped) {

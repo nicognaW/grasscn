@@ -11,6 +11,7 @@ export { type MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 
 import { paintMinecraftAvatar } from "./minecraft-avatar-paint";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -170,7 +171,7 @@ function AvatarFallback({
     >
       {children == null ? (
         <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
-      ) : typeof children === "string" || typeof children === "number" ? (
+      ) : isMinecraftTextContent(children) ? (
         <Label scale={scale} maxWidth={maxWidth} align={align}>
           {children}
         </Label>
@@ -259,7 +260,7 @@ function AvatarGroupCount({
       className={cn(`mc-avatar-group-count`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <Label scale={scale}>{children}</Label>
       ) : (
         children

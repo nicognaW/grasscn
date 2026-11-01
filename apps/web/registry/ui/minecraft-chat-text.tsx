@@ -7,6 +7,7 @@ import { MinecraftColorUnicodeLabel } from "./minecraft-color-unicode";
 import { disclosureAdvance } from "./minecraft-disclosure-metrics";
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -95,10 +96,9 @@ const MinecraftChatText = ({
   const child = null;
   const content = children;
 
-  const accessibleText =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : null;
+  const accessibleText = isMinecraftTextContent(content)
+    ? String(content)
+    : null;
 
   let text = accessibleText;
 
@@ -124,7 +124,7 @@ const MinecraftChatText = ({
       .join("\n");
   }
 
-  const unicode = text != null && /[^\x00-\x7F]/.test(text);
+  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
@@ -164,7 +164,7 @@ const MinecraftChatText = ({
     (!unicode || fontReady) &&
     [...text].every(
       (char) =>
-        char === "\n" || /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+        char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     );
 
   const lines = text == null ? [] : splitLines(text, maxWidth);
@@ -172,7 +172,7 @@ const MinecraftChatText = ({
   const width = containerWidth ?? maxWidth ?? widest;
 
   const richText = (value: React.ReactNode): React.ReactNode => {
-    if (typeof value === "string" || typeof value === "number") {
+    if (isMinecraftTextContent(value)) {
       return (
         <MinecraftChatText
           scale={scale}

@@ -64,7 +64,7 @@ export const MinecraftUnicodeLabel = ({
 
         if (
           ![...text].every(
-            (char) => /^[\x20-\x7E]$/.test(char) || getUnihexGlyph(char)
+            (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
           )
         ) {
           setWidth(undefined);

@@ -3,7 +3,11 @@
 import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { minecraftSelectAssets } from "./minecraft-select-assets";
 
 import "./minecraft-table.css";
@@ -19,11 +23,7 @@ function literalText(children: React.ReactNode): string | null {
       return;
     }
 
-    if (
-      typeof node === "string" ||
-      typeof node === "number" ||
-      typeof node === "bigint"
-    ) {
+    if (isMinecraftTextContent(node) || typeof node === "bigint") {
       result += String(node);
 
       return;

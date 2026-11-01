@@ -8,6 +8,7 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -55,11 +56,7 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
         return;
       }
 
-      if (
-        typeof child === "string" ||
-        typeof child === "number" ||
-        typeof child === "bigint"
-      ) {
+      if (isMinecraftTextContent(child) || typeof child === "bigint") {
         run += String(child);
       } else {
         flush();
@@ -75,11 +72,7 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
     ));
   }
 
-  if (
-    typeof content !== "string" &&
-    typeof content !== "number" &&
-    typeof content !== "bigint"
-  ) {
+  if (!isMinecraftTextContent(content) && typeof content !== "bigint") {
     return content;
   }
 

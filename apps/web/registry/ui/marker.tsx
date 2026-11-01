@@ -7,6 +7,7 @@ import * as React from "react";
 import { Label } from "./label";
 import type { LabelProps } from "./label";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -56,12 +57,11 @@ const Marker = ({
   const child = null;
   const content = children;
 
-  const contents =
-    typeof content === "string" || typeof content === "number" ? (
-      <MarkerContent>{content}</MarkerContent>
-    ) : (
-      content
-    );
+  const contents = isMinecraftTextContent(content) ? (
+    <MarkerContent>{content}</MarkerContent>
+  ) : (
+    content
+  );
 
   return (
     <MarkerScale value={scale}>
@@ -114,7 +114,7 @@ const MarkerContent = ({
       className={cn(`mc-marker-content`, className)}
       {...props}
     >
-      {typeof children === "string" || typeof children === "number" ? (
+      {isMinecraftTextContent(children) ? (
         <Label
           scale={scale}
           maxWidth={maxWidth}

@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { DialogUnicodeLine } from "./minecraft-dialog-unicode";
 import { minecraftGlyphs } from "./minecraft-font";
+import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
@@ -72,7 +73,7 @@ export const MinecraftDialogText = ({
   const [, loaded] = React.useReducer((n) => n + 1, 0);
 
   const unicode =
-    typeof children === "string" && /[^\x20-\x7E\n]/.test(children);
+    typeof children === "string" && /[^\u0020-\u007E\n]/u.test(children);
 
   React.useEffect(() => {
     let active = true;
@@ -89,9 +90,9 @@ export const MinecraftDialogText = ({
   }, [unicode]);
 
   if (
-    (typeof children !== "string" && typeof children !== "number") ||
+    !isMinecraftTextContent(children) ||
     ![...String(children)].every(
-      (char) => /^[\x20-\x7E\n]$/.test(char) || getUnihexGlyph(char)
+      (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
     return <span data-mc-dialog-item={item || undefined}>{children}</span>;
