@@ -77,6 +77,7 @@ const steps = [
 ];
 let hosts;
 try {
+  /* oxlint-disable no-await-in-loop -- Build steps consume earlier outputs; save each receipt and fail before starting the next step. */
   for (const [name, args, cwd] of steps) {
     if (name === "normal-tests")
       hosts = await serveVerificationHosts({
@@ -113,6 +114,7 @@ try {
     await save();
     if (code !== 0) throw Error(`${name} failed (${code})`);
   }
+  /* oxlint-enable no-await-in-loop */
   report.completed = true;
   report.passed = true;
 } catch (error) {
