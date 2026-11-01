@@ -1,0 +1,103 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sampling": "nearest at pixel centers; exact source-boundary ties choose lower texel; dimensions 17*scale; synthesized only from original PNG bytes, never reference screenshots",
+  "assets": {
+    "assets/minecraft/textures/gui/sprites/widget/checkbox.png": {
+      "sha256": "122aa9b71056547c555ebf80797dcc5bfe98573e467be227475faac54c03555c",
+      "embeddedBytes": "unchanged",
+      "derivatives": [
+        {
+          "scale": 1,
+          "width": 17,
+          "height": 17,
+          "sha256": "25759678caaa8ecceb46b8104193909978c282b749b7014e73fe83344cd8c762"
+        },
+        {
+          "scale": 2,
+          "width": 34,
+          "height": 34,
+          "sha256": "eacf9208736aa82c4b204f03553f7f1cf0622bc065397dfa965279358c85927a"
+        },
+        {
+          "scale": 3,
+          "width": 51,
+          "height": 51,
+          "sha256": "2413ba971a069c500dd07dbb40ed285ced664c71e6083d312d4a80da08555e74"
+        }
+      ]
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_selected.png": {
+      "sha256": "1c02f4aa8887cba07e27bc935837fb47b3d61503d448326d520c86588ac1261b",
+      "embeddedBytes": "unchanged",
+      "derivatives": [
+        {
+          "scale": 1,
+          "width": 17,
+          "height": 17,
+          "sha256": "7eb2115767e735261ce5df3abe1f0380fc3523d5eca6e8d2dccd813dee1c5889"
+        },
+        {
+          "scale": 2,
+          "width": 34,
+          "height": 34,
+          "sha256": "397080b9f6db697c4d5423b954aa996c209f3aacb7f8bc18a1efaec04b47d5f6"
+        },
+        {
+          "scale": 3,
+          "width": 51,
+          "height": 51,
+          "sha256": "b1180a03c83dbcf72f2c7fe4f6504b45268ee52cdab9f8fcda474f2f06be6535"
+        }
+      ]
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_highlighted.png": {
+      "sha256": "a2d73ca5171d598cd7247f511a53e87a5d237cd1828103b25b8c3683a64bc025",
+      "embeddedBytes": "unchanged",
+      "derivatives": [
+        {
+          "scale": 1,
+          "width": 17,
+          "height": 17,
+          "sha256": "658dfdb4d833861a5c75141c0916720593f8534b9f5bca9b231c77d131860d08"
+        },
+        {
+          "scale": 2,
+          "width": 34,
+          "height": 34,
+          "sha256": "4c32821fd5985da9be4351f22629e06ca1d084209013d193396193f436e3197e"
+        },
+        {
+          "scale": 3,
+          "width": 51,
+          "height": 51,
+          "sha256": "57ce1ef5c3962c3b28e70b6876cbf45e5cc3e5060b20dbe1dc2e72961219ef70"
+        }
+      ]
+    },
+    "assets/minecraft/textures/gui/sprites/widget/checkbox_selected_highlighted.png": {
+      "sha256": "90c7112d3618e00a774fcbb80c67910ecc767d64f0861a37f91c67a74f2c6269",
+      "embeddedBytes": "unchanged",
+      "derivatives": [
+        {
+          "scale": 1,
+          "width": 17,
+          "height": 17,
+          "sha256": "1f8f3a3352ab249bf130623468e3b3e07eb4c94d1e8f57335c8c8da53291e8b6"
+        },
+        {
+          "scale": 2,
+          "width": 34,
+          "height": 34,
+          "sha256": "cd2fe727fd22f8e6481fd0d31505055e2b44b543c2138d8434ac7041fcf7bf53"
+        },
+        {
+          "scale": 3,
+          "width": 51,
+          "height": 51,
+          "sha256": "1aae9303f3c8d665d2d99c8e8c276255e838cac13cc07c87df224bcc43ebb903"
+        }
+      ]
+    }
+  },
+  "rendering": "Original Checkbox graphic17x17 at the left of the full21x17 empty-label native widget. Artwork and source-derived nearest-sampling assets are reused unchanged. The extra4 pixels are the original label gap. Exclusive selection and group/label layout are Radix/web composition."
+}

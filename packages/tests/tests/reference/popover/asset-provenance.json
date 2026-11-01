@@ -1,0 +1,30 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "member": "assets/minecraft/textures/gui/sprites/popup/background.png",
+  "sha256": "380160151f20a64ae14c13e7e26f496d7c28f105fa958950fe6c3c1434727ed9",
+  "metadataSha256": "b552ee01037bf7870b689fb27fbb3d6edc1386006bad7ff318ea20c7be376762",
+  "scaling": {
+    "type": "nine_slice",
+    "width": 236,
+    "height": 34,
+    "border": 6
+  },
+  "sourceMethod": "PopupScreen.extractBackground; GuiGraphicsExtractor.blitSprite",
+  "scope": "Original popup/background sprite, original native MultiLineTextWidget bold/normal text and original Button. Placement relative to a web anchor is a web composition.",
+  "sources": {
+    "minecraft/font/include/unifont.json": {
+      "sha1": "402ded0eebd448033ef415e861a17513075f80e7",
+      "sha256": "8b0624ab98ad3e6d4038b581f3cc83c497587a92e764da7784f7a4dfd528c1be",
+      "size": 3993
+    },
+    "minecraft/font/unifont.zip": {
+      "sha1": "ccd5ac4767ce0a9c71d1dd62f2dc25449789b5dd",
+      "sha256": "aea3e9918b0d31de6f94623080f04c31c8c16a5b1a2e8d99ab39f1acdddd30f7",
+      "size": 1559654
+    }
+  },
+  "glyphAtlasSha256": "1c8e9aa8bb3efc440fc85dbb6d31bfe234535b022acbd79055a2647528095a09",
+  "glyphProbeSource": "tests/reference/popover/source/ControlsReferenceMain.java",
+  "glyphProbeSourceSha256": "71cc3e50eaa2a54e5790e01d4749f59522e63cff7e9bf9a07c63c05cbed2ac53",
+  "glyphObservationVerification": "repeatability.json"
+}

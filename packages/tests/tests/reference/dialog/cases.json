@@ -1,0 +1,1004 @@
+[
+  {
+    "name": "dialog-c0",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 0,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c1",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 1,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c2",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 2,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c3",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 3,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c4",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 4,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c5",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 5,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c6",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 6,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c7",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 7,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c8",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 8,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c9",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 9,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c10",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 10,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c11",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 11,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c12",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 12,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c13",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 13,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Done"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c14",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 14,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c15",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 15,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c16",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 16,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c17",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 17,
+    "state": "normal",
+    "wrapWidth": 300,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "One",
+      "Two",
+      "Three"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c18",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 18,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "A very long world settings title that wraps onto multiple lines",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c19",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 19,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "A very long world settings title that wraps onto multiple lines",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c20",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 20,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "A very long world settings title that wraps onto multiple lines",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c21",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 21,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "A very long world settings title that wraps onto multiple lines",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c22",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 22,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "This description wraps across several lines so that its text metrics, line spacing, and centered alignment can be checked.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c23",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 23,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "This description wraps across several lines so that its text metrics, line spacing, and centered alignment can be checked.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c24",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 24,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "This description wraps across several lines so that its text metrics, line spacing, and centered alignment can be checked.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c25",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 25,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "This description wraps across several lines so that its text metrics, line spacing, and centered alignment can be checked.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c26",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 26,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "First paragraph.\n\nSecond paragraph.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c27",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 27,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "First paragraph.\n\nSecond paragraph.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c28",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 28,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "First paragraph.\n\nSecond paragraph.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c29",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 29,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "First paragraph.\n\nSecond paragraph.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c30",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 30,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": null,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c31",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 31,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": null,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c32",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 32,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": null,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c33",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 33,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": null,
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c34",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 34,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c35",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 35,
+    "state": "normal",
+    "wrapWidth": 200,
+    "label": "World settings",
+    "text": "",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c36",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 36,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c37",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 37,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080"
+  },
+  {
+    "name": "dialog-c38",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 38,
+    "state": "hover",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 0
+  },
+  {
+    "name": "dialog-c39",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 39,
+    "state": "hover",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 0
+  },
+  {
+    "name": "dialog-c40",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 40,
+    "state": "hover",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 1
+  },
+  {
+    "name": "dialog-c41",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 41,
+    "state": "hover",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 1
+  },
+  {
+    "name": "dialog-c42",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 42,
+    "state": "focus",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 0
+  },
+  {
+    "name": "dialog-c43",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 43,
+    "state": "focus",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 0
+  },
+  {
+    "name": "dialog-c44",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 44,
+    "state": "focus",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 1
+  },
+  {
+    "name": "dialog-c45",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 45,
+    "state": "focus",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 1
+  },
+  {
+    "name": "dialog-c46",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 46,
+    "state": "disabled",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 0,
+    "disabledIndex": 0
+  },
+  {
+    "name": "dialog-c47",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 47,
+    "state": "disabled",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 0,
+    "disabledIndex": 0
+  },
+  {
+    "name": "dialog-c48",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 48,
+    "state": "disabled",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#202020",
+    "targetIndex": 1,
+    "disabledIndex": 1
+  },
+  {
+    "name": "dialog-c49",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 49,
+    "state": "disabled",
+    "wrapWidth": 250,
+    "label": "World settings",
+    "text": "A helpful description.",
+    "labels": [
+      "Cancel",
+      "Continue"
+    ],
+    "background": "#808080",
+    "targetIndex": 1,
+    "disabledIndex": 1
+  },
+  {
+    "name": "dialog-c50",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 50,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "labels": [
+      "Done"
+    ],
+    "background": "#202020"
+  },
+  {
+    "name": "dialog-c51",
+    "element": "dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "page": 51,
+    "state": "normal",
+    "wrapWidth": 250,
+    "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "labels": [
+      "Done"
+    ],
+    "background": "#808080"
+  }
+]

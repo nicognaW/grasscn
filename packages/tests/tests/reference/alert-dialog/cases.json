@@ -1,0 +1,896 @@
+[
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c0",
+    "page": 0
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c1",
+    "page": 1
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "",
+    "text": "",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c2",
+    "page": 2
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "",
+    "text": "",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c3",
+    "page": 3
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c4",
+    "page": 4
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "text": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c5",
+    "page": 5
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c6",
+    "page": 6
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width. A helpful description wraps at the original screen width.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c7",
+    "page": 7
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "Line 01\nLine 02\nLine 03\nLine 04\nLine 05\nLine 06\nLine 07\nLine 08\nLine 09\nLine 10\nLine 11\nLine 12\nLine 13\nLine 14\nLine 15\nLine 16\nLine 17\nLine 18",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c8",
+    "page": 8
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "Line 01\nLine 02\nLine 03\nLine 04\nLine 05\nLine 06\nLine 07\nLine 08\nLine 09\nLine 10\nLine 11\nLine 12\nLine 13\nLine 14\nLine 15\nLine 16\nLine 17\nLine 18",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c9",
+    "page": 9
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c10",
+    "page": 10
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c11",
+    "page": 11
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "Line one\nLine two\n",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c12",
+    "page": 12
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "Line one\nLine two\n",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c13",
+    "page": 13
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Spaced title",
+    "text": "  A  helpful description.   \n  More information.  ",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c14",
+    "page": 14
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Spaced title",
+    "text": "  A  helpful description.   \n  More information.  ",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c15",
+    "page": 15
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "hover",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#202020",
+    "name": "alert-c16",
+    "page": 16
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "hover",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#808080",
+    "name": "alert-c17",
+    "page": 17
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "hover",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#202020",
+    "name": "alert-c18",
+    "page": 18
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "hover",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#808080",
+    "name": "alert-c19",
+    "page": 19
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "focus",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#202020",
+    "name": "alert-c20",
+    "page": 20
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "focus",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#808080",
+    "name": "alert-c21",
+    "page": 21
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "focus",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#202020",
+    "name": "alert-c22",
+    "page": 22
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "focus",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#808080",
+    "name": "alert-c23",
+    "page": 23
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "disabled",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#202020",
+    "disabledIndex": 0,
+    "name": "alert-c24",
+    "page": 24
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "disabled",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 0,
+    "background": "#808080",
+    "disabledIndex": 0,
+    "name": "alert-c25",
+    "page": 25
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "disabled",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#202020",
+    "disabledIndex": 1,
+    "name": "alert-c26",
+    "page": 26
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "disabled",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "targetIndex": 1,
+    "background": "#808080",
+    "disabledIndex": 1,
+    "name": "alert-c27",
+    "page": 27
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 0,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "checked": true,
+    "name": "alert-c28",
+    "page": 28
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 0,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "checked": true,
+    "name": "alert-c29",
+    "page": 29
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "checked": true,
+    "name": "alert-c30",
+    "page": 30
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "checked": true,
+    "name": "alert-c31",
+    "page": 31
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "你好，世界",
+    "text": "你好，世界\n你好，世界",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c32",
+    "page": 32
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "你好，世界",
+    "text": "你好，世界\n你好，世界",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c33",
+    "page": 33
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "こんにちは",
+    "text": "こんにちは\nこんにちは",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c34",
+    "page": 34
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "こんにちは",
+    "text": "こんにちは\nこんにちは",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c35",
+    "page": 35
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "안녕하세요",
+    "text": "안녕하세요\n안녕하세요",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c36",
+    "page": 36
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "안녕하세요",
+    "text": "안녕하세요\n안녕하세요",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c37",
+    "page": 37
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Hello 世界",
+    "text": "Hello 世界\nHello 世界",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#202020",
+    "name": "alert-c38",
+    "page": 38
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Hello 世界",
+    "text": "Hello 世界\nHello 世界",
+    "labels": [
+      "Yes",
+      "No"
+    ],
+    "background": "#808080",
+    "name": "alert-c39",
+    "page": 39
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "是",
+      "否"
+    ],
+    "background": "#202020",
+    "name": "alert-c40",
+    "page": 40
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "是",
+      "否"
+    ],
+    "background": "#808080",
+    "name": "alert-c41",
+    "page": 41
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "はい",
+      "いいえ"
+    ],
+    "background": "#202020",
+    "name": "alert-c42",
+    "page": 42
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "はい",
+      "いいえ"
+    ],
+    "background": "#808080",
+    "name": "alert-c43",
+    "page": 43
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "예",
+      "아니요"
+    ],
+    "background": "#202020",
+    "name": "alert-c44",
+    "page": 44
+  },
+  {
+    "element": "alert-dialog",
+    "viewport": true,
+    "width": 512,
+    "height": 300,
+    "x": 0,
+    "y": 0,
+    "state": "normal",
+    "value": 5,
+    "label": "Are you sure?",
+    "text": "This action cannot be undone.",
+    "labels": [
+      "예",
+      "아니요"
+    ],
+    "background": "#808080",
+    "name": "alert-c45",
+    "page": 45
+  }
+]

@@ -1,0 +1,588 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "e6109be539b535ac27d56c01ff2225de168f4fa22c9066d939e61efd7a52bd47",
+  "caseDefinitionSha256": "5e5bf1c5f801d9efcf31b931707b87bb3edaa30c2e93cee6fe7fd7654f557367",
+  "glyphObservationEnabled": false,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p8-s1.png",
+      "sha256": "999473937c4cf45930c76db0ee75889f0df9f951c4f1747a31b239d16c70faca"
+    },
+    {
+      "name": "native-controls-p8-s2.png",
+      "sha256": "68018624ae6c822238f3d1f4a2f4fd44bd47706947437a5222e04137c54a628a"
+    },
+    {
+      "name": "native-controls-p8-s3.png",
+      "sha256": "a64a12f529faf0e18767ca28357f6b1c9467e3651c7f00ce2ab7fb070c3a32ad"
+    },
+    {
+      "name": "native-controls-p9-s1.png",
+      "sha256": "b3d47cd01b0f9faf272aa522f891cbfe5204a550e84295a6f62d1476dffde9c0"
+    },
+    {
+      "name": "native-controls-p9-s2.png",
+      "sha256": "0198615da409fbe1b25f07728c357ba74f9928f20d4e81704433cc96aad72d36"
+    },
+    {
+      "name": "native-controls-p9-s3.png",
+      "sha256": "12b4d67491223294134ca6724dacc2355c695d36a12bdd7f554852ad8efcce26"
+    },
+    {
+      "name": "native-controls-p10-s1.png",
+      "sha256": "f881b9aa48ae6b42abe3849e7052f6b054f90272761bd53104ada8862b8cd7cf"
+    },
+    {
+      "name": "native-controls-p10-s2.png",
+      "sha256": "9d3cff04e41aeaa8d07b2e84c9031b8aa55f839c6b44cba08431cc2a7ca948d1"
+    },
+    {
+      "name": "native-controls-p10-s3.png",
+      "sha256": "6688a1cf8fa1b580e537fb45fa0a7aac00c8445566ffa5644f49c31411099a28"
+    },
+    {
+      "name": "native-controls-p11-s1.png",
+      "sha256": "ce880753bc693427b5da635c8e93c514085bc9c98cc2997e771ef74f11493582"
+    },
+    {
+      "name": "native-controls-p11-s2.png",
+      "sha256": "679c7cbedd492e5465d7db19c7ba970f987b8edae44741e21f28caa7a7c2bc77"
+    },
+    {
+      "name": "native-controls-p11-s3.png",
+      "sha256": "b5ce2393ca9d8f881ee705968ee04d1f1523dfedf2cc131e7cc4246ad077999f"
+    }
+  ],
+  "cases": [
+    {
+      "name": "book-0-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "2b976c0523d8509bfd9a6f14edd9e40792f6e10c691484a23ba73804cc0b60e1"
+    },
+    {
+      "name": "book-1-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f9acd71c6522364f5595d7a50cdc67654edc621e9538ea3f52927d2d3bc36205"
+    },
+    {
+      "name": "book-2-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "532634df9c667cc0873bb2b23068d74ad72aafa10ae4d45de04fac7b1f5c4ea8"
+    },
+    {
+      "name": "book-3-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 1,
+      "sha256": "f3cc6c929d38a40592af5c1176cbb6cd611636a1a24f587bdfd70783d948ac2c"
+    },
+    {
+      "name": "book-4-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#e7dcc3",
+      "scale": 1,
+      "sha256": "da31109cf8b59968a4aa0a7dc37d82a184c69948e6571cdbea91c94e5cb2b955"
+    },
+    {
+      "name": "book-5-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 1,
+      "sha256": "3b962d293cd9937054cd8d3e25e3580557e0007a4ad4389718aaf3939c1b5d9d"
+    },
+    {
+      "name": "book-6-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 1,
+      "sha256": "f590f837a9db67f8ced6da926f8e27958775cfd0856b1dbd225704adbfef9f45"
+    },
+    {
+      "name": "book-7-s1.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 1,
+      "sha256": "eafda5d0f61bd2f6bf261ba75144a5b96655f6f3add508de6dbcd288dd1625b4"
+    },
+    {
+      "name": "book-0-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "c4a1f1475d6b0d7ec67e5bfd8e7d354d0a9189a6b5b8457bc7d00afbf51a5b9d"
+    },
+    {
+      "name": "book-1-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "3f979690a99b0aca2901468339b965d60866fa9320bbf67753b028b813ed8098"
+    },
+    {
+      "name": "book-2-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "bdf5ac81573ec94e8b783d988b8a48dc73cad2bf3a70074b1e0e6c89016ac41f"
+    },
+    {
+      "name": "book-3-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 2,
+      "sha256": "7fad461ca6063e4b699206a3239b58d1df886ae8f36f283fcfadee54c7def8f8"
+    },
+    {
+      "name": "book-4-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#e7dcc3",
+      "scale": 2,
+      "sha256": "b969b4e55e501f298adbf172551bad953db56c442974cfff4337f95327824c6b"
+    },
+    {
+      "name": "book-5-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 2,
+      "sha256": "93f884caf09903a27291e2bdeb4685bb1e3846d844714867e3a789665293f1a4"
+    },
+    {
+      "name": "book-6-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 2,
+      "sha256": "30228e50c92407ee03a805ecff89593e382ebe8c97c13465d6180abefdce69d4"
+    },
+    {
+      "name": "book-7-s2.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 2,
+      "sha256": "ad9f1f8b2a87477e124fa2fa8274109cedd745db215136cee206d699c6b50ba2"
+    },
+    {
+      "name": "book-0-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "194f2d819030709c7a682cdd14ef7c0e97994c569b1d7d2c62c0938574d4021d"
+    },
+    {
+      "name": "book-1-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 8,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "570283808ccf1fb5dbc0c0da63dc69d8a8c5ab7eb1538e406b047e289a3fb994"
+    },
+    {
+      "name": "book-2-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "de69c0cebe6130b5fff7685313af3388f7d376abfd2f8a42296fcbd033013bbc"
+    },
+    {
+      "name": "book-3-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 9,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#202020",
+      "scale": 3,
+      "sha256": "c5a4b292f1d1c476d4575955f7beb21b83b0bf1a9b19c5f6aeaa5729e896f331"
+    },
+    {
+      "name": "book-4-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts."
+      ],
+      "background": "#e7dcc3",
+      "scale": 3,
+      "sha256": "e8fb5a3d7a05edb96a7c7831a4ebc95c8ecb0c5d428fab70f418ac4619568b02"
+    },
+    {
+      "name": "book-5-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 10,
+      "label": "",
+      "text": "",
+      "value": 0,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 3,
+      "sha256": "c46c1be8ada32903b150633798244cb4ceff7b49fe2891a9f7f6382ba2cb4a65"
+    },
+    {
+      "name": "book-6-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 24,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 1,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 3,
+      "sha256": "c1b90cb13c29903d5cab4aabe43dba2926386ce4828c06b762a4b763d9a7dca6"
+    },
+    {
+      "name": "book-7-s3.png",
+      "element": "book",
+      "state": "normal",
+      "checked": false,
+      "width": 192,
+      "height": 192,
+      "x": 240,
+      "y": 16,
+      "page": 11,
+      "label": "",
+      "text": "",
+      "value": 2,
+      "labels": [
+        "Welcome to grasscn.\n\nEvery pixel counts.",
+        "Plan. Build. Ship.\n\nMake something useful.",
+        "Your next chapter starts here."
+      ],
+      "background": "#e7dcc3",
+      "scale": 3,
+      "sha256": "e5920411a8a1adefdedd81d1eff888d1f6bf42ec503051fdcd4e46aa3447b3c6"
+    }
+  ],
+  "sourceDirectory": "source"
+}

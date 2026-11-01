@@ -1,0 +1,45 @@
+{
+  "nativeVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSource": "source/ControlsReferenceMain.java",
+  "captureSourceSha256": "56510733e82331e660cd54d6358e1090d2f2c40836437aa0906e43cb67f0509c",
+  "caseDefinitions": "cases.json",
+  "caseDefinitionSha256": "19b6c373ea8dddf2910ec497c1cc9d7e83f040e99972bd9a3c5708390e622ea9",
+  "normalization": {
+    "class": "net.minecraft.client.gui.font.FontManager",
+    "originalMethod": "updateOptions(Minecraft.options)",
+    "access": "Read original private Minecraft.fontManager field through reflection; invoke its unchanged public method",
+    "timing": "Once on the render thread immediately before gui.setScreen(new ControlsScreen()), after game loading finishes and loading overlay disappears",
+    "effect": "Original FontSet.reload(Set) resets textures and glyph caches and selects the same already loaded providers using the same current font options",
+    "providerChanges": false,
+    "fontOptionChanges": false,
+    "resourcePackChanges": false
+  },
+  "actualPersistedFontOptions": {
+    "forceUnicodeFont": "false",
+    "japaneseGlyphVariants": "false",
+    "guiScale": "1",
+    "lang": "en_us"
+  },
+  "captureGuiScaleSequence": [
+    1,
+    2,
+    3
+  ],
+  "caseOrder": "Cases remain in frozen cases.json order; four non-overlapping rows per page at y16/80/144/208",
+  "glyphObservation": {
+    "timing": "No UV observation is required or performed for these integral original ASCII bitmap glyphs; the inherited observer hook is enabled in runOne and disabled in runTwo",
+    "runOne": true,
+    "runTwo": false,
+    "glyphsObserved": 0,
+    "samplingAuthority": "Original unchanged ASCII PNG binary alpha masks, original bitmap advances; SVG rects compared to original native output"
+  },
+  "verification": {
+    "report": "repeatability.json",
+    "caseCount": 108,
+    "decodedRgbaMismatchedCases": 0,
+    "tolerance": 0,
+    "independentLaunches": 2
+  },
+  "scope": "Original Minecraft font renderer and assets only. This normalizes startup/title/splash texture history; it does not replace glyphs, styles, metrics or the renderer."
+}

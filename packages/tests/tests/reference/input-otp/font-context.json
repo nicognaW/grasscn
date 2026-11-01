@@ -1,0 +1,45 @@
+{
+  "nativeVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSource": "source/ControlsReferenceMain.java",
+  "captureSourceSha256": "36831bd1b93272186314e07356cf3ad78c17fff7022591849474de39411a28d8",
+  "caseDefinitions": "cases.json",
+  "caseDefinitionSha256": "8f0a6c1cce0b3200b75a95aaed4bc60c2e364f465b5264ea5e37255a9918a7bd",
+  "normalization": {
+    "class": "net.minecraft.client.gui.font.FontManager",
+    "originalMethod": "updateOptions(Minecraft.options)",
+    "access": "Read original private Minecraft.fontManager field through reflection; invoke its unchanged public method",
+    "timing": "Once on the render thread immediately before gui.setScreen(new ControlsScreen()), after game loading finishes and loading overlay disappears",
+    "effect": "Original FontSet.reload(Set) resets textures and glyph caches and selects the same already loaded providers using the same current font options",
+    "providerChanges": false,
+    "fontOptionChanges": false,
+    "resourcePackChanges": false
+  },
+  "actualPersistedFontOptions": {
+    "forceUnicodeFont": "false",
+    "japaneseGlyphVariants": "false",
+    "guiScale": "1",
+    "lang": "en_us"
+  },
+  "captureGuiScaleSequence": [
+    1,
+    2,
+    3
+  ],
+  "caseOrder": "Frozen cases.json order: ten non-overlapping horizontal20x20 cells per page at x16+36*i,y16; page0\u20135; GUI scales1,2,3 per page",
+  "glyphObservation": {
+    "timing": "After the final captured native screenshot",
+    "runOne": true,
+    "runTwo": false,
+    "glyphAtlas": "glyph-atlas.json",
+    "glyphAtlasSha256": "5e0b47535092112b24aafcf2ac8aea4245e45b65b8903db15bf1fee7938bfd62"
+  },
+  "verification": {
+    "report": "repeatability.json",
+    "caseCount": 180,
+    "decodedRgbaMismatchedCases": 0,
+    "tolerance": 0,
+    "independentLaunches": 2
+  },
+  "scope": "Original Minecraft font renderer and assets only. This normalizes startup/title/splash texture history; it does not replace glyphs, styles, metrics or the renderer."
+}

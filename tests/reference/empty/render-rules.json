@@ -1,7 +1,0 @@
-{
-  "nativeReference": "tests/reference/empty/manifest.json",
-  "additionalNativeReference": "tests/reference/label/manifest.json",
-  "layout": "Native entry content padding2; StringWidget at getContentXMiddle()-font.width(label)/2 and getContentYMiddle()-9/2 using integer division. Single-line text remains unwrapped even beyond entry bounds.",
-  "slots": "EmptyHeader/Media/Content layout is a web composition; EmptyTitle and EmptyDescription reproduce Label glyphs, wrapping and alignment. Default media only; no invented icon variants.",
-  "scope": "96 native ASCII empty-row cases: four labels including blank/overflow, widths101/200, heights20/41, two backgrounds and GUI scales1\u20133. Additional84 originalLabelcases are compared through each Title/Description slot, including CJK, wrapping and alignment. Whole composed empty-state screens and arbitrary rich children do not have a native equality claim."
-}

@@ -1,0 +1,13 @@
+{
+  "minecraftVersion": "26.2",
+  "nativeAppearance": "PopupScreen popup sprite and native multiline labels",
+  "mapping": "Designed web composition",
+  "nativePanelManifest": "tests/reference/card/manifest.json",
+  "nativeTextManifest": "tests/reference/label/manifest.json",
+  "nativeRenderers": "Original PopupScreen Card constituent plus Label font renderers. Both native matrices retain original source/fullframes/two-launch repeatability.",
+  "surface": "Unmodified original PNG bytes/crops via MinecraftSurface and minecraftCardSprite.",
+  "text": "ASCII Card title/body native wrapping; additional Sheet/Drawer scalar labels use original indexed Unifont with Label UV observations.",
+  "interaction": "Radix Dialog modal state and keyboard/focus behavior",
+  "audio": "tests/reference/sound-provenance.json; original ui.button.click on native Button actions; no synthesized audio",
+  "unverified": "Arbitrary web layouts, edge placement, motion and overlays do not constitute an original native edge-overlay claim."
+}

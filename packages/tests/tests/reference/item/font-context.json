@@ -1,0 +1,45 @@
+{
+  "nativeVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSource": "source/ControlsReferenceMain.java",
+  "captureSourceSha256": "462e9a16231a4214912406fc5ced768bba21fe7253c5c55b19c483e88a60f80c",
+  "caseDefinitions": "cases.json",
+  "caseDefinitionSha256": "f1158148e88199f17b5dee0ab9d3eb322297e0fd4a59bb8131bfbbad0b9f7a6a",
+  "normalization": {
+    "class": "net.minecraft.client.gui.font.FontManager",
+    "originalMethod": "updateOptions(Minecraft.options)",
+    "access": "Read original private Minecraft.fontManager field through reflection; invoke its unchanged public method",
+    "timing": "Once on the render thread immediately before gui.setScreen(new ControlsScreen()), after game loading finishes and loading overlay disappears",
+    "effect": "Original FontSet.reload(Set) resets textures and glyph caches and selects the same already loaded providers using the same current font options",
+    "providerChanges": false,
+    "fontOptionChanges": false,
+    "resourcePackChanges": false
+  },
+  "actualPersistedFontOptions": {
+    "forceUnicodeFont": "false",
+    "japaneseGlyphVariants": "false",
+    "guiScale": "1",
+    "lang": "en_us"
+  },
+  "captureGuiScaleSequence": [
+    1,
+    2,
+    3
+  ],
+  "caseOrder": "Cases remain in frozen cases.json order; four non-overlapping rows per page at y16/80/144/208",
+  "glyphObservation": {
+    "timing": "After the final captured native screenshot",
+    "runOne": true,
+    "runTwo": false,
+    "glyphAtlas": "glyph-atlas.json",
+    "glyphAtlasSha256": "e9a2fc563140f558d6b6e065b368e10071a2d5ccd139e87dda6a8b3180b23e9a"
+  },
+  "verification": {
+    "report": "repeatability.json",
+    "caseCount": 180,
+    "decodedRgbaMismatchedCases": 0,
+    "tolerance": 0,
+    "independentLaunches": 2
+  },
+  "scope": "Original Minecraft font renderer and assets only. This normalizes startup/title/splash texture history; it does not replace glyphs, styles, metrics or the renderer."
+}

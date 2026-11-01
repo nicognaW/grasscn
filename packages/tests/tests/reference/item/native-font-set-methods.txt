@@ -1,0 +1,451 @@
+Compiled from "FontSet.java"
+public class net.minecraft.client.gui.font.FontSet implements java.lang.AutoCloseable {
+  private static final float LARGE_FORWARD_ADVANCE;
+
+  private static final net.minecraft.client.gui.font.glyphs.BakedGlyph INVISIBLE_MISSING_GLYPH;
+
+  private final net.minecraft.client.gui.font.GlyphStitcher stitcher;
+
+  private final com.mojang.blaze3d.font.UnbakedGlyph$Stitcher wrappedStitcher;
+
+  private java.util.List<com.mojang.blaze3d.font.GlyphProvider$Conditional> allProviders;
+
+  private java.util.List<com.mojang.blaze3d.font.GlyphProvider> activeProviders;
+
+  private final it.unimi.dsi.fastutil.ints.Int2ObjectMap<it.unimi.dsi.fastutil.ints.IntList> glyphsByWidth;
+
+  private final net.minecraft.client.gui.font.CodepointMap<net.minecraft.client.gui.font.FontSet$SelectedGlyphs> glyphCache;
+
+  private final java.util.function.IntFunction<net.minecraft.client.gui.font.FontSet$SelectedGlyphs> glyphGetter;
+
+  private net.minecraft.client.gui.font.glyphs.BakedGlyph missingGlyph;
+
+  private final java.util.function.Supplier<net.minecraft.client.gui.font.glyphs.BakedGlyph> missingGlyphGetter;
+
+  private final net.minecraft.client.gui.font.FontSet$SelectedGlyphs missingSelectedGlyphs;
+
+  private net.minecraft.client.gui.font.glyphs.EffectGlyph whiteGlyph;
+
+  private final net.minecraft.client.gui.GlyphSource anyGlyphs;
+
+  private final net.minecraft.client.gui.GlyphSource nonFishyGlyphs;
+
+  public net.minecraft.client.gui.font.FontSet(net.minecraft.client.gui.font.GlyphStitcher);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #7                  // class net/minecraft/client/gui/font/FontSet$2
+       8: dup
+       9: aload_0
+      10: invokespecial #9                  // Method net/minecraft/client/gui/font/FontSet$2."<init>":(Lnet/minecraft/client/gui/font/FontSet;)V
+      13: putfield      #12                 // Field wrappedStitcher:Lcom/mojang/blaze3d/font/UnbakedGlyph$Stitcher;
+      16: aload_0
+      17: invokestatic  #18                 // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      20: putfield      #24                 // Field allProviders:Ljava/util/List;
+      23: aload_0
+      24: invokestatic  #18                 // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      27: putfield      #28                 // Field activeProviders:Ljava/util/List;
+      30: aload_0
+      31: new           #31                 // class it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap
+      34: dup
+      35: invokespecial #33                 // Method it/unimi/dsi/fastutil/ints/Int2ObjectOpenHashMap."<init>":()V
+      38: putfield      #34                 // Field glyphsByWidth:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      41: aload_0
+      42: new           #38                 // class net/minecraft/client/gui/font/CodepointMap
+      45: dup
+      46: invokedynamic #40,  0             // InvokeDynamic #0:apply:()Ljava/util/function/IntFunction;
+      51: invokedynamic #44,  0             // InvokeDynamic #1:apply:()Ljava/util/function/IntFunction;
+      56: invokespecial #45                 // Method net/minecraft/client/gui/font/CodepointMap."<init>":(Ljava/util/function/IntFunction;Ljava/util/function/IntFunction;)V
+      59: putfield      #48                 // Field glyphCache:Lnet/minecraft/client/gui/font/CodepointMap;
+      62: aload_0
+      63: aload_0
+      64: invokedynamic #52,  0             // InvokeDynamic #2:apply:(Lnet/minecraft/client/gui/font/FontSet;)Ljava/util/function/IntFunction;
+      69: putfield      #55                 // Field glyphGetter:Ljava/util/function/IntFunction;
+      72: aload_0
+      73: getstatic     #59                 // Field INVISIBLE_MISSING_GLYPH:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+      76: putfield      #63                 // Field missingGlyph:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+      79: aload_0
+      80: aload_0
+      81: invokedynamic #66,  0             // InvokeDynamic #3:get:(Lnet/minecraft/client/gui/font/FontSet;)Ljava/util/function/Supplier;
+      86: putfield      #70                 // Field missingGlyphGetter:Ljava/util/function/Supplier;
+      89: aload_0
+      90: new           #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+      93: dup
+      94: aload_0
+      95: getfield      #70                 // Field missingGlyphGetter:Ljava/util/function/Supplier;
+      98: aload_0
+      99: getfield      #70                 // Field missingGlyphGetter:Ljava/util/function/Supplier;
+     102: invokespecial #76                 // Method net/minecraft/client/gui/font/FontSet$SelectedGlyphs."<init>":(Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V
+     105: putfield      #79                 // Field missingSelectedGlyphs:Lnet/minecraft/client/gui/font/FontSet$SelectedGlyphs;
+     108: aload_0
+     109: new           #83                 // class net/minecraft/client/gui/font/FontSet$Source
+     112: dup
+     113: aload_0
+     114: iconst_0
+     115: invokespecial #85                 // Method net/minecraft/client/gui/font/FontSet$Source."<init>":(Lnet/minecraft/client/gui/font/FontSet;Z)V
+     118: putfield      #88                 // Field anyGlyphs:Lnet/minecraft/client/gui/GlyphSource;
+     121: aload_0
+     122: new           #83                 // class net/minecraft/client/gui/font/FontSet$Source
+     125: dup
+     126: aload_0
+     127: iconst_1
+     128: invokespecial #85                 // Method net/minecraft/client/gui/font/FontSet$Source."<init>":(Lnet/minecraft/client/gui/font/FontSet;Z)V
+     131: putfield      #92                 // Field nonFishyGlyphs:Lnet/minecraft/client/gui/GlyphSource;
+     134: aload_0
+     135: aload_1
+     136: putfield      #95                 // Field stitcher:Lnet/minecraft/client/gui/font/GlyphStitcher;
+     139: return
+
+  public void reload(java.util.List<com.mojang.blaze3d.font.GlyphProvider$Conditional>, java.util.Set<net.minecraft.client.gui.font.FontOption>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #24                 // Field allProviders:Ljava/util/List;
+       5: aload_0
+       6: aload_2
+       7: invokevirtual #99                 // Method reload:(Ljava/util/Set;)V
+      10: return
+
+  public void reload(java.util.Set<net.minecraft.client.gui.font.FontOption>);
+    Code:
+       0: aload_0
+       1: invokestatic  #18                 // InterfaceMethod java/util/List.of:()Ljava/util/List;
+       4: putfield      #28                 // Field activeProviders:Ljava/util/List;
+       7: aload_0
+       8: invokevirtual #103                // Method resetTextures:()V
+      11: aload_0
+      12: aload_0
+      13: aload_0
+      14: getfield      #24                 // Field allProviders:Ljava/util/List;
+      17: aload_1
+      18: invokevirtual #106                // Method selectProviders:(Ljava/util/List;Ljava/util/Set;)Ljava/util/List;
+      21: putfield      #28                 // Field activeProviders:Ljava/util/List;
+      24: return
+
+  private void resetTextures();
+    Code:
+       0: aload_0
+       1: getfield      #95                 // Field stitcher:Lnet/minecraft/client/gui/font/GlyphStitcher;
+       4: invokevirtual #110                // Method net/minecraft/client/gui/font/GlyphStitcher.reset:()V
+       7: aload_0
+       8: getfield      #48                 // Field glyphCache:Lnet/minecraft/client/gui/font/CodepointMap;
+      11: invokevirtual #115                // Method net/minecraft/client/gui/font/CodepointMap.clear:()V
+      14: aload_0
+      15: getfield      #34                 // Field glyphsByWidth:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      18: invokeinterface #118,  1          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.clear:()V
+      23: aload_0
+      24: getstatic     #121                // Field net/minecraft/client/gui/font/glyphs/SpecialGlyphs.MISSING:Lnet/minecraft/client/gui/font/glyphs/SpecialGlyphs;
+      27: aload_0
+      28: getfield      #95                 // Field stitcher:Lnet/minecraft/client/gui/font/GlyphStitcher;
+      31: invokevirtual #127                // Method net/minecraft/client/gui/font/glyphs/SpecialGlyphs.bake:(Lnet/minecraft/client/gui/font/GlyphStitcher;)Lnet/minecraft/client/gui/font/glyphs/BakedSheetGlyph;
+      34: invokestatic  #131                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      37: checkcast     #137                // class net/minecraft/client/gui/font/glyphs/BakedGlyph
+      40: putfield      #63                 // Field missingGlyph:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+      43: aload_0
+      44: getstatic     #139                // Field net/minecraft/client/gui/font/glyphs/SpecialGlyphs.WHITE:Lnet/minecraft/client/gui/font/glyphs/SpecialGlyphs;
+      47: aload_0
+      48: getfield      #95                 // Field stitcher:Lnet/minecraft/client/gui/font/GlyphStitcher;
+      51: invokevirtual #127                // Method net/minecraft/client/gui/font/glyphs/SpecialGlyphs.bake:(Lnet/minecraft/client/gui/font/GlyphStitcher;)Lnet/minecraft/client/gui/font/glyphs/BakedSheetGlyph;
+      54: putfield      #142                // Field whiteGlyph:Lnet/minecraft/client/gui/font/glyphs/EffectGlyph;
+      57: return
+
+  private java.util.List<com.mojang.blaze3d.font.GlyphProvider> selectProviders(java.util.List<com.mojang.blaze3d.font.GlyphProvider$Conditional>, java.util.Set<net.minecraft.client.gui.font.FontOption>);
+    Code:
+       0: new           #146                // class it/unimi/dsi/fastutil/ints/IntOpenHashSet
+       3: dup
+       4: invokespecial #148                // Method it/unimi/dsi/fastutil/ints/IntOpenHashSet."<init>":()V
+       7: astore_3
+       8: new           #149                // class java/util/ArrayList
+      11: dup
+      12: invokespecial #151                // Method java/util/ArrayList."<init>":()V
+      15: astore        4
+      17: aload_1
+      18: invokeinterface #152,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      23: astore        5
+      25: aload         5
+      27: invokeinterface #156,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          92
+      35: aload         5
+      37: invokeinterface #162,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      42: checkcast     #166                // class com/mojang/blaze3d/font/GlyphProvider$Conditional
+      45: astore        6
+      47: aload         6
+      49: invokevirtual #168                // Method com/mojang/blaze3d/font/GlyphProvider$Conditional.filter:()Lnet/minecraft/client/gui/font/FontOption$Filter;
+      52: aload_2
+      53: invokevirtual #172                // Method net/minecraft/client/gui/font/FontOption$Filter.apply:(Ljava/util/Set;)Z
+      56: ifeq          89
+      59: aload         4
+      61: aload         6
+      63: invokevirtual #177                // Method com/mojang/blaze3d/font/GlyphProvider$Conditional.provider:()Lcom/mojang/blaze3d/font/GlyphProvider;
+      66: invokeinterface #181,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      71: pop
+      72: aload_3
+      73: aload         6
+      75: invokevirtual #177                // Method com/mojang/blaze3d/font/GlyphProvider$Conditional.provider:()Lcom/mojang/blaze3d/font/GlyphProvider;
+      78: invokeinterface #185,  1          // InterfaceMethod com/mojang/blaze3d/font/GlyphProvider.getSupportedGlyphs:()Lit/unimi/dsi/fastutil/ints/IntSet;
+      83: invokeinterface #191,  2          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntSet.addAll:(Lit/unimi/dsi/fastutil/ints/IntCollection;)Z
+      88: pop
+      89: goto          25
+      92: invokestatic  #197                // Method com/google/common/collect/Sets.newHashSet:()Ljava/util/HashSet;
+      95: astore        5
+      97: aload_3
+      98: aload_0
+      99: aload         4
+     101: aload         5
+     103: invokedynamic #203,  0            // InvokeDynamic #4:accept:(Lnet/minecraft/client/gui/font/FontSet;Ljava/util/List;Ljava/util/Set;)Lit/unimi/dsi/fastutil/ints/IntConsumer;
+     108: invokeinterface #207,  2          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntSet.forEach:(Lit/unimi/dsi/fastutil/ints/IntConsumer;)V
+     113: aload         4
+     115: invokeinterface #211,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     120: aload         5
+     122: dup
+     123: invokestatic  #131                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+     126: pop
+     127: invokedynamic #215,  0            // InvokeDynamic #5:test:(Ljava/util/Set;)Ljava/util/function/Predicate;
+     132: invokeinterface #219,  2          // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+     137: invokeinterface #224,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+     142: areturn
+
+  public void close();
+    Code:
+       0: aload_0
+       1: getfield      #95                 // Field stitcher:Lnet/minecraft/client/gui/font/GlyphStitcher;
+       4: invokevirtual #227                // Method net/minecraft/client/gui/font/GlyphStitcher.close:()V
+       7: return
+
+  private static boolean hasFishyAdvance(com.mojang.blaze3d.font.GlyphInfo);
+    Code:
+       0: aload_0
+       1: iconst_0
+       2: invokeinterface #230,  2          // InterfaceMethod com/mojang/blaze3d/font/GlyphInfo.getAdvance:(Z)F
+       7: fstore_1
+       8: fload_1
+       9: fconst_0
+      10: fcmpg
+      11: iflt          21
+      14: fload_1
+      15: ldc           #236                // float 32.0f
+      17: fcmpl
+      18: ifle          23
+      21: iconst_1
+      22: ireturn
+      23: aload_0
+      24: iconst_1
+      25: invokeinterface #230,  2          // InterfaceMethod com/mojang/blaze3d/font/GlyphInfo.getAdvance:(Z)F
+      30: fstore_2
+      31: fload_2
+      32: fconst_0
+      33: fcmpg
+      34: iflt          44
+      37: fload_2
+      38: ldc           #236                // float 32.0f
+      40: fcmpl
+      41: ifle          46
+      44: iconst_1
+      45: ireturn
+      46: iconst_0
+      47: ireturn
+
+  private net.minecraft.client.gui.font.FontSet$SelectedGlyphs computeGlyphInfo(int);
+    Code:
+       0: aconst_null
+       1: astore_2
+       2: aload_0
+       3: getfield      #28                 // Field activeProviders:Ljava/util/List;
+       6: invokeinterface #152,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore_3
+      12: aload_3
+      13: invokeinterface #156,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          119
+      21: aload_3
+      22: invokeinterface #162,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #186                // class com/mojang/blaze3d/font/GlyphProvider
+      30: astore        4
+      32: aload         4
+      34: iload_1
+      35: invokeinterface #237,  2          // InterfaceMethod com/mojang/blaze3d/font/GlyphProvider.getGlyph:(I)Lcom/mojang/blaze3d/font/UnbakedGlyph;
+      40: astore        5
+      42: aload         5
+      44: ifnonnull     50
+      47: goto          12
+      50: aload_2
+      51: ifnonnull     65
+      54: new           #241                // class net/minecraft/client/gui/font/FontSet$DelayedBake
+      57: dup
+      58: aload_0
+      59: aload         5
+      61: invokespecial #243                // Method net/minecraft/client/gui/font/FontSet$DelayedBake."<init>":(Lnet/minecraft/client/gui/font/FontSet;Lcom/mojang/blaze3d/font/UnbakedGlyph;)V
+      64: astore_2
+      65: aload         5
+      67: invokeinterface #246,  1          // InterfaceMethod com/mojang/blaze3d/font/UnbakedGlyph.info:()Lcom/mojang/blaze3d/font/GlyphInfo;
+      72: invokestatic  #252                // Method hasFishyAdvance:(Lcom/mojang/blaze3d/font/GlyphInfo;)Z
+      75: ifne          116
+      78: aload_2
+      79: getfield      #256                // Field net/minecraft/client/gui/font/FontSet$DelayedBake.unbaked:Lcom/mojang/blaze3d/font/UnbakedGlyph;
+      82: aload         5
+      84: if_acmpne     97
+      87: new           #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+      90: dup
+      91: aload_2
+      92: aload_2
+      93: invokespecial #76                 // Method net/minecraft/client/gui/font/FontSet$SelectedGlyphs."<init>":(Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V
+      96: areturn
+      97: new           #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+     100: dup
+     101: aload_2
+     102: new           #241                // class net/minecraft/client/gui/font/FontSet$DelayedBake
+     105: dup
+     106: aload_0
+     107: aload         5
+     109: invokespecial #243                // Method net/minecraft/client/gui/font/FontSet$DelayedBake."<init>":(Lnet/minecraft/client/gui/font/FontSet;Lcom/mojang/blaze3d/font/UnbakedGlyph;)V
+     112: invokespecial #76                 // Method net/minecraft/client/gui/font/FontSet$SelectedGlyphs."<init>":(Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V
+     115: areturn
+     116: goto          12
+     119: aload_2
+     120: ifnull        136
+     123: new           #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+     126: dup
+     127: aload_2
+     128: aload_0
+     129: getfield      #70                 // Field missingGlyphGetter:Ljava/util/function/Supplier;
+     132: invokespecial #76                 // Method net/minecraft/client/gui/font/FontSet$SelectedGlyphs."<init>":(Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V
+     135: areturn
+     136: aload_0
+     137: getfield      #79                 // Field missingSelectedGlyphs:Lnet/minecraft/client/gui/font/FontSet$SelectedGlyphs;
+     140: areturn
+
+  private net.minecraft.client.gui.font.FontSet$SelectedGlyphs getGlyph(int);
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field glyphCache:Lnet/minecraft/client/gui/font/CodepointMap;
+       4: iload_1
+       5: aload_0
+       6: getfield      #55                 // Field glyphGetter:Ljava/util/function/IntFunction;
+       9: invokevirtual #260                // Method net/minecraft/client/gui/font/CodepointMap.computeIfAbsent:(ILjava/util/function/IntFunction;)Ljava/lang/Object;
+      12: checkcast     #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+      15: areturn
+
+  public net.minecraft.client.gui.font.glyphs.BakedGlyph getRandomGlyph(net.minecraft.util.RandomSource, int);
+    Code:
+       0: aload_0
+       1: getfield      #34                 // Field glyphsByWidth:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+       4: iload_2
+       5: invokeinterface #264,  2          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.get:(I)Ljava/lang/Object;
+      10: checkcast     #267                // class it/unimi/dsi/fastutil/ints/IntList
+      13: astore_3
+      14: aload_3
+      15: ifnull        61
+      18: aload_3
+      19: invokeinterface #269,  1          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntList.isEmpty:()Z
+      24: ifne          61
+      27: aload_0
+      28: aload_3
+      29: aload_1
+      30: aload_3
+      31: invokeinterface #272,  1          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntList.size:()I
+      36: invokeinterface #276,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+      41: invokeinterface #282,  2          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntList.getInt:(I)I
+      46: invokevirtual #285                // Method getGlyph:(I)Lnet/minecraft/client/gui/font/FontSet$SelectedGlyphs;
+      49: invokevirtual #288                // Method net/minecraft/client/gui/font/FontSet$SelectedGlyphs.nonFishy:()Ljava/util/function/Supplier;
+      52: invokeinterface #292,  1          // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+      57: checkcast     #137                // class net/minecraft/client/gui/font/glyphs/BakedGlyph
+      60: areturn
+      61: aload_0
+      62: getfield      #63                 // Field missingGlyph:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+      65: areturn
+
+  public net.minecraft.client.gui.font.glyphs.EffectGlyph whiteGlyph();
+    Code:
+       0: aload_0
+       1: getfield      #142                // Field whiteGlyph:Lnet/minecraft/client/gui/font/glyphs/EffectGlyph;
+       4: invokestatic  #131                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+       7: checkcast     #296                // class net/minecraft/client/gui/font/glyphs/EffectGlyph
+      10: areturn
+
+  public net.minecraft.client.gui.GlyphSource source(boolean);
+    Code:
+       0: iload_1
+       1: ifeq          11
+       4: aload_0
+       5: getfield      #92                 // Field nonFishyGlyphs:Lnet/minecraft/client/gui/GlyphSource;
+       8: goto          15
+      11: aload_0
+      12: getfield      #88                 // Field anyGlyphs:Lnet/minecraft/client/gui/GlyphSource;
+      15: areturn
+
+  private void lambda$selectProviders$0(java.util.List, java.util.Set, int);
+    Code:
+       0: aload_1
+       1: invokeinterface #152,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       6: astore        4
+       8: aload         4
+      10: invokeinterface #156,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      15: ifeq          113
+      18: aload         4
+      20: invokeinterface #162,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #186                // class com/mojang/blaze3d/font/GlyphProvider
+      28: astore        5
+      30: aload         5
+      32: iload_3
+      33: invokeinterface #237,  2          // InterfaceMethod com/mojang/blaze3d/font/GlyphProvider.getGlyph:(I)Lcom/mojang/blaze3d/font/UnbakedGlyph;
+      38: astore        6
+      40: aload         6
+      42: ifnull        110
+      45: aload_2
+      46: aload         5
+      48: invokeinterface #298,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      53: pop
+      54: aload         6
+      56: invokeinterface #246,  1          // InterfaceMethod com/mojang/blaze3d/font/UnbakedGlyph.info:()Lcom/mojang/blaze3d/font/GlyphInfo;
+      61: getstatic     #121                // Field net/minecraft/client/gui/font/glyphs/SpecialGlyphs.MISSING:Lnet/minecraft/client/gui/font/glyphs/SpecialGlyphs;
+      64: if_acmpeq     113
+      67: aload_0
+      68: getfield      #34                 // Field glyphsByWidth:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      71: aload         6
+      73: invokeinterface #246,  1          // InterfaceMethod com/mojang/blaze3d/font/UnbakedGlyph.info:()Lcom/mojang/blaze3d/font/GlyphInfo;
+      78: iconst_0
+      79: invokeinterface #230,  2          // InterfaceMethod com/mojang/blaze3d/font/GlyphInfo.getAdvance:(Z)F
+      84: invokestatic  #301                // Method net/minecraft/util/Mth.ceil:(F)I
+      87: invokedynamic #307,  0            // InvokeDynamic #6:get:()Lit/unimi/dsi/fastutil/ints/Int2ObjectFunction;
+      92: invokeinterface #310,  3          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.computeIfAbsent:(ILit/unimi/dsi/fastutil/ints/Int2ObjectFunction;)Ljava/lang/Object;
+      97: checkcast     #267                // class it/unimi/dsi/fastutil/ints/IntList
+     100: iload_3
+     101: invokeinterface #313,  2          // InterfaceMethod it/unimi/dsi/fastutil/ints/IntList.add:(I)Z
+     106: pop
+     107: goto          113
+     110: goto          8
+     113: return
+
+  private static it.unimi.dsi.fastutil.ints.IntList lambda$selectProviders$1(int);
+    Code:
+       0: new           #316                // class it/unimi/dsi/fastutil/ints/IntArrayList
+       3: dup
+       4: invokespecial #318                // Method it/unimi/dsi/fastutil/ints/IntArrayList."<init>":()V
+       7: areturn
+
+  private net.minecraft.client.gui.font.glyphs.BakedGlyph lambda$new$0();
+    Code:
+       0: aload_0
+       1: getfield      #63                 // Field missingGlyph:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+       4: areturn
+
+  private static net.minecraft.client.gui.font.FontSet$SelectedGlyphs[][] lambda$glyphCache$1(int);
+    Code:
+       0: iload_0
+       1: anewarray     #319                // class "[Lnet/minecraft/client/gui/font/FontSet$SelectedGlyphs;"
+       4: areturn
+
+  private static net.minecraft.client.gui.font.FontSet$SelectedGlyphs[] lambda$glyphCache$0(int);
+    Code:
+       0: iload_0
+       1: anewarray     #74                 // class net/minecraft/client/gui/font/FontSet$SelectedGlyphs
+       4: areturn
+
+  static {};
+    Code:
+       0: new           #321                // class net/minecraft/client/gui/font/FontSet$1
+       3: dup
+       4: invokespecial #323                // Method net/minecraft/client/gui/font/FontSet$1."<init>":()V
+       7: putstatic     #59                 // Field INVISIBLE_MISSING_GLYPH:Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;
+      10: return
+}

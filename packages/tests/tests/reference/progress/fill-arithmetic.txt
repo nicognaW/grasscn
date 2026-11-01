@@ -1,0 +1,30 @@
+
+>   public static int lerpDiscrete(float, int, int);
+      Code:
+         0: iload_2
+         1: iload_1
+         2: isub
+         3: istore_3
+         4: iload_1
+         5: fload_0
+         6: iload_3
+         7: iconst_1
+         8: isub
+         9: i2f
+        10: fmul
+        11: invokestatic  #98                 // Method floor:(F)I
+        14: iadd
+        15: fload_0
+        16: fconst_0
+        17: fcmpl
+        18: ifle          25
+        21: iconst_1
+        22: goto          26
+        25: iconst_0
+        26: iadd
+        27: ireturn
+  
+    public static float lerp(float, float, float);
+      Code:
+         0: fload_1
+

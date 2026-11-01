@@ -1,0 +1,82 @@
+{
+  "source": "Exact scrollbar-thumb crops from the original native AbstractScrollArea capture. Resizable is a web composition; only the reused grip artwork has a native pixel counterpart.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "b0a738f791b356597599c81d4314f953b35b848d5b0e46002ee5679bdef65ca4",
+  "caseDefinitionSha256": "b3491eb091192af883170d5ebf31abfdcec227d4ca6887b8c465cf18c671a35c",
+  "glyphObservationEnabled": false,
+  "sourceDirectory": "../scroll-area/source",
+  "framesDirectory": "../scroll-area/frames",
+  "frames": [
+    {
+      "name": "native-controls-p27-s1.png",
+      "sha256": "4bbaef151bb6161844fc97fc847ce854c22f7e96b74e1c1c0e29d02e154bb6ab"
+    },
+    {
+      "name": "native-controls-p27-s2.png",
+      "sha256": "209c9f16371f9cbf27e9eee4edee407f76dc6b2f4544d747a6aaa27edc6d5800"
+    },
+    {
+      "name": "native-controls-p27-s3.png",
+      "sha256": "a3617f80b7042389521dd2e43b891df1b7710d8fadb58be8d5b0fc574c9941c6"
+    }
+  ],
+  "cases": [
+    {
+      "name": "native-scroll-thumb-s1.png",
+      "element": "native-scrollbar-thumb-crop",
+      "state": "normal",
+      "width": 6,
+      "height": 32,
+      "x": 90,
+      "y": 16,
+      "scale": 1,
+      "background": "#202020",
+      "sourceCase": "scroll-area-c54-s1.png",
+      "sha256": "8f1e10596560a6dfda6802fd1685855e98daf57c5df50e1ee0fb668ab274ec6b"
+    },
+    {
+      "name": "native-scroll-thumb-s2.png",
+      "element": "native-scrollbar-thumb-crop",
+      "state": "normal",
+      "width": 6,
+      "height": 32,
+      "x": 90,
+      "y": 16,
+      "scale": 2,
+      "background": "#202020",
+      "sourceCase": "scroll-area-c54-s2.png",
+      "sha256": "a3d6f519428b323521e696870af45774dd8721c6f998ca0b9925687809cf00c8"
+    },
+    {
+      "name": "native-scroll-thumb-s3.png",
+      "element": "native-scrollbar-thumb-crop",
+      "state": "normal",
+      "width": 6,
+      "height": 32,
+      "x": 90,
+      "y": 16,
+      "scale": 3,
+      "background": "#202020",
+      "sourceCase": "scroll-area-c54-s3.png",
+      "sha256": "ea767c37128d80fde72b8808f19c2f547c9468fe5d00bc89d75fdbaa345e6c5d"
+    }
+  ],
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "mods": [],
+  "resourcePacks": [],
+  "differenceTolerance": 0,
+  "derivation": {
+    "kind": "exact-crop-of-independent-native-captures",
+    "sourceManifest": "tests/reference/scroll-area/manifest.json",
+    "sourceManifestSha256": "35eba39a6d9babbd5102042d1620fb6123a1707ab55cac94478af8723f9d3cde",
+    "sourceRepeatManifestSha256": "35eba39a6d9babbd5102042d1620fb6123a1707ab55cac94478af8723f9d3cde",
+    "cropProvenance": "tests/reference/resizable/crop-derivation.json",
+    "cropProvenanceSha256": "8695e1390c245953037261d072d5575c5d536f73a9910fb55afbfe70fe9abd18",
+    "note": "captureSourceSha256 and caseDefinitionSha256 identify the original complete Scroll Area native capture; the listed Resizable cases are exact thumb ROI crops, not a claimed native Resizable renderer."
+  }
+}

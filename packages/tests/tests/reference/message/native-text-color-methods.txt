@@ -1,0 +1,404 @@
+Compiled from "TextColor.java"
+public final class net.minecraft.network.chat.TextColor {
+  private static final java.lang.String CUSTOM_COLOR_PREFIX;
+
+  public static final com.mojang.serialization.Codec<net.minecraft.network.chat.TextColor> CODEC;
+
+  private static final java.util.Map<java.lang.String, net.minecraft.network.chat.TextColor> NAMED_COLORS;
+
+  public static final net.minecraft.network.chat.TextColor BLACK;
+
+  public static final net.minecraft.network.chat.TextColor DARK_BLUE;
+
+  public static final net.minecraft.network.chat.TextColor DARK_GREEN;
+
+  public static final net.minecraft.network.chat.TextColor DARK_AQUA;
+
+  public static final net.minecraft.network.chat.TextColor DARK_RED;
+
+  public static final net.minecraft.network.chat.TextColor DARK_PURPLE;
+
+  public static final net.minecraft.network.chat.TextColor GOLD;
+
+  public static final net.minecraft.network.chat.TextColor GRAY;
+
+  public static final net.minecraft.network.chat.TextColor DARK_GRAY;
+
+  public static final net.minecraft.network.chat.TextColor BLUE;
+
+  public static final net.minecraft.network.chat.TextColor GREEN;
+
+  public static final net.minecraft.network.chat.TextColor AQUA;
+
+  public static final net.minecraft.network.chat.TextColor RED;
+
+  public static final net.minecraft.network.chat.TextColor LIGHT_PURPLE;
+
+  public static final net.minecraft.network.chat.TextColor YELLOW;
+
+  public static final net.minecraft.network.chat.TextColor WHITE;
+
+  private final int value;
+
+  private final java.lang.String name;
+
+  private net.minecraft.network.chat.TextColor(int, java.lang.String);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: ldc           #7                  // int 16777215
+       8: iand
+       9: putfield      #8                  // Field value:I
+      12: aload_0
+      13: aload_2
+      14: putfield      #14                 // Field name:Ljava/lang/String;
+      17: return
+
+  private net.minecraft.network.chat.TextColor(int);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: ldc           #7                  // int 16777215
+       8: iand
+       9: putfield      #8                  // Field value:I
+      12: aload_0
+      13: aconst_null
+      14: putfield      #14                 // Field name:Ljava/lang/String;
+      17: return
+
+  private static net.minecraft.network.chat.TextColor named(java.lang.String, int);
+    Code:
+       0: new           #9                  // class net/minecraft/network/chat/TextColor
+       3: dup
+       4: iload_1
+       5: aload_0
+       6: invokespecial #18                 // Method "<init>":(ILjava/lang/String;)V
+       9: astore_2
+      10: getstatic     #21                 // Field NAMED_COLORS:Ljava/util/Map;
+      13: aload_0
+      14: aload_2
+      15: invokeinterface #25,  3           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      20: pop
+      21: aload_2
+      22: areturn
+
+  public int getValue();
+    Code:
+       0: aload_0
+       1: getfield      #8                  // Field value:I
+       4: ireturn
+
+  public java.lang.String serialize();
+    Code:
+       0: aload_0
+       1: getfield      #14                 // Field name:Ljava/lang/String;
+       4: ifnull        14
+       7: aload_0
+       8: getfield      #14                 // Field name:Ljava/lang/String;
+      11: goto          18
+      14: aload_0
+      15: invokevirtual #31                 // Method formatValue:()Ljava/lang/String;
+      18: areturn
+
+  private java.lang.String formatValue();
+    Code:
+       0: getstatic     #35                 // Field java/util/Locale.ROOT:Ljava/util/Locale;
+       3: ldc           #41                 // String #%06X
+       5: iconst_1
+       6: anewarray     #2                  // class java/lang/Object
+       9: dup
+      10: iconst_0
+      11: aload_0
+      12: getfield      #8                  // Field value:I
+      15: invokestatic  #43                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      18: aastore
+      19: invokestatic  #49                 // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      22: areturn
+
+  public boolean equals(java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: if_acmpne     7
+       5: iconst_1
+       6: ireturn
+       7: aload_1
+       8: ifnull        22
+      11: aload_0
+      12: invokevirtual #55                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      15: aload_1
+      16: invokevirtual #55                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      19: if_acmpeq     24
+      22: iconst_0
+      23: ireturn
+      24: aload_1
+      25: checkcast     #9                  // class net/minecraft/network/chat/TextColor
+      28: astore_2
+      29: aload_0
+      30: getfield      #8                  // Field value:I
+      33: aload_2
+      34: getfield      #8                  // Field value:I
+      37: if_icmpne     44
+      40: iconst_1
+      41: goto          45
+      44: iconst_0
+      45: ireturn
+
+  public int hashCode();
+    Code:
+       0: iconst_2
+       1: anewarray     #2                  // class java/lang/Object
+       4: dup
+       5: iconst_0
+       6: aload_0
+       7: getfield      #8                  // Field value:I
+      10: invokestatic  #43                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      13: aastore
+      14: dup
+      15: iconst_1
+      16: aload_0
+      17: getfield      #14                 // Field name:Ljava/lang/String;
+      20: aastore
+      21: invokestatic  #59                 // Method java/util/Objects.hash:([Ljava/lang/Object;)I
+      24: ireturn
+
+  public java.lang.String toString();
+    Code:
+       0: aload_0
+       1: invokevirtual #65                 // Method serialize:()Ljava/lang/String;
+       4: areturn
+
+  public static net.minecraft.network.chat.TextColor fromLegacyFormat(net.minecraft.ChatFormatting);
+    Code:
+       0: getstatic     #68                 // Field net/minecraft/network/chat/TextColor$1.$SwitchMap$net$minecraft$ChatFormatting:[I
+       3: aload_0
+       4: invokevirtual #74                 // Method net/minecraft/ChatFormatting.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 16
+
+                     1: 88
+
+                     2: 94
+
+                     3: 100
+
+                     4: 106
+
+                     5: 112
+
+                     6: 118
+
+                     7: 124
+
+                     8: 130
+
+                     9: 136
+
+                    10: 142
+
+                    11: 148
+
+                    12: 154
+
+                    13: 160
+
+                    14: 166
+
+                    15: 172
+
+                    16: 178
+               default: 184
+          }
+      88: getstatic     #80                 // Field BLACK:Lnet/minecraft/network/chat/TextColor;
+      91: goto          185
+      94: getstatic     #84                 // Field DARK_BLUE:Lnet/minecraft/network/chat/TextColor;
+      97: goto          185
+     100: getstatic     #87                 // Field DARK_GREEN:Lnet/minecraft/network/chat/TextColor;
+     103: goto          185
+     106: getstatic     #90                 // Field DARK_AQUA:Lnet/minecraft/network/chat/TextColor;
+     109: goto          185
+     112: getstatic     #93                 // Field DARK_RED:Lnet/minecraft/network/chat/TextColor;
+     115: goto          185
+     118: getstatic     #96                 // Field DARK_PURPLE:Lnet/minecraft/network/chat/TextColor;
+     121: goto          185
+     124: getstatic     #99                 // Field GOLD:Lnet/minecraft/network/chat/TextColor;
+     127: goto          185
+     130: getstatic     #102                // Field GRAY:Lnet/minecraft/network/chat/TextColor;
+     133: goto          185
+     136: getstatic     #105                // Field DARK_GRAY:Lnet/minecraft/network/chat/TextColor;
+     139: goto          185
+     142: getstatic     #108                // Field BLUE:Lnet/minecraft/network/chat/TextColor;
+     145: goto          185
+     148: getstatic     #111                // Field GREEN:Lnet/minecraft/network/chat/TextColor;
+     151: goto          185
+     154: getstatic     #114                // Field AQUA:Lnet/minecraft/network/chat/TextColor;
+     157: goto          185
+     160: getstatic     #117                // Field RED:Lnet/minecraft/network/chat/TextColor;
+     163: goto          185
+     166: getstatic     #120                // Field LIGHT_PURPLE:Lnet/minecraft/network/chat/TextColor;
+     169: goto          185
+     172: getstatic     #123                // Field YELLOW:Lnet/minecraft/network/chat/TextColor;
+     175: goto          185
+     178: getstatic     #126                // Field WHITE:Lnet/minecraft/network/chat/TextColor;
+     181: goto          185
+     184: aconst_null
+     185: areturn
+
+  public static net.minecraft.network.chat.TextColor fromRgb(int);
+    Code:
+       0: new           #9                  // class net/minecraft/network/chat/TextColor
+       3: dup
+       4: iload_0
+       5: invokespecial #129                // Method "<init>":(I)V
+       8: areturn
+
+  public static com.mojang.serialization.DataResult<net.minecraft.network.chat.TextColor> parseColor(java.lang.String);
+    Code:
+       0: aload_0
+       1: ldc           #132                // String #
+       3: invokevirtual #134                // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+       6: ifeq          62
+       9: aload_0
+      10: iconst_1
+      11: invokevirtual #138                // Method java/lang/String.substring:(I)Ljava/lang/String;
+      14: bipush        16
+      16: invokestatic  #142                // Method java/lang/Integer.parseInt:(Ljava/lang/String;I)I
+      19: istore_1
+      20: iload_1
+      21: iflt          30
+      24: iload_1
+      25: ldc           #7                  // int 16777215
+      27: if_icmple     40
+      30: aload_0
+      31: invokedynamic #146,  0            // InvokeDynamic #0:get:(Ljava/lang/String;)Ljava/util/function/Supplier;
+      36: invokestatic  #150                // InterfaceMethod com/mojang/serialization/DataResult.error:(Ljava/util/function/Supplier;)Lcom/mojang/serialization/DataResult;
+      39: areturn
+      40: iload_1
+      41: invokestatic  #156                // Method fromRgb:(I)Lnet/minecraft/network/chat/TextColor;
+      44: invokestatic  #160                // Method com/mojang/serialization/Lifecycle.stable:()Lcom/mojang/serialization/Lifecycle;
+      47: invokestatic  #166                // InterfaceMethod com/mojang/serialization/DataResult.success:(Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/serialization/DataResult;
+      50: areturn
+      51: astore_1
+      52: aload_0
+      53: invokedynamic #172,  0            // InvokeDynamic #1:get:(Ljava/lang/String;)Ljava/util/function/Supplier;
+      58: invokestatic  #150                // InterfaceMethod com/mojang/serialization/DataResult.error:(Ljava/util/function/Supplier;)Lcom/mojang/serialization/DataResult;
+      61: areturn
+      62: getstatic     #21                 // Field NAMED_COLORS:Ljava/util/Map;
+      65: aload_0
+      66: invokeinterface #173,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      71: checkcast     #9                  // class net/minecraft/network/chat/TextColor
+      74: astore_1
+      75: aload_1
+      76: ifnonnull     89
+      79: aload_0
+      80: invokedynamic #176,  0            // InvokeDynamic #2:get:(Ljava/lang/String;)Ljava/util/function/Supplier;
+      85: invokestatic  #150                // InterfaceMethod com/mojang/serialization/DataResult.error:(Ljava/util/function/Supplier;)Lcom/mojang/serialization/DataResult;
+      88: areturn
+      89: aload_1
+      90: invokestatic  #160                // Method com/mojang/serialization/Lifecycle.stable:()Lcom/mojang/serialization/Lifecycle;
+      93: invokestatic  #166                // InterfaceMethod com/mojang/serialization/DataResult.success:(Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/serialization/DataResult;
+      96: areturn
+    Exception table:
+       from    to  target type
+           9    39    51   Class java/lang/NumberFormatException
+          40    50    51   Class java/lang/NumberFormatException
+
+  private static java.lang.String lambda$parseColor$2(java.lang.String);
+    Code:
+       0: aload_0
+       1: invokedynamic #177,  0            // InvokeDynamic #3:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       6: areturn
+
+  private static java.lang.String lambda$parseColor$1(java.lang.String);
+    Code:
+       0: aload_0
+       1: invokedynamic #181,  0            // InvokeDynamic #4:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       6: areturn
+
+  private static java.lang.String lambda$parseColor$0(java.lang.String);
+    Code:
+       0: aload_0
+       1: invokedynamic #182,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       6: areturn
+
+  static {};
+    Code:
+       0: getstatic     #183                // Field com/mojang/serialization/Codec.STRING:Lcom/mojang/serialization/codecs/PrimitiveCodec;
+       3: invokedynamic #189,  0            // InvokeDynamic #6:apply:()Ljava/util/function/Function;
+       8: invokedynamic #193,  0            // InvokeDynamic #7:apply:()Ljava/util/function/Function;
+      13: invokeinterface #194,  3          // InterfaceMethod com/mojang/serialization/codecs/PrimitiveCodec.comapFlatMap:(Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;
+      18: putstatic     #200                // Field CODEC:Lcom/mojang/serialization/Codec;
+      21: new           #204                // class java/util/HashMap
+      24: dup
+      25: invokespecial #206                // Method java/util/HashMap."<init>":()V
+      28: putstatic     #21                 // Field NAMED_COLORS:Ljava/util/Map;
+      31: ldc           #207                // String black
+      33: iconst_0
+      34: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      37: putstatic     #80                 // Field BLACK:Lnet/minecraft/network/chat/TextColor;
+      40: ldc           #213                // String dark_blue
+      42: sipush        170
+      45: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      48: putstatic     #84                 // Field DARK_BLUE:Lnet/minecraft/network/chat/TextColor;
+      51: ldc           #215                // String dark_green
+      53: ldc           #217                // int 43520
+      55: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      58: putstatic     #87                 // Field DARK_GREEN:Lnet/minecraft/network/chat/TextColor;
+      61: ldc           #218                // String dark_aqua
+      63: ldc           #220                // int 43690
+      65: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      68: putstatic     #90                 // Field DARK_AQUA:Lnet/minecraft/network/chat/TextColor;
+      71: ldc           #221                // String dark_red
+      73: ldc           #223                // int 11141120
+      75: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      78: putstatic     #93                 // Field DARK_RED:Lnet/minecraft/network/chat/TextColor;
+      81: ldc           #224                // String dark_purple
+      83: ldc           #226                // int 11141290
+      85: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      88: putstatic     #96                 // Field DARK_PURPLE:Lnet/minecraft/network/chat/TextColor;
+      91: ldc           #227                // String gold
+      93: ldc           #229                // int 16755200
+      95: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+      98: putstatic     #99                 // Field GOLD:Lnet/minecraft/network/chat/TextColor;
+     101: ldc           #230                // String gray
+     103: ldc           #232                // int 11184810
+     105: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     108: putstatic     #102                // Field GRAY:Lnet/minecraft/network/chat/TextColor;
+     111: ldc           #233                // String dark_gray
+     113: ldc           #235                // int 5592405
+     115: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     118: putstatic     #105                // Field DARK_GRAY:Lnet/minecraft/network/chat/TextColor;
+     121: ldc           #236                // String blue
+     123: ldc           #238                // int 5592575
+     125: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     128: putstatic     #108                // Field BLUE:Lnet/minecraft/network/chat/TextColor;
+     131: ldc           #239                // String green
+     133: ldc           #241                // int 5635925
+     135: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     138: putstatic     #111                // Field GREEN:Lnet/minecraft/network/chat/TextColor;
+     141: ldc           #242                // String aqua
+     143: ldc           #244                // int 5636095
+     145: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     148: putstatic     #114                // Field AQUA:Lnet/minecraft/network/chat/TextColor;
+     151: ldc           #245                // String red
+     153: ldc           #247                // int 16733525
+     155: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     158: putstatic     #117                // Field RED:Lnet/minecraft/network/chat/TextColor;
+     161: ldc           #248                // String light_purple
+     163: ldc           #250                // int 16733695
+     165: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     168: putstatic     #120                // Field LIGHT_PURPLE:Lnet/minecraft/network/chat/TextColor;
+     171: ldc           #251                // String yellow
+     173: ldc           #253                // int 16777045
+     175: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     178: putstatic     #123                // Field YELLOW:Lnet/minecraft/network/chat/TextColor;
+     181: ldc           #254                // String white
+     183: ldc           #7                  // int 16777215
+     185: invokestatic  #209                // Method named:(Ljava/lang/String;I)Lnet/minecraft/network/chat/TextColor;
+     188: putstatic     #126                // Field WHITE:Lnet/minecraft/network/chat/TextColor;
+     191: return
+}

@@ -1,0 +1,402 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "e6109be539b535ac27d56c01ff2225de168f4fa22c9066d939e61efd7a52bd47",
+  "caseDefinitionSha256": "5e5bf1c5f801d9efcf31b931707b87bb3edaa30c2e93cee6fe7fd7654f557367",
+  "glyphObservationEnabled": false,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-p2-s1.png",
+      "sha256": "53135b6328d74f978ff271593c55181e10f300355db60b0e23399326ede120d8"
+    },
+    {
+      "name": "native-controls-p2-s2.png",
+      "sha256": "b220380a3f79c4d7b433b14f12437b5df66158cdc600d3a37b92b0f6bb779cc6"
+    },
+    {
+      "name": "native-controls-p2-s3.png",
+      "sha256": "d06d681aeac04c3be70a5d437adc12920f002cb1b453d8dcd3b2935ebee38b75"
+    },
+    {
+      "name": "native-controls-p3-s1.png",
+      "sha256": "52487ca87389243483cf8c95cfe11b48d8550da58267b4f3b57038dd9a3423b8"
+    },
+    {
+      "name": "native-controls-p3-s2.png",
+      "sha256": "3dbd9b415cf568641f6281cfea711044fdc781f49eff5369998d7cde2a8992fc"
+    },
+    {
+      "name": "native-controls-p3-s3.png",
+      "sha256": "26f97176890ba2abc0d9eeb6ab433916634c0e9921ee5e04854c6e421678f58c"
+    },
+    {
+      "name": "native-controls-p4-s1.png",
+      "sha256": "29b26be385548a07ca8db45828bc46f9bcc6d7289fafeb3c581e6f1132068748"
+    },
+    {
+      "name": "native-controls-p4-s2.png",
+      "sha256": "b28c06036442e4e17fdb15fcf43f55329f452f34f560785f985512e43c0b9a40"
+    },
+    {
+      "name": "native-controls-p4-s3.png",
+      "sha256": "27aa5ab918ba40cb2505dcbe0ae2bcb165377a3f70d4df94c66a03f8673cf585"
+    },
+    {
+      "name": "native-controls-p5-s1.png",
+      "sha256": "4c71530b4fd2b88755be73a3b34dd0c24e2ddd078f71ed26742e7a1aba58d0d2"
+    },
+    {
+      "name": "native-controls-p5-s2.png",
+      "sha256": "9113ee28565c54db7ae418678fe8ce172cb2c6455b8a2df9db550f0432212765"
+    },
+    {
+      "name": "native-controls-p5-s3.png",
+      "sha256": "eefd07a76b0416e83f928cb0d77dd73402e9f8a8c15b84bc4c0a4ea25bc69d39"
+    },
+    {
+      "name": "native-controls-p6-s1.png",
+      "sha256": "930735df3a62387c4411ae333b7cc8b167f814ea96d11da872bb43bbb81c4b6e"
+    },
+    {
+      "name": "native-controls-p6-s2.png",
+      "sha256": "7a037f9f1456308e86cb542a22952e9f5a583f541da04d816dd8eeb73a829d20"
+    },
+    {
+      "name": "native-controls-p6-s3.png",
+      "sha256": "b7c08af3cb8c882deafa24d6a854de7c0f42da17e43bed0c8b89980649e77272"
+    },
+    {
+      "name": "native-controls-p7-s1.png",
+      "sha256": "a82c7f4dfa9066bc3e06a0e74c132d9e525b20631ec208ab9ecf4f0ef7741dd8"
+    },
+    {
+      "name": "native-controls-p7-s2.png",
+      "sha256": "7e9ac3aced0989c31f147da9f6824f1104b0c769d89d78de3ed6015e644ea439"
+    },
+    {
+      "name": "native-controls-p7-s3.png",
+      "sha256": "337c4a72c4c9d8bd972d162a320952d5fb367bcfad5a5aaaf15107178a3aa7c6"
+    }
+  ],
+  "cases": [
+    {
+      "name": "player-0-s1.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 2,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "e41683015fd86ce3e58f879aeb7f790bda976fa8c6eb9cbc07f6e6f482e267c9"
+    },
+    {
+      "name": "player-1-s1.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 3,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "916c4c2fd48e922ab05c67b6c7a216e32107163536616cf4d86143b7b348961b"
+    },
+    {
+      "name": "player-2-s1.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 4,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "dcb4d791f7e714741638ef70610c778053383975f3415f9ad2f467aa12b8a08e"
+    },
+    {
+      "name": "player-3-s1.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 5,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "939a018cb1dc9cf9926ec6ee1272b1f957618c9ed393ceb568443b6445710bea"
+    },
+    {
+      "name": "player-4-s1.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 6,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "e2324f831a2232a6f8cdd3adcd1f5d8d2238f5f5afac784acb5954645ea1f45d"
+    },
+    {
+      "name": "player-5-s1.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 7,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 1,
+      "sha256": "0288318616f406e8d0960d6c123c2dda238e7f5e9d7ad70f412548ab7bffb357"
+    },
+    {
+      "name": "player-0-s2.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 2,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "ee897a41db3fa1ac4a87df187c915d1615f84b7d5e19b340bc8622b20d6400ed"
+    },
+    {
+      "name": "player-1-s2.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 3,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "d29c16a5b565821eeb37c69386a1fdf14a3b1a4ed5818a34f32041c9b173a0ed"
+    },
+    {
+      "name": "player-2-s2.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 4,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "4bc839737ce8647ba6e9f50c31ba71b954bce8e0975e09b6998c61d42d6b723c"
+    },
+    {
+      "name": "player-3-s2.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 5,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "8713833f6b6bbe097df6d69fc423d8b95d79a133f89420f172994d4eb4060f4b"
+    },
+    {
+      "name": "player-4-s2.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 6,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "c0c621daf542ac8c03b4abf8324e30df039f26597197d2189d8c2eba1711c27c"
+    },
+    {
+      "name": "player-5-s2.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 7,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 2,
+      "sha256": "ed243ca72e61542be321a8d75918fa4ca3efed40d957f3d414c68508d6948740"
+    },
+    {
+      "name": "player-0-s3.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 2,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "a68abad01bc2a4dff3ce224e83627a13f211ed298009d1c8eeda962232125fdd"
+    },
+    {
+      "name": "player-1-s3.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 3,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "3a55f3faf911edc752592d51616d7ebc555345a48987981e32b9c4eca6f80845"
+    },
+    {
+      "name": "player-2-s3.png",
+      "element": "player-preview",
+      "state": "wide/steve",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 4,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "d8f43c53722ac6ce0876dfb887e14809cb802b2b65da25fa9966313110941bad"
+    },
+    {
+      "name": "player-3-s3.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 5,
+      "value": 30,
+      "anchor": -5,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "fd8bcfef9d50fdc3e52cce501ca54ef60eff2e6ac2e4c06f967255a3ed598d4e"
+    },
+    {
+      "name": "player-4-s3.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 6,
+      "value": 0,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "fe7b41fe69ee0eb1bebb199a5d688e3fbce3e4a5bc8bc1bf77b23a8db82dbec9"
+    },
+    {
+      "name": "player-5-s3.png",
+      "element": "player-preview",
+      "state": "slim/alex",
+      "checked": false,
+      "x": 24,
+      "y": 16,
+      "width": 80,
+      "height": 120,
+      "page": 7,
+      "value": 90,
+      "anchor": 0,
+      "label": "",
+      "text": "",
+      "scale": 3,
+      "sha256": "7c5a54fc4a588875a363fdbdba2a76bd05f66d33232093bee18c52b3783ff122"
+    }
+  ],
+  "sourceDirectory": "source"
+}

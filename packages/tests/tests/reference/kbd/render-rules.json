@@ -1,0 +1,20 @@
+{
+  "nativeReference": "tests/reference/manifest.json",
+  "nativeRenderer": "Original Minecraft Java26.2; frozen sharednative matrix andseparatelaunch repeatability evidence retainedat nativeReference directory",
+  "scope": "Original Button surface andglyphs reused aspassive keyboard-key labels. Semantic kbd has noactivationhandlers orclickaudio; chordgrouping iswebcomposition. Nativehover/focus/disabled appearance followsoriginalbutton skin.",
+  "upstream": "https://ui.shadcn.com/docs/components/radix/kbd",
+  "environment": {
+    "browser": "Microsoft Edge",
+    "viewport": [
+      1536,
+      900
+    ],
+    "devicePixelRatio": 1,
+    "guiScales": [
+      1,
+      2,
+      3
+    ]
+  },
+  "compositionAuthority": "analyst-designed webcomposition fromnativeconstituents"
+}

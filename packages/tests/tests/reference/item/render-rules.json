@@ -1,0 +1,48 @@
+{
+  "nativeClasses": [
+    "WorldSelectionList.WorldListEntry",
+    "AbstractSelectionList.extractItem/extractSelection",
+    "StringWidget",
+    "ComponentRenderUtils.clipText",
+    "FaviconTexture"
+  ],
+  "logicalGeometry": {
+    "row": [
+      270,
+      36
+    ],
+    "contentPadding": 2,
+    "thumbnail": [
+      32,
+      32
+    ],
+    "textX": 37,
+    "titleY": 3,
+    "metadataLineYs": [
+      14,
+      23
+    ],
+    "textClipWidth": 231,
+    "selectionBorder": 1
+  },
+  "colors": {
+    "title": "#ffffff",
+    "titleShadow": "#3f3f3f",
+    "description": "#808080",
+    "descriptionShadow": "#202020",
+    "unfocusedSelectionBorder": "#808080",
+    "focusedSelectionBorder": "#ffffff",
+    "selectedInterior": "#000000",
+    "hoverShadeArgb": "#a0909090"
+  },
+  "sprites": {
+    "thumbnail": "assets/minecraft/textures/misc/unknown_server.png",
+    "hover": "assets/minecraft/textures/gui/sprites/world_list/join.png",
+    "iconHover": "assets/minecraft/textures/gui/sprites/world_list/join_highlighted.png"
+  },
+  "fontContext": "font-context.json",
+  "sampling": "Original raw RGBA, nearest WebGL sampling using the actual viewport and physical origin; native hover shade is blended before the native join sprite. Bitmap/Unihex text uses original advances and quarter-intensity shadows.",
+  "nativeData": "The test LevelSummary supplies fixed compatible-world title, ID and description; lastPlayed=-1 disables date formatting. Parent list data is allocated without running world loading or opening real saves. The original WorldListEntry and AbstractSelectionList renderer paint every expected pixel.",
+  "webSemantics": "Ten standard shadcn Item exports, refs, HTML props and asChild composition. Default native appearance/size only. Header/footer/action placement and custom media are web compositions. Direct semantic link/button activation reuses the original click sound; passive selection stays silent and custom asChild components keep their own audio.",
+  "scope": "180 compatible-world row cases: six ASCII/Chinese/Japanese/Korean/mixed/overflow contents, normal/body-hover/icon-hover/selected/focused states, two backgrounds and GUI scales1\u20133. Whole-row links and buttons match all180 cases; passive div aliases match the108 non-hover cases. Additional84 Label cases through standalone ItemTitle and108 Separator cases through ItemSeparator. Arbitrary content, custom media, locked/incompatible world states, rich composed layouts, other glyphs and raster environments remain outside this exact matrix."
+}

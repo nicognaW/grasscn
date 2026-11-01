@@ -1,0 +1,16 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sources": {
+    "net/minecraft/client/gui/screens/worldselection/WorldSelectionList$NoWorldsEntry.class": {
+      "sha256": "12d29bd67d1f17c1f6ddf7e2e80a3ece950ec3c34e70d37574ce48a01cd9fb05"
+    },
+    "net/minecraft/client/gui/components/AbstractSelectionList$Entry.class": {
+      "sha256": "ec33f0bb35d19d5b73d016f3eff0ba988b9a899720f52936b11cda09a54a1e21"
+    },
+    "net/minecraft/client/gui/components/StringWidget.class": {
+      "sha256": "88dc927dd8a0b6503f4432af160aade94552259c457a502c827ebc8bbc19da2f"
+    }
+  },
+  "nativeFactory": "new WorldSelectionList.NoWorldsEntry(Component.literal(label), Minecraft.font), setX/Y/Width/Height, original extractContent",
+  "scope": "Native ASCII empty-row cases use the original StringWidget. CJK/title/description constituents reuse the separately repeated original Label84 matrix and pinned effective font/atlas evidence at tests/reference/label."
+}

@@ -1,0 +1,158 @@
+Compiled from "ObjectSelectionList.java"
+public abstract class net.minecraft.client.gui.components.ObjectSelectionList$Entry<E extends net.minecraft.client.gui.components.ObjectSelectionList$Entry<E>> extends net.minecraft.client.gui.components.AbstractSelectionList$Entry<E> implements net.minecraft.client.gui.narration.NarrationSupplier {
+  public net.minecraft.client.gui.components.ObjectSelectionList$Entry();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry."<init>":()V
+       4: return
+
+  public abstract net.minecraft.network.chat.Component getNarration();
+
+  public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: iconst_1
+       1: ireturn
+
+  public void updateNarration(net.minecraft.client.gui.narration.NarrationElementOutput);
+    Code:
+       0: aload_1
+       1: getstatic     #7                  // Field net/minecraft/client/gui/narration/NarratedElementType.TITLE:Lnet/minecraft/client/gui/narration/NarratedElementType;
+       4: aload_0
+       5: invokevirtual #13                 // Method getNarration:()Lnet/minecraft/network/chat/Component;
+       8: invokeinterface #19,  3           // InterfaceMethod net/minecraft/client/gui/narration/NarrationElementOutput.add:(Lnet/minecraft/client/gui/narration/NarratedElementType;Lnet/minecraft/network/chat/Component;)V
+      13: return
+
+  public net.minecraft.client.gui.navigation.ScreenRectangle getRectangle();
+    Code:
+       0: aload_0
+       1: invokespecial #25                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getRectangle:()Lnet/minecraft/client/gui/navigation/ScreenRectangle;
+       4: areturn
+
+  public void visitWidgets(java.util.function.Consumer);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #29                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.visitWidgets:(Ljava/util/function/Consumer;)V
+       5: return
+
+  public int getHeight();
+    Code:
+       0: aload_0
+       1: invokespecial #33                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getHeight:()I
+       4: ireturn
+
+  public int getWidth();
+    Code:
+       0: aload_0
+       1: invokespecial #37                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getWidth:()I
+       4: ireturn
+
+  public int getY();
+    Code:
+       0: aload_0
+       1: invokespecial #40                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getY:()I
+       4: ireturn
+
+  public int getX();
+    Code:
+       0: aload_0
+       1: invokespecial #43                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getX:()I
+       4: ireturn
+
+  public int getContentRight();
+    Code:
+       0: aload_0
+       1: invokespecial #46                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentRight:()I
+       4: ireturn
+
+  public int getContentXMiddle();
+    Code:
+       0: aload_0
+       1: invokespecial #49                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentXMiddle:()I
+       4: ireturn
+
+  public int getContentWidth();
+    Code:
+       0: aload_0
+       1: invokespecial #52                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentWidth:()I
+       4: ireturn
+
+  public int getContentBottom();
+    Code:
+       0: aload_0
+       1: invokespecial #55                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentBottom:()I
+       4: ireturn
+
+  public int getContentYMiddle();
+    Code:
+       0: aload_0
+       1: invokespecial #58                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentYMiddle:()I
+       4: ireturn
+
+  public int getContentHeight();
+    Code:
+       0: aload_0
+       1: invokespecial #61                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentHeight:()I
+       4: ireturn
+
+  public int getContentY();
+    Code:
+       0: aload_0
+       1: invokespecial #64                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentY:()I
+       4: ireturn
+
+  public int getContentX();
+    Code:
+       0: aload_0
+       1: invokespecial #67                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.getContentX:()I
+       4: ireturn
+
+  public void setHeight(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #70                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.setHeight:(I)V
+       5: return
+
+  public void setWidth(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #74                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.setWidth:(I)V
+       5: return
+
+  public void setY(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #77                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.setY:(I)V
+       5: return
+
+  public void setX(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #80                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.setX:(I)V
+       5: return
+
+  public boolean isMouseOver(double, double);
+    Code:
+       0: aload_0
+       1: dload_1
+       2: dload_3
+       3: invokespecial #83                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.isMouseOver:(DD)Z
+       6: ireturn
+
+  public boolean isFocused();
+    Code:
+       0: aload_0
+       1: invokespecial #87                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.isFocused:()Z
+       4: ireturn
+
+  public void setFocused(boolean);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #91                 // Method net/minecraft/client/gui/components/AbstractSelectionList$Entry.setFocused:(Z)V
+       5: return
+}
