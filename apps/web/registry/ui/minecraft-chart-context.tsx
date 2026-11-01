@@ -536,6 +536,7 @@ export const ChartPixelSurface = ({
           mask.stroke(path);
         } else {
           mask.fillStyle = ink.ink;
+          // oxlint-disable-next-line unicorn/no-array-fill-with-reference-type -- Canvas fills a Path2D; this is not Array.fill.
           mask.fill(path, style.fillRule === "evenodd" ? "evenodd" : "nonzero");
         }
 

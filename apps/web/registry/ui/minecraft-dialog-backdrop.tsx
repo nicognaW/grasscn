@@ -56,6 +56,7 @@ export const MinecraftDialogBackdrop = () => {
     gl.attachShader(program, vertex);
     gl.attachShader(program, fragment);
     gl.linkProgram(program);
+    // oxlint-disable-next-line react/hooks -- WebGL's native useProgram selects a shader program, not a React hook.
     gl.useProgram(program);
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
