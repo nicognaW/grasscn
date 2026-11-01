@@ -941,6 +941,23 @@
         "route": "/docs/components/button#installation",
         "reason": "Default Manual installation lists the actual closure, offers selected complete files, defers the font resource until requested, copies/downloads exact full content and resets per-file status. Its ordinary 390px mobile composition must contain source overflow; desktop/mobile screenshots review this website composition without claiming a native page."
       }
+    },
+    {
+      "file": "docs-installation-pixels.spec.ts",
+      "title": "default installation controls match their captured Minecraft content and states",
+      "titlePath": [
+        "default installation controls match their captured Minecraft content and states"
+      ],
+      "components": [
+        "website",
+        "button",
+        "tabs"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Actual scale2 CLI/Manual strips, all four visible package-manager selections, every registry-derived default Manual file selector, Download/Load/Copy full file actions and loaded-resource disabled Load on the integrated Button page. Retry and other native scales remain outside this browser case."
+      }
     }
   ]
 }

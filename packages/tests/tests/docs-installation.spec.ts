@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 import { test, expect } from "./verified-test";
 
@@ -152,8 +152,15 @@ test("Button manual installation exposes complete files and defers large resourc
   expect(download.suggestedFilename()).toBe("minecraft-unifont-data.ts");
   expect(await readFile((await download.path())!, "utf8")).toBe(font);
   await page.mouse.move(0, 0);
-  await installation.screenshot({ path: info.outputPath("installation-desktop-actual.png") });
+  await installation.screenshot({
+    path: info.outputPath("installation-desktop-actual.png"),
+  });
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-  await installation.screenshot({ path: info.outputPath("installation-mobile-actual.png") });
+  await writeFile(info.outputPath("installation-mobile-overflow.json"),JSON.stringify(await page.evaluate(() => Array.from(document.querySelectorAll("body *")).map((element) => ({tag:element.tagName,class:element.className,text:element.textContent?.slice(0,120),right:element.getBoundingClientRect().right,width:element.getBoundingClientRect().width})).filter((element) => element.right > 390.5)),null,2));
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+    .toBeLessThanOrEqual(390);
+  await installation.screenshot({
+    path: info.outputPath("installation-mobile-actual.png"),
+  });
 });

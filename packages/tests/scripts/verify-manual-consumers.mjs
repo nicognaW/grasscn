@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 
@@ -12,13 +12,25 @@ assert(
   origin && /^http:\/\/127\.0\.0\.1:\d+$/.test(origin),
   "Set the owned production GRASSCN_PREVIEW_URL"
 );
-const output = path.join(
-  root,
-  ".pixel-perfect-test",
-  "manual-consumers",
-  String(Date.now())
+const consumerRoot = path.join(root, ".pixel-perfect-test", "manual-consumers");
+const output = process.env.GRASSCN_MANUAL_CONSUMER_DIRECTORY
+  ? path.resolve(process.env.GRASSCN_MANUAL_CONSUMER_DIRECTORY)
+  : path.join(consumerRoot, String(Date.now()));
+assert(
+  output.startsWith(consumerRoot + path.sep),
+  "Resume only an independently created manual-consumer fixture"
 );
+const exists = async (file) => {
+  try {
+    return (await stat(file)).isFile();
+  } catch {
+    return false;
+  }
+};
 await mkdir(output, { recursive: true });
+const previousReport = (await exists(path.join(output, "report.json")))
+  ? JSON.parse(await readFile(path.join(output, "report.json"), "utf8"))
+  : undefined;
 const report = {
   status: "incomplete",
   website: origin,
@@ -88,6 +100,7 @@ assert(
   )
 );
 const browser = await chromium.launch({ headless: true, channel: "msedge" });
+report.browserVersion = browser.version();
 let server;
 try {
   const page = await browser.newPage({
@@ -123,6 +136,7 @@ try {
     assert(response.ok, `Public ${name} inventory available`);
     manifests.push(await response.json());
   }
+  report.publicManifestSha256 = hash(JSON.stringify(manifests));
   const dependencies = {
     react: "19.3.1",
     "react-dom": "19.3.1",
@@ -209,9 +223,22 @@ try {
         if (previous)
           assert.equal(hash(bytes), previous, "Overlapping manual files agree");
         files.set(file.destination, hash(bytes));
-        await write(`src/${file.destination}`, bytes.toString("utf8"));
+        const existing = path.join(consumer, "src", file.destination);
+        if (await exists(existing))
+          assert.equal(
+            hash(await readFile(existing)),
+            hash(bytes),
+            `Resume requires unchanged public source: ${file.destination}`
+          );
+        else await write(`src/${file.destination}`, bytes.toString("utf8"));
       }
-    await write("src/button-example.tsx", exampleCode);
+    if (await exists(path.join(consumer, "src/button-example.tsx")))
+      assert.equal(
+        hash(await readFile(path.join(consumer, "src/button-example.tsx"))),
+        hash(exampleCode),
+        "Resume requires unchanged copied public example"
+      );
+    else await write("src/button-example.tsx", exampleCode);
     await write(
       "src/globals.css",
       '@import "tailwindcss";body{margin:0;background:#202020}*{box-sizing:border-box}\n'
@@ -272,7 +299,48 @@ try {
         'import ButtonExample from "../button-example";import "@/components/ui/code-block";import "@/components/form";export default function Page(){return <ButtonExample/>}'
       );
     }
-    await run(["install", "--ignore-scripts"], consumer);
+    const cached = previousReport?.consumers?.find(
+      (entry) => entry.framework === framework
+    );
+    if (
+      cached &&
+      previousReport.bun === Bun.version &&
+      previousReport.browserVersion === report.browserVersion &&
+      previousReport.publicManifestSha256 === report.publicManifestSha256 &&
+      previousReport.exampleSha256 === report.exampleSha256 &&
+      cached.packageSha256 ===
+        hash(await readFile(path.join(consumer, "package.json"))) &&
+      (await exists(path.join(consumer, "bun.lock"))) &&
+      cached.lockSha256 ===
+        hash(await readFile(path.join(consumer, "bun.lock"))) &&
+      cached.actualSha256 ===
+        hash(
+          await readFile(path.join(output, `${framework}-button-actual.png`))
+        )
+    ) {
+      assert.deepEqual(cached.downloadedFiles, Object.fromEntries(files));
+      report.consumers.push({
+        ...cached,
+        reusedAfterSourceAndEnvironmentVerification: true,
+      });
+      await writeFile(
+        path.join(output, "report.json"),
+        JSON.stringify(report, null, 2)
+      );
+      continue;
+    }
+    await run(
+      [
+        "install",
+        "--ignore-scripts",
+        "--network-concurrency",
+        "1",
+        ...((await exists(path.join(consumer, "bun.lock")))
+          ? ["--frozen-lockfile"]
+          : []),
+      ],
+      consumer
+    );
     if (framework === "next")
       await run(
         ["--bun", "node_modules/next/dist/bin/next", "typegen"],
@@ -396,6 +464,7 @@ try {
     report.consumers.push({
       framework,
       directory: consumer,
+      actualSha256: hash(actualBytes),
       packageSha256: hash(await readFile(path.join(consumer, "package.json"))),
       lockSha256: hash(await readFile(path.join(consumer, "bun.lock"))),
       items: manifests.map((manifest) => ({
@@ -412,6 +481,10 @@ try {
         referenceSha256: hash(referenceBytes),
       },
     });
+    await writeFile(
+      path.join(output, "report.json"),
+      JSON.stringify(report, null, 2)
+    );
     await consumerPage.close();
     server.kill();
     await server.exited;

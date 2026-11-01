@@ -80,7 +80,7 @@ function FileSource({ file }: { file: InstallationFile }) {
       className="documentation-manual-source"
     >
       <DocumentParagraph>{file.destination}</DocumentParagraph>
-      <DocumentText>Source: {file.source}</DocumentText>
+      <DocumentParagraph>Source: {file.source}</DocumentParagraph>
       <div className="documentation-manual-actions">
         <Button
           className="documentation-control"
