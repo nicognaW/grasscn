@@ -54,7 +54,7 @@ test("Button installation copies and remembers the visitor package manager", asy
 
 test("Button manual installation exposes complete files and defers large resources", async ({
   page,
-}) => {
+}, info) => {
   const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
   const sourceRequests: string[] = [];
   page.on("request", (request) => {
@@ -151,4 +151,9 @@ test("Button manual installation exposes complete files and defers large resourc
   const download = await downloadEvent;
   expect(download.suggestedFilename()).toBe("minecraft-unifont-data.ts");
   expect(await readFile((await download.path())!, "utf8")).toBe(font);
+  await page.mouse.move(0, 0);
+  await installation.screenshot({ path: info.outputPath("installation-desktop-actual.png") });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await installation.screenshot({ path: info.outputPath("installation-mobile-actual.png") });
 });

@@ -939,7 +939,7 @@
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
-        "reason": "Default Manual installation lists the actual closure, offers selected complete files, defers the font resource until requested, copies/downloads exact full content and resets per-file status."
+        "reason": "Default Manual installation lists the actual closure, offers selected complete files, defers the font resource until requested, copies/downloads exact full content and resets per-file status. Its ordinary 390px mobile composition must contain source overflow; desktop/mobile screenshots review this website composition without claiming a native page."
       }
     }
   ]

@@ -231,7 +231,7 @@ try {
     };
     if (framework === "vite") {
       await write("tsconfig.json", {
-        compilerOptions,
+        compilerOptions: { ...compilerOptions, types: ["vite/client"] },
         include: ["src", "vite.config.ts"],
       });
       await write(
