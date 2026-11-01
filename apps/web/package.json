@@ -116,6 +116,7 @@
     "./ui/minecraft-toast-assets": "./registry/ui/minecraft-toast-assets.ts",
     "./ui/minecraft-toast-atlas": "./registry/ui/minecraft-toast-atlas.ts",
     "./ui/minecraft-toast-sound-assets": "./registry/ui/minecraft-toast-sound-assets.ts",
+    "./ui/minecraft-trading-sound-assets": "./registry/ui/minecraft-trading-sound-assets.ts",
     "./ui/minecraft-unifont": "./registry/ui/minecraft-unifont.ts",
     "./ui/native-select": "./registry/ui/native-select.tsx",
     "./ui/pagination": "./registry/ui/pagination.tsx",
