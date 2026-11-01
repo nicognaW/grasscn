@@ -32,3 +32,12 @@ An interaction or composition introduced for web use that has no corresponding M
 
 **Verified coverage**:
 The reference cases, game versions and environments for which a UI port's appearance or behavior has been demonstrated. Coverage applies to those declared conditions rather than every possible use of the component.
+
+**Base tests**:
+Grasscn browser tests selected to cover the default usage paths presented on the website or to correspond to actual upstream shadcn tests.
+
+**Full tests**:
+The remaining Grasscn browser tests outside Base tests, covering additional reference cases, variants and edge cases.
+
+**Full test run**:
+An approved execution of Full tests against one fixed source and environment snapshot. Resuming interrupted portions against that same snapshot continues the same run.
