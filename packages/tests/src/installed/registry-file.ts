@@ -1,15 +1,25 @@
 import assert from "node:assert/strict";
 import path from "node:path";
 
+export interface InstalledRegistryEntry {
+  path?: string;
+  target?: string;
+  type?: string;
+}
+
+export interface InstalledComponentSettings {
+  aliases: { components: string; hooks: string; lib: string; ui: string };
+}
+
 // Resolve CLI target placeholders using the fixture's configured UI location.
 export function installedRegistryFile(
-  entry,
-  consumer,
-  settings,
+  entry: InstalledRegistryEntry,
+  consumer: string,
+  settings: InstalledComponentSettings,
   uiDirectory = "src/components/ui"
 ) {
   const root = path.resolve(consumer);
-  const uiAlias = settings.aliases.ui.replace(/^[@~]\//, "");
+  const uiAlias = settings.aliases.ui.replace(/^[@~]\//u, "");
   const ui = path.resolve(root, uiDirectory);
   assert.ok(
     ui.endsWith(path.normalize(uiAlias)),
@@ -17,29 +27,30 @@ export function installedRegistryFile(
   );
   const sourceRoot = ui.slice(0, -path.normalize(uiAlias).length);
 
-  const aliases = {
+  const aliases: Record<string, keyof InstalledComponentSettings["aliases"]> = {
     components: "components",
     hooks: "hooks",
     lib: "lib",
     ui: "ui",
   };
 
-  let target;
+  let target: string;
 
-  const placeholder = /^@(components|ui|hooks|lib)\/(.+)$/.exec(
-    entry.target ?? ""
-  );
+  const placeholder =
+    /^@(?<alias>components|ui|hooks|lib)\/(?<filename>.+)$/u.exec(
+      entry.target ?? ""
+    );
 
   if (placeholder) {
     const alias = settings.aliases[aliases[placeholder[1]]];
     assert.ok(alias, `Missing ${placeholder[1]} alias`);
     target = path.resolve(
       sourceRoot,
-      alias.replace(/^[@~]\//, ""),
+      alias.replace(/^[@~]\//u, ""),
       placeholder[2]
     );
   } else if (entry.target) {
-    target = path.resolve(root, entry.target.replace(/^~\//, ""));
+    target = path.resolve(root, entry.target.replace(/^~\//u, ""));
   } else {
     const kind =
       entry.type === "registry:hook"
@@ -53,10 +64,10 @@ export function installedRegistryFile(
         ? ui
         : path.resolve(
             sourceRoot,
-            settings.aliases[kind].replace(/^[@~]\//, "")
+            settings.aliases[kind].replace(/^[@~]\//u, "")
           );
 
-    target = path.join(directory, path.basename(entry.path));
+    target = path.join(directory, path.basename(entry.path!));
   }
 
   assert.ok(

@@ -5,9 +5,10 @@ import path from "node:path";
 
 import { repoRoot } from "@tests/paths";
 
-const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
+const json = (value: { pid: number; start: string | null | undefined }) =>
+  `${JSON.stringify(value, null, 2)}\n`;
 
-const git = (args) =>
+const git = (args: string[]) =>
   execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8" }).trim();
 
 export function coordinationRoot() {
@@ -17,7 +18,7 @@ export function coordinationRoot() {
   );
 }
 
-export function processIdentity(pid) {
+export function processIdentity(pid: number) {
   if (!Number.isInteger(pid) || pid <= 0) {
     return null;
   }
