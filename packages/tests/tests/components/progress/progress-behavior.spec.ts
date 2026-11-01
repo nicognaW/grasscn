@@ -67,7 +67,7 @@ test("Progress updates and pointer events are silent", async ({ page }) => {
     await page.evaluate(() => {
       // SAFETY: this test installs and initializes its own playback counter before navigation.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Read only this fixture's initialized counter.
-      const state = window as Window & { progressAudioPlays: number };
+      const state = window as typeof window & { progressAudioPlays: number };
 
       return state.progressAudioPlays;
     })

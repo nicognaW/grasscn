@@ -57,7 +57,7 @@ export const recordedAudioPlayback = async (page: Page) =>
   await page.evaluate(() => {
     // SAFETY: recordAudioPlayback installs this one fixture state on each document before its controls can play.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This is the paired reader of the fixture-owned initialization above.
-    const fixture = window as Window & AudioPlaybackFixture;
+    const fixture = window as typeof window & AudioPlaybackFixture;
 
     return fixture.__soundVoices;
   });
@@ -84,7 +84,7 @@ export const recordedOriginalClicks = async (page: Page) =>
   await page.evaluate(() => {
     // SAFETY: recordOriginalClick initializes this exact observation format before navigation.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned original-click installation.
-    const fixture = window as Window & OriginalClickFixture;
+    const fixture = window as typeof window & OriginalClickFixture;
 
     return fixture.voices;
   });
@@ -111,7 +111,7 @@ export const recordedPitchedPlayback = async (page: Page) =>
   await page.evaluate(() => {
     // SAFETY: recordPitchedPlayback installs this pitch/source/volume trace on each document.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned pitched-playback installation.
-    const fixture = window as Window & PitchedPlaybackFixture;
+    const fixture = window as typeof window & PitchedPlaybackFixture;
 
     return fixture.sounds;
   });
@@ -134,7 +134,7 @@ export const recordedAudioSources = async (page: Page) =>
   await page.evaluate(() => {
     // SAFETY: recordAudioSources installs this source-only trace before the tested document loads.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned source trace.
-    const fixture = window as Window & AudioSourceFixture;
+    const fixture = window as typeof window & AudioSourceFixture;
 
     return fixture.sounds;
   });
