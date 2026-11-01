@@ -13,6 +13,11 @@ import os from "node:os";
 import path from "node:path";
 
 import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
+import {
+  approvalLabel,
+  parseRunPlan,
+  runPlanBody,
+} from "@ppt/full-runs/plan";
 import { pixelPerfectTestRoot, repoRoot, pixelPerfectRoot } from "@ppt/paths";
 import {
   baseCatalogue,
@@ -21,9 +26,14 @@ import {
   classifyBrowserCases,
 } from "@ppt/selection/suite";
 
+export {
+  approvalLabel,
+  planMarker,
+  parseRunPlan,
+  runPlanBody,
+} from "@ppt/full-runs/plan";
+
 export const fullRoot = repoRoot;
-export const approvalLabel = "full-tests:approved";
-export const planMarker = "<!-- grasscn-full-run-plan:v1 -->";
 export const stateMarker = "<!-- grasscn-full-run-state:v1 -->";
 const hash = (value) => createHash("sha256").update(value).digest("hex");
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -129,156 +139,6 @@ export function environmentIdentity() {
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     webgl: process.env.GRASSCN_WEBGL_BACKEND ?? null,
   };
-}
-
-function exactKeys(value, keys, subject) {
-  if (
-    !value ||
-    typeof value !== "object" ||
-    Array.isArray(value) ||
-    Object.keys(value).toSorted().join("|") !== [...keys].toSorted().join("|")
-  ) {
-    throw new Error(`Invalid ${subject} fields`);
-  }
-}
-
-export function parseRunPlan(body) {
-  const marker = body.indexOf(planMarker);
-
-  if (marker === -1 || body.includes(planMarker, marker + planMarker.length)) {
-    throw new Error("Issue is not a dedicated Full run plan");
-  }
-
-  const match = body
-    .slice(marker + planMarker.length)
-    .match(/^\s*```json\s*\n([\s\S]*?)\n```/);
-
-  if (!match) {
-    throw new Error("Missing machine-readable Full run plan");
-  }
-
-  const plan = JSON.parse(match[1]);
-  exactKeys(
-    plan,
-    [
-      "schemaVersion",
-      "scope",
-      "repository",
-      "commit",
-      "initiatingThread",
-      "initiatingCheckout",
-      "environment",
-      "execution",
-    ],
-    "Full run plan"
-  );
-  exactKeys(
-    plan.execution,
-    ["workers", "fixturePort", "previewPort", "proxyPort"],
-    "Full execution"
-  );
-  exactKeys(
-    plan.environment,
-    [
-      "bun",
-      "platform",
-      "arch",
-      "hostname",
-      "timezone",
-      "locale",
-      "bunLockSha256",
-      "installedDependenciesSha256",
-      "edge",
-      "webgl",
-      "ci",
-    ],
-    "Full environment"
-  );
-
-  if (
-    plan.schemaVersion !== 1 ||
-    plan.scope !== "full" ||
-    !/^[a-f0-9]{40}$/.test(plan.commit) ||
-    !/^[\w.-]+\/[\w.-]+$/.test(plan.repository) ||
-    !/^[a-zA-Z0-9-]{10,100}$/.test(plan.initiatingThread)
-  ) {
-    throw new Error("Invalid Full run identity");
-  }
-
-  if (
-    typeof plan.initiatingCheckout !== "string" ||
-    !path.isAbsolute(plan.initiatingCheckout)
-  ) {
-    throw new Error("Invalid initiating checkout");
-  }
-
-  if (
-    !Number.isInteger(plan.execution.workers) ||
-    plan.execution.workers < 1 ||
-    plan.execution.workers > 8
-  ) {
-    throw new Error("Full workers must be 1-8");
-  }
-
-  const ports = [
-    plan.execution.fixturePort,
-    plan.execution.previewPort,
-    plan.execution.proxyPort,
-  ];
-
-  if (
-    ports.some(
-      (port) => !Number.isInteger(port) || port < 1024 || port > 65_535
-    ) ||
-    new Set(ports).size !== ports.length ||
-    ports.some((port) => [5173, 5174, 5176, 5178].includes(port))
-  ) {
-    throw new Error("Full run needs distinct, non-foreground loopback ports");
-  }
-
-  for (const key of [
-    "bun",
-    "platform",
-    "arch",
-    "hostname",
-    "timezone",
-    "locale",
-  ]) {
-    if (typeof plan.environment[key] !== "string" || !plan.environment[key]) {
-      throw Error(`Invalid environment ${key}`);
-    }
-  }
-
-  for (const key of ["bunLockSha256", "installedDependenciesSha256"]) {
-    if (!/^[a-f0-9]{64}$/.test(plan.environment[key])) {
-      throw Error(`Invalid environment ${key}`);
-    }
-  }
-
-  exactKeys(
-    plan.environment.edge,
-    ["executable", "size", "modified"],
-    "Edge environment"
-  );
-
-  if (
-    typeof plan.environment.edge.executable !== "string" ||
-    !Number.isFinite(plan.environment.edge.size) ||
-    !Number.isFinite(plan.environment.edge.modified) ||
-    !(
-      plan.environment.webgl === null ||
-      typeof plan.environment.webgl === "string"
-    ) ||
-    !(plan.environment.ci === null || typeof plan.environment.ci === "string")
-  ) {
-    throw new Error("Invalid browser environment");
-  }
-
-  return plan;
-}
-
-export function runPlanBody(plan) {
-  return `# Full Pixel Perfect Test run\n\nThis approval covers Full PPTs only; non-PPT tests run in ordinary verification.\n\nApprove this fixed plan by applying ${approvalLabel} as a human maintainer. Executors must not apply authorization. Progress and results belong in comments; do not edit an approved body.\n\n${planMarker}\n\`\`\`json\n${json(plan)}\`\`\`\n`;
 }
 
 export function readRunIssue(number) {
