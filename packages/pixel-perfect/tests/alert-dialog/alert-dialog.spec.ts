@@ -36,9 +36,9 @@ function compare(expected: PNG, actual: PNG) {
     const different = left[i] !== right[i];
     mismatchedPixels += Number(different);
     const at = i * 4;
-    diff.data[at] = different ? 255 : expected.data[at] >> 2;
-    diff.data[at + 1] = different ? 0 : expected.data[at + 1] >> 2;
-    diff.data[at + 2] = different ? 255 : expected.data[at + 2] >> 2;
+    diff.data[at] = different ? 255 : Math.floor(expected.data[at] / 4);
+    diff.data[at + 1] = different ? 0 : Math.floor(expected.data[at + 1] / 4);
+    diff.data[at + 2] = different ? 255 : Math.floor(expected.data[at + 2] / 4);
     diff.data[at + 3] = 255;
   }
 
