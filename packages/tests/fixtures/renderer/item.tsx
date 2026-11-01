@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Item, ItemContent, ItemTitle, ItemDescription, ItemMedia, ItemActions, ItemHeader, ItemFooter, ItemGroup, ItemSeparator } from "../../../../apps/web/registry/ui/item";
-import { playMinecraftClick, setMinecraftSoundVolume } from "../../../../apps/web/registry/ui/minecraft-sound";
+import { Item, ItemContent, ItemTitle, ItemDescription, ItemMedia, ItemActions, ItemHeader, ItemFooter, ItemGroup, ItemSeparator } from "@grasscn/web/ui/item";
+import { playMinecraftClick, setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
 const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, state = q.get("state") ?? "normal", title = q.get("label") ?? "New World", id = q.get("text") ?? "world-1", description = q.get("description") ?? "Survival Mode";
 if (q.has("volume"))
     setMinecraftSoundVolume(Number(q.get("volume")));

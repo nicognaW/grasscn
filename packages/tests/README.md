@@ -1,9 +1,13 @@
-# Shared testing infrastructure and normal tests
+# General testing infrastructure and normal tests
 
-This package owns the reusable renderer, artifacts, fixture host/build, dependency identity, foreground/resource coordination, checkpoint utilities and installed registry target resolution. Normal tests run without importing the PPT selector or approval coordinator. The PPT package consumes these interfaces; the package graph has no reverse dependency.
+This package owns shared rendering fixtures, artifact collection, fixture hosting, resource coordination, installed-consumer mechanics and normal tests. The PPT package depends on these public interfaces; this package does not import PPT selection or Full approval.
 
-Public modules are exported as `@grasscn/tests/test`, `fixture`, `coordination`, `paths`, `dependency-identity`, `checkpoints`, `checkpoint-reporter` and `installed-registry-file`. Private code uses `@tests` aliases; fixture resolution also preserves the shadcn consumer aliases. Shared reference inputs have explicit byte-preserving relocations recorded beside them; original provenance records are unchanged.
+- `bun run test` from the repository root runs normal unit and browser tests only.
+- `bun run check:pr` runs guarded ordinary prechecks, builds and normal tests.
+- `bun run test:ppt` and `bun run porting:check` are explicit PPT workflows owned by the specialized package.
 
-`fixtureFile`, `referenceFile`, `registryFile` and `testFile` resolve files inside an explicit owner. They reject absolute names and parent traversal and never fall back to a different checkout for explicit consumer roots. The root logical-path resolver remains a compatibility adapter for retained evidence and callers not yet migrated.
+Normal component behavior and compile-time API cases live together under component groups. Website cases and infrastructure unit checks have separate groups. Reusable implementation lives in source modules; CLI entrypoints select and launch it. Public imports use `@grasscn/tests` subpaths; private implementation uses `@tests` aliases. Shared renderer imports the actual authored registry through narrow web-package exports.
 
-The expansion phase retains old PPT entrypoints as forwarders and keeps commands stable. Spec #24's subsequent migration separates normal verification from explicitly chosen PPT verification and removes the forwarders after all callers migrate.
+The public fixture, artifact, coordination, checkpoint, paths, installed-consumer and resource-runner interfaces are consumed by both normal and PPT workflows. Checkpoint schema 3 records owning case and definition source independently; legacy records remain source-bound and are rejected when their source relationship cannot be established.
+
+Reference and fixture access is owner-aware and independent of the shell's current directory. Historical evidence keeps its original bytes and provenance; `fixtures/reference/relocations.json` maps shared inputs relocated from the earlier layout.

@@ -1,11 +1,11 @@
 import * as React from "react"
 import {Field} from "@base-ui/react/field"
-import {Button} from "../../../../apps/web/registry/ui/button"
-import {Checkbox} from "../../../../apps/web/registry/ui/checkbox"
-import {Input} from "../../../../apps/web/registry/ui/input"
-import {Dialog, DialogTrigger, DialogContent, DialogTitle} from "../../../../apps/web/registry/ui/dialog"
-import {ButtonGroupText} from "../../../../apps/web/registry/ui/button-group"
-import {SidebarProvider, SidebarGroupLabel, SidebarMenuSubButton} from "../../../../apps/web/registry/ui/sidebar"
+import {Button} from "@grasscn/web/ui/button"
+import {Checkbox} from "@grasscn/web/ui/checkbox"
+import {Input} from "@grasscn/web/ui/input"
+import {Dialog, DialogTrigger, DialogContent, DialogTitle} from "@grasscn/web/ui/dialog"
+import {ButtonGroupText} from "@grasscn/web/ui/button-group"
+import {SidebarProvider, SidebarGroupLabel, SidebarMenuSubButton} from "@grasscn/web/ui/sidebar"
 
 export function BaseUICompositionFixture() {
   const [disabled, setDisabled] = React.useState(false)

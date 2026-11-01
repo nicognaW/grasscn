@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput, ComboboxTrigger, ComboboxValue, useComboboxAnchor, ComboboxClear, ComboboxChipRemove } from "../../../../apps/web/registry/ui/combobox";
-import { Input } from "../../../../apps/web/registry/ui/input";
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxGroup, ComboboxLabel, ComboboxCollection, ComboboxEmpty, ComboboxSeparator, ComboboxChips, ComboboxChip, ComboboxChipsInput, ComboboxTrigger, ComboboxValue, useComboboxAnchor, ComboboxClear, ComboboxChipRemove } from "@grasscn/web/ui/combobox";
+import { Input } from "@grasscn/web/ui/input";
 const p = new URLSearchParams(location.search), native = p.has('native'), part = p.get('part') ?? 'list', scale = Number(p.get('scale') ?? 2) as 1 | 2 | 3, labels = JSON.parse(p.get('labels') ?? '["Stone","Stick","世界"]') as string[], nativeItems = labels.map((label, i) => ({ id: `row-${i}`, label })), blocks = ['Stone', 'Stick', '世界', 'Bedrock'];
 export function ComboboxFixture() {
     React.useLayoutEffect(() => { const bg = p.get("background") ?? "#202020", html = document.documentElement.style.background, body = document.body.style.background; document.documentElement.style.background = bg; document.body.style.background = bg; return () => { document.documentElement.style.background = html; document.body.style.background = body; }; }, []);

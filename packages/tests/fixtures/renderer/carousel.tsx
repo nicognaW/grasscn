@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "../../../../apps/web/registry/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@grasscn/web/ui/carousel";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, vertical = p.has("vertical"), cancel = p.has("cancel");
 export function CarouselFixture() {
     React.useLayoutEffect(() => { const bg = p.get("background") ?? "#202020", html = document.documentElement.style.background, body = document.body.style.background; document.documentElement.style.background = bg; document.body.style.background = bg; return () => { document.documentElement.style.background = html; document.body.style.background = body; }; }, []);

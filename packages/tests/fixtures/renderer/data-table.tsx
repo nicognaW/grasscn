@@ -1,10 +1,10 @@
 import * as React from "react"
 import {createColumnHelper,useTable} from "@tanstack/react-table"
-import {DataTable} from "../../../../apps/web/registry/blocks/data-table"
-import {features,type DataTableFeatures} from "../../../../apps/web/registry/blocks/data-table-features"
-import {Table,TableHeader,TableBody,TableRow,TableHead,TableCell} from "../../../../apps/web/registry/ui/table"
-import {Input} from "../../../../apps/web/registry/ui/input"
-import {MinecraftDisclosureText} from "../../../../apps/web/registry/ui/minecraft-disclosure-text"
+import {DataTable} from "@grasscn/web/blocks/data-table"
+import {features,type DataTableFeatures} from "@grasscn/web/blocks/data-table-features"
+import {Table,TableHeader,TableBody,TableRow,TableHead,TableCell} from "@grasscn/web/ui/table"
+import {Input} from "@grasscn/web/ui/input"
+import {MinecraftDisclosureText} from "@grasscn/web/ui/minecraft-disclosure-text"
 type World={id:string;name:string;players:number}
 const helper=createColumnHelper<DataTableFeatures,World>(),worlds:World[]=[{id:"a",name:"Alpha",players:4},{id:"b",name:"你好，世界",players:2},{id:"c",name:"Birch",players:8},{id:"d",name:"Desert",players:1}]
 const p=new URLSearchParams(location.search),scale=Number(p.get("scale")??2) as 1|2|3,part=p.get("part"),width=Number(p.get("width")??200),height=Number(p.get("height")??9),label=p.get("label")??"Minecraft"

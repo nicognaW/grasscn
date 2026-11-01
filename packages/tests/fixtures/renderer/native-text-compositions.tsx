@@ -1,9 +1,9 @@
 import * as React from "react";
-import { CodeBlock, CodeBlockContent } from "../../../../apps/web/registry/ui/code-block";
-import { Trace, TraceLine, TraceTitle } from "../../../../apps/web/registry/ui/trace";
-import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem } from "../../../../apps/web/registry/ui/message-scroller";
+import { CodeBlock, CodeBlockContent } from "@grasscn/web/ui/code-block";
+import { Trace, TraceLine, TraceTitle } from "@grasscn/web/ui/trace";
+import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem } from "@grasscn/web/ui/message-scroller";
 import { Skeleton } from "./legacy-skeleton";
-import { Spinner } from "../../../../apps/web/registry/ui/spinner";
+import { Spinner } from "@grasscn/web/ui/spinner";
 export function NativeTextCompositionsFixture() {
     const q = new URLSearchParams(location.search), component = q.get("component") ?? q.get("part") ?? "code-block", scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, label = q.get("label") ?? "Hello Minecraft!", width = Number(q.get("width") ?? 172), height = Number(q.get("height") ?? 9), style = { position: "fixed", left: Number(q.get("x") ?? 16) * scale, top: Number(q.get("y") ?? 16) * scale, width: width * scale, height: height * scale, color: q.get("color") ?? "#fff", "--mc-scale": scale, "--mc-pixel": scale + "px" } as React.CSSProperties, nativeTextStyle = { ...style, padding: `${scale}px ${8 * scale}px 0 ${4 * scale}px`, background: "rgba(0,0,0,.4980392156862745)", overflow: "hidden" };
     React.useLayoutEffect(() => { document.documentElement.style.background = q.get("background") ?? "#202020"; document.body.style.background = q.get("background") ?? "#202020"; }, []);

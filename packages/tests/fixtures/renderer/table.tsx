@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "../../../../apps/web/registry/ui/table";
-import { Button } from "../../../../apps/web/registry/ui/button";
+import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "@grasscn/web/ui/table";
+import { Button } from "@grasscn/web/ui/button";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, width = Number(p.get("width") ?? 200), height = Number(p.get("height") ?? 9), part = p.get("part") ?? "app", label = p.get("label") ?? "Minecraft";
 export function TableFixture() {
     React.useLayoutEffect(() => { const bg = p.get("background") ?? "#202020", html = document.documentElement.style.background, body = document.body.style.background; document.documentElement.style.background = bg; document.body.style.background = bg; return () => { document.documentElement.style.background = html; document.body.style.background = body; }; }, []);

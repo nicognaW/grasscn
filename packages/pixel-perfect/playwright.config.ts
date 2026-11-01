@@ -1,7 +1,7 @@
 import path from 'node:path'
-import {pixelPerfectTestRoot} from '../../workspace-paths.mjs'
+import {pixelPerfectTestRoot} from '@ppt/paths'
 import { defineConfig } from "@playwright/test"
-import {baseGrep} from './scripts/browser-suite.mjs'
+import {baseGrep} from '@ppt/selection/suite.mjs'
 
 const inventory = process.argv.includes('--list') && process.env.GRASSCN_BROWSER_GUARD_COLLECTION !== '1'
 const full = process.env.GRASSCN_BROWSER_SCOPE === 'full'
@@ -9,13 +9,14 @@ const proxyPort = full ? process.env.GRASSCN_FULL_PROXY_PORT : process.env.GRASS
 
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: ["**/reference/**", "**/unit/**"],
   outputDir: path.join(pixelPerfectTestRoot, "browser"),
-  testMatch: ["*.spec.ts", "*.spec.js"],
+  testMatch: ["**/*.spec.ts", "**/*.spec.js"],
   fullyParallel: false,
   workers: 1,
   grep: inventory || full ? undefined : baseGrep(),
   grepInvert: !inventory && full ? baseGrep() : undefined,
-  globalSetup: './scripts/browser-selection-guard.mjs',
+  globalSetup: './src/selection/guard.mjs',
   use: {
     baseURL: process.env.GRASSCN_FIXTURE_URL ?? "http://127.0.0.1:5174",
     browserName: "chromium",

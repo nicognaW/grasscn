@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from '../../../../apps/web/registry/ui/native-select';
+import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from '@grasscn/web/ui/native-select';
 export function NativeSelectFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, [value, setValue] = React.useState('one'), [selected, setSelected] = React.useState(''), [tag, setTag] = React.useState(''), ref = React.useRef<HTMLSelectElement>(null);
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);

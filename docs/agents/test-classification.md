@@ -15,7 +15,7 @@ A case checking both a captured reference and behavior remains a PPT. Separate b
 1. Read the whole case, including helpers, inputs and assertions.
 2. Identify a concrete Base mapping: the default appearance shown in a website demo, or a corresponding actual test owned by upstream shadcn. Record the route and reference conditions, or a commit-pinned shadcn test URL and title.
 3. Keep PPTs combining the primary path with deliberate edge cases or additional variants in Full. Choose another existing primary-path PPT where available; otherwise record the coverage gap.
-4. Add qualifying cases individually to `packages/pixel-perfect/scripts/browser-base-cases.json`, with their exact file/title path and mapping evidence. Every other PPT is Full. Selecting one case does not select its file, component family or generated matrix.
+4. Add qualifying cases individually to `packages/pixel-perfect/src/selection/base-cases.json`, with their exact file/title path and mapping evidence. Every other PPT is Full. Selecting one case does not select its file, component family or generated matrix.
 
 When shadcn has no corresponding test, use only the website-default rule. Base UI, DayPicker and other dependency tests are not substitutes for shadcn-owned tests. Avoid recreating dependency-owned behavior coverage.
 
@@ -31,6 +31,6 @@ Judge CJK text and states against the actual default demo. Being fast, historica
 
 The original cleanup spec (#1) prohibited manufacturing Base coverage with new or rewritten cases. This later package/policy migration preserves the complete inventory while moving behavior-only cases out of PPT files. Future features and ports should add meaningful tests under the coding standards.
 
-After catalogue changes, use `bun packages/pixel-perfect/scripts/browser-suite.mjs list --all --json` to verify every mapping resolves once and Base plus Full covers the PPT inventory. Use `bun run --cwd packages/tests test --list --reporter=json` for the independent non-PPT inventory. Listing never executes Full PPTs. Type checks, builds and harness unit checks remain ordinary prechecks.
+After catalogue changes, use `bun packages/pixel-perfect/src/selection/suite.mjs list --all --json` to verify every mapping resolves once and Base plus Full covers the PPT inventory. Use `bun run --cwd packages/tests test --list --reporter=json` for the independent non-PPT inventory. Listing never executes Full PPTs. Type checks, builds and harness unit checks remain ordinary prechecks.
 
 For execution, approval and reporting, use [the Full-run lifecycle](full-test-runs.md). Full PPT results do not block merging.

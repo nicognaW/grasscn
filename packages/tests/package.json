@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "bun scripts/test.mjs",
-    "test:unit": "bun test --timeout 120000 ./tests/*.test.mjs",
+    "test": "bun cli/test.mjs",
+    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.mjs",
     "dev": "bun --bun vite --config vite.config.ts",
-    "fixture:build": "bun scripts/build-fixture.mjs"
+    "fixture:build": "bun cli/build-fixture.mjs"
   },
   "devDependencies": {
     "@grasscn/web": "workspace:*",
@@ -44,6 +44,9 @@
     "./checkpoints": "./src/runtime/checkpoints.mjs",
     "./checkpoint-reporter": "./src/runtime/checkpoint-reporter.mjs",
     "./guarded-entry": "./src/runtime/guarded-entry.mjs",
-    "./windows-budget": "./src/runtime/windows-budget.ps1"
+    "./windows-budget": "./src/runtime/windows-budget.ps1",
+    "./case-paths": "./src/runtime/case-paths.mjs",
+    "./run-workload": "./src/runtime/run-workload.ps1",
+    "./hosts": "./src/runtime/hosts.mjs"
   }
 }

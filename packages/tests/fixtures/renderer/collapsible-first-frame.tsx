@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "../../../../apps/web/registry/ui/collapsible";
-import { loadUnihex } from "../../../../apps/web/registry/ui/minecraft-unifont";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@grasscn/web/ui/collapsible";
+import { loadUnihex } from "@grasscn/web/ui/minecraft-unifont";
 export function CollapsibleFirstFrameFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, warm = q.has("warm"), [ready, setReady] = React.useState(!warm);
     React.useLayoutEffect(() => {

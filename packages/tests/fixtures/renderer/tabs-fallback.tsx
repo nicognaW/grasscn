@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Tabs,TabsList,TabsTrigger} from "../../../../apps/web/registry/ui/tabs"
+import {Tabs,TabsList,TabsTrigger} from "@grasscn/web/ui/tabs"
 
 export function TabsFallbackFixture(){
   const [changed,setChanged]=React.useState(false)

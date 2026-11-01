@@ -1,16 +1,16 @@
 import * as React from "react";
-import { getWorldMapPixels } from "../../../../apps/web/demos/map-world-data";
-import { setMinecraftSoundVolume } from "../../../../apps/web/registry/ui/minecraft-sound";
-import { Book } from "../../../../apps/web/registry/ui/book";
-import { Hotbar } from "../../../../apps/web/registry/ui/hotbar";
-import { HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar } from "../../../../apps/web/registry/ui/hud";
-import { PlayerPreview } from "../../../../apps/web/registry/ui/player-preview";
-import { MinecraftMap, LocatorBar } from "../../../../apps/web/registry/ui/map";
-import { Sign, HangingSign } from "../../../../apps/web/registry/ui/sign";
-import { PlayerList, Scoreboard } from "../../../../apps/web/registry/ui/player-list";
-import { Trading } from "../../../../apps/web/registry/ui/trading";
-import { minecraftBadgeAssets } from "../../../../apps/web/registry/ui/minecraft-badge-assets";
-import type { MinecraftAvatarSkin } from "../../../../apps/web/registry/ui/avatar";
+import { getWorldMapPixels } from "@grasscn/web/demos/map-world-data";
+import { setMinecraftSoundVolume } from "@grasscn/web/ui/minecraft-sound";
+import { Book } from "@grasscn/web/ui/book";
+import { Hotbar } from "@grasscn/web/ui/hotbar";
+import { HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar } from "@grasscn/web/ui/hud";
+import { PlayerPreview } from "@grasscn/web/ui/player-preview";
+import { MinecraftMap, LocatorBar } from "@grasscn/web/ui/map";
+import { Sign, HangingSign } from "@grasscn/web/ui/sign";
+import { PlayerList, Scoreboard } from "@grasscn/web/ui/player-list";
+import { Trading } from "@grasscn/web/ui/trading";
+import { minecraftBadgeAssets } from "@grasscn/web/ui/minecraft-badge-assets";
+import type { MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 type Sample = {
     element: string;
     uncontrolled?: boolean;
@@ -76,10 +76,10 @@ export default function DraftDemos({ sample, scale }: {
             content = <div id="subject" style={{ position: 'relative', width: 182 * scale, height: 17 * scale }} data-subject="true"><LocatorBar scale={scale} heading={sample.heading ?? 0} markers={sample.checked ? [{ id: 'point', label: 'Waypoint', bearing: value, color: sample.color ?? '#ffffff', shape: 'default_3' }] : []} style={{ position: 'absolute', left: 0, top: 6 * scale }} onMarkerSelect={id => { setSelected(id); document.documentElement.dataset.marker = id; }}/></div>;
             break;
         case 'sign':
-            content = <Sign {...common} wood={sample.state as import('../../../../apps/web/registry/ui/sign').SignWood ?? 'oak'} glowing={sample.checked} lines={sample.labels ?? ['Welcome', 'to grasscn', '', 'Make it yours.']}/>;
+            content = <Sign {...common} wood={sample.state as import('@grasscn/web/ui/sign').SignWood ?? 'oak'} glowing={sample.checked} lines={sample.labels ?? ['Welcome', 'to grasscn', '', 'Make it yours.']}/>;
             break;
         case 'hanging-sign':
-            content = <HangingSign {...common} wood={sample.state as import('../../../../apps/web/registry/ui/sign').SignWood ?? 'oak'} glowing={sample.checked} lines={sample.labels ?? ['Open', 'for business', '', 'Welcome!']}/>;
+            content = <HangingSign {...common} wood={sample.state as import('@grasscn/web/ui/sign').SignWood ?? 'oak'} glowing={sample.checked} lines={sample.labels ?? ['Open', 'for business', '', 'Welcome!']}/>;
             break;
         case 'player-list':
             content = <PlayerList {...common} players={(sample.labels ?? roster.map(p => p.name)).map((name, i) => ({ id: String(i), name, skin: (['slim/alex', 'wide/steve', 'wide/kai'] as const)[i % 3], latency: (sample.labels?.length ?? 3) === 3 ? [42, 220, 670][i] : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8], score: sample.checked ? ((sample.labels?.length ?? 3) === 3 ? [18, 12, 7][i] : i * 3 + 7) : undefined }))} header={sample.label} footer={sample.text} onPlayerSelect={setSelected}/>;

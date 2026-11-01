@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Marker, MarkerIcon, MarkerContent, markerVariants } from '../../../../apps/web/registry/ui/marker';
+import { Marker, MarkerIcon, MarkerContent, markerVariants } from '@grasscn/web/ui/marker';
 export function MarkerFixture() {
     const q = new URLSearchParams(location.search), scale = Number(q.get('scale') ?? 2) as 1 | 2 | 3, [count, setCount] = React.useState(0), [tag, setTag] = React.useState(""), ref = React.useRef<HTMLDivElement>(null);
     React.useLayoutEffect(() => { document.documentElement.style.background = document.body.style.background = q.get('background') ?? '#202020'; }, []);

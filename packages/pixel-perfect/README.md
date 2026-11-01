@@ -10,13 +10,13 @@ Run from the repository root:
 
 - `bun run --cwd packages/pixel-perfect test`: Base PPTs only.
 - `bun run --cwd packages/tests test`: all non-PPT unit and browser tests.
-- `bun run test`: both packages through Turbo, serialized to share local fixture ports; failure in one test package does not suppress the other.
+- `bun run test`: all non-PPT cases only. Use `bun run test:ppt` to explicitly select Base PPTs.
 - `bun run --cwd packages/pixel-perfect test:unit`: ordinary harness unit checks.
-- `bun run --cwd packages/pixel-perfect dev`: the rendering fixture at `http://127.0.0.1:5174/`.
-- `bun run --cwd packages/pixel-perfect fixture:build`: the independent production fixture.
-- `bun run porting:check` / `bun run check:pr`: guarded maintainer verification of Base PPTs and all non-PPT tests, plus prechecks and applicable builds.
+- `bun run --cwd packages/tests dev`: the rendering fixture at `http://127.0.0.1:5174/`.
+- `bun run --cwd packages/tests fixture:build`: the independent production fixture.
+- `bun run porting:check` / `bun run check:pr`: separate guarded workflows: `porting:check` checks PPT preconditions and Base PPTs; `check:pr` checks normal preconditions, builds and non-PPT tests.
 
-`playwright.config.ts`, the Base catalogue and `scripts/browser-suite.mjs` operate only on this package's cases. `scripts/browser-suite.mjs list --all --json` lists the PPT inventory without executing it. `packages/tests` has its own unfiltered Playwright configuration and runner. A non-PPT outside the catalogue remains ordinary, not a Full PPT.
+`playwright.config.ts`, the Base catalogue and `src/selection/suite.mjs` operate only on this package's cases. `bun src/selection/suite.mjs list --all --json` lists the PPT inventory without executing it. `packages/tests` has its own unfiltered Playwright configuration and runner. A non-PPT outside the catalogue remains ordinary, not a Full PPT.
 
 The Full executor collects only the PPT complement of Base and rejects non-PPT cases. It retains the fixed snapshot, human-applied run-issue approval, independent-session, resource and checkpoint requirements in [the Full-run lifecycle](../../docs/agents/full-test-runs.md). Non-PPT runs have foreground priority like Base PPTs.
 

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter, MessageScale } from "../../../../apps/web/registry/ui/message";
-import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "../../../../apps/web/registry/ui/bubble";
+import { MessageGroup, Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter, MessageScale } from "@grasscn/web/ui/message";
+import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@grasscn/web/ui/bubble";
 export function ChatFamilyFixture() {
     const q = new URLSearchParams(location.search), component = q.get("component") ?? q.get("part") ?? "message", scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, native = q.has("native"), label = q.get("label") ?? "Hello Minecraft!", [text, setText] = React.useState(label), [events, setEvents] = React.useState(0), [tag, setTag] = React.useState(""), ref = React.useRef<HTMLDivElement>(null), width = Number(q.get("width") ?? 172), common = { position: "fixed", left: Number(q.get("x") ?? 16) * scale, top: Number(q.get("y") ?? 16) * scale, width: width * scale, ...(native ? { height: Number(q.get("height") ?? 9) * scale } : {}), color: q.get("color") ?? "#ffffff", "--mc-scale": scale, "--mc-pixel": scale + "px" } as React.CSSProperties;
     document.documentElement.style.background = q.get("background") ?? "#202020";

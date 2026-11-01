@@ -1,11 +1,12 @@
 import path from "node:path"
 import {defineConfig} from "@playwright/test"
-import {repoRoot} from "../../workspace-paths.mjs"
+import {repoRoot} from "@tests/paths"
 
 // General tests always participate in ordinary verification; PPT selection does not apply.
 export default defineConfig({
   testDir: "./tests",
-  testMatch: ["*.spec.ts", "*.spec.js"],
+  testIgnore: ["**/reference/**", "**/unit/**"],
+  testMatch: ["**/*.spec.ts", "**/*.spec.js"],
   outputDir: path.join(repoRoot, "test-results/general"),
   fullyParallel: false,
   workers: 1,

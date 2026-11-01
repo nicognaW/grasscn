@@ -1,9 +1,9 @@
 import * as React from "react";
-import { AspectRatio } from "../../../../apps/web/registry/ui/aspect-ratio";
-import { DirectionProvider, useDirection } from "../../../../apps/web/registry/ui/direction";
-import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator, buttonGroupVariants } from "../../../../apps/web/registry/ui/button-group";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from "../../../../apps/web/registry/ui/pagination";
-import { Button } from "../../../../apps/web/registry/ui/button";
+import { AspectRatio } from "@grasscn/web/ui/aspect-ratio";
+import { DirectionProvider, useDirection } from "@grasscn/web/ui/direction";
+import { ButtonGroup, ButtonGroupText, ButtonGroupSeparator, buttonGroupVariants } from "@grasscn/web/ui/button-group";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from "@grasscn/web/ui/pagination";
+import { Button } from "@grasscn/web/ui/button";
 const p = new URLSearchParams(location.search), scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3, kind = p.get("component") ?? "button-group", state = p.get("state") ?? "normal", native = p.has("native"), label = p.get("label") ?? "Button", width = Number(p.get("width") ?? 200), height = Number(p.get("height") ?? 20);
 const position: React.CSSProperties = { position: "absolute", left: Number(p.get("x") ?? 16) * scale, top: Number(p.get("y") ?? 16) * scale };
 function ReadDirection({ name }: {

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Badge } from "../../../../apps/web/registry/ui/badge";
-import { Typography, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyP, TypographySmall, TypographyBlockquote, TypographyInlineCode, TypographyLead, TypographyLarge, TypographyMuted } from "../../../../apps/web/registry/ui/typography";
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "../../../../apps/web/registry/ui/breadcrumb";
-import { Kbd, KbdGroup } from "../../../../apps/web/registry/ui/kbd";
-import { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia } from "../../../../apps/web/registry/ui/empty";
+import { Badge } from "@grasscn/web/ui/badge";
+import { Typography, TypographyH1, TypographyH2, TypographyH3, TypographyH4, TypographyP, TypographySmall, TypographyBlockquote, TypographyInlineCode, TypographyLead, TypographyLarge, TypographyMuted } from "@grasscn/web/ui/typography";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis } from "@grasscn/web/ui/breadcrumb";
+import { Kbd, KbdGroup } from "@grasscn/web/ui/kbd";
+import { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia } from "@grasscn/web/ui/empty";
 const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3, component = q.get("component") ?? "badge", state = q.get("state") ?? "normal", text = q.get("text") ?? q.get("label") ?? "Minecraft", native = q.has("native"), part = q.get("part") ?? "default";
 const nativeStyle = { left: Number(q.get("x") ?? 16) * scale, top: Number(q.get("y") ?? 16) * scale, width: q.has("width") ? Number(q.get("width")) * scale : undefined, height: q.has("height") ? Number(q.get("height")) * scale : undefined, position: "fixed" } as React.CSSProperties;
 function TextComponentsFixture() {

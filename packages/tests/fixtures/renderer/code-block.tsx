@@ -1,6 +1,6 @@
 import * as React from "react";
-import { CodeBlock, CodeBlockHeader, CodeBlockTitle, CodeBlockActions, CodeBlockCopyButton, CodeBlockContent, CodeBlockLine, CodeBlockFooter } from "../../../../apps/web/registry/ui/code-block";
-import { useHighlightedCode } from "../../../../apps/web/registry/hooks/use-highlighted-code";
+import { CodeBlock, CodeBlockHeader, CodeBlockTitle, CodeBlockActions, CodeBlockCopyButton, CodeBlockContent, CodeBlockLine, CodeBlockFooter } from "@grasscn/web/ui/code-block";
+import { useHighlightedCode } from "@grasscn/web/hooks/use-highlighted-code";
 const q = new URLSearchParams(location.search), scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
 export function CodeBlockFixture() {
     const [text, setText] = React.useState(q.get("text") ?? "First\n\n你好 世界\nLast"), [events, setEvents] = React.useState(0), [tag, setTag] = React.useState(""), ref = React.useRef<HTMLPreElement>(null), highlighted = useHighlightedCode(text, q.get("language") ?? "typescript");

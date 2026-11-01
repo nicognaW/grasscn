@@ -1,2 +1,2 @@
-import {buildProductionFixture} from '@grasscn/tests/fixture'
-await buildProductionFixture()
+export * from '../cli/build-fixture.mjs'
+import '../cli/build-fixture.mjs'
