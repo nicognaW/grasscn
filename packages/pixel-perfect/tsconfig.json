@@ -1,50 +1,46 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
+    "lib": ["ES2022", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "strict": true,
+    "allowJs": true,
     "noEmit": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/lib/utils": [
-        "../tests/fixtures/renderer/utils.ts"
-      ],
-      "@/components/ui/*": [
-        "../../apps/web/registry/ui/*"
-      ],
-      "@tests/*": [
-        "../tests/src/*"
-      ],
-      "@ppt/*": [
-        "../pixel-perfect/src/*"
-      ],
-      "@tests/paths": [
-        "../tests/src/paths.ts"
-      ],
-      "@ppt/paths": [
-        "../pixel-perfect/src/paths.ts"
-      ]
+      "@/lib/utils": ["../tests/fixtures/renderer/utils.ts"],
+      "@/components/ui/*": ["../../apps/web/registry/ui/*"],
+      "@tests/*": ["../tests/src/*"],
+      "@ppt/*": ["../pixel-perfect/src/*"],
+      "@tests/paths": ["../tests/src/paths.ts"],
+      "@ppt/paths": ["../pixel-perfect/src/paths.ts"]
     },
-    "types": [
-      "node",
-      "vite/client"
-    ],
+    "types": ["bun", "node", "vite/client"],
     "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.mts",
+    "src/**/*.mjs",
+    "cli/**/*.mjs",
     "fixtures/**/*.ts",
     "fixtures/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
+    "tests/unit/**/*.mjs",
+    "tests/reference/capture-header-branding.mjs",
+    "tests/reference/verify-header-branding.mjs",
     "*.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests/**/source-input/**",
+    "tests/**/native*/**",
+    "../../test-results",
+    "../../.pixel-perfect-test",
+    "../../.native-reference"
   ]
 }
