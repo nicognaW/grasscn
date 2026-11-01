@@ -28,7 +28,7 @@ import {
   baseCatalogue,
   collectBrowserCases,
   classifyBrowserCases,
-} from "@ppt/selection/suite.mjs";
+} from "@ppt/selection/suite";
 
 const root = repoRoot;
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);

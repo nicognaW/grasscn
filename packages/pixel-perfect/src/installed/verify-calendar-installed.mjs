@@ -10,7 +10,7 @@ import { chromium, expect } from "@playwright/test";
 import {
   installedCaseCache,
   installedConsumerIdentity,
-} from "@ppt/installed/case-cache.mjs";
+} from "@ppt/installed/case-cache";
 import {
   pixelPerfectTestRoot,
   repoRoot,

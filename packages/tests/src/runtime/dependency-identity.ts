@@ -2,11 +2,14 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+import { JSON5, version } from "bun";
+
+const digest = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 // A lock identifies intended dependencies; installed bytes identify what ran.
 // Generated tool caches are excluded because running a check may update them.
-export function installedDependencyIdentity(root) {
+export function installedDependencyIdentity(root: string) {
   const lock = path.join(root, "bun.lock");
   const modules = path.join(root, "node_modules");
 
@@ -15,11 +18,11 @@ export function installedDependencyIdentity(root) {
   }
 
   const hash = createHash("sha256");
-  const seen = new Set();
+  const seen = new Set<string>();
 
   let files = 0;
 
-  function visit(file, relative) {
+  function visit(file: string, relative: string) {
     const info = fs.lstatSync(file);
 
     if (info.isSymbolicLink()) {
@@ -50,7 +53,7 @@ export function installedDependencyIdentity(root) {
     }
 
     if (info.isDirectory()) {
-      for (const name of fs.readdirSync(file).toSorted()) {
+      for (const name of fs.readdirSync(file).sort()) {
         if ([".cache", ".vite", ".bin", ".package-lock.json"].includes(name)) {
           continue;
         }
@@ -69,10 +72,14 @@ export function installedDependencyIdentity(root) {
 
   visit(modules, "node_modules");
 
-  const workspaces =
-    Bun.JSON5.parse(fs.readFileSync(lock, "utf-8")).workspaces ?? {};
+  // SAFETY: bun.lock is the installed Bun workspace lock; only its workspace names are consumed.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The pinned Bun lockfile owns this workspace-name map.
+  const lockfile = JSON5.parse(fs.readFileSync(lock, "utf-8")) as {
+    workspaces?: Record<string, object>;
+  };
+  const workspaces = lockfile.workspaces ?? {};
 
-  for (const workspace of Object.keys(workspaces).toSorted()) {
+  for (const workspace of Object.keys(workspaces).sort()) {
     if (!workspace) {
       continue;
     }
@@ -89,7 +96,7 @@ export function installedDependencyIdentity(root) {
   }
 
   return {
-    bun: Bun.version,
+    bun: version,
     files,
     installedSha256: hash.digest("hex"),
     lockSha256: digest(fs.readFileSync(lock)),

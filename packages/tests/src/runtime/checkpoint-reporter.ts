@@ -9,8 +9,30 @@ import path from "node:path";
 
 import { relativeCaseFile } from "@grasscn/tests/case-paths";
 import { repoRoot } from "@grasscn/tests/paths";
+import type {
+  FullConfig,
+  FullResult,
+  Reporter,
+  Suite,
+  TestCase,
+  TestResult,
+} from "@playwright/test/reporter";
+import type {
+  BrowserVerification,
+  CheckpointDeclaration,
+} from "@tests/runtime/checkpoint-protocol";
 
-export default class CheckpointReporter {
+export default class CheckpointReporter implements Reporter {
+  directory: string | undefined;
+  sources: Map<string, string>;
+  declarations: Map<
+    string,
+    CheckpointDeclaration & { sourceFiles: { file: string; sha256: string }[] }
+  >;
+  counts: Record<TestResult["status"], number>;
+  changed: Set<string>;
+  testRoot = "";
+  sourceRoot = "";
   constructor() {
     this.directory = process.env.GRASSCN_CHECKPOINT_REPORT_DIR;
     this.sources = new Map();
@@ -24,8 +46,12 @@ export default class CheckpointReporter {
     };
     this.changed = new Set();
   }
-  owner(test) {
-    for (let suite = test.parent; suite; suite = suite.parent) {
+  owner(test: TestCase) {
+    for (
+      let suite: Suite | undefined = test.parent;
+      suite;
+      suite = suite.parent
+    ) {
       if (suite.type === "file") {
         return path.resolve(this.testRoot, suite.title);
       }
@@ -33,7 +59,7 @@ export default class CheckpointReporter {
 
     return test.location.file;
   }
-  onBegin(config, suite) {
+  onBegin(config: FullConfig, suite: Suite) {
     if (!this.directory) {
       return;
     }
@@ -83,15 +109,15 @@ export default class CheckpointReporter {
 
       const declaration = {
         definitionFile: relativeCaseFile(this.sourceRoot, definition),
-        definitionSha256: this.sources.get(definition),
+        definitionSha256: this.sourceHash(definition),
         file: relativeCaseFile(this.sourceRoot, owner),
         id: test.id,
         line: test.location.line,
         sourceFiles: files.map((file) => ({
           file: relativeCaseFile(this.sourceRoot, file),
-          sha256: this.sources.get(file),
+          sha256: this.sourceHash(file),
         })),
-        sourceSha256: this.sources.get(owner),
+        sourceSha256: this.sourceHash(owner),
         title: test.titlePath().slice(1),
       };
 
@@ -118,15 +144,24 @@ export default class CheckpointReporter {
     );
     writeFileSync(path.join(this.directory, "results.jsonl"), "");
   }
-  hash(file) {
+  sourceHash(file: string): string {
+    const retained = this.sources.get(file);
+    if (retained !== undefined) {
+      return retained;
+    }
+    const hash = this.hash(file);
+    this.sources.set(file, hash);
+    return hash;
+  }
+  hash(file: string) {
     return createHash("sha256").update(readFileSync(file)).digest("hex");
   }
-  onTestEnd(test, result) {
+  onTestEnd(test: TestCase, result: TestResult) {
     if (!this.directory) {
       return;
     }
 
-    const declaration = this.declarations.get(test.id);
+    const declaration = this.declarations.get(test.id)!;
     let changed = false;
 
     for (const source of declaration.sourceFiles) {
@@ -144,10 +179,13 @@ export default class CheckpointReporter {
       (item) => item.name === "grasscn-verification-artifacts"
     );
 
+    // SAFETY: the named attachment is emitted by our verification fixture with this protocol.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve attachment payload bytes and the fixture-owned contract.
     const verification = attachment
-      ? JSON.parse(
-          attachment.body?.toString() ?? readFileSync(attachment.path, "utf-8")
-        )
+      ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: the named attachment is emitted by the general verification fixture.
+        (JSON.parse(
+          attachment.body?.toString() ?? readFileSync(attachment.path!, "utf-8")
+        ) as BrowserVerification)
       : undefined;
 
     appendFileSync(
@@ -164,7 +202,7 @@ export default class CheckpointReporter {
       })}\n`
     );
   }
-  onEnd(result) {
+  onEnd(result: FullResult) {
     if (this.directory) {
       writeFileSync(
         path.join(this.directory, "summary.json"),

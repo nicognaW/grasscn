@@ -161,7 +161,12 @@ function compare(a, b) {
     diff.data.set(
       mismatch
         ? [255, 0, 255, 255]
-        : [a.data[i] >> 2, a.data[i + 1] >> 2, a.data[i + 2] >> 2, 255],
+        : [
+            Math.floor(a.data[i] / 4),
+            Math.floor(a.data[i + 1] / 4),
+            Math.floor(a.data[i + 2] / 4),
+            255,
+          ],
       i
     );
   }

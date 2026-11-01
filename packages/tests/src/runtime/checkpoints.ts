@@ -3,20 +3,49 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
+import type {
+  CheckpointCandidate,
+  CheckpointCatalogue,
+  CheckpointDeclaration,
+  CheckpointResult,
+  CheckpointSource,
+  ReusableBrowserTest,
+} from "@tests/runtime/checkpoint-protocol";
 
 export { browserFilePattern } from "@grasscn/tests/case-paths";
+export type {
+  BrowserVerification,
+  CheckpointCandidate,
+  CheckpointCatalogue,
+  CheckpointDeclaration,
+  CheckpointResult,
+  CheckpointSource,
+  ReusableBrowserTest,
+} from "@tests/runtime/checkpoint-protocol";
 
-const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const digest = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+const hasReplayableTestIdentity = (
+  record: CheckpointResult
+): record is CheckpointResult & { file: string; title: string[] } =>
+  Array.isArray(record.title) &&
+  record.title.length >= 3 &&
+  typeof record.file === "string" &&
+  !record.title.some((title) => /[\r\n›]/u.test(title));
+
+const same = (
+  a: string[] | CheckpointSource[] | undefined,
+  b: string[] | CheckpointSource[] | undefined
+) => JSON.stringify(a) === JSON.stringify(b);
 
 async function sourceMatches(
-  expected,
-  declaration,
-  record,
-  file,
-  spec,
-  root,
-  allowedSourceRoot
+  expected: CheckpointCatalogue,
+  declaration: CheckpointDeclaration,
+  record: CheckpointResult & { file: string; title: string[] },
+  file: string,
+  spec: string,
+  root: string,
+  allowedSourceRoot: string
 ) {
   if (expected.schemaVersion === 2) {
     // Old records establish only direct definitions, never a helper-to-wrapper relationship.
@@ -112,18 +141,18 @@ async function sourceMatches(
 
 /** The caller must already match the entire source tree and runtime environment. */
 export async function reusableBrowserTests(
-  candidates,
-  file,
-  root,
+  candidates: CheckpointCandidate[],
+  file: string,
+  root: string,
   sourceRoot = root
 ) {
   file = normalizeCasePath(file);
 
-  const tests = new Map();
+  const tests = new Map<string, ReusableBrowserTest>();
   const spec = path.resolve(root, "tests", file);
   const source = digest(await readFile(spec));
 
-  for (const candidate of [...candidates].toSorted((a, b) =>
+  for (const candidate of [...candidates].sort((a, b) =>
     (a.report.startedAt ?? a.filename).localeCompare(
       b.report.startedAt ?? b.filename
     )
@@ -131,13 +160,15 @@ export async function reusableBrowserTests(
     const run = path.dirname(candidate.filename);
     const directory = path.join(run, "checkpoints", file);
 
-    let expected;
-    let records;
+    let expected: CheckpointCatalogue;
+    let records: CheckpointResult[];
 
     try {
+      // SAFETY: checkpoint metadata is written by CheckpointReporter; existing schema/source checks below remain authoritative.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain original v2/v3 metadata and every existing integrity guard.
       expected = JSON.parse(
         await readFile(path.join(directory, "expected.json"), "utf-8")
-      );
+      ) as CheckpointCatalogue;
 
       if (
         ![2, 3].includes(expected.schemaVersion) ||
@@ -159,9 +190,15 @@ export async function reusableBrowserTests(
         lines.pop();
       }
 
-      records = lines.filter(Boolean).map((line) => JSON.parse(line));
+      records = lines.filter(Boolean).map((line) => {
+        // SAFETY: complete journal lines follow CheckpointReporter results; malformed JSON still rejects the candidate.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing per-record integrity checks remain unchanged below.
+        return JSON.parse(line) as CheckpointResult;
+      });
     } catch (error) {
-      if (error.code !== "ENOENT") {
+      if (
+        !(error instanceof Error && "code" in error && error.code === "ENOENT")
+      ) {
         tests.clear();
       }
 
@@ -191,12 +228,7 @@ export async function reusableBrowserTests(
         continue;
       }
 
-      if (
-        !Array.isArray(record.title) ||
-        record.title.length < 3 ||
-        typeof record.file !== "string" ||
-        record.title.some((title) => /[\r\n›]/.test(title))
-      ) {
+      if (!hasReplayableTestIdentity(record)) {
         tests.delete(record.id);
         continue;
       }
@@ -218,29 +250,31 @@ export async function reusableBrowserTests(
 
       let intact = true;
 
-      for (const artifact of record.verification?.artifacts ?? []) {
-        const output = path.resolve(record.verification.outputDirectory);
-        const relative = path.relative(run, output);
+      if (record.verification) {
+        for (const artifact of record.verification.artifacts ?? []) {
+          const output = path.resolve(record.verification.outputDirectory);
+          const relative = path.relative(run, output);
 
-        if (
-          relative === ".." ||
-          relative.startsWith(`..${path.sep}`) ||
-          path.isAbsolute(relative) ||
-          path.basename(artifact.file) !== artifact.file
-        ) {
-          intact = false;
-          break;
-        }
-
-        try {
           if (
-            digest(await readFile(path.join(output, artifact.file))) !==
-            artifact.pngSha256
+            relative === ".." ||
+            relative.startsWith(`..${path.sep}`) ||
+            path.isAbsolute(relative) ||
+            path.basename(artifact.file) !== artifact.file
           ) {
             intact = false;
+            break;
           }
-        } catch {
-          intact = false;
+
+          try {
+            if (
+              digest(await readFile(path.join(output, artifact.file))) !==
+              artifact.pngSha256
+            ) {
+              intact = false;
+            }
+          } catch {
+            intact = false;
+          }
         }
       }
 
