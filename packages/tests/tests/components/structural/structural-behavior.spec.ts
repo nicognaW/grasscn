@@ -4,6 +4,7 @@ import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
   page,
 }) => {
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const ratio of [1, 4 / 3, 16 / 9])
     for (const width of [160, 320, 640]) {
       await page.goto(
@@ -18,6 +19,7 @@ test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
       const art = (await page.locator("#art").boundingBox())!;
       expect([art.width, art.height]).toEqual([40, 40]);
     }
+  /* oxlint-enable no-await-in-loop */
 });
 test("Aspect Ratio supports explicit clipping without resampling its content", async ({
   page,
@@ -38,6 +40,7 @@ test("Aspect Ratio supports explicit clipping without resampling its content", a
 test("Button Group preserves horizontal/vertical geometry and independent activations", async ({
   page,
 }) => {
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const orientation of ["horizontal", "vertical"]) {
     await page.goto(`/?component=button-group&orientation=${orientation}`);
     const group = page.getByRole("group", { name: "Game actions" });
@@ -64,6 +67,7 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
       /mc-button-group-vertical/
     );
   }
+  /* oxlint-enable no-await-in-loop */
 });
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent", async ({
   page,
@@ -109,12 +113,14 @@ test("Pagination preserves navigation, anchors, refs, active state and keyboard 
 test("Pagination cancellation and disabled links prevent activation and navigation", async ({
   page,
 }) => {
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&${suffix}`);
     await page.locator("[data-subject]").dispatchEvent("click");
     await expect(page.locator("#events")).toHaveText("0");
     expect(new URL(page.url()).hash).toBe("");
   }
+  /* oxlint-enable no-await-in-loop */
 });
 test("Pagination uses original audio once per accepted action and stays silent when canceled", async ({
   page,
@@ -138,11 +144,13 @@ test("Pagination uses original audio once per accepted action and stays silent w
   expect(await page.evaluate(() => (window as any).sounds)).toEqual([
     { source: minecraftClickSound, volume: 0.25, pitch: 1 },
   ]);
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&${suffix}`);
     await page.locator("[data-subject]").dispatchEvent("click");
     expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
   }
+  /* oxlint-enable no-await-in-loop */
 });
 test("Pagination original arrows retain native links and keyboard activation with original click audio", async ({
   page,
@@ -158,6 +166,7 @@ test("Pagination original arrows retain native links and keyboard activation wit
       return Promise.resolve();
     };
   });
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const forward of [false, true]) {
     await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
     const arrow = page.getByRole("link", {
@@ -173,6 +182,7 @@ test("Pagination original arrows retain native links and keyboard activation wit
       { source: minecraftClickSound, volume: 0.25, pitch: 1 },
     ]);
   }
+  /* oxlint-enable no-await-in-loop */
 });
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions", async ({
   page,
@@ -184,6 +194,7 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
       return Promise.resolve();
     };
   });
+  /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
     const arrow = page.locator("[data-subject]");
@@ -192,4 +203,5 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
     expect(new URL(page.url()).hash).toBe("");
     expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
   }
+  /* oxlint-enable no-await-in-loop */
 });
