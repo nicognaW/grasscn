@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "full-tests": "node scripts/full-run.mjs",
     "dev": "node scripts/prepare-preview.mjs && vite --config vite.preview.config.ts",
     "build": "npm run check && npm run registry:build && vite build --config vite.preview.config.ts",
     "registry:build": "shadcn build && node scripts/check-primitives.mjs --built",

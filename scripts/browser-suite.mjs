@@ -85,7 +85,7 @@ export function classifyBrowserCases(cases) {
 export function assertBaseExecution(cases) {
   const allowed = new Set(baseCatalogue().map(caseKey))
   const full = cases.filter(test => !allowed.has(caseKey(test)))
-  if (full.length) throw Error(`Full tests are not authorized by an ordinary browser command (${full.length} selected). Full execution requires a dedicated approved run issue and independent execution session. Authorization support is not yet enabled.`)
+  if (full.length) throw Error(`Full tests are not authorized by an ordinary browser command (${full.length} selected). Use an approved Full run issue and its independent execution session.`)
 }
 
 export async function main(args = process.argv.slice(2)) {
@@ -100,17 +100,21 @@ export async function main(args = process.argv.slice(2)) {
     return
   }
   if (command !== 'run') throw Error('Use browser-suite.mjs run [Playwright filters] or list [--base|--full|--all] [--json]')
+  if (process.env.GRASSCN_BROWSER_SCOPE === 'full') throw Error('Ordinary Base commands cannot become Full commands; use the approved Full executor')
   if (args.some(arg => /^--test-list(?:=|$)/.test(arg))) throw Error('The Base runner owns --test-list; use file or --grep filters within Base tests')
-  const {base} = classifyBrowserCases(collectBrowserCases())
-  const directory = path.join(browserRoot, 'test-results/browser-selection')
-  fs.mkdirSync(directory, {recursive: true})
-  const selection = path.join(directory, `base-${process.pid}.txt`)
-  fs.writeFileSync(selection, base.map(test => `[${test.projectName}] › ${test.file} › ${test.titlePath.join(' › ')}`).join('\n') + '\n')
+  const {foregroundLease} = await import('./full-run.mjs')
+  const releaseForeground = foregroundLease()
+  let selection
   try {
+    const {base} = classifyBrowserCases(collectBrowserCases())
+    const directory = path.join(browserRoot, 'test-results/browser-selection')
+    fs.mkdirSync(directory, {recursive: true})
+    selection = path.join(directory, `base-${process.pid}.txt`)
+    fs.writeFileSync(selection, base.map(test => `[${test.projectName}] › ${test.file} › ${test.titlePath.join(' › ')}`).join('\n') + '\n')
     const result = spawnSync(process.execPath, [cli, 'test', ...args, '--test-list', selection], {cwd: browserRoot, stdio: 'inherit', env: process.env})
     if (result.error) throw result.error
     process.exitCode = result.status ?? 1
-  } finally { fs.rmSync(selection, {force: true}) }
+  } finally { if (selection) fs.rmSync(selection, {force: true}); releaseForeground() }
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
