@@ -149,6 +149,10 @@
   width: 100%;
   min-width: 0;
 }
+.documentation-install-command > [data-slot="tabs"] {
+  width: 100%;
+  min-width: 0;
+}
 .documentation-manual,
 .documentation-manual-source {
   display: flex;
