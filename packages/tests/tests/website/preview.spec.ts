@@ -222,7 +222,22 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
       .locator(".documentation-playground")
       .getByLabel("Menubar status", { exact: true })
   ).toHaveText("こんにちは");
+  await expect(page.getByRole("menu")).toHaveCount(0);
+  await expect(trigger).toBeFocused();
   await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+
+  const reopened = page.getByRole("menu", { exact: true, name: "你好，世界" });
+
+  await expect(reopened).toBeVisible();
+  await expect
+    .poll(
+      async () =>
+        await reopened.evaluate((element) =>
+          element.contains(document.activeElement)
+        )
+    )
+    .toBe(true);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("menu")).toHaveCount(0);
   await expect(trigger).toBeFocused();
