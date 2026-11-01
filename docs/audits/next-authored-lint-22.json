@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baseline": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+  "baseline": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
   "authoredFiles": [
     "apps/web/app/api/installation/[name]/[file]/route.ts",
     "apps/web/app/api/installation/[name]/route.ts",
@@ -509,7 +509,7 @@
       "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
     }
   ],
-  "attribution": "Latest approved main46 is the current source-quality baseline. Full authored scope must pass the actual toolchain; only exact unchanged baseline statements can retain attributed debt. Older1369/4caf/e009 counts are historical, not current acceptance. No source or native verification is granted by metadata.",
+  "attribution": "Approved main c7b908 (including PR37 functional cleanup) is the current source-quality baseline. Full authored scope must pass the actual toolchain; only exact unchanged baseline statements can retain attributed debt. Older main46/1369/4caf/e009 counts are historical, not current acceptance. This metadata grants no semantic equivalence, source verification or native verification.",
   "readOnlyAudits": [
     "test-results/22-main29-lint/rest-attribution.json",
     "test-results/22-main29-lint/inherited-app-ledger.json",
