@@ -27,65 +27,85 @@ const directory = path.join(
   "next-workflow",
   randomUUID()
 );
+
 await mkdir(directory, { recursive: true });
+
 assert.ok(
   (await realpath(directory)).startsWith((await realpath(repoRoot)) + path.sep),
   "Workflow backups must stay physically in this source workspace"
 );
-const source = await sourceIdentity(),
-  report = {
-    source,
-    bun: Bun.version,
-    startedAt: new Date().toISOString(),
-    steps: [],
-    passed: false,
-  };
-async function run(name, args, { capture = false } = {}) {
+
+const source = await sourceIdentity();
+
+const report = {
+  bun: Bun.version,
+  passed: false,
+  source,
+  startedAt: new Date().toISOString(),
+  steps: [],
+};
+
+const run = async (name, args, { capture = false } = {}) => {
   let stdout = "";
+
   const child = spawn(process.execPath, args, {
     cwd: repoRoot,
     env: {
       ...process.env,
-      GOMEMLIMIT: "768MiB",
       GOMAXPROCS: "1",
+      GOMEMLIMIT: "768MiB",
       RAYON_NUM_THREADS: "1",
     },
     stdio: ["ignore", "pipe", "pipe"],
   });
+
   child.stdout.on("data", (value) => {
     stdout += value;
-    if (!capture) process.stdout.write(value);
+
+    if (!capture) {
+      process.stdout.write(value);
+    }
   });
   child.stderr.on("data", (value) => process.stderr.write(value));
+
   const code = await new Promise((resolve, reject) => {
     child.once("error", reject);
     child.once("exit", resolve);
   });
-  await writeFile(path.join(directory, name + ".log"), stdout);
-  report.steps.push({ name, exitCode: code });
+
+  await writeFile(path.join(directory, `${name}.log`), stdout);
+  report.steps.push({ exitCode: code, name });
   assert.equal(code, 0, `${name} failed`);
+
   return stdout;
-}
+};
+
 let turbo;
-async function preserveInstalledDependencies() {
-  const root = await realpath(repoRoot),
-    lock = Bun.JSON5.parse(
-      await readFile(path.join(repoRoot, "bun.lock"), "utf8")
-    );
+
+const preserveInstalledDependencies = async () => {
+  const root = await realpath(repoRoot);
+
+  const lock = Bun.JSON5.parse(
+    await readFile(path.join(repoRoot, "bun.lock"), "utf-8")
+  );
+
   const targets = [];
+
   for (const workspace of new Set([
     "",
     ...Object.keys(lock.workspaces ?? {}),
   ])) {
-    const target = path.resolve(repoRoot, workspace, "node_modules"),
-      relative = path.relative(repoRoot, target);
+    const target = path.resolve(repoRoot, workspace, "node_modules");
+    const relative = path.relative(repoRoot, target);
+
     assert.ok(
       relative &&
-        !relative.startsWith(".." + path.sep) &&
+        !relative.startsWith(`..${path.sep}`) &&
         relative !== ".." &&
         !path.isAbsolute(relative),
       "Dependency backup must stay in this source workspace"
     );
+
     try {
       const info = await lstat(target);
       assert.ok(
@@ -97,53 +117,70 @@ async function preserveInstalledDependencies() {
         physical.startsWith(root + path.sep),
         "Dependency backup cannot follow an external directory"
       );
-      targets.push({ target, relative, physical });
+      targets.push({ physical, relative, target });
     } catch (error) {
-      if (error.code !== "ENOENT") throw error;
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
     }
   }
+
   const backup = path.join(directory, "installed-dependency-backup");
   await mkdir(backup);
+
   for (const [index, item] of targets
     .sort((left, right) => right.target.length - left.target.length)
-    .entries())
+    .entries()) {
     await rename(item.target, path.join(backup, String(index)));
+  }
+
   report.freshDependencyInstall = {
     backup,
     previousDirectories: targets.map(({ relative, physical }) => ({
-      relative,
       physical,
+      relative,
     })),
   };
-}
-async function generatedDocsIdentity() {
+};
+
+const generatedDocsIdentity = async () => {
   const hash = createHash("sha256");
-  async function visit(directory) {
+
+  const visit = async (directory) => {
     for (const entry of (
       await readdir(directory, { withFileTypes: true })
     ).sort((left, right) => left.name.localeCompare(right.name))) {
       const filename = path.join(directory, entry.name);
-      if (entry.isDirectory()) await visit(filename);
-      else if (entry.isFile())
+
+      if (entry.isDirectory()) {
+        await visit(filename);
+      } else if (entry.isFile()) {
         hash
           .update(path.relative(webRoot, filename))
           .update(await readFile(filename));
+      }
     }
-  }
+  };
+
   await visit(path.join(webRoot, ".source"));
   hash.update(await readFile(path.join(webRoot, "next-env.d.ts")));
+
   return hash.digest("hex");
-}
+};
+
 const taskHashes = async (name) => {
   const data = JSON.parse(
     await run(name, [turbo, "run", "build", "--dry=json"], { capture: true })
   );
+
   return Object.fromEntries(data.tasks.map((task) => [task.taskId, task.hash]));
 };
+
 try {
   const expectedBun = JSON.parse(
-    await readFile(path.join(repoRoot, "package.json"), "utf8")
+    await readFile(path.join(repoRoot, "package.json"), "utf-8")
   ).packageManager;
+
   assert.equal(
     `bun@${Bun.version}`,
     expectedBun,
@@ -153,6 +190,7 @@ try {
   await run("frozen-install", ["install", "--frozen-lockfile"]);
   turbo = packageBin("turbo", "turbo", repoRoot);
   report.freshToolchain = {};
+
   for (const [name, binary, from] of [
     ["turbo", "turbo", repoRoot],
     ["next", "next", webRoot],
@@ -162,11 +200,12 @@ try {
     const physical = await realpath(packageBin(name, binary, from));
     assert.ok(
       physical.startsWith((await realpath(repoRoot)) + path.sep) &&
-        physical.includes(path.sep + "node_modules" + path.sep),
+        physical.includes(`${path.sep}node_modules${path.sep}`),
       "Fresh toolchain must resolve inside this source workspace"
     );
     report.freshToolchain[name] = physical;
   }
+
   await run("generate", [turbo, "run", "generate"]);
   await run("workspace-types", [
     packageBin("uncheck", "uncheck", repoRoot),
@@ -174,21 +213,26 @@ try {
     "--require=tsc",
   ]);
   await run("root-build", [turbo, "run", "build"]);
-  const baseline = await productionBuildIdentity({ source }),
-    generated = await generatedDocsIdentity(),
-    hashes = await taskHashes("baseline-hashes");
+
+  const baseline = await productionBuildIdentity({ source });
+  const generated = await generatedDocsIdentity();
+  const hashes = await taskHashes("baseline-hashes");
+
   const outputPaths = [".source", ".next", "next-env.d.ts", "public/r"];
   const backup = path.join(directory, "generated-backup");
   await mkdir(backup);
+
   for (const [index, name] of outputPaths.entries()) {
-    const target = path.resolve(webRoot, name),
-      resolved = await realpath(target);
+    const target = path.resolve(webRoot, name);
+    const resolved = await realpath(target);
+
     assert.ok(
       resolved.startsWith((await realpath(webRoot)) + path.sep),
       "Generated backup must stay in this web workspace"
     );
     await rename(target, path.join(backup, String(index)));
   }
+
   const restoredLog = await run("cache-restore", [turbo, "run", "build"]);
   assert.match(
     restoredLog,
@@ -211,48 +255,53 @@ try {
     "--only=tsc",
     "--require=tsc",
   ]);
+
   const probes = [
     {
-      name: "mdx",
-      file: path.join(webRoot, "content/docs/components/button.mdx"),
-      task: "@grasscn/web#generate",
       change: (bytes) =>
         Buffer.concat([
           bytes,
           Buffer.from("\nWorkflow cache invalidation sentinel.\n"),
         ]),
+      file: path.join(webRoot, "content/docs/components/button.mdx"),
+      name: "mdx",
       run: [turbo, "run", "generate"],
+      task: "@grasscn/web#generate",
     },
     {
-      name: "registry",
-      file: path.join(webRoot, "registry.json"),
-      task: "@grasscn/web#registry:build",
       change: (bytes) => {
         const json = JSON.parse(bytes);
         json.items.find((item) => item.name === "button").description =
           "Workflow invalidation sentinel";
-        return Buffer.from(JSON.stringify(json, null, 2) + "\n");
+
+        return Buffer.from(`${JSON.stringify(json, null, 2)}\n`);
       },
+      file: path.join(webRoot, "registry.json"),
+      name: "registry",
       run: [turbo, "run", "registry:build"],
+      task: "@grasscn/web#registry:build",
     },
     {
-      name: "config",
-      file: path.join(webRoot, "next.config.mjs"),
-      task: "@grasscn/web#generate",
       change: (bytes) =>
         Buffer.concat([
           bytes,
           Buffer.from("\n// Workflow cache invalidation sentinel.\n"),
         ]),
+      file: path.join(webRoot, "next.config.mjs"),
+      name: "config",
       run: [turbo, "run", "generate"],
+      task: "@grasscn/web#generate",
     },
   ];
+
   report.invalidation = [];
+
   for (const probe of probes) {
     const original = await readFile(probe.file);
+
     try {
       await writeFile(probe.file, probe.change(original));
-      const changed = await taskHashes(probe.name + "-hashes");
+      const changed = await taskHashes(`${probe.name}-hashes`);
       assert.notEqual(
         changed[probe.task],
         hashes[probe.task],
@@ -263,18 +312,19 @@ try {
         hashes["@grasscn/web#build"],
         `${probe.name} did not invalidate web build`
       );
-      const log = await run(probe.name + "-generation", probe.run);
+      const log = await run(`${probe.name}-generation`, probe.run);
       assert.match(log, /cache miss/, "Changed inputs must execute generation");
       report.invalidation.push({
+        after: changed[probe.task],
+        before: hashes[probe.task],
         input: probe.name,
         task: probe.task,
-        before: hashes[probe.task],
-        after: changed[probe.task],
       });
     } finally {
       await writeFile(probe.file, original);
     }
   }
+
   await run("restore-original-build", [turbo, "run", "build"]);
   const final = await productionBuildIdentity({ source });
   assert.equal(
@@ -296,15 +346,15 @@ try {
   });
   report.build = {
     buildId: final.buildId,
-    outputSha256: final.outputSha256,
     generatedSha256: generated,
+    outputSha256: final.outputSha256,
   };
   report.passed = true;
 } finally {
   report.finishedAt = new Date().toISOString();
   await writeFile(
     path.join(directory, "report.json"),
-    JSON.stringify(report, null, 2) + "\n"
+    `${JSON.stringify(report, null, 2)}\n`
   );
   console.log(`Next workflow receipt: ${directory}`);
 }

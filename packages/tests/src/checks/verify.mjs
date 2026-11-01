@@ -14,65 +14,78 @@ import {
 } from "@grasscn/tests/next-production";
 import { repoRoot, testRoot, packageBin } from "@tests/paths";
 
-const [output, workerArgument = "1"] = process.argv.slice(2),
-  workers = Number(workerArgument);
-assert(
+const [output, workerArgument = "1"] = process.argv.slice(2);
+const workers = Number(workerArgument);
+
+assert.ok(
   output && Number.isInteger(workers) && workers >= 1 && workers <= 8,
   "Use the guarded normal verification command"
 );
+
 const phase = process.env.GRASSCN_VERIFY_PHASE ?? "all";
-assert(
+
+assert.ok(
   ["all", "prepare", "browser"].includes(phase),
   "Use prepare, browser or all verification phase"
 );
+
 await mkdir(output, { recursive: true });
-const source = await sourceIdentity(),
-  dependencies = installedDependencyIdentity(repoRoot);
-assert(
+
+const source = await sourceIdentity();
+const dependencies = installedDependencyIdentity(repoRoot);
+
+assert.ok(
   dependencies,
   "Normal verification requires this source workspace dependency installation"
 );
+
 const environment = {
-  scope: "normal",
-  pptIncluded: false,
-  workers,
-  bun: Bun.version,
-  platform: process.platform,
   arch: process.arch,
-  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  locale: Intl.DateTimeFormat().resolvedOptions().locale,
+  bun: Bun.version,
   ci: process.env.CI ?? null,
-  webgl: process.env.GRASSCN_WEBGL_BACKEND ?? null,
   installedDependencies: dependencies,
+  locale: Intl.DateTimeFormat().resolvedOptions().locale,
+  platform: process.platform,
+  pptIncluded: false,
+  scope: "normal",
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  webgl: process.env.GRASSCN_WEBGL_BACKEND ?? null,
+  workers,
 };
+
 for (const executable of [
   "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
 ]) {
   try {
     const info = await stat(executable);
-    environment.edge = { executable, size: info.size, modified: info.mtimeMs };
+    environment.edge = { executable, modified: info.mtimeMs, size: info.size };
     break;
   } catch (error) {
-    if (error.code !== "ENOENT") throw error;
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
   }
 }
+
 const report = {
-  scope: "normal",
-  pptIncluded: false,
-  source,
-  environment,
-  phase,
-  startedAt: new Date().toISOString(),
   checks: [],
   completed: false,
+  environment,
   passed: false,
+  phase,
+  pptIncluded: false,
+  scope: "normal",
+  source,
+  startedAt: new Date().toISOString(),
 };
-const save = () =>
-  writeFile(
+
+const save = async () =>
+  await writeFile(
     path.join(output, "verification.json"),
-    JSON.stringify(report, null, 2) + "\n"
+    `${JSON.stringify(report, null, 2)}\n`
   );
+
 const steps = [
   [
     "generate",
@@ -113,10 +126,12 @@ const steps = [
   ["fixture-build", [path.join(testRoot, "cli/build-fixture.mjs")], testRoot],
   ["normal-unit-contracts", ["run", "test:unit"], testRoot],
 ];
+
 if (phase === "browser") {
   const prepared = JSON.parse(
-    await readFile(path.join(output, "prepared.json"), "utf8")
+    await readFile(path.join(output, "prepared.json"), "utf-8")
   );
+
   assert.deepEqual(prepared.source, source, "Prepared normal source changed");
   assert.deepEqual(
     prepared.environment,
@@ -137,7 +152,8 @@ if (phase === "browser") {
   report.fixtureBundle = prepared.fixtureBundle;
   steps.length = 0;
 }
-if (phase !== "prepare")
+
+if (phase !== "prepare") {
   steps.push([
     "normal-browser",
     [
@@ -151,7 +167,10 @@ if (phase !== "prepare")
     ],
     testRoot,
   ]);
+}
+
 let hosts;
+
 try {
   for (const [name, args, cwd] of steps) {
     if (
@@ -160,15 +179,17 @@ try {
     ) {
       report.websiteBuild = await readPreparedProductionBuild({ source });
       report.checks.push({
-        name,
         exitCode: 0,
+        name,
         reusedCompletedBuild: true,
         verifiedCommand: report.websiteBuild.verifiedCommand,
       });
       await save();
       continue;
     }
+
     let browserEnvironment = {};
+
     if (name === "normal-browser") {
       await writeFile(
         path.join(output, "verification-phase.json"),
@@ -179,6 +200,7 @@ try {
         previewPort: 5286,
         proxyPort: 5287,
       });
+
       const {
         buildId,
         outputSha256,
@@ -186,53 +208,66 @@ try {
         bun,
         runtime,
       } = hosts.websiteIdentity;
+
       report.websiteBuild = {
         buildId,
-        outputSha256,
-        source: websiteSource,
         bun,
+        outputSha256,
         runtime,
+        source: websiteSource,
       };
       browserEnvironment = {
+        GRASSCN_BROWSER_PROXY_PORT: "5287",
         GRASSCN_BROWSER_SCOPE: "ordinary",
+        GRASSCN_CHECKPOINT_REPORT_DIR: path.join(output, "checkpoints"),
+        GRASSCN_EXPANSION_URL: "http://127.0.0.1:5174/adventure.html",
         GRASSCN_FIXTURE_URL: "http://127.0.0.1:5174",
         GRASSCN_PREVIEW_URL: "http://127.0.0.1:5176/",
-        GRASSCN_EXPANSION_URL: "http://127.0.0.1:5174/adventure.html",
         GRASSCN_TREE_INSTALLED_URL: "http://127.0.0.1:5174/adventure.html",
-        GRASSCN_BROWSER_PROXY_PORT: "5287",
         GRASSCN_WEBSITE_IDENTITY: JSON.stringify(report.websiteBuild),
-        GRASSCN_CHECKPOINT_REPORT_DIR: path.join(output, "checkpoints"),
         PLAYWRIGHT_JSON_OUTPUT_NAME: path.join(output, "playwright.json"),
       };
     }
+
     console.log(`Normal verification: ${name}`);
+
     const code = await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, args, {
         cwd,
         env: {
           ...process.env,
-          GOMEMLIMIT: process.env.GOMEMLIMIT ?? "768MiB",
           GOMAXPROCS: "1",
-          RAYON_NUM_THREADS: "1",
+          GOMEMLIMIT: process.env.GOMEMLIMIT ?? "768MiB",
           GRASSCN_BROWSER_SCOPE: "ordinary",
+          RAYON_NUM_THREADS: "1",
           ...browserEnvironment,
         },
         stdio: "inherit",
       });
+
       child.once("error", reject);
-      child.once("exit", (code, signal) => resolve(code ?? (signal ? 1 : 0)));
+      child.once("exit", (code, signal) => {
+        resolve(code ?? (signal ? 1 : 0));
+      });
     });
-    report.checks.push({ name, exitCode: code });
+
+    report.checks.push({ exitCode: code, name });
     await save();
     assert.equal(code, 0, `${name} failed`);
-    if (name === "production-build")
+
+    if (name === "production-build") {
       report.websiteBuild = await stampProductionBuild({
         source,
         verifiedCommand: [process.execPath, ...args],
         verifiedExitCode: code,
       });
-    if (name === "fixture-build") report.fixtureBundle = fixtureManifest();
+    }
+
+    if (name === "fixture-build") {
+      report.fixtureBundle = fixtureManifest();
+    }
   }
+
   report.sourceAfter = await sourceIdentity();
   assert.deepEqual(
     report.sourceAfter,
@@ -255,20 +290,21 @@ try {
     report.websiteBuild.outputSha256,
     "Next output changed during normal verification"
   );
+
   if (phase === "prepare") {
     report.prepared = true;
     await writeFile(
       path.join(output, "prepared.json"),
-      JSON.stringify(
+      `${JSON.stringify(
         {
-          source,
           environment,
-          websiteBuild: report.websiteBuild,
           fixtureBundle: report.fixtureBundle,
+          source,
+          websiteBuild: report.websiteBuild,
         },
         null,
         2
-      ) + "\n"
+      )}\n`
     );
   } else {
     report.completed = true;
