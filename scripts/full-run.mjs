@@ -241,7 +241,7 @@ export async function main(args = process.argv.slice(2)) {
     if (!/^--[a-z-]+$/.test(args[i]) || !args[i + 1] || options.has(args[i])) throw Error('Use explicit --option value arguments')
     options.set(args[i], args[i + 1])
   }
-  const allowed = command === 'plan' ? ['--commit', '--workers', '--fixture-port', '--preview-port', '--proxy-port'] : ['--issue']
+  const allowed = command === 'plan' ? ['--commit', '--workers', '--fixture-port', '--preview-port', '--proxy-port'] : ['report', 'publish-report', 'repair-handoff'].includes(command) ? ['--issue', '--review', '--problem'] : ['--issue']
   for (const key of options.keys()) if (!allowed.includes(key)) throw Error(`Unknown option ${key}`)
   if (command === 'plan') {
     const commit = options.get('--commit') ?? git(['rev-parse', 'HEAD'])
@@ -251,6 +251,12 @@ export async function main(args = process.argv.slice(2)) {
     console.log(runPlanBody(plan)); return
   }
   const number = issueNumber(options.get('--issue'))
+  if (['report', 'publish-report', 'repair-handoff'].includes(command)) {
+    const reporter = await import('./full-run-report.mjs')
+    if (command !== 'report' && !options.get('--review')) throw Error('Provide the completed evidence review using --review file')
+    const result = command === 'report' ? reporter.prepareReport(number) : command === 'publish-report' ? reporter.publishReport(number, options.get('--review')) : reporter.repairHandoff(number, options.get('--review'), options.get('--problem'))
+    console.log(json(result)); return
+  }
   if (command === 'context') {
     const run = assertFullBrowserExecution([])
     const attempt = process.env.GRASSCN_FULL_RUN_ATTEMPT
@@ -270,7 +276,7 @@ export async function main(args = process.argv.slice(2)) {
     console.log(json({handoff: file, issue: run.issue.html_url, sessionCreated: false, next: 'Use the actual desktop create_thread tool with this handoff; do not wait in the initiating session.'})); return
   }
   if (command === 'execute' || command === 'resume') { await execute(number, command === 'resume'); return }
-  throw Error('Use full-run.mjs plan, handoff, status, execute or resume')
+  throw Error('Use full-run.mjs plan, handoff, status, execute, resume, report, publish-report or repair-handoff')
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exitCode = 1 })
