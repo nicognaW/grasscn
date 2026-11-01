@@ -7,6 +7,7 @@ import * as React from "react";
 import { minecraftBadgeAssets } from "./minecraft-badge-assets";
 import { MinecraftProse } from "./minecraft-prose";
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -77,10 +78,7 @@ const Badge = ({
   const child = null;
   const content = children;
 
-  const plain =
-    typeof content === "string" || typeof content === "number"
-      ? String(content)
-      : undefined;
+  const plain = isMinecraftTextContent(content) ? String(content) : undefined;
 
   const [, refreshFont] = React.useState(0);
   React.useEffect(() => {

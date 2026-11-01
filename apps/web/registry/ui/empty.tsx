@@ -6,7 +6,11 @@ import * as React from "react";
 
 import { MinecraftProse } from "./minecraft-prose";
 import type { MinecraftProseProps } from "./minecraft-prose";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 
 import "./minecraft-empty.css";
 
@@ -29,7 +33,7 @@ const Empty = ({
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
 
   React.useImperativeHandle(ref, () => node.current!, []);
-  const plain = typeof children === "string" || typeof children === "number";
+  const plain = isMinecraftTextContent(children);
   React.useLayoutEffect(() => {
     if (!plain || !node.current || !textNode.current) {
       return;

@@ -9,7 +9,10 @@ import { MinecraftProse } from "./minecraft-prose";
 import type { MinecraftProseProps } from "./minecraft-prose";
 
 import "./minecraft-field.css";
-import { minecraftClasses as cn } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+} from "./minecraft-render";
 import { Separator } from "./separator";
 
 const FieldSet = ({
@@ -209,7 +212,7 @@ const FieldError = ({
       className={cn("mc-field-error", className)}
       {...props}
     >
-      {typeof content === "string" || typeof content === "number" ? (
+      {isMinecraftTextContent(content) ? (
         <MinecraftProse scale={scale}>{content}</MinecraftProse>
       ) : (
         content

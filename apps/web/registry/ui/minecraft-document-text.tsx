@@ -97,7 +97,7 @@ const MinecraftDocumentText = ({
     setReady(false);
     Promise.all([
       fontImage(),
-      /[^\x20-\x7E\n]/.test(text) ? loadUnihex() : Promise.resolve(),
+      /[^\u0020-\u007E\n]/u.test(text) ? loadUnihex() : Promise.resolve(),
     ])
       .then(([image]) => {
         if (!live) {

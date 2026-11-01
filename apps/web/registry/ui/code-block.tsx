@@ -6,7 +6,11 @@ import "./minecraft-code-block.css";
 import { Button } from "./button";
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftLoadingGlyphs } from "./minecraft-loading-glyphs";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftSelectableText } from "./minecraft-selectable-text";
 
 const CodeScale = React.createContext<1 | 2 | 3>(2);
@@ -162,7 +166,7 @@ const CodeBlockCopyButton = ({
 };
 
 function selectable(value: React.ReactNode): React.ReactNode {
-  if (typeof value === "string" || typeof value === "number") {
+  if (isMinecraftTextContent(value)) {
     return <MinecraftSelectableText text={String(value)} />;
   }
 

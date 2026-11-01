@@ -4,6 +4,7 @@ import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import {
+  isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
   MinecraftRender,
@@ -108,8 +109,8 @@ const TooltipContent = ({
 
   const skin = (content: React.ReactNode) => {
     const plain =
-      (typeof content === "string" || typeof content === "number") &&
-      /^[\x20-\x7E\n]*$/.test(String(content))
+      isMinecraftTextContent(content) &&
+      /^[\u0020-\u007E\n]*$/u.test(String(content))
         ? String(content)
         : undefined;
 
@@ -153,19 +154,18 @@ const TooltipContent = ({
     );
   };
 
-  const plain =
-    typeof children === "string" || typeof children === "number"
-      ? String(children)
-      : render &&
-          React.isValidElement<{
-            children?: React.ReactNode;
-          }>(children) &&
-          typeof children.props.children === "string"
-        ? children.props.children
-        : undefined;
+  const plain = isMinecraftTextContent(children)
+    ? String(children)
+    : render &&
+        React.isValidElement<{
+          children?: React.ReactNode;
+        }>(children) &&
+        typeof children.props.children === "string"
+      ? children.props.children
+      : undefined;
 
   const lines =
-    plain == null || !/^[\x20-\x7E\n]*$/.test(plain)
+    plain == null || !/^[\u0020-\u007E\n]*$/u.test(plain)
       ? undefined
       : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
 

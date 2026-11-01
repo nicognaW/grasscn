@@ -3,7 +3,11 @@
 import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
+import {
+  isMinecraftTextContent,
+  minecraftClasses as cn,
+  minecraftStyle,
+} from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
@@ -162,7 +166,7 @@ ${colorConfig
 const ChartText = ({ children }: { children: React.ReactNode }) => {
   const { scale } = useChart();
 
-  return typeof children === "string" || typeof children === "number" ? (
+  return isMinecraftTextContent(children) ? (
     <MinecraftDisclosureText scale={scale}>{children}</MinecraftDisclosureText>
   ) : (
     children
