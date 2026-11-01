@@ -1,4 +1,47 @@
-import { test, expect } from '@grasscn/tests/test';
-test('Marker asChild preserves link, keyboard activation, ref and original rich children', async ({ page }) => { await page.goto('/?component=marker'); await expect(page.getByRole('link')).toHaveAttribute('href', '#marker'); await page.getByRole('link').focus(); await page.keyboard.press('Enter'); await expect(page).toHaveURL(/#marker$/); await expect(page.locator('#events')).toHaveText('1'); await page.locator('#read-marker-ref').click(); await expect(page.locator('#marker-ref')).toHaveText('A'); await expect(page.locator('#rich')).toHaveText('Real rich content'); await expect(page.locator('[data-slot=marker-icon]')).toHaveAttribute('aria-hidden', 'true'); });
-test('Marker native separator layouts and exported styling helper stay usable', async ({ page }) => { await page.goto('/?component=marker'); const values = await page.locator('#separated').evaluate(e => ({ before: getComputedStyle(e, '::before').backgroundImage, after: getComputedStyle(e, '::after').backgroundImage })); expect(values.before.startsWith('url("data:image/png;base64,')).toBe(true); expect(values.before).toBe(values.after); expect(await page.locator('#helper').evaluate(e => getComputedStyle(e, '::after').backgroundImage)).toBe(values.after); });
-test('Marker CJK text is painted with original label glyphs', async ({ page }) => { await page.goto('/?component=marker'); await expect(page.locator('#linked [data-mc-label-layout-ready]')).toHaveAttribute('data-mc-label-layout-ready', 'true'); await expect(page.locator('#linked [data-mc-label-ready]')).toHaveAttribute('data-mc-label-ready', 'true'); await expect(page.locator('#linked')).toContainText('Checkpoint 世界'); });
+import { test, expect } from "@grasscn/tests/test";
+test("Marker asChild preserves link, keyboard activation, ref and original rich children", async ({
+  page,
+}) => {
+  await page.goto("/?component=marker");
+  await expect(page.getByRole("link")).toHaveAttribute("href", "#marker");
+  await page.getByRole("link").focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#marker$/);
+  await expect(page.locator("#events")).toHaveText("1");
+  await page.locator("#read-marker-ref").click();
+  await expect(page.locator("#marker-ref")).toHaveText("A");
+  await expect(page.locator("#rich")).toHaveText("Real rich content");
+  await expect(page.locator("[data-slot=marker-icon]")).toHaveAttribute(
+    "aria-hidden",
+    "true"
+  );
+});
+test("Marker native separator layouts and exported styling helper stay usable", async ({
+  page,
+}) => {
+  await page.goto("/?component=marker");
+  const values = await page.locator("#separated").evaluate((e) => ({
+    before: getComputedStyle(e, "::before").backgroundImage,
+    after: getComputedStyle(e, "::after").backgroundImage,
+  }));
+  expect(values.before.startsWith('url("data:image/png;base64,')).toBe(true);
+  expect(values.before).toBe(values.after);
+  expect(
+    await page
+      .locator("#helper")
+      .evaluate((e) => getComputedStyle(e, "::after").backgroundImage)
+  ).toBe(values.after);
+});
+test("Marker CJK text is painted with original label glyphs", async ({
+  page,
+}) => {
+  await page.goto("/?component=marker");
+  await expect(
+    page.locator("#linked [data-mc-label-layout-ready]")
+  ).toHaveAttribute("data-mc-label-layout-ready", "true");
+  await expect(page.locator("#linked [data-mc-label-ready]")).toHaveAttribute(
+    "data-mc-label-ready",
+    "true"
+  );
+  await expect(page.locator("#linked")).toContainText("Checkpoint 世界");
+});

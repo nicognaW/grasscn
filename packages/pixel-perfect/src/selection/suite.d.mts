@@ -1,1 +1,1 @@
-export function baseGrep(): RegExp
+export function baseGrep(): RegExp;

@@ -1,4 +1,10 @@
 @layer components {
- .mc-toggle-group {display:inline-flex;align-items:center;gap:calc(var(--mc-toggle-spacing,2)*var(--mc-scale,2)*1px);}
- .mc-toggle-group[data-orientation="vertical"] {flex-direction:column;}
+  .mc-toggle-group {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--mc-toggle-spacing, 2)*var(--mc-scale, 2)*1px);
+  }
+  .mc-toggle-group[data-orientation="vertical"] {
+    flex-direction: column;
+  }
 }

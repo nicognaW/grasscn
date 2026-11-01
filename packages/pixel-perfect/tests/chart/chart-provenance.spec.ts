@@ -1,2 +1,57 @@
-import {resolveRepositoryPath, pixelPerfectRoot} from '@ppt/paths'
-import{pixelPerfectTest as test,expect}from"@grasscn/pixel-perfect/test";import{readFileSync}from"node:fs";import{createHash}from"node:crypto";import{PNG}from"pngjs";const hash=(b:Buffer)=>createHash('sha256').update(b).digest('hex');for(const kind of['fps','pie'])test(`Chart ${kind} expected pixels come from pinned original full frames and source snapshots`,()=>{const dir=`tests/reference/chart-${kind}`,m=JSON.parse(readFileSync(resolveRepositoryPath(`${dir}/manifest.json`, pixelPerfectRoot),'utf8')),r=JSON.parse(readFileSync(resolveRepositoryPath(`${dir}/repeatability.json`, pixelPerfectRoot),'utf8'));expect(hash(readFileSync(resolveRepositoryPath(`${dir}/source/ControlsReferenceMain.java`, pixelPerfectRoot)))).toBe(m.captureSourceSha256);expect(hash(readFileSync(resolveRepositoryPath(`${dir}/cases.json`, pixelPerfectRoot)))).toBe(m.caseDefinitionSha256);expect(r.sourceJarSha256).toBe(m.sourceJarSha256);expect(r.captureSourceSha256).toBe(m.captureSourceSha256);expect(r.caseDefinitionSha256).toBe(m.caseDefinitionSha256);for(const c of m.cases){const bytes=readFileSync(resolveRepositoryPath(`${dir}/captures/${c.name}`, pixelPerfectRoot)),expected=PNG.sync.read(bytes),frameName=`native-controls-p${c.page}-s${c.scale}.png`,frameBytes=readFileSync(resolveRepositoryPath(`${dir}/frames/${frameName}`, pixelPerfectRoot)),frame=PNG.sync.read(frameBytes),pixels=Buffer.alloc(expected.width*expected.height*4);expect(hash(bytes)).toBe(c.sha256);expect(hash(frameBytes)).toBe(m.frames.find((f:{name:string})=>f.name===frameName).sha256);for(let y=0;y<expected.height;y++){const start=((c.y*c.scale+y)*frame.width+c.x*c.scale)*4;frame.data.copy(pixels,y*expected.width*4,start,start+expected.width*4)}expect(pixels.equals(expected.data)).toBe(true);const repeated=r.cases.find((v:{name:string})=>v.name===c.name);expect(repeated.mismatchedPixels).toBe(0);expect(repeated.decodedRgbaSha256).toBe(hash(expected.data))}})
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import { pixelPerfectRoot, pixelPerfectFile } from "@ppt/paths";
+import { PNG } from "pngjs";
+const hash = (b: Buffer) => createHash("sha256").update(b).digest("hex");
+for (const kind of ["fps", "pie"])
+  test(`Chart ${kind} expected pixels come from pinned original full frames and source snapshots`, () => {
+    const dir = `tests/reference/chart-${kind}`,
+      m = JSON.parse(
+        readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
+      ),
+      r = JSON.parse(
+        readFileSync(pixelPerfectFile(`${dir}/repeatability.json`), "utf8")
+      );
+    expect(
+      hash(
+        readFileSync(
+          pixelPerfectFile(`${dir}/source/ControlsReferenceMain.java`)
+        )
+      )
+    ).toBe(m.captureSourceSha256);
+    expect(hash(readFileSync(pixelPerfectFile(`${dir}/cases.json`)))).toBe(
+      m.caseDefinitionSha256
+    );
+    expect(r.sourceJarSha256).toBe(m.sourceJarSha256);
+    expect(r.captureSourceSha256).toBe(m.captureSourceSha256);
+    expect(r.caseDefinitionSha256).toBe(m.caseDefinitionSha256);
+    for (const c of m.cases) {
+      const bytes = readFileSync(pixelPerfectFile(`${dir}/captures/${c.name}`)),
+        expected = PNG.sync.read(bytes),
+        frameName = `native-controls-p${c.page}-s${c.scale}.png`,
+        frameBytes = readFileSync(
+          pixelPerfectFile(`${dir}/frames/${frameName}`)
+        ),
+        frame = PNG.sync.read(frameBytes),
+        pixels = Buffer.alloc(expected.width * expected.height * 4);
+      expect(hash(bytes)).toBe(c.sha256);
+      expect(hash(frameBytes)).toBe(
+        m.frames.find((f: { name: string }) => f.name === frameName).sha256
+      );
+      for (let y = 0; y < expected.height; y++) {
+        const start = ((c.y * c.scale + y) * frame.width + c.x * c.scale) * 4;
+        frame.data.copy(
+          pixels,
+          y * expected.width * 4,
+          start,
+          start + expected.width * 4
+        );
+      }
+      expect(pixels.equals(expected.data)).toBe(true);
+      const repeated = r.cases.find((v: { name: string }) => v.name === c.name);
+      expect(repeated.mismatchedPixels).toBe(0);
+      expect(repeated.decodedRgbaSha256).toBe(hash(expected.data));
+    }
+  });

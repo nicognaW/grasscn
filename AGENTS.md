@@ -20,9 +20,7 @@ Use the pinned Bun package manager and runtime. The website and authored registr
 
 ## Minecraft UI work
 
-Before porting UI or changing its verified appearance, read `.agents/skills/port-minecraft-ui/SKILL.md`.
-Keep the preview local at `http://127.0.0.1:5176/`.
-Preserve byte-pinned source and captured references; appearance claims apply only to declared cases.
+Before porting UI or changing its verified appearance, read `.agents/skills/port-minecraft-ui/SKILL.md`. Keep the preview local at `http://127.0.0.1:5176/`. Preserve byte-pinned source and captured references; appearance claims apply only to declared cases.
 
 ## Pull request verification
 

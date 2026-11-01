@@ -7,5 +7,7 @@
     pointer-events: none;
     image-rendering: pixelated;
   }
-  .mc-surface > span { background-repeat: repeat; }
+  .mc-surface > span {
+    background-repeat: repeat;
+  }
 }

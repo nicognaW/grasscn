@@ -1,4 +1,4 @@
-import {pixelPerfectTestRoot} from '../../../../workspace-paths.mjs'
+import {pixelPerfectTestRoot} from '../../src/paths.ts'
 import { spawnSync } from "node:child_process"
 import { createHash } from "node:crypto"
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises"

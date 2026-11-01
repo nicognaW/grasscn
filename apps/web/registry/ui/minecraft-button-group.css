@@ -1,11 +1,47 @@
 @layer components {
-  .mc-button-group { display:inline-flex; align-items:stretch; gap:calc(2px * var(--mc-scale,2)); width:fit-content; }
-  .mc-button-group-horizontal { flex-direction:row; }
-  .mc-button-group-vertical { flex-direction:column; }
-  .mc-button-group > :focus-visible { position:relative; z-index:1; }
-  .mc-button-group-text { display:flex; flex-direction:column; justify-content:center; padding:0 calc(4px * var(--mc-scale,2)); }
-  .mc-button-group-separator { position:relative; overflow:hidden; flex-shrink:0; min-width:calc(2px * var(--mc-scale,2)); }
-  .mc-button-group-separator[data-orientation="horizontal"] { width:100%; height:calc(2px * var(--mc-scale,2)); }
-  .mc-button-group-separator[data-orientation="vertical"] { align-self:stretch; width:calc(2px * var(--mc-scale,2)); }
-  .mc-button-group-separator[data-orientation="vertical"] > .mc-button-group-separator-art { position:absolute; left:0; top:0; width:calc(20px * var(--mc-scale,2)); transform:rotate(90deg) translateY(-100%); transform-origin:top left; }
+  .mc-button-group {
+    display: inline-flex;
+    align-items: stretch;
+    gap: calc(2px * var(--mc-scale, 2));
+    width: fit-content;
+  }
+  .mc-button-group-horizontal {
+    flex-direction: row;
+  }
+  .mc-button-group-vertical {
+    flex-direction: column;
+  }
+  .mc-button-group > :focus-visible {
+    position: relative;
+    z-index: 1;
+  }
+  .mc-button-group-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 calc(4px * var(--mc-scale, 2));
+  }
+  .mc-button-group-separator {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-width: calc(2px * var(--mc-scale, 2));
+  }
+  .mc-button-group-separator[data-orientation="horizontal"] {
+    width: 100%;
+    height: calc(2px * var(--mc-scale, 2));
+  }
+  .mc-button-group-separator[data-orientation="vertical"] {
+    align-self: stretch;
+    width: calc(2px * var(--mc-scale, 2));
+  }
+  .mc-button-group-separator[data-orientation="vertical"]
+    > .mc-button-group-separator-art {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(20px * var(--mc-scale, 2));
+    transform: rotate(90deg) translateY(-100%);
+    transform-origin: top left;
+  }
 }

@@ -1,1 +1,48 @@
-@layer components {.mc-map{position:relative;flex:none;overflow:hidden;image-rendering:pixelated}.mc-map>canvas{display:block;image-rendering:pixelated}.mc-map-marker{position:absolute;background:none;border:0;padding:0;cursor:pointer;transform-origin:center}.mc-map-marker>img{display:block}.mc-map-marker:focus-visible{outline:2px solid white}.mc-locator-bar{position:relative;box-sizing:border-box;border-style:solid;border-width:0;flex:none;image-rendering:pixelated}.mc-locator-marker{position:absolute;display:block;border:0;background:none;padding:0;cursor:pointer}.mc-locator-marker>img{display:block}.mc-locator-marker:focus-visible{outline:calc(1px * var(--mc-scale)) solid white}}
+@layer components {
+  .mc-map {
+    position: relative;
+    flex: none;
+    overflow: hidden;
+    image-rendering: pixelated;
+  }
+  .mc-map > canvas {
+    display: block;
+    image-rendering: pixelated;
+  }
+  .mc-map-marker {
+    position: absolute;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transform-origin: center;
+  }
+  .mc-map-marker > img {
+    display: block;
+  }
+  .mc-map-marker:focus-visible {
+    outline: 2px solid white;
+  }
+  .mc-locator-bar {
+    position: relative;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 0;
+    flex: none;
+    image-rendering: pixelated;
+  }
+  .mc-locator-marker {
+    position: absolute;
+    display: block;
+    border: 0;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .mc-locator-marker > img {
+    display: block;
+  }
+  .mc-locator-marker:focus-visible {
+    outline: calc(1px * var(--mc-scale)) solid white;
+  }
+}

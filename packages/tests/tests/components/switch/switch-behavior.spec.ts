@@ -1,86 +1,129 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
-test("Switch toggles with pointer, Space and Enter, preserving role and native words", async ({ page }) => {
-    await page.goto("/?component=switch");
-    const control = page.getByRole("switch", { name: "Test switch", exact: true });
-    await expect(control).not.toBeChecked();
-    await expect(control.locator(".mc-switch-off")).toBeVisible();
-    await control.click();
-    await expect(control).toBeChecked();
-    await expect(control.locator(".mc-switch-on")).toBeVisible();
-    await expect(control.locator(".mc-switch-off")).toBeHidden();
-    await page.keyboard.press("Space");
-    await expect(control).not.toBeChecked();
-    await page.keyboard.press("Enter");
-    await expect(control).toBeChecked();
-    await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText("3");
+test("Switch toggles with pointer, Space and Enter, preserving role and native words", async ({
+  page,
+}) => {
+  await page.goto("/?component=switch");
+  const control = page.getByRole("switch", {
+    name: "Test switch",
+    exact: true,
+  });
+  await expect(control).not.toBeChecked();
+  await expect(control.locator(".mc-switch-off")).toBeVisible();
+  await control.click();
+  await expect(control).toBeChecked();
+  await expect(control.locator(".mc-switch-on")).toBeVisible();
+  await expect(control.locator(".mc-switch-off")).toBeHidden();
+  await page.keyboard.press("Space");
+  await expect(control).not.toBeChecked();
+  await page.keyboard.press("Enter");
+  await expect(control).toBeChecked();
+  await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText(
+    "3"
+  );
 });
-test("Switch preserves controlled acceptance, rejection and external updates", async ({ page }) => {
-    await page.goto("/?component=switch&controlled=1");
-    await page.getByRole("switch").click();
-    await expect(page.getByRole("switch")).toBeChecked();
-    await page.locator("#switch-external").click();
-    await expect(page.getByRole("switch")).not.toBeChecked();
-    await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText("1");
-    await page.goto("/?component=switch&controlled=1&reject=1");
-    await page.getByRole("switch").click();
-    await expect(page.getByRole("switch")).not.toBeChecked();
-    await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText("1");
+test("Switch preserves controlled acceptance, rejection and external updates", async ({
+  page,
+}) => {
+  await page.goto("/?component=switch&controlled=1");
+  await page.getByRole("switch").click();
+  await expect(page.getByRole("switch")).toBeChecked();
+  await page.locator("#switch-external").click();
+  await expect(page.getByRole("switch")).not.toBeChecked();
+  await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText(
+    "1"
+  );
+  await page.goto("/?component=switch&controlled=1&reject=1");
+  await page.getByRole("switch").click();
+  await expect(page.getByRole("switch")).not.toBeChecked();
+  await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText(
+    "1"
+  );
 });
-test("Switch supports native form requirements, custom values and disabled exclusion", async ({ page }) => {
-    await page.goto("/?component=switch&form=1&required=1&formValue=custom");
-    await page.getByRole("button", { name: "Save switch", exact: true }).click();
-    await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText("");
-    await page.getByRole("switch").click();
-    await page.getByRole("button", { name: "Save switch", exact: true }).click();
-    await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText("custom");
-    await page.goto("/?component=switch&form=1&checked=true&state=disabled");
-    await expect(page.getByRole("switch")).toBeDisabled();
-    await page.getByRole("button", { name: "Save switch", exact: true }).click();
-    await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText("missing");
+test("Switch supports native form requirements, custom values and disabled exclusion", async ({
+  page,
+}) => {
+  await page.goto("/?component=switch&form=1&required=1&formValue=custom");
+  await page.getByRole("button", { name: "Save switch", exact: true }).click();
+  await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText(
+    ""
+  );
+  await page.getByRole("switch").click();
+  await page.getByRole("button", { name: "Save switch", exact: true }).click();
+  await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText(
+    "custom"
+  );
+  await page.goto("/?component=switch&form=1&checked=true&state=disabled");
+  await expect(page.getByRole("switch")).toBeDisabled();
+  await page.getByRole("button", { name: "Save switch", exact: true }).click();
+  await expect(page.getByLabel("Submitted switch", { exact: true })).toHaveText(
+    "missing"
+  );
 });
-test("Switch retains label association, refs and asChild composition", async ({ page }) => {
-    await page.goto("/?component=switch&labelled=1&asChild=1");
-    await page.locator('label[for="subject"]').click();
-    await expect(page.getByRole("switch", { name: "Switch setting", exact: true })).toBeChecked();
-    await page.locator("#switch-read-ref").click();
-    await expect(page.getByLabel("Switch ref", { exact: true })).toHaveText("BUTTON");
-    await page.goto("/?component=switch&asChild=1&anchor=1");
-    await page.getByRole("switch").click();
-    await expect(page.getByRole("switch")).toBeChecked();
-    await page.locator("#switch-read-ref").click();
-    await expect(page.getByLabel("Switch ref", { exact: true })).toHaveText("A");
-    await page.goto("/?component=switch&asChild=1&anchor=1&state=disabled");
-    await expect(page.getByRole("switch")).toBeDisabled();
-    await page.getByRole("switch").dispatchEvent("click");
-    await expect(page.getByRole("switch")).not.toBeChecked();
-    await expect(page.getByLabel("Switch events", { exact: true })).toHaveText("0");
+test("Switch retains label association, refs and asChild composition", async ({
+  page,
+}) => {
+  await page.goto("/?component=switch&labelled=1&asChild=1");
+  await page.locator('label[for="subject"]').click();
+  await expect(
+    page.getByRole("switch", { name: "Switch setting", exact: true })
+  ).toBeChecked();
+  await page.locator("#switch-read-ref").click();
+  await expect(page.getByLabel("Switch ref", { exact: true })).toHaveText(
+    "BUTTON"
+  );
+  await page.goto("/?component=switch&asChild=1&anchor=1");
+  await page.getByRole("switch").click();
+  await expect(page.getByRole("switch")).toBeChecked();
+  await page.locator("#switch-read-ref").click();
+  await expect(page.getByLabel("Switch ref", { exact: true })).toHaveText("A");
+  await page.goto("/?component=switch&asChild=1&anchor=1&state=disabled");
+  await expect(page.getByRole("switch")).toBeDisabled();
+  await page.getByRole("switch").dispatchEvent("click");
+  await expect(page.getByRole("switch")).not.toBeChecked();
+  await expect(page.getByLabel("Switch events", { exact: true })).toHaveText(
+    "0"
+  );
 });
-test("Switch uses original click audio once per activation, and respects cancellation", async ({ page }) => {
-    await page.addInitScript(() => {
-        ;
-        (window as any).switchSounds = [];
-        HTMLMediaElement.prototype.play = function () { (window as any).switchSounds.push({ source: this.src, volume: this.volume, rate: this.playbackRate }); return Promise.resolve(); };
-    });
-    const sounds = () => page.evaluate(() => (window as any).switchSounds);
-    await page.goto("/?component=switch");
-    const control = page.getByRole("switch");
-    await control.hover();
-    await control.focus();
-    expect(await sounds()).toEqual([]);
-    await control.click();
-    expect(await sounds()).toEqual([{ source: minecraftClickSound, volume: .25, rate: 1 }]);
-    await page.keyboard.press("Space");
-    expect(await sounds()).toHaveLength(2);
-    await page.keyboard.press("Enter");
-    expect(await sounds()).toHaveLength(3);
-    await page.goto("/?component=switch&state=disabled");
-    await page.getByRole("switch").dispatchEvent("click");
-    expect(await sounds()).toEqual([]);
-    await page.goto("/?component=switch&prevent=1");
-    await page.getByRole("switch").click();
-    await expect(page.getByRole("switch")).not.toBeChecked();
-    await expect(page.getByLabel("Switch events", { exact: true })).toHaveText("1");
-    await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText("0");
-    expect(await sounds()).toEqual([]);
+test("Switch uses original click audio once per activation, and respects cancellation", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    (window as any).switchSounds = [];
+    HTMLMediaElement.prototype.play = function () {
+      (window as any).switchSounds.push({
+        source: this.src,
+        volume: this.volume,
+        rate: this.playbackRate,
+      });
+      return Promise.resolve();
+    };
+  });
+  const sounds = () => page.evaluate(() => (window as any).switchSounds);
+  await page.goto("/?component=switch");
+  const control = page.getByRole("switch");
+  await control.hover();
+  await control.focus();
+  expect(await sounds()).toEqual([]);
+  await control.click();
+  expect(await sounds()).toEqual([
+    { source: minecraftClickSound, volume: 0.25, rate: 1 },
+  ]);
+  await page.keyboard.press("Space");
+  expect(await sounds()).toHaveLength(2);
+  await page.keyboard.press("Enter");
+  expect(await sounds()).toHaveLength(3);
+  await page.goto("/?component=switch&state=disabled");
+  await page.getByRole("switch").dispatchEvent("click");
+  expect(await sounds()).toEqual([]);
+  await page.goto("/?component=switch&prevent=1");
+  await page.getByRole("switch").click();
+  await expect(page.getByRole("switch")).not.toBeChecked();
+  await expect(page.getByLabel("Switch events", { exact: true })).toHaveText(
+    "1"
+  );
+  await expect(page.getByLabel("Switch changes", { exact: true })).toHaveText(
+    "0"
+  );
+  expect(await sounds()).toEqual([]);
 });

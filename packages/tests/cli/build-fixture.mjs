@@ -1,2 +1,2 @@
-import {buildProductionFixture} from '@grasscn/tests/fixture'
-await buildProductionFixture()
+import { buildProductionFixture } from "@grasscn/tests/fixture";
+await buildProductionFixture();

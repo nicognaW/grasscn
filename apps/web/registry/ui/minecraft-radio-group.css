@@ -1,8 +1,26 @@
 @import "./minecraft-checkbox.css";
 @layer components {
-  .mc-radio-group { --mc-pixel: calc(1px * var(--mc-scale,2)); display: grid; margin: 0; padding: 0; border: 0; min-width: 0; gap: calc(8 * var(--mc-pixel)); }
-  .mc-radio-group[data-orientation="horizontal"] { display: flex; flex-direction: row; }
+  .mc-radio-group {
+    --mc-pixel: calc(1px * var(--mc-scale, 2));
+    display: grid;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+    gap: calc(8 * var(--mc-pixel));
+  }
+  .mc-radio-group[data-orientation="horizontal"] {
+    display: flex;
+    flex-direction: row;
+  }
   /* Vanilla's empty-label Checkbox widget includes a four-pixel label gap. */
-  .mc-checkbox.mc-radio-item { width: calc(21 * var(--mc-pixel)); height: calc(17 * var(--mc-pixel)); background-size: calc(17 * var(--mc-pixel)) calc(17 * var(--mc-pixel)); background-position: left top; }
-  .mc-radio-indicator { display: none; }
+  .mc-checkbox.mc-radio-item {
+    width: calc(21 * var(--mc-pixel));
+    height: calc(17 * var(--mc-pixel));
+    background-size: calc(17 * var(--mc-pixel)) calc(17 * var(--mc-pixel));
+    background-position: left top;
+  }
+  .mc-radio-indicator {
+    display: none;
+  }
 }

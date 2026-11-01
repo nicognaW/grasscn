@@ -1,6 +1,23 @@
 @layer components {
- .mc-typography { margin:0; padding:0; border:0; font-style:normal; letter-spacing:normal; text-transform:none; }
- .mc-typography-list { margin:0; padding-inline-start:calc(12px * var(--mc-scale,2)); list-style-type:square; }
- .mc-typography-table { border-collapse:collapse; text-align:start; }
- .mc-typography-table :is(th,td) { padding:calc(4px * var(--mc-scale,2)); font-weight:normal; }
+  .mc-typography {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .mc-typography-list {
+    margin: 0;
+    padding-inline-start: calc(12px * var(--mc-scale, 2));
+    list-style-type: square;
+  }
+  .mc-typography-table {
+    border-collapse: collapse;
+    text-align: start;
+  }
+  .mc-typography-table :is(th, td) {
+    padding: calc(4px * var(--mc-scale, 2));
+    font-weight: normal;
+  }
 }
