@@ -1222,6 +1222,51 @@
         "route": "/docs/components/form",
         "reason": "Actual primary Form and Combobox pages at ordinary desktop1536 and narrow390 viewport widths, preserving page bounds and default visible composition for review. This is composition evidence rather than native whole-page identity or a component variant matrix."
       }
+    },
+    {
+      "file": "minecraft-documentation.spec.ts",
+      "title": "Minecraft documentation delivers maintained examples for all nine installable items",
+      "titlePath": [
+        "Minecraft documentation delivers maintained examples for all nine installable items"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/book",
+        "reason": "Actual nine primary documentation pages and matching maintained source copy; navigation does not prove every native state."
+      }
+    },
+    {
+      "file": "minecraft-documentation.spec.ts",
+      "title": "Minecraft primary examples expose paging selection status and trade callbacks",
+      "titlePath": [
+        "Minecraft primary examples expose paging selection status and trade callbacks"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/book",
+        "reason": "Ordinary first examples: book paging, slot selection, damage, advancement selection, sign text, built-in skin readiness, palette-map marker, Bread result and roster selection."
+      }
+    },
+    {
+      "file": "minecraft-documentation.spec.ts",
+      "title": "documentation empty Hotbar matches native selection zero on explicit backdrop",
+      "titlePath": [
+        "documentation empty Hotbar matches native selection zero on explicit backdrop"
+      ],
+      "components": [
+        "hotbar"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/hotbar",
+        "reason": "Actual primary empty nine-slot Hotbar at scale2, selection0, uniform #202020; exactly retained native hotbar-0-s2 input and geometry. Other states/scales remain outside selection."
+      }
     }
   ]
 }
