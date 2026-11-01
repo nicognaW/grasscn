@@ -811,10 +811,14 @@ try {
         .getByRole("button", { exact: true, name: "Save player" })
         .click();
       await expect(
-        form.getByRole("status", { name: "Saved player" })
+        form
+          .getByRole("status", { exact: true, name: "Saved player" })
+          .locator(":scope > [data-slot=label] > .mc-text-accessible")
       ).toHaveText("Alex");
       await expect(
-        form.getByRole("status", { name: "Saved world" })
+        form
+          .getByRole("status", { exact: true, name: "Saved world" })
+          .locator(":scope > [data-slot=label] > .mc-text-accessible")
       ).toHaveText("Consumer world");
       await form.getByRole("button", { exact: true, name: "Reset" }).click();
       assert.equal(
