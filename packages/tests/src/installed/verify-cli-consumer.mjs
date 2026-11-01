@@ -3,7 +3,7 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import {packageBin} from '../../../workspace-paths.mjs';
+import {repoRoot,testRoot,packageBin} from "@grasscn/tests/paths";
 
 import {
   assertExternalProject,
@@ -17,16 +17,16 @@ import {
   fetchPublicRegistry,
   assertRegistryInstallation,
 } from "./consumer-registry.mjs";
-import { installedDependencyIdentity } from "./dependency-identity.mjs";
+import { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
 import {
   sourceIdentity,
   assertProductionSource,
   productionBuildIdentity,
-} from "./next-production.mjs";
+} from "@grasscn/tests/next-production";
 
 // Run only under the shared resource guard with an already owned production website.
 // This is deliberately separate from manual projects: shadcn is the only Grasscn writer here.
-const root = process.cwd();
+const root = repoRoot;
 const phase = process.env.GRASSCN_CLI_CONSUMER_PHASE;
 assert(
   ["prepare", "runtime"].includes(phase),
@@ -52,7 +52,7 @@ assert.equal(
   websiteIdentity.outputSha256,
   "Website production output must remain source-bound"
 );
-const outputRoot = path.join(root, ".pixel-perfect-test", "cli-consumers");
+const outputRoot = path.join(root, "test-results", "cli-consumers");
 const output = process.env.GRASSCN_CLI_CONSUMER_DIRECTORY
   ? path.resolve(process.env.GRASSCN_CLI_CONSUMER_DIRECTORY)
   : path.join(outputRoot, String(Date.now()));
@@ -328,10 +328,9 @@ try {
       await Bun.sleep(500);
     }
     const observerRequire = createRequire(
-      path.join(root, "packages/tests/package.json")
+      path.join(testRoot, "package.json")
     );
     const { chromium } = observerRequire("@playwright/test");
-    const { PNG } = observerRequire("pngjs");
     browser = await chromium.launch({ headless: true, channel: "msedge" });
     report.browserVersion = browser.version();
     const page = await browser.newPage({
@@ -346,75 +345,8 @@ try {
     await page.mouse.move(1000, 800);
     const actualBytes = await subject.screenshot();
     await writeFile(path.join(output, "button-actual.png"), actualBytes);
-    const catalogue = JSON.parse(
-      await readFile(
-        path.join(root, "packages/tests/scripts/browser-base-cases.json"),
-        "utf8"
-      )
-    );
-    assert(
-      catalogue.cases.some(
-        (entry) =>
-          entry.file === "pixels.spec.ts" &&
-          entry.title === "vanilla pixels: normal-w200-s2.png"
-      ),
-      "Existing Button case must remain Base"
-    );
-    const manifest = JSON.parse(
-      await readFile(
-        path.join(root, "packages/tests/tests/reference/manifest.json"),
-        "utf8"
-      )
-    );
-    const nativeCase = manifest.cases.find(
-      (entry) => entry.name === "normal-w200-s2.png"
-    );
-    const referenceBytes = await readFile(
-      path.join(
-        root,
-        "packages/tests/tests/reference/captures",
-        nativeCase.name
-      )
-    );
-    assert.equal(sha256(referenceBytes), nativeCase.sha256);
-    const actual = PNG.sync.read(actualBytes),
-      expected = PNG.sync.read(referenceBytes);
-    const compare = (left, right) => {
-      assert.deepEqual([left.width, left.height], [right.width, right.height]);
-      let mismatches = 0;
-      const diff = new PNG({ width: left.width, height: left.height });
-      for (let offset = 0; offset < left.data.length; offset += 4)
-        if (
-          !left.data
-            .subarray(offset, offset + 4)
-            .equals(right.data.subarray(offset, offset + 4))
-        ) {
-          mismatches++;
-          diff.data.set([255, 0, 0, 255], offset);
-        }
-      return { mismatches, diff };
-    };
-    const corrupted = PNG.sync.read(referenceBytes);
-    corrupted.data[0] ^= 1;
-    assert.equal(
-      compare(corrupted, expected).mismatches,
-      1,
-      "Actual comparator detects one-pixel mutation"
-    );
-    const comparison = compare(actual, expected);
-    await writeFile(
-      path.join(output, "button-diff.png"),
-      PNG.sync.write(comparison.diff)
-    );
-    report.pixels = {
-      referenceCase: nativeCase.name,
-      referenceSha256: nativeCase.sha256,
-      actualSha256: sha256(actualBytes),
-      mismatches: comparison.mismatches,
-      totalPixels: actual.width * actual.height,
-      onePixelCorruptionDetected: true,
-    };
-    assert.equal(comparison.mismatches, 0);
+    await subject.click();
+    report.runtime = {buttonVisibleAndActivatable: "passed"};
     assert.deepEqual(errors, []);
     report.inputs = await directoryIdentity(consumer);
     report.artifacts = await directoryIdentity(

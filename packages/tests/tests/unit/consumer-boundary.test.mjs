@@ -7,7 +7,7 @@ import {
   assertExternalProject,
   assertIndependentDependencies,
   consumerEnvironment,
-} from "../scripts/consumer-boundary.mjs";
+} from "@grasscn/tests/consumer-boundary";
 
 test("external consumer rejects repository descendants and ancestors", async () => {
   const root = await mkdtemp(path.join(tmpdir(), "grasscn-boundary-"));

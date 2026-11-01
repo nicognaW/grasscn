@@ -6,7 +6,7 @@ import path from "node:path";
 import {
   fetchPublicRegistry,
   assertRegistryInstallation,
-} from "../scripts/consumer-registry.mjs";
+} from "@grasscn/tests/consumer-registry";
 
 test("public registry consumer rejects a responding host from another source build", async () => {
   const source = await mkdtemp(path.join(tmpdir(), "grasscn-public-registry-"));

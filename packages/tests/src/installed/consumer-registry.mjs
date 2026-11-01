@@ -3,7 +3,7 @@ import { readFile, stat, realpath } from "node:fs/promises";
 import path from "node:path";
 
 import { sha256 } from "./consumer-boundary.mjs";
-import { installedRegistryFile } from "./installed-registry-file.mjs";
+import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 
 export async function fetchPublicRegistry(origin, items, source) {
   const payloads = new Map();
