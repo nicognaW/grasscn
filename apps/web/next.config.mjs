@@ -12,6 +12,8 @@ export default withMDX({
   transpilePackages: ["shiki"],
   experimental: {
     cpus: 1,
+    // Fumadocs customizes Webpack; release each compiler heap before prerendering.
+    webpackBuildWorker: true,
     // Share loader runtimes across MDX/PostCSS work within the local build budget.
     turbopackPluginRuntimeStrategy: "workerThreads",
   },
