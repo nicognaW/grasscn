@@ -104,6 +104,7 @@ const BreadcrumbPage = ({
     <MinecraftProse
       as="span"
       data-slot="breadcrumb-page"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn BreadcrumbPage's disabled span link semantics.
       role="link"
       aria-disabled="true"
       aria-current="page"

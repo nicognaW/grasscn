@@ -3,10 +3,10 @@ import * as React from "react";
 import { paintToast } from "./minecraft-toast-gpu";
 import { toastLayout } from "./minecraft-toast-layout";
 
-export type ToastMotion = {
+export interface ToastMotion {
   phase: "entering" | "exiting" | "shown" | "hidden";
   start: number;
-};
+}
 
 export const MinecraftToastGraphic = ({
   title,

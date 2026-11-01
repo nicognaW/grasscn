@@ -66,6 +66,7 @@ const Spinner = ({
   return (
     <svg
       data-slot="spinner"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Spinner's SVG status indicator and SVG props/ref contract.
       role="status"
       aria-label="Loading"
       viewBox={`0 0 ${logicalWidth} 9`}

@@ -40,6 +40,7 @@ const ButtonGroup = ({
     scale?: 1 | 2 | 3;
   }) => (
   <div
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn ButtonGroup's div group and div props/ref contract.
     role="group"
     data-slot="button-group"
     data-orientation={orientation}

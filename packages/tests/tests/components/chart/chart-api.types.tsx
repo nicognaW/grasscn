@@ -28,7 +28,12 @@ export const api = (
     aria-label="Activity"
   >
     <BarChart data={[{ count: 1 }]}>
-      <Bar dataKey="count" shape={ChartPixelBar} isAnimationActive={false} />
+      <Bar
+        dataKey="count"
+        // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- This contract exercises Recharts' actual renderer prop.
+        shape={ChartPixelBar}
+        isAnimationActive={false}
+      />
       <ChartFpsFrame labels={["1 min", "1 avg", "1 max"]} />
       <ChartTooltip
         content={

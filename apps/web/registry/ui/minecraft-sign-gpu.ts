@@ -154,6 +154,7 @@ export function paintSignGpu(
   );
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, font);
   const rgb = Number.parseInt(color.slice(1), 16);
+  /* oxlint-disable no-bitwise -- The shader tint receives the three unpacked bytes of the packed RGB sign color. */
   gl.uniform4f(
     tint,
     ((rgb >> 16) & 255) / 255,
@@ -161,6 +162,7 @@ export function paintSignGpu(
     (rgb & 255) / 255,
     1
   );
+  /* oxlint-enable no-bitwise */
   const ts = f((hanging ? 1 : f(0.9765628)) * scale);
 
   for (const [index, line] of lines.entries()) {

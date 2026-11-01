@@ -88,14 +88,17 @@ const MinecraftMap = ({
       const rgba = minecraftMapPalette[color];
       const j = i * 4;
 
+      // oxlint-disable-next-line no-bitwise -- Map palette bytes reserve their low two bits for shade; a zero base-color field is transparent.
       if (color >> 2 === 0) {
         continue;
       }
 
+      /* oxlint-disable no-bitwise -- Unpack the palette ARGB word into the four ImageData byte channels. */
       image.data[j] = (rgba >>> 16) & 255;
       image.data[j + 1] = (rgba >>> 8) & 255;
       image.data[j + 2] = rgba & 255;
       image.data[j + 3] = rgba >>> 24;
+      /* oxlint-enable no-bitwise */
     }
 
     ctx.putImageData(image, 0, 0);
@@ -268,6 +271,7 @@ const LocatorDot = ({
         : 0xff_ff_ff;
 
       for (let i = 0; i < pixels.data.length; i += 4) {
+        /* oxlint-disable no-bitwise -- Tint each texture byte with the corresponding channel of the packed RGB color. */
         pixels.data[i] = Math.round(
           (pixels.data[i] * ((raw >> 16) & 255)) / 255
         );
@@ -277,6 +281,7 @@ const LocatorDot = ({
         pixels.data[i + 2] = Math.round(
           (pixels.data[i + 2] * (raw & 255)) / 255
         );
+        /* oxlint-enable no-bitwise */
         pixels.data[i + 3] = pixels.data[i + 3];
       }
 

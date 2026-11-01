@@ -79,7 +79,12 @@ export const FpsChartExample = ({
       >
         <XAxis hide padding={{ left: 0, right: 0 }} />
         <YAxis hide domain={domain} allowDataOverflow />
-        <Bar dataKey={dataKey} isAnimationActive={false} shape={ChartPixelBar}>
+        <Bar
+          dataKey={dataKey}
+          isAnimationActive={false}
+          // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
+          shape={ChartPixelBar}
+        >
           {rows.map((row, index) => (
             <Cell
               key={index}
