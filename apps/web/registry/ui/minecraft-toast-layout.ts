@@ -3,13 +3,13 @@ import { minecraftInputAssets } from "./minecraft-input-assets";
 import { toastGlyphAtlas } from "./minecraft-toast-atlas";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
-export type ToastGlyph = {
+export interface ToastGlyph {
   code: number;
   pixels: Uint8Array;
   width: number;
   height: number;
   advance: number;
-};
+}
 
 let source: Promise<Uint8ClampedArray> | undefined;
 
