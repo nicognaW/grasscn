@@ -1,0 +1,37 @@
+---
+title: Collapsible
+description: Button-triggered disclosure with measured Minecraft text.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Button-triggered disclosure with measured Minecraft text.
+
+## Preview
+
+<ComponentExample name="collapsible-example" />
+
+## Usage
+
+open/onOpenChange control this example. Without them the Base UI root owns disclosure state. CollapsibleTrigger is a native-skinned Button; CollapsibleContent defaults to align="left" and wrap=true. maxWidth is a logical text width, independent of the outer container width.
+
+## Composition
+
+Scalar content uses the measured disclosure text path; rich children render separately. Compose links or fields inside Content as ordinary interactive children and let Trigger own disclosure. Open/closed whole-panel geometry is a web adaptation, while the Button constituent retains its declared evidence.
+
+## Installation
+
+<Installation name="collapsible" title="Collapsible" />
+
+## Component source
+
+<ComponentSource name="collapsible" title="Collapsible" />
+
+## Interactive playground
+
+<LayoutPlayground name="collapsible" />
+
+For the inherited interaction contract, see [Base UI Collapsible](https://base-ui.com/react/components/collapsible). The restrictions above describe the installed Grasscn implementation.

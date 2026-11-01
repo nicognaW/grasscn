@@ -895,6 +895,149 @@
       }
     },
     {
+      "file": "next-showcase.spec.ts",
+      "title": "homepage application examples keep their default public interactions",
+      "titlePath": [
+        "homepage application examples keep their default public interactions"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "Default homepage application examples: button activation, project submission, chat, savings and component install picker wired to the shared package manager command selector."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart showcase exposes the complete executable example and chart destinations",
+      "titlePath": [
+        "chart showcase exposes the complete executable example and chart destinations"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default chart overview code copy and Bar navigation/data disclosure."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "homepage default checkbox retains its captured Minecraft pixels",
+      "titlePath": [
+        "homepage default checkbox retains its captured Minecraft pixels"
+      ],
+      "components": ["website", "checkbox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "The initial Remember me checked Checkbox at scale 2 in the default Essentials homepage panel, integrated context compared to the unchanged native checked-normal captured reference."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart showcase default frame timing matches its original Minecraft renderer",
+      "titlePath": [
+        "chart showcase default frame timing matches its original Minecraft renderer"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default Frame timing panel uses all 240 maintained samples, frame rate limit 120, logical width 242, scale 1 at the standard desktop viewport; compare original FpsDebugChart capture from independently repeatable native launches."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart example tabs remain visible and match their Minecraft modes",
+      "titlePath": [
+        "chart example tabs remain visible and match their Minecraft modes"
+      ],
+      "components": ["website", "chart", "tabs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default API response time chart Preview/Code controls must both be fully visible; compare the normal selected Preview and selected Code modes, with focus moved into the Copy action as in the default code-copy journey. Chart-only width 120 logical at scale 2."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "layout documentation exposes its actual examples and complete source",
+      "titlePath": [
+        "layout documentation exposes its actual examples and complete source"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/card",
+        "reason": "Visits each authored canonical default page and switches its actual primary example to complete maintained source; no variants or matrix."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "default composed documentation examples retain their owned state and callbacks",
+      "titlePath": [
+        "default composed documentation examples retain their owned state and callbacks"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/card",
+        "reason": "Ordinary Card save, Tabs World selection, World details and Trace disclosure, numbered-page selection, Progress completion, Empty Create world and Resizable drag/reset shown in the maintained default examples; no variant matrix."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "documentation prose styles preserve native breadcrumb ink and keyboard focus",
+      "titlePath": [
+        "documentation prose styles preserve native breadcrumb ink and keyboard focus"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/breadcrumb",
+        "reason": "Default Home breadcrumb anchor inside documentation follows its real destination and retains registry-owned native text ink and visible keyboard focus."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "default code renderer copies its own complete source and Sonner uses one host",
+      "titlePath": [
+        "default code renderer copies its own complete source and Sonner uses one host"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/code-block",
+        "reason": "Primary installed code renderer copies its exact value and primary Sonner trigger produces one toast with one page-owned host."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "default layout documentation Separator and Progress match retained native cases",
+      "titlePath": [
+        "default layout documentation Separator and Progress match retained native cases"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/separator",
+        "reason": "Only the initial scale2 header/footer separators at logical width200 and pink unnotched half-filled Progress on #202020, matching the real default previews; no extra states."
+      }
+    },
+    {
+      "file": "layout-documentation.spec.ts",
+      "title": "default responsive Sidebar composition toggles within its desktop context and mobile portal",
+      "titlePath": [
+        "default responsive Sidebar composition toggles within its desktop context and mobile portal"
+      ],
+      "components": ["sidebar", "website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/sidebar",
+        "reason": "The named default responsive Sidebar example visibly demonstrates its actual offcanvas control at desktop and mobile widths; one ordinary trigger and Escape-close path, no icon or edge-state matrix."
+      }
+    },
+    {
       "file": "docs-inputs.spec.ts",
       "title": "Slider docs default edits one controlled thumb",
       "titlePath": ["Slider docs default edits one controlled thumb"],

@@ -1,0 +1,35 @@
+---
+title: Kbd
+description: Passive keyboard labels using Minecraft button artwork.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Passive keyboard labels using Minecraft button artwork.
+
+## Preview
+
+<ComponentExample name="kbd-example" />
+
+## Usage
+
+Kbd renders a kbd element and KbdGroup a span. These passive labels have no activation or keyboard shortcut handler. Scale defaults to 2; intrinsic width follows measured text and Unicode glyph loading. Register the actual shortcut in your application and describe its scope separately.
+
+## Composition
+
+Compose one Kbd per key inside KbdGroup and label a chord if its reading order is ambiguous. The button surface is visual reuse, not button semantics, click audio or native hotkey registration.
+
+## Installation
+
+<Installation name="kbd" title="Kbd" />
+
+## Component source
+
+<ComponentSource name="kbd" title="Kbd" />
+
+## Interactive playground
+
+<LayoutPlayground name="kbd" />

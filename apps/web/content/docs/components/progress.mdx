@@ -1,0 +1,37 @@
+---
+title: Progress
+description: Minecraft boss-bar textures with controlled progress semantics.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Minecraft boss-bar textures with controlled progress semantics.
+
+## Preview
+
+<ComponentExample name="progress-example" />
+
+## Usage
+
+value defaults to 0; absent or invalid max uses 100. The default color is pink and overlay is progress. The example starts at 50 and completes through a controlled value. Invalid values draw an empty bar; no indeterminate animation is promised.
+
+## Composition
+
+Colors are pink, blue, red, green, yellow, purple and white; overlays are progress, notched_6, notched_10, notched_12 and notched_20. ProgressTrack, ProgressIndicator, ProgressLabel and ProgressValue expose further Base UI composition. Use the playground for colors, segments and slider-controlled values.
+
+## Installation
+
+<Installation name="progress" title="Progress" />
+
+## Component source
+
+<ComponentSource name="progress" title="Progress" />
+
+## Interactive playground
+
+<LayoutPlayground name="progress" />
+
+For the inherited interaction contract, see [Base UI Progress](https://base-ui.com/react/components/progress). The restrictions above describe the installed Grasscn implementation.

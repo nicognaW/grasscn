@@ -1,0 +1,37 @@
+---
+title: Scroll Area
+description: Vertical scrolling with the native track and thumb.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Vertical scrolling with the native track and thumb.
+
+## Preview
+
+<ComponentExample name="scroll-area-example" />
+
+## Usage
+
+Give ScrollArea a bounded width and height. viewportRef addresses the scrollable div, not the root. viewportProps carries its label and onScroll handler. type="auto" and a vertical ScrollBar are the supported modes; horizontal or alternate scrollbar modes throw. disabled stops scrolling without disabling buttons inside.
+
+## Composition
+
+Put interactive rows inside the viewport and move scrollTop through viewportRef for application navigation. ScrollBar is separately exported for vertical composition. The retained playground demonstrates Top/Middle/Bottom, row selection and the disabled-scrolling state.
+
+## Installation
+
+<Installation name="scroll-area" title="Scroll Area" />
+
+## Component source
+
+<ComponentSource name="scroll-area" title="Scroll Area" />
+
+## Interactive playground
+
+<LayoutPlayground name="scroll-area" />
+
+For the inherited interaction contract, see [Base UI Scroll Area](https://base-ui.com/react/components/scroll-area). The restrictions above describe the installed Grasscn implementation.

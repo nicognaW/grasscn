@@ -8,9 +8,11 @@ import { ExampleTabs } from "./example-tabs";
 export async function ComponentExample({
   name,
   title,
+  tabListWidth,
 }: {
   name: string;
   title?: string;
+  tabListWidth?: number;
 }) {
   if (!Object.hasOwn(examples, name))
     return (
@@ -27,6 +29,7 @@ export async function ComponentExample({
         code={code}
         filename={entry.filename}
         title={title ?? entry.title}
+        tabListWidth={tabListWidth}
       >
         <entry.Component />
       </ExampleTabs>
