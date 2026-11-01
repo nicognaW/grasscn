@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { registryFile } from "@tests/paths";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
@@ -292,10 +292,10 @@ test("website code uses the shared Shiki highlighter without changing source tex
   await expect(implementation.locator(".mc-code-token").first()).toBeVisible();
   const displayedCode = await implementation.locator("code").textContent();
   expect(displayedCode?.replaceAll("\r\n", "\n")).toBe(
-    readFileSync(
-      resolveRepositoryPath("registry/ui/button.tsx", testRoot),
-      "utf-8"
-    ).replaceAll(/\r\n/gu, "\n")
+    readFileSync(registryFile("ui/button.tsx"), "utf-8").replaceAll(
+      "\r\n",
+      "\n"
+    )
   );
 
   const colors = await implementation

@@ -10,7 +10,8 @@ import {
   assertProductionSource,
   productionBuildIdentity,
 } from "@grasscn/tests/next-production";
-import { repoRoot, testRoot, packageBin } from "@grasscn/tests/paths";
+import { repoRoot, testRoot } from "@grasscn/tests/paths";
+import { packageBin } from "@grasscn/tests/tooling";
 
 import {
   assertExternalProject,

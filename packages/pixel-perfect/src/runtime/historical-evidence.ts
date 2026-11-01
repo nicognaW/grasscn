@@ -14,7 +14,10 @@ const sourceSchema = z.object({
 
 const bindingSchema = z.object({
   component: z.string(),
-  manifest: z.string(),
+  manifest: z.string().nullable(),
+  proofKind: z
+    .enum(["native-installation", "utility-installation", "utility-behavior"])
+    .default("native-installation"),
   registryItem: z.string(),
   reportPath: z.string(),
 });
@@ -68,6 +71,8 @@ const componentSchema = z.object({
   pixelVerification: z.object({
     additionalInstallationReports: z.record(z.string(), z.string()).optional(),
     additionalManifests: z.array(z.string()).optional(),
+    behaviorEvidenceScope: z.string().optional(),
+    behaviorReport: z.string().nullish(),
     evidenceScope: z.string().optional(),
     installationReport: z.string().nullish(),
     manifest: z.string().nullish(),
@@ -104,6 +109,10 @@ const sourceReportSchema = z.object({
   ),
 });
 
+export type HistoricalArchiveInput = z.input<typeof archiveSchema>;
+
+export type HistoricalPolicyInput = z.input<typeof policySchema>;
+
 type Component = z.infer<typeof componentSchema>;
 
 type Binding = z.infer<typeof bindingSchema>;
@@ -136,6 +145,7 @@ interface Evidence {
   historicalIntegrity: string;
   originCommit: string;
   reports: Applicability[];
+  currentBehaviorCoverage: string;
   currentPixelCoverage: string;
 }
 
@@ -152,6 +162,7 @@ const key = (entry: Binding) =>
     entry.component,
     entry.registryItem,
     entry.manifest,
+    entry.proofKind,
     entry.reportPath,
   ]);
 
@@ -210,6 +221,54 @@ export const historicalBindings = (map: z.infer<typeof mapSchema>) => {
       );
     }
 
+    if (
+      component.pixelVerification.status === "not-applicable-unskinned-utility"
+    ) {
+      assert.equal(
+        component.pixelVerification.manifest,
+        null,
+        "Unskinned utility must not claim a native manifest"
+      );
+      assert.equal(
+        component.pixelVerification.behaviorEvidenceScope,
+        historicalScope,
+        "Utility behavior reports require historical scope"
+      );
+
+      const registryItem = z
+        .string()
+        .min(1)
+        .parse(component.implementation.registryItem);
+
+      const behaviorReport = z
+        .string()
+        .min(1)
+        .parse(component.pixelVerification.behaviorReport);
+
+      const installationReport = z
+        .string()
+        .min(1)
+        .parse(component.pixelVerification.installationReport);
+
+      result.push(
+        {
+          component: component.name,
+          manifest: null,
+          proofKind: "utility-behavior",
+          registryItem,
+          reportPath: safePath(behaviorReport),
+        },
+        {
+          component: component.name,
+          manifest: null,
+          proofKind: "utility-installation",
+          registryItem,
+          reportPath: safePath(installationReport),
+        }
+      );
+      continue;
+    }
+
     if (component.pixelVerification.status !== "verified-declared-cases") {
       continue;
     }
@@ -249,6 +308,7 @@ export const historicalBindings = (map: z.infer<typeof mapSchema>) => {
       result.push({
         component: component.name,
         manifest: safePath(manifest),
+        proofKind: "native-installation",
         registryItem,
         reportPath: safePath(reportPath),
       });
@@ -540,6 +600,8 @@ export const validateHistoricalEvidence = async ({
   );
 
   return {
+    currentBehaviorCoverage:
+      "Not established by historical integrity; fresh ordinary and consumer checks cover their actual current cases.",
     currentPixelCoverage:
       "Not established by historical integrity; fresh selected Base receipts cover only their actual current cases.",
     historicalIntegrity: "valid",
@@ -569,6 +631,7 @@ export const historicalComponentSummary = (
 
   return {
     currentApplicability,
+    currentBehaviorCoverage: evidence.currentBehaviorCoverage,
     currentPixelCoverage: evidence.currentPixelCoverage,
     historicalReports: reports,
     implementation: {
@@ -603,4 +666,36 @@ export const historicalMapComponents = (text: string, evidence: Evidence) => {
   return map.components.map((component) =>
     historicalComponentSummary(component, evidence)
   );
+};
+
+/** Recorded utility reports must authenticate the same source versions, independently of current applicability. */
+export const assertHistoricalUtilitySources = (
+  behaviorText: string,
+  installationText: string
+) => {
+  const behavior = sourceReportSchema.parse(JSON.parse(behaviorText));
+  const installation = sourceReportSchema.parse(JSON.parse(installationText));
+
+  const versions = new Map(
+    behavior.files.map((file) => [file.path, file.sourceSha256])
+  );
+
+  assert.equal(
+    versions.size,
+    behavior.files.length,
+    "Duplicate utility behavior source"
+  );
+  assert.deepEqual(
+    [...versions.keys()].toSorted(compare),
+    installation.files.map((file) => file.path).toSorted(compare),
+    "Utility source sets differ"
+  );
+
+  for (const file of installation.files) {
+    assert.equal(
+      versions.get(file.path),
+      file.sourceSha256,
+      "Utility report source versions differ"
+    );
+  }
 };

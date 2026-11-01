@@ -456,7 +456,8 @@ try {
                   report.fixtureBundle.sha256)
           ),
           file,
-          pixelPerfectRoot
+          pixelPerfectRoot,
+          repoRoot
         )
       );
       // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.

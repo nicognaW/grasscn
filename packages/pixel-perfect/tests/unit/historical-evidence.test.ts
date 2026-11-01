@@ -6,9 +6,14 @@ import os from "node:os";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
 
+import type {
+  HistoricalArchiveInput,
+  HistoricalPolicyInput,
+} from "../../src/runtime/historical-evidence";
 import {
   validateHistoricalEvidence,
   assertCurrentSourceEvidence,
+  assertHistoricalUtilitySources,
   historicalMapComponents,
 } from "../../src/runtime/historical-evidence";
 
@@ -39,7 +44,7 @@ const prepareFixture = async (directory: string) => {
     reportSha256: digest(reportBytes),
   };
 
-  const archive = {
+  const archive: HistoricalArchiveInput = {
     files: [
       {
         bytes: original.length,
@@ -57,7 +62,7 @@ const prepareFixture = async (directory: string) => {
     scope,
   };
 
-  const transitions = {
+  const transitions: HistoricalPolicyInput = {
     files: [
       {
         classification: "preexisting-main-source-drift",
@@ -99,7 +104,7 @@ const prepareFixture = async (directory: string) => {
 
   const json = async (
     name: string,
-    value: typeof archive | typeof transitions
+    value: HistoricalArchiveInput | HistoricalPolicyInput
   ) => {
     await writeFile(path.join(archiveDirectory, name), JSON.stringify(value));
   };
@@ -258,5 +263,114 @@ test("extra unused historical archive and transition bindings fail", async () =>
       validateHistoricalEvidence(options),
       /Unused historical archive/u
     );
+  });
+});
+
+test("explicit historical utility behavior and installation pair has no current grant and rejects wrong roles or changed behavior", async () => {
+  await fixture(async (options) => {
+    const behaviorPath = "tests/reference/example/behavior.json";
+
+    const files = [
+      {
+        path: "example.css",
+        sourceSha256: options.archive.files[0].sourceSha256,
+      },
+    ];
+
+    const behavior = {
+      cases: [{ passed: true }],
+      files,
+      kind: "unskinned-web-utility",
+      nativeReferenceNotApplicable: true,
+      scope: "Recorded original utility cases only",
+    };
+
+    const behaviorBytes = Buffer.from(JSON.stringify(behavior));
+
+    const installationText = await readFile(
+      options.resolvePath(options.reportPath),
+      "utf-8"
+    );
+
+    const [original] = options.map.components;
+
+    const component = {
+      ...original,
+      pixelVerification: {
+        ...original.pixelVerification,
+        behaviorEvidenceScope: scope,
+        behaviorReport: behaviorPath,
+        manifest: null,
+        status: "not-applicable-unskinned-utility",
+      },
+    };
+
+    const behaviorBinding: HistoricalArchiveInput["reports"][number] = {
+      ...options.archive.reports[0],
+      manifest: null,
+      proofKind: "utility-behavior",
+      reportPath: behaviorPath,
+      reportSha256: digest(behaviorBytes),
+    };
+
+    const installationBinding: HistoricalArchiveInput["reports"][number] = {
+      ...options.archive.reports[0],
+      manifest: null,
+      proofKind: "utility-installation",
+    };
+
+    const archive = {
+      ...options.archive,
+      reports: [behaviorBinding, installationBinding],
+    };
+
+    const inputs = {
+      ...options,
+      map: { ...options.map, components: [component] },
+    };
+
+    await writeFile(options.resolvePath(behaviorPath), behaviorBytes);
+    await options.json("manifest.json", archive);
+
+    const evidence = await validateHistoricalEvidence(inputs);
+
+    assert.equal(evidence.reports.length, 2);
+    assert.equal(
+      evidence.reports.every(
+        (report) => report.manifest === null && report.scope === scope
+      ),
+      true
+    );
+    assert.match(evidence.currentBehaviorCoverage, /Not established/u);
+    assert.throws(() => {
+      assertCurrentSourceEvidence(evidence);
+    }, /current-source/u);
+    assertHistoricalUtilitySources(JSON.stringify(behavior), installationText);
+
+    const wrongVersions = {
+      ...behavior,
+      files: [{ path: "example.css", sourceSha256: "unrecorded" }],
+    };
+
+    assert.throws(() => {
+      assertHistoricalUtilitySources(
+        JSON.stringify(wrongVersions),
+        installationText
+      );
+    }, /source versions differ/u);
+    await options.json("manifest.json", {
+      ...archive,
+      reports: [
+        { ...behaviorBinding, proofKind: "utility-installation" },
+        installationBinding,
+      ],
+    });
+    await assert.rejects(validateHistoricalEvidence(inputs), /binding/u);
+    await options.json("manifest.json", archive);
+    await writeFile(
+      options.resolvePath(behaviorPath),
+      `${behaviorBytes.toString("utf-8")} `
+    );
+    await assert.rejects(validateHistoricalEvidence(inputs), /report hash/u);
   });
 });

@@ -1,8 +1,10 @@
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 const differences = (left: PNG, right: PNG) => {
@@ -24,7 +26,7 @@ const differences = (left: PNG, right: PNG) => {
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
     const metadata = JSON.parse(
-      await readFile(resolveRepositoryPath(file, pixelPerfectRoot), "utf8")
+      readFileSync(evidenceFile(file, pixelPerfectRoot), "utf-8")
     );
     expect(metadata.name).toBe("grasscn");
     if (metadata.packages?.[""])
@@ -32,10 +34,7 @@ test("Grasscn project identity and native branding assets are consistent", async
   }
   const provenance = JSON.parse(
     await readFile(
-      resolveRepositoryPath(
-        "preview/branding.provenance.json",
-        pixelPerfectRoot
-      ),
+      evidenceFile("preview/branding.provenance.json", pixelPerfectRoot),
       "utf8"
     )
   );
@@ -47,7 +46,7 @@ test("Grasscn project identity and native branding assets are consistent", async
     { sha256: string },
   ][]) {
     const bytes = await readFile(
-      resolveRepositoryPath(`preview/assets/${file}`, pixelPerfectRoot)
+      evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
     );
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       record.sha256
@@ -56,7 +55,7 @@ test("Grasscn project identity and native branding assets are consistent", async
   for (const c of provenance.cases) {
     const one = PNG.sync.read(
       await readFile(
-        resolveRepositoryPath(
+        evidenceFile(
           `tests/reference/branding/native-one/${c.filename}`,
           pixelPerfectRoot
         )
@@ -64,7 +63,7 @@ test("Grasscn project identity and native branding assets are consistent", async
     );
     const two = PNG.sync.read(
       await readFile(
-        resolveRepositoryPath(
+        evidenceFile(
           `tests/reference/branding/native-two/${c.filename}`,
           pixelPerfectRoot
         )
@@ -77,7 +76,7 @@ test("Grasscn project identity and native branding assets are consistent", async
 
 test("Branding source grass matches its native scale3 capture independently of website geometry", async () => {
   const svg = await readFile(
-    resolveRepositoryPath("preview/assets/grasscn-logo.svg", pixelPerfectRoot),
+    evidenceFile("preview/assets/grasscn-logo.svg", pixelPerfectRoot),
     "utf-8"
   );
 
@@ -99,7 +98,7 @@ test("Branding source grass matches its native scale3 capture independently of w
 
   const native = PNG.sync.read(
     await readFile(
-      resolveRepositoryPath(
+      evidenceFile(
         "tests/reference/branding/native-one/grass-block-black-s3.png",
         pixelPerfectRoot
       )

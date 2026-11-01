@@ -10,14 +10,17 @@ import {
   assertProductionSource,
   productionBuildIdentity,
 } from "@grasscn/tests/next-production";
-import { pixelPerfectRoot, pixelPerfectTestRoot } from "@grasscn/tests/paths";
 import {
   readPreparedConsumerProjects,
   servePreparedConsumer,
   consumerVerificationEnvironment,
 } from "@grasscn/tests/prepared-consumers";
 
-import { referenceFile } from "../paths.ts";
+import {
+  pixelPerfectRoot,
+  pixelPerfectTestRoot,
+  referenceFile,
+} from "../paths.ts";
 import {
   parseNativeManifest,
   parseBaseCatalogue,

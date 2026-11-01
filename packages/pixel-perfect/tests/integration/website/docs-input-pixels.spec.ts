@@ -2,11 +2,12 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { test, expect } from "@grasscn/pixel-perfect/test";
-import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
+import { pixelPerfectRoot } from "@ppt/paths";
 import {
   parseNativeManifest,
   nativeReference,
 } from "@ppt/runtime/docs-reference-types";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
 const comparePixels = (actual: PNG, expected: PNG) => {
@@ -113,7 +114,7 @@ for (const c of cases) {
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
     }
 
-    const referencePath = resolveRepositoryPath(
+    const referencePath = evidenceFile(
       `tests/reference/${c.family}/captures/${c.file}`,
       pixelPerfectRoot
     );
@@ -122,7 +123,7 @@ for (const c of cases) {
 
     const manifest = parseNativeManifest(
       await readFile(
-        resolveRepositoryPath(
+        evidenceFile(
           `tests/reference/${c.family}/manifest.json`,
           pixelPerfectRoot
         ),

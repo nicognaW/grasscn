@@ -855,7 +855,8 @@
         "manifest": null,
         "scope": "Unskinned web layout/context behavior only; no Minecraft pixel counterpart is claimed. Child skins retain their independent native-fidelity scope.",
         "behaviorReport": "tests/reference/aspect-ratio/behavior-verification.json",
-        "installationReport": "tests/reference/aspect-ratio/installation-verification.json"
+        "installationReport": "tests/reference/aspect-ratio/installation-verification.json",
+        "behaviorEvidenceScope": "historical-source-snapshot"
       },
       "nextStep": "Maintain layout/context behavior and installed source integrity; visible children need independent native verification."
     },

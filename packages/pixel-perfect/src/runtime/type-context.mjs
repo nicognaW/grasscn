@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { pixelPerfectRoot } from "@grasscn/tests/paths";
+import { pixelPerfectRoot } from "@ppt/paths";
 
 /** @type {string} */
 export const bunRuntimeVersion = Bun.version;
