@@ -24,6 +24,8 @@ Preserve byte-pinned source and captured references; appearance claims apply onl
 
 Before reviewing changes, read `CODING_STANDARDS.md`.
 
+Before adding, reviewing or reclassifying browser tests, read `docs/agents/test-classification.md`.
+
 This project does not use GitHub Actions. Maintainers verify pull requests locally before merging; contributors are not responsible for running the maintainer verification workflow.
 
 Ordinary browser checks select Base tests. Full tests require an individually approved GitHub run issue and an independent execution session; Full results do not block merging. Before planning, dispatching, executing, resuming or reporting a Full run, read `docs/agents/full-test-runs.md`.
