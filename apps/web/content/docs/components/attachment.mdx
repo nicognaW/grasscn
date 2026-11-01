@@ -1,0 +1,49 @@
+---
+title: Attachment
+description: World archive presentation with explicit preview and remove actions.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+World archive presentation with explicit preview and remove actions.
+
+## Preview
+
+<ComponentExample name="attachment-example" />
+
+## Usage
+
+The example reports preview activations and removes/restores the attachment in local state. Supply an aria-label to AttachmentTrigger and each icon-only AttachmentAction. The component does not upload or process files.
+
+## Composition
+
+Compose Media, Content, Title and Description, then Trigger and Actions. Empty Media uses the packaged world thumbnail. Root defaults to state done, horizontal orientation, scale 2 and default size. selected and disabled are independent props; disabled cancels attachment interactions.
+
+## Interaction and limits
+
+States idle/uploading/processing/error/done describe presentation only. Your application owns upload progress, file permissions and backend effects. Custom media and attachment action layout are web compositions; the copied example requires no external thumbnail server.
+
+See the [upstream API](https://ui.shadcn.com/docs/components/attachment) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="attachment"
+  title="Attachment"
+  initialFile="attachment.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="attachment"
+  title="Attachment"
+  initialFile="registry/ui/attachment.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="attachment" />

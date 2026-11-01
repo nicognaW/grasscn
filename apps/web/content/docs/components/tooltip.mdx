@@ -1,0 +1,45 @@
+---
+title: Tooltip
+description: Item information painted with the original Minecraft tooltip surface.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Item information painted with the original Minecraft tooltip surface.
+
+## Preview
+
+<ComponentExample name="tooltip-example" />
+
+## Usage
+
+Wrap triggers in `TooltipProvider`. Use `TooltipTrigger render={<Button />}` to keep the real button semantics; pass the same integer scale to the Button and TooltipContent because the root has no scale context.
+
+## Composition
+
+`TooltipContent` already creates its portal and positioner. It defaults to top/center, sideOffset 0 and a maximum logical text width of 170. Scalar text, including explicit newline strings, uses the painted tooltip text; rich children take the custom-content path.
+
+## Interaction and limits
+
+Provider delay defaults to 0. Hover or focus the trigger; Escape dismisses the tooltip. Keep the trigger independently named. The existing native coverage covers fixed ASCII layouts and solid backdrops; rich content and arbitrary image backdrops do not inherit that claim.
+
+See the [upstream API](https://base-ui.com/react/components/tooltip) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="tooltip" title="Tooltip" initialFile="tooltip.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="tooltip"
+  title="Tooltip"
+  initialFile="registry/ui/tooltip.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="tooltip" />

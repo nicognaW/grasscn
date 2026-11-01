@@ -1,0 +1,45 @@
+---
+title: Calendar
+description: A DayPicker 10 calendar using Minecraft controls.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+A DayPicker 10 calendar using Minecraft controls.
+
+## Preview
+
+<ComponentExample name="calendar-example" />
+
+## Usage
+
+Use a discriminated DayPicker mode with its corresponding selected/onSelect shape. The example controls a single Date and freezes the initial displayed month to October 2026. Range mode accepts DateRange rather than a Date.
+
+## Composition
+
+Calendar defaults to scale 2, showOutsideDays=true and captionLayout label. For a month/year picker use captionLayout dropdown with startMonth and endMonth. `CalendarDayButton` supplies original logical 20 by 20 day buttons; components and classNames can be merged through DayPicker props.
+
+## Interaction and limits
+
+Only buttonVariant default is supported. Date selection and formatting belong to react-day-picker 10 and date-fns 4. The month grid and dropdown arrangement are web compositions; recorded native coverage applies to day buttons, labels, card surfaces and navigation arrows.
+
+See the [upstream API](https://daypicker.dev/) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="calendar" title="Calendar" initialFile="calendar.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="calendar"
+  title="Calendar"
+  initialFile="registry/ui/calendar.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="calendar" />

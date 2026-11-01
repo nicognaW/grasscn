@@ -1,0 +1,47 @@
+---
+title: Carousel
+description: An Embla-backed slide composition with original navigation arrows.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+An Embla-backed slide composition with original navigation arrows.
+
+## Preview
+
+<ComponentExample name="carousel-example" />
+
+## Usage
+
+Give Carousel an accessible name, place Content and Item inside it, then Previous and Next within the same provider. The example has three world cards; arrows retain default accessible Previous/Next slide names.
+
+## Composition
+
+Root accepts opts, plugins and setApi and defaults to horizontal orientation. It derives the Embla axis from orientation. `useCarousel` and all parts require the provider. Arrow variant and size support default only; Card is a separately installed composition.
+
+## Interaction and limits
+
+Arrow keys respect vertical orientation and RTL and avoid text-edit targets. Dragging and slide state are web adaptations; native pixel scope applies to arrow constituents rather than the whole carousel. The example includes its own arrow clearance and layout.
+
+See the [upstream API](https://www.embla-carousel.com/) for the underlying part and event contracts.
+
+## Installation
+
+The world-card example also uses [Card](/docs/components/card); install `card` when copying that composition.
+
+<Installation name="carousel" title="Carousel" initialFile="carousel.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="carousel"
+  title="Carousel"
+  initialFile="registry/ui/carousel.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="carousel" />

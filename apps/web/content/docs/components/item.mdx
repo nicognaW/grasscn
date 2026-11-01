@@ -1,0 +1,41 @@
+---
+title: Item
+description: World rows with original thumbnail and measured text layout.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+World rows with original thumbnail and measured text layout.
+
+## Preview
+
+<ComponentExample name="item-example" />
+
+## Usage
+
+The example uses a passive Item with a separate Open button and visible activation count. Use `render={<a href="..." />}` or a button when the whole row should be interactive; a passive div does not become a button by itself.
+
+## Composition
+
+ItemMedia with no children displays the packaged world thumbnail. ItemContent supplies clip measurements to Title and Description. ItemGroup shares scale with rows, ItemSeparator divides them, and Header/Footer/Actions support passive row compositions. Only default size and variant are supported.
+
+## Interaction and limits
+
+Avoid putting nested interactive controls inside a whole-row anchor. Use a passive Item with ItemActions for separate actions. Native row coverage is limited to compatible-world reference contents/states; arbitrary rich media, custom layouts and incompatible-world states need separate evidence.
+
+See the [upstream API](https://ui.shadcn.com/docs/components/item) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="item" title="Item" initialFile="item.tsx" />
+
+## Component source
+
+<ComponentSource name="item" title="Item" initialFile="registry/ui/item.tsx" />
+
+## Interactive playground
+
+<OverlayPlayground name="item" />

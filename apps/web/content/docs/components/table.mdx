@@ -1,0 +1,45 @@
+---
+title: Table
+description: Semantic tables with painted Minecraft cell text.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Semantic tables with painted Minecraft cell text.
+
+## Preview
+
+<ComponentExample name="table-example" />
+
+## Usage
+
+Compose the native table parts and provide a Caption or accessible name. The example lists complete World and Players values with real column headers; it does not imply built-in selection or sorting.
+
+## Composition
+
+Table creates a horizontal overflow wrapper and defaults to scale 2. Head defaults to scope col. Scalar Head, Cell and Caption children use `MinecraftDisclosureText`; rich children remain intact. `maxTextWidth` is logical and `textAlign` supports left or center.
+
+## Interaction and limits
+
+Sorting, filtering and pagination belong to the Data Table recipe or your application. Keep captions and header relationships intact when composing controls in cells. Cell glyph references establish only their declared content and conditions, not a native whole-table widget.
+
+See the [upstream API](https://ui.shadcn.com/docs/components/table) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="table" title="Table" initialFile="table.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="table"
+  title="Table"
+  initialFile="registry/ui/table.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="table" />

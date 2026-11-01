@@ -1,0 +1,47 @@
+---
+title: Bubble
+description: Conversation bubbles distributed with the Message item.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Conversation bubbles distributed with the Message item.
+
+## Preview
+
+<ComponentExample name="bubble-example" />
+
+## Usage
+
+Install `message`, then import Bubble parts from components/ui/bubble. `from="user"` and `from="assistant"` derive Player and Assistant authors unless author is supplied. Scalar Content prefixes that author automatically.
+
+## Composition
+
+BubbleGroup and Bubble inherit MessageScale, defaulting to 2. Bubble supports align start/end and the default backdrop variant only. `BubbleReactions` defaults to bottom/end and accepts actual interactive children. The example toggles a real reaction button state.
+
+## Interaction and limits
+
+System bubbles use yellow text. Bubble grouping and reaction placement are web compositions over chat rendering; no separate vanilla bubble widget or independent installation item is claimed. Related Message and Message Scroller pages share the same complete installation payload.
+
+See the [upstream API](https://ui.shadcn.com/docs/components/message) for the underlying part and event contracts.
+
+## Installation
+
+This page shares the `message` installation identity; choose its own implementation file below. There is no separate registry item for this part.
+
+<Installation name="message" title="Bubble" initialFile="bubble.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="message"
+  title="Bubble"
+  initialFile="registry/ui/bubble.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="bubble" />

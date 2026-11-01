@@ -1,0 +1,51 @@
+---
+title: Message Scroller
+description: Follow-latest and manual-reading behavior for Minecraft messages.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Follow-latest and manual-reading behavior for Minecraft messages.
+
+## Preview
+
+<ComponentExample name="message-scroller-example" />
+
+## Usage
+
+Install `message`, then import the scroller parts from components/ui/message-scroller. `MessageScrollerProvider` must wrap every hook consumer; the visual Root alone does not provide that hook boundary. Give the viewport an explicit bounded height.
+
+## Composition
+
+Compose Root, Viewport, Content and Item with stable messageId values. Root propagates MessageScale. The example uses Provider autoScroll/defaultScrollPosition end and `useMessageScroller().scrollToStart({behavior:"instant"})`; the Latest button scrolls back to the end.
+
+## Interaction and limits
+
+Content role log and aria-live polite are choices made by this example, not automatic semantics. Follow-latest respects manual reading through the @shadcn/react engine. Scrolling controls and conversation layout are web adaptations; this is part of the message install identity.
+
+See the [upstream API](https://www.npmjs.com/package/@shadcn/react) for the underlying part and event contracts.
+
+## Installation
+
+This page shares the `message` installation identity; choose its own implementation file below. There is no separate registry item for this part.
+
+<Installation
+  name="message"
+  title="Message Scroller"
+  initialFile="message-scroller.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="message"
+  title="Message Scroller"
+  initialFile="registry/ui/message-scroller.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="message-scroller" />

@@ -1,0 +1,53 @@
+---
+title: Data Table
+description: A copyable TanStack Table 9 recipe with Minecraft cells.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+A copyable TanStack Table 9 recipe with Minecraft cells.
+
+## Preview
+
+<ComponentExample name="data-table-example" />
+
+## Usage
+
+The installed generic `DataTable` accepts columns, data and scale. Build columns with `createColumnHelper<DataTableFeatures, World>()` and `helper.columns`. Install both data-table.tsx and data-table-features.tsx; the latter defines the actual feature set.
+
+## Composition
+
+The full world-browser example uses `useTable({features,columns,data})`, `table.FlexRender`, table.state and real column/pagination methods. It provides filtering, sorting, column visibility, page navigation and keyboard row selection. These controls are composed in the example rather than automatic DataTable props.
+
+## World browser
+
+<ComponentExample name="data-table-features-example" />
+
+## Interaction and limits
+
+The empty state comes from the block when no rows remain. TanStack 8 useReactTable/getCoreRowModel examples do not match this installed version. Table layout, engine state and controls are web adaptations; native claims apply to the recorded painted constituents.
+
+See the [upstream API](https://tanstack.com/table/latest/docs/introduction) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="data-table"
+  title="Data Table"
+  initialFile="data-table.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="data-table"
+  title="Data Table"
+  initialFile="registry/blocks/data-table.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="data-table" />
