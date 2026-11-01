@@ -6,8 +6,28 @@ export interface RecordedAudioPlayback {
   volume: number;
 }
 
+export interface RecordedOriginalClick {
+  original: boolean;
+  rate: number;
+  volume: number;
+}
+
+export interface RecordedPitchedPlayback {
+  pitch: number;
+  source: string;
+  volume: number;
+}
+
 interface AudioPlaybackFixture {
   __soundVoices: RecordedAudioPlayback[];
+}
+
+interface OriginalClickFixture {
+  voices: RecordedOriginalClick[];
+}
+
+interface PitchedPlaybackFixture {
+  sounds: RecordedPitchedPlayback[];
 }
 
 /** Register before navigation so every document starts with an empty audio trace. */
@@ -36,4 +56,58 @@ export const recordedAudioPlayback = async (page: Page) =>
     const fixture = window as Window & AudioPlaybackFixture;
 
     return fixture.__soundVoices;
+  });
+
+/** Keep the asset-origin observation used by Attachment and NativeSelect. */
+export const recordOriginalClick = async (page: Page) => {
+  await page.addInitScript(() => {
+    const recordings: RecordedOriginalClick[] = [];
+    const fixture = Object.assign(window, { voices: recordings });
+
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      fixture.voices.push({
+        original: this.src.startsWith("data:audio/ogg;base64,"),
+        rate: this.playbackRate,
+        volume: this.volume,
+      });
+
+      return Promise.resolve();
+    };
+  });
+};
+
+export const recordedOriginalClicks = async (page: Page) =>
+  await page.evaluate(() => {
+    // SAFETY: recordOriginalClick initializes this exact observation format before navigation.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned original-click installation.
+    const fixture = window as Window & OriginalClickFixture;
+
+    return fixture.voices;
+  });
+
+/** Preserve the existing pitch-named observation used by native navigation tests. */
+export const recordPitchedPlayback = async (page: Page) => {
+  await page.addInitScript(() => {
+    const recordings: RecordedPitchedPlayback[] = [];
+    const fixture = Object.assign(window, { sounds: recordings });
+
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      fixture.sounds.push({
+        pitch: this.playbackRate,
+        source: this.src,
+        volume: this.volume,
+      });
+
+      return Promise.resolve();
+    };
+  });
+};
+
+export const recordedPitchedPlayback = async (page: Page) =>
+  await page.evaluate(() => {
+    // SAFETY: recordPitchedPlayback installs this pitch/source/volume trace on each document.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Paired reader for the fixture-owned pitched-playback installation.
+    const fixture = window as Window & PitchedPlaybackFixture;
+
+    return fixture.sounds;
   });
