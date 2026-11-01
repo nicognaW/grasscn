@@ -60,6 +60,19 @@ test("overlay documentation exposes exact examples, own grouped source and retai
   );
   for (const slug of slugs) {
     await page.goto(`${origin}/docs/components/${slug}`);
+    if (slug === "calendar") {
+      await writeFile(
+        info.outputPath("calendar-locale.json"),
+        JSON.stringify(
+          await page.evaluate(() => ({
+            language: navigator.language,
+            locale: Intl.DateTimeFormat().resolvedOptions().locale,
+            defaultDate: new Date(2026, 9, 30).toLocaleDateString(),
+            explicitDate: new Date(2026, 9, 30).toLocaleDateString("en-US"),
+          }))
+        )
+      );
+    }
     for (const id of ["preview", "usage", "composition", "installation"])
       await expect(page.locator(`h2#${id}`)).toBeVisible();
     const example = page.locator(".documentation-example").first();
@@ -205,9 +218,11 @@ test("documentation tooltip and popover open from their real focusable triggers"
 }) => {
   await page.goto(`${origin}/docs/components/tooltip`);
   let example = page.locator(".documentation-example").first();
-  await example
-    .getByRole("button", { name: "Inspect pickaxe", exact: true })
-    .focus();
+  await example.getByRole("tab", { name: "Preview", exact: true }).click();
+  await page.keyboard.press("Tab");
+  await expect(
+    example.getByRole("button", { name: "Inspect pickaxe", exact: true })
+  ).toBeFocused();
   await expect(page.getByRole("tooltip")).toContainText("Diamond Pickaxe");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("tooltip")).toHaveCount(0);
