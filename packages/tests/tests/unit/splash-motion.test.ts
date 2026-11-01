@@ -6,13 +6,9 @@ import { readFileSync } from "node:fs";
 import { referenceFile } from "@grasscn/tests/paths";
 import { splashMotion, splashTransform } from "@grasscn/web/splash-motion";
 
-const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
+import provenance from "../../fixtures/reference/title-splash/provenance.json";
 
-// SAFETY: this retained reference provenance supplies the expected independent oracle hash.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the actual retained provenance read and hash assertion.
-const provenance = JSON.parse(
-  readFileSync(referenceFile("title-splash/provenance.json"), "utf-8")
-) as { expectedSha256: string };
+const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
 
 const rows = bytes
   .toString("utf-8")
