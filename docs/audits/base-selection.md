@@ -54,3 +54,9 @@ Every catalogue entry identifies its own existing file/title path and mapping re
 ## Validation
 
 Use browser-suite inventory commands to check the current counts and partition. Full inventory collection does not execute tests or confer approval. No Full tests were executed to construct this selection.
+
+## Next/Fumadocs foundation
+
+Spec #12 adds one independently classified Base case: `next-foundation.spec.ts` / `the default MDX component page renders within the Minecraft website shell`. Its website-default mapping is the new `/docs/components/button` route: authored MDX content, the shared navigation, Minecraft typography and the displayed default Button at its retained `normal-w200-s2.png` reference conditions. The case compares the actual integrated Button against that independent captured reference; it does not promote further Button variants, scales or the rest of the file into Base.
+
+This is new feature coverage outside cleanup spec #1. Earlier partition counts above describe that cleanup snapshot; use the current inventory for the new total. New or revised primary examples elsewhere must receive their own case-by-case mapping review.

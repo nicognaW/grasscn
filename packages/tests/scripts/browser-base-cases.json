@@ -863,6 +863,21 @@
         "route": "/components/progress",
         "reason": "Default website Progress is the unnotched half-filled bar at GUI2; its existing preview pixel check uses this exact reference."
       }
+    },
+    {
+      "file": "next-foundation.spec.ts",
+      "title": "the default MDX component page renders within the Minecraft website shell",
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Default authored MDX component page, shared navigation, Minecraft typography and displayed Button at the retained normal-w200-s2 native reference conditions."
+      },
+      "titlePath": [
+        "the default MDX component page renders within the Minecraft website shell"
+      ]
     }
   ]
 }
