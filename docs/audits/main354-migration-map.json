@@ -1,0 +1,2141 @@
+{
+  "main": "354e37203e81838ff4a44ee1ea62c0c30779260b",
+  "integrationBefore": "4a23ad451edd11c830ca3d0587a243b1f4247a40",
+  "nativeFiles": [
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/cases.json",
+      "sha256": "e6f944e5d461f79d9ebb33ebd26cfd536ea3fa499d5a2e26239ba5e5fb95dc63"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/layout.json",
+      "sha256": "4984cfc52b802afe06f0bd8bae418d910ccc4fe8723863e44acb715e80b46121"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/manifest.json",
+      "sha256": "43f798cf2936d6776fe5141e1f1ebc125d8ed89de7745c84d8ac9bd05b33cd2f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat-proof.json",
+      "sha256": "89cc0b8a6e584d38ba238ee4785962425570a70cdd5d0da12ab1655c32bd896e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/runtime-provenance.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/runtime-provenance.json",
+      "sha256": "8bc74a9c0f8ca51fcc7326b987413b67a5c825ae7956d5889c044934e37f03bf"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-code-directive-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-code-directive-s1.png",
+      "sha256": "7e41c626a02144557b5e44b971b5262b88d32bb25e05349dba307ffea2aa8402"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-code-directive-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-code-directive-s2.png",
+      "sha256": "ad3cbe2de146598a2ab7e6b33ed9fdaff2c1841dfca784d505af41d62dc8029f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-code-directive-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-code-directive-s3.png",
+      "sha256": "5659808478ceae24384c931d09dd6627c9d0d3f28ee3fb1c9246c92c01b98418"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-collapse-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-collapse-s1.png",
+      "sha256": "5013ac6287e950e6f750393cb678a6f5e10977d1cdd3b361dba2cabd3e8669ff"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-collapse-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-collapse-s2.png",
+      "sha256": "5d518fb299e9199d7aba2359611b2d87e0591f89e6b3e2a442595277b142680d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-collapse-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-collapse-s3.png",
+      "sha256": "3018e2841639a120078521ab82025a8427185fd52eeebe60ff4f44a138dbf475"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-focus-s1.png",
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-focus-s2.png",
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-focus-s3.png",
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-hover-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-hover-s1.png",
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-hover-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-hover-s2.png",
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-hover-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-hover-s3.png",
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-s1.png",
+      "sha256": "ce72a3239018cf262e37eb7f77a8d5b5bbb27139f016020d256074649d059859"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-s2.png",
+      "sha256": "2fdd3162c02e97ac0f586b574b91b3e1d167340805b9916a75bcbaa68ce8a324"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-copy-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-copy-s3.png",
+      "sha256": "ce647de870d2d872da17d087819963143558c1be6ec364839cf91b92ea4b88d5"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-expand-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-expand-s1.png",
+      "sha256": "fbbc6d84d23e210016769c265e62e39f8ad04bf6b41c4475411eca79febbdb99"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-expand-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-expand-s2.png",
+      "sha256": "f281319ae23d5d52a09e0ccaa314ac9212ead9831ddf1d3396ef24314dce2af7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-expand-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-expand-s3.png",
+      "sha256": "72f2ccc850f0824c9145427cf96dac7ccec9643f765f193f0de54677759d7783"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s1.png",
+      "sha256": "b82a042e8dd460f94b0d2da2d6956746cf9d012bb9acf0c1cd7b3d8f3c8c04fd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s2.png",
+      "sha256": "bb1ce41ba80b07fcea3f9cadb611f21e76546c71548ca9ff1659fc39a7eddb29"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-focus-s3.png",
+      "sha256": "9d3d92b42125f70bcf59d23b89dadd2062334b914035a08ca46a32746f1d276f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-s1.png",
+      "sha256": "612c56e0556025c0246b8f6d84daecf4927c18af6d421b24dd349565ae17b43b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-s2.png",
+      "sha256": "314b3c0ac4acf323f5c0eece5c0517ab3a8e70970e8b90e098c532c934235afd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-code-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-code-s3.png",
+      "sha256": "aff13af809eb84291f45cb1e0e19f933f76d8df45dce3a82b5a4448e963cfbd7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-preview-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-preview-s1.png",
+      "sha256": "66e1b27a8baf93ef7266c0bb0eda638cec42f4ba76cc87832aa218e6845ebb1c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-preview-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-preview-s2.png",
+      "sha256": "425159fa92576c334dae37c1eaae3ad65cec7e960386acffee7462bc3d30f681"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/captures/docs-tabs-preview-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/captures/docs-tabs-preview-s3.png",
+      "sha256": "fae9411ac98129b891d80d089cb98b7dd96bebe6f23ca9b9cc87e9d002b211e0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/frames/native-controls-s1.png",
+      "sha256": "b8139e4cde7dff112011a7738e5d5d1e101bca449398a207e8943725d438aee7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/frames/native-controls-s2.png",
+      "sha256": "22b98327fa2f5796f7675861b40e1415e8f899b0656c07a73b1c73dd6f51f282"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/frames/native-controls-s3.png",
+      "sha256": "87a086a43435b2c47b1413efce9a797c6d5fcfb018241b32363d6c8c59c55fd6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/layout.json",
+      "sha256": "4984cfc52b802afe06f0bd8bae418d910ccc4fe8723863e44acb715e80b46121"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/manifest.json",
+      "sha256": "43f798cf2936d6776fe5141e1f1ebc125d8ed89de7745c84d8ac9bd05b33cd2f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/source/ControlsReferenceMain.java",
+      "sha256": "a5c01c943f720ef9ea15db801de1f0230e366fc4d5d6cc58dbf5cf56192801b0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s1.png",
+      "sha256": "7e41c626a02144557b5e44b971b5262b88d32bb25e05349dba307ffea2aa8402"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s2.png",
+      "sha256": "ad3cbe2de146598a2ab7e6b33ed9fdaff2c1841dfca784d505af41d62dc8029f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-code-directive-s3.png",
+      "sha256": "5659808478ceae24384c931d09dd6627c9d0d3f28ee3fb1c9246c92c01b98418"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s1.png",
+      "sha256": "5013ac6287e950e6f750393cb678a6f5e10977d1cdd3b361dba2cabd3e8669ff"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s2.png",
+      "sha256": "5d518fb299e9199d7aba2359611b2d87e0591f89e6b3e2a442595277b142680d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-collapse-s3.png",
+      "sha256": "3018e2841639a120078521ab82025a8427185fd52eeebe60ff4f44a138dbf475"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s1.png",
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s2.png",
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-focus-s3.png",
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s1.png",
+      "sha256": "0b761bec073776529400ce84acdc181fc6844a6706a60ca5cc7587c4010794d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s2.png",
+      "sha256": "9e5491b88a37bb41c0538a4d876b073cd0f8baece60140bc8f6e457a5a788e60"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-hover-s3.png",
+      "sha256": "3db0d8a6b05845ab5f794111a71358b55485273f07053a6ddf9ed65b91823f80"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-s1.png",
+      "sha256": "ce72a3239018cf262e37eb7f77a8d5b5bbb27139f016020d256074649d059859"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-s2.png",
+      "sha256": "2fdd3162c02e97ac0f586b574b91b3e1d167340805b9916a75bcbaa68ce8a324"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-copy-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-copy-s3.png",
+      "sha256": "ce647de870d2d872da17d087819963143558c1be6ec364839cf91b92ea4b88d5"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-expand-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-expand-s1.png",
+      "sha256": "fbbc6d84d23e210016769c265e62e39f8ad04bf6b41c4475411eca79febbdb99"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-expand-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-expand-s2.png",
+      "sha256": "f281319ae23d5d52a09e0ccaa314ac9212ead9831ddf1d3396ef24314dce2af7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-expand-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-expand-s3.png",
+      "sha256": "72f2ccc850f0824c9145427cf96dac7ccec9643f765f193f0de54677759d7783"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s1.png",
+      "sha256": "b82a042e8dd460f94b0d2da2d6956746cf9d012bb9acf0c1cd7b3d8f3c8c04fd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s2.png",
+      "sha256": "bb1ce41ba80b07fcea3f9cadb611f21e76546c71548ca9ff1659fc39a7eddb29"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-focus-s3.png",
+      "sha256": "9d3d92b42125f70bcf59d23b89dadd2062334b914035a08ca46a32746f1d276f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s1.png",
+      "sha256": "612c56e0556025c0246b8f6d84daecf4927c18af6d421b24dd349565ae17b43b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s2.png",
+      "sha256": "314b3c0ac4acf323f5c0eece5c0517ab3a8e70970e8b90e098c532c934235afd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-code-s3.png",
+      "sha256": "aff13af809eb84291f45cb1e0e19f933f76d8df45dce3a82b5a4448e963cfbd7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s1.png",
+      "sha256": "66e1b27a8baf93ef7266c0bb0eda638cec42f4ba76cc87832aa218e6845ebb1c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s2.png",
+      "sha256": "425159fa92576c334dae37c1eaae3ad65cec7e960386acffee7462bc3d30f681"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/captures/docs-tabs-preview-s3.png",
+      "sha256": "fae9411ac98129b891d80d089cb98b7dd96bebe6f23ca9b9cc87e9d002b211e0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/frames/native-controls-s1.png",
+      "sha256": "b8139e4cde7dff112011a7738e5d5d1e101bca449398a207e8943725d438aee7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/frames/native-controls-s2.png",
+      "sha256": "22b98327fa2f5796f7675861b40e1415e8f899b0656c07a73b1c73dd6f51f282"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/frames/native-controls-s3.png",
+      "sha256": "87a086a43435b2c47b1413efce9a797c6d5fcfb018241b32363d6c8c59c55fd6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-controls/repeat/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-controls/repeat/source/ControlsReferenceMain.java",
+      "sha256": "a5c01c943f720ef9ea15db801de1f0230e366fc4d5d6cc58dbf5cf56192801b0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/cases.json",
+      "sha256": "8a19f87d19dcfad095c056187d331f178392f58b8dce4e8ccd5ee874fa416184"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/layout.json",
+      "sha256": "dfbbd1082bf2de88402daf2417018ede89dcd27a8ae4ddffcd2ee3aa073ca184"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/manifest.json",
+      "sha256": "aa0c6a4181fdfcfac8e635f86a2aa030541e696a933c370beeb2c45bac3ed754"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat-proof.json",
+      "sha256": "c1984591cd2aabe981dd968f8cbf02d64e059d7f31e0a9fd64d40dcd25824384"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/runtime-provenance.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/runtime-provenance.json",
+      "sha256": "8bc74a9c0f8ca51fcc7326b987413b67a5c825ae7956d5889c044934e37f03bf"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s1.png",
+      "sha256": "14716b7b7dc66e7171d7a14c46ef5c0b90aee6b8a4db303239212854a2dbd2cc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s2.png",
+      "sha256": "dd1f89fe84e02b5425d95429a38e92f6f17565b28b13d0cc1e6fdd89c1b2f334"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/captures/docs-code-directive-semicolon-s3.png",
+      "sha256": "2413c92c034a471c9454bb2778343c0d8c8c5a5def767e4098a081a7897bfcb1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/frames/native-controls-s1.png",
+      "sha256": "2477aaa5902faea29e76e8c9150b0318736432c53177efc8cfdddcc3f3eb9747"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/frames/native-controls-s2.png",
+      "sha256": "edb16c57eadcae26ff0be0cf2aa62bf0b0b26a4687b37615fa1563877333d0ff"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/frames/native-controls-s3.png",
+      "sha256": "5661137c5d17715300651fdb5ca08138b81388cdbd897eed041650f3c0fb99fb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/layout.json",
+      "sha256": "dfbbd1082bf2de88402daf2417018ede89dcd27a8ae4ddffcd2ee3aa073ca184"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/manifest.json",
+      "sha256": "aa0c6a4181fdfcfac8e635f86a2aa030541e696a933c370beeb2c45bac3ed754"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/source/ControlsReferenceMain.java",
+      "sha256": "bd0b093e0299b7f4f3912cc1ae6a0cb108a35aae0cd786f219134ef1291ec92c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s1.png",
+      "sha256": "14716b7b7dc66e7171d7a14c46ef5c0b90aee6b8a4db303239212854a2dbd2cc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s2.png",
+      "sha256": "dd1f89fe84e02b5425d95429a38e92f6f17565b28b13d0cc1e6fdd89c1b2f334"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/captures/docs-code-directive-semicolon-s3.png",
+      "sha256": "2413c92c034a471c9454bb2778343c0d8c8c5a5def767e4098a081a7897bfcb1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/frames/native-controls-s1.png",
+      "sha256": "2477aaa5902faea29e76e8c9150b0318736432c53177efc8cfdddcc3f3eb9747"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/frames/native-controls-s2.png",
+      "sha256": "edb16c57eadcae26ff0be0cf2aa62bf0b0b26a4687b37615fa1563877333d0ff"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/frames/native-controls-s3.png",
+      "sha256": "5661137c5d17715300651fdb5ca08138b81388cdbd897eed041650f3c0fb99fb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-code-directive/repeat/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-code-directive/repeat/source/ControlsReferenceMain.java",
+      "sha256": "bd0b093e0299b7f4f3912cc1ae6a0cb108a35aae0cd786f219134ef1291ec92c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/cases.json",
+      "sha256": "4e6ca061410c30339f228d7f2de42770d2e01426a1d3fc95849f5cf87fecf2fe"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/repeat-proof.json",
+      "sha256": "edc1a10a4dd43f25b6f37f91165ca63b38fffe52553cdf4c6d84fc81026047a1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/runtime-provenance.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/runtime-provenance.json",
+      "sha256": "213f6808141fe7a09329c8cfbfb35d1c9706745bef9465044cbdd2a48476bed7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/manifest.json",
+      "sha256": "e3e1f6ed14418247660bda9930cfaae35379d157571304c5f9695e8df5842908"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/manifest.json",
+      "sha256": "e3e1f6ed14418247660bda9930cfaae35379d157571304c5f9695e8df5842908"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/source-input/capture-controls.mjs",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/source-input/capture-docs-input-defaults.mjs",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-docs-input-defaults.mjs",
+      "sha256": "0b116396cc1d961497b7c4afbd0f5d45bb341f8a7a91d21a9b5941f9d27077c2"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/source-input/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s1.png",
+      "sha256": "40f5d143520e4af7a5fc327aad2cf037ed2811fda769a0ee89fdd3030c8ca944"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s2.png",
+      "sha256": "17568a15305c6dce6430d321831d9e3dc9a96b4ae6cf21580f5966f53abcda5d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/captures/docs-slider-volume-50-s3.png",
+      "sha256": "2d8c797ea2c0558426213828fe0527c57d7de0e72fb4da51ecdcab4a904e0656"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/frames/native-controls-s1.png",
+      "sha256": "8768f07b8e9eaa6e270e9eb2d188a855220bbd56ca9e26315e8618d14c00a878"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/frames/native-controls-s2.png",
+      "sha256": "05706f44213350d824fd4ef77ef19b78c298bea031c6e6ed09919c09f4747174"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/frames/native-controls-s3.png",
+      "sha256": "ccb8a4dd5e0c66c0b2bd79789edf84f4f4b426fd947b3a59c57689f8815ff4d7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-b/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-b/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s1.png",
+      "sha256": "40f5d143520e4af7a5fc327aad2cf037ed2811fda769a0ee89fdd3030c8ca944"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s2.png",
+      "sha256": "17568a15305c6dce6430d321831d9e3dc9a96b4ae6cf21580f5966f53abcda5d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/captures/docs-slider-volume-50-s3.png",
+      "sha256": "2d8c797ea2c0558426213828fe0527c57d7de0e72fb4da51ecdcab4a904e0656"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/frames/native-controls-s1.png",
+      "sha256": "8768f07b8e9eaa6e270e9eb2d188a855220bbd56ca9e26315e8618d14c00a878"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/frames/native-controls-s2.png",
+      "sha256": "05706f44213350d824fd4ef77ef19b78c298bea031c6e6ed09919c09f4747174"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/frames/native-controls-s3.png",
+      "sha256": "ccb8a4dd5e0c66c0b2bd79789edf84f4f4b426fd947b3a59c57689f8815ff4d7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-input-defaults/native-a/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-input-defaults/native-a/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/cases.json",
+      "sha256": "32e786e4df18b975fd0776726a0a2b58518146e2c22586fc076f421e1527d251"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/layout.json",
+      "sha256": "050726e54048f2d1b305efb20c90eda4a8ff96d4ff1dd67d6eec4e9d2eebbf9d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/manifest.json",
+      "sha256": "ced0ae12ccf3decc65a0969f972d61c5c42d8dd32166221574ad837d0d4a998a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat-proof.json",
+      "sha256": "c2303ac0025dc531d7191b4f75ad32c3c6adc37e8bef3fba3d73f870de67d451"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/runtime-provenance.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/runtime-provenance.json",
+      "sha256": "73a96537c82ceac57a83ff32725683b120c75596c533cdf11ef25df6b7efdb1f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s1.png",
+      "sha256": "0992bf03d0c30ab2cdd8a5951c1989e9b0fd213f13cc99a3518485b7aa597b73"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s2.png",
+      "sha256": "4e3aa4417c8a9866850482d032f4f62e175637b6120e5c110d6a773158894568"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-copy-full-file-s3.png",
+      "sha256": "f98b6e207eb9971fe4fb412a5ef7a5d259fb19966998befc1783db5160598080"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-download-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-download-s1.png",
+      "sha256": "54c1144fb6fffc05b62416641880e76a70d4308916f3280aa02a481aecae9e38"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-download-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-download-s2.png",
+      "sha256": "97878fc252b95121bbfc8bf640ddb8787dafa501f570e77caf21712fdd3c0051"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-download-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-download-s3.png",
+      "sha256": "9c2c95f57335c19950ae07e2c2376f6ddc3a5a6d449a80e6da90835c13953123"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s1.png",
+      "sha256": "baa0da169a39d2b8bcf53e74b7d501ce5c3696e167027ee207039dd9a48125c6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s2.png",
+      "sha256": "cc72d72f9293f324f6fea791e3bfeeae507a44f232a0a1a35eda4d44fb6ba00e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-disabled-s3.png",
+      "sha256": "952e08441b8c0cecaacc0f4bbebe625c23615d8519dd90937140ab86ff9048f3"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-s1.png",
+      "sha256": "ea54c64d33d7e5d26c2250445cc954476a336b2b45a1b59ba74555f5c0aee10e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-s2.png",
+      "sha256": "eac183459a950fa3a38ab8b98e9cb41d5e897e07dcaae08999156e9bbcfdf7e9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-load-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-load-s3.png",
+      "sha256": "d2cd65a7c224441ba70ff7de60c2da30a2741773c77826a2ed9d01647f3380fb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-retry-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-retry-s1.png",
+      "sha256": "3b48c27db9773605c7ae087bdc0c3b4e3839aa5445b22d9587a70cc505db8d05"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-retry-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-retry-s2.png",
+      "sha256": "36ac107288dc59618dea20d7db45948e0d550e7e54128c665e807caca845bc13"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-action-retry-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-action-retry-s3.png",
+      "sha256": "02cd7686be934b7093927f12ba4c06fd9676a2212f73c2b70d1ea937f0355ad6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s1.png",
+      "sha256": "f6e1d18378b2e99bbfa15dbddb7fedfc1e7dce6f9fef34e2f9790016ced9b7ee"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s2.png",
+      "sha256": "010c1ce24cc65a3ca47c68e86cbf759de9f777eadda94ee7c3b2cef09f4701d9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-button-tsx-s3.png",
+      "sha256": "b8856219a5a80f5bea87788a3f8400a914ea92af684907cae7be1de28a4b4e6d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s1.png",
+      "sha256": "0e6a4c08a58c961e95b78826cd30d0496d534e59f2e306e92618cabe63e5d0a6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s2.png",
+      "sha256": "45132af2ae3a4d7eb676f9f8569180da32b701c7910ac707442775f1e6e02090"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-assets-css-s3.png",
+      "sha256": "7eab642a84a35b64d59bbf77fc588506a60230cd68c08ee2c804ffff2c31a3a2"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s1.png",
+      "sha256": "5142eddb46fe6b77a06e8c394599bcf98e18f88ad6b597ecac1e034394fc110e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s2.png",
+      "sha256": "f9aa96851d1d1f98363f0e57249afcda813eea1973d0140e63a3c08ed5809700"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-button-css-s3.png",
+      "sha256": "6b72250d4913a538ddaae320f4ba21b7c4552b56df383175b94e45cff5dece79"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s1.png",
+      "sha256": "348cc717df0158ea6f22a14345c7a8a04eeaebe49c5fcf3adbbbd624cac4b320"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s2.png",
+      "sha256": "61233af02da7ed55b55f5c2cac96f6f60f2a54a77e2afbc247bbaef89ba544e9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-font-ts-s3.png",
+      "sha256": "3cbb08c0fc62a7beb5f9b9e15482741b38dbaa8553d37e6ffad9ac67a7504515"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s1.png",
+      "sha256": "b9aece2896a7d272f034aaedee6c6f4f82c4ba0721cfac6920e970786180574b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s2.png",
+      "sha256": "45d30677e00d69ddd5116ec366bdc63da2ed3b25b05ce2ccb8bb3ff6882047e0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-input-assets-ts-s3.png",
+      "sha256": "512a97a56252b42778a93ae206e6b7185eddec3e7fdf42c90f2f5e3119f6fa44"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s1.png",
+      "sha256": "7d21cec11271905afc576d1e62fea96a1740ae955deedf955161bcf1529386bd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s2.png",
+      "sha256": "e2121503d047402af2f40fbcb3c6c21590a6a6d916fdf65a63e5d31f5176b116"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-render-tsx-s3.png",
+      "sha256": "d61cb1800b3f8d441a2b9da96018bbf8ff52b90b6484ad851102f37884a47ca8"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s1.png",
+      "sha256": "ad00be004ce6f3b5642e2ed2cfa226e49a4a48764159559659cf9dc627d70b51"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s2.png",
+      "sha256": "39b36563c5744cb69929ddd587df7221fbe896606b503e5c0cf15a301c5af0a9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-assets-ts-s3.png",
+      "sha256": "59276aa73f6f4c674e55255c61896026c08f763c43166849f21b24fd2119c68c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s1.png",
+      "sha256": "0bbd67485cefa426077cf4f019b72adb4b845e3407fb4f92062d220d0d2207f0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s2.png",
+      "sha256": "de1a2a2055c6d0341ed25783643c4c57ac6bb69ada464518148bf338b06eebf7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-sound-ts-s3.png",
+      "sha256": "fcd015950f6cf09894f1311ad84f6e9fd53de41c8481d2bdb58af177b673916f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s1.png",
+      "sha256": "4c3da7ae0fd5a933f4f29a1f7394ccee0563c6d2e2c5f63d3299799ee4997d18"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s2.png",
+      "sha256": "60c3f02e7b93bc49d46b107ddb7ac56725adb52ba6e3fde2a85802f6f26a9508"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unicode-label-tsx-s3.png",
+      "sha256": "3b16992e2664a8cb3212ee82902800775ec94759bf2b4f2d90be343b1d6da702"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s1.png",
+      "sha256": "181c25d53b9f2d90b3795560d779cc37f76833f45365e41d4269bf97c5839f9d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s2.png",
+      "sha256": "c1f202f220be5e72695bfb867331a8419a5801bef92d815e98fe77c7b9def1d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-atlas-ts-s3.png",
+      "sha256": "2d0e71702a69cbeaf081975af48065a5150488127cee13d335cc13b308b8eb65"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s1.png",
+      "sha256": "54c4a430b7aa72d5f899a600279e76d1cc411b39e406e5b2e024f318c0553b45"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s2.png",
+      "sha256": "863bb312bf9ed77961fe0f805c7b7bdf2971ea98a47fa44a8b53a61e18203486"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-data-ts-s3.png",
+      "sha256": "224056863619b76280b857e8632722a59880fca92b227e1d043d5c2c31558a11"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s1.png",
+      "sha256": "b04bf00904f67aa1eda6e97a4e02e585e4aed05b9ded885203ab3ad10564687b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s2.png",
+      "sha256": "aa2131d12d545163e653b502e41795cfd87ef2ee1bd06dd13d20f0a6d2978d22"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-gpu-ts-s3.png",
+      "sha256": "ede33e9d697b6b2a4df6634063e803ad97d5077842ce4fcb3b44c26ad32c1493"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s1.png",
+      "sha256": "5784a6a4a9f0b314249ff5cd72365d7557543a74bf523b4d267af2a698818afb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s2.png",
+      "sha256": "49cc68fa5cb244ca30d4270d622e0909017a80661bfa3354874063db69005680"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-file-minecraft-unifont-ts-s3.png",
+      "sha256": "52b0cc3aeeca749cfe424c7ec99938943b836ccf2def812d0853d85f3f6b3953"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-cli-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-cli-s1.png",
+      "sha256": "721477c61b4d3fab39eb82ed1bf6ee7f34ff666ea753fb2ecdcefee3ada7da69"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-cli-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-cli-s2.png",
+      "sha256": "c4e71d0e8ce7928249dab103c1eb811147a41f2ab73333cc4491e160bacd64c0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-cli-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-cli-s3.png",
+      "sha256": "eaaccb9681637b6d98c7fcd1926f79d09eb22bc24750d98e223c91c843476dc0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-manual-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-manual-s1.png",
+      "sha256": "1dfcc7f59ec8825fb531f8c25906bc06c5372c1778d846d50dbd169ffb54f156"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-manual-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-manual-s2.png",
+      "sha256": "640023733da69a5b443e1d89e6f0a36110a3797c395982525cdfc971d607d71b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-mode-manual-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-mode-manual-s3.png",
+      "sha256": "9bdc41936524f1b35316ee203a415787fe42801ad106fe77bac9d213a8ef8d01"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-bun-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-bun-s1.png",
+      "sha256": "d0bdffb4507ec9cfe96bc5b9632eced993504c01c8862e745716f604e4700232"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-bun-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-bun-s2.png",
+      "sha256": "3c9b266af75231da5eeba353b673c7a2e46e9fc58169de567593e6eca2f7590d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-bun-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-bun-s3.png",
+      "sha256": "77d568af6eff01ac7fe78ac8990de874f9688c3099698e8256f85b95ccb1e4dd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-npm-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-npm-s1.png",
+      "sha256": "5cdb18af0a213fde8326846c76f15c0335093f39b4b62deab79e67435f795a2d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-npm-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-npm-s2.png",
+      "sha256": "195ed61d7509f69262443db4c74a711ff9e774af8932c710bfd1feeaf930ea83"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-npm-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-npm-s3.png",
+      "sha256": "1ecc8920b00c79ca6e8b73df6c43e6358e14a29032f8ed65ec6723d28c04ebb3"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s1.png",
+      "sha256": "94f72c38a2f72ef4f55f9061232b78cd65111ea8d95359018139d912bad8d7eb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s2.png",
+      "sha256": "ce959f7fb4a5c925d43ee4b6b58209a12e65c35727a32980869c88b6f7a3bc57"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-pnpm-s3.png",
+      "sha256": "4b675a70d76ae0cb1abc573b2c8c60e456626efc51c87cd7f7650eeb9ab64c29"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-yarn-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-yarn-s1.png",
+      "sha256": "760d4adee48dd092bbd4e815de0608c395e9a723cfc54fd48f0496816e1b0bcd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-yarn-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-yarn-s2.png",
+      "sha256": "5738c8caf226a53af8d7cc4b1dbaac8ae2983284a76e4718a222d2f60944149d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/captures/install-pm-yarn-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/captures/install-pm-yarn-s3.png",
+      "sha256": "602659bd5120a9caf27bd23bc6884125408fc9576505d36c254b59a902f46e4a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p0-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p0-s1.png",
+      "sha256": "c4e458a5d79511c4457c6e123bb9fc1f688a0fef1be97c9a576568b039a5435d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p0-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p0-s2.png",
+      "sha256": "ac1343de70d5bb81ea0fe3125e8fa89f1b9ce5ac8437c03fc77ceb9ac280d404"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p0-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p0-s3.png",
+      "sha256": "dfa707676b5f7a439d9ecfb5d9fd242cd40a63e307a2a341c0beca78eee5defc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p1-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p1-s1.png",
+      "sha256": "641f63a0fd74e16c1c0e61874c7c5c82e2572f7c5d6071da540467e8ebbc83dc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p1-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p1-s2.png",
+      "sha256": "32da567ad84eb966de6e4c6593269e6818d27e8bc70942a4d395372bd0a56b7f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p1-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p1-s3.png",
+      "sha256": "a6ec584d6e36f5c0d0ea42f4ee09d4a628b68524b99913d1a787c16c2894694f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p2-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p2-s1.png",
+      "sha256": "e3ec4441bdc6e7adc3833de193310d4712f2689c92f97e7f6d4ca848195e9c2b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p2-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p2-s2.png",
+      "sha256": "daec025caf2207aa77d7e6d17273aa1112260ac38b706de2d6f498aa4cd675ab"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/frames/native-controls-p2-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/frames/native-controls-p2-s3.png",
+      "sha256": "50c7be20462ab630e95266a3aacd813c3b5c3eb036e886c5d9a1b739ab727425"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/layout.json",
+      "sha256": "050726e54048f2d1b305efb20c90eda4a8ff96d4ff1dd67d6eec4e9d2eebbf9d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/manifest.json",
+      "sha256": "ced0ae12ccf3decc65a0969f972d61c5c42d8dd32166221574ad837d0d4a998a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/source-input/capture-controls.mjs",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/source-input/capture-docs-installation.mjs",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/capture-docs-installation.mjs",
+      "sha256": "c989759bf0c6315d2a0fa23e27f27f39223eb87da567d461982c4ee10f836317"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/source-input/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s1.png",
+      "sha256": "0992bf03d0c30ab2cdd8a5951c1989e9b0fd213f13cc99a3518485b7aa597b73"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s2.png",
+      "sha256": "4e3aa4417c8a9866850482d032f4f62e175637b6120e5c110d6a773158894568"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-copy-full-file-s3.png",
+      "sha256": "f98b6e207eb9971fe4fb412a5ef7a5d259fb19966998befc1783db5160598080"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s1.png",
+      "sha256": "54c1144fb6fffc05b62416641880e76a70d4308916f3280aa02a481aecae9e38"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s2.png",
+      "sha256": "97878fc252b95121bbfc8bf640ddb8787dafa501f570e77caf21712fdd3c0051"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-download-s3.png",
+      "sha256": "9c2c95f57335c19950ae07e2c2376f6ddc3a5a6d449a80e6da90835c13953123"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s1.png",
+      "sha256": "baa0da169a39d2b8bcf53e74b7d501ce5c3696e167027ee207039dd9a48125c6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s2.png",
+      "sha256": "cc72d72f9293f324f6fea791e3bfeeae507a44f232a0a1a35eda4d44fb6ba00e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-disabled-s3.png",
+      "sha256": "952e08441b8c0cecaacc0f4bbebe625c23615d8519dd90937140ab86ff9048f3"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s1.png",
+      "sha256": "ea54c64d33d7e5d26c2250445cc954476a336b2b45a1b59ba74555f5c0aee10e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s2.png",
+      "sha256": "eac183459a950fa3a38ab8b98e9cb41d5e897e07dcaae08999156e9bbcfdf7e9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-load-s3.png",
+      "sha256": "d2cd65a7c224441ba70ff7de60c2da30a2741773c77826a2ed9d01647f3380fb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s1.png",
+      "sha256": "3b48c27db9773605c7ae087bdc0c3b4e3839aa5445b22d9587a70cc505db8d05"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s2.png",
+      "sha256": "36ac107288dc59618dea20d7db45948e0d550e7e54128c665e807caca845bc13"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-action-retry-s3.png",
+      "sha256": "02cd7686be934b7093927f12ba4c06fd9676a2212f73c2b70d1ea937f0355ad6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s1.png",
+      "sha256": "f6e1d18378b2e99bbfa15dbddb7fedfc1e7dce6f9fef34e2f9790016ced9b7ee"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s2.png",
+      "sha256": "010c1ce24cc65a3ca47c68e86cbf759de9f777eadda94ee7c3b2cef09f4701d9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-button-tsx-s3.png",
+      "sha256": "b8856219a5a80f5bea87788a3f8400a914ea92af684907cae7be1de28a4b4e6d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s1.png",
+      "sha256": "0e6a4c08a58c961e95b78826cd30d0496d534e59f2e306e92618cabe63e5d0a6"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s2.png",
+      "sha256": "45132af2ae3a4d7eb676f9f8569180da32b701c7910ac707442775f1e6e02090"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-assets-css-s3.png",
+      "sha256": "7eab642a84a35b64d59bbf77fc588506a60230cd68c08ee2c804ffff2c31a3a2"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s1.png",
+      "sha256": "5142eddb46fe6b77a06e8c394599bcf98e18f88ad6b597ecac1e034394fc110e"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s2.png",
+      "sha256": "f9aa96851d1d1f98363f0e57249afcda813eea1973d0140e63a3c08ed5809700"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-button-css-s3.png",
+      "sha256": "6b72250d4913a538ddaae320f4ba21b7c4552b56df383175b94e45cff5dece79"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s1.png",
+      "sha256": "348cc717df0158ea6f22a14345c7a8a04eeaebe49c5fcf3adbbbd624cac4b320"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s2.png",
+      "sha256": "61233af02da7ed55b55f5c2cac96f6f60f2a54a77e2afbc247bbaef89ba544e9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-font-ts-s3.png",
+      "sha256": "3cbb08c0fc62a7beb5f9b9e15482741b38dbaa8553d37e6ffad9ac67a7504515"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s1.png",
+      "sha256": "b9aece2896a7d272f034aaedee6c6f4f82c4ba0721cfac6920e970786180574b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s2.png",
+      "sha256": "45d30677e00d69ddd5116ec366bdc63da2ed3b25b05ce2ccb8bb3ff6882047e0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-input-assets-ts-s3.png",
+      "sha256": "512a97a56252b42778a93ae206e6b7185eddec3e7fdf42c90f2f5e3119f6fa44"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s1.png",
+      "sha256": "7d21cec11271905afc576d1e62fea96a1740ae955deedf955161bcf1529386bd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s2.png",
+      "sha256": "e2121503d047402af2f40fbcb3c6c21590a6a6d916fdf65a63e5d31f5176b116"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-render-tsx-s3.png",
+      "sha256": "d61cb1800b3f8d441a2b9da96018bbf8ff52b90b6484ad851102f37884a47ca8"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s1.png",
+      "sha256": "ad00be004ce6f3b5642e2ed2cfa226e49a4a48764159559659cf9dc627d70b51"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s2.png",
+      "sha256": "39b36563c5744cb69929ddd587df7221fbe896606b503e5c0cf15a301c5af0a9"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-assets-ts-s3.png",
+      "sha256": "59276aa73f6f4c674e55255c61896026c08f763c43166849f21b24fd2119c68c"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s1.png",
+      "sha256": "0bbd67485cefa426077cf4f019b72adb4b845e3407fb4f92062d220d0d2207f0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s2.png",
+      "sha256": "de1a2a2055c6d0341ed25783643c4c57ac6bb69ada464518148bf338b06eebf7"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-sound-ts-s3.png",
+      "sha256": "fcd015950f6cf09894f1311ad84f6e9fd53de41c8481d2bdb58af177b673916f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s1.png",
+      "sha256": "4c3da7ae0fd5a933f4f29a1f7394ccee0563c6d2e2c5f63d3299799ee4997d18"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s2.png",
+      "sha256": "60c3f02e7b93bc49d46b107ddb7ac56725adb52ba6e3fde2a85802f6f26a9508"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unicode-label-tsx-s3.png",
+      "sha256": "3b16992e2664a8cb3212ee82902800775ec94759bf2b4f2d90be343b1d6da702"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s1.png",
+      "sha256": "181c25d53b9f2d90b3795560d779cc37f76833f45365e41d4269bf97c5839f9d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s2.png",
+      "sha256": "c1f202f220be5e72695bfb867331a8419a5801bef92d815e98fe77c7b9def1d1"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-atlas-ts-s3.png",
+      "sha256": "2d0e71702a69cbeaf081975af48065a5150488127cee13d335cc13b308b8eb65"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s1.png",
+      "sha256": "54c4a430b7aa72d5f899a600279e76d1cc411b39e406e5b2e024f318c0553b45"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s2.png",
+      "sha256": "863bb312bf9ed77961fe0f805c7b7bdf2971ea98a47fa44a8b53a61e18203486"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-data-ts-s3.png",
+      "sha256": "224056863619b76280b857e8632722a59880fca92b227e1d043d5c2c31558a11"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s1.png",
+      "sha256": "b04bf00904f67aa1eda6e97a4e02e585e4aed05b9ded885203ab3ad10564687b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s2.png",
+      "sha256": "aa2131d12d545163e653b502e41795cfd87ef2ee1bd06dd13d20f0a6d2978d22"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-gpu-ts-s3.png",
+      "sha256": "ede33e9d697b6b2a4df6634063e803ad97d5077842ce4fcb3b44c26ad32c1493"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s1.png",
+      "sha256": "5784a6a4a9f0b314249ff5cd72365d7557543a74bf523b4d267af2a698818afb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s2.png",
+      "sha256": "49cc68fa5cb244ca30d4270d622e0909017a80661bfa3354874063db69005680"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-file-minecraft-unifont-ts-s3.png",
+      "sha256": "52b0cc3aeeca749cfe424c7ec99938943b836ccf2def812d0853d85f3f6b3953"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s1.png",
+      "sha256": "721477c61b4d3fab39eb82ed1bf6ee7f34ff666ea753fb2ecdcefee3ada7da69"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s2.png",
+      "sha256": "c4e71d0e8ce7928249dab103c1eb811147a41f2ab73333cc4491e160bacd64c0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-cli-s3.png",
+      "sha256": "eaaccb9681637b6d98c7fcd1926f79d09eb22bc24750d98e223c91c843476dc0"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s1.png",
+      "sha256": "1dfcc7f59ec8825fb531f8c25906bc06c5372c1778d846d50dbd169ffb54f156"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s2.png",
+      "sha256": "640023733da69a5b443e1d89e6f0a36110a3797c395982525cdfc971d607d71b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-mode-manual-s3.png",
+      "sha256": "9bdc41936524f1b35316ee203a415787fe42801ad106fe77bac9d213a8ef8d01"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s1.png",
+      "sha256": "d0bdffb4507ec9cfe96bc5b9632eced993504c01c8862e745716f604e4700232"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s2.png",
+      "sha256": "3c9b266af75231da5eeba353b673c7a2e46e9fc58169de567593e6eca2f7590d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-bun-s3.png",
+      "sha256": "77d568af6eff01ac7fe78ac8990de874f9688c3099698e8256f85b95ccb1e4dd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s1.png",
+      "sha256": "5cdb18af0a213fde8326846c76f15c0335093f39b4b62deab79e67435f795a2d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s2.png",
+      "sha256": "195ed61d7509f69262443db4c74a711ff9e774af8932c710bfd1feeaf930ea83"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-npm-s3.png",
+      "sha256": "1ecc8920b00c79ca6e8b73df6c43e6358e14a29032f8ed65ec6723d28c04ebb3"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s1.png",
+      "sha256": "94f72c38a2f72ef4f55f9061232b78cd65111ea8d95359018139d912bad8d7eb"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s2.png",
+      "sha256": "ce959f7fb4a5c925d43ee4b6b58209a12e65c35727a32980869c88b6f7a3bc57"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-pnpm-s3.png",
+      "sha256": "4b675a70d76ae0cb1abc573b2c8c60e456626efc51c87cd7f7650eeb9ab64c29"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s1.png",
+      "sha256": "760d4adee48dd092bbd4e815de0608c395e9a723cfc54fd48f0496816e1b0bcd"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s2.png",
+      "sha256": "5738c8caf226a53af8d7cc4b1dbaac8ae2983284a76e4718a222d2f60944149d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/captures/install-pm-yarn-s3.png",
+      "sha256": "602659bd5120a9caf27bd23bc6884125408fc9576505d36c254b59a902f46e4a"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s1.png",
+      "sha256": "c4e458a5d79511c4457c6e123bb9fc1f688a0fef1be97c9a576568b039a5435d"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s2.png",
+      "sha256": "ac1343de70d5bb81ea0fe3125e8fa89f1b9ce5ac8437c03fc77ceb9ac280d404"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p0-s3.png",
+      "sha256": "dfa707676b5f7a439d9ecfb5d9fd242cd40a63e307a2a341c0beca78eee5defc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s1.png",
+      "sha256": "641f63a0fd74e16c1c0e61874c7c5c82e2572f7c5d6071da540467e8ebbc83dc"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s2.png",
+      "sha256": "32da567ad84eb966de6e4c6593269e6818d27e8bc70942a4d395372bd0a56b7f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p1-s3.png",
+      "sha256": "a6ec584d6e36f5c0d0ea42f4ee09d4a628b68524b99913d1a787c16c2894694f"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s1.png",
+      "sha256": "e3ec4441bdc6e7adc3833de193310d4712f2689c92f97e7f6d4ca848195e9c2b"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s2.png",
+      "sha256": "daec025caf2207aa77d7e6d17273aa1112260ac38b706de2d6f498aa4cd675ab"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/frames/native-controls-p2-s3.png",
+      "sha256": "50c7be20462ab630e95266a3aacd813c3b5c3eb036e886c5d9a1b739ab727425"
+    },
+    {
+      "from": "packages/tests/tests/reference/docs-installation-controls/repeat/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/docs-installation-controls/repeat/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/cases.json",
+      "sha256": "0784314b04956c62bb9bcb3098927d27ae9914d0126d036508c4e5764fa98e14"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/repeat-proof.json",
+      "sha256": "8507f2d0af73e55af82484fb019b3c0422497da9cf3a1ad2031339795151d9a8"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/runtime-provenance.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/runtime-provenance.json",
+      "sha256": "c9b34f49788044ce6fa522a481aed1d160d389d62ec94c75f01bf8c1e68ec2f4"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/manifest.json",
+      "sha256": "8a9c56e1d277cfc16fc5097947d4ac6426f64a1d7631eb1f9a979609c1a05b89"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/manifest.json",
+      "sha256": "8a9c56e1d277cfc16fc5097947d4ac6426f64a1d7631eb1f9a979609c1a05b89"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/source-input/capture-controls.mjs",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/source-input/capture-docs-navigation.mjs",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/source-input/capture-docs-navigation.mjs",
+      "sha256": "2336687ae3ccaed10ac0f296b40d4b87ada47f32b652e0fb0e074bf179ee8478"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/source-input/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/source-input/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s1.png",
+      "sha256": "0f2bd961d9843ab2a8cfbe11da90492833dfc95035a124837a6db911bd8d9a55"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s2.png",
+      "sha256": "d418652b3549e17c275d89dc1e9619270b16cc511cdb0f0f5167a29ddf88cb24"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-header-components-s3.png",
+      "sha256": "c55795e39ca4e261afe34bffa8c8555e9ccc81f464b43b65cae12d7bc11db81b"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s1.png",
+      "sha256": "26baaa646c8891d6621fd86ef915408fcf37384c82ffc8bfce2eae2b40987ad0"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s2.png",
+      "sha256": "dfd41f2b75b35410197c6ae70f6e091c9e0912dd58a4a0816bf3efe088d8d1de"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-empty-s3.png",
+      "sha256": "c83e93d4bdd85aa45e635fa13313ecb81f7dae9f9665c135a9df4ffa81a707a5"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s1.png",
+      "sha256": "33bff0552f99e059e9423a608659455c797f38b86955477a2ca910dbd2b46328"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s2.png",
+      "sha256": "2c566d29c80638548bf662178fef8f843bfc7ad2f16f5ea5f0d9548d963cc038"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-focus-s3.png",
+      "sha256": "408e5affc5a33476379fcd6842825bffca7b88f4427248aa1c22edf7e1377fbe"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s1.png",
+      "sha256": "13a6a9e2d15ede00729f952ce399e85a6226a8de65a1f1d667b4dc5d1ac36cc7"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s2.png",
+      "sha256": "660b620b13b9843ee799cab17e1a66932a517071c07e7ef7ef943cef1957442d"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-hear-s3.png",
+      "sha256": "935d81c63d61e8a127c4731a9aa06103c45517f9181bc6959f56217a6cfad59c"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s1.png",
+      "sha256": "341539e2a9163cb75b5bfc303a90432b420fde6415f2ff1657a5f32154d55be9"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s2.png",
+      "sha256": "01602b7b8e2ea89d30a0e5c14d15ad002837a0abc1328db8735ac40c2b0b48d4"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/captures/docs-search-symbol-s3.png",
+      "sha256": "9a447412fcfb2d804976cc21aa11b17c01aab72044267497269e314af54fc37c"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/frames/native-controls-s1.png",
+      "sha256": "f938a586c4eac69f5673611bed62543e74a2fab9f0fb664637b1b539c7c640e3"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/frames/native-controls-s2.png",
+      "sha256": "ba8bc75eaf556c6a45a5df9a09cc85500ed53a6b1ffaa72c539d47bc65a90a75"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/frames/native-controls-s3.png",
+      "sha256": "5352657fdf8314fc4c5fdd374d9bfed9e529cbbaede84d3511b0d24d244c8765"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-b/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-b/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s1.png",
+      "sha256": "0f2bd961d9843ab2a8cfbe11da90492833dfc95035a124837a6db911bd8d9a55"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s2.png",
+      "sha256": "d418652b3549e17c275d89dc1e9619270b16cc511cdb0f0f5167a29ddf88cb24"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-header-components-s3.png",
+      "sha256": "c55795e39ca4e261afe34bffa8c8555e9ccc81f464b43b65cae12d7bc11db81b"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s1.png",
+      "sha256": "26baaa646c8891d6621fd86ef915408fcf37384c82ffc8bfce2eae2b40987ad0"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s2.png",
+      "sha256": "dfd41f2b75b35410197c6ae70f6e091c9e0912dd58a4a0816bf3efe088d8d1de"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-empty-s3.png",
+      "sha256": "c83e93d4bdd85aa45e635fa13313ecb81f7dae9f9665c135a9df4ffa81a707a5"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s1.png",
+      "sha256": "33bff0552f99e059e9423a608659455c797f38b86955477a2ca910dbd2b46328"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s2.png",
+      "sha256": "2c566d29c80638548bf662178fef8f843bfc7ad2f16f5ea5f0d9548d963cc038"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-focus-s3.png",
+      "sha256": "408e5affc5a33476379fcd6842825bffca7b88f4427248aa1c22edf7e1377fbe"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s1.png",
+      "sha256": "13a6a9e2d15ede00729f952ce399e85a6226a8de65a1f1d667b4dc5d1ac36cc7"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s2.png",
+      "sha256": "660b620b13b9843ee799cab17e1a66932a517071c07e7ef7ef943cef1957442d"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-hear-s3.png",
+      "sha256": "935d81c63d61e8a127c4731a9aa06103c45517f9181bc6959f56217a6cfad59c"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s1.png",
+      "sha256": "341539e2a9163cb75b5bfc303a90432b420fde6415f2ff1657a5f32154d55be9"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s2.png",
+      "sha256": "01602b7b8e2ea89d30a0e5c14d15ad002837a0abc1328db8735ac40c2b0b48d4"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/captures/docs-search-symbol-s3.png",
+      "sha256": "9a447412fcfb2d804976cc21aa11b17c01aab72044267497269e314af54fc37c"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/frames/native-controls-s1.png",
+      "sha256": "f938a586c4eac69f5673611bed62543e74a2fab9f0fb664637b1b539c7c640e3"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/frames/native-controls-s2.png",
+      "sha256": "ba8bc75eaf556c6a45a5df9a09cc85500ed53a6b1ffaa72c539d47bc65a90a75"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/frames/native-controls-s3.png",
+      "sha256": "5352657fdf8314fc4c5fdd374d9bfed9e529cbbaede84d3511b0d24d244c8765"
+    },
+    {
+      "from": "packages/tests/tests/reference/next-docs-navigation/native-a/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/next-docs-navigation/native-a/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/cases.json",
+      "sha256": "60b2ae267aae246500b6af58e4f0b642d1b0f9aa6a9e9a89d48a9816d829352b"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/layout.json",
+      "sha256": "cb5069c8ed49b51ddba7d7c97bca21473738b23bacc8fa54bf7e7ca90ed4a4d5"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/manifest.json",
+      "sha256": "340e7138bc67f5674194665fc03d129cf2ccaa806a912ba4306958a40d334842"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat-proof.json",
+      "sha256": "ac5df901f023367079067ddd16c37be5bcd7b7b21ba28c21de7d326a49b23194"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s1.png",
+      "sha256": "a2b2d9bff55a44b4afe78df658c90d1840f716269646bba1a76d18129550080a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s2.png",
+      "sha256": "9b9c961cfa78b7ccc3e78e30244313e3668f0e66aea8ef2a84e599721e4227b3"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-code-s3.png",
+      "sha256": "628408618c0332cb63288f80a7930cab8f94490d19e0236ef02400466f2285ee"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s1.png",
+      "sha256": "e052230f3d40e31539b4badff81b3af31f3e6f40f8e6c5efbabda29d381a2679"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s2.png",
+      "sha256": "fbe6e124075cfaf4d8c0309d3b89f65479d3624df7b03b44bcc7e126aca84d4c"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/captures/showcase-tabs-preview-s3.png",
+      "sha256": "eb01498cc9bd307a1592e20b4ba7d21f8b69b559cd0e8e967dcc6e03ebc77bd1"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/frames/native-controls-s1.png",
+      "sha256": "80a3b91cce76f28d5fdd7a0697b67a40b5c488e629f1f3f3c482bf392c81f105"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/frames/native-controls-s2.png",
+      "sha256": "76be58318548c2b674afa1438266355bd083656c5b46e27902b08d20d9e6b80a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/frames/native-controls-s3.png",
+      "sha256": "60cf4b1058a8ae97ed822956f6e254c71a618a5140dcaad7529c73710de6931b"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/layout.json",
+      "sha256": "cb5069c8ed49b51ddba7d7c97bca21473738b23bacc8fa54bf7e7ca90ed4a4d5"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/manifest.json",
+      "sha256": "340e7138bc67f5674194665fc03d129cf2ccaa806a912ba4306958a40d334842"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/source-input/capture-controls.mjs",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s1.png",
+      "sha256": "a2b2d9bff55a44b4afe78df658c90d1840f716269646bba1a76d18129550080a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s2.png",
+      "sha256": "9b9c961cfa78b7ccc3e78e30244313e3668f0e66aea8ef2a84e599721e4227b3"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-code-s3.png",
+      "sha256": "628408618c0332cb63288f80a7930cab8f94490d19e0236ef02400466f2285ee"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s1.png",
+      "sha256": "e052230f3d40e31539b4badff81b3af31f3e6f40f8e6c5efbabda29d381a2679"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s2.png",
+      "sha256": "fbe6e124075cfaf4d8c0309d3b89f65479d3624df7b03b44bcc7e126aca84d4c"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/captures/showcase-tabs-preview-s3.png",
+      "sha256": "eb01498cc9bd307a1592e20b4ba7d21f8b69b559cd0e8e967dcc6e03ebc77bd1"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s1.png",
+      "sha256": "80a3b91cce76f28d5fdd7a0697b67a40b5c488e629f1f3f3c482bf392c81f105"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s2.png",
+      "sha256": "76be58318548c2b674afa1438266355bd083656c5b46e27902b08d20d9e6b80a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/frames/native-controls-s3.png",
+      "sha256": "60cf4b1058a8ae97ed822956f6e254c71a618a5140dcaad7529c73710de6931b"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-code-tabs/repeat/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/showcase-code-tabs/repeat/source/ControlsReferenceMain.java",
+      "sha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/cases.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/cases.json",
+      "sha256": "55673a9e2d42b0457906f1a4961b4b2ebae4c1f753266e32b5e0042a3f5e40dd"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/glyph-atlas.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/glyph-atlas.json",
+      "sha256": "83660cce61a0564efdb690ed8eb5989719ea81c31adb01e13be4ca7da9562986"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/manifest.json",
+      "sha256": "525807e67f301cccdd270bd04e421fed901ed7f92a0f90b7825eed69c8870820"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat-proof.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat-proof.json",
+      "sha256": "369d429b9114a144b5496750b071d229b418fefc386f7de01c6a023aaf1c081f"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s1.png",
+      "sha256": "2a262157bd7ee3ca02577bdc7d8c65a5d058ebe7d542eb513862e8c96e6cdf1e"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s2.png",
+      "sha256": "73d3e2da3c79545986235bd5eb557fa1df562928563e5a9d5f82d074763ae932"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/captures/showcase-frame-timing-s3.png",
+      "sha256": "70df505df0e6ab12e79850bac0ed8075db1aa9c17557df45b65d101924309860"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/frames/native-controls-s1.png",
+      "sha256": "4a1802ef3298bf385be53a98d5ce8f309c65d387792d1693acd231bb460e8e0d"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/frames/native-controls-s2.png",
+      "sha256": "fb340cfd98540e001ea88154a214af9d6eb7e2bbe228a97fe7e274c3477ee839"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/frames/native-controls-s3.png",
+      "sha256": "2fdb2d683bf9f6825d0d8469d5f1b0735d95d05799695690bd8b2cd673212451"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/checkbox-atlas.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/checkbox-atlas.json",
+      "sha256": "938bb002aa462131127ae5990421d451ec7bfce424698b0a525b1b138ed5d12b"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/glyph-atlas.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/glyph-atlas.json",
+      "sha256": "01e6fcb7be2a3c174f5cf330edcfa3a23baa2f5b8dc4e8e8c8d2b4f7c5bd0fbc"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/layout.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/layout.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/manifest.json",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/manifest.json",
+      "sha256": "525807e67f301cccdd270bd04e421fed901ed7f92a0f90b7825eed69c8870820"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/source/ControlsReferenceMain.java",
+      "sha256": "abcbb3b92a631ef54ad433cf55a0db38593918c3001223fbc3bce2c34fbf4b87"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s1.png",
+      "sha256": "2a262157bd7ee3ca02577bdc7d8c65a5d058ebe7d542eb513862e8c96e6cdf1e"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s2.png",
+      "sha256": "73d3e2da3c79545986235bd5eb557fa1df562928563e5a9d5f82d074763ae932"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/captures/showcase-frame-timing-s3.png",
+      "sha256": "70df505df0e6ab12e79850bac0ed8075db1aa9c17557df45b65d101924309860"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s1.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s1.png",
+      "sha256": "4a1802ef3298bf385be53a98d5ce8f309c65d387792d1693acd231bb460e8e0d"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s2.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s2.png",
+      "sha256": "fb340cfd98540e001ea88154a214af9d6eb7e2bbe228a97fe7e274c3477ee839"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s3.png",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/frames/native-controls-s3.png",
+      "sha256": "2fdb2d683bf9f6825d0d8469d5f1b0735d95d05799695690bd8b2cd673212451"
+    },
+    {
+      "from": "packages/tests/tests/reference/showcase-frame-timing/repeat/source/ControlsReferenceMain.java",
+      "to": "packages/pixel-perfect/tests/reference/showcase-frame-timing/repeat/source/ControlsReferenceMain.java",
+      "sha256": "abcbb3b92a631ef54ad433cf55a0db38593918c3001223fbc3bce2c34fbf4b87"
+    }
+  ],
+  "caseMigration": [
+    {
+      "from": "packages/tests/tests/docs-examples.spec.ts",
+      "to": "packages/tests/tests/website/docs-examples.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "Button documentation connects its executable example, complete code and implementation source"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-inputs.spec.ts",
+      "to": "packages/tests/tests/website/docs-inputs.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "Slider docs default edits one controlled thumb",
+        "Input docs defaults preserve editing and associated control state",
+        "Selection docs defaults resolve labels arrays and suggestions",
+        "OTP docs default completes the real six-character input",
+        "Field docs implementation and manual copy select the owned file",
+        "Form docs block validates saves and resets",
+        "Questionnaire docs default submits ordered answers",
+        "Input family docs copy complete executable primary examples",
+        "Input docs default layouts fit desktop and narrow viewports"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-installation.spec.ts",
+      "to": "packages/tests/tests/website/docs-installation.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "Button installation copies and remembers the visitor package manager",
+        "Button manual installation exposes complete files and defers large resources"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-navigation.spec.ts",
+      "to": "packages/tests/tests/website/docs-navigation.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "documentation sidebar and heading links follow the authored page tree",
+        "documentation search finds authored prose and follows its section",
+        "documentation search discovers the public component export",
+        "documentation search discovers a component alias",
+        "the legacy Button link retains its query and reaches the usage section",
+        "the legacy Field export result reaches independently discoverable Field documentation",
+        "mobile documentation navigation opens the page tree without page overflow"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-example-pixels.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/docs-example-pixels.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "default documentation code controls match their Minecraft reference cases"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-input-pixels.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/docs-input-pixels.spec.ts",
+      "purpose": "ppt",
+      "titles": []
+    },
+    {
+      "from": "packages/tests/tests/docs-installation-pixels.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/docs-installation-pixels.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "default installation controls match their captured Minecraft content and states"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/docs-navigation-pixels.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/docs-navigation-pixels.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "documentation header Components matches its captured Minecraft Button",
+        "documentation search placeholder matches its captured Minecraft input",
+        "documentation prose search typing matches its captured Minecraft input"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/next-foundation.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/next-foundation.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "the default MDX component page renders within the Minecraft website shell"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/layout-documentation.spec.ts",
+      "to": "packages/tests/tests/website/layout-documentation.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "layout documentation exposes its actual examples and complete source",
+        "default composed documentation examples retain their owned state and callbacks",
+        "default responsive Sidebar composition toggles within its desktop context and mobile portal",
+        "documentation prose styles preserve native breadcrumb ink and keyboard focus",
+        "default code renderer copies its own complete source and Sonner uses one host"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/layout-documentation.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/layout-documentation.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "default layout documentation Separator and Progress match retained native cases"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/minecraft-documentation.spec.ts",
+      "to": "packages/tests/tests/website/minecraft-documentation.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "Minecraft documentation delivers maintained examples for all nine installable items",
+        "Minecraft primary examples expose paging selection status and trade callbacks"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/minecraft-documentation.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/minecraft-documentation.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "documentation empty Hotbar matches native selection zero on explicit backdrop"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/overlay-documentation.spec.ts",
+      "to": "packages/tests/tests/website/overlay-documentation.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "overlay documentation exposes exact examples, own grouped source and retained playgrounds",
+        "documentation confirmation callbacks update once and close their actual modal",
+        "documentation edge panels expose labelled Done actions",
+        "documentation menu and command examples dispatch real selections",
+        "documentation tooltip and popover open from their real focusable triggers",
+        "documentation Calendar and Date Picker select with their actual DayPicker 10 APIs",
+        "documentation world browser filters and pages through TanStack Table 9",
+        "documentation message scroller appends messages and navigates its bounded history",
+        "documentation bubble reactions and attachment actions retain local state",
+        "overlay documentation remains usable at its default mobile width"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/overlay-documentation.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/overlay-documentation.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "default documentation packaged avatar faces match native PlayerFaceExtractor"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/next-showcase.spec.ts",
+      "to": "packages/tests/tests/website/next-showcase.spec.ts",
+      "purpose": "ordinary",
+      "titles": [
+        "homepage application examples keep their default public interactions",
+        "chart showcase exposes the complete executable example and chart destinations"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/next-showcase.spec.ts",
+      "to": "packages/pixel-perfect/tests/integration/website/next-showcase.spec.ts",
+      "purpose": "ppt",
+      "titles": [
+        "chart example tabs remain visible and match their Minecraft modes",
+        "chart showcase default frame timing matches its original Minecraft renderer",
+        "homepage default checkbox retains its captured Minecraft pixels"
+      ]
+    },
+    {
+      "from": "packages/tests/tests/component-source.test.tsx",
+      "to": "packages/tests/tests/unit/component-source.test.tsx",
+      "purpose": "unit"
+    },
+    {
+      "from": "packages/tests/tests/overlay-examples.test.mjs",
+      "to": "packages/tests/tests/unit/overlay-examples.test.mjs",
+      "purpose": "unit"
+    },
+    {
+      "from": "packages/tests/scripts/verify-manual-consumers.mjs",
+      "to": "packages/pixel-perfect/src/installed/verify-manual-consumers.mjs",
+      "purpose": "consumer-harness-pending-22"
+    }
+  ],
+  "newPptMappings": 19,
+  "totalPptMappings": 30,
+  "preservedDocumentedRemovals": [
+    {
+      "file": "slider/slider.spec.ts",
+      "title": "Control native pixels: slider-w200-v500-normal-s2.png",
+      "titlePath": [
+        "Control native pixels: slider-w200-v500-normal-s2.png"
+      ],
+      "components": [
+        "slider"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/components/slider",
+        "reason": "Default website Volume slider: 200 logical pixels, 50% value, normal GUI2."
+      }
+    }
+  ],
+  "removalEvidence": "docs/audits/next-inputs-documentation.md: old Slider reference label is iIl! MW@09 rather than the real Volume: 50%; reference and case remain retained outside Base."
+}

@@ -1,13 +1,12 @@
 import path from 'node:path'
-import {pixelPerfectTestRoot} from '../../workspace-paths.mjs'
-import { defineConfig } from "vite"
-import tailwindcss from "@tailwindcss/vite"
-import { fileURLToPath } from "node:url"
+import {defineConfig} from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+import {fixtureRoot,testRoot,pixelPerfectTestRoot,webRoot} from '@grasscn/tests/paths'
 
 export default defineConfig({
-  root: fileURLToPath(new URL("./tests/fixture", import.meta.url)),
-  cacheDir: path.join(pixelPerfectTestRoot, 'vite/registry-fixture'),
-  plugins: [tailwindcss()],
-  resolve: { alias: { "@/lib/utils": fileURLToPath(new URL("./tests/fixture/utils.ts", import.meta.url)), "@/components/ui": fileURLToPath(new URL("../../apps/web/registry/ui", import.meta.url)) } },
-  server: { host: "127.0.0.1", port: 5174, strictPort: true },
+ root:fixtureRoot,
+ cacheDir:path.join(pixelPerfectTestRoot,'vite/registry-fixture'),
+ plugins:[tailwindcss()],
+ resolve:{alias:{'@/lib/utils':path.join(fixtureRoot,'utils.ts'),'@/components/ui':path.join(webRoot,'registry/ui'),'@tests':path.join(testRoot,'src')}},
+ server:{host:'127.0.0.1',port:5174,strictPort:true},
 })
