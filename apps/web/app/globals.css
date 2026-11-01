@@ -51,6 +51,9 @@ a {
 .minecraft-brand {
   --mc-scale: 3;
   display: inline-flex;
+  flex: none;
+  width: 176px;
+  height: 64px;
 }
 .minecraft-header nav {
   display: flex;

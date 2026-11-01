@@ -59,14 +59,13 @@ test("Header serves the preserved branding source at its actual production geome
   await expect(logo).toHaveAttribute("src", /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/)
   await logo.evaluate(node => (node as HTMLImageElement).decode())
   const image = PNG.sync.read(await logo.screenshot({path:info.outputPath("actual-header-logo.png")}))
-  expect([image.width, image.height]).toEqual([132, 48])
+  expect([image.width, image.height]).toEqual([176, 64])
   await expect(logo).toHaveCSS("image-rendering", "pixelated")
   const response = await request.get(new URL(await logo.getAttribute("src") ?? "", origin).href)
   expect(response.ok()).toBe(true)
   expect((await response.body()).equals(await readFile(resolveRepositoryPath("preview/assets/grasscn-logo.svg", testRoot)))).toBe(true)
-  // The intrinsic 176x64 source is displayed at132x48. Its grass becomes36px:
-  // a fractional2.25 scale with no corresponding independently captured case.
-  // This proves source delivery and production layout, not integrated native RGBA.
+  // The original SVG is served at its intrinsic176x64 geometry. Native
+  // constituent coverage is independently tested at the actual header backdrop.
   const iconBytes=await page.evaluate(async()=>Array.from(new Uint8Array(await(await fetch(document.querySelector<HTMLLinkElement>('link[rel="icon"]')!.href)).arrayBuffer())))
   expect(Buffer.from(iconBytes).equals(await readFile(resolveRepositoryPath("preview/assets/grass-block-16.png", testRoot)))).toBe(true)
   expect(errors).toEqual([])
@@ -77,8 +76,8 @@ test("Grasscn logo stays crisp and contained on narrow preview screens", async (
     await page.setViewportSize({ width, height: 844 })
     await page.goto(`${origin}docs`)
     const logo = page.getByRole("banner").getByRole("link", { name: "grasscn home", exact: true }).locator("img")
-    await expect(logo).toHaveCSS("width", "132px")
-    await expect(logo).toHaveCSS("height", "48px")
+    await expect(logo).toHaveCSS("width", "176px")
+    await expect(logo).toHaveCSS("height", "64px")
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   }
 })
