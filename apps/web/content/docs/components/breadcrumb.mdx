@@ -1,0 +1,35 @@
+---
+title: Breadcrumb
+description: Accessible ordered navigation with native label glyphs.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Accessible ordered navigation with native label glyphs.
+
+## Preview
+
+<ComponentExample name="breadcrumb-example" />
+
+## Usage
+
+Breadcrumb provides a nav labelled Breadcrumb and BreadcrumbList an ordered list. BreadcrumbLink supports render composition for a router anchor. BreadcrumbPage is an aria-disabled current-page span with role="link". It supplies location semantics without an active destination.
+
+## Composition
+
+Keep separators outside BreadcrumbItem. BreadcrumbEllipsis is presentation-only and its More text is hidden too; use a labelled Button or menu trigger for interactive overflow. The ordered path and focus ring are web adaptations around native label glyphs.
+
+## Installation
+
+<Installation name="breadcrumb" title="Breadcrumb" />
+
+## Component source
+
+<ComponentSource name="breadcrumb" title="Breadcrumb" />
+
+## Interactive playground
+
+<LayoutPlayground name="breadcrumb" />

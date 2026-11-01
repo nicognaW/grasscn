@@ -1,0 +1,37 @@
+---
+title: Sonner
+description: Sonner notifications with the original SystemToast appearance.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Sonner notifications with the original SystemToast appearance.
+
+## Preview
+
+<ComponentExample name="sonner-example" />
+
+## Usage
+
+Mount one Toaster in your application, then call the exported `toast(title,{description})`. The primary example contains its own host for copying into a standalone page. Avoid a second host if your application already mounts one. No theme provider or demo portal helper is required.
+
+## Composition
+
+Defaults are position="top-right", offset=0, gap=0, visibleToasts=5, richColors=false and expand=true. Unsupported richColors=true or expand=false throw. Actions, dismiss controls, rich HTML, alternate placement and library timers/swiping are web adaptations beyond the retained native SystemToast frames.
+
+## Installation
+
+<Installation name="sonner" title="Sonner" />
+
+## Component source
+
+<ComponentSource name="sonner" title="Sonner" />
+
+## Interactive playground
+
+<LayoutPlayground name="sonner" />
+
+For the inherited interaction contract, see [Sonner](https://sonner.emilkowal.ski/). The restrictions above describe the installed Grasscn implementation.

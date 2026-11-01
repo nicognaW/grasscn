@@ -1,0 +1,35 @@
+---
+title: Trace
+description: Chat-text status lines and controlled expandable details.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Chat-text status lines and controlled expandable details.
+
+## Preview
+
+<ComponentExample name="trace-example" />
+
+## Usage
+
+TraceLine status accepts running, error and pending; TraceTitle/Description render selectable chat text. TraceIcon is decorative. Supplying TraceCollapsible open requires onOpenChange; the example maintains that state. className on TraceCollapsibleContent styles its inner content div.
+
+## Composition
+
+Combine lines for running/pending stages and disclosure for details. Native white/red/dark-gray status text comes from the chat palette. Indentation, timing labels and the complete trace viewer are web adaptations; this is not a vanilla profiler widget.
+
+## Installation
+
+<Installation name="trace" title="Trace" />
+
+## Component source
+
+<ComponentSource name="trace" title="Trace" />
+
+## Interactive playground
+
+<LayoutPlayground name="trace" />

@@ -1,0 +1,37 @@
+---
+title: Empty
+description: Native empty-list text and structured empty-state composition.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Native empty-list text and structured empty-state composition.
+
+## Preview
+
+<ComponentExample name="empty-example" />
+
+## Usage
+
+A scalar child selects the centered native empty-list path; size the root to position it. Structured children select the Header/Title/Description/Content composition instead. EmptyMedia supports only the default variant. The Create world example keeps its action and disabled state in the caller.
+
+## Composition
+
+The structured example adds EmptyHeader, EmptyTitle, EmptyDescription and EmptyContent around a separately installed Button. It deliberately differs from scalar centered empty-list geometry; the complete empty screen is a web composition.
+
+<ComponentExample name="empty-create" />
+
+## Installation
+
+<Installation name="empty" title="Empty" />
+
+## Component source
+
+<ComponentSource name="empty" title="Empty" />
+
+## Interactive playground
+
+<LayoutPlayground name="empty" />
