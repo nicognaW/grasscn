@@ -7,6 +7,7 @@ import { repoRoot } from "@grasscn/tests/paths";
 import {
   assertPreparedSnapshot,
   readPreparedConsumerProjects,
+  consumerVerificationEnvironment,
 } from "@grasscn/tests/prepared-consumers";
 
 const source = { commit: "current", treeSha256: "current-source", status: "" };
@@ -22,13 +23,25 @@ const prepared = {
   source,
   websiteIdentity,
   bun: Bun.version,
-  environment: {
-    platform: process.platform,
-    arch: process.arch,
-    locale: Intl.DateTimeFormat().resolvedOptions().locale,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  },
+  environment: consumerVerificationEnvironment(),
 };
+
+test("prepared consumer refuses changed Bun runtime options", () => {
+  const previous = process.env.BUN_OPTIONS;
+  const snapshot = {
+    ...prepared,
+    environment: consumerVerificationEnvironment(),
+  };
+  try {
+    process.env.BUN_OPTIONS = `${previous ?? ""} --smol`;
+    expect(() =>
+      assertPreparedSnapshot(snapshot, { source, websiteIdentity })
+    ).toThrow("environment");
+  } finally {
+    if (previous === undefined) delete process.env.BUN_OPTIONS;
+    else process.env.BUN_OPTIONS = previous;
+  }
+});
 
 test("prepared consumer refuses changed platform architecture locale and timezone", () => {
   for (const key of ["platform", "arch", "locale", "timezone"])

@@ -90,20 +90,31 @@ try {
   const page = await context.newPage(),
     errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  const inventory = documentationInventory();
+  const titles = new Map([
+    ["/docs", "Components"],
+    ...inventory.pages.map((entry) => [entry.route, entry.title]),
+  ]);
   for (const route of [
     "/",
     "/docs",
     "/charts",
     "/charts/line",
-    ...documentationInventory().pages.map((entry) => entry.route),
+    ...inventory.pages.map((entry) => entry.route),
   ]) {
     const response = await page.goto("http://127.0.0.1:5176" + route, {
       timeout: 120000,
       waitUntil: "domcontentloaded",
     });
     assert.ok(response?.ok(), `Ordinary dev route ${route}`);
-    await expect(page.locator("h1")).toBeVisible({ timeout: 30000 });
-    report.pages.push({ route, title: await page.locator("h1").innerText() });
+    const title = titles.get(route);
+    const heading = title
+      ? page
+          .locator(".minecraft-document")
+          .getByRole("heading", { level: 1, name: title, exact: true })
+      : page.getByRole("heading", { level: 1 });
+    await expect(heading).toBeVisible({ timeout: 30000 });
+    report.pages.push({ route, title: await heading.innerText() });
   }
   await page.goto("http://127.0.0.1:5176/docs/components/button");
   const example = page.getByRole("region", {

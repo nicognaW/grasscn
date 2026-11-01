@@ -24,6 +24,7 @@ import {
   fetchPublicRegistry,
   assertRegistryInstallation,
 } from "./consumer-registry.mjs";
+import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
 
 // Run only under the shared resource guard with an already owned production website.
 // This is deliberately separate from manual projects: shadcn is the only Grasscn writer here.
@@ -98,12 +99,7 @@ const report = {
   bun: Bun.version,
   steps: [],
 };
-report.environment = {
-  platform: process.platform,
-  arch: process.arch,
-  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  locale: Intl.DateTimeFormat().resolvedOptions().locale,
-};
+report.environment = consumerVerificationEnvironment();
 if (prepared)
   assert.deepEqual(
     prepared.environment,

@@ -62,6 +62,7 @@ export async function validatePreparedProject(project, { excludedRoots } = {}) {
 
 export function consumerVerificationEnvironment() {
   return {
+    bunOptionsSha256: sha256(process.env.BUN_OPTIONS ?? ""),
     platform: process.platform,
     arch: process.arch,
     locale: Intl.DateTimeFormat().resolvedOptions().locale,

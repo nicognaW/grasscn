@@ -27,6 +27,7 @@ import {
   consumerEnvironment,
   directoryIdentity,
 } from "./consumer-boundary.mjs";
+import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
 
 // Run through the workspace resource guard with an owned production website already available.
 // These consumers start empty: no CLI-installed Grasscn files, developer aliases or fixture imports.
@@ -134,12 +135,7 @@ const report = {
   websiteIdentity,
   source,
   phase,
-  environment: {
-    platform: process.platform,
-    arch: process.arch,
-    locale: Intl.DateTimeFormat().resolvedOptions().locale,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  },
+  environment: consumerVerificationEnvironment(),
 };
 if (publicInputs) {
   assert.equal(
