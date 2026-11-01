@@ -46,6 +46,7 @@ const Slider = ({
   const [uncontrolled, setUncontrolled] = React.useState(
     () => defaultValue ?? [min, max]
   );
+
   const initialValue = React.useRef(uncontrolled);
   const root = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => root.current!);
