@@ -64,9 +64,14 @@ test("Tooltip preserves controlled state, asChild and the real content ref", asy
     await expect(page.getByLabel("Tooltip open", { exact: true })).toHaveText("false");
 });
 test("Tooltip honors hover delay and accepts rich children", async ({ page }) => {
-    await page.clock.install();
+    const clockTime = new Date("2030-01-01T00:00:00Z");
+    await page.clock.install({ time: clockTime });
+    await page.clock.pauseAt(new Date(clockTime.getTime() + 60_000));
     await page.goto("/?component=tooltip&delay=500&rich=1");
-    await page.locator("#tooltip-trigger").hover();
+    const trigger = page.locator("#tooltip-trigger");
+    await expect(trigger).toBeVisible();
+    const bounds = (await trigger.boundingBox())!;
+    await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
     await page.clock.runFor(400);
     await expect(page.locator('[data-slot="tooltip-content"]')).toHaveCount(0);
     await page.clock.runFor(200);
