@@ -1,0 +1,90 @@
+{
+  "source": "1985ecf452b21389b8e1f99fd883536509814cb3",
+  "buildId": "Bq8VrLldObJNkk3E3pKp1",
+  "outputSha256": "fd6dbd331a9da58eca33f791153eb896764483d21b4889e63d3957307d894464",
+  "images": [
+    {
+      "name": "home-desktop.png",
+      "sourceArtifact": "test-results/22-final/integration-1985ecf/final-acceptance/home-viewport-desktop.png",
+      "description": "Website composition; desktop viewport",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "8a3e0a07c6de7f350debb373e3418e48e3c20e4041b2dc08c2239b358751055b"
+    },
+    {
+      "name": "home-mobile.png",
+      "sourceArtifact": "test-results/22-final/integration-1985ecf/final-acceptance/home-viewport-mobile.png",
+      "description": "Website composition; mobile viewport",
+      "width": 390,
+      "height": 844,
+      "sha256": "0395b6d68ed7ebcae5f772f729f6a995c85b8630c747d9dd39c1a5f36d43dbd3"
+    },
+    {
+      "name": "example-code.png",
+      "sourceArtifact": "test-results/22-final/integration-1985ecf/final-acceptance/button-example-code-desktop.png",
+      "description": "Executable Button example source; desktop section",
+      "width": 944,
+      "height": 350,
+      "sha256": "7c336b7754a674c5b120b76b66729d630796e125f22d65a6a9f6b8518c0e1969"
+    },
+    {
+      "name": "manual-mobile.png",
+      "sourceArtifact": "test-results/22-final/integration-1985ecf/final-acceptance/button-manual-mobile.png",
+      "description": "Manual installation; mobile section",
+      "width": 350,
+      "height": 1617,
+      "sha256": "5827c606f43e102762de39c48bfb8ee3638b81c741772a163fa68492e2bf7703"
+    },
+    {
+      "name": "charts-mobile.png",
+      "sourceArtifact": "test-results/22-final/integration-1985ecf/final-acceptance/charts-viewport-mobile.png",
+      "description": "Chart showcase; mobile viewport",
+      "width": 390,
+      "height": 844,
+      "sha256": "824c668099e17d01dbbf2470760677480e38bf8a78ebcba943c5e9d7c9e4f9be"
+    },
+    {
+      "name": "installed-button.png",
+      "sourceArtifact": ".pixel-perfect-test/installed-consumers/integration-1985ecf/manual-vite-actual.png",
+      "description": "Installed Button; normal-w200-s2; 400 by 40 physical pixels; DPR 1",
+      "width": 400,
+      "height": 40,
+      "sha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87"
+    }
+  ],
+  "nativeButton": {
+    "reference": {
+      "name": "normal-w200-s2.png",
+      "state": "normal",
+      "width": 200,
+      "height": 20,
+      "scale": 2,
+      "label": "Button",
+      "sha256": "df62aa575215cf6cc5ab30488a19a53bfda5a32b85c3389da01bcb6968e1934c",
+      "manifestSha256": "b5a76e5550dc9684c8a91f785ea60c3b66c40379dba0e91e87c33a3f98e8f3e9",
+      "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
+    },
+    "consumers": [
+      {
+        "id": "manual-vite",
+        "actualSha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87",
+        "mismatchedPixels": 0,
+        "totalPixels": 16000
+      },
+      {
+        "id": "manual-next",
+        "actualSha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87",
+        "mismatchedPixels": 0,
+        "totalPixels": 16000
+      },
+      {
+        "id": "cli-vite",
+        "actualSha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87",
+        "mismatchedPixels": 0,
+        "totalPixels": 16000
+      }
+    ],
+    "onePixelCorruptionDetected": true
+  },
+  "wholePageNativeEquivalenceClaimed": false
+}
