@@ -3,6 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { expect, test } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
+
 const slugs = [
   "tooltip",
   "dialog",
@@ -28,6 +29,13 @@ const slugs = [
   "chart",
 ];
 
+// These properties capture clipboard writes performed by this test page.
+declare global {
+  interface Window {
+    copied: string;
+  }
+}
+
 test("overlay documentation exposes exact examples, own grouped source and retained playgrounds", async ({
   page,
 }, info) => {
@@ -36,55 +44,64 @@ test("overlay documentation exposes exact examples, own grouped source and retai
   page.on("pageerror", (error) =>
     errors.push(`${page.url()}: ${error.message}`)
   );
+
+  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of slugs) {
     await page.goto(`${origin}/docs/components/${slug}`);
+
     if (slug === "calendar") {
       await writeFile(
         info.outputPath("calendar-locale.json"),
         JSON.stringify(
           await page.evaluate(() => ({
-            language: navigator.language,
-            locale: Intl.DateTimeFormat().resolvedOptions().locale,
             defaultDate: new Date(2026, 9, 30).toLocaleDateString(),
             explicitDate: new Date(2026, 9, 30).toLocaleDateString("en-US"),
+            language: navigator.language,
+            locale: Intl.DateTimeFormat().resolvedOptions().locale,
           }))
         )
       );
     }
-    for (const id of ["preview", "usage", "composition", "installation"])
+
+    for (const id of ["preview", "usage", "composition", "installation"]) {
       await expect(page.locator(`h2#${id}`)).toBeVisible();
+    }
+
     const example = page.locator(".documentation-example").first();
     await expect(example.locator(".minecraft-example")).toBeVisible();
-    if (["dialog", "data-table", "message-scroller", "chart"].includes(slug))
+
+    if (["dialog", "data-table", "message-scroller", "chart"].includes(slug)) {
       await page.screenshot({
-        path: info.outputPath(`${slug}-desktop-actual.png`),
         fullPage: true,
+        path: info.outputPath(`${slug}-desktop-actual.png`),
       });
-    await example.getByRole("tab", { name: "Code", exact: true }).click();
+    }
+
+    await example.getByRole("tab", { exact: true, name: "Code" }).click();
+
     const filename =
       slug === "chart"
         ? "charts/fps-example.tsx"
         : `overlays/${slug}-example.tsx`;
+
     const source = await readFile(
       new URL(`../../../../apps/web/examples/${filename}`, import.meta.url),
-      "utf8"
+      "utf-8"
     );
+
     await page.evaluate(() =>
       Object.defineProperty(navigator, "clipboard", {
         configurable: true,
         value: {
+          // eslint-disable-next-line require-await -- The clipboard mock preserves the asynchronous browser API while recording its supplied text synchronously.
           writeText: async (text: string) => {
-            (window as unknown as { copied: string }).copied = text;
+            window.copied = text;
           },
         },
       })
     );
-    await example.getByRole("button", { name: "Copy", exact: true }).click();
-    expect(
-      await page.evaluate(
-        () => (window as unknown as { copied: string }).copied
-      )
-    ).toBe(source);
+    await example.getByRole("button", { exact: true, name: "Copy" }).click();
+    expect(await page.evaluate(() => window.copied)).toBe(source);
     await expect(page.locator(".documentation-implementation")).toContainText(
       `components/${["date-picker", "data-table"].includes(slug) ? "" : "ui/"}${slug}.tsx`
     );
@@ -95,6 +112,8 @@ test("overlay documentation exposes exact examples, own grouped source and retai
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
   }
+  /* eslint-enable no-await-in-loop */
+
   expect(errors).toEqual([]);
 });
 
@@ -103,17 +122,21 @@ test("documentation confirmation callbacks update once and close their actual mo
 }) => {
   await page.goto(`${origin}/docs/components/alert-dialog`);
   let example = page.locator(".documentation-example").first();
+
   const trigger = example.getByRole("button", {
+    exact: true,
     name: "Delete world",
-    exact: true,
   });
+
   await trigger.click();
+
   const alert = page.getByRole("alertdialog", {
-    name: "Delete this world?",
     exact: true,
+    name: "Delete this world?",
   });
+
   await expect(alert).toBeVisible();
-  await alert.getByRole("button", { name: "Yes", exact: true }).click();
+  await alert.getByRole("button", { exact: true, name: "Yes" }).click();
   await expect(alert).toHaveCount(0);
   await expect(example.getByLabel("Confirmed deletions")).toHaveText(
     "1 confirmed"
@@ -122,11 +145,11 @@ test("documentation confirmation callbacks update once and close their actual mo
   await page.goto(`${origin}/docs/components/dialog`);
   example = page.locator(".documentation-example").first();
   await example
-    .getByRole("button", { name: "Open world settings", exact: true })
+    .getByRole("button", { exact: true, name: "Open world settings" })
     .click();
   await page
-    .getByRole("dialog", { name: "World settings", exact: true })
-    .getByRole("button", { name: "Continue", exact: true })
+    .getByRole("dialog", { exact: true, name: "World settings" })
+    .getByRole("button", { exact: true, name: "Continue" })
     .click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(example.getByLabel("Saved worlds")).toHaveText("1 saved");
@@ -135,23 +158,29 @@ test("documentation confirmation callbacks update once and close their actual mo
 test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
+  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of ["sheet", "drawer"]) {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
+
     const trigger = example.getByRole("button", {
+      exact: true,
       name: `Open ${slug}`,
-      exact: true,
     });
+
     await trigger.click();
+
     const dialog = page.getByRole("dialog", {
-      name: "World settings",
       exact: true,
+      name: "World settings",
     });
+
     await expect(dialog).toBeVisible();
-    await dialog.getByRole("button", { name: "Done", exact: true }).click();
+    await dialog.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
   }
+  /* eslint-enable no-await-in-loop */
 });
 
 test("documentation menu and command examples dispatch real selections", async ({
@@ -159,33 +188,37 @@ test("documentation menu and command examples dispatch real selections", async (
 }) => {
   await page.goto(`${origin}/docs/components/dropdown-menu`);
   let example = page.locator(".documentation-example").first();
-  await example.getByRole("button", { name: "Game menu", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Game menu" }).click();
   await page
-    .getByRole("menuitemcheckbox", { name: "Show coordinates", exact: true })
+    .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
     .click();
   await expect(example.getByLabel("World action")).toContainText(
     "Coordinates on"
   );
   await page
-    .getByRole("menuitem", { name: "Resume game", exact: true })
+    .getByRole("menuitem", { exact: true, name: "Resume game" })
     .click();
   await expect(example.getByLabel("World action")).toContainText("Resumed");
   await page.goto(`${origin}/docs/components/command`);
   example = page.locator(".documentation-example").first();
   await example.getByRole("combobox").fill("creative");
-  await example.getByRole("option", { name: "Creative", exact: true }).click();
+  await example.getByRole("option", { exact: true, name: "Creative" }).click();
   await expect(example.getByLabel("Selected command")).toHaveText("creative");
   const palette = page.locator(".documentation-example").nth(1);
+
   const paletteTrigger = palette.getByRole("button", {
+    exact: true,
     name: "Open command palette",
-    exact: true,
   });
+
   await paletteTrigger.click();
+
   const dialog = page.getByRole("dialog", {
-    name: "World commands",
     exact: true,
+    name: "World commands",
   });
-  await dialog.getByRole("option", { name: "Save world", exact: true }).click();
+
+  await dialog.getByRole("option", { exact: true, name: "Save world" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(palette.getByLabel("Palette selection")).toHaveText("save");
   await expect(paletteTrigger).toBeFocused();
@@ -196,12 +229,12 @@ test("documentation tooltip and popover open from their real focusable triggers"
 }) => {
   await page.goto(`${origin}/docs/components/tooltip`);
   let example = page.locator(".documentation-example").first();
-  await example.getByRole("tab", { name: "Preview", exact: true }).click();
+  await example.getByRole("tab", { exact: true, name: "Preview" }).click();
   await page.keyboard.press("Tab");
   await expect(example.getByRole("tabpanel")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    example.getByRole("button", { name: "Inspect pickaxe", exact: true })
+    example.getByRole("button", { exact: true, name: "Inspect pickaxe" })
   ).toBeFocused();
   await expect(page.locator('[data-slot="tooltip-content"]')).toContainText(
     "Diamond Pickaxe"
@@ -210,15 +243,19 @@ test("documentation tooltip and popover open from their real focusable triggers"
   await expect(page.locator('[data-slot="tooltip-content"]')).toHaveCount(0);
   await page.goto(`${origin}/docs/components/popover`);
   example = page.locator(".documentation-example").first();
+
   const trigger = example.getByRole("button", {
+    exact: true,
     name: "World options",
-    exact: true,
   });
+
   await trigger.click();
+
   const popover = page.getByRole("dialog", {
-    name: "World settings",
     exact: true,
+    name: "World settings",
   });
+
   await expect(popover).toHaveAccessibleDescription("Configure your world.");
   await page.keyboard.press("Escape");
   await expect(popover).toHaveCount(0);
@@ -230,19 +267,21 @@ test("documentation Calendar and Date Picker select with their actual DayPicker 
 }) => {
   await page.goto(`${origin}/docs/components/calendar`);
   let example = page.locator(".documentation-example").first();
-  await example.getByRole("button", { name: /October 15.*2026/ }).click();
+  await example.getByRole("button", { name: /October 15.*2026/u }).click();
   await expect(example.getByLabel("Selected date")).toHaveText("10/15/2026");
   await page.goto(`${origin}/docs/components/date-picker`);
   example = page.locator(".documentation-example").first();
+
   const trigger = example.getByRole("button", {
-    name: "Pick a day",
     exact: true,
+    name: "Pick a day",
   });
+
   await trigger.click();
   const popup = page.locator('[data-slot="date-picker-content"]');
-  await popup.getByRole("button", { name: /October 15.*2026/ }).click();
+  await popup.getByRole("button", { name: /October 15.*2026/u }).click();
   await expect(
-    example.getByRole("button", { name: "October 15th, 2026", exact: true })
+    example.getByRole("button", { exact: true, name: "October 15th, 2026" })
   ).toBeVisible();
   await expect(popup).toBeVisible();
   await page.keyboard.press("Escape");
@@ -257,12 +296,12 @@ test("documentation world browser filters and pages through TanStack Table 9", a
   await expect(example.getByLabel("World selection")).toContainText(
     "Page 1 of 2"
   );
-  await example.getByRole("button", { name: "Next", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Next" }).click();
   await expect(example.getByLabel("World selection")).toContainText(
     "Page 2 of 2"
   );
   await example
-    .getByRole("textbox", { name: "Filter worlds", exact: true })
+    .getByRole("textbox", { exact: true, name: "Filter worlds" })
     .fill("Grasslands");
   await expect(
     example.getByRole("row").filter({ hasText: "Grasslands" })
@@ -272,10 +311,10 @@ test("documentation world browser filters and pages through TanStack Table 9", a
     "1 selected"
   );
   await example
-    .getByRole("textbox", { name: "Filter worlds", exact: true })
+    .getByRole("textbox", { exact: true, name: "Filter worlds" })
     .fill("missing world");
   await expect(
-    example.getByRole("cell", { name: "No results.", exact: true })
+    example.getByRole("cell", { exact: true, name: "No results." })
   ).toBeVisible();
 });
 
@@ -286,23 +325,24 @@ test("documentation message scroller appends messages and navigates its bounded 
   const example = page.locator(".documentation-example").first();
   const viewport = example.getByLabel("Player chat", { exact: true });
   await expect(example.getByLabel("Message count")).toHaveText("12 messages");
-  await example.getByRole("button", { name: "First", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "First" }).click();
   await expect
-    .poll(() => viewport.evaluate((element) => element.scrollTop))
+    .poll(async () => await viewport.evaluate((element) => element.scrollTop))
     .toBe(0);
   await example
-    .getByRole("textbox", { name: "Message text", exact: true })
+    .getByRole("textbox", { exact: true, name: "Message text" })
     .fill("Bring torches.");
-  await example.getByRole("button", { name: "Send", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Send" }).click();
   await expect(example.getByLabel("Message count")).toHaveText("13 messages");
-  await example.getByRole("button", { name: "Latest", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Latest" }).click();
   await expect(example.getByRole("log")).toContainText("Bring torches.");
   await expect
-    .poll(() =>
-      viewport.evaluate(
-        (element) =>
-          element.scrollHeight - element.clientHeight - element.scrollTop
-      )
+    .poll(
+      async () =>
+        await viewport.evaluate(
+          (element) =>
+            element.scrollHeight - element.clientHeight - element.scrollTop
+        )
     )
     .toBeLessThan(2);
 });
@@ -312,34 +352,36 @@ test("documentation bubble reactions and attachment actions retain local state",
 }) => {
   await page.goto(`${origin}/docs/components/bubble`);
   let example = page.locator(".documentation-example").first();
-  await example.getByRole("button", { name: "Like", exact: true }).click();
+  await example.getByRole("button", { exact: true, name: "Like" }).click();
   await expect(
-    example.getByRole("button", { name: "Liked", exact: true })
+    example.getByRole("button", { exact: true, name: "Liked" })
   ).toHaveAttribute("aria-pressed", "true");
   await page.goto(`${origin}/docs/components/attachment`);
   example = page.locator(".documentation-example").first();
   await example
-    .getByRole("button", { name: "Preview archive", exact: true })
+    .getByRole("button", { exact: true, name: "Preview archive" })
     .click();
   await expect(example.getByLabel("Archive previews")).toHaveText("1 previews");
   await example
-    .getByRole("button", { name: "Remove archive", exact: true })
+    .getByRole("button", { exact: true, name: "Remove archive" })
     .click();
   await expect(
-    example.getByRole("button", { name: "Preview archive", exact: true })
+    example.getByRole("button", { exact: true, name: "Preview archive" })
   ).toHaveCount(0);
   await example
-    .getByRole("button", { name: "Restore archive", exact: true })
+    .getByRole("button", { exact: true, name: "Restore archive" })
     .click();
   await expect(
-    example.getByRole("button", { name: "Preview archive", exact: true })
+    example.getByRole("button", { exact: true, name: "Preview archive" })
   ).toBeVisible();
 });
 
 test("overlay documentation remains usable at its default mobile width", async ({
   page,
 }, info) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
+
+  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of ["dialog", "data-table", "message-scroller", "chart"]) {
     await page.goto(`${origin}/docs/components/${slug}`);
     await expect(page.locator(".documentation-example").first()).toBeVisible();
@@ -347,8 +389,9 @@ test("overlay documentation remains usable at its default mobile width", async (
       await page.evaluate(() => document.documentElement.scrollWidth)
     ).toBeLessThanOrEqual(391);
     await page.screenshot({
-      path: info.outputPath(`${slug}-390-actual.png`),
       fullPage: true,
+      path: info.outputPath(`${slug}-390-actual.png`),
     });
   }
+  /* eslint-enable no-await-in-loop */
 });

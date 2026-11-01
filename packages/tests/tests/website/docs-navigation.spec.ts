@@ -4,7 +4,7 @@ const website = (
   process.env.GRASSCN_WEBSITE_URL ??
   process.env.GRASSCN_PREVIEW_URL ??
   "http://127.0.0.1:5176"
-).replace(/\/$/, "");
+).replace(/\/$/u, "");
 
 test("documentation sidebar and heading links follow the authored page tree", async ({
   page,
@@ -12,25 +12,25 @@ test("documentation sidebar and heading links follow the authored page tree", as
   await page.goto(`${website}/docs`);
   await page
     .getByRole("navigation", { name: "Documentation" })
-    .getByRole("link", { name: "Button", exact: true })
+    .getByRole("link", { exact: true, name: "Button" })
     .click({ timeout: 5000 });
   await expect(page).toHaveURL(`${website}/docs/components/button`);
   await expect(
     page
       .getByRole("navigation", { name: "Documentation" })
-      .getByRole("link", { name: "Button", exact: true })
+      .getByRole("link", { exact: true, name: "Button" })
   ).toHaveAttribute("aria-current", "page");
   await page
     .getByRole("navigation", { name: "On this page" })
-    .getByRole("link", { name: "Usage", exact: true })
+    .getByRole("link", { exact: true, name: "Usage" })
     .click({ timeout: 5000 });
   await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
   await expect(
-    page.getByRole("heading", { name: "Usage", exact: true })
+    page.getByRole("heading", { exact: true, name: "Usage" })
   ).toBeInViewport();
   await page.screenshot({
-    path: testInfo.outputPath("actual-docs-desktop.png"),
     fullPage: true,
+    path: testInfo.outputPath("actual-docs-desktop.png"),
   });
 });
 
@@ -44,15 +44,15 @@ test("documentation search finds authored prose and follows its section", async 
   await search.fill("hear", { timeout: 5000 });
   await expect(
     page.getByRole("option", {
-      name: "Activate a button to hear the original Minecraft click.",
       exact: true,
+      name: "Activate a button to hear the original Minecraft click.",
     })
   ).toBeVisible();
   await search.press("ArrowDown");
   await search.press("Enter");
   await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
   await expect(
-    page.getByRole("heading", { name: "Usage", exact: true })
+    page.getByRole("heading", { exact: true, name: "Usage" })
   ).toBeInViewport();
 });
 
@@ -63,11 +63,11 @@ test("documentation search discovers the public component export", async ({
   const search = page.getByRole("combobox", { name: "Search documentation" });
   await search.fill("buttonVariants");
   await page
-    .getByRole("option", { name: "buttonVariants", exact: true })
+    .getByRole("option", { exact: true, name: "buttonVariants" })
     .click({ timeout: 5000 });
   await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
   await expect(
-    page.getByRole("heading", { name: "Button", exact: true })
+    page.getByRole("heading", { exact: true, name: "Button" })
   ).toBeVisible();
 });
 
@@ -77,7 +77,7 @@ test("documentation search discovers a component alias", async ({ page }) => {
     .getByRole("combobox", { name: "Search documentation" })
     .fill("push button");
   await page
-    .getByRole("option", { name: "push button", exact: true })
+    .getByRole("option", { exact: true, name: "push button" })
     .click({ timeout: 5000 });
   await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
 });
@@ -90,7 +90,7 @@ test("the legacy Button link retains its query and reaches the usage section", a
     `${website}/docs/components/button?ref=bookmark#usage`
   );
   await expect(
-    page.getByRole("heading", { name: "Usage", exact: true })
+    page.getByRole("heading", { exact: true, name: "Usage" })
   ).toBeInViewport();
 });
 
@@ -104,29 +104,31 @@ test("the legacy Field export result reaches independently discoverable Field do
     `${website}/docs/components/field?part=FieldLabel#usage`
   );
   await expect(
-    page.getByRole("heading", { name: "Field", exact: true })
+    page.getByRole("heading", { exact: true, name: "Field" })
   ).toBeVisible();
   await expect(
     page
       .getByRole("navigation", { name: "Documentation" })
-      .getByRole("link", { name: "Field", exact: true })
+      .getByRole("link", { exact: true, name: "Field" })
   ).toHaveAttribute("aria-current", "page");
 });
 
 test("mobile documentation navigation opens the page tree without page overflow", async ({
   page,
 }, testInfo) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
   await page.goto(`${website}/docs`);
+
   const browse = page.getByRole("button", {
-    name: "Browse documentation",
     exact: true,
+    name: "Browse documentation",
   });
+
   await browse.click({ timeout: 5000 });
   await expect(browse).toHaveAttribute("aria-expanded", "true");
   await page
     .getByRole("navigation", { name: "Documentation" })
-    .getByRole("link", { name: "Button", exact: true })
+    .getByRole("link", { exact: true, name: "Button" })
     .click();
   await expect(page).toHaveURL(`${website}/docs/components/button`);
   await expect(browse).toHaveAttribute("aria-expanded", "false");
@@ -134,7 +136,7 @@ test("mobile documentation navigation opens the page tree without page overflow"
     390
   );
   await page.screenshot({
-    path: testInfo.outputPath("actual-docs-mobile.png"),
     fullPage: true,
+    path: testInfo.outputPath("actual-docs-mobile.png"),
   });
 });

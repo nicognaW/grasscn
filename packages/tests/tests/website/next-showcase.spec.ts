@@ -13,12 +13,12 @@ test("homepage application examples keep their default public interactions", asy
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(origin);
   await expect(
-    page.getByRole("heading", { name: "grasscn", exact: true })
+    page.getByRole("heading", { exact: true, name: "grasscn" })
   ).toBeVisible();
-  await page.getByRole("button", { name: "Click me", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Click me" }).click();
   await expect(page.getByLabel("Example button clicks")).toHaveText("1 clicks");
   await page
-    .getByRole("button", { name: "Create project", exact: true })
+    .getByRole("button", { exact: true, name: "Create project" })
     .click();
   await expect(page.getByLabel("Project result")).toHaveText(
     "Created: Website redesign"
@@ -26,37 +26,43 @@ test("homepage application examples keep their default public interactions", asy
   await page
     .getByLabel("Team message", { exact: true })
     .fill("Ready to build.");
-  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Send" }).click();
   await expect(page.getByRole("log")).toContainText("Ready to build.");
-  await page.getByRole("button", { name: "Add $250", exact: true }).click();
+  await page.getByRole("button", { exact: true, name: "Add $250" }).click();
   await expect(page.getByLabel("Savings percentage")).toHaveText("70% saved");
+
   const install = page.getByRole("region", {
-    name: "Place your first component.",
     exact: true,
+    name: "Place your first component.",
   });
+
   await install
-    .getByRole("combobox", { name: "Component to install", exact: true })
+    .getByRole("combobox", { exact: true, name: "Component to install" })
     .click();
-  await page.getByRole("option", { name: "chart", exact: true }).click();
-  await install.getByRole("tab", { name: "Bun", exact: true }).click();
-  await install.getByRole("button", { name: "Copy", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "chart" }).click();
+  await install.getByRole("tab", { exact: true, name: "Bun" }).click();
+  await install.getByRole("button", { exact: true, name: "Copy" }).click();
   await expect(install.getByRole("status")).toHaveText("Copied");
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    `bunx --bun shadcn@latest add ${new URL(origin).origin}/r/chart.json`
-  );
+  expect(
+    await page.evaluate(async () => await navigator.clipboard.readText())
+  ).toBe(`bunx --bun shadcn@latest add ${new URL(origin).origin}/r/chart.json`);
   expect(errors).toEqual([]);
-  await page.evaluate(() => scrollTo(0, 0));
+  await page.evaluate(() => {
+    scrollTo(0, 0);
+  });
   await page.screenshot({
     path: info.outputPath("homepage-desktop-viewport-actual.png"),
   });
   await page.screenshot({
-    path: info.outputPath("homepage-desktop-actual.png"),
     fullPage: true,
+    path: info.outputPath("homepage-desktop-actual.png"),
   });
+
   const team = page.getByRole("region", {
-    name: "Better, together.",
     exact: true,
+    name: "Better, together.",
   });
+
   await team.scrollIntoViewIfNeeded();
   await expect(
     team.locator('[data-mc-avatar-face][data-ready="true"]')
@@ -65,14 +71,16 @@ test("homepage application examples keep their default public interactions", asy
   await team.screenshot({
     path: info.outputPath("homepage-team-desktop-actual.png"),
   });
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.evaluate(() => scrollTo(0, 0));
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.evaluate(() => {
+    scrollTo(0, 0);
+  });
   await page.screenshot({
     path: info.outputPath("homepage-mobile-viewport-actual.png"),
   });
   await page.screenshot({
-    path: info.outputPath("homepage-mobile-actual.png"),
     fullPage: true,
+    path: info.outputPath("homepage-mobile-actual.png"),
   });
   await team.scrollIntoViewIfNeeded();
   await team.screenshot({
@@ -93,80 +101,87 @@ test("chart showcase exposes the complete executable example and chart destinati
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto(`${origin}/charts`);
   await expect(
-    page.getByRole("heading", { name: "Charts", exact: true })
+    page.getByRole("heading", { exact: true, name: "Charts" })
   ).toBeVisible();
   await page.screenshot({
+    fullPage: true,
     path: info.outputPath("charts-overview-desktop-actual.png"),
-    fullPage: true,
   });
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
   await page.screenshot({
-    path: info.outputPath("charts-overview-mobile-actual.png"),
     fullPage: true,
+    path: info.outputPath("charts-overview-mobile-actual.png"),
   });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth
     )
   ).toBe(true);
-  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.setViewportSize({ height: 900, width: 1280 });
+
   const metric = page.getByRole("region", {
-    name: "API response time",
     exact: true,
+    name: "API response time",
   });
-  await metric.getByRole("tab", { name: "Code", exact: true }).click();
-  await metric.getByRole("button", { name: "Copy", exact: true }).click();
+
+  await metric.getByRole("tab", { exact: true, name: "Code" }).click();
+  await metric.getByRole("button", { exact: true, name: "Copy" }).click();
   await expect(metric.getByRole("status")).toHaveText("Copied");
-  const copied = await page.evaluate(() => navigator.clipboard.readText());
+
+  const copied = await page.evaluate(
+    async () => await navigator.clipboard.readText()
+  );
+
   const maintainedSource = await readFile(
     new URL(
       "../../../../apps/web/examples/charts/metric-example.tsx",
       import.meta.url
     ),
-    "utf8"
+    "utf-8"
   );
+
   // Windows clipboard transfer normalizes line endings; compare every other source character exactly.
   expect(copied.replaceAll("\r\n", "\n")).toBe(
     maintainedSource.replaceAll("\r\n", "\n")
   );
   expect(copied).toContain("length: 240");
   expect(copied).toContain("@/components/chart-fps");
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
   await page.screenshot({
-    path: info.outputPath("chart-code-mobile-actual.png"),
     fullPage: true,
+    path: info.outputPath("chart-code-mobile-actual.png"),
   });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth
     )
   ).toBe(true);
-  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.setViewportSize({ height: 900, width: 1280 });
   await page
     .getByRole("navigation", { name: "Chart types" })
-    .getByRole("link", { name: "Bar", exact: true })
+    .getByRole("link", { exact: true, name: "Bar" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Bar charts", exact: true })
+    page.getByRole("heading", { exact: true, name: "Bar charts" })
   ).toBeVisible();
   await page
-    .getByRole("region", { name: "Website visitors", exact: true })
+    .getByRole("region", { exact: true, name: "Website visitors" })
     .getByText("View chart data", { exact: true })
     .click();
   await expect(
-    page.getByRole("cell", { name: "Jan", exact: true })
+    page.getByRole("cell", { exact: true, name: "Jan" })
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Chart documentation", exact: true })
+    page.getByRole("link", { exact: true, name: "Chart documentation" })
   ).toHaveAttribute("href", "/docs/components/chart");
   await page.screenshot({
+    fullPage: true,
     path: info.outputPath("charts-desktop-actual.png"),
-    fullPage: true,
   });
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ height: 844, width: 390 });
   await page.screenshot({
-    path: info.outputPath("charts-mobile-actual.png"),
     fullPage: true,
+    path: info.outputPath("charts-mobile-actual.png"),
   });
   expect(
     await page.evaluate(

@@ -1,56 +1,68 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
+import { test, expect } from "@grasscn/pixel-perfect/test";
 import type { Locator, TestInfo } from "@playwright/test";
+import {
+  parseNativeManifest,
+  nativeReference,
+} from "@ppt/runtime/docs-reference-types";
 import { PNG } from "pngjs";
 
-import { test, expect } from "@grasscn/pixel-perfect/test";
+const compare = (a: PNG, b: PNG) => {
+  let differentPixels = 0;
+  const diff = new PNG({ height: a.height, width: a.width });
+
+  for (let offset = 0; offset < a.data.length; offset += 4) {
+    if (
+      !a.data
+        .subarray(offset, offset + 4)
+        .equals(b.data.subarray(offset, offset + 4))
+    ) {
+      differentPixels += 1;
+      diff.data.set([255, 0, 0, 255], offset);
+    }
+  }
+
+  return { diff, differentPixels };
+};
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
 
-async function nativePixels(
+const nativePixels = async (
   subject: Locator,
   family: string,
   name: string,
   prefix: string,
   info: TestInfo
-) {
+) => {
   const bytes = await readFile(
     new URL(`../../reference/${family}/captures/${name}`, import.meta.url)
   );
-  const manifest: { cases: { name: string; sha256: string }[] } = JSON.parse(
+
+  const manifest = parseNativeManifest(
     await readFile(
       new URL(`../../reference/${family}/manifest.json`, import.meta.url),
-      "utf8"
+      "utf-8"
     )
   );
+
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-    manifest.cases.find((entry) => entry.name === name)?.sha256
+    nativeReference(manifest, name).sha256
   );
   const reference = PNG.sync.read(bytes);
+
   const actual = PNG.sync.read(
     await subject.screenshot({ path: info.outputPath(`${prefix}-actual.png`) })
   );
+
   expect([actual.width, actual.height]).toEqual([
     reference.width,
     reference.height,
   ]);
-  const compare = (a: PNG, b: PNG) => {
-    let differentPixels = 0;
-    const diff = new PNG({ width: a.width, height: a.height });
-    for (let offset = 0; offset < a.data.length; offset += 4) {
-      if (
-        !a.data
-          .subarray(offset, offset + 4)
-          .equals(b.data.subarray(offset, offset + 4))
-      ) {
-        differentPixels++;
-        diff.data.set([255, 0, 0, 255], offset);
-      }
-    }
-    return { differentPixels, diff };
-  };
+
   const changed = PNG.sync.read(PNG.sync.write(reference));
+  // eslint-disable-next-line no-bitwise -- Preserve the established exact byte operation for one-pixel negative controls or diagnostic RGBA shading.
   changed.data[0] ^= 1;
   expect(compare(changed, reference).differentPixels).toBe(1);
   const { differentPixels, diff } = compare(actual, reference);
@@ -58,35 +70,38 @@ async function nativePixels(
   await writeFile(
     info.outputPath(`${prefix}-pixels.json`),
     JSON.stringify({
-      reference: `${family}/${name}`,
-      differentPixels,
-      totalPixels: actual.width * actual.height,
-      mutationRejected: true,
       browser: subject.page().context().browser()?.version(),
-      viewport: subject.page().viewportSize(),
       devicePixelRatio: await subject.page().evaluate(() => devicePixelRatio),
+      differentPixels,
+      mutationRejected: true,
+      reference: `${family}/${name}`,
+      totalPixels: actual.width * actual.height,
+      viewport: subject.page().viewportSize(),
     })
   );
   expect(differentPixels).toBe(0);
-}
+};
 
 test("chart example tabs remain visible and match their Minecraft modes", async ({
   page,
 }, info) => {
   await page.goto(`${origin}/charts`);
+
   const example = page.getByRole("region", {
+    exact: true,
     name: "API response time",
-    exact: true,
   });
+
   const tabs = example.getByRole("tablist", {
-    name: "API response time example view",
     exact: true,
+    name: "API response time example view",
   });
+
   await expect(
-    tabs.getByRole("tab", { name: "Preview", exact: true })
+    tabs.getByRole("tab", { exact: true, name: "Preview" })
   ).toBeInViewport({ ratio: 1 });
   await expect(
-    tabs.getByRole("tab", { name: "Code", exact: true })
+    tabs.getByRole("tab", { exact: true, name: "Code" })
   ).toBeInViewport({ ratio: 1 });
   await page.mouse.move(0, 0);
   await nativePixels(
@@ -96,8 +111,8 @@ test("chart example tabs remain visible and match their Minecraft modes", async 
     "showcase-tabs-preview",
     info
   );
-  await tabs.getByRole("tab", { name: "Code", exact: true }).click();
-  await example.getByRole("button", { name: "Copy", exact: true }).focus();
+  await tabs.getByRole("tab", { exact: true, name: "Code" }).click();
+  await example.getByRole("button", { exact: true, name: "Copy" }).focus();
   await page.mouse.move(0, 0);
   await nativePixels(
     tabs,
@@ -112,9 +127,11 @@ test("chart showcase default frame timing matches its original Minecraft rendere
   page,
 }, info) => {
   await page.goto(`${origin}/charts`);
+
   const chart = page
-    .getByRole("region", { name: "Frame timing", exact: true })
+    .getByRole("region", { exact: true, name: "Frame timing" })
     .locator(".mc-chart");
+
   await expect(chart.locator('[data-slot="chart-fps-frame"]')).toHaveAttribute(
     "data-mc-ready",
     "true"
@@ -133,10 +150,12 @@ test("homepage default checkbox retains its captured Minecraft pixels", async ({
   page,
 }, info) => {
   await page.goto(origin);
+
   const checkbox = page.getByRole("checkbox", {
-    name: "Remember me",
     exact: true,
+    name: "Remember me",
   });
+
   await expect(checkbox).toBeChecked();
   await page.mouse.move(0, 0);
   await nativePixels(
