@@ -1,0 +1,41 @@
+{
+  "launches": 2,
+  "comparisons": [
+    {
+      "name": "showcase-tabs-code-s1.png",
+      "width": 120,
+      "height": 24,
+      "differentPixels": 0
+    },
+    {
+      "name": "showcase-tabs-code-s2.png",
+      "width": 240,
+      "height": 48,
+      "differentPixels": 0
+    },
+    {
+      "name": "showcase-tabs-code-s3.png",
+      "width": 360,
+      "height": 72,
+      "differentPixels": 0
+    },
+    {
+      "name": "showcase-tabs-preview-s1.png",
+      "width": 120,
+      "height": 24,
+      "differentPixels": 0
+    },
+    {
+      "name": "showcase-tabs-preview-s2.png",
+      "width": 240,
+      "height": 48,
+      "differentPixels": 0
+    },
+    {
+      "name": "showcase-tabs-preview-s3.png",
+      "width": 360,
+      "height": 72,
+      "differentPixels": 0
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "source": "Actual vanilla control classes and GPU renderer; test screen supplies inputs and layout only.",
+  "minecraftVersion": "26.2",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "captureSourceSha256": "99ffcae14e599b532772784729533434118f1b4fde77960eaf20b02e4bc4d197",
+  "caseDefinitionSha256": "60b2ae267aae246500b6af58e4f0b642d1b0f9aa6a9e9a89d48a9816d829352b",
+  "glyphObservationEnabled": true,
+  "mods": [],
+  "resourcePacks": [],
+  "background": "#202020",
+  "guiScales": [
+    1,
+    2,
+    3
+  ],
+  "labelLanguage": "en_us",
+  "differenceTolerance": 0,
+  "framesDirectory": "frames",
+  "frames": [
+    {
+      "name": "native-controls-s1.png",
+      "sha256": "80a3b91cce76f28d5fdd7a0697b67a40b5c488e629f1f3f3c482bf392c81f105"
+    },
+    {
+      "name": "native-controls-s2.png",
+      "sha256": "76be58318548c2b674afa1438266355bd083656c5b46e27902b08d20d9e6b80a"
+    },
+    {
+      "name": "native-controls-s3.png",
+      "sha256": "60cf4b1058a8ae97ed822956f6e254c71a618a5140dcaad7529c73710de6931b"
+    }
+  ],
+  "cases": [
+    {
+      "name": "showcase-tabs-preview-s1.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "e052230f3d40e31539b4badff81b3af31f3e6f40f8e6c5efbabda29d381a2679"
+    },
+    {
+      "name": "showcase-tabs-code-s1.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 1,
+      "sha256": "a2b2d9bff55a44b4afe78df658c90d1840f716269646bba1a76d18129550080a"
+    },
+    {
+      "name": "showcase-tabs-preview-s2.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "fbe6e124075cfaf4d8c0309d3b89f65479d3624df7b03b44bcc7e126aca84d4c"
+    },
+    {
+      "name": "showcase-tabs-code-s2.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 2,
+      "sha256": "9b9c961cfa78b7ccc3e78e30244313e3668f0e66aea8ef2a84e599721e4227b3"
+    },
+    {
+      "name": "showcase-tabs-preview-s3.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 0,
+      "targetIndex": 0,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 16,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "eb01498cc9bd307a1592e20b4ba7d21f8b69b559cd0e8e967dcc6e03ebc77bd1"
+    },
+    {
+      "name": "showcase-tabs-code-s3.png",
+      "element": "tabs",
+      "labels": [
+        "Preview",
+        "Code"
+      ],
+      "selectedIndex": 1,
+      "targetIndex": 1,
+      "state": "normal",
+      "width": 120,
+      "height": 24,
+      "x": 16,
+      "y": 48,
+      "page": 0,
+      "timeMs": 0,
+      "background": "#202020",
+      "renderedLines": [
+        "Preview",
+        "Code"
+      ],
+      "tabRects": [
+        {
+          "x": 14,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        },
+        {
+          "x": 60,
+          "y": 0,
+          "width": 46,
+          "height": 24
+        }
+      ],
+      "scale": 3,
+      "sha256": "628408618c0332cb63288f80a7930cab8f94490d19e0236ef02400466f2285ee"
+    }
+  ],
+  "sourceDirectory": "source"
+}

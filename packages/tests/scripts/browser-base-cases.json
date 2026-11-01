@@ -872,9 +872,7 @@
       "titlePath": [
         "Button installation copies and remembers the visitor package manager"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -887,9 +885,7 @@
       "titlePath": [
         "Button manual installation exposes complete files and defers large resources"
       ],
-      "components": [
-        "website"
-      ],
+      "components": ["website"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
@@ -902,15 +898,76 @@
       "titlePath": [
         "default installation controls match their captured Minecraft content and states"
       ],
-      "components": [
-        "website",
-        "button",
-        "tabs"
-      ],
+      "components": ["website", "button", "tabs"],
       "evidence": {
         "kind": "website-default",
         "route": "/docs/components/button#installation",
         "reason": "Actual scale2 CLI/Manual strips, all four visible package-manager selections, every registry-derived default Manual file selector, Download/Load/Copy full file actions and loaded-resource disabled Load on the integrated Button page. Retry and other native scales remain outside this browser case."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "homepage application examples keep their default public interactions",
+      "titlePath": [
+        "homepage application examples keep their default public interactions"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "Default homepage application examples: button activation, project submission, chat, savings and component install picker wired to the shared package manager command selector."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart showcase exposes the complete executable example and chart destinations",
+      "titlePath": [
+        "chart showcase exposes the complete executable example and chart destinations"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default chart overview code copy and Bar navigation/data disclosure."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "homepage default checkbox retains its captured Minecraft pixels",
+      "titlePath": [
+        "homepage default checkbox retains its captured Minecraft pixels"
+      ],
+      "components": ["website", "checkbox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "The initial Remember me checked Checkbox at scale 2 in the default Essentials homepage panel, integrated context compared to the unchanged native checked-normal captured reference."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart showcase default frame timing matches its original Minecraft renderer",
+      "titlePath": [
+        "chart showcase default frame timing matches its original Minecraft renderer"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default Frame timing panel uses all 240 maintained samples, frame rate limit 120, logical width 242, scale 1 at the standard desktop viewport; compare original FpsDebugChart capture from independently repeatable native launches."
+      }
+    },
+    {
+      "file": "next-showcase.spec.ts",
+      "title": "chart example tabs remain visible and match their Minecraft modes",
+      "titlePath": [
+        "chart example tabs remain visible and match their Minecraft modes"
+      ],
+      "components": ["website", "chart", "tabs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default API response time chart Preview/Code controls must both be fully visible; compare the normal selected Preview and selected Code modes, with focus moved into the Copy action as in the default code-copy journey. Chart-only width 120 logical at scale 2."
       }
     }
   ]
