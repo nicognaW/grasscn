@@ -11,7 +11,7 @@ import zipfile
 parser = argparse.ArgumentParser()
 parser.add_argument("--jar", required=True, type=Path)
 parser.add_argument("--java-bin", required=True, type=Path)
-parser.add_argument("--output", type=Path, default=Path("tests/reference/catalog/native-inventory.json"))
+parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1]/"tests/reference/catalog/native-inventory.json")
 args = parser.parse_args()
 sha = lambda data: hashlib.sha256(data).hexdigest()
 digest = sha(args.jar.read_bytes())

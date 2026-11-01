@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync,writeFileSync} from 'node:fs'
 import path from 'node:path'
@@ -7,7 +8,7 @@ if(process.env.GRASSCN_WEBGL_BACKEND)test.use({launchOptions:{args:[`--use-angle
 const corpora=process.env.GRASSCN_EXPANSION_REFERENCE?[path.resolve(process.env.GRASSCN_EXPANSION_REFERENCE)]:['book','hotbar','hud','hud/meters','sign','player-preview','player-preview/custom-skins','map','map/locator','map/demo-world','trading','trading/scrollbar','player-list'].map(name=>path.resolve('tests/reference',name))
 const reference=corpora[0]
 
-const specimens=corpora.flatMap(reference=>JSON.parse(readFileSync(path.join(reference,'manifest.json'),'utf8')).cases.map((sample:any)=>({reference,sample})))
+const specimens=corpora.flatMap(reference=>JSON.parse(readFileSync(resolveRepositoryPath(path.join(reference,'manifest.json'), testRoot),'utf8')).cases.map((sample:any)=>({reference,sample})))
 for(const {reference,sample} of specimens)test(`native expansion pixels ${sample.name}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))
@@ -18,7 +19,7 @@ for(const {reference,sample} of specimens)test(`native expansion pixels ${sample
  await expect.poll(()=>subject.locator('img').evaluateAll(images=>images.every(image=>(image as HTMLImageElement).complete&&(image as HTMLImageElement).naturalWidth>0))).toBe(true)
  await page.evaluate(()=>document.fonts.ready)
  await page.waitForTimeout(100)
- const actual=await subject.screenshot(),expected=readFileSync(path.join(reference,'captures',sample.name)),a=PNG.sync.read(actual),b=PNG.sync.read(expected)
+ const actual=await subject.screenshot(),expected=readFileSync(resolveRepositoryPath(path.join(reference,'captures',sample.name), testRoot)),a=PNG.sync.read(actual),b=PNG.sync.read(expected)
  expect([a.width,a.height]).toEqual([b.width,b.height])
  let differences=0;const diff=new PNG({width:a.width,height:a.height}),coordinates:unknown[]=[]
  for(let i=0;i<a.data.length;i+=4){const same=a.data.subarray(i,i+4).equals(b.data.subarray(i,i+4));if(!same){differences++;if(coordinates.length<20)coordinates.push([i/4%a.width,Math.floor(i/4/a.width),[...a.data.subarray(i,i+4)],[...b.data.subarray(i,i+4)]])}diff.data.set(same?[0,0,0,0]:[255,0,255,255],i)}

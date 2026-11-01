@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -13,9 +14,9 @@ function compare(expected: PNG, actual: PNG) {
   }
   return { diff, mismatchedPixels }
 }
-test("Navigation Menu row comparator detects one changed pixel",()=>{const expected=PNG.sync.read(readFileSync("tests/reference/card/captures/card-c0-s1.png")),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test("Navigation Menu row comparator detects one changed pixel",()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath("tests/reference/card/captures/card-c0-s1.png", testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 
-const directory="tests/reference/suggestions",manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+const directory="tests/reference/suggestions",manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
 test.describe("Navigation Menu native link rows",()=>{
 test.describe.configure({mode:"parallel"})
 for(const c of manifest.cases)for(const inline of [false,true])test(`Navigation rows: ${c.name} inline:${inline}`,async({page},info)=>{
@@ -31,7 +32,7 @@ for(const c of manifest.cases)for(const inline of [false,true])test(`Navigation 
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
  const bounds=(await subject.boundingBox())!;expect([bounds.x,bounds.y]).toEqual([c.x*c.scale,c.y*c.scale])
 
-const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
 const actualBytes=await subject.screenshot(),{diff,mismatchedPixels}=compare(PNG.sync.read(bytes),PNG.sync.read(actualBytes))
 writeFileSync(info.outputPath("actual.png"),actualBytes);writeFileSync(info.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({case:c.name,mismatchedPixels,tolerance:0}))
 expect(mismatchedPixels).toBe(0)

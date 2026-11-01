@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 type NativeCase = { name: string; text: string; placeholder?: string; state: string; width: number; height: number; scale: number; x: number; y: number; value?: number; cursor?: number; anchor?: number; caretMs: number; sha256: string; referenceDirectory: string }
-const manifest = { cases: ["textarea", "textarea-cjk"].flatMap(directory => (JSON.parse(readFileSync(`tests/reference/${directory}/manifest.json`, "utf8")).cases as NativeCase[]).map(c => ({ ...c, referenceDirectory: directory }))) }
+const manifest = { cases: ["textarea", "textarea-cjk"].flatMap(directory => (JSON.parse(readFileSync(resolveRepositoryPath(`tests/reference/${directory}/manifest.json`, testRoot), "utf8")).cases as NativeCase[]).map(c => ({ ...c, referenceDirectory: directory }))) }
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([expected.width, expected.height])
   const diff = new PNG({ width: expected.width, height: expected.height })
@@ -17,7 +18,7 @@ function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels }
 }
 test("Textarea comparator catches a one-pixel mutation", async () => {
-  const expected = PNG.sync.read(await readFile(`tests/reference/textarea/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/textarea/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected)); actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
 })
@@ -103,7 +104,7 @@ for (const c of manifest.cases) test(`Textarea native pixels: ${c.name}`, async 
     area.scrollTop = settings.scroll
   }, { cursor: c.cursor ?? c.text.length, anchor: c.anchor ?? c.cursor ?? c.text.length, scroll: (c.value ?? 0) * c.scale })
   await page.clock.runFor(c.caretMs)
-  const expectedBytes = await readFile(`tests/reference/${c.referenceDirectory}/captures/${c.name}`)
+  const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/${c.referenceDirectory}/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const actualBytes = await area.screenshot({ animations: "disabled" }), actual = PNG.sync.read(actualBytes), expected = PNG.sync.read(expectedBytes)
   const { diff, mismatchedPixels } = compare(expected, actual)

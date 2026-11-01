@@ -1,11 +1,12 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 import { menuCheckboxAtlas } from "../../../apps/web/registry/ui/minecraft-menu-checkbox-assets"
 
-const inventory = JSON.parse(readFileSync("tests/reference/catalog/native-inventory.json", "utf8"))
-const native = JSON.parse(readFileSync("tests/reference/menu-parts/checkbox-atlas.json", "utf8"))
+const inventory = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/catalog/native-inventory.json", testRoot), "utf8"))
+const native = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/menu-parts/checkbox-atlas.json", testRoot), "utf8"))
 for (const [name, sprite] of Object.entries(menuCheckboxAtlas.sprites)) {
   test(`Menu embeds the original ${name} texture and native atlas coordinates`, () => {
     const bytes = Buffer.from(sprite.image.split(",")[1], "base64"), png = PNG.sync.read(bytes)

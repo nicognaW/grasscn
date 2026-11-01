@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 import { labelUnihexAtlas } from "../../../apps/web/registry/ui/minecraft-label-atlas"
-const manifest = JSON.parse(readFileSync("tests/reference/label/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/label/manifest.json", testRoot), "utf8")) as {
   cases: { name: string; width: number; height: number; scale: number; background: string; label: string; wrapWidth?: number; alignment?: string; x: number; y: number; state: string; sha256: string }[]
 }
 function compare(expected: PNG, actual: PNG) {
@@ -19,13 +20,13 @@ function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels }
 }
 test("Label comparator catches a one-pixel change", async () => {
-  const expected = PNG.sync.read(await readFile(`tests/reference/label/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/label/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
 })
 test("Label uses the UVs observed in its native font-atlas context", () => {
-  const observed = JSON.parse(readFileSync("tests/reference/label/glyph-atlas.json", "utf8"))
+  const observed = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/label/glyph-atlas.json", testRoot), "utf8"))
   expect(Object.keys(labelUnihexAtlas).sort()).toEqual(Object.keys(observed).sort())
   for (const [code, uv] of Object.entries(labelUnihexAtlas)) {
     expect(uv).toEqual(Object.fromEntries(["u0", "u1", "v0", "v1"].map(key => [key, observed[code][key]])))
@@ -41,7 +42,7 @@ for (const c of manifest.cases) test(`Label native pixels: ${c.name}`, async ({ 
   const card = page.locator('[data-slot="label"]')
   await expect(card).toHaveAttribute("data-mc-label-layout-ready", "true")
   for (const line of await card.locator('[data-mc-label-ready]').all()) await expect(line).toHaveAttribute("data-mc-label-ready", "true")
-  const expectedBytes = await readFile(`tests/reference/label/captures/${c.name}`)
+  const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/label/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const actualBytes = await card.screenshot({ animations: "disabled" })
   const { diff, mismatchedPixels } = compare(PNG.sync.read(expectedBytes), PNG.sync.read(actualBytes))

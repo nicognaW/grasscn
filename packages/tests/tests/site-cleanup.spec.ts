@@ -1,6 +1,7 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
-const index=JSON.parse(readFileSync('preview/search.generated.json','utf8')) as {name:string;title:string;exports:string[]}[]
+const index=JSON.parse(readFileSync(resolveRepositoryPath('preview/search.generated.json', testRoot),'utf8')) as {name:string;title:string;exports:string[]}[]
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
 test('catalog consolidates pages and removes discarded controls and copy',async({page})=>{
  expect(index.map(i=>i.name)).not.toEqual(expect.arrayContaining(['skeleton']))

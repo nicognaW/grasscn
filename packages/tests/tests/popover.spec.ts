@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -8,10 +9,10 @@ function compare(expected:PNG,actual:PNG) {
   for(let at=0;at<expected.data.length;at+=4){const mismatch=!expected.data.subarray(at,at+4).equals(actual.data.subarray(at,at+4));mismatchedPixels+=Number(mismatch);diff.data.set(mismatch ? [255,0,255,255] : [expected.data[at]>>2,expected.data[at+1]>>2,expected.data[at+2]>>2,255],at)}
   return {mismatchedPixels,diff}
 }
-test("Popover comparator catches one changed pixel",()=>{const expected=PNG.sync.read(readFileSync("tests/reference/card/captures/card-c0-s1.png")),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test("Popover comparator catches one changed pixel",()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath("tests/reference/card/captures/card-c0-s1.png", testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 for(const directory of ["tests/reference/card",...(process.env.POPOVER_SURFACE_ONLY ? [] : ["tests/reference/popover"])])test.describe(`Popover original surface ${directory}`,()=>{
   test.describe.configure({mode:"parallel"})
-  const manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+  const manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
   for(const c of manifest.cases)test(`Popover native pixels: ${c.name}`,async({page},testInfo)=>{
     await page.setViewportSize({width:1536,height:900})
     const query=new URLSearchParams({component:"popover",native:"1",scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y)})
@@ -25,7 +26,7 @@ for(const directory of ["tests/reference/card",...(process.env.POPOVER_SURFACE_O
     const bounds=(await subject.boundingBox())!
     expect(bounds.x).toBe(c.x*c.scale)
     expect(bounds.y).toBe(c.y*c.scale)
-    const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+    const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
     const actual=await subject.screenshot({animations:"disabled"}),{mismatchedPixels,diff}=compare(PNG.sync.read(bytes),PNG.sync.read(actual))
     writeFileSync(testInfo.outputPath("actual.png"),actual);writeFileSync(testInfo.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(testInfo.outputPath("metrics.json"),JSON.stringify({case:c.name,mismatchedPixels,totalPixels:c.width*c.height*c.scale*c.scale,tolerance:0}))
     expect(mismatchedPixels).toBe(0)

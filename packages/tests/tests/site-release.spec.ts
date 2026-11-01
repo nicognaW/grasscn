@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
-const index=JSON.parse(readFileSync('preview/search.generated.json','utf8')) as {name:string;title:string;exports:string[]}[]
+const index=JSON.parse(readFileSync(resolveRepositoryPath('preview/search.generated.json', testRoot),'utf8')) as {name:string;title:string;exports:string[]}[]
 const internal=/work in progress|\bWIP\b|26\.2|native cases|62\s*\/\s*62|19722|LOCAL PREVIEW|still being verified/i
 test('search index covers every published item and its named exports',()=>{
- const registry=JSON.parse(readFileSync('registry.json','utf8'))
+ const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json', testRoot),'utf8'))
  expect(index.map(i=>i.name).sort()).toEqual(registry.items.map((i:{name:string})=>i.name).sort())
  expect(index.find(i=>i.name==='card')?.exports).toContain('CardHeader')
  expect(index.find(i=>i.name==='form')?.exports).toContain('FieldLabel')
@@ -110,7 +111,7 @@ test('website code uses the shared Shiki highlighter without changing source tex
  await page.getByRole('group',{name:'Example view'}).getByRole('button',{name:'Source',exact:true}).click()
  await expect(page.locator('#component-preview .mc-code-token').first()).toBeVisible()
  const displayed=await page.locator('#component-preview code').textContent()
- expect(displayed?.replace(/\r\n/g,'\n')).toBe(readFileSync('registry/ui/button.tsx','utf8').replace(/\r\n/g,'\n'))
+ expect(displayed?.replace(/\r\n/g,'\n')).toBe(readFileSync(resolveRepositoryPath('registry/ui/button.tsx', testRoot),'utf8').replace(/\r\n/g,'\n'))
  const colors=await page.locator('#component-preview .mc-code-token').evaluateAll(tokens=>[...new Set(tokens.map(token=>getComputedStyle(token).color))])
  expect(colors).toContain('rgb(255, 85, 255)')
  expect(colors).toContain('rgb(85, 255, 85)')

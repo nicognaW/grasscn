@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { createHash } from "node:crypto"
@@ -5,7 +6,7 @@ import { PNG } from "pngjs"
 import { minecraftTabsAssets as assets } from "../../../apps/web/registry/ui/minecraft-tabs-assets"
 import { tabsUnihexAtlas } from "../../../apps/web/registry/ui/minecraft-tabs-atlas"
 
-const json = (file: string) => JSON.parse(readFileSync(file, "utf8"))
+const json = (file: string) => JSON.parse(readFileSync(resolveRepositoryPath(file, testRoot), "utf8"))
 const decode = (uri: string) => Buffer.from(uri.match(/base64,([A-Za-z0-9+/=]+)/)![1], "base64")
 test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {
   const provenance = json("tests/reference/tabs/asset-provenance.json")

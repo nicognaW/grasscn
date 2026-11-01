@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {PNG} from 'pngjs'
 import {readFileSync,writeFileSync} from 'node:fs'
@@ -13,7 +14,7 @@ for(const sample of [{name:'Dream back',src:'/dream-skin.png',state:'wide/steve'
 
 test('website loads Dream with slim arms after both presets',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))
- await page.route('https://mc-heads.net/skin/Dream',route=>route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync('tests/fixture/dream-skin.png')}))
+ await page.route('https://mc-heads.net/skin/Dream',route=>route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(resolveRepositoryPath('tests/fixture/dream-skin.png', testRoot))}))
  await page.goto('http://127.0.0.1:5176/components/player-preview')
  const player=page.getByRole('group',{name:'Player preview',exact:true})
  for(const preset of ['Steve','Alex']){
@@ -22,7 +23,7 @@ test('website loads Dream with slim arms after both presets',async({page},info)=
   await expect(player).toHaveAttribute('data-model','slim');await expect(player).toHaveAttribute('data-ready','true')
  }
  await player.focus();await player.press('ArrowDown');for(let i=0;i<30;i++)await player.press('ArrowRight');await player.blur()
- const actual=await player.locator('canvas').screenshot(),a=PNG.sync.read(actual),b=PNG.sync.read(readFileSync('tests/reference/player-preview/custom-skins/captures/player-back-1-s2.png'))
+ const actual=await player.locator('canvas').screenshot(),a=PNG.sync.read(actual),b=PNG.sync.read(readFileSync(resolveRepositoryPath('tests/reference/player-preview/custom-skins/captures/player-back-1-s2.png', testRoot)))
  expect([a.width,a.height]).toEqual([b.width,b.height]);expect(a.data.equals(b.data)).toBe(true)
  await page.screenshot({path:info.outputPath('dream-back-website.png')});expect(errors).toEqual([])
 })
@@ -31,7 +32,7 @@ test('custom skin can fail, recover, and replace another model without remountin
  await page.route('https://mc-heads.net/skin/*',route=>{
   const name=decodeURIComponent(new URL(route.request().url()).pathname.split('/').pop()!)
   if(name==='Missing')return route.fulfill({status:404,body:''})
-  return route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(`tests/fixture/${name==='Dream'?'dream':'steve'}-skin.png`)})
+  return route.fulfill({status:200,contentType:'image/png',headers:{'access-control-allow-origin':'*'},body:readFileSync(resolveRepositoryPath(`tests/fixture/${name==='Dream'?'dream':'steve'}-skin.png`, testRoot))})
  })
  await page.goto('http://127.0.0.1:5176/components/player-preview')
  const player=page.getByRole('group',{name:'Player preview',exact:true}),input=page.getByRole('textbox',{name:'Player name',exact:true})

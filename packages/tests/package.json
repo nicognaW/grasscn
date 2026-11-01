@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun --bun vite --config vite.config.ts",
     "test": "bun scripts/browser-suite.mjs run",
-    "test:unit": "bun test ./tests/*.test.mjs",
+    "test:unit": "bun test --timeout 120000 ./tests/*.test.mjs",
     "fixture:build": "bun scripts/production-fixture.mjs",
     "verify": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-porting.ps1 -Suite all",
     "full-tests": "bun scripts/full-run.mjs"

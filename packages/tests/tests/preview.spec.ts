@@ -1,8 +1,9 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect, type Locator, type Page } from "./verified-test"
 import { readFile } from "node:fs/promises"
 import { PNG } from "pngjs"
 import { readFileSync } from "node:fs"
-const catalog = JSON.parse(readFileSync("preview/catalog.generated.json", "utf8")) as { total: number; completedCount: number; components: { name: string }[] }
+const catalog = JSON.parse(readFileSync(resolveRepositoryPath("preview/catalog.generated.json", testRoot), "utf8")) as { total: number; completedCount: number; components: { name: string }[] }
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 
 test("Toggle preview supports CJK labels, native pressed state and disabling",async({page})=>{
@@ -152,7 +153,7 @@ async function focusByKeyboard(page: Page, locator: Locator) {
 }
 async function nativePixels(locator: Locator, file: string) {
   const actual = PNG.sync.read(await locator.screenshot({ animations: "disabled" }))
-  const expected = PNG.sync.read(await readFile(file))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(file, testRoot)))
   expect([actual.width, actual.height]).toEqual([expected.width, expected.height])
   expect(actual.data.equals(expected.data), "Preview chrome must preserve native pixels").toBe(true)
 }

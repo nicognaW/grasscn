@@ -1,9 +1,10 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect, type Page } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import { minecraftClickSound } from "../../../apps/web/registry/ui/minecraft-sound-assets"
 
-const provenance = JSON.parse(readFileSync("tests/reference/sound-provenance.json", "utf8"))
+const provenance = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/sound-provenance.json", testRoot), "utf8"))
 const voices = (page: Page) => page.evaluate(() => (window as any).__soundVoices as { volume: number; rate: number; source: string }[])
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {

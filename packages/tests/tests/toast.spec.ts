@@ -1,15 +1,16 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
 import {PNG} from "pngjs"
-const directory="tests/reference/toast",manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+const directory="tests/reference/toast",manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
 function compare(expected:PNG,actual:PNG){
  expect([actual.width,actual.height]).toEqual([expected.width,expected.height]);let mismatchedPixels=0;const diff=new PNG({width:expected.width,height:expected.height})
  for(let i=0;i<expected.data.length;i+=4){const mismatch=!actual.data.subarray(i,i+4).equals(expected.data.subarray(i,i+4));mismatchedPixels+=Number(mismatch);diff.data.set(mismatch?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
  return {mismatchedPixels,diff}
 }
 for(const component of ["sonner"]){
- test(`${component} pixel comparator catches a changed pixel`,()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+ test(`${component} pixel comparator catches a changed pixel`,()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
  test.describe(`${component} native SystemToast frames`,()=>{
   test.describe.configure({mode:"parallel"})
   for(const c of manifest.cases)test(`${component} original frame: ${c.name}`,async({page},info)=>{
@@ -27,7 +28,7 @@ for(const component of ["sonner"]){
    await page.clock.fastForward(c.timeMs)
    if(c.state!=="exiting"||c.timeMs<600){await expect(page.locator('[data-mc-toast-ready]')).toHaveCount(c.selectedIndex??1);for(const canvas of await page.locator('[data-mc-toast-ready]').all())await expect(canvas).toHaveAttribute('data-mc-toast-ready','true')}
    await page.evaluate(()=>window.dispatchEvent(new Event("resize")))
-   const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+   const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
    const actual=await subject.screenshot({animations:"disabled"}),{mismatchedPixels,diff}=compare(PNG.sync.read(bytes),PNG.sync.read(actual))
    writeFileSync(info.outputPath("actual.png"),actual);writeFileSync(info.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({case:c.name,component,state:c.state,timeMs:c.timeMs,mismatchedPixels,totalPixels:c.width*c.height*c.scale*c.scale,tolerance:0}));expect(mismatchedPixels).toBe(0)
   })

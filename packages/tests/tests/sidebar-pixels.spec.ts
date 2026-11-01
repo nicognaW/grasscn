@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import{test,expect}from"./verified-test"
 import{readFileSync,writeFileSync}from"node:fs"
 import path from"node:path"
@@ -10,9 +11,9 @@ const runtimeErrors=new WeakMap<object,string[]>()
 test.beforeEach(async({page})=>{const errors:string[]=[];runtimeErrors.set(page,errors);page.on("pageerror",error=>errors.push(error.message))})
 test.afterEach(async({page,browser},info)=>{writeFileSync(info.outputPath("browser-version.json"),JSON.stringify({version:browser.version()}));const errors=runtimeErrors.get(page)??[];writeFileSync(info.outputPath("page-errors.json"),JSON.stringify(errors));expect(errors).toEqual([])})
 
-test('Sidebar native constituent comparator rejects one changed pixel',()=>{const expected=PNG.sync.read(readFileSync(path.join(repo,'tests/reference/captures/normal-w200-s1.png'))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test('Sidebar native constituent comparator rejects one changed pixel',()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath(path.join(repo,'tests/reference/captures/normal-w200-s1.png'), testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 const matrices=[['','button'],['button-cjk','button'],['input','input'],['input-cjk','input'],['card','panel'],['label','label'],['separator','separator'],['scroll-area','scroll']] as const
-test.describe('Sidebar original native constituent cases',()=>{test.describe.configure({mode:'parallel'});for(const[folder,kind]of matrices){const directory=path.join(repo,'tests/reference',folder),manifest=JSON.parse(readFileSync(path.join(directory,'manifest.json'),'utf8'))
+test.describe('Sidebar original native constituent cases',()=>{test.describe.configure({mode:'parallel'});for(const[folder,kind]of matrices){const directory=path.join(repo,'tests/reference',folder),manifest=JSON.parse(readFileSync(resolveRepositoryPath(path.join(directory,'manifest.json'), testRoot),'utf8'))
 for(const c of manifest.cases){const representative=(folder===''&&c.width===200&&c.label==='Button')||(folder==='button-cjk'&&c.width===103&&c.label==='你好，世界'),parts=kind==='button'?['menu-button','sub-button',...(representative?['trigger','group-action','menu-action']:[])]:kind==='label'?['label','badge']:[kind]
 for(const part of parts)for(const active of ['menu-button','sub-button'].includes(part)&&['hover','focus'].includes(c.state)?[false,true]:[false])test(`Sidebar ${part} native pixels ${c.name} active:${active}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
@@ -29,7 +30,7 @@ for(const part of parts)for(const active of ['menu-button','sub-button'].include
  if(kind==='label')await expect(subject).toHaveAttribute('data-mc-label-layout-ready','true')
  for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute('data-mc-label-ready','true')
  if(kind!=='input')await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
- const expectedBytes=readFileSync(path.join(directory,'captures',c.name));expect(hash(expectedBytes)).toBe(c.sha256);const actualBytes=await subject.screenshot(),expected=PNG.sync.read(expectedBytes),actual=PNG.sync.read(actualBytes),{mismatchedPixels,diff}=compare(expected,actual)
+ const expectedBytes=readFileSync(resolveRepositoryPath(path.join(directory,'captures',c.name), testRoot));expect(hash(expectedBytes)).toBe(c.sha256);const actualBytes=await subject.screenshot(),expected=PNG.sync.read(expectedBytes),actual=PNG.sync.read(actualBytes),{mismatchedPixels,diff}=compare(expected,actual)
  writeFileSync(info.outputPath('actual.png'),actualBytes);writeFileSync(info.outputPath('diff.png'),PNG.sync.write(diff));writeFileSync(info.outputPath('metrics.json'),JSON.stringify({case:c.name,part,active,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)
 })
 }}})

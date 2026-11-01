@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync, writeFileSync } from "node:fs"
 import { createHash } from "node:crypto"
@@ -15,14 +16,14 @@ function compare(expected: PNG, actual: PNG) {
   return { mismatchedPixels, diff }
 }
 test("Hover Card comparator catches one changed pixel", () => {
-  const manifest = JSON.parse(readFileSync("tests/reference/tooltip/manifest.json", "utf8"))
-  const expected = PNG.sync.read(readFileSync(`tests/reference/tooltip/captures/${manifest.cases[0].name}`))
+  const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/tooltip/manifest.json", testRoot), "utf8"))
+  const expected = PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/tooltip/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
 })
 for (const directory of ["tests/reference/tooltip", "tests/reference/hover-card"]) {
-  const manifest = JSON.parse(readFileSync(`${directory}/manifest.json`, "utf8"))
+  const manifest = JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot), "utf8"))
   for (const c of manifest.cases) test(`Hover Card native pixels: ${c.name}`, async ({ page }, info) => {
     await page.setViewportSize({ width: 1536, height: 900 })
     await page.goto(`/?${new URLSearchParams({ component: "hover-card", native: "1", text: c.text, wrapWidth: String(c.wrapWidth), scale: String(c.scale), x: String(c.x), y: String(c.y) })}`)
@@ -40,7 +41,7 @@ for (const directory of ["tests/reference/tooltip", "tests/reference/hover-card"
     const bounds = (await subject.boundingBox())!
     expect(bounds.x).toBe(c.x * c.scale)
     expect(bounds.y).toBe(c.y * c.scale)
-    const bytes = readFileSync(`${directory}/captures/${c.name}`)
+    const bytes = readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot))
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
     const actual = await subject.screenshot(), { mismatchedPixels, diff } = compare(PNG.sync.read(bytes), PNG.sync.read(actual))
     writeFileSync(info.outputPath("actual.png"), actual)

@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -13,8 +14,8 @@ function compare(expected: PNG, actual: PNG) {
   }
   return { mismatchedPixels, diff }
 }
-const directory="tests/reference/suggestions",manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
-test("Menu comparator catches one changed pixel",()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+const directory="tests/reference/suggestions",manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
+test("Menu comparator catches one changed pixel",()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 for(const c of manifest.cases)test(`Dropdown Menu native appearance: ${c.name}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
  const query=new URLSearchParams({component:"dropdown-menu",native:"1",labels:JSON.stringify(c.labels),scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y),surface:c.element==="menu-panel" ? "popup" : "suggestions"})
@@ -30,7 +31,7 @@ for(const c of manifest.cases)test(`Dropdown Menu native appearance: ${c.name}`,
  for(const line of await subject.locator('[data-mc-menu-unicode-ready]').all())await expect(line).toHaveAttribute("data-mc-menu-unicode-ready","true")
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
  const bounds=(await subject.boundingBox())!;expect(bounds.x).toBe(c.x*c.scale);expect(bounds.y).toBe(c.y*c.scale)
- const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+ const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
  const actual=await subject.screenshot(),{mismatchedPixels,diff}=compare(PNG.sync.read(bytes),PNG.sync.read(actual))
  writeFileSync(info.outputPath("actual.png"),actual);writeFileSync(info.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({case:c.name,mismatchedPixels,tolerance:0}))
  expect(mismatchedPixels).toBe(0)

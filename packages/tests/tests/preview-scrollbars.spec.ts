@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 import {minecraftTextareaAssets} from '../../../apps/web/registry/ui/minecraft-textarea-assets'
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
 
 test('Page scrollbars embed the unchanged original game textures',()=>{
- const css=readFileSync('preview/minecraft-scrollbars.css','utf8')
+ const css=readFileSync(resolveRepositoryPath('preview/minecraft-scrollbars.css', testRoot),'utf8')
  expect(css).toContain(minecraftTextareaAssets.scroller)
  expect(css).toContain(minecraftTextareaAssets.scroller_background)
 })
@@ -39,7 +40,7 @@ for(const scale of [2])test(`Document, nested and horizontal bars use Minecraft 
 })
 
 test('Retired components are absent from supported catalog and served payloads',async({page,request})=>{
- const registry=JSON.parse(readFileSync('registry.json','utf8')),map=JSON.parse(readFileSync('registry/minecraft-map.json','utf8'))
+ const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json', testRoot),'utf8')),map=JSON.parse(readFileSync(resolveRepositoryPath('registry/minecraft-map.json', testRoot),'utf8'))
  expect(registry.items.length).toBe(map.components.length)
  const served=await (await request.get('http://127.0.0.1:5173/r/registry.json')).json()
  expect(served.items).toHaveLength(registry.items.length)

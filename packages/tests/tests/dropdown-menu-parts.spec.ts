@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -13,7 +14,7 @@ function compare(expected: PNG, actual: PNG) {
   }
   return { mismatchedPixels, diff }
 }
-const directory="tests/reference/menu-parts",manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+const directory="tests/reference/menu-parts",manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
 for(const c of manifest.cases)for(const kind of c.element==="menu-checkbox" ? ["menu-checkbox","menu-radio"] : [c.element])test(`Dropdown Menu slot pixels: ${c.name} ${kind}`,async({page},info)=>{
  await page.setViewportSize({width:1536,height:900})
  const query=new URLSearchParams({component:"dropdown-menu",native:"1",part:kind,label:c.label??"",labels:JSON.stringify(c.labels??[]),checked:String(c.checked??false),state:c.state,scale:String(c.scale),width:String(c.width),height:String(c.height),x:String(c.x),y:String(c.y),surface:c.element==="suggestion-list" ? "suggestions" : "popup"})
@@ -26,7 +27,7 @@ for(const c of manifest.cases)for(const kind of c.element==="menu-checkbox" ? ["
  for(const line of await subject.locator('[data-mc-menu-unicode-ready]').all())await expect(line).toHaveAttribute("data-mc-menu-unicode-ready","true")
  await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
  const bounds=(await subject.boundingBox())!;expect(bounds.x).toBe(c.x*c.scale);expect(bounds.y).toBe(c.y*c.scale)
- const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+ const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
  const actual=await subject.screenshot(),{mismatchedPixels,diff}=compare(PNG.sync.read(bytes),PNG.sync.read(actual))
  writeFileSync(info.outputPath("actual.png"),actual);writeFileSync(info.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(info.outputPath("metrics.json"),JSON.stringify({case:c.name,kind,mismatchedPixels,tolerance:0}))
  expect(mismatchedPixels).toBe(0)

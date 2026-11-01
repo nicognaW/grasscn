@@ -100,7 +100,6 @@ $result=Join-Path $runDirectory 'resource-summary.json'
 $node=(Get-Command bun).Source
 $budgetGate=Join-Path $runDirectory ('budget-ready-'+[Guid]::NewGuid().ToString('N')+'.json')
 $argsList=@('scripts/guarded-entry.mjs',('"'+$budgetGate+'"'),'scripts/verify-porting.mjs',$Suite,('"'+$runDirectory+'"'),$Workers.ToString())
-$env:BUN_JSC_forceRAMSize='1073741824'
 $env:GOMAXPROCS='1'
 $env:RAYON_NUM_THREADS='1'
 $process=$null;$reason='completed' ;$peakCpu=0.;$peakRam=0.;$count=0

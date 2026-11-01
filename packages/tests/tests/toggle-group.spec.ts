@@ -1,8 +1,9 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
 import {PNG} from "pngjs"
-const directory="tests/reference/toggle",manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+const directory="tests/reference/toggle",manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
 const sha=(bytes:Buffer)=>createHash("sha256").update(bytes).digest("hex")
 function compare(expected:PNG,actual:PNG){
  expect([actual.width,actual.height]).toEqual([expected.width,expected.height]);let mismatchedPixels=0
@@ -10,9 +11,9 @@ function compare(expected:PNG,actual:PNG){
  for(let i=0;i<expected.data.length;i+=4){const mismatch=!expected.data.subarray(i,i+4).equals(actual.data.subarray(i,i+4));mismatchedPixels+=Number(mismatch);diff.data.set(mismatch?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
  return {mismatchedPixels,diff}
 }
-test("Toggle Group comparator rejects one altered pixel",()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test("Toggle Group comparator rejects one altered pixel",()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 test("Toggle Group embeds the original four opaque recipe-filter PNGs",()=>{
- const pins=JSON.parse(readFileSync(`${directory}/asset-provenance.json`,"utf8")),css=readFileSync("registry/ui/minecraft-toggle-assets.css","utf8")
+ const pins=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/asset-provenance.json`, testRoot),"utf8")),css=readFileSync(resolveRepositoryPath("registry/ui/minecraft-toggle-assets.css", testRoot),"utf8")
  const images=[...css.matchAll(/data:image\/png;base64,([A-Za-z0-9+/=]+)/g)].map(m=>Buffer.from(m[1],"base64"))
  expect(images).toHaveLength(4)
  expect(images.map(sha).sort()).toEqual(Object.values(pins.assets).map((pin:any)=>pin.sha256).sort())
@@ -28,7 +29,7 @@ test.describe("Toggle Group native recipe-filter matrix",()=>{
   if(c.state==='focus'){await subject.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');await expect(subject).toBeFocused()}
   await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
   const bounds=(await subject.boundingBox())!;expect([bounds.x,bounds.y]).toEqual([c.x*c.scale,c.y*c.scale])
-  const expectedBytes=readFileSync(`${directory}/captures/${c.name}`);expect(sha(expectedBytes)).toBe(c.sha256)
+  const expectedBytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(sha(expectedBytes)).toBe(c.sha256)
   const actualBytes=await subject.screenshot(),{mismatchedPixels,diff}=compare(PNG.sync.read(expectedBytes),PNG.sync.read(actualBytes))
   writeFileSync(info.outputPath('actual.png'),actualBytes);writeFileSync(info.outputPath('diff.png'),PNG.sync.write(diff));writeFileSync(info.outputPath('metrics.json'),JSON.stringify({case:c.name,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)
  })

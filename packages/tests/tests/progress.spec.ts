@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test";
 import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { PNG } from "pngjs";
 import { minecraftProgressAssets, minecraftProgressRgba } from "../../../apps/web/registry/ui/minecraft-progress-assets";
-const manifest = JSON.parse(readFileSync("tests/reference/progress/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/progress/manifest.json", testRoot), "utf8")) as {
     cases: {
         name: string;
         width: number;
@@ -29,7 +30,7 @@ function compare(expected: PNG, actual: PNG) {
     return { diff, mismatchedPixels };
 }
 test("Progress comparator catches a one-pixel change", async () => {
-    const expected = PNG.sync.read(await readFile(`tests/reference/progress/captures/${manifest.cases[0].name}`));
+    const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/progress/captures/${manifest.cases[0].name}`, testRoot)));
     const actual = PNG.sync.read(PNG.sync.write(expected));
     actual.data[0] ^= 1;
     expect(compare(expected, actual).mismatchedPixels).toBe(1);
@@ -44,7 +45,7 @@ test.describe("Progress native matrix", () => {
             await page.mouse.move(0, 0);
             const card = page.locator('[data-slot="progress"]');
             await expect(card).toBeVisible();
-            const expectedBytes = await readFile(`tests/reference/progress/captures/${c.name}`);
+            const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/progress/captures/${c.name}`, testRoot));
             expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256);
             const actualBytes = await card.screenshot({ animations: "disabled" });
             const { diff, mismatchedPixels } = compare(PNG.sync.read(expectedBytes), PNG.sync.read(actualBytes));
@@ -55,7 +56,7 @@ test.describe("Progress native matrix", () => {
         });
 });
 test("Progress retains every original boss-bar PNG", () => {
-    const provenance = JSON.parse(readFileSync("tests/reference/progress/asset-provenance.json", "utf8"));
+    const provenance = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/progress/asset-provenance.json", testRoot), "utf8"));
     expect(Object.keys(minecraftProgressAssets)).toHaveLength(22);
     for (const [name, uri] of Object.entries(minecraftProgressAssets)) {
         const bytes = Buffer.from(uri.split(",")[1], "base64"), image = PNG.sync.read(bytes);
@@ -96,6 +97,6 @@ for (const scale of [1, 2, 3])
         await writeFile(testInfo.outputPath("actual.png"), actualBytes);
         await writeFile(testInfo.outputPath("metrics.json"), JSON.stringify({ component: "progress", manifest: "tests/reference/progress/manifest.json", case: c.name, part: "surface", alias: "asChild" }));
         const actual = PNG.sync.read(actualBytes);
-        const expected = PNG.sync.read(await readFile(`tests/reference/progress/captures/${c.name}`));
+        const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/progress/captures/${c.name}`, testRoot)));
         expect(compare(expected, actual).mismatchedPixels).toBe(0);
     });

@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync} from "node:fs"
 import {PNG} from "pngjs"
@@ -58,7 +59,7 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
   await page.setViewportSize({width:1536,height:900});await page.goto("/?component=alert-dialog&native=1&patterned=1&scale=3&blur=5")
   await page.addStyleTag({content:"html,body{background:#202020} #root{opacity:0}"})
   const overlay=page.locator('[data-slot="alert-dialog-overlay"]')
-  const expected=(name:string)=>PNG.sync.read(readFileSync(`tests/reference/alert-dialog-backdrop/captures/${name}`)).data
+  const expected=(name:string)=>PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/alert-dialog-backdrop/captures/${name}`, testRoot))).data
   const dark=expected("alert-smoke-c2-s3.png"),light=expected("alert-smoke-c3-s3.png")
   await expect(overlay).toHaveAttribute("data-mc-confirmation-gpu-ready","true")
   expect(PNG.sync.read(await page.screenshot()).data.equals(dark)).toBe(true)
@@ -70,7 +71,7 @@ test("AlertDialog refreshes native backdrop pixels when the underlying backgroun
 test("AlertDialog preserves fixed native UI while the page underneath scrolls",async({page})=>{
   await page.setViewportSize({width:1536,height:900});await page.goto("/?component=alert-dialog&native=1&patterned=1&scale=3&blur=5")
   await page.addStyleTag({content:"html,body{background:#808080} #root{opacity:0}"})
-  const overlay=page.locator('[data-slot="alert-dialog-overlay"]'),expected=PNG.sync.read(readFileSync("tests/reference/alert-dialog-backdrop/captures/alert-smoke-c3-s3.png")).data
+  const overlay=page.locator('[data-slot="alert-dialog-overlay"]'),expected=PNG.sync.read(readFileSync(resolveRepositoryPath("tests/reference/alert-dialog-backdrop/captures/alert-smoke-c3-s3.png", testRoot))).data
   await expect(overlay).toHaveAttribute("data-mc-confirmation-gpu-ready","true")
   await page.evaluate(()=>{const spacer=document.createElement("div");spacer.style.height="2200px";document.getElementById("root")!.append(spacer);scrollTo(0,400)})
   await expect.poll(()=>page.evaluate(()=>scrollY)).toBe(400)

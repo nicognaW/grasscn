@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -8,11 +9,11 @@ function compare(expected:PNG,actual:PNG){
  for(let i=0;i<actual.data.length;i+=4){const different=!actual.data.subarray(i,i+4).equals(expected.data.subarray(i,i+4));mismatchedPixels+=Number(different);diff.data.set(different?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
  return {mismatchedPixels,diff}
 }
-test('Structural pixel comparator detects one changed pixel',()=>{const expected=PNG.sync.read(readFileSync('tests/reference/captures/normal-w200-s1.png')),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test('Structural pixel comparator detects one changed pixel',()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath('tests/reference/captures/normal-w200-s1.png', testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 test.describe('Structural native constituents',()=>{
  test.describe.configure({mode:'parallel'})
  for(const component of ['button-group','pagination'])for(const directory of ['tests/reference','tests/reference/button-cjk',...(component==='button-group'?['tests/reference/label','tests/reference/separator']:[])]){
-  const manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,'utf8')),part=directory.endsWith('/label')?'text':directory.endsWith('/separator')?'separator':'button'
+  const manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),'utf8')),part=directory.endsWith('/label')?'text':directory.endsWith('/separator')?'separator':'button'
   for(const c of manifest.cases)for(const orientation of component==='button-group'&&part==='button'?['horizontal','vertical']:['horizontal'])for(const active of component==='pagination'&&['hover','focus'].includes(c.state)?[false,true]:[false]){
    test(`${component} native ${part}: ${c.name} orientation:${orientation} active:${active}`,async({page},info)=>{
     await page.setViewportSize({width:1536,height:900})
@@ -24,7 +25,7 @@ test.describe('Structural native constituents',()=>{
     if(part==='text')await expect(subject).toHaveAttribute('data-mc-label-layout-ready','true')
     for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute('data-mc-label-ready','true')
     await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
-    const expectedBytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash('sha256').update(expectedBytes).digest('hex')).toBe(c.sha256)
+    const expectedBytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash('sha256').update(expectedBytes).digest('hex')).toBe(c.sha256)
     const actualBytes=await subject.screenshot(),actual=PNG.sync.read(actualBytes),expected=PNG.sync.read(expectedBytes),{mismatchedPixels,diff}=compare(expected,actual)
     writeFileSync(info.outputPath('actual.png'),actualBytes);writeFileSync(info.outputPath('diff.png'),PNG.sync.write(diff));writeFileSync(info.outputPath('metrics.json'),JSON.stringify({component,case:c.name,orientation,active,mismatchedPixels,tolerance:0}));expect(mismatchedPixels).toBe(0)
    })

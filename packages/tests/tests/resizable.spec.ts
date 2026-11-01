@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {PNG} from "pngjs"
@@ -24,12 +25,12 @@ test('Resizable honors disabled separators and disabled groups',async({page})=>{
 test('Resizable preserves optional grip and never synthesizes interaction audio',async({page})=>{
  await page.addInitScript(()=>{(window as any).sounds=0;HTMLMediaElement.prototype.play=function(){(window as any).sounds++;return Promise.resolve()}});await page.goto('/?component=resizable&noHandle=1');await expect(page.locator('[data-slot="resizable-grip"]')).toHaveCount(0);const handle=page.getByRole('separator',{name:'Resize panels'});await handle.focus();await page.keyboard.press('ArrowRight');expect(await page.evaluate(()=>(window as any).sounds)).toBe(0)
 })
-const arrowManifest=JSON.parse(readFileSync('tests/reference/pagination-arrow/manifest.json','utf8'))
+const arrowManifest=JSON.parse(readFileSync(resolveRepositoryPath('tests/reference/pagination-arrow/manifest.json', testRoot),'utf8'))
 for(const c of arrowManifest.cases)test(`Resizable original arrow constituent ${c.name}`,async({page},info)=>{
  const params=new URLSearchParams({component:'resizable',scale:String(c.scale),background:c.background});if(c.state.startsWith('disabled'))params.set('disabled','1');await page.goto(`/?${params}`)
  const handle=page.getByRole('separator',{name:'Resize panels'});await page.mouse.move(0,0)
  if(c.state.endsWith('hover'))await handle.hover();else if(c.state==='focus'){await handle.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab')}
- const arrow=handle.locator(`[data-slot="resizable-arrow"][data-direction="${c.checked?'forward':'backward'}"]`),bytes=await arrow.screenshot(),actual=PNG.sync.read(bytes),expectedBytes=readFileSync(`tests/reference/pagination-arrow/captures/${c.name}`),expected=PNG.sync.read(expectedBytes)
+ const arrow=handle.locator(`[data-slot="resizable-arrow"][data-direction="${c.checked?'forward':'backward'}"]`),bytes=await arrow.screenshot(),actual=PNG.sync.read(bytes),expectedBytes=readFileSync(resolveRepositoryPath(`tests/reference/pagination-arrow/captures/${c.name}`, testRoot)),expected=PNG.sync.read(expectedBytes)
  expect(createHash('sha256').update(expectedBytes).digest('hex')).toBe(c.sha256);writeFileSync(info.outputPath('actual.png'),bytes);writeFileSync(info.outputPath('metrics.json'),JSON.stringify({component:'resizable',manifest:'tests/reference/pagination-arrow/manifest.json',case:c.name,part:c.checked?'forward-arrow':'backward-arrow',alias:'base'}));expect([actual.width,actual.height]).toEqual([expected.width,expected.height]);expect(actual.data.equals(expected.data)).toBe(true)
 })
 for(const orientation of['horizontal','vertical'])test(`Resizable ${orientation} grip arrows agree with resize direction`,async({page})=>{await page.goto(`/?component=resizable&orientation=${orientation}`);const handle=page.getByRole('separator',{name:'Resize panels'}),arrow=handle.locator('[data-slot=resizable-arrow]').first(),bounds=(await arrow.boundingBox())!;expect(bounds.width<bounds.height).toBe(orientation==='horizontal');expect(await handle.evaluate(node=>getComputedStyle(node).cursor)).toBe(orientation==='horizontal'?'col-resize':'row-resize');await handle.focus();await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');expect(await handle.locator('[data-slot=resizable-grip]').evaluate(node=>getComputedStyle(node).outlineStyle)).toBe('solid')})

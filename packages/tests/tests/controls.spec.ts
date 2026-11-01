@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 
-const manifest = JSON.parse(readFileSync("tests/reference/controls/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/controls/manifest.json", testRoot), "utf8")) as {
   cases: { name: string; element: string; state: string; checked: boolean; scale: number; width: number; height: number; sha256: string }[]
 }
 
@@ -21,7 +22,7 @@ function compare(expected: PNG, actual: PNG) {
 }
 
 test("Control comparator detects one changed pixel", async () => {
-  const expected = PNG.sync.read(await readFile(`tests/reference/controls/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/controls/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
@@ -29,7 +30,7 @@ test("Control comparator detects one changed pixel", async () => {
 
 for (const reference of manifest.cases) {
   test(`Control native pixels: ${reference.name}`, async ({ page }, testInfo) => {
-    const bytes = await readFile(`tests/reference/controls/captures/${reference.name}`)
+    const bytes = await readFile(resolveRepositoryPath(`tests/reference/controls/captures/${reference.name}`, testRoot))
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(reference.sha256)
     await page.goto(`/?${new URLSearchParams({ component: reference.element, scale: String(reference.scale), state: reference.state, checked: String(reference.checked) })}`)
     const subject = page.locator("[data-subject]")

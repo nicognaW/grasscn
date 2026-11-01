@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
@@ -5,13 +6,13 @@ import path from "node:path"
 import { PNG } from "pngjs"
 import { readFileSync } from "node:fs"
 
-const manifest = JSON.parse(readFileSync("tests/reference/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/manifest.json", testRoot), "utf8")) as {
   cases: { name: string; scale: number; width: number; label: string; state: string; sha256: string }[]
 }
 
 for (const reference of manifest.cases) {
   test(`vanilla pixels: ${reference.name}`, async ({ page }, testInfo) => {
-    const expectedBytes = await readFile(path.join("tests/reference/captures", reference.name))
+    const expectedBytes = await readFile(resolveRepositoryPath(path.join("tests/reference/captures", reference.name), testRoot))
     expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(reference.sha256)
     await page.goto(`/?${new URLSearchParams({
       scale: String(reference.scale), width: String(reference.width),

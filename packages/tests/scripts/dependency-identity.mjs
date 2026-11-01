@@ -33,6 +33,12 @@ export function installedDependencyIdentity(root) {
     }
   }
   visit(modules, 'node_modules')
+  const workspaces = Bun.JSON5.parse(fs.readFileSync(lock, 'utf8')).workspaces ?? {}
+  for (const workspace of Object.keys(workspaces).sort()) {
+    if (!workspace) continue
+    const localModules = path.join(root, workspace, 'node_modules')
+    if (fs.existsSync(localModules)) visit(localModules, path.join(workspace, 'node_modules'))
+  }
   if (!files) return null
   return {bun: Bun.version, lockSha256: digest(fs.readFileSync(lock)), installedSha256: hash.digest('hex'), files}
 }

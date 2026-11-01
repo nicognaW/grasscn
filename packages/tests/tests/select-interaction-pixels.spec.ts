@@ -1,8 +1,9 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync, writeFileSync } from "node:fs"
 import { PNG } from "pngjs"
 import { compareSelectPixels } from "./select-pixel-compare"
-const manifest = JSON.parse(readFileSync("tests/reference/select/manifest.json", "utf8"))
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/select/manifest.json", testRoot), "utf8"))
 for (const scale of [1, 2, 3]) for (const mode of ["pointer", "keyboard"]) test(`Select ${mode} focus preserves original list pixels at scale ${scale}`, async ({ page }, testInfo) => {
   const c = manifest.cases.find((c: any) => c.element === "select-list" && c.width === 300 && c.height === 80 && c.labels.length === 3 && c.selectedIndex === 1 && c.state === "focus" && c.background === "#202020" && c.disabledIndex == null && c.scale === scale)
   expect(c).toBeTruthy()
@@ -23,7 +24,7 @@ for (const scale of [1, 2, 3]) for (const mode of ["pointer", "keyboard"]) test(
   await expect(creative).toHaveAttribute("data-highlighted", "")
   await expect(page.getByLabel("Select changes", { exact: true })).toHaveText("0")
   const actualBytes = await popup.screenshot()
-  const expected = PNG.sync.read(readFileSync(`tests/reference/select/captures/${c.name}`))
+  const expected = PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/select/captures/${c.name}`, testRoot)))
   writeFileSync(testInfo.outputPath("actual.png"),actualBytes)
   writeFileSync(testInfo.outputPath("metrics.json"),JSON.stringify({component:"select",manifest:"tests/reference/select/manifest.json",case:c.name,part:"list",alias:mode}))
   await testInfo.attach("actual", { body: actualBytes, contentType: "image/png" })

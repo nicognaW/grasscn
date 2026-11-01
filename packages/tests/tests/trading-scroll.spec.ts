@@ -1,8 +1,9 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 const fixture=process.env.GRASSCN_EXPANSION_URL??'http://127.0.0.1:5174/adventure.html'
 const reference=process.env.GRASSCN_TRADING_SCROLL_REFERENCE??'tests/reference/trading/scrollbar'
-const probes=JSON.parse(readFileSync(`${reference}/trading-scroll-events.json`,'utf8')) as Record<string,{kind:string;start:number;amount?:number;y?:number;result:number}[]>
+const probes=JSON.parse(readFileSync(resolveRepositoryPath(`${reference}/trading-scroll-events.json`, testRoot),'utf8')) as Record<string,{kind:string;start:number;amount?:number;y?:number;result:number}[]>
 for(const[count,events]of Object.entries(probes))test(`native trading scroll gestures with ${count} offers`,async({page})=>{
  await page.goto(`${fixture}?scale=2&case=${encodeURIComponent(JSON.stringify({element:'trading',offerCount:Number(count),cursor:0}))}`)
  const input=page.getByRole('spinbutton',{name:'Scroll offset'}),rail=page.getByRole('scrollbar',{name:'Trade offers scroll'}),root=page.locator('[data-slot="trading"]'),bounds=(await rail.boundingBox())!

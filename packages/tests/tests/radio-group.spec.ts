@@ -1,9 +1,10 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync, writeFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 const directory = "tests/reference/radio-group"
-const manifest = JSON.parse(readFileSync(`${directory}/manifest.json`, "utf8"))
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot), "utf8"))
 function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([expected.width, expected.height])
   const diff = new PNG({ width: expected.width, height: expected.height })
@@ -16,7 +17,7 @@ function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels }
 }
 test("Radio Group comparator catches a changed pixel", () => {
-  const expected = PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)), actual = PNG.sync.read(PNG.sync.write(expected))
+  const expected = PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot))), actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected,actual).mismatchedPixels).toBe(1)
 })
@@ -29,7 +30,7 @@ for (const c of manifest.cases) test(`Radio Group native pixels: ${c.name}`, asy
   await page.mouse.move(0,0)
   if(c.state === "focus") await subject.focus()
   if(c.state === "hover") await subject.hover()
-  const expectedBytes = readFileSync(`${directory}/captures/${c.name}`)
+  const expectedBytes = readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const actual = await subject.screenshot()
   const {diff,mismatchedPixels} = compare(PNG.sync.read(expectedBytes),PNG.sync.read(actual))

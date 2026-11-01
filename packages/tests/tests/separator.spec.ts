@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test";
 import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { PNG } from "pngjs";
 import { minecraftSeparatorAssets } from "../../../apps/web/registry/ui/minecraft-separator-assets";
-const manifest = JSON.parse(readFileSync("tests/reference/separator/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/separator/manifest.json", testRoot), "utf8")) as {
     cases: {
         name: string;
         width: number;
@@ -29,7 +30,7 @@ function compare(expected: PNG, actual: PNG) {
     return { diff, mismatchedPixels };
 }
 test("Separator comparator catches a one-pixel change", async () => {
-    const expected = PNG.sync.read(await readFile(`tests/reference/separator/captures/${manifest.cases[0].name}`));
+    const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/separator/captures/${manifest.cases[0].name}`, testRoot)));
     const actual = PNG.sync.read(PNG.sync.write(expected));
     actual.data[0] ^= 1;
     expect(compare(expected, actual).mismatchedPixels).toBe(1);
@@ -45,7 +46,7 @@ for (const asChild of [false, true])
             await page.mouse.move(0, 0);
             const card = page.locator('[data-slot="separator"]');
             await expect(card).toBeVisible();
-            const expectedBytes = await readFile(`tests/reference/separator/captures/${c.name}`);
+            const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/separator/captures/${c.name}`, testRoot));
             expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256);
             const actualBytes = await card.screenshot({ animations: "disabled" });
             const { diff, mismatchedPixels } = compare(PNG.sync.read(expectedBytes), PNG.sync.read(actualBytes));
@@ -55,7 +56,7 @@ for (const asChild of [false, true])
             expect(mismatchedPixels).toBe(0);
         });
 test("Separator embeds unchanged original title and in-world textures", () => {
-    const provenance = JSON.parse(readFileSync("tests/reference/separator/asset-provenance.json", "utf8"));
+    const provenance = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/separator/asset-provenance.json", testRoot), "utf8"));
     for (const edge of ["header", "footer"] as const) {
         const bytes = Buffer.from(minecraftSeparatorAssets[edge].split(",")[1], "base64");
         const sha = createHash("sha256").update(bytes).digest("hex");

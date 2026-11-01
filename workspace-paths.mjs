@@ -21,7 +21,7 @@ export function resolveRepositoryPath(name, base = repoRoot) {
   if (logical === 'tests' || logical.startsWith('tests/') || logical === 'scripts' || logical.startsWith('scripts/')) return path.resolve(testRoot, logical)
   if (logical === 'playwright.config.ts' || logical === 'vite.config.ts') return path.join(testRoot, logical)
   if (logical === 'vite.preview.config.ts') return path.join(webRoot, 'vite.config.ts')
-  return path.resolve(repoRoot, logical)
+  return path.resolve(base, logical)
 }
 
 export function packageBin(name, binary, from = testRoot) {

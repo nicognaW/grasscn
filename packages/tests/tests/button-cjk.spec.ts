@@ -1,9 +1,10 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
-const manifest = JSON.parse(readFileSync("tests/reference/button-cjk/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/button-cjk/manifest.json", testRoot), "utf8")) as {
   cases: { name: string; label: string; state: string; width: number; height: number; scale: number; x: number; y: number; sha256: string }[]
 }
 function compare(expected: PNG, actual: PNG) {
@@ -18,7 +19,7 @@ function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels }
 }
 test("CJK Button comparator catches one changed pixel", async () => {
-  const expected = PNG.sync.read(await readFile(`tests/reference/button-cjk/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/button-cjk/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
@@ -33,7 +34,7 @@ for (const c of manifest.cases) test(`CJK Button native pixels: ${c.name}`, asyn
   if (c.state === "hover") await button.hover()
   if (c.state === "focus") { await page.keyboard.press("Tab"); await expect(button).toBeFocused() }
   await expect(button.locator('[data-mc-label-ready]')).toHaveAttribute("data-mc-label-ready", "true")
-  const expectedBytes = await readFile(`tests/reference/button-cjk/captures/${c.name}`)
+  const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/button-cjk/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const actualBytes = await button.screenshot({ animations: "disabled" }), actual = PNG.sync.read(actualBytes), expected = PNG.sync.read(expectedBytes)
   const { diff, mismatchedPixels } = compare(expected, actual)

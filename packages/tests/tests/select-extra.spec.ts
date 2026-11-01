@@ -1,12 +1,13 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync, writeFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
 import { compareSelectPixels } from "./select-pixel-compare"
 const directory = "tests/reference/select-extra"
-const manifest = JSON.parse(readFileSync(`${directory}/manifest.json`, "utf8")) as { cases: { name: string; element: string; label?: string; labels?: string[]; width: number; height: number; x: number; y: number; scale: number; state: string; selectedIndex?: number; value?: number; timeMs?: number; background: string; targetIndex?: number; disabledIndex?: number; sha256: string }[] }
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot), "utf8")) as { cases: { name: string; element: string; label?: string; labels?: string[]; width: number; height: number; x: number; y: number; scale: number; state: string; selectedIndex?: number; value?: number; timeMs?: number; background: string; targetIndex?: number; disabledIndex?: number; sha256: string }[] }
 test("Select comparator catches a one-pixel change", () => {
-  const expected = PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected)); actual.data[0] ^= 1
   expect(compareSelectPixels(expected, actual).mismatches).toBe(1)
 })
@@ -35,7 +36,7 @@ for (const c of manifest.cases) test(`Select CJK native pixels: ${c.name}`, asyn
   for (const label of await subject.locator("[data-mc-label-ready]").all()) await expect(label).toHaveAttribute("data-mc-label-ready", "true")
   const actualBytes = await subject.screenshot()
   writeFileSync(testInfo.outputPath("actual.png"), actualBytes)
-  const expectedBytes = readFileSync(`${directory}/captures/${c.name}`)
+  const expectedBytes = readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const expected = PNG.sync.read(expectedBytes), actual = PNG.sync.read(actualBytes)
   expect([actual.width, actual.height]).toEqual([expected.width, expected.height])

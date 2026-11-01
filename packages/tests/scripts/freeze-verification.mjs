@@ -1,12 +1,23 @@
-import {repoRoot, webRoot, testRoot, resolveRepositoryPath, packageBin} from '../../../workspace-paths.mjs'
-import assert from "node:assert/strict"
-import {createHash} from "node:crypto"
-import {mkdir,readdir,readFile,writeFile,stat} from "node:fs/promises"
-import path from "node:path"
-import {fileURLToPath} from "node:url"
-const root=repoRoot,output=path.resolve(process.argv[2]??"");assert.ok(process.argv[2],"Pass a new snapshot directory");await mkdir(output,{recursive:false});const files=new Set()
-async function walk(directory,predicate=()=>true){for(const entry of await readdir(resolveRepositoryPath(path.join(directory)),{withFileTypes:true})){const name=path.posix.join(directory,entry.name);if(entry.isDirectory())await walk(name,predicate);else if(predicate(name))files.add(name)}}
-await walk("registry");await walk("preview");await walk("tests/fixture");for(const entry of await readdir(resolveRepositoryPath(path.join("tests")))){if(/\.(?:ts|tsx|js)$/.test(entry))files.add("tests/"+entry)}
-for(const file of ["registry.json","package.json","bun.lock","bunfig.toml",".bun-version","turbo.json","workspace-paths.mjs","apps/web/package.json","packages/tests/package.json","apps/web/tsconfig.json","packages/tests/tsconfig.json","tsconfig.json","playwright.config.ts","vite.config.ts","vite.preview.config.ts","scripts/check-map.mjs","scripts/check-registry-closure.mjs","scripts/prepare-preview.mjs","scripts/checkpoint-reporter.mjs",".agents/skills/port-minecraft-ui/SKILL.md"])files.add(file)
-await walk("tests/reference",name=>/\.(?:json|java|mjs)$/.test(name));const records=[];for(const file of [...files].sort()){const bytes=await readFile(resolveRepositoryPath(path.join(file))),target=path.join(output,"sources",file);await mkdir(path.dirname(target),{recursive:true});await writeFile(target,bytes);records.push({path:file,sha256:createHash("sha256").update(bytes).digest("hex"),bytes:bytes.length})}
-const map=JSON.parse(await readFile(resolveRepositoryPath(path.join("registry/minecraft-map.json")),"utf8"));await writeFile(path.join(output,"source-manifest.json"),JSON.stringify({capturedAt:new Date().toISOString(),bun:Bun.version,minecraftVersion:map.minecraftVersion,sourceJarSha256:map.sourceJarSha256,components:map.components.map(c=>({name:c.name,status:c.implementation.status,pixels:c.pixelVerification.status})),files:records},null,2)+"\n");console.log(`Retained ${records.length} exact source/provenance files in ${output}`)
+import assert from 'node:assert/strict'
+import {createHash} from 'node:crypto'
+import {readFile, writeFile, mkdir} from 'node:fs/promises'
+import {execFileSync} from 'node:child_process'
+import path from 'node:path'
+import {repoRoot, resolveRepositoryPath} from '../../../workspace-paths.mjs'
+
+assert.ok(process.argv[2], 'Pass a new snapshot directory')
+const output = path.resolve(process.argv[2])
+await mkdir(output, {recursive: false})
+const names = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], {cwd: repoRoot, encoding: 'utf8'}).split('\0').filter(Boolean)
+const records = []
+for (const name of [...new Set(names)].sort()) {
+  if (name.startsWith('packages/tests/tests/reference/') && !/\.(json|java|mjs)$/.test(name)) continue
+  const bytes = await readFile(path.join(repoRoot, name))
+  const target = path.join(output, 'sources', name)
+  await mkdir(path.dirname(target), {recursive: true})
+  await writeFile(target, bytes)
+  records.push({path: name, sha256: createHash('sha256').update(bytes).digest('hex'), bytes: bytes.length})
+}
+const map = JSON.parse(await readFile(resolveRepositoryPath('registry/minecraft-map.json'), 'utf8'))
+await writeFile(path.join(output, 'source-manifest.json'), JSON.stringify({capturedAt: new Date().toISOString(), bun: Bun.version, minecraftVersion: map.minecraftVersion, sourceJarSha256: map.sourceJarSha256, components: map.components.map(c => ({name: c.name, status: c.implementation.status, pixels: c.pixelVerification.status})), files: records}, null, 2) + '\n')
+console.log(`Retained ${records.length} exact source/provenance files in ${output}`)

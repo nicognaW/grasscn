@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
@@ -8,9 +9,9 @@ function compare(expected:PNG,actual:PNG){
  return {mismatchedPixels,diff}
 }
 for(const component of ["sheet","drawer","alert"]){
- test(`${component} pixel comparator rejects a changed pixel`,()=>{const manifest=JSON.parse(readFileSync("tests/reference/card/manifest.json","utf8")),expected=PNG.sync.read(readFileSync(`tests/reference/card/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+ test(`${component} pixel comparator rejects a changed pixel`,()=>{const manifest=JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/card/manifest.json", testRoot),"utf8")),expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`tests/reference/card/captures/${manifest.cases[0].name}`, testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
  for(const directory of component==="alert"?["card"]:["card","label"]){
-  const folder=`tests/reference/${directory}`,manifest=JSON.parse(readFileSync(`${folder}/manifest.json`,"utf8"))
+  const folder=`tests/reference/${directory}`,manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${folder}/manifest.json`, testRoot),"utf8"))
   test.describe(`${component} native constituents ${directory}`,()=>{
    test.describe.configure({mode:"parallel"})
    for(const c of manifest.cases)test(`${component} native appearance: ${c.name}`,async({page},info)=>{
@@ -25,7 +26,7 @@ for(const component of ["sheet","drawer","alert"]){
      await page.mouse.move(0,0)
      if(directory==="label"){await expect(subject).toHaveAttribute("data-mc-label-layout-ready","true");for(const label of await subject.locator('[data-mc-label-ready]').all())await expect(label).toHaveAttribute("data-mc-label-ready","true")}
      await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
-     const expectedBytes=readFileSync(`${folder}/captures/${c.name}`);expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
+     const expectedBytes=readFileSync(resolveRepositoryPath(`${folder}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
      const actualBytes=await subject.screenshot({animations:"disabled"}),actual=PNG.sync.read(actualBytes),expected=PNG.sync.read(expectedBytes),{mismatchedPixels,diff}=compare(expected,actual)
      writeFileSync(info.outputPath(`${part}-actual.png`),actualBytes);writeFileSync(info.outputPath(`${part}-diff.png`),PNG.sync.write(diff));writeFileSync(info.outputPath(`${part}-metrics.json`),JSON.stringify({case:c.name,component,part,mismatchedPixels,totalPixels:actual.width*actual.height,tolerance:0}));expect(mismatchedPixels).toBe(0)
     }

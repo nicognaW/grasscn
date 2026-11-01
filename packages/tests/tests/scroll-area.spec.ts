@@ -1,10 +1,11 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test";
 import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { PNG } from "pngjs";
 import { minecraftTextareaAssets } from "../../../apps/web/registry/ui/minecraft-textarea-assets";
-const manifest = JSON.parse(readFileSync("tests/reference/scroll-area/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/scroll-area/manifest.json", testRoot), "utf8")) as {
     cases: {
         name: string;
         width: number;
@@ -29,7 +30,7 @@ function compare(expected: PNG, actual: PNG) {
     return { diff, mismatchedPixels };
 }
 test("ScrollArea comparator catches a one-pixel change", async () => {
-    const expected = PNG.sync.read(await readFile(`tests/reference/scroll-area/captures/${manifest.cases[0].name}`));
+    const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/scroll-area/captures/${manifest.cases[0].name}`, testRoot)));
     const actual = PNG.sync.read(PNG.sync.write(expected));
     actual.data[0] ^= 1;
     expect(compare(expected, actual).mismatchedPixels).toBe(1);
@@ -47,7 +48,7 @@ for (const c of manifest.cases)
             await viewport.focus();
         if (c.state === "hover")
             await card.locator('[data-slot="scroll-area-scrollbar"]').hover();
-        const expectedBytes = await readFile(`tests/reference/scroll-area/captures/${c.name}`);
+        const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/scroll-area/captures/${c.name}`, testRoot));
         expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256);
         const actualBytes = await card.screenshot({ animations: "disabled" });
         const { diff, mismatchedPixels } = compare(PNG.sync.read(expectedBytes), PNG.sync.read(actualBytes));
@@ -57,7 +58,7 @@ for (const c of manifest.cases)
         expect(mismatchedPixels).toBe(0);
     });
 test("ScrollArea retains original scroller PNG bytes and nine-slice metadata", () => {
-    const provenance = JSON.parse(readFileSync("tests/reference/scroll-area/asset-provenance.json", "utf8"));
+    const provenance = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/scroll-area/asset-provenance.json", testRoot), "utf8"));
     for (const name of ["scroller", "scroller_background"] as const) {
         const bytes = Buffer.from(minecraftTextareaAssets[name].split(",")[1], "base64");
         const source = provenance.sources[`assets/minecraft/textures/gui/sprites/widget/${name}.png`];
@@ -72,7 +73,7 @@ for (const scale of [1, 2, 3])
         const subject = page.locator("section[data-subject]");
         await expect(subject).toHaveAttribute("data-mc-scroll-ready", "true");
         await expect.poll(() => subject.locator('[data-slot="scroll-area-viewport"]').evaluate(node => node.scrollTop)).toBe(c.value * scale);
-        const expected = PNG.sync.read(await readFile(`tests/reference/scroll-area/captures/${c.name}`));
+        const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/scroll-area/captures/${c.name}`, testRoot)));
         const actualBytes = await subject.screenshot();
         await writeFile(testInfo.outputPath("actual.png"), actualBytes);
         await writeFile(testInfo.outputPath("metrics.json"), JSON.stringify({ component: "scroll-area", manifest: "tests/reference/scroll-area/manifest.json", case: c.name, part: "surface", alias: "asChild" }));

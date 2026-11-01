@@ -1,9 +1,10 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import { test, expect } from "./verified-test"
 import { readFileSync } from "node:fs"
 import { readFile, writeFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 import { PNG } from "pngjs"
-const manifest = JSON.parse(readFileSync("tests/reference/card/manifest.json", "utf8")) as {
+const manifest = JSON.parse(readFileSync(resolveRepositoryPath("tests/reference/card/manifest.json", testRoot), "utf8")) as {
   cases: { name: string; width: number; height: number; scale: number; background: string; label?: string; text?: string; sha256: string }[]
 }
 function compare(expected: PNG, actual: PNG) {
@@ -18,7 +19,7 @@ function compare(expected: PNG, actual: PNG) {
   return { diff, mismatchedPixels }
 }
 test("Card comparator catches a one-pixel change", async () => {
-  const expected = PNG.sync.read(await readFile(`tests/reference/card/captures/${manifest.cases[0].name}`))
+  const expected = PNG.sync.read(await readFile(resolveRepositoryPath(`tests/reference/card/captures/${manifest.cases[0].name}`, testRoot)))
   const actual = PNG.sync.read(PNG.sync.write(expected))
   actual.data[0] ^= 1
   expect(compare(expected, actual).mismatchedPixels).toBe(1)
@@ -31,7 +32,7 @@ for (const c of manifest.cases) test(`Card native pixels: ${c.name}`, async ({ p
   await page.mouse.move(0, 0)
   const card = page.locator('[data-slot="card"]')
   await expect(card).toBeVisible()
-  const expectedBytes = await readFile(`tests/reference/card/captures/${c.name}`)
+  const expectedBytes = await readFile(resolveRepositoryPath(`tests/reference/card/captures/${c.name}`, testRoot))
   expect(createHash("sha256").update(expectedBytes).digest("hex")).toBe(c.sha256)
   const actualBytes = await card.screenshot({ animations: "disabled" })
   const { diff, mismatchedPixels } = compare(PNG.sync.read(expectedBytes), PNG.sync.read(actualBytes))

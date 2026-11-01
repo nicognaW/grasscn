@@ -1,11 +1,12 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 const base=process.env.GRASSCN_EXPANSION_URL??'http://127.0.0.1:5174/adventure.html'
 const url=(sample:object={})=>`${base}?scale=2&case=${encodeURIComponent(JSON.stringify({element:'trading',value:0,...sample}))}`
-const clips=JSON.parse(readFileSync('registry/ui/minecraft-trading-sound-assets.ts','utf8').match(/export const tradingSounds = (\[[\s\S]+\]) as const/)![1]) as {src:string;volume:number;pitch:number}[]
+const clips=JSON.parse(readFileSync(resolveRepositoryPath('registry/ui/minecraft-trading-sound-assets.ts', testRoot),'utf8').match(/export const tradingSounds = (\[[\s\S]+\]) as const/)![1]) as {src:string;volume:number;pitch:number}[]
 test('trading original sound bytes decode in the browser',async({page})=>{
- const provenance=JSON.parse(readFileSync('tests/reference/native-expansion/trading-sound-provenance.json','utf8'))
+ const provenance=JSON.parse(readFileSync(resolveRepositoryPath('tests/reference/native-expansion/trading-sound-provenance.json', testRoot),'utf8'))
  expect(clips).toHaveLength(3)
  for(const [i,clip]of clips.entries()){expect(createHash('sha256').update(Buffer.from(clip.src.split(',')[1],'base64')).digest('hex')).toBe(provenance.clips[i].sha256);expect(clip.volume).toBe(1);expect(clip.pitch).toBe(1)}
  await page.goto(url());const durations=await page.evaluate(async clips=>{const context=new AudioContext();try{return await Promise.all(clips.map(async clip=>(await context.decodeAudioData(await(await fetch(clip.src)).arrayBuffer())).duration))}finally{await context.close()}},clips)

@@ -1,7 +1,8 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
-const names=JSON.parse(readFileSync('preview/demos.json','utf8')).map((c:{name:string})=>c.name)
+const names=JSON.parse(readFileSync(resolveRepositoryPath('preview/demos.json', testRoot),'utf8')).map((c:{name:string})=>c.name)
 for(const viewport of [{width:1440,height:1000},{width:390,height:844}])test(`Maintained gallery remains usable at the fixed preview scale at ${viewport.width}px`,async({page})=>{
  test.setTimeout(240000)
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))

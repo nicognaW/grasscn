@@ -1,3 +1,4 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from './verified-test'
 import {readFileSync} from 'node:fs'
 const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
@@ -38,7 +39,7 @@ test('Field is consolidated into Form',async({page})=>{
  const nav=page.getByRole('navigation',{name:'Components'})
  await expect(nav.getByRole('link',{name:'Form',exact:true})).toHaveCount(1)
  await expect(nav.getByRole('link',{name:'Field',exact:true})).toHaveCount(0)
- const registry=JSON.parse(readFileSync('registry.json','utf8'))
+ const registry=JSON.parse(readFileSync(resolveRepositoryPath('registry.json', testRoot),'utf8'))
  const form=registry.items.find((item:{name:string})=>item.name==='form')
  expect(form.files.some((file:{path:string})=>file.path==='registry/ui/field.tsx')).toBe(true)
  expect(registry.items.some((item:{name:string})=>item.name==='field')).toBe(false)

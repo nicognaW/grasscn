@@ -1,9 +1,10 @@
+import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
 import {test,expect} from "./verified-test"
 import {readFileSync,writeFileSync} from "node:fs"
 import {createHash} from "node:crypto"
 import {PNG} from "pngjs"
 const directory="tests/reference/dialog"
-const manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+const manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
 function compare(expected:PNG,actual:PNG) {
   expect([actual.width,actual.height]).toEqual([expected.width,expected.height])
   const left=new Uint32Array(expected.data.buffer,expected.data.byteOffset,expected.data.length/4),right=new Uint32Array(actual.data.buffer,actual.data.byteOffset,actual.data.length/4)
@@ -11,9 +12,9 @@ function compare(expected:PNG,actual:PNG) {
   for(let i=0;i<left.length;i++){const mismatch=left[i]!==right[i];mismatchedPixels+=Number(mismatch);const offset=i*4;diff.data[offset]=mismatch ? 255 : expected.data[offset]>>2;diff.data[offset+1]=mismatch ? 0 : expected.data[offset+1]>>2;diff.data[offset+2]=mismatch ? 255 : expected.data[offset+2]>>2;diff.data[offset+3]=255}
   return {diff,mismatchedPixels}
 }
-test("Dialog comparator catches a one-pixel change",()=>{const expected=PNG.sync.read(readFileSync(`${directory}/captures/${manifest.cases[0].name}`)),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
+test("Dialog comparator catches a one-pixel change",()=>{const expected=PNG.sync.read(readFileSync(resolveRepositoryPath(`${directory}/captures/${manifest.cases[0].name}`, testRoot))),actual=PNG.sync.read(PNG.sync.write(expected));actual.data[0]^=1;expect(compare(expected,actual).mismatchedPixels).toBe(1)})
 for(const directory of ["tests/reference/dialog","tests/reference/dialog-extra"])test.describe(`Dialog native viewport matrix ${directory}`,()=>{
- const manifest=JSON.parse(readFileSync(`${directory}/manifest.json`,"utf8"))
+ const manifest=JSON.parse(readFileSync(resolveRepositoryPath(`${directory}/manifest.json`, testRoot),"utf8"))
  test.describe.configure({mode:"parallel"})
  for(const c of manifest.cases)test(`Dialog native pixels: ${c.name}`,async({page},testInfo)=>{
   await page.setViewportSize({width:1536,height:900})
@@ -33,7 +34,7 @@ for(const directory of ["tests/reference/dialog","tests/reference/dialog-extra"]
   if(c.state==="focus")await button.focus()
   await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))))
   writeFileSync(testInfo.outputPath("layout.json"),JSON.stringify(await dialog.evaluate(node=>[node,...node.querySelectorAll('[data-slot="dialog-title"],.mc-dialog-text,[data-slot="dialog-footer"],button')].map(n=>{const r=n.getBoundingClientRect();return {slot:n.getAttribute("data-slot"),text:n.textContent,rect:{x:r.x,y:r.y,width:r.width,height:r.height},shift:(n as HTMLElement).dataset.mcDialogShift}})),null,2))
-  const bytes=readFileSync(`${directory}/captures/${c.name}`);expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
+  const bytes=readFileSync(resolveRepositoryPath(`${directory}/captures/${c.name}`, testRoot));expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256)
   const actual=await page.screenshot({animations:"disabled"}),{diff,mismatchedPixels}=compare(PNG.sync.read(bytes),PNG.sync.read(actual))
   writeFileSync(testInfo.outputPath("actual.png"),actual);writeFileSync(testInfo.outputPath("diff.png"),PNG.sync.write(diff));writeFileSync(testInfo.outputPath("metrics.json"),JSON.stringify({case:c.name,mismatchedPixels,totalPixels:1536*900,tolerance:0}))
   expect(mismatchedPixels).toBe(0)
