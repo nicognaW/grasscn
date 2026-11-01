@@ -18,3 +18,6 @@ __pycache__/
 
 # Turborepo task cache.
 .turbo/
+
+# Browser preview screenshots written by the retained expansion cases.
+/work/native-expansion/

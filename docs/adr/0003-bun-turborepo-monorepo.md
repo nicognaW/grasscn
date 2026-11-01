@@ -16,4 +16,6 @@ This layout follows upstream's actual responsibilities: shadcn authors component
 
 The user confirmed the shared design and subsequently invoked implement-spec to authorize implementation and the agreed installation/build/Base verification workflow. Full runs retain their separate human-approval and independent-session requirements.
 
-The captured-reference requirements in ADR 0001 remain in force. The existing dependency-policy checks and source-bound verification records currently depend on npm lockfile structure; the migration must preserve their guarantees using Bun-aware inputs rather than disabling them.
+The captured-reference requirements in ADR 0001 remain in force. Dependency-policy checks and source-bound verification records use Bun-aware graph and installed-byte identities, preserving their guarantees after retiring npm's lockfile.
+
+The toolchain pins Bun 1.4.4 and Turbo 2.11.10. Upstream's earlier Turbo 2.9.18 cannot parse Bun's version-2 lockfile, so retaining that version would lose workspace dependency analysis. A small Bun dependency patch makes Uncheck 0.1.1 generate explicitly Bun-run hooks; its default bare bunx command otherwise follows Node shebangs despite the Bun runtime configuration.
