@@ -6,7 +6,7 @@ const catalog = { components: documentationInventory().playgrounds };
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 test("Toggle preview supports CJK labels, native pressed state and disabling", async ({
   page,

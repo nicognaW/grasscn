@@ -3,7 +3,7 @@ import { documentationInventory } from "@tests/checks/documentation-inventory.mj
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 const names = documentationInventory().playgrounds.map(
   (component) => component.name

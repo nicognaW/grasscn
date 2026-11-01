@@ -5,9 +5,21 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { resolveRepositoryPath, pixelPerfectRoot } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const origin = (
-  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+const differences = (left: PNG, right: PNG) => {
+  let count = 0;
+
+  for (let offset = 0; offset < left.data.length; offset += 4) {
+    if (
+      !left.data
+        .subarray(offset, offset + 4)
+        .equals(right.data.subarray(offset, offset + 4))
+    ) {
+      count += 1;
+    }
+  }
+
+  return count;
+};
 
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
@@ -70,14 +82,21 @@ test("Branding source grass matches its native scale3 capture independently of w
   );
 
   const encoded =
-    /<image href="data:image\/png;base64,([^"]+)" x="0" y="8" width="48" height="48"\/>/.exec(
+    /<image href="data:image\/png;base64,(?<grassBytes>[^"]+)" x="0" y="8" width="48" height="48"\/>/u.exec(
       svg
-    )?.[1];
+    )?.groups?.grassBytes;
+
   expect(
     encoded,
     "The authored SVG must retain its embedded48px original grass image"
   ).toBeDefined();
-  const grass = PNG.sync.read(Buffer.from(encoded!, "base64"));
+
+  if (encoded === undefined) {
+    throw new Error("Embedded native grass image required");
+  }
+
+  const grass = PNG.sync.read(Buffer.from(encoded, "base64"));
+
   const native = PNG.sync.read(
     await readFile(
       resolveRepositoryPath(
@@ -86,28 +105,25 @@ test("Branding source grass matches its native scale3 capture independently of w
       )
     )
   );
+
   expect([grass.width, grass.height]).toEqual([native.width, native.height]);
-  const composite = new PNG({ width: grass.width, height: grass.height });
+
+  const composite = new PNG({ height: grass.height, width: grass.width });
+
   for (let offset = 0; offset < grass.data.length; offset += 4) {
     const alpha = grass.data[offset + 3] / 255;
-    for (let channel = 0; channel < 3; channel++)
+
+    for (let channel = 0; channel < 3; channel += 1) {
       composite.data[offset + channel] = Math.round(
         grass.data[offset + channel] * alpha
       );
+    }
+
     composite.data[offset + 3] = 255;
   }
-  const differences = (left: PNG, right: PNG) => {
-    let count = 0;
-    for (let offset = 0; offset < left.data.length; offset += 4)
-      if (
-        !left.data
-          .subarray(offset, offset + 4)
-          .equals(right.data.subarray(offset, offset + 4))
-      )
-        count++;
-    return count;
-  };
+
   const mutation = PNG.sync.read(PNG.sync.write(native));
+  // oxlint-disable-next-line eslint/no-bitwise -- Flip exactly one retained RGBA byte for the independent comparator negative control.
   mutation.data[0] ^= 1;
   expect(differences(mutation, native)).toBe(1);
   expect(

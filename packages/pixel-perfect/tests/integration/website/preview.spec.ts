@@ -7,7 +7,7 @@ import { PNG } from "pngjs";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 async function focusByKeyboard(page: Page, locator: Locator) {
   for (let i = 0; i < 256; i++) {
@@ -24,7 +24,7 @@ async function nativePixels(locator: Locator, file: string) {
     await locator.screenshot({ animations: "disabled" })
   );
   const expected = PNG.sync.read(
-    await readFile(referenceFile(file.replace(/^tests\/reference\//, "")))
+    await readFile(referenceFile(file.replace(/^tests\/reference\//u, "")))
   );
   expect([actual.width, actual.height]).toEqual([
     expected.width,

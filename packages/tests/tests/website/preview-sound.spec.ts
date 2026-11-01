@@ -15,7 +15,7 @@ const clearVoices = (page: Page) =>
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {

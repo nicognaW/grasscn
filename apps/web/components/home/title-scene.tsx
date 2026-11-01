@@ -1,4 +1,6 @@
 "use client";
+
+import type { StaticImageData } from "next/image";
 import Image from "next/image";
 import * as React from "react";
 
@@ -6,6 +8,23 @@ import title from "../../assets/grasscn-title.svg";
 import { minecraftGlyphs } from "../../registry/ui/minecraft-font";
 import { MinecraftText } from "../../registry/ui/minecraft-text";
 import { splashMotion, splashTransform } from "../../splash-motion";
+
+// Next's image loader emits src/width/height; SVG imports are otherwise typed any.
+const isTitleImage = (value: unknown): value is StaticImageData =>
+  value !== null &&
+  typeof value === "object" &&
+  "src" in value &&
+  typeof value.src === "string" &&
+  "width" in value &&
+  typeof value.width === "number" &&
+  "height" in value &&
+  typeof value.height === "number";
+
+const titleSource: unknown = title;
+
+if (!isTitleImage(titleSource)) {
+  throw new Error("Bundled title image metadata required");
+}
 
 const splash = "Now with components!";
 const splashWidth = Array.from(splash).reduce(
@@ -66,7 +85,7 @@ export function TitleScene() {
       <h1 id="grass-title">
         <span className="sr-only">grasscn</span>
         <Image
-          src={title}
+          src={titleSource}
           width={260}
           height={64}
           alt=""

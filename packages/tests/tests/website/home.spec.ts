@@ -2,7 +2,7 @@ import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 for (const width of [320, 390, 768, 1024, 1565])
   test(`homepage examples render without overflow or runtime errors at ${width}px`, async ({

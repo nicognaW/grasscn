@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2023",
-      "DOM"
-    ],
+    "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -13,41 +10,20 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/lib/utils": [
-        "./utils.ts"
-      ],
-      "@/components/ui/*": [
-        "./registry/ui/*"
-      ],
-      "@/*": [
-        "./*"
-      ],
-      "@/components/form": [
-        "./registry/blocks/form.tsx"
-      ],
-      "@/components/chart-fps": [
-        "./registry/blocks/chart-fps.tsx"
-      ],
-      "@/components/chart-profiler": [
-        "./registry/blocks/chart-profiler.tsx"
-      ],
-      "@/components/chart-analytics": [
-        "./registry/blocks/chart-analytics.tsx"
-      ],
-      "@/components/data-table": [
-        "./registry/blocks/data-table.tsx"
-      ],
+      "@/lib/utils": ["./utils.ts"],
+      "@/components/ui/*": ["./registry/ui/*"],
+      "@/*": ["./*"],
+      "@/components/form": ["./registry/blocks/form.tsx"],
+      "@/components/chart-fps": ["./registry/blocks/chart-fps.tsx"],
+      "@/components/chart-profiler": ["./registry/blocks/chart-profiler.tsx"],
+      "@/components/chart-analytics": ["./registry/blocks/chart-analytics.tsx"],
+      "@/components/data-table": ["./registry/blocks/data-table.tsx"],
       "@/components/data-table-features": [
         "./registry/blocks/data-table-features.ts"
       ],
-      "@/components/date-picker": [
-        "./registry/blocks/date-picker.tsx"
-      ]
+      "@/components/date-picker": ["./registry/blocks/date-picker.tsx"]
     },
-    "types": [
-      "bun",
-      "node"
-    ],
+    "types": ["bun", "node"],
     "resolveJsonModule": true,
     "plugins": [
       {
@@ -78,7 +54,5 @@
     "next.config.mjs",
     "postcss.config.mjs"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

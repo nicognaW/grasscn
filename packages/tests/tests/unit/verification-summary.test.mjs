@@ -12,6 +12,7 @@ test("browser artifact identity accepts the public host summary without weakenin
     outputSha256: "output",
     source: { commit: "commit", status: "", treeSha256: "tree" },
   };
+
   assert.deepEqual(verificationWebsite(summary), summary);
   assert.throws(
     () => parseProductionIdentity(JSON.stringify(summary)),

@@ -2,7 +2,7 @@ import { test, expect, type Page, type Locator } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 async function open(page: Page, name: string) {
   await page.setViewportSize({ width: 390, height: 844 });

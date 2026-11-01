@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -36,6 +37,7 @@ import { Panel, Action } from "./showcase-panel";
 import { TitleScene } from "./title-scene";
 
 import "./homepage.css";
+
 const traffic = [
   { name: "Jan", visitors: 186, returning: 80 },
   { name: "Feb", visitors: 305, returning: 160 },
@@ -645,14 +647,16 @@ function Install() {
         <Select
           items={{
             button: "button",
-            input: "input",
             card: "card",
             chart: "chart",
             combobox: "combobox",
+            input: "input",
           }}
           scale={2}
           value={item}
-          onValueChange={(value) => setItem(value ?? "button")}
+          onValueChange={(value) => {
+            setItem(value ?? "button");
+          }}
         >
           <SelectTrigger aria-label="Component to install">
             <SelectValue />
@@ -673,6 +677,13 @@ function Install() {
     </section>
   );
 }
+
+// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
+const installationLink = <Link href="/#install" role="link" />;
+
+// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Base UI's polymorphic Button needs its Next Link adapter to retain native link semantics.
+const documentationLink = <Link href="/docs" role="link" />;
+
 export default function HomePageShowcase() {
   return (
     <div className="grass-home" id="home">
@@ -695,18 +706,10 @@ export default function HomePageShowcase() {
             <DocumentText>shadcn components. Yours to build.</DocumentText>
           </p>
           <div className="grass-hero-actions">
-            <Button
-              nativeButton={false}
-              render={<Link href="/#install" role="link" />}
-              scale={2}
-            >
+            <Button nativeButton={false} render={installationLink} scale={2}>
               {"Get started"}
             </Button>
-            <Button
-              nativeButton={false}
-              render={<Link href="/docs" role="link" />}
-              scale={2}
-            >
+            <Button nativeButton={false} render={documentationLink} scale={2}>
               {"Browse components"}
             </Button>
           </div>

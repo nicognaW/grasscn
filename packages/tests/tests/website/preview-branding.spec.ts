@@ -6,7 +6,7 @@ import { PNG } from "pngjs";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 test("Header serves the preserved branding source at its actual production geometry", async ({
   page,
@@ -15,7 +15,7 @@ test("Header serves the preserved branding source at its actual production geome
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(`${origin}docs`);
-  await expect(page).toHaveTitle(/grasscn/);
+  await expect(page).toHaveTitle(/grasscn/u);
 
   const brand = page
     .getByRole("banner")
@@ -36,18 +36,16 @@ test("Header serves the preserved branding source at its actual production geome
   expect([image.width, image.height]).toEqual([176, 64]);
   await expect(logo).toHaveCSS("image-rendering", "pixelated");
 
-  const response = await request.get(
-    new URL((await logo.getAttribute("src")) ?? "", origin).href
+  const logoSource = await logo.getAttribute("src");
+  const response = await request.get(new URL(logoSource ?? "", origin).href);
+  expect(response.ok()).toBe(true);
+
+  const deliveredSvg = await response.body();
+  const originalSvg = await readFile(
+    resolveRepositoryPath("preview/assets/grasscn-logo.svg", testRoot)
   );
 
-  expect(response.ok()).toBe(true);
-  expect(
-    (await response.body()).equals(
-      await readFile(
-        resolveRepositoryPath("preview/assets/grasscn-logo.svg", testRoot)
-      )
-    )
-  ).toBe(true);
+  expect(deliveredSvg.equals(originalSvg)).toBe(true);
   // The original SVG is served at its intrinsic176x64 geometry. Native
   // constituent coverage is independently tested at the actual header backdrop.
   const iconBytes = await page.evaluate(async () => [

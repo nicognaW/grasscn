@@ -3,7 +3,7 @@ import { documentationInventory } from "@tests/checks/documentation-inventory.mj
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 test("canonical documentation independently exposes grouped public parts and omits discarded controls", async ({
   page,
@@ -20,8 +20,11 @@ test("canonical documentation independently exposes grouped public parts and omi
       inventory.pages.find((item) => item.name === name)?.registryItem
     ).toBe(owner);
     expect(inventory.items).not.toContain(name);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await page.goto(`${origin}docs/components/${name}`);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await expect(
       page.getByRole("heading", { exact: true, name: "Installation" })
     ).toBeVisible();

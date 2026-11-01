@@ -1,11 +1,9 @@
-import { readFileSync } from "node:fs";
-
 import { test, expect } from "@grasscn/tests/test";
-import { resolveRepositoryPath, testRoot } from "@tests/paths";
+import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 for (const scale of [2])
   test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`, async ({
@@ -107,25 +105,19 @@ test("Field is independently documented while installed through Form", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Field");
   const nav = page.getByRole("navigation", { name: "Documentation" });
   await expect(
-    nav.getByRole("link", { name: "Form", exact: true })
+    nav.getByRole("link", { exact: true, name: "Form" })
   ).toHaveCount(1);
   await expect(
     nav.getByRole("link", { exact: true, name: "Field" })
   ).toHaveCount(1);
 
-  const registry = JSON.parse(
-    readFileSync(resolveRepositoryPath("registry.json", testRoot), "utf8")
-  );
+  const registry = documentationRegistry();
+  const form = registry.find((item) => item.name === "form");
+  expect(form).toBeDefined();
   expect(
-    registry.items
-      .find((item: { name: string }) => item.name === "form")
-      .files.some(
-        (file: { path: string }) => file.path === "registry/ui/field.tsx"
-      )
+    form?.files?.some((file) => file.path === "registry/ui/field.tsx")
   ).toBe(true);
-  expect(
-    registry.items.some((item: { name: string }) => item.name === "field")
-  ).toBe(false);
+  expect(registry.some((item) => item.name === "field")).toBe(false);
   await expect(
     page.getByRole("region", {
       exact: true,

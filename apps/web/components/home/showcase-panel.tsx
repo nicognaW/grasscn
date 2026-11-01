@@ -1,9 +1,11 @@
 "use client";
+
 import * as React from "react";
 
 import { Button } from "../../registry/ui/button";
 import { Card } from "../../registry/ui/card";
 import { DocumentText } from "../document-text";
+
 export function Panel({
   title,
   description,

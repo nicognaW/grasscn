@@ -6,7 +6,7 @@ import { resolveRepositoryPath, testRoot } from "@tests/paths";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 const index = documentationInventory().pages;
 
@@ -18,17 +18,20 @@ test("search index covers every published item and its named exports", async ({
   for (const name of documentationInventory().items) {
     expect(index.some((page) => page.name === name)).toBe(true);
   }
-  for (const [query, name] of [
-    ["CardHeader", "card"],
-    ["FieldLabel", "field"],
-    ["ChartProfilerFrame", "chart"],
-  ]) {
-    const response = await request.get(`${origin}api/search?query=${query}`);
-    expect(response.ok()).toBe(true);
-    expect(JSON.stringify(await response.json())).toContain(
-      `/docs/components/${name}`
-    );
-  }
+
+  await Promise.all(
+    [
+      ["CardHeader", "card"],
+      ["FieldLabel", "field"],
+      ["ChartProfilerFrame", "chart"],
+    ].map(async ([query, name]) => {
+      const response = await request.get(`${origin}api/search?query=${query}`);
+      expect(response.ok()).toBe(true);
+      expect(JSON.stringify(await response.json())).toContain(
+        `/docs/components/${name}`
+      );
+    })
+  );
 });
 
 test("all production sections share navigation and omit internal status content", async ({
@@ -90,7 +93,9 @@ test("component pages expose live preview, source, installation and composition"
   await example.getByRole("button", { exact: true, name: "Button" }).click();
   await example.getByRole("tab", { exact: true, name: "Code" }).click();
   await expect(example.locator("pre")).toContainText("const ButtonExample =");
-  await expect(example.locator("pre")).toContainText("export default ButtonExample");
+  await expect(example.locator("pre")).toContainText(
+    "export default ButtonExample"
+  );
   await expect(example.locator("pre")).not.toContainText("function Button({");
 
   const implementation = page.getByRole("region", {
@@ -118,15 +123,20 @@ test("component pages expose live preview, source, installation and composition"
 for (const width of [320, 390, 768, 1440])
   test(`shared site navigation is usable at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto(origin + "docs/components/input");
+    await page.goto(`${origin}docs/components/input`);
+
     const browse = page.getByRole("button", {
-      name: "Browse documentation",
       exact: true,
+      name: "Browse documentation",
     });
-    if (await browse.isVisible()) await browse.click();
+
+    if (await browse.isVisible()) {
+      await browse.click();
+    }
+
     await page
-      .getByRole("navigation", { name: "Documentation", exact: true })
-      .getByRole("link", { name: "Form", exact: true })
+      .getByRole("navigation", { exact: true, name: "Documentation" })
+      .getByRole("link", { exact: true, name: "Form" })
       .click();
     await expect(page.locator("h1")).toHaveText("Form");
     expect(
@@ -136,7 +146,7 @@ for (const width of [320, 390, 768, 1440])
     ).toBe(true);
     await page
       .getByRole("navigation", { name: "Main navigation" })
-      .getByRole("link", { name: "Charts", exact: true })
+      .getByRole("link", { exact: true, name: "Charts" })
       .click();
     await expect(page.locator("h1")).toHaveText("Charts");
     expect(
@@ -156,7 +166,7 @@ test("canonical routes reload and legacy links still resolve", async ({
   await expect(page).toHaveTitle(/Button.*grasscn/);
   await page
     .getByRole("navigation", { name: "Main navigation" })
-    .getByRole("link", { name: "Charts", exact: true })
+    .getByRole("link", { exact: true, name: "Charts" })
     .click();
   await expect(page).toHaveURL(origin + "charts");
   await page.goBack();
@@ -264,16 +274,12 @@ test("website code uses the shared Shiki highlighter without changing source tex
     .getByRole("button", { exact: true, name: "Expand" })
     .click();
   await expect(implementation.locator(".mc-code-token").first()).toBeVisible();
-  expect(
-    (await implementation.locator("code").textContent())?.replaceAll(
-      "\r\n",
-      "\n"
-    )
-  ).toBe(
+  const displayedCode = await implementation.locator("code").textContent();
+  expect(displayedCode?.replaceAll("\r\n", "\n")).toBe(
     readFileSync(
       resolveRepositoryPath("registry/ui/button.tsx", testRoot),
-      "utf8"
-    ).replace(/\r\n/g, "\n")
+      "utf-8"
+    ).replaceAll(/\r\n/gu, "\n")
   );
 
   const colors = await implementation

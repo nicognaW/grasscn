@@ -6,7 +6,7 @@ import { resolveRepositoryPath, testRoot } from "@tests/paths";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
-).replace(/\/?$/, "/");
+).replace(/\/?$/u, "/");
 
 test("Page scrollbars embed the unchanged original game textures", () => {
   const css = readFileSync(
