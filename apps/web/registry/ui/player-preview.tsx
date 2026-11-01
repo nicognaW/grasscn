@@ -194,6 +194,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
       );
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
+      // oxlint-disable-next-line no-bitwise -- WebGL combines independent color and depth buffer flags in its clear mask.
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.useProgram(program);
       gl.uniform2f(

@@ -65,7 +65,8 @@ export async function toastLayout(title: string, message: string | null) {
         const on = ascii
           ? bitmap[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
           : uni
-            ? ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
+            ? // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
+              ((uni.rows[y] >>> (uni.bitWidth - 1 - x - uni.left)) & 1) * 255
             : 0;
 
         pixels.set([255, 255, 255, on], (y * width + x) * 4);

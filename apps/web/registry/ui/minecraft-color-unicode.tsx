@@ -255,6 +255,7 @@ function paintUnihex(
       if (
         sx >= 0 &&
         sx < glyph.bitWidth &&
+        // oxlint-disable-next-line no-bitwise -- Unihex rows store one bit per glyph column; extract the selected column bit.
         (glyph.rows[sy] >>> (glyph.bitWidth - 1 - sx)) & 1
       ) {
         context.fillRect(px, py, 1, 1);
