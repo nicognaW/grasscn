@@ -453,8 +453,6 @@ const SidebarActionButton = ({
     (props.disabled ?? props["aria-disabled"] === true) ||
     props["aria-disabled"] === "true";
 
-  const child = null;
-
   const content = children;
 
   return (
@@ -833,7 +831,6 @@ const SidebarMenuButton = ({
     );
   }
 
-  const child = null;
   const raw = children;
   const label = props["aria-label"] ?? plainText(raw);
   const display = collapsed ? collapsedContent(raw) : raw;

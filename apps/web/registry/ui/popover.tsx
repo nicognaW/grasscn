@@ -14,7 +14,6 @@ import {
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -170,7 +169,7 @@ const PopoverContent = ({
     props["aria-describedby"],
     props["aria-label"],
   ]);
-  const child = null;
+
   const text = children;
 
   const contents = (

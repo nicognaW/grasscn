@@ -4,11 +4,7 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { toggleVariants } from "./toggle";

@@ -10,7 +10,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
+import type { MinecraftRenderProp } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
@@ -90,7 +90,7 @@ const MinecraftProse = ({
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
-  const child = null;
+
   const content = children;
 
   const text = isMinecraftTextContent(content) ? String(content) : null;

@@ -10,10 +10,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type {
-  MinecraftProps,
-  MinecraftPolymorphicProps,
-} from "./minecraft-render";
+import type { MinecraftPolymorphicProps } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";

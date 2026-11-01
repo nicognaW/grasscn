@@ -8,11 +8,7 @@ import { minecraftCardSprite } from "./minecraft-card-sprite";
 import { CardScaleContext } from "./minecraft-card-text";
 import { MinecraftDialogBackdrop } from "./minecraft-dialog-backdrop";
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 
@@ -95,8 +91,6 @@ const DrawerOverlay = ({
   children,
   ...props
 }: MinecraftProps<typeof DrawerPrimitive.Backdrop>) => {
-  const child = null;
-
   const content = (
     <>
       <MinecraftDialogBackdrop />
@@ -133,8 +127,6 @@ const DrawerContent = ({
   const inherited = React.useContext(DrawerScale);
   const scale = explicit ?? inherited;
   const side = React.useContext(DrawerDirection);
-
-  const child = null;
 
   const content = (
     <>

@@ -80,7 +80,9 @@ export const MinecraftMenuText = ({
   );
 };
 
-export function menuTextNodes(children: React.ReactNode) {
+export function menuTextNodes(
+  children: React.ReactNode
+): React.ReactNode[] | null | undefined {
   return React.Children.map(children, (child) =>
     isMinecraftTextContent(child) ? (
       <MinecraftMenuText>{child}</MinecraftMenuText>

@@ -121,7 +121,9 @@ function isChatInline(value: React.ReactNode): boolean {
   );
 }
 
-const ChatChildren = ({ children }: React.PropsWithChildren) => {
+const ChatChildren = ({
+  children,
+}: React.PropsWithChildren): React.ReactNode => {
   const scale = React.useContext(MessageScale);
 
   return isChatInline(children) ? (

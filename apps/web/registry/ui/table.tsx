@@ -65,7 +65,7 @@ const TableText = ({
   textAlign = "left",
 }: {
   children: React.ReactNode;
-} & TextLayout) => {
+} & TextLayout): React.ReactNode => {
   const scale = React.useContext(TableScale);
   const value = literalText(children);
 

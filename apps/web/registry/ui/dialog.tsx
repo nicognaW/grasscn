@@ -10,11 +10,7 @@ import {
   DialogLayoutContext,
   MinecraftDialogText,
 } from "./minecraft-dialog-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { MinecraftSurface } from "./minecraft-surface";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
@@ -109,8 +105,6 @@ const DialogOverlay = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Backdrop>) => {
-  const child = null;
-
   const content = (
     <>
       <MinecraftDialogBackdrop />
@@ -228,7 +222,6 @@ const DialogContent = ({
       window.removeEventListener("resize", update);
     };
   }, [element, scale, width]);
-  const child = null;
 
   const contents = (
     <>
@@ -336,7 +329,6 @@ const DialogTitle = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Title>) => {
-  const child = null;
   const content = <MinecraftDialogText bold>{children}</MinecraftDialogText>;
 
   return (
@@ -358,7 +350,6 @@ const DialogDescription = ({
   render,
   ...props
 }: MinecraftProps<typeof DialogPrimitive.Description>) => {
-  const child = null;
   const text = children;
 
   const content =

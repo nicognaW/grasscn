@@ -12,11 +12,7 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -187,11 +183,7 @@ function useMenuFrame(
   return forwarded;
 }
 
-function contentChildren(
-  children: React.ReactNode,
-  render: unknown,
-  surface: MenuSurface
-) {
+function contentChildren(children: React.ReactNode, surface: MenuSurface) {
   const content = (
     <>
       {surface === "popup" && (
@@ -282,7 +274,7 @@ const MenubarContent = ({
             )}
             {...props}
           >
-            {contentChildren(children, render, surface)}
+            {contentChildren(children, surface)}
           </Primitive.Popup>
         </Primitive.Positioner>
       </MenuScaleContext.Provider>
@@ -296,7 +288,6 @@ const MenubarGroup = (props: MinecraftProps<typeof Primitive.Group>) => {
 
 function rowChildren(
   children: React.ReactNode,
-  _render: unknown,
   before?: React.ReactNode,
   after?: React.ReactNode
 ) {
@@ -344,7 +335,7 @@ const MenubarItem = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.Item>
   );
 };
@@ -404,7 +395,7 @@ const MenubarCheckboxItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale))}
+      {rowChildren(children, checkboxIcon(scale))}
     </Primitive.CheckboxItem>
   );
 };
@@ -444,7 +435,7 @@ const MenubarRadioItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale, true))}
+      {rowChildren(children, checkboxIcon(scale, true))}
     </Primitive.RadioItem>
   );
 };
@@ -474,7 +465,7 @@ const MenubarLabel = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.GroupLabel>
   );
 };
@@ -557,7 +548,7 @@ const MenubarSubTrigger = ({
       )}
       {...props}
     >
-      {rowChildren(children, render, undefined, arrow)}
+      {rowChildren(children, undefined, arrow)}
     </Primitive.SubmenuTrigger>
   );
 };
@@ -627,7 +618,7 @@ const MenubarSubContent = ({
           )}
           {...props}
         >
-          {contentChildren(children, render, surface)}
+          {contentChildren(children, surface)}
         </Primitive.Popup>
       </Primitive.Positioner>
     </MenuScaleContext.Provider>

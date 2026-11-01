@@ -170,7 +170,7 @@ const FieldError = ({
     | undefined
   )[];
 }) => {
-  const content = useMemo(() => {
+  const content = useMemo((): React.ReactNode => {
     if (children) {
       return children;
     }

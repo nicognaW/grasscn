@@ -5,11 +5,7 @@ import * as React from "react";
 
 import { minecraftProgressAssets } from "./minecraft-progress-assets";
 import { MinecraftProgressPaint } from "./minecraft-progress-paint";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-progress.css";
