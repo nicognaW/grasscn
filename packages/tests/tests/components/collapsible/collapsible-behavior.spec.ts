@@ -1,6 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 const trigger = (page: Page) =>
   page.getByRole("button", { exact: true, name: "World details" });
@@ -119,21 +123,9 @@ test("Collapsible preserves form editing without closing the section", async ({
 test("Collapsible clicks use the original asset once and disabled actions are silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).__collapsibleVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__collapsibleVoices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
+  await recordAudioPlayback(page);
 
-      return Promise.resolve();
-    };
-  });
-
-  const voices = async () =>
-    page.evaluate(() => (window as any).__collapsibleVoices);
+  const voices = async () => recordedAudioPlayback(page);
 
   await page.goto("/?component=collapsible");
   await trigger(page).hover();

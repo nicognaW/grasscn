@@ -1,6 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 async function openMenu(page: Page, query = "") {
   await page.goto(`/?component=context-menu&${query}`);
@@ -175,27 +179,14 @@ test("Context Menu follows RTL submenu navigation", async ({ page }) => {
 test("Context Menu opening and hovering stay silent; checkbox activation plays the original click once", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).__contextVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__contextVoices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioPlayback(page);
   await openMenu(page, "keepOpen");
   await page.getByRole("menuitem", { name: /Resume game/ }).hover();
-  expect(await page.evaluate(() => (window as any).__contextVoices)).toEqual(
-    []
-  );
+  expect(await recordedAudioPlayback(page)).toEqual([]);
   await page
     .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
     .click();
-  expect(await page.evaluate(() => (window as any).__contextVoices)).toEqual([
+  expect(await recordedAudioPlayback(page)).toEqual([
     { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
 });
