@@ -22,7 +22,8 @@
     "./consumer-boundary": "./src/installed/consumer-boundary.mjs",
     "./consumer-registry": "./src/installed/consumer-registry.mjs",
     "./consumer-validation": "./src/installed/consumer-validation-types.ts",
-    "./prepared-consumers": "./src/installed/prepared-consumers.mjs"
+    "./prepared-consumers": "./src/installed/prepared-consumers.mjs",
+    "./verification-types": "./src/runtime/verification-types.ts"
   },
   "scripts": {
     "test": "bun cli/test.mjs",

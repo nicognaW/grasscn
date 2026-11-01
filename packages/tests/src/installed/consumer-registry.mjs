@@ -5,29 +5,34 @@ import path from "node:path";
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 
 import { sha256 } from "./consumer-boundary.mjs";
+import { isRegistryPayload } from "./consumer-metadata.ts";
 
 /** @typedef {{path: string, type?: string, target?: string}} RegistryFile */
 /** @typedef {{name: string, files: RegistryFile[]}} RegistryPayload */
 /** @typedef {{url: string, sha256: string, payload: RegistryPayload}} RegistryEntry */
 /** @param {string} origin @param {{name:string}[]} items @param {string} source @returns {Promise<Map<string,RegistryEntry>>} */
-export async function fetchPublicRegistry(origin, items, source) {
+export const fetchPublicRegistry = async (origin, items, source) => {
   /** @type {Map<string,RegistryEntry>} */
   const payloads = new Map();
 
   for (const item of items) {
     assert.ok(
-      /^[a-z0-9-]+$/.test(item.name),
+      /^[a-z0-9-]+$/u.test(item.name),
       "Safe registry item identity required"
     );
     const url = `${origin}/r/${item.name}.json`;
+    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const response = await fetch(url);
     assert.ok(
       response.ok &&
-        response.headers.get("content-type")?.includes("application/json") === true,
+        response.headers.get("content-type")?.includes("application/json") ===
+          true,
       `Public JSON registry item unavailable: ${url}`
     );
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const bytes = Buffer.from(await response.arrayBuffer());
 
+    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const built = await readFile(
       path.join(source, "apps/web/public/r", `${item.name}.json`)
     );
@@ -40,40 +45,10 @@ export async function fetchPublicRegistry(origin, items, source) {
     /** @type {unknown} */
     const decoded = JSON.parse(bytes.toString("utf-8"));
     assert.ok(
-      decoded !== null &&
-        typeof decoded === "object" &&
-        "name" in decoded &&
-        typeof decoded.name === "string" &&
-        "files" in decoded &&
-        Array.isArray(decoded.files),
-      "Registry item must contain a name and files"
+      isRegistryPayload(decoded),
+      "Registry item must contain named file definitions"
     );
-
-    const files = decoded.files.map((entry) => {
-      /** @type {unknown} */
-      const file = entry;
-      assert.ok(
-        file !== null &&
-          typeof file === "object" &&
-          "path" in file &&
-          typeof file.path === "string",
-        "Registry file path required"
-      );
-      const type = "type" in file ? file.type : undefined;
-      const target = "target" in file ? file.target : undefined;
-      assert.ok(
-        type === undefined || typeof type === "string",
-        "Registry file type must be a string"
-      );
-      assert.ok(
-        target === undefined || typeof target === "string",
-        "Registry file target must be a string"
-      );
-
-      return { path: file.path, target, type };
-    });
-
-    const payload = { files, name: decoded.name };
+    const payload = decoded;
     assert.equal(payload.name, item.name);
     assert.ok(
       Array.isArray(payload.files) && payload.files.length > 0,
@@ -83,24 +58,32 @@ export async function fetchPublicRegistry(origin, items, source) {
   }
 
   return payloads;
-}
+};
 
 /** @param {Map<string,RegistryEntry>} payloads @param {string} consumer @param {{aliases: Record<string,string>}} settings */
-export async function assertRegistryInstallation(payloads, consumer, settings) {
+export const assertRegistryInstallation = async (
+  payloads,
+  consumer,
+  settings
+) => {
   /** @type {Map<string,string>} */
   const targets = new Map();
 
   for (const { payload } of payloads.values()) {
     for (const file of payload.files) {
       const target = installedRegistryFile(file, consumer, settings);
+      // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+      const targetStat = await stat(target);
       assert.ok(
-        (await stat(target)).isFile(),
+        targetStat.isFile(),
         `Missing CLI-installed file: ${file.path}`
       );
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+      const physicalTarget = await realpath(target);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+      const physicalConsumer = await realpath(consumer);
       assert.ok(
-        (await realpath(target)).startsWith(
-          (await realpath(consumer)) + path.sep
-        ),
+        physicalTarget.startsWith(physicalConsumer + path.sep),
         `CLI-installed file must stay physically inside consumer: ${file.path}`
       );
       targets.set(file.path, target);
@@ -112,13 +95,15 @@ export async function assertRegistryInstallation(payloads, consumer, settings) {
   const installed = {};
 
   for (const [original, filename] of targets) {
+    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const bytes = await readFile(filename);
     installed[path.relative(consumer, filename).replaceAll(path.sep, "/")] =
       sha256(bytes);
 
-    if (!/\.[cm]?[jt]sx?$/.test(filename)) {
+    if (!/\.[cm]?[jt]sx?$/u.test(filename)) {
       continue;
     }
+
     const parsed = new Bun.Transpiler({
       loader: filename.endsWith("x") ? "tsx" : "ts",
     }).scan(bytes.toString("utf-8"));
@@ -127,7 +112,8 @@ export async function assertRegistryInstallation(payloads, consumer, settings) {
       if (!entry.path.startsWith(".") && !entry.path.startsWith("@/")) {
         continue;
       }
-      importsChecked++;
+
+      importsChecked += 1;
 
       const target = entry.path.startsWith("@/")
         ? path.join(consumer, "src", entry.path.slice(2))
@@ -158,14 +144,20 @@ export async function assertRegistryInstallation(payloads, consumer, settings) {
         let isFile = false;
 
         try {
-          isFile = (await stat(candidate)).isFile();
-        } catch {}
+          // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+          const candidateStat = await stat(candidate);
+          isFile = candidateStat.isFile();
+        } catch {
+          /* Missing candidates are expected while walking package/import resolution. */
+        }
 
         if (isFile) {
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+          const physicalCandidate = await realpath(candidate);
+          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
+          const physicalConsumer = await realpath(consumer);
           assert.ok(
-            (await realpath(candidate)).startsWith(
-              (await realpath(consumer)) + path.sep
-            ),
+            physicalCandidate.startsWith(physicalConsumer + path.sep),
             `${original} imports must stay physically inside consumer`
           );
           found = true;
@@ -181,4 +173,4 @@ export async function assertRegistryInstallation(payloads, consumer, settings) {
   }
 
   return { importsChecked, installed, uniqueFiles: targets.size };
-}
+};
