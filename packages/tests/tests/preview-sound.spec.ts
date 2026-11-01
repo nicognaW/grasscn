@@ -5,7 +5,7 @@ import { getMinecraftSoundVolume, setMinecraftSoundVolume } from "../../../apps/
 type Voice = { source: string; volume: number; rate: number }
 const voices = (page: Page) => page.evaluate(() => (window as any).__previewVoices as Voice[])
 const clearVoices = (page: Page) => page.evaluate(() => { (window as any).__previewVoices = [] })
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+const origin = (process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/").replace(/\/?$/, "/")
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -32,7 +32,7 @@ test("Master volume defaults to native gain and safely clamps public settings", 
 })
 
 for (const [key, value] of [["Home", "0"], ["End", "100"]] as const) test(`Clicking the visible Volume thumb preserves endpoint ${value}`, async ({ page }) => {
-  await page.goto(`${origin}#slider`)
+  await page.goto(`${origin}docs/components/slider`)
   const volume = page.getByRole("slider", { name: "Volume", exact: true })
   await volume.focus()
   await page.keyboard.press(key)
@@ -42,11 +42,11 @@ for (const [key, value] of [["Home", "0"], ["End", "100"]] as const) test(`Click
 })
 
 test("Preview Volume controls button, checkbox and slider sounds across pages",async({page})=>{
- await page.goto(`${origin}#slider`)
+ await page.goto(`${origin}docs/components/slider`)
  // Isolate demo control audio from the navigation buttons.
- const navigate=async(name:string)=>{const previous=await voices(page);await page.getByRole('navigation',{name:'Components',exact:true}).getByRole('link',{name,exact:true}).click();await page.evaluate(previous=>{(window as any).__previewVoices=previous},previous)}
+ const navigate=async(name:string)=>{const previous=await voices(page);await page.getByRole('navigation',{name:'Documentation',exact:true}).getByRole('link',{name,exact:true}).click();await page.evaluate(previous=>{(window as any).__previewVoices=previous},previous)}
  const volume=page.getByRole('slider',{name:'Volume',exact:true})
- const button=page.locator('#component-button [data-stage="button"] [data-slot="button"]').first()
+ const button=page.locator('.documentation-playground [data-stage="button"] [data-slot="button"]').first()
  const checkbox=page.getByRole('checkbox',{name:'Enable shadows',exact:true})
  await expect(volume).toHaveAttribute('aria-valuenow','50')
  await navigate('Button');await button.click()
@@ -62,20 +62,20 @@ test("Preview Volume controls button, checkbox and slider sounds across pages",a
 })
 
 test("Keyboard volume changes persist when the slider demo is filtered out", async ({ page }) => {
-  await page.goto(`${origin}#slider`)
+  await page.goto(`${origin}docs/components/slider`)
   const volume = page.getByRole("slider", { name: "Volume", exact: true })
   await volume.focus()
   await page.keyboard.press("ArrowRight")
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText("51%")
-  await page.getByRole("navigation",{name:"Components",exact:true}).getByRole("link", { name: "Button", exact: true }).click()
+  await page.getByRole("navigation",{name:"Documentation",exact:true}).getByRole("link", { name: "Button", exact: true }).click()
   await clearVoices(page)
-  await page.locator('#component-button [data-stage="button"] [data-slot="button"]').first().click()
+  await page.locator('.documentation-playground [data-stage="button"] [data-slot="button"]').first().click()
   const played = await voices(page)
   expect(played).toHaveLength(1)
   expect(played[0].volume).toBeCloseTo(.1275)
   expect(played[0].source).toBe(minecraftClickSound)
   expect(played[0].rate).toBe(1)
-  await page.getByRole("navigation",{name:"Components",exact:true}).getByRole("link", { name: "Slider", exact: true }).click()
+  await page.getByRole("navigation",{name:"Documentation",exact:true}).getByRole("link", { name: "Slider", exact: true }).click()
   await expect(volume).toHaveAttribute("aria-valuenow", "51")
   await expect(page.getByLabel("Slider value", { exact: true })).toHaveText("51%")
 })

@@ -6,7 +6,7 @@ const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 for (const scale of [2] as const) for (const container of ["narrow", "padded"] as const) {
   test(`Chart retains its integer pixel grid in ${container} container at GUI${scale}`, async ({page}, info) => {
     await page.setViewportSize({width:1280,height:1000});
-    await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
+    await page.goto(`${preview.replace(/\/$/, "")}/docs/components/chart`);
 
     const chart = page.locator('[data-slot="chart-example"]');
     await expect(chart.locator("canvas")).toHaveAttribute("data-mc-ready", "true");

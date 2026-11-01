@@ -1,8 +1,8 @@
 import {test,expect} from './verified-test'
-const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
+const origin=(process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/').replace(/\/?$/, "/")
 for(const selection of ["alert-dialog"])for(const scale of [2])test(`Long CJK confirmation keeps its GPU backdrop and readable text at mobile GUI ${scale} in ${selection}`,async({page})=>{
  const warnings:string[]=[];page.on('console',m=>{if(m.text().includes('Too many active WebGL contexts'))warnings.push(m.text())})
- await page.setViewportSize({width:390,height:844});await page.goto(origin+'#'+selection)
+ await page.setViewportSize({width:390,height:844});await page.goto(origin+'docs/components/'+selection)
 
  const stage=page.locator('[data-stage="alert-dialog"]');await stage.scrollIntoViewIfNeeded()
  await page.getByLabel('Alert dialog title',{exact:true}).fill('世界設定を削除しますか？')
@@ -22,7 +22,7 @@ for(const selection of ["alert-dialog"])for(const scale of [2])test(`Long CJK co
 
 
 for(const scene of ['fixed-pseudo','nested-fixed'])test(`Scrolled confirmation preserves ${scene} viewport paint`,async({page})=>{
- await page.setViewportSize({width:390,height:844});await page.goto(origin+'#alert-dialog')
+ await page.setViewportSize({width:390,height:844});await page.goto(origin+'docs/components/alert-dialog')
  await page.evaluate(scene=>{
   const owner=document.createElement('div');owner.id='snapshot-viewport-proof'
   if(scene==='fixed-pseudo'){

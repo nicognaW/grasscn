@@ -2,7 +2,7 @@ import {test,expect} from './verified-test';
 const preview=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/';
 for(const scale of[2]as const)for(const position of['default','popper']as const)for(const short of[false,true])test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short?'short':'scrolled'}`,async({page})=>{
  const width=390,height=short?280:844;await page.setViewportSize({width,height});
- await page.goto(`${preview.replace(/\/$/,'')}/#/components/${position==='default'?'chart':'select'}`);
+ await page.goto(`${preview.replace(/\/$/,'')}/docs/components/${position==='default'?'chart':'select'}`);
  const trigger=page.locator(`[data-slot=select-trigger][aria-label="${position==='default'?'Chart type':'Demo game mode'}"]`);
  await expect.poll(()=>trigger.evaluate(n=>getComputedStyle(n).getPropertyValue('--mc-scale').trim())).toBe(String(scale));
  await trigger.evaluate(n=>scrollBy(0,n.getBoundingClientRect().top-80));await trigger.click();

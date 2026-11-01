@@ -1,10 +1,10 @@
 import {test,expect,type Page,type Locator} from './verified-test'
-const origin=process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/'
+const origin=(process.env.GRASSCN_PREVIEW_URL??'http://127.0.0.1:5176/').replace(/\/?$/, "/")
 async function open(page:Page,name:string){
  await page.setViewportSize({width:390,height:844})
- await page.goto(`${origin}#${name}`)
+ await page.goto(`${origin}docs/components/${name}`)
 
- return page.locator(`#component-${name}`)
+ return page.locator(".documentation-playground")
 }
 async function inside(child:Locator,parent:Locator){
  await expect.poll(async()=>{

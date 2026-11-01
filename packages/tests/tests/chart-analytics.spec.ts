@@ -3,7 +3,7 @@ import { PNG } from "pngjs";
 const types=[['bar','Bar'],['stacked-bar','Stacked bar'],['line','Line'],['area','Area'],['pie','Pie'],['donut','Donut'],['radar','Radar'],['radial','Radial']] as const;
 async function select(page:any,label:string,value:string) { await page.getByRole('combobox',{name:label,exact:true}).click(); await page.getByRole('option',{name:value,exact:true}).click(); }
 async function open(page:any,scale:number,mobile=false) {
- await page.setViewportSize({width:mobile?390:1440,height:1000}); await page.goto(`${process.env.GRASSCN_PREVIEW_URL ?? 'http://127.0.0.1:5176/'}#/components/chart`);
+ await page.setViewportSize({width:mobile?390:1440,height:1000}); await page.goto(`${process.env.GRASSCN_PREVIEW_URL ?? 'http://127.0.0.1:5176/'}docs/components/chart`);
 
  await expect(page.locator('[data-stage="chart"] [data-slot="chart-example"] canvas')).toHaveAttribute('data-mc-ready','true');
 }

@@ -2,7 +2,7 @@ import { test, expect } from "./verified-test";
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 for(const scale of [2] as const) for(const [device,width,height] of [["desktop",1440,955],["mobile",390,844],["short mobile",390,300]] as const) {
  test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`,async({page})=>{
-  await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,"")}/#/components/chart`);
+  await page.setViewportSize({width,height});await page.goto(`${preview.replace(/\/$/,"")}/docs/components/chart`);
 
   const native=page.locator('[data-chart-native-examples]'),fps=native.locator('[data-native-chart=fps]'),profiler=native.locator('[data-native-chart=profiler]');
   await expect(fps).toBeVisible();await expect(profiler).toBeVisible();
