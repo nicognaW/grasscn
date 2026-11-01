@@ -12,7 +12,11 @@ interface PackageManifest {
 const isBinaryPath = (value: PackageManifest["bin"]): value is string =>
   typeof value === "string";
 
-export function packageBin(name: string, binary = name, from = testRoot) {
+export const packageBin = function packageBin(
+  name: string,
+  binary = name,
+  from = testRoot
+) {
   const require = createRequire(path.join(from, "package.json"));
   let location: string;
 
@@ -63,4 +67,4 @@ export function packageBin(name: string, binary = name, from = testRoot) {
   }
 
   return path.resolve(path.dirname(location), target);
-}
+};

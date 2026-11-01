@@ -9,7 +9,9 @@ const digest = (bytes: Uint8Array) =>
 
 // A lock identifies intended dependencies; installed bytes identify what ran.
 // Generated tool caches are excluded because running a check may update them.
-export function installedDependencyIdentity(root: string) {
+export const installedDependencyIdentity = function installedDependencyIdentity(
+  root: string
+) {
   const lock = path.join(root, "bun.lock");
   const modules = path.join(root, "node_modules");
 
@@ -22,7 +24,7 @@ export function installedDependencyIdentity(root: string) {
 
   let files = 0;
 
-  function visit(file: string, relative: string) {
+  const visit = function visit(file: string, relative: string) {
     const info = fs.lstatSync(file);
 
     if (info.isSymbolicLink()) {
@@ -68,7 +70,7 @@ export function installedDependencyIdentity(root: string) {
         .update("\0");
       files += 1;
     }
-  }
+  };
 
   visit(modules, "node_modules");
 
@@ -101,4 +103,4 @@ export function installedDependencyIdentity(root: string) {
     installedSha256: hash.digest("hex"),
     lockSha256: digest(fs.readFileSync(lock)),
   };
-}
+};

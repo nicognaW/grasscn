@@ -11,14 +11,14 @@ const json = (value: { pid: number; start: string | null | undefined }) =>
 const git = (args: string[]) =>
   execFileSync("git", args, { cwd: repoRoot, encoding: "utf-8" }).trim();
 
-export function coordinationRoot() {
+export const coordinationRoot = function coordinationRoot() {
   return path.join(
     path.resolve(repoRoot, git(["rev-parse", "--git-common-dir"])),
     "grasscn-verification"
   );
-}
+};
 
-export function processIdentity(pid: number) {
+export const processIdentity = function processIdentity(pid: number) {
   if (!Number.isInteger(pid) || pid <= 0) {
     return null;
   }
@@ -43,9 +43,9 @@ export function processIdentity(pid: number) {
   } catch {
     return null;
   }
-}
+};
 
-export function foregroundLease() {
+export const foregroundLease = function foregroundLease() {
   const directory = path.join(coordinationRoot(), "foreground");
   fs.mkdirSync(directory, { recursive: true });
   const file = path.join(directory, `${process.pid}-${randomUUID()}.json`);
@@ -58,4 +58,4 @@ export function foregroundLease() {
   return () => {
     fs.rmSync(file, { force: true });
   };
-}
+};
