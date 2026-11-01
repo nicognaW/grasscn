@@ -11,7 +11,7 @@ const repo = path.resolve(".");
 const hash = (value: Buffer) =>
   createHash("sha256").update(value).digest("hex");
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -39,7 +39,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 

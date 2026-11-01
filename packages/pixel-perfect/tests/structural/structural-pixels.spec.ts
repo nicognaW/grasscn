@@ -5,7 +5,7 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -33,7 +33,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Structural pixel comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(

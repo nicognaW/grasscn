@@ -11,7 +11,7 @@ const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
 );
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -47,7 +47,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Dialog comparator catches a one-pixel change", () => {
   const expected = PNG.sync.read(

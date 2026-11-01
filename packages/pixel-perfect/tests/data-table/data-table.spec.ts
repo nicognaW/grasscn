@@ -8,7 +8,13 @@ import { PNG } from "pngjs";
 
 const repo = path.resolve(".");
 
-function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
+const compare = function compare(
+  actual: PNG,
+  expected: PNG,
+  info: any,
+  c: any,
+  part: string
+) {
   let mismatchedPixels = 0;
   const diff = new PNG({ height: actual.height, width: actual.width });
 
@@ -36,7 +42,7 @@ function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
     })
   );
   expect(mismatchedPixels).toBe(0);
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 

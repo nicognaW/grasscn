@@ -5,7 +5,7 @@ import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function compare(expected: PNG, actual: PNG) {
+export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -33,9 +33,9 @@ export function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
-export function nativeTextTests(
+export const nativeTextTests = function nativeTextTests(
   component: "badge" | "typography" | "breadcrumb" | "kbd"
 ) {
   test.describe.configure({ mode: "parallel" });
@@ -195,4 +195,4 @@ export function nativeTextTests(
       }
     }
   }
-}
+};
