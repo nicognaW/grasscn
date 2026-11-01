@@ -561,21 +561,6 @@
       ]
     },
     {
-      "file": "input-otp-behavior.spec.ts",
-      "title": "InputOTP edits with keyboard and moves the active slot",
-      "components": [
-        "input-otp"
-      ],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/components/input-otp",
-        "reason": "Entering the ordinary numeric code shown in the default demo."
-      },
-      "titlePath": [
-        "InputOTP edits with keyboard and moves the active slot"
-      ]
-    },
-    {
       "file": "native-select-behavior.spec.ts",
       "title": "NativeSelect opens the platform popup and commits a keyboard option without claiming its pixels",
       "components": [
@@ -666,21 +651,6 @@
       ]
     },
     {
-      "file": "data-table.spec.ts",
-      "title": "Data table recipe paginates rows and preserves rich cells and caller-owned TanStack state",
-      "components": [
-        "data-table"
-      ],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/components/data-table",
-        "reason": "The website world table presents cell content and normal page navigation."
-      },
-      "titlePath": [
-        "Data table recipe paginates rows and preserves rich cells and caller-owned TanStack state"
-      ]
-    },
-    {
       "file": "resizable.spec.ts",
       "title": "Resizable responds to pointer dragging and reports layouts",
       "components": [
@@ -723,21 +693,6 @@
       },
       "titlePath": [
         "Progress exposes controlled values and completion semantics"
-      ]
-    },
-    {
-      "file": "text-widgets-behavior.spec.ts",
-      "title": "Spinner retains SVG semantics, ref, custom children, events and exact1200ms phase cycle",
-      "components": [
-        "spinner"
-      ],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/components/spinner",
-        "reason": "The default loading indicator follows its normal phase cycle and status semantics."
-      },
-      "titlePath": [
-        "Spinner retains SVG semantics, ref, custom children, events and exact1200ms phase cycle"
       ]
     },
     {

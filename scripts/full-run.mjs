@@ -77,7 +77,7 @@ export function parseRunPlan(body) {
   if (typeof plan.initiatingCheckout !== 'string' || !path.isAbsolute(plan.initiatingCheckout)) throw Error('Invalid initiating checkout')
   if (!Number.isInteger(plan.execution.workers) || plan.execution.workers < 1 || plan.execution.workers > 8) throw Error('Full workers must be 1-8')
   const ports = [plan.execution.fixturePort, plan.execution.previewPort, plan.execution.proxyPort]
-  if (ports.some(port => !Number.isInteger(port) || port < 1024 || port > 65535) || new Set(ports).size !== ports.length || ports.some(port => [5174, 5176, 5178].includes(port))) throw Error('Full run needs distinct, non-foreground loopback ports')
+  if (ports.some(port => !Number.isInteger(port) || port < 1024 || port > 65535) || new Set(ports).size !== ports.length || ports.some(port => [5173, 5174, 5176, 5178].includes(port))) throw Error('Full run needs distinct, non-foreground loopback ports')
   for (const key of ['node', 'platform', 'arch', 'hostname', 'timezone', 'locale']) if (typeof plan.environment[key] !== 'string' || !plan.environment[key]) throw Error(`Invalid environment ${key}`)
   for (const key of ['packageLockSha256', 'installedDependenciesSha256']) if (!/^[a-f0-9]{64}$/.test(plan.environment[key])) throw Error(`Invalid environment ${key}`)
   exactKeys(plan.environment.edge, ['executable', 'size', 'modified'], 'Edge environment')
@@ -140,7 +140,9 @@ export function authorizeFullRun(number, {executor = false, checkSnapshot = true
   if (approval.actor?.type !== 'User') throw Error('Authorization label must come from a human maintainer account')
   const permission = gh(['api', `repos/${data.repo}/collaborators/${approval.actor.login}/permission`])
   if (!['admin', 'maintain'].includes(permission.permission) && !['admin', 'maintain'].includes(permission.role_name)) throw Error('Authorization actor lacks maintainer permission')
-  if (Date.parse(edit.lastEditedAt ?? edit.createdAt) >= Date.parse(approval.created_at)) throw Error('Run plan was edited after authorization, or timestamp ordering is ambiguous; a maintainer must review and reapply the label')
+  const firstApproval = eventsForLabel.find(event => event.event === 'labeled')
+  if (edit.lastEditedAt && Date.parse(edit.lastEditedAt) >= Date.parse(firstApproval.created_at)) throw Error('Run plan body was edited at or after its first authorization; create a new run issue, even if the label was reapplied')
+  if (Date.parse(edit.lastEditedAt ?? edit.createdAt) >= Date.parse(approval.created_at)) throw Error('Issue creation or pre-approval edit is not strictly before the latest label event; for an unedited body, wait and ask the maintainer to reapply the label')
   if (comments.some(comment => parseStateComment(comment.body)?.phase === 'completed')) throw Error('A completed run issue cannot authorize another execution')
   const paths = fullRunPaths(data.number)
   const localState = fs.existsSync(paths.state) ? JSON.parse(fs.readFileSync(paths.state, 'utf8')) : null
