@@ -67,6 +67,7 @@ const Field = ({
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) => (
   <div
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn Field's div group and div props/ref contract.
     role="group"
     data-slot="field"
     data-orientation={orientation}

@@ -25,6 +25,7 @@ const InputGroup = ({
   <InputGroupScale.Provider value={scale}>
     <div
       data-slot="input-group"
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputGroup's div group and div props/ref contract.
       role="group"
       className={cn(`mc-input-group`, className)}
       style={minecraftStyle(
@@ -48,6 +49,7 @@ const InputGroupAddon = ({
   <div
     data-slot="input-group-addon"
     data-align={align}
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputGroupAddon's div grouping contract.
     role="group"
     className={cn(`mc-input-group-addon`, className)}
     {...props}
