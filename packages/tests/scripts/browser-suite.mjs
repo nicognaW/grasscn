@@ -1,4 +1,4 @@
-import {packageBin} from '../../../workspace-paths.mjs'
+import {repoRoot, packageBin} from '../../../workspace-paths.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 import {spawnSync} from 'node:child_process'
@@ -108,7 +108,7 @@ export async function main(args = process.argv.slice(2)) {
   let selection
   try {
     const {base} = classifyBrowserCases(collectBrowserCases())
-    const directory = path.join(browserRoot, 'test-results/browser-selection')
+    const directory = path.join(repoRoot, '.pixel-perfect-test/browser-selection')
     fs.mkdirSync(directory, {recursive: true})
     selection = path.join(directory, `base-${process.pid}.txt`)
     fs.writeFileSync(selection, base.map(test => `[${test.projectName}] › ${test.file} › ${test.titlePath.join(' › ')}`).join('\n') + '\n')

@@ -1,3 +1,4 @@
+import {pixelPerfectTestRoot} from '../../../workspace-paths.mjs'
 import { test } from "bun:test"
 import assert from "node:assert/strict"
 import { spawn } from "node:child_process"
@@ -6,8 +7,8 @@ import path from "node:path"
 import { once } from "node:events"
 
 async function fixture(run) {
-  await mkdir(path.resolve("test-results"), { recursive: true })
-  const root = await mkdtemp(path.resolve("test-results/guarded-entry-"))
+  await mkdir(path.join(pixelPerfectTestRoot,"unit"), { recursive: true })
+  const root = await mkdtemp(path.join(pixelPerfectTestRoot,"unit/guarded-entry-"))
   const gate = path.join(root, "gate.json"), marker = path.join(root, "ran.txt"), target = path.join(root, "payload.mjs")
   await writeFile(target, 'import {writeFile} from "node:fs/promises"; await writeFile(process.argv[2], "ran")')
   const child = spawn(process.execPath, ["scripts/guarded-entry.mjs", gate, target, marker], { stdio: "ignore" })

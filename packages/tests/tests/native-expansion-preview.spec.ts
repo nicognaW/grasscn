@@ -1,5 +1,5 @@
 import {test,expect} from './verified-test'
-for(const [name,title] of [['book','Book'],['hotbar','Hotbar'],['hud','HUD Meters'],['sign','Signs'],['player-preview','Player Preview'],['advancement-tree','Advancement Tree'],['map','Map'],['trading','Trading'],['player-list','Player List']])test(`local ${name} preview`,async({page})=>{
+for(const [name,title] of [['book','Book'],['hotbar','Hotbar'],['hud','HUD Meters'],['sign','Signs'],['player-preview','Player Preview'],['advancement-tree','Advancement Tree'],['map','Map'],['trading','Trading'],['player-list','Player List']])test(`local ${name} preview`,async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message))
  await page.setViewportSize({width:1440,height:1000});await page.goto(`http://127.0.0.1:5176/components/${name}`)
  await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible()
@@ -13,12 +13,12 @@ for(const [name,title] of [['book','Book'],['hotbar','Hotbar'],['hud','HUD Meter
  if(name==='trading'){const geometry=await page.getByRole('group',{name:'Trade offers',exact:true}).evaluate(element=>{const bounds=element.getBoundingClientRect();return Array.from(element.querySelectorAll('button')).map((row,i)=>{const r=row.getBoundingClientRect();return {height:r.height,offset:r.top-bounds.top,index:i,bottom:r.bottom-bounds.bottom}})});expect(geometry).toHaveLength(7);for(const row of geometry){expect(row.height).toBe(40);expect(row.offset).toBe(row.index*40);expect(row.bottom).toBeLessThanOrEqual(0)}await page.getByRole('button',{name:'Bread',exact:true}).click();await expect(page.getByRole('button',{name:'Bread',exact:true})).toHaveAttribute('aria-pressed','true');await page.getByRole('button',{name:'Trade for Bread',exact:true}).click();await expect(page.getByRole('status')).toContainText('1 trade completed.')}
  if(name==='player-list'){await page.getByRole('button',{name:'Steve',exact:true}).click();await page.getByRole('button',{name:'Award 10 points',exact:true}).click();await expect(page.getByRole('table',{name:'Build points',exact:true})).toContainText('166');await page.getByRole('button',{name:'Larger crew',exact:true}).click();await expect(page.getByRole('listitem')).toHaveCount(24);await page.getByRole('button',{name:'Player24',exact:true}).click();await page.getByRole('button',{name:'Award 10 points',exact:true}).click();await expect(page.getByRole('table',{name:'Build points',exact:true})).toContainText('169')}
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
- await page.screenshot({path:`../../work/native-expansion/${name}-website.png`});expect(errors).toEqual([])
+ await page.screenshot({path:info.outputPath(`${name}-website.png`)});expect(errors).toEqual([])
 })
 
-for(const name of ['map','trading','player-list'])test(`mobile ${name} preview fits viewport`,async({page})=>{
+for(const name of ['map','trading','player-list'])test(`mobile ${name} preview fits viewport`,async({page},info)=>{
  await page.setViewportSize({width:390,height:844});await page.goto(`http://127.0.0.1:5176/components/${name}`)
  await expect(page.locator(`[data-stage="${name}"]`)).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
  const card=page.getByRole('region',{name:name==='map'?'Map':name==='trading'?'Trading':'Player List',exact:true});const bounds=(await card.boundingBox())!;expect(bounds.x+bounds.width).toBeLessThanOrEqual(390)
- await page.screenshot({path:`../../work/native-expansion/${name}-website-mobile.png`})
+ await page.screenshot({path:info.outputPath(`${name}-website-mobile.png`)})
 })

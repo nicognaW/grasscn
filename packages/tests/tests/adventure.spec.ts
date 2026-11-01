@@ -1,5 +1,5 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
-import {test,expect} from './verified-test'
+import {pixelPerfectTest as test,expect} from './verified-test'
 import {readFileSync,writeFileSync} from 'node:fs'
 import path from 'node:path'
 import {PNG} from 'pngjs'
@@ -30,7 +30,7 @@ test('advancement tree selection, keyboard, details and panning',async({page})=>
  const box=(await tree.boundingBox())!;await page.mouse.move(box.x+10,box.y+10);await page.mouse.down();await page.mouse.move(box.x+40,box.y+30,{steps:4});await page.mouse.up();expect(await plane.getAttribute('style')).not.toEqual(before)
 })
 
-test('advancement roadmap is available in the local website',async({page})=>{
+test('advancement roadmap is available in the local website',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message))
  await page.setViewportSize({width:1440,height:1000});await page.goto('http://127.0.0.1:5176/components/advancement-tree')
  await expect(page.getByRole('heading',{name:'Advancement Tree',exact:true})).toBeVisible()
@@ -38,6 +38,6 @@ test('advancement roadmap is available in the local website',async({page})=>{
  await page.getByRole('button',{name:'Mark incomplete',exact:true}).click()
  await expect(page.getByRole('button',{name:'Plan',exact:true})).toHaveAttribute('data-completed','false')
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
- await page.screenshot({path:'../../work/native-expansion/advancement-tree-preview.png',fullPage:false})
+ await page.screenshot({path:info.outputPath('advancement-tree-preview.png'),fullPage:false})
  expect(errors).toEqual([])
 })

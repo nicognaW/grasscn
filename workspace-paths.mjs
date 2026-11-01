@@ -7,6 +7,7 @@ export const repoRoot = path.dirname(fileURLToPath(import.meta.url))
 export const repositoryRoot = repoRoot
 export const webRoot = path.join(repoRoot, 'apps/web')
 export const testRoot = path.join(repoRoot, 'packages/tests')
+export const pixelPerfectTestRoot = path.join(repoRoot, '.pixel-perfect-test')
 
 // Manifests keep their historical names; moving files does not change provenance.
 // Explicit fixture roots are isolated and must never fall back to repository files.

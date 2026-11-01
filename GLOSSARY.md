@@ -24,6 +24,9 @@ An appearance or interaction result captured from Minecraft, with its game versi
 Zero differing pixels between a UI port and its captured reference for a particular reference case, including textures, glyphs, spacing and text shadows.
 _Avoid_: Visually close
 
+**Pixel Perfect Test**:
+A test that checks a UI port against a captured Minecraft reference, requiring zero differing decoded RGBA pixels for a declared reference case. A Pixel Perfect Test is classified as Base or Full under the same rules as other browser tests.
+
 **Native behavior**:
 The response of a Minecraft interface element to an input or sequence of inputs, including state changes and interaction timing.
 

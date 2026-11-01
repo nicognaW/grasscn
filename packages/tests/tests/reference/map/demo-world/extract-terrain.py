@@ -1,4 +1,6 @@
 from pathlib import Path
+scratch = Path(__file__).resolve().parents[6] / '.pixel-perfect-test' / 'native-expansion'
+scratch.mkdir(parents=True, exist_ok=True)
 import gzip,zlib,struct,json,hashlib,collections,math
 class Nbt:
  def __init__(self,b):self.b=b;self.i=0
@@ -54,7 +56,7 @@ def main():
     bs=section['block_states'];pal=bs['palette'];j=(y%16)*256+(i//16)*16+i%16;bits=max(4,(len(pal)-1).bit_length());index=0 if len(pal)==1 else ((bs['data'][j//(64//bits)]&((1<<64)-1))>>((j%(64//bits))*bits))&((1<<bits)-1);surface[pal[index]['Name']]+=1
   summary.append({'file':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'chunks':len(chunks),'fullSurfaceChunks':valid,'topStates':surface.most_common(20)})
   print(p.name,len(chunks),valid,surface.most_common(8))
- Path('../../work/native-expansion/map-region-candidates.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+ scratch.joinpath('map-region-candidates.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 def export_terrain():
  world=Path(r'C:\Users\admin\mc\.minecraft\versions\Everything Voxy 26.2\saves\新的世界');source=world/'dimensions/minecraft/overworld/region/r.2.-2.mca';raw=source.read_bytes();all_chunks=list(region_chunks(source,raw));chunks=[]
  for c in all_chunks:
@@ -70,7 +72,7 @@ def export_terrain():
   chunks.append({'x':c['xPos'],'z':c['zPos'],'heightmap':c['Heightmaps']['WORLD_SURFACE'],'sections':sections})
  if len(chunks)!=18*19:raise ValueError(('Missing original chunks',len(chunks)))
  data={'sourceRegion':str(source),'sourceRegionSha256':hashlib.sha256(raw).hexdigest(),'dimension':'minecraft:overworld','minY':-64,'height':384,'hasCeiling':False,'centerX':1344,'centerZ':-704,'mapScale':1,'chunks':chunks}
- encoded=json.dumps(data,separators=(',',':')).encode('utf-8');target=Path('../../work/native-expansion/map-world-input.json.gz');target.write_bytes(gzip.compress(encoded,mtime=0));provenance={'sourceRegion':str(source),'sourceRegionSha256':hashlib.sha256(raw).hexdigest(),'regionBytes':len(raw),'inputSha256':hashlib.sha256(target.read_bytes()).hexdigest(),'inputBytes':target.stat().st_size,'chunkBounds':{'x':[75,92],'z':[-54,-36]},'chunks':len(chunks),'center':[1344,-704],'mapScale':1,'sourceDimensionType':'Minecraft26.2 vanilla overworld: min_y-64, height384, has_ceiling false','method':'Read-only NBT decoding preserves original block-state Name/Properties/palettes/packed indices and WORLD_SURFACE heightmap words; no colors are inferred or painted by this extractor.'};Path('../../work/native-expansion/map-world-input-provenance.json').write_text(json.dumps(provenance,indent=2,ensure_ascii=False)+'\n',encoding='utf-8');print(json.dumps(provenance,ensure_ascii=True))
+ encoded=json.dumps(data,separators=(',',':')).encode('utf-8');target=scratch.joinpath('map-world-input.json.gz');target.write_bytes(gzip.compress(encoded,mtime=0));provenance={'sourceRegion':str(source),'sourceRegionSha256':hashlib.sha256(raw).hexdigest(),'regionBytes':len(raw),'inputSha256':hashlib.sha256(target.read_bytes()).hexdigest(),'inputBytes':target.stat().st_size,'chunkBounds':{'x':[75,92],'z':[-54,-36]},'chunks':len(chunks),'center':[1344,-704],'mapScale':1,'sourceDimensionType':'Minecraft26.2 vanilla overworld: min_y-64, height384, has_ceiling false','method':'Read-only NBT decoding preserves original block-state Name/Properties/palettes/packed indices and WORLD_SURFACE heightmap words; no colors are inferred or painted by this extractor.'};scratch.joinpath('map-world-input-provenance.json').write_text(json.dumps(provenance,indent=2,ensure_ascii=False)+'\n',encoding='utf-8');print(json.dumps(provenance,ensure_ascii=True))
 if __name__=='__main__':
  import sys
  export_terrain() if '--export' in sys.argv else main()

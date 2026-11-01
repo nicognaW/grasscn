@@ -1,4 +1,4 @@
-import { test, expect } from "./verified-test";
+import { pixelPerfectTest as test, expect } from "./verified-test";
 import { PNG } from "pngjs";
 
 // Explicit preview origin: the main suite's baseURL is the installed fixture.

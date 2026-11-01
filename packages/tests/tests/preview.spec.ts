@@ -1,5 +1,5 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
-import { test, expect, type Locator, type Page } from "./verified-test"
+import { pixelPerfectTest as test, expect, type Locator, type Page } from "./verified-test"
 import { readFile } from "node:fs/promises"
 import { PNG } from "pngjs"
 import { readFileSync } from "node:fs"

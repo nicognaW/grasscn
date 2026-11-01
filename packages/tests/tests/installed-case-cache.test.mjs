@@ -1,15 +1,18 @@
 import {test} from 'bun:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
-import os from 'node:os'
+import {pixelPerfectTestRoot} from '../../../workspace-paths.mjs'
 import path from 'node:path'
 import {createHash} from 'node:crypto'
 import {PNG} from 'pngjs'
 import {installedCaseCache,installedConsumerIdentity} from '../scripts/installed-case-cache.mjs'
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex')
 
+const scratchRoot=path.join(pixelPerfectTestRoot,'unit')
+fs.mkdirSync(scratchRoot,{recursive:true})
+
 test('installed case checkpoints require all aliases, exact pixels and matching source identity',()=>{
- const directory=fs.mkdtempSync(path.join(os.tmpdir(),'grasscn-case-cache-'))
+ const directory=fs.mkdtempSync(path.join(scratchRoot,'grasscn-case-cache-'))
  try{
   const png=new PNG({width:2,height:2});png.data.fill(255)
   const bytes=PNG.sync.write(png),rgba=digest(png.data)
@@ -25,11 +28,11 @@ test('installed case checkpoints require all aliases, exact pixels and matching 
   const folder=path.join(directory,fs.readdirSync(directory)[0],digest('case'))
   fs.writeFileSync(path.join(folder,digest('decodedRgbaSha256')+'.png'),changed)
   assert.equal(cache.read('case',bytes,['decodedRgbaSha256','selectedDecodedRgbaSha256']),null)
- }finally{assert.ok(directory.startsWith(path.join(os.tmpdir(),'grasscn-case-cache-')));fs.rmSync(directory,{recursive:true,force:true})}
+ }finally{assert.ok(directory.startsWith(path.join(scratchRoot,'grasscn-case-cache-')));fs.rmSync(directory,{recursive:true,force:true})}
 })
 
 test('consumer identity changes with fixture and installed dependency inputs',()=>{
- const directory=fs.mkdtempSync(path.join(os.tmpdir(),'grasscn-case-cache-'))
+ const directory=fs.mkdtempSync(path.join(scratchRoot,'grasscn-case-cache-'))
  try{
   fs.mkdirSync(path.join(directory,'src'));fs.writeFileSync(path.join(directory,'src','fixture.tsx'),'first')
   const before=installedConsumerIdentity(directory)
@@ -47,5 +50,5 @@ test('consumer identity changes with fixture and installed dependency inputs',()
   const installed=installedConsumerIdentity(directory)
   fs.writeFileSync(path.join(local,'index.js'),'changed installed bytes')
   assert.notEqual(installed,installedConsumerIdentity(directory))
- }finally{assert.ok(directory.startsWith(path.join(os.tmpdir(),'grasscn-case-cache-')));fs.rmSync(directory,{recursive:true,force:true})}
+ }finally{assert.ok(directory.startsWith(path.join(scratchRoot,'grasscn-case-cache-')));fs.rmSync(directory,{recursive:true,force:true})}
 })

@@ -1,5 +1,5 @@
 import {resolveRepositoryPath, testRoot} from '../../../workspace-paths.mjs'
-import{test,expect}from"./verified-test"
+import{pixelPerfectTest as test,expect}from"./verified-test"
 import{readFileSync,writeFileSync}from"node:fs"
 import path from"node:path"
 import{createHash}from"node:crypto"

@@ -42,7 +42,7 @@ try{
   if(sha(expectedBytes)!==c.sha256)throw Error(`Native reference changed ${c.name}`)
   if(actual.width!==expected.width||actual.height!==expected.height)throw Error(`Dimensions ${c.name}: ${actual.width}x${actual.height} / ${expected.width}x${expected.height}`)
   const mismatchedPixels=comparator(expected,actual);const diff=new PNG({width:actual.width,height:actual.height});for(let i=0;i<actual.data.length;i+=4){const mismatch=!actual.data.subarray(i,i+4).equals(expected.data.subarray(i,i+4));diff.data.set(mismatch?[255,0,255,255]:[expected.data[i]>>2,expected.data[i+1]>>2,expected.data[i+2]>>2,255],i)}
-  if(mismatchedPixels){const out=path.join(consumer,"verification-results",componentArg);fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,`actual-${c.name}`),actualBytes);fs.writeFileSync(path.join(out,`diff-${c.name}`),PNG.sync.write(diff));console.log(c.name,mismatchedPixels,JSON.stringify(await page.locator('[data-slot="toast"]').evaluateAll(nodes=>nodes.map(n=>({rect:n.getBoundingClientRect().toJSON(),text:n.textContent})))))}
+  if(mismatchedPixels){const out=path.join(repoRoot,".pixel-perfect-test/installed-verification",componentArg);fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,`actual-${c.name}`),actualBytes);fs.writeFileSync(path.join(out,`diff-${c.name}`),PNG.sync.write(diff));console.log(c.name,mismatchedPixels,JSON.stringify(await page.locator('[data-slot="toast"]').evaluateAll(nodes=>nodes.map(n=>({rect:n.getBoundingClientRect().toJSON(),text:n.textContent})))))}
   results.push({name:c.name,mismatchedPixels,decodedRgbaSha256:sha(actual.data),pageErrors:errors});if(index%64===0)console.log("Compared",index,"native cases")
  }
 

@@ -75,17 +75,17 @@ Make the installed item self-contained: include required styles, metrics, and te
 
 **Ready when:** the actual public component renders each agreed case, and all appearance resources are included in its installable registry payload.
 
-## 5. Verify pixels, behavior, and installation
+## 5. Run Pixel Perfect Tests and verify behavior and installation
 
 Drive the component through its public interface in the test fixture. Use matching native/web content and geometry; enter hover and keyboard-focus states through browser interaction. Capture the element at the declared environment settings.
 
-Check reference integrity and dimensions, then compare every decoded RGBA pixel with zero tolerance. Save actual image, visible diff, mismatched-pixel count, total-pixel count, and case identity. Correct the rendering or reference-capture defect that explains a failure. Baseline updates must come from a deliberately recaptured captured reference, never from the browser output under test.
+Pixel Perfect Tests check reference integrity and dimensions, then compare every decoded RGBA pixel with zero tolerance. Save actual image, visible diff, mismatched-pixel count, total-pixel count, and case identity. Correct the rendering or reference-capture defect that explains a failure. Baseline updates must come from a deliberately recaptured captured reference, never from the browser output under test.
 
 For a new comparator or capture route, confirm a deliberate one-pixel change fails in a temporary copy. This checks that the test detects disagreement rather than passing by construction.
 
 For complex stateful ports, recover native event traces as well as pixels and repeat those traces in an independent launch. Drive boundary and burst sequences through the actual public component. Thresholds and browser normalization must be labeled as web adaptations unless native evidence establishes them.
 
-Test web behavior separately at the public primitive: keyboard operation, focus visibility, disabled behavior, events, and composition as applicable. Stateful controls also need value-change behavior. Green pixel tests do not establish accessibility or interaction correctness.
+Test web behavior separately at the public primitive: keyboard operation, focus visibility, disabled behavior, events, and composition as applicable. Stateful controls also need value-change behavior. Passing Pixel Perfect Tests do not establish accessibility or interaction correctness.
 
 For audible interactions, verify exact embedded asset hashes, browser decoding, native pitch/volume, one playback per relevant action, and silence for disabled, hover-only or otherwise silent native interactions. Keep audio checks separate from pixel comparisons.
 

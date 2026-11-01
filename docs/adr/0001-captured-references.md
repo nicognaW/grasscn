@@ -1,6 +1,6 @@
 # Verify UI ports against captured Minecraft references
 
-Grasscn establishes pixel-perfect matches by comparing UI ports with captured references produced by Minecraft itself. Browser-generated snapshots establish regression stability but cannot independently establish that a port matches the game. Reference cases retain the game version, source identity, conditions and repeatability evidence; pixel acceptance requires zero differing decoded RGBA pixels.
+Grasscn establishes pixel-perfect matches by comparing UI ports with captured references produced by Minecraft itself. Browser-generated snapshots establish regression stability but cannot independently establish that a port matches the game. Reference cases retain the game version, source identity, conditions and repeatability evidence; Pixel Perfect Tests require zero differing decoded RGBA pixels.
 
 This decision applies to the registry as a whole. Each UI port has its own verified coverage, recorded in `apps/web/registry/minecraft-map.json` and its linked evidence. A captured reference establishes verified coverage only for its recorded game version and reference conditions.
 

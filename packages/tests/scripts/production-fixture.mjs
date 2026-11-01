@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url'
 import assert from 'node:assert/strict'
 
 const root=repoRoot
-export const fixtureDirectory=resolveRepositoryPath(path.join('.native-reference','production-fixture','dist'))
+export const fixtureDirectory=resolveRepositoryPath(path.join('.pixel-perfect-test','production-fixture','dist'))
 const fallbackDirectory=resolveRepositoryPath(path.join('tests','fixture'))
 const skins=['dream-skin.png','steve-skin.png']
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex')
@@ -31,11 +31,11 @@ export function fixtureManifest(directory=fixtureDirectory,fallback=fallbackDire
 
 export async function buildProductionFixture(){
  // Vite empties this output directory. Check its resolved target before allowing that.
- const intended=resolveRepositoryPath(path.join('.native-reference'))+path.sep
+ const intended=resolveRepositoryPath(path.join('.pixel-perfect-test'))+path.sep
  assert.ok(path.resolve(fixtureDirectory).startsWith(intended))
  if(fs.existsSync(fixtureDirectory))assert.ok(fs.realpathSync(fixtureDirectory).startsWith(fs.realpathSync(root)+path.sep))
  const {build}=await import('vite')
- await build({configFile:resolveRepositoryPath(path.join('vite.config.ts')),cacheDir:resolveRepositoryPath(path.join('.native-reference','production-fixture','cache')),build:{outDir:fixtureDirectory,emptyOutDir:true,rollupOptions:{input:{index:resolveRepositoryPath(path.join('tests','fixture','index.html')),adventure:resolveRepositoryPath(path.join('tests','fixture','adventure.html'))}}}})
+ await build({configFile:resolveRepositoryPath(path.join('vite.config.ts')),cacheDir:resolveRepositoryPath(path.join('.pixel-perfect-test','production-fixture','cache')),build:{outDir:fixtureDirectory,emptyOutDir:true,rollupOptions:{input:{index:resolveRepositoryPath(path.join('tests','fixture','index.html')),adventure:resolveRepositoryPath(path.join('tests','fixture','adventure.html'))}}}})
  return fixtureManifest()
 }
 

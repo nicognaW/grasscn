@@ -29,7 +29,7 @@ if($Suite -eq 'full'){
  New-Item -ItemType Directory -Path $foregroundDirectory -Force|Out-Null
  $foregroundLease=Join-Path $foregroundDirectory ($PID.ToString()+'-'+[Guid]::NewGuid().ToString('N')+'.json')
  [IO.File]::WriteAllText($foregroundLease,([pscustomobject]@{pid=$PID;start=(Get-Process -Id $PID).StartTime.ToUniversalTime().ToString('o')}|ConvertTo-Json -Compress),[Text.UTF8Encoding]::new($false))
- $runDirectory=Join-Path $repo ('test-results/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)
+ $runDirectory=Join-Path (Split-Path -Parent (Split-Path -Parent $repo)) ('.pixel-perfect-test/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)
 }
 $grasscnHeavyMutex=[Threading.Mutex]::new($false,'Local\GrasscnHeavyVerification');$acquired=$false
 try {

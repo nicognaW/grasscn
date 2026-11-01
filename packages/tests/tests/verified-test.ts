@@ -25,3 +25,6 @@ export const test=base.extend<{grasscnVerificationArtifacts:void}>({
   await info.attach('grasscn-verification-artifacts',{body:Buffer.from(JSON.stringify({testId:info.testId,titlePath:info.titlePath,outputDirectory:info.outputDir,fixtureUrl:process.env.GRASSCN_FIXTURE_URL,previewUrl:process.env.GRASSCN_PREVIEW_URL,bundleSha256:process.env.GRASSCN_INSTALLED_BUNDLE_SHA256,renderedUrl,subjectSlot,subjectElement,artifacts,metrics})),contentType:'application/json'})
  },{auto:true}],
 })
+
+// Pixel Perfect Tests share the artifact fixture and retain stable case identities.
+export const pixelPerfectTest = test

@@ -1,3 +1,5 @@
+import path from 'node:path'
+import {pixelPerfectTestRoot} from '../../workspace-paths.mjs'
 import { defineConfig } from "@playwright/test"
 import {baseGrep} from './scripts/browser-suite.mjs'
 
@@ -7,7 +9,7 @@ const proxyPort = full ? process.env.GRASSCN_FULL_PROXY_PORT : process.env.GRASS
 
 export default defineConfig({
   testDir: "./tests",
-  outputDir: "./test-results/browser",
+  outputDir: path.join(pixelPerfectTestRoot, "browser"),
   testMatch: ["*.spec.ts", "*.spec.js"],
   fullyParallel: false,
   workers: 1,

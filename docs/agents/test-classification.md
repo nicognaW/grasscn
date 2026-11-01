@@ -2,6 +2,8 @@
 
 Use this guide when adding, reviewing or reclassifying browser tests. The [accepted decision](../adr/0002-base-and-full-tests.md) defines the policy; [CODING_STANDARDS.md](../../CODING_STANDARDS.md) determines whether a test is worth retaining at all. A tautological or redundant test needs removal or improvement, not a place in Full.
 
+Pixel Perfect Tests use the same Base and Full classification rules; their purpose does not select a suite.
+
 ## Decide one case at a time
 
 1. Read the whole case, including helpers, inputs and assertions. Its title alone does not establish coverage.
@@ -17,7 +19,7 @@ When shadcn has no corresponding test, use only the website-default rule. Base U
 | --- | --- |
 | Default Button activation or Checkbox toggling shown in its website demo | Base, with the specific demo mapping |
 | Questionnaire validation/navigation corresponding to an actual pinned shadcn test | Base, with the upstream mapping |
-| One existing default GUI-scale pixel case matching the website appearance | Base for that case; additional scales and variants stay Full |
+| One existing default GUI-scale Pixel Perfect Test matching the website appearance | Base for that case; additional scales and variants stay Full |
 | Default OTP editing combined with overlength-input truncation | Full: the existing case mixes the primary path with an edge case |
 | Default Spinner animation combined with custom children and click handlers | Full: additional consumer variants share the case |
 | Additional CJK corpora, viewport matrices, disabled/custom states or stress scenarios beyond the mapped primary path | Full |

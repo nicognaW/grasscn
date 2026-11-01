@@ -1,4 +1,4 @@
-import { test, expect } from "./verified-test";
+import { pixelPerfectTest as test, expect } from "./verified-test";
 import { PNG } from "pngjs";
 const types=[['bar','Bar'],['stacked-bar','Stacked bar'],['line','Line'],['area','Area'],['pie','Pie'],['donut','Donut'],['radar','Radar'],['radial','Radial']] as const;
 async function select(page:any,label:string,value:string) { await page.getByRole('combobox',{name:label,exact:true}).click(); await page.getByRole('option',{name:value,exact:true}).click(); }
