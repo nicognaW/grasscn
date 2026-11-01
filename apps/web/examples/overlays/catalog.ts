@@ -1,4 +1,5 @@
 import type { ExampleDefinition } from "../definition";
+import CommandPaletteExample from "./command-palette-example";
 import Example2 from "./alert-dialog-example";
 import Example22 from "./attachment-example";
 import Example10 from "./avatar-example";
@@ -24,6 +25,11 @@ import Example11 from "./table-example";
 import Example0 from "./tooltip-example";
 
 export const overlayExamples = {
+  "command-palette-example": {
+    Component: CommandPaletteExample,
+    filename: "overlays/command-palette-example.tsx",
+    title: "World command palette",
+  },
   "tooltip-example": {
     Component: Example0,
     filename: "overlays/tooltip-example.tsx",

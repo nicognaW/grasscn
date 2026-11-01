@@ -19,7 +19,7 @@
       "@/components/chart-analytics": ["./registry/blocks/chart-analytics.tsx"],
       "@/components/data-table": ["./registry/blocks/data-table.tsx"],
       "@/components/data-table-features": [
-        "./registry/blocks/data-table-features.tsx"
+        "./registry/blocks/data-table-features.ts"
       ],
       "@/components/date-picker": ["./registry/blocks/date-picker.tsx"]
     },
@@ -52,3 +52,4 @@
   ],
   "exclude": ["node_modules"]
 }
+

@@ -20,6 +20,7 @@ import Demo3 from "../demos/popover";
 import Demo7 from "../demos/sheet";
 import Demo11 from "../demos/table";
 import Demo0 from "../demos/tooltip";
+import BubbleExample from "../examples/overlays/bubble-example";
 
 import "./documentation.css";
 
@@ -42,7 +43,7 @@ const playgrounds = {
   "data-table": Demo15,
   carousel: Demo16,
   message: Demo17,
-  bubble: Demo17,
+  bubble: BubbleExample,
   "message-scroller": Demo17,
   attachment: Demo18,
   chart: Demo19,
