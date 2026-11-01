@@ -1,27 +1,9 @@
-import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { PNG } from "pngjs";
 
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
-
-function rgbaDifferences(actual: PNG, expected: PNG) {
-  expect([actual.width, actual.height]).toEqual([
-    expected.width,
-    expected.height,
-  ]);
-  let count = 0;
-  for (let offset = 0; offset < actual.data.length; offset += 4)
-    if (
-      !actual.data
-        .subarray(offset, offset + 4)
-        .equals(expected.data.subarray(offset, offset + 4))
-    )
-      count++;
-  return count;
-}
 
 test("layout documentation exposes its actual examples and complete source", async ({
   page,

@@ -1,74 +1,9 @@
-import { createHash } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 
-import type { Locator, TestInfo } from "@playwright/test";
-import { PNG } from "pngjs";
 
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
-
-async function nativePixels(
-  subject: Locator,
-  family: string,
-  name: string,
-  prefix: string,
-  info: TestInfo
-) {
-  const bytes = await readFile(
-    new URL(`./reference/${family}/captures/${name}`, import.meta.url)
-  );
-  const manifest: { cases: { name: string; sha256: string }[] } = JSON.parse(
-    await readFile(
-      new URL(`./reference/${family}/manifest.json`, import.meta.url),
-      "utf8"
-    )
-  );
-  expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-    manifest.cases.find((entry) => entry.name === name)?.sha256
-  );
-  const reference = PNG.sync.read(bytes);
-  const actual = PNG.sync.read(
-    await subject.screenshot({ path: info.outputPath(`${prefix}-actual.png`) })
-  );
-  expect([actual.width, actual.height]).toEqual([
-    reference.width,
-    reference.height,
-  ]);
-  const compare = (a: PNG, b: PNG) => {
-    let differentPixels = 0;
-    const diff = new PNG({ width: a.width, height: a.height });
-    for (let offset = 0; offset < a.data.length; offset += 4) {
-      if (
-        !a.data
-          .subarray(offset, offset + 4)
-          .equals(b.data.subarray(offset, offset + 4))
-      ) {
-        differentPixels++;
-        diff.data.set([255, 0, 0, 255], offset);
-      }
-    }
-    return { differentPixels, diff };
-  };
-  const changed = PNG.sync.read(PNG.sync.write(reference));
-  changed.data[0] ^= 1;
-  expect(compare(changed, reference).differentPixels).toBe(1);
-  const { differentPixels, diff } = compare(actual, reference);
-  await writeFile(info.outputPath(`${prefix}-diff.png`), PNG.sync.write(diff));
-  await writeFile(
-    info.outputPath(`${prefix}-pixels.json`),
-    JSON.stringify({
-      reference: `${family}/${name}`,
-      differentPixels,
-      totalPixels: actual.width * actual.height,
-      mutationRejected: true,
-      browser: subject.page().context().browser()?.version(),
-      viewport: subject.page().viewportSize(),
-      devicePixelRatio: await subject.page().evaluate(() => devicePixelRatio),
-    })
-  );
-  expect(differentPixels).toBe(0);
-}
 
 test("homepage application examples keep their default public interactions", async ({
   page,

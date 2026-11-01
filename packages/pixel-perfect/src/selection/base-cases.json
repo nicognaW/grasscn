@@ -10,8 +10,8 @@
       ],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/tabs",
-        "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced."
+        "route": "/docs/components/tabs#interactive-playground",
+        "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": [
         "Tabs preview preserves native tab bar at scale 2"
@@ -25,8 +25,8 @@
       ],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/select",
-        "reason": "Default Survival cycle button at the website fixed GUI scale."
+        "route": "/docs/components/select#interactive-playground",
+        "reason": "Default Survival cycle button at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": [
         "Select preview preserves native cycle button at scale 2"
@@ -40,8 +40,8 @@
       ],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/radio-group",
-        "reason": "The default selected Survival option at the website fixed GUI scale."
+        "route": "/docs/components/radio-group#interactive-playground",
+        "reason": "The default selected Survival option at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": [
         "Radio Group preview preserves native widget pixels at scale 2"
@@ -55,8 +55,8 @@
       ],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/switch",
-        "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale."
+        "route": "/docs/components/switch#interactive-playground",
+        "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": [
         "Switch preview preserves native on/off pixels at scale 2"
@@ -460,6 +460,36 @@
         "kind": "website-default",
         "route": "/docs/components/avatar",
         "reason": "The packaged Steve and Alex faces displayed by the default Avatar example atscale2 match their exact16logical hat/upright dark native PlayerFaceExtractor cases. No other skins,sizes or scales."
+      }
+    },
+    {
+      "file": "integration/website/docs-mobile-tabs.spec.ts",
+      "title": "mobile documentation Preview and Code remain visible and match compact native tabs",
+      "titlePath": [
+        "mobile documentation Preview and Code remain visible and match compact native tabs"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Actual390px default Button documentation uses the production240px Preview/Code strip (120logical GUI2) on#202020, matching the independently captured normal Preview/Code selections. Both controls remain visible without test geometry rewriting; no viewport/content/state matrix."
+      }
+    },
+    {
+      "file": "integration/website/docs-header-branding.spec.ts",
+      "title": "default header grass at intrinsic SVG size matches original Minecraft GUI3",
+      "titlePath": [
+        "default header grass at intrinsic SVG size matches original Minecraft GUI3"
+      ],
+      "components": [
+        "website"
+      ],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "Actual default header preserves the byte-pinned176x64SVG with48pxgrass GUI3 on#202020. One1536x900/DPR1 constituent compares to two original renderer launches; composite badge/header remain web adaptations. No DOM-forced geometry or extra native variant."
       }
     }
   ]

@@ -1,30 +1,9 @@
-import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 
-import { PNG } from "pngjs";
 
 import { expect, test } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
-function compareFaces(actual: PNG, expected: PNG) {
-  expect([actual.width, actual.height]).toEqual([
-    expected.width,
-    expected.height,
-  ]);
-  const diff = new PNG({ width: actual.width, height: actual.height });
-  let differingPixels = 0;
-  for (let offset = 0; offset < actual.data.length; offset += 4) {
-    const changed = !actual.data
-      .subarray(offset, offset + 4)
-      .equals(expected.data.subarray(offset, offset + 4));
-    differingPixels += Number(changed);
-    diff.data.set(
-      changed ? [255, 0, 255, 255] : expected.data.subarray(offset, offset + 4),
-      offset
-    );
-  }
-  return { differingPixels, diff };
-}
 const slugs = [
   "tooltip",
   "dialog",

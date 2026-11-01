@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { PNG } from "pngjs";
-import { pixelPerfectTest as test, expect } from "./verified-test";
+import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 
 const origin=(process.env.GRASSCN_PREVIEW_URL??"http://127.0.0.1:5176").replace(/\/$/,"");
 
@@ -17,11 +17,11 @@ test("default header grass at intrinsic SVG size matches original Minecraft GUI3
   await expect(header).toHaveCSS("background-color","rgb(32, 32, 32)");
   await expect(logo).toHaveCSS("image-rendering","pixelated");
   expect(await page.evaluate(()=>devicePixelRatio)).toBe(1);
-  const manifest=JSON.parse(await readFile(new URL("./reference/branding-header/manifest.json",import.meta.url),"utf8"));
+  const manifest=JSON.parse(await readFile(new URL("../../reference/branding-header/manifest.json",import.meta.url),"utf8"));
   expect(manifest.repeatDecodedRgbaEqual).toBe(true);
   const reference=manifest.cases[0];
   expect({scale:reference.scale,background:reference.background,width:reference.width,height:reference.height}).toEqual({scale:3,background:"#202020",width:48,height:48});
-  const bytes=await readFile(new URL(`./reference/branding-header/${reference.path}`,import.meta.url));
+  const bytes=await readFile(new URL(`../../reference/branding-header/${reference.path}`,import.meta.url));
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(reference.sha256);
   await page.mouse.move(0,0);
   // Crop the unchanged SVG's actual grass bounds. The source image is48x48 at
