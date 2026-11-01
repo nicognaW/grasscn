@@ -1,6 +1,6 @@
 @layer theme, base, components, utilities;
 @import "./minecraft-text-assets.css";
-@import "./minecraft-unifont-metrics.css";
+
 @layer components {
   .mc-input {
     --mc-pixel: calc(1px * var(--mc-scale, 2));

@@ -1,6 +1,5 @@
 @layer theme,base,components,utilities;
 @import "./minecraft-text-assets.css";
-@import "./minecraft-unifont-metrics.css";
 @layer components {
  .mc-selectable-text{--mc-pixel:calc(1px * var(--mc-scale,2));position:relative;display:inline-block;vertical-align:top;font-family:"Minecraft Bitmap","Minecraft Unihex Metrics",monospace;font-size:calc(8px * var(--mc-scale,2));font-kerning:none;font-synthesis:none;letter-spacing:0;line-height:calc(9px * var(--mc-scale,2));color:inherit;max-width:100%}
  .mc-selectable-raw{color:transparent;-webkit-text-fill-color:transparent}
