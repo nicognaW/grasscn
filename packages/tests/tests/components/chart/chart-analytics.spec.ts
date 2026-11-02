@@ -1,3 +1,5 @@
+import type { Page } from "@playwright/test";
+
 import { test, expect } from "@grasscn/tests/test";
 import { PNG } from "pngjs";
 
@@ -12,12 +14,12 @@ const types = [
   ["radial", "Radial"],
 ] as const;
 
-async function select(page: any, label: string, value: string) {
+async function select(page: Page, label: string, value: string) {
   await page.getByRole("combobox", { exact: true, name: label }).click();
   await page.getByRole("option", { exact: true, name: value }).click();
 }
 
-async function open(page: any, scale: number, mobile = false) {
+async function open(page: Page, scale: number, mobile = false) {
   await page.setViewportSize({ height: 1000, width: mobile ? 390 : 1440 });
   await page.goto(
     `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"}#/components/chart`

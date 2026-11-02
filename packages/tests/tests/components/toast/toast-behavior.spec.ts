@@ -1,10 +1,12 @@
+import type { Page } from "@playwright/test";
+
 import { createHash } from "node:crypto";
 
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 import { minecraftToastSounds } from "@grasscn/web/ui/minecraft-toast-sound-assets";
 
-const ready = async (page: any) => {
+const ready = async (page: Page) => {
   await expect(
     page.locator('[data-mc-toast-ready="true"]').first()
   ).toBeVisible();

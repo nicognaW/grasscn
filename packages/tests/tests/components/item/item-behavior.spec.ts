@@ -1,7 +1,9 @@
+import type { Page } from "@playwright/test";
+
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
-const ready = async function ready(page: any) {
+const ready = async function ready(page: Page) {
   await expect(
     page.locator("[data-subject] [data-slot=item-content]")
   ).toHaveAttribute("data-mc-item-content-ready", "true");

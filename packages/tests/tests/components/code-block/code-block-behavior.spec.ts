@@ -1,6 +1,8 @@
+import type { Page } from "@playwright/test";
+
 import { test, expect } from "@grasscn/tests/test";
 
-const ready = async function ready(page: any) {
+const ready = async function ready(page: Page) {
   for (const text of await page.locator("[data-mc-selectable-ready]").all()) {
     await expect(text).toHaveAttribute("data-mc-selectable-ready", "true");
   }
