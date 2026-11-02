@@ -818,7 +818,7 @@ const ContextFixture = () => {
       <button
         type="button"
         id="context-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
@@ -965,7 +965,7 @@ const CollapsibleFixture = () => {
       <button
         type="button"
         id="collapsible-refs"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setRefs(
             [
@@ -1253,7 +1253,7 @@ const MenubarFixture = () => {
       <button
         type="button"
         id="menubar-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [
@@ -1513,7 +1513,7 @@ const DropdownFixture = () => {
       <button
         type="button"
         id="menu-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
         onClick={() => {
           setTags(
             [trigger.current?.tagName, content.current?.tagName].join(",")
@@ -1671,7 +1671,7 @@ const PopoverFixture = () => {
       <button
         type="button"
         id="popover-outside"
-        style={{ bottom: 8, position: "fixed", right: 8 }}
+        className="fixture-corner-control"
       >
         Outside
       </button>
