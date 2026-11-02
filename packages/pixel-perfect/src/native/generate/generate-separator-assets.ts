@@ -4,23 +4,30 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SeparatorSource,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 if (!directory) {
   throw new Error("Pass the original separator PNG directory");
 }
 
+// SAFETY: the retained native inventory pins the sprite/metadata inputs used below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory;
 
-const sources = {};
-const assets = {};
+const sources: Record<string, SeparatorSource> = {};
+const assets: Record<string, string> = {};
 
 for (const prefix of ["", "inworld_"]) {
   for (const edge of ["header", "footer"]) {
@@ -28,12 +35,18 @@ for (const prefix of ["", "inworld_"]) {
     const member = `assets/minecraft/textures/gui/${filename}`;
     const bytes = await readFile(path.join(directory, filename));
     const sha256 = createHash("sha256").update(bytes).digest("hex");
-    assert.equal(sha256, inventory.assets[member].sha256);
+    // SAFETY: these four original separator members are pinned by the native inventory.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const original = inventory.assets[member] as InventoryAsset;
+
+    assert.equal(sha256, original.sha256);
+    // SAFETY: these literal ordered fields define the pinned separator hash and fixed native geometry.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     sources[member] = Object.fromEntries([
       ["sha256", sha256],
       ["width", 32],
       ["height", 2],
-    ]);
+    ]) as SeparatorSource;
 
     if (prefix) {
       assert.equal(
