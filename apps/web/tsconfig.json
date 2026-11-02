@@ -49,7 +49,7 @@
     "registry/**/*.tsx",
     ".next/dev/types/**/*.ts",
     "examples/**/*.tsx",
-    "scripts/generate-component-symbols.mjs",
+    "scripts/*.mjs",
     "scripts/*.test.tsx",
     "scripts/*.test.ts",
     "next.config.mjs",
