@@ -4,26 +4,36 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SpriteMetadata,
+  SpriteSource,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 if (!directory) {
   throw new Error("Pass the original tab PNG and metadata directory");
 }
 
+// SAFETY: inspect-ui-catalog.py emits a complete asset table from the pinned archive, including the literal members consumed here.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
-const sources = {};
-const sprites = {};
+const sources: Record<string, SpriteSource> = {};
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const sprites: Record<string, { original: string; pieces: string[] }> = {};
+
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 for (const name of [
   "tab",
@@ -42,16 +52,20 @@ for (const name of [
   const image = PNG.sync.read(bytes);
   const pieces = [];
 
-  const { border } = JSON.parse(metadata).gui.scaling;
-  assert.deepEqual(
-    border,
-    Object.fromEntries([
-      ["left", 2],
-      ["top", 2],
-      ["right", 2],
-      ["bottom", 0],
-    ])
-  );
+  // SAFETY: hash-matched tab mcmeta owns this geometry; the original border assertion below remains active.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const metadataDocument = JSON.parse(
+    metadata.toString("utf-8")
+  ) as SpriteMetadata;
+
+  const { border } = metadataDocument.gui.scaling;
+
+  assert.deepEqual(border, {
+    left: 2,
+    top: 2,
+    right: 2,
+    bottom: 0,
+  });
 
   for (const [y, height] of [
     [0, 2],
@@ -70,18 +84,24 @@ for (const name of [
     }
   }
 
-  sources[member] = Object.fromEntries([
-    ["sha256", hash(bytes)],
-    ["metadataSha256", hash(metadata)],
-    ["scaling", JSON.parse(metadata).gui.scaling],
-  ]);
+  // SAFETY: these hash-matched metadata bytes are parsed again at the original provenance-construction phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const provenanceMetadata = JSON.parse(
+    metadata.toString("utf-8")
+  ) as SpriteMetadata;
+
+  sources[member] = {
+    sha256: hash(bytes),
+    metadataSha256: hash(metadata),
+    scaling: provenanceMetadata.gui.scaling,
+  };
   sprites[name] = {
     original: `data:image/png;base64,${bytes.toString("base64")}`,
     pieces,
   };
 }
 
-const textures = {};
+const textures: Record<string, string> = {};
 
 for (const name of ["menu_background", "header_separator"]) {
   const member = `assets/minecraft/textures/gui/${name}.png`;

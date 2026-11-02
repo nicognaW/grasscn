@@ -3,9 +3,11 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
@@ -13,19 +15,21 @@ if (!input) {
   );
 }
 
+// SAFETY: inspect-ui-catalog.py emits a complete asset table from the pinned archive, including the literal members consumed here.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
 const css = [
   "/* Original Minecraft menu textures: Mojang Studios. Embedded unchanged. */",
   ":root {",
 ];
 
-const sources = {};
+const sources: Record<string, { sha256: string; embeddedBytes: string }> = {};
 
 for (const [variable, filename] of [
   ["menu", "menu_background.png"],
@@ -43,10 +47,10 @@ for (const [variable, filename] of [
   css.push(
     `  --preview-${variable}: url("data:image/png;base64,${bytes.toString("base64")}");`
   );
-  sources[member] = Object.fromEntries([
-    ["sha256", sha256],
-    ["embeddedBytes", "unchanged"],
-  ]);
+  sources[member] = {
+    sha256,
+    embeddedBytes: "unchanged",
+  };
 }
 
 css.push("}");

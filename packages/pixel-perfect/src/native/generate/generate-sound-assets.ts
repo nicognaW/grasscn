@@ -6,21 +6,26 @@ import path from "node:path";
 
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 
-const assets = process.argv[2];
+const [assets] = process.argv.slice(2);
 
 if (!assets) {
   throw new Error(
-    "Usage: bun src/native/generate/generate-sound-assets.mjs <Minecraft assets directory>"
+    "Usage: bun src/native/generate/generate-sound-assets.ts <Minecraft assets directory>"
   );
 }
 
 const indexBytes = await readFile(path.join(assets, "indexes/32.json"));
-const index = JSON.parse(indexBytes);
 
-const hash = (bytes, algorithm = "sha256") =>
+// SAFETY: the Minecraft asset-index format owns resource SHA-1 and byte length; existing entry, size and digest checks remain below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const index = JSON.parse(indexBytes.toString("utf-8")) as {
+  objects: Record<string, { hash: string; size: number } | undefined>;
+};
+
+const hash = (bytes: Uint8Array, algorithm = "sha256") =>
   createHash(algorithm).update(bytes).digest("hex");
 
-async function original(resource) {
+const original = async function original(resource: string) {
   const entry = index.objects[resource];
   assert.ok(entry, `Missing indexed resource: ${resource}`);
 
@@ -32,14 +37,18 @@ async function original(resource) {
   assert.equal(hash(bytes, "sha1"), entry.hash);
 
   return { bytes, sha1: entry.hash, sha256: hash(bytes) };
-}
+};
 
 const definitions = await original("minecraft/sounds.json");
 const event = "ui.button.click";
 
-assert.deepEqual(JSON.parse(definitions.bytes)[event].sounds, [
-  "random/click_stereo",
-]);
+// SAFETY: the original sounds.json event definition is checked against the exact expected click resource immediately below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const soundDefinitions = JSON.parse(
+  definitions.bytes.toString("utf-8")
+) as Record<string, { sounds: (string | { name: string })[] }>;
+
+assert.deepEqual(soundDefinitions[event].sounds, ["random/click_stereo"]);
 
 const resource = "minecraft/sounds/random/click_stereo.ogg";
 const sound = await original(resource);

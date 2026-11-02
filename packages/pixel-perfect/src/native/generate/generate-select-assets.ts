@@ -4,33 +4,50 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SpriteMetadata,
+  SpriteSource,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 if (!directory) {
   throw new Error("Pass the original menu-list texture directory");
 }
 
+// SAFETY: inspect-ui-catalog.py emits a complete asset table from the pinned archive, including the literal members consumed here.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & {
+  assets: Record<
+    | "assets/minecraft/textures/gui/menu_list_background.png"
+    | "assets/minecraft/textures/gui/header_separator.png"
+    | "assets/minecraft/textures/gui/footer_separator.png",
+    InventoryAsset
+  >;
+};
 
-const textures = {};
-const sources = {};
+const textures: Record<string, string> = {};
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const sources: Record<string, SpriteSource> = {};
+
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 for (const name of [
   "menu_list_background",
   "header_separator",
   "footer_separator",
-]) {
+] as const) {
   const bytes = await readFile(path.join(directory, `${name}.png`));
-  const member = `assets/minecraft/textures/gui/${name}.png`;
+  const member = `assets/minecraft/textures/gui/${name}.png` as const;
 
   assert.equal(hash(bytes), inventory.assets[member].sha256);
   textures[name] = `url("data:image/png;base64,${bytes.toString("base64")}")`;
@@ -47,15 +64,18 @@ for (const name of [
   const member = `assets/minecraft/textures/gui/sprites/widget/${name}.png`;
   const original = inventory.assets[member];
   assert.ok(original);
-  sources[member] = {
-    sha256: original.sha256,
-    ...(original.metadataSha256
-      ? {
-          metadataSha256: original.metadataSha256,
-          scaling: original.metadata.gui.scaling,
-        }
-      : {}),
-  };
+
+  const source: SpriteSource = { sha256: original.sha256 };
+
+  if (original.metadataSha256 !== undefined && original.metadataSha256 !== "") {
+    source.metadataSha256 = original.metadataSha256;
+    // SAFETY: inspect-ui-catalog.py emits parsed mcmeta with metadataSha256; these literal native widget entries contain gui.scaling.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const metadata = original.metadata as SpriteMetadata;
+    source.scaling = metadata.gui.scaling;
+  }
+
+  sources[member] = source;
 }
 
 await writeFile(
