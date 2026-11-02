@@ -1,5 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface DialogAudioState {
+  __dialogSounds: RecordedAudioPlayback[];
+}
 
 test("Dialog opens, traps keyboard focus, closes with Escape and restores its trigger", async ({
   page,
@@ -172,9 +177,13 @@ test("Dialog buttons play the original click once; hover and Escape remain silen
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__dialogSounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__dialogSounds.push({
+    // SAFETY: This addInitScript owns __dialogSounds, creating its empty audio trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+    (window as typeof window & DialogAudioState).__dialogSounds = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The init script creates __dialogSounds; this unchanged media play mock records only rate, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & DialogAudioState).__dialogSounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -185,7 +194,11 @@ test("Dialog buttons play the original click once; hover and Escape remain silen
   });
 
   const voices = async () =>
-    page.evaluate(() => (window as any).__dialogSounds);
+    page.evaluate(() =>
+      // SAFETY: This paired reader runs after navigation's init script creates __dialogSounds with the recorded audio contract.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+      (window as typeof window & DialogAudioState).__dialogSounds
+    );
 
   await page.goto("/?component=dialog");
 
