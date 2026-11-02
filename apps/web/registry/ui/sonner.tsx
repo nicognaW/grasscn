@@ -118,14 +118,9 @@ const ActionGraphic = function ActionGraphic({
     Array.from({ length: 9 }, (_, i) => [`--mc-piece-${i}`, "inherit"])
   );
 
-  return (
-    <Button
-      render={<span aria-hidden="true" />}
-      scale={scale}
-      disabled={action.node.disabled}
-      data-mc-sonner-button-art=""
-      style={
-        {
+  const actionRender = <span aria-hidden="true" />;
+  const actionDisabled = action.node.disabled;
+  const canvasStyle: ToastCanvasStyle = {
           ...inherited,
           "--mc-ink": "inherit",
           "--mc-shadow": "inherit",
@@ -134,8 +129,15 @@ const ActionGraphic = function ActionGraphic({
           pointerEvents: "none",
           position: "absolute",
           width: "100%",
-        } satisfies ToastCanvasStyle
-      }
+        };
+
+  return (
+    <Button
+      render={actionRender}
+      scale={scale}
+      disabled={actionDisabled}
+      data-mc-sonner-button-art=""
+      style={canvasStyle}
     >
       {action.label}
     </Button>

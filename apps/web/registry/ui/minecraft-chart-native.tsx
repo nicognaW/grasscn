@@ -62,18 +62,18 @@ const NativeChartText = ({
       )
     : "transparent";
 
-  return (
-    <span
-      className="mc-chart-text"
-      style={
-        {
+  const textStyle: NativeChartTextStyle = {
           "--mc-ink": ink,
           "--mc-shadow": shade,
           color: ink,
           left: x * scale,
           top: y * scale,
-        } satisfies NativeChartTextStyle
-      }
+        };
+
+  return (
+    <span
+      className="mc-chart-text"
+      style={textStyle}
     >
       {/\P{ASCII}/u.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />

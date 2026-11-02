@@ -30,6 +30,7 @@ interface CarouselProps {
 }
 
 type CarouselContextProps = CarouselProps & {
+  scale: 1 | 2 | 3;
   carouselRef: UseEmblaCarouselType[0];
   api: CarouselApi;
   scrollPrev: () => void;

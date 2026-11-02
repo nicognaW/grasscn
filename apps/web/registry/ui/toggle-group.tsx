@@ -35,6 +35,7 @@ type ToggleGroupItemProps = MinecraftProps<typeof TogglePrimitive> & Appearance;
 
 const AppearanceContext = React.createContext<
   Appearance & {
+    scale: 1 | 2 | 3;
     disabled?: boolean;
   }
 >({ scale: 2, size: "default", variant: "default" });

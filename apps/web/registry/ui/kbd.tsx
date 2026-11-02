@@ -52,18 +52,18 @@ const keyText = function keyText(content: React.ReactNode): React.ReactNode {
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
-          return (
-            <span
-              key={index}
-              className="mc-glyph"
-              style={
-                {
+          const glyphStyle: KbdGlyphStyle = {
                   "--mc-advance": advance,
                   "--mc-glyph-x": x,
                   "--mc-glyph-y": y,
                   visibility: char === " " ? "hidden" : undefined,
-                } satisfies KbdGlyphStyle
-              }
+                };
+
+          return (
+            <span
+              key={index}
+              className="mc-glyph"
+              style={glyphStyle}
             />
           );
         })}
