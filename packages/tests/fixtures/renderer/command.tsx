@@ -188,6 +188,7 @@ export const CommandFixture = () => {
       )}
       <output aria-label="Selected command">{output}</output>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setOutput(input.current?.tagName ?? "");

@@ -69,13 +69,20 @@ const ScrollerFixture = () => {
         <MessageScrollerButton direction="start" behavior="instant" />
         <MessageScrollerButton direction="end" behavior="instant" />
       </MessageScroller>
-      <button onClick={() => api.scrollToStart({ behavior: "instant" })}>
+      <button
+        type="button"
+        onClick={() => api.scrollToStart({ behavior: "instant" })}
+      >
         API start
       </button>
-      <button onClick={() => api.scrollToEnd({ behavior: "instant" })}>
+      <button
+        type="button"
+        onClick={() => api.scrollToEnd({ behavior: "instant" })}
+      >
         API end
       </button>
       <button
+        type="button"
         onClick={() =>
           api.scrollToMessage("15", { align: "start", behavior: "instant" })
         }
@@ -83,6 +90,7 @@ const ScrollerFixture = () => {
         API message
       </button>
       <button
+        type="button"
         onClick={() => {
           setIds((values) => [...values, Math.max(...values) + 1]);
         }}
@@ -90,6 +98,7 @@ const ScrollerFixture = () => {
         Append
       </button>
       <button
+        type="button"
         onClick={() => {
           setIds((values) => [Math.min(...values) - 1, ...values]);
         }}
@@ -97,6 +106,7 @@ const ScrollerFixture = () => {
         Prepend
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(viewport.current?.tagName ?? "missing");
@@ -151,6 +161,7 @@ export const TextWidgetsFixture = () => {
           <title>Original loading dots</title>
         </Spinner>
         <button
+          type="button"
           onClick={() => {
             setPhase(phase + 300);
           }}
@@ -158,6 +169,7 @@ export const TextWidgetsFixture = () => {
           Next phase
         </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setTag(svg.current?.tagName ?? "missing");
@@ -209,6 +221,7 @@ export const TextWidgetsFixture = () => {
         </TraceCollapsibleContent>
       </TraceCollapsible>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(div.current?.tagName ?? "missing");

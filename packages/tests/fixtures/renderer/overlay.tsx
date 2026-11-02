@@ -121,7 +121,7 @@ export const OverlayFixture = () => {
         }}
       >
         <Trigger
-          render={p.has("asChild") ? <button /> : undefined}
+          render={p.has("asChild") ? <button type="button" /> : undefined}
           disabled={p.has("disabled")}
         >
           Open panel
@@ -214,6 +214,7 @@ export const OverlayFixture = () => {
         </Content>
       </Root>
       <button
+        type="button"
         id="external"
         onClick={() => {
           setOpen((v) => !v);
@@ -222,6 +223,7 @@ export const OverlayFixture = () => {
         External toggle
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

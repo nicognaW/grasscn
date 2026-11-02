@@ -85,6 +85,7 @@ export const CodeBlockFixture = () => {
         }}
       />
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "missing");

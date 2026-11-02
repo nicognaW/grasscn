@@ -83,6 +83,7 @@ const ItemFixture = () => {
         <>
           <ItemActions>
             <button
+              type="button"
               onClick={() => {
                 setActions((n) => n + 1);
               }}
@@ -197,6 +198,7 @@ const ItemFixture = () => {
     <>
       {subject}
       <button
+        type="button"
         id="read-ref"
         style={{ position: "absolute", top: 1500 }}
         onClick={() => {
@@ -206,6 +208,7 @@ const ItemFixture = () => {
         Read ref
       </button>
       <button
+        type="button"
         id="resize"
         style={{ position: "absolute", top: 1460 }}
         onClick={() => {

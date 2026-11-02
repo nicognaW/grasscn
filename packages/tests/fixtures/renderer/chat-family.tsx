@@ -143,6 +143,7 @@ export const ChatFamilyFixture = () => {
           }}
         />
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setTag(ref.current?.tagName ?? "missing");

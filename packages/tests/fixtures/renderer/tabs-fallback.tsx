@@ -20,6 +20,7 @@ export const TabsFallbackFixture = () => {
         </TabsList>
       </Tabs>
       <button
+        type="button"
         onClick={() => {
           setChanged(true);
         }}

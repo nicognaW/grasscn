@@ -15,11 +15,17 @@ export const CustomApiFixture = () => {
 
   return (
     <>
-      <button onClick={() => tree.current?.focus()}>Focus tree by ref</button>
-      <button onClick={() => hotbar.current?.querySelector("button")?.focus()}>
+      <button type="button" onClick={() => tree.current?.focus()}>
+        Focus tree by ref
+      </button>
+      <button
+        type="button"
+        onClick={() => hotbar.current?.querySelector("button")?.focus()}
+      >
         Focus hotbar by ref
       </button>
       <button
+        type="button"
         onClick={() => {
           setCancel((value) => !value);
         }}

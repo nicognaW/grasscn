@@ -178,6 +178,7 @@ export const TableFixture = () => {
         </TableFooter>
       </Table>
       <button
+        type="button"
         id="ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

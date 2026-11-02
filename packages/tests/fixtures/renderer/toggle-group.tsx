@@ -92,6 +92,7 @@ export const ToggleGroupFixture = () => {
         </ToggleGroup>
       )}
       <button
+        type="button"
         id="external"
         onClick={() => {
           setValue((v) => (v.length ? [] : ["two"]));
@@ -101,6 +102,7 @@ export const ToggleGroupFixture = () => {
         External
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(`${root.current?.tagName}/${item.current?.tagName}`);

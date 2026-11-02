@@ -239,6 +239,7 @@ export const StructuralFixture = () => {
           </PaginationContent>
         </Pagination>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setTag(ref.current?.tagName ?? "");

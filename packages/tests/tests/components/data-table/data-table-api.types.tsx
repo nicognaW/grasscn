@@ -30,7 +30,10 @@ export const TableComposition = () => {
   });
 
   return (
-    <button onClick={() => table.getColumn("name")?.toggleSorting()}>
+    <button
+      type="button"
+      onClick={() => table.getColumn("name")?.toggleSorting()}
+    >
       Sort
     </button>
   );

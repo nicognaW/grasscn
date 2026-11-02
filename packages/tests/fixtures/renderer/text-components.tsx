@@ -119,6 +119,7 @@ const TextComponentsFixture = () => {
         </EmptyHeader>
         <EmptyContent>
           <button
+            type="button"
             onClick={() => {
               setEvents((n) => n + 1);
             }}
@@ -255,6 +256,7 @@ const TextComponentsFixture = () => {
     <>
       {subject}
       <button
+        type="button"
         id="read-ref"
         className="native-reference-read-ref"
         onClick={() => {

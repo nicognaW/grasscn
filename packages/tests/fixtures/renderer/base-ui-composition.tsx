@@ -23,6 +23,7 @@ export const BaseUICompositionFixture = () => {
   return (
     <>
       <button
+        type="button"
         onClick={() => {
           setDisabled((value) => !value);
         }}

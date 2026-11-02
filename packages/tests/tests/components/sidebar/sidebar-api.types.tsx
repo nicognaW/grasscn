@@ -82,7 +82,7 @@ const SidebarTypes = () => {
           <SidebarGroup>
             <SidebarGroupLabel render={<span />}>Group</SidebarGroupLabel>
             <SidebarGroupAction
-              render={<button aria-label="Create" />}
+              render={<button type="button" aria-label="Create" />}
               ref={button}
             >
               +

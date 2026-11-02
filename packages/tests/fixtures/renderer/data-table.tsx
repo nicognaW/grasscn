@@ -114,18 +114,21 @@ export const DataTableFixture = () => {
         }
       />
       <button
+        type="button"
         id="sort"
         onClick={() => table.getColumn("name")?.toggleSorting()}
       >
         Sort
       </button>
       <button
+        type="button"
         id="visibility"
         onClick={() => table.getColumn("players")?.toggleVisibility()}
       >
         Columns
       </button>
       <button
+        type="button"
         id="page-size"
         onClick={() => {
           table.setPageSize(4);
@@ -191,6 +194,7 @@ export const DataTableFixture = () => {
         </TableBody>
       </Table>
       <button
+        type="button"
         id="previous"
         disabled={!table.getCanPreviousPage()}
         onClick={() => {
@@ -200,6 +204,7 @@ export const DataTableFixture = () => {
         Previous
       </button>
       <button
+        type="button"
         id="next"
         disabled={!table.getCanNextPage()}
         onClick={() => {
@@ -211,6 +216,7 @@ export const DataTableFixture = () => {
       <output id="page">{table.state.pagination.pageIndex + 1}</output>
       <output id="selection">{table.getSelectedRowModel().rows.length}</output>
       <button
+        type="button"
         id="ref"
         onClick={() => {
           setEvents(table.getCoreRowModel().rows.length);

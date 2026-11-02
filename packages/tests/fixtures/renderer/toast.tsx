@@ -77,13 +77,14 @@ const SonnerFixture = () => {
         }}
         data-subject="true"
       />
-      <button id="open" onClick={show}>
+      <button type="button" id="open" onClick={show}>
         Open toast
       </button>
-      <button id="close" onClick={() => notify.dismiss()}>
+      <button type="button" id="close" onClick={() => notify.dismiss()}>
         Close toast
       </button>
       <button
+        type="button"
         id="update"
         onClick={() =>
           notify("Updated 世界", {
@@ -95,6 +96,7 @@ const SonnerFixture = () => {
         Update toast
       </button>
       <button
+        type="button"
         id="promise"
         onClick={() =>
           notify.promise(Promise.resolve("Saved"), {
@@ -119,10 +121,11 @@ const StrictFixture = () => {
   return (
     <>
       <Toaster ref={ref} />
-      <button id="show" onClick={() => notify("World saved")}>
+      <button type="button" id="show" onClick={() => notify("World saved")}>
         Show
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
