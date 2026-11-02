@@ -71,7 +71,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page.addInitScript(() => {
     // SAFETY: this initScript initializes the exact test-owned pitch/source/volume log here.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as TradingAudioWindow).tradeAudio = [];
+    (window as typeof window & TradingAudioWindow).tradeAudio = [];
 
     class RecordedAudio {
       src: string;
@@ -83,7 +83,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
       play() {
         // SAFETY: this class method writes its own playbackRate, src and volume to the log initialized above.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as TradingAudioWindow).tradeAudio.push({
+        (window as typeof window & TradingAudioWindow).tradeAudio.push({
           pitch: this.playbackRate,
           src: this.src,
           volume: this.volume,
@@ -111,7 +111,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
   let calls = await page.evaluate(() =>
     // SAFETY: this test's initScript initializes this precise playback log before navigation.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as TradingAudioWindow).tradeAudio
+    (window as typeof window & TradingAudioWindow).tradeAudio
   );
   expect(calls.map((c) => c.volume)).toEqual([0.25, 1]);
   expect(calls[1].pitch).toBe(1);
@@ -134,14 +134,14 @@ test("trading selection, result feedback and native scrollbar controls", async (
   calls = await page.evaluate(() =>
     // SAFETY: this test's initScript initializes this precise playback log before navigation.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as TradingAudioWindow).tradeAudio
+    (window as typeof window & TradingAudioWindow).tradeAudio
   );
   expect(calls).toHaveLength(3);
   await disabled.hover({ force: true });
   expect(await page.evaluate(() =>
     // SAFETY: this test's initScript initializes this precise playback log before navigation.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as TradingAudioWindow).tradeAudio.length
+    (window as typeof window & TradingAudioWindow).tradeAudio.length
   )).toBe(3);
   await scroll.focus();
   await scroll.press("Home");
@@ -163,6 +163,6 @@ test("trading selection, result feedback and native scrollbar controls", async (
   expect(await page.evaluate(() =>
     // SAFETY: this test's initScript initializes this precise playback log before navigation.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as TradingAudioWindow).tradeAudio
+    (window as typeof window & TradingAudioWindow).tradeAudio
   )).toEqual([]);
 });

@@ -129,11 +129,11 @@ for (const component of ["sonner"]) {
       ({ sounds, click }) => {
         // SAFETY: this initScript initializes the exact test-owned gain/pitch sound log here.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as ToastPlaybackWindow).sounds = [];
+        (window as typeof window & ToastPlaybackWindow).sounds = [];
         HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
           // SAFETY: this play mock writes only kind, playbackRate and volume to the log initialized above.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          (window as ToastPlaybackWindow).sounds.push({
+          (window as typeof window & ToastPlaybackWindow).sounds.push({
             kind:
               this.src === sounds.in
                 ? "in"
@@ -157,7 +157,7 @@ for (const component of ["sonner"]) {
       .poll(async () => page.evaluate(() =>
         // SAFETY: this test's initScript initializes this precise playback log before navigation.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as ToastPlaybackWindow).sounds
+        (window as typeof window & ToastPlaybackWindow).sounds
       ))
       .toEqual([{ kind: "in", rate: 1, volume: 0.2 }]);
     await page
@@ -168,20 +168,20 @@ for (const component of ["sonner"]) {
     expect(await page.evaluate(() =>
       // SAFETY: this test's initScript initializes this precise playback log before navigation.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      (window as ToastPlaybackWindow).sounds
+      (window as typeof window & ToastPlaybackWindow).sounds
     )).toHaveLength(1);
     await page.getByRole("button", { exact: true, name: "Undo" }).click();
     await expect
       .poll(async () => page.evaluate(() =>
         // SAFETY: this test's initScript initializes this precise playback log before navigation.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as ToastPlaybackWindow).sounds.length
+        (window as typeof window & ToastPlaybackWindow).sounds.length
       ))
       .toBe(3);
     const sounds = await page.evaluate(() =>
       // SAFETY: this test's initScript initializes this precise playback log before navigation.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      (window as ToastPlaybackWindow).sounds
+      (window as typeof window & ToastPlaybackWindow).sounds
     );
     expect(sounds.filter((s) => s.kind === "click")).toEqual([
       { kind: "click", rate: 1, volume: 0.125 },
@@ -200,11 +200,11 @@ for (const component of ["sonner"]) {
       ({ sounds }) => {
         // SAFETY: this separate initScript initializes its own string-only StrictMode sound log.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as StrictToastSoundWindow).sounds = [];
+        (window as typeof window & StrictToastSoundWindow).sounds = [];
         HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
           // SAFETY: this play mock appends only the three string tags to the log initialized above.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          (window as StrictToastSoundWindow).sounds.push(
+          (window as typeof window & StrictToastSoundWindow).sounds.push(
             this.src === sounds.in
               ? "in"
               : this.src === sounds.out
@@ -230,7 +230,7 @@ for (const component of ["sonner"]) {
       .poll(async () => page.evaluate(() =>
         // SAFETY: the separate StrictMode initScript initializes this string-only log before navigation.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (window as StrictToastSoundWindow).sounds
+        (window as typeof window & StrictToastSoundWindow).sounds
       ))
       .toEqual(["in"]);
   });
