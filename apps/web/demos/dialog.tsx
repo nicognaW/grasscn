@@ -6,9 +6,9 @@ import { Textarea } from "../registry/ui/textarea"
 import type { DemoProps } from "../types"
 
 export default function DialogDemo({ scale }: DemoProps) {
-  const [title, setTitle] = React.useState("World settings"),
-    [message, setMessage] = React.useState("A helpful description."),
-    [saved, setSaved] = React.useState(0);
+  const [title, setTitle] = React.useState("World settings");
+  const [message, setMessage] = React.useState("A helpful description.");
+  const [saved, setSaved] = React.useState(0);
 
   const [open, setOpen] = React.useState(false);
 

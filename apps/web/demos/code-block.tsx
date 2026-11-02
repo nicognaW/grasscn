@@ -7,11 +7,12 @@ import type {DemoProps} from "../types"
 
 export default function CodeBlockDemo({ scale }: DemoProps) {
   const [code, setCode] = React.useState(
-      'const greeting = "Hello 世界";\n\n// Keep building!'
-    ),
-    [wrap, setWrap] = React.useState(false),
-    [numbers, setNumbers] = React.useState(true),
-    lines = useHighlightedCode(code, "typescript");
+    'const greeting = "Hello 世界";\n\n// Keep building!'
+  );
+
+  const [wrap, setWrap] = React.useState(false);
+  const [numbers, setNumbers] = React.useState(true);
+  const lines = useHighlightedCode(code, "typescript");
 
   return (
     <>

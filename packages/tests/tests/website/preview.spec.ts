@@ -16,9 +16,11 @@ test("Toggle preview supports CJK labels, native pressed state and disabling", a
     .locator(".documentation-playground")
     .getByRole("textbox", { name: "Toggle filter label" })
     .fill("只显示可合成的配方");
+
   const control = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "只显示可合成的配方" });
+
   await expect(control).toHaveAttribute("aria-pressed", "false");
   await control.click();
   await expect(control).toHaveAttribute("aria-pressed", "true");
@@ -47,9 +49,11 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
   const single = page
     .locator(".documentation-playground")
     .getByRole("group", { name: "One recipe station" });
+
   const multiple = page
     .locator(".documentation-playground")
     .getByRole("group", { name: "Several recipe stations" });
+
   await single.getByRole("button", { name: "Furnace recipes" }).click();
   await expect(
     page
@@ -98,9 +102,11 @@ test("Collapsible preview supports CJK content, line breaks and external control
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Collapsible message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "你好，世界" });
+
   await expect(trigger.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -258,9 +264,11 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Context menu action" })
     .fill("こんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByLabel("World context menu target", { exact: true });
+
   const open = () =>
     trigger.click({ button: "right", position: { x: 24, y: 24 } });
 
@@ -324,9 +332,11 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Dropdown menu action" })
     .fill("こんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Game menu" });
+
   await trigger.click();
   const menu = page.getByRole("menu").first();
   await expect(
@@ -475,6 +485,7 @@ test("Preview Separator width control updates both original surfaces", async ({
       .locator(".documentation-playground")
       .getByLabel("Separator width", { exact: true })
   ).toHaveText("257 px");
+
   for (const name of ["Menu header separator", "Menu footer separator"]) {
     await expect(
       page
@@ -484,7 +495,7 @@ test("Preview Separator width control updates both original surfaces", async ({
     await expect(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name, exact: true })
+        .getByRole("separator", { exact: true, name })
     ).toHaveCSS("height", "4px");
   }
 });
@@ -522,9 +533,11 @@ test("Preview ScrollArea scrolls, selects rows and locks scrolling", async ({
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Scrolling: On" })
     .click();
+
   const root = page
     .locator(".documentation-playground")
     .getByRole("region", { exact: true, name: "Demo scroll area" });
+
   await expect(root).toHaveAttribute("data-disabled", "true");
   await root.locator('[data-slot="scroll-area-viewport"]').hover();
   await page.mouse.wheel(0, 120);
@@ -644,6 +657,7 @@ test("Button label editor accepts CJK text without stripping characters", async 
   page,
 }) => {
   await page.goto(`${origin}docs/components/button`);
+
   for (const label of ["你好，世界", "こんにちは世界", "안녕하세요 세계"]) {
     await page
       .locator(".documentation-playground")
@@ -654,6 +668,7 @@ test("Button label editor accepts CJK text without stripping characters", async 
         .locator(".documentation-playground")
         .getByLabel("Button label", { exact: true })
     ).toHaveValue(label);
+
     const button = page
       .locator(
         '.documentation-playground [data-stage="button"] [data-slot="button"]'
@@ -675,6 +690,7 @@ test("Text entry defaults disable browser spelling and correction", async ({
 
   for (const component of catalog.components) {
     await page.goto(`${origin}docs/components/${component.name}`);
+
     for (const field of await page
       .locator('input[data-slot="input"], textarea[data-slot="textarea"]')
       .all()) {
@@ -696,9 +712,11 @@ test("Dialog preview supports editable CJK titles, multiline messages and footer
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Dialog message" })
     .fill("Hello 世界\nこんにちは");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open world settings" });
+
   await trigger.click();
   const dialog = page.getByRole("dialog", { exact: true, name: "你好，世界" });
   await expect(dialog).toBeVisible();
@@ -709,6 +727,7 @@ test("Dialog preview supports editable CJK titles, multiline messages and footer
     .all()) {
     await expect(line).toHaveAttribute("data-mc-dialog-unicode-ready", "true");
   }
+
   await dialog.getByRole("button", { exact: true, name: "Continue" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(
@@ -740,9 +759,11 @@ test("Alert Dialog preview supports CJK text, native blur, confirmation and canc
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Alert dialog message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open confirmation" });
+
   await trigger.click();
 
   const dialog = page.getByRole("alertdialog", {
@@ -788,6 +809,7 @@ test("Editable, read-only and disabled textarea examples render real line breaks
   page,
 }) => {
   await page.goto(`${origin}docs/components/textarea`);
+
   for (const name of [
     "Demo textarea",
     "Read-only demo textarea",
@@ -795,13 +817,15 @@ test("Editable, read-only and disabled textarea examples render real line breaks
   ]) {
     const field = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name, exact: true });
+      .getByRole("textbox", { exact: true, name });
+
     await expect(field).toHaveValue("Line one\nLine two\nLine three");
     await expect(field).toHaveAttribute("data-mc-ready", "true");
     await expect(field).toHaveAttribute("data-mc-bitmap", "true");
   }
 
   await page.getByRole("heading", { exact: true, name: "Textarea" }).click();
+
   const images = await page
     .locator('[data-stage="textarea"] textarea')
     .evaluateAll((nodes) =>
@@ -824,6 +848,7 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
   const world = page
     .locator(".documentation-playground")
     .getByRole("tab", { exact: true, name: "World" });
+
   await page
     .locator(".documentation-playground")
     .getByLabel("Tabs world name", { exact: true })
@@ -861,9 +886,11 @@ test("Tabs preview supports keyboard navigation, CJK titles and settings", async
     .locator(".documentation-playground")
     .getByLabel("First tab title", { exact: true })
     .fill("你好，世界");
+
   const renamed = page
     .locator(".documentation-playground")
     .getByRole("tab", { exact: true, name: "你好，世界" });
+
   await expect(renamed.locator("[data-mc-label-ready]")).toHaveAttribute(
     "data-mc-label-ready",
     "true"
@@ -879,6 +906,7 @@ test("Select preview supports CJK labels, disabled choices and keyboard selectio
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("combobox", { exact: true, name: "Demo game mode" });
+
   await trigger.focus();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -1001,6 +1029,7 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   const control = page
     .locator(".documentation-playground")
     .getByRole("switch", { exact: true, name: "Enable clouds" });
+
   await control.click();
   await expect(
     page
@@ -1016,9 +1045,11 @@ test("Switch preview supports CJK labels, keyboard toggling and disabled state",
   await expect(
     page.locator(".documentation-playground [data-mc-label-ready]")
   ).toHaveAttribute("data-mc-label-ready", "true");
+
   const renamed = page
     .locator(".documentation-playground")
     .getByRole("switch", { exact: true, name: "你好，世界" });
+
   await renamed.click();
   await expect(renamed).toBeChecked();
   await page
@@ -1047,9 +1078,11 @@ test("Popover preview supports editable CJK text, world settings and dismissal",
     .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Popover message" })
     .fill("こんにちは\n안녕하세요");
+
   const trigger = page
     .locator(".documentation-playground")
     .getByRole("button", { exact: true, name: "Open world options" });
+
   await trigger.click();
   const dialog = page.getByRole("dialog", { exact: true, name: "你好，世界" });
   await expect(dialog).toHaveAccessibleDescription("こんにちは 안녕하세요");

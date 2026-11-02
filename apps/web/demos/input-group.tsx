@@ -11,9 +11,9 @@ import {
 import type { DemoProps } from "../types";
 
 export default function InputGroupDemo({ scale }: DemoProps) {
-  const [name, setName] = React.useState("Player"),
-    [message, setMessage] = React.useState("你好，Minecraft!"),
-    [sent, setSent] = React.useState("");
+  const [name, setName] = React.useState("Player");
+  const [message, setMessage] = React.useState("你好，Minecraft!");
+  const [sent, setSent] = React.useState("");
 
   return (
     <>

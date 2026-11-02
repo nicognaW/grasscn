@@ -48,9 +48,9 @@ const milestones: AdvancementNode[] = [
 ];
 
 export default function AdvancementDemo({ scale }: DemoProps) {
-  const [nodes, setNodes] = React.useState(milestones),
-    [selected, setSelected] = React.useState("plan"),
-    [reset, setReset] = React.useState(0);
+  const [nodes, setNodes] = React.useState(milestones);
+  const [selected, setSelected] = React.useState("plan");
+  const [reset, setReset] = React.useState(0);
 
   const node = nodes.find((n) => n.id === selected)!;
 

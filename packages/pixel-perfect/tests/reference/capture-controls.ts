@@ -134,6 +134,7 @@ const frozenSource = path.join(
   frozenSourceDirectory,
   "ControlsReferenceMain.java"
 );
+
 const frozenCases = path.join(runtime, "cases.json");
 
 await writeFile(frozenSource, harnessBytes);
@@ -165,8 +166,9 @@ function permitted(library: MinecraftCaptureLibrary) {
         process.arch,
         process.arch === "x64" ? "x86_64" : process.arch,
       ].includes(rule.os.arch)
-    )
+    ) {
       continue;
+    }
 
     allowed = rule.action === "allow";
   }
@@ -219,10 +221,11 @@ async function javaCommand(
     `${result.stdout ?? ""}\n${result.stderr ?? ""}`
   );
 
-  if (result.error || result.status !== 0)
+  if (result.error || result.status !== 0) {
     throw new Error(
       `${command} failed. See ${path.join(runtime, `${command}.log`)}\n${result.error ?? result.stderr}`
     );
+  }
 
   return result.stdout;
 }
@@ -320,7 +323,7 @@ try {
   }
 }
 
-for (const scale of [1, 2, 3])
+for (const scale of [1, 2, 3]) {
   for (const definition of definitions) {
     const name = definition.name + "-s" + scale + ".png";
 
@@ -337,6 +340,7 @@ for (const scale of [1, 2, 3])
       sha256: sha256(bytes),
     });
   }
+}
 
 const pages = [...new Set(definitions.map((c) => c.page ?? 0))].sort(
   (a, b) => a - b
@@ -350,7 +354,7 @@ await mkdir(path.join(outputDir, "frames"), { recursive: true });
 
 const frameRecords = [];
 
-for (const page of pages)
+for (const page of pages) {
   for (const scale of [1, 2, 3]) {
     const name = `native-controls-${pages.length > 1 ? `p${page}-` : ""}s${scale}.png`;
 
@@ -360,6 +364,7 @@ for (const page of pages)
 
     frameRecords.push({ name, sha256: sha256(bytes) });
   }
+}
 
 const manifest: ControlCaptureManifest = {
   source:
@@ -394,6 +399,7 @@ if (
   // SAFETY: the selected official asset index maps resource names to SHA-1 objects and byte sizes; existing checks remain.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific launcher asset-index contract, with original fresh read and later integrity checks preserved.
   const index = JSON.parse(String(indexBytes)) as MinecraftCaptureAssetIndex;
+
   const resources: Record<
     string,
     { sha1: string; sha256: string; size: number } | undefined

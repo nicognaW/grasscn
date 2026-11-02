@@ -4,7 +4,12 @@ const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   for (const mobile of [false, true]) {
-    for (const route of ["calendar", "chart", "select", "date-picker"] as const)
+    for (const route of [
+      "calendar",
+      "chart",
+      "select",
+      "date-picker",
+    ] as const) {
       test(`Default ${route} Select anchors initially at GUI${scale} ${mobile ? "mobile" : "desktop"}`, async ({
         page,
       }) => {
@@ -16,11 +21,12 @@ for (const scale of [2] as const) {
           `${preview.replace(/\/$/u, "")}/docs/components/${route}`
         );
 
-        if (route === "date-picker")
+        if (route === "date-picker") {
           await page
             .locator(".documentation-playground")
             .getByRole("button", { exact: true, name: "Pick a range" })
             .click();
+        }
 
         const triggers =
           route === "date-picker"
@@ -128,6 +134,7 @@ for (const scale of [2] as const) {
           await expect(trigger).toBeFocused();
         }
       });
+    }
   }
 }
 

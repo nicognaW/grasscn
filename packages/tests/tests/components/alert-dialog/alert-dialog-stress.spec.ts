@@ -11,8 +11,9 @@ for (const selection of ["alert-dialog"]) {
     }) => {
       const warnings: string[] = [];
       page.on("console", (m) => {
-        if (m.text().includes("Too many active WebGL contexts"))
+        if (m.text().includes("Too many active WebGL contexts")) {
           warnings.push(m.text());
+        }
       });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(origin + "docs/components/" + selection);
@@ -112,23 +113,25 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
       /^[1-9]\d*$/u
     );
 
-    const pixel = await overlay.locator("canvas").evaluate((node, pixelScene) => {
-      const canvas = node as HTMLCanvasElement;
-      const gl = canvas.getContext("webgl")!;
-      const rgba = new Uint8Array(4);
+    const pixel = await overlay
+      .locator("canvas")
+      .evaluate((node, pixelScene) => {
+        const canvas = node as HTMLCanvasElement;
+        const gl = canvas.getContext("webgl")!;
+        const rgba = new Uint8Array(4);
 
-      gl.readPixels(
-        pixelScene === "fixed-pseudo" ? 30 : 315,
-        canvas.height - (pixelScene === "fixed-pseudo" ? 30 : 75),
-        1,
-        1,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        rgba
-      );
+        gl.readPixels(
+          pixelScene === "fixed-pseudo" ? 30 : 315,
+          canvas.height - (pixelScene === "fixed-pseudo" ? 30 : 75),
+          1,
+          1,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          rgba
+        );
 
-      return [...rgba];
-    }, scene);
+        return [...rgba];
+      }, scene);
 
     expect(pixel).toEqual(
       scene === "fixed-pseudo" ? [191, 0, 153, 255] : [191, 0, 0, 255]

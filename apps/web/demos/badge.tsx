@@ -6,9 +6,9 @@ import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
 
 export default function BadgeDemo({ scale }: DemoProps) {
-  const [text, setText] = React.useState("Diamonds!"),
-    [earned, setEarned] = React.useState(true),
-    [clicks, setClicks] = React.useState(0);
+  const [text, setText] = React.useState("Diamonds!");
+  const [earned, setEarned] = React.useState(true);
+  const [clicks, setClicks] = React.useState(0);
 
   return (
     <>

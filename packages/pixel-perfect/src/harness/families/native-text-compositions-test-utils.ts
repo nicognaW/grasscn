@@ -39,8 +39,9 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
       const q = new URLSearchParams({ component, native: "1" });
 
       for (const [key, value] of Object.entries(c)) {
-        if (typeof value === "string" || typeof value === "number")
+        if (typeof value === "string" || typeof value === "number") {
           q.set(key, String(value));
+        }
       }
 
       await page.goto(`/?${q}`);

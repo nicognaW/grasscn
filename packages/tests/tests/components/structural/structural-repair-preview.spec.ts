@@ -4,11 +4,12 @@ const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
 ).replace(/\/?$/u, "/");
 
-for (const scale of [2])
-  for (const name of ["collapsible"])
+for (const scale of [2]) {
+  for (const name of ["collapsible"]) {
     test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
       await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
+
       for (const control of await card
         .locator(
           ".demo-options input,.demo-options textarea,.demo-options button"
@@ -21,6 +22,8 @@ for (const scale of [2])
         ).toBe(scale);
       }
     });
+  }
+}
 
 for (const scale of [2]) {
   test(`Retained Data Table and Resizable playground controls preserve behavior at scale${scale}`, async ({

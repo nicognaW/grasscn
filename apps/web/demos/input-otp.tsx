@@ -6,14 +6,15 @@ import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
 
 export default function InputOTPDemo({ scale }: DemoProps) {
-  const stage = useDemoWidth(scale),
-    slotWidth = Math.min(
-      20,
-      Math.max(12, Math.floor((stage.width - 6 - 24 / scale) / 6))
-    );
+  const stage = useDemoWidth(scale);
 
-  const [value, setValue] = React.useState(""),
-    [complete, setComplete] = React.useState(0);
+  const slotWidth = Math.min(
+    20,
+    Math.max(12, Math.floor((stage.width - 6 - 24 / scale) / 6))
+  );
+
+  const [value, setValue] = React.useState("");
+  const [complete, setComplete] = React.useState(0);
 
   return (
     <>

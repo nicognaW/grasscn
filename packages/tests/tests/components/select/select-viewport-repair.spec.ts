@@ -4,7 +4,7 @@ const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   for (const position of ["default", "popper"] as const) {
-    for (const short of [false, true])
+    for (const short of [false, true]) {
       test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short ? "short" : "scrolled"}`, async ({
         page,
       }) => {
@@ -55,6 +55,7 @@ for (const scale of [2] as const) {
         if (short) {
           expect(scroll.maximum).toBeGreaterThan(0);
         }
+
         await viewport.hover();
         await page.mouse.wheel(0, scroll.top > 0 ? -1000 : 1000);
 
@@ -67,6 +68,7 @@ for (const scale of [2] as const) {
             .poll(async () => viewport.evaluate((n) => n.scrollTop))
             .toBe(0);
         }
+
         await page.evaluate(async () => {
           const frameCompletion = Promise.withResolvers<void>();
 
@@ -87,6 +89,7 @@ for (const scale of [2] as const) {
         if ((await popup.getAttribute("data-align-trigger")) !== "true") {
           expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
         }
+
         expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(scale);
         expect(after.y).toBeGreaterThanOrEqual(0);
         expect(after.y + after.height).toBeLessThanOrEqual(height);
@@ -126,8 +129,10 @@ for (const scale of [2] as const) {
         } else {
           await expect(bar).toBeHidden();
         }
+
         await page.keyboard.press("Escape");
         await expect(trigger).toBeFocused();
       });
+    }
   }
 }
