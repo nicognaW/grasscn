@@ -49,7 +49,9 @@ export default function DataTableDemo({ scale }: DemoProps) {
               type="button"
               scale={scale}
               aria-label="World"
-              className="w-(--demo-width) max-w-full" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
+              className="w-(--demo-width) max-w-full" style={
+                /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+                ({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
               onClick={() => column.toggleSorting()}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
@@ -85,7 +87,9 @@ export default function DataTableDemo({ scale }: DemoProps) {
           aria-label="Filter worlds"
           placeholder="Search worlds"
           scale={scale}
-          className="w-(--demo-width) max-w-full" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${160 * scale}px`} satisfies DemoVariables) as DemoVariables}
+          className="w-(--demo-width) max-w-full" style={
+            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+            ({"--demo-width": `${160 * scale}px`} satisfies DemoVariables) as DemoVariables}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(e) =>
             table.getColumn("name")?.setFilterValue(e.target.value)
@@ -94,7 +98,9 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          className="w-(--demo-width) max-w-full" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
+          className="w-(--demo-width) max-w-full" style={
+            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+            ({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
           aria-pressed={table.getColumn("players")?.getIsVisible()}
           onClick={() => table.getColumn("players")?.toggleVisibility()}
         >
@@ -160,7 +166,9 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           scale={scale}
           type="button"
-          className="w-(--demo-width)" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
+          className="w-(--demo-width)" style={
+            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+            ({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
           disabled={!table.getCanPreviousPage()}
           onClick={() => table.previousPage()}
         >
@@ -169,7 +177,9 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           scale={scale}
           type="button"
-          className="w-(--demo-width)" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
+          className="w-(--demo-width)" style={
+            /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
+            ({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
           disabled={!table.getCanNextPage()}
           onClick={() => table.nextPage()}
         >
