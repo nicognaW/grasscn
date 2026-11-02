@@ -9,6 +9,7 @@ for (const scale of [2]) {
     test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
       await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
+
       for (const control of await card
         .locator(
           ".demo-options input,.demo-options textarea,.demo-options button"

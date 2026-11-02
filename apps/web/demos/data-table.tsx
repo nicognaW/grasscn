@@ -20,6 +20,7 @@ import type { DemoProps } from "../types";
 type World = { id: string; name: string; players: number };
 
 const helper = createColumnHelper<DataTableFeatures, World>();
+
 const worlds: World[] = [
   { id: "a", name: "Grasslands", players: 4 },
   { id: "b", name: "你好，世界", players: 2 },

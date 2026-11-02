@@ -9,6 +9,7 @@ export default function TableDemo({ scale }: DemoProps) {
   const textWidth = Math.max(16, Math.floor((stage.width - 24) / 3));
 
   const [selected, setSelected] = React.useState("");
+
   const worlds = [
     { name: "Grasslands", players: 4 },
     { name: "你好，世界", players: 2 },

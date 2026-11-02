@@ -129,6 +129,7 @@ test("Retired components are absent from supported catalog and served payloads",
   );
 
   expect(registry.items.length).toBe(mapSize);
+
   const served = await (
     await request.get(new URL("r/registry.json", origin).href)
   ).json();

@@ -3,6 +3,7 @@ import { PNG } from "pngjs";
 
 // Explicit preview origin: the main suite's baseURL is the installed fixture.
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+
 for (const scale of [2] as const) {
   for (const container of ["narrow", "padded"] as const) {
     test(`Chart retains its integer pixel grid in ${container} container at GUI${scale}`, async ({

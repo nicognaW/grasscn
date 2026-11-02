@@ -8,9 +8,11 @@ import type { DemoProps } from '../types';
 export default function PlayerDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("Nyanki");
   const [username, setUsername] = React.useState<string>();
+
   const [skin, setSkin] = React.useState<"wide/steve" | "slim/alex">(
     "wide/steve"
   );
+
   const [reset, setReset] = React.useState(0);
 
   return (

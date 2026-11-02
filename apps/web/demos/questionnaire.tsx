@@ -10,6 +10,7 @@ export default function QuestionnaireDemo({ scale }: DemoProps) {
   const [session, setSession] = React.useState(0);
   const [width, setWidth] = React.useState(180);
   const form = React.useRef<HTMLFormElement>(null);
+
   const items = [
     {
       name: "mode",

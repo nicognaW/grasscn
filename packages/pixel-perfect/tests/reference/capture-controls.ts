@@ -134,6 +134,7 @@ const frozenSource = path.join(
   frozenSourceDirectory,
   "ControlsReferenceMain.java"
 );
+
 const frozenCases = path.join(runtime, "cases.json");
 
 await writeFile(frozenSource, harnessBytes);
@@ -398,6 +399,7 @@ if (
   // SAFETY: the selected official asset index maps resource names to SHA-1 objects and byte sizes; existing checks remain.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific launcher asset-index contract, with original fresh read and later integrity checks preserved.
   const index = JSON.parse(String(indexBytes)) as MinecraftCaptureAssetIndex;
+
   const resources: Record<
     string,
     { sha1: string; sha256: string; size: number } | undefined

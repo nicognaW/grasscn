@@ -32,6 +32,7 @@ function History({ scale }: DemoProps) {
     if (!text.trim()) {
       return;
     }
+
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };

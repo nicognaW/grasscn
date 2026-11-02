@@ -12,6 +12,7 @@ export default function TraceDemo({ scale }: DemoProps) {
   const [status, setStatus] = React.useState<"running" | "error" | "pending">(
     "running"
   );
+
   const [open, setOpen] = React.useState(false);
 
   return (

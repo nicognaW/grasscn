@@ -1,6 +1,7 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@playwright/test";
 import { PNG } from "pngjs";
+
 const types = [
   ["bar", "Bar"],
   ["stacked-bar", "Stacked bar"],
@@ -27,6 +28,7 @@ async function open(page: Page, scale: number, mobile = false) {
     page.locator('[data-stage="chart"] [data-slot="chart-example"] canvas')
   ).toHaveAttribute("data-mc-ready", "true");
 }
+
 for (const scale of [2]) {
   for (const mobile of [false, true]) {
     test(`Analytics types preserve integer pixels and fit ${mobile ? "mobile" : "desktop"} GUI${scale}`, async ({
@@ -91,6 +93,7 @@ for (const scale of [2]) {
     });
   }
 }
+
 test("Website analytics filters update real data and accessible table", async ({
   page,
 }) => {
@@ -123,6 +126,7 @@ test("Website analytics filters update real data and accessible table", async ({
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("May");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("209");
 });
+
 test("Analytics chart rerasterizes when available width changes", async ({
   page,
 }) => {

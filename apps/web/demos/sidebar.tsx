@@ -13,6 +13,7 @@ export default function SidebarDemo({ scale }: DemoProps) {
   const [search, setSearch] = React.useState("");
   const [selected, setSelected] = React.useState("Survival");
   const [action, setAction] = React.useState("Ready");
+
   const worlds = [
     "Survival",
     "Creative",

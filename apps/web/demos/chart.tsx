@@ -108,6 +108,7 @@ export default function ChartDemo({ scale }: DemoProps) {
       ...row,
       visitors: row.visitors + (webStep % 3) * (i + 1) * 5,
     }));
+
     const total = rows.reduce((sum, row) => sum + row.visitors, 0);
 
     return rows.map((row) => ({ name: row.name, visitors: row.visitors }));

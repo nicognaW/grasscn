@@ -41,6 +41,7 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
     if (!text.trim()) {
       return;
     }
+
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };

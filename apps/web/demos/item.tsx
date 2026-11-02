@@ -8,9 +8,11 @@ import type { DemoProps } from "../types";
 
 export default function ItemDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("New World");
+
   const [description, setDescription] = React.useState(
     "world-1\nSurvival Mode"
   );
+
   const [selected, setSelected] = React.useState("");
   const [opens, setOpens] = React.useState(0);
 

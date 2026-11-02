@@ -98,6 +98,7 @@ export const formsNativeTests = function formsNativeTests(
           if (c.wrapWidth != null) {
             params.set("wrapWidth", String(c.wrapWidth));
           }
+
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
@@ -112,6 +113,7 @@ export const formsNativeTests = function formsNativeTests(
             .all()) {
             await expect(line).toHaveAttribute("data-mc-label-ready", "true");
           }
+
           await page.evaluate(async () => {
             const frameCompletion = Promise.withResolvers<void>();
 
@@ -137,6 +139,7 @@ export const formsNativeTests = function formsNativeTests(
           );
 
           const actualBytes = await subject.screenshot();
+
           const { mismatchedPixels, diff } = compare(
             PNG.sync.read(bytes),
             PNG.sync.read(actualBytes)
