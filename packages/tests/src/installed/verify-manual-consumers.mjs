@@ -962,25 +962,22 @@ try {
       await expect
         .poll(
           async () =>
-            await trading
-              .locator("img")
-              .evaluateAll((images) => {
-                const sortedImageStates = images
-                  .map((image) =>
-                    image instanceof HTMLImageElement
-                      ? [
-                          image.naturalWidth,
-                          image.naturalHeight,
-                          image.complete,
-                          image.closest(".mc-trade-item") !== null,
-                        ]
-                      : null
-                  );
-                sortedImageStates.sort((first, second) =>
-                  String(first).localeCompare(String(second))
-                );
-                return sortedImageStates;
-              })
+            await trading.locator("img").evaluateAll((images) => {
+              const sortedImageStates = images.map((image) =>
+                image instanceof HTMLImageElement
+                  ? [
+                      image.naturalWidth,
+                      image.naturalHeight,
+                      image.complete,
+                      image.closest(".mc-trade-item") !== null,
+                    ]
+                  : null
+              );
+              sortedImageStates.sort((first, second) =>
+                String(first).localeCompare(String(second))
+              );
+              return sortedImageStates;
+            })
         )
         // adventureAssets declares villager 512x256, trade_arrow 10x9 and
         // scroller_disabled 6x27; the example supplies four 16x16 item icons.

@@ -182,7 +182,6 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
         {/* eslint-enable jsx-a11y/control-has-associated-label */}
         {bulk ? (
           <>
-            
             <Button
               /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control"
@@ -194,8 +193,7 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
             >
               Load
             </Button>
-            
-            
+
             <Button
               /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control documentation-full-copy"
@@ -207,17 +205,14 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
             >
               Copy full file
             </Button>
-            
           </>
         ) : null}
       </div>
       {loading ? <DocumentText>Loading file</DocumentText> : null}
       {failure ? (
-        <div
-          role="alert"
-        >
+        <div role="alert">
           <DocumentText>File could not be loaded.</DocumentText>
-          
+
           <Button /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
             className="documentation-control"
             /* eslint-enable shadcn/no-unknown-classes */ onClick={() => {
@@ -226,7 +221,6 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
           >
             Retry
           </Button>
-          
         </div>
       ) : null}
       {bulk ? (
@@ -343,7 +337,6 @@ export const ManualInstallation = ({
               className="documentation-manual-file-entry"
               /* eslint-enable shadcn/no-unknown-classes */
             >
-              
               <Button
                 /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
                 className="documentation-manual-file"
@@ -355,7 +348,7 @@ export const ManualInstallation = ({
               >
                 {file.source.split("/").at(-1)}
               </Button>
-              
+
               <DocumentParagraph>{file.destination}</DocumentParagraph>
             </div>
           ))}
@@ -364,9 +357,7 @@ export const ManualInstallation = ({
       {selected ? (
         <FileSource key={selected.url} file={selected} />
       ) : (
-        <DocumentText
-          role="alert"
-        >
+        <DocumentText role="alert">
           Installation files unavailable.
         </DocumentText>
       )}

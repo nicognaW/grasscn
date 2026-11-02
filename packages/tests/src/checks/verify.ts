@@ -48,7 +48,9 @@ interface NormalVerificationEnvironment {
   arch: string;
   bun: string;
   ci: string | null;
-  installedDependencies: NonNullable<ReturnType<typeof installedDependencyIdentity>>;
+  installedDependencies: NonNullable<
+    ReturnType<typeof installedDependencyIdentity>
+  >;
   locale: string;
   platform: NodeJS.Platform;
   pptIncluded: false;
@@ -316,7 +318,8 @@ try {
     fixtureManifest().sha256,
     // SAFETY: successful fixture-build records this bundle, or the browser phase restores it after the existing prepared-receipt assertion.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed stage list must finish successfully before this unchanged SHA read.
-    (report.fixtureBundle as NonNullable<VerificationReport["fixtureBundle"]>).sha256,
+    (report.fixtureBundle as NonNullable<VerificationReport["fixtureBundle"]>)
+      .sha256,
     "Independent fixture changed during normal verification"
   );
   const awaitedIdentity2 = await productionBuildIdentity({ source });
@@ -324,7 +327,8 @@ try {
     awaitedIdentity2.outputSha256,
     // SAFETY: production-build stamps this identity, or the browser phase restores its asserted prepared website identity.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed successful stage flow owns this exact output hash read.
-    (report.websiteBuild as NonNullable<VerificationReport["websiteBuild"]>).outputSha256,
+    (report.websiteBuild as NonNullable<VerificationReport["websiteBuild"]>)
+      .outputSha256,
     "Next output changed during normal verification"
   );
 

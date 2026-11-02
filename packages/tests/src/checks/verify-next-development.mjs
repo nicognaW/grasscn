@@ -55,9 +55,7 @@ for (const [index, name] of [
 
   try {
     const physicalInput = await realpath(target);
-    assert.ok(
-      physicalInput.startsWith((await realpath(webRoot)) + path.sep)
-    );
+    assert.ok(physicalInput.startsWith((await realpath(webRoot)) + path.sep));
     await rename(target, path.join(directory, `generated-backup-${index}`));
 
     if (index < 2) {
@@ -222,11 +220,7 @@ try {
 
     try {
       const physicalInput = await realpath(target);
-      assert.ok(
-        physicalInput.startsWith(
-          (await realpath(webRoot)) + path.sep
-        )
-      );
+      assert.ok(physicalInput.startsWith((await realpath(webRoot)) + path.sep));
       await rename(
         target,
         path.join(directory, `generated-dev-after-${index}`)

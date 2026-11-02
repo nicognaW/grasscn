@@ -27,9 +27,7 @@ export const ComponentSource = async ({
 
   if (index < 0) {
     return (
-      <DocumentText
-        role="alert"
-      >
+      <DocumentText role="alert">
         Component source unavailable: {name}
       </DocumentText>
     );
@@ -45,9 +43,7 @@ export const ComponentSource = async ({
 
   if (!source) {
     return (
-      <DocumentText
-        role="alert"
-      >
+      <DocumentText role="alert">
         Component source could not be loaded: {name}. Reload this page to retry.
       </DocumentText>
     );

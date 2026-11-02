@@ -24,26 +24,14 @@ const offers: TradeOffer[] = [
   {
     cost: {
       count: 1,
-      icon: (
-        <img
-          src={emerald}
-          alt="" 
-          style={iconStyle}
-        />
-      ),
+      icon: <img src={emerald} alt="" style={iconStyle} />,
       label: "Emerald",
     },
     id: "bread",
     label: "Bread",
     result: {
       count: 1,
-      icon: (
-        <img
-          src={bread}
-          alt="" 
-          style={iconStyle}
-        />
-      ),
+      icon: <img src={bread} alt="" style={iconStyle} />,
       label: "Bread",
     },
   },

@@ -181,9 +181,7 @@ const generatedDocsIdentity = async () => {
     const entries = await readdir(folder, { withFileTypes: true });
 
     const sortedEntries = entries.slice();
-    sortedEntries.sort((left, right) =>
-      left.name.localeCompare(right.name)
-    );
+    sortedEntries.sort((left, right) => left.name.localeCompare(right.name));
     for (const entry of sortedEntries) {
       const filename = path.join(folder, entry.name);
 

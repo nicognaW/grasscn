@@ -20,11 +20,7 @@ export const ComponentExample = async ({
 }) => {
   if (!Object.hasOwn(examples, name)) {
     return (
-      <DocumentText
-        role="alert"
-      >
-        Example unavailable: {name}
-      </DocumentText>
+      <DocumentText role="alert">Example unavailable: {name}</DocumentText>
     );
   }
 
@@ -43,9 +39,7 @@ export const ComponentExample = async ({
 
   if (code === undefined) {
     return (
-      <DocumentText
-        role="alert"
-      >
+      <DocumentText role="alert">
         Example source could not be loaded: {name}. Reload this page to retry.
       </DocumentText>
     );

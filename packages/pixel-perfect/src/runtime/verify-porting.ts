@@ -576,12 +576,11 @@ try {
             "utf-8"
           );
 
-          const results =
-            checkpointResultsBytes
-              .trim()
-              .split("\n")
-              .filter(Boolean)
-              .map(checkpointResult);
+          const results = checkpointResultsBytes
+            .trim()
+            .split("\n")
+            .filter(Boolean)
+            .map(checkpointResult);
 
           const terminal = new Set(
             results.flatMap((result) =>

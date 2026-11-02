@@ -8,7 +8,6 @@ const AspectRatioExample = () => (
     /* eslint-enable shadcn/no-inline-styles */
   >
     <AspectRatio ratio={16 / 9}>
-      
       <img
         width="160"
         height="90"
@@ -18,7 +17,6 @@ const AspectRatioExample = () => (
         style={{ height: "100%", imageRendering: "pixelated", width: "100%" }}
         /* eslint-enable shadcn/no-inline-styles */
       />
-      
     </AspectRatio>
   </div>
 );

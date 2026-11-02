@@ -17,11 +17,7 @@ export const Installation = async ({
 
   if (!manifest) {
     return (
-      <DocumentText
-        role="alert"
-      >
-        Installation unavailable: {name}
-      </DocumentText>
+      <DocumentText role="alert">Installation unavailable: {name}</DocumentText>
     );
   }
 

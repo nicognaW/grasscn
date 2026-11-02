@@ -19,9 +19,7 @@ export const SonnerPlayground = ({ scale }: { scale: 1 | 2 | 3 }) => {
 
   return (
     <>
-      <div 
-        className="demo-options"
-      >
+      <div className="demo-options">
         <label>
           Title
           <Input

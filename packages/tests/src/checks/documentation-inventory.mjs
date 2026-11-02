@@ -112,31 +112,31 @@ export const documentationInventory = (root = webRoot) => {
   );
   sortedPageFiles.sort();
   const pages = sortedPageFiles.map((file) => {
-      const name = file.slice(0, -4);
-      const text = readFileSync(path.join(directory, file), "utf-8");
+    const name = file.slice(0, -4);
+    const text = readFileSync(path.join(directory, file), "utf-8");
 
-      const title = titlePattern
-        .exec(text)
-        ?.groups?.title?.replaceAll(quotesPattern, "");
+    const title = titlePattern
+      .exec(text)
+      ?.groups?.title?.replaceAll(quotesPattern, "");
 
-      if (title === undefined || title.length === 0) {
-        throw new Error(`${name}: authored canonical page has no title`);
-      }
+    if (title === undefined || title.length === 0) {
+      throw new Error(`${name}: authored canonical page has no title`);
+    }
 
-      const registryItem = owners.get(name);
+    const registryItem = owners.get(name);
 
-      if (registryItem === undefined) {
-        throw new Error(`${name}: canonical page has no registry owner`);
-      }
+    if (registryItem === undefined) {
+      throw new Error(`${name}: canonical page has no registry owner`);
+    }
 
-      return {
-        name,
-        playground: playgroundPattern.test(text),
-        registryItem,
-        route: `/docs/components/${name}`,
-        title,
-      };
-    });
+    return {
+      name,
+      playground: playgroundPattern.test(text),
+      registryItem,
+      route: `/docs/components/${name}`,
+      title,
+    };
+  });
 
   const pageNames = new Set(pages.map((page) => page.name));
 

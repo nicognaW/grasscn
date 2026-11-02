@@ -1028,7 +1028,6 @@ export const publishReport = function publishReport(
 
       // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
 
-
       const comments = readCommentPages([
         "--paginate",
         "--slurp",
@@ -1065,7 +1064,6 @@ export const publishReport = function publishReport(
     const body = `${marker}\n\nFull collection completed: **${report.outcome}** against local commit ${report.testedCommit}. Scope: ${report.total} Full cases; ${report.failures.length} unexpected final results, ${report.flaky.length} recovered/flaky cases, ${report.skipped.length} skipped. Skips are not passes.\n\nPlan hash: ${report.planHash}\nExecution session: ${report.executionSession ?? report.executionThread}\nEnvironment: ${JSON.stringify(report.environment)}\nReviewed by: ${review.reviewedBy}\nEvidence bundle sha256 identity: ${report.evidenceHash}\n\n${links.map((link) => `- ${link.problem}: ${link.issue} (${link.state}; no automatic reopening)`).join("\n") || "No unexpected final failures."}\n\nFlaky case identities: ${report.flaky.length} (complete identities in local report bundle)\nSkipped case identities: ${report.skipped.length} (complete identities in local report bundle)\n\nLocal retained evidence (not uploaded):\n${evidenceLocation(report)} (file sha256 ${hash(json(report))}); contains every attempt receipt/journal/artifact path and recorded sha256\n\nThese results apply only to this Full snapshot. Base coverage is separate. Findings enter the normal work queue; merging is not blocked. Repairs may use any suitable session after completion. A Full rerun needs a new issue, human approval and independent execution session.\n`;
 
     // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
-
 
     const comments = readCommentPages([
       "--paginate",
