@@ -3,6 +3,16 @@ import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface ItemAudioPlayback {
+  rate: number;
+  src: string;
+  volume: number;
+}
+
+interface ItemAudioState {
+  sounds: ItemAudioPlayback[];
+}
+
 const ready = async function ready(page: Page) {
   await expect(
     page.locator("[data-subject] [data-slot=item-content]")
@@ -205,9 +215,13 @@ test("Item uses original activation sound once and keeps passive rows silent", a
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: This Item initScript creates its own empty rate/src/volume trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+    (window as typeof window & ItemAudioState).sounds = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Item initScript initializes sounds; this native media play mock records its own rate, src and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+      (window as typeof window & ItemAudioState).sounds.push({
         rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
@@ -223,9 +237,17 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     const subject = page.locator("[data-subject]");
     await subject.hover();
     await subject.focus();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    expect(await page.evaluate(() =>
+      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+      (window as typeof window & ItemAudioState).sounds
+    )).toEqual([]);
     await subject.click();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([
+    expect(await page.evaluate(() =>
+      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+      (window as typeof window & ItemAudioState).sounds
+    )).toEqual([
       { rate: 1, src: minecraftClickSound, volume: 0.25 },
     ]);
   }
@@ -239,14 +261,22 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
     await ready(page);
     await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    expect(await page.evaluate(() =>
+      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+      (window as typeof window & ItemAudioState).sounds
+    )).toEqual([]);
   }
 
   await page.goto("/?component=item&volume=0.4");
   await ready(page);
   await page.locator("[data-subject]").click();
   expect(
-    await page.evaluate(() => (window as any).sounds[0].volume)
+    await page.evaluate(() =>
+      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+      (window as typeof window & ItemAudioState).sounds[0].volume
+    )
   ).toBeCloseTo(0.1);
 });
 

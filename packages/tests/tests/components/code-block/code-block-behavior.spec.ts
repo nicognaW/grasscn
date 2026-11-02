@@ -2,6 +2,10 @@ import type { Page } from "@playwright/test";
 
 import { test, expect } from "@grasscn/tests/test";
 
+interface CodeBlockClipboardState {
+  __copied?: string;
+}
+
 const ready = async function ready(page: Page) {
   for (const text of await page.locator("[data-mc-selectable-ready]").all()) {
     await expect(text).toHaveAttribute("data-mc-selectable-ready", "true");
@@ -82,7 +86,8 @@ test("Copy uses mocked clipboard, live state and reset timer", async ({
     Object.defineProperty(navigator, "clipboard", {
       value: {
         writeText: (value: string) => {
-          (window as any).__copied = value;
+          // SAFETY: This owned writeText mock creates __copied with its string argument only when a clipboard write occurs.
+          (window as typeof window & CodeBlockClipboardState).__copied = value;
 
           return Promise.resolve();
         },
@@ -94,7 +99,10 @@ test("Copy uses mocked clipboard, live state and reset timer", async ({
   await expect(
     page.getByRole("button", { exact: true, name: "Copied" })
   ).toHaveAttribute("data-copied", "true");
-  expect(await page.evaluate(() => (window as any).__copied)).toBe(
+  expect(await page.evaluate(() =>
+    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+    (window as typeof window & CodeBlockClipboardState).__copied
+  )).toBe(
     "First\n\n你好 世界\nLast"
   );
   await expect(
@@ -109,7 +117,8 @@ test("Canceled or disabled copy remains silent and does not write", async ({
     Object.defineProperty(navigator, "clipboard", {
       value: {
         writeText: (value: string) => {
-          (window as any).__copied = value;
+          // SAFETY: This owned writeText mock creates __copied with its string argument only when a clipboard write occurs.
+          (window as typeof window & CodeBlockClipboardState).__copied = value;
 
           return Promise.resolve();
         },
@@ -118,12 +127,18 @@ test("Canceled or disabled copy remains silent and does not write", async ({
   );
   await page.goto("?component=code-block&cancel=1");
   await page.getByRole("button", { exact: true, name: "Copy" }).click();
-  expect(await page.evaluate(() => (window as any).__copied)).toBeUndefined();
+  expect(await page.evaluate(() =>
+    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+    (window as typeof window & CodeBlockClipboardState).__copied
+  )).toBeUndefined();
   await page.goto("?component=code-block&disabled=1");
   await expect(
     page.getByRole("button", { exact: true, name: "Copy" })
   ).toBeDisabled();
-  expect(await page.evaluate(() => (window as any).__copied)).toBeUndefined();
+  expect(await page.evaluate(() =>
+    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+    (window as typeof window & CodeBlockClipboardState).__copied
+  )).toBeUndefined();
 });
 
 test("Wrap creates real lines, line numbers retain startLine and blank lines", async ({
