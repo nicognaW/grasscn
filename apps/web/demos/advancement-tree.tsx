@@ -1,6 +1,97 @@
-import * as React from "react"
-import {AdvancementTree,type AdvancementNode} from "../registry/ui/advancement-tree"
-import {Button} from "../registry/ui/button"
-import type {DemoProps} from "../types"
-const milestones:AdvancementNode[]=[{id:"plan",x:0,y:1,title:"Plan",description:"Define the product and its audience.",completed:true},{id:"design",parentId:"plan",x:2,y:0,title:"Design",description:"Create the first working prototype.",kind:"goal",completed:true},{id:"build",parentId:"plan",x:2,y:2,title:"Build",description:"Implement and test the core features.",kind:"task"},{id:"launch",parentId:"design",x:4,y:1,title:"Launch",description:"Ship the release to your users.",kind:"challenge"}]
-export default function AdvancementDemo({scale}:DemoProps){const[nodes,setNodes]=React.useState(milestones),[selected,setSelected]=React.useState('plan'),[reset,setReset]=React.useState(0);const node=nodes.find(n=>n.id===selected)!;return <><div className="demo-stage" data-stage="advancement-tree" style={{display:'grid',gap:16}}><AdvancementTree key={reset} nodes={nodes} scale={scale} selectedId={selected} onSelectedIdChange={setSelected} aria-label="Release roadmap"/><strong>{node.title}</strong><p>{node.description}</p><div style={{display:'flex',flexWrap:'wrap',gap:12}}><Button scale={scale} onClick={()=>setNodes(old=>old.map(n=>n.id===selected?{...n,completed:!n.completed}:n))} style={{width:200*scale,maxWidth:'100%'}}>{node.completed?'Mark incomplete':'Complete milestone'}</Button><Button scale={scale} onClick={()=>setReset(v=>v+1)} style={{width:100*scale,maxWidth:'100%'}}>Reset view</Button></div><p className="grass-note">Drag to pan. Use Tab to reach milestones and arrow keys to explore.</p></div></>}
+import * as React from "react";
+
+import {
+  AdvancementTree,
+  type AdvancementNode,
+} from "../registry/ui/advancement-tree";
+import { Button } from "../registry/ui/button";
+import type { DemoProps } from "../types";
+const milestones: AdvancementNode[] = [
+  {
+    id: "plan",
+    x: 0,
+    y: 1,
+    title: "Plan",
+    description: "Define the product and its audience.",
+    completed: true,
+  },
+  {
+    id: "design",
+    parentId: "plan",
+    x: 2,
+    y: 0,
+    title: "Design",
+    description: "Create the first working prototype.",
+    kind: "goal",
+    completed: true,
+  },
+  {
+    id: "build",
+    parentId: "plan",
+    x: 2,
+    y: 2,
+    title: "Build",
+    description: "Implement and test the core features.",
+    kind: "task",
+  },
+  {
+    id: "launch",
+    parentId: "design",
+    x: 4,
+    y: 1,
+    title: "Launch",
+    description: "Ship the release to your users.",
+    kind: "challenge",
+  },
+];
+export default function AdvancementDemo({ scale }: DemoProps) {
+  const [nodes, setNodes] = React.useState(milestones),
+    [selected, setSelected] = React.useState("plan"),
+    [reset, setReset] = React.useState(0);
+  const node = nodes.find((n) => n.id === selected)!;
+  return (
+    <>
+      <div
+        className="demo-stage"
+        data-stage="advancement-tree"
+        style={{ display: "grid", gap: 16 }}
+      >
+        <AdvancementTree
+          key={reset}
+          nodes={nodes}
+          scale={scale}
+          selectedId={selected}
+          onSelectedIdChange={setSelected}
+          aria-label="Release roadmap"
+        />
+        <strong>{node.title}</strong>
+        <p>{node.description}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+          <Button
+            scale={scale}
+            onClick={() =>
+              setNodes((old) =>
+                old.map((n) =>
+                  n.id === selected ? { ...n, completed: !n.completed } : n
+                )
+              )
+            }
+            style={{ width: 200 * scale, maxWidth: "100%" }}
+          >
+            {node.completed ? "Mark incomplete" : "Complete milestone"}
+          </Button>
+          <Button
+            scale={scale}
+            onClick={() => setReset((v) => v + 1)}
+            style={{ width: 100 * scale, maxWidth: "100%" }}
+          >
+            Reset view
+          </Button>
+        </div>
+        <p className="grass-note">
+          Drag to pan. Use Tab to reach milestones and arrow keys to explore.
+        </p>
+      </div>
+    </>
+  );
+}
