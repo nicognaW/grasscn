@@ -29,7 +29,7 @@ export const CodeBlockFixture = () => {
   );
 
   return (
-    <div style={{ padding: 32, width: 700 }}>
+    <div className="fixture-code-block-frame">
       <CodeBlock
         scale={scale}
         variant={q.has("error") ? "destructive" : "default"}

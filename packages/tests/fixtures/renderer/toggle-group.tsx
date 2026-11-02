@@ -97,7 +97,7 @@ export const ToggleGroupFixture = () => {
         onClick={() => {
           setValue((v) => (v.length ? [] : ["two"]));
         }}
-        style={{ position: "absolute", top: 400 }}
+        className="fixture-toggle-external-control"
       >
         External
       </button>
@@ -107,17 +107,17 @@ export const ToggleGroupFixture = () => {
         onClick={() => {
           setTag(`${root.current?.tagName}/${item.current?.tagName}`);
         }}
-        style={{ position: "absolute", top: 440 }}
+        className="fixture-toggle-read-control"
       >
         Read ref
       </button>
-      <output id="events" style={{ position: "absolute", top: 480 }}>
+      <output id="events" className="fixture-toggle-event-output">
         {events}
       </output>
-      <output id="tag" style={{ position: "absolute", top: 520 }}>
+      <output id="tag" className="fixture-toggle-ref-output">
         {tag}
       </output>
-      <output id="value" style={{ position: "absolute", top: 560 }}>
+      <output id="value" className="fixture-toggle-group-value-output">
         {value.join(",")}
       </output>
     </>

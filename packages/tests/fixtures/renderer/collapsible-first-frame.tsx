@@ -28,7 +28,7 @@ export const CollapsibleFirstFrameFixture = () => {
   }, [warm]);
 
   return (
-    <div data-warm-ready={ready} style={{ width: "100%" }}>
+    <div data-warm-ready={ready} className="fixture-collapsible-warm-frame">
       <Collapsible
         scale={scale}
         style={{

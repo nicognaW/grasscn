@@ -200,7 +200,7 @@ const ItemFixture = () => {
       <button
         type="button"
         id="read-ref"
-        style={{ position: "absolute", top: 1500 }}
+        className="fixture-item-read-control"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
         }}
@@ -210,23 +210,23 @@ const ItemFixture = () => {
       <button
         type="button"
         id="resize"
-        style={{ position: "absolute", top: 1460 }}
+        className="fixture-item-resize-control"
         onClick={() => {
           setWidth(340);
         }}
       >
         Resize
       </button>
-      <output id="tag" style={{ position: "absolute", top: 1540 }}>
+      <output id="tag" className="fixture-item-ref-output">
         {tag}
       </output>
-      <output id="events" style={{ position: "absolute", top: 1580 }}>
+      <output id="events" className="fixture-item-event-output">
         {events}
       </output>
-      <output id="actions" style={{ position: "absolute", top: 1620 }}>
+      <output id="actions" className="fixture-item-action-output">
         {actions}
       </output>
-      <div style={{ display: "none" }}>
+      <div className="fixture-item-hidden-variants">
         <ItemGroup>
           <Item />
           <ItemSeparator />

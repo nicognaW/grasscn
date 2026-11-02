@@ -76,7 +76,7 @@ export const ToggleFixture = () => {
         onClick={() => {
           setPressed((v) => !v);
         }}
-        style={{ position: "absolute", top: 400 }}
+        className="fixture-toggle-external-control"
       >
         External
       </button>
@@ -86,14 +86,14 @@ export const ToggleFixture = () => {
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
         }}
-        style={{ position: "absolute", top: 440 }}
+        className="fixture-toggle-read-control"
       >
         Read ref
       </button>
-      <output id="events" style={{ position: "absolute", top: 480 }}>
+      <output id="events" className="fixture-toggle-event-output">
         {events}
       </output>
-      <output id="tag" style={{ position: "absolute", top: 520 }}>
+      <output id="tag" className="fixture-toggle-ref-output">
         {tag}
       </output>
       <span

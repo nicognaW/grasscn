@@ -1777,7 +1777,7 @@ const AlertDialogFixture = () => {
         createPortal(
           <div
             data-dialog-underlay="true"
-            style={{ inset: 0, position: "fixed" }}
+            className="fixture-dialog-underlay"
           >
             <div
               style={{
@@ -2038,7 +2038,7 @@ const DialogFixture = () => {
         createPortal(
           <div
             data-dialog-underlay="true"
-            style={{ inset: 0, position: "fixed" }}
+            className="fixture-dialog-underlay"
           >
             <div
               style={{

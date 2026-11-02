@@ -17,7 +17,7 @@ export const ColorPainterStressFixture = () => {
 
   return (
     <>
-      <div style={{ bottom: 0, position: "fixed", right: 0 }}>
+      <div className="fixture-painter-stress-controls">
         {([1, 2, 3] as const).map((value) => (
           <button
             type="button"

@@ -51,7 +51,7 @@ export const ResizableFixture = () => {
           collapsedSize="0%"
           panelRef={panel}
         >
-          <div style={{ background: "#555", height: "100%" }}>First panel</div>
+          <div className="fixture-resizable-first-surface">First panel</div>
         </ResizablePanel>
         <ResizableHandle
           id="subject"
@@ -62,7 +62,7 @@ export const ResizableFixture = () => {
           data-subject="true"
         />
         <ResizablePanel id="right" defaultSize="50%" minSize="10%">
-          <div style={{ background: "#333", height: "100%" }}>Second panel</div>
+          <div className="fixture-resizable-second-surface">Second panel</div>
         </ResizablePanel>
       </ResizablePanelGroup>
       <button

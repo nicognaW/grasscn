@@ -24,3 +24,114 @@ output {
   position: fixed;
   right: 8px;
 }
+
+/* Fixture-owned frames and diagnostic controls, separate from component caller-style probes. */
+.fixture-chat-controls {
+  left: 1000px;
+  position: fixed;
+  top: 800px;
+}
+
+.fixture-code-block-frame {
+  padding: 32px;
+  width: 700px;
+}
+
+.fixture-collapsible-warm-frame {
+  width: 100%;
+}
+
+.fixture-painter-stress-controls {
+  bottom: 0;
+  position: fixed;
+  right: 0;
+}
+
+.fixture-demo-value {
+  color: white;
+  display: block;
+  margin-top: 20px;
+}
+
+.fixture-item-read-control {
+  position: absolute;
+  top: 1500px;
+}
+
+.fixture-item-resize-control {
+  position: absolute;
+  top: 1460px;
+}
+
+.fixture-item-ref-output {
+  position: absolute;
+  top: 1540px;
+}
+
+.fixture-item-event-output {
+  position: absolute;
+  top: 1580px;
+}
+
+.fixture-item-action-output {
+  position: absolute;
+  top: 1620px;
+}
+
+.fixture-item-hidden-variants {
+  display: none;
+}
+
+.fixture-overlay-scroll-spacer {
+  height: 2000px;
+}
+
+.fixture-overlay-empty-spacer {
+  height: 0;
+}
+
+.fixture-resizable-first-surface {
+  background: #555;
+  height: 100%;
+}
+
+.fixture-resizable-second-surface {
+  background: #333;
+  height: 100%;
+}
+
+.fixture-sidebar-inspector {
+  left: 32px;
+  position: absolute;
+  top: 700px;
+}
+
+.fixture-toggle-external-control {
+  position: absolute;
+  top: 400px;
+}
+
+.fixture-toggle-read-control {
+  position: absolute;
+  top: 440px;
+}
+
+.fixture-toggle-event-output {
+  position: absolute;
+  top: 480px;
+}
+
+.fixture-toggle-ref-output {
+  position: absolute;
+  top: 520px;
+}
+
+.fixture-toggle-group-value-output {
+  position: absolute;
+  top: 560px;
+}
+
+.fixture-dialog-underlay {
+  inset: 0;
+  position: fixed;
+}

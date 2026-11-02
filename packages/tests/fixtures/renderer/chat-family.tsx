@@ -137,7 +137,7 @@ export const ChatFamilyFixture = () => {
   return (
     <MessageScale value={scale}>
       {subject}
-      <div style={{ left: 1000, position: "fixed", top: 800 }}>
+      <div className="fixture-chat-controls">
         <input
           aria-label="Chat text"
           spellCheck={false}

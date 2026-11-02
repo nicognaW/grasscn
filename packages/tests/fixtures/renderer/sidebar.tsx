@@ -54,7 +54,7 @@ const Inspector = () => {
   const ctx = useSidebar();
 
   return (
-    <div style={{ left: 32, position: "absolute", top: 700 }}>
+    <div className="fixture-sidebar-inspector">
       <output id="state">{ctx.state}</output>
       <output id="mobile">{String(ctx.isMobile)}</output>
       <output id="open-mobile">{String(ctx.openMobile)}</output>
