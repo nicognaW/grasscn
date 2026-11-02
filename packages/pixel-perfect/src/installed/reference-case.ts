@@ -46,7 +46,7 @@ export interface DialogReferenceCase extends PositionedReferenceCase {
   element: "dialog" | "alert-dialog";
   background: string;
   label: string;
-  text: string;
+  text: string | null;
   labels: string[];
   value?: number;
   wrapWidth?: number;

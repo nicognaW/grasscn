@@ -654,9 +654,14 @@ try {
       );
 
       if (confirmation) {
+        // The AlertDialog capture producer always emits text; Dialog alone also records null text cases.
+        const confirmationText = c.text!;
+
         const count =
           Number(/[^\u0000-\u007F]/.test(c.label)) +
-          (/[^\u0000-\u007F]/.test(c.text) ? c.text.split("\n").length : 0) +
+          (/[^\u0000-\u007F]/.test(confirmationText)
+            ? confirmationText.split("\n").length
+            : 0) +
           c.labels.filter((label) => /[^\u0000-\u007F]/.test(label)).length;
 
         if (count) {
