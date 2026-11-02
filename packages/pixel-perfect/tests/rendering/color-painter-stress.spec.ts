@@ -173,7 +173,7 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (
-      /too many active webgl|shader failed|program failed/i.test(message.text())
+      /[tT][oO][oO] [mM][aA][nN][yY] [aA][cC][tT][iI][vV][eE] [wW][eE][bB][gG][lL]|[sS][hH][aA][dD][eE][rR] [fF][aA][iI][lL][eE][dD]|[pP][rR][oO][gG][rR][aA][mM] [fF][aA][iI][lL][eE][dD]/u.test(message.text())
     ) {
       warnings.push(message.text());
     }

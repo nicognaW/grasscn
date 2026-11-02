@@ -19,7 +19,7 @@ import { testRoot } from "@grasscn/tests/paths";
 import { packageBin } from "@grasscn/tests/tooling";
 
 test("browser file filters select exact basenames on Windows and POSIX", () => {
-  const pattern = new RegExp(browserFilePattern("select.spec.ts"));
+  const pattern = new RegExp(browserFilePattern("select.spec.ts"), "u");
   assert.ok(pattern.test("C:\\repo\\tests\\select.spec.ts"));
   assert.ok(pattern.test("/repo/tests/select.spec.ts"));
   assert.equal(pattern.test("/repo/tests/native-select.spec.ts"), false);
@@ -238,7 +238,7 @@ test("Playwright can retain a complete file without repeating its tests", async 
   }));
 
 test("nested browser file filters match the same exact case path on Windows and POSIX", () => {
-  const pattern = new RegExp(browserFilePattern("button/native.spec.ts"));
+  const pattern = new RegExp(browserFilePattern("button/native.spec.ts"), "u");
   assert.ok(pattern.test("C:\\repo\\tests\\button\\native.spec.ts"));
   assert.ok(pattern.test("/repo/tests/button/native.spec.ts"));
   assert.equal(pattern.test("/repo/tests/input/native.spec.ts"), false);

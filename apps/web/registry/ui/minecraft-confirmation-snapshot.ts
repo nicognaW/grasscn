@@ -90,7 +90,7 @@ export function useConfirmationSnapshot(
         const bodyColor = getComputedStyle(document.body).backgroundColor;
 
         const opaque = (value: string) =>
-          value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/.test(value);
+          value !== "transparent" && !/rgba\([^)]*,\s*0\s*\)/u.test(value);
 
         const offsetX = scrollX;
         const offsetY = scrollY;

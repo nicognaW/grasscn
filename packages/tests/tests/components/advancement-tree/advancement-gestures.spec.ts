@@ -103,7 +103,7 @@ test("dragging from a node pans without selecting and does not block keyboard se
   await node.click();
   await expect(node).toHaveAttribute("aria-pressed", "true");
   expect(
-    warnings.filter((message) => /controlled|pointer capture/i.test(message))
+    warnings.filter((message) => /[cC][oO][nN][tT][rR][oO][lL][lL][eE][dD]|[pP][oO][iI][nN][tT][eE][rR] [cC][aA][pP][tT][uU][rR][eE]/u.test(message))
   ).toEqual([]);
 });
 
