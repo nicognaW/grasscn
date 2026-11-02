@@ -71,4 +71,9 @@
   .mc-scoreboard-body {
     background: #0000004c;
   }
+  .mc-scoreboard-row {
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
 }
