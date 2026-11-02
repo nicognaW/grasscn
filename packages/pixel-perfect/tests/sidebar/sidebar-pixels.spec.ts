@@ -11,6 +11,7 @@ import type buttonReference from "../reference/manifest.json";
 import type scrollReference from "../reference/scroll-area/manifest.json";
 
 type SidebarInputReferenceCase = (typeof inputReference)["cases"][number];
+
 type SidebarScrollReferenceCase = (typeof scrollReference)["cases"][number];
 
 // This composite consumer forwards only these observed fields from its eight native constituent families.

@@ -189,12 +189,14 @@ for (const component of ["sonner"]) {
         )
       )
       .toBe(3);
+
     const sounds = await page.evaluate(
       () =>
         // SAFETY: this test's initScript initializes this precise playback log before navigation.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         (window as typeof window & ToastPlaybackWindow).sounds
     );
+
     expect(sounds.filter((s) => s.kind === "click")).toEqual([
       { kind: "click", rate: 1, volume: 0.125 },
     ]);

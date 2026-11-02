@@ -156,6 +156,7 @@ export async function serveVerificationHosts(execution: {fixturePort: number; pr
         response.end("Verification proxy request failed");
       });
     });
+
     proxyServer.on("connection", (socket) => {
       track(socket);
     });

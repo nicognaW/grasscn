@@ -97,6 +97,7 @@ const Slider = ({
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
   const highlightTrack = !(disabled ?? false) && focused && !editing;
+
   const highlightHandle =
     !(disabled ?? false) && (hovered || (focused && editing));
 

@@ -22,6 +22,7 @@ export const fixtureDirectory = repositoryFile(
 
 const fallbackDirectory = fixtureRoot;
 const skins = ["dream-skin.png", "steve-skin.png"];
+
 const digest = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 

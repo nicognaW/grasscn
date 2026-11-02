@@ -279,12 +279,14 @@ try {
       },
       stdio: "inherit",
     });
+
     // SAFETY: Node's ChildProcess exit event provides (code, signal); events.once rejects on spawn errors.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This owned child has no callers operating on its handle after exit.
     const [exitCode, signal] = (await once(child, "exit")) as [
       number | null,
       NodeJS.Signals | null,
     ];
+
     const code = exitCode ?? (signal === null ? 0 : 1);
 
     report.checks.push({ exitCode: code, name });

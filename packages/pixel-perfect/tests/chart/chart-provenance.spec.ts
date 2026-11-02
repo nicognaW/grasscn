@@ -104,11 +104,13 @@ for (const kind of ["fps", "pie"]) {
       }
 
       expect(pixels.equals(expected.data)).toBe(true);
+
       // SAFETY: Each retained FPS/Pie case has exactly one paired repeat record with the consumed mismatch/digest fields. Preserve this bounded retained lookup and its raw failure path.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact paired retained capture/repeat relation; no new success check or fallback.
       const repeated = r.cases.find(
         (v: { name: string }) => v.name === c.name
       ) as ChartRepeatedCase;
+
       expect(repeated.mismatchedPixels).toBe(0);
       expect(repeated.decodedRgbaSha256).toBe(hash(expected.data));
     }

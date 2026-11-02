@@ -84,6 +84,7 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
       atob(sprite.rgba),
       (c) => c.codePointAt(0) ?? Number.NaN
     );
+
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,
@@ -138,12 +139,14 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
 
     const a = [quadX, quadY, u / atlas.width, v / atlas.height];
     const b = [quadX, quadY + h, u / atlas.width, (v + sh) / atlas.height];
+
     const c = [
       quadX + w,
       quadY + h,
       (u + sw) / atlas.width,
       (v + sh) / atlas.height,
     ];
+
     const d = [quadX + w, quadY, (u + sw) / atlas.width, v / atlas.height];
 
     gl.bufferData(

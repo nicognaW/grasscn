@@ -58,10 +58,12 @@ const readManifest = async (name: string, directory = root) => {
 
 const radix = (name: string) =>
   /^(?:@radix-ui\/|radix-ui(?:@|\/|$))/u.test(name);
+
 const cmdk = (name: string) => /^cmdk(?:@|\/|$)/u.test(name);
 const vaul = (name: string) => /^vaul(?:@|\/|$)/u.test(name);
 const banned = (name: string) => radix(name) || vaul(name);
 const manifest = await readManifest("package.json");
+
 // SAFETY: the pinned Bun lockfile defines dependency package tuples and workspace roots.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing lockfile-version and dependency-route assertions remain intact.
 const lock = JSON5.parse(
@@ -75,8 +77,10 @@ assert.equal(lock.lockfileVersion, 2, "Unsupported Bun lockfile format");
 const registry = JSON.parse(
   await readFile(path.join(sourceRoot, "registry.json"), "utf-8")
 ) as PrimitiveRegistry;
+
 const failures: string[] = [];
 const packages = lock.packages ?? {};
+
 const metadata = (location: string): DependencyFields =>
   packages[location]?.[2] ?? {};
 
@@ -204,6 +208,7 @@ for (
 
 const dependencyIsInCommandClosure = (location: string, name: string) => {
   const dependency = resolveDependency(location, name);
+
   return dependency !== undefined && cmdkClosure.has(dependency);
 };
 

@@ -108,12 +108,14 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page
     .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
+
   let calls = await page.evaluate(
     () =>
       // SAFETY: this test's initScript initializes this precise playback log before navigation.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       (window as typeof window & TradingAudioWindow).tradeAudio
   );
+
   expect(calls.map((c) => c.volume)).toEqual([0.25, 1]);
   expect(calls[1].pitch).toBe(1);
   expect(clips.some((c) => c.src === calls[1].src)).toBe(true);

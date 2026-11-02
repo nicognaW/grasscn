@@ -52,6 +52,7 @@ const HotbarPaint = ({
       ["hotbar_selection", value * 20, 0],
     ] as const) {
       const asset = hotbarRgba[name];
+
       const bytes = Uint8Array.from(
         atob(asset.rgba),
         (c) => c.codePointAt(0) ?? Number.NaN
