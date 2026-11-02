@@ -3,17 +3,25 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
+import type { Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
+import type { CachedCase } from "@ppt/installed/case-cache";
 import {
   installedCaseCache,
   installedConsumerIdentity,
 } from "@ppt/installed/case-cache";
+import type { DecodedPixels } from "@ppt/installed/installed-compositions-protocol";
+import type {
+  CalendarCaptureManifest,
+  CalendarConsumerSettings,
+  LegacyCalendarQuery,
+  LegacyCalendarConsumerWindow,
+} from "@ppt/installed/legacy-consumer-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import {
   pixelPerfectTestRoot,
-  repoRoot,
   webFile,
   pixelPerfectFile,
   repositoryFile,
@@ -24,19 +32,25 @@ fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 
 const [consumerArg, component, url] = process.argv.slice(2);
 const consumer = path.resolve(consumerArg);
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
 assert.ok(["calendar", "date-picker"].includes(component) && url);
 
-const item = JSON.parse(
-  fs.readFileSync(webFile(path.join("registry.json")))
-).items.find((i) => i.name === component);
+// SAFETY: the authored registry owns this fresh source descriptor read at the original verification phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
 
+const item = registry.items.find((i) => i.name === component);
+
+// SAFETY: the initialized shadcn consumer configuration owns these existing alias/rsc fields.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
-  fs.readFileSync(path.join(consumer, "components.json"))
-);
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as CalendarConsumerSettings;
 
-const canonical = (b) => {
+const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll("\r\n", "\n")
@@ -50,7 +64,7 @@ const canonical = (b) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(installedRegistryFile(f, consumer, settings));
@@ -69,10 +83,10 @@ const files = item.files.map((f) => {
 });
 
 const browser = await chromium.launch({ channel: "msedge" });
-const pageErrors = [];
+const pageErrors: string[] = [];
 
 let comparisons = 0;
-let page;
+let page: Page | undefined;
 
 const inputIdentity = installedConsumerIdentity(consumer);
 
@@ -86,7 +100,7 @@ const runtimeIdentity = {
   viewport: [1536, 900, 1],
 };
 
-function differences(a, b) {
+function differences(a: DecodedPixels, b: DecodedPixels) {
   assert.deepEqual([a.width, a.height], [b.width, b.height]);
   let count = 0;
 
@@ -112,13 +126,17 @@ try {
         ]
       : []),
   ]) {
+    // SAFETY: the existing Calendar/DatePicker constituent table selects these captured-reference producers.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Calendar constituent capture producer boundary.
     const manifest = JSON.parse(
-      fs.readFileSync(
-        pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
-      )
-    );
+      fs
+        .readFileSync(
+          pixelPerfectFile(path.join("tests/reference", dir, "manifest.json"))
+        )
+        .toString()
+    ) as CalendarCaptureManifest;
 
-    const cases = [];
+    const cases: CachedCase[] = [];
 
     let retainedCases = 0;
 
@@ -179,8 +197,8 @@ try {
         continue;
       }
 
-      const record = { mismatchedPixels: 0, name: c.name };
-      const images = {};
+      const record: CachedCase = { mismatchedPixels: 0, name: c.name };
+      const images: Record<string, Buffer> = {};
 
       for (const alias of aliases) {
         const previousComparisonCount = comparisons;
@@ -197,10 +215,15 @@ try {
           });
           page.on("pageerror", (e) => pageErrors.push(e.message));
           await page.goto(url);
-          await page.waitForFunction(() => !!window.renderCalendarCase);
+          await page.waitForFunction(
+            () =>
+              // SAFETY: the hash-bound retained Calendar standalone consumer installs the required renderCalendarCase ABI.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge boundary.
+              !!(window as LegacyCalendarConsumerWindow).renderCalendarCase
+          );
         }
 
-        const q = {
+        const q: LegacyCalendarQuery = {
           align: c.alignment ?? "left",
           background: c.background ?? manifest.background ?? "#202020",
           case: component + part + c.name + alias,
@@ -223,27 +246,33 @@ try {
         const optionalText = c.text;
 
         if (optionalText !== null && optionalText !== undefined) {
-          q.text = c.text;
+          q.text = c.text!;
         }
 
         if (c.wrapWidth) {
           q.wrapWidth = String(c.wrapWidth);
         }
 
-        await page.evaluate((q) => window.renderCalendarCase(q), q);
-        await expect(page.locator("#marker")).toHaveAttribute(
+        await page!.evaluate(
+          (q) =>
+            // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
+            (window as LegacyCalendarConsumerWindow).renderCalendarCase(q),
+          q
+        );
+        await expect(page!.locator("#marker")).toHaveAttribute(
           "data-case",
           q.case
         );
-        await expect(page.locator("#subject")).toBeVisible();
+        await expect(page!.locator("#subject")).toBeVisible();
 
         if (part === "label") {
-          await expect(page.locator("#subject")).toHaveAttribute(
+          await expect(page!.locator("#subject")).toHaveAttribute(
             "data-mc-label-layout-ready",
             "true"
           );
 
-          for (const canvas of await page
+          for (const canvas of await page!
             .locator("#subject [data-mc-label-ready]")
             .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
@@ -251,27 +280,27 @@ try {
         }
 
         if (part === "trigger-cjk") {
-          for (const canvas of await page
+          for (const canvas of await page!
             .locator("#subject [data-mc-label-ready]")
             .all()) {
             await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
           }
         }
 
-        await page.mouse.move(0, 0);
+        await page!.mouse.move(0, 0);
 
         if (
           alias === "base" &&
           (c.state === "hover" || c.state === "disabled-hover")
         ) {
-          await page.locator("#subject").hover({ force: true });
+          await page!.locator("#subject").hover({ force: true });
         }
 
         if (alias === "base" && c.state === "focus") {
-          await page.locator("#subject").focus();
+          await page!.locator("#subject").focus();
         }
 
-        await page.evaluate(
+        await page!.evaluate(
           async () =>
             new Promise((r) =>
               requestAnimationFrame(() => requestAnimationFrame(r))
@@ -288,7 +317,7 @@ try {
 
         const expected = PNG.sync.read(bytes);
 
-        const actualBytes = await page
+        const actualBytes = await page!
           .locator("#subject")
           .screenshot({ animations: "disabled" });
 
