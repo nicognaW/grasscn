@@ -36,9 +36,11 @@ export default function ChartDemo({ scale }: DemoProps) {
     const [step, setStep] = React.useState(0), [limit, setLimit] = React.useState(120);
     const [metric, setMetric] = React.useState("latency"), [webStep, setWebStep] = React.useState(0);
     const webSamples = React.useMemo(() => Array.from({ length: 240 }, (_, i) => metric === "latency" ? [86, 112, 98, 172, 146, 104, 132, 220, 158, 94, 121, 188][(i + webStep) % 12] : [18, 32, 28, 46, 35, 24, 41, 62, 38, 26, 34, 53][(i + webStep) % 12]), [metric, webStep]);
+
     const browserData = React.useMemo(() => { const rows = browsers.map((row, i) => ({ ...row, visitors: row.visitors + (webStep % 3) * (i + 1) * 5 })), total = rows.reduce((sum, row) => sum + row.visitors, 0);
 
  return rows.map(row => ({ name: row.name, visitors: row.visitors })); }, [webStep]);
+
     const samples = React.useMemo(() => Array.from({ length: 240 }, (_, i) => ((i * 7 + step) % 30 + 1) * 1e6), [step]);
     const nativeData = React.useMemo(() => [{ name: "render", percentage: step % 2 ? 35 : 50 }, { name: "tick", percentage: step % 2 ? 65 : 50 }], [step]);
     const circular = ["pie", "donut", "radial"].includes(type);
