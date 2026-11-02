@@ -41,14 +41,55 @@ type Geometry =
       fill: string;
     };
 
-interface GeometryStore {
-  entries: Map<string, Geometry>;
-  version: number;
-  listeners: Set<() => void>;
+interface GeometrySnapshot {
+  entries: Geometry[];
+  revision: number;
+}
+
+const createGeometryStore = () => {
+  const entries = new Map<string, Geometry>();
+  const listeners = new Set<() => void>();
+  const initialSnapshot: GeometrySnapshot = { entries: [], revision: 0 };
+  let snapshot = initialSnapshot;
+
+  const invalidate = () => {
+    snapshot = {
+      entries: [...entries.values()].sort((a, b) => a.index - b.index),
+      revision: snapshot.revision + 1,
+    };
+    listeners.forEach((listener) => {
+      listener();
+    });
+  };
+
+  return {
+    getServerSnapshot: () => initialSnapshot,
+    getSnapshot: () => snapshot,
+    invalidate,
+    remove: (id: string) => {
+      entries.delete(id);
+      invalidate();
+    },
+    set: (id: string, geometry: Geometry) => {
+      entries.set(id, geometry);
+      invalidate();
+    },
+    subscribe: (listener: () => void) => {
+      listeners.add(listener);
+
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+  };
+};
+
+interface GeometryContext {
+  store: ReturnType<typeof createGeometryStore>;
   scale: 1 | 2 | 3;
 }
 
-const Context = React.createContext<GeometryStore | null>(null);
+const Context = React.createContext<GeometryContext | null>(null);
 
 export function chartColorChannels(
   color: string,
@@ -101,26 +142,15 @@ export const ChartGeometryProvider = ({
   host: React.RefObject<HTMLDivElement | null>;
   colors: unknown;
 }) => {
-  const [store] = React.useState<GeometryStore>(() => ({
-    entries: new Map(),
-    listeners: new Set(),
-    scale,
-    version: 0,
-  }));
+  const [store] = React.useState(createGeometryStore);
+  const context = React.useMemo(() => ({ scale, store }), [scale, store]);
 
-  store.scale = scale;
   React.useLayoutEffect(() => {
-    store.version++;
-    store.listeners.forEach((listener) => {
-      listener();
-    });
+    store.invalidate();
   }, [store, colors, scale]);
   React.useLayoutEffect(() => {
     const observer = new MutationObserver(() => {
-      store.version++;
-      store.listeners.forEach((listener) => {
-        listener();
-      });
+      store.invalidate();
     });
 
     for (
@@ -139,7 +169,7 @@ export const ChartGeometryProvider = ({
     };
   }, [store, host]);
 
-  return <Context.Provider value={store}>{children}</Context.Provider>;
+  return <Context.Provider value={context}>{children}</Context.Provider>;
 };
 
 function useStore() {
@@ -218,47 +248,31 @@ export const ChartAxisTick = ({
 };
 
 export function useChartGeometry() {
-  const store = useStore();
-  React.useSyncExternalStore(
-    React.useCallback(
-      (listener) => {
-        store.listeners.add(listener);
+  const { scale, store } = useStore();
 
-        return () => {
-          store.listeners.delete(listener);
-        };
-      },
-      [store]
-    ),
-    () => store.version,
-    () => 0
+  const snapshot = React.useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getServerSnapshot
   );
 
   return {
-    entries: [...store.entries.values()].sort((a, b) => a.index - b.index),
-    revision: store.version,
-    scale: store.scale,
+    ...snapshot,
+    scale,
   };
 }
 
 function useRegister(geometry: Geometry) {
-  const store = useStore();
+  const { store } = useStore();
   const id = React.useId();
   const serialized = JSON.stringify(geometry);
 
   React.useLayoutEffect(() => {
-    store.entries.set(id, JSON.parse(serialized) as Geometry);
-    store.version += 1;
-    store.listeners.forEach((listener) => {
-      listener();
-    });
+    // SAFETY: serialized was produced immediately above from this hook's Geometry input.
+    store.set(id, JSON.parse(serialized) as Geometry);
 
     return () => {
-      store.entries.delete(id);
-      store.version += 1;
-      store.listeners.forEach((listener) => {
-        listener();
-      });
+      store.remove(id);
     };
   }, [store, id, serialized]);
 }
