@@ -3,9 +3,11 @@ import * as React from "react"
 import {Spinner} from "../registry/ui/spinner"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
+
 export default function SpinnerDemo({ scale }: DemoProps) {
   const [paused, setPaused] = React.useState(false),
     [time, setTime] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

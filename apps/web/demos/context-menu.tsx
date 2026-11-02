@@ -3,12 +3,14 @@ import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuGroup, 
 import { Card, CardHeader, CardTitle, CardDescription } from "../registry/ui/card";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
+
 export default function ContextMenuDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("World Settings");
   const [action, setAction] = React.useState("Resume game");
   const [coordinates, setCoordinates] = React.useState(false);
   const [mode, setMode] = React.useState("world");
   const [lastAction, setLastAction] = React.useState("Choose a world option");
+
   return (
     <>
       <div className="demo-options">

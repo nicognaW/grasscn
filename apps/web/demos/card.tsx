@@ -8,6 +8,7 @@ import type { DemoProps } from "../types"
 export default function CardDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("Minecraft");
   const [saved, setSaved] = React.useState(false);
+
   return (
     <>
       <div className="demo-stage" data-stage="card">

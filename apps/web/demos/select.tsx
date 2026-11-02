@@ -3,6 +3,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from ".
 import { Button } from "../registry/ui/button";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
+
 const initial = [
   "Survival",
   "Creative",
@@ -14,12 +15,14 @@ const initial = [
   "Normal",
   "Hard",
 ];
+
 export default function SelectDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState("mode-0");
   const [disabled, setDisabled] = React.useState(false);
   const [title, setTitle] = React.useState("Survival");
   const [disabledOption, setDisabledOption] = React.useState(true);
   const titles = [title || " ", ...initial.slice(1)];
+
   return (
     <>
       <div className="demo-options">

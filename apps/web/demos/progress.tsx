@@ -4,6 +4,7 @@ import { Progress, type BossBarColor, type BossBarOverlay } from "../registry/ui
 import { Slider } from "../registry/ui/slider";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
+
 const colors: BossBarColor[] = [
   "pink",
   "blue",
@@ -13,6 +14,7 @@ const colors: BossBarColor[] = [
   "purple",
   "white",
 ];
+
 const overlays: BossBarOverlay[] = [
   "progress",
   "notched_6",
@@ -20,12 +22,14 @@ const overlays: BossBarOverlay[] = [
   "notched_12",
   "notched_20",
 ];
+
 export default function ProgressDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState(50);
   const [color, setColor] = React.useState<BossBarColor>("pink");
   const [overlay, setOverlay] = React.useState<BossBarOverlay>("progress");
   const colorName = color[0].toUpperCase() + color.slice(1);
   const notchName = overlay === "progress" ? "None" : overlay.slice(8);
+
   return (
     <>
       <div className="demo-options">

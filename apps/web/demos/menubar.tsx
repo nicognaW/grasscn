@@ -2,12 +2,14 @@ import * as React from "react";
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarGroup, MenubarLabel, MenubarItem, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubTrigger, MenubarPortal, MenubarSubContent, } from "../registry/ui/menubar";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
+
 export default function MenubarDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("Game");
   const [action, setAction] = React.useState("Resume game");
   const [coordinates, setCoordinates] = React.useState(false);
   const [mode, setMode] = React.useState("world");
   const [lastAction, setLastAction] = React.useState("Choose a world option");
+
   return (
     <>
       <div className="demo-options">

@@ -4,14 +4,17 @@ import {InputOTP,InputOTPGroup,InputOTPSlot,InputOTPSeparator} from "../registry
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
+
 export default function InputOTPDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale),
     slotWidth = Math.min(
       20,
       Math.max(12, Math.floor((stage.width - 6 - 24 / scale) / 6))
     );
+
   const [value, setValue] = React.useState(""),
     [complete, setComplete] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

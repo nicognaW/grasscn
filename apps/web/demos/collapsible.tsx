@@ -12,6 +12,7 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
       "Hello Minecraft\nYour next adventure starts here."
     ),
     [open, setOpen] = React.useState(false);
+
   return (
     <>
       <div className="demo-options">

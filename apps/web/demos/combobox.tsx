@@ -4,12 +4,15 @@ import{Combobox,ComboboxInput,ComboboxContent,ComboboxList,ComboboxItem,Combobox
 import{Button}from"../registry/ui/button"
 import{MinecraftMenuText,MenuScaleContext}from"../registry/ui/minecraft-menu-text"
 import type{DemoProps}from"../types"
+
 const biomes = ["Grasslands", "Birch Forest", "你好，世界", "Deep Dark"],
   blocks = ["Oak Planks", "Stone", "你好，世界", "Bedrock"];
+
 export default function ComboboxDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState<string | null>(null),
     [inventory, setInventory] = React.useState<string[]>(["Oak Planks"]),
     anchor = useComboboxAnchor();
+
   return (
     <MenuScaleContext.Provider value={scale}>
       <div className="demo-options">

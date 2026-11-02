@@ -3,9 +3,11 @@ import * as React from "react";
 import { Trading, type TradeOffer } from "../registry/ui/trading";
 import type { DemoProps } from "../types";
 import { tradingIcons } from "./trading-icons";
+
 export default function TradingDemo({ scale }: DemoProps) {
   const [completed, setCompleted] = React.useState(0),
     [selected, setSelected] = React.useState("0");
+
   const goods = [
     ["book", "Field guide", 4],
     ["bread", "Bread", 1],
@@ -17,6 +19,7 @@ export default function TradingDemo({ scale }: DemoProps) {
     ["diamond", "Diamond", 12],
     ["book", "Enchanted guide", 16],
   ] as const;
+
   const offers: TradeOffer[] = goods.map(([name, label, count], i) => ({
     id: String(i),
     label,
@@ -28,6 +31,7 @@ export default function TradingDemo({ scale }: DemoProps) {
     result: { label, count: 1, icon: <img src={tradingIcons[name]} alt="" /> },
     inStock: i !== 8,
   }));
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-16 max-w-full"

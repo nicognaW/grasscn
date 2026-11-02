@@ -4,10 +4,12 @@ import {Attachment,AttachmentMedia,AttachmentContent,AttachmentTitle,AttachmentD
 import {Input} from "../registry/ui/input"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
+
 export default function AttachmentDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("New World.zip"),
     [opened, setOpened] = React.useState(0),
     [removed, setRemoved] = React.useState(false);
+
   return (
     <>
       <div className="demo-options">

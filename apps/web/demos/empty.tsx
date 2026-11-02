@@ -5,13 +5,16 @@ import {Textarea} from "../registry/ui/textarea"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
+
 export default function EmptyDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
+
   const [title, setTitle] = React.useState("No worlds found"),
     [description, setDescription] = React.useState(
       "Create your first world.\nYour adventure starts here."
     ),
     [worlds, setWorlds] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

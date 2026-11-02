@@ -16,7 +16,9 @@ import {
   TableCell,
 } from "../registry/ui/table";
 import type { DemoProps } from "../types";
+
 type World = { id: string; name: string; players: number };
+
 const helper = createColumnHelper<DataTableFeatures, World>(),
   worlds: World[] = [
     { id: "a", name: "Grasslands", players: 4 },
@@ -65,6 +67,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
       ]),
     [scale]
   );
+
   const table = useTable({
     features,
     columns,

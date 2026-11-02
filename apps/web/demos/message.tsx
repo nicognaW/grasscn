@@ -5,7 +5,9 @@ import {Message,MessageContent} from "../registry/ui/message"
 import {Input} from "../registry/ui/input"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
+
 type Line = { author?: string; text: string; system?: boolean };
+
 const history: Line[] = [
   { author: "Steve", text: "The dashboard is ready for review." },
   { author: "Alex", text: "带上你的镐子。" },
@@ -20,15 +22,18 @@ const history: Line[] = [
   { author: "Alex", text: "明天继续。" },
   { system: true, text: "Changes saved." },
 ];
+
 function History({ scale }: DemoProps) {
   const [messages, setMessages] = React.useState(history),
     [text, setText] = React.useState("The updated design looks great."),
     api = useMessageScroller();
+
   const send = () => {
     if (!text.trim()) return;
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };
+
   return (
     <>
       <form
@@ -144,6 +149,7 @@ function History({ scale }: DemoProps) {
     </>
   );
 }
+
 export default function MessageDemo(props: DemoProps) {
   return (
     <MessageScrollerProvider

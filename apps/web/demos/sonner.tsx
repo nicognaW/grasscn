@@ -5,12 +5,14 @@ import {Input} from "../registry/ui/input"
 import {Textarea} from "../registry/ui/textarea"
 import {Toaster,toast} from "../registry/ui/sonner"
 import type {DemoProps} from "../types"
+
 export default function SonnerDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("World saved"),
     [message, setMessage] = React.useState(
       "Your progress has been saved.\n世界已保存"
     ),
     [shown, setShown] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

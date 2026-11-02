@@ -4,16 +4,19 @@ import {Input} from "../registry/ui/input"
 import {Button} from "../registry/ui/button"
 import {Avatar,AvatarImage,AvatarFallback,AvatarGroup,AvatarGroupCount} from "../registry/ui/avatar"
 import type {DemoProps} from "../types"
+
 const people = [
   { name: "Jordan Lee", role: "Frontend developer", skin: "wide/steve" },
   { name: "Alex Morgan", role: "Design engineer", skin: "slim/alex" },
   { name: "Sam Rivera", role: "Product designer", skin: "wide/kai" },
   { name: "Jamie Chen", role: "Project lead", skin: "wide/sunny" },
 ] as const;
+
 export default function AvatarDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("Nyanki"),
     [player, setPlayer] = React.useState("Nyanki"),
     [status, setStatus] = React.useState("loading");
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-16"
@@ -24,6 +27,7 @@ export default function AvatarDemo({ scale }: DemoProps) {
         onSubmit={(event) => {
           event.preventDefault();
           const value = name.trim();
+
           if (value && value !== player) {
             setStatus("loading");
             setPlayer(value);

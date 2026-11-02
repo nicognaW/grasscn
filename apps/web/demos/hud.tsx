@@ -3,9 +3,11 @@ import * as React from 'react';
 import { HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar } from '../registry/ui/hud';
 import { Button } from '../registry/ui/button';
 import type { DemoProps } from '../types';
+
 export default function HudDemo({ scale }: DemoProps) {
   const [health, setHealth] = React.useState(17),
     [progress, setProgress] = React.useState(0.45);
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-20"

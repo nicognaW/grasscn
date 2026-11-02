@@ -8,33 +8,44 @@ import { Button } from "../registry/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../registry/ui/select";
 import { MinecraftDisclosureText } from "../registry/ui/minecraft-disclosure-text";
 import type { DemoProps } from "../types";
+
 // Official shadcn chart-bar-multiple and chart-pie-donut example datasets.
 const visitors = [
     { name: "January", desktop: 186, mobile: 80 }, { name: "February", desktop: 305, mobile: 200 },
     { name: "March", desktop: 237, mobile: 120 }, { name: "April", desktop: 73, mobile: 190 },
     { name: "May", desktop: 209, mobile: 130 }, { name: "June", desktop: 214, mobile: 140 },
 ];
+
 const browsers = [{ name: "Chrome", visitors: 275 }, { name: "Safari", visitors: 200 }, { name: "Firefox", visitors: 187 }, { name: "Edge", visitors: 173 }, { name: "Other", visitors: 90 }];
 const config: ChartConfig = { desktop: { label: "Desktop", color: "#55ff55" }, mobile: { label: "Mobile", color: "#5555ff" }, visitors: { label: "Visitors", color: "#55ff55" } };
+
 const types: {
     value: AnalyticsChartType;
     label: string;
 }[] = [{ value: "bar", label: "Bar" }, { value: "stacked-bar", label: "Stacked bar" }, { value: "line", label: "Line" }, { value: "area", label: "Area" }, { value: "pie", label: "Pie" }, { value: "donut", label: "Donut" }, { value: "radar", label: "Radar" }, { value: "radial", label: "Radial" }];
+
 export default function ChartDemo({ scale }: DemoProps) {
     const stage = React.useRef<HTMLDivElement>(null), [contentWidth, setContentWidth] = React.useState(80);
-    React.useLayoutEffect(() => { const measure = () => { const node = stage.current!; const css = getComputedStyle(node); setContentWidth(Math.max(40, Math.floor((node.clientWidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight)) / scale))); }; measure(); const observer = new ResizeObserver(measure); observer.observe(stage.current!); return () => observer.disconnect(); }, [scale]);
+    React.useLayoutEffect(() => { const measure = () => { const node = stage.current!; const css = getComputedStyle(node); setContentWidth(Math.max(40, Math.floor((node.clientWidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight)) / scale))); };
+
+ measure(); const observer = new ResizeObserver(measure); observer.observe(stage.current!);
+
+ return () => observer.disconnect(); }, [scale]);
     const copy = (text: string) => <MinecraftDisclosureText scale={scale} maxWidth={contentWidth}>{text}</MinecraftDisclosureText>;
     const [type, setType] = React.useState<AnalyticsChartType>("area"), [period, setPeriod] = React.useState("6"), [device, setDevice] = React.useState("both");
     const [step, setStep] = React.useState(0), [limit, setLimit] = React.useState(120);
     const [metric, setMetric] = React.useState("latency"), [webStep, setWebStep] = React.useState(0);
     const webSamples = React.useMemo(() => Array.from({ length: 240 }, (_, i) => metric === "latency" ? [86, 112, 98, 172, 146, 104, 132, 220, 158, 94, 121, 188][(i + webStep) % 12] : [18, 32, 28, 46, 35, 24, 41, 62, 38, 26, 34, 53][(i + webStep) % 12]), [metric, webStep]);
-    const browserData = React.useMemo(() => { const rows = browsers.map((row, i) => ({ ...row, visitors: row.visitors + (webStep % 3) * (i + 1) * 5 })), total = rows.reduce((sum, row) => sum + row.visitors, 0); return rows.map(row => ({ name: row.name, visitors: row.visitors })); }, [webStep]);
+    const browserData = React.useMemo(() => { const rows = browsers.map((row, i) => ({ ...row, visitors: row.visitors + (webStep % 3) * (i + 1) * 5 })), total = rows.reduce((sum, row) => sum + row.visitors, 0);
+
+ return rows.map(row => ({ name: row.name, visitors: row.visitors })); }, [webStep]);
     const samples = React.useMemo(() => Array.from({ length: 240 }, (_, i) => ((i * 7 + step) % 30 + 1) * 1e6), [step]);
     const nativeData = React.useMemo(() => [{ name: "render", percentage: step % 2 ? 35 : 50 }, { name: "tick", percentage: step % 2 ? 65 : 50 }], [step]);
     const circular = ["pie", "donut", "radial"].includes(type);
     const data = React.useMemo(() => circular ? browsers : visitors.slice(-Number(period)), [circular, period]);
     const series = React.useMemo(() => circular ? ["visitors"] : device === "both" ? ["desktop", "mobile"] : [device], [circular, device]);
     const total = data.reduce((n, row) => n + series.reduce((s, key) => s + Number((row as Record<string, string | number>)[key]), 0), 0);
+
     return <>
     <div ref={stage} className="demo-stage demo-stage-display-flex flex-col demo-stage-flex-wrap-nowrap demo-stage-align-items-stretch demo-stage-min-width-0" data-stage="chart" style={
       /* SAFETY: satisfies checks --mc-scale, --demo-stage-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */

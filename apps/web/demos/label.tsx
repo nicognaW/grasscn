@@ -6,6 +6,7 @@ import type { DemoProps } from "../types"
 
 export default function LabelDemo({ scale }: DemoProps) {
   const [text, setText] = React.useState("Player Name");
+
   return (
     <>
       <div className="demo-options">

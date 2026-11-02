@@ -15,6 +15,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
   const identity = React.useId();
   const left = `${identity}-left`;
   const right = `${identity}-right`;
+
   const [orientation, setOrientation] = React.useState<
       "horizontal" | "vertical"
     >("horizontal"),

@@ -6,8 +6,10 @@ import{Button}from"../registry/ui/button"
 import{Card,CardHeader,CardTitle,CardDescription,CardContent}from"../registry/ui/card"
 import type{DemoProps}from"../types"
 import {useDemoWidth} from "../use-demo-width"
+
 export default function SidebarDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
+
   const [search, setSearch] = React.useState(""),
     [selected, setSelected] = React.useState("Survival"),
     [action, setAction] = React.useState("Ready"),
@@ -19,6 +21,7 @@ export default function SidebarDemo({ scale }: DemoProps) {
       "Skyblock",
       "Hardcore",
     ].filter((name) => name.toLowerCase().includes(search.toLowerCase()));
+
   return (
     <>
       <div ref={stage.ref} className="demo-stage" data-stage="sidebar">

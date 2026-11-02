@@ -12,6 +12,7 @@ export default function PopoverDemo({ scale }: DemoProps) {
   const [message, setMessage] = React.useState("Configure your world.");
   const [name, setName] = React.useState("Minecraft");
   const [saved, setSaved] = React.useState(false);
+
   return (
     <>
       <div className="demo-options">

@@ -9,11 +9,13 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState("survival");
   const [first, setFirst] = React.useState("Survival");
   const [disabled, setDisabled] = React.useState(false);
+
   const choices = [
     { value: "survival", label: first || " " },
     { value: "creative", label: "Creative" },
     { value: "adventure", label: "Adventure" },
   ];
+
   return (
     <>
       <div className="demo-options">

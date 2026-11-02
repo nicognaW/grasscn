@@ -3,11 +3,14 @@ import {MinecraftMap,LocatorBar} from '../registry/ui/map'
 import {Button} from '../registry/ui/button'
 import type {DemoProps} from '../types'
 import {getWorldMapPixels} from './map-world-data'
+
 export default function MapDemo({ scale }: DemoProps) {
   const [heading, setHeading] = React.useState(0),
     [selected, setSelected] = React.useState("Home"),
     [point, setPoint] = React.useState<{ x: number; y: number }>();
+
   const pixels = React.useMemo(getWorldMapPixels, []);
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-20 max-w-full"

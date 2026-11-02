@@ -5,11 +5,13 @@ import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
+
 export default function ItemDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("New World"),
     [description, setDescription] = React.useState("world-1\nSurvival Mode"),
     [selected, setSelected] = React.useState(""),
     [opens, setOpens] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

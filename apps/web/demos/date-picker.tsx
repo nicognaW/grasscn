@@ -3,6 +3,7 @@ import {DatePickerDemo,DatePickerRangeDemo} from "../registry/blocks/date-picker
 import {Label} from "../registry/ui/label"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
+
 export default function DatePickerExamples({ scale }: DemoProps) {
   return (
     <div

@@ -7,6 +7,7 @@ import {
 } from "../registry/ui/advancement-tree";
 import { Button } from "../registry/ui/button";
 import type { DemoProps } from "../types";
+
 const milestones: AdvancementNode[] = [
   {
     id: "plan",
@@ -45,11 +46,14 @@ const milestones: AdvancementNode[] = [
     kind: "challenge",
   },
 ];
+
 export default function AdvancementDemo({ scale }: DemoProps) {
   const [nodes, setNodes] = React.useState(milestones),
     [selected, setSelected] = React.useState("plan"),
     [reset, setReset] = React.useState(0);
+
   const node = nodes.find((n) => n.id === selected)!;
+
   return (
     <>
       <div

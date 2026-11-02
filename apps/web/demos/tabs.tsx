@@ -7,6 +7,7 @@ import { Label } from "../registry/ui/label";
 import { Checkbox } from "../registry/ui/checkbox";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
+
 export default function TabsDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
   const [title, setTitle] = React.useState("Game");
@@ -14,11 +15,13 @@ export default function TabsDemo({ scale }: DemoProps) {
   const [disabled, setDisabled] = React.useState(false);
   const [structures, setStructures] = React.useState(true);
   const [world, setWorld] = React.useState("New World");
+
   const panelStyle = {
     height: 64 * scale,
     padding: 8 * scale,
     boxSizing: "border-box" as const,
   };
+
   return (
     <>
       <div className="demo-options">

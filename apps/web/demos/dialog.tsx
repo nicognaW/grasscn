@@ -9,7 +9,9 @@ export default function DialogDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("World settings"),
     [message, setMessage] = React.useState("A helpful description."),
     [saved, setSaved] = React.useState(0);
+
   const [open, setOpen] = React.useState(false);
+
   return (
     <>
       <div className="demo-options">

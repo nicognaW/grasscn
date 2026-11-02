@@ -6,13 +6,17 @@ import type { DemoProps } from "../types"
 
 export default function ScrollAreaDemo({ scale }: DemoProps) {
   const viewport = React.useRef<HTMLDivElement>(null);
+
   const [offset, setOffset] = React.useState(0),
     [selected, setSelected] = React.useState<number>();
+
   const [disabled, setDisabled] = React.useState(false);
+
   const jump = (fraction: number) => {
     const node = viewport.current!;
     node.scrollTop = (node.scrollHeight - node.clientHeight) * fraction;
   };
+
   return (
     <>
       <div className="demo-options">

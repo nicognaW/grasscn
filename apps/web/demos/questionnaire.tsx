@@ -4,6 +4,7 @@ import {Questionnaire,QuestionnaireProgress,QuestionnaireItem,QuestionnaireTitle
 import {Label} from "../registry/ui/label"
 import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
+
 export default function QuestionnaireDemo({ scale }: DemoProps) {
   const [result, setResult] = React.useState(""),
     [session, setSession] = React.useState(0),
@@ -22,15 +23,20 @@ export default function QuestionnaireDemo({ scale }: DemoProps) {
       },
       { name: "name", required: true },
     ] as const;
+
   React.useLayoutEffect(() => {
     const node = form.current!;
+
     const measure = () =>
       setWidth(Math.max(1, Math.floor(node.clientWidth / scale)));
+
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(node);
+
     return () => observer.disconnect();
   }, [scale, session]);
+
   return (
     <>
       <div className="demo-options">

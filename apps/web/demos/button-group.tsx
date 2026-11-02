@@ -5,17 +5,21 @@ import {Button} from "../registry/ui/button"
 import {Input} from "../registry/ui/input"
 import {useDemoWidth} from "../use-demo-width"
 import type {DemoProps} from "../types"
+
 export default function ButtonGroupDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
+
   const buttonWidth = Math.min(
     100,
     Math.max(40, Math.floor((stage.width - 6) / 2))
   );
+
   const [orientation, setOrientation] = React.useState<
       "horizontal" | "vertical"
     >("horizontal"),
     [title, setTitle] = React.useState("World actions"),
     [action, setAction] = React.useState("Ready");
+
   return (
     <>
       <div className="demo-options">

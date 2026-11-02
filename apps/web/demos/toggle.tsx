@@ -6,11 +6,14 @@ import {Label} from "../registry/ui/label"
 import type {DemoProps} from "../types"
 
 import {useDemoWidth} from "../use-demo-width"
+
 export default function ToggleDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
+
   const [pressed, setPressed] = React.useState(false),
     [disabled, setDisabled] = React.useState(false),
     [label, setLabel] = React.useState("Only craftable recipes");
+
   return (
     <>
       <div className="demo-options">

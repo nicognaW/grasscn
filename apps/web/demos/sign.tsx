@@ -4,6 +4,7 @@ import {Sign,HangingSign,type SignWood} from '../registry/ui/sign'
 import {Input} from '../registry/ui/input'
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from '../registry/ui/select'
 import type {DemoProps} from '../types'
+
 const woods: SignWood[] = [
   "oak",
   "spruce",
@@ -18,10 +19,13 @@ const woods: SignWood[] = [
   "warped",
   "pale_oak",
 ];
+
 export default function SignDemo({ scale }: DemoProps) {
   const [wood, setWood] = React.useState<SignWood>("oak"),
     [title, setTitle] = React.useState("Welcome");
+
   const lines = [title, "to grasscn", "", "Open daily"];
+
   return (
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-20"

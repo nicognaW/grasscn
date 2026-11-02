@@ -14,11 +14,14 @@ import {
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
+
 export default function AlertDialogDemo({ scale }: DemoProps) {
   const [open, setOpen] = React.useState(false);
+
   const [title, setTitle] = React.useState("Are you sure?"),
     [message, setMessage] = React.useState("This action cannot be undone."),
     [confirmed, setConfirmed] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">

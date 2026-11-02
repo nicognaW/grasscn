@@ -9,6 +9,7 @@ export default function SwitchDemo({ scale }: DemoProps) {
   const [checked, setChecked] = React.useState(false);
   const [disabled, setDisabled] = React.useState(false);
   const [label, setLabel] = React.useState("Enable clouds");
+
   return (
     <>
       <div className="demo-options">
