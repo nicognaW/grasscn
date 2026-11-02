@@ -1,7 +1,92 @@
 import { test, expect } from "@grasscn/tests/test";
 import { nativeTextGap } from "@tests/harness/native-text-gap";
+import { PNG } from "pngjs";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
+
+test("selected documentation keeps its bitmap glyphs and a visible highlight", async ({
+  page,
+}) => {
+  await page.goto(`${origin}/docs/components/advancement-tree`);
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+  });
+
+  const word = page
+    .locator(".minecraft-paragraph")
+    .first()
+    .locator(".mc-bitmap")
+    .filter({ hasText: "selectable" })
+    .first();
+
+  await expect(word).toBeVisible();
+  const box = await word.boundingBox();
+
+  if (box === null) {
+    throw new Error("Visible selectable word bounds required");
+  }
+
+  const clip = {
+    height: 50,
+    width: Math.ceil(box.width) + 24,
+    x: Math.floor(box.x) - 12,
+    y: Math.floor(box.y) - 10,
+  };
+
+  const before = PNG.sync.read(
+    await page.screenshot({ caret: "initial", clip })
+  );
+
+  await page.mouse.move(box.x + 1, box.y + 8);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width - 1, box.y + 8, { steps: 12 });
+  await page.mouse.up();
+
+  const selected = PNG.sync.read(
+    await page.screenshot({ caret: "initial", clip })
+  );
+
+  expect(await page.evaluate(() => window.getSelection()?.toString())).toBe(
+    "selectable"
+  );
+
+  let changedInk = 0;
+  let highlightedPixels = 0;
+
+  for (let index = 0; index < before.data.length; index += 4) {
+    const wasInk = [0, 1, 2].every(
+      (channel) => before.data[index + channel] === 255
+    );
+
+    const isInk = [0, 1, 2].every(
+      (channel) => selected.data[index + channel] === 255
+    );
+
+    if (wasInk !== isInk) {
+      changedInk += 1;
+    }
+
+    if (
+      !wasInk &&
+      !isInk &&
+      [0, 1, 2].some(
+        (channel) =>
+          before.data[index + channel] !== selected.data[index + channel]
+      )
+    ) {
+      highlightedPixels += 1;
+    }
+  }
+
+  expect(
+    changedInk,
+    "Selection must preserve the original bitmap foreground"
+  ).toBe(0);
+  expect(
+    highlightedPixels,
+    "Selection must have a visible background"
+  ).toBeGreaterThan(100);
+});
 
 test("documentation text supports real mouse selection with one accessible heading", async ({
   page,

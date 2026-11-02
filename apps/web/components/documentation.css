@@ -60,6 +60,12 @@
   user-select: text;
   cursor: text;
 }
+/* Preserve the bitmap foreground while the browser highlights the copyable text. */
+.document-text .mc-text-accessible::selection {
+  color: transparent;
+  background-color: Highlight;
+}
+
 :is(button, [role="option"]) .document-text .mc-text-accessible {
   user-select: none;
   cursor: inherit;
