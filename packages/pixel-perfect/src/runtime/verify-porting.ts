@@ -503,7 +503,9 @@ try {
       browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR = directory;
     }
 
-    const code = await new Promise<number>((resolve, reject) => {
+    const completion = Promise.withResolvers<number>();
+
+    try {
       const commandArgs = [...args];
 
       const child = spawn(process.execPath, commandArgs, {
@@ -519,11 +521,15 @@ try {
         stdio: "inherit",
       });
 
-      child.on("error", reject);
+      child.on("error", completion.reject);
       child.on("exit", (exitCode, signal) => {
-        resolve(exitCode ?? (hasText(signal) ? 1 : 0));
+        completion.resolve(exitCode ?? (hasText(signal) ? 1 : 0));
       });
-    });
+    } catch (error) {
+      completion.reject(error);
+    }
+
+    const code = await completion.promise;
 
     const check: RuntimeVerificationReceipt["checks"][number] = {
       exitCode: code,

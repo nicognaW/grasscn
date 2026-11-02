@@ -220,10 +220,16 @@ export async function serveVerificationHosts({
       });
     });
     proxy = proxyServer;
-    await new Promise<void>((resolve, reject) => {
-      proxyServer.once("error", reject);
-      proxyServer.listen(proxyPort, "127.0.0.1", resolve);
-    });
+    const listening = Promise.withResolvers<void>();
+
+    try {
+      proxyServer.once("error", listening.reject);
+      proxyServer.listen(proxyPort, "127.0.0.1", listening.resolve);
+    } catch (error) {
+      listening.reject(error);
+    }
+
+    await listening.promise;
     const ownedFixture = fixture;
     const ownedPreview = preview;
 
