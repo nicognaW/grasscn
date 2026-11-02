@@ -100,7 +100,12 @@ const MinecraftItemText = ({
 
   let text = accessibleText;
 
-  if (text !== null && (typeof clipWidth !== "undefined" && clipWidth !== null) && clipWidth > 0) {
+  if (
+    text !== null &&
+    typeof clipWidth !== "undefined" &&
+    clipWidth !== null &&
+    clipWidth > 0
+  ) {
     text = text
       .split("\n")
       .map((line) => {
@@ -264,7 +269,10 @@ const MinecraftItemText = ({
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: (typeof maxWidth === "undefined" || maxWidth === null) ? undefined : maxWidth * scale,
+            width:
+              typeof maxWidth === "undefined" || maxWidth === null
+                ? undefined
+                : maxWidth * scale,
             ...__style,
           }) as React.CSSProperties
       )}

@@ -256,8 +256,16 @@ const buildRenderer = function buildRenderer(
 
       const order = Array.from({ length: source.length / 4 }, (_, i) => i).sort(
         (leftQuadIndex, rightQuadIndex) =>
-          Math.fround(Math.fround(data[leftQuadIndex * 48 + 2] + data[leftQuadIndex * 48 + 18]) * 0.5) -
-          Math.fround(Math.fround(data[rightQuadIndex * 48 + 2] + data[rightQuadIndex * 48 + 18]) * 0.5)
+          Math.fround(
+            Math.fround(
+              data[leftQuadIndex * 48 + 2] + data[leftQuadIndex * 48 + 18]
+            ) * 0.5
+          ) -
+          Math.fround(
+            Math.fround(
+              data[rightQuadIndex * 48 + 2] + data[rightQuadIndex * 48 + 18]
+            ) * 0.5
+          )
       );
 
       const sorted = new Float32Array(data.length);

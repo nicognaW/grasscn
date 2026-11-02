@@ -71,7 +71,11 @@ const TableText = ({
   const scale = React.useContext(TableScale);
   const value = literalText(children);
 
-  if ((typeof children === "undefined" || children === null) || typeof children === "boolean") {
+  if (
+    typeof children === "undefined" ||
+    children === null ||
+    typeof children === "boolean"
+  ) {
     return null;
   }
 

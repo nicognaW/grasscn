@@ -3,10 +3,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { compare } from "@ppt/harness/families/text-components-test-utils";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 /** Inputs read by this file's closed Item-row, Label-title and Separator routes. */
 interface ItemComparisonCase extends CapturedReferenceCase {
@@ -158,24 +157,21 @@ for (const [part, directory] of [
           await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers<void>();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers<void>();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    frameCompletion.resolve();
-                  });
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return await frameCompletion.promise;
-            }
-        );
+          return await frameCompletion.promise;
+        });
         const box = (await subject.boundingBox())!;
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 

@@ -7,7 +7,6 @@ import { PNG } from "pngjs";
 
 import type nativeReference from "../reference/menu-parts/manifest.json";
 
-
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -108,24 +107,21 @@ for (const c of manifest.cases) {
         );
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers<void>();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers<void>();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  frameCompletion.resolve();
-                });
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return await frameCompletion.promise;
-          }
-      );
+        return await frameCompletion.promise;
+      });
       const bounds = (await subject.boundingBox())!;
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);

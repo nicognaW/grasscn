@@ -7,7 +7,6 @@ import { PNG } from "pngjs";
 
 import type nativeReference from "../reference/suggestions/manifest.json";
 
-
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -90,11 +89,14 @@ for (const c of manifest.cases) {
     }
 
     if (c.state.endsWith("hover")) {
-      await subject.getByRole("menuitem").nth(
-        // SAFETY: all 24 pinned hover cases have numeric targets; ReferenceSuggestions unboxes targetIndex only when state ends with hover.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        (c as typeof c & { targetIndex: number }).targetIndex
-      ).hover();
+      await subject
+        .getByRole("menuitem")
+        .nth(
+          // SAFETY: all 24 pinned hover cases have numeric targets; ReferenceSuggestions unboxes targetIndex only when state ends with hover.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+          (c as typeof c & { targetIndex: number }).targetIndex
+        )
+        .hover();
     } else {
       await page.mouse.move(0, 0);
     }
@@ -115,24 +117,21 @@ for (const c of manifest.cases) {
       await expect(line).toHaveAttribute("data-mc-menu-unicode-ready", "true");
     }
 
-    await page.evaluate(
-      async () =>
-        {
-          const frameCompletion = Promise.withResolvers<void>();
+    await page.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers<void>();
 
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                frameCompletion.resolve();
-              });
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            frameCompletion.resolve();
+          });
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
 
-          return frameCompletion.promise;
-        }
-    );
+      return frameCompletion.promise;
+    });
     const bounds = (await subject.boundingBox())!;
     expect(bounds.x).toBe(c.x * c.scale);
     expect(bounds.y).toBe(c.y * c.scale);

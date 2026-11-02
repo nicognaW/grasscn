@@ -144,7 +144,10 @@ const Label = ({
       className={cn(`mc-label`, className)}
       style={minecraftStyle(style, (__style): LabelStyle => ({
         "--mc-scale": scale,
-        width: (typeof maxWidth === "undefined" || maxWidth === null) ? undefined : maxWidth * scale,
+        width:
+          typeof maxWidth === "undefined" || maxWidth === null
+            ? undefined
+            : maxWidth * scale,
         ...__style,
       }))}
       {...props}

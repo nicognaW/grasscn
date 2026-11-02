@@ -5,4 +5,6 @@ export type TrackedGpuContext = WebGLRenderingContext | WebGL2RenderingContext;
 export type GpuTrackingWindow = typeof window & { __gpu: TrackedGpuContext[] };
 
 /** Preserve the native canvas options parameter from the browser API owner. */
-export type CanvasContextArguments = [options?: Parameters<HTMLCanvasElement["getContext"]>[1]];
+export type CanvasContextArguments = [
+  options?: Parameters<HTMLCanvasElement["getContext"]>[1],
+];

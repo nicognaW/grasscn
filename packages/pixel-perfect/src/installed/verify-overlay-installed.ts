@@ -225,22 +225,19 @@ try {
                 }
               }
 
-              await page.evaluate(
-                async () =>
-                  {
-                    const frameCompletion = Promise.withResolvers();
+              await page.evaluate(async () => {
+                const frameCompletion = Promise.withResolvers();
 
-                    try {
-                      requestAnimationFrame(() => {
-                        requestAnimationFrame(frameCompletion.resolve);
-                      });
-                    } catch (error) {
-                      frameCompletion.reject(error);
-                    }
+                try {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(frameCompletion.resolve);
+                  });
+                } catch (error) {
+                  frameCompletion.reject(error);
+                }
 
-                    return frameCompletion.promise;
-                  }
-              );
+                return frameCompletion.promise;
+              });
 
               const expectedBytes = fs.readFileSync(
                 path.join(folder, "captures", c.name)

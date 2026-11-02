@@ -72,7 +72,7 @@ const Switch = ({
       {...props}
       aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
-        if ((disabled ?? false)) {
+        if (disabled ?? false) {
           event.preventDefault();
 
           return;
@@ -93,7 +93,10 @@ const Switch = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}

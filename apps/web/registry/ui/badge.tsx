@@ -108,7 +108,9 @@ const Badge = ({
     );
 
   const natural =
-    plain === undefined ? maxWidth : Math.max(1, ...plain.split("\n").map(widthOf));
+    plain === undefined
+      ? maxWidth
+      : Math.max(1, ...plain.split("\n").map(widthOf));
 
   const textWidth = Math.max(
     1,

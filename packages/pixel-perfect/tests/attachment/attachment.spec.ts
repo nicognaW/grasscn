@@ -2,10 +2,9 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 /** Inputs read by the closed Item-row and ASCII/CJK Button-action routes. */
 interface AttachmentComparisonCase extends CapturedReferenceCase {
@@ -122,22 +121,19 @@ for (const [part, dir] of [
           await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

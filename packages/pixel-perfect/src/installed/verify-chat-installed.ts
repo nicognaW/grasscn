@@ -188,22 +188,19 @@ async function worker() {
         await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion.resolve);
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
 
       const actual = await subject.screenshot();
 
@@ -279,8 +276,7 @@ fs.writeFileSync(
     {
       browser: browserVersion,
       cases: results,
-      command:
-        `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
+      command: `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
       comparatorNegativeControl:
         "One altered RGBA channel yields exactly one mismatch",
       consumer:

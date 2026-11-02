@@ -1,6 +1,5 @@
-import type { Page } from "@playwright/test";
-
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@playwright/test";
 
 interface CodeBlockClipboardState {
   __copied?: string;
@@ -99,12 +98,13 @@ test("Copy uses mocked clipboard, live state and reset timer", async ({
   await expect(
     page.getByRole("button", { exact: true, name: "Copied" })
   ).toHaveAttribute("data-copied", "true");
-  expect(await page.evaluate(() =>
-    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
-    (window as typeof window & CodeBlockClipboardState).__copied
-  )).toBe(
-    "First\n\n你好 世界\nLast"
-  );
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+        (window as typeof window & CodeBlockClipboardState).__copied
+    )
+  ).toBe("First\n\n你好 世界\nLast");
   await expect(
     page.getByRole("button", { exact: true, name: "Copy" })
   ).toBeVisible({ timeout: 4000 });
@@ -127,18 +127,24 @@ test("Canceled or disabled copy remains silent and does not write", async ({
   );
   await page.goto("?component=code-block&cancel=1");
   await page.getByRole("button", { exact: true, name: "Copy" }).click();
-  expect(await page.evaluate(() =>
-    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
-    (window as typeof window & CodeBlockClipboardState).__copied
-  )).toBeUndefined();
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+        (window as typeof window & CodeBlockClipboardState).__copied
+    )
+  ).toBeUndefined();
   await page.goto("?component=code-block&disabled=1");
   await expect(
     page.getByRole("button", { exact: true, name: "Copy" })
   ).toBeDisabled();
-  expect(await page.evaluate(() =>
-    // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
-    (window as typeof window & CodeBlockClipboardState).__copied
-  )).toBeUndefined();
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: The paired mock writes strings to __copied; before any write this optional property remains absent.
+        (window as typeof window & CodeBlockClipboardState).__copied
+    )
+  ).toBeUndefined();
 });
 
 test("Wrap creates real lines, line numbers retain startLine and blank lines", async ({

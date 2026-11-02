@@ -86,7 +86,7 @@ test.describe("Tabs extra native matrix", () => {
         query.set("labels", JSON.stringify(c.labels));
       }
 
-      if ((c.contentHeight ?? 0)) {
+      if (c.contentHeight ?? 0) {
         query.set("contentHeight", String(c.contentHeight));
       }
 
@@ -120,9 +120,10 @@ test.describe("Tabs extra native matrix", () => {
           await card.focus();
         }
       } else {
-        const list = (c.contentHeight ?? 0)
-          ? card.locator('[data-slot="tabs-list"]')
-          : card;
+        const list =
+          (c.contentHeight ?? 0)
+            ? card.locator('[data-slot="tabs-list"]')
+            : card;
 
         await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
         const target = list.getByRole("tab").nth(c.targetIndex ?? 0);

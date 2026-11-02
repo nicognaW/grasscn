@@ -249,7 +249,7 @@ try {
           q.text = c.text!;
         }
 
-        if ((c.wrapWidth ?? 0)) {
+        if (c.wrapWidth ?? 0) {
           q.wrapWidth = String(c.wrapWidth);
         }
 
@@ -300,22 +300,19 @@ try {
           await page!.locator("#subject").focus();
         }
 
-        await page!.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page!.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
 
         const bytes = fs.readFileSync(
           pixelPerfectFile(

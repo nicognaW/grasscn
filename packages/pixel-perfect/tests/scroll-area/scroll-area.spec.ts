@@ -154,7 +154,8 @@ for (const scale of [1, 2, 3]) {
     page,
   }, testInfo) => {
     const c = manifest.cases.find(
-      (scrollAreaCase) => scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
+      (scrollAreaCase) =>
+        scrollAreaCase.name === `scroll-area-c67-s${scale}.png`
     )!;
 
     await page.goto(

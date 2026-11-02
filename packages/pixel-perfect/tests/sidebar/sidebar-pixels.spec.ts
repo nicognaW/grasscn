@@ -6,17 +6,19 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type buttonReference from "../reference/manifest.json";
 import type inputReference from "../reference/input/manifest.json";
+import type buttonReference from "../reference/manifest.json";
 import type scrollReference from "../reference/scroll-area/manifest.json";
-
 
 type SidebarInputReferenceCase = (typeof inputReference)["cases"][number];
 type SidebarScrollReferenceCase = (typeof scrollReference)["cases"][number];
 
 // This composite consumer forwards only these observed fields from its eight native constituent families.
 // Input-only selection/caret data and Scroll Area values are narrowed at their existing kind branches below.
-interface SidebarReferenceCase extends Pick<(typeof buttonReference)["cases"][number], "name" | "sha256" | "state" | "scale" | "width" | "height"> {
+interface SidebarReferenceCase extends Pick<
+  (typeof buttonReference)["cases"][number],
+  "name" | "sha256" | "state" | "scale" | "width" | "height"
+> {
   x?: number;
   y?: number;
   background?: string;
@@ -311,24 +313,21 @@ test.describe("Sidebar original native constituent cases", () => {
             }
 
             if (kind !== "input") {
-              await page.evaluate(
-                async () =>
-                  {
-                    const frameCompletion = Promise.withResolvers<void>();
+              await page.evaluate(async () => {
+                const frameCompletion = Promise.withResolvers<void>();
 
-                    try {
-                      requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                          frameCompletion.resolve();
-                        });
-                      });
-                    } catch (error) {
-                      frameCompletion.reject(error);
-                    }
+                try {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      frameCompletion.resolve();
+                    });
+                  });
+                } catch (error) {
+                  frameCompletion.reject(error);
+                }
 
-                    return await frameCompletion.promise;
-                  }
-              );
+                return await frameCompletion.promise;
+              });
             }
 
             const expectedBytes = readFileSync(

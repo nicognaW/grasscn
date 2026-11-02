@@ -68,22 +68,19 @@ for (const dir of ["native-select", "native-select-extra"]) {
           await page.locator("[data-subject]").hover({ force: true });
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

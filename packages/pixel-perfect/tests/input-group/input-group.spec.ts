@@ -1,4 +1,3 @@
-import type { InputGroupCaptureManifest, InputGroupEntryElement } from "@ppt/installed/control-capture-protocol";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -6,6 +5,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type {
+  InputGroupCaptureManifest,
+  InputGroupEntryElement,
+} from "@ppt/installed/control-capture-protocol";
 import { PNG } from "pngjs";
 
 test.describe.configure({ mode: "parallel" });
@@ -25,8 +28,8 @@ for (const [folder, part] of [
   const reference = directory;
 
   // SAFETY: the existing InputGroup entry/label/button route table selects these concrete captured-reference producers.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact InputGroupCaptureManifest producer boundary with original collection read timing.
-const manifest = JSON.parse(
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact InputGroupCaptureManifest producer boundary with original collection read timing.
+  const manifest = JSON.parse(
     readFileSync(path.join(directory, "manifest.json"), "utf-8")
   ) as InputGroupCaptureManifest;
 
@@ -123,8 +126,8 @@ const manifest = JSON.parse(
         await subject.evaluate(
           (node, { cursor, anchor }) =>
             // SAFETY: this entry fixture route renders an HTML input or textarea with native selection support.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
-              (node as InputGroupEntryElement).setSelectionRange(
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
+            (node as InputGroupEntryElement).setSelectionRange(
               Math.min(cursor, anchor),
               Math.max(cursor, anchor),
               cursor < anchor ? "backward" : "forward"
@@ -144,22 +147,19 @@ const manifest = JSON.parse(
         await page.clock.runFor(c.caretMs!);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       } else {
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return await frameCompletion.promise;
-            }
-        );
+          return await frameCompletion.promise;
+        });
       }
 
       const expectedBytes = await readFile(

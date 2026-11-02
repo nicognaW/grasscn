@@ -123,24 +123,21 @@ test.describe("Toggle native recipe-filter matrix", () => {
         await expect(subject).toBeFocused();
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers<void>();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers<void>();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  frameCompletion.resolve();
-                });
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
       const bounds = (await subject.boundingBox())!;
       expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 

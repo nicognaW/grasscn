@@ -135,7 +135,10 @@ const RadioGroupItem = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}

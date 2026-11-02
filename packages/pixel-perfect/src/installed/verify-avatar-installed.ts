@@ -78,22 +78,19 @@ try {
       "data-ready",
       "true"
     );
-    await page!.evaluate(
-      async () =>
-        {
-          const frameCompletion = Promise.withResolvers();
+    await page!.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
 
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(frameCompletion.resolve);
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
 
-          return frameCompletion.promise;
-        }
-    );
+      return frameCompletion.promise;
+    });
 
     const got = PNG.sync.read(
       await page!.locator("#subject").screenshot({ animations: "disabled" })

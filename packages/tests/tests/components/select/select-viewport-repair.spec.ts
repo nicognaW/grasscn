@@ -64,24 +64,21 @@ for (const scale of [2] as const) {
           await expect
             .poll(async () => await viewport.evaluate((n) => n.scrollTop))
             .toBe(0);
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers<void>();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers<void>();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    frameCompletion.resolve();
-                  });
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return await frameCompletion.promise;
-            }
-        );
+          return await frameCompletion.promise;
+        });
         const after = (await popup.boundingBox())!;
 
         if ((await popup.getAttribute("data-align-trigger")) !== "true")

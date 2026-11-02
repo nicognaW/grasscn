@@ -107,7 +107,9 @@ const ToggleGroupItem = ({
           ({ "--mc-scale": resolvedScale, ...__style }) as React.CSSProperties
       )}
       {...props}
-      aria-disabled={(resolvedDisabled ?? false) ? true : props["aria-disabled"]}
+      aria-disabled={
+        (resolvedDisabled ?? false) ? true : props["aria-disabled"]
+      }
       onPointerDown={(event) => {
         if (
           (resolvedDisabled ?? false) ||
@@ -133,7 +135,10 @@ const ToggleGroupItem = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
+        if (
+          !event.defaultPrevented &&
+          !(event.baseUIHandlerPrevented ?? false)
+        ) {
           playMinecraftClick();
         }
       }}

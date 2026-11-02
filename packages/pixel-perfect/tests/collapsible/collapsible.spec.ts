@@ -126,24 +126,21 @@ for (const directory of [
             await expect(label).toHaveAttribute("data-mc-label-ready", "true");
           }
 
-          await page.evaluate(
-            async () =>
-              {
-                const frameCompletion = Promise.withResolvers<void>();
+          await page.evaluate(async () => {
+            const frameCompletion = Promise.withResolvers<void>();
 
-                try {
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                      frameCompletion.resolve();
-                    });
-                  });
-                } catch (error) {
-                  frameCompletion.reject(error);
-                }
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
 
-                return await frameCompletion.promise;
-              }
-          );
+            return await frameCompletion.promise;
+          });
           const bounds = (await subject.boundingBox())!;
           expect([bounds.x, bounds.y]).toEqual([
             (c.x ?? 16) * c.scale,

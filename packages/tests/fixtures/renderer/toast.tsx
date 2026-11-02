@@ -80,9 +80,13 @@ const SonnerFixture = () => {
       <button type="button" id="open" onClick={show}>
         Open toast
       </button>
-      <button type="button" id="close" onClick={() => {
-        notify.dismiss();
-      }}>
+      <button
+        type="button"
+        id="close"
+        onClick={() => {
+          notify.dismiss();
+        }}
+      >
         Close toast
       </button>
       <button
@@ -123,9 +127,13 @@ const StrictFixture = () => {
   return (
     <>
       <Toaster ref={ref} />
-      <button type="button" id="show" onClick={() => {
-        notify("World saved");
-      }}>
+      <button
+        type="button"
+        id="show"
+        onClick={() => {
+          notify("World saved");
+        }}
+      >
         Show
       </button>
       <button

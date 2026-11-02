@@ -1,6 +1,5 @@
-import type { Page } from "@playwright/test";
-
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@playwright/test";
 import { PNG } from "pngjs";
 
 const types = [

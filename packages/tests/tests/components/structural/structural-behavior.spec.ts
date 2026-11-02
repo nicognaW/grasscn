@@ -163,29 +163,36 @@ test("Pagination uses original audio once per accepted action and stays silent w
   await page.goto("/?component=pagination");
   await page.locator("[data-subject]").hover();
   await page.locator("[data-subject]").focus();
-  expect(await page.evaluate(() =>
-    // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-    (window as typeof window & PaginationPlaybackState).sounds
-  )).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
   await page.locator("[data-subject]").click();
-  expect(await page.evaluate(() =>
-    // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-    (window as typeof window & PaginationPlaybackState).sounds
-  )).toEqual([
-    { pitch: 1, source: minecraftClickSound, volume: 0.25 },
-  ]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
 
   /* oxlint-disable no-await-in-loop -- Variants navigate and exercise one shared page; finish each variant before the next navigation. */
   for (const suffix of ["cancel=1", "state=disabled"]) {
     await page.goto(`/?component=pagination&${suffix}`);
     await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() =>
-      // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & PaginationPlaybackState).sounds
-    )).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([]);
   }
   /* oxlint-enable no-await-in-loop */
 });
@@ -221,20 +228,24 @@ test("Pagination original arrows retain native links and keyboard activation wit
     await expect(arrow).toHaveAttribute("href", "#next");
     await arrow.hover();
     await arrow.focus();
-    expect(await page.evaluate(() =>
-      // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & PaginationPlaybackState).sounds
-    )).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([]);
     await page.keyboard.press("Enter");
     expect(new URL(page.url()).hash).toBe("#next");
-    expect(await page.evaluate(() =>
-      // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & PaginationPlaybackState).sounds
-    )).toEqual([
-      { pitch: 1, source: minecraftClickSound, volume: 0.25 },
-    ]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationPlaybackState).sounds
+      )
+    ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
   }
   /* oxlint-enable no-await-in-loop */
 });
@@ -249,7 +260,9 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: Pagination arrow silence initializes sounds; this unchanged media play mock records only source strings.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & PaginationArrowSourceState).sounds.push(this.src);
+      (window as typeof window & PaginationArrowSourceState).sounds.push(
+        this.src
+      );
 
       return Promise.resolve();
     };
@@ -262,11 +275,14 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
     await expect(arrow).toContainText("World");
     await arrow.dispatchEvent("click");
     expect(new URL(page.url()).hash).toBe("");
-    expect(await page.evaluate(() =>
-      // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & PaginationArrowSourceState).sounds
-    )).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+          (window as typeof window & PaginationArrowSourceState).sounds
+      )
+    ).toEqual([]);
   }
   /* oxlint-enable no-await-in-loop */
 });

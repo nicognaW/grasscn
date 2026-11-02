@@ -1,4 +1,3 @@
-import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -6,6 +5,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
 import { PNG } from "pngjs";
 
 test.describe.configure({ mode: "parallel" });
@@ -20,8 +20,8 @@ for (const [folder, part] of [
   const directory = path.join("tests/reference", folder);
 
   // SAFETY: the existing Command suggestion/input route table selects these concrete captured-reference producers.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact CommandCaptureManifest producer boundary with original collection read timing.
-const manifest = JSON.parse(
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact CommandCaptureManifest producer boundary with original collection read timing.
+  const manifest = JSON.parse(
     readFileSync(path.join(directory, "manifest.json"), "utf-8")
   ) as CommandCaptureManifest;
 
@@ -103,22 +103,19 @@ const manifest = JSON.parse(
           );
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
 
@@ -142,8 +139,8 @@ const manifest = JSON.parse(
         await subject.evaluate(
           (node, { cursor, anchor }) =>
             // SAFETY: this entry fixture route renders an HTML input with native selection support.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
-              (node as HTMLInputElement).setSelectionRange(
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
+            (node as HTMLInputElement).setSelectionRange(
               Math.min(cursor, anchor),
               Math.max(cursor, anchor),
               cursor < anchor ? "backward" : "forward"

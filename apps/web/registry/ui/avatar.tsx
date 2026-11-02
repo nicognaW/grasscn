@@ -168,7 +168,7 @@ const AvatarFallback = function AvatarFallback({
       className={cn(`mc-avatar-fallback`, className)}
       {...props}
     >
-      {(typeof children === "undefined" || children === null) ? (
+      {typeof children === "undefined" || children === null ? (
         <MinecraftAvatarFace skin="wide/steve" hat upsideDown={false} />
       ) : isMinecraftTextContent(children) ? (
         <Label scale={scale} maxWidth={maxWidth} align={align}>

@@ -2,10 +2,10 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import type inputReference from "../reference/input/manifest.json";
 
 type QuestionnaireInputCase = (typeof inputReference)["cases"][number];
@@ -134,7 +134,8 @@ for (const [part, dir] of parts) {
           if (part === "input") {
             // SAFETY: Only the per-iteration [input, input] route enters this branch; its retained Input cases have required string text, as the type-only artifact import records.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation; no property read or fallback is added.
-            const cursor = c.cursor ?? (c as QuestionnaireInputCase).text.length;
+            const cursor =
+              c.cursor ?? (c as QuestionnaireInputCase).text.length;
             const anchor = c.anchor ?? cursor;
 
             await subject.evaluate(
@@ -161,22 +162,19 @@ for (const [part, dir] of parts) {
               );
             }
 
-            await page.evaluate(
-              async () =>
-                {
-                  const frameCompletion = Promise.withResolvers();
+            await page.evaluate(async () => {
+              const frameCompletion = Promise.withResolvers();
 
-                  try {
-                    requestAnimationFrame(() => {
-                      requestAnimationFrame(frameCompletion.resolve);
-                    });
-                  } catch (error) {
-                    frameCompletion.reject(error);
-                  }
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
 
-                  return await frameCompletion.promise;
-                }
-            );
+              return await frameCompletion.promise;
+            });
           }
 
           const bytes = readFileSync(

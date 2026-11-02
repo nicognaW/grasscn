@@ -157,7 +157,10 @@ const ModelGraphic = function ModelGraphic({
 
         model.node.style.width = `${width * scale}px`;
         model.node.style.height = `${total * scale}px`;
-        model.node.style.setProperty("--mc-toast-height", String(graphicHeight));
+        model.node.style.setProperty(
+          "--mc-toast-height",
+          String(graphicHeight)
+        );
         model.bounds = model.node.getBoundingClientRect();
         model.geometryChanged?.();
       }
@@ -306,7 +309,9 @@ const Toaster = function Toaster({
           node.querySelector<HTMLElement>("[data-description]");
 
         const rich = !!(
-          (title?.childElementCount ?? description?.childElementCount ?? 0)
+          title?.childElementCount ??
+          description?.childElementCount ??
+          0
         );
 
         let model = entries.get(node);

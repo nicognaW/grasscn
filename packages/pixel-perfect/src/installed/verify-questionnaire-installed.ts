@@ -77,7 +77,10 @@ try {
     ["action", "."],
     ["action", "button-cjk"],
     ["input", "input"],
-  ].filter(([constituentPart]) => !partsArg || partsArg.split(",").includes(constituentPart))) {
+  ].filter(
+    ([constituentPart]) =>
+      !partsArg || partsArg.split(",").includes(constituentPart)
+  )) {
     // SAFETY: the existing part directory table selects the Label/Controls/Button/Input capture producers.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire constituent capture producer boundary.
     const m = JSON.parse(
@@ -150,7 +153,7 @@ try {
           q.set("radio", "1");
         }
 
-        if ((c.wrapWidth ?? 0)) {
+        if (c.wrapWidth ?? 0) {
           q.set("wrapWidth", String(c.wrapWidth));
         }
 
@@ -213,22 +216,19 @@ try {
             await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
           }
 
-          await page!.evaluate(
-            async () =>
-              {
-                const frameCompletion = Promise.withResolvers();
+          await page!.evaluate(async () => {
+            const frameCompletion = Promise.withResolvers();
 
-                try {
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(frameCompletion.resolve);
-                  });
-                } catch (error) {
-                  frameCompletion.reject(error);
-                }
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(frameCompletion.resolve);
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
 
-                return frameCompletion.promise;
-              }
-          );
+            return frameCompletion.promise;
+          });
         }
 
         const bytes = fs.readFileSync(

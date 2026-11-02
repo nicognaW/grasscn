@@ -32,7 +32,9 @@ const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((registryItem) => registryItem.name === "input-group");
+const item = registry.items.find(
+  (registryItem) => registryItem.name === "input-group"
+);
 
 // SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -256,22 +258,19 @@ try {
           await page.clock.runFor(c.caretMs!);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         } else {
-          await page.evaluate(
-            async () =>
-              {
-                const frameCompletion = Promise.withResolvers();
+          await page.evaluate(async () => {
+            const frameCompletion = Promise.withResolvers();
 
-                try {
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(frameCompletion.resolve);
-                  });
-                } catch (error) {
-                  frameCompletion.reject(error);
-                }
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(frameCompletion.resolve);
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
 
-                return frameCompletion.promise;
-              }
-          );
+            return frameCompletion.promise;
+          });
         }
 
         const expectedBytes = await readFile(

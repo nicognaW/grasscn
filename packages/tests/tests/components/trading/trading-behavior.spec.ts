@@ -108,10 +108,11 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page
     .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
-  let calls = await page.evaluate(() =>
-    // SAFETY: this test's initScript initializes this precise playback log before navigation.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as typeof window & TradingAudioWindow).tradeAudio
+  let calls = await page.evaluate(
+    () =>
+      // SAFETY: this test's initScript initializes this precise playback log before navigation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      (window as typeof window & TradingAudioWindow).tradeAudio
   );
   expect(calls.map((c) => c.volume)).toEqual([0.25, 1]);
   expect(calls[1].pitch).toBe(1);
@@ -131,18 +132,22 @@ test("trading selection, result feedback and native scrollbar controls", async (
   });
 
   await expect(disabled).toBeDisabled();
-  calls = await page.evaluate(() =>
-    // SAFETY: this test's initScript initializes this precise playback log before navigation.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as typeof window & TradingAudioWindow).tradeAudio
+  calls = await page.evaluate(
+    () =>
+      // SAFETY: this test's initScript initializes this precise playback log before navigation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      (window as typeof window & TradingAudioWindow).tradeAudio
   );
   expect(calls).toHaveLength(3);
   await disabled.hover({ force: true });
-  expect(await page.evaluate(() =>
-    // SAFETY: this test's initScript initializes this precise playback log before navigation.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as typeof window & TradingAudioWindow).tradeAudio.length
-  )).toBe(3);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: this test's initScript initializes this precise playback log before navigation.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        (window as typeof window & TradingAudioWindow).tradeAudio.length
+    )
+  ).toBe(3);
   await scroll.focus();
   await scroll.press("Home");
   await expect(scroll).toHaveAttribute("aria-valuenow", "0");
@@ -160,9 +165,12 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page
     .getByRole("button", { exact: true, name: "Trade for Reward 2" })
     .click();
-  expect(await page.evaluate(() =>
-    // SAFETY: this test's initScript initializes this precise playback log before navigation.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    (window as typeof window & TradingAudioWindow).tradeAudio
-  )).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: this test's initScript initializes this precise playback log before navigation.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        (window as typeof window & TradingAudioWindow).tradeAudio
+    )
+  ).toEqual([]);
 });

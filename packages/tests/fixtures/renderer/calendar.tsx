@@ -212,7 +212,7 @@ export const CalendarFixture = () => {
         part === "surface"
           ? ({
               "--reference-height": `${height * scale}px`,
-              "--reference-padding": `${(q.has("text") ? 18 * scale : 0)}px`,
+              "--reference-padding": `${q.has("text") ? 18 * scale : 0}px`,
               "--reference-width": `${width * scale}px`,
               "--reference-x": `${x}px`,
               "--reference-y": `${y}px`,

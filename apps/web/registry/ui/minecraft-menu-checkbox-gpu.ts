@@ -31,7 +31,9 @@ const create = function create(): Painter | null {
     gl.compileShader(shaderHandle);
 
     if (!gl.getShaderParameter(shaderHandle, gl.COMPILE_STATUS)) {
-      throw new Error(gl.getShaderInfoLog(shaderHandle) ?? "Checkbox shader failed");
+      throw new Error(
+        gl.getShaderInfoLog(shaderHandle) ?? "Checkbox shader failed"
+      );
     }
 
     return shaderHandle;
@@ -144,7 +146,7 @@ export const menuCheckboxPixels = function menuCheckboxPixels(
   x: number,
   y: number
 ) {
-  if ((painter?.gl.isContextLost() ?? false)) {
+  if (painter?.gl.isContextLost() ?? false) {
     painter = undefined;
   }
 

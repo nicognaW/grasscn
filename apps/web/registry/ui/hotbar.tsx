@@ -117,7 +117,7 @@ const Hotbar = ({
 
   const select = React.useCallback(
     (next: number) => {
-      if ((items[next]?.disabled ?? false)) {
+      if (items[next]?.disabled ?? false) {
         return;
       }
 

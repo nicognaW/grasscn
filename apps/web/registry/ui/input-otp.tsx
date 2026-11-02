@@ -33,7 +33,11 @@ const InputOTP = ({
   scale?: Scale;
 }) => (
   <OTPStyle.Provider
-    value={{ disabled: !!(props.disabled ?? false), readOnly: !!(props.readOnly ?? false), scale }}
+    value={{
+      disabled: !!(props.disabled ?? false),
+      readOnly: !!(props.readOnly ?? false),
+      scale,
+    }}
   >
     <OTPInput
       spellCheck={spellCheck}

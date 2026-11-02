@@ -53,24 +53,21 @@ for (const scale of [1, 2, 3] as const) {
       const viewport = popup.locator("[data-slot=select-viewport]");
       await viewport.hover();
       await page.mouse.wheel(0, -100);
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers<void>();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers<void>();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  frameCompletion.resolve();
-                });
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return await frameCompletion.promise;
-          }
-      );
+        return await frameCompletion.promise;
+      });
       const after = (await popup.boundingBox())!;
       expect(after.x).toBeGreaterThanOrEqual(0);
       expect(after.y).toBeGreaterThanOrEqual(0);

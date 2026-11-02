@@ -2,12 +2,12 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { SourceProvenance } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type { SourceProvenance } from "@ppt/native/generate/asset-protocol";
-import type nativeReference from "../reference/resizable/manifest.json";
 import type cropDerivation from "../reference/resizable/crop-derivation.json";
+import type nativeReference from "../reference/resizable/manifest.json";
 
 const hash = (bytes: Buffer) =>
   createHash("sha256").update(bytes).digest("hex");

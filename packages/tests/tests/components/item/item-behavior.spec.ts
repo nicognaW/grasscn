@@ -1,7 +1,6 @@
-import type { Page } from "@playwright/test";
-
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { Page } from "@playwright/test";
 
 interface ItemAudioPlayback {
   rate: number;
@@ -237,19 +236,23 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     const subject = page.locator("[data-subject]");
     await subject.hover();
     await subject.focus();
-    expect(await page.evaluate(() =>
-      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-      (window as typeof window & ItemAudioState).sounds
-    )).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([]);
     await subject.click();
-    expect(await page.evaluate(() =>
-      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-      (window as typeof window & ItemAudioState).sounds
-    )).toEqual([
-      { rate: 1, src: minecraftClickSound, volume: 0.25 },
-    ]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([{ rate: 1, src: minecraftClickSound, volume: 0.25 }]);
   }
 
   for (const suffix of [
@@ -261,21 +264,25 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
     await ready(page);
     await page.locator("[data-subject]").dispatchEvent("click");
-    expect(await page.evaluate(() =>
-      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-      (window as typeof window & ItemAudioState).sounds
-    )).toEqual([]);
+    expect(
+      await page.evaluate(
+        () =>
+          // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+          (window as typeof window & ItemAudioState).sounds
+      )
+    ).toEqual([]);
   }
 
   await page.goto("/?component=item&volume=0.4");
   await ready(page);
   await page.locator("[data-subject]").click();
   expect(
-    await page.evaluate(() =>
-      // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
-      (window as typeof window & ItemAudioState).sounds[0].volume
+    await page.evaluate(
+      () =>
+        // SAFETY: The paired Item initializer runs for every navigation before this reader observes its playback trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned playback state initialized by the paired addInitScript.
+        (window as typeof window & ItemAudioState).sounds[0].volume
     )
   ).toBeCloseTo(0.1);
 });

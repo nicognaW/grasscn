@@ -135,7 +135,7 @@ export const CommandFixture = () => {
         shouldFilter={false}
         value={selected}
         onValueChange={(next) => {
-          if ((root.current?.contains(document.activeElement) ?? false)) {
+          if (root.current?.contains(document.activeElement) ?? false) {
             setSelected(next);
           }
         }}

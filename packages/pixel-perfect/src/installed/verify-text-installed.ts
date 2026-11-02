@@ -336,22 +336,19 @@ async function worker() {
         await expect(line).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion.resolve);
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
 
       const bytes = await readFile(
         pixelPerfectFile(

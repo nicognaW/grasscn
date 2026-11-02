@@ -1,7 +1,11 @@
-import type { GpuTrackingWindow, TrackedGpuContext, CanvasContextArguments } from "@ppt/harness/gpu-tracking-protocol";
 import fs from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type {
+  GpuTrackingWindow,
+  TrackedGpuContext,
+  CanvasContextArguments,
+} from "@ppt/harness/gpu-tracking-protocol";
 import { PNG } from "pngjs";
 
 test("Colored CJK labels share bounded GPU resources and preserve native pixels", async ({
@@ -24,29 +28,31 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
     (window as GpuTrackingWindow).__gpu = [];
     HTMLCanvasElement.prototype.getContext =
-    // SAFETY: this wrapper forwards every original native argument/return and only records guarded WebGL results.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native canvas getContext overload forwarding boundary.
-    function getContext(
-      this: HTMLCanvasElement,
-      kind: string,
-      ...args: CanvasContextArguments
-    ) {
-      const result = original.call(this, kind, ...args);
-
-      if (
-        (kind === "webgl" || kind === "webgl2") &&
-        result &&
-        // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
-        !(window as GpuTrackingWindow).__gpu.includes(result as TrackedGpuContext)
+      // SAFETY: this wrapper forwards every original native argument/return and only records guarded WebGL results.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native canvas getContext overload forwarding boundary.
+      function getContext(
+        this: HTMLCanvasElement,
+        kind: string,
+        ...args: CanvasContextArguments
       ) {
-        // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
-        (window as GpuTrackingWindow).__gpu.push(result as TrackedGpuContext);
-      }
+        const result = original.call(this, kind, ...args);
 
-      return result;
-    } as typeof original;
+        if (
+          (kind === "webgl" || kind === "webgl2") &&
+          result &&
+          // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
+          !(window as GpuTrackingWindow).__gpu.includes(
+            result as TrackedGpuContext
+          )
+        ) {
+          // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
+          (window as GpuTrackingWindow).__gpu.push(result as TrackedGpuContext);
+        }
+
+        return result;
+      } as typeof original;
   });
 
   await page.goto("/?component=color-painter-stress");
@@ -66,22 +72,19 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
       "width",
       `${252 * scale}px`
     );
-    await page.evaluate(
-      async () =>
-        {
-          const frameCompletion = Promise.withResolvers();
+    await page.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers();
 
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(frameCompletion.resolve);
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion.resolve);
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
 
-          return frameCompletion.promise;
-        }
-    );
+      return frameCompletion.promise;
+    });
 
     const expected = PNG.sync.read(
       fs.readFileSync(`tests/reference/message/captures/chat-c48-s${scale}.png`)
@@ -107,20 +110,26 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
 
   // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-  expect(await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)).toBe(1);
+  expect(
+    await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)
+  ).toBe(1);
   await page.getByRole("button", { name: "Toggle siblings" }).click();
   await expect(page.locator("[data-stress-label]")).toHaveCount(0);
   await verify(2);
   // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-  expect(await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)).toBe(1);
+  expect(
+    await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)
+  ).toBe(1);
   await page.getByRole("button", { name: "Toggle all" }).click();
   await expect(page.locator("#subject")).toHaveCount(0);
   expect(
     await page.evaluate(
       // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      () => (window as GpuTrackingWindow).__gpu.filter((gl) => !gl.isContextLost()).length
+      () =>
+        (window as GpuTrackingWindow).__gpu.filter((gl) => !gl.isContextLost())
+          .length
     )
   ).toBe(0);
   await page.getByRole("button", { name: "Toggle all" }).click();
@@ -132,12 +141,16 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   await verify(3);
   // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-  expect(await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)).toBe(2);
+  expect(
+    await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)
+  ).toBe(2);
   expect(
     await page.evaluate(
       // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      () => (window as GpuTrackingWindow).__gpu.filter((gl) => !gl.isContextLost()).length
+      () =>
+        (window as GpuTrackingWindow).__gpu.filter((gl) => !gl.isContextLost())
+          .length
     )
   ).toBe(1);
   expect(errors).toEqual([]);
@@ -184,29 +197,33 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
     (window as GpuTrackingWindow).__gpu = [];
     HTMLCanvasElement.prototype.getContext =
-    // SAFETY: this wrapper forwards every original native argument/return and only records guarded WebGL results.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native canvas getContext overload forwarding boundary.
-    function getContext(
-      this: HTMLCanvasElement,
-      kind: string,
-      ...args: CanvasContextArguments
-    ) {
-      const context = original.call(this, kind, ...args);
-
-      if (
-        (kind === "webgl" || kind === "webgl2") &&
-        context &&
-        // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
-        !(window as GpuTrackingWindow).__gpu.includes(context as TrackedGpuContext)
+      // SAFETY: this wrapper forwards every original native argument/return and only records guarded WebGL results.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native canvas getContext overload forwarding boundary.
+      function getContext(
+        this: HTMLCanvasElement,
+        kind: string,
+        ...args: CanvasContextArguments
       ) {
-        // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
-        (window as GpuTrackingWindow).__gpu.push(context as TrackedGpuContext);
-      }
+        const context = original.call(this, kind, ...args);
 
-      return context;
-    } as typeof original;
+        if (
+          (kind === "webgl" || kind === "webgl2") &&
+          context &&
+          // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
+          !(window as GpuTrackingWindow).__gpu.includes(
+            context as TrackedGpuContext
+          )
+        ) {
+          // SAFETY: the existing native kind/result guards admit only WebGL contexts, and this initScript owns their tracker array.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized tracker and guarded native WebGL result boundaries.
+          (window as GpuTrackingWindow).__gpu.push(
+            context as TrackedGpuContext
+          );
+        }
+
+        return context;
+      } as typeof original;
   });
   await page.goto("/?component=color-painter-stress");
   await expect(page.locator("[data-stress-label]")).toHaveCount(64);
@@ -217,18 +234,25 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
 
   // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-  expect(await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)).toBe(1);
+  expect(
+    await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)
+  ).toBe(1);
   expect(
     await page.evaluate(
       // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      () => !!(window as GpuTrackingWindow).__gpu[0].getExtension("WEBGL_lose_context")
+      () =>
+        !!(window as GpuTrackingWindow).__gpu[0].getExtension(
+          "WEBGL_lose_context"
+        )
     )
   ).toBe(true);
   await page.evaluate(() =>
     // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-    (window as GpuTrackingWindow).__gpu[0].getExtension("WEBGL_lose_context")!.loseContext()
+    (window as GpuTrackingWindow).__gpu[0]
+      .getExtension("WEBGL_lose_context")!
+      .loseContext()
   );
   const checks: { mismatchedPixels: number; scale: number }[] = [];
 
@@ -240,22 +264,19 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
       "width",
       `${252 * scale}px`
     );
-    await page.evaluate(
-      async () =>
-        {
-          const frameCompletion2 = Promise.withResolvers();
+    await page.evaluate(async () => {
+      const frameCompletion2 = Promise.withResolvers();
 
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(frameCompletion2.resolve);
-            });
-          } catch (error) {
-            frameCompletion2.reject(error);
-          }
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(frameCompletion2.resolve);
+        });
+      } catch (error) {
+        frameCompletion2.reject(error);
+      }
 
-          return frameCompletion2.promise;
-        }
-    );
+      return frameCompletion2.promise;
+    });
 
     const bytes = await page.locator("#subject").screenshot();
     const actual = PNG.sync.read(bytes);
@@ -282,12 +303,17 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
 
   // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-  expect(await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)).toBe(2);
+  expect(
+    await page.evaluate(() => (window as GpuTrackingWindow).__gpu.length)
+  ).toBe(2);
   expect(
     await page.evaluate(
       // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      () => (window as GpuTrackingWindow).__gpu.filter((context) => !context.isContextLost()).length
+      () =>
+        (window as GpuTrackingWindow).__gpu.filter(
+          (context) => !context.isContextLost()
+        ).length
     )
   ).toBe(1);
   expect(errors).toEqual([]);

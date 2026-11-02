@@ -140,7 +140,10 @@ const MinecraftDisclosureText = ({
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: (typeof maxWidth === "undefined" || maxWidth === null) ? undefined : maxWidth * scale,
+            width:
+              typeof maxWidth === "undefined" || maxWidth === null
+                ? undefined
+                : maxWidth * scale,
             ...__style,
           }) as React.CSSProperties
       )}

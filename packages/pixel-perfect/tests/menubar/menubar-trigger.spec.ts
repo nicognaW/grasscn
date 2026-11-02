@@ -5,9 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type buttonReference from "../reference/manifest.json";
 import type cjkButtonReference from "../reference/button-cjk/manifest.json";
-
+import type buttonReference from "../reference/manifest.json";
 
 type MenubarTriggerReferenceCase = (typeof buttonReference)["cases"][number] & {
   x?: (typeof cjkButtonReference)["cases"][number]["x"];
@@ -113,24 +112,21 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           await expect(line).toHaveAttribute("data-mc-label-ready", "true");
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers<void>();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers<void>();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    frameCompletion.resolve();
-                  });
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return await frameCompletion.promise;
-            }
-        );
+          return await frameCompletion.promise;
+        });
         const bounds = (await trigger.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([
           (c.x ?? 16) * c.scale,

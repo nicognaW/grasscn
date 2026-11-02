@@ -262,33 +262,49 @@ test("Sidebar uses the original click sound once per accepted native-button acti
   });
   await page.goto("/?component=sidebar");
   await page.locator("#menu-worlds").hover();
-  expect(await page.evaluate(() =>
-    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-    (window as typeof window & SidebarClickAudioState).sounds
-  )).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarClickAudioState).sounds
+    )
+  ).toEqual([]);
   await page.locator("#menu-worlds").click();
   await page.locator("#toggle").click();
-  expect(await page.evaluate(() =>
-    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-    (window as typeof window & SidebarClickAudioState).sounds
-  )).toEqual([
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarClickAudioState).sounds
+    )
+  ).toEqual([
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.locator("#disabled").dispatchEvent("click");
-  expect((await page.evaluate(() =>
-    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-    (window as typeof window & SidebarClickAudioState).sounds
-  )).length).toBe(2);
+  expect(
+    (
+      await page.evaluate(
+        () =>
+          // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+          (window as typeof window & SidebarClickAudioState).sounds
+      )
+    ).length
+  ).toBe(2);
   await page.keyboard.press("Control+b");
-  expect((await page.evaluate(() =>
-    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-    (window as typeof window & SidebarClickAudioState).sounds
-  )).length).toBe(2);
+  expect(
+    (
+      await page.evaluate(
+        () =>
+          // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+          (window as typeof window & SidebarClickAudioState).sounds
+      )
+    ).length
+  ).toBe(2);
 });
 
 test("Sidebar prevented trigger activation stays silent and does not change state", async ({
@@ -310,9 +326,12 @@ test("Sidebar prevented trigger activation stays silent and does not change stat
   const button = page.locator("[data-subject]");
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "true");
-  expect(await page.evaluate(() =>
-    // SAFETY: This paired reader runs after navigation initializes this test's numeric play counter; no playback-array contract is assumed.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
-    (window as typeof window & SidebarPreventedAudioState).sounds
-  )).toBe(0);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation initializes this test's numeric play counter; no playback-array contract is assumed.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+        (window as typeof window & SidebarPreventedAudioState).sounds
+    )
+  ).toBe(0);
 });

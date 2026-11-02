@@ -18,7 +18,7 @@ export const paintMinecraftAvatar = function paintMinecraftAvatar(
   upsideDown: boolean,
   scale: number
 ) {
-  if ((renderer?.gl.isContextLost() ?? false)) {
+  if (renderer?.gl.isContextLost() ?? false) {
     renderer = undefined;
   }
 

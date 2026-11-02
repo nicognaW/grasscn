@@ -230,22 +230,19 @@ try {
           await expect(subject).toBeFocused();
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion.resolve);
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion.resolve);
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
 
         const expectedBytes = await readFile(
           pixelPerfectFile(
@@ -404,22 +401,19 @@ try {
           );
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion2 = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion2 = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion2.resolve);
-                });
-              } catch (error) {
-                frameCompletion2.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion2.resolve);
+            });
+          } catch (error) {
+            frameCompletion2.reject(error);
+          }
 
-              return frameCompletion2.promise;
-            }
-        );
+          return frameCompletion2.promise;
+        });
         const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
         assert.equal(bounds.y, c.y * c.scale);
@@ -504,22 +498,19 @@ try {
           await expect(line).toHaveAttribute("data-mc-label-ready", "true");
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion3 = Promise.withResolvers();
+        await page.evaluate(async () => {
+          const frameCompletion3 = Promise.withResolvers();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(frameCompletion3.resolve);
-                });
-              } catch (error) {
-                frameCompletion3.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(frameCompletion3.resolve);
+            });
+          } catch (error) {
+            frameCompletion3.reject(error);
+          }
 
-              return frameCompletion3.promise;
-            }
-        );
+          return frameCompletion3.promise;
+        });
         const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
           [bounds.x, bounds.y],
@@ -603,22 +594,19 @@ try {
         );
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion4 = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion4 = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion4.resolve);
-              });
-            } catch (error) {
-              frameCompletion4.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion4.resolve);
+          });
+        } catch (error) {
+          frameCompletion4.reject(error);
+        }
 
-            return frameCompletion4.promise;
-          }
-      );
+        return frameCompletion4.promise;
+      });
       const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
       assert.equal(bounds.y, c.y * c.scale);
@@ -687,7 +675,7 @@ try {
         params.set("disabledIndex", String(c.disabledIndex));
       }
 
-      if ((c.checked ?? false)) {
+      if (c.checked ?? false) {
         params.set("patterned", "1");
       }
 
@@ -759,22 +747,19 @@ try {
         await button.focus();
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion5 = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion5 = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion5.resolve);
-              });
-            } catch (error) {
-              frameCompletion5.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion5.resolve);
+          });
+        } catch (error) {
+          frameCompletion5.reject(error);
+        }
 
-            return frameCompletion5.promise;
-          }
-      );
+        return frameCompletion5.promise;
+      });
 
       const bytes = await readFile(
         pixelPerfectFile(
@@ -1075,9 +1060,10 @@ try {
           await subject.focus();
         }
       } else {
-        const list = (selectedCase.contentHeight ?? 0)
-          ? subject.locator('[data-slot="tabs-list"]')
-          : subject;
+        const list =
+          (selectedCase.contentHeight ?? 0)
+            ? subject.locator('[data-slot="tabs-list"]')
+            : subject;
 
         await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
         const target = list.getByRole("tab").nth(selectedCase.targetIndex ?? 0);
@@ -1167,22 +1153,19 @@ try {
         );
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion6 = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion6 = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion6.resolve);
-              });
-            } catch (error) {
-              frameCompletion6.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion6.resolve);
+          });
+        } catch (error) {
+          frameCompletion6.reject(error);
+        }
 
-            return frameCompletion6.promise;
-          }
-      );
+        return frameCompletion6.promise;
+      });
 
       for (const label of await subject
         .locator("[data-mc-label-ready]")

@@ -104,24 +104,21 @@ export const formsNativeTests = function formsNativeTests(
             .locator("[data-mc-label-ready]")
             .all())
             await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-          await page.evaluate(
-            async () =>
-              {
-                const frameCompletion = Promise.withResolvers<void>();
+          await page.evaluate(async () => {
+            const frameCompletion = Promise.withResolvers<void>();
 
-                try {
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                      frameCompletion.resolve();
-                    });
-                  });
-                } catch (error) {
-                  frameCompletion.reject(error);
-                }
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
 
-                return await frameCompletion.promise;
-              }
-          );
+            return await frameCompletion.promise;
+          });
 
           const bytes = readFileSync(
             pixelPerfectFile(`${directory}/captures/${c.name}`)

@@ -149,24 +149,21 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
           );
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers<void>();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers<void>();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    frameCompletion.resolve();
-                  });
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return frameCompletion.promise;
-            }
-        );
+          return frameCompletion.promise;
+        });
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
 

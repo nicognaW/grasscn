@@ -180,10 +180,11 @@ test("Radio Group uses original click audio per activation and respects preventD
     };
   });
   const sounds = async () =>
-    page.evaluate(() =>
-      // SAFETY: This paired reader runs after navigation's init script creates radioSounds with the recorded audio contract.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-      (window as typeof window & RadioGroupAudioState).radioSounds
+    page.evaluate(
+      () =>
+        // SAFETY: This paired reader runs after navigation's init script creates radioSounds with the recorded audio contract.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & RadioGroupAudioState).radioSounds
     );
   await page.goto("/?component=radio-group");
   const survival = page.getByRole("radio", { exact: true, name: "survival" });

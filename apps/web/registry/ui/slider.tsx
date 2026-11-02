@@ -93,7 +93,8 @@ const Slider = ({
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
   const highlightTrack = !(disabled ?? false) && focused && !editing;
-  const highlightHandle = !(disabled ?? false) && (hovered || (focused && editing));
+  const highlightHandle =
+    !(disabled ?? false) && (hovered || (focused && editing));
 
   return (
     <BaseDirectionProvider direction={dir}>
@@ -165,12 +166,18 @@ const Slider = ({
         onPointerDownCapture={(event) => {
           onPointerDownCapture?.(event);
           pressed.current =
-            !(disabled ?? false) && !event.defaultPrevented && event.button === 0;
+            !(disabled ?? false) &&
+            !event.defaultPrevented &&
+            event.button === 0;
         }}
         onPointerUpCapture={(event) => {
           onPointerUpCapture?.(event);
 
-          if (pressed.current && !(disabled ?? false) && !event.defaultPrevented) {
+          if (
+            pressed.current &&
+            !(disabled ?? false) &&
+            !event.defaultPrevented
+          ) {
             playMinecraftClick();
           }
 
@@ -239,7 +246,7 @@ const Slider = ({
               </span>
             );
           })}
-          {(typeof label !== "undefined" && label !== null) && (
+          {typeof label !== "undefined" && label !== null && (
             <MinecraftText className="mc-slider-label">{label}</MinecraftText>
           )}
         </SliderPrimitive.Control>

@@ -20,24 +20,21 @@ for (const reason of ["disabled", "missing"]) {
     await expect(
       page.getByRole("tab", { exact: true, name: "First" })
     ).toHaveAttribute("aria-selected", "true");
-    await page.evaluate(
-      async () =>
-        {
-          const frameCompletion = Promise.withResolvers<void>();
+    await page.evaluate(async () => {
+      const frameCompletion = Promise.withResolvers<void>();
 
-          try {
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                frameCompletion.resolve();
-              });
-            });
-          } catch (error) {
-            frameCompletion.reject(error);
-          }
+      try {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            frameCompletion.resolve();
+          });
+        });
+      } catch (error) {
+        frameCompletion.reject(error);
+      }
 
-          return frameCompletion.promise;
-        }
-    );
+      return frameCompletion.promise;
+    });
     expect(await page.evaluate(() => (window as any).voices)).toBe(0);
   });
 }

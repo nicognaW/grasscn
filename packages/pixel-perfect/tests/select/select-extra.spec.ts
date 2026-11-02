@@ -127,24 +127,21 @@ test.describe("Select CJK native matrix", () => {
         );
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers<void>();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers<void>();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  frameCompletion.resolve();
-                });
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
 
       for (const label of await subject
         .locator("[data-mc-label-ready]")

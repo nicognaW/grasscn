@@ -63,22 +63,19 @@ test.describe("Actual original PlayerFaceExtractor", () => {
         "data-ready",
         "true"
       );
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion.resolve);
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion.resolve);
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
 
       const expected = readFileSync(
         pixelPerfectFile(`${dir}/captures/${c.name}`)
@@ -155,22 +152,19 @@ test.describe("AvatarFallback original Label constituents", () => {
         await expect(canvas).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion2 = Promise.withResolvers();
+      await page.evaluate(async () => {
+        const frameCompletion2 = Promise.withResolvers();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(frameCompletion2.resolve);
-              });
-            } catch (error) {
-              frameCompletion2.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion2.resolve);
+          });
+        } catch (error) {
+          frameCompletion2.reject(error);
+        }
 
-            return frameCompletion2.promise;
-          }
-      );
+        return frameCompletion2.promise;
+      });
 
       const expected = readFileSync(
         pixelPerfectFile(`tests/reference/label/captures/${c.name}`)

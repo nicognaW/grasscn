@@ -3,12 +3,12 @@ import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { minecraftSelectAssets } from "@grasscn/web/ui/minecraft-select-assets";
+import type { SourceProvenance } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type { SourceProvenance } from "@ppt/native/generate/asset-protocol";
-import type nativeReference from "../reference/table-background/manifest.json";
 import type cropDerivation from "../reference/table-background/crop-derivation.json";
+import type nativeReference from "../reference/table-background/manifest.json";
 
 const hash = (bytes: Buffer) =>
   createHash("sha256").update(bytes).digest("hex");

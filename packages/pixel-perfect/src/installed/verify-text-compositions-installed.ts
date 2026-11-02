@@ -235,23 +235,20 @@ async function worker() {
           .filter(Boolean);
 
         await Promise.all(
-          images.map(
-            async (src) =>
-              {
-                const imageCompletion = Promise.withResolvers();
+          images.map(async (src) => {
+            const imageCompletion = Promise.withResolvers();
 
-                try {
-                  const image = new Image();
-                  image.onload = image.onerror = imageCompletion.resolve;
-                  // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-                  image.src = src!;
-                } catch (error) {
-                  imageCompletion.reject(error);
-                }
+            try {
+              const image = new Image();
+              image.onload = image.onerror = imageCompletion.resolve;
+              // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
+              image.src = src!;
+            } catch (error) {
+              imageCompletion.reject(error);
+            }
 
-                return imageCompletion.promise;
-              }
-          )
+            return imageCompletion.promise;
+          })
         );
         const frameCompletion = Promise.withResolvers();
 
@@ -355,8 +352,7 @@ fs.writeFileSync(
       caseIsolation:
         "Two workers; pages closed every50 cases; all browsers closed finally",
       cases: results,
-      command:
-        `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
+      command: `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
       comparatorNegativeControl:
         "One changed RGBA channel yields exactly one mismatched pixel",
       consumer:

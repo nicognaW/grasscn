@@ -135,7 +135,12 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
 
     const a = [quadX, quadY, u / atlas.width, v / atlas.height];
     const b = [quadX, quadY + h, u / atlas.width, (v + sh) / atlas.height];
-    const c = [quadX + w, quadY + h, (u + sw) / atlas.width, (v + sh) / atlas.height];
+    const c = [
+      quadX + w,
+      quadY + h,
+      (u + sw) / atlas.width,
+      (v + sh) / atlas.height,
+    ];
     const d = [quadX + w, quadY, (u + sw) / atlas.width, v / atlas.height];
 
     gl.bufferData(
@@ -220,7 +225,10 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
 
   for (let pixelRow = 0; pixelRow < height; pixelRow += 1) {
     result.set(
-      raw.subarray((height - pixelRow - 1) * width * 4, (height - pixelRow) * width * 4),
+      raw.subarray(
+        (height - pixelRow - 1) * width * 4,
+        (height - pixelRow) * width * 4
+      ),
       pixelRow * width * 4
     );
   }

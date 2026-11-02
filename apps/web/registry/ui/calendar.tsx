@@ -229,8 +229,16 @@ const CalendarDropdown = ({
           value: String(option.value),
         }))}
         scale={scale}
-        value={(typeof value === "undefined" || value === null) ? undefined : String(value)}
-        defaultValue={(typeof defaultValue === "undefined" || defaultValue === null) ? undefined : String(defaultValue)}
+        value={
+          typeof value === "undefined" || value === null
+            ? undefined
+            : String(value)
+        }
+        defaultValue={
+          typeof defaultValue === "undefined" || defaultValue === null
+            ? undefined
+            : String(defaultValue)
+        }
         disabled={disabled}
         onValueChange={(next) => {
           if (native.current) {

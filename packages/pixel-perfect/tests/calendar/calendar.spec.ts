@@ -153,22 +153,19 @@ for (const component of ["calendar", "date-picker"]) {
               await page.locator("[data-subject]").focus();
             }
 
-            await page.evaluate(
-              async () =>
-                {
-                  const frameCompletion = Promise.withResolvers();
+            await page.evaluate(async () => {
+              const frameCompletion = Promise.withResolvers();
 
-                  try {
-                    requestAnimationFrame(() => {
-                      requestAnimationFrame(frameCompletion.resolve);
-                    });
-                  } catch (error) {
-                    frameCompletion.reject(error);
-                  }
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
 
-                  return await frameCompletion.promise;
-                }
-            );
+              return await frameCompletion.promise;
+            });
 
             const bytes = readFileSync(
               pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)

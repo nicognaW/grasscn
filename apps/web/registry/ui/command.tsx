@@ -275,7 +275,7 @@ const CommandGroup = ({
     data-slot="command-group"
     className={cn(`mc-command-group`, className)}
     heading={
-      (typeof heading === "undefined" || heading === null) ? undefined : (
+      typeof heading === "undefined" || heading === null ? undefined : (
         <MinecraftMenuText>{heading}</MinecraftMenuText>
       )
     }

@@ -7,8 +7,10 @@ import { PNG } from "pngjs";
 
 import type confirmationReference from "../reference/alert-dialog/manifest.json";
 
-
-type ConfirmationReferenceManifest = Pick<typeof confirmationReference, "cases">;
+type ConfirmationReferenceManifest = Pick<
+  typeof confirmationReference,
+  "cases"
+>;
 
 const directory = "tests/reference/alert-dialog-backdrop";
 
@@ -73,7 +75,10 @@ for (const constituentDirectory of [
     // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const constituentManifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${constituentDirectory}/manifest.json`), "utf-8")
+      readFileSync(
+        pixelPerfectFile(`${constituentDirectory}/manifest.json`),
+        "utf-8"
+      )
     ) as ConfirmationReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
@@ -147,24 +152,21 @@ for (const constituentDirectory of [
           await button.focus();
         }
 
-        await page.evaluate(
-          async () =>
-            {
-              const frameCompletion = Promise.withResolvers<void>();
+        await page.evaluate(async () => {
+          const frameCompletion = Promise.withResolvers<void>();
 
-              try {
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    frameCompletion.resolve();
-                  });
-                });
-              } catch (error) {
-                frameCompletion.reject(error);
-              }
+          try {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
 
-              return await frameCompletion.promise;
-            }
-        );
+          return await frameCompletion.promise;
+        });
 
         const bytes = readFileSync(
           pixelPerfectFile(`${constituentDirectory}/captures/${c.name}`)

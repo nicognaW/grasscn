@@ -95,24 +95,21 @@ for (const scale of [2] as const) {
         }
       }
 
-      await page.evaluate(
-        async () =>
-          {
-            const frameCompletion = Promise.withResolvers<void>();
+      await page.evaluate(async () => {
+        const frameCompletion = Promise.withResolvers<void>();
 
-            try {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                  frameCompletion.resolve();
-                });
-              });
-            } catch (error) {
-              frameCompletion.reject(error);
-            }
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              frameCompletion.resolve();
+            });
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
 
-            return frameCompletion.promise;
-          }
-      );
+        return frameCompletion.promise;
+      });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
       const after = (await popup.boundingBox())!;
       expect(after.y).toBeGreaterThanOrEqual(0);

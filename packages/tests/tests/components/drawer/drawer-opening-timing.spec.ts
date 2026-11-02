@@ -36,51 +36,49 @@ for (const scale of [2] as const) {
       document.body.append(s);
     });
 
-    const first = await page.evaluate(
-      async () =>
-        {
-          const mutationCompletion = Promise.withResolvers<{ ready: string | null; opacity: string }>();
+    const first = await page.evaluate(async () => {
+      const mutationCompletion = Promise.withResolvers<{
+        ready: string | null;
+        opacity: string;
+      }>();
 
-          try {
-            const observer = new MutationObserver(() => {
-              const overlay = document.querySelector<HTMLElement>(
-                "[data-slot=drawer-overlay]"
-              );
+      try {
+        const observer = new MutationObserver(() => {
+          const overlay = document.querySelector<HTMLElement>(
+            "[data-slot=drawer-overlay]"
+          );
 
-              const content = document.querySelector(
-                "[data-slot=drawer-content]"
-              );
+          const content = document.querySelector("[data-slot=drawer-content]");
 
-              if (!overlay || !content) {
-                return;
-              }
-
-              observer.disconnect();
-
-              for (const n of [overlay, content]) {
-                for (const a of n.getAnimations()) {
-                  a.pause();
-                  a.currentTime = 0;
-                }
-              }
-
-              mutationCompletion.resolve({
-                opacity: getComputedStyle(overlay).opacity,
-                ready: overlay.getAttribute("data-mc-backdrop-ready"),
-              });
-            });
-
-            observer.observe(document.body, { childList: true, subtree: true });
-            document
-              .querySelector<HTMLButtonElement>("[data-slot=drawer-trigger]")!
-              .click();
-          } catch (error) {
-            mutationCompletion.reject(error);
+          if (!overlay || !content) {
+            return;
           }
 
-          return mutationCompletion.promise;
-        }
-    );
+          observer.disconnect();
+
+          for (const n of [overlay, content]) {
+            for (const a of n.getAnimations()) {
+              a.pause();
+              a.currentTime = 0;
+            }
+          }
+
+          mutationCompletion.resolve({
+            opacity: getComputedStyle(overlay).opacity,
+            ready: overlay.getAttribute("data-mc-backdrop-ready"),
+          });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+        document
+          .querySelector<HTMLButtonElement>("[data-slot=drawer-trigger]")!
+          .click();
+      } catch (error) {
+        mutationCompletion.reject(error);
+      }
+
+      return mutationCompletion.promise;
+    });
 
     // No waiting for backdrop-ready or animation end: inspect the first mounted frame.
     expect(first.opacity).toBe("1");
@@ -173,43 +171,43 @@ test("Drawer stays visible during its closing transition, then restores focus", 
     )
     .toBe(true);
 
-  const closing = await page.evaluate(
-    async () =>
-      {
-        const mutationCompletion2 = Promise.withResolvers<{ ending: boolean; display: string }>();
+  const closing = await page.evaluate(async () => {
+    const mutationCompletion2 = Promise.withResolvers<{
+      ending: boolean;
+      display: string;
+    }>();
 
-        try {
-          const panel = document.querySelector<HTMLElement>(
-            "[data-slot=drawer-content]"
-          )!;
+    try {
+      const panel = document.querySelector<HTMLElement>(
+        "[data-slot=drawer-content]"
+      )!;
 
-          const observer = new MutationObserver(() => {
-            if (!Object.hasOwn(panel.dataset, "endingStyle")) {
-              return;
-            }
-
-            observer.disconnect();
-            const { display } = getComputedStyle(panel);
-
-            for (const animation of panel.getAnimations()) {
-              animation.pause();
-              animation.currentTime = 100;
-            }
-
-            mutationCompletion2.resolve({ display, ending: true });
-          });
-
-          observer.observe(panel, { attributes: true });
-          document
-            .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
-            .click();
-        } catch (error) {
-          mutationCompletion2.reject(error);
+      const observer = new MutationObserver(() => {
+        if (!Object.hasOwn(panel.dataset, "endingStyle")) {
+          return;
         }
 
-        return mutationCompletion2.promise;
-      }
-  );
+        observer.disconnect();
+        const { display } = getComputedStyle(panel);
+
+        for (const animation of panel.getAnimations()) {
+          animation.pause();
+          animation.currentTime = 100;
+        }
+
+        mutationCompletion2.resolve({ display, ending: true });
+      });
+
+      observer.observe(panel, { attributes: true });
+      document
+        .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
+        .click();
+    } catch (error) {
+      mutationCompletion2.reject(error);
+    }
+
+    return mutationCompletion2.promise;
+  });
 
   expect(closing.ending).toBe(true);
   expect(closing.display).not.toBe("none");
