@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -11,8 +12,8 @@ const repo = path.resolve(".");
 const compare = function compare(
   actual: PNG,
   expected: PNG,
-  info: any,
-  c: any,
+  info: TestInfo,
+  c: { name: string },
   part: string
 ) {
   let mismatchedPixels = 0;
