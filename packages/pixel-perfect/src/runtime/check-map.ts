@@ -24,43 +24,36 @@ import type {
   AppearanceField,
   NativeFamily,
 } from "@ppt/runtime/map-evidence";
+import {
+  readComponentMap,
+  readComponentCatalog,
+  readNativeInventory,
+  readEvidenceRegistry,
+  readNativeCaptureManifest,
+  readUtilityBehavior,
+  readUtilityInstallation,
+  readInstallationEvidence,
+  readRepeatabilityEvidence,
+  readGlyphProvenance,
+  readGlyphObservation,
+  readNativeGlyphCaptureManifest,
+} from "@ppt/runtime/map-evidence-readers";
 import { PNG } from "pngjs";
-
-const jsonText = async (file: string) =>
-  await readFile(evidenceFile(file), "utf-8");
 
 const args = process.argv.slice(2);
 const mapArg = args.indexOf("--map");
 
-// SAFETY: the requested component map follows the authored registry mapping contract.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const map = JSON.parse(
-  await jsonText(
-    mapArg === -1 ? "registry/minecraft-map.json" : args[mapArg + 1]
-  )
-) as ComponentEvidenceMap;
+const map = await readComponentMap(
+  mapArg === -1 ? "registry/minecraft-map.json" : args[mapArg + 1]
+);
 
-// SAFETY: the map names the retained catalogue snapshot produced by catalogue capture.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const catalog = JSON.parse(await jsonText(map.catalog)) as ComponentCatalog;
+const catalog = await readComponentCatalog(map.catalog);
 
-// SAFETY: the mapped inventory is the native inventory producer's retained output.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const inventory = JSON.parse(
-  await jsonText(map.nativeInventory)
-) as NativeInventory;
+const inventory = await readNativeInventory(map.nativeInventory);
 
-// SAFETY: registry.json is the authored registry item/file catalogue.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const registry = JSON.parse(
-  await jsonText("registry.json")
-) as EvidenceRegistry;
+const registry = await readEvidenceRegistry("registry.json");
 
-// SAFETY: the retained pilot capture manifest supplies its pinned source identity.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const pilot = JSON.parse(
-  await jsonText("tests/reference/manifest.json")
-) as NativeCaptureManifest;
+const pilot = await readNativeCaptureManifest("tests/reference/manifest.json");
 
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -264,17 +257,11 @@ for (const component of map.components) {
       `${component.name}: unskinned utility must not claim native pixels`
     );
 
-    // SAFETY: the utility mapping names its behavior verifier's retained report.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const behavior = JSON.parse(
-      await jsonText(verification.behaviorReport)
-    ) as UtilityBehaviorEvidence;
+    const behavior = await readUtilityBehavior(verification.behaviorReport);
 
-    // SAFETY: the utility mapping names its CLI installation verifier's retained report.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const installation = JSON.parse(
-      await jsonText(verification.installationReport)
-    ) as UtilityInstallationEvidence;
+    const installation = await readUtilityInstallation(
+      verification.installationReport
+    );
 
     assert.equal(behavior.kind, "unskinned-web-utility");
     assert.ok(behavior.nativeReferenceNotApplicable && behavior.scope);
@@ -327,11 +314,7 @@ for (const component of map.components) {
     verification.manifest,
     ...(verification.additionalManifests ?? []),
   ].filter((file): file is string => Boolean(file))) {
-    // SAFETY: mapped primary/additional files are retained native capture manifests.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const manifest = JSON.parse(
-      await jsonText(manifestFile)
-    ) as NativeCaptureManifest;
+    const manifest = await readNativeCaptureManifest(manifestFile);
 
     assert.equal(manifest.sourceJarSha256, map.sourceJarSha256);
     assert.ok(
@@ -398,29 +381,21 @@ for (const component of map.components) {
     if (verification.status === "verified-declared-cases") {
       const primary = manifestFile === verification.manifest;
 
-      // SAFETY: the verified mapping selects its installation verifier's report.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const report = JSON.parse(
-        await jsonText(
-          primary
-            ? verification.installationReport
-            : (verification.additionalInstallationReports?.[manifestFile] ??
-                path.join(
-                  path.dirname(manifestFile),
-                  "installation-verification.json"
-                ))
-        )
-      ) as InstallationEvidence;
+      const report = await readInstallationEvidence(
+        primary
+          ? verification.installationReport
+          : (verification.additionalInstallationReports?.[manifestFile] ??
+              path.join(
+                path.dirname(manifestFile),
+                "installation-verification.json"
+              ))
+      );
 
-      // SAFETY: repeatability capture writes this sibling report with native case results.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const repeat = JSON.parse(
-        await jsonText(
-          primary
-            ? verification.repeatabilityReport
-            : path.join(path.dirname(manifestFile), "repeatability.json")
-        )
-      ) as RepeatabilityEvidence;
+      const repeat = await readRepeatabilityEvidence(
+        primary
+          ? verification.repeatabilityReport
+          : path.join(path.dirname(manifestFile), "repeatability.json")
+      );
 
       assert.equal(report.sourceJarSha256, map.sourceJarSha256);
       assert.equal(repeat.sourceJarSha256, map.sourceJarSha256);
@@ -548,13 +523,9 @@ for (const component of map.components) {
           file.path.endsWith("/minecraft-unifont-data.ts")
         ) === true
     ) {
-      // SAFETY: the native glyph generator retains this indexed resource/probe provenance.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const provenance = JSON.parse(
-        await jsonText(
-          path.join(path.dirname(manifestFile), "asset-provenance.json")
-        )
-      ) as GlyphProvenance;
+      const provenance = await readGlyphProvenance(
+        path.join(path.dirname(manifestFile), "asset-provenance.json")
+      );
 
       for (const [resource, pin] of Object.entries(
         manifest.effectiveAssets.resources
@@ -603,16 +574,12 @@ for (const component of map.components) {
         provenance.glyphObservationVerification !== undefined &&
         provenance.glyphObservationVerification !== ""
       ) {
-        // SAFETY: the provenance points to its two-run glyph-observation comparison report.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const observation = JSON.parse(
-          await jsonText(
-            path.join(
-              path.dirname(manifestFile),
-              provenance.glyphObservationVerification
-            )
+        const observation = await readGlyphObservation(
+          path.join(
+            path.dirname(manifestFile),
+            provenance.glyphObservationVerification
           )
-        ) as GlyphObservationEvidence;
+        );
 
         assert.deepEqual(observation.glyphObservationEnabled, {
           runOne: true,
@@ -650,11 +617,8 @@ for (const component of map.components) {
           provenance.glyphAtlasCaptureManifestSha256
         );
 
-        // SAFETY: the pinned glyph-atlas capture path names a native capture manifest.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const observation = JSON.parse(
-          await jsonText(observationPath)
-        ) as NativeGlyphCaptureManifest;
+        const observation =
+          await readNativeGlyphCaptureManifest(observationPath);
 
         const observedAtlasPath = path.join(
           path.dirname(manifestFile),

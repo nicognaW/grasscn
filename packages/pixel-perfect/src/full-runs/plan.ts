@@ -35,6 +35,10 @@ export interface FullRunPlan {
   execution: FullExecution;
 }
 
+export type FullRunPlanDraft = Omit<FullRunPlan, "initiatingThread"> & {
+  initiatingThread: string | undefined;
+};
+
 type ExactRunFields = (
   value: unknown,
   keys: readonly string[],
@@ -62,7 +66,7 @@ const isBrowserEnvironment = (
   (environment.webgl === null || typeof environment.webgl === "string") &&
   (environment.ci === null || typeof environment.ci === "string");
 
-const json = (value: FullRunPlan) => `${JSON.stringify(value, null, 2)}\n`;
+const json = (value: FullRunPlanDraft) => `${JSON.stringify(value, null, 2)}\n`;
 
 const exactKeys: ExactRunFields = (
   value,
@@ -212,5 +216,5 @@ export const parseRunPlan = (body: string) => {
   return plan;
 };
 
-export const runPlanBody = (plan: FullRunPlan) =>
+export const runPlanBody = (plan: FullRunPlanDraft) =>
   `# Full Pixel Perfect Test run\n\nThis approval covers Full PPTs only; non-PPT tests run in ordinary verification.\n\nApprove this fixed plan by applying ${approvalLabel} as a human maintainer. Executors must not apply authorization. Progress and results belong in comments; do not edit an approved body.\n\n${planMarker}\n\`\`\`json\n${json(plan)}\`\`\`\n`;

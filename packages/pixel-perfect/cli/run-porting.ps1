@@ -4,7 +4,7 @@ $pptPackage=Split-Path -Parent $PSScriptRoot
 $repository=Split-Path -Parent (Split-Path -Parent $pptPackage)
 $node=(Get-Command bun).Source
 function Get-GrasscnFullContext {
- $result=& $node (Join-Path $pptPackage 'cli/full-tests.mjs') context --issue $env:GRASSCN_FULL_RUN_ISSUE
+ $result=& $node (Join-Path $pptPackage 'cli/full-tests.ts') context --issue $env:GRASSCN_FULL_RUN_ISSUE
  if($LASTEXITCODE -ne 0){throw 'Full run authorization or executor ownership rejected'}
  return ($result|ConvertFrom-Json)
 }
