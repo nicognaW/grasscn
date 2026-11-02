@@ -11,8 +11,14 @@ import {
 import * as React from "react";
 import { BarChart, Bar, XAxis, CartesianGrid } from "recharts";
 
+import type { ChartFixtureQuery } from "./fixture-query-protocol";
+
 const p = new URLSearchParams(location.search);
-const c = JSON.parse(p.get("case") ?? "{}");
+
+// SAFETY: owned chart callers serialize native FPS/Profiler cases or the ordinary metric/default query fields.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Chart fixture query producer boundary.
+const c = JSON.parse(p.get("case") ?? "{}") as ChartFixtureQuery;
+
 const scale = c.scale ?? 2;
 
 const style = {

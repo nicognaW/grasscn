@@ -2,9 +2,14 @@ import { AdvancementTree } from "@grasscn/web/ui/advancement-tree";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 
+import type { AdventureFixtureSample } from "./fixture-query-protocol";
+
 const DraftDemos = React.lazy(async () => import("./draft-demos"));
 
 const params = new URLSearchParams(location.search);
+
+// SAFETY: owned Adventure callers serialize GUI scales 1/2/3; the existing omitted-scale default is 2.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Adventure fixture GUI-scale query boundary.
 const scale = Number(params.get("scale") ?? 2) as 1 | 2 | 3;
 const mask = Number(params.get("mask") ?? 1);
 const x = Number(params.get("x") ?? 40);
@@ -28,8 +33,10 @@ const nodes: React.ComponentProps<typeof AdvancementTree>["nodes"] =
     y,
   }));
 
-const sample = params.has("case")
-  ? JSON.parse(params.get("case")!)
+const sample: AdventureFixtureSample = params.has("case")
+  ? // SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Adventure fixture query producer boundary.
+    (JSON.parse(params.get("case")!) as AdventureFixtureSample)
   : {
       element: params.get("kind") ?? "advancement-tree",
       state: params.get("state") ?? undefined,
