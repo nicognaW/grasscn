@@ -12,9 +12,11 @@ export default function CarouselDemo({ scale }: DemoProps) {
 
   React.useEffect(() => {
     if (!api) return;
+
     const update = () => {
       setSelected(api.selectedScrollSnap());
     };
+
     update();
     api.on("select", update);
 

@@ -5,6 +5,7 @@ import type { DemoProps } from "../types";
 
 export default function CheckboxDemo({ scale }: DemoProps) {
   const [checked, setChecked] = React.useState(false);
+
   return (
     <>
       <div

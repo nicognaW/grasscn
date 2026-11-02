@@ -26,6 +26,7 @@ const browsers = [
   { name: "Edge", visitors: 173 },
   { name: "Other", visitors: 90 },
 ];
+
 const config: ChartConfig = {
   desktop: { label: "Desktop", color: "#55ff55" },
   mobile: { label: "Mobile", color: "#5555ff" },
@@ -49,6 +50,7 @@ const types: {
 export default function ChartDemo({ scale }: DemoProps) {
   const stage = React.useRef<HTMLDivElement>(null),
     [contentWidth, setContentWidth] = React.useState(80);
+
   React.useLayoutEffect(() => {
     const measure = () => {
       const node = stage.current!;
@@ -72,18 +74,23 @@ export default function ChartDemo({ scale }: DemoProps) {
 
     return () => observer.disconnect();
   }, [scale]);
+
   const copy = (text: string) => (
     <MinecraftDisclosureText scale={scale} maxWidth={contentWidth}>
       {text}
     </MinecraftDisclosureText>
   );
+
   const [type, setType] = React.useState<AnalyticsChartType>("area"),
     [period, setPeriod] = React.useState("6"),
     [device, setDevice] = React.useState("both");
+
   const [step, setStep] = React.useState(0),
     [limit, setLimit] = React.useState(120);
+
   const [metric, setMetric] = React.useState("latency"),
     [webStep, setWebStep] = React.useState(0);
+
   const webSamples = React.useMemo(
     () =>
       Array.from({ length: 240 }, (_, i) =>
@@ -111,6 +118,7 @@ export default function ChartDemo({ scale }: DemoProps) {
       Array.from({ length: 240 }, (_, i) => (((i * 7 + step) % 30) + 1) * 1e6),
     [step]
   );
+
   const nativeData = React.useMemo(
     () => [
       { name: "render", percentage: step % 2 ? 35 : 50 },
@@ -118,11 +126,14 @@ export default function ChartDemo({ scale }: DemoProps) {
     ],
     [step]
   );
+
   const circular = ["pie", "donut", "radial"].includes(type);
+
   const data = React.useMemo(
     () => (circular ? browsers : visitors.slice(-Number(period))),
     [circular, period]
   );
+
   const series = React.useMemo(
     () =>
       circular
@@ -132,6 +143,7 @@ export default function ChartDemo({ scale }: DemoProps) {
           : [device],
     [circular, device]
   );
+
   const total = data.reduce(
     (n, row) =>
       n +

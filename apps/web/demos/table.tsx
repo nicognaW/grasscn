@@ -3,15 +3,18 @@ import{Table,TableHeader,TableBody,TableFooter,TableRow,TableHead,TableCell,Tabl
 import{Button}from"../registry/ui/button"
 import{useDemoWidth}from"../use-demo-width"
 import type{DemoProps}from"../types"
+
 export default function TableDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale),
     textWidth = Math.max(16, Math.floor((stage.width - 24) / 3));
+
   const [selected, setSelected] = React.useState(""),
     worlds = [
       { name: "Grasslands", players: 4 },
       { name: "你好，世界", players: 2 },
       { name: "Deep Dark", players: 1 },
     ];
+
   return (
     <>
       <div ref={stage.ref} className="demo-stage" data-stage="table">

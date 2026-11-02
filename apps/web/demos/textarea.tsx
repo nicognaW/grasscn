@@ -2,10 +2,12 @@ import * as React from "react";
 
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
+
 const initialText = "Line one\nLine two\nLine three";
 
 export default function TextareaDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState(initialText);
+
   return (
     <>
       <div className="demo-stage" data-stage="textarea">

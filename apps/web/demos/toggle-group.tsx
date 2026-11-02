@@ -4,17 +4,21 @@ import { Button } from "../registry/ui/button";
 import { Label } from "../registry/ui/label";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
+
 export default function ToggleGroupDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale),
     id = React.useId();
+
   const [single, setSingle] = React.useState("crafting"),
     [multiple, setMultiple] = React.useState<string[]>(["crafting"]),
     [disabled, setDisabled] = React.useState(false);
+
   const filters = [
     { value: "crafting", label: "Crafting recipes" },
     { value: "furnace", label: "Furnace recipes" },
     { value: "stonecutter", label: "Stonecutter recipes" },
   ];
+
   return (
     <>
       <div className="demo-options">

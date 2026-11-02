@@ -5,6 +5,7 @@ import type { DemoProps } from "../types";
 
 export default function InputDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState("Hello Minecraft");
+
   return (
     <>
       <div className="demo-stage" data-stage="input">

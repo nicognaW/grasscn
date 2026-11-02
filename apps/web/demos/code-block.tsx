@@ -4,6 +4,7 @@ import {useHighlightedCode} from "../registry/hooks/use-highlighted-code"
 import {Textarea} from "../registry/ui/textarea"
 import {Checkbox} from "../registry/ui/checkbox"
 import type {DemoProps} from "../types"
+
 export default function CodeBlockDemo({ scale }: DemoProps) {
   const [code, setCode] = React.useState(
       'const greeting = "Hello 世界";\n\n// Keep building!'
@@ -11,6 +12,7 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
     [wrap, setWrap] = React.useState(false),
     [numbers, setNumbers] = React.useState(true),
     lines = useHighlightedCode(code, "typescript");
+
   return (
     <>
       <div className="demo-options">

@@ -9,6 +9,7 @@ export default function ButtonDemo({ scale }: DemoProps) {
   const [label, setLabel] = React.useState("Button");
   const [width, setWidth] = React.useState(200);
   const [count, setCount] = React.useState(0);
+
   return (
     <>
       <div className="demo-options">
