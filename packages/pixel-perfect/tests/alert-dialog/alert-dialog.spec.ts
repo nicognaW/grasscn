@@ -102,12 +102,12 @@ for (const directory of [
           "true"
         );
 
-        const dialog = page.getByRole("alertdialog"),
-          expectedUnicode =
-            Number(/[^\x00-\x7f]/.test(c.label)) +
-            (/[^\x00-\x7f]/.test(c.text) ? c.text.split("\n").length : 0) +
-            c.labels.filter((label: string) => /[^\x00-\x7f]/.test(label))
-              .length;
+        const dialog = page.getByRole("alertdialog");
+
+        const expectedUnicode =
+          Number(/[^\x00-\x7f]/.test(c.label)) +
+          (/[^\x00-\x7f]/.test(c.text) ? c.text.split("\n").length : 0) +
+          c.labels.filter((label: string) => /[^\x00-\x7f]/.test(label)).length;
 
         if (expectedUnicode) {
           await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(
@@ -155,11 +155,12 @@ for (const directory of [
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actual = await page.screenshot({ animations: "disabled" }),
-          { diff, mismatchedPixels } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actual)
-          );
+        const actual = await page.screenshot({ animations: "disabled" });
+
+        const { diff, mismatchedPixels } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actual)
+        );
 
         writeFileSync(testInfo.outputPath("actual.png"), actual);
         writeFileSync(testInfo.outputPath("diff.png"), PNG.sync.write(diff));

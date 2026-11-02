@@ -176,11 +176,12 @@ for (const directory of [
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actual = await page.screenshot({ animations: "disabled" }),
-          { diff, mismatchedPixels } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actual)
-          );
+        const actual = await page.screenshot({ animations: "disabled" });
+
+        const { diff, mismatchedPixels } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actual)
+        );
 
         writeFileSync(testInfo.outputPath("actual.png"), actual);
         writeFileSync(testInfo.outputPath("diff.png"), PNG.sync.write(diff));

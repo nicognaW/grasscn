@@ -131,9 +131,9 @@ export function useConfirmationSnapshot(
             }
 
             if (viewport) {
-              const previous = element.dataset.mcSnapshotFixed ?? null,
-                key = `${identity}-${fixed.length}`,
-                style = getComputedStyle(element);
+              const previous = element.dataset.mcSnapshotFixed ?? null;
+              const key = `${identity}-${fixed.length}`;
+              const style = getComputedStyle(element);
 
               fixed.push({
                 element,

@@ -201,8 +201,8 @@ test.describe("Sidebar original native constituent cases", () => {
                 await subject.hover();
               }
 
-              const cursor = c.cursor ?? c.text.length,
-                anchor = c.anchor ?? cursor;
+              const cursor = c.cursor ?? c.text.length;
+              const anchor = c.anchor ?? cursor;
 
               await subject.evaluate(
                 (node, selection) => {
@@ -292,10 +292,10 @@ test.describe("Sidebar original native constituent cases", () => {
 
             expect(hash(expectedBytes)).toBe(c.sha256);
 
-            const actualBytes = await subject.screenshot(),
-              expected = PNG.sync.read(expectedBytes),
-              actual = PNG.sync.read(actualBytes),
-              { mismatchedPixels, diff } = compare(expected, actual);
+            const actualBytes = await subject.screenshot();
+            const expected = PNG.sync.read(expectedBytes);
+            const actual = PNG.sync.read(actualBytes);
+            const { mismatchedPixels, diff } = compare(expected, actual);
 
             writeFileSync(info.outputPath("actual.png"), actualBytes);
             writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

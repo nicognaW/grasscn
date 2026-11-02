@@ -8,8 +8,8 @@ for (const scale of [2] as const) {
       test(`Default ${route} Select anchors initially at GUI${scale} ${mobile ? "mobile" : "desktop"}`, async ({
         page,
       }) => {
-        const width = mobile ? 390 : 1440,
-          height = mobile ? 844 : 955;
+        const width = mobile ? 390 : 1440;
+        const height = mobile ? 844 : 955;
 
         await page.setViewportSize({ width, height });
         await page.goto(`${preview.replace(/\/$/u, "")}/#/components/${route}`);

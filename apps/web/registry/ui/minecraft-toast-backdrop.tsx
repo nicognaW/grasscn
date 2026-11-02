@@ -12,9 +12,9 @@ export const MinecraftToastBackdrop = ({
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
   React.useLayoutEffect(() => {
-    let disposed = false,
-      frame = 0,
-      signature = "";
+    let disposed = false;
+    let frame = 0;
+    let signature = "";
 
     const canvas = ref.current!;
 

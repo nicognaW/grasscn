@@ -156,11 +156,12 @@ for (const [part, directory] of [
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          { mismatchedPixels, diff } = compare(
-            PNG.sync.read(bytes),
-            PNG.sync.read(actualBytes)
-          );
+        const actualBytes = await subject.screenshot();
+
+        const { mismatchedPixels, diff } = compare(
+          PNG.sync.read(bytes),
+          PNG.sync.read(actualBytes)
+        );
 
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

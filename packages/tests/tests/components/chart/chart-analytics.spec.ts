@@ -37,8 +37,8 @@ for (const scale of [2]) {
       page.on("pageerror", (e) => errors.push(e.message));
       await open(page, scale, mobile);
 
-      const stage = page.locator('[data-stage="chart"]'),
-        chart = stage.locator('[data-slot="chart-example"]');
+      const stage = page.locator('[data-stage="chart"]');
+      const chart = stage.locator('[data-slot="chart-example"]');
 
       for (const [type, label] of types) {
         await select(page, "Chart type", label);
@@ -70,8 +70,8 @@ for (const scale of [2]) {
           for (let x = 0; x < image.width; x += scale) {
             for (let sy = 0; sy < scale; sy++) {
               for (let sx = 0; sx < scale; sx++) {
-                const a = (y * image.width + x) * 4,
-                  b = ((y + sy) * image.width + x + sx) * 4;
+                const a = (y * image.width + x) * 4;
+                const b = ((y + sy) * image.width + x + sx) * 4;
 
                 if (
                   !image.data
@@ -151,7 +151,7 @@ test("Hover inspection reports the plotted datum and leaving clears the readout"
   const chart = page.locator('[data-slot="chart-example"]');
   const canvas = chart.locator("canvas");
 
-  const b = (await canvas.boundingBox())!;
+  const b = await canvas.boundingBox();
   await chart.getByRole("application").hover({ position: { x: 80, y: 40 } });
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("January");
   await expect(chart.locator(".mc-chart-tooltip")).toContainText("186");
