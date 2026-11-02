@@ -191,11 +191,11 @@ try {
 
     if (c.state === "exiting") {
       await page!.clock.fastForward(600);
-      await page!.locator("#close").evaluate((n) =>
+      await page!.locator("#close").evaluate((n) => {
         // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Sonner close button HTML DOM API boundary.
-        (n as HTMLElement).click()
-      );
+        (n as HTMLElement).click();
+      });
       await page!.clock.fastForward(component === "sonner" ? 16 : 0);
       await expect(
         page!

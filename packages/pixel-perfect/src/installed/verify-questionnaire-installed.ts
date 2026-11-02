@@ -197,14 +197,15 @@ try {
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
-            (input, p) =>
+            (input, p) => {
               // SAFETY: the input constituent fixture renders #subject as an HTML input with selection support.
               // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact input constituent HTML DOM API boundary.
               (input as HTMLInputElement).setSelectionRange(
                 Math.min(p.cursor, p.anchor),
                 Math.max(p.cursor, p.anchor),
                 p.cursor < p.anchor ? "backward" : "forward"
-              ),
+              );
+            },
             { anchor, cursor }
           );
           await page!.clock.runFor(c.caretMs!);
