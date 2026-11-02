@@ -15,6 +15,10 @@ import { MinecraftSurface } from "./minecraft-surface";
 import "./minecraft-card.css";
 import "./minecraft-sheet.css";
 
+interface SheetScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const SheetScale = React.createContext<1 | 2 | 3>(2);
 
 const Sheet = ({
@@ -132,8 +136,8 @@ const SheetContent = ({
             className={cn(`mc-card mc-sheet-content`, className)}
             style={minecraftStyle(
               style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+              (__style): SheetScaleStyle =>
+                ({ "--mc-scale": scale, ...__style })
             )}
             {...props}
           >

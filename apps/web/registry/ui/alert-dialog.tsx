@@ -18,6 +18,10 @@ import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 import "./minecraft-alert-dialog.css";
 
+interface AlertDialogScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const IdentityContext = React.createContext("");
 
@@ -314,8 +318,8 @@ const AlertDialogContent = ({
             className={cn(`mc-alert-dialog-content`, className)}
             style={minecraftStyle(
               style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+              (__style): AlertDialogScaleStyle =>
+                ({ "--mc-scale": scale, ...__style })
             )}
             {...props}
           >

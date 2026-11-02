@@ -22,6 +22,10 @@ import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
 import "./minecraft-menubar.css";
 
+interface MenubarScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type MenuSurface = "popup" | "suggestions";
 
 const Menubar = ({
@@ -38,8 +42,8 @@ const Menubar = ({
       className={cn("mc-menubar", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />
@@ -270,8 +274,8 @@ const MenubarContent = ({
             className={cn("mc-menu-content", className)}
             style={minecraftStyle(
               style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+              (__style): MenubarScaleStyle =>
+                ({ "--mc-scale": scale, ...__style })
             )}
             {...props}
           >
@@ -331,8 +335,8 @@ const MenubarItem = ({
       className={cn("mc-menu-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -384,8 +388,8 @@ const MenubarCheckboxItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
@@ -422,8 +426,8 @@ const MenubarRadioItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onClick={(event) => {
         onClick?.(event);
@@ -459,8 +463,8 @@ const MenubarLabel = ({
       className={cn("mc-menu-item mc-menu-label", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -540,8 +544,8 @@ const MenubarSubTrigger = ({
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): MenubarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -610,8 +614,8 @@ const MenubarSubContent = ({
           className={cn("mc-menu-content", className)}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): MenubarScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           {...props}
         >

@@ -9,6 +9,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-book.css";
 
+interface BookScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type BookProps = React.ComponentProps<"div"> & {
   pages: readonly string[];
   page?: number;
@@ -64,13 +68,13 @@ const Book = ({
       aria-label={props["aria-label"] ?? "Book"}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): BookScaleStyle =>
           ({
             "--mc-scale": scale,
             height: 192 * scale,
             width: 192 * scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       onKeyDown={(event) => {
         onKeyDown?.(event);

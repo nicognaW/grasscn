@@ -29,6 +29,10 @@ import { Separator } from "./separator";
 import "./minecraft-menu.css";
 import "./minecraft-command.css";
 
+interface CommandScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 const Command = ({
@@ -45,8 +49,8 @@ const Command = ({
       className={cn(`mc-command`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): CommandScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />

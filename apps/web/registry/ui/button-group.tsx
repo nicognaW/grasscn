@@ -19,6 +19,10 @@ import { Separator } from "./separator";
 
 import "./minecraft-button-group.css";
 
+interface ButtonGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const buttonGroupVariants = cva("mc-button-group", {
   defaultVariants: { orientation: "horizontal" },
   variants: {
@@ -47,7 +51,7 @@ const ButtonGroup = ({
     className={cn(buttonGroupVariants({ orientation }), className)}
     style={minecraftStyle(
       style,
-      (__style) => ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      (__style): ButtonGroupScaleStyle => ({ "--mc-scale": scale, ...__style })
     )}
     {...props}
   />
@@ -113,7 +117,7 @@ const ButtonGroupSeparator = ({
     className={cn(`mc-button-group-separator`, className)}
     style={minecraftStyle(
       style,
-      (__style) => ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      (__style): ButtonGroupScaleStyle => ({ "--mc-scale": scale, ...__style })
     )}
     {...props}
   >

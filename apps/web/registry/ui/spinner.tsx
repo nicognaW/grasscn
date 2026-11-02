@@ -7,6 +7,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-spinner.css";
 
+interface SpinnerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const frames = ["O o o", "o O o", "o o O", "o O o"] as const;
 
 const Spinner = ({
@@ -75,8 +79,8 @@ const Spinner = ({
       className={cn(`mc-spinner`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): SpinnerScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

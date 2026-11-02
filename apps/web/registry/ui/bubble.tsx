@@ -20,6 +20,10 @@ import type {
 } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface BubbleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const BubbleGroup = ({
   className,
   scale: providedScale,
@@ -38,8 +42,8 @@ const BubbleGroup = ({
         className={cn(`mc-bubble-group`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): BubbleScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
       />
@@ -92,12 +96,12 @@ const Bubble = ({
           className={cn(`mc-bubble`, className)}
           style={minecraftStyle(
             style,
-            (__style) =>
+            (__style): BubbleScaleStyle =>
               ({
                 "--mc-scale": scale,
                 ...(from === "system" ? { color: "#ffff55" } : {}),
                 ...__style,
-              }) as React.CSSProperties
+              })
           )}
           {...props}
         />

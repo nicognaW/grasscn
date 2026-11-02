@@ -19,6 +19,10 @@ import { Separator } from "./separator";
 import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
 
+interface ContextMenuScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type MenuSurface = "popup" | "suggestions";
 
 const ContextMenu = ({
@@ -237,8 +241,8 @@ const ContextMenuContent = ({
             className={cn("mc-menu-content", className)}
             style={minecraftStyle(
               style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+              (__style): ContextMenuScaleStyle =>
+                ({ "--mc-scale": scale, ...__style })
             )}
             {...props}
           >
@@ -298,8 +302,8 @@ const ContextMenuItem = ({
       className={cn("mc-menu-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ContextMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -351,8 +355,8 @@ const ContextMenuCheckboxItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ContextMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
@@ -389,8 +393,8 @@ const ContextMenuRadioItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ContextMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onClick={(event) => {
         onClick?.(event);
@@ -426,8 +430,8 @@ const ContextMenuLabel = ({
       className={cn("mc-menu-item mc-menu-label", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ContextMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -507,8 +511,8 @@ const ContextMenuSubTrigger = ({
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ContextMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -578,8 +582,8 @@ const ContextMenuSubContent = ({
           className={cn("mc-menu-content", className)}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): ContextMenuScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           {...props}
         >

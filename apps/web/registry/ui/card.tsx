@@ -9,6 +9,10 @@ import { MinecraftSurface } from "./minecraft-surface";
 
 import "./minecraft-card.css";
 
+interface CardScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Card = ({
   className,
   scale = 2,
@@ -23,7 +27,7 @@ const Card = ({
     className={cn("mc-card", className)}
     style={minecraftStyle(
       style,
-      (__style) => ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      (__style): CardScaleStyle => ({ "--mc-scale": scale, ...__style })
     )}
     {...props}
   >

@@ -22,6 +22,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 import "./minecraft-button.css";
 import "./minecraft-select.css";
 
+interface SelectScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const AnchorContext = React.createContext("");
 
@@ -287,8 +291,8 @@ const SelectTrigger = ({
       className={cn(`mc-button mc-select-trigger`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): SelectScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

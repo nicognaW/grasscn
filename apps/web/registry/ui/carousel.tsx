@@ -11,6 +11,10 @@ import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 import "./minecraft-carousel.css";
 
+interface CarouselScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type CarouselApi = UseEmblaCarouselType[1];
 
 type CarouselOptions = Parameters<typeof useEmblaCarousel>[0];
@@ -121,8 +125,8 @@ const Carousel = ({
         className={cn(`mc-carousel`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): CarouselScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
         onKeyDownCapture={(event) => {
@@ -240,11 +244,11 @@ const CarouselArrow = ({
       className={cn(`mc-pagination-arrow mc-carousel-arrow`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): CarouselScaleStyle =>
           ({
             "--mc-scale": ownScale ?? context.scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
       onClick={(event) => {

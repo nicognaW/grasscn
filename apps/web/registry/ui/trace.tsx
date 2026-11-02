@@ -11,6 +11,10 @@ import {
 import { ChatChildren, MessageScale } from "./message";
 import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
+interface TraceScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Trace = ({
   className,
   scale = 2,
@@ -25,8 +29,8 @@ const Trace = ({
       className={cn(`mc-trace`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): TraceScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />

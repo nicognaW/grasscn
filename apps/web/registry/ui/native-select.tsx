@@ -8,6 +8,10 @@ import { Select, SelectTrigger } from "./select";
 
 import "./minecraft-native-select.css";
 
+interface NativeSelectScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
   size?: "default";
   scale?: 1 | 2 | 3;
@@ -106,8 +110,8 @@ const NativeSelect = ({
       className={`mc-native-select-wrapper ${(multiple ?? false) ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
       style={minecraftStyle(
         wrapperProps?.style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): NativeSelectScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
     >
       <select

@@ -19,6 +19,10 @@ import {
 
 import "./minecraft-avatar.css";
 
+interface AvatarScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const AvatarContext = React.createContext<1 | 2 | 3>(2);
 
 type AvatarProps = MinecraftProps<typeof AvatarPrimitive.Root> & {
@@ -240,8 +244,8 @@ const AvatarGroup = function AvatarGroup({
         className={cn(`mc-avatar-group`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): AvatarScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
       >

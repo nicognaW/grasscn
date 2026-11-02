@@ -9,6 +9,10 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-scroll-area.css";
 
+interface ScrollAreaScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface Geometry {
   height: number;
   content: number;
@@ -192,8 +196,8 @@ const ScrollArea = ({
         className={cn(`mc-scroll-area`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): ScrollAreaScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         onWheelCapture={(event) => {
           onWheelCapture?.(event);

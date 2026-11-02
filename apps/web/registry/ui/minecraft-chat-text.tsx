@@ -17,6 +17,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface MinecraftChatTextScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
@@ -282,7 +286,7 @@ const MinecraftChatText = ({
       className={cn(`mc-label`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): MinecraftChatTextScaleStyle =>
           ({
             "--mc-scale": scale,
             width:
@@ -290,7 +294,7 @@ const MinecraftChatText = ({
                 ? undefined
                 : maxWidth * scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
     >

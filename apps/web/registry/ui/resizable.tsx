@@ -8,6 +8,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import "./minecraft-resizable.css";
 import "./minecraft-resizable-assets.css";
 
+interface ResizableScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
 const ResizablePanelGroup = ({
@@ -24,8 +28,8 @@ const ResizablePanelGroup = ({
       className={cn(`mc-resizable-group`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ResizableScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />
@@ -64,8 +68,8 @@ const ResizableHandle = ({
       className={cn(`mc-resizable-handle`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ResizableScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

@@ -11,6 +11,10 @@ import {
   minecraftStyle,
 } from "./minecraft-render";
 
+interface MessageScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const MessageScale = React.createContext<1 | 2 | 3>(2);
 const MessageAuthor = React.createContext<string | undefined>(undefined);
 
@@ -52,12 +56,12 @@ const Message = ({
           className={cn(`mc-message`, className)}
           style={minecraftStyle(
             style,
-            (__style) =>
+            (__style): MessageScaleStyle =>
               ({
                 "--mc-scale": scale,
                 ...(kind === "system" ? { color: "#ffff55" } : {}),
                 ...__style,
-              }) as React.CSSProperties
+              })
           )}
           {...props}
         />

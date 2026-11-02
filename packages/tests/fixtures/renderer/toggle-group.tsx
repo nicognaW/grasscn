@@ -77,7 +77,7 @@ export const ToggleGroupFixture = () => {
       position: "absolute",
       left: Number(p.get("x") ?? 16) * scale,
       top: Number(p.get("y") ?? 16) * scale,
-    } as React.CSSProperties,
+    } satisfies React.CSSProperties,
   };
 
   return (

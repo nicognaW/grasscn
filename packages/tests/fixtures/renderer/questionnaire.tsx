@@ -40,7 +40,7 @@ export const QuestionnaireFixture = () => {
     position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: Number(q.get("width") ?? 200) * scale,
-  } as React.CSSProperties;
+  } satisfies React.CSSProperties;
 
   if (q.has("native")) {
     const part = q.get("part") ?? "title";

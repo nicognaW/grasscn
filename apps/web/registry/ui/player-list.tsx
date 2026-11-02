@@ -15,6 +15,10 @@ import { loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-player-list.css";
 
+interface PlayerListScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface PlayerListEntry {
   id: string;
   name: string;
@@ -117,14 +121,14 @@ const PlayerList = ({
         className={cn(`mc-player-list`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): PlayerListScaleStyle =>
             ({
               "--mc-scale": scale,
               height: (1 + headHeight + rows * 9 + footHeight) * scale,
               position: "relative",
               width: width * scale,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
       >
         {header && (
@@ -371,13 +375,13 @@ const Scoreboard = ({
       className={cn(`mc-scoreboard`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): PlayerListScaleStyle =>
           ({
             "--mc-scale": scale,
             height: (visible.length * 9 + 10) * scale,
             width: (contentWidth + 4) * scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
     >
       <div

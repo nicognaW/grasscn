@@ -15,6 +15,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface MinecraftDisclosureTextScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
@@ -137,7 +141,7 @@ const MinecraftDisclosureText = ({
       className={cn(`mc-label`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): MinecraftDisclosureTextScaleStyle =>
           ({
             "--mc-scale": scale,
             width:
@@ -145,7 +149,7 @@ const MinecraftDisclosureText = ({
                 ? undefined
                 : maxWidth * scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
     >

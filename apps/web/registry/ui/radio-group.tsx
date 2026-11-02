@@ -10,6 +10,10 @@ import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-radio-group.css";
 
+interface RadioGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const RadioContext = React.createContext<{
   scale: 1 | 2 | 3;
   disabled: boolean;
@@ -58,8 +62,8 @@ const RadioGroup = function RadioGroup<Value = string>({
         className={cn(`mc-radio-group`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): RadioGroupScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
       />

@@ -15,6 +15,10 @@ import {
 
 import "./minecraft-advancement-tree.css";
 
+interface AdvancementTreeScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface AdvancementNode {
   id: string;
   parentId?: string;
@@ -243,7 +247,7 @@ const AdvancementTree = ({
         aria-label={props["aria-label"] ?? "Advancement tree"}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): AdvancementTreeScaleStyle =>
             ({
               "--mc-scale": scale,
               backgroundImage: `url("${background}")`,
@@ -252,7 +256,7 @@ const AdvancementTree = ({
               height: height * scale,
               width: width * scale,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
         onKeyDown={(event) => {
           onKeyDown?.(event);

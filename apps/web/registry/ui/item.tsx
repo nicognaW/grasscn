@@ -22,6 +22,10 @@ import type {
 import { playMinecraftClick } from "./minecraft-sound";
 import { Separator } from "./separator";
 
+interface ItemScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ItemScale = React.createContext<1 | 2 | 3>(2);
 const ItemClipWidth = React.createContext<number | undefined>(undefined);
 const ItemInside = React.createContext(false);
@@ -97,8 +101,8 @@ const Item = ({
           className={cn(itemVariants({ size, variant }), className)}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): ItemScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           {...props}
           onClickCapture={(event) => {
@@ -160,8 +164,8 @@ const ItemGroup = ({
         className={cn(`mc-item-group`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): ItemScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
       />

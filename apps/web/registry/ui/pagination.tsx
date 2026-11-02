@@ -10,6 +10,10 @@ import { MinecraftText } from "./minecraft-text";
 import "./minecraft-pagination.css";
 import "./minecraft-pagination-assets.css";
 
+interface PaginationScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
@@ -120,8 +124,8 @@ const PaginationArrow = ({
       className={cn(`mc-pagination-arrow`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): PaginationScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       aria-current={(isActive ?? false) ? "page" : undefined}
       {...props}
@@ -177,7 +181,7 @@ const PaginationEllipsis = ({
     className={cn(`mc-pagination-ellipsis`, className)}
     style={minecraftStyle(
       style,
-      (__style) => ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+      (__style): PaginationScaleStyle => ({ "--mc-scale": scale, ...__style })
     )}
     {...props}
   >
