@@ -11,7 +11,8 @@ import {
 import { pixelPerfectTestRoot } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const digest = (bytes: string | Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 const scratchRoot = path.join(pixelPerfectTestRoot, "unit");
 
@@ -69,9 +70,9 @@ test("installed case checkpoints require all aliases, exact pixels and matching 
       ]),
       null
     );
-    assert.throws(() =>
-      cache.write("case", bytes, record, { decodedRgbaSha256: changed })
-    );
+    assert.throws(() => {
+      cache.write("case", bytes, record, { decodedRgbaSha256: changed });
+    });
 
     const folder = path.join(
       directory,

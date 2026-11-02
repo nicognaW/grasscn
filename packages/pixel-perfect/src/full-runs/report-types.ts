@@ -129,11 +129,11 @@ export interface PreparedReport {
   publishing: false;
 }
 
-export type FindingLink = {
+export interface FindingLink {
   problem: string;
   issue: string;
   state: string;
-};
+}
 
 export interface PublishedReport {
   reportComment: string;

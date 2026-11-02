@@ -4,8 +4,12 @@ import { mkdir, cp, mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 
 import { pixelPerfectTestRoot } from "@ppt/paths";
-import { verifyPortingEvidence } from "@ppt/runtime/check-porting-evidence.mjs";
+import { verifyPortingEvidence } from "@ppt/runtime/check-porting-evidence";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
+import type {
+  TradingTraceRepeat,
+  NativeMapRepeat,
+} from "@ppt/runtime/porting-evidence-types";
 
 test("evidence chain rejects corrupted inputs, generated outputs and stale trace identity", async () => {
   const scratchRoot = path.join(pixelPerfectTestRoot, "unit");
@@ -49,31 +53,45 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
 
       changed[0] ^= 1;
       await writeFile(target, changed);
-      await assert.rejects(() => verifyPortingEvidence(root));
+      await assert.rejects(verifyPortingEvidence(root));
       await writeFile(target, original);
     }
 
     for (const [file, mutate] of [
       [
         "tests/reference/trading/scrollbar/interaction-repeatability.json",
-        (data) => {
+        (original: Buffer) => {
+          // SAFETY: this named fixture is the retained trading-trace repeatability report.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+          const data = JSON.parse(
+            original.toString("utf-8")
+          ) as TradingTraceRepeat;
+
           data.captureSourceSha256 = "0".repeat(64);
+
+          return JSON.stringify(data);
         },
       ],
       [
         "tests/reference/map/demo-world/generation-repeatability.json",
-        (data) => {
+        (original: Buffer) => {
+          // SAFETY: this named fixture is the retained native map-generation repeatability report.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+          const data = JSON.parse(
+            original.toString("utf-8")
+          ) as NativeMapRepeat;
+
           data.generationRunTwo.unsupportedRequests = 1;
+
+          return JSON.stringify(data);
         },
       ],
-    ]) {
+    ] satisfies [string, (original: Buffer) => string][]) {
       const target = path.join(root, file);
       const original = await readFile(target);
-      const data = JSON.parse(original);
 
-      mutate(data);
-      await writeFile(target, JSON.stringify(data));
-      await assert.rejects(() => verifyPortingEvidence(root));
+      await writeFile(target, mutate(original));
+      await assert.rejects(verifyPortingEvidence(root));
       await writeFile(target, original);
     }
 
@@ -82,9 +100,12 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
 
     await writeFile(
       target,
-      original.replace(/(worldMapPaletteBase64\s*=\s*")[A-Za-z0-9+/]/, "$1A")
+      original.replace(
+        /(?<assignment>worldMapPaletteBase64\s*=\s*")[A-Za-z0-9+/]/u,
+        "$1A"
+      )
     );
-    await assert.rejects(() => verifyPortingEvidence(root));
+    await assert.rejects(verifyPortingEvidence(root));
   } finally {
     await rm(root, { force: true, recursive: true });
   }
