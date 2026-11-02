@@ -17,7 +17,7 @@ import type { UnihexGlyph } from "./minecraft-unifont";
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function loadAlpha() {
+const loadAlpha = function loadAlpha() {
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -31,7 +31,7 @@ function loadAlpha() {
     image.onerror = reject;
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??

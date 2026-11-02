@@ -76,7 +76,7 @@ const MessageAvatar = ({
   />
 );
 
-function isChatInline(value: React.ReactNode): boolean {
+const isChatInline = function isChatInline(value: React.ReactNode): boolean {
   if (
     value === null ||
     value === undefined ||
@@ -115,7 +115,7 @@ function isChatInline(value: React.ReactNode): boolean {
         ].includes(value.type))) &&
     isChatInline(value.props.children)
   );
-}
+};
 
 const ChatChildren = ({
   children,

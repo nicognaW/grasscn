@@ -11,14 +11,14 @@ interface Painter {
 const painters = new WeakMap<CanvasRenderingContext2D, Painter | null>();
 const origins = new WeakMap<CanvasRenderingContext2D, DOMRect>();
 
-export function positionMenuGlyphs(
+export const positionMenuGlyphs = function positionMenuGlyphs(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -99,9 +99,9 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function paintMenuGlyph(
+export const paintMenuGlyph = function paintMenuGlyph(
   context: CanvasRenderingContext2D,
   code: number,
   pixels: Uint8Array,
@@ -226,9 +226,11 @@ export function paintMenuGlyph(
   );
 
   return true;
-}
+};
 
-export function disposeMenuGlyphs(context: CanvasRenderingContext2D) {
+export const disposeMenuGlyphs = function disposeMenuGlyphs(
+  context: CanvasRenderingContext2D
+) {
   const painter = painters.get(context);
 
   if (painter) {
@@ -241,4 +243,4 @@ export function disposeMenuGlyphs(context: CanvasRenderingContext2D) {
 
   painters.delete(context);
   origins.delete(context);
-}
+};

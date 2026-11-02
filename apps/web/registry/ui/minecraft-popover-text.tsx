@@ -20,7 +20,7 @@ const advance = (char: string, bold: boolean) => {
 const textWidth = (text: string, bold: boolean) =>
   Math.ceil([...text].reduce((sum, char) => sum + advance(char, bold), 0));
 
-function wrap(text: string, maximum: number, bold: boolean) {
+const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (const paragraph of text.split("\n")) {
@@ -55,7 +55,7 @@ function wrap(text: string, maximum: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftPopoverText = ({
   children,

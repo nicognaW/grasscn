@@ -18,7 +18,9 @@ import "./minecraft-button.css";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
-function bitmapText(content: React.ReactNode): React.ReactNode {
+const bitmapText = function bitmapText(
+  content: React.ReactNode
+): React.ReactNode {
   if (
     Array.isArray(content) ||
     (React.isValidElement(content) && content.type === React.Fragment)
@@ -112,7 +114,7 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
 
 const buttonVariants = cva(
   "mc-button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0",

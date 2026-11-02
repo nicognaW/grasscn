@@ -11,7 +11,7 @@ import { loadUnihex, getUnihexGlyph, paintUnihex } from "./minecraft-unifont";
 const images = new Map<string, Promise<HTMLImageElement>>();
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the per-source image Promise itself, including cached rejection; async would wrap it.
-function load(src: string) {
+const load = function load(src: string) {
   let promise = images.get(src);
 
   if (!promise) {
@@ -28,7 +28,7 @@ function load(src: string) {
   }
 
   return promise;
-}
+};
 
 export const MinecraftSignPaint = ({
   src,

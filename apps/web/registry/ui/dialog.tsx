@@ -20,7 +20,9 @@ import "./minecraft-dialog.css";
 
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
-function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
+const useElement = function useElement<T extends HTMLElement>(
+  ref: React.Ref<T> | undefined
+) {
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
@@ -44,7 +46,7 @@ function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
   );
 
   return [element, callback] as const;
-}
+};
 
 const Dialog = ({
   scale = 2,

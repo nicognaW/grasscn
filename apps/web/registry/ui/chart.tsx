@@ -62,7 +62,7 @@ interface ChartContextProps {
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 
-function useChart() {
+const useChart = function useChart() {
   const context = React.useContext(ChartContext);
 
   if (!context) {
@@ -70,7 +70,7 @@ function useChart() {
   }
 
   return context;
-}
+};
 
 const ChartContainer = ({
   id,

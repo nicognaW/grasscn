@@ -51,7 +51,7 @@ type ToasterProps = Omit<SonnerProps, "richColors" | "expand"> & {
   ref?: React.Ref<HTMLElement>;
 };
 
-function ActionGraphic({
+const ActionGraphic = function ActionGraphic({
   action,
   model,
   scale,
@@ -131,9 +131,15 @@ function ActionGraphic({
       {action.label}
     </Button>
   );
-}
+};
 
-function ModelGraphic({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) {
+const ModelGraphic = function ModelGraphic({
+  model,
+  scale,
+}: {
+  model: Model;
+  scale: 1 | 2 | 3;
+}) {
   const [height, setHeight] = React.useState(model.height);
 
   const update = React.useCallback(
@@ -186,9 +192,9 @@ function ModelGraphic({ model, scale }: { model: Model; scale: 1 | 2 | 3 }) {
       )}
     </span>
   );
-}
+};
 
-function Toaster({
+const Toaster = function Toaster({
   scale = 2,
   richColors = false,
   expand = true,
@@ -501,7 +507,7 @@ function Toaster({
       )}
     </>
   );
-}
+};
 
 export type { ToasterProps };
 

@@ -26,7 +26,7 @@ type AvatarProps = MinecraftProps<typeof AvatarPrimitive.Root> & {
   scale?: 1 | 2 | 3;
 };
 
-function Avatar({
+const Avatar = function Avatar({
   size = "default",
   scale: providedScale,
   className,
@@ -59,9 +59,9 @@ function Avatar({
       />
     </AvatarContext.Provider>
   );
-}
+};
 
-function MinecraftAvatarFace({
+const MinecraftAvatarFace = function MinecraftAvatarFace({
   skin,
   hat,
   upsideDown,
@@ -107,7 +107,7 @@ function MinecraftAvatarFace({
   }, [skin, hat, upsideDown, scale]);
 
   return <canvas ref={ref} data-mc-avatar-face="" aria-hidden="true" />;
-}
+};
 
 type AvatarImageProps = MinecraftProps<typeof AvatarPrimitive.Image> & {
   skin?: MinecraftAvatarSkin;
@@ -115,7 +115,7 @@ type AvatarImageProps = MinecraftProps<typeof AvatarPrimitive.Image> & {
   upsideDown?: boolean;
 };
 
-function AvatarImage({
+const AvatarImage = function AvatarImage({
   skin,
   hat = true,
   upsideDown = false,
@@ -148,9 +148,9 @@ function AvatarImage({
       )}
     </>
   );
-}
+};
 
-function AvatarFallback({
+const AvatarFallback = function AvatarFallback({
   children,
   className,
   maxWidth,
@@ -179,9 +179,12 @@ function AvatarFallback({
       )}
     </AvatarPrimitive.Fallback>
   );
-}
+};
 
-function AvatarBadge({ className, ...props }: MinecraftProps<"span">) {
+const AvatarBadge = function AvatarBadge({
+  className,
+  ...props
+}: MinecraftProps<"span">) {
   return (
     <span
       data-slot="avatar-badge"
@@ -189,9 +192,11 @@ function AvatarBadge({ className, ...props }: MinecraftProps<"span">) {
       {...props}
     />
   );
-}
+};
 
-function groupScale(children: React.ReactNode): 1 | 2 | 3 | undefined {
+const groupScale = function groupScale(
+  children: React.ReactNode
+): 1 | 2 | 3 | undefined {
   for (const child of React.Children.toArray(children)) {
     if (
       !React.isValidElement<{
@@ -214,9 +219,9 @@ function groupScale(children: React.ReactNode): 1 | 2 | 3 | undefined {
       }
     }
   }
-}
+};
 
-function AvatarGroup({
+const AvatarGroup = function AvatarGroup({
   className,
   scale: providedScale,
   style,
@@ -244,9 +249,9 @@ function AvatarGroup({
       </div>
     </AvatarContext.Provider>
   );
-}
+};
 
-function AvatarGroupCount({
+const AvatarGroupCount = function AvatarGroupCount({
   children,
   className,
   ...props
@@ -266,7 +271,7 @@ function AvatarGroupCount({
       )}
     </div>
   );
-}
+};
 
 export {
   Avatar,

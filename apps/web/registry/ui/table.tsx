@@ -14,7 +14,9 @@ import "./minecraft-table.css";
 
 const TableScale = React.createContext<1 | 2 | 3>(2);
 
-function literalText(children: React.ReactNode): string | null {
+const literalText = function literalText(
+  children: React.ReactNode
+): string | null {
   let plain = true;
   let result = "";
 
@@ -52,7 +54,7 @@ function literalText(children: React.ReactNode): string | null {
   visit(children);
 
   return plain ? result : null;
-}
+};
 
 interface TextLayout {
   maxTextWidth?: number;
