@@ -225,4 +225,24 @@ test("compact charts keep default tooltip labels and numbers at readable native 
   await expect(
     tooltip.locator(".mc-bitmap").filter({ hasText: "275" })
   ).toHaveCount(1);
+
+  const gap = await tooltip.evaluate((element) => {
+    const labels = [...element.querySelectorAll(".mc-bitmap")];
+
+    const name = labels
+      .find((label) => label.textContent === "Chrome")
+      ?.querySelector(".mc-text-pixels");
+
+    const value = labels
+      .find((label) => label.textContent === "275")
+      ?.querySelector(".mc-text-pixels");
+
+    if (!name || !value) {
+      throw new Error("The default native tooltip row must be painted");
+    }
+
+    return value.getBoundingClientRect().x - name.getBoundingClientRect().right;
+  });
+
+  expect(gap).toBeGreaterThanOrEqual(8);
 });

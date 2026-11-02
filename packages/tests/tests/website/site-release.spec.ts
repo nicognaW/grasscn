@@ -198,12 +198,12 @@ test("canonical routes reload and legacy links still resolve", async ({
 });
 
 for (const width of [320, 390]) {
-  test(`compact demos keep actions reachable at ${width}px`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ height: 844, width });
+  for (const name of ["button-group", "table", "pagination"]) {
+    test(`compact ${name} demo keeps actions reachable at ${width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ height: 844, width });
 
-    for (const name of ["button-group", "table", "pagination"]) {
       await page.goto(origin + "docs/components/" + name);
       await expect(
         page.locator(".documentation-playground .demo-stage")
@@ -244,8 +244,8 @@ for (const width of [320, 390]) {
             .getByLabel("Pagination current page")
         ).toHaveText("Page 2 / 3");
       }
-    }
-  });
+    });
+  }
 }
 
 test("shared controls retain native rendering and the sticky header is opaque", async ({
