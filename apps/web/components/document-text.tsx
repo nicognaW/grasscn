@@ -9,7 +9,6 @@ import { MinecraftUnicodeLabel } from "../registry/ui/minecraft-unicode-label";
 import "./documentation.css";
 
 const isTextNode = (value: ReactNode): value is string | number =>
-  // eslint-disable-next-line anti-slop/no-runtime-typeof -- ReactNode is the rendering boundary; native text and element nodes require distinct handling.
   typeof value === "string" || typeof value === "number";
 
 const hexColor = /^#[\da-f]{6}$/iu;

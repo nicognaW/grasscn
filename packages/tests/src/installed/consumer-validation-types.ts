@@ -103,7 +103,6 @@ export interface CliReport {
 }
 
 // JSON parsing yields unknown until each consumed protocol field is checked.
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- JSON string fields are checked at the external protocol boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
 
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Raw JSON object members are unknown until the adjacent domain guards validate them.

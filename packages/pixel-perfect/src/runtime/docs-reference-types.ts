@@ -80,10 +80,8 @@ export interface InstallationCase {
   name: string;
 }
 
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- Validate primitive fields at the native/reference JSON boundary.
 const isString = (value: unknown): value is string => typeof value === "string";
 
-// eslint-disable-next-line anti-slop/no-runtime-typeof -- Native geometry and image dimensions are numeric protocol fields.
 const isNumber = (value: unknown): value is number => typeof value === "number";
 
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Native protocol members remain unknown until the adjacent field guards validate their domain shapes.

@@ -4,7 +4,6 @@ import type { ComponentProps, ReactNode } from "react";
 import { CodeView } from "./code-view";
 
 const isTextNode = (value: ReactNode): value is string | number =>
-  // eslint-disable-next-line anti-slop/no-runtime-typeof -- ReactNode is the rendering boundary; native text and element nodes require distinct handling.
   typeof value === "string" || typeof value === "number";
 
 const plainCode = (node: ReactNode): string =>

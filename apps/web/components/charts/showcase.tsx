@@ -51,7 +51,7 @@ const Example = ({ name }: { name: keyof typeof chartExamples }) => {
       <ComponentExample
         name={name}
         title={`${example.title} example`}
-        tabListWidth={240}
+        tabListLayout="compact"
       />
     </Card>
   );
