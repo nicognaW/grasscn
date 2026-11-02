@@ -104,18 +104,17 @@ const bitmapText = function bitmapText(
           }
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
+          const glyphStyle: ButtonGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
 
           return (
             <span
               key={index}
               className={cn("mc-glyph", char === " " && "mc-glyph-space")}
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                } satisfies ButtonGlyphStyle
-              }
+              style={glyphStyle}
             />
           );
         })}

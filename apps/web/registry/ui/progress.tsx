@@ -98,6 +98,21 @@ const Progress = ({
   }
 
   const content = children;
+  const backgroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${background}")`,
+  };
+  const notchBackgroundStyle: ProgressSurfaceStyle | undefined = notchBackground
+    ? { "--mc-progress-image": `url("${notchBackground}")` }
+    : undefined;
+  const indicatorStyle: ProgressIndicatorStyle = {
+    "--mc-progress-filled": filled,
+  };
+  const foregroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${foreground}")`,
+  };
+  const notchForegroundStyle: ProgressSurfaceStyle | undefined = notchForeground
+    ? { "--mc-progress-image": `url("${notchForeground}")` }
+    : undefined;
 
   const artwork = (
     <>
@@ -114,49 +129,26 @@ const Progress = ({
         <span
           aria-hidden="true"
           className="mc-progress-surface"
-          style={
-            {
-              "--mc-progress-image": `url("${background}")`,
-            } satisfies ProgressSurfaceStyle
-          }
+          style={backgroundStyle}
         />
         {notchBackground && (
           <span
             aria-hidden="true"
             className="mc-progress-surface"
-            style={
-              {
-                "--mc-progress-image": `url("${notchBackground}")`,
-              } satisfies ProgressSurfaceStyle
-            }
+            style={notchBackgroundStyle}
           />
         )}
         <ProgressPrimitive.Indicator
           data-slot="progress-indicator"
           aria-hidden="true"
           className="mc-progress-indicator"
-          style={
-            {
-              "--mc-progress-filled": filled,
-            } satisfies ProgressIndicatorStyle
-          }
+          style={indicatorStyle}
         >
-          <span
-            className="mc-progress-surface"
-            style={
-              {
-                "--mc-progress-image": `url("${foreground}")`,
-              } satisfies ProgressSurfaceStyle
-            }
-          />
+          <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (
             <span
               className="mc-progress-surface"
-              style={
-                {
-                  "--mc-progress-image": `url("${notchForeground}")`,
-                } satisfies ProgressSurfaceStyle
-              }
+              style={notchForegroundStyle}
             />
           )}
         </ProgressPrimitive.Indicator>
