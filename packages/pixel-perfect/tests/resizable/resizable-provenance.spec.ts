@@ -5,21 +5,29 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { SourceProvenance } from "@ppt/native/generate/asset-protocol";
+import type nativeReference from "../reference/resizable/manifest.json";
+import type cropDerivation from "../reference/resizable/crop-derivation.json";
+
 const hash = (bytes: Buffer) =>
   createHash("sha256").update(bytes).digest("hex");
 
 const directory = "tests/reference/resizable";
 
 test("Historical scrollbar grip pixels remain exact crops from both original native launches and retained fullframes", () => {
+  // SAFETY: the retained native crop producer owns this exact manifest; keep its original read/parse and hash checks.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as typeof nativeReference;
 
   const proofBytes = readFileSync(
     pixelPerfectFile(`${directory}/crop-derivation.json`)
   );
 
-  const proof = JSON.parse(proofBytes.toString());
+  // SAFETY: the retained crop derivation producer owns these exact source/crop fields; retain the original proof bytes and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const proof = JSON.parse(proofBytes.toString()) as typeof cropDerivation;
 
   const repeat = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/repeatability.json`), "utf-8")
@@ -92,6 +100,8 @@ test("Historical scrollbar grip pixels remain exact crops from both original nat
 });
 
 test("Resizable ships unchanged original recipe-book arrow PNG artwork", () => {
+  // SAFETY: the maintained native asset generator writes SourceProvenance with SHA-256 source pins; existing artwork/hash checks remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile(
@@ -99,7 +109,7 @@ test("Resizable ships unchanged original recipe-book arrow PNG artwork", () => {
       ),
       "utf-8"
     )
-  );
+  ) as SourceProvenance;
 
   const css = readFileSync(
     webFile("registry/ui/minecraft-resizable-assets.css"),
