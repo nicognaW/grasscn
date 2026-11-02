@@ -45,11 +45,11 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
   await page.goto(`${origin}docs/components/toggle-group`);
 
   const single = page
-      .locator(".documentation-playground")
-      .getByRole("group", { name: "One recipe station" }); const 
-    multiple = page
-      .locator(".documentation-playground")
-      .getByRole("group", { name: "Several recipe stations" });
+    .locator(".documentation-playground")
+    .getByRole("group", { name: "One recipe station" });
+  const multiple = page
+    .locator(".documentation-playground")
+    .getByRole("group", { name: "Several recipe stations" });
   await single.getByRole("button", { name: "Furnace recipes" }).click();
   await expect(
     page

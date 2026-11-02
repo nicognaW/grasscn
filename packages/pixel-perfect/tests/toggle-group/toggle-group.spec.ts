@@ -131,7 +131,9 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
         await expect(subject).toHaveAttribute("data-slot", "toggle-group-item");
         await page.mouse.move(0, 0);
 
-        if (c.state.endsWith("hover")) { await subject.hover(); }
+        if (c.state.endsWith("hover")) {
+          await subject.hover();
+        }
 
         if (c.state === "focus") {
           await subject.focus();

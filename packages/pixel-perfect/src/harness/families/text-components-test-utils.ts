@@ -209,11 +209,11 @@ export const nativeTextTests = function nativeTextTests(
             c.sha256
           );
 
-          const actualBytes = await subject.screenshot(); const 
-            { mismatchedPixels, diff } = compare(
-              PNG.sync.read(bytes),
-              PNG.sync.read(actualBytes)
-            );
+          const actualBytes = await subject.screenshot();
+          const { mismatchedPixels, diff } = compare(
+            PNG.sync.read(bytes),
+            PNG.sync.read(actualBytes)
+          );
 
           writeFileSync(info.outputPath("actual.png"), actualBytes);
           writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

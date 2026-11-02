@@ -30,9 +30,9 @@ const history: Line[] = [
   { system: true, text: "Changes saved." },
 ];
 function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
-  const [messages, setMessages] = React.useState(history); const 
-    [text, setText] = React.useState("The updated design looks great."); const 
-    api = useMessageScroller();
+  const [messages, setMessages] = React.useState(history);
+  const [text, setText] = React.useState("The updated design looks great.");
+  const api = useMessageScroller();
   const send = () => {
     if (!text.trim()) return;
     setMessages((values) => [...values, { author: "You", text }]);

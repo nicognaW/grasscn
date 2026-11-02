@@ -38,12 +38,12 @@ const splashWidth = Array.from(splash).reduce(
 export function TitleScene() {
   const ref = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
-    const node = ref.current!; const 
-      splashNode = node.querySelector<HTMLElement>(".grass-title-splash")!; const 
-      motion = matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0; let 
-      visible = true; let 
-      guiScale = 1;
+    const node = ref.current!;
+    const splashNode = node.querySelector<HTMLElement>(".grass-title-splash")!;
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let visible = true;
+    let guiScale = 1;
     const paint = (time: number) => {
       splashNode.style.transform = splashTransform(
         splashMotion(time, splashWidth),
@@ -64,13 +64,15 @@ export function TitleScene() {
       if (running) {
         paint(performance.now());
         frame = requestAnimationFrame(tick);
-      } else { paint(0); }
+      } else {
+        paint(0);
+      }
     };
     const observer = new IntersectionObserver(([entry]) => {
-        visible = entry.isIntersecting;
-        sync();
-      }); const 
-      resize = new ResizeObserver(sync);
+      visible = entry.isIntersecting;
+      sync();
+    });
+    const resize = new ResizeObserver(sync);
     observer.observe(node);
     resize.observe(node);
     document.addEventListener("visibilitychange", sync);
