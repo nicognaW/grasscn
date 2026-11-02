@@ -207,6 +207,7 @@
     "packages/tests/src/checks/verify-next-development.mjs",
     "packages/tests/src/checks/verify-next-workflow.mjs",
     "packages/tests/src/checks/verify.mjs",
+    "packages/tests/src/harness/native-text-gap.ts",
     "packages/tests/src/installed/consumer-boundary.mjs",
     "packages/tests/src/installed/consumer-build-identity.mjs",
     "packages/tests/src/installed/consumer-metadata.ts",
