@@ -7,24 +7,7 @@ import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-asse
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/scroll-area/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    contentHeight: number;
-    value: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/scroll-area/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([

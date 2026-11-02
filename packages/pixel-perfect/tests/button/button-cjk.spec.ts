@@ -1,29 +1,11 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    label: string;
-    state: string;
-    width: number;
-    height: number;
-    scale: number;
-    x: number;
-    y: number;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/button-cjk/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
