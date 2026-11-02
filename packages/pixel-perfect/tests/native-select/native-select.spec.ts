@@ -5,13 +5,30 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Fields consumed from the two retained closed native Select matrices. */
+interface ClosedNativeSelectCase extends CapturedReferenceCase {
+  background: string;
+  label: string;
+  timeMs: number;
+  x: number;
+  y: number;
+}
+
+interface ClosedNativeSelectManifest {
+  cases: ClosedNativeSelectCase[];
+}
+
 for (const dir of ["native-select", "native-select-extra"]) {
+  // SAFETY: Both retained native-select/native-select-extra manifests supply every consumed identity, geometry, background, label and numeric timeMs field; no unrelated variant properties are added.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; preserve the original fresh runtime read/parse phase.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as ClosedNativeSelectManifest;
 
   test.describe(`${dir} real HTMLSelect closed native appearance`, () => {
     test.describe.configure({ mode: "parallel" });
