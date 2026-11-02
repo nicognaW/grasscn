@@ -47,6 +47,7 @@ const transitionSchema = z.object({
   classification: z.enum([
     "preexisting-main-source-drift",
     "owned-behavior-repair",
+    "reviewed-source-transition",
   ]),
   currentSha256: z.string(),
   historicalSha256: z.string(),
@@ -437,9 +438,11 @@ export const validateHistoricalEvidence = async ({
     );
     assert.match(policy.currentSha256, /^[a-f0-9]{64}$/u);
     assert.ok(
-      ["preexisting-main-source-drift", "owned-behavior-repair"].includes(
-        policy.classification
-      )
+      [
+        "preexisting-main-source-drift",
+        "owned-behavior-repair",
+        "reviewed-source-transition",
+      ].includes(policy.classification)
     );
 
     archived.set(entry.sourcePath, entry.sourceSha256);
