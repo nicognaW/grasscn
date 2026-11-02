@@ -80,7 +80,7 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
     const sprite = sprites[name];
     const location = atlas.locations[name];
 
-    const rgba = Uint8Array.from(atob(sprite.rgba), (c) => c.charCodeAt(0));
+    const rgba = Uint8Array.from(atob(sprite.rgba), (c) => c.codePointAt(0) ?? Number.NaN);
     gl.texSubImage2D(
       gl.TEXTURE_2D,
       0,

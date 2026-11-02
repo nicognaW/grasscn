@@ -75,6 +75,7 @@ for (const scale of [2] as const) {
       await section.evaluate(
         (n) =>
           !!(
+            // oxlint-disable-next-line no-bitwise -- compareDocumentPosition returns combined DOM position flags; test the FOLLOWING bit while retaining other flags.
             n.compareDocumentPosition(
               document.querySelector("[data-slot=chart-example]")!
             ) & Node.DOCUMENT_POSITION_FOLLOWING

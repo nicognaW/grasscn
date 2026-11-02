@@ -36,7 +36,7 @@ export const loadUnihex = function loadUnihex() {
       await import("./minecraft-unifont-data");
 
     const bytes = Uint8Array.from(atob(unifontZip), (char) =>
-      char.charCodeAt(0)
+      char.codePointAt(0) ?? Number.NaN
     );
 
     const view = new DataView(bytes.buffer);
