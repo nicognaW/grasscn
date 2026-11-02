@@ -224,7 +224,7 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
 
   let cancelled = false;
   let frame = 0;
-  let loaded: Awaited<ReturnType<typeof loadImages>>;
+  let loaded: Awaited<ReturnType<typeof loadImages>> | undefined;
   let signature = "";
   let focusedAt = Date.now();
 

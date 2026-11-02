@@ -228,7 +228,7 @@ export const attachMinecraftInput = function attachMinecraftInput(
   let focusedAt = Date.now();
   let previousValue = "";
 
-  let loaded: Images;
+  let loaded: Images | undefined;
   let loadingUnihex = false;
 
   const paint = () => {
