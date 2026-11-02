@@ -5,11 +5,29 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
+import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { chromium, expect } from "@playwright/test";
+import type {
+  ToggleReferenceCase,
+  PositionedReferenceCase,
+  MenuReferenceCase,
+  MenubarTriggerReferenceCase,
+  PopoverReferenceCase,
+  DialogReferenceCase,
+  FixtureReferenceCase,
+  TabsReferenceCase,
+  SelectReferenceCase,
+  InstalledReferenceManifest,
+  InstalledCaseResult,
+} from "@ppt/installed/reference-case";
+import type { CollapsibleReferenceCase } from "@ppt/installed/verify-collapsible-installed";
 import { verifyCollapsibleCase } from "@ppt/installed/verify-collapsible-installed";
-import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
+
+import type registry from "../../../../apps/web/registry.json";
+import type minecraftMap from "../../../../apps/web/registry/minecraft-map.json";
 
 const [
   consumerDir,
@@ -21,19 +39,25 @@ const [
 
 if (!consumerDir || !name || !url) {
   throw new Error(
-    "Usage: bun src/installed/verify-installed.mjs <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]"
+    "Usage: bun src/installed/verify-installed.ts <initialized-consumer-dir> <item-name> <consumer-fixture-url> [installed-ui-directory]"
   );
 }
 
-const json = async (file) =>
-  JSON.parse(await readFile(evidenceFile(file), "utf-8"));
+// SAFETY: this read is the authored registry map, preserving its fresh-read boundary.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The exact registry map owns this JSON document.
+const map = JSON.parse(
+  await readFile(evidenceFile("registry/minecraft-map.json"), "utf-8")
+) as typeof minecraftMap;
 
-const map = await json("registry/minecraft-map.json");
 const component = map.components.find((c) => c.name === name);
 
-const item = (await json("registry.json")).items.find(
-  (item) => item.name === name
-);
+// SAFETY: registry.json is the registry producer for the installed source list.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific authored registry document boundary.
+const registeredItems = JSON.parse(
+  await readFile(evidenceFile("registry.json"), "utf-8")
+) as typeof registry;
+
+const item = registeredItems.items.find((candidate) => candidate.name === name);
 
 assert.ok(
   component?.pixelVerification.manifest && item,
@@ -50,14 +74,22 @@ assert.ok(
   "Reference manifest must be registered on the component"
 );
 
-const manifest = await json(manifestFile);
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+// SAFETY: the existing registration assertion above restricts this to a component's captured native manifest, emitted by capture.mjs or capture-controls.mjs.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered capture producer owns the identity/case protocol.
+const manifest = JSON.parse(
+  await readFile(evidenceFile(manifestFile), "utf-8")
+) as InstalledReferenceManifest;
 
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+// SAFETY: this is the initialized shadcn consumer configuration read by installedRegistryFile.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual installed consumer configuration boundary.
 const consumerSettings = JSON.parse(
   await readFile(path.resolve(consumerDir, "components.json"), "utf-8")
-);
+) as InstalledComponentSettings & { rsc?: boolean };
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll("\r\n", "\n")
@@ -97,16 +129,16 @@ for (const entry of item.files) {
 
 let browser = await chromium.launch({ channel: "msedge" });
 const browserVersion = browser.version();
-let page;
 
-const pageErrors = [];
-const cases = [];
+const pageErrors: string[] = [];
+const cases: (InstalledCaseResult | undefined)[] = [];
 
 async function preparePage() {
-  page = await browser.newPage({
+  const page = await browser.newPage({
     deviceScaleFactor: 1,
     viewport: { height: 900, width: 1280 },
   });
+
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
   if (["tabs", "select"].includes(name)) {
@@ -138,13 +170,18 @@ async function preparePage() {
   ) {
     await page.setViewportSize({ height: 900, width: 1536 });
   }
+
+  return page;
 }
 
 try {
-  await preparePage();
+  let page = await preparePage();
 
-  for (const c of manifest.cases) {
+  for (const referenceCase of manifest.cases) {
     if (name === "toggle" || name === "toggle-group") {
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as ToggleReferenceCase;
       await page.setViewportSize({ height: 900, width: 1536 });
       const renderings = [];
 
@@ -241,10 +278,13 @@ try {
         );
       }
 
-      await preparePage();
+      page = await preparePage();
     }
 
     if (name === "collapsible") {
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as CollapsibleReferenceCase;
       cases.push(await verifyCollapsibleCase({ c, manifestFile, page, url }));
       continue;
     }
@@ -258,7 +298,10 @@ try {
           "tests/reference/button-cjk/manifest.json",
         ].includes(manifestFile))
     ) {
-      let result;
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as MenuReferenceCase;
+      let result: InstalledCaseResult | undefined;
 
       for (const kind of c.element === "menu-checkbox"
         ? ["menu-checkbox", "menu-radio"]
@@ -296,10 +339,10 @@ try {
         const subject = page.locator(`[data-slot="${name}-content"]`);
         await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
         await page.mouse.move(0, 0);
-        await subject.evaluate((node) => node.focus());
+        await subject.evaluate((node: HTMLElement) => node.focus());
 
-        if (c.selectedIndex >= 0) {
-          await subject.getByRole("menuitem").nth(c.selectedIndex).focus();
+        if (Number(c.selectedIndex) >= 0) {
+          await subject.getByRole("menuitem").nth(c.selectedIndex!).focus();
         }
 
         if (c.state === "focus") {
@@ -312,7 +355,7 @@ try {
         }
 
         if (c.state.endsWith("hover")) {
-          await subject.getByRole("menuitem").nth(c.targetIndex).hover();
+          await subject.getByRole("menuitem").nth(c.targetIndex!).hover();
         }
 
         await subject.evaluate(
@@ -349,7 +392,7 @@ try {
               requestAnimationFrame(() => requestAnimationFrame(resolve))
             )
         );
-        const bounds = await subject.boundingBox();
+        const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
         assert.equal(bounds.y, c.y * c.scale);
 
@@ -389,7 +432,10 @@ try {
     }
 
     if (name === "menubar") {
-      let result;
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as MenubarTriggerReferenceCase;
+      let result: InstalledCaseResult | undefined;
 
       for (const open of c.state === "hover" ? [false, true] : [false]) {
         const params = new URLSearchParams({
@@ -436,7 +482,7 @@ try {
               requestAnimationFrame(() => requestAnimationFrame(resolve))
             )
         );
-        const bounds = await trigger.boundingBox();
+        const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
           [bounds.x, bounds.y],
           [(c.x ?? 16) * c.scale, (c.y ?? 16) * c.scale]
@@ -478,6 +524,10 @@ try {
     }
 
     if (name === "popover") {
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as PopoverReferenceCase;
+
       const params = new URLSearchParams({
         component: "popover",
         height: String(c.height),
@@ -491,8 +541,8 @@ try {
       const optionalText = c.text;
 
       if (optionalText !== null && optionalText !== undefined) {
-        params.set("text", c.text);
-        params.set("label", c.label);
+        params.set("text", optionalText);
+        params.set("label", c.label!);
       }
 
       await page.goto(`${url}?${params}`);
@@ -521,7 +571,7 @@ try {
             requestAnimationFrame(() => requestAnimationFrame(resolve))
           )
       );
-      const bounds = await subject.boundingBox();
+      const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
       assert.equal(bounds.y, c.y * c.scale);
 
@@ -553,6 +603,9 @@ try {
     }
 
     if (name === "dialog" || name === "alert-dialog") {
+      // SAFETY: registered item dispatch selects this capture producer's case protocol; no data or checks are changed.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registered native-case boundary.
+      const c = referenceCase as DialogReferenceCase;
       const confirmation = name === "alert-dialog";
 
       const params = new URLSearchParams({
@@ -574,7 +627,7 @@ try {
       const optionalText = c.text;
 
       if (optionalText !== null && optionalText !== undefined) {
-        params.set("text", c.text);
+        params.set("text", optionalText);
       }
 
       const optionalDisabledIndex = c.disabledIndex;
@@ -687,6 +740,10 @@ try {
       continue;
     }
 
+    // SAFETY: remaining fixture controls dispatch by their captured element discriminator.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered fixture-control protocol at the capture boundary.
+    const c = referenceCase as FixtureReferenceCase;
+
     const params = new URLSearchParams({
       checked: String(c.checked ?? false),
       component: c.element ?? name,
@@ -731,7 +788,7 @@ try {
       const optionalText = c.text;
 
       if (optionalText !== null && optionalText !== undefined) {
-        params.set("text", c.text);
+        params.set("text", optionalText);
       }
     }
 
@@ -760,6 +817,10 @@ try {
     }
 
     if (name === "tabs") {
+      // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
+      const selectedCase = c as TabsReferenceCase;
+
       for (const key of [
         "selected",
         "selectedIndex",
@@ -767,32 +828,36 @@ try {
         "disabledIndex",
         "timeMs",
         "contentHeight",
-      ]) {
-        const optionalParameter = c[key];
+      ] as const) {
+        const optionalParameter = selectedCase[key];
 
         if (optionalParameter !== null && optionalParameter !== undefined) {
-          params.set(key, String(c[key]));
+          params.set(key, String(selectedCase[key]));
         }
       }
 
-      if (c.labels) {
-        params.set("labels", JSON.stringify(c.labels));
+      if (selectedCase.labels) {
+        params.set("labels", JSON.stringify(selectedCase.labels));
       }
     }
 
     if (name === "select") {
-      params.set("height", String(c.height));
+      // SAFETY: the existing item-name branch selects its registered SelectReferenceCase capture format.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
+      const selectedCase = c as SelectReferenceCase;
 
-      for (const key of ["selectedIndex", "disabledIndex", "timeMs"]) {
-        const optionalParameter = c[key];
+      params.set("height", String(selectedCase.height));
+
+      for (const key of ["selectedIndex", "disabledIndex", "timeMs"] as const) {
+        const optionalParameter = selectedCase[key];
 
         if (optionalParameter !== null && optionalParameter !== undefined) {
-          params.set(key, String(c[key]));
+          params.set(key, String(selectedCase[key]));
         }
       }
 
-      if (c.labels) {
-        params.set("labels", JSON.stringify(c.labels));
+      if (selectedCase.labels) {
+        params.set("labels", JSON.stringify(selectedCase.labels));
       }
     }
 
@@ -817,7 +882,7 @@ try {
 
     if (c.element === "label") {
       await subject.evaluate(
-        (node, position) => {
+        (node: HTMLElement, position) => {
           Object.assign(node.style, {
             left: `${position.x}px`,
             position: "fixed",
@@ -844,14 +909,14 @@ try {
 
     if ((name === "input" || name === "textarea") && manifest.effectiveAssets) {
       await subject.evaluate(
-        (node, position) => {
+        (node: HTMLElement, position) => {
           Object.assign(node.style, {
             left: `${position.x}px`,
             position: "fixed",
             top: `${position.y}px`,
           });
         },
-        { x: c.x * c.scale, y: c.y * c.scale }
+        { x: c.x! * c.scale, y: c.y! * c.scale }
       );
       await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
     }
@@ -861,14 +926,14 @@ try {
         content: "#root > :not([data-subject]) { visibility: hidden; }",
       });
       await subject.evaluate(
-        (node, position) => {
+        (node: HTMLElement, position) => {
           Object.assign(node.style, {
             left: `${position.x}px`,
             position: "fixed",
             top: `${position.y}px`,
           });
         },
-        { x: c.x * c.scale, y: c.y * c.scale }
+        { x: c.x! * c.scale, y: c.y! * c.scale }
       );
       await expect(subject.locator("[data-mc-label-ready]")).toHaveAttribute(
         "data-mc-label-ready",
@@ -876,7 +941,9 @@ try {
       );
     }
 
-    if (["card", "separator", "scroll-area", "progress"].includes(c.element)) {
+    if (
+      ["card", "separator", "scroll-area", "progress"].includes(c.element ?? "")
+    ) {
       await page.addStyleTag({
         content: `html,body { background: ${c.background}; }`,
       });
@@ -911,8 +978,12 @@ try {
     await page.mouse.move(0, 0);
 
     if (name === "tabs") {
+      // SAFETY: the existing item-name branch selects its registered TabsReferenceCase capture format.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
+      const selectedCase = c as TabsReferenceCase;
+
       await subject.evaluate(
-        (node, p) =>
+        (node: HTMLElement, p) =>
           Object.assign(node.style, {
             left: `${p.x}px`,
             position: "fixed",
@@ -920,35 +991,39 @@ try {
             visibility: "visible",
             width: `${p.width}px`,
           }),
-        { width: c.width * c.scale, x: c.x * c.scale, y: c.y * c.scale }
+        {
+          width: selectedCase.width * selectedCase.scale,
+          x: selectedCase.x * selectedCase.scale,
+          y: selectedCase.y * selectedCase.scale,
+        }
       );
       await page.addStyleTag({
-        content: `html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}`,
+        content: `html,body{background:${selectedCase.background}} #root{visibility:hidden} [data-subject]{visibility:visible}`,
       });
 
-      if (c.element === "tabs-trigger") {
+      if (selectedCase.element === "tabs-trigger") {
         await expect(subject).toHaveAttribute("data-mc-tab-ready", "true");
 
-        if (c.state.endsWith("hover")) {
+        if (selectedCase.state.endsWith("hover")) {
           await subject.hover();
         }
 
-        if (c.state === "focus") {
+        if (selectedCase.state === "focus") {
           await subject.focus();
         }
       } else {
-        const list = c.contentHeight
+        const list = selectedCase.contentHeight
           ? subject.locator('[data-slot="tabs-list"]')
           : subject;
 
         await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
-        const target = list.getByRole("tab").nth(c.targetIndex ?? 0);
+        const target = list.getByRole("tab").nth(selectedCase.targetIndex ?? 0);
 
-        if (c.state === "hover") {
+        if (selectedCase.state === "hover") {
           await target.hover();
         }
 
-        if (c.state === "focus") {
+        if (selectedCase.state === "focus") {
           await target.focus();
         }
       }
@@ -961,8 +1036,12 @@ try {
     }
 
     if (name === "select") {
+      // SAFETY: the existing item-name branch selects its registered SelectReferenceCase capture format.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific registered manifest protocol.
+      const selectedCase = c as SelectReferenceCase;
+
       await subject.evaluate(
-        (node, p) =>
+        (node: HTMLElement, p) =>
           Object.assign(node.style, {
             height: `${p.height}px`,
             left: `${p.x}px`,
@@ -971,42 +1050,57 @@ try {
             width: `${p.width}px`,
           }),
         {
-          height: c.height * c.scale,
-          width: c.width * c.scale,
-          x: c.x * c.scale,
-          y: c.y * c.scale,
+          height: selectedCase.height * selectedCase.scale,
+          width: selectedCase.width * selectedCase.scale,
+          x: selectedCase.x * selectedCase.scale,
+          y: selectedCase.y * selectedCase.scale,
         }
       );
       await page.addStyleTag({
-        content: `html,body{background:${c.background}} #root{visibility:hidden;${c.element === "select-list" ? "opacity:0;" : ""}} [data-subject]{visibility:visible} [data-mc-positioner]{left:0!important;top:0!important;transform:none!important}`,
+        content: `html,body{background:${selectedCase.background}} #root{visibility:hidden;${selectedCase.element === "select-list" ? "opacity:0;" : ""}} [data-subject]{visibility:visible} [data-mc-positioner]{left:0!important;top:0!important;transform:none!important}`,
       });
       await expect(subject).toHaveAttribute("data-mc-select-ready", "true");
 
-      if (c.state === "focus") {
+      if (selectedCase.state === "focus") {
         await subject.focus();
       } else {
-        await page.evaluate(() => document.activeElement?.blur());
+        await page.evaluate(() => {
+          // SAFETY: the consumer fixture renders native HTML focus targets; null preserves the original optional blur.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual authored HTML focus target boundary.
+          const active = document.activeElement as HTMLElement | null;
+
+          return active?.blur();
+        });
       }
 
-      if (c.state.endsWith("hover")) {
+      if (selectedCase.state.endsWith("hover")) {
         await (
-          c.element === "select-list"
-            ? subject.getByRole("option").nth(c.targetIndex ?? 0)
+          selectedCase.element === "select-list"
+            ? subject.getByRole("option").nth(selectedCase.targetIndex ?? 0)
             : subject
         ).hover();
       }
 
       // Retain the captured list focus state after Base UI hover navigation.
-      if (c.element === "select-list" && c.state !== "focus") {
-        await page.evaluate(() => document.activeElement?.blur());
+      if (
+        selectedCase.element === "select-list" &&
+        selectedCase.state !== "focus"
+      ) {
+        await page.evaluate(() => {
+          // SAFETY: the consumer fixture renders native HTML focus targets; null preserves the original optional blur.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual authored HTML focus target boundary.
+          const active = document.activeElement as HTMLElement | null;
+
+          return active?.blur();
+        });
       }
 
-      if (c.element === "select-list") {
+      if (selectedCase.element === "select-list") {
         await subject.locator('[data-slot="select-viewport"]').evaluate(
           (node, value) => {
             node.scrollTop = value;
           },
-          (c.value ?? 0) * c.scale
+          (selectedCase.value ?? 0) * selectedCase.scale
         );
       }
 
@@ -1025,14 +1119,17 @@ try {
     }
 
     if (["radio-group", "switch"].includes(name)) {
+      // SAFETY: the registered radio-group and switch captures both emit required numeric x/y coordinates.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact positioned capture producer boundary.
+      const positionedCase = c as PositionedReferenceCase;
       await subject.evaluate(
-        (node, c) =>
+        (node: HTMLElement, c: PositionedReferenceCase) =>
           Object.assign(node.style, {
             left: `${c.x * c.scale}px`,
             position: "fixed",
             top: `${c.y * c.scale}px`,
           }),
-        c
+        positionedCase
       );
       await page.addStyleTag({
         content: `html,body{background:${c.background}} #root{visibility:hidden} [data-subject]{visibility:visible}`,
@@ -1074,7 +1171,7 @@ try {
       const anchor = c.anchor ?? cursor;
 
       await subject.evaluate(
-        (node, selection) =>
+        (node: HTMLInputElement | HTMLTextAreaElement, selection) =>
           node.setSelectionRange(
             Math.min(selection.cursor, selection.anchor),
             Math.max(selection.cursor, selection.anchor),
@@ -1138,13 +1235,18 @@ try {
     sourceJarSha256: manifest.sourceJarSha256,
   };
 
+  interface InstallationReports {
+    [manifest: string]: string | undefined;
+  }
+
+  const additionalReports: InstallationReports | undefined =
+    component.pixelVerification.additionalInstallationReports;
+
   const reportFile =
     manifestFile === component.pixelVerification.manifest &&
     component.pixelVerification.installationReport
       ? component.pixelVerification.installationReport
-      : (component.pixelVerification.additionalInstallationReports?.[
-          manifestFile
-        ] ??
+      : (additionalReports?.[manifestFile] ??
         path.join(
           path.dirname(manifestFile),
           "installation-verification.json"
