@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { NativeCaptureManifest } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
 const [firstDir, secondDir] = process.argv.slice(2);
@@ -13,31 +14,37 @@ if (!firstDir || !secondDir) {
   );
 }
 
-const read = async (dir) =>
-  JSON.parse(await readFile(path.join(dir, "manifest.json"), "utf-8"));
+const read = async (dir: string): Promise<NativeCaptureManifest> => {
+  // SAFETY: both native reference directories use the retained capture-manifest producer; original identity/case/digest/pixel checks remain below.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  return JSON.parse(
+    await readFile(path.join(dir, "manifest.json"), "utf-8")
+  ) as NativeCaptureManifest;
+};
 
 const first = await read(firstDir);
 const second = await read(secondDir);
 
-const hash = (data) => createHash("sha256").update(data).digest("hex");
+const hash = (data: Uint8Array) =>
+  createHash("sha256").update(data).digest("hex");
 
 for (const key of [
   "sourceJarSha256",
   "captureSourceSha256",
   "caseDefinitionSha256",
-]) {
+] as const) {
   assert.equal(first[key], second[key], `Capture identity differs: ${key}`);
 }
 
 assert.deepEqual(
-  first.cases.map((c) => c.name).toSorted(),
-  second.cases.map((c) => c.name).toSorted()
+  first.cases.map((c) => c.name).sort(),
+  second.cases.map((c) => c.name).sort()
 );
 
 const cases = [];
 
 for (const reference of first.cases) {
-  const repeated = second.cases.find((c) => c.name === reference.name);
+  const repeated = second.cases.find((c) => c.name === reference.name)!;
   const a = await readFile(path.join(firstDir, "captures", reference.name));
   const b = await readFile(path.join(secondDir, "captures", reference.name));
   assert.equal(hash(a), reference.sha256);

@@ -5,11 +5,18 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type confirmationReference from "../reference/alert-dialog/manifest.json";
+
+
+type ConfirmationReferenceManifest = Pick<typeof confirmationReference, "cases">;
+
 const directory = "tests/reference/alert-dialog-backdrop";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as ConfirmationReferenceManifest;
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -63,9 +70,11 @@ for (const directory of [
   "tests/reference/alert-dialog",
 ]) {
   test.describe(`Original confirmation screen ${directory}`, () => {
+    // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as ConfirmationReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
 

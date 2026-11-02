@@ -5,11 +5,25 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type dialogReference from "../reference/dialog/manifest.json";
+import type extendedDialogReference from "../reference/dialog-extra/manifest.json";
+
+
+type DialogReferenceCase = (typeof dialogReference)["cases"][number] & {
+  checked?: (typeof extendedDialogReference)["cases"][number]["checked"];
+};
+
+interface DialogReferenceManifest {
+  cases: DialogReferenceCase[];
+}
+
 const directory = "tests/reference/dialog";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as DialogReferenceManifest;
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -67,9 +81,11 @@ for (const directory of [
   "tests/reference/dialog-extra",
 ]) {
   test.describe(`Dialog native viewport matrix ${directory}`, () => {
+    // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as DialogReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
 

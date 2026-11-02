@@ -5,6 +5,19 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type buttonReference from "../reference/manifest.json";
+import type cjkButtonReference from "../reference/button-cjk/manifest.json";
+
+
+type MenubarTriggerReferenceCase = (typeof buttonReference)["cases"][number] & {
+  x?: (typeof cjkButtonReference)["cases"][number]["x"];
+  y?: (typeof cjkButtonReference)["cases"][number]["y"];
+};
+
+interface MenubarTriggerReferenceManifest {
+  cases: MenubarTriggerReferenceCase[];
+}
+
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -49,9 +62,11 @@ test("Menubar trigger comparator catches one changed pixel", () => {
 });
 
 for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
+  // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as MenubarTriggerReferenceManifest;
 
   for (const c of manifest.cases) {
     for (const open of c.state === "hover" ? [false, true] : [false]) {
