@@ -86,7 +86,7 @@ const AdvancementTree = ({
     ids.add(node.id);
 
     if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
-      throw new Error("Advancement positions must be finite");
+      throw Error("Advancement positions must be finite");
     }
   }
 
