@@ -290,7 +290,7 @@ const CalendarDayButton = ({
           {...props}
           type={props.type ?? "button"}
           onClick={(event) => {
-            if (!event.defaultPrevented && !props.disabled) {
+            if (!event.defaultPrevented && !(props.disabled ?? false)) {
               playMinecraftClick();
             }
 

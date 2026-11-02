@@ -214,10 +214,10 @@ const PlayerList = ({
                 <span
                   className="mc-roster-name"
                   style={{
-                    fontStyle: player.spectator ? "italic" : undefined,
+                    fontStyle: (player.spectator ?? false) ? "italic" : undefined,
                     left: 9 * scale,
                     maxWidth: (columnWidth - 9 - scoreWidth - 13) * scale,
-                    opacity: player.spectator ? 144 / 255 : 1,
+                    opacity: (player.spectator ?? false) ? 144 / 255 : 1,
                     top: 0,
                   }}
                 >

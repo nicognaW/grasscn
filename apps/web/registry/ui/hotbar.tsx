@@ -117,7 +117,7 @@ const Hotbar = ({
 
   const select = React.useCallback(
     (next: number) => {
-      if (items[next]?.disabled) {
+      if ((items[next]?.disabled ?? false)) {
         return;
       }
 
@@ -218,7 +218,7 @@ const Hotbar = ({
           event.preventDefault();
           select(next);
 
-          if (!items[next]?.disabled) {
+          if (!(items[next]?.disabled ?? false)) {
             root.current
               ?.querySelectorAll<HTMLButtonElement>("button")
               [next]?.focus();

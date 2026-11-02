@@ -92,8 +92,8 @@ const Slider = ({
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const pressed = React.useRef(false);
-  const highlightTrack = !disabled && focused && !editing;
-  const highlightHandle = !disabled && (hovered || (focused && editing));
+  const highlightTrack = !(disabled ?? false) && focused && !editing;
+  const highlightHandle = !(disabled ?? false) && (hovered || (focused && editing));
 
   return (
     <BaseDirectionProvider direction={dir}>
@@ -165,12 +165,12 @@ const Slider = ({
         onPointerDownCapture={(event) => {
           onPointerDownCapture?.(event);
           pressed.current =
-            !disabled && !event.defaultPrevented && event.button === 0;
+            !(disabled ?? false) && !event.defaultPrevented && event.button === 0;
         }}
         onPointerUpCapture={(event) => {
           onPointerUpCapture?.(event);
 
-          if (pressed.current && !disabled && !event.defaultPrevented) {
+          if (pressed.current && !(disabled ?? false) && !event.defaultPrevented) {
             playMinecraftClick();
           }
 

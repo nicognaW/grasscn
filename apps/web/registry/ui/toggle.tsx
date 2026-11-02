@@ -54,9 +54,9 @@ const Toggle = ({
           ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
       )}
       {...props}
-      aria-disabled={disabled ? true : props["aria-disabled"]}
+      aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
-        if (disabled) {
+        if ((disabled ?? false)) {
           event.preventDefault();
 
           return;
@@ -66,7 +66,7 @@ const Toggle = ({
       }}
       onClick={(event) => {
         if (
-          disabled ||
+          (disabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -77,7 +77,7 @@ const Toggle = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
           playMinecraftClick();
         }
       }}

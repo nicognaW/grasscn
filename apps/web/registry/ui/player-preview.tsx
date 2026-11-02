@@ -380,7 +380,7 @@ const PlayerPreview = ({
 }: PlayerPreviewProps) => {
   const requestedModel =
     model ??
-    (!src && !username
+    (!(src ?? "") && !(username ?? "")
       ? skin.startsWith("slim/")
         ? "slim"
         : "wide"

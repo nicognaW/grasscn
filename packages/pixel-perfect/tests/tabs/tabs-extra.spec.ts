@@ -86,7 +86,7 @@ test.describe("Tabs extra native matrix", () => {
         query.set("labels", JSON.stringify(c.labels));
       }
 
-      if (c.contentHeight) {
+      if ((c.contentHeight ?? 0)) {
         query.set("contentHeight", String(c.contentHeight));
       }
 
@@ -120,7 +120,7 @@ test.describe("Tabs extra native matrix", () => {
           await card.focus();
         }
       } else {
-        const list = c.contentHeight
+        const list = (c.contentHeight ?? 0)
           ? card.locator('[data-slot="tabs-list"]')
           : card;
 

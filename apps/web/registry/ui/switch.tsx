@@ -70,9 +70,9 @@ const Switch = ({
           ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
       )}
       {...props}
-      aria-disabled={disabled ? true : props["aria-disabled"]}
+      aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
-        if (disabled) {
+        if ((disabled ?? false)) {
           event.preventDefault();
 
           return;
@@ -82,7 +82,7 @@ const Switch = ({
       }}
       onClick={(event) => {
         if (
-          disabled ||
+          (disabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -93,7 +93,7 @@ const Switch = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
           playMinecraftClick();
         }
       }}

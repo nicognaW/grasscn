@@ -37,8 +37,8 @@ const Checkbox = ({
 
       if (
         !event.defaultPrevented &&
-        !event.baseUIHandlerPrevented &&
-        !props.disabled &&
+        !(event.baseUIHandlerPrevented ?? false) &&
+        !(props.disabled ?? false) &&
         !Object.hasOwn(event.currentTarget.dataset, "disabled")
       ) {
         playMinecraftClick();

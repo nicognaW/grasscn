@@ -425,8 +425,8 @@ const AdvancementTree = ({
                   <button
                     type="button"
                     data-slot="advancement-node"
-                    data-completed={String(!!node.completed)}
-                    aria-label={`${node.title}${node.completed ? ", completed" : ""}`}
+                    data-completed={String(!!(node.completed ?? false))}
+                    aria-label={`${node.title}${(node.completed ?? false) ? ", completed" : ""}`}
                     aria-pressed={current === node.id}
                     className="mc-advancement-node"
                     style={{ left: node.px * scale, top: node.py * scale }}
@@ -471,7 +471,7 @@ const AdvancementTree = ({
                   draggable={false}
                   src={
                     minecraftBadgeAssets[
-                      `${node.kind ?? "task"}_${node.completed ? "obtained" : "unobtained"}`
+                      `${node.kind ?? "task"}_${(node.completed ?? false) ? "obtained" : "unobtained"}`
                     ]
                   }
                 />

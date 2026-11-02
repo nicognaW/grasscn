@@ -249,7 +249,7 @@ try {
           q.text = c.text!;
         }
 
-        if (c.wrapWidth) {
+        if ((c.wrapWidth ?? 0)) {
           q.wrapWidth = String(c.wrapWidth);
         }
 

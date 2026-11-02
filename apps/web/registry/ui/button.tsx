@@ -189,7 +189,7 @@ const Button = ({
 
         if (
           !event.defaultPrevented &&
-          !props.disabled &&
+          !(props.disabled ?? false) &&
           !Object.hasOwn(event.currentTarget.dataset, "disabled")
         ) {
           playMinecraftClick();

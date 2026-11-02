@@ -42,7 +42,7 @@ const RadioGroup = function RadioGroup<Value = string>({
           keyboardSelection.current =
             !disabled &&
             !event.defaultPrevented &&
-            !event.baseUIHandlerPrevented &&
+            !(event.baseUIHandlerPrevented ?? false) &&
             event.key.startsWith("Arrow");
         }}
         onValueChange={(next, details) => {
@@ -135,7 +135,7 @@ const RadioGroupItem = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
           playMinecraftClick();
         }
       }}

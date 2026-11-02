@@ -144,7 +144,7 @@ export const menuCheckboxPixels = function menuCheckboxPixels(
   x: number,
   y: number
 ) {
-  if (painter?.gl.isContextLost()) {
+  if ((painter?.gl.isContextLost() ?? false)) {
     painter = undefined;
   }
 

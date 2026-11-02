@@ -103,7 +103,7 @@ const NativeSelect = ({
     <div
       {...wrapperProps}
       data-slot="native-select-wrapper"
-      className={`mc-native-select-wrapper ${multiple ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
+      className={`mc-native-select-wrapper ${(multiple ?? false) ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
       style={minecraftStyle(
         wrapperProps?.style,
         (__style) =>
@@ -135,7 +135,7 @@ const NativeSelect = ({
 
           if (
             !event.defaultPrevented &&
-            !props.disabled &&
+            !(props.disabled ?? false) &&
             event.button === 0
           ) {
             playMinecraftClick();
@@ -146,7 +146,7 @@ const NativeSelect = ({
 
           if (
             !event.defaultPrevented &&
-            !props.disabled &&
+            !(props.disabled ?? false) &&
             !event.repeat &&
             (event.key === "Enter" ||
               event.key === " " ||
@@ -158,7 +158,7 @@ const NativeSelect = ({
       >
         {children}
       </select>
-      {!multiple && (
+      {!(multiple ?? false) && (
         <div className="mc-native-select-art" aria-hidden="true" inert>
           <Select
             scale={scale}

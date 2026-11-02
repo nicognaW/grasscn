@@ -137,7 +137,7 @@ export const paintToast = function paintToast(
   title: Glyph[][],
   message: Glyph[][]
 ) {
-  if (shared?.gl.isContextLost()) {
+  if ((shared?.gl.isContextLost() ?? false)) {
     shared = undefined;
   }
 

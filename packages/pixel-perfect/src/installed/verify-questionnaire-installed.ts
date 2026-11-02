@@ -150,7 +150,7 @@ try {
           q.set("radio", "1");
         }
 
-        if (c.wrapWidth) {
+        if ((c.wrapWidth ?? 0)) {
           q.set("wrapWidth", String(c.wrapWidth));
         }
 
