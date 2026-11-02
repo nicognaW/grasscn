@@ -5,6 +5,25 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+interface PopoverComparisonCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+  label?: string;
+  text?: string;
+}
+
+interface PopoverTextCase extends PopoverComparisonCase {
+  label: string;
+  text: string;
+}
+
+interface PopoverComparisonManifest {
+  cases: PopoverComparisonCase[];
+}
+
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -56,9 +75,11 @@ for (const directory of [
   test.describe(`Popover original surface ${directory}`, () => {
     test.describe.configure({ mode: "parallel" });
 
+    // SAFETY: The closed retained Card/Popover routes supply this shared identity/geometry/background and real optional label/text; their co-presence is projected only under the existing text guard.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; preserve the original fresh runtime read/parse phase.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as PopoverComparisonManifest;
 
     for (const c of manifest.cases) {
       test(`Popover native pixels: ${c.name}`, async ({ page }, testInfo) => {
@@ -76,7 +97,9 @@ for (const directory of [
 
         if (c.text != null) {
           query.set("text", c.text);
-          query.set("label", c.label);
+          // SAFETY: Every retained Card/Popover case with non-null text also has a string label; this original text guard identifies that actual co-present variant.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained field co-presence under the existing guard; no new check, fallback or property read.
+          query.set("label", (c as PopoverTextCase).label);
         }
 
         await page.goto(`/?${query}`);
