@@ -5,6 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/calendar-day/manifest.json";
+
 const different = function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;
@@ -20,12 +22,14 @@ const different = function different(a: PNG, b: PNG) {
 
 for (const component of ["calendar", "date-picker"]) {
   test(`${component} comparator rejects a one-pixel mutation`, () => {
+    // SAFETY: This read consumes the same pinned tests/reference/calendar-day/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const m = JSON.parse(
       readFileSync(
         pixelPerfectFile("tests/reference/calendar-day/manifest.json"),
         "utf-8"
       )
-    );
+    ) as typeof CapturedData0;
 
     const a = PNG.sync.read(
       readFileSync(

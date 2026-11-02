@@ -5,6 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/card/manifest.json";
+
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -37,12 +39,14 @@ const compare = function compare(expected: PNG, actual: PNG) {
 
 for (const component of ["sheet", "drawer"]) {
   test(`${component} pixel comparator rejects a changed pixel`, () => {
+    // SAFETY: This read consumes the same pinned tests/reference/card/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const manifest = JSON.parse(
       readFileSync(
         pixelPerfectFile("tests/reference/card/manifest.json"),
         "utf-8"
       )
-    );
+    ) as typeof CapturedData0;
 
     const expected = PNG.sync.read(
       readFileSync(
