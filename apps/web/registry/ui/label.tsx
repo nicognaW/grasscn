@@ -148,9 +148,9 @@ const Label = ({
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, className)}
       style={minecraftStyle(style, (__style): LabelStyle => ({
-        "--mc-scale": scale,
         "--mc-label-width":
           maxWidth == null ? undefined : `${maxWidth * scale}px`,
+        "--mc-scale": scale,
         ...__style,
       }))}
       {...props}
