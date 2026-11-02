@@ -360,7 +360,8 @@ export const ChartPixelSurface = ({
     "--mc-chart-surface-height": number;
     "--mc-chart-surface-width": number;
   } = {
-    "--mc-chart-surface-height": Math.max(1, Math.floor(height / scale)) * scale,
+    "--mc-chart-surface-height":
+      Math.max(1, Math.floor(height / scale)) * scale,
     "--mc-chart-surface-width": Math.max(1, Math.floor(width / scale)) * scale,
   };
 
