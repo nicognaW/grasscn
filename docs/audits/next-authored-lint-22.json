@@ -222,6 +222,7 @@
     "packages/tests/src/runtime/next-production.mjs",
     "packages/tests/src/runtime/owned-http-process.mjs",
     "packages/tests/src/runtime/verification-types.ts",
+    "packages/tests/tests/components/chart/chart-tooltip-spacing.spec.ts",
     "packages/tests/tests/unit/component-source.test.tsx",
     "packages/tests/tests/unit/consumer-boundary.test.mjs",
     "packages/tests/tests/unit/consumer-build-identity.test.mjs",
@@ -516,7 +517,12 @@
     {
       "file": "apps/web/registry/ui/chart.tsx",
       "baseline": "apps/web/registry/ui/chart.tsx",
-      "reason": "Owned default tooltip native-number and minimum integer GUI-scale repair; only exact unchanged statements retain inherited debt. No full-file clean or native pixel-verification claim."
+      "reason": "Owned default tooltip native-number, minimum integer GUI-scale and four-logical-pixel label/value gap repair; only exact unchanged statements retain inherited debt. No full-file clean or native pixel-verification claim."
+    },
+    {
+      "file": "packages/tests/fixtures/renderer/chart.tsx",
+      "baseline": "packages/tests/fixtures/renderer/chart.tsx",
+      "reason": "Owned API fixture forwards its existing case.scale input for default tooltip GUI1/2/3 geometry checks. Only exact unchanged statements retain inherited debt; no full-file clean or native pixel-verification claim."
     }
   ],
   "attribution": "Approved main c7b908 (including PR37 functional cleanup) is the current source-quality baseline. Full authored scope must pass the actual toolchain; only exact unchanged baseline statements can retain attributed debt. Older main46/1369/4caf/e009 counts are historical, not current acceptance. This metadata grants no semantic equivalence, source verification or native verification.",

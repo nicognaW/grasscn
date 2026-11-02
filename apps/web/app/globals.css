@@ -105,7 +105,7 @@ a {
   overflow: auto;
   background: #202020;
 }
-.minecraft-docs-layout .minecraft-example {
+.minecraft-docs-layout .minecraft-example:not(.documentation-playground) {
   display: flex;
   align-items: center;
   justify-content: safe center;
@@ -143,7 +143,7 @@ a {
   top: 8px;
 }
 @media (max-width: 720px) {
-  .minecraft-docs-layout .minecraft-example {
+  .minecraft-docs-layout .minecraft-example:not(.documentation-playground) {
     padding: 32px 16px;
     min-height: 280px;
   }

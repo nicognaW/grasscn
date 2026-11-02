@@ -319,7 +319,7 @@ const ChartTooltipContent = ({
                     )}
                     <div
                       className={cn(
-                        "flex flex-1 justify-between leading-none",
+                        "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
                         nestLabel ? "items-end" : "items-center"
                       )}
                     >
