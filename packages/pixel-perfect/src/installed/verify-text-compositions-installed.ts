@@ -4,14 +4,17 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import {
-  repoRoot,
-  webFile,
-  pixelPerfectFile,
-  repositoryFile,
-} from "@ppt/paths";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+  ComposedTextCaptureManifest,
+  InstalledComposedTextResult,
+  InstalledTextFailure,
+} from "@ppt/installed/text-verification-protocol";
+import { webFile, pixelPerfectFile, repositoryFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, name, origin, descriptorArgument] =
@@ -21,23 +24,39 @@ const supported = ["code-block", "trace", "message-scroller", "spinner"];
 
 assert.ok(
   consumerArgument && supported.includes(name) && origin,
-  "Usage: bun src/installed/verify-text-compositions-installed.mjs <consumer> <component> <fixture-url> [registry-item-file]"
+  "Usage: bun src/installed/verify-text-compositions-installed.ts <consumer> <component> <fixture-url> [registry-item-file]"
 );
 
 const consumer = path.resolve(consumerArgument);
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
-const item = descriptorArgument
-  ? JSON.parse(fs.readFileSync(path.resolve(descriptorArgument), "utf-8"))
-  : JSON.parse(
-      fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
-    ).items.find((i) => i.name === name);
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
+let item: InstalledTextItem | undefined;
+
+if (descriptorArgument) {
+  // SAFETY: the supplied descriptor owns this verifier's exact shadcn item source list.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete supplied registry item descriptor boundary.
+  item = JSON.parse(
+    fs.readFileSync(path.resolve(descriptorArgument), "utf-8")
+  ) as InstalledTextItem;
+} else {
+  // SAFETY: the authored registry document owns this item lookup; missing items retain their original later failure.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete registry document boundary.
+  const registry = JSON.parse(
+    fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
+  ) as InstalledTextRegistry;
+
+  item = registry.items.find((candidate) => candidate.name === name);
+}
+
+// SAFETY: this is the initialized shadcn consumer configuration; preserve its optional rsc behavior.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer settings boundary.
 const settings = JSON.parse(
   fs.readFileSync(path.join(consumer, "components.json"), "utf-8")
-);
+) as InstalledComponentSettings & { rsc?: boolean };
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -50,7 +69,7 @@ const canonical = (bytes) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-const files = item.files.map((file) => {
+const files = item!.files.map((file) => {
   const filename = path.basename(file.path);
 
   const directory =
@@ -92,21 +111,23 @@ assert.equal(types.status, 0, (types.stdout ?? "") + (types.stderr ?? ""));
 
 const directory = name === "spinner" ? name : "message";
 
+// SAFETY: this fixed synchronous read selects the native message/spinner capture producer after the consumer typecheck.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual text-family capture producer boundary.
 const manifest = JSON.parse(
   fs.readFileSync(
     pixelPerfectFile(path.join("tests/reference", directory, "manifest.json")),
     "utf-8"
   )
-);
+) as ComposedTextCaptureManifest;
 
 const browser = await chromium.launch({ channel: "msedge" });
 const browserVersion = browser.version();
-const results = [];
-const errors = [];
+const results: InstalledComposedTextResult[] = [];
+const errors: string[] = [];
 
 let next = 0;
 
-function compare(expected, actual) {
+function compare(expected: PNG, actual: PNG) {
   assert.deepEqual(
     [actual.width, actual.height],
     [expected.width, expected.height]
@@ -219,7 +240,8 @@ async function worker() {
               new Promise((resolve) => {
                 const image = new Image();
                 image.onload = image.onerror = resolve;
-                image.src = src;
+                // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
+                image.src = src!;
               })
           )
         );
@@ -258,7 +280,10 @@ async function worker() {
         fs.mkdirSync(failures, { recursive: true });
         fs.writeFileSync(path.join(failures, `${name}-${c.name}`), actualBytes);
       }
-    } catch (error) {
+    } catch (failure) {
+      // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
+      const error = failure as InstalledTextFailure;
       errors.push(`${c.name}: ${error.message}`);
       console.log(name, c.name, error.message);
     }

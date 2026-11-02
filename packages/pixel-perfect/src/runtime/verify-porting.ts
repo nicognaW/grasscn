@@ -4,6 +4,11 @@ import { mkdir, readFile, writeFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type {
+  CheckpointCatalogue,
+  CheckpointResult,
+  ReusableBrowserTest,
+} from "@grasscn/tests/checkpoints";
 import {
   reusableBrowserTests,
   browserFilePattern,
@@ -15,6 +20,7 @@ import {
 } from "@grasscn/tests/fixture";
 import { packageBin } from "@grasscn/tests/tooling";
 import { serveFullHosts } from "@ppt/full-runs/hosts";
+import type { AuthorizedFullRun } from "@ppt/full-runs/run";
 import { assertFullBrowserExecution } from "@ppt/full-runs/run";
 import {
   repoRoot,
@@ -24,11 +30,22 @@ import {
   repositoryFile,
   webFile,
 } from "@ppt/paths";
+import type {
+  PreviousVerification,
+  RuntimeVerificationEnvironment,
+  RuntimeVerificationReceipt,
+  RuntimeCheckpointSummary,
+} from "@ppt/runtime/verification-protocol";
+import type { BrowserCase } from "@ppt/selection/suite";
 import {
   baseCatalogue,
   collectBrowserCases,
   classifyBrowserCases,
 } from "@ppt/selection/suite";
+import type { ViteDevServer } from "vite";
+
+const hasText = (value: string | null | undefined): value is string =>
+  Boolean(value);
 
 const root = repoRoot;
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);
@@ -58,12 +75,16 @@ if (fullMode) {
     "GRASSCN_EXPANSION_REFERENCE",
     "GRASSCN_INSTALLED_BUNDLE_SHA256",
   ]) {
-    if (process.env[name]) {
-      throw Error(`Full scope cannot use ${name}`);
+    if (hasText(process.env[name])) {
+      throw new Error(`Full scope cannot use ${name}`);
     }
   }
 
-  const { fixturePort, previewPort, proxyPort } = fullRun.plan.execution;
+  // SAFETY: Full mode is the branch that just authorized and returned this run.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const approvedRun = fullRun as AuthorizedFullRun;
+
+  const { fixturePort, previewPort, proxyPort } = approvedRun.plan.execution;
   process.env.GRASSCN_BROWSER_SCOPE = "full";
   process.env.GRASSCN_FULL_PROXY_PORT = String(proxyPort);
   process.env.GRASSCN_FIXTURE_URL = `http://127.0.0.1:${fixturePort}`;
@@ -81,7 +102,7 @@ const managedFixture =
       "GRASSCN_EXPANSION_REFERENCE",
       "GRASSCN_TREE_INSTALLED_URL",
       "GRASSCN_INSTALLED_BUNDLE_SHA256",
-    ].some((name) => process.env[name]));
+    ].some((name) => hasText(process.env[name])));
 
 if (managedFixture && !fullMode) {
   process.env.GRASSCN_FIXTURE_URL = "http://127.0.0.1:5178";
@@ -92,31 +113,35 @@ if (managedFixture && !fullMode) {
 
 await mkdir(output, { recursive: true });
 
-const git = (args) =>
+const git = (args: string[]) =>
   execFileSync("git", args, {
     cwd: root,
     encoding: "utf-8",
     maxBuffer: 16 * 1024 * 1024,
   }).trim();
 
-async function identity() {
+const identity = async function identity() {
   const names = [
     ...new Set(
       git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"])
         .split("\0")
         .filter(Boolean)
     ),
-  ].toSorted();
+  ].sort();
 
   const hash = createHash("sha256");
 
   for (const name of names) {
-    let bytes;
+    let bytes: Buffer;
 
     try {
       bytes = await readFile(repositoryFile(name));
     } catch (error) {
-      if (error.code !== "ENOENT") {
+      // SAFETY: the Node filesystem call supplies its error/code contract.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const failure = error as NodeJS.ErrnoException;
+
+      if (failure.code !== "ENOENT") {
         throw error;
       }
 
@@ -135,11 +160,11 @@ async function identity() {
     status: git(["status", "--porcelain=v1"]),
     treeSha256: hash.digest("hex"),
   };
-}
+};
 
 const before = await identity();
 
-const environment = {
+const environment: RuntimeVerificationEnvironment = {
   arch: process.arch,
   bun: Bun.version,
   ci: process.env.CI ?? null,
@@ -169,15 +194,19 @@ for (const executable of [
     environment.edge = { executable, modified: info.mtimeMs, size: info.size };
     break;
   } catch (error) {
-    if (error.code !== "ENOENT") {
+    // SAFETY: the Node filesystem call supplies its error/code contract.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const failure = error as NodeJS.ErrnoException;
+
+    if (failure.code !== "ENOENT") {
       throw error;
     }
   }
 }
 
-function installedDependencyState() {
+const installedDependencyState = function installedDependencyState() {
   return installedDependencyIdentity(repoRoot);
-}
+};
 
 environment.installedDependencies = installedDependencyState();
 
@@ -186,10 +215,14 @@ environment.browserSelection = fullMode ? "full" : "base";
 environment.nonPptIncluded = false;
 
 if (fullMode) {
+  // SAFETY: Full mode has the authorized run returned before environment construction.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const approvedRun = fullRun as AuthorizedFullRun;
+
   environment.fullRun = {
-    approvalEvent: fullRun.approval.eventId,
-    issue: fullRun.number,
-    planHash: fullRun.planHash,
+    approvalEvent: approvedRun.approval.eventId,
+    issue: approvedRun.number,
+    planHash: approvedRun.planHash,
   };
 }
 
@@ -197,7 +230,7 @@ environment.fixtureMode = managedFixture
   ? "production"
   : "provided-or-development";
 
-const report = {
+const report: RuntimeVerificationReceipt = {
   browserScope: fullMode ? "full" : "base",
   checks: [],
   completed: false,
@@ -218,15 +251,15 @@ const save = async () =>
 const cacheAllowed =
   environment.installedDependencies !== null &&
   (managedFixture ||
-    (!process.env.GRASSCN_EXPANSION_REFERENCE &&
-      !process.env.GRASSCN_EXPANSION_URL &&
-      !process.env.GRASSCN_TREE_INSTALLED_URL &&
-      (!process.env.GRASSCN_FIXTURE_URL ||
-        /^http:\/\/127\.0\.0\.1:5174\/?$/.test(
+    (!hasText(process.env.GRASSCN_EXPANSION_REFERENCE) &&
+      !hasText(process.env.GRASSCN_EXPANSION_URL) &&
+      !hasText(process.env.GRASSCN_TREE_INSTALLED_URL) &&
+      (!hasText(process.env.GRASSCN_FIXTURE_URL) ||
+        /^http:\/\/127\.0\.0\.1:5174\/?$/u.test(
           process.env.GRASSCN_FIXTURE_URL
         ))));
 
-const previous = [];
+const previous: PreviousVerification[] = [];
 
 for (const folder of await readdir(path.dirname(output))) {
   try {
@@ -236,7 +269,11 @@ for (const folder of await readdir(path.dirname(output))) {
       "verification.json"
     );
 
-    const candidate = JSON.parse(await readFile(filename, "utf-8"));
+    // SAFETY: prior attempts write this receipt shape; existing source/environment checks follow.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const candidate = JSON.parse(
+      await readFile(filename, "utf-8")
+    ) as Partial<RuntimeVerificationReceipt>;
 
     if (
       cacheAllowed &&
@@ -247,7 +284,11 @@ for (const folder of await readdir(path.dirname(output))) {
       previous.push({ filename, report: candidate });
     }
   } catch (error) {
-    if (error.code !== "ENOENT" && !(error instanceof SyntaxError)) {
+    // SAFETY: candidate reads/JSON parsing reject with Node errors or SyntaxError.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const failure = error as NodeJS.ErrnoException;
+
+    if (failure.code !== "ENOENT" && !(error instanceof SyntaxError)) {
       throw error;
     }
   }
@@ -255,7 +296,7 @@ for (const folder of await readdir(path.dirname(output))) {
 
 await save();
 
-const steps = [
+const steps: [name: string, args: string[]][] = [
   ["prepare-preview", [path.join(webRoot, "scripts/prepare-preview.mjs")]],
   [
     "types",
@@ -274,20 +315,25 @@ const steps = [
   ["evidence", [path.join(pixelPerfectRoot, "src/runtime/check-map.ts")]],
   [
     "porting-evidence",
-    [path.join(pixelPerfectRoot, "src/runtime/check-porting-evidence.mjs")],
-  ],
-  [
-    "evidence-negative-controls",
-    [
-      "test",
-      "--timeout",
-      "120000",
-      ...(await readdir(path.join(pixelPerfectRoot, "tests/unit")))
-        .filter((name) => name.endsWith(".test.mjs"))
-        .map((name) => path.join(pixelPerfectRoot, "tests/unit", name)),
-    ],
+    [path.join(pixelPerfectRoot, "src/runtime/check-porting-evidence.ts")],
   ],
 ];
+
+const unitFiles = await readdir(path.join(pixelPerfectRoot, "tests/unit"));
+
+steps.push([
+  "evidence-negative-controls",
+  [
+    "test",
+    "--timeout",
+    "120000",
+    ...unitFiles.flatMap((name) =>
+      name.endsWith(".test.ts")
+        ? [path.join(pixelPerfectRoot, "tests/unit", name)]
+        : []
+    ),
+  ],
+]);
 
 if (suite === "all" || fullMode) {
   steps.push(
@@ -318,13 +364,15 @@ const selectedCases = fullMode
 
 // Retain exact case identities for historical reporting, independently of future source.
 if (fullMode) {
-  report.fullCases = selectedCases;
+  // SAFETY: Full mode selected this exact array from the Full partition above.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  report.fullCases = selectedCases as BrowserCase[];
   await save();
 }
 
 const browserFiles = [
   ...new Set((selectedCases ?? baseCatalogue()).map((test) => test.file)),
-].toSorted();
+].sort();
 
 for (const file of browserFiles) {
   steps.push([
@@ -342,9 +390,9 @@ for (const file of browserFiles) {
   ]);
 }
 
-let fixtureHost;
-let fullHosts;
-let previewHost;
+let fixtureHost: Awaited<ReturnType<typeof serveProductionFixture>> | undefined;
+let fullHosts: Awaited<ReturnType<typeof serveFullHosts>> | undefined;
+let previewHost: ViteDevServer | undefined;
 let testFailures = false;
 
 try {
@@ -352,62 +400,76 @@ try {
     // Rebuild generated outputs and rerun prechecks. Browser passes are reused
     // individually below, with current test status and artifact hashes checked.
     console.log(`\nLocal verification: ${name}`);
-    const browserEnvironment = {};
-    let reusedTests = [];
+    const browserEnvironment: NodeJS.ProcessEnv = {};
+    let reusedTests: ReusableBrowserTest[] = [];
 
-    if (name.startsWith("browser:") || name === "general-tests") {
-      if (managedFixture && !fixtureHost && !fullHosts) {
-        report.fixtureBundle = fixtureManifest();
-        await writeFile(
-          path.join(output, "fixture-bundle.json"),
-          `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
+    if (
+      (name.startsWith("browser:") || name === "general-tests") &&
+      managedFixture &&
+      !fixtureHost &&
+      !fullHosts
+    ) {
+      report.fixtureBundle = fixtureManifest();
+      await writeFile(
+        path.join(output, "fixture-bundle.json"),
+        `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
+      );
+
+      if (fullMode) {
+        // SAFETY: host startup is inside the authorized Full-mode branch.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const approvedRun = fullRun as AuthorizedFullRun;
+
+        fullHosts = await serveFullHosts(approvedRun.plan);
+      } else {
+        fixtureHost = await serveProductionFixture();
+      }
+
+      let previewReady = false;
+
+      try {
+        const response = await fetch(
+          process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/",
+          { signal: AbortSignal.timeout(2500) }
         );
 
-        if (fullMode) {
-          fullHosts = await serveFullHosts(fullRun.plan);
-        } else {
-          fixtureHost = await serveProductionFixture();
-        }
-
-        let previewReady = false;
-
-        try {
-          const response = await fetch(
-            process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/",
-            { signal: AbortSignal.timeout(2500) }
-          );
-
-          previewReady = response.ok;
-          await response.body?.cancel();
-        } catch {}
-
-        if (!previewReady) {
-          if (process.env.GRASSCN_PREVIEW_URL) {
-            throw new Error("The configured preview server is unavailable");
-          }
-
-          const { createServer } = await import("vite");
-          previewHost = await createServer({
-            configFile: webFile("vite.config.ts"),
-          });
-          await previewHost.listen();
-        }
-
-        await save();
+        previewReady = response.ok;
+        await response.body?.cancel();
+      } catch {
+        // Preserve the existing unavailable/incomplete-evidence fallback.
       }
+
+      if (!previewReady) {
+        if (hasText(process.env.GRASSCN_PREVIEW_URL)) {
+          throw new Error("The configured preview server is unavailable");
+        }
+
+        const { createServer } = await import("vite");
+        previewHost = await createServer({
+          configFile: webFile("vite.config.ts"),
+        });
+        await previewHost.listen();
+      }
+
+      await save();
     }
 
     if (name.startsWith("browser:")) {
       const file = name.slice("browser:".length);
       const directory = path.join(output, "checkpoints", file);
 
+      // SAFETY: managed fixture startup records its bundle before browser cache selection; retain missing-bundle behavior.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const initialFixture = report.fixtureBundle as ReturnType<
+        typeof fixtureManifest
+      >;
+
       reusedTests = await reusableBrowserTests(
         previous.filter(
           (candidate) =>
             candidate.report.suite === suite &&
             (!managedFixture ||
-              candidate.report.fixtureBundle?.sha256 ===
-                report.fixtureBundle.sha256)
+              candidate.report.fixtureBundle?.sha256 === initialFixture.sha256)
         ),
         file,
         pixelPerfectRoot,
@@ -441,7 +503,7 @@ try {
       browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR = directory;
     }
 
-    const code = await new Promise((resolve, reject) => {
+    const code = await new Promise<number>((resolve, reject) => {
       const commandArgs = [...args];
 
       const child = spawn(process.execPath, commandArgs, {
@@ -458,16 +520,21 @@ try {
       });
 
       child.on("error", reject);
-      child.on("exit", (code, signal) => {
-        resolve(code ?? (signal ? 1 : 0));
+      child.on("exit", (exitCode, signal) => {
+        resolve(exitCode ?? (hasText(signal) ? 1 : 0));
       });
     });
 
-    report.checks.push({
+    const check: RuntimeVerificationReceipt["checks"][number] = {
       exitCode: code,
       name,
-      ...(reusedTests.length ? { reusedTests } : {}),
-    });
+    };
+
+    if (reusedTests.length) {
+      check.reusedTests = reusedTests;
+    }
+
+    report.checks.push(check);
     await save();
 
     if (code !== 0) {
@@ -480,50 +547,72 @@ try {
         const file = name.slice("browser:".length);
         const directory = path.join(output, "checkpoints", file);
 
-        let summary;
+        let summary: RuntimeCheckpointSummary | undefined;
 
         try {
+          // SAFETY: checkpoint reporting writes this summary; original completeness checks remain.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           summary = JSON.parse(
             await readFile(path.join(directory, "summary.json"), "utf-8")
-          );
-        } catch {}
+          ) as RuntimeCheckpointSummary;
+        } catch {
+          // Preserve the existing unavailable/incomplete-evidence fallback.
+        }
 
         let collectionComplete = false;
 
         try {
+          // SAFETY: checkpoint reporter owns the expected declaration catalogue.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           const expected = JSON.parse(
             await readFile(path.join(directory, "expected.json"), "utf-8")
+          ) as CheckpointCatalogue;
+
+          const journal = await readFile(
+            path.join(directory, "results.jsonl"),
+            "utf-8"
           );
 
-          const results = (
-            await readFile(path.join(directory, "results.jsonl"), "utf-8")
-          )
+          const results = journal
             .trim()
             .split("\n")
-            .filter(Boolean)
-            .map((line) => JSON.parse(line));
+            .flatMap((line) => {
+              if (!line) {
+                return [];
+              }
+
+              // SAFETY: complete journal lines are owned checkpoint result records.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              const result = JSON.parse(line) as CheckpointResult;
+
+              return [result];
+            });
 
           const terminal = new Set(
-            results
-              .filter((result) => result.status !== "interrupted")
-              .map((result) => result.id)
+            results.flatMap((result) =>
+              result.status === "interrupted" ? [] : [result.id]
+            )
           );
 
+          // SAFETY: Playwright writes the terminal JSON report; original error checks remain.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           const browserReport = JSON.parse(
             await readFile(path.join(directory, "playwright.json"), "utf-8")
-          );
+          ) as { errors?: { message?: string }[] };
 
           collectionComplete =
-            !browserReport.errors?.length &&
+            !Boolean(browserReport.errors?.length) &&
             expected.tests.every((test) => terminal.has(test.id));
-        } catch {}
+        } catch {
+          // Preserve the existing unavailable/incomplete-evidence fallback.
+        }
 
         if (
           collectionComplete &&
           summary?.status === "failed" &&
           summary.counts.failed + summary.counts.timedOut > 0 &&
-          !summary.counts.interrupted &&
-          !summary.changedSources?.length
+          !Boolean(summary.counts.interrupted) &&
+          !Boolean(summary.changedSources?.length)
         ) {
           testFailures = true;
           console.error(
@@ -564,7 +653,13 @@ try {
   if (managedFixture) {
     report.fixtureBundleAfter = fixtureManifest();
 
-    if (report.fixtureBundleAfter.sha256 !== report.fixtureBundle.sha256) {
+    // SAFETY: managed browser-host startup records the original fixture bundle; retain its existing missing-bundle failure.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const initialFixture = report.fixtureBundle as ReturnType<
+      typeof fixtureManifest
+    >;
+
+    if (report.fixtureBundleAfter.sha256 !== initialFixture.sha256) {
       throw new Error("The production fixture changed during verification");
     }
   }
@@ -576,7 +671,11 @@ try {
     process.exitCode = 1;
   }
 } catch (error) {
-  report.error = error.message;
+  // SAFETY: owned checks and Node/browser-host APIs reject with Error instances.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const failure = error as Error;
+
+  report.error = failure.message;
   process.exitCode = 1;
 } finally {
   await fullHosts?.close();

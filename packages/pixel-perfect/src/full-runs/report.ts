@@ -1061,17 +1061,15 @@ export const publishReport = function publishReport(
         atomic(journalFile, journal);
       }
 
-      // SAFETY: these ordered entries are the finding link shown in the report.
+      const linkFields = Object.fromEntries([
+        ["problem", group.problemKey],
+        ["issue", issue.html_url],
+        ["state", issue.state],
+      ]);
+
+      // SAFETY: these literal entries provide all three FindingLink keys in protocol order with string values.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      links.push(
-        // SAFETY: these ordered entries define the problem, issue URL and state link.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        Object.fromEntries([
-          ["problem", group.problemKey],
-          ["issue", issue.html_url],
-          ["state", issue.state],
-        ]) as FindingLink
-      );
+      links.push(linkFields as typeof linkFields & FindingLink);
     }
 
     const marker = `<!-- grasscn-full-report:v1:${run.number}:${run.planHash} -->`;
