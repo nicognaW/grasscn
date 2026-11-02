@@ -53,7 +53,7 @@ export default function AvatarDemo({ scale }: DemoProps) {
         <Button
           type="submit"
           scale={scale}
-          className="self-end w-(--demo-width) max-w-full"
+          className="demo-align-self-end w-(--demo-width) max-w-full"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
             {

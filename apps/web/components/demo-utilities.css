@@ -116,3 +116,7 @@
 @utility demo-pair-max-width-full {
   --demo-pair-max-width: 100%;
 }
+
+@utility demo-align-self-end {
+  align-self: end;
+}
