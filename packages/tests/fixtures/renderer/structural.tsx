@@ -71,7 +71,9 @@ export const StructuralFixture = () => {
             ratio={Number(p.get("ratio") ?? 16 / 9)}
             style={{ overflow: p.has("clip") ? "hidden" : "visible" }}
             ref={(node) => {
-              if (node) node.dataset.ref = "true";
+              if (node) {
+                node.dataset.ref = "true";
+              }
             }}
           >
             <div

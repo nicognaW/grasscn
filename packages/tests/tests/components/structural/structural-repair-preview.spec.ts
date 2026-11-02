@@ -12,12 +12,13 @@ for (const scale of [2]) {
         .locator(
           ".demo-options input,.demo-options textarea,.demo-options button"
         )
-        .all())
+        .all()) {
         expect(
           await control.evaluate((n) =>
             Number(getComputedStyle(n).getPropertyValue("--mc-scale"))
           )
         ).toBe(scale);
+      }
     });
   }
 }

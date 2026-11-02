@@ -42,7 +42,9 @@ export const ToggleFixture = () => {
               onPressedChange: (next: boolean) => {
                 setEvents((v) => v + 1);
 
-                if (!p.has("reject")) setPressed(next);
+                if (!p.has("reject")) {
+                  setPressed(next);
+                }
               },
               pressed,
             }
