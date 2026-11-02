@@ -5,11 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
+import type { SearchPage } from "../lib/search-results";
 import { Button } from "../registry/ui/button";
 import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
 
-export const SiteFrame = ({ children }: { children: ReactNode }) => {
+export const SiteFrame = ({
+  children,
+  searchPages,
+}: {
+  children: ReactNode;
+  searchPages: SearchPage[];
+}) => {
   const pathname = usePathname();
 
   return (
@@ -64,7 +71,7 @@ export const SiteFrame = ({ children }: { children: ReactNode }) => {
             <MinecraftText>Charts</MinecraftText>
           </Link>
         </nav>
-        <DocumentSearch />
+        <DocumentSearch pages={searchPages} />
         <a
           className="minecraft-github"
           href="https://github.com/nicognaW/grasscn"

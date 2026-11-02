@@ -5,20 +5,21 @@ import { fetchClient } from "fumadocs-core/search/client/fetch";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { groupSearchResults } from "../lib/search-results";
+import type { SearchPage } from "../lib/search-results";
 import {
   Command,
   CommandInput,
   CommandItem,
   CommandList,
 } from "../registry/ui/command";
-import { MinecraftText } from "../registry/ui/minecraft-text";
+import { DocumentText } from "./document-text";
 
 import "./document-search.css";
 
 const client = fetchClient();
-const plain = (text: string) => text.replaceAll(/<\/?mark>/gu, "");
 
-export const DocumentSearch = () => {
+export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
   const router = useRouter();
   const pathname = usePathname();
   const input = useRef<HTMLInputElement>(null);
@@ -27,7 +28,7 @@ export const DocumentSearch = () => {
 
   const results =
     !query.isLoading && !query.error && Array.isArray(query.data)
-      ? query.data
+      ? groupSearchResults(query.data, search, pages)
       : [];
 
   /* eslint-disable react/exhaustive-effect-dependencies, react/set-state-in-effect -- The Next pathname intentionally invalidates the search session when external navigation changes. */
@@ -129,7 +130,7 @@ export const DocumentSearch = () => {
                 <CommandItem
                   key={result.id}
                   value={result.id}
-                  aria-label={plain(result.content)}
+                  aria-label={result.title}
                   onSelect={() => {
                     router.push(result.url);
                     setOpen(false);
@@ -137,12 +138,14 @@ export const DocumentSearch = () => {
                     input.current?.blur();
                   }}
                 >
-                  {plain(result.content)}
+                  <div>
+                    <DocumentText>{result.title}</DocumentText>
+                  </div>
                   <span /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-search.css and loaded by the documentation layout. */
                     className="minecraft-search-context"
                     /* eslint-enable shadcn/no-unknown-classes */
                   >
-                    {result.url}
+                    <DocumentText>{result.snippet}</DocumentText>
                   </span>
                 </CommandItem>
               ))}
@@ -155,7 +158,7 @@ export const DocumentSearch = () => {
               className="minecraft-search-status"
               /* eslint-enable shadcn/no-unknown-classes */
             >
-              <MinecraftText>{message}</MinecraftText>
+              <DocumentText>{message}</DocumentText>
             </div>
           </div>
         )}

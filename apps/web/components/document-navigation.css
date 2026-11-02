@@ -20,7 +20,8 @@
   padding: 24px 12px;
   max-height: 100dvh;
   overflow: auto;
-  --mc-scale: 1;
+  --mc-scale: 2;
+  overscroll-behavior: contain;
 }
 .minecraft-docs-layout nav ul {
   list-style: none;
@@ -30,10 +31,35 @@
 .minecraft-docs-layout nav li {
   margin: 0 0 4px;
 }
-.minecraft-docs-sidebar nav .mc-button,
-.minecraft-docs-toc nav .mc-button {
-  width: 200px;
-  max-width: 100%;
+.minecraft-docs-sidebar nav a,
+.minecraft-docs-toc nav a {
+  display: block;
+  padding: 8px 12px;
+  min-height: 32px;
+  color: #aaa;
+  outline-offset: -2px;
+  overflow-wrap: anywhere;
+}
+.minecraft-docs-layout nav a:focus-visible {
+  color: #ffff55;
+  --mc-ink: #ffff55;
+  --mc-shadow: #3f3f15;
+}
+@media (hover: hover) and (pointer: fine) {
+  .minecraft-docs-layout nav a:hover {
+    color: #ffff55;
+    --mc-ink: #ffff55;
+    --mc-shadow: #3f3f15;
+  }
+}
+.minecraft-docs-layout nav a[aria-current="page"] {
+  background: #ffffff14;
+  color: #fff;
+  box-shadow: inset 2px 0 #aaa;
+}
+.minecraft-docs-layout nav [data-nav-heading] {
+  padding: 16px 12px 12px;
+  color: #fff;
 }
 .minecraft-nav-heading {
   display: block;
@@ -72,7 +98,7 @@
   .minecraft-docs-sidebar {
     width: 100%;
     position: static;
-    max-height: 160px;
+    max-height: none;
     border-bottom: 2px solid #555;
   }
   .minecraft-docs-mobile-toggle {
@@ -84,9 +110,12 @@
   }
   .minecraft-docs-sidebar nav > ul,
   .minecraft-docs-sidebar nav li > ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    display: block;
+  }
+  .minecraft-docs-sidebar nav[data-mobile-open="true"] {
+    max-height: 50dvh;
+    overflow: auto;
+    overscroll-behavior: contain;
   }
   .minecraft-docs-sidebar nav li {
     margin: 0;
@@ -102,7 +131,7 @@
   }
 }
 
-/* Documentation chrome uses GUI 2 scrollbar pixels around GUI 1 labels. */
+/* Documentation chrome keeps both scrollbar pixels and text at integer GUI 2. */
 :is(
   .minecraft-docs-sidebar,
   .minecraft-docs-sidebar nav,

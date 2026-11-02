@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { Calendar } from "../../registry/ui/calendar";
+import { Calendar, CalendarDayButton } from "../../registry/ui/calendar";
 import { Progress } from "../../registry/ui/progress";
 import { RadioGroup, RadioGroupItem } from "../../registry/ui/radio-group";
 import { Textarea } from "../../registry/ui/textarea";
@@ -50,7 +50,17 @@ export function Savings() {
     </Panel>
   );
 }
-export function Schedule() {
+
+const ScheduleDay = (props: React.ComponentProps<typeof CalendarDayButton>) => (
+  <CalendarDayButton
+    {...props}
+    /* eslint-disable shadcn/no-inline-styles -- Bridge the public DayButton width override to the website's integer container-query sizes. */
+    style={{ ...props.style, width: "var(--schedule-day-width)" }}
+    /* eslint-enable shadcn/no-inline-styles */
+  />
+);
+
+export const Schedule = () => {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(2026, 10, 2)
   );
@@ -59,14 +69,24 @@ export function Schedule() {
       title="Find a day that works."
       tag="TEAM CALENDAR"
       description="Choose a date for the design review."
+      /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
+      className="grass-schedule-panel"
+      /* eslint-enable shadcn/no-unknown-classes */
     >
-      <Calendar
-        scale={1}
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        defaultMonth={new Date(2026, 10)}
-      />
+      <div
+        /* eslint-disable shadcn/no-unknown-classes -- Defined in the parent homepage.css composition stylesheet. */
+        className="grass-calendar-viewport"
+        /* eslint-enable shadcn/no-unknown-classes */
+      >
+        <Calendar
+          scale={2}
+          components={{ DayButton: ScheduleDay }}
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          defaultMonth={new Date(2026, 10)}
+        />
+      </div>
       <output
         aria-live="polite"
         aria-label="Review date"
@@ -84,7 +104,7 @@ export function Schedule() {
       </output>
     </Panel>
   );
-}
+};
 export function Feedback() {
   const [text, setText] = React.useState(""),
     [sent, setSent] = React.useState(false);

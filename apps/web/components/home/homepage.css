@@ -109,6 +109,31 @@
   gap: 16px;
   min-width: 0;
 }
+.grass-home .grass-schedule-panel {
+  padding: 16px;
+  container: schedule / inline-size;
+}
+.grass-calendar-viewport {
+  --schedule-day-width: 32px;
+  display: flex;
+  justify-content: safe center;
+  width: 100%;
+  min-width: 0;
+}
+.grass-calendar-viewport .mc-calendar {
+  --mc-cell: var(--schedule-day-width);
+  padding: 8px;
+}
+@container schedule (min-width: 284px) {
+  .grass-calendar-viewport {
+    --schedule-day-width: 36px;
+  }
+}
+@container schedule (min-width: 312px) {
+  .grass-calendar-viewport {
+    --schedule-day-width: 40px;
+  }
+}
 .grass-panel {
   padding: 24px;
   gap: 20px;

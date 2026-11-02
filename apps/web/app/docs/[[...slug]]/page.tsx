@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import {
-  DocumentationNavigation,
-  TableOfContents,
-} from "../../../components/document-navigation";
+import { DocumentH1 } from "../../../components/document-elements";
+import { TableOfContents } from "../../../components/document-navigation";
 import { source } from "../../../lib/source";
 import { getMDXComponents } from "../../../mdx-components";
-import { TypographyH1 } from "../../../registry/ui/typography";
 
 import "../../../components/document-navigation.css";
 
@@ -41,19 +38,15 @@ const DocsPage = async ({ params }: PageProps) => {
   const Body = page.data.body;
 
   return (
-    <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
-      className="minecraft-docs-layout"
-      /* eslint-enable shadcn/no-unknown-classes */
-    >
-      <DocumentationNavigation tree={source.pageTree} currentUrl={page.url} />
+    <>
       <main id="content" className="minecraft-document">
-        <TypographyH1>{page.data.title}</TypographyH1>
+        <DocumentH1>{page.data.title}</DocumentH1>
         <article className="minecraft-prose">
           <Body components={getMDXComponents()} />
         </article>
       </main>
       <TableOfContents items={page.data.toc} />
-    </div>
+    </>
   );
 };
 

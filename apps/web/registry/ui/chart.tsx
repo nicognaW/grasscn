@@ -159,11 +159,19 @@ ${colorConfig
   );
 };
 
-const ChartText = ({ children }: { children: React.ReactNode }) => {
+const ChartText = ({
+  children,
+  scale: explicitScale,
+}: {
+  children: React.ReactNode;
+  scale?: 1 | 2 | 3;
+}): React.ReactNode => {
   const { scale } = useChart();
 
   return typeof children === "string" || typeof children === "number" ? (
-    <MinecraftDisclosureText scale={scale}>{children}</MinecraftDisclosureText>
+    <MinecraftDisclosureText scale={explicitScale ?? scale}>
+      {children}
+    </MinecraftDisclosureText>
   ) : (
     children
   );
@@ -199,7 +207,12 @@ const ChartTooltipContent = ({
     >,
     "accessibilityLayer"
   >) => {
-  const { config } = useChart();
+  const { config, scale } = useChart();
+  const tooltipScale = scale === 3 ? 3 : 2;
+
+  const tooltipStyle: React.CSSProperties & { "--mc-scale": number } = {
+    "--mc-scale": tooltipScale,
+  };
 
   const tooltipLabel = React.useMemo(() => {
     if (hideLabel || !payload?.length) {
@@ -229,7 +242,7 @@ const ChartTooltipContent = ({
 
     return (
       <div className={cn("font-medium", labelClassName)}>
-        <ChartText>{value}</ChartText>
+        <ChartText scale={tooltipScale}>{value}</ChartText>
       </div>
     );
   }, [
@@ -240,6 +253,7 @@ const ChartTooltipContent = ({
     labelClassName,
     config,
     labelKey,
+    tooltipScale,
   ]);
 
   if (!active || !payload?.length) {
@@ -250,6 +264,7 @@ const ChartTooltipContent = ({
 
   return (
     <div
+      style={tooltipStyle}
       className={cn(
         "mc-chart-tooltip grid min-w-[8rem] items-start gap-1.5 text-xs [&>*:not(.mc-surface)]:relative",
         className
@@ -311,16 +326,20 @@ const ChartTooltipContent = ({
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
                         <span className="text-muted-foreground">
-                          <ChartText>
+                          <ChartText scale={tooltipScale}>
                             {itemConfig?.label ?? item.name}
                           </ChartText>
                         </span>
                       </div>
                       {item.value != null && (
-                        <span className="text-foreground font-mono font-medium tabular-nums">
-                          {typeof item.value === "number"
-                            ? item.value.toLocaleString()
-                            : String(item.value)}
+                        <span className="text-foreground tabular-nums">
+                          <ChartText scale={tooltipScale}>
+                            {/* eslint-disable anti-slop/no-runtime-typeof -- Recharts' declared public value union formats numbers by locale; other supported values retain their string representation. */}
+                            {typeof item.value === "number"
+                              ? item.value.toLocaleString()
+                              : String(item.value)}
+                            {/* eslint-enable anti-slop/no-runtime-typeof */}
+                          </ChartText>
                         </span>
                       )}
                     </div>

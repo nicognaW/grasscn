@@ -70,6 +70,18 @@ test("Button documentation connects its executable example, complete code and im
       return displayed?.replaceAll("\r\n", "\n");
     })
     .toBe(executable.replaceAll("\r\n", "\n"));
+
+  const selectedCode = await source.evaluate((element) => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    return selection?.toString() ?? "";
+  });
+
+  expect(selectedCode).toBe(executable.replaceAll("\r\n", "\n"));
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
