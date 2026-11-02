@@ -35,7 +35,9 @@ export default function TableDemo({ scale }: DemoProps) {
                 data-state={selected === world.name ? "selected" : undefined}
                 aria-selected={selected === world.name}
                 tabIndex={0}
-                onClick={() => { setSelected(world.name); }}
+                onClick={() => {
+                  setSelected(world.name);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
@@ -50,7 +52,9 @@ export default function TableDemo({ scale }: DemoProps) {
                     scale={scale}
                     type="button"
                     style={{ width: Math.min(60, textWidth) * scale }}
-                    onClick={() => { setSelected(world.name); }}
+                    onClick={() => {
+                      setSelected(world.name);
+                    }}
                   >
                     Join
                   </Button>

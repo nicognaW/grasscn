@@ -26,15 +26,15 @@ export default function TraceDemo({ scale }: DemoProps) {
               "--demo-width": `${110 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() =>
-            { setStatus((value) =>
+          onClick={() => {
+            setStatus((value) =>
               value === "running"
                 ? "error"
                 : value === "error"
                   ? "pending"
                   : "running"
-            ); }
-          }
+            );
+          }}
         >
           Change status
         </Button>

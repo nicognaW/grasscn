@@ -36,7 +36,9 @@ export default function SignDemo({ scale }: DemoProps) {
         <Input
           id="sign-label"
           value={title}
-          onChange={(event) => { setTitle(event.target.value); }}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
           maxLength={15}
           scale={scale}
           className="w-(--demo-width)"
@@ -50,7 +52,9 @@ export default function SignDemo({ scale }: DemoProps) {
         <Select
           scale={scale}
           value={wood}
-          onValueChange={(value) => { setWood(value as SignWood); }}
+          onValueChange={(value) => {
+            setWood(value as SignWood);
+          }}
         >
           <SelectTrigger aria-label="Wood type" style={{ width: 120 * scale }}>
             <SelectValue />

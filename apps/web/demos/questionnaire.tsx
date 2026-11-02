@@ -27,8 +27,9 @@ export default function QuestionnaireDemo({ scale }: DemoProps) {
   React.useLayoutEffect(() => {
     const node = form.current!;
 
-    const measure = () =>
-      { setWidth(Math.max(1, Math.floor(node.clientWidth / scale))); };
+    const measure = () => {
+      setWidth(Math.max(1, Math.floor(node.clientWidth / scale)));
+    };
 
     measure();
     const observer = new ResizeObserver(measure);

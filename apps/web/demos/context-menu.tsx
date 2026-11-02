@@ -19,7 +19,9 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
           <Input
             aria-label="Context menu title"
             value={title}
-            onChange={(event) => { setTitle(event.target.value); }}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-60"
           />
         </label>
@@ -28,7 +30,9 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
           <Input
             aria-label="Context menu action"
             value={action}
-            onChange={(event) => { setAction(event.target.value); }}
+            onChange={(event) => {
+              setAction(event.target.value);
+            }}
             className="w-60"
           />
         </label>
@@ -63,7 +67,11 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
           <ContextMenuContent collisionPadding={8}>
             <ContextMenuGroup>
               <ContextMenuLabel>{title || " "}</ContextMenuLabel>
-              <ContextMenuItem onClick={() => { setLastAction(action); }}>
+              <ContextMenuItem
+                onClick={() => {
+                  setLastAction(action);
+                }}
+              >
                 {action || " "}
                 <ContextMenuShortcut>Esc</ContextMenuShortcut>
               </ContextMenuItem>
@@ -100,12 +108,16 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
               <ContextMenuPortal>
                 <ContextMenuSubContent collisionPadding={8}>
                   <ContextMenuItem
-                    onClick={() => { setLastAction("Video settings"); }}
+                    onClick={() => {
+                      setLastAction("Video settings");
+                    }}
                   >
                     Video settings
                   </ContextMenuItem>
                   <ContextMenuItem
-                    onClick={() => { setLastAction("Audio settings"); }}
+                    onClick={() => {
+                      setLastAction("Audio settings");
+                    }}
                   >
                     Audio settings
                   </ContextMenuItem>

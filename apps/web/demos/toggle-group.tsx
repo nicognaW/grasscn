@@ -18,7 +18,11 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <Button onClick={() => { setDisabled((v) => !v); }}>
+        <Button
+          onClick={() => {
+            setDisabled((v) => !v);
+          }}
+        >
           {disabled ? "Enable filters" : "Disable filters"}
         </Button>
         <Button
@@ -46,7 +50,9 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
                   ? single
                   : [single]
             }
-            onValueChange={(__values) => { setSingle(__values[0] ?? ""); }}
+            onValueChange={(__values) => {
+              setSingle(__values[0] ?? "");
+            }}
             disabled={disabled}
             multiple={false}
           >
@@ -79,7 +85,9 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
                   ? multiple
                   : [multiple]
             }
-            onValueChange={(__values) => { setMultiple(__values); }}
+            onValueChange={(__values) => {
+              setMultiple(__values);
+            }}
             disabled={disabled}
             multiple={true}
           >

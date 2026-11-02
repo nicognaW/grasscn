@@ -18,7 +18,9 @@ export default function TextareaDemo({ scale }: DemoProps) {
             aria-label="Demo textarea"
             scale={scale}
             value={value}
-            onChange={(event) => { setValue(event.target.value); }}
+            onChange={(event) => {
+              setValue(event.target.value);
+            }}
             placeholder="Write a message..."
           />
         </div>

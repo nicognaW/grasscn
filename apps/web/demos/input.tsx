@@ -17,7 +17,9 @@ export default function InputDemo({ scale }: DemoProps) {
             aria-label="Demo input"
             scale={scale}
             value={value}
-            onChange={(event) => { setValue(event.target.value); }}
+            onChange={(event) => {
+              setValue(event.target.value);
+            }}
             placeholder="Search..."
           />
         </div>

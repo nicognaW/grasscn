@@ -29,9 +29,13 @@ export default function ResizableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          className="w-(--demo-width)" style={
+          className="w-(--demo-width)"
+          style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            ({"--demo-width": `${120 * scale}px`} satisfies DemoVariables) as DemoVariables}
+            {
+              "--demo-width": `${120 * scale}px`,
+            } satisfies DemoVariables as DemoVariables
+          }
           onClick={() => {
             setOrientation((v) =>
               v === "horizontal" ? "vertical" : "horizontal"
@@ -43,9 +47,13 @@ export default function ResizableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          className="w-(--demo-width)" style={
+          className="w-(--demo-width)"
+          style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-            ({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
+            {
+              "--demo-width": `${100 * scale}px`,
+            } satisfies DemoVariables as DemoVariables
+          }
           onClick={() => {
             group.current?.setLayout({ [left]: 50, [right]: 50 });
           }}
@@ -88,8 +96,10 @@ export default function ResizableDemo({ scale }: DemoProps) {
                   <Button
                     key={label}
                     scale={scale}
-                    onClick={() => { setSelected(label); }}
-                    className="w-full" 
+                    onClick={() => {
+                      setSelected(label);
+                    }}
+                    className="w-full"
                   >
                     {label}
                   </Button>
@@ -117,8 +127,10 @@ export default function ResizableDemo({ scale }: DemoProps) {
                   <Button
                     key={label}
                     scale={scale}
-                    onClick={() => { setSelected(label); }}
-                    className="w-full" 
+                    onClick={() => {
+                      setSelected(label);
+                    }}
+                    className="w-full"
                   >
                     {label}
                   </Button>

@@ -52,7 +52,9 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
             aria-label="Message text"
             scale={scale}
             value={text}
-            onChange={(event) => { setText(event.target.value); }}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             style={{ width: 180 * scale, maxWidth: "100%" }}
           />
         </label>

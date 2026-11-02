@@ -49,7 +49,9 @@ function History({ scale }: DemoProps) {
             aria-label="Message text"
             scale={scale}
             value={text}
-            onChange={(event) => { setText(event.target.value); }}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             className="w-(--demo-width) max-w-full"
             style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */

@@ -24,15 +24,25 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
           <Input
             aria-label="First radio choice"
             value={first}
-            onChange={(event) => { setFirst(event.target.value); }}
+            onChange={(event) => {
+              setFirst(event.target.value);
+            }}
             className="w-45"
           />
         </label>
         <Button
           aria-pressed={disabled}
-          onClick={() => { setDisabled((current) => !current); }}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
         >{`Group: ${disabled ? "Disabled" : "Enabled"}`}</Button>
-        <Button onClick={() => { setValue(""); }}>Clear choice</Button>
+        <Button
+          onClick={() => {
+            setValue("");
+          }}
+        >
+          Clear choice
+        </Button>
       </div>
       <div className="demo-stage" data-stage="radio-group">
         <div className="demo-pair">

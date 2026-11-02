@@ -21,7 +21,9 @@ export default function SonnerDemo({ scale }: DemoProps) {
           <Input
             aria-label="Sonner title"
             value={title}
-            onChange={(e) => { setTitle(e.target.value); }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
             className="w-70"
           />
         </label>
@@ -30,7 +32,9 @@ export default function SonnerDemo({ scale }: DemoProps) {
           <Textarea
             aria-label="Sonner message"
             value={message}
-            onChange={(e) => { setMessage(e.target.value); }}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
             style={{ width: 320, height: 100 }}
           />
         </label>

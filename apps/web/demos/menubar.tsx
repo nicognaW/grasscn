@@ -18,7 +18,9 @@ export default function MenubarDemo({ scale }: DemoProps) {
           <Input
             aria-label="Menubar title"
             value={title}
-            onChange={(event) => { setTitle(event.target.value); }}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-60"
           />
         </label>
@@ -27,7 +29,9 @@ export default function MenubarDemo({ scale }: DemoProps) {
           <Input
             aria-label="Menubar action"
             value={action}
-            onChange={(event) => { setAction(event.target.value); }}
+            onChange={(event) => {
+              setAction(event.target.value);
+            }}
             className="w-60"
           />
         </label>
@@ -39,7 +43,11 @@ export default function MenubarDemo({ scale }: DemoProps) {
             <MenubarContent collisionPadding={8}>
               <MenubarGroup>
                 <MenubarLabel>World Settings</MenubarLabel>
-                <MenubarItem onClick={() => { setLastAction(action); }}>
+                <MenubarItem
+                  onClick={() => {
+                    setLastAction(action);
+                  }}
+                >
                   {action || " "}
                   <MenubarShortcut>Esc</MenubarShortcut>
                 </MenubarItem>
@@ -76,12 +84,16 @@ export default function MenubarDemo({ scale }: DemoProps) {
                 <MenubarPortal>
                   <MenubarSubContent collisionPadding={8}>
                     <MenubarItem
-                      onClick={() => { setLastAction("Video settings"); }}
+                      onClick={() => {
+                        setLastAction("Video settings");
+                      }}
                     >
                       Video settings
                     </MenubarItem>
                     <MenubarItem
-                      onClick={() => { setLastAction("Audio settings"); }}
+                      onClick={() => {
+                        setLastAction("Audio settings");
+                      }}
                     >
                       Audio settings
                     </MenubarItem>
@@ -93,10 +105,18 @@ export default function MenubarDemo({ scale }: DemoProps) {
           <MenubarMenu>
             <MenubarTrigger>World</MenubarTrigger>
             <MenubarContent collisionPadding={8}>
-              <MenubarItem onClick={() => { setLastAction("Create world"); }}>
+              <MenubarItem
+                onClick={() => {
+                  setLastAction("Create world");
+                }}
+              >
                 Create world
               </MenubarItem>
-              <MenubarItem onClick={() => { setLastAction("Load world"); }}>
+              <MenubarItem
+                onClick={() => {
+                  setLastAction("Load world");
+                }}
+              >
                 Load world
               </MenubarItem>
             </MenubarContent>

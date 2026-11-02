@@ -16,7 +16,9 @@ export default function SheetDemo({ scale }: DemoProps) {
           <Input
             aria-label="Sheet title"
             value={title}
-            onChange={(e) => { setTitle(e.target.value); }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
             className="w-70"
           />
         </label>
@@ -25,7 +27,9 @@ export default function SheetDemo({ scale }: DemoProps) {
           <Textarea
             aria-label="Sheet message"
             value={message}
-            onChange={(e) => { setMessage(e.target.value); }}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
             style={{ width: 320, height: 100 }}
           />
         </label>

@@ -67,13 +67,13 @@ export default function PlayerListDemo({ scale }: DemoProps) {
       <div className="flex gap-3 flex-wrap">
         <Button
           scale={scale}
-          onClick={() =>
-            { setPlayers((old) =>
+          onClick={() => {
+            setPlayers((old) =>
               old.map((p) =>
                 p.id === selected ? { ...p, score: (p.score ?? 0) + 10 } : p
               )
-            ); }
-          }
+            );
+          }}
           disabled={!players.some((p) => p.id === selected)}
         >
           Award 10 points

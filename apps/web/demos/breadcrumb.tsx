@@ -25,8 +25,10 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
             aria-label="Breadcrumb current page"
             value={current}
             scale={scale}
-            onChange={(event) => { setCurrent(event.target.value); }}
-            className="w-70" 
+            onChange={(event) => {
+              setCurrent(event.target.value);
+            }}
+            className="w-70"
           />
         </label>
       </div>
@@ -36,7 +38,9 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
             <BreadcrumbItem>
               <BreadcrumbLink
                 href="#breadcrumb"
-                onClick={() => { setVisited("Worlds"); }}
+                onClick={() => {
+                  setVisited("Worlds");
+                }}
               >
                 Worlds
               </BreadcrumbLink>
@@ -47,7 +51,9 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
                 render={
                   <a
                     href="#breadcrumb"
-                    onClick={() => { setVisited("Saved games"); }}
+                    onClick={() => {
+                      setVisited("Saved games");
+                    }}
                   />
                 }
               >

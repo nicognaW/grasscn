@@ -15,7 +15,9 @@ export default function KbdDemo({ scale }: DemoProps) {
             aria-label="Keyboard key label"
             scale={scale}
             value={key}
-            onChange={(event) => { setKey(event.target.value); }}
+            onChange={(event) => {
+              setKey(event.target.value);
+            }}
             className="w-60"
           />
         </label>

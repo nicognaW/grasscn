@@ -20,7 +20,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
             aria-label="Code block source"
             scale={scale}
             value={code}
-            onChange={(event) => { setCode(event.target.value); }}
+            onChange={(event) => {
+              setCode(event.target.value);
+            }}
             style={{ width: 340, height: 120 }}
           />
         </label>
@@ -28,7 +30,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
           <Checkbox
             scale={scale}
             checked={wrap}
-            onCheckedChange={(value) => { setWrap(value === true); }}
+            onCheckedChange={(value) => {
+              setWrap(value === true);
+            }}
           />
           Wrap
         </label>
@@ -36,7 +40,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
           <Checkbox
             scale={scale}
             checked={numbers}
-            onCheckedChange={(value) => { setNumbers(value === true); }}
+            onCheckedChange={(value) => {
+              setNumbers(value === true);
+            }}
           />
           Line numbers
         </label>

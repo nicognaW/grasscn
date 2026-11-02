@@ -24,7 +24,9 @@ export default function EmptyDemo({ scale }: DemoProps) {
             aria-label="Empty state title"
             scale={scale}
             value={title}
-            onChange={(event) => { setTitle(event.target.value); }}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-70"
           />
         </label>
@@ -34,7 +36,9 @@ export default function EmptyDemo({ scale }: DemoProps) {
             aria-label="Empty state description"
             scale={scale}
             value={description}
-            onChange={(event) => { setDescription(event.target.value); }}
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
             style={{ width: 320, height: 100 }}
           />
         </label>
@@ -59,7 +63,12 @@ export default function EmptyDemo({ scale }: DemoProps) {
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <Button scale={scale} onClick={() => { setWorlds((v) => v + 1); }}>
+              <Button
+                scale={scale}
+                onClick={() => {
+                  setWorlds((v) => v + 1);
+                }}
+              >
                 Create world
               </Button>
             </EmptyContent>

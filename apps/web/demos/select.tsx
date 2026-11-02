@@ -31,24 +31,28 @@ export default function SelectDemo({ scale }: DemoProps) {
           <Input
             aria-label="First select option"
             value={title}
-            onChange={(event) => { setTitle(event.target.value); }}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-45"
           />
         </label>
         <Button
           aria-pressed={disabled}
-          onClick={() => { setDisabled((current) => !current); }}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
         >{`Select: ${disabled ? "Disabled" : "Enabled"}`}</Button>
         <Button
           aria-pressed={disabledOption}
-          onClick={() => { setDisabledOption((current) => !current); }}
+          onClick={() => {
+            setDisabledOption((current) => !current);
+          }}
         >{`Creative: ${disabledOption ? "Disabled" : "Enabled"}`}</Button>
       </div>
       <div className="demo-stage" data-stage="select">
         <div className="demo-pair">
-          <label htmlFor="preview-mode-select">
-            GAME MODE
-          </label>
+          <label htmlFor="preview-mode-select">GAME MODE</label>
           <Select
             items={titles.map((label, index) => ({
               label,
@@ -56,7 +60,9 @@ export default function SelectDemo({ scale }: DemoProps) {
             }))}
             scale={scale}
             value={value}
-            onValueChange={(selectedValue) => { setValue(selectedValue ?? ""); }}
+            onValueChange={(selectedValue) => {
+              setValue(selectedValue ?? "");
+            }}
             disabled={disabled}
           >
             <SelectTrigger id="preview-mode-select" aria-label="Demo game mode">
@@ -76,9 +82,7 @@ export default function SelectDemo({ scale }: DemoProps) {
           </Select>
         </div>
         <div className="demo-pair">
-          <label htmlFor="preview-mode-empty">
-            PLACEHOLDER
-          </label>
+          <label htmlFor="preview-mode-empty">PLACEHOLDER</label>
           <Select
             scale={scale}
             items={initial

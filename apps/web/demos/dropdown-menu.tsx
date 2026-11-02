@@ -35,8 +35,10 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
           <Input
             aria-label="Dropdown menu title"
             value={title}
-            onChange={(event) => { setTitle(event.target.value); }}
-            className="w-60" 
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+            className="w-60"
           />
         </label>
         <label>
@@ -44,8 +46,10 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
           <Input
             aria-label="Dropdown menu action"
             value={action}
-            onChange={(event) => { setAction(event.target.value); }}
-            className="w-60" 
+            onChange={(event) => {
+              setAction(event.target.value);
+            }}
+            className="w-60"
           />
         </label>
       </div>
@@ -55,7 +59,11 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
           <DropdownMenuContent collisionPadding={8}>
             <DropdownMenuGroup>
               <DropdownMenuLabel>{title || " "}</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => { setLastAction(action); }}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setLastAction(action);
+                }}
+              >
                 {action || " "}
                 <DropdownMenuShortcut>Esc</DropdownMenuShortcut>
               </DropdownMenuItem>
@@ -92,12 +100,16 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
               <DropdownMenuPortal>
                 <DropdownMenuSubContent collisionPadding={8}>
                   <DropdownMenuItem
-                    onClick={() => { setLastAction("Video settings"); }}
+                    onClick={() => {
+                      setLastAction("Video settings");
+                    }}
                   >
                     Video settings
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => { setLastAction("Audio settings"); }}
+                    onClick={() => {
+                      setLastAction("Audio settings");
+                    }}
                   >
                     Audio settings
                   </DropdownMenuItem>
