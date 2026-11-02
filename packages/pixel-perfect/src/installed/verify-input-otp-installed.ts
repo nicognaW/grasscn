@@ -6,32 +6,40 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import type { OtpCaptureManifest } from "@ppt/installed/constituent-capture-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, url] = process.argv.slice(2);
 
 assert.ok(
   consumerArgument && url,
-  "Usage: bun src/installed/verify-input-otp-installed.mjs <consumer-dir> <consumer-url>"
+  "Usage: bun src/installed/verify-input-otp-installed.ts <consumer-dir> <consumer-url>"
 );
 
 const consumer = path.resolve(consumerArgument);
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+// SAFETY: registry.json is the authored registry descriptor producer; retain its awaited read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
 const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
-);
+) as InstalledTextRegistry;
 
 const item = registry.items.find((item) => item.name === "input-otp");
 
+// SAFETY: the initialized shadcn components.json owns the existing rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
   await readFile(path.join(consumer, "components.json"), "utf-8")
-);
+) as { rsc?: boolean };
 
 const files = [];
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -44,7 +52,7 @@ const canonical = (bytes) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-for (const entry of item.files) {
+for (const entry of item!.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 
@@ -74,14 +82,22 @@ execFileSync(
 
 const reference = pixelPerfectFile(path.join("tests/reference/input-otp"));
 
+// SAFETY: the existing input-otp manifest selection reads its captured-reference producer at this point.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact input-otp capture producer boundary.
 const manifest = JSON.parse(
   await readFile(path.join(reference, "manifest.json"), "utf-8")
-);
+) as OtpCaptureManifest;
 
 const browser = await chromium.launch({ channel: "msedge" });
 const browserVersion = browser.version();
-const cases = [];
-const pageErrors = [];
+
+const cases: {
+  decodedRgbaSha256: string;
+  mismatchedPixels: number;
+  name: string;
+}[] = [];
+
+const pageErrors: string[] = [];
 
 let next = 0;
 
