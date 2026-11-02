@@ -10,6 +10,9 @@ import { minecraftInputAssets } from "@grasscn/web/ui/minecraft-input-assets";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type modelAssets from "../../../tests/reference/branding/model-assets.json";
+import type popupAssets from "../../../tests/reference/card/asset-provenance.json";
+
 const [first, second] = process.argv.slice(2);
 
 if (!first || !second) {
@@ -18,10 +21,20 @@ if (!first || !second) {
   );
 }
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
-const one = JSON.parse(await readFile(path.join(first, "capture.json")));
-const two = JSON.parse(await readFile(path.join(second, "capture.json")));
+const oneBytes = await readFile(path.join(first, "capture.json"));
+
+// SAFETY: capture-brand-icon emits these scale records; the paired identity/pixel checks below remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const one = JSON.parse(oneBytes.toString("utf-8")) as { scales: number[] };
+
+const twoBytes = await readFile(path.join(second, "capture.json"));
+
+// SAFETY: capture-brand-icon emits these scale records; the paired identity/pixel checks below remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const two = JSON.parse(twoBytes.toString("utf-8")) as { scales: number[] };
 
 assert.deepEqual(one, two, "Native item capture identities differ");
 
@@ -34,7 +47,19 @@ await Promise.all([
 ]);
 
 const cases = [];
-const generated = {};
+
+const generated: Record<
+  string,
+  {
+    width: number;
+    height: number;
+    sha256: string;
+    opaquePixels?: number;
+    alphaRecovery?: string;
+    text?: string;
+    composition?: string;
+  }
+> = {};
 
 for (const scale of one.scales) {
   const images = [];
@@ -51,17 +76,15 @@ for (const scale of one.scales) {
     assert.deepEqual([p.width, p.height], [16 * scale, 16 * scale]);
     assert.ok(p.data.equals(q.data), `Non-repeatable native item: ${filename}`);
     images.push(p);
-    cases.push(
-      Object.fromEntries([
-        ["filename", filename],
-        ["scale", scale],
-        ["background", background],
-        ["firstPngSha256", hash(a)],
-        ["secondPngSha256", hash(b)],
-        ["decodedRgbaSha256", hash(p.data)],
-        ["mismatchedPixels", 0],
-      ])
-    );
+    cases.push({
+      filename,
+      scale,
+      background,
+      firstPngSha256: hash(a),
+      secondPngSha256: hash(b),
+      decodedRgbaSha256: hash(p.data),
+      mismatchedPixels: 0,
+    });
   }
 
   const [black, white] = images;
@@ -101,23 +124,22 @@ for (const scale of one.scales) {
   const filename = `grass-block-${16 * scale}.png`;
 
   await writeFile(path.join(assets, filename), bytes);
-  generated[filename] = Object.fromEntries([
-    ["width", result.width],
-    ["height", result.height],
-    ["sha256", hash(bytes)],
-    ["opaquePixels", opaque],
-    [
-      "alphaRecovery",
+  generated[filename] = {
+    width: result.width,
+    height: result.height,
+    sha256: hash(bytes),
+    opaquePixels: opaque,
+    alphaRecovery:
       "Exact per-pixel black/white contrast identifies binary coverage; original item RGB copied without recoloring or resizing",
-    ],
-  ]);
+  };
 }
 
-const block = `data:image/png;base64,${(await readFile(path.join(assets, "grass-block-48.png"))).toString("base64")}`;
+const blockBytes = await readFile(path.join(assets, "grass-block-48.png"));
+const block = `data:image/png;base64,${blockBytes.toString("base64")}`;
 const { atlas } = minecraftInputAssets;
 
 const defs = [];
-const shapes = [];
+const badgeRects = [];
 
 const border = minecraftCardSprite.border.left;
 
@@ -135,7 +157,7 @@ for (let row = 0, y = 12; row < 3; row += 1) {
     defs.push(
       `<pattern id="panel${index}" x="${x}" y="${y}" width="${widths[col]}" height="${heights[row]}" patternUnits="userSpaceOnUse"><image href="${source}" width="${widths[col]}" height="${heights[row]}"/></pattern>`
     );
-    shapes.push(
+    badgeRects.push(
       `<rect x="${x}" y="${y}" width="${destinationWidths[col]}" height="${destinationHeights[row]}" fill="url(#panel${index})"/>`
     );
 
@@ -148,7 +170,7 @@ for (let row = 0, y = 12; row < 3; row += 1) {
 let x = 68;
 
 for (const [index, char] of [..."grass cn"].entries()) {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0) - 32];
+  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
   const color = index > 5 ? "#55ff55" : "#ffffff";
   const shadow = index > 5 ? "#153f15" : "#3f3f3f";
 
@@ -156,7 +178,7 @@ for (const [index, char] of [..."grass cn"].entries()) {
     for (const [pass, offset, ink] of [
       ["shadow", 2, shadow],
       ["ink", 0, color],
-    ]) {
+    ] as const) {
       const left = x + offset;
       const top = 24 + offset;
       const id = `glyph${index}${pass}`;
@@ -164,7 +186,7 @@ for (const [index, char] of [..."grass cn"].entries()) {
       defs.push(
         `<mask id="${id}" maskUnits="userSpaceOnUse" x="${left}" y="${top}" width="${advance * 2}" height="16"><image href="${atlas}" x="${left - gx * 2}" y="${top - gy * 2}" width="256" height="256"/></mask>`
       );
-      shapes.push(
+      badgeRects.push(
         `<rect x="${left}" y="${top}" width="${advance * 2}" height="16" fill="${ink}" mask="url(#${id})"/>`
       );
     }
@@ -173,53 +195,56 @@ for (const [index, char] of [..."grass cn"].entries()) {
   x += advance * 2;
 }
 
-const logo = `<svg xmlns="http://www.w3.org/2000/svg" width="176" height="64" viewBox="0 0 176 64" role="img" aria-labelledby="title desc" style="image-rendering:pixelated" shape-rendering="crispEdges"><title id="title">grasscn</title><desc id="desc">Original Minecraft grass-block inventory item with a grass cn pixel-text badge.</desc><defs>${defs.join("")}</defs><image href="${block}" x="0" y="8" width="48" height="48"/>${shapes.join("")}</svg>\n`;
+const logo = `<svg xmlns="http://www.w3.org/2000/svg" width="176" height="64" viewBox="0 0 176 64" role="img" aria-labelledby="title desc" style="image-rendering:pixelated" shape-rendering="crispEdges"><title id="title">grasscn</title><desc id="desc">Original Minecraft grass-block inventory item with a grass cn pixel-text badge.</desc><defs>${defs.join("")}</defs><image href="${block}" x="0" y="8" width="48" height="48"/>${badgeRects.join("")}</svg>\n`;
 
 await writeFile(path.join(assets, "grasscn-logo.svg"), logo);
 
-generated["grasscn-logo.svg"] = Object.fromEntries([
-  ["width", 176],
-  ["height", 64],
-  ["sha256", hash(Buffer.from(logo))],
-  ["text", "grass cn"],
-  [
-    "composition",
+generated["grasscn-logo.svg"] = {
+  width: 176,
+  height: 64,
+  sha256: hash(Buffer.from(logo)),
+  text: "grass cn",
+  composition:
     "Native GUI-scale-3 grass item plus original popup nine-slice artwork and original ASCII bitmap glyphs; layout is an original project badge",
-  ],
-]);
+};
 
 await cp(first, path.join(references, "native-one"), { recursive: true });
 
 await cp(second, path.join(references, "native-two"), { recursive: true });
+
+const blockSourceBytes = await readFile(
+  pixelPerfectFile("tests/reference/branding/model-assets.json")
+);
+
+// SAFETY: this fixed retained source document owns the provenance copied below; its contract is inferred from that same document.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const blockSource = JSON.parse(
+  blockSourceBytes.toString("utf-8")
+) as typeof modelAssets;
+
+const popupSourceBytes = await readFile(
+  pixelPerfectFile("tests/reference/card/asset-provenance.json")
+);
+
+// SAFETY: this fixed retained source document owns the provenance copied below; its contract is inferred from that same document.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const popupSource = JSON.parse(
+  popupSourceBytes.toString("utf-8")
+) as typeof popupAssets;
 
 const provenance = {
   project: "grasscn",
   minecraftVersion: "26.2",
   ...one,
   cases,
-  sourceAssets: Object.fromEntries([
-    [
-      "block",
-      JSON.parse(
-        await readFile(
-          pixelPerfectFile("tests/reference/branding/model-assets.json")
-        )
-      ),
-    ],
-    [
-      "popup",
-      JSON.parse(
-        await readFile(
-          pixelPerfectFile("tests/reference/card/asset-provenance.json")
-        )
-      ),
-    ],
-    [
-      "asciiGlyphMetricsSha256",
-      hash(await readFile(webFile("registry/ui/minecraft-font.ts"))),
-    ],
-    ["asciiRasterSha256", hash(Buffer.from(atlas.split(",")[1], "base64"))],
-  ]),
+  sourceAssets: {
+    block: blockSource,
+    popup: popupSource,
+    asciiGlyphMetricsSha256: hash(
+      await readFile(webFile("registry/ui/minecraft-font.ts"))
+    ),
+    asciiRasterSha256: hash(Buffer.from(atlas.split(",")[1], "base64")),
+  },
   generated,
 };
 
