@@ -9,7 +9,7 @@ export default function SheetDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Sheet title"
@@ -18,7 +18,7 @@ export default function SheetDemo({ scale }: DemoProps) {
             className="w-70"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Sheet message"

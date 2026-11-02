@@ -87,6 +87,6 @@ export default function ChartDemo({ scale }: DemoProps) {
       {copy("Illustrative data from the shadcn chart examples.")}
       {copy("Inspect trends, compare series and explore the underlying data.")}
     </div>
-    <div className="demo-result"><span className="status-dot"/><output aria-label="Chart sample">Sample {step + 1}</output><span>{types.find(t => t.value === type)?.label}</span></div>
+    <div className="demo-result"><span/><output aria-label="Chart sample">Sample {step + 1}</output><span>{types.find(t => t.value === type)?.label}</span></div>
   </>;
 }

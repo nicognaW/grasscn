@@ -45,7 +45,7 @@ export default function SpinnerDemo({ scale }: DemoProps) {
         />
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <span>Loading indicator</span>
       </div>
     </>

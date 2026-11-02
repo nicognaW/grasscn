@@ -12,7 +12,7 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Context menu title"
@@ -21,7 +21,7 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
             className="w-60"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Action
           <Input
             aria-label="Context menu action"
@@ -114,7 +114,7 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
         </ContextMenu>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Context menu status">{lastAction}</output>
         <span>
           {coordinates ? "Coordinates on" : "Coordinates off"} / {mode}

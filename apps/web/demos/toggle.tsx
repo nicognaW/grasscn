@@ -14,7 +14,7 @@ export default function ToggleDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Filter label
           <Input
             aria-label="Toggle filter label"
@@ -42,7 +42,7 @@ export default function ToggleDemo({ scale }: DemoProps) {
           />
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">LOCKED FILTER</span>
+          <span>LOCKED FILTER</span>
           <Toggle
             aria-label="Locked recipe filter"
             scale={scale}
@@ -52,7 +52,7 @@ export default function ToggleDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Recipe filter state">
           {pressed ? "Craftable recipes" : "All recipes"}
         </output>

@@ -118,7 +118,7 @@ export default function QuestionnaireDemo({ scale }: DemoProps) {
         </Questionnaire>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         {result ? (
           <Label
             scale={1}

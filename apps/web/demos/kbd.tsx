@@ -7,7 +7,7 @@ export default function KbdDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Key label
           <Input
             aria-label="Keyboard key label"
@@ -20,25 +20,25 @@ export default function KbdDemo({ scale }: DemoProps) {
       </div>
       <div className="demo-stage" data-stage="kbd">
         <div className="demo-pair">
-          <span className="sample-caption">JUMP</span>
+          <span>JUMP</span>
           <Kbd scale={scale}>{key}</Kbd>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">SHORTCUT</span>
+          <span>SHORTCUT</span>
           <KbdGroup>
             <Kbd scale={scale}>Ctrl</Kbd>
             <Kbd scale={scale}>C</Kbd>
           </KbdGroup>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">UNAVAILABLE</span>
+          <span>UNAVAILABLE</span>
           <Kbd scale={scale} aria-disabled="true">
             Unbound
           </Kbd>
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <span>Keyboard labels display shortcuts</span>
       </div>
     </>

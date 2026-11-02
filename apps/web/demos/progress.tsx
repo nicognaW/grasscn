@@ -46,7 +46,7 @@ export default function ProgressDemo({ scale }: DemoProps) {
       </div>
       <div className="demo-stage" data-stage="progress">
         <div className="demo-pair">
-          <span className="sample-caption">BOSS BAR</span>
+          <span>BOSS BAR</span>
           <Progress
             aria-label="Demo progress"
             scale={scale}
@@ -76,7 +76,7 @@ export default function ProgressDemo({ scale }: DemoProps) {
         />
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Progress percentage">{value}%</output>
         <span>Try different colors and segments</span>
       </div>

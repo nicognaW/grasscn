@@ -76,7 +76,7 @@ export default function CarouselDemo({ scale }: DemoProps) {
         </Carousel>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Current slide">World {selected + 1} / 3</output>
         <span>Drag or use arrow keys.</span>
       </div>

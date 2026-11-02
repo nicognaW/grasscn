@@ -15,7 +15,7 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             scale={scale}
@@ -31,7 +31,7 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
             }
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             scale={scale}
@@ -63,7 +63,7 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
         </Collapsible>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Collapsible status">
           {open ? "Details open" : "Details closed"}
         </output>

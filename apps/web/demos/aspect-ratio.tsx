@@ -55,7 +55,7 @@ export default function AspectRatioDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Aspect ratio">
           {ratio === 1 ? "1:1" : ratio === 4 / 3 ? "4:3" : "16:9"}
         </output>

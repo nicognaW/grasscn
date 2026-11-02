@@ -15,7 +15,7 @@ export default function PopoverDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Popover title"
@@ -24,7 +24,7 @@ export default function PopoverDemo({ scale }: DemoProps) {
             className="w-60"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Popover message"
@@ -75,7 +75,7 @@ export default function PopoverDemo({ scale }: DemoProps) {
         </Popover>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Popover status">
           {saved ? "World settings saved" : "Open your world options"}
         </output>

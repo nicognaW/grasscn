@@ -19,7 +19,7 @@ export default function AvatarDemo({ scale }: DemoProps) {
       className="demo-stage demo-stage-display-grid demo-stage-gap-16"
       data-stage="avatar"
     >
-      <span className="sample-caption">MINECRAFT PLAYER</span>
+      <span>MINECRAFT PLAYER</span>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -84,7 +84,7 @@ export default function AvatarDemo({ scale }: DemoProps) {
       <p className="grass-note">
         Username lookup requires an internet connection. Profiles may be cached.
       </p>
-      <span className="sample-caption">TEAM PROFILES</span>
+      <span>TEAM PROFILES</span>
       <div className="grass-team">
         {people.map((person) => (
           <div className="grass-team-member" key={person.name}>
@@ -98,7 +98,7 @@ export default function AvatarDemo({ scale }: DemoProps) {
           </div>
         ))}
       </div>
-      <span className="sample-caption">WORKSPACE MEMBERS</span>
+      <span>WORKSPACE MEMBERS</span>
       <AvatarGroup aria-label="Workspace members">
         {people.map((person) => (
           <Avatar key={person.name} scale={scale}>

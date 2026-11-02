@@ -38,7 +38,7 @@ function History({ scale }: DemoProps) {
           send();
         }}
       >
-        <label className="demo-option">
+        <label>
           Message
           <Input
             aria-label="Message text"
@@ -138,7 +138,7 @@ function History({ scale }: DemoProps) {
         </MessageScroller>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Message count">{messages.length} messages</output>
       </div>
     </>

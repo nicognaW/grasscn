@@ -17,7 +17,7 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           First choice
           <Input
             aria-label="First radio choice"
@@ -34,7 +34,7 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
       </div>
       <div className="demo-stage" data-stage="radio-group">
         <div className="demo-pair">
-          <span className="sample-caption">GAME MODE</span>
+          <span>GAME MODE</span>
           <RadioGroup
             scale={scale}
             aria-label="Demo radio game mode"
@@ -56,7 +56,7 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
           </RadioGroup>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">UNAVAILABLE CHOICE</span>
+          <span>UNAVAILABLE CHOICE</span>
           <RadioGroup
             scale={scale}
             aria-label="Disabled radio example"
@@ -73,7 +73,7 @@ export default function RadioGroupDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Selected radio game mode">
           {choices.find((choice) => choice.value === value)?.label ??
             "No choice"}

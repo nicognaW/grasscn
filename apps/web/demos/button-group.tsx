@@ -19,7 +19,7 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Button group title"
@@ -90,7 +90,7 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
         </ButtonGroup>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Button group action">{action}</output>
         <span>{orientation} grouping</span>
       </div>

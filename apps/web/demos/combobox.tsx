@@ -112,7 +112,7 @@ export default function ComboboxDemo({ scale }: DemoProps) {
           } as React.CSSProperties
         }
       >
-        <span className="status-dot" />
+        <span />
         <output aria-label="Biome choice">
           <MinecraftMenuText>{value ?? "Choose a biome"}</MinecraftMenuText>
         </output>

@@ -17,7 +17,7 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Current page
           <Input
             aria-label="Breadcrumb current page"
@@ -64,7 +64,7 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
         </Breadcrumb>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Breadcrumb last destination">
           Visited: {visited}
         </output>

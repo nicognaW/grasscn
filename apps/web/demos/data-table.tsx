@@ -187,7 +187,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
         </Button>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="World selection">
           {table.getFilteredSelectedRowModel().rows.length} selected / Page{" "}
           {table.getPageCount() ? table.state.pagination.pageIndex + 1 : 0} of{" "}

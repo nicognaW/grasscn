@@ -32,7 +32,7 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
       </div>
       <div className="demo-stage" data-stage="scroll-area">
         <div className="demo-pair">
-          <span className="sample-caption">VERTICAL SCROLLING</span>
+          <span>VERTICAL SCROLLING</span>
           <ScrollArea
             role="region"
             aria-label="Demo scroll area"
@@ -78,7 +78,7 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Scroll area offset">{offset} px</output>
         <span>
           {selected == null ? "Select a row" : `Selected Row ${selected}`}

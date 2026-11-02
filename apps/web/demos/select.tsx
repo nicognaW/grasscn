@@ -23,7 +23,7 @@ export default function SelectDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           First option
           <Input
             aria-label="First select option"
@@ -43,7 +43,7 @@ export default function SelectDemo({ scale }: DemoProps) {
       </div>
       <div className="demo-stage" data-stage="select">
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-mode-select">
+          <label htmlFor="preview-mode-select">
             GAME MODE
           </label>
           <Select
@@ -73,7 +73,7 @@ export default function SelectDemo({ scale }: DemoProps) {
           </Select>
         </div>
         <div className="demo-pair">
-          <label className="sample-caption" htmlFor="preview-mode-empty">
+          <label htmlFor="preview-mode-empty">
             PLACEHOLDER
           </label>
           <Select
@@ -96,7 +96,7 @@ export default function SelectDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Selected preview game mode">
           {titles[Number(value.slice(5))]}
         </output>

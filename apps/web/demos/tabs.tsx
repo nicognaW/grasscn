@@ -22,7 +22,7 @@ export default function TabsDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           First tab
           <Input
             aria-label="First tab title"
@@ -102,7 +102,7 @@ export default function TabsDemo({ scale }: DemoProps) {
         </Tabs>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Active settings tab">
           {value === "game"
             ? title || " "

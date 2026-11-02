@@ -128,7 +128,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
         </ResizablePanelGroup>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Resizable layout">{layout}</output>
         <output aria-label="Resizable selection">{selected}</output>
         <span>

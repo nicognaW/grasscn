@@ -50,14 +50,14 @@ export default function LabelDemo({ scale }: DemoProps) {
           />
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">WRAPPED / CENTERED</span>
+          <span>WRAPPED / CENTERED</span>
           <Label scale={scale} maxWidth={100} align="center">
             Create a new world with friends
           </Label>
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <span>Click a label to focus its field</span>
       </div>
     </>

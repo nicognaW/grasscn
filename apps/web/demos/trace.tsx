@@ -64,7 +64,7 @@ export default function TraceDemo({ scale }: DemoProps) {
         </Trace>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Trace status">{status}</output>
         <span>Expand the details to inspect the trace</span>
       </div>

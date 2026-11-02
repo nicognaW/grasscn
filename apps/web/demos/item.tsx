@@ -13,7 +13,7 @@ export default function ItemDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           World name
           <Input
             aria-label="Item world name"
@@ -23,7 +23,7 @@ export default function ItemDemo({ scale }: DemoProps) {
             className="w-70"
           />
         </label>
-        <label className="demo-option">
+        <label>
           World information
           <Textarea
             aria-label="Item world information"
@@ -101,7 +101,7 @@ export default function ItemDemo({ scale }: DemoProps) {
         </Item>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Item activations">Opened {opens} times</output>
         <span>Hover a thumbnail or use your keyboard</span>
       </div>

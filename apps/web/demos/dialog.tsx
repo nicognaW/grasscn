@@ -13,7 +13,7 @@ export default function DialogDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Dialog title"
@@ -22,7 +22,7 @@ export default function DialogDemo({ scale }: DemoProps) {
             className="w-60"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Dialog message"
@@ -56,7 +56,7 @@ export default function DialogDemo({ scale }: DemoProps) {
         </Dialog>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Dialog confirmations">{`Confirmed ${saved} ${saved === 1 ? "time" : "times"}`}</output>
         <span>Edit your details, then save</span>
       </div>

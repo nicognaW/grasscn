@@ -14,7 +14,7 @@ export default function SonnerDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Sonner title"
@@ -23,7 +23,7 @@ export default function SonnerDemo({ scale }: DemoProps) {
             className="w-70"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Sonner message"
@@ -45,7 +45,7 @@ export default function SonnerDemo({ scale }: DemoProps) {
         </Button>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Sonner messages">
           Shown {shown} time{shown === 1 ? "" : "s"}
         </output>

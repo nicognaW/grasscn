@@ -58,7 +58,7 @@ export default function CardDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Card status">
           {saved ? "Settings saved" : "Edit your world name"}
         </output>

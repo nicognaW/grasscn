@@ -43,7 +43,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
         </Button>
       </div>
       <div ref={stage.ref} className="demo-stage" data-stage="input-otp">
-        <div className="sample-caption">
+        <div>
           ONE-TIME CODE
           <InputOTP
             aria-label="One-time code demo"
@@ -68,7 +68,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
             </InputOTPGroup>
           </InputOTP>
         </div>
-        <div className="sample-caption">
+        <div>
           READ ONLY
           <InputOTP
             aria-label="Read-only one-time code"
@@ -88,7 +88,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
             </InputOTPGroup>
           </InputOTP>
         </div>
-        <div className="sample-caption">
+        <div>
           DISABLED
           <InputOTP
             aria-label="Disabled one-time code"
@@ -110,7 +110,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="OTP completions">{complete} complete codes</output>
         <span>Type or paste Latin and CJK text</span>
       </div>

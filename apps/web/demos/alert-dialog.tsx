@@ -22,7 +22,7 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Alert dialog title"
@@ -31,7 +31,7 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
             className="w-60" 
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Alert dialog message"
@@ -64,7 +64,7 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
         </AlertDialog>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Alert dialog confirmations">{`Confirmed ${confirmed} ${confirmed === 1 ? "time" : "times"}`}</output>
         <span>Confirm or cancel an action</span>
       </div>

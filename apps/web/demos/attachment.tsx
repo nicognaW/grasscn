@@ -11,7 +11,7 @@ export default function AttachmentDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Archive
           <Input
             aria-label="Attachment name"
@@ -64,11 +64,11 @@ export default function AttachmentDemo({ scale }: DemoProps) {
             </AttachmentActions>
           </Attachment>
         ) : (
-          <span className="sample-caption">NO ARCHIVE SELECTED</span>
+          <span>NO ARCHIVE SELECTED</span>
         )}
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Attachment status">
           {removed ? "Attachment removed" : `Previewed ${opened} times`}
         </output>

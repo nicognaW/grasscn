@@ -19,7 +19,7 @@ export default function DrawerDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Drawer title"
@@ -28,7 +28,7 @@ export default function DrawerDemo({ scale }: DemoProps) {
             className="w-70" 
           />
         </label>
-        <label className="demo-option">
+        <label>
           Message
           <Textarea
             aria-label="Drawer message"

@@ -28,7 +28,7 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Dropdown menu title"
@@ -37,7 +37,7 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
             className="w-60" 
           />
         </label>
-        <label className="demo-option">
+        <label>
           Action
           <Input
             aria-label="Dropdown menu action"
@@ -106,7 +106,7 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
         </DropdownMenu>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Dropdown menu status">{lastAction}</output>
         <span>
           {coordinates ? "Coordinates on" : "Coordinates off"} / {mode}

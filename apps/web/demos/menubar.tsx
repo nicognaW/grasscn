@@ -11,7 +11,7 @@ export default function MenubarDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Menubar title"
@@ -20,7 +20,7 @@ export default function MenubarDemo({ scale }: DemoProps) {
             className="w-60"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Action
           <Input
             aria-label="Menubar action"
@@ -108,7 +108,7 @@ export default function MenubarDemo({ scale }: DemoProps) {
         </Menubar>
       </div>
       <div className="demo-result" aria-live="polite">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Menubar status">{lastAction}</output>
         <span>
           {coordinates ? "Coordinates on" : "Coordinates off"} / {mode}

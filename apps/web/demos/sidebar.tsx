@@ -157,7 +157,7 @@ export default function SidebarDemo({ scale }: DemoProps) {
         </SidebarProvider>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Sidebar selection">{selected}</output>
         <output aria-label="Sidebar action">{action}</output>
       </div>

@@ -11,7 +11,7 @@ export default function BadgeDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Advancement title
           <Input
             aria-label="Badge text"
@@ -52,19 +52,19 @@ export default function BadgeDemo({ scale }: DemoProps) {
         }
       >
         <div className="demo-pair demo-pair-max-width-full">
-          <span className="sample-caption">CHALLENGE</span>
+          <span>CHALLENGE</span>
           <Badge scale={scale} earned={earned}>
             {text}
           </Badge>
         </div>
         <div className="demo-pair demo-pair-max-width-full">
-          <span className="sample-caption">TASK</span>
+          <span>TASK</span>
           <Badge scale={scale} achievement="task">
             New recipe
           </Badge>
         </div>
         <div className="demo-pair demo-pair-max-width-full">
-          <span className="sample-caption">GOAL / LINK</span>
+          <span>GOAL / LINK</span>
           <Badge
             render={<a href="#badge" onClick={() => setClicks((v) => v + 1)} />}
             scale={scale}
@@ -75,7 +75,7 @@ export default function BadgeDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Badge achievement state">
           {earned ? "Challenge complete!" : "Challenge not yet earned"}
         </output>

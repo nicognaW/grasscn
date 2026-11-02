@@ -12,7 +12,7 @@ export default function SwitchDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Setting label
           <Input
             aria-label="Switch setting label"
@@ -47,7 +47,7 @@ export default function SwitchDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Switch setting value">
           {checked ? "ON" : "OFF"}
         </output>

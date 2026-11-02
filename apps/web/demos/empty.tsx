@@ -15,7 +15,7 @@ export default function EmptyDemo({ scale }: DemoProps) {
   return (
     <>
       <div className="demo-options">
-        <label className="demo-option">
+        <label>
           Title
           <Input
             aria-label="Empty state title"
@@ -25,7 +25,7 @@ export default function EmptyDemo({ scale }: DemoProps) {
             className="w-70"
           />
         </label>
-        <label className="demo-option">
+        <label>
           Description
           <Textarea
             aria-label="Empty state description"
@@ -38,11 +38,11 @@ export default function EmptyDemo({ scale }: DemoProps) {
       </div>
       <div ref={stage.ref} className="demo-stage" data-stage="empty">
         <div className="demo-pair">
-          <span className="sample-caption">EMPTY WORLD LIST</span>
+          <span>EMPTY WORLD LIST</span>
           <Empty scale={scale}>{title}</Empty>
         </div>
         <div className="demo-pair">
-          <span className="sample-caption">WITH ACTION</span>
+          <span>WITH ACTION</span>
           <Empty scale={scale}>
             <EmptyHeader>
               <EmptyTitle maxWidth={Math.min(180, stage.width)} align="center">
@@ -64,7 +64,7 @@ export default function EmptyDemo({ scale }: DemoProps) {
         </div>
       </div>
       <div className="demo-result">
-        <span className="status-dot" />
+        <span />
         <output aria-label="Created demo worlds">
           Created {worlds} worlds
         </output>
