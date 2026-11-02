@@ -45,3 +45,6 @@ export type ChartFixtureQuery =
   | FpsFixtureQuery
   | ProfilerFixtureQuery
   | DefaultChartQuery;
+
+/** String labels serialized by the owned menu, dialog and tab query producers. */
+export type FixtureLabels = string[];

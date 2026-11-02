@@ -148,6 +148,7 @@ import { CommandFixture } from "./command";
 import { CustomApiFixture } from "./custom-api";
 import { DataTableFixture } from "./data-table";
 import { DialogFooterFixture } from "./dialog-footer";
+import type { FixtureLabels } from "./fixture-query-protocol";
 import { FormsFixture } from "./forms";
 import { InputGroupFixture } from "./input-group";
 import { InputOTPFixture } from "./input-otp";
@@ -178,7 +179,9 @@ const label = params.get("label") ?? "Button";
 
 const SelectFixture = () => {
   const titles: string[] = params.has("labels")
-    ? JSON.parse(params.get("labels")!)
+    ? // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
+      (JSON.parse(params.get("labels")!) as FixtureLabels)
     : ["Survival", "Creative", "Adventure"];
 
   const initial = Number(params.get("selectedIndex") ?? 0);
@@ -615,9 +618,11 @@ const ContextFixture = () => {
   const trigger = React.useRef<HTMLDivElement>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned ContextMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact ContextMenu items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -625,8 +630,8 @@ const ContextFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -674,7 +679,7 @@ const ContextFixture = () => {
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -1006,9 +1011,11 @@ const MenubarFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned Menubar items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Menubar items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -1016,8 +1023,8 @@ const MenubarFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -1062,7 +1069,7 @@ const MenubarFixture = () => {
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -1284,9 +1291,11 @@ const DropdownFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
+  // SAFETY: owned DropdownMenu items callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact DropdownMenu items query-label producer boundary.
   const labels: string[] = JSON.parse(
     params.get("labels") ?? '["Game","World","More >"]'
-  );
+  ) as FixtureLabels;
 
   const part = params.get("part");
   const nativeLabel = params.get("label") ?? "World Settings";
@@ -1294,8 +1303,8 @@ const DropdownFixture = () => {
   const nativeChecked = params.get("checked") === "true";
 
   const choose = (event: {
-    preventDefault(): void;
-    preventBaseUIHandler?(): void;
+    preventDefault: () => void;
+    preventBaseUIHandler?: () => void;
   }) => {
     setActions((n) => n + 1);
 
@@ -1343,7 +1352,7 @@ const DropdownFixture = () => {
 
   const handleOpen = (
     next: boolean,
-    details: { reason: string; cancel(): void }
+    details: { reason: string; cancel: () => void }
   ) => {
     if (
       params.has("reject") ||
@@ -1754,7 +1763,12 @@ const AlertDialogFixture = () => {
   const [confirmed, setConfirmed] = React.useState(0);
 
   const content = React.useRef<HTMLDivElement>(null);
-  const labels: string[] = JSON.parse(params.get("labels") ?? '["Yes","No"]');
+
+  // SAFETY: owned AlertDialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact AlertDialog actions query-label producer boundary.
+  const labels: string[] = JSON.parse(
+    params.get("labels") ?? '["Yes","No"]'
+  ) as FixtureLabels;
 
   return (
     <>
@@ -2005,7 +2019,9 @@ const DialogFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
 
   const labels: string[] = params.has("labels")
-    ? JSON.parse(params.get("labels")!)
+    ? // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
+      (JSON.parse(params.get("labels")!) as FixtureLabels)
     : ["Cancel", "Continue"];
 
   const description = native
@@ -2434,7 +2450,9 @@ const Fixture = () => {
 
   if (params.get("component") === "tabs") {
     const titles: string[] = params.has("labels")
-      ? JSON.parse(params.get("labels")!)
+      ? // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
+        (JSON.parse(params.get("labels")!) as FixtureLabels)
       : ["Game", "World", "More"];
 
     const panel = Number(params.get("contentHeight") ?? 0);
@@ -2504,7 +2522,7 @@ const Fixture = () => {
           value={params.has("controlled") ? tabsValue : undefined}
           dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
           style={{ width: width * scale }}
-          onValueChange={(next) => {
+          onValueChange={(next: string) => {
             if (!params.has("reject")) {
               setTabsValue(next);
             }
