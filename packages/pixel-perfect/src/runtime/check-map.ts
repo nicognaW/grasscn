@@ -3,38 +3,79 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
+import type {
+  ComponentEvidenceMap,
+  ComponentCatalog,
+  NativeInventory,
+  EvidenceRegistry,
+  NativeCaptureManifest,
+  NativeGlyphCaptureManifest,
+  UtilityBehaviorEvidence,
+  InstallationEvidence,
+  UtilityInstallationEvidence,
+  RepeatabilityEvidence,
+  RepeatedEvidenceCase,
+  GlyphProvenance,
+  GlyphObservationEvidence,
+  UpstreamRegistryCatalog,
+  EvidenceRegistryItem,
+  PixelEvidenceCase,
+  AppearanceField,
+  NativeFamily,
+} from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const json = async (file) =>
-  JSON.parse(await readFile(evidenceFile(file), "utf-8"));
+const jsonText = async (file: string) => await readFile(evidenceFile(file), "utf-8");
 
 const args = process.argv.slice(2);
 const mapArg = args.indexOf("--map");
 
-const map = await json(
-  mapArg === -1 ? "registry/minecraft-map.json" : args[mapArg + 1]
-);
+// SAFETY: the requested component map follows the authored registry mapping contract.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const map = JSON.parse(
+  await jsonText(
+    mapArg === -1 ? "registry/minecraft-map.json" : args[mapArg + 1]
+  )
+) as ComponentEvidenceMap;
 
-const catalog = await json(map.catalog);
-const inventory = await json(map.nativeInventory);
-const registry = await json("registry.json");
-const pilot = await json("tests/reference/manifest.json");
-const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+// SAFETY: the map names the retained catalogue snapshot produced by catalogue capture.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const catalog = JSON.parse(await jsonText(map.catalog)) as ComponentCatalog;
 
-const hash = (value) => {
-  assert.match(value, /^[a-f0-9]{64}$/);
+// SAFETY: the mapped inventory is the native inventory producer's retained output.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const inventory = JSON.parse(
+  await jsonText(map.nativeInventory)
+) as NativeInventory;
+
+// SAFETY: registry.json is the authored registry item/file catalogue.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const registry = JSON.parse(
+  await jsonText("registry.json")
+) as EvidenceRegistry;
+
+// SAFETY: the retained pilot capture manifest supplies its pinned source identity.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const pilot = JSON.parse(
+  await jsonText("tests/reference/manifest.json")
+) as NativeCaptureManifest;
+
+const digest = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+const hash = (value: string) => {
+  assert.match(value, /^[a-f0-9]{64}$/u);
 };
 
-let embeddedFontDigest;
+let embeddedFontDigest: string | undefined;
 
 const embeddedFontZipDigest = async () => {
-  if (embeddedFontDigest) {
+  if (embeddedFontDigest !== undefined && embeddedFontDigest !== "") {
     return embeddedFontDigest;
   }
 
-  const embedded = /export const unifontZip = "([A-Za-z0-9+/=]+)"/.exec(
+  const embedded = /export const unifontZip = "(?<zip>[A-Za-z0-9+/=]+)"/u.exec(
     await readFile(
       evidenceFile(path.join("registry/ui/minecraft-unifont-data.ts")),
       "utf-8"
@@ -46,13 +87,21 @@ const embeddedFontZipDigest = async () => {
   return (embeddedFontDigest = digest(Buffer.from(embedded[1], "base64")));
 };
 
+const registryItems = new Map<string | undefined, EvidenceRegistryItem>();
+
+for (const item of registry.items) {
+  if (!registryItems.has(item.name)) {
+    registryItems.set(item.name, item);
+  }
+}
+
 const names = map.components.map((component) => component.name);
 
 assert.equal(new Set(names).size, names.length, "Duplicate component mapping");
 
 const union = [
   ...new Set(catalog.sources.flatMap((source) => source.names)),
-].toSorted();
+].sort();
 
 assert.deepEqual(
   catalog.names,
@@ -60,11 +109,14 @@ assert.deepEqual(
   "Catalog snapshot is not the union of its sources"
 );
 
+const catalogNames = new Set(union);
+const mappedNames = new Set(names);
+
 const extensions = map.nativeExtensions ?? [];
 
 for (const extension of extensions) {
   assert.ok(
-    extension.reason && !union.includes(extension.name),
+    extension.reason && !catalogNames.has(extension.name),
     "Native extensions need a reason and must be distinct from the upstream catalog"
   );
 }
@@ -79,11 +131,11 @@ assert.equal(
 
 for (const component of excluded) {
   assert.ok(
-    union.includes(component.name) && component.reason,
+    catalogNames.has(component.name) && component.reason,
     "Exclusions need a catalog component and an explicit reason"
   );
   assert.ok(
-    !names.includes(component.name),
+    !mappedNames.has(component.name),
     `${component.name}: excluded component still mapped`
   );
   assert.ok(
@@ -93,13 +145,13 @@ for (const component of excluded) {
 }
 
 assert.deepEqual(
-  [...names].toSorted(),
+  [...names].sort(),
   [
     ...union.filter(
       (name) => !excluded.some((component) => component.name === name)
     ),
     ...extensions.map((component) => component.name),
-  ].toSorted(),
+  ].sort(),
   "Missing or extra supported shadcn component"
 );
 
@@ -115,7 +167,11 @@ for (const source of catalog.sources) {
   hash(source.sha256);
 }
 
-for (const [id, family] of Object.entries(map.families)) {
+// SAFETY: authored JSON object entries contain native-family values, never undefined.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const families = Object.entries(map.families) as [string, NativeFamily][];
+
+for (const [id, family] of families) {
   assert.ok(family.classes.length, `${id}: no native class evidence`);
 
   for (const member of family.classes) {
@@ -158,6 +214,8 @@ const kinds = new Set([
 ]);
 
 for (const component of map.components) {
+  const verification = component.pixelVerification;
+  const registryItemName = component.implementation.registryItem;
   assert.ok(
     kinds.has(component.mapping.kind),
     `${component.name}: unknown mapping kind`
@@ -182,66 +240,63 @@ for (const component of map.components) {
       "reference-and-tests-available",
       "verified-declared-cases",
       "not-applicable-unskinned-utility",
-    ].includes(component.pixelVerification.status),
+    ].includes(verification.status),
     `${component.name}: unsupported fidelity claim`
   );
 
-  if (component.implementation.registryItem) {
+  if (registryItemName !== undefined && registryItemName !== "") {
     assert.ok(
-      registry.items.some(
-        (item) => item.name === component.implementation.registryItem
-      ),
+      registry.items.some((item) => item.name === registryItemName),
       `${component.name}: missing installable item`
     );
   }
 
-  if (
-    component.pixelVerification.status === "not-applicable-unskinned-utility"
-  ) {
+  if (verification.status === "not-applicable-unskinned-utility") {
     assert.equal(
       component.mapping.kind,
       "layout",
       `${component.name}: visible skins require native evidence`
     );
     assert.equal(
-      component.pixelVerification.manifest,
+      verification.manifest,
       null,
       `${component.name}: unskinned utility must not claim native pixels`
     );
 
-    const behavior = await json(component.pixelVerification.behaviorReport);
+    // SAFETY: the utility mapping names its behavior verifier's retained report.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const behavior = JSON.parse(
+      await jsonText(verification.behaviorReport)
+    ) as UtilityBehaviorEvidence;
 
-    const installation = await json(
-      component.pixelVerification.installationReport
-    );
+    // SAFETY: the utility mapping names its CLI installation verifier's retained report.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const installation = JSON.parse(
+      await jsonText(verification.installationReport)
+    ) as UtilityInstallationEvidence;
 
     assert.equal(behavior.kind, "unskinned-web-utility");
     assert.ok(behavior.nativeReferenceNotApplicable && behavior.scope);
     assert.ok(
-      behavior.cases.length && behavior.cases.every((c) => c.passed === true),
+      behavior.cases.length && behavior.cases.every((c) => c.passed),
       `${component.name}: utility behavior proof incomplete`
     );
     assert.deepEqual(installation.pageErrors, []);
     assert.equal(installation.typecheck?.passed, true);
     assert.equal(installation.consumerRsc, false);
-    assert.match(installation.command, /shadcn.*add/);
+    assert.match(installation.command, /shadcn.*add/u);
 
-    const item = registry.items.find(
-      (item) => item.name === component.implementation.registryItem
-    );
+    // SAFETY: the authored utility mapping names its installable registry item, checked above.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const item = registryItems.get(registryItemName) as EvidenceRegistryItem;
 
-    const filenames = item.files
-      .map((file) => path.basename(file.path))
-      .toSorted();
+    const filenames = item.files.map((file) => path.basename(file.path)).sort();
 
     assert.deepEqual(
-      installation.files.map((file) => file.path).toSorted(),
+      installation.files.map((file) => file.path).sort(),
       filenames
     );
-    assert.deepEqual(
-      behavior.files.map((file) => file.path).toSorted(),
-      filenames
-    );
+    assert.deepEqual(behavior.files.map((file) => file.path).sort(), filenames);
 
     for (const file of installation.files) {
       hash(file.installedSha256);
@@ -268,17 +323,25 @@ for (const component of map.components) {
   }
 
   for (const manifestFile of [
-    component.pixelVerification.manifest,
-    ...(component.pixelVerification.additionalManifests ?? []),
-  ].filter(Boolean)) {
-    const manifest = await json(manifestFile);
+    verification.manifest,
+    ...(verification.additionalManifests ?? []),
+  ].filter((file): file is string => Boolean(file))) {
+    // SAFETY: mapped primary/additional files are retained native capture manifests.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const manifest = JSON.parse(
+      await jsonText(manifestFile)
+    ) as NativeCaptureManifest;
+
     assert.equal(manifest.sourceJarSha256, map.sourceJarSha256);
     assert.ok(
       manifest.cases.length,
       `${component.name}: empty reference matrix`
     );
 
-    if (manifest.sourceDirectory) {
+    if (
+      manifest.sourceDirectory !== undefined &&
+      manifest.sourceDirectory !== ""
+    ) {
       const source = path.join(
         path.dirname(manifestFile),
         manifest.sourceDirectory,
@@ -312,7 +375,10 @@ for (const component of map.components) {
       );
     }
 
-    if (manifest.framesDirectory) {
+    if (
+      manifest.framesDirectory !== undefined &&
+      manifest.framesDirectory !== ""
+    ) {
       for (const frame of manifest.frames) {
         const file = path.join(
           path.dirname(manifestFile),
@@ -328,26 +394,32 @@ for (const component of map.components) {
       }
     }
 
-    if (component.pixelVerification.status === "verified-declared-cases") {
-      const primary = manifestFile === component.pixelVerification.manifest;
+    if (verification.status === "verified-declared-cases") {
+      const primary = manifestFile === verification.manifest;
 
-      const report = await json(
-        primary
-          ? component.pixelVerification.installationReport
-          : (component.pixelVerification.additionalInstallationReports?.[
-              manifestFile
-            ] ??
-              path.join(
-                path.dirname(manifestFile),
-                "installation-verification.json"
-              ))
-      );
+      // SAFETY: the verified mapping selects its installation verifier's report.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const report = JSON.parse(
+        await jsonText(
+          primary
+            ? verification.installationReport
+            : (verification.additionalInstallationReports?.[manifestFile] ??
+                path.join(
+                  path.dirname(manifestFile),
+                  "installation-verification.json"
+                ))
+        )
+      ) as InstallationEvidence;
 
-      const repeat = await json(
-        primary
-          ? component.pixelVerification.repeatabilityReport
-          : path.join(path.dirname(manifestFile), "repeatability.json")
-      );
+      // SAFETY: repeatability capture writes this sibling report with native case results.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const repeat = JSON.parse(
+        await jsonText(
+          primary
+            ? verification.repeatabilityReport
+            : path.join(path.dirname(manifestFile), "repeatability.json")
+        )
+      ) as RepeatabilityEvidence;
 
       assert.equal(report.sourceJarSha256, map.sourceJarSha256);
       assert.equal(repeat.sourceJarSha256, map.sourceJarSha256);
@@ -355,22 +427,26 @@ for (const component of map.components) {
       assert.equal(repeat.caseDefinitionSha256, manifest.caseDefinitionSha256);
       assert.deepEqual(report.pageErrors, []);
       assert.deepEqual(
-        report.cases.map((c) => c.name).toSorted(),
-        manifest.cases.map((c) => c.name).toSorted()
+        report.cases.map((c) => c.name).sort(),
+        manifest.cases.map((c) => c.name).sort()
       );
       assert.deepEqual(
-        repeat.cases.map((c) => c.name).toSorted(),
-        manifest.cases.map((c) => c.name).toSorted()
+        repeat.cases.map((c) => c.name).sort(),
+        manifest.cases.map((c) => c.name).sort()
       );
 
       for (const file of report.files) {
         const sourcePath =
           file.sourcePath ?? path.posix.join("registry/ui", file.path);
 
+        // SAFETY: the verified mapping names its installable item; the original lookup throws if absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const registryItem = registryItems.get(
+          registryItemName
+        ) as EvidenceRegistryItem;
+
         assert.ok(
-          registry.items
-            .find((item) => item.name === component.implementation.registryItem)
-            .files.some((entry) => entry.path === sourcePath),
+          registryItem.files.some((entry) => entry.path === sourcePath),
           `Installed proof source is not part of the item: ${sourcePath}`
         );
         assert.equal(
@@ -381,19 +457,32 @@ for (const component of map.components) {
       }
 
       for (const reference of manifest.cases) {
-        const installed = report.cases.find((c) => c.name === reference.name);
-        const repeated = repeat.cases.find((c) => c.name === reference.name);
+        // SAFETY: the case-name arrays were just asserted equal to the reference matrix.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const installed = report.cases.find(
+          (c) => c.name === reference.name
+        ) as PixelEvidenceCase;
+
+        // SAFETY: the repeatability case names were likewise asserted equal above.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const repeated = repeat.cases.find(
+          (c) => c.name === reference.name
+        ) as RepeatedEvidenceCase;
+
         assert.equal(installed.mismatchedPixels, 0);
         assert.equal(repeated.mismatchedPixels, 0);
         assert.equal(installed.decodedRgbaSha256, repeated.decodedRgbaSha256);
 
-        for (const reuse of component.pixelVerification.appearanceReuses ??
-          []) {
+        for (const reuse of verification.appearanceReuses ?? []) {
           if (
             reuse.manifest !== manifestFile ||
-            !Object.entries(reuse.where).every(
-              ([field, value]) => reference[field] === value
-            )
+            !Object.entries(reuse.where).every(([field, value]) => {
+              // SAFETY: authored appearance reuse predicates select native case state or element.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              const fieldName = field as AppearanceField;
+
+              return reference[fieldName] === value;
+            })
           ) {
             continue;
           }
@@ -422,11 +511,11 @@ for (const component of map.components) {
       }
     }
 
-    const includesUnihex = registry.items
-      .find((item) => item.name === component.implementation.registryItem)
+    const includesUnihex = registryItems
+      .get(registryItemName)
       ?.files.some((file) => file.path.endsWith("/minecraft-unifont-data.ts"));
 
-    if (manifest.effectiveAssets && includesUnihex) {
+    if (manifest.effectiveAssets && includesUnihex === true) {
       assert.equal(
         await embeddedFontZipDigest(),
         manifest.effectiveAssets.resources["minecraft/font/unifont.zip"].sha256,
@@ -442,7 +531,7 @@ for (const component of map.components) {
               (value) =>
                 value !== null &&
                 value !== undefined &&
-                /[^\u0020-\u007E\r\n\t]/.test(String(value))
+                /[^\u0020-\u007E\r\n\t]/u.test(value)
             )
         ),
         `${component.name}: native Unihex text cases require their glyph sampling evidence`
@@ -452,13 +541,19 @@ for (const component of map.components) {
     if (
       manifest.glyphObservationEnabled !== false &&
       manifest.effectiveAssets &&
-      registry.items
-        .find((item) => item.name === component.implementation.registryItem)
-        ?.files.some((file) => file.path.endsWith("/minecraft-unifont-data.ts"))
+      registryItems
+        .get(registryItemName)
+        ?.files.some((file) =>
+          file.path.endsWith("/minecraft-unifont-data.ts")
+        ) === true
     ) {
-      const provenance = await json(
-        path.join(path.dirname(manifestFile), "asset-provenance.json")
-      );
+      // SAFETY: the native glyph generator retains this indexed resource/probe provenance.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const provenance = JSON.parse(
+        await jsonText(
+          path.join(path.dirname(manifestFile), "asset-provenance.json")
+        )
+      ) as GlyphProvenance;
 
       for (const [resource, pin] of Object.entries(
         manifest.effectiveAssets.resources
@@ -503,13 +598,20 @@ for (const component of map.components) {
         provenance.glyphProbeSourceSha256
       );
 
-      if (provenance.glyphObservationVerification) {
-        const observation = await json(
-          path.join(
-            path.dirname(manifestFile),
-            provenance.glyphObservationVerification
+      if (
+        provenance.glyphObservationVerification !== undefined &&
+        provenance.glyphObservationVerification !== ""
+      ) {
+        // SAFETY: the provenance points to its two-run glyph-observation comparison report.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const observation = JSON.parse(
+          await jsonText(
+            path.join(
+              path.dirname(manifestFile),
+              provenance.glyphObservationVerification
+            )
           )
-        );
+        ) as GlyphObservationEvidence;
 
         assert.deepEqual(observation.glyphObservationEnabled, {
           runOne: true,
@@ -524,8 +626,8 @@ for (const component of map.components) {
           manifest.caseDefinitionSha256
         );
         assert.deepEqual(
-          observation.cases.map((c) => c.name).toSorted(),
-          manifest.cases.map((c) => c.name).toSorted()
+          observation.cases.map((c) => c.name).sort(),
+          manifest.cases.map((c) => c.name).sort()
         );
         assert.ok(
           observation.cases.every((c) => c.mismatchedPixels === 0),
@@ -533,7 +635,10 @@ for (const component of map.components) {
         );
       }
 
-      if (provenance.glyphAtlasCaptureManifest) {
+      if (
+        provenance.glyphAtlasCaptureManifest !== undefined &&
+        provenance.glyphAtlasCaptureManifest !== ""
+      ) {
         const observationPath = path.join(
           path.dirname(manifestFile),
           provenance.glyphAtlasCaptureManifest
@@ -543,7 +648,12 @@ for (const component of map.components) {
           digest(await readFile(evidenceFile(observationPath))),
           provenance.glyphAtlasCaptureManifestSha256
         );
-        const observation = await json(observationPath);
+
+        // SAFETY: the pinned glyph-atlas capture path names a native capture manifest.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const observation = JSON.parse(
+          await jsonText(observationPath)
+        ) as NativeGlyphCaptureManifest;
 
         const observedAtlasPath = path.join(
           path.dirname(manifestFile),
@@ -632,17 +742,20 @@ if (args.includes("--live")) {
     if (source.url.endsWith("/docs/components")) {
       current = [
         ...new Set(
-          [...body.matchAll(/href="\/docs\/components\/base\/([^"#?]+)"/g)].map(
-            (match) => match[1]
-          )
+          [
+            ...body.matchAll(
+              /href="\/docs\/components\/base\/(?<component>[^"#?]+)"/gu
+            ),
+          ].map((match) => match[1])
         ),
-      ].toSorted();
+      ].sort();
     } else {
-      const data = JSON.parse(body);
+      // SAFETY: the official registry catalogue endpoint returns items or a bare item array.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const data = JSON.parse(body) as UpstreamRegistryCatalog;
       current = (data.items ?? data)
-        .filter((item) => item.type === "registry:ui")
-        .map((item) => item.name)
-        .toSorted();
+        .flatMap((item) => (item.type === "registry:ui" ? [item.name] : []))
+        .sort();
     }
 
     assert.deepEqual(

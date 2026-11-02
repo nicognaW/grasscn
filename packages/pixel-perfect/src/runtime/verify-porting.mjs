@@ -271,7 +271,7 @@ const steps = [
     "registry-closure",
     [path.join(testRoot, "src/checks/check-registry-closure.ts")],
   ],
-  ["evidence", [path.join(pixelPerfectRoot, "src/runtime/check-map.mjs")]],
+  ["evidence", [path.join(pixelPerfectRoot, "src/runtime/check-map.ts")]],
   [
     "porting-evidence",
     [path.join(pixelPerfectRoot, "src/runtime/check-porting-evidence.mjs")],
