@@ -149,6 +149,7 @@ test("default composed documentation examples retain their owned state and callb
   );
   await page.goto(`${origin}/docs/components/resizable`);
   example = page.locator(".documentation-example").first();
+  await expect(example).toHaveAttribute("aria-busy", "false");
 
   const handle = example.getByRole("separator", {
     name: "Resize inventory panels",

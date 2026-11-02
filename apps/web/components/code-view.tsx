@@ -139,10 +139,6 @@ export const CodeView = ({
         /* eslint-enable jsx-a11y/no-noninteractive-tabindex */
 
         aria-label={`${filename} code`}
-        onCopy={(event) => {
-          event.clipboardData.setData("text/plain", code);
-          event.preventDefault();
-        }}
         /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
         className={`documentation-code-scroll${canCollapse && !expanded ? " documentation-code-collapsed" : ""}`}
         /* eslint-enable shadcn/no-unknown-classes */

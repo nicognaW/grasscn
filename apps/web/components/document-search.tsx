@@ -104,9 +104,8 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
         }}
       >
         <CommandInput
+          asChild
           ref={input}
-          aria-label="Search documentation"
-          aria-expanded={open}
           placeholder="Find documentation..."
           value={search}
           onValueChange={(value) => {
@@ -116,16 +115,28 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
           onFocus={() => {
             setOpen(true);
           }}
-        />
+        >
+          {/* cmdk assumes an always-open list; this popup owns its collapsed semantics. */}
+          {/* eslint-disable jsx-a11y/role-has-required-aria-props -- cmdk supplies aria-controls through its slot when open; a collapsed popup has no mounted target. */}
+          <input
+            role="combobox"
+            aria-label="Search documentation"
+            aria-expanded={open}
+            {...(open
+              ? {}
+              : {
+                  "aria-activedescendant": undefined,
+                  "aria-controls": undefined,
+                })}
+          />
+          {/* eslint-enable jsx-a11y/role-has-required-aria-props */}
+        </CommandInput>
         {open && (
           <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-search.css and loaded by the documentation layout. */
             className="minecraft-search-popup"
             /* eslint-enable shadcn/no-unknown-classes */
           >
-            <CommandList
-              aria-label="Search results"
-              aria-busy={query.isLoading}
-            >
+            <CommandList label="Search results" aria-busy={query.isLoading}>
               {results.map((result) => (
                 <CommandItem
                   key={result.id}

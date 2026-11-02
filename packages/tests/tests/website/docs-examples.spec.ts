@@ -11,6 +11,86 @@ declare global {
   }
 }
 
+test("examples wait for hydration before accepting input", async ({ page }) => {
+  const scripts = Promise.withResolvers<undefined>();
+  let heldRequests = 0;
+  await page.route(/\/_next\/static\/.*\.js(?:\?.*)?$/u, async (route) => {
+    heldRequests += 1;
+    await scripts.promise;
+    await route.continue();
+  });
+  const example = page.locator(".documentation-example").first();
+
+  try {
+    await page.goto(
+      `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"}/docs/components/textarea`,
+      { waitUntil: "domcontentloaded" }
+    );
+    await expect.poll(() => heldRequests).toBeGreaterThan(0);
+    await expect(example).toHaveAttribute("aria-busy", "true");
+    await expect(example.locator("textarea")).toBeDisabled();
+  } finally {
+    scripts.resolve(undefined);
+  }
+
+  await page.waitForLoadState("load");
+  await expect(example).toHaveAttribute("aria-busy", "false");
+  const input = example.getByRole("textbox", { name: "Journey notes" });
+  await input.fill("First\nSecond");
+  await expect(input).toHaveValue("First\nSecond");
+});
+
+test("copying a selected code fragment preserves the visitor's selection", async ({
+  page,
+}) => {
+  await page.goto(
+    `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"}/docs/components/button`
+  );
+
+  const example = page.getByRole("region", {
+    exact: true,
+    name: "Button example",
+  });
+
+  await example.getByRole("tab", { exact: true, name: "Code" }).click();
+
+  const token = example
+    .locator("pre .mc-text-accessible")
+    .filter({ hasText: /^Button$/u })
+    .first();
+
+  await expect(token).toBeAttached();
+
+  const copied = await token.evaluate((element) => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    const selected = selection?.toString();
+    const clipboardData = new DataTransfer();
+
+    const event = new ClipboardEvent("copy", {
+      bubbles: true,
+      cancelable: true,
+      clipboardData,
+    });
+
+    element.dispatchEvent(event);
+
+    return {
+      selected,
+      // An uncancelled event lets the browser copy its actual selected range.
+      text: event.defaultPrevented
+        ? clipboardData.getData("text/plain")
+        : selected,
+    };
+  });
+
+  expect(copied.selected).toBe("Button");
+  expect(copied.text).toBe("Button");
+});
+
 test("Button documentation connects its executable example, complete code and implementation source", async ({
   page,
 }) => {
@@ -23,6 +103,7 @@ test("Button documentation connects its executable example, complete code and im
     name: "Button example",
   });
 
+  await expect(example).toHaveAttribute("aria-busy", "false");
   await expect(
     example.getByRole("button", { exact: true, name: "Button" })
   ).toBeVisible();

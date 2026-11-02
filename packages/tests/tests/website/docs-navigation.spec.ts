@@ -6,6 +6,36 @@ const website = (
   "http://127.0.0.1:5176"
 ).replace(/\/$/u, "");
 
+test("search announces its collapsed state after Escape and blur", async ({
+  page,
+}) => {
+  await page.goto(`${website}/docs`);
+  const search = page.getByRole("combobox", { name: "Search documentation" });
+  await search.fill("button");
+  await expect(
+    page.getByRole("option", { exact: true, name: "Button" })
+  ).toBeVisible();
+  await expect(search).toHaveAttribute("aria-expanded", "true");
+  await search.press("Escape");
+  await expect(
+    page.getByRole("listbox", { name: "Search results" })
+  ).toHaveCount(0);
+  await expect(search).toHaveAttribute("aria-expanded", "false");
+  await expect(search).not.toHaveAttribute("aria-controls");
+  await expect(search).not.toHaveAttribute("aria-activedescendant");
+  await search.press("ArrowDown");
+  await expect(
+    page.getByRole("option", { exact: true, name: "Button" })
+  ).toBeVisible();
+  const controls = await search.getAttribute("aria-controls");
+  expect(controls).toBeTruthy();
+  await expect(
+    page.getByRole("listbox", { name: "Search results" })
+  ).toHaveAttribute("id", controls ?? "");
+  await search.press("Tab");
+  await expect(search).toHaveAttribute("aria-expanded", "false");
+});
+
 test("documentation sidebar and heading links follow the authored page tree", async ({
   page,
 }, testInfo) => {

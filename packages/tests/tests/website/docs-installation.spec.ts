@@ -10,6 +10,57 @@ declare global {
   }
 }
 
+for (const width of [320, 390]) {
+  test(`package manager labels remain readable at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ height: 844, width });
+    await page.goto(
+      `${process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"}/docs/components/button`
+    );
+
+    const installation = page.getByRole("region", {
+      exact: true,
+      name: "Button installation",
+    });
+
+    const tabs = installation.getByRole("tablist", {
+      name: "Installation package manager",
+    });
+
+    await expect(tabs).toHaveAttribute("data-mc-tabs-ready", "true");
+    await expect
+      .poll(
+        async () =>
+          await tabs.getByRole("tab").evaluateAll((elements) =>
+            elements.flatMap((element) => {
+              const frame = element
+                .querySelector(".mc-tab-label-window")
+                ?.getBoundingClientRect();
+
+              const label = element
+                .querySelector(".mc-tab-label")
+                ?.getBoundingClientRect();
+
+              return frame &&
+                label &&
+                (label.left < frame.left || label.right > frame.right)
+                ? [element.textContent]
+                : [];
+            })
+          )
+      )
+      .toEqual([]);
+    await tabs.getByRole("tab", { exact: true, name: "Bun" }).click();
+    await expect(
+      tabs.getByRole("tab", { exact: true, name: "Bun" })
+    ).toHaveAttribute("aria-selected", "true");
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth)
+    ).toBe(width);
+  });
+}
+
 test("Button installation copies and remembers the visitor package manager", async ({
   page,
 }) => {

@@ -10,7 +10,8 @@ const origin = (
 
 const index = documentationInventory().pages;
 
-const internal = /work in progress|\bWIP\b|LOCAL PREVIEW|still being verified/i;
+const internal =
+  /work in progress|\bWIP\b|LOCAL PREVIEW|still being verified/iu;
 
 test("search index covers every published item and its named exports", async ({
   request,
@@ -37,9 +38,12 @@ test("search index covers every published item and its named exports", async ({
 test("all production sections share navigation and omit internal status content", async ({
   page,
 }) => {
+  // This workflow loads five complete pages under the local resource guard.
+  test.setTimeout(90_000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
 
+  /* eslint-disable no-await-in-loop -- Navigate and verify each section sequentially in the same browser page. */
   for (const path of [
     "",
     "docs",
@@ -55,6 +59,7 @@ test("all production sections share navigation and omit internal status content"
     await expect(page.locator("h1")).toBeVisible();
     expect(await page.locator("body").textContent()).not.toMatch(internal);
   }
+  /* eslint-enable no-await-in-loop */
 
   expect(errors).toEqual([]);
 });
@@ -63,6 +68,7 @@ test("search shows distinct component pages and resolves nested component export
   page,
 }) => {
   await page.goto(origin);
+
   const search = page.getByRole("combobox", {
     exact: true,
     name: "Search documentation",
@@ -127,7 +133,7 @@ test("component pages expose live preview, source, installation and composition"
 
 for (const width of [320, 390, 768, 1440]) {
   test(`shared site navigation is usable at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
+    await page.setViewportSize({ height: 900, width });
     await page.goto(`${origin}docs/components/input`);
 
     const browse = page.getByRole("button", {
@@ -169,6 +175,8 @@ for (const width of [320, 390, 768, 1440]) {
 test("canonical routes reload and legacy links still resolve", async ({
   page,
 }) => {
+  // Reload, history and compatibility navigation share one bounded workflow.
+  test.setTimeout(90_000);
   await page.goto(`${origin}docs/components/button`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
     "Button"
@@ -177,7 +185,7 @@ test("canonical routes reload and legacy links still resolve", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
     "Button"
   );
-  await expect(page).toHaveTitle(/Button.*grasscn/);
+  await expect(page).toHaveTitle(/Button.*grasscn/u);
   await page
     .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { exact: true, name: "Charts" })
@@ -204,7 +212,7 @@ for (const width of [320, 390]) {
     }) => {
       await page.setViewportSize({ height: 844, width });
 
-      await page.goto(origin + "docs/components/" + name);
+      await page.goto(`${origin}docs/components/${name}`);
       await expect(
         page.locator(".documentation-playground .demo-stage")
       ).toBeVisible();
@@ -258,11 +266,13 @@ test("shared controls retain native rendering and the sticky header is opaque", 
     name: "Button example",
   });
 
-  for (const label of ["Preview", "Code"]) {
-    await expect(
-      views.getByRole("tab", { name: label, exact: true })
-    ).toHaveAttribute("data-slot", "tabs-trigger");
-  }
+  await Promise.all(
+    ["Preview", "Code"].map(async (label) => {
+      await expect(
+        views.getByRole("tab", { exact: true, name: label })
+      ).toHaveAttribute("data-slot", "tabs-trigger");
+    })
+  );
 
   const componentLink = page
     .getByRole("navigation", { exact: true, name: "Documentation" })
