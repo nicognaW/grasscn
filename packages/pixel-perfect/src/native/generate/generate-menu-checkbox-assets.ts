@@ -4,33 +4,61 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 assert.ok(input, "Pass a directory containing the four original checkbox PNGs");
 
 const locationFile = "tests/reference/menu-parts/checkbox-atlas.json";
 
+// SAFETY: the retained native atlas probe maps sprite identities to observed UV coordinates.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const locations = JSON.parse(
   await readFile(pixelPerfectFile(locationFile), "utf-8")
-);
+) as Record<
+  string,
+  { u0: number; u1: number; v0: number; v1: number; x: number; y: number }
+>;
 
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
-const sprites = {};
-const sources = {};
+const sprites: Record<
+  string,
+  {
+    width: number;
+    height: number;
+    u0: number;
+    u1: number;
+    v0: number;
+    v1: number;
+    x: number;
+    y: number;
+    image: string;
+    rgba: string;
+  }
+> = {};
 
-let height;
-let width;
+const sources: Record<
+  string,
+  { sha256: string; width: number; height: number }
+> = {};
+
+let height: number | undefined;
+let width: number | undefined;
 
 for (const name of [
   "checkbox",
@@ -60,33 +88,33 @@ for (const name of [
 
   width = w;
   height = h;
-  sprites[name] = Object.fromEntries([
-    ["width", image.width],
-    ["height", image.height],
-    ["u0", native.u0],
-    ["u1", native.u1],
-    ["v0", native.v0],
-    ["v1", native.v1],
-    ["x", Math.round(native.u0 * w)],
-    ["y", Math.round(native.v0 * h)],
-    ["image", `data:image/png;base64,${bytes.toString("base64")}`],
-    ["rgba", image.data.toString("base64")],
-  ]);
-  sources[member] = Object.fromEntries([
-    ["sha256", hash(bytes)],
-    ["width", image.width],
-    ["height", image.height],
-  ]);
+  sprites[name] = {
+    width: image.width,
+    height: image.height,
+    u0: native.u0,
+    u1: native.u1,
+    v0: native.v0,
+    v1: native.v1,
+    x: Math.round(native.u0 * w),
+    y: Math.round(native.v0 * h),
+    image: `data:image/png;base64,${bytes.toString("base64")}`,
+    rgba: image.data.toString("base64"),
+  };
+  sources[member] = {
+    sha256: hash(bytes),
+    width: image.width,
+    height: image.height,
+  };
 }
 
 await writeFile(
   webFile("registry/ui/minecraft-menu-checkbox-assets.ts"),
   `// Original Minecraft GUI sprites and observed runtime atlas coordinates.\nexport const menuCheckboxAtlas=${JSON.stringify(
-    Object.fromEntries([
-      ["width", width],
-      ["height", height],
-      ["sprites", sprites],
-    ])
+    {
+      width,
+      height,
+      sprites,
+    }
   )} as const\n`
 );
 

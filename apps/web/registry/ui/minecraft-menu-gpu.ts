@@ -151,14 +151,16 @@ export const paintMenuGlyph = function paintMenuGlyph(
         Number.parseInt(fill.slice(start, start + 2), 16)
       )
     : (fill
-        .match(/[\d.]+/g)
+        .match(/[\d.]+/gu)
         ?.slice(0, 3)
         .map(Number) ?? [255, 255, 255]);
 
   const alpha =
     fill.startsWith("#") && fill.length === 9
       ? Number.parseInt(fill.slice(7, 9), 16) / 255
-      : Number(fill.startsWith("rgba") ? (fill.match(/[\d.]+/g)?.[3] ?? 1) : 1);
+      : Number(
+          fill.startsWith("rgba") ? (fill.match(/[\d.]+/gu)?.[3] ?? 1) : 1
+        );
 
   gl.uniform4f(
     gl.getUniformLocation(program, "ink"),

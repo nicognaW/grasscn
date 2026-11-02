@@ -13,7 +13,7 @@ for (const scale of [2] as const) {
 
         await page.setViewportSize({ width, height });
         await page.goto(
-          `${preview.replace(/\/$/, "")}/#/components/${position === "default" ? "chart" : "select"}`
+          `${preview.replace(/\/$/u, "")}/#/components/${position === "default" ? "chart" : "select"}`
         );
 
         const trigger = page.locator(

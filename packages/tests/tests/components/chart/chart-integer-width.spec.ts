@@ -9,7 +9,7 @@ for (const scale of [2] as const) {
       page,
     }, info) => {
       await page.setViewportSize({ height: 1000, width: 1280 });
-      await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
+      await page.goto(`${preview.replace(/\/$/u, "")}/#/components/chart`);
 
       const chart = page.locator('[data-slot="chart-example"]');
       await expect(chart.locator("canvas")).toHaveAttribute(

@@ -147,7 +147,7 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
   ).toBeDisabled();
   await trigger.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: /こんにちは/ })
+    page.getByRole("menuitem", { name: /こんにちは/u })
   ).toBeFocused();
 
   const checkbox = page.getByRole("menuitemcheckbox", {
@@ -181,7 +181,7 @@ test("Menubar preview supports CJK titles, menu switching and nested actions", a
     "Create world"
   );
   await trigger.click();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(page.getByLabel("Menubar status", { exact: true })).toHaveText(
     "こんにちは"
   );
@@ -242,7 +242,7 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     page.getByLabel("Context menu status", { exact: true })
   ).toHaveText("Video settings");
   await open();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(
     page.getByLabel("Context menu status", { exact: true })
   ).toHaveText("こんにちは");
@@ -303,7 +303,7 @@ test("Dropdown Menu preview supports CJK actions, toggles and nested menus", asy
   ).toHaveText("Video settings");
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await page.getByRole("menuitem", { name: /こんにちは/ }).click();
+  await page.getByRole("menuitem", { name: /こんにちは/u }).click();
   await expect(
     page.getByLabel("Dropdown menu status", { exact: true })
   ).toHaveText("こんにちは");

@@ -47,7 +47,7 @@ test("production fixture serves bundle assets and skin inputs without exposing o
   try {
     assert.equal(await (await fetch(host.url)).text(), "<div>fixture</div>");
     const script = await fetch(`${host.url}/asset.js`);
-    assert.match(script.headers.get("content-type") ?? "", /javascript/);
+    assert.match(script.headers.get("content-type") ?? "", /javascript/u);
     const image = await fetch(`${host.url}/dream-skin.png`);
     assert.equal(image.headers.get("content-type"), "image/png");
     assert.equal(await image.text(), "dream texture");

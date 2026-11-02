@@ -36,8 +36,8 @@ type MarkerLine = (typeof separator)["cases"][number] & {
   wrapWidth?: never;
 };
 
-/** Both current Marker constituent producers omit timeMs; keep the verifier's existing fallback read. */
+/** Current producers omit timeMs; the legacy reader preserves unconstrained extra JSON values and its existing fallback/coercion. */
 export interface MarkerCaptureManifest {
   sourceJarSha256: string;
-  cases: ((MarkerText | MarkerLine) & { timeMs?: never })[];
+  cases: ((MarkerText | MarkerLine) & { timeMs?: unknown })[];
 }

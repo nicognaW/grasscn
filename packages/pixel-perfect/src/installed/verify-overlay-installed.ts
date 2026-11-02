@@ -4,39 +4,48 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { chromium, expect } from "@playwright/test";
-import {
-  repoRoot,
-  webFile,
-  pixelPerfectFile,
-  repositoryFile,
-} from "@ppt/paths";
+import type {
+  DecodedPixels,
+  OverlayCaptureManifest,
+  OverlayCaseResult,
+  InstalledOverlayDataset,
+  InstalledOverlayProof,
+} from "@ppt/installed/installed-compositions-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { webFile, pixelPerfectFile, repositoryFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArg, nameArg, urlArg] = process.argv.slice(2);
 
 assert.ok(
   consumerArg && ["sheet", "drawer"].includes(nameArg) && urlArg,
-  "Usage: bun src/installed/verify-overlay-installed.mjs <consumer> <sheet|drawer> <fixture-url>"
+  "Usage: bun src/installed/verify-overlay-installed.ts <consumer> <sheet|drawer> <fixture-url>"
 );
 
 const consumer = path.resolve(consumerArg);
 const base = urlArg;
 const names = [nameArg];
 const smoke = false;
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 const browser = await chromium.launch({ channel: "msedge" });
 
-const item = JSON.parse(
-  fs.readFileSync(webFile(path.join("registry.json")))
-).items.find((i) => i.name === nameArg);
+// SAFETY: the authored registry owns this fresh source descriptor read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
 
+const item = registry.items.find((i) => i.name === nameArg);
+
+// SAFETY: the initialized shadcn consumer components.json owns the optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
-  fs.readFileSync(path.join(consumer, "components.json"))
-);
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as { rsc?: boolean };
 
 assert.ok(item);
 
-const canonical = (b) => {
+const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -72,9 +81,9 @@ const files = item.files.map((entry) => {
   };
 });
 
-const report = [];
+const report: InstalledOverlayProof[] = [];
 
-function compare(a, b) {
+function compare(a: DecodedPixels, b: DecodedPixels) {
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error(
       `dimensions ${a.width}x${a.height} / ${b.width}x${b.height}`
@@ -111,8 +120,8 @@ try {
   await Promise.all(
     Array.from({ length: Math.min(2, names.length) }, async () => {
       while (pending.length) {
-        const name = pending.shift();
-        const errors = [];
+        const name = pending.shift()!;
+        const errors: string[] = [];
 
         let page = await browser.newPage({
           deviceScaleFactor: 1,
@@ -122,23 +131,25 @@ try {
         let count = 0;
 
         page.on("pageerror", (e) => errors.push(e.message));
-        const all = [];
+        const all: InstalledOverlayDataset[] = [];
 
         for (const dir of ["card", "label"]) {
           const folder = pixelPerfectFile(path.join("tests/reference", dir));
 
+          // SAFETY: the fixed Card/Label directory table selects these captured-reference producers.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Overlay constituent capture producer boundary.
           const m = JSON.parse(
-            fs.readFileSync(path.join(folder, "manifest.json"))
-          );
+            fs.readFileSync(path.join(folder, "manifest.json")).toString()
+          ) as OverlayCaptureManifest;
 
           const { cases } = m;
-          const records = [];
+          const records: OverlayCaseResult[] = [];
 
           for (const c of smoke ? cases.slice(0, 2) : cases) {
             const parts =
               dir === "label" ? ["title", "description"] : ["surface"];
 
-            const record = { name: c.name };
+            const record: OverlayCaseResult = { name: c.name };
 
             for (const part of parts) {
               const previousCaseCount = count;
@@ -169,13 +180,13 @@ try {
               const optionalLabel = c.label;
 
               if (optionalLabel !== null && optionalLabel !== undefined) {
-                q.set("label", c.label);
+                q.set("label", c.label!);
               }
 
               const optionalText = c.text;
 
               if (optionalText !== null && optionalText !== undefined) {
-                q.set("text", c.text);
+                q.set("text", c.text!);
               }
 
               const optionalWrapWidth = c.wrapWidth;
@@ -322,9 +333,13 @@ try {
 
   for (const r of report) {
     for (const dataset of r.datasets) {
+      // SAFETY: the dataset retains the Card/Label manifest path from the existing capture loop.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Overlay report capture producer boundary.
       const manifest = JSON.parse(
-        fs.readFileSync(pixelPerfectFile(path.join(dataset.manifest)))
-      );
+        fs
+          .readFileSync(pixelPerfectFile(path.join(dataset.manifest)))
+          .toString()
+      ) as OverlayCaptureManifest;
 
       const proof = {
         browser: r.browser,

@@ -36,7 +36,7 @@ test("Attachment forwards refs and keeps custom image/rich content and asChild l
   );
   await page.getByRole("link", { name: "Open link" }).focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#preview$/);
+  await expect(page).toHaveURL(/#preview$/u);
 });
 
 test("Disabled Attachment blocks actions and callbacks, including dispatched events", async ({

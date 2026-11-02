@@ -43,7 +43,7 @@ page.on("pageerror", (e) => errors.push(e.message));
 try {
   await page.goto(origin);
   await expect(
-    page.getByRole("heading", { name: /Familiar controls/ })
+    page.getByRole("heading", { name: /Familiar controls/u })
   ).toBeVisible();
   await expect(
     page.locator("main .component-grid > .component-card")
