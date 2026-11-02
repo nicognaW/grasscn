@@ -21,10 +21,6 @@ interface LabelStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
 
-interface LabelLineStyle extends React.CSSProperties {
-  "--mc-label-line-padding": number;
-}
-
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
@@ -155,32 +151,28 @@ const Label = ({
     >
       {supported ? (
         <>
-          {lines.map((line, index) => {
-            const lineStyle: LabelLineStyle = {
-              "--mc-label-line-padding":
-                align === "center"
-                  ? (Math.floor((width - widest) / 2) +
-                      Math.floor(widest / 2) -
-                      Math.floor(textWidth(line) / 2)) *
-                    scale
-                  : 0,
-            };
-
-            return (
-              <span
-                aria-hidden="true"
-                className="mc-label-line"
-                key={index}
-                style={lineStyle}
-              >
-                {/^[\u0020-\u007E]*$/u.test(line) ? (
-                  <MinecraftText>{line}</MinecraftText>
-                ) : (
-                  <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
-                )}
-              </span>
-            );
-          })}
+          {lines.map((line, index) => (
+            <span
+              aria-hidden="true"
+              className="mc-label-line"
+              key={index}
+              style={{
+                paddingLeft:
+                  align === "center"
+                    ? (Math.floor((width - widest) / 2) +
+                        Math.floor(widest / 2) -
+                        Math.floor(textWidth(line) / 2)) *
+                      scale
+                    : 0,
+              }}
+            >
+              {/^[\u0020-\u007E]*$/u.test(line) ? (
+                <MinecraftText>{line}</MinecraftText>
+              ) : (
+                <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
+              )}
+            </span>
+          ))}
           <span className="mc-text-accessible">{text}</span>
         </>
       ) : (
