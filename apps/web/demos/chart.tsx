@@ -48,8 +48,8 @@ const types: {
 ];
 
 export default function ChartDemo({ scale }: DemoProps) {
-  const stage = React.useRef<HTMLDivElement>(null),
-    [contentWidth, setContentWidth] = React.useState(80);
+  const stage = React.useRef<HTMLDivElement>(null);
+    const [contentWidth, setContentWidth] = React.useState(80);
 
   React.useLayoutEffect(() => {
     const measure = () => {
@@ -81,15 +81,15 @@ export default function ChartDemo({ scale }: DemoProps) {
     </MinecraftDisclosureText>
   );
 
-  const [type, setType] = React.useState<AnalyticsChartType>("area"),
-    [period, setPeriod] = React.useState("6"),
-    [device, setDevice] = React.useState("both");
+  const [type, setType] = React.useState<AnalyticsChartType>("area");
+    const [period, setPeriod] = React.useState("6");
+    const [device, setDevice] = React.useState("both");
 
-  const [step, setStep] = React.useState(0),
-    [limit, setLimit] = React.useState(120);
+  const [step, setStep] = React.useState(0);
+    const [limit, setLimit] = React.useState(120);
 
-  const [metric, setMetric] = React.useState("latency"),
-    [webStep, setWebStep] = React.useState(0);
+  const [metric, setMetric] = React.useState("latency");
+    const [webStep, setWebStep] = React.useState(0);
 
   const webSamples = React.useMemo(
     () =>
@@ -107,8 +107,8 @@ export default function ChartDemo({ scale }: DemoProps) {
     const rows = browsers.map((row, i) => ({
         ...row,
         visitors: row.visitors + (webStep % 3) * (i + 1) * 5,
-      })),
-      total = rows.reduce((sum, row) => sum + row.visitors, 0);
+      }));
+      const total = rows.reduce((sum, row) => sum + row.visitors, 0);
 
     return rows.map((row) => ({ name: row.name, visitors: row.visitors }));
   }, [webStep]);

@@ -95,7 +95,7 @@ export const formsNativeTests = function formsNativeTests(
             align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+          if (c.wrapWidth != null) { params.set("wrapWidth", String(c.wrapWidth)); }
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
@@ -108,7 +108,7 @@ export const formsNativeTests = function formsNativeTests(
           for (const line of await subject
             .locator("[data-mc-label-ready]")
             .all())
-            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+            { await expect(line).toHaveAttribute("data-mc-label-ready", "true"); }
           await page.evaluate(async () => {
             const frameCompletion = Promise.withResolvers<void>();
 

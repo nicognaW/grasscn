@@ -147,7 +147,7 @@ test("Retired components are absent from supported catalog and served payloads",
     await expect(
       page
         .getByRole("navigation", { name: "Documentation" })
-        .getByRole("link", { name, exact: true })
+        .getByRole("link", { exact: true, name })
     ).toHaveCount(0);
     expect(
       registry.items.some(

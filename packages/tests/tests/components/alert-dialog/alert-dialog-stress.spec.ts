@@ -12,7 +12,7 @@ for (const selection of ["alert-dialog"]) {
       const warnings: string[] = [];
       page.on("console", (m) => {
         if (m.text().includes("Too many active WebGL contexts"))
-          warnings.push(m.text());
+          { warnings.push(m.text()); }
       });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(origin + "docs/components/" + selection);

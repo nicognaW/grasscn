@@ -21,8 +21,8 @@ const woods: SignWood[] = [
 ];
 
 export default function SignDemo({ scale }: DemoProps) {
-  const [wood, setWood] = React.useState<SignWood>("oak"),
-    [title, setTitle] = React.useState("Welcome");
+  const [wood, setWood] = React.useState<SignWood>("oak");
+    const [title, setTitle] = React.useState("Welcome");
 
   const lines = [title, "to grasscn", "", "Open daily"];
 

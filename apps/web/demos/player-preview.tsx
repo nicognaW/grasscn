@@ -6,10 +6,10 @@ import { Input } from '../registry/ui/input';
 import type { DemoProps } from '../types';
 
 export default function PlayerDemo({ scale }: DemoProps) {
-  const [name, setName] = React.useState("Nyanki"),
-    [username, setUsername] = React.useState<string>(),
-    [skin, setSkin] = React.useState<"wide/steve" | "slim/alex">("wide/steve"),
-    [reset, setReset] = React.useState(0);
+  const [name, setName] = React.useState("Nyanki");
+    const [username, setUsername] = React.useState<string>();
+    const [skin, setSkin] = React.useState<"wide/steve" | "slim/alex">("wide/steve");
+    const [reset, setReset] = React.useState(0);
 
   return (
     <div
@@ -79,7 +79,7 @@ export default function PlayerDemo({ scale }: DemoProps) {
           event.preventDefault();
 
           if (/^[A-Za-z0-9_]{1,16}$/u.test(name.trim()))
-            setUsername(name.trim());
+            { setUsername(name.trim()); }
         }}
         className="flex gap-3 flex-wrap"
       >

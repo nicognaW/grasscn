@@ -10,9 +10,9 @@ import {useDemoWidth} from "../use-demo-width"
 export default function ToggleDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
 
-  const [pressed, setPressed] = React.useState(false),
-    [disabled, setDisabled] = React.useState(false),
-    [label, setLabel] = React.useState("Only craftable recipes");
+  const [pressed, setPressed] = React.useState(false);
+    const [disabled, setDisabled] = React.useState(false);
+    const [label, setLabel] = React.useState("Only craftable recipes");
 
   return (
     <>

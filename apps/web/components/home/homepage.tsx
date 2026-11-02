@@ -514,7 +514,7 @@ function Chat() {
   React.useEffect(() => {
     const el = list.current;
 
-    if (el) el.scrollTop = el.scrollHeight;
+    if (el) { el.scrollTop = el.scrollHeight; }
   }, [messages]);
 
   return (

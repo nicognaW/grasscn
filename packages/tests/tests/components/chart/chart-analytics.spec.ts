@@ -28,8 +28,8 @@ async function open(page: Page, scale: number, mobile = false) {
   ).toHaveAttribute("data-mc-ready", "true");
 }
 for (const scale of [2])
-  for (const mobile of [false, true])
-    test(`Analytics types preserve integer pixels and fit ${mobile ? "mobile" : "desktop"} GUI${scale}`, async ({
+  { for (const mobile of [false, true])
+    { test(`Analytics types preserve integer pixels and fit ${mobile ? "mobile" : "desktop"} GUI${scale}`, async ({
       page,
     }, info) => {
       const errors: string[] = [];
@@ -88,7 +88,7 @@ for (const scale of [2])
       }
 
       expect(errors).toEqual([]);
-    });
+    }); } }
 test("Website analytics filters update real data and accessible table", async ({
   page,
 }) => {

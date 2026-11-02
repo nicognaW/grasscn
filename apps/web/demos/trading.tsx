@@ -5,8 +5,8 @@ import type { DemoProps } from "../types";
 import { tradingIcons } from "./trading-icons";
 
 export default function TradingDemo({ scale }: DemoProps) {
-  const [completed, setCompleted] = React.useState(0),
-    [selected, setSelected] = React.useState("0");
+  const [completed, setCompleted] = React.useState(0);
+    const [selected, setSelected] = React.useState("0");
 
   const goods = [
     ["book", "Field guide", 4],

@@ -484,7 +484,7 @@ test("Preview Separator width control updates both original surfaces", async ({
     await expect(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name, exact: true })
+        .getByRole("separator", { exact: true, name })
     ).toHaveCSS("height", "4px");
   }
 });
@@ -795,7 +795,7 @@ test("Editable, read-only and disabled textarea examples render real line breaks
   ]) {
     const field = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name, exact: true });
+      .getByRole("textbox", { exact: true, name });
     await expect(field).toHaveValue("Line one\nLine two\nLine three");
     await expect(field).toHaveAttribute("data-mc-ready", "true");
     await expect(field).toHaveAttribute("data-mc-bitmap", "true");

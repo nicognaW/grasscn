@@ -7,11 +7,11 @@ import {Toaster,toast} from "../registry/ui/sonner"
 import type {DemoProps} from "../types"
 
 export default function SonnerDemo({ scale }: DemoProps) {
-  const [title, setTitle] = React.useState("World saved"),
-    [message, setMessage] = React.useState(
+  const [title, setTitle] = React.useState("World saved");
+    const [message, setMessage] = React.useState(
       "Your progress has been saved.\n世界已保存"
-    ),
-    [shown, setShown] = React.useState(0);
+    );
+    const [shown, setShown] = React.useState(0);
 
   return (
     <>

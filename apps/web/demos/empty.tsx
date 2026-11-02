@@ -9,11 +9,11 @@ import {useDemoWidth} from "../use-demo-width"
 export default function EmptyDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
 
-  const [title, setTitle] = React.useState("No worlds found"),
-    [description, setDescription] = React.useState(
+  const [title, setTitle] = React.useState("No worlds found");
+    const [description, setDescription] = React.useState(
       "Create your first world.\nYour adventure starts here."
-    ),
-    [worlds, setWorlds] = React.useState(0);
+    );
+    const [worlds, setWorlds] = React.useState(0);
 
   return (
     <>

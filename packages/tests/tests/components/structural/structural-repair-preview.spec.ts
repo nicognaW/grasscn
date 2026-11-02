@@ -5,8 +5,8 @@ const origin = (
 ).replace(/\/?$/u, "/");
 
 for (const scale of [2])
-  for (const name of ["collapsible"])
-    test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
+  { for (const name of ["collapsible"])
+    { test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
       await page.goto(`${origin}docs/components/${name}`);
       const card = page.locator(".documentation-playground");
       for (const control of await card
@@ -20,7 +20,7 @@ for (const scale of [2])
           )
         ).toBe(scale);
       }
-    });
+    }); } }
 
 for (const scale of [2]) {
   test(`Retained Data Table and Resizable playground controls preserve behavior at scale${scale}`, async ({

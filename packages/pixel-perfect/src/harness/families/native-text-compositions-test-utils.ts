@@ -40,7 +40,7 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
 
       for (const [key, value] of Object.entries(c)) {
         if (typeof value === "string" || typeof value === "number")
-          q.set(key, String(value));
+          { q.set(key, String(value)); }
       }
 
       await page.goto(`/?${q}`);

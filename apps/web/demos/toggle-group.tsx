@@ -6,12 +6,12 @@ import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
 
 export default function ToggleGroupDemo({ scale }: DemoProps) {
-  const stage = useDemoWidth(scale),
-    id = React.useId();
+  const stage = useDemoWidth(scale);
+    const id = React.useId();
 
-  const [single, setSingle] = React.useState("crafting"),
-    [multiple, setMultiple] = React.useState<string[]>(["crafting"]),
-    [disabled, setDisabled] = React.useState(false);
+  const [single, setSingle] = React.useState("crafting");
+    const [multiple, setMultiple] = React.useState<string[]>(["crafting"]);
+    const [disabled, setDisabled] = React.useState(false);
 
   const filters = [
     { value: "crafting", label: "Crafting recipes" },

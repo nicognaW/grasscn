@@ -18,10 +18,10 @@ export default function ResizableDemo({ scale }: DemoProps) {
 
   const [orientation, setOrientation] = React.useState<
       "horizontal" | "vertical"
-    >("horizontal"),
-    [layout, setLayout] = React.useState("50% / 50%"),
-    [selected, setSelected] = React.useState("Choose supplies or a recipe"),
-    group = React.useRef<GroupImperativeHandle>(null);
+    >("horizontal");
+    const [layout, setLayout] = React.useState("50% / 50%");
+    const [selected, setSelected] = React.useState("Choose supplies or a recipe");
+    const group = React.useRef<GroupImperativeHandle>(null);
 
   return (
     <>

@@ -19,9 +19,9 @@ const javaBin = path.resolve(
   process.argv[3] ?? process.env.MINECRAFT_JAVA_BIN ?? ""
 );
 if (!process.argv[2] && !process.env.MINECRAFT_VERSION_DIR)
-  throw new Error("Pass the Minecraft version directory as argument 1");
+  { throw new Error("Pass the Minecraft version directory as argument 1"); }
 if (!process.argv[3] && !process.env.MINECRAFT_JAVA_BIN)
-  throw new Error("Pass the Java 25 bin directory as argument 2");
+  { throw new Error("Pass the Java 25 bin directory as argument 2"); }
 const instanceName = path.basename(versionDir);
 // SAFETY: selected launcher metadata supplies libraries, rule OS selectors, artifact paths and asset index ID.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Local assertion of the launcher metadata contract; preserve this fresh CLI-selected read.
@@ -65,10 +65,10 @@ const platformName =
       ? "osx"
       : "linux";
 function permitted(library: MinecraftCaptureLibrary) {
-  if (!library.rules) return true;
+  if (!library.rules) { return true; }
   let allowed = false;
   for (const rule of library.rules) {
-    if (rule.os?.name && rule.os.name !== platformName) continue;
+    if (rule.os?.name && rule.os.name !== platformName) { continue; }
     if (
       rule.os?.arch &&
       ![
@@ -76,7 +76,7 @@ function permitted(library: MinecraftCaptureLibrary) {
         process.arch === "x64" ? "x86_64" : process.arch,
       ].includes(rule.os.arch)
     )
-      continue;
+      { continue; }
     allowed = rule.action === "allow";
   }
   return allowed;
@@ -112,9 +112,9 @@ async function javaCommand(command: "java" | "javac", args: string[]) {
     `${result.stdout ?? ""}\n${result.stderr ?? ""}`
   );
   if (result.error || result.status !== 0)
-    throw new Error(
+    { throw new Error(
       `${command} failed. See ${path.join(runtime, `${command}.log`)}\n${result.error ?? result.stderr}`
-    );
+    ); }
   return result.stdout;
 }
 await javaCommand("javac", [
@@ -167,16 +167,16 @@ const javaArgs = [
 console.log("Capturing vanilla Button pixels in an isolated offline client…");
 const output = await javaCommand("java", javaArgs);
 if (!output.includes("REGISTRY_REFERENCE_COMPLETE"))
-  throw new Error("Client exited without completing reference captures");
+  { throw new Error("Client exited without completing reference captures"); }
 if (sha256(await readFile(jar)) !== sourceJarSha256)
-  throw new Error("Source JAR changed during capture");
+  { throw new Error("Source JAR changed during capture"); }
 const files = await readdir(captures);
 const cases = [];
 for (const scale of [1, 2, 3]) {
   for (const [column, width] of [200, 150, 103, 257].entries()) {
     for (const state of ["normal", "hover", "focus", "disabled"]) {
       const name = `${state}-w${width}-s${scale}.png`;
-      if (!files.includes(name)) throw new Error(`Missing reference ${name}`);
+      if (!files.includes(name)) { throw new Error(`Missing reference ${name}`); }
       cases.push({
         name,
         state,
@@ -196,7 +196,7 @@ for (const scale of [1, 2, 3]) {
     ).join("");
     for (const state of ["normal", "disabled"]) {
       const name = `ascii-${start}-${end}-${state}-s${scale}.png`;
-      if (!files.includes(name)) throw new Error(`Missing reference ${name}`);
+      if (!files.includes(name)) { throw new Error(`Missing reference ${name}`); }
       cases.push({
         name,
         state,

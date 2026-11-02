@@ -17,9 +17,9 @@ const largerCrew: PlayerListEntry[] = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 export default function PlayerListDemo({ scale }: DemoProps) {
-  const [players, setPlayers] = React.useState(initial),
-    [selected, setSelected] = React.useState("alex"),
-    [large, setLarge] = React.useState(false);
+  const [players, setPlayers] = React.useState(initial);
+    const [selected, setSelected] = React.useState("alex");
+    const [large, setLarge] = React.useState(false);
 
   const switchCrew = () => {
     const next = large ? initial : largerCrew;

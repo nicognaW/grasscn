@@ -7,8 +7,8 @@ import type { DemoProps } from "../types"
 export default function ScrollAreaDemo({ scale }: DemoProps) {
   const viewport = React.useRef<HTMLDivElement>(null);
 
-  const [offset, setOffset] = React.useState(0),
-    [selected, setSelected] = React.useState<number>();
+  const [offset, setOffset] = React.useState(0);
+    const [selected, setSelected] = React.useState<number>();
 
   const [disabled, setDisabled] = React.useState(false);
 

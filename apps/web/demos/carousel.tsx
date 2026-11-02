@@ -6,12 +6,12 @@ import{Button}from"../registry/ui/button"
 import type{DemoProps}from"../types"
 
 export default function CarouselDemo({ scale }: DemoProps) {
-  const [api, setApi] = React.useState<CarouselApi>(),
-    [selected, setSelected] = React.useState(0),
-    [vertical, setVertical] = React.useState(false);
+  const [api, setApi] = React.useState<CarouselApi>();
+    const [selected, setSelected] = React.useState(0);
+    const [vertical, setVertical] = React.useState(false);
 
   React.useEffect(() => {
-    if (!api) return;
+    if (!api) { return; }
 
     const update = () => {
       setSelected(api.selectedScrollSnap());

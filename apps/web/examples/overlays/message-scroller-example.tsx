@@ -38,7 +38,7 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
   const api = useMessageScroller();
 
   const send = () => {
-    if (!text.trim()) return;
+    if (!text.trim()) { return; }
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };

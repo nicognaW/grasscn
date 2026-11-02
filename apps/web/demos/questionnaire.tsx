@@ -6,11 +6,11 @@ import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
 export default function QuestionnaireDemo({ scale }: DemoProps) {
-  const [result, setResult] = React.useState(""),
-    [session, setSession] = React.useState(0),
-    [width, setWidth] = React.useState(180),
-    form = React.useRef<HTMLFormElement>(null),
-    items = [
+  const [result, setResult] = React.useState("");
+    const [session, setSession] = React.useState(0);
+    const [width, setWidth] = React.useState(180);
+    const form = React.useRef<HTMLFormElement>(null);
+    const items = [
       {
         name: "mode",
         required: true,

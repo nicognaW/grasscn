@@ -13,9 +13,9 @@ const people = [
 ] as const;
 
 export default function AvatarDemo({ scale }: DemoProps) {
-  const [name, setName] = React.useState("Nyanki"),
-    [player, setPlayer] = React.useState("Nyanki"),
-    [status, setStatus] = React.useState("loading");
+  const [name, setName] = React.useState("Nyanki");
+    const [player, setPlayer] = React.useState("Nyanki");
+    const [status, setStatus] = React.useState("loading");
 
   return (
     <div

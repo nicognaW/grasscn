@@ -10,10 +10,10 @@ import {useDemoWidth} from "../use-demo-width"
 export default function SidebarDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
 
-  const [search, setSearch] = React.useState(""),
-    [selected, setSelected] = React.useState("Survival"),
-    [action, setAction] = React.useState("Ready"),
-    worlds = [
+  const [search, setSearch] = React.useState("");
+    const [selected, setSelected] = React.useState("Survival");
+    const [action, setAction] = React.useState("Ready");
+    const worlds = [
       "Survival",
       "Creative",
       "Adventure",
@@ -32,7 +32,7 @@ export default function SidebarDemo({ scale }: DemoProps) {
               (event.ctrlKey || event.metaKey) &&
               event.key.toLowerCase() === "b"
             )
-              event.preventDefault();
+              { event.preventDefault(); }
           }}
           style={
             {

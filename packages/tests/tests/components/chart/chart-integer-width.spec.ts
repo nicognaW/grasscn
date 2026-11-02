@@ -71,7 +71,7 @@ for (const scale of [2] as const) {
           const start = (y * image.width + x) * 4;
 
           for (let dy = 0; dy < scale; dy += 1)
-            for (let dx = 0; dx < scale; dx += 1) {
+            { for (let dx = 0; dx < scale; dx += 1) {
               const offset = ((y + dy) * image.width + x + dx) * 4;
 
               if (
@@ -81,7 +81,7 @@ for (const scale of [2] as const) {
               ) {
                 differing += 1;
               }
-            }
+            } }
         }
       }
 

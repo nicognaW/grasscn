@@ -5,8 +5,8 @@ import {Button} from "../registry/ui/button"
 import type {DemoProps} from "../types"
 
 export default function SpinnerDemo({ scale }: DemoProps) {
-  const [paused, setPaused] = React.useState(false),
-    [time, setTime] = React.useState(0);
+  const [paused, setPaused] = React.useState(false);
+    const [time, setTime] = React.useState(0);
 
   return (
     <>
