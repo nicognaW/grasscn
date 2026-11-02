@@ -13,24 +13,17 @@ import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites"
 
 import "./minecraft-chart.css";
 
-export {
-  ChartFpsFrame,
-  ChartProfilerFrame,
-  chartFpsColor,
-  chartProfilerColor,
-} from "./minecraft-chart-native";
+import { ChartFpsFrame as NativeChartFpsFrame, ChartProfilerFrame as NativeChartProfilerFrame, chartFpsColor as nativeChartFpsColor, chartProfilerColor as nativeChartProfilerColor } from "./minecraft-chart-native";
 
-export {
-  ChartPixelBar,
-  ChartProfilerSector,
-  ChartPixelSurface,
-  ChartAxisTick,
-} from "./minecraft-chart-context";
+import { ChartPixelBar as NativeChartPixelBar, ChartProfilerSector as NativeChartProfilerSector, ChartPixelSurface as NativeChartPixelSurface, ChartAxisTick as NativeChartAxisTick } from "./minecraft-chart-context";
 
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";
 
 import { ChartGeometryProvider } from "./minecraft-chart-context";
+
+export { NativeChartFpsFrame as ChartFpsFrame, NativeChartProfilerFrame as ChartProfilerFrame, nativeChartFpsColor as chartFpsColor, nativeChartProfilerColor as chartProfilerColor };
+export { NativeChartPixelBar as ChartPixelBar, NativeChartProfilerSector as ChartProfilerSector, NativeChartPixelSurface as ChartPixelSurface, NativeChartAxisTick as ChartAxisTick };
 
 interface ChartScaleStyle extends React.CSSProperties {
   "--mc-scale": number;

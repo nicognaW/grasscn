@@ -4,7 +4,7 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { Toaster as Sonner } from "sonner";
 
-export { toast } from "sonner";
+import { toast as sonnerToast } from "sonner";
 
 import type { ToasterProps as SonnerProps } from "sonner";
 
@@ -19,6 +19,8 @@ import { playMinecraftToastSound } from "./minecraft-toast-sound";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
+
+export { sonnerToast as toast };
 
 interface ToastCanvasStyle extends React.CSSProperties {
   "--mc-ink": string;

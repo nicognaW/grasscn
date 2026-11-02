@@ -7,7 +7,7 @@ import { Label } from "./label";
 import { minecraftAvatarSkins } from "./minecraft-avatar-assets";
 import type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 
-export { type MinecraftAvatarSkin } from "./minecraft-avatar-assets";
+
 
 import { paintMinecraftAvatar } from "./minecraft-avatar-paint";
 import {
@@ -18,6 +18,8 @@ import {
 } from "./minecraft-render";
 
 import "./minecraft-avatar.css";
+
+export type { MinecraftAvatarSkin };
 
 interface AvatarPaintStyle extends React.CSSProperties {
   "--mc-avatar-size": number;
