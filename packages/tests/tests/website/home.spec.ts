@@ -175,7 +175,7 @@ test("installation picker copies the selected real registry command", async ({
   await page
     .getByRole("combobox", { exact: true, name: "Component to install" })
     .click();
-  await page.getByRole("option", { name: "card", exact: true }).click();
+  await page.getByRole("option", { exact: true, name: "card" }).click();
   await page
     .locator(".grass-install")
     .getByRole("button", { exact: true, name: "Copy" })

@@ -21,7 +21,7 @@ for (const scale of [2]) {
     await expect
       .poll(async () => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
       .toBeLessThanOrEqual(2);
-    await page.getByRole("button", { name: "Done", exact: true }).click();
+    await page.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(trigger).toBeFocused();
   });
   test(`Avatar group count follows native face size and GUI${scale}`, async ({
