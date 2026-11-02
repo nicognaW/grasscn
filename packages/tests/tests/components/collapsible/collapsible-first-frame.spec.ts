@@ -39,7 +39,7 @@ for (const scale of [1, 2, 3]) {
           const start = performance.now();
 
           trigger.click();
-          const frames = [];
+          const capturedFrames = [];
 
           for (const milestone of [0, 16, 32, 50, 100]) {
             const samplingCompletion = Promise.withResolvers();
@@ -75,7 +75,7 @@ for (const scale of [1, 2, 3]) {
               height: line.getBoundingClientRect().height,
             }));
 
-            frames.push({
+            capturedFrames.push({
               milestone,
               elapsed: performance.now() - start,
               height: rect.height,
@@ -87,7 +87,7 @@ for (const scale of [1, 2, 3]) {
             });
           }
 
-          return frames;
+          return capturedFrames;
         });
 
         writeFileSync(

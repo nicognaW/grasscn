@@ -77,11 +77,11 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(origin + "docs/components/alert-dialog");
-    await page.evaluate((scene) => {
+    await page.evaluate((viewportScene) => {
       const owner = document.createElement("div");
       owner.id = "snapshot-viewport-proof";
 
-      if (scene === "fixed-pseudo") {
+      if (viewportScene === "fixed-pseudo") {
         owner.style.cssText =
           "position:absolute;top:100000px;left:0;width:10px;height:10px";
         const child = document.createElement("div");
@@ -112,14 +112,14 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
       /^[1-9]\d*$/u
     );
 
-    const pixel = await overlay.locator("canvas").evaluate((node, scene) => {
+    const pixel = await overlay.locator("canvas").evaluate((node, pixelScene) => {
       const canvas = node as HTMLCanvasElement;
       const gl = canvas.getContext("webgl")!;
       const rgba = new Uint8Array(4);
 
       gl.readPixels(
-        scene === "fixed-pseudo" ? 30 : 315,
-        canvas.height - (scene === "fixed-pseudo" ? 30 : 75),
+        pixelScene === "fixed-pseudo" ? 30 : 315,
+        canvas.height - (pixelScene === "fixed-pseudo" ? 30 : 75),
         1,
         1,
         gl.RGBA,

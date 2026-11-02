@@ -43,11 +43,11 @@ test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real
   const selection = await subject.evaluate((el) => {
     const range = document.createRange();
     range.selectNodeContents(el.querySelector("code")!);
-    const selection = getSelection()!;
-    selection.removeAllRanges();
-    selection.addRange(range);
+    const browserSelection = getSelection()!;
+    browserSelection.removeAllRanges();
+    browserSelection.addRange(range);
 
-    return selection.toString();
+    return browserSelection.toString();
   });
 
   expect(selection).toBe("Added 世界\n\nRemoved\nHighlight");

@@ -93,8 +93,8 @@ for (const c of manifest.cases) {
 
     await input.evaluate(
       (node, selection) => {
-        const input = node as HTMLInputElement;
-        input.setSelectionRange(
+        const inputElement = node as HTMLInputElement;
+        inputElement.setSelectionRange(
           Math.min(selection.cursor, selection.anchor),
           Math.max(selection.cursor, selection.anchor),
           selection.cursor < selection.anchor ? "backward" : "forward"

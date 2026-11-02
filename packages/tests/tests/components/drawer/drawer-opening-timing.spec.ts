@@ -191,19 +191,19 @@ test("Drawer stays visible during its closing transition, then restores focus", 
     }>();
 
     try {
-      const panel = document.querySelector<HTMLElement>(
+      const drawerPanel = document.querySelector<HTMLElement>(
         "[data-slot=drawer-content]"
       )!;
 
       const observer = new MutationObserver(() => {
-        if (!Object.hasOwn(panel.dataset, "endingStyle")) {
+        if (!Object.hasOwn(drawerPanel.dataset, "endingStyle")) {
           return;
         }
 
         observer.disconnect();
-        const { display } = getComputedStyle(panel);
+        const { display } = getComputedStyle(drawerPanel);
 
-        for (const animation of panel.getAnimations()) {
+        for (const animation of drawerPanel.getAnimations()) {
           animation.pause();
           animation.currentTime = 100;
         }
@@ -211,7 +211,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
         mutationCompletion2.resolve({ display, ending: true });
       });
 
-      observer.observe(panel, { attributes: true });
+      observer.observe(drawerPanel, { attributes: true });
       document
         .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
         .click();

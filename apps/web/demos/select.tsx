@@ -18,7 +18,7 @@ export default function SelectDemo({ scale }: DemoProps) {
     </div>
     <div className="demo-stage" data-stage="select">
       <div className="demo-pair"><label className="sample-caption" htmlFor="preview-mode-select">GAME MODE</label>
-        <Select items={titles.map((label,index)=>({label,value:`mode-${index}`}))} scale={scale} value={value} onValueChange={value => setValue(value ?? "")} disabled={disabled}>
+        <Select items={titles.map((label,index)=>({label,value:`mode-${index}`}))} scale={scale} value={value} onValueChange={selectedValue => setValue(selectedValue ?? "")} disabled={disabled}>
           <SelectTrigger id="preview-mode-select" aria-label="Demo game mode"><SelectValue placeholder="Choose game mode"/></SelectTrigger>
           <SelectContent alignItemWithTrigger={false} sideOffset={2 * scale}>
             {titles.map((label, index) => <SelectItem key={index} value={`mode-${index}`} disabled={index === 1 && disabledOption}>{label}</SelectItem>)}
