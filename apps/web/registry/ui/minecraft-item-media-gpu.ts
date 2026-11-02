@@ -87,7 +87,7 @@ const create = function create(): Painter | null {
       0,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      Uint8Array.from(atob(asset.rgba), (char) => char.charCodeAt(0))
+      Uint8Array.from(atob(asset.rgba), (char) => char.codePointAt(0) ?? Number.NaN)
     );
   }
 

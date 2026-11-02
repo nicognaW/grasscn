@@ -34,7 +34,7 @@ const MinecraftText = ({
     <span className={cn(`mc-bitmap`, className)}>
       <span className="mc-text-pixels" aria-hidden="true">
         {Array.from(text, (char, index) => {
-          const [x, y, advance] = minecraftGlyphs[char.charCodeAt(0) - 32];
+          const [x, y, advance] = minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
           const glyphStyle: MinecraftGlyphStyle = {
             "--mc-advance": advance,

@@ -134,7 +134,7 @@ export const MinecraftDialogText = ({
                 <span className="mc-card-bold-pixels">
                   {Array.from(line, (char, i) => {
                     const [x, y, advance] =
-                      minecraftGlyphs[char.charCodeAt(0) - 32];
+                      minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
                     return (
                       <span

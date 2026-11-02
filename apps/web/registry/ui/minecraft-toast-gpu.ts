@@ -112,7 +112,7 @@ const create = function create(): Painter | null {
     minecraftToastSprite.height,
     gl.RGBA,
     gl.UNSIGNED_BYTE,
-    Uint8Array.from(atob(minecraftToastSprite.rgba), (c) => c.charCodeAt(0))
+    Uint8Array.from(atob(minecraftToastSprite.rgba), (c) => c.codePointAt(0) ?? Number.NaN)
   );
   const font = texture(256, 256);
   gl.disable(gl.DITHER);
