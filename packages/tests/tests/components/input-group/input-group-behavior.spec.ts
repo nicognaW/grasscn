@@ -1,6 +1,16 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
+interface InputGroupPlayback {
+  rate: number;
+  src: string;
+  volume: number;
+}
+
+interface InputGroupPlaybackState {
+  sounds: InputGroupPlayback[];
+}
+
 for (const part of ["input", "textarea"]) {
   test(`Input Group ${part} supports editing, addon focus and refs`, async ({
     page,
@@ -71,9 +81,13 @@ test("Input Group native buttons do not submit forms or steal focus", async ({
 
 test("Input Group plays only the original button audio", async ({ page }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: This Input Group initScript creates sounds as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & InputGroupPlaybackState).sounds = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Input Group initializer owns sounds; this unchanged native play mock appends only rate, src and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & InputGroupPlaybackState).sounds.push({
         rate: this.playbackRate,
         src: this.src,
         volume: this.volume,
@@ -85,9 +99,17 @@ test("Input Group plays only the original button audio", async ({ page }) => {
   await page.goto("/?component=input-group");
   await page.locator("[data-slot=input-group-text]").click();
   await page.getByRole("textbox").fill("世界");
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await page.evaluate(() =>
+    // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & InputGroupPlaybackState).sounds
+  )).toEqual([]);
   await page.getByRole("button", { exact: true, name: "Send" }).click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
+  expect(await page.evaluate(() =>
+    // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & InputGroupPlaybackState).sounds
+  )).toEqual([
     { rate: 1, src: minecraftClickSound, volume: 0.25 },
   ]);
 });
