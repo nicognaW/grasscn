@@ -4,6 +4,12 @@ import { minecraftGlyphs } from "./minecraft-font";
 import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 
+interface CardBoldGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
 export const CardScaleContext = React.createContext(2);
 
 const wrap = function wrap(text: string, width: number, bold: boolean) {
@@ -131,7 +137,7 @@ export const MinecraftCardText = ({
                           "--mc-glyph-x": x,
                           "--mc-glyph-y": y,
                           visibility: char === " " ? "hidden" : undefined,
-                        } as React.CSSProperties
+                        } satisfies CardBoldGlyphStyle
                       }
                     >
                       <i />

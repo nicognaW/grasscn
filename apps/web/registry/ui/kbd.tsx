@@ -13,6 +13,12 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
 
+interface KbdGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
 interface KbdScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -56,7 +62,7 @@ const keyText = function keyText(content: React.ReactNode): React.ReactNode {
                   "--mc-glyph-x": x,
                   "--mc-glyph-y": y,
                   visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
+                } satisfies KbdGlyphStyle
               }
             />
           );

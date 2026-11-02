@@ -22,6 +22,12 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 import "./minecraft-card.css";
 import "./minecraft-popover.css";
 
+interface PopoverPaintStyle extends React.CSSProperties {
+  "--mc-popover-scroll-thumb": string;
+  "--mc-popover-scroll-track": string;
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
 const Popover = ({
@@ -207,13 +213,13 @@ const PopoverContent = ({
                 className={cn(`mc-card mc-popover`, className)}
                 style={minecraftStyle(
                   style,
-                  (__style) =>
+                  (__style): PopoverPaintStyle =>
                     ({
                       "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
                       "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
                       "--mc-scale": scale,
                       ...__style,
-                    }) as React.CSSProperties
+                    })
                 )}
                 {...props}
               >

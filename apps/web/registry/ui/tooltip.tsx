@@ -20,6 +20,13 @@ import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites"
 
 import "./minecraft-tooltip.css";
 
+interface TooltipPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-tooltip-height": number | undefined;
+  "--mc-tooltip-max": number;
+  "--mc-tooltip-width": number | undefined;
+}
+
 const TooltipProvider = ({
   delay = 0,
   ...props
@@ -194,14 +201,14 @@ const TooltipContent = ({
           className={cn("mc-tooltip", className)}
           style={minecraftStyle(
             style,
-            (__style) =>
+            (__style): TooltipPaintStyle =>
               ({
                 "--mc-scale": scale,
                 "--mc-tooltip-height": height,
                 "--mc-tooltip-max": maxWidth,
                 "--mc-tooltip-width": width,
                 ...__style,
-              }) as React.CSSProperties
+              })
           )}
           {...props}
         >

@@ -18,6 +18,13 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 import "./minecraft-card.css";
 import "./minecraft-dialog.css";
 
+interface DialogPaintStyle extends React.CSSProperties {
+  "--mc-dialog-maximum": string;
+  "--mc-dialog-scroll-thumb": string;
+  "--mc-dialog-scroll-track": string;
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
 const useElement = function useElement<T extends HTMLElement>(
@@ -246,14 +253,14 @@ const DialogContent = ({
             className={cn(`mc-dialog-content`, className)}
             style={minecraftStyle(
               style,
-              (__style) =>
+              (__style): DialogPaintStyle =>
                 ({
                   "--mc-dialog-maximum": `${width * scale}px`,
                   "--mc-dialog-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
                   "--mc-dialog-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
                   "--mc-scale": scale,
                   ...__style,
-                }) as React.CSSProperties
+                })
             )}
             {...props}
           >

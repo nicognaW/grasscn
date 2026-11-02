@@ -13,6 +13,13 @@ import { minecraftSelectAssets } from "./minecraft-select-assets";
 
 import "./minecraft-table.css";
 
+interface TablePaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-table-background": string;
+  "--mc-table-footer": string;
+  "--mc-table-header": string;
+}
+
 const TableScale = React.createContext<1 | 2 | 3>(2);
 
 const literalText = function literalText(
@@ -113,7 +120,7 @@ const Table = ({
         className={cn(`mc-table`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): TablePaintStyle =>
             ({
               "--mc-scale": scale,
               "--mc-table-background":
@@ -121,7 +128,7 @@ const Table = ({
               "--mc-table-footer": minecraftSelectAssets.footer_separator,
               "--mc-table-header": minecraftSelectAssets.header_separator,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
         {...props}
       />

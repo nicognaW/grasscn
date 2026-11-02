@@ -20,6 +20,11 @@ import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-marker.css";
 
+interface MarkerPaintStyle extends React.CSSProperties {
+  "--mc-marker-separator": string;
+  "--mc-scale": number;
+}
+
 const MarkerScale = React.createContext<1 | 2 | 3>(2);
 
 const markerVariants = cva("mc-marker", {
@@ -73,12 +78,12 @@ const Marker = ({
         className={cn(markerVariants({ variant }), className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): MarkerPaintStyle =>
             ({
               "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
               "--mc-scale": scale,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
         {...props}
       >

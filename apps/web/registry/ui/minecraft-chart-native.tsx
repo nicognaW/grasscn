@@ -13,6 +13,11 @@ import { MinecraftText } from "./minecraft-text";
 
 import "./minecraft-chart.css";
 
+interface NativeChartTextStyle extends React.CSSProperties {
+  "--mc-ink": string;
+  "--mc-shadow": string;
+}
+
 const f = Math.fround;
 
 const widthOf = (value: string) =>
@@ -67,7 +72,7 @@ const NativeChartText = ({
           color: ink,
           left: x * scale,
           top: y * scale,
-        } as React.CSSProperties
+        } satisfies NativeChartTextStyle
       }
     >
       {/\P{ASCII}/u.test(text) ? (

@@ -16,6 +16,14 @@ import {
 } from "@grasscn/web/ui/sidebar";
 import * as React from "react";
 
+interface CompositionCheckedStyle extends React.CSSProperties {
+  "--checked-state": number;
+}
+
+interface CompositionOpenStyle extends React.CSSProperties {
+  "--open-state": number;
+}
+
 export const BaseUICompositionFixture = () => {
   const [disabled, setDisabled] = React.useState(false);
   const [subClicks, setSubClicks] = React.useState(0);
@@ -44,8 +52,8 @@ export const BaseUICompositionFixture = () => {
         className={(state) =>
           state.checked ? "state-checked" : "state-unchecked"
         }
-        style={(state) =>
-          ({ "--checked-state": state.checked ? 1 : 0 }) as React.CSSProperties
+        style={(state): CompositionCheckedStyle =>
+          ({ "--checked-state": state.checked ? 1 : 0 })
         }
       />
       <Field.Root disabled={disabled}>
@@ -75,8 +83,8 @@ export const BaseUICompositionFixture = () => {
         <DialogTrigger>Open stateful dialog</DialogTrigger>
         <DialogContent
           className={(state) => (state.open ? "state-open" : "state-closed")}
-          style={(state) =>
-            ({ "--open-state": state.open ? 1 : 0 }) as React.CSSProperties
+          style={(state): CompositionOpenStyle =>
+            ({ "--open-state": state.open ? 1 : 0 })
           }
         >
           <DialogTitle>Native state</DialogTitle>

@@ -20,6 +20,11 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
 
+interface ToastCanvasStyle extends React.CSSProperties {
+  "--mc-ink": string;
+  "--mc-shadow": string;
+}
+
 interface SonnerScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -129,7 +134,7 @@ const ActionGraphic = function ActionGraphic({
           pointerEvents: "none",
           position: "absolute",
           width: "100%",
-        } as React.CSSProperties
+        } satisfies ToastCanvasStyle
       }
     >
       {action.label}

@@ -20,6 +20,12 @@ import {
 } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
+interface MessageScrollerPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-thumb": string;
+  "--mc-track": string;
+}
+
 const ScrollerScale = React.createContext<1 | 2 | 3>(2);
 
 const MessageScrollerProvider = function MessageScrollerProvider(
@@ -44,13 +50,13 @@ const MessageScroller = function MessageScroller({
           className={cn(`mc-message-scroller`, className)}
           style={minecraftStyle(
             style,
-            (__style) =>
+            (__style): MessageScrollerPaintStyle =>
               ({
                 "--mc-scale": scale,
                 "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
                 "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
                 ...__style,
-              }) as React.CSSProperties
+              })
           )}
           {...props}
         />

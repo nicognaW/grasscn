@@ -21,6 +21,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
 
+interface TabsHeaderStyle extends React.CSSProperties {
+  "--mc-tab-header": string;
+}
+
 interface TabsScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -225,11 +229,11 @@ const TabsList = ({
       className={cn(`${tabsListVariants({ variant })} `, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): TabsHeaderStyle =>
           ({
             "--mc-tab-header": assets.textures.header_separator,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
     >

@@ -12,6 +12,16 @@ import * as React from "react";
 
 import "./native-reference.css";
 
+interface NativeCompositionReferenceStyle extends React.CSSProperties {
+  "--mc-pixel": string;
+  "--mc-scale": number;
+  "--reference-color": string | undefined;
+  "--reference-height": string;
+  "--reference-width": string;
+  "--reference-x": string;
+  "--reference-y": string;
+}
+
 export const NativeTextCompositionsFixture = () => {
   const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "code-block";
@@ -20,7 +30,7 @@ export const NativeTextCompositionsFixture = () => {
   const width = Number(q.get("width") ?? 172);
   const height = Number(q.get("height") ?? 9);
 
-  const style = {
+  const style: NativeCompositionReferenceStyle = {
     "--mc-pixel": `${scale}px`,
     "--mc-scale": scale,
     "--reference-color": q.get("color") ?? undefined,
@@ -28,7 +38,7 @@ export const NativeTextCompositionsFixture = () => {
     "--reference-width": `${width * scale}px`,
     "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
     "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
-  } as React.CSSProperties;
+  };
 
   React.useLayoutEffect(() => {
     document.documentElement.style.background =

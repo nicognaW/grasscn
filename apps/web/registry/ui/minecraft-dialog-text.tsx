@@ -6,6 +6,12 @@ import { isMinecraftTextContent } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+interface DialogBoldGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
 export const DialogLayoutContext = React.createContext({
   contentWidth: 214,
   scale: 2,
@@ -146,7 +152,7 @@ export const MinecraftDialogText = ({
                             "--mc-glyph-x": x,
                             "--mc-glyph-y": y,
                             visibility: char === " " ? "hidden" : undefined,
-                          } as React.CSSProperties
+                          } satisfies DialogBoldGlyphStyle
                         }
                       >
                         <i />

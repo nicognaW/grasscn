@@ -9,6 +9,11 @@ import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 
 import "./minecraft-separator.css";
 
+interface SeparatorPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-separator-texture": string;
+}
+
 type SeparatorProps = Omit<
   MinecraftProps<typeof SeparatorPrimitive>,
   "orientation"
@@ -41,12 +46,12 @@ const Separator = ({
       className={cn(`mc-separator`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): SeparatorPaintStyle =>
           ({
             "--mc-scale": scale,
             "--mc-separator-texture": `url("${minecraftSeparatorAssets[edge]}")`,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
     />
