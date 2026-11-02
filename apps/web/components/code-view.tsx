@@ -162,6 +162,15 @@ export const CodeView = ({
                 : null}
             </span>
           ))}
+          {displayedCode.endsWith("\n") ? (
+            // A rendered empty final line preserves the authored LF in browser selection.
+            <span
+              aria-hidden="true"
+              /* eslint-disable shadcn/no-unknown-classes -- This empty line box is defined in the imported documentation stylesheet. */
+              className="documentation-code-endline"
+              /* eslint-enable shadcn/no-unknown-classes */
+            />
+          ) : null}
         </code>
       </pre>
       <div
