@@ -586,7 +586,7 @@ export const ChartPixelSurface = ({
 
       stamp(style.fill, Number(style.fillOpacity), false);
       stamp(style.stroke, Number(style.strokeOpacity), true);
-      count++;
+      count += 1;
     }
 
     setReady(count > 0);

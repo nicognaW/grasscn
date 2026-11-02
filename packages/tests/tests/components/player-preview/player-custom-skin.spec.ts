@@ -58,7 +58,7 @@ for (const sample of [
 
     for (let i = 0; i < a.data.length; i += 4) {
       if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))) {
-        differences++;
+        differences += 1;
       }
     }
 

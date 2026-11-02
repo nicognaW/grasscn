@@ -105,12 +105,12 @@ export const MinecraftSignPaint = ({
           for (
             let y = Math.max(0, Math.ceil(top - 0.5));
             y < Math.min(height, Math.ceil(bottom - 0.5));
-            y++
+            y += 1
           ) {
             for (
               let x = Math.max(0, Math.ceil(left - 0.5));
               x < Math.min(width, Math.ceil(right - 0.5));
-              x++
+              x += 1
             ) {
               const sx = Math.max(
                 0,
