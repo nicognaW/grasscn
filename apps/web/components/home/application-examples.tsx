@@ -173,11 +173,11 @@ export function Plan() {
         aria-label="Billing cycle"
       >
         <label className="grass-inline">
-          <RadioGroupItem value="monthly" />
+          <RadioGroupItem value="monthly" aria-label="Monthly · $12 / month" />
           <DocumentText>Monthly · $12 / month</DocumentText>
         </label>
         <label className="grass-inline">
-          <RadioGroupItem value="annual" />
+          <RadioGroupItem value="annual" aria-label="Annual · $120 / year" />
           <DocumentText>Annual · $120 / year</DocumentText>
         </label>
       </RadioGroup>
