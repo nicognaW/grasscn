@@ -3,26 +3,43 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  NativeNineSlice,
+  SpriteMetadata,
+  SpriteSource,
+  SliderSprite,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error("Pass the extracted original slider PNG/metadata directory");
 }
 
+// SAFETY: the retained native inventory pins the sprite/metadata inputs used below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory;
 
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
-const sprites = {};
-const sources = {};
+const isUniformBorder = (border: NativeNineSlice["border"]): border is number =>
+  typeof border === "number";
+
+const uri = (data: Buffer) =>
+  `url("data:image/png;base64,${data.toString("base64")}")`;
+
+const sprites: Record<string, SliderSprite> = {};
+const sources: Record<string, SpriteSource> = {};
 
 for (const name of [
   "slider",
@@ -34,25 +51,32 @@ for (const name of [
   const bytes = await readFile(path.join(input, `${name}.png`));
   const metadata = await readFile(path.join(input, `${name}.png.mcmeta`));
 
+  // SAFETY: these original slider members are present in the pinned native inventory.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const original = inventory.assets[member] as InventoryAsset;
+
   if (
-    sha(bytes) !== inventory.assets[member].sha256 ||
-    sha(metadata) !== inventory.assets[member].metadataSha256
+    sha(bytes) !== original.sha256 ||
+    sha(metadata) !== original.metadataSha256
   ) {
     throw new Error(`Source changed: ${member}`);
   }
 
   const image = PNG.sync.read(bytes);
-  const { scaling } = JSON.parse(metadata).gui;
 
-  const border =
-    typeof scaling.border === "number"
-      ? Object.fromEntries([
-          ["left", scaling.border],
-          ["top", scaling.border],
-          ["right", scaling.border],
-          ["bottom", scaling.border],
-        ])
-      : scaling.border;
+  // SAFETY: hash-matched original mcmeta files define this nine-slice geometry.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const { scaling } = (JSON.parse(metadata.toString("utf-8")) as SpriteMetadata)
+    .gui;
+
+  const border = isUniformBorder(scaling.border)
+    ? Object.fromEntries([
+        ["left", scaling.border],
+        ["top", scaling.border],
+        ["right", scaling.border],
+        ["bottom", scaling.border],
+      ])
+    : scaling.border;
 
   const widths = [
     border.left,
@@ -65,9 +89,6 @@ for (const name of [
     image.height - border.top - border.bottom,
     border.bottom,
   ];
-
-  const uri = (data) =>
-    `url("data:image/png;base64,${data.toString("base64")}")`;
 
   const pieces = [];
 
@@ -83,6 +104,8 @@ for (const name of [
     y += heights[row];
   }
 
+  // SAFETY: these literal ordered fields are the exact cropped-sprite output contract.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   sprites[name] = Object.fromEntries([
     ["width", image.width],
     ["height", image.height],
@@ -90,12 +113,14 @@ for (const name of [
     ["stretch", scaling.stretch_inner ?? false],
     ["image", uri(bytes)],
     ["pieces", pieces],
-  ]);
+  ]) as SliderSprite;
+  // SAFETY: these literal ordered fields define the pinned slider source and metadata.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   sources[member] = Object.fromEntries([
     ["sha256", sha(bytes)],
     ["metadataSha256", sha(metadata)],
     ["scaling", scaling],
-  ]);
+  ]) as SpriteSource;
 }
 
 await writeFile(
@@ -108,11 +133,16 @@ const textAssets = await readFile(
   "utf-8"
 );
 
-const fontFace = /@font-face[^\n]+/.exec(textAssets)[0];
+// SAFETY: the shared generated font sheet owns this font-face marker; preserve its original missing-marker failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const fontFace = (/@font-face[^\n]+/.exec(textAssets) as RegExpExecArray)[0];
 
-const atlas = /--mc-ascii-atlas: (url\("[^"]+"\)); --mc-atlas-size: (\d+)/.exec(
-  textAssets
-);
+const atlasMatch =
+  /--mc-ascii-atlas: (url\("[^"]+"\)); --mc-atlas-size: (\d+)/.exec(textAssets);
+
+// SAFETY: the generated font sheet owns these two capture fields; preserve the original null/index failure.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const atlas = atlasMatch as RegExpExecArray;
 
 await writeFile(
   webFile("registry/ui/minecraft-text-assets.css"),
