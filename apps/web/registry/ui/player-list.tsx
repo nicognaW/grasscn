@@ -119,17 +119,13 @@ const PlayerList = ({
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? "Player list"}
         className={cn(`mc-player-list`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): PlayerListScaleStyle =>
-            ({
-              "--mc-scale": scale,
-              height: (1 + headHeight + rows * 9 + footHeight) * scale,
-              position: "relative",
-              width: width * scale,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+          "--mc-scale": scale,
+          height: (1 + headHeight + rows * 9 + footHeight) * scale,
+          position: "relative",
+          width: width * scale,
+          ...__style,
+        }))}
       >
         {header && (
           <div
@@ -373,16 +369,12 @@ const Scoreboard = ({
       role="table"
       aria-label={title}
       className={cn(`mc-scoreboard`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): PlayerListScaleStyle =>
-          ({
-            "--mc-scale": scale,
-            height: (visible.length * 9 + 10) * scale,
-            width: (contentWidth + 4) * scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): PlayerListScaleStyle => ({
+        "--mc-scale": scale,
+        height: (visible.length * 9 + 10) * scale,
+        width: (contentWidth + 4) * scale,
+        ...__style,
+      }))}
     >
       <div
         role="row"

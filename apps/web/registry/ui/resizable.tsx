@@ -26,11 +26,10 @@ const ResizablePanelGroup = ({
     <ResizablePrimitive.Group
       data-slot="resizable-panel-group"
       className={cn(`mc-resizable-group`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): ResizableScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ResizableScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </ScaleContext.Provider>
@@ -66,11 +65,10 @@ const ResizableHandle = ({
       data-slot="resizable-handle"
       data-with-handle={String(withHandle)}
       className={cn(`mc-resizable-handle`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): ResizableScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ResizableScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {children}

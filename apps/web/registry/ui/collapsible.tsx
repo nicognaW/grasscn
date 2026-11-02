@@ -34,11 +34,10 @@ const Collapsible = ({
     <Primitive.Root
       data-slot="collapsible"
       className={cn("mc-collapsible", className)}
-      style={minecraftStyle(
-        style,
-        (__style): CollapsibleScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): CollapsibleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </ScaleContext.Provider>
@@ -160,11 +159,10 @@ const CollapsibleContent = ({
       ref={forwarded}
       data-slot="collapsible-content"
       className={cn("mc-collapsible-content", className)}
-      style={minecraftStyle(
-        style,
-        (__style): CollapsibleScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): CollapsibleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {scalar ? (

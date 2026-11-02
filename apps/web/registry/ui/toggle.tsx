@@ -52,11 +52,10 @@ const Toggle = ({
       data-slot="toggle"
       disabled={disabled}
       className={cn(toggleVariants({ size, variant }), className)}
-      style={minecraftStyle(
-        style,
-        (__style): ToggleScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ToggleScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {

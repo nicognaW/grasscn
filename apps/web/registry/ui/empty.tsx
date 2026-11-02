@@ -74,11 +74,10 @@ const Empty = ({
         data-slot="empty"
         data-mc-empty-native={plain ? "true" : undefined}
         className={cn(`mc-empty`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): EmptyScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): EmptyScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       >
         {plain ? (

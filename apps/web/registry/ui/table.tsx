@@ -118,18 +118,13 @@ const Table = ({
       <table
         data-slot="table"
         className={cn(`mc-table`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): TablePaintStyle =>
-            ({
-              "--mc-scale": scale,
-              "--mc-table-background":
-                minecraftSelectAssets.menu_list_background,
-              "--mc-table-footer": minecraftSelectAssets.footer_separator,
-              "--mc-table-header": minecraftSelectAssets.header_separator,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): TablePaintStyle => ({
+          "--mc-scale": scale,
+          "--mc-table-background": minecraftSelectAssets.menu_list_background,
+          "--mc-table-footer": minecraftSelectAssets.footer_separator,
+          "--mc-table-header": minecraftSelectAssets.header_separator,
+          ...__style,
+        }))}
         {...props}
       />
     </div>

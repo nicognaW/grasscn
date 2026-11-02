@@ -183,16 +183,12 @@ const Hotbar = ({
       aria-label={props["aria-label"] ?? "Hotbar"}
       data-slot="hotbar"
       className={cn(`mc-hotbar`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): HotbarScaleStyle =>
-          ({
-            "--mc-scale": scale,
-            height: 23 * scale,
-            width: 184 * scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): HotbarScaleStyle => ({
+        "--mc-scale": scale,
+        height: 23 * scale,
+        width: 184 * scale,
+        ...__style,
+      }))}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 

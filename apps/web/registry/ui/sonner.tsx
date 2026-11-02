@@ -121,15 +121,15 @@ const ActionGraphic = function ActionGraphic({
   const actionRender = <span aria-hidden="true" />;
   const actionDisabled = action.node.disabled;
   const canvasStyle: ToastCanvasStyle = {
-          ...inherited,
-          "--mc-ink": "inherit",
-          "--mc-shadow": "inherit",
-          height: "100%",
-          inset: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          width: "100%",
-        };
+    ...inherited,
+    "--mc-ink": "inherit",
+    "--mc-shadow": "inherit",
+    height: "100%",
+    inset: 0,
+    pointerEvents: "none",
+    position: "absolute",
+    width: "100%",
+  };
 
   return (
     <Button
@@ -479,11 +479,10 @@ const Toaster = function Toaster({
         visibleToasts={visibleToasts}
         expand={expand}
         richColors={false}
-        style={minecraftStyle(
-          style,
-          (__style): SonnerScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): SonnerScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         toastOptions={{ ...toastOptions, unstyled: true }}
         {...props}
       />

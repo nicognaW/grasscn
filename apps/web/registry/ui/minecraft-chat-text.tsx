@@ -284,18 +284,14 @@ const MinecraftChatText = ({
       data-slot="minecraft-prose"
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): MinecraftChatTextScaleStyle =>
-          ({
-            "--mc-scale": scale,
-            width:
-              typeof maxWidth === "undefined" || maxWidth === null
-                ? undefined
-                : maxWidth * scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): MinecraftChatTextScaleStyle => ({
+        "--mc-scale": scale,
+        width:
+          typeof maxWidth === "undefined" || maxWidth === null
+            ? undefined
+            : maxWidth * scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rendered}

@@ -25,11 +25,10 @@ const Breadcrumb = ({
     <nav
       aria-label="Breadcrumb"
       data-slot="breadcrumb"
-      style={minecraftStyle(
-        style,
-        (__style): BreadcrumbScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): BreadcrumbScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </BreadcrumbScale>

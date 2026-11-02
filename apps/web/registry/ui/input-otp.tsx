@@ -99,11 +99,10 @@ const InputOTPSlot = ({
       data-slot="input-otp-slot"
       data-active={active.current}
       className={cn(`mc-otp-slot`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): InputOtpScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): InputOtpScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       <input

@@ -201,11 +201,10 @@ const ScrollArea = ({
         data-scrollable={geometry.maximum > 0}
         data-disabled={disabled || undefined}
         className={cn(`mc-scroll-area`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): ScrollAreaScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): ScrollAreaScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onWheelCapture={(event) => {
           onWheelCapture?.(event);
 
@@ -301,17 +300,13 @@ const ScrollBar = ({
       data-dragging={dragging || undefined}
       aria-disabled={disabled || undefined}
       className={cn(`mc-scroll-area-scrollbar`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): ScrollAreaThumbStyle =>
-          ({
-            "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-            "--mc-thumb-height": `${geometry.thumb * scale}px`,
-            "--mc-thumb-offset": `${geometry.offset * scale}px`,
-            "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): ScrollAreaThumbStyle => ({
+        "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+        "--mc-thumb-height": `${geometry.thumb * scale}px`,
+        "--mc-thumb-offset": `${geometry.offset * scale}px`,
+        "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+        ...__style,
+      }))}
       onPointerDownCapture={(event) => {
         onPointerDownCapture?.(event);
         event.preventBaseUIHandler();

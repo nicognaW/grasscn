@@ -211,16 +211,12 @@ const PopoverContent = ({
                 data-slot="popover-content"
                 ref={forwarded}
                 className={cn(`mc-card mc-popover`, className)}
-                style={minecraftStyle(
-                  style,
-                  (__style): PopoverPaintStyle =>
-                    ({
-                      "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-                      "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-                      "--mc-scale": scale,
-                      ...__style,
-                    })
-                )}
+                style={minecraftStyle(style, (__style): PopoverPaintStyle => ({
+                  "--mc-popover-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+                  "--mc-popover-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+                  "--mc-scale": scale,
+                  ...__style,
+                }))}
                 {...props}
               >
                 {contents}

@@ -77,11 +77,10 @@ const Spinner = ({
       width={logicalWidth * scale}
       height={9 * scale}
       className={cn(`mc-spinner`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): SpinnerScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): SpinnerScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       <g aria-hidden="true" fill="#202020">

@@ -45,11 +45,10 @@ const CodeBlock = ({
           data-variant={variant}
           data-size={size}
           className={cn(`mc-code-block`, className)}
-          style={minecraftStyle(
-            style,
-            (__style): CodeBlockScaleStyle =>
-              ({ "--mc-scale": scale, ...__style })
-          )}
+          style={minecraftStyle(style, (__style): CodeBlockScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         />
       </MessageScale>

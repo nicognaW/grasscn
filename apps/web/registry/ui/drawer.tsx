@@ -156,15 +156,11 @@ const DrawerContent = ({
               data-slot="drawer-content"
               data-side={side}
               className={cn(`mc-card mc-drawer-content`, className)}
-              style={minecraftStyle(
-                style,
-                (__style): DrawerScaleStyle =>
-                  ({
-                    "--mc-scale": scale,
-                    pointerEvents: "auto",
-                    ...__style,
-                  })
-              )}
+              style={minecraftStyle(style, (__style): DrawerScaleStyle => ({
+                "--mc-scale": scale,
+                pointerEvents: "auto",
+                ...__style,
+              }))}
               {...props}
             >
               <DrawerPrimitive.Content

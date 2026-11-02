@@ -68,11 +68,10 @@ const Switch = ({
       data-size={size}
       disabled={disabled}
       className={cn(`mc-button mc-switch`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): SwitchScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): SwitchScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {

@@ -348,20 +348,16 @@ const LocatorBar = ({
     role={props.role ?? "group"}
     aria-label={props["aria-label"] ?? "Locator bar"}
     className={cn(`mc-locator-bar`, className)}
-    style={minecraftStyle(
-      style,
-      (__style): MapScaleStyle =>
-        ({
-          "--mc-scale": scale,
-          borderImageRepeat: "repeat",
-          borderImageSlice: "1 5 fill",
-          borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
-          borderImageWidth: `${scale}px ${5 * scale}px`,
-          height: 5 * scale,
-          width: 182 * scale,
-          ...__style,
-        })
-    )}
+    style={minecraftStyle(style, (__style): MapScaleStyle => ({
+      "--mc-scale": scale,
+      borderImageRepeat: "repeat",
+      borderImageSlice: "1 5 fill",
+      borderImageSource: `url("${adventureAssets["gui/sprites/hud/locator_bar_background"].src}")`,
+      borderImageWidth: `${scale}px ${5 * scale}px`,
+      height: 5 * scale,
+      width: 182 * scale,
+      ...__style,
+    }))}
   >
     {markers.map((marker) => {
       const relative = ((((marker.bearing - heading) % 360) + 540) % 360) - 180;

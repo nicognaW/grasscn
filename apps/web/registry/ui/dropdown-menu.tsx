@@ -254,11 +254,10 @@ const DropdownMenuContent = ({
             data-surface={surface}
             ref={forwarded}
             className={cn("mc-menu-content", className)}
-            style={minecraftStyle(
-              style,
-              (__style): DropdownMenuScaleStyle =>
-                ({ "--mc-scale": scale, ...__style })
-            )}
+            style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {contentChildren(children, surface)}
@@ -315,11 +314,10 @@ const DropdownMenuItem = ({
       data-slot="dropdown-menu-item"
       data-inset={inset}
       className={cn("mc-menu-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): DropdownMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -368,11 +366,10 @@ const DropdownMenuCheckboxItem = ({
       render={render}
       data-slot="dropdown-menu-checkbox-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): DropdownMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
@@ -406,11 +403,10 @@ const DropdownMenuRadioItem = ({
       render={render}
       data-slot="dropdown-menu-radio-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): DropdownMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onClick={(event) => {
         onClick?.(event);
 
@@ -443,11 +439,10 @@ const DropdownMenuLabel = ({
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-label", className)}
-      style={minecraftStyle(
-        style,
-        (__style): DropdownMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -524,11 +519,10 @@ const DropdownMenuSubTrigger = ({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
-      style={minecraftStyle(
-        style,
-        (__style): DropdownMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children, undefined, arrow)}
@@ -595,11 +589,10 @@ const DropdownMenuSubContent = ({
           data-surface={surface}
           ref={forwarded}
           className={cn("mc-menu-content", className)}
-          style={minecraftStyle(
-            style,
-            (__style): DropdownMenuScaleStyle =>
-              ({ "--mc-scale": scale, ...__style })
-          )}
+          style={minecraftStyle(style, (__style): DropdownMenuScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         >
           {contentChildren(children, surface)}

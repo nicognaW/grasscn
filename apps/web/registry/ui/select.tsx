@@ -298,11 +298,10 @@ const SelectTrigger = ({
       data-size={size}
       ref={forwarded}
       className={cn(`mc-button mc-select-trigger`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): SelectScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): SelectScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {contents}
@@ -466,19 +465,15 @@ const SelectContent = ({
             data-align-trigger={alignItemWithTrigger}
             ref={forwarded}
             className={cn(`mc-select-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style): SelectPopupPaintStyle =>
-                ({
-                  "--mc-scale": scale,
-                  "--mc-select-background": assets.menu_list_background,
-                  "--mc-select-footer": assets.footer_separator,
-                  "--mc-select-header": assets.header_separator,
-                  "--mc-select-thumb": `url("${scrollbar.scroller}")`,
-                  "--mc-select-track": `url("${scrollbar.scroller_background}")`,
-                  ...__style,
-                })
-            )}
+            style={minecraftStyle(style, (__style): SelectPopupPaintStyle => ({
+              "--mc-scale": scale,
+              "--mc-select-background": assets.menu_list_background,
+              "--mc-select-footer": assets.footer_separator,
+              "--mc-select-header": assets.header_separator,
+              "--mc-select-thumb": `url("${scrollbar.scroller}")`,
+              "--mc-select-track": `url("${scrollbar.scroller_background}")`,
+              ...__style,
+            }))}
             {...props}
           >
             {contents}

@@ -124,11 +124,10 @@ const Carousel = ({
         data-slot="carousel"
         data-orientation={orientation}
         className={cn(`mc-carousel`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): CarouselScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): CarouselScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
         onKeyDownCapture={(event) => {
           onKeyDownCapture?.(event);
@@ -243,14 +242,10 @@ const CarouselArrow = ({
       aria-disabled={inactive || undefined}
       disabled={inactive}
       className={cn(`mc-pagination-arrow mc-carousel-arrow`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): CarouselScaleStyle =>
-          ({
-            "--mc-scale": ownScale ?? context.scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): CarouselScaleStyle => ({
+        "--mc-scale": ownScale ?? context.scale,
+        ...__style,
+      }))}
       {...props}
       onClick={(event) => {
         if (inactive) {

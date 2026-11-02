@@ -96,11 +96,10 @@ const Attachment = ({
         data-selected={selected ? "true" : undefined}
         aria-disabled={inactive || undefined}
         className={cn(`mc-item mc-attachment`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): AttachmentScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): AttachmentScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
         onClickCapture={(event) => {
           if (inactive) {

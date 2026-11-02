@@ -27,18 +27,14 @@ const Checkbox = ({
   <CheckboxPrimitive.Root
     data-slot="checkbox"
     className={cn("peer mc-checkbox", className)}
-    style={minecraftStyle(
-      style,
-      (__style): CheckboxPaintStyle =>
-        ({
-          "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-          "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
-          "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
-          "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
-          "--mc-scale": scale,
-          ...__style,
-        })
-    )}
+    style={minecraftStyle(style, (__style): CheckboxPaintStyle => ({
+      "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
+      "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+      "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+      "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+      "--mc-scale": scale,
+      ...__style,
+    }))}
     {...props}
     onClick={(event) => {
       onClick?.(event);

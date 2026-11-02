@@ -49,10 +49,10 @@ const ButtonGroup = ({
     data-slot="button-group"
     data-orientation={orientation}
     className={cn(buttonGroupVariants({ orientation }), className)}
-    style={minecraftStyle(
-      style,
-      (__style): ButtonGroupScaleStyle => ({ "--mc-scale": scale, ...__style })
-    )}
+    style={minecraftStyle(style, (__style): ButtonGroupScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
     {...props}
   />
 );
@@ -115,10 +115,10 @@ const ButtonGroupSeparator = ({
     data-slot="button-group-separator"
     data-orientation={orientation}
     className={cn(`mc-button-group-separator`, className)}
-    style={minecraftStyle(
-      style,
-      (__style): ButtonGroupScaleStyle => ({ "--mc-scale": scale, ...__style })
-    )}
+    style={minecraftStyle(style, (__style): ButtonGroupScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
     {...props}
   >
     <Separator

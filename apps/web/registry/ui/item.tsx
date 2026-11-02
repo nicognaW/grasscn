@@ -99,11 +99,10 @@ const Item = ({
           data-selected={selected ? "true" : undefined}
           data-mc-item-interactive={interactive && !inactive ? "true" : "false"}
           className={cn(itemVariants({ size, variant }), className)}
-          style={minecraftStyle(
-            style,
-            (__style): ItemScaleStyle =>
-              ({ "--mc-scale": scale, ...__style })
-          )}
+          style={minecraftStyle(style, (__style): ItemScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
           onClickCapture={(event) => {
             if (inactive) {
@@ -162,11 +161,10 @@ const ItemGroup = ({
         data-slot="item-group"
         role="list"
         className={cn(`mc-item-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): ItemScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): ItemScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </ItemScale>

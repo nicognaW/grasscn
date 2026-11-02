@@ -54,15 +54,11 @@ const Message = ({
           data-author={author}
           data-kind={kind}
           className={cn(`mc-message`, className)}
-          style={minecraftStyle(
-            style,
-            (__style): MessageScaleStyle =>
-              ({
-                "--mc-scale": scale,
-                ...(kind === "system" ? { color: "#ffff55" } : {}),
-                ...__style,
-              })
-          )}
+          style={minecraftStyle(style, (__style): MessageScaleStyle => ({
+            "--mc-scale": scale,
+            ...(kind === "system" ? { color: "#ffff55" } : {}),
+            ...__style,
+          }))}
           {...props}
         />
       </MessageAuthor>

@@ -20,8 +20,18 @@ const browser = await chromium.launch({ channel: "msedge" });
 const page = await browser.newPage();
 const errors: string[] = [];
 const rows: (
-  | { route: string; scrollWidth: number; viewport: { height: number; width: number } }
-  | { playground: ReturnType<typeof documentationInventory>["pages"][number]["playground"]; route: string; visible: boolean }
+  | {
+      route: string;
+      scrollWidth: number;
+      viewport: { height: number; width: number };
+    }
+  | {
+      playground: ReturnType<
+        typeof documentationInventory
+      >["pages"][number]["playground"];
+      route: string;
+      visible: boolean;
+    }
 )[] = [];
 
 page.on("pageerror", (error) => errors.push(error.message));

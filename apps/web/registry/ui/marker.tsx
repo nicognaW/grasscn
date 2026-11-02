@@ -76,15 +76,11 @@ const Marker = ({
         data-slot="marker"
         data-variant={variant}
         className={cn(markerVariants({ variant }), className)}
-        style={minecraftStyle(
-          style,
-          (__style): MarkerPaintStyle =>
-            ({
-              "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
-              "--mc-scale": scale,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): MarkerPaintStyle => ({
+          "--mc-marker-separator": `url("${minecraftSeparatorAssets[separatorEdge]}")`,
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       >
         {contents}

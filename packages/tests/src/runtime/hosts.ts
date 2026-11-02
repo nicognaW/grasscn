@@ -15,7 +15,11 @@ import { serveNextProduction } from "./next-production.mjs";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
-export async function serveVerificationHosts(execution: {fixturePort: number; previewPort: number; proxyPort: number}) {
+export async function serveVerificationHosts(execution: {
+  fixturePort: number;
+  previewPort: number;
+  proxyPort: number;
+}) {
   const { fixturePort, previewPort, proxyPort } = execution;
   const sockets = new Set<Duplex>();
 
@@ -46,7 +50,10 @@ export async function serveVerificationHosts(execution: {fixturePort: number; pr
      * @param {import("node:http").IncomingMessage} request - Browser proxy request.
      * @param {import("node:http").ServerResponse} response - Owned proxy response.
      */
-    const handleRequest = async (request: http.IncomingMessage, response: http.ServerResponse) => {
+    const handleRequest = async (
+      request: http.IncomingMessage,
+      response: http.ServerResponse
+    ) => {
       let target;
 
       try {

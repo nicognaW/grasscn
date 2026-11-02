@@ -53,19 +53,13 @@ const keyText = function keyText(content: React.ReactNode): React.ReactNode {
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
           const glyphStyle: KbdGlyphStyle = {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                };
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+            visibility: char === " " ? "hidden" : undefined,
+          };
 
-          return (
-            <span
-              key={index}
-              className="mc-glyph"
-              style={glyphStyle}
-            />
-          );
+          return <span key={index} className="mc-glyph" style={glyphStyle} />;
         })}
       </span>
       <span className="mc-text-accessible">{text}</span>
@@ -101,11 +95,10 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
     <kbd
       data-slot="kbd"
       className={cn(`mc-button mc-kbd`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): KbdScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): KbdScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       <span className="mc-button-surface" aria-hidden="true">

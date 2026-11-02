@@ -251,17 +251,13 @@ const DialogContent = ({
             data-slot="dialog-content"
             ref={forwarded}
             className={cn(`mc-dialog-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style): DialogPaintStyle =>
-                ({
-                  "--mc-dialog-maximum": `${width * scale}px`,
-                  "--mc-dialog-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-                  "--mc-dialog-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-                  "--mc-scale": scale,
-                  ...__style,
-                })
-            )}
+            style={minecraftStyle(style, (__style): DialogPaintStyle => ({
+              "--mc-dialog-maximum": `${width * scale}px`,
+              "--mc-dialog-scroll-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+              "--mc-dialog-scroll-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {contents}
