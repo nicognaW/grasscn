@@ -178,11 +178,12 @@ const state = params.get("state") ?? "normal";
 const label = params.get("label") ?? "Button";
 
 const SelectFixture = () => {
+  // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
   const titles: string[] = params.has("labels")
-    ? // SAFETY: owned Select titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Select titles query-label producer boundary.
-      (JSON.parse(params.get("labels")!) as FixtureLabels)
+    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
     : ["Survival", "Creative", "Adventure"];
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   const initial = Number(params.get("selectedIndex") ?? 0);
 
@@ -2018,11 +2019,12 @@ const DialogFixture = () => {
   const content = React.useRef<HTMLDivElement>(null);
   const trigger = React.useRef<HTMLButtonElement>(null);
 
+  // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
   const labels: string[] = params.has("labels")
-    ? // SAFETY: owned Dialog actions callers serialize string label arrays; preserve this branch's existing parameter/default read.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Dialog actions query-label producer boundary.
-      (JSON.parse(params.get("labels")!) as FixtureLabels)
+    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
     : ["Cancel", "Continue"];
+  // oxlint-enable typescript/no-unsafe-type-assertion
 
   const description = native
     ? params.has("text")
@@ -2449,11 +2451,12 @@ const Fixture = () => {
   }
 
   if (params.get("component") === "tabs") {
+    // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
     const titles: string[] = params.has("labels")
-      ? // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
-        (JSON.parse(params.get("labels")!) as FixtureLabels)
+      ? (JSON.parse(params.get("labels")!) as FixtureLabels)
       : ["Game", "World", "More"];
+    // oxlint-enable typescript/no-unsafe-type-assertion
 
     const panel = Number(params.get("contentHeight") ?? 0);
 

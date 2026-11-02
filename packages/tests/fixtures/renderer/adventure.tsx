@@ -33,15 +33,16 @@ const nodes: React.ComponentProps<typeof AdvancementTree>["nodes"] =
     y,
   }));
 
+// SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.
+// oxlint-disable typescript/no-unsafe-type-assertion -- Exact Adventure fixture query producer boundary.
 const sample: AdventureFixtureSample = params.has("case")
-  ? // SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Adventure fixture query producer boundary.
-    (JSON.parse(params.get("case")!) as AdventureFixtureSample)
+  ? (JSON.parse(params.get("case")!) as AdventureFixtureSample)
   : {
       element: params.get("kind") ?? "advancement-tree",
       state: params.get("state") ?? undefined,
       value: params.has("value") ? Number(params.get("value")) : undefined,
     };
+// oxlint-enable typescript/no-unsafe-type-assertion
 
 if (sample.background) {
   document.body.style.backgroundColor = sample.background;
