@@ -207,58 +207,6 @@
 .documentation-playground {
   padding: 0;
 }
-.documentation-playground .demo-options,
-.documentation-playground .demo-stage {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  min-width: 0;
-}
-.documentation-playground .demo-stage {
-  align-items: flex-start;
-  padding: 32px 24px;
-  overflow: auto;
-}
-.documentation-playground .demo-options {
-  padding: 24px 24px 0;
-  margin-bottom: 24px;
-  align-items: flex-end;
-}
-.documentation-playground .demo-options label,
-.documentation-playground .demo-pair {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 0;
-  max-width: 100%;
-}
-.documentation-playground .demo-options > *,
-.documentation-playground .demo-stage .mc-button,
-.documentation-playground .demo-stage .mc-input,
-.documentation-playground .demo-stage .mc-textarea,
-.documentation-playground .demo-stage .mc-slider,
-.documentation-playground .demo-stage .mc-switch,
-.documentation-playground .demo-stage .mc-native-select,
-.documentation-playground .demo-stage .mc-native-select-wrapper,
-.documentation-playground .demo-stage .mc-native-select-control,
-.documentation-playground .demo-stage > .mc-tabs,
-.documentation-playground .demo-pair > .mc-scroll-area,
-.documentation-playground .demo-pair > .mc-empty {
-  max-width: 100%;
-}
-.documentation-playground .demo-options .mc-button,
-.documentation-playground .demo-options .mc-input,
-.documentation-playground .demo-options .mc-textarea {
-  max-width: 100%;
-}
-@media (max-width: 720px) {
-  .documentation-playground .demo-stage {
-    padding: 24px 16px;
-  }
-  .documentation-playground .demo-options {
-    padding: 16px 16px 0;
-  }
-}
 .documentation-installation,
 .documentation-installation-tabs,
 .documentation-install-command,

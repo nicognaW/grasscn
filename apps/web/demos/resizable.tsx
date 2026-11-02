@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 import type { GroupImperativeHandle } from "react-resizable-panels";
 
@@ -27,7 +28,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          style={{ width: 120 * scale }}
+          className="w-(--demo-width)" style={({"--demo-width": `${120 * scale}px`} satisfies DemoVariables) as DemoVariables}
           onClick={() => {
             setOrientation((v) =>
               v === "horizontal" ? "vertical" : "horizontal"
@@ -39,7 +40,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          style={{ width: 100 * scale }}
+          className="w-(--demo-width)" style={({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
           onClick={() => {
             group.current?.setLayout({ [left]: 50, [right]: 50 });
           }}
@@ -83,7 +84,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
                     key={label}
                     scale={scale}
                     onClick={() => setSelected(label)}
-                    style={{ width: "100%" }}
+                    className="w-full" 
                   >
                     {label}
                   </Button>
@@ -112,7 +113,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
                     key={label}
                     scale={scale}
                     onClick={() => setSelected(label)}
-                    style={{ width: "100%" }}
+                    className="w-full" 
                   >
                     {label}
                   </Button>

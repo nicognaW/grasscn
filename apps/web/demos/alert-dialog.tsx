@@ -28,7 +28,7 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
             aria-label="Alert dialog title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            style={{ width: 240 }}
+            className="w-60" 
           />
         </label>
         <label className="demo-option">

@@ -12,7 +12,7 @@ export default function SelectDemo({ scale }: DemoProps) {
     const titles = [title || " ", ...initial.slice(1)];
     return <>
     <div className="demo-options">
-      <label className="demo-option">First option<Input aria-label="First select option" value={title} onChange={event => setTitle(event.target.value)} style={{ width: 180 }}/></label>
+      <label className="demo-option">First option<Input aria-label="First select option" value={title} onChange={event => setTitle(event.target.value)} className="w-45" /></label>
       <Button aria-pressed={disabled} onClick={() => setDisabled(current => !current)}>{`Select: ${disabled ? "Disabled" : "Enabled"}`}</Button>
       <Button aria-pressed={disabledOption} onClick={() => setDisabledOption(current => !current)}>{`Creative: ${disabledOption ? "Disabled" : "Enabled"}`}</Button>
     </div>

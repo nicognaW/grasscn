@@ -24,7 +24,7 @@ export default function BreadcrumbDemo({ scale }: DemoProps) {
             value={current}
             scale={scale}
             onChange={(event) => setCurrent(event.target.value)}
-            style={{ width: 280 }}
+            className="w-70" 
           />
         </label>
       </div>

@@ -30,11 +30,11 @@ export default function TradingDemo({ scale }: DemoProps) {
   }));
   return (
     <div
-      className="demo-stage"
+      className="demo-stage demo-stage-display-grid demo-stage-gap-16 max-w-full"
       data-stage="trading"
-      style={{ display: "grid", gap: 16, maxWidth: "100%" }}
+      
     >
-      <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+      <div className="max-w-full overflow-x-auto" >
         <Trading
           scale={scale}
           title="Village market"

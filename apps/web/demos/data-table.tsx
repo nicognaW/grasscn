@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import { createColumnHelper, useTable } from "@tanstack/react-table";
 import * as React from "react";
 
@@ -48,7 +49,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
               type="button"
               scale={scale}
               aria-label="World"
-              style={{ width: 100 * scale, maxWidth: "100%" }}
+              className="w-(--demo-width) max-w-full" style={({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
               onClick={() => column.toggleSorting()}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
@@ -84,7 +85,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
           aria-label="Filter worlds"
           placeholder="Search worlds"
           scale={scale}
-          style={{ width: 160 * scale, maxWidth: "100%" }}
+          className="w-(--demo-width) max-w-full" style={({"--demo-width": `${160 * scale}px`} satisfies DemoVariables) as DemoVariables}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(e) =>
             table.getColumn("name")?.setFilterValue(e.target.value)
@@ -93,7 +94,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           type="button"
           scale={scale}
-          style={{ width: 100 * scale, maxWidth: "100%" }}
+          className="w-(--demo-width) max-w-full" style={({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
           aria-pressed={table.getColumn("players")?.getIsVisible()}
           onClick={() => table.getColumn("players")?.toggleVisibility()}
         >
@@ -159,7 +160,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           scale={scale}
           type="button"
-          style={{ width: 80 * scale }}
+          className="w-(--demo-width)" style={({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
           disabled={!table.getCanPreviousPage()}
           onClick={() => table.previousPage()}
         >
@@ -168,7 +169,7 @@ export default function DataTableDemo({ scale }: DemoProps) {
         <Button
           scale={scale}
           type="button"
-          style={{ width: 80 * scale }}
+          className="w-(--demo-width)" style={({"--demo-width": `${80 * scale}px`} satisfies DemoVariables) as DemoVariables}
           disabled={!table.getCanNextPage()}
           onClick={() => table.nextPage()}
         >

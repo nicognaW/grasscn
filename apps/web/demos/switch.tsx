@@ -10,7 +10,7 @@ export default function SwitchDemo({ scale }: DemoProps) {
   const [disabled, setDisabled] = React.useState(false)
   const [label, setLabel] = React.useState("Enable clouds")
   return <>
-    <div className="demo-options"><label className="demo-option">Setting label<Input aria-label="Switch setting label" value={label} onChange={event => setLabel(event.target.value)} style={{ width: 180 }} /></label><Button aria-pressed={disabled} onClick={() => setDisabled(current => !current)}>{`Switch: ${disabled ? "Disabled" : "Enabled"}`}</Button></div>
+    <div className="demo-options"><label className="demo-option">Setting label<Input aria-label="Switch setting label" value={label} onChange={event => setLabel(event.target.value)} className="w-45"  /></label><Button aria-pressed={disabled} onClick={() => setDisabled(current => !current)}>{`Switch: ${disabled ? "Disabled" : "Enabled"}`}</Button></div>
     <div className="demo-stage" data-stage="switch">
       <div className="demo-pair"><Label htmlFor="preview-switch" scale={scale}>{label || " "}</Label><Switch id="preview-switch" scale={scale} checked={checked} onCheckedChange={setChecked} disabled={disabled} /></div>
       <div className="demo-pair"><Label htmlFor="preview-switch-locked" scale={scale}>Locked setting</Label><Switch id="preview-switch-locked" scale={scale} checked disabled /></div>

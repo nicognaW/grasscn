@@ -34,7 +34,7 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
             aria-label="Dropdown menu title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            style={{ width: 240 }}
+            className="w-60" 
           />
         </label>
         <label className="demo-option">
@@ -43,7 +43,7 @@ export default function DropdownMenuDemo({ scale }: DemoProps) {
             aria-label="Dropdown menu action"
             value={action}
             onChange={(event) => setAction(event.target.value)}
-            style={{ width: 240 }}
+            className="w-60" 
           />
         </label>
       </div>

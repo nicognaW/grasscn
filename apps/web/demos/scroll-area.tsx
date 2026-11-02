@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react"
 import { ScrollArea } from "../registry/ui/scroll-area"
 import { Button } from "../registry/ui/button"
@@ -21,7 +22,7 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
     <div className="demo-stage" data-stage="scroll-area">
       <div className="demo-pair"><span className="sample-caption">VERTICAL SCROLLING</span>
         <ScrollArea role="region" aria-label="Demo scroll area" scale={scale} disabled={disabled} viewportRef={viewport} viewportProps={{ "aria-label": "Scrollable rows", onScroll: event => setOffset(Math.round(event.currentTarget.scrollTop / scale)) }} style={{ width: 200 * scale, maxWidth: "100%", height: 64 * scale }}>
-          <div style={{ height: 2400 * scale, overflow: "hidden" }}>{Array.from({ length: 100 }, (_, index) => <div key={index} style={{ height: 24 * scale, display: "flex", alignItems: "flex-start" }}><Button scale={scale} style={{ width: "100%" }} onClick={() => setSelected(index + 1)}>{`Row ${index + 1}`}</Button></div>)}</div>
+          <div className="h-(--demo-height) overflow-hidden" style={({"--demo-height": `${2400 * scale}px`} satisfies DemoVariables) as DemoVariables}>{Array.from({ length: 100 }, (_, index) => <div key={index} className="h-(--demo-height) flex items-start" style={({"--demo-height": `${24 * scale}px`} satisfies DemoVariables) as DemoVariables}><Button scale={scale} className="w-full"  onClick={() => setSelected(index + 1)}>{`Row ${index + 1}`}</Button></div>)}</div>
         </ScrollArea>
       </div>
     </div>

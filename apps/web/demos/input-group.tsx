@@ -16,13 +16,9 @@ export default function InputGroupDemo({ scale }: DemoProps) {
   return (
     <>
       <div
-        className="demo-stage"
+        className="demo-stage demo-stage-display-grid grid-cols-1 demo-stage-gap-16"
         data-stage="input-group"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "minmax(0,1fr)",
-          gap: 16,
-        }}
+        
       >
         <InputGroup
           scale={scale}

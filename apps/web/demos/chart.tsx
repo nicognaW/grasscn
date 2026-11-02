@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 import { AnalyticsChartExample, type AnalyticsChartType } from "../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../registry/blocks/chart-fps";
@@ -35,24 +36,24 @@ export default function ChartDemo({ scale }: DemoProps) {
     const series = React.useMemo(() => circular ? ["visitors"] : device === "both" ? ["desktop", "mobile"] : [device], [circular, device]);
     const total = data.reduce((n, row) => n + series.reduce((s, key) => s + Number((row as Record<string, string | number>)[key]), 0), 0);
     return <>
-    <div ref={stage} className="demo-stage" data-stage="chart" style={{ "--mc-scale": scale, display: "flex", flexDirection: "column", flexWrap: "nowrap", gap: 10 * scale, alignItems: "stretch", minWidth: 0 } as React.CSSProperties}>
-      <section data-f3-web-data="true" style={{ display: "flex", flexDirection: "column", gap: 8 * scale, minWidth: 0, width: "100%", maxWidth: "100%" }}>
+    <div ref={stage} className="demo-stage demo-stage-display-flex flex-col demo-stage-flex-wrap-nowrap demo-stage-align-items-stretch demo-stage-min-width-0" data-stage="chart" style={({"--mc-scale": scale, "--demo-stage-gap": `${10 * scale}px`} satisfies DemoVariables) as DemoVariables}>
+      <section data-f3-web-data="true" className="flex flex-col gap-(--demo-gap) min-w-0 w-full max-w-full" style={({"--demo-gap": `${8 * scale}px`} satisfies DemoVariables) as DemoVariables}>
         {copy("Vanilla F3 charts with web data")}
         {copy(metric === "latency" ? "API response time - milliseconds" : "Website requests per minute")}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 * scale }}>
+        <div className="flex flex-wrap gap-(--demo-gap)" style={({"--demo-gap": `${6 * scale}px`} satisfies DemoVariables) as DemoVariables}>
           <Select items={{latency:"Response time",requests:"Request volume"}} scale={scale} value={metric} onValueChange={value => setMetric(value ?? "")}><SelectTrigger aria-label="F3 metric" style={{ width: Math.min(116, contentWidth) * scale, maxWidth: "100%" }}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="latency">Response time</SelectItem><SelectItem value="requests">Request volume</SelectItem></SelectContent></Select>
           <Button scale={scale} type="button" style={{ width: Math.min(100, contentWidth) * scale, maxWidth: "100%" }} onClick={() => setWebStep(value => value + 1)}>Next hour</Button>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8 * scale, overflowX: "auto", width: "100%", minWidth: 0, maxWidth: "100%", padding: scale }}>
+        <div className="flex flex-col items-start gap-(--demo-gap) overflow-x-auto w-full min-w-0 max-w-full p-(--demo-padding)" style={({"--demo-gap": `${8 * scale}px`, "--demo-padding": `${scale}px`} satisfies DemoVariables) as DemoVariables}>
           <FpsChartExample data-web-chart="metric" aria-label={metric === "latency" ? "API response time" : "Requests per minute"} data={webSamples.map(value=>({value}))} dataKey="value" domain={metric === "latency" ? [0, 300] : [0, 80]} formatValue={v=>`${Math.round(v)} ${metric==="latency"?"ms":"req"}`} guides={metric==="latency"?[{value:300,label:"300 ms"},{value:150,label:"150 ms"}]:[{value:80,label:"80 req"},{value:40,label:"40 req"}]} scale={scale}/>
           <ProfilerChartExample dataKey="visitors" data-web-chart="profiler" aria-label="Browser visitor share" data={browserData} rootName="Browser visitors" scale={scale}/>
         </div>
         {copy("Illustrative web data. The F3 bar scale and captions adapt to the selected metric.")}
       </section>
-      <section className="mc-chart-native-examples" data-chart-native-examples="true" style={{ display: "flex", flexDirection: "column", gap: 8 * scale, minWidth: 0, width: "100%", maxWidth: "100%" }}>
+      <section className="mc-chart-native-examples flex flex-col gap-(--demo-gap) min-w-0 w-full max-w-full" data-chart-native-examples="true" style={({"--demo-gap": `${8 * scale}px`} satisfies DemoVariables) as DemoVariables}>
         {copy("F3 charts")}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 * scale }}><Button scale={scale} type="button" style={{ width: Math.min(120, contentWidth) * scale, maxWidth: "100%" }} onClick={() => setStep(v => v + 1)}>Next sample</Button><Button scale={scale} type="button" style={{ width: Math.min(100, contentWidth) * scale, maxWidth: "100%" }} onClick={() => setLimit(v => v === 120 ? 260 : 120)}>{limit === 120 ? "120 FPS cap" : "Unlimited"}</Button></div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8 * scale, overflowX: "auto", width: "100%", minWidth: 0, maxWidth: "100%", padding: scale }}>
+        <div className="flex flex-wrap gap-(--demo-gap)" style={({"--demo-gap": `${6 * scale}px`} satisfies DemoVariables) as DemoVariables}><Button scale={scale} type="button" style={{ width: Math.min(120, contentWidth) * scale, maxWidth: "100%" }} onClick={() => setStep(v => v + 1)}>Next sample</Button><Button scale={scale} type="button" style={{ width: Math.min(100, contentWidth) * scale, maxWidth: "100%" }} onClick={() => setLimit(v => v === 120 ? 260 : 120)}>{limit === 120 ? "120 FPS cap" : "Unlimited"}</Button></div>
+        <div className="flex flex-col items-start gap-(--demo-gap) overflow-x-auto w-full min-w-0 max-w-full p-(--demo-padding)" style={({"--demo-gap": `${8 * scale}px`, "--demo-padding": `${scale}px`} satisfies DemoVariables) as DemoVariables}>
           <FpsChartExample data-native-chart="fps" data={samples.map(value=>({value:value/1e6}))} dataKey="value" framerateLimit={limit} scale={scale}/>
           <ProfilerChartExample dataKey="percentage" data-native-chart="profiler" data={nativeData} scale={scale}/>
         </div>
@@ -60,7 +61,7 @@ export default function ChartDemo({ scale }: DemoProps) {
       {copy("More pixel-styled chart types")}
       {copy(circular ? "Browser visitors" : "Website visitors")}
       {copy(circular ? "Browser share - Jan to Jun 2024" : `${period === "3" ? "Apr to Jun" : "Jan to Jun"} 2024 - Desktop and mobile`)}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 * scale }}>
+      <div className="flex flex-wrap gap-(--demo-gap)" style={({"--demo-gap": `${6 * scale}px`} satisfies DemoVariables) as DemoVariables}>
         <Select items={types} scale={scale} value={type} onValueChange={v => setType(v as AnalyticsChartType)}><SelectTrigger aria-label="Chart type" style={{ width: Math.min(116, contentWidth) * scale, maxWidth: "100%" }}><SelectValue /></SelectTrigger><SelectContent>{types.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select>
         {!circular && <><Select items={{"6":"Last 6 months","3":"Last 3 months"}} scale={scale} value={period} onValueChange={value => setPeriod(value ?? "")}><SelectTrigger aria-label="Chart period" style={{ width: Math.min(116, contentWidth) * scale, maxWidth: "100%" }}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="6">Last 6 months</SelectItem><SelectItem value="3">Last 3 months</SelectItem></SelectContent></Select>
         <Select items={{both:"Both devices",desktop:"Desktop",mobile:"Mobile"}} scale={scale} value={device} onValueChange={value => setDevice(value ?? "")}><SelectTrigger aria-label="Chart devices" style={{ width: Math.min(116, contentWidth) * scale, maxWidth: "100%" }}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="both">Both devices</SelectItem><SelectItem value="desktop">Desktop</SelectItem><SelectItem value="mobile">Mobile</SelectItem></SelectContent></Select></>}

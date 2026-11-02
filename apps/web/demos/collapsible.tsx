@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react"
 import {Collapsible,CollapsibleTrigger,CollapsibleContent} from "../registry/ui/collapsible"
 import {Input} from "../registry/ui/input"
@@ -9,9 +10,9 @@ export default function CollapsibleDemo({scale}:DemoProps){
  const [title,setTitle]=React.useState("World details"),[message,setMessage]=React.useState("Hello Minecraft\nYour next adventure starts here."),[open,setOpen]=React.useState(false)
  return <>
   <div className="demo-options">
-   <label className="demo-option">Title<Input scale={scale} aria-label="Collapsible title" value={title} onChange={event=>setTitle(event.target.value)} style={{width:120*scale,maxWidth:"100%"}}/></label>
+   <label className="demo-option">Title<Input scale={scale} aria-label="Collapsible title" value={title} onChange={event=>setTitle(event.target.value)} className="w-(--demo-width) max-w-full" style={({"--demo-width": `${120*scale}px`} satisfies DemoVariables) as DemoVariables}/></label>
    <label className="demo-option">Message<Textarea scale={scale} aria-label="Collapsible message" value={message} onChange={event=>setMessage(event.target.value)} style={{width:160*scale,maxWidth:"100%",height:50*scale}}/></label>
-   <Button type="button" scale={scale} style={{width:120*scale,maxWidth:"100%"}} onClick={()=>setOpen(value=>!value)}>{open?"Hide details":"Show details"}</Button>
+   <Button type="button" scale={scale} className="w-(--demo-width) max-w-full" style={({"--demo-width": `${120*scale}px`} satisfies DemoVariables) as DemoVariables} onClick={()=>setOpen(value=>!value)}>{open?"Hide details":"Show details"}</Button>
   </div>
   <div className="demo-stage" data-stage="collapsible">
    <Collapsible scale={scale} open={open} onOpenChange={setOpen}><CollapsibleTrigger>{title||" "}</CollapsibleTrigger><CollapsibleContent>{message}</CollapsibleContent></Collapsible>

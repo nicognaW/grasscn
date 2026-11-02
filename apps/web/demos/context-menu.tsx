@@ -11,8 +11,8 @@ export default function ContextMenuDemo({ scale }: DemoProps) {
     const [lastAction, setLastAction] = React.useState("Choose a world option");
     return <>
     <div className="demo-options">
-      <label className="demo-option">Title<Input aria-label="Context menu title" value={title} onChange={event => setTitle(event.target.value)} style={{ width: 240 }}/></label>
-      <label className="demo-option">Action<Input aria-label="Context menu action" value={action} onChange={event => setAction(event.target.value)} style={{ width: 240 }}/></label>
+      <label className="demo-option">Title<Input aria-label="Context menu title" value={title} onChange={event => setTitle(event.target.value)} className="w-60" /></label>
+      <label className="demo-option">Action<Input aria-label="Context menu action" value={action} onChange={event => setAction(event.target.value)} className="w-60" /></label>
     </div>
     <div className="demo-stage" data-stage="context-menu">
       <ContextMenu scale={scale}>

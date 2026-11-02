@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 
 import grass from "../assets/grass-block-48.png";
@@ -21,7 +22,7 @@ export default function AspectRatioDemo({ scale }: DemoProps) {
             key={String(label)}
             type="button"
             scale={scale}
-            style={{ width: 70 * scale }}
+            className="w-(--demo-width)" style={({"--demo-width": `${70 * scale}px`} satisfies DemoVariables) as DemoVariables}
             aria-pressed={ratio === value}
             onClick={() => setRatio(Number(value))}
           >

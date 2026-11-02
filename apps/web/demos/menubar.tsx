@@ -10,8 +10,8 @@ export default function MenubarDemo({ scale }: DemoProps) {
     const [lastAction, setLastAction] = React.useState("Choose a world option");
     return <>
     <div className="demo-options">
-      <label className="demo-option">Title<Input aria-label="Menubar title" value={title} onChange={event => setTitle(event.target.value)} style={{ width: 240 }}/></label>
-      <label className="demo-option">Action<Input aria-label="Menubar action" value={action} onChange={event => setAction(event.target.value)} style={{ width: 240 }}/></label>
+      <label className="demo-option">Title<Input aria-label="Menubar title" value={title} onChange={event => setTitle(event.target.value)} className="w-60" /></label>
+      <label className="demo-option">Action<Input aria-label="Menubar action" value={action} onChange={event => setAction(event.target.value)} className="w-60" /></label>
     </div>
     <div className="demo-stage" data-stage="menubar">
       <Menubar scale={scale} aria-label="World command bar">

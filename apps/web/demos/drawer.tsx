@@ -25,7 +25,7 @@ export default function DrawerDemo({ scale }: DemoProps) {
             aria-label="Drawer title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            style={{ width: 280 }}
+            className="w-70" 
           />
         </label>
         <label className="demo-option">

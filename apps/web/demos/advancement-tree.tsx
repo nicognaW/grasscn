@@ -1,3 +1,4 @@
+import type { DemoVariables } from "../demo-variables";
 import * as React from "react";
 
 import {
@@ -52,9 +53,9 @@ export default function AdvancementDemo({ scale }: DemoProps) {
   return (
     <>
       <div
-        className="demo-stage"
+        className="demo-stage demo-stage-display-grid demo-stage-gap-16"
         data-stage="advancement-tree"
-        style={{ display: "grid", gap: 16 }}
+        
       >
         <AdvancementTree
           key={reset}
@@ -66,7 +67,7 @@ export default function AdvancementDemo({ scale }: DemoProps) {
         />
         <strong>{node.title}</strong>
         <p>{node.description}</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+        <div className="flex flex-wrap gap-3" >
           <Button
             scale={scale}
             onClick={() =>
@@ -76,14 +77,14 @@ export default function AdvancementDemo({ scale }: DemoProps) {
                 )
               )
             }
-            style={{ width: 200 * scale, maxWidth: "100%" }}
+            className="w-(--demo-width) max-w-full" style={({"--demo-width": `${200 * scale}px`} satisfies DemoVariables) as DemoVariables}
           >
             {node.completed ? "Mark incomplete" : "Complete milestone"}
           </Button>
           <Button
             scale={scale}
             onClick={() => setReset((v) => v + 1)}
-            style={{ width: 100 * scale, maxWidth: "100%" }}
+            className="w-(--demo-width) max-w-full" style={({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
           >
             Reset view
           </Button>
