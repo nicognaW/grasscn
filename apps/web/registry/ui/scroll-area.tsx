@@ -9,6 +9,13 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 import "./minecraft-scroll-area.css";
 
+interface ScrollAreaThumbStyle extends React.CSSProperties {
+  "--mc-thumb": string;
+  "--mc-thumb-height": string;
+  "--mc-thumb-offset": string;
+  "--mc-track": string;
+}
+
 interface ScrollAreaScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -296,14 +303,14 @@ const ScrollBar = ({
       className={cn(`mc-scroll-area-scrollbar`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): ScrollAreaThumbStyle =>
           ({
             "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
             "--mc-thumb-height": `${geometry.thumb * scale}px`,
             "--mc-thumb-offset": `${geometry.offset * scale}px`,
             "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       onPointerDownCapture={(event) => {
         onPointerDownCapture?.(event);

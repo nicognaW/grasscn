@@ -10,6 +10,14 @@ import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-radio-group.css";
 
+interface RadioGroupItemPaintStyle extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
 interface RadioGroupScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -103,7 +111,7 @@ const RadioGroupItem = ({
       className={cn(`mc-checkbox mc-radio-item`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): RadioGroupItemPaintStyle =>
           ({
             "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
             "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
@@ -111,7 +119,7 @@ const RadioGroupItem = ({
             "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
             "--mc-scale": scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
       disabled={disabled}

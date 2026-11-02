@@ -7,6 +7,14 @@ import type { MinecraftProps } from "./minecraft-render";
 import "./minecraft-checkbox.css";
 import { playMinecraftClick } from "./minecraft-sound";
 
+interface CheckboxPaintStyle extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
 const Checkbox = ({
   className,
   scale = 2,
@@ -21,7 +29,7 @@ const Checkbox = ({
     className={cn("peer mc-checkbox", className)}
     style={minecraftStyle(
       style,
-      (__style) =>
+      (__style): CheckboxPaintStyle =>
         ({
           "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
           "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
@@ -29,7 +37,7 @@ const Checkbox = ({
           "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
           "--mc-scale": scale,
           ...__style,
-        }) as React.CSSProperties
+        })
     )}
     {...props}
     onClick={(event) => {

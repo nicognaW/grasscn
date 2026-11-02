@@ -19,6 +19,11 @@ import {
 
 import "./minecraft-avatar.css";
 
+interface AvatarPaintStyle extends React.CSSProperties {
+  "--mc-avatar-size": number;
+  "--mc-scale": number;
+}
+
 interface AvatarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -52,12 +57,12 @@ const Avatar = function Avatar({
         className={cn(`mc-avatar`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): AvatarPaintStyle =>
             ({
               "--mc-avatar-size": { sm: 12, default: 16, lg: 20 }[size],
               "--mc-scale": scale,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
         {...props}
       />

@@ -18,6 +18,13 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-badge.css";
 
+interface BadgePaintStyle extends React.CSSProperties {
+  "--mc-badge-emblem": string;
+  "--mc-badge-natural": string;
+  "--mc-badge-panel": string;
+  "--mc-scale": number;
+}
+
 const badgeVariants = cva("mc-badge", {
   defaultVariants: { variant: "default" },
   variants: { variant: { default: "" } },
@@ -158,14 +165,14 @@ const Badge = ({
       className={cn(badgeVariants({ variant }), className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): BadgePaintStyle =>
           ({
             "--mc-badge-emblem": `url("${minecraftBadgeAssets[`${achievement}_${earned ? "obtained" : "unobtained"}`]}")`,
             "--mc-badge-natural": `${Math.min(maxWidth, natural) + 37}px`,
             "--mc-badge-panel": `url("${earned ? minecraftBadgeAssets.obtained : minecraftBadgeAssets.unobtained}")`,
             "--mc-scale": scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       {...props}
     >

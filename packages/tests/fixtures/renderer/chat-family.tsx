@@ -15,6 +15,11 @@ import {
 } from "@grasscn/web/ui/message";
 import * as React from "react";
 
+interface ChatFamilyReferenceStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-pixel": string;
+}
+
 export const ChatFamilyFixture = () => {
   const q = new URLSearchParams(location.search);
   const component = q.get("component") ?? q.get("part") ?? "message";
@@ -27,7 +32,7 @@ export const ChatFamilyFixture = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   const width = Number(q.get("width") ?? 172);
 
-  const common = {
+  const common: ChatFamilyReferenceStyle = {
     position: "fixed",
     left: Number(q.get("x") ?? 16) * scale,
     top: Number(q.get("y") ?? 16) * scale,
@@ -36,7 +41,7 @@ export const ChatFamilyFixture = () => {
     color: q.get("color") ?? "#ffffff",
     "--mc-scale": scale,
     "--mc-pixel": `${scale}px`,
-  } as React.CSSProperties;
+  };
 
   document.documentElement.style.background = q.get("background") ?? "#202020";
   document.body.style.background = q.get("background") ?? "#202020";

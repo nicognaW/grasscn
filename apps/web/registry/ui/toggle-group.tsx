@@ -11,6 +11,11 @@ import { toggleVariants } from "./toggle";
 
 import "./minecraft-toggle-group.css";
 
+interface ToggleGroupSpacingStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-toggle-spacing": number;
+}
+
 interface ToggleGroupScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -59,12 +64,12 @@ const ToggleGroup = ({
         className={cn(`mc-toggle-group`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): ToggleGroupSpacingStyle =>
             ({
               "--mc-scale": scale,
               "--mc-toggle-spacing": spacing,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
         {...props}
       >

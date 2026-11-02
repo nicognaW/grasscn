@@ -12,6 +12,14 @@ import { playMinecraftClick } from "./minecraft-sound";
 import "./minecraft-checkbox.css";
 import "./minecraft-questionnaire.css";
 
+interface QuestionnaireCheckboxStyle extends React.CSSProperties {
+  "--mc-checkbox-checked": string;
+  "--mc-checkbox-checked-focused": string;
+  "--mc-checkbox-focused": string;
+  "--mc-checkbox-normal": string;
+  "--mc-scale": number;
+}
+
 interface QuestionnaireScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -176,7 +184,7 @@ const QuestionnaireChoice = ({
               className={`mc-checkbox ${input.className ?? ""}`}
               style={minecraftStyle(
                 input.style,
-                (__style) =>
+                (__style): QuestionnaireCheckboxStyle =>
                   ({
                     "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
                     "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
@@ -185,7 +193,7 @@ const QuestionnaireChoice = ({
                     "--mc-scale": scale,
                     appearance: "none",
                     ...__style,
-                  }) as React.CSSProperties
+                  })
               )}
               onClick={(event) => {
                 input.onClick?.(event);

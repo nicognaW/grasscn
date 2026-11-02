@@ -22,6 +22,15 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 import "./minecraft-button.css";
 import "./minecraft-select.css";
 
+interface SelectPopupPaintStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-select-background": string;
+  "--mc-select-footer": string;
+  "--mc-select-header": string;
+  "--mc-select-thumb": string;
+  "--mc-select-track": string;
+}
+
 interface SelectScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -459,7 +468,7 @@ const SelectContent = ({
             className={cn(`mc-select-content`, className)}
             style={minecraftStyle(
               style,
-              (__style) =>
+              (__style): SelectPopupPaintStyle =>
                 ({
                   "--mc-scale": scale,
                   "--mc-select-background": assets.menu_list_background,
@@ -468,7 +477,7 @@ const SelectContent = ({
                   "--mc-select-thumb": `url("${scrollbar.scroller}")`,
                   "--mc-select-track": `url("${scrollbar.scroller_background}")`,
                   ...__style,
-                }) as React.CSSProperties
+                })
             )}
             {...props}
           >

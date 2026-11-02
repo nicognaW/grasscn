@@ -40,6 +40,13 @@ import {
 
 import "./minecraft-sidebar.css";
 
+interface SidebarWidthStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--sidebar-width": string;
+  "--sidebar-width-icon": string;
+  "--sidebar-width-mobile": string;
+}
+
 interface SidebarScaleStyle extends React.CSSProperties {
   "--mc-scale": number;
 }
@@ -196,14 +203,14 @@ const SidebarProvider = ({
           className={cn(`mc-sidebar-wrapper`, className)}
           style={minecraftStyle(
             style,
-            (__style) =>
+            (__style): SidebarWidthStyle =>
               ({
                 "--mc-scale": scale,
                 "--sidebar-width": `${120 * scale}px`,
                 "--sidebar-width-icon": `${36 * scale}px`,
                 "--sidebar-width-mobile": `${140 * scale}px`,
                 ...__style,
-              }) as React.CSSProperties
+              })
           )}
           {...props}
         >
