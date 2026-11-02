@@ -1,5 +1,10 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface OverlayPlaybackState {
+  sounds: RecordedAudioPlayback[];
+}
 
 for (const component of ["sheet", "drawer"]) {
   test(`${component} preserves keyboard dismissal, accessible text, CJK input and close focus`, async ({
@@ -116,9 +121,13 @@ for (const component of ["sheet", "drawer"]) {
     page,
   }) => {
     await page.addInitScript(() => {
-      (window as any).sounds = [];
-      HTMLMediaElement.prototype.play = function play() {
-        (window as any).sounds.push({
+      // SAFETY: This Overlay initScript creates sounds as an empty playback trace before navigation and playback.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & OverlayPlaybackState).sounds = [];
+      HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+        // SAFETY: The paired Overlay initializer owns sounds; this unchanged native play mock appends only rate, source and volume.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & OverlayPlaybackState).sounds.push({
           rate: this.playbackRate,
           source: this.src,
           volume: this.volume,
@@ -135,13 +144,21 @@ for (const component of ["sheet", "drawer"]) {
     });
 
     await trigger.hover();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+    expect(await page.evaluate(() =>
+      // SAFETY: This Overlay reader follows navigation initialized with the exact paired sounds producer.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & OverlayPlaybackState).sounds
+    )).toEqual([]);
     await trigger.click();
     await page
       .getByRole("dialog")
       .getByRole("button", { exact: true, name: "Cancel" })
       .click();
-    expect(await page.evaluate(() => (window as any).sounds)).toEqual(
+    expect(await page.evaluate(() =>
+      // SAFETY: This Overlay reader follows navigation initialized with the exact paired sounds producer.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & OverlayPlaybackState).sounds
+    )).toEqual(
       Array.from({ length: 2 }, () => ({
         rate: 1,
         source: minecraftClickSound,

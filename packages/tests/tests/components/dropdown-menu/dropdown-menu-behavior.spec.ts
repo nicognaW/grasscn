@@ -1,5 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface DropdownPlaybackState {
+  __menuSounds: RecordedAudioPlayback[];
+}
+
+interface DropdownCounterState {
+  __menuVoices: number;
+}
 
 test("Dropdown Menu keyboard navigation skips disabled items and opens nested menus", async ({
   page,
@@ -197,9 +206,13 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__menuSounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__menuSounds.push({
+    // SAFETY: This Dropdown Menu initScript creates __menuSounds as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & DropdownPlaybackState).__menuSounds = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Dropdown Menu initializer owns __menuSounds; this unchanged native play mock appends only rate, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & DropdownPlaybackState).__menuSounds.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -208,7 +221,11 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
       return Promise.resolve();
     };
   });
-  const voices = async () => page.evaluate(() => (window as any).__menuSounds);
+  const voices = async () => page.evaluate(() =>
+    // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuSounds producer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & DropdownPlaybackState).__menuSounds
+  );
   await page.goto("/?component=dropdown-menu");
   const trigger = page.getByRole("button", { exact: true, name: "Game menu" });
   await trigger.hover();
@@ -241,9 +258,13 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
     page,
   }) => {
     await page.addInitScript(() => {
-      (window as any).__menuVoices = 0;
-      HTMLMediaElement.prototype.play = function play() {
-        (window as any).__menuVoices += 1;
+      // SAFETY: This Dropdown Menu initScript creates __menuVoices as a zero playback counter before navigation and playback.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & DropdownCounterState).__menuVoices = 0;
+      HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+        // SAFETY: The paired Dropdown Menu initializer sets __menuVoices to zero; this mock only increments that owned counter.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & DropdownCounterState).__menuVoices += 1;
 
         return Promise.resolve();
       };
@@ -257,13 +278,21 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
 
     await trigger.click();
     await expect
-      .poll(async () => page.evaluate(() => (window as any).__menuVoices))
+      .poll(async () => page.evaluate(() =>
+        // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & DropdownCounterState).__menuVoices
+      ))
       .toBe(1);
     await page.keyboard.press("Escape");
     await trigger.focus();
     await trigger.press("Enter");
     await expect
-      .poll(async () => page.evaluate(() => (window as any).__menuVoices))
+      .poll(async () => page.evaluate(() =>
+        // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & DropdownCounterState).__menuVoices
+      ))
       .toBe(2);
   });
 }

@@ -1,6 +1,15 @@
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedAudioPlayback } from "@tests/harness/audio-playback";
+
+interface MenubarPlaybackState {
+  __menubarVoices: RecordedAudioPlayback[];
+}
+
+interface MenubarCounterState {
+  __menubarVoices: number;
+}
 
 const game = (page: Page) =>
   page.getByRole("menuitem", { exact: true, name: "Game menu" });
@@ -253,9 +262,13 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).__menubarVoices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__menubarVoices.push({
+    // SAFETY: This Menubar initScript creates __menubarVoices as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & MenubarPlaybackState).__menubarVoices = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Menubar initializer owns __menubarVoices; this unchanged native play mock appends only rate, source and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & MenubarPlaybackState).__menubarVoices.push({
         rate: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -266,7 +279,11 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   });
 
   const voices = async () =>
-    page.evaluate(() => (window as any).__menubarVoices);
+    page.evaluate(() =>
+      // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & MenubarPlaybackState).__menubarVoices
+    );
 
   await page.goto("/?component=menubar&keepOpen");
   await game(page).hover();
@@ -294,22 +311,34 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
 for (const query of ["nativeButtonChild", "controlled&reject"]) {
   test(`Menubar keeps trigger sound single for ${query}`, async ({ page }) => {
     await page.addInitScript(() => {
-      (window as any).__menubarVoices = 0;
-      HTMLMediaElement.prototype.play = function play() {
-        (window as any).__menubarVoices += 1;
+      // SAFETY: This Menubar initScript creates __menubarVoices as a zero playback counter before navigation and playback.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & MenubarCounterState).__menubarVoices = 0;
+      HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+        // SAFETY: The paired Menubar initializer sets __menubarVoices to zero; this mock only increments that owned counter.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & MenubarCounterState).__menubarVoices += 1;
 
         return Promise.resolve();
       };
     });
     await openMenu(page, query);
     await expect
-      .poll(async () => page.evaluate(() => (window as any).__menubarVoices))
+      .poll(async () => page.evaluate(() =>
+        // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & MenubarCounterState).__menubarVoices
+      ))
       .toBe(1);
     await page.keyboard.press("Escape");
     await game(page).focus();
     await game(page).press("Enter");
     await expect
-      .poll(async () => page.evaluate(() => (window as any).__menubarVoices))
+      .poll(async () => page.evaluate(() =>
+        // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & MenubarCounterState).__menubarVoices
+      ))
       .toBe(2);
   });
 }

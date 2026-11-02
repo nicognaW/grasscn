@@ -1,4 +1,9 @@
 import { test, expect } from "@grasscn/tests/test";
+import type { RecordedOriginalClick } from "@tests/harness/audio-playback";
+
+interface QuestionnairePlaybackState {
+  voices: RecordedOriginalClick[];
+}
 
 test("Questionnaire uses the official ordered items, validation and previous/next navigation", async ({
   page,
@@ -96,9 +101,13 @@ test("Questionnaire choice and navigation interactions play the original click e
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
+    // SAFETY: This Questionnaire initScript creates voices as an empty playback trace before navigation and playback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & QuestionnairePlaybackState).voices = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The paired Questionnaire initializer owns voices; this unchanged native play mock appends only original-asset flag, rate and volume.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+      (window as typeof window & QuestionnairePlaybackState).voices.push({
         original: this.src.startsWith("data:audio/ogg;base64,"),
         rate: this.playbackRate,
         volume: this.volume,
@@ -110,10 +119,18 @@ test("Questionnaire choice and navigation interactions play the original click e
   await page.goto("/?component=questionnaire");
   const choice = page.getByRole("radio", { name: /Creative/u });
   await choice.hover();
-  expect(await page.evaluate(() => (window as any).voices.length)).toBe(0);
+  expect(await page.evaluate(() =>
+    // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & QuestionnairePlaybackState).voices.length
+  )).toBe(0);
   await choice.check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
-  expect(await page.evaluate(() => (window as any).voices)).toEqual([
+  expect(await page.evaluate(() =>
+    // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+    (window as typeof window & QuestionnairePlaybackState).voices
+  )).toEqual([
     { original: true, rate: 1, volume: 0.25 },
     { original: true, rate: 1, volume: 0.25 },
   ]);
