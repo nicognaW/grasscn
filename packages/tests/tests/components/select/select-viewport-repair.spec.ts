@@ -66,13 +66,13 @@ for (const scale of [2] as const) {
             .toBe(0);
         await page.evaluate(
           async () =>
-            await new Promise<void>((r) =>
-              requestAnimationFrame(() =>
+            await new Promise<void>((r) => {
+              requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                   r();
-                })
-              )
-            )
+                });
+              });
+            })
         );
         const after = (await popup.boundingBox())!;
 

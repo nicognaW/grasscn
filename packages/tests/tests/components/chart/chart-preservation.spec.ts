@@ -97,13 +97,13 @@ for (const scale of [2] as const) {
 
       await page.evaluate(
         async () =>
-          new Promise<void>((r) =>
-            requestAnimationFrame(() =>
+          new Promise<void>((r) => {
+            requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 r();
-              })
-            )
-          )
+              });
+            });
+          })
       );
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
       const after = (await popup.boundingBox())!;

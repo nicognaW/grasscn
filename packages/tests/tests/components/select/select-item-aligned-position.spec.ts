@@ -55,13 +55,13 @@ for (const scale of [1, 2, 3] as const) {
       await page.mouse.wheel(0, -100);
       await page.evaluate(
         async () =>
-          await new Promise<void>((r) =>
-            requestAnimationFrame(() =>
+          await new Promise<void>((r) => {
+            requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 r();
-              })
-            )
-          )
+              });
+            });
+          })
       );
       const after = (await popup.boundingBox())!;
       expect(after.x).toBeGreaterThanOrEqual(0);

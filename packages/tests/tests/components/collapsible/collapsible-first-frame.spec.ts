@@ -42,12 +42,12 @@ for (const scale of [1, 2, 3]) {
           const frames = [];
 
           for (const milestone of [0, 16, 32, 50, 100]) {
-            await new Promise((resolve) =>
+            await new Promise((resolve) => {
               setTimeout(
                 resolve,
                 Math.max(0, milestone - (performance.now() - start))
-              )
-            );
+              );
+            });
 
             const content = document.querySelector<HTMLElement>(
               '[data-slot="collapsible-content"]'
