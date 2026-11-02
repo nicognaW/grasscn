@@ -159,8 +159,8 @@ export const ChartGeometryProvider = ({
       node = node.parentElement
     ) {
       observer.observe(node, {
-        attributes: true,
         attributeFilter: ["class", "style", "data-theme"],
+        attributes: true,
       });
     }
 
