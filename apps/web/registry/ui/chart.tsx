@@ -139,7 +139,9 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   }
 
   return (
+    // oxlint-disable-next-line shadcn/no-inline-styles -- Upstream ChartStyle emits scoped theme variables for runtime ChartConfig series names.
     <style
+      // oxlint-disable-next-line react/no-danger -- Preserve upstream ChartStyle's per-chart theme-variable stylesheet.
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
@@ -373,6 +375,22 @@ const ChartLegendContent = ({
         .map((item, index) => {
           const key = `${nameKey ?? item.dataKey ?? "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
+          let icon: React.ReactNode;
+
+          if (itemConfig?.icon && !hideIcon) {
+            icon = <itemConfig.icon />;
+          } else {
+            const swatchStyle: React.CSSProperties & {
+              "--mc-chart-legend-color": string | undefined;
+            } = { "--mc-chart-legend-color": item.color };
+
+            icon = (
+              <div
+                className="mc-chart-legend-swatch h-2 w-2 shrink-0"
+                style={swatchStyle}
+              />
+            );
+          }
 
           return (
             <div
@@ -381,16 +399,7 @@ const ChartLegendContent = ({
                 "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
               )}
             >
-              {itemConfig?.icon && !hideIcon ? (
-                <itemConfig.icon />
-              ) : (
-                <div
-                  className="h-2 w-2 shrink-0"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
-                />
-              )}
+              {icon}
               <ChartText>{itemConfig?.label}</ChartText>
             </div>
           );

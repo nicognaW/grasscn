@@ -48,6 +48,9 @@
     justify-content: center;
     gap: 16px;
   }
+  .mc-chart-legend-swatch {
+    background-color: var(--mc-chart-legend-color);
+  }
   .mc-chart {
     font-family: "Minecraft Bitmap", monospace;
   }
