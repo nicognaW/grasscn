@@ -78,10 +78,7 @@ const MessageAvatar = ({
 );
 
 const isChatInline = function isChatInline(value: React.ReactNode): boolean {
-  if (
-    isMinecraftEmptyChild(value) ||
-    isMinecraftTextContent(value)
-  ) {
+  if (isMinecraftEmptyChild(value) || isMinecraftTextContent(value)) {
     return true;
   }
 
