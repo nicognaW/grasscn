@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
+import type CapturedData0 from "../reference/calendar-day/manifest.json";
 import { PNG } from "pngjs";
 
 /** Consumed fields of the six retained Calendar/Date Picker constituent families. */
@@ -23,7 +24,6 @@ interface CalendarComparisonManifest {
   cases: CalendarComparisonCase[];
 }
 
-import type CapturedData0 from "../reference/calendar-day/manifest.json";
 
 const different = function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
