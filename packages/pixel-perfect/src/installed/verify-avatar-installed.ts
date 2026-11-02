@@ -3,33 +3,47 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 
-import {
-  pixelPerfectTestRoot,
-  repoRoot,
-  pixelPerfectFile,
-  webFile,
-} from "@ppt/paths";
+import type { Page } from "@playwright/test";
+import type * as Playwright from "@playwright/test";
+import type {
+  AvatarCaptureManifest,
+  LegacyAvatarConsumerWindow,
+} from "@ppt/installed/legacy-consumer-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { pixelPerfectTestRoot, pixelPerfectFile, webFile } from "@ppt/paths";
+import type * as PngJs from "pngjs";
 
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 
 const [consumerArg, urlArg] = process.argv.slice(2);
 const consumer = path.resolve(consumerArg);
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 const require = createRequire(import.meta.url);
-const { chromium, expect } = require("@playwright/test");
-const { PNG } = require("pngjs");
 
+const { chromium, expect } =
+  // SAFETY: createRequire resolves the installed Playwright API at the original load point.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Playwright module API boundary.
+  require("@playwright/test") as typeof Playwright;
+
+// SAFETY: createRequire resolves the installed pngjs decoder used by this comparator.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
+const { PNG } = require("pngjs") as typeof PngJs;
+
+// SAFETY: the fixed Avatar captured-reference producer owns this fresh metadata read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Avatar capture producer boundary.
 const m = JSON.parse(
-  fs.readFileSync(
-    pixelPerfectFile(path.join("tests/reference/avatar/manifest.json"))
-  )
-);
+  fs
+    .readFileSync(
+      pixelPerfectFile(path.join("tests/reference/avatar/manifest.json"))
+    )
+    .toString()
+) as AvatarCaptureManifest;
 
 const browser = await chromium.launch({ channel: "msedge" });
 const results = [];
 
-const pageErrors = [];
-let page;
+const pageErrors: string[] = [];
+let page: Page | undefined;
 
 try {
   for (let i = 0; i < m.cases.length; i += 1) {
@@ -44,16 +58,27 @@ try {
       });
       page.on("pageerror", (e) => pageErrors.push(e.message));
       await page.goto(urlArg);
-      await page.waitForFunction(() => !!window.renderCase);
+      await page.waitForFunction(
+        () =>
+          // SAFETY: the hash-bound retained Avatar standalone consumer installs the required renderCase ABI.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge boundary.
+          !!(window as LegacyAvatarConsumerWindow).renderCase
+      );
     }
 
     const c = m.cases[i];
-    await page.evaluate((c) => window.renderCase(c), c);
-    await expect(page.locator("[data-mc-avatar-face]")).toHaveAttribute(
+    await page!.evaluate(
+      (c) =>
+        // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
+        (window as LegacyAvatarConsumerWindow).renderCase(c),
+      c
+    );
+    await expect(page!.locator("[data-mc-avatar-face]")).toHaveAttribute(
       "data-ready",
       "true"
     );
-    await page.evaluate(
+    await page!.evaluate(
       async () =>
         new Promise((r) =>
           requestAnimationFrame(() => requestAnimationFrame(r))
@@ -61,7 +86,7 @@ try {
     );
 
     const got = PNG.sync.read(
-      await page.locator("#subject").screenshot({ animations: "disabled" })
+      await page!.locator("#subject").screenshot({ animations: "disabled" })
     );
 
     const want = PNG.sync.read(
@@ -73,8 +98,9 @@ try {
     let diff = 0;
 
     for (let n = 0; n < want.data.length; n += 4) {
-      if (!want.data.subarray(n, n + 4).equals(got.data.subarray(n, n + 4)))
+      if (!want.data.subarray(n, n + 4).equals(got.data.subarray(n, n + 4))) {
         diff += 1;
+      }
     }
 
     if (diff) {
@@ -100,15 +126,21 @@ try {
     throw new Error(pageErrors.join("\n"));
   }
 
-  const item = JSON.parse(
-    fs.readFileSync(webFile(path.join("registry.json")))
-  ).items.find((i) => i.name === "avatar");
+  // SAFETY: the authored registry owns this fresh source descriptor read at the original verification phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+  const registry = JSON.parse(
+    fs.readFileSync(webFile(path.join("registry.json"))).toString()
+  ) as InstalledTextRegistry;
 
+  const item = registry.items.find((i) => i.name === "avatar");
+
+  // SAFETY: the initialized shadcn consumer configuration owns these existing alias/rsc fields.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
   const settings = JSON.parse(
-    fs.readFileSync(path.join(consumer, "components.json"))
-  );
+    fs.readFileSync(path.join(consumer, "components.json")).toString()
+  ) as { rsc?: boolean };
 
-  const canonical = (b) => {
+  const canonical = (b: Buffer) => {
     let t = b
       .toString()
       .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -121,7 +153,7 @@ try {
     return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
   };
 
-  const files = item.files.map((f) => {
+  const files = item!.files.map((f) => {
     const name = path.basename(f.path);
     const a = fs.readFileSync(webFile(path.join(f.path)));
     const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -149,8 +181,9 @@ try {
   for (let n = 0; n < changed.data.length; n += 4) {
     if (
       !changed.data.subarray(n, n + 4).equals(negative.data.subarray(n, n + 4))
-    )
+    ) {
       mismatch += 1;
+    }
   }
 
   if (mismatch !== 1) {

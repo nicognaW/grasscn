@@ -6,32 +6,40 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, url] = process.argv.slice(2);
 
 assert.ok(
   consumerArgument && url,
-  "Usage: bun src/installed/verify-command-installed.mjs <consumer-dir> <consumer-url>"
+  "Usage: bun src/installed/verify-command-installed.ts <consumer-dir> <consumer-url>"
 );
 
 const consumer = path.resolve(consumerArgument);
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+// SAFETY: the authored registry owns this existing awaited source descriptor read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
 const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
-);
+) as InstalledTextRegistry;
 
 const item = registry.items.find((item) => item.name === "command");
 
+// SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
   await readFile(path.join(consumer, "components.json"), "utf-8")
-);
+) as { rsc?: boolean };
 
 const files = [];
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -44,7 +52,7 @@ const canonical = (bytes) => {
   return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-for (const entry of item.files) {
+for (const entry of item!.files) {
   const name = path.basename(entry.path);
   const source = await readFile(webFile(path.join(entry.path)));
 
@@ -89,12 +97,14 @@ try {
   ]) {
     const directory = pixelPerfectFile(path.join("tests/reference", folder));
 
+    // SAFETY: the existing command route list selects these actual capture producers at this read point.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact command constituent capture producer boundary.
     const manifest = JSON.parse(
       await readFile(path.join(directory, "manifest.json"), "utf-8")
-    );
+    ) as CommandCaptureManifest;
 
     const cases = [];
-    const pageErrors = [];
+    const pageErrors: string[] = [];
 
     const first = PNG.sync.read(
       await readFile(path.join(directory, "captures", manifest.cases[0].name))
@@ -151,7 +161,7 @@ try {
           );
           query.set("selectedIndex", String(c.selectedIndex));
         } else {
-          query.set("text", c.text);
+          query.set("text", c.text!);
           query.set("placeholder", c.placeholder ?? "");
 
           const optionalMaxLength = c.maxLength;
@@ -175,7 +185,7 @@ try {
           await subject.focus();
 
           if (c.state.endsWith("hover")) {
-            await subject.getByRole("option").nth(c.targetIndex).hover();
+            await subject.getByRole("option").nth(c.targetIndex!).hover();
           } else {
             await page.mouse.move(0, 0);
           }
@@ -222,19 +232,21 @@ try {
             await page.mouse.move(0, 0);
           }
 
-          const cursor = c.cursor ?? c.text.length;
+          const cursor = c.cursor ?? c.text!.length;
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
             (node, { cursor, anchor }) =>
-              node.setSelectionRange(
+              // SAFETY: the entry route renders an HTML input or textarea with native selection support.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed entry fixture HTML DOM API boundary.
+              (node as HTMLInputElement).setSelectionRange(
                 Math.min(cursor, anchor),
                 Math.max(cursor, anchor),
                 cursor < anchor ? "backward" : "forward"
               ),
             { anchor, cursor }
           );
-          await page.clock.runFor(c.caretMs);
+          await page.clock.runFor(c.caretMs!);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         }
 

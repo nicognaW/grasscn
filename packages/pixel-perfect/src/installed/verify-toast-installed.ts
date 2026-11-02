@@ -3,7 +3,13 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import type { Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
+import type {
+  ToastCaptureManifest,
+  DecodedPixels,
+} from "@ppt/installed/control-capture-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
 import { repoRoot, pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -11,29 +17,40 @@ const [consumerArg, componentArg, urlArg] = process.argv.slice(2);
 
 assert.ok(
   consumerArg && ["sonner"].includes(componentArg) && urlArg,
-  "Usage: bun src/installed/verify-toast-installed.mjs <consumer> <sonner> <fixture-url>"
+  "Usage: bun src/installed/verify-toast-installed.ts <consumer> <sonner> <fixture-url>"
 );
 
 const consumer = path.resolve(consumerArg);
 const ref = pixelPerfectFile(path.join("tests/reference/toast"));
-const manifest = JSON.parse(fs.readFileSync(`${ref}/manifest.json`));
+
+// SAFETY: the fixed Toast reference path owns this fresh capture manifest read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Toast capture producer boundary.
+const manifest = JSON.parse(
+  fs.readFileSync(`${ref}/manifest.json`).toString()
+) as ToastCaptureManifest;
 
 const { cases } = manifest;
 const results = [];
 
-const sha = (b) => createHash("sha256").update(b).digest("hex");
+const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
-const item = JSON.parse(
-  fs.readFileSync(webFile(path.join("registry.json")))
-).items.find((i) => i.name === componentArg);
+// SAFETY: the authored registry owns this fresh installed source descriptor read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
 
+const item = registry.items.find((i) => i.name === componentArg);
+
+// SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
-  fs.readFileSync(path.join(consumer, "components.json"))
-);
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as { rsc?: boolean };
 
 assert.ok(item);
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let t = bytes
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -74,12 +91,14 @@ const files = item.files.map((file) => {
   };
 });
 
-const comparator = (a, b) => {
+const comparator = (a: DecodedPixels, b: DecodedPixels) => {
   assert.deepEqual([a.width, a.height], [b.width, b.height]);
   let n = 0;
 
   for (let i = 0; i < a.data.length; i += 4) {
-    if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))) n += 1;
+    if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))) {
+      n += 1;
+    }
   }
 
   return n;
@@ -99,8 +118,8 @@ const browser = await chromium.launch({ channel: "msedge" });
 
 try {
   let index = 0;
-  let page;
-  let errors = [];
+  let page: Page | undefined;
+  let errors: string[] = [];
 
   for (const c of cases) {
     const previousCaseCount = index;
@@ -142,40 +161,44 @@ try {
       q.set("text", c.text);
     }
 
-    await page.goto(`${urlArg}?${q}`);
+    await page!.goto(`${urlArg}?${q}`);
 
     if (component === "sonner") {
-      await expect(page.locator("#created")).toHaveText(
+      await expect(page!.locator("#created")).toHaveText(
         String(c.selectedIndex ?? 1)
       );
     }
 
-    await page.clock.fastForward(0);
-    await page.addStyleTag({
+    await page!.clock.fastForward(0);
+    await page!.addStyleTag({
       content:
         "#root{visibility:hidden}#subject,[data-sonner-toast],[data-mc-sonner-ghost]{visibility:visible}",
     });
-    const subject = page.locator("#subject");
+    const subject = page!.locator("#subject");
     await expect(subject).toBeVisible();
     await expect(
-      page.locator(
+      page!.locator(
         component === "sonner" ? "[data-sonner-toast]" : '[data-slot="toast"]'
       )
     ).toHaveCount(c.selectedIndex ?? 1);
-    await expect(page.locator("[data-mc-toast-ready]")).toHaveCount(
+    await expect(page!.locator("[data-mc-toast-ready]")).toHaveCount(
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await page.locator("[data-mc-toast-ready]").all()) {
+    for (const canvas of await page!.locator("[data-mc-toast-ready]").all()) {
       await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
     }
 
     if (c.state === "exiting") {
-      await page.clock.fastForward(600);
-      await page.locator("#close").evaluate((n) => n.click());
-      await page.clock.fastForward(component === "sonner" ? 16 : 0);
+      await page!.clock.fastForward(600);
+      await page!.locator("#close").evaluate((n) =>
+        // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Sonner close button HTML DOM API boundary.
+        (n as HTMLElement).click()
+      );
+      await page!.clock.fastForward(component === "sonner" ? 16 : 0);
       await expect(
-        page
+        page!
           .locator(
             component === "sonner"
               ? "[data-sonner-toast]"
@@ -188,19 +211,19 @@ try {
       );
     }
 
-    await page.clock.fastForward(c.timeMs);
+    await page!.clock.fastForward(c.timeMs);
 
     if (c.state !== "exiting" || c.timeMs < 600) {
-      await expect(page.locator("[data-mc-toast-ready]")).toHaveCount(
+      await expect(page!.locator("[data-mc-toast-ready]")).toHaveCount(
         c.selectedIndex ?? 1
       );
 
-      for (const canvas of await page.locator("[data-mc-toast-ready]").all()) {
+      for (const canvas of await page!.locator("[data-mc-toast-ready]").all()) {
         await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
       }
     }
 
-    await page.evaluate(() => window.dispatchEvent(new Event("resize")));
+    await page!.evaluate(() => window.dispatchEvent(new Event("resize")));
 
     const actualBytes = await subject.screenshot({ animations: "disabled" });
     const actual = PNG.sync.read(actualBytes);
@@ -252,8 +275,8 @@ try {
         c.name,
         mismatchedPixels,
         JSON.stringify(
-          await page.locator('[data-slot="toast"]').evaluateAll((nodes) =>
-            nodes.map((n) => ({
+          await page!.locator('[data-slot="toast"]').evaluateAll((nodes) =>
+            nodes.map((n): { rect: unknown; text: string | null } => ({
               rect: n.getBoundingClientRect().toJSON(),
               text: n.textContent,
             }))
