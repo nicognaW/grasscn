@@ -59,7 +59,7 @@ const readRegistryItems = async () =>
   ) as typeof registry;
 
 const readReferenceManifest = async (file: string) =>
-  // SAFETY: the caller checks the component's registered manifest paths before reading this capture.mjs/capture-controls.mjs document.
+  // SAFETY: the caller checks the component's registered manifest paths before reading this native capture launcher document.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered capture producer owns the identity/case protocol.
   JSON.parse(
     await readFile(evidenceFile(file), "utf-8")
