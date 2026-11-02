@@ -96,7 +96,10 @@ export const FpsChartExample = ({
           isAnimationActive={false}
           // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
           shape={(barProps) => (
-            <ChartPixelBar {...barProps} fill={fills[barProps.originalDataIndex]} />
+            <ChartPixelBar
+              {...barProps}
+              fill={fills[barProps.originalDataIndex]}
+            />
           )}
         />
         <ChartFpsFrame
