@@ -4,7 +4,7 @@ import { createHash } from "node:crypto"
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import type { BinaryLike } from "node:crypto";
+import type { Buffer } from "node:buffer";
 import type { MinecraftCaptureLibrary, MinecraftCaptureVersion } from "@ppt/native/capture-types";
 
 
@@ -25,7 +25,7 @@ const classes = path.join(runtime, "classes")
 const outputDir = path.resolve(process.env.MINECRAFT_REFERENCE_OUTPUT_DIR ?? here)
 const captures = path.join(outputDir, "captures")
 const frames = path.join(runtime, "frames")
-const sha256 = (bytes: BinaryLike) => createHash("sha256").update(bytes).digest("hex")
+const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex")
 const sourceJarSha256 = sha256(await readFile(jar))
 if (sourceJarSha256 !== "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290") {
   throw new Error("Reference capture is pinned to the agreed Minecraft Java 26.2 artifact; source JAR digest does not match")

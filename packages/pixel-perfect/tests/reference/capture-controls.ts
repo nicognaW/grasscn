@@ -8,7 +8,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises"
 import path from "node:path"
 
 import { fileURLToPath } from "node:url"
-import type { BinaryLike } from "node:crypto";
+import type { Buffer } from "node:buffer";
 import type { MinecraftCaptureLibrary, MinecraftCaptureVersion, CaptureCaseInput, NativeCaptureLayout, MinecraftCaptureAssetIndex, MinecraftCaptureAssetObject, ControlCaptureCase, ControlCaptureManifest } from "@ppt/native/capture-types";
 
 
@@ -46,7 +46,7 @@ const caseBytes = await readFile(caseFile)
 
 // SAFETY: authored native case files and their retained Java Case producers own these consumed fields; existing checks stay unchanged.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact native case input contract; runtime-selected path and raw bytes must remain fresh.
-const definitions = JSON.parse(caseBytes) as CaptureCaseInput[]
+const definitions = JSON.parse(String(caseBytes)) as CaptureCaseInput[]
 
 if (!definitions.length || new Set(definitions.map(c => c.name)).size !== definitions.length) throw new Error("Empty or duplicate native cases")
 
@@ -68,7 +68,7 @@ const harnessBytes = await readFile(harnessSource)
 
 const observeGlyphs = process.env.MINECRAFT_REFERENCE_OBSERVE_GLYPHS !== "false"
 
-const sha256 = (bytes: BinaryLike) => createHash("sha256").update(bytes).digest("hex")
+const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex")
 
 const sourceJarSha256 = sha256(await readFile(jar))
 
@@ -228,7 +228,7 @@ if (definitions.some(c => /[^\x00-\x7f]/.test((c.text ?? "") + (c.label ?? "") +
 
   // SAFETY: the selected official asset index maps resource names to SHA-1 objects and byte sizes; existing checks remain.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific launcher asset-index contract, with original fresh read and later integrity checks preserved.
-  const index = JSON.parse(indexBytes) as MinecraftCaptureAssetIndex, resources: Record<string, { sha1: string; sha256: string; size: number } | undefined> = {}
+  const index = JSON.parse(String(indexBytes)) as MinecraftCaptureAssetIndex, resources: Record<string, { sha1: string; sha256: string; size: number } | undefined> = {}
 
   for (const key of ["minecraft/font/include/unifont.json", "minecraft/font/unifont.zip"]) {
 
