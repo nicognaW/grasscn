@@ -1,15 +1,21 @@
 import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import type { Page } from "@grasscn/tests/test";
 import { PNG } from "pngjs";
 
+const pageErrors = new WeakMap<Page, string[]>();
+
 test.beforeEach(({ page }) => {
-  (page as any).__errors = [];
-  page.on("pageerror", (e) => (page as any).__errors.push(e.message));
+  const errors: string[] = [];
+  pageErrors.set(page, errors);
+  page.on("pageerror", (error) => {
+    errors.push(error.message);
+  });
 });
 
 test.afterEach(({ page, browser }, info) => {
-  const errors = (page as any).__errors;
+  const errors = pageErrors.get(page);
   writeFileSync(
     info.outputPath("runtime.json"),
     JSON.stringify({ browser: browser.version(), pageErrors: errors })

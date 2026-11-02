@@ -1,4 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 test("Calendar single selection, disabled dates, keyboard and month navigation use actual DayPicker", async ({
   page,
@@ -107,29 +111,18 @@ test("Date picker example owns selection across close and reopen", async ({
 test("Calendar cell and navigation activation preserve original one-voice click audio; hover remains silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioPlayback(page);
   await page.goto("/?component=calendar");
   const calendar = page.locator("[data-slot=calendar]").first();
   await calendar.getByRole("button", { name: /October 10th/ }).hover();
-  expect(await page.evaluate(() => (window as any).voices)).toHaveLength(0);
+  expect(await recordedAudioPlayback(page)).toHaveLength(0);
   await calendar.getByRole("button", { name: /October 10th/ }).click();
   await calendar.getByRole("button", { name: /next month/i }).click();
-  const voices = await page.evaluate(() => (window as any).voices);
+  const voices = await recordedAudioPlayback(page);
   expect(voices).toHaveLength(2);
   expect(
     voices.every(
-      (v: any) =>
+      (v) =>
         v.source.startsWith("data:audio/ogg;base64,") &&
         v.volume === 0.25 &&
         v.rate === 1

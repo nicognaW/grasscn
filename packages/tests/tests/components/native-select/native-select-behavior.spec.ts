@@ -1,4 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordOriginalClick,
+  recordedOriginalClicks,
+} from "@tests/harness/audio-playback";
 
 test("NativeSelect preserves native element refs, controlled options, optgroup and CJK selected text", async ({
   page,
@@ -73,31 +77,21 @@ test("NativeSelect native required validity and form reset update the skinned cl
 test("NativeSelect remains a real keyboard-operable select and original click voice is singular", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
-        original: this.src.startsWith("data:audio/ogg;base64,"),
-        rate: this.playbackRate,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordOriginalClick(page);
   await page.goto("/?component=native-select");
   const control = page.getByRole("combobox", { name: "Controlled choice" });
   await control.focus();
   await page.keyboard.press("ArrowDown");
   await expect(control).toHaveValue("two");
   await control.dispatchEvent("pointerdown", { button: 0 });
-  expect(await page.evaluate(() => (window as any).voices)).toEqual([
+  expect(await recordedOriginalClicks(page)).toEqual([
     { original: true, rate: 1, volume: 0.25 },
   ]);
   await page
     .getByRole("combobox", { name: "Disabled choice" })
     .dispatchEvent("pointerdown", { button: 0 });
-  expect(await page.evaluate(() => (window as any).voices.length)).toBe(1);
+  const voicesAfterDisabled = await recordedOriginalClicks(page);
+  expect(voicesAfterDisabled.length).toBe(1);
 });
 
 test("NativeSelect opens the platform popup and commits a keyboard option without claiming its pixels", async ({

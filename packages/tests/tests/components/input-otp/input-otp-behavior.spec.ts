@@ -1,4 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordAudioSources,
+  recordedAudioSources,
+} from "@tests/harness/audio-playback";
 
 test("InputOTP preserves real input, CJK value, completion, form name and ref", async ({
   page,
@@ -89,19 +93,12 @@ test("InputOTP preserves pattern filtering and paste transformation", async ({
 test("InputOTP interaction stays silent and visual mirrors stay out of accessibility", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push(this.src);
-
-      return Promise.resolve();
-    };
-  });
+  await recordAudioSources(page);
   await page.goto("/?component=input-otp");
   const input = page.getByRole("textbox", { name: "One-time code" });
   await input.fill("123");
   await input.press("ArrowLeft");
   await input.press("Delete");
   await expect(page.getByRole("textbox")).toHaveCount(1);
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await recordedAudioSources(page)).toEqual([]);
 });

@@ -49,13 +49,9 @@ test("Progress preserves native first-pixel fill and remains noninteractive", as
 
 test("Progress updates and pointer events are silent", async ({ page }) => {
   await page.addInitScript(() => {
-    const state = window as Window & {
-      progressAudioPlays?: number;
-    };
-
-    state.progressAudioPlays = 0;
+    const state = Object.assign(window, { progressAudioPlays: 0 });
     HTMLMediaElement.prototype.play = function play() {
-      state.progressAudioPlays!++;
+      state.progressAudioPlays += 1;
 
       return Promise.resolve();
     };
@@ -68,13 +64,12 @@ test("Progress updates and pointer events are silent", async ({ page }) => {
     "50"
   );
   expect(
-    await page.evaluate(
-      () =>
-        (
-          window as Window & {
-            progressAudioPlays?: number;
-          }
-        ).progressAudioPlays
-    )
+    await page.evaluate(() => {
+      // SAFETY: this test installs and initializes its own playback counter before navigation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Read only this fixture's initialized counter.
+      const state = window as typeof window & { progressAudioPlays: number };
+
+      return state.progressAudioPlays;
+    })
   ).toBe(0);
 });
