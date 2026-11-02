@@ -969,8 +969,8 @@ try {
           async () =>
             await trading
               .locator("img")
-              .evaluateAll((images) =>
-                images
+              .evaluateAll((images) => {
+                const sortedImageStates = images
                   .map((image) =>
                     image instanceof HTMLImageElement
                       ? [
@@ -980,11 +980,12 @@ try {
                           image.closest(".mc-trade-item") !== null,
                         ]
                       : null
-                  )
-                  .toSorted((first, second) =>
-                    String(first).localeCompare(String(second))
-                  )
-              )
+                  );
+                sortedImageStates.sort((first, second) =>
+                  String(first).localeCompare(String(second))
+                );
+                return sortedImageStates;
+              })
         )
         // adventureAssets declares villager 512x256, trade_arrow 10x9 and
         // scroller_disabled 6x27; the example supplies four 16x16 item icons.

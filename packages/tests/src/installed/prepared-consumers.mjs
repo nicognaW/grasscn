@@ -231,8 +231,10 @@ export const readPreparedConsumerProjects = async ({
     };
   });
 
+  const sortedProjectIds = projects.map((entry) => entry.id);
+  sortedProjectIds.sort();
   assert.deepEqual(
-    projects.map((entry) => entry.id).toSorted(),
+    sortedProjectIds,
     kind === "manual" ? ["manual-next", "manual-vite"] : ["cli-vite"]
   );
 
@@ -245,7 +247,9 @@ export const readPreparedConsumerProjects = async ({
   /** @type {Map<string, PreparedProject>} */
   const observedByFramework = new Map();
 
-  for (const entry of rawObserved.toReversed()) {
+  const reversedObserved = rawObserved.slice();
+  reversedObserved.reverse();
+  for (const entry of reversedObserved) {
     const project = preparedProject(entry);
     observedByFramework.set(project.framework, project);
   }

@@ -99,13 +99,17 @@ export const verifyGenerationCacheOwnership = async ({
       children.map(async (child) => await walk(path.join(relative, child)))
     );
 
-    return files.flat().toSorted(compare);
+    const sortedFiles = files.flat();
+    sortedFiles.sort(compare);
+    return sortedFiles;
   };
 
   const generatedFiles = async () => {
     const files = await Promise.all(generatedRoots.map(walk));
 
-    return files.flat().toSorted(compare);
+    const sortedFiles = files.flat();
+    sortedFiles.sort(compare);
+    return sortedFiles;
   };
 
   const names = await generatedFiles();

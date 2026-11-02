@@ -126,10 +126,12 @@ export const assertIndependentDependencies = async (project) => {
   /** @type {Record<string, {path: string, version: string, packageSha256: string}>} */
   const identities = {};
 
-  for (const name of Object.keys({
+  const sortedDependencyNames = Object.keys({
     ...dependencies,
     ...devDependencies,
-  }).toSorted()) {
+  });
+  sortedDependencyNames.sort();
+  for (const name of sortedDependencyNames) {
     let resolved;
 
     try {
@@ -214,18 +216,17 @@ export const directoryIdentity = async (
 
   await visit("");
 
+  const sortedFiles = Object.entries(files);
+  sortedFiles.sort(([first], [second]) => {
+    if (first < second) {
+      return -1;
+    }
+
+    return Number(first > second);
+  });
+
   return {
     files,
-    sha256: sha256(
-      JSON.stringify(
-        Object.entries(files).toSorted(([first], [second]) => {
-          if (first < second) {
-            return -1;
-          }
-
-          return Number(first > second);
-        })
-      )
-    ),
+    sha256: sha256(JSON.stringify(sortedFiles)),
   };
 };

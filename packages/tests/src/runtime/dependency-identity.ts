@@ -76,8 +76,9 @@ export const installedDependencyIdentity = function installedDependencyIdentity(
   visit(modules, "node_modules");
 
   const workspaces = workspaceNames(fs.readFileSync(lock, "utf-8"));
+  workspaces.sort();
 
-  for (const workspace of workspaces.toSorted()) {
+  for (const workspace of workspaces) {
     if (!workspace) {
       continue;
     }
