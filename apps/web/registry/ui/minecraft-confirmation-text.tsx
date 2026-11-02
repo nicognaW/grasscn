@@ -22,7 +22,7 @@ const advance = (char: string) =>
 const widthOf = (text: string) =>
   Math.ceil([...text].reduce((sum, char) => sum + advance(char), 0));
 
-function wrap(text: string, maximum: number) {
+const wrap = function wrap(text: string, maximum: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -55,9 +55,9 @@ function wrap(text: string, maximum: number) {
   }
 
   return lines;
-}
+};
 
-export function confirmationButtonText(
+export const confirmationButtonText = function confirmationButtonText(
   children: React.ReactNode
 ): React.ReactNode {
   return isMinecraftTextContent(children) &&
@@ -69,7 +69,7 @@ export function confirmationButtonText(
   ) : (
     children
   );
-}
+};
 
 export const MinecraftConfirmationText = ({
   children,

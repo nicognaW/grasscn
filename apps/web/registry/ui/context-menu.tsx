@@ -40,7 +40,7 @@ const ContextMenuTrigger = (
   props: MinecraftProps<typeof Primitive.Trigger>
 ) => <Primitive.Trigger data-slot="context-menu-trigger" {...props} />;
 
-function useMenuFrame(
+const useMenuFrame = function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
   scale: number,
   surface: MenuSurface
@@ -145,9 +145,12 @@ function useMenuFrame(
   }, [node, scale, surface]);
 
   return forwarded;
-}
+};
 
-function contentChildren(children: React.ReactNode, surface: MenuSurface) {
+const contentChildren = function contentChildren(
+  children: React.ReactNode,
+  surface: MenuSurface
+) {
   const content = (
     <>
       {surface === "popup" && (
@@ -170,7 +173,7 @@ function contentChildren(children: React.ReactNode, surface: MenuSurface) {
   );
 
   return content;
-}
+};
 
 type ContextMenuContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
@@ -251,7 +254,7 @@ const ContextMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
   <Primitive.Group data-slot="context-menu-group" {...props} />
 );
 
-function rowChildren(
+const rowChildren = function rowChildren(
   children: React.ReactNode,
   before?: React.ReactNode,
   after?: React.ReactNode
@@ -263,7 +266,7 @@ function rowChildren(
       {after}
     </>
   );
-}
+};
 
 type ContextMenuItemProps = MinecraftProps<typeof Primitive.Item> & {
   inset?: boolean;
@@ -305,7 +308,7 @@ const ContextMenuItem = ({
   );
 };
 
-function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
+const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
   const Indicator = radio
     ? Primitive.RadioItemIndicator
     : Primitive.CheckboxItemIndicator;
@@ -329,7 +332,7 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       <span className="mc-checkbox-indicator" />
     </Indicator>
   );
-}
+};
 
 const ContextMenuCheckboxItem = ({
   children,

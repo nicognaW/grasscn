@@ -11,7 +11,7 @@ export const DialogLayoutContext = React.createContext({
   scale: 2,
 });
 
-function widthOf(text: string, bold: boolean) {
+const widthOf = function widthOf(text: string, bold: boolean) {
   return Math.ceil(
     [...text].reduce((sum, char) => {
       const ascii = minecraftGlyphs[char.codePointAt(0)! - 32];
@@ -23,9 +23,9 @@ function widthOf(text: string, bold: boolean) {
       );
     }, 0)
   );
-}
+};
 
-function wrap(text: string, maximum: number, bold: boolean) {
+const wrap = function wrap(text: string, maximum: number, bold: boolean) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -58,7 +58,7 @@ function wrap(text: string, maximum: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftDialogText = ({
   children,

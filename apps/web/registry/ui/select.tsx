@@ -25,7 +25,9 @@ import "./minecraft-select.css";
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 const AnchorContext = React.createContext("");
 
-function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
+const useElement = function useElement<T extends HTMLElement>(
+  ref: React.Ref<T> | undefined
+) {
   const [element, setElement] = React.useState<T | null>(null);
 
   const callback = React.useCallback(
@@ -49,9 +51,9 @@ function useElement<T extends HTMLElement>(ref: React.Ref<T> | undefined) {
   );
 
   return [element, callback] as const;
-}
+};
 
-function textSkin(children: React.ReactNode): React.ReactNode {
+const textSkin = function textSkin(children: React.ReactNode): React.ReactNode {
   if (Array.isArray(children)) {
     return children.map((child, index) => (
       <React.Fragment key={index}>{textSkin(child)}</React.Fragment>
@@ -69,7 +71,7 @@ function textSkin(children: React.ReactNode): React.ReactNode {
   }
 
   return children;
-}
+};
 
 const Select = <Value = string, Multiple extends boolean = false>({
   scale = 2,
@@ -619,7 +621,9 @@ const SelectSeparator = ({
   />
 );
 
-function scrollButtonContents(children: React.ReactNode) {
+const scrollButtonContents = function scrollButtonContents(
+  children: React.ReactNode
+) {
   return (
     <>
       <span className="mc-button-surface" aria-hidden="true">
@@ -630,7 +634,7 @@ function scrollButtonContents(children: React.ReactNode) {
       <span className="mc-button-label">{textSkin(children)}</span>
     </>
   );
-}
+};
 
 const SelectScrollUpButton = ({
   children = "^",

@@ -10,7 +10,7 @@ import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
 let bitmap: Promise<HTMLImageElement> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function fontImage() {
+const fontImage = function fontImage() {
   return (bitmap ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -20,9 +20,9 @@ function fontImage() {
     image.onerror = reject;
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
-function documentTextWidth(text: string) {
+const documentTextWidth = function documentTextWidth(text: string) {
   return [...text].reduce(
     (sum, c) =>
       sum +
@@ -31,9 +31,9 @@ function documentTextWidth(text: string) {
         6),
     0
   );
-}
+};
 
-function documentLines(text: string, width: number) {
+const documentLines = function documentLines(text: string, width: number) {
   const lines: string[] = [];
 
   for (let line of text.split("\n")) {
@@ -69,7 +69,7 @@ function documentLines(text: string, width: number) {
   }
 
   return lines;
-}
+};
 
 const MinecraftDocumentText = ({
   text,

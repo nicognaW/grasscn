@@ -26,7 +26,7 @@ const manifest = JSON.parse(
   }[];
 };
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   if (expected.width !== actual.width || expected.height !== actual.height) {
     throw new Error("Pixel dimensions differ");
   }
@@ -54,7 +54,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Control comparator detects one changed pixel", async () => {
   const expected = PNG.sync.read(

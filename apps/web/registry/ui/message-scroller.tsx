@@ -22,13 +22,13 @@ import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
 
 const ScrollerScale = React.createContext<1 | 2 | 3>(2);
 
-function MessageScrollerProvider(
+const MessageScrollerProvider = function MessageScrollerProvider(
   props: React.ComponentProps<typeof Primitive.Provider>
 ) {
   return <Primitive.Provider {...props} />;
-}
+};
 
-function MessageScroller({
+const MessageScroller = function MessageScroller({
   className,
   scale = 2,
   style,
@@ -57,9 +57,9 @@ function MessageScroller({
       </MessageScale>
     </ScrollerScale>
   );
-}
+};
 
-function MessageScrollerViewport({
+const MessageScrollerViewport = function MessageScrollerViewport({
   className,
   ...props
 }: React.ComponentProps<typeof Primitive.Viewport>) {
@@ -70,9 +70,9 @@ function MessageScrollerViewport({
       {...props}
     />
   );
-}
+};
 
-function MessageScrollerContent({
+const MessageScrollerContent = function MessageScrollerContent({
   className,
   ...props
 }: React.ComponentProps<typeof Primitive.Content>) {
@@ -83,9 +83,9 @@ function MessageScrollerContent({
       {...props}
     />
   );
-}
+};
 
-function MessageScrollerItem({
+const MessageScrollerItem = function MessageScrollerItem({
   className,
   scrollAnchor = false,
   children,
@@ -105,9 +105,9 @@ function MessageScrollerItem({
       )}
     </Primitive.Item>
   );
-}
+};
 
-function MessageScrollerButton({
+const MessageScrollerButton = function MessageScrollerButton({
   direction = "end",
   className,
   children,
@@ -133,7 +133,7 @@ function MessageScrollerButton({
       {children ?? (direction === "end" ? "Scroll to end" : "Scroll to start")}
     </Primitive.Button>
   );
-}
+};
 
 export {
   MessageScrollerProvider,

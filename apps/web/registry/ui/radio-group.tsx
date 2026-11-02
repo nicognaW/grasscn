@@ -15,7 +15,7 @@ const RadioContext = React.createContext<{
   disabled: boolean;
 }>({ disabled: false, scale: 2 });
 
-function RadioGroup<Value = string>({
+const RadioGroup = function RadioGroup<Value = string>({
   className,
   scale = 2,
   disabled = false,
@@ -65,7 +65,7 @@ function RadioGroup<Value = string>({
       />
     </RadioContext.Provider>
   );
-}
+};
 
 const RadioGroupItem = ({
   className,
