@@ -98,8 +98,9 @@ test("Toast sounds use byte-identical original assets and decode in the browser"
     const out = [];
 
     for (const src of Object.values(sounds)) {
-      const data = Uint8Array.from(atob(src.split(",")[1]), (c) =>
-        c.codePointAt(0) ?? Number.NaN
+      const data = Uint8Array.from(
+        atob(src.split(",")[1]),
+        (c) => c.codePointAt(0) ?? Number.NaN
       );
 
       const audio = await context.decodeAudioData(data.buffer);

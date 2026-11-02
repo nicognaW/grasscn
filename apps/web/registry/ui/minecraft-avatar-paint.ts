@@ -148,8 +148,9 @@ export const paintMinecraftAvatar = function paintMinecraftAvatar(
     0,
     gl.RGBA,
     gl.UNSIGNED_BYTE,
-    Uint8Array.from(atob(minecraftAvatarSkins[skin].rgba), (c) =>
-      c.codePointAt(0) ?? Number.NaN
+    Uint8Array.from(
+      atob(minecraftAvatarSkins[skin].rgba),
+      (c) => c.codePointAt(0) ?? Number.NaN
     )
   );
 

@@ -95,7 +95,9 @@ export const MinecraftCardText = ({
   const widths = lines.map((line) =>
     [...line].reduce(
       (sum, char) =>
-        sum + minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32][2] + Number(bold),
+        sum +
+        minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32][2] +
+        Number(bold),
       0
     )
   );

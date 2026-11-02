@@ -127,8 +127,9 @@ const paint = function paint(
     let pixels = decoded.get(name);
 
     if (!pixels) {
-      pixels = Uint8Array.from(atob(minecraftProgressRgba[name]), (char) =>
-        char.codePointAt(0) ?? Number.NaN
+      pixels = Uint8Array.from(
+        atob(minecraftProgressRgba[name]),
+        (char) => char.codePointAt(0) ?? Number.NaN
       );
       decoded.set(name, pixels);
     }
