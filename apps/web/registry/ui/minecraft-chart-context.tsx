@@ -352,6 +352,19 @@ export const ChartPixelSurface = ({
   const [paint, setPaint] = React.useState(0);
   const [ready, setReady] = React.useState(false);
 
+  const backgroundStyle: React.CSSProperties & {
+    "--mc-chart-surface-background": string;
+  } = { "--mc-chart-surface-background": background };
+
+  const canvasStyle: React.CSSProperties & {
+    "--mc-chart-surface-height": number;
+    "--mc-chart-surface-width": number;
+  } = {
+    "--mc-chart-surface-height":
+      Math.max(1, Math.floor(height / scale)) * scale,
+    "--mc-chart-surface-width": Math.max(1, Math.floor(width / scale)) * scale,
+  };
+
   React.useLayoutEffect(() => {
     const svg = canvas.current?.closest("svg.recharts-surface");
 
@@ -587,21 +600,13 @@ export const ChartPixelSurface = ({
       height={height}
       pointerEvents="none"
     >
-      <div style={{ background, height: "100%", width: "100%" }}>
-        <style>
-          {".mc-chart [data-mc-pixel-source]{filter:opacity(0)!important}"}
-        </style>
+      <div className="mc-chart-pixel-background" style={backgroundStyle}>
         <canvas
           ref={canvas}
           aria-hidden="true"
           data-mc-ready={ready}
-          style={{
-            display: "block",
-            height: Math.max(1, Math.floor(height / scale)) * scale,
-            imageRendering: "pixelated",
-            pointerEvents: "none",
-            width: Math.max(1, Math.floor(width / scale)) * scale,
-          }}
+          className="mc-chart-pixel-canvas"
+          style={canvasStyle}
         />
       </div>
     </foreignObject>
