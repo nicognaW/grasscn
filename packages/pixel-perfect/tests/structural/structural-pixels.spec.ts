@@ -73,7 +73,7 @@ test.describe("Structural native constituents", () => {
         for (const orientation of component === "button-group" &&
         part === "button"
           ? ["horizontal", "vertical"]
-          : ["horizontal"])
+          : ["horizontal"]) {
           for (const active of component === "pagination" &&
           ["hover", "focus"].includes(c.state)
             ? [false, true]
@@ -192,6 +192,7 @@ test.describe("Structural native constituents", () => {
               expect(mismatchedPixels).toBe(0);
             });
           }
+        }
       }
     }
   }

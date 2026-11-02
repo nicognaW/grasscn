@@ -66,9 +66,9 @@ for (const scale of [2]) {
         expect(image.width % scale).toBe(0);
         expect(image.height % scale).toBe(0);
 
-        for (let y = 0; y < image.height; y += scale)
-          for (let x = 0; x < image.width; x += scale)
-            for (let sy = 0; sy < scale; sy++)
+        for (let y = 0; y < image.height; y += scale) {
+          for (let x = 0; x < image.width; x += scale) {
+            for (let sy = 0; sy < scale; sy++) {
               for (let sx = 0; sx < scale; sx++) {
                 const a = (y * image.width + x) * 4,
                   b = ((y + sy) * image.width + x + sx) * 4;
@@ -83,6 +83,9 @@ for (const scale of [2]) {
                   );
                 }
               }
+            }
+          }
+        }
       }
 
       expect(errors).toEqual([]);
