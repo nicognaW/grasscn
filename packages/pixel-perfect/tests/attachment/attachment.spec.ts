@@ -5,17 +5,37 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Inputs read by the closed Item-row and ASCII/CJK Button-action routes. */
+interface AttachmentComparisonCase extends CapturedReferenceCase {
+  label: string;
+  background?: string;
+  x?: number;
+  y?: number;
+  text?: string;
+  placeholder?: string;
+  selected?: boolean;
+}
+
+interface AttachmentComparisonManifest {
+  background: string;
+  cases: AttachmentComparisonCase[];
+}
+
 for (const [part, dir] of [
   ["row", "item"],
   ["action", "."],
   ["action", "button-cjk"],
 ]) {
+  // SAFETY: This closed row/item and action/ASCII-or-CJK-Button table reads retained manifests with the audited core fields, real variant optionals and string background headers.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact finite retained constituent-manifest boundary; runtime read/parse phase is preserved.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as AttachmentComparisonManifest;
 
   test.describe(`Attachment actual native ${part} constituents ${dir}`, () => {
     test.describe.configure({ mode: "parallel" });
