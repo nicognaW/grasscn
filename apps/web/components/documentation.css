@@ -127,6 +127,10 @@
     width: 240px;
   }
 }
+.documentation-tabs-scroll
+  > [data-slot="tabs-list"][data-example-tabs-layout="compact"] {
+  width: 240px;
+}
 .documentation-install-command
   .documentation-tabs-scroll
   > [data-slot="tabs-list"] {

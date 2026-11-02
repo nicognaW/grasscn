@@ -12,11 +12,11 @@ import { ExampleTabs } from "./example-tabs";
 export const ComponentExample = async ({
   name,
   title,
-  tabListWidth,
+  tabListLayout,
 }: {
   name: string;
   title?: string;
-  tabListWidth?: number;
+  tabListLayout?: "responsive" | "compact";
 }) => {
   if (!Object.hasOwn(examples, name)) {
     return (
@@ -60,7 +60,7 @@ export const ComponentExample = async ({
       code={code}
       filename={entry.filename}
       title={title ?? entry.title}
-      tabListWidth={tabListWidth}
+      tabListLayout={tabListLayout}
       installation={
         <div data-example-installation={entry.filename}>
           <DocumentText>
