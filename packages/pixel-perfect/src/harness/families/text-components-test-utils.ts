@@ -14,6 +14,26 @@ type TextReference =
   | typeof labelReference
   | typeof tooltipReference;
 
+interface TextReferenceCase {
+  name: string;
+  state: string;
+  scale: number;
+  width: number;
+  height: number;
+  sha256: string;
+  label?: string;
+  text?: string;
+  x?: number;
+  y?: number;
+  background?: string;
+  alignment?: string;
+  wrapWidth?: number;
+}
+
+interface TextReferenceManifest {
+  cases: TextReferenceCase[];
+}
+
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -77,9 +97,11 @@ export const nativeTextTests = function nativeTextTests(
   });
 
   for (const directory of directories) {
+    // SAFETY: the retained button, CJK button, tooltip and label cases share this core; each optional field occurs in at least one variant.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact consumed text-family protocol at its owned JSON boundary.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as TextReferenceManifest;
 
     const parts =
       component === "typography"
