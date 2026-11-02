@@ -1,5 +1,23 @@
 @import "./minecraft-assets.css";
+
+.mc-chart [data-mc-pixel-source] {
+  filter: opacity(0) !important;
+}
+
 @layer components {
+  .mc-chart-pixel-background {
+    background: var(--mc-chart-surface-background);
+    height: 100%;
+    width: 100%;
+  }
+  .mc-chart-pixel-canvas {
+    display: block;
+    height: calc(var(--mc-chart-surface-height) * 1px);
+    image-rendering: pixelated;
+    pointer-events: none;
+    width: calc(var(--mc-chart-surface-width) * 1px);
+  }
+
   .mc-chart-rect,
   .mc-chart-text {
     --mc-pixel: calc(1px * var(--mc-scale, 2));
@@ -29,6 +47,9 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
+  }
+  .mc-chart-legend-swatch {
+    background-color: var(--mc-chart-legend-color);
   }
   .mc-chart {
     font-family: "Minecraft Bitmap", monospace;

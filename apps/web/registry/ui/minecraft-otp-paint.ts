@@ -22,7 +22,7 @@ interface Images {
 let images: Promise<Images> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function loadImages() {
+const loadImages = function loadImages() {
   return (images ??= Promise.all(
     Object.values(minecraftInputAssets).map(
       (src) =>
@@ -51,7 +51,7 @@ function loadImages() {
       normal,
     };
   }));
-}
+};
 
 const glyphAdvance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
@@ -61,7 +61,11 @@ const glyphAdvance = (char: string) =>
 const advance = (text: string) =>
   Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
 
-function trimToWidth(text: string, width: number, backwards = false) {
+const trimToWidth = function trimToWidth(
+  text: string,
+  width: number,
+  backwards = false
+) {
   let length = 0;
   let used = 0;
 
@@ -79,9 +83,9 @@ function trimToWidth(text: string, width: number, backwards = false) {
   }
 
   return backwards ? text.slice(text.length - length) : text.slice(0, length);
-}
+};
 
-function scrollTo(
+const scrollTo = function scrollTo(
   text: string,
   start: number,
   position: number,
@@ -101,9 +105,9 @@ function scrollTo(
   }
 
   return Math.max(0, Math.min(text.length, start));
-}
+};
 
-function field(
+const field = function field(
   context: CanvasRenderingContext2D,
   image: HTMLImageElement,
   width: number,
@@ -154,9 +158,9 @@ function field(
       }
     }
   }
-}
+};
 
-function text(
+const text = function text(
   context: CanvasRenderingContext2D,
   alpha: Uint8ClampedArray,
   value: string,
@@ -210,10 +214,10 @@ function text(
       offset += width;
     }
   }
-}
+};
 
 /** Paints a native input's background, retaining the actual editable DOM input. */
-export function attachMinecraftOTPSlot(
+export const attachMinecraftOTPSlot = function attachMinecraftOTPSlot(
   input: HTMLInputElement,
   initialScale: number,
   readActive: () => boolean
@@ -471,4 +475,4 @@ export function attachMinecraftOTPSlot(
     input.removeEventListener("focus", focus);
     input.removeEventListener("blur", blur);
   };
-}
+};

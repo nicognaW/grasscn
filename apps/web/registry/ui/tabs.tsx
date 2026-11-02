@@ -10,7 +10,6 @@ import {
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
@@ -24,7 +23,7 @@ import "./minecraft-tabs.css";
 
 const ScaleContext = React.createContext(2);
 
-function useLocalRef<T extends HTMLElement>(
+const useLocalRef = function useLocalRef<T extends HTMLElement>(
   forwarded: React.Ref<T> | undefined
 ) {
   const local = React.useRef<T>(null);
@@ -53,7 +52,7 @@ function useLocalRef<T extends HTMLElement>(
   );
 
   return [local, callback, element] as const;
-}
+};
 
 type TabsProps = Omit<
   MinecraftProps<typeof TabsPrimitive.Root>,

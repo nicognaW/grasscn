@@ -1,5 +1,9 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import {
+  recordAudioPlayback,
+  recordedAudioPlayback,
+} from "@tests/harness/audio-playback";
 
 test("AlertDialog follows Base UI initial focus, traps focus, dismisses on Escape and restores its trigger", async ({
   page,
@@ -147,21 +151,9 @@ test("AlertDialog composes elements, preserves forms and forwards DOM refs witho
 test("AlertDialog uses one original click per button activation and keeps hover and Escape silent", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).__confirmationSounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).__confirmationSounds.push({
-        rate: this.playbackRate,
-        source: this.src,
-        volume: this.volume,
-      });
+  await recordAudioPlayback(page);
 
-      return Promise.resolve();
-    };
-  });
-
-  const sounds = async () =>
-    page.evaluate(() => (window as any).__confirmationSounds);
+  const sounds = async () => recordedAudioPlayback(page);
 
   await page.goto("/?component=alert-dialog");
 

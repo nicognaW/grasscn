@@ -5,7 +5,7 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -33,7 +33,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const directory = "tests/reference/menu-parts";
 
@@ -74,13 +74,15 @@ for (const c of manifest.cases) {
         (node as HTMLElement).focus();
       });
 
-      if (c.state === "focus")
+      if (c.state === "focus") {
         await subject
           .locator(
             '[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]'
           )
           .first()
           .focus();
+      }
+
       await page.mouse.move(0, 0);
       await expect(
         subject.locator('[data-mc-menu-text-ready="false"]')
@@ -88,11 +90,13 @@ for (const c of manifest.cases) {
 
       for (const line of await subject
         .locator("[data-mc-menu-unicode-ready]")
-        .all())
+        .all()) {
         await expect(line).toHaveAttribute(
           "data-mc-menu-unicode-ready",
           "true"
         );
+      }
+
       await page.evaluate(
         async () =>
           await new Promise<void>((resolve) =>

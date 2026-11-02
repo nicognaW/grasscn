@@ -23,16 +23,16 @@ interface ComboboxScaleStyle extends React.CSSProperties {
   "--mc-scale": Scale;
 }
 
-function classes<S>(
+const classes = function classes<S>(
   base: string,
   value?: string | ((state: S) => string | undefined)
 ) {
   return isMinecraftClassResolver(value)
     ? (state: S) => `${base} ${value(state) ?? ""}`
     : `${base} ${value ?? ""}`;
-}
+};
 
-function scaled<S>(
+const scaled = function scaled<S>(
   scale: Scale,
   style?: React.CSSProperties | ((state: S) => React.CSSProperties | undefined)
 ) {
@@ -44,7 +44,7 @@ function scaled<S>(
   return isMinecraftStyleResolver(style)
     ? (state: S) => merge(style(state))
     : merge(style);
-}
+};
 
 const Combobox = <
   Value,
@@ -467,9 +467,9 @@ const ComboboxChipsInput = ({
   );
 };
 
-function useComboboxAnchor() {
+const useComboboxAnchor = function useComboboxAnchor() {
   return React.useRef<HTMLDivElement | null>(null);
-}
+};
 
 export {
   Combobox,

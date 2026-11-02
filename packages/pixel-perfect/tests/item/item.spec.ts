@@ -58,11 +58,18 @@ for (const [part, directory] of [
           align: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) q.set("wrapWidth", String(c.wrapWidth));
+        if (c.wrapWidth != null) {
+          q.set("wrapWidth", String(c.wrapWidth));
+        }
 
-        if (mode === "plain") q.set("plain", "1");
+        if (mode === "plain") {
+          q.set("plain", "1");
+        }
 
-        if (mode === "button") q.set("button", "1");
+        if (mode === "button") {
+          q.set("button", "1");
+        }
+
         await page.goto(`/?${q}`);
         const subject = page.locator("[data-subject]");
         await expect(subject).toHaveAttribute(
@@ -79,18 +86,22 @@ for (const [part, directory] of [
 
           for (const text of await subject
             .locator("[data-mc-label-layout-ready]")
-            .all())
+            .all()) {
             await expect(text).toHaveAttribute(
               "data-mc-label-layout-ready",
               "true"
             );
+          }
+
           const media = subject.locator("[data-mc-item-media-ready]");
           await expect(media).toHaveAttribute(
             "data-mc-item-media-ready",
             "true"
           );
 
-          if (c.state === "hover") await subject.hover();
+          if (c.state === "hover") {
+            await subject.hover();
+          }
 
           if (c.state === "icon-hover") {
             const box = (await subject.boundingBox())!;
@@ -108,11 +119,13 @@ for (const [part, directory] of [
             "data-mc-item-media-state",
             c.state === "hover" ? "1" : c.state === "icon-hover" ? "2" : "0"
           );
-        } else if (part === "title")
+        } else if (part === "title") {
           await expect(subject).toHaveAttribute(
             "data-mc-label-layout-ready",
             "true"
           );
+        }
+
         await page.addStyleTag({
           content:
             "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
@@ -120,8 +133,10 @@ for (const [part, directory] of [
 
         for (const glyph of await subject
           .locator("[data-mc-label-ready]")
-          .all())
+          .all()) {
           await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
+        }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

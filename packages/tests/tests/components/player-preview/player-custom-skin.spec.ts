@@ -57,8 +57,9 @@ for (const sample of [
     let differences = 0;
 
     for (let i = 0; i < a.data.length; i += 4) {
-      if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4)))
+      if (!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))) {
         differences++;
+      }
     }
 
     writeFileSync(info.outputPath("auto.png"), actual);

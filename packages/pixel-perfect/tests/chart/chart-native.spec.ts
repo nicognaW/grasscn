@@ -82,7 +82,10 @@ for (const kind of ["fps", "pie"]) {
           .subarray(i, i + 4)
           .equals(expected.data.subarray(i, i + 4));
 
-        if (changed) count += 1;
+        if (changed) {
+          count += 1;
+        }
+
         diff.data.set(changed ? [255, 0, 255, 255] : [0, 0, 0, 255], i);
       }
 

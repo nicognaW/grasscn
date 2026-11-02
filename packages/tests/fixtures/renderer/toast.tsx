@@ -29,7 +29,9 @@ const SonnerFixture = () => {
                     onClick: (event) => {
                       setActions((v) => v + 1);
 
-                      if (p.has("cancelAction")) event.preventDefault();
+                      if (p.has("cancelAction")) {
+                        event.preventDefault();
+                      }
                     },
                   },
                   closeButton: true,

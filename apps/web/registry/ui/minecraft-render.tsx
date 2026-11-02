@@ -23,7 +23,7 @@ export type MinecraftPolymorphicProps<T extends React.ElementType> =
   useRender.ComponentProps<T>;
 
 /** Base UI composition for Minecraft's non-primitive artwork components. */
-export function MinecraftRender<
+export const MinecraftRender = function MinecraftRender<
   T extends keyof React.JSX.IntrinsicElements = "div",
 >({
   as,
@@ -40,7 +40,7 @@ export function MinecraftRender<
     ref: ref as React.Ref<HTMLElement>,
     render,
   });
-}
+};
 
 type StateClass<State> = ClassValue | ((state: State) => ClassValue);
 

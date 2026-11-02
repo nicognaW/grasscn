@@ -5,7 +5,7 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -33,7 +33,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Structural pixel comparator detects one changed pixel", () => {
   const expected = PNG.sync.read(
@@ -73,7 +73,7 @@ test.describe("Structural native constituents", () => {
         for (const orientation of component === "button-group" &&
         part === "button"
           ? ["horizontal", "vertical"]
-          : ["horizontal"])
+          : ["horizontal"]) {
           for (const active of component === "pagination" &&
           ["hover", "focus"].includes(c.state)
             ? [false, true]
@@ -100,10 +100,14 @@ test.describe("Structural native constituents", () => {
                 alignment: c.alignment ?? "left",
               });
 
-              if (c.wrapWidth != null)
+              if (c.wrapWidth != null) {
                 params.set("wrapWidth", String(c.wrapWidth));
+              }
 
-              if (active) params.set("active", "1");
+              if (active) {
+                params.set("active", "1");
+              }
+
               await page.goto(`/?${params}`);
               const subject = page.locator("[data-subject]");
               await expect(subject).toBeVisible();
@@ -122,7 +126,9 @@ test.describe("Structural native constituents", () => {
               await page.mouse.move(0, 0);
 
               if (!active && part === "button") {
-                if (c.state === "hover") await subject.hover();
+                if (c.state === "hover") {
+                  await subject.hover();
+                }
 
                 if (c.state === "focus") {
                   await subject.focus();
@@ -132,19 +138,22 @@ test.describe("Structural native constituents", () => {
                 }
               }
 
-              if (part === "text")
+              if (part === "text") {
                 await expect(subject).toHaveAttribute(
                   "data-mc-label-layout-ready",
                   "true"
                 );
+              }
 
               for (const label of await subject
                 .locator("[data-mc-label-ready]")
-                .all())
+                .all()) {
                 await expect(label).toHaveAttribute(
                   "data-mc-label-ready",
                   "true"
                 );
+              }
+
               await page.evaluate(
                 async () =>
                   await new Promise<void>((resolve) =>
@@ -185,6 +194,7 @@ test.describe("Structural native constituents", () => {
               expect(mismatchedPixels).toBe(0);
             });
           }
+        }
       }
     }
   }

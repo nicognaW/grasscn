@@ -159,7 +159,9 @@ const CodeBlockCopyButton = ({
   );
 };
 
-function selectable(value: React.ReactNode): React.ReactNode {
+const selectable = function selectable(
+  value: React.ReactNode
+): React.ReactNode {
   if (isMinecraftTextContent(value)) {
     return <MinecraftSelectableText text={String(value)} />;
   }
@@ -186,7 +188,7 @@ function selectable(value: React.ReactNode): React.ReactNode {
   }
 
   return value;
-}
+};
 
 const CodeBlockContent = ({
   className,

@@ -1,36 +1,17 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/input-cjk/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    text: string;
-    placeholder?: string;
-    cursor?: number;
-    anchor?: number;
-    caretMs: number;
-    maxLength?: number;
-    state: string;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    scale: number;
-    sha256: string;
-  }[];
-};
+import capturedManifest from "../reference/input-cjk/manifest.json";
+import type nativeInput from "../reference/input/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+// The inferred primary Input protocol includes the optional fields absent from these CJK records.
+const manifest: typeof nativeInput = capturedManifest;
+
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -58,7 +39,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Input pixel comparator detects a one-pixel change", async () => {
   const expected = PNG.sync.read(

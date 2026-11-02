@@ -13,7 +13,7 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
 
-function keyText(content: React.ReactNode): React.ReactNode {
+const keyText = function keyText(content: React.ReactNode): React.ReactNode {
   if (Array.isArray(content)) {
     return content.map((child, index) => (
       <React.Fragment key={index}>{keyText(child)}</React.Fragment>
@@ -61,7 +61,7 @@ function keyText(content: React.ReactNode): React.ReactNode {
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
 
 type KbdProps = React.ComponentProps<"kbd"> & {
   scale?: 1 | 2 | 3;

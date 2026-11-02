@@ -11,7 +11,6 @@ import {
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
 } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
@@ -19,7 +18,19 @@ import "./minecraft-button.css";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
-function bitmapText(content: React.ReactNode): React.ReactNode {
+interface ButtonStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ButtonGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
+const bitmapText = function bitmapText(
+  content: React.ReactNode
+): React.ReactNode {
   if (
     Array.isArray(content) ||
     (React.isValidElement(content) && content.type === React.Fragment)
@@ -94,18 +105,17 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
+          const glyphStyle: ButtonGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
+
           return (
             <span
               key={index}
-              className="mc-glyph"
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
-              }
+              className={cn("mc-glyph", char === " " && "mc-glyph-space")}
+              style={glyphStyle}
             />
           );
         })}
@@ -113,7 +123,7 @@ function bitmapText(content: React.ReactNode): React.ReactNode {
       <span className="mc-text-accessible">{text}</span>
     </span>
   );
-}
+};
 
 const buttonVariants = cva(
   "mc-button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -169,11 +179,10 @@ const Button = ({
       data-variant={variant}
       data-size={size}
       className={cn(cn(buttonVariants({ size, variant }), className))}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ButtonStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       onClick={(event) => {
         onClick?.(event);

@@ -54,7 +54,7 @@ const Marker = ({
   }
 
   const Root = MinecraftRender;
-  const child = null;
+
   const content = children;
 
   const contents = isMinecraftTextContent(content) ? (

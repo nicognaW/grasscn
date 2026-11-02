@@ -4,7 +4,7 @@ import { MinecraftSurface } from "./minecraft-surface";
 import { gpuTooltipPixels } from "./minecraft-tooltip-gpu";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
 
-function solidBackdrop(node: HTMLElement) {
+const solidBackdrop = function solidBackdrop(node: HTMLElement) {
   const bounds = node.getBoundingClientRect();
 
   const under = document
@@ -116,7 +116,7 @@ function solidBackdrop(node: HTMLElement) {
   }
 
   return color;
-}
+};
 
 export const MinecraftTooltipSurface = ({
   width,

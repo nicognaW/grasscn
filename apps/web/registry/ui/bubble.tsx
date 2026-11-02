@@ -171,7 +171,6 @@ const BubbleContent = ({
     };
   }, [scale]);
 
-  const child = null;
   const original = children;
 
   const content =

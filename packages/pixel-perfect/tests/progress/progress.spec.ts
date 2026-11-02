@@ -10,26 +10,9 @@ import {
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/progress/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    value: number;
-    color: string;
-    overlay: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/progress/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -57,7 +40,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Progress comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -196,7 +179,7 @@ test("Progress notch painter preserves the background through transparent corner
   for (let y = 0; y < 5; y += 1) {
     for (let x = 0; x < 182; x += 1) {
       if (!original.data[(y * 182 + x) * 4 + 3]) {
-        for (let dy = 0; dy < 2; dy++)
+        for (let dy = 0; dy < 2; dy++) {
           for (let dx = 0; dx < 2; dx++) {
             const index = ((y * 2 + dy) * rendered.width + x * 2 + dx) * 4;
             expect(
@@ -206,6 +189,7 @@ test("Progress notch painter preserves the background through transparent corner
             ).toBe(true);
             checked++;
           }
+        }
       }
     }
   }

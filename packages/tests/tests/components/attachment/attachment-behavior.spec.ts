@@ -1,27 +1,20 @@
 import { test, expect } from "@grasscn/tests/test";
+import {
+  recordOriginalClick,
+  recordedOriginalClicks,
+} from "@tests/harness/audio-playback";
 
 test("Attachment preview, removal and original native click sounds remain distinct", async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    (window as any).voices = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).voices.push({
-        original: this.src.startsWith("data:audio/ogg;base64,"),
-        rate: this.playbackRate,
-        volume: this.volume,
-      });
-
-      return Promise.resolve();
-    };
-  });
+  await recordOriginalClick(page);
   await page.goto("/?component=attachment");
   await page.getByRole("button", { name: "Preview file" }).click();
   await expect(page.locator("#opened")).toHaveText("1");
   await page.getByRole("button", { name: "Remove file" }).click();
   await expect(page.locator("#removed")).toHaveText("1");
   await expect(page.locator("#opened")).toHaveText("1");
-  expect(await page.evaluate(() => (window as any).voices)).toEqual([
+  expect(await recordedOriginalClicks(page)).toEqual([
     { original: true, rate: 1, volume: 0.25 },
     { original: true, rate: 1, volume: 0.25 },
   ]);

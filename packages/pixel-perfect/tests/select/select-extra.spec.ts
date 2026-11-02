@@ -6,31 +6,22 @@ import { compareSelectPixels } from "@ppt/harness/families/select-pixel-compare"
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import capturedManifest from "../reference/select-extra/manifest.json";
+import type nativeSelect from "../reference/select/manifest.json";
+
 const directory = "tests/reference/select-extra";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-) as {
-  cases: {
-    name: string;
-    element: string;
-    label?: string;
-    labels?: string[];
-    width: number;
-    height: number;
-    x: number;
-    y: number;
-    scale: number;
-    state: string;
-    selectedIndex?: number;
-    value?: number;
-    timeMs?: number;
-    background: string;
-    targetIndex?: number;
-    disabledIndex?: number;
-    sha256: string;
-  }[];
+// Extra captures share the primary Select protocol, including optional selection/scroll fields.
+type SelectCase = Omit<
+  (typeof nativeSelect.cases)[number],
+  "value" | "targetIndex"
+> & { value?: number; targetIndex?: number };
+
+type SelectManifest = Omit<typeof capturedManifest, "cases"> & {
+  cases: SelectCase[];
 };
+
+const manifest: SelectManifest = capturedManifest;
 
 test("Select comparator catches a one-pixel change", () => {
   const expected = PNG.sync.read(

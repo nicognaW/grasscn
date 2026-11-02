@@ -4,7 +4,7 @@ $pptPackage=Split-Path -Parent $PSScriptRoot
 $repository=Split-Path -Parent (Split-Path -Parent $pptPackage)
 $node=(Get-Command bun).Source
 function Get-GrasscnFullContext {
- $result=& $node (Join-Path $pptPackage 'cli/full-tests.mjs') context --issue $env:GRASSCN_FULL_RUN_ISSUE
+ $result=& $node (Join-Path $pptPackage 'cli/full-tests.ts') context --issue $env:GRASSCN_FULL_RUN_ISSUE
  if($LASTEXITCODE -ne 0){throw 'Full run authorization or executor ownership rejected'}
  return ($result|ConvertFrom-Json)
 }
@@ -17,5 +17,5 @@ if($Suite -eq 'full'){
 }else{$runDirectory=Join-Path $repository ('.pixel-perfect-test/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)}
 Push-Location -LiteralPath $pptPackage
 try{$runner=& $node --eval "console.log(require.resolve('@grasscn/tests/run-workload'))";if($LASTEXITCODE -ne 0){throw 'Cannot resolve shared resource runner'}}finally{Pop-Location}
-& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.mjs') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
+& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.ts') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
 exit $LASTEXITCODE

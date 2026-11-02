@@ -12,11 +12,7 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -78,7 +74,7 @@ const MenubarTrigger = ({
   );
 };
 
-function useMenuFrame(
+const useMenuFrame = function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
   scale: number,
   surface: MenuSurface
@@ -183,11 +179,10 @@ function useMenuFrame(
   }, [node, scale, surface]);
 
   return forwarded;
-}
+};
 
-function contentChildren(
+const contentChildren = function contentChildren(
   children: React.ReactNode,
-  render: unknown,
   surface: MenuSurface
 ) {
   const content = (
@@ -212,7 +207,7 @@ function contentChildren(
   );
 
   return content;
-}
+};
 
 type MenubarContentProps = MinecraftProps<typeof Primitive.Popup> &
   Pick<
@@ -280,7 +275,7 @@ const MenubarContent = ({
             )}
             {...props}
           >
-            {contentChildren(children, render, surface)}
+            {contentChildren(children, surface)}
           </Primitive.Popup>
         </Primitive.Positioner>
       </MenuScaleContext.Provider>
@@ -292,9 +287,8 @@ const MenubarGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
   <Primitive.Group data-slot="menubar-group" {...props} />
 );
 
-function rowChildren(
+const rowChildren = function rowChildren(
   children: React.ReactNode,
-  _render: unknown,
   before?: React.ReactNode,
   after?: React.ReactNode
 ) {
@@ -305,7 +299,7 @@ function rowChildren(
       {after}
     </>
   );
-}
+};
 
 type MenubarItemProps = MinecraftProps<typeof Primitive.Item> & {
   inset?: boolean;
@@ -342,12 +336,12 @@ const MenubarItem = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.Item>
   );
 };
 
-function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
+const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
   const Indicator = radio
     ? Primitive.RadioItemIndicator
     : Primitive.CheckboxItemIndicator;
@@ -371,7 +365,7 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       <span className="mc-checkbox-indicator" />
     </Indicator>
   );
-}
+};
 
 const MenubarCheckboxItem = ({
   children,
@@ -402,7 +396,7 @@ const MenubarCheckboxItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale))}
+      {rowChildren(children, checkboxIcon(scale))}
     </Primitive.CheckboxItem>
   );
 };
@@ -440,7 +434,7 @@ const MenubarRadioItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale, true))}
+      {rowChildren(children, checkboxIcon(scale, true))}
     </Primitive.RadioItem>
   );
 };
@@ -470,7 +464,7 @@ const MenubarLabel = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.GroupLabel>
   );
 };
@@ -551,7 +545,7 @@ const MenubarSubTrigger = ({
       )}
       {...props}
     >
-      {rowChildren(children, render, undefined, arrow)}
+      {rowChildren(children, undefined, arrow)}
     </Primitive.SubmenuTrigger>
   );
 };
@@ -621,7 +615,7 @@ const MenubarSubContent = ({
           )}
           {...props}
         >
-          {contentChildren(children, render, surface)}
+          {contentChildren(children, surface)}
         </Primitive.Popup>
       </Primitive.Positioner>
     </MenuScaleContext.Provider>

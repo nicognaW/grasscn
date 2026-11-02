@@ -3,7 +3,9 @@ import { minecraftToastSounds } from "./minecraft-toast-sound-assets";
 
 let playedThisFrame = false;
 
-export function playMinecraftToastSound(event: "in" | "out") {
+export const playMinecraftToastSound = function playMinecraftToastSound(
+  event: "in" | "out"
+) {
   if (playedThisFrame || typeof Audio === "undefined") {
     return;
   }
@@ -24,4 +26,4 @@ export function playMinecraftToastSound(event: "in" | "out") {
   void voice.play().catch(() => {
     /* empty */
   });
-}
+};

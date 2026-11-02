@@ -8,10 +8,7 @@
       "type": "registry:ui",
       "title": "Minecraft Button",
       "description": "Minecraft Button with original textures, ASCII/Unihex glyphs and click sound. Native default variant and size; scale, refs, native props and render supported. 66 ASCII plus 96 fixed CJK native cases at scales 1–3. Other glyphs and scrolling labels remain unverified.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -64,6 +61,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -72,9 +73,7 @@
       "type": "registry:ui",
       "title": "Minecraft Checkbox",
       "description": "Vanilla Minecraft Checkbox appearance with standard Base UI/shadcn behavior. Native-reference matrix covers boolean states at scales 1–3; mixed state is a web composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/checkbox.tsx",
@@ -107,9 +106,7 @@
       "type": "registry:ui",
       "title": "Minecraft Slider",
       "description": "Original Minecraft slider track/handle, logical-pixel position rounding, and ASCII labels with standard shadcn/Base UI values and events. Native matrix: 225 single-thumb horizontal cases at scales 1–3. Range/RTL/vertical are web extensions.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/slider.tsx",
@@ -216,18 +213,14 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Minecraft Tooltip",
       "description": "Original Minecraft tooltip background/frame and ASCII glyphs with Base UI tooltip behavior. Native comparisons cover 180 composited cases at scales 1–3, fixed screen geometry and solid backdrops. Complex backdrops and other browser/GPU environments are unverified.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/tooltip.tsx",
@@ -334,9 +327,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "textarea",
@@ -397,18 +388,14 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "label",
       "type": "registry:ui",
       "title": "Minecraft Label",
       "description": "Minecraft StringWidget and MultiLineTextWidget appearance with accessible Base UI label association, original ASCII/Unihex glyphs, native 9-pixel line spacing, wrapping and centering. 84 native cases at scales 1–3; other glyphs and raster environments remain unverified.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/label.tsx",
@@ -465,6 +452,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -473,9 +464,7 @@
       "type": "registry:ui",
       "title": "Minecraft Separator",
       "description": "Original Minecraft menu header/footer separator textures, native horizontal orientation and 2-pixel height, with Base UI semantic/decorative behavior, refs and render composition. 108 repeated native cases at scales1–3; vertical orientation is unsupported.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/separator.tsx",
@@ -500,9 +489,7 @@
       "type": "registry:ui",
       "title": "Minecraft Scroll Area",
       "description": "Minecraft vertical scrollbar and borderless clipped viewport with original scroller textures and native integer thumb geometry. Base UI viewport preserves native browser scrolling; refs, custom ScrollBar and render composition supported. 297 repeatable native cases at scales1–3. Horizontal and hover-only variants are unsupported.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/scroll-area.tsx",
@@ -527,9 +514,7 @@
       "type": "registry:ui",
       "title": "Minecraft Progress",
       "description": "Original Minecraft boss-bar appearance, all7 colors and5 notch styles, native182x5 geometry and float/discrete fill arithmetic. Original PNG and RGBA assets; notches use native source-alpha GPU blending. Base UI value/max semantics, labels, refs and render. 1284 steady-state native cases at scales1–3; arbitrary resizing and interpolation remain unverified.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/progress.tsx",
@@ -558,10 +543,7 @@
       "type": "registry:ui",
       "title": "Minecraft Tabs",
       "description": "Original Minecraft horizontal menu tabs, four native sprites, selected underline, timed overflowing labels and menu panel texture. Base UI selection, keyboard navigation, refs and composition. 822 repeated native cases at GUI scales1-3; fixed CJK glyph sampling context. Default visual variant only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/tabs.tsx",
@@ -630,6 +612,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -638,9 +624,7 @@
       "type": "registry:ui",
       "title": "Minecraft Select",
       "description": "Original Minecraft cycle-button trigger with original language-selection-list surface and scrollbar. Base UI dropdown semantics, forms, refs, composition and CJK labels; 942 repeatable native surface cases at scales1-3. Native default trigger size only; popup behavior and optional grouping are web composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/select.tsx",
@@ -721,6 +705,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -729,9 +717,7 @@
       "type": "registry:ui",
       "title": "Minecraft Radio Group",
       "description": "Exclusive selection using original Minecraft Checkbox artwork and full21x17 empty-label widget bounds. Base UI keyboard navigation, forms, controlled values, refs and render; original click audio. 48 repeatable native item cases at GUI scales1-3 on two backgrounds. Group layout and exclusive selection are web composition; no circular radio variant.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/radio-group.tsx",
@@ -768,9 +754,7 @@
       "type": "registry:ui",
       "title": "Minecraft Switch",
       "description": "Original Minecraft CycleButton ON/OFF appearance with shadcn/Base UI switch semantics. Original sprites, English value labels, click audio, refs, forms and render composition. Default150x20 native button, 192 repeated native cases at four widths and GUI scales1-3 on two backgrounds. Default visual size only.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/switch.tsx",
@@ -823,9 +807,7 @@
       "type": "registry:ui",
       "title": "Dialog",
       "description": "Original Minecraft PopupScreen appearance with shadcn Dialog semantics.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -937,6 +919,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -1055,6 +1041,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1063,10 +1053,7 @@
       "type": "registry:ui",
       "title": "Minecraft Popover",
       "description": "Original Minecraft popup surface and typography, with shadcn/Base UI anchoring and interactive web behavior. 156 native appearance cases at scales 1-3; fixed CJK glyphs, original textures and click sound.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1179,6 +1166,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1187,10 +1178,7 @@
       "type": "registry:ui",
       "title": "Minecraft Dropdown Menu",
       "description": "Shadcn/Base UI menu semantics with original Minecraft popup, suggestion-row typography, checkbox/radio and separator artwork. Fifteen standard exports, original click sound and fixed ASCII/CJK native appearance cases. Default visual variant only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1323,6 +1311,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1331,9 +1323,7 @@
       "type": "registry:ui",
       "title": "Minecraft Context Menu",
       "description": "Shadcn/Base UI context menu semantics with original Minecraft popup, suggestion rows, checkbox textures, font and separators. Fifteen exports; original checkbox/radio click sound. General menu layout is a designed composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/context-menu.tsx",
@@ -1450,6 +1440,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1458,10 +1452,7 @@
       "type": "registry:ui",
       "title": "Minecraft Menubar",
       "description": "Sixteen standard shadcn/Base UI menubar exports with original Button triggers, popup and suggestion-row surfaces, checkbox textures, glyphs, separators and click audio. Menubar geometry is a designed web composition. Default visual variant only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1598,6 +1589,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1606,10 +1601,7 @@
       "type": "registry:ui",
       "title": "Minecraft Collapsible",
       "description": "Three standard shadcn Collapsible exports with original Button appearance, normal/CJK text, native wrapping and click audio. Open-content layout is a designed web composition.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1702,6 +1694,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1710,10 +1706,7 @@
       "type": "registry:ui",
       "title": "Minecraft Toggle",
       "description": "Original Minecraft recipe-book filter textures with shadcn pressed-state semantics. Native 26 by 16 logical pixels at scales 1–3; default variant and size only. Optional web children are a composition outside the native icon-only pixel claim.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/toggle.tsx",
@@ -1746,10 +1739,7 @@
       "type": "registry:ui",
       "title": "Minecraft Toggle Group",
       "description": "Base UI single/multiple Toggle Group using original recipe-book filter artwork. Group geometry and optional children are web composition; default visual variant/size only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/toggle.tsx",
@@ -1790,9 +1780,7 @@
       "type": "registry:ui",
       "title": "Minecraft Aspect Ratio",
       "description": "Unskinned Base UI ratio layout; preserves child artwork without resampling. Web geometry verified separately from native skin fidelity.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/aspect-ratio.tsx",
@@ -1809,10 +1797,7 @@
       "type": "registry:ui",
       "title": "Minecraft Button Group",
       "description": "Horizontal/vertical web grouping of original native Button and Label skins. Default button visuals only. Group geometry and rotated vertical separator are designed compositions.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -1913,6 +1898,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -1921,10 +1910,7 @@
       "type": "registry:ui",
       "title": "Minecraft Pagination",
       "description": "Original recipe-book12×17 page arrows and original Button-skinned numeric links, bitmap fonts and native click audio; accessible web pagination semantics. Arrow and numeric-link cases are independently verified; web arrangement is a composition.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2013,6 +1999,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2021,10 +2011,7 @@
       "type": "registry:ui",
       "title": "Minecraft Badge",
       "description": "Original vanilla advancement frames, panel and diamond artwork with challenge/goal/task and earned/locked states.18 native117x26 reference cases at GUI scales1–3; compact sizing, CJK wrapping and link focus are web adaptations.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-label.css",
@@ -2121,6 +2108,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2129,9 +2120,7 @@
       "type": "registry:ui",
       "title": "Minecraft Typography",
       "description": "Semantic HTML typography with original vanilla ASCII/Unihex glyphs, shadow, wrapping and alignment. Headings retain native font scale; semantic hierarchy and prose layout are web compositions.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-label.css",
@@ -2196,6 +2185,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2204,9 +2197,7 @@
       "type": "registry:ui",
       "title": "Minecraft Breadcrumb",
       "description": "Accessible shadcn breadcrumb navigation using original vanilla ASCII/Unihex text. Navigation, separators and ellipsis layout are a web composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-label.css",
@@ -2271,6 +2262,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2279,9 +2274,7 @@
       "type": "registry:ui",
       "title": "Minecraft Kbd",
       "description": "Semantic kbd and KbdGroup using original native key-binding button treatment and glyphs, without activation handlers or audio. Keycap grouping is a web composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-font.ts",
@@ -2330,6 +2323,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2338,10 +2335,7 @@
       "type": "registry:ui",
       "title": "Minecraft Sheet",
       "description": "Original popup surface and native text constituents in an explicitly designed sheet composition. Native variants only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2450,6 +2444,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2458,10 +2456,7 @@
       "type": "registry:ui",
       "title": "Minecraft Drawer",
       "description": "Original popup surface and native text constituents in an explicitly designed drawer composition. Native variants only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -2570,6 +2565,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2578,10 +2577,7 @@
       "type": "registry:ui",
       "title": "Minecraft Empty",
       "description": "Original WorldSelectionList.NoWorldsEntry empty-row text placement with shadcn Empty composition slots, original ASCII/Unihex text and no invented media variants. Scalar children use the original native empty-row layout; rich slot composition remains a web layout.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-label.css",
@@ -2646,6 +2642,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2654,10 +2654,7 @@
       "type": "registry:ui",
       "title": "Minecraft Resizable",
       "description": "Accessible split panels with opposing original recipe-book page arrows, direction-correct resize cursors, keyboard controls and percentage feedback.60 native arrow constituent cases; divider arrangement and rotated vertical controls are web compositions.",
-      "dependencies": [
-        "react-resizable-panels@^4",
-        "@base-ui/react"
-      ],
+      "dependencies": ["react-resizable-panels@^4", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/resizable.tsx",
@@ -2859,6 +2856,10 @@
         {
           "path": "registry/ui/minecraft-input-paint.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -2867,10 +2868,7 @@
       "type": "registry:ui",
       "title": "Minecraft Sidebar",
       "description": "The25standard shadcn Sidebar exports with original Button/Input/Popup/Label/Separator/ScrollArea/Tooltip artwork. Controlled and responsive web navigation, original click audio, native fonts/CJK and mobile Sheet. Sidebar layout is an explicit web composition; unsupported visual variants omitted.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -3059,6 +3057,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3164,6 +3166,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3172,9 +3178,7 @@
       "type": "registry:ui",
       "title": "Minecraft Avatar",
       "description": "Original PlayerFaceExtractor head and optional hat with accessible Base UI Avatar loading/fallback composition.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/label.tsx",
@@ -3247,6 +3251,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3255,10 +3263,7 @@
       "type": "registry:ui",
       "title": "Minecraft Input Group",
       "description": "Standard Input Group exports composed from original EditBox, multiline edit, Button and native text appearances. Addon alignment/group layout are web composition; default native visual sizes/variants only.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -3375,6 +3380,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3383,9 +3392,7 @@
       "type": "registry:ui",
       "title": "Minecraft Table",
       "description": "Standard semantic Table exports composed from original native list background, separators and bitmap text. Table layout and selection are web compositions.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/table.tsx",
@@ -3453,6 +3460,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -3603,6 +3614,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -3783,6 +3798,10 @@
         {
           "path": "registry/ui/minecraft-select-atlas.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3791,10 +3810,7 @@
       "type": "registry:ui",
       "title": "Minecraft Item",
       "description": "Ten standard shadcn Item exports with original compatible-world row layout, landscape thumbnail, hover join sprites, selection frames, ASCII/Unihex text, native clipping and activation audio. Only default visual variant and size; arbitrary content and action layouts remain compositions.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/item.tsx",
@@ -3907,6 +3923,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -3915,10 +3935,7 @@
       "type": "registry:block",
       "title": "Minecraft Data Table",
       "description": "TanStack Table v9 columns/data with sorting, filtering, pagination, selection and visibility. Original native Table constituents; data-grid behavior is an explicit web composition.",
-      "dependencies": [
-        "@tanstack/react-table@9.3.1",
-        "@base-ui/react"
-      ],
+      "dependencies": ["@tanstack/react-table@9.3.1", "@base-ui/react"],
       "files": [
         {
           "path": "registry/blocks/data-table.tsx",
@@ -3997,6 +4014,10 @@
         {
           "path": "registry/ui/minecraft-select-assets.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4005,10 +4026,7 @@
       "type": "registry:ui",
       "title": "Minecraft Carousel",
       "description": "Standard Embla Carousel API with original recipe-book ImageButton arrows and original click audio. Slide layout, gestures and vertical arrow rotation are explicit web compositions.",
-      "dependencies": [
-        "embla-carousel-react@8.6.0",
-        "@base-ui/react"
-      ],
+      "dependencies": ["embla-carousel-react@8.6.0", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/carousel.tsx",
@@ -4157,6 +4175,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -4314,6 +4336,10 @@
         {
           "path": "registry/ui/minecraft-prose.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4447,6 +4473,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4455,10 +4485,7 @@
       "type": "registry:ui",
       "title": "Minecraft Chart",
       "description": "Full standard Recharts chart/config/tooltip/legend API plus original Minecraft FPS and profiler charts. Native plot pixels verified against unchanged original native renderers; generic Recharts charts are explicit web extensions.",
-      "dependencies": [
-        "recharts@3.8.0",
-        "@base-ui/react"
-      ],
+      "dependencies": ["recharts@3.8.0", "@base-ui/react"],
       "files": [
         {
           "path": "registry/blocks/chart-analytics.tsx",
@@ -4570,6 +4597,10 @@
           "path": "registry/blocks/chart-fps.tsx",
           "type": "registry:component",
           "target": "@components/chart-fps.tsx"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4578,10 +4609,7 @@
       "type": "registry:ui",
       "title": "Minecraft Trace",
       "description": "Standard current shadcn trace APIs using original Minecraft font, palette, sprites or loading phases. Layout and web interactions compose native constituents; verified scope is recorded separately.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -4706,6 +4734,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4714,9 +4746,7 @@
       "type": "registry:ui",
       "title": "Minecraft Spinner",
       "description": "Standard current shadcn spinner APIs using original Minecraft font, palette, sprites or loading phases. Layout and web interactions compose native constituents; verified scope is recorded separately.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/minecraft-loading-glyphs.ts",
@@ -4741,9 +4771,7 @@
       "type": "registry:ui",
       "title": "Minecraft Native Select",
       "description": "Real HTML select with an original CycleButton closed visual; OS popup and multiple listbox remain platform-controlled.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/native-select.tsx",
@@ -4832,6 +4860,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4840,10 +4872,7 @@
       "type": "registry:ui",
       "title": "Minecraft Marker",
       "description": "Original Label text and Screen separator textures in an explicit marker composition.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/marker.tsx",
@@ -4912,6 +4941,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -4920,10 +4953,7 @@
       "type": "registry:ui",
       "title": "Minecraft Input-Otp",
       "description": "Standard shadcn API composed with verified Minecraft native constituents.",
-      "dependencies": [
-        "input-otp",
-        "@base-ui/react"
-      ],
+      "dependencies": ["input-otp", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/input-otp.tsx",
@@ -5003,6 +5033,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -5125,6 +5159,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5133,10 +5171,7 @@
       "type": "registry:ui",
       "title": "Minecraft attachment",
       "description": "Original world-list row, item thumbnail/text constituents and button actions in an explicit file-attachment composition.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/attachment.tsx",
@@ -5232,6 +5267,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]
@@ -5378,6 +5417,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5385,10 +5428,7 @@
       "name": "advancement-tree",
       "title": "Advancement Tree",
       "description": "A pannable advancement graph with task, goal and challenge nodes.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "type": "registry:ui",
       "files": [
         {
@@ -5502,6 +5542,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5576,9 +5620,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "hotbar",
@@ -5611,9 +5653,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "hud",
@@ -5642,9 +5682,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "sign",
@@ -5705,9 +5743,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "player-preview",
@@ -5740,9 +5776,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "map",
@@ -5783,19 +5817,14 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "trading",
       "type": "registry:ui",
       "title": "Trading",
       "description": "A selectable trade list with payment, result and original merchant feedback.",
-      "dependencies": [
-        "class-variance-authority",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/button.tsx",
@@ -5920,6 +5949,10 @@
         {
           "path": "registry/ui/minecraft-render.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
+          "type": "registry:ui"
         }
       ]
     },
@@ -5928,9 +5961,7 @@
       "type": "registry:ui",
       "title": "Player List",
       "description": "A player roster and ranked scoreboard.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "registry/ui/avatar.tsx",
@@ -6034,6 +6065,10 @@
         },
         {
           "path": "registry/ui/minecraft-render.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/minecraft-unicode.css",
           "type": "registry:ui"
         }
       ]

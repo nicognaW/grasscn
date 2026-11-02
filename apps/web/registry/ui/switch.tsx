@@ -3,11 +3,7 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftText } from "./minecraft-text";
@@ -37,8 +33,6 @@ const Switch = ({
       "Minecraft on/off buttons support the default visual size only"
     );
   }
-
-  const child = null;
 
   const artwork = (
     <>

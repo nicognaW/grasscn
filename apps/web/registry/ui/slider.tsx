@@ -7,11 +7,7 @@ import {
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSliderSprites as sprites } from "./minecraft-slider-sprites";
 import { playMinecraftClick } from "./minecraft-sound";
@@ -47,8 +43,11 @@ const Slider = ({
   scale?: 1 | 2 | 3;
   label?: string;
 }) => {
-  const initialValue = React.useRef(defaultValue ?? [min, max]);
-  const [uncontrolled, setUncontrolled] = React.useState(initialValue.current);
+  const [uncontrolled, setUncontrolled] = React.useState(
+    () => defaultValue ?? [min, max]
+  );
+
+  const initialValue = React.useRef(uncontrolled);
   const root = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => root.current!);
   React.useEffect(() => {

@@ -3,14 +3,14 @@ import type { Page, Locator } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
-async function open(page: Page, name: string) {
+const open = async function open(page: Page, name: string) {
   await page.setViewportSize({ height: 844, width: 390 });
   await page.goto(`${origin}#${name}`);
 
   return page.locator(`#component-${name}`);
-}
+};
 
-async function inside(child: Locator, parent: Locator) {
+const inside = async function inside(child: Locator, parent: Locator) {
   await expect
     .poll(async () => {
       const [c, p] = await Promise.all([
@@ -21,7 +21,7 @@ async function inside(child: Locator, parent: Locator) {
       return !!c && !!p && c.x >= p.x - 1 && c.x + c.width <= p.x + p.width + 1;
     })
     .toBe(true);
-}
+};
 
 for (const scale of [2]) {
   for (const [name, selector] of [

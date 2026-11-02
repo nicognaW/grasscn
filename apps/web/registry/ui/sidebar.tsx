@@ -60,7 +60,7 @@ const CollapsibleContext = React.createContext<"offcanvas" | "icon" | "none">(
   "offcanvas"
 );
 
-function useSidebarContext() {
+const useSidebarContext = function useSidebarContext() {
   const value = React.useContext(SidebarContext);
 
   if (!value) {
@@ -68,15 +68,15 @@ function useSidebarContext() {
   }
 
   return value;
-}
+};
 
-function useSidebar(): SidebarState {
+const useSidebar = function useSidebar(): SidebarState {
   const { ...state } = useSidebarContext();
 
   return state;
-}
+};
 
-function useIsMobile() {
+const useIsMobile = function useIsMobile() {
   const [mobile, setMobile] = React.useState(false);
   React.useEffect(() => {
     const query = matchMedia("(max-width: 767px)");
@@ -94,7 +94,7 @@ function useIsMobile() {
   }, []);
 
   return mobile;
-}
+};
 
 const SidebarProvider = ({
   defaultOpen = true,
@@ -323,7 +323,9 @@ type SidebarControlProps = MinecraftPolymorphicProps<"button"> & {
   scale?: Scale;
 };
 
-function sidebarControlLabel(children: React.ReactNode): React.ReactNode {
+const sidebarControlLabel = function sidebarControlLabel(
+  children: React.ReactNode
+): React.ReactNode {
   const parts: React.ReactNode[] = [];
   let run = "";
 
@@ -378,7 +380,7 @@ function sidebarControlLabel(children: React.ReactNode): React.ReactNode {
       )}
     </React.Fragment>
   ));
-}
+};
 
 const SidebarControl = ({
   scale = 2,
@@ -453,8 +455,6 @@ const SidebarActionButton = ({
   const inactive =
     (props.disabled ?? props["aria-disabled"] === true) ||
     props["aria-disabled"] === "true";
-
-  const child = null;
 
   const content = children;
 
@@ -751,7 +751,7 @@ const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => (
   />
 );
 
-function plainText(children: React.ReactNode): string {
+const plainText = function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
     .map((child) =>
       isMinecraftTextContent(child)
@@ -763,9 +763,11 @@ function plainText(children: React.ReactNode): string {
           : ""
     )
     .join("");
-}
+};
 
-function collapsedContent(children: React.ReactNode): React.ReactNode {
+const collapsedContent = function collapsedContent(
+  children: React.ReactNode
+): React.ReactNode {
   const values = React.Children.toArray(children);
 
   const icon = values.find(
@@ -779,7 +781,7 @@ function collapsedContent(children: React.ReactNode): React.ReactNode {
   );
 
   return icon ?? [...plainText(children)][0] ?? "?";
-}
+};
 
 const sidebarMenuButtonVariants = cva("mc-sidebar-menu-button", {
   defaultVariants: { size: "default", variant: "default" },
@@ -820,7 +822,6 @@ const SidebarMenuButton = ({
     );
   }
 
-  const child = null;
   const raw = children;
   const label = props["aria-label"] ?? plainText(raw);
   const display = collapsed ? collapsedContent(raw) : raw;

@@ -6,7 +6,7 @@ import {
   tabsListVariants,
 } from "@grasscn/web/ui/tabs";
 
-export function TabsApiContract() {
+export const TabsApiContract = function TabsApiContract() {
   const supported = (
     <Tabs defaultValue="game" orientation="horizontal" scale={3}>
       <TabsList variant="default" activateOnFocus>
@@ -23,4 +23,4 @@ export function TabsApiContract() {
   const line = <TabsList variant="line" activateOnFocus />;
 
   return [supported, styled, vertical, line];
-}
+};

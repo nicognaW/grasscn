@@ -14,7 +14,7 @@ export interface ToastGlyph {
 let source: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function alpha() {
+const alpha = function alpha() {
   return (source ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -28,9 +28,12 @@ function alpha() {
     image.onerror = reject;
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
-export async function toastLayout(title: string, message: string | null) {
+export const toastLayout = async function toastLayout(
+  title: string,
+  message: string | null
+) {
   const [, bitmap] = await Promise.all([loadUnihex(), alpha()]);
   const cache = new Map<string, ToastGlyph>();
 
@@ -156,4 +159,4 @@ export async function toastLayout(title: string, message: string | null) {
     titleLines,
     width,
   };
-}
+};

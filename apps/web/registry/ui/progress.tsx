@@ -5,14 +5,18 @@ import * as React from "react";
 
 import { minecraftProgressAssets } from "./minecraft-progress-assets";
 import { MinecraftProgressPaint } from "./minecraft-progress-paint";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-progress.css";
+
+interface ProgressStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ProgressSurfaceStyle extends React.CSSProperties {
+  "--mc-progress-image": string;
+}
 
 type BossBarColor =
   | "pink"
@@ -91,6 +95,22 @@ const Progress = ({
 
   const content = children;
 
+  const backgroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${background}")`,
+  };
+
+  const notchBackgroundStyle: ProgressSurfaceStyle | undefined = notchBackground
+    ? { "--mc-progress-image": `url("${notchBackground}")` }
+    : undefined;
+
+  const foregroundStyle: ProgressSurfaceStyle = {
+    "--mc-progress-image": `url("${foreground}")`,
+  };
+
+  const notchForegroundStyle: ProgressSurfaceStyle | undefined = notchForeground
+    ? { "--mc-progress-image": `url("${notchForeground}")` }
+    : undefined;
+
   const artwork = (
     <>
       {overlay !== "progress" && (
@@ -106,13 +126,13 @@ const Progress = ({
         <span
           aria-hidden="true"
           className="mc-progress-surface"
-          style={{ backgroundImage: `url("${background}")` }}
+          style={backgroundStyle}
         />
         {notchBackground && (
           <span
             aria-hidden="true"
             className="mc-progress-surface"
-            style={{ backgroundImage: `url("${notchBackground}")` }}
+            style={notchBackgroundStyle}
           />
         )}
         <ProgressPrimitive.Indicator
@@ -121,14 +141,11 @@ const Progress = ({
           className="mc-progress-indicator"
           style={{ height: "100%", width: `calc(${filled} * var(--mc-pixel))` }}
         >
-          <span
-            className="mc-progress-surface"
-            style={{ backgroundImage: `url("${foreground}")` }}
-          />
+          <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (
             <span
               className="mc-progress-surface"
-              style={{ backgroundImage: `url("${notchForeground}")` }}
+              style={notchForegroundStyle}
             />
           )}
         </ProgressPrimitive.Indicator>
@@ -147,11 +164,10 @@ const Progress = ({
       data-color={color}
       data-overlay={overlay}
       className={cn(`mc-progress`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ProgressStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {artwork}

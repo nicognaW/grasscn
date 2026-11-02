@@ -7,26 +7,9 @@ import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-as
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/separator/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    x: number;
-    y: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/separator/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -54,7 +37,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Separator comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -82,7 +65,10 @@ for (const asChild of [false, true]) {
         state: c.state,
       });
 
-      if (asChild) query.set("asChild", "1");
+      if (asChild) {
+        query.set("asChild", "1");
+      }
+
       await page.goto(`/?${query}`);
       await page.addStyleTag({
         content: `html,body { background: ${c.background}; } #root > :not([data-subject]) { visibility: hidden; } [data-subject] { position: fixed; left: ${c.x * c.scale}px; top: ${c.y * c.scale}px; }`,

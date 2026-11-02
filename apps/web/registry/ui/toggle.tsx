@@ -5,11 +5,7 @@ import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-toggle-assets.css";
@@ -45,8 +41,6 @@ const Toggle = ({
       "Minecraft recipe filters support the default visual variant and size only"
     );
   }
-
-  const child = null;
 
   return (
     <TogglePrimitive

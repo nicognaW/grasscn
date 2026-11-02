@@ -10,10 +10,17 @@ import {
 } from "./minecraft-popover-gpu";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+import "./minecraft-unicode.css";
+
+interface PopoverUnicodeStyle extends React.CSSProperties {
+  "--mc-popover-unicode-height": string;
+  "--mc-popover-unicode-width": string;
+}
+
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function loadAlpha() {
+const loadAlpha = function loadAlpha() {
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -27,7 +34,7 @@ function loadAlpha() {
     image.onerror = reject;
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
 export const PopoverUnicodeLine = ({
   text,
@@ -164,29 +171,20 @@ export const PopoverUnicodeLine = ({
     };
   }, [text, bold, scale, width]);
 
+  const lineStyle: PopoverUnicodeStyle = {
+    "--mc-popover-unicode-height": `${9 * scale}px`,
+    "--mc-popover-unicode-width": `${width * scale}px`,
+  };
+
   return (
-    <span
-      style={{
-        display: "block",
-        height: 9 * scale,
-        position: "relative",
-        width: width * scale,
-      }}
-    >
+    <span className="mc-popover-unicode" style={lineStyle}>
       <canvas
         ref={ref}
         data-mc-popover-unicode-ready={ready}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          left: 0,
-          position: "absolute",
-          top: 0,
-          visibility: ready ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="mc-popover-unicode-canvas"
       />
-      <span style={{ visibility: ready ? "hidden" : "visible" }}>{text}</span>
+      <span className="mc-popover-unicode-fallback">{text}</span>
     </span>
   );
 };

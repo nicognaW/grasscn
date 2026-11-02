@@ -1,5 +1,7 @@
 /** Unused UV columns distinguish the standard three-pixel arm layout. */
-export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
+export const inferPlayerSkinModel = function inferPlayerSkinModel(
+  image: HTMLImageElement
+): "wide" | "slim" {
   const canvas = document.createElement("canvas");
   canvas.width = image.naturalWidth;
   canvas.height = image.naturalHeight;
@@ -28,4 +30,4 @@ export function inferPlayerSkinModel(image: HTMLImageElement): "wide" | "slim" {
   }
 
   return "slim";
-}
+};

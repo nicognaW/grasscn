@@ -160,6 +160,9 @@
       calc(-1 * var(--mc-glyph-y) * var(--mc-pixel));
     mask-repeat: no-repeat;
   }
+  .mc-glyph-space {
+    visibility: hidden;
+  }
   .mc-text-accessible {
     position: absolute;
     width: 1px;

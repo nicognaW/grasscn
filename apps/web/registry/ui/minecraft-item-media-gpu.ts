@@ -11,7 +11,7 @@ interface Painter {
 let painter: Painter | null | undefined;
 let users = 0;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -106,13 +106,13 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, textures };
-}
+};
 
-export function retainItemMedia() {
+export const retainItemMedia = function retainItemMedia() {
   users += 1;
-}
+};
 
-export function releaseItemMedia() {
+export const releaseItemMedia = function releaseItemMedia() {
   users -= 1;
 
   if (users > 0) {
@@ -132,9 +132,9 @@ export function releaseItemMedia() {
   }
 
   painter = undefined;
-}
+};
 
-export function itemMediaPixels(
+export const itemMediaPixels = function itemMediaPixels(
   state: 0 | 1 | 2,
   scale: number,
   x: number,
@@ -232,4 +232,4 @@ export function itemMediaPixels(
   }
 
   return result;
-}
+};

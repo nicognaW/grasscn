@@ -12,7 +12,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
+import type { MinecraftRenderProp } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
@@ -26,7 +26,7 @@ const advance = (char: string) =>
 const textWidth = (text: string) =>
   Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
 
-function splitLines(text: string, width?: number) {
+const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -64,7 +64,7 @@ function splitLines(text: string, width?: number) {
   }
 
   return lines;
-}
+};
 
 type MinecraftChatTextProps = React.HTMLAttributes<HTMLElement> & {
   render?: MinecraftRenderProp;
@@ -93,7 +93,7 @@ const MinecraftChatText = ({
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
-  const child = null;
+
   const content = children;
 
   const accessibleText = isMinecraftTextContent(content)
@@ -119,6 +119,7 @@ const MinecraftChatText = ({
           if (used + next > clipWidth - textWidth("...")) {
             break;
           }
+
           value += char;
           used += next;
         }

@@ -6,7 +6,7 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function nativeTextCompositionTests(
+export const nativeTextCompositionTests = function nativeTextCompositionTests(
   component: "code-block" | "trace" | "message-scroller" | "spinner"
 ) {
   test.describe.configure({ mode: "parallel" });
@@ -130,4 +130,4 @@ export function nativeTextCompositionTests(
       expect(mismatchedPixels).toBe(0);
     });
   }
-}
+};

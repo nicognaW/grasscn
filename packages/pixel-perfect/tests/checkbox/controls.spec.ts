@@ -1,30 +1,13 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/controls/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    element: string;
-    state: string;
-    checked: boolean;
-    scale: number;
-    width: number;
-    height: number;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/controls/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   if (expected.width !== actual.width || expected.height !== actual.height) {
     throw new Error("Pixel dimensions differ");
   }
@@ -52,7 +35,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Control comparator detects one changed pixel", async () => {
   const expected = PNG.sync.read(

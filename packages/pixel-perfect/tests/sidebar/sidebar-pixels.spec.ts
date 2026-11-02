@@ -11,7 +11,7 @@ const repo = path.resolve(".");
 const hash = (value: Buffer) =>
   createHash("sha256").update(value).digest("hex");
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -39,7 +39,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -156,10 +156,16 @@ test.describe("Sidebar original native constituent cases", () => {
               "alignment",
               "contentHeight",
               "value",
-            ])
-              if (c[field] != null) params.set(field, String(c[field]));
+            ]) {
+              if (c[field] != null) {
+                params.set(field, String(c[field]));
+              }
+            }
 
-            if (active) params.set("active", "1");
+            if (active) {
+              params.set("active", "1");
+            }
+
             await page.goto(`/?component=sidebar&${params}`);
             const subject = page.locator("[data-subject]");
             await expect(subject).toHaveAttribute(
@@ -191,7 +197,9 @@ test.describe("Sidebar original native constituent cases", () => {
                 await expect(subject).toBeFocused();
               }
 
-              if (c.state === "hover") await subject.hover();
+              if (c.state === "hover") {
+                await subject.hover();
+              }
 
               const cursor = c.cursor ?? c.text.length,
                 anchor = c.anchor ?? cursor;
@@ -227,14 +235,19 @@ test.describe("Sidebar original native constituent cases", () => {
                 )
                 .toBe(c.value * c.scale);
 
-              if (c.state === "hover")
+              if (c.state === "hover") {
                 await subject
                   .locator('[data-slot="scroll-area-scrollbar"]')
                   .hover();
+              }
 
-              if (c.state === "focus") await viewport.focus();
+              if (c.state === "focus") {
+                await viewport.focus();
+              }
             } else if (kind === "button" && !active) {
-              if (c.state === "hover") await subject.hover();
+              if (c.state === "hover") {
+                await subject.hover();
+              }
 
               if (c.state === "focus") {
                 await subject.focus();
@@ -244,21 +257,23 @@ test.describe("Sidebar original native constituent cases", () => {
               }
             }
 
-            if (kind === "label")
+            if (kind === "label") {
               await expect(subject).toHaveAttribute(
                 "data-mc-label-layout-ready",
                 "true"
               );
+            }
 
             for (const label of await subject
               .locator("[data-mc-label-ready]")
-              .all())
+              .all()) {
               await expect(label).toHaveAttribute(
                 "data-mc-label-ready",
                 "true"
               );
+            }
 
-            if (kind !== "input")
+            if (kind !== "input") {
               await page.evaluate(
                 async () =>
                   await new Promise<void>((resolve) =>
@@ -269,6 +284,7 @@ test.describe("Sidebar original native constituent cases", () => {
                     )
                   )
               );
+            }
 
             const expectedBytes = readFileSync(
               pixelPerfectFile(path.join(directory, "captures", c.name))

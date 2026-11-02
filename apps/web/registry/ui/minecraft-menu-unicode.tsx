@@ -10,10 +10,17 @@ import {
 } from "./minecraft-menu-gpu";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+import "./minecraft-unicode.css";
+
+interface MenuUnicodeStyle extends React.CSSProperties {
+  "--mc-menu-unicode-height": string;
+  "--mc-menu-unicode-width": string;
+}
+
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function loadAlpha() {
+const loadAlpha = function loadAlpha() {
   return (alpha ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {
@@ -27,7 +34,7 @@ function loadAlpha() {
     image.onerror = reject;
     image.src = minecraftInputAssets.atlas;
   }));
-}
+};
 
 export const MenuUnicodeLine = ({
   text,
@@ -41,7 +48,18 @@ export const MenuUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+
+  const input = React.useMemo(
+    () => ({ bold, scale, text, width }),
+    [bold, scale, text, width]
+  );
+
+  const [completion, setCompletion] = React.useState<{
+    input: typeof input;
+    supported: boolean;
+  }>();
+
+  const ready = completion?.input === input && completion.supported;
 
   React.useLayoutEffect(() => {
     let disposed = false;
@@ -51,13 +69,12 @@ export const MenuUnicodeLine = ({
     const canvas = ref.current!;
     const context = canvas.getContext("2d")!;
 
-    setReady(false);
     void Promise.all([loadUnihex(), loadAlpha()]).then(([, source]) => {
       if (disposed) {
         return;
       }
 
-      const glyphs = [...text].map((char) => {
+      const glyphs = [...input.text].map((char) => {
         const code = char.codePointAt(0)!;
         const ascii = minecraftGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
@@ -122,8 +139,8 @@ export const MenuUnicodeLine = ({
 
         if (next !== signature) {
           signature = next;
-          canvas.width = Math.max(1, width * scale);
-          canvas.height = 9 * scale;
+          canvas.width = Math.max(1, input.width * input.scale);
+          canvas.height = 9 * input.scale;
           context.imageSmoothingEnabled = false;
           positionMenuGlyphs(context, bounds);
           let supported = true;
@@ -134,7 +151,7 @@ export const MenuUnicodeLine = ({
               context.fillStyle = shadow ? shade : ink;
 
               if (glyph.char !== " ") {
-                for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
+                for (let copy = 0; copy < (input.bold ? 2 : 1); copy++) {
                   supported =
                     paintMenuGlyph(
                       context,
@@ -146,17 +163,21 @@ export const MenuUnicodeLine = ({
                         copy * glyph.boldOffset +
                         (shadow ? glyph.shadowOffset : 0),
                       shadow ? glyph.shadowOffset : 0,
-                      scale,
-                      bold
+                      input.scale,
+                      input.bold
                     ) && supported;
                 }
               }
             }
 
-            x += glyph.advance + (bold ? glyph.boldOffset : 0);
+            x += glyph.advance + (input.bold ? glyph.boldOffset : 0);
           }
 
-          setReady(supported);
+          setCompletion((previous) =>
+            previous?.input === input && previous.supported === supported
+              ? previous
+              : { input, supported }
+          );
         }
 
         frame = requestAnimationFrame(tick);
@@ -170,31 +191,22 @@ export const MenuUnicodeLine = ({
       cancelAnimationFrame(frame);
       disposeMenuGlyphs(context);
     };
-  }, [text, bold, scale, width]);
+  }, [input]);
+
+  const lineStyle: MenuUnicodeStyle = {
+    "--mc-menu-unicode-height": `${9 * scale}px`,
+    "--mc-menu-unicode-width": `${width * scale}px`,
+  };
 
   return (
-    <span
-      style={{
-        display: "block",
-        height: 9 * scale,
-        position: "relative",
-        width: width * scale,
-      }}
-    >
+    <span className="mc-menu-unicode" style={lineStyle}>
       <canvas
         ref={ref}
         data-mc-menu-unicode-ready={ready}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          left: 0,
-          position: "absolute",
-          top: 0,
-          visibility: ready ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="mc-menu-unicode-canvas"
       />
-      <span style={{ visibility: ready ? "hidden" : "visible" }}>{text}</span>
+      <span className="mc-menu-unicode-fallback">{text}</span>
     </span>
   );
 };

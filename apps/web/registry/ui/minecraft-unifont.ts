@@ -30,7 +30,7 @@ export const getUnihexGlyph = (char: string) => {
 };
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached Unihex initialization Promise itself, including rejection; async would wrap it.
-export function loadUnihex() {
+export const loadUnihex = function loadUnihex() {
   return (pending ??= (async () => {
     const { unifontZip, unifontOverrides } =
       await import("./minecraft-unifont-data");
@@ -146,9 +146,9 @@ export function loadUnihex() {
       });
     }
   })());
-}
+};
 
-export function paintUnihex(
+export const paintUnihex = function paintUnihex(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -197,4 +197,4 @@ export function paintUnihex(
       }
     }
   }
-}
+};

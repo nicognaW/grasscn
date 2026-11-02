@@ -80,14 +80,14 @@ const NativeChartText = ({
 };
 
 /** Minecraft's frame-duration gradient; input is in nanoseconds. */
-export function chartFpsColor(nanos: number) {
+export const chartFpsColor = function chartFpsColor(nanos: number) {
   const ms = Math.max(0, Math.min(56, nanos / 1e6));
   const t = f(ms < 28 ? ms / 28 : (ms - 28) / 28);
   const a = ms < 28 ? [0, 255, 0] : [255, 255, 0];
   const b = ms < 28 ? [255, 255, 0] : [255, 0, 0];
 
   return `rgb(${a.map((v, i) => v + Math.floor(f(t * (b[i] - v)))).join(",")})`;
-}
+};
 
 /** Decoration inside a Recharts BarChart. The bar shape supplies engine geometry. */
 const ChartFpsFrame = ({
@@ -301,7 +301,7 @@ const ChartFpsFrame = ({
   );
 };
 
-export function chartProfilerColor(name: string) {
+export const chartProfilerColor = function chartProfilerColor(name: string) {
   let hash = 0;
 
   for (let i = 0; i < name.length; i += 1) {
@@ -310,7 +310,7 @@ export function chartProfilerColor(name: string) {
 
   // oxlint-disable-next-line no-bitwise -- The native profiler derives its packed RGB color with these exact hash masks.
   return cssColor(((hash & 0xaa_aa_aa) + 0x44_44_44) & 0xff_ff_ff);
-}
+};
 
 const sin = new Float32Array(65_536);
 
@@ -326,7 +326,7 @@ const nativeCos = (angle: number) =>
   // oxlint-disable-next-line no-bitwise -- Native trigonometry table addresses wrap to their low 16 bits after the cosine offset.
   sin[Math.trunc(angle * 10_430.378350470453 + 16_384) & 65_535];
 
-function paintProfiler(
+const paintProfiler = function paintProfiler(
   canvas: HTMLCanvasElement,
   data: readonly {
     name: string;
@@ -540,7 +540,7 @@ function paintProfiler(
   } finally {
     gl.getExtension("WEBGL_lose_context")?.loseContext();
   }
-}
+};
 
 /** Header, legend and batched pixel surface for Recharts Pie shapes. */
 const ChartProfilerFrame = ({

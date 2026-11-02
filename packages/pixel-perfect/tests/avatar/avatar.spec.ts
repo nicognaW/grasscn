@@ -11,7 +11,7 @@ const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
 );
 
-function difference(a: PNG, b: PNG) {
+const difference = function difference(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;
 
@@ -22,7 +22,7 @@ function difference(a: PNG, b: PNG) {
   }
 
   return count;
-}
+};
 
 test("Avatar comparator catches a changed pixel", () => {
   const a = PNG.sync.read(

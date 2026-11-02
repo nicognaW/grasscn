@@ -11,11 +11,7 @@ import {
   MinecraftConfirmationText,
   confirmationButtonText,
 } from "./minecraft-confirmation-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-card.css";
@@ -75,7 +71,6 @@ const AlertDialogOverlay = ({
   blur?: number;
 }) => {
   const identity = React.useContext(IdentityContext);
-  const child = null;
 
   const content = (
     <>
@@ -373,8 +368,6 @@ const AlertDialogTitle = ({
   render,
   ...props
 }: MinecraftProps<typeof Primitive.Title>) => {
-  const child = null;
-
   const content = (
     <MinecraftConfirmationText title>{children}</MinecraftConfirmationText>
   );
@@ -398,8 +391,6 @@ const AlertDialogDescription = ({
   render,
   ...props
 }: MinecraftProps<typeof Primitive.Description>) => {
-  const child = null;
-
   const content = (
     <MinecraftConfirmationText>{children}</MinecraftConfirmationText>
   );

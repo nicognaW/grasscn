@@ -11,7 +11,7 @@ interface Painter {
 let painter: Painter | null | undefined;
 let users = 0;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -113,31 +113,32 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function retainMenuCheckboxPainter() {
+export const retainMenuCheckboxPainter = function retainMenuCheckboxPainter() {
   users += 1;
-}
+};
 
-export function releaseMenuCheckboxPainter() {
-  users -= 1;
+export const releaseMenuCheckboxPainter =
+  function releaseMenuCheckboxPainter() {
+    users -= 1;
 
-  if (users > 0) {
-    return;
-  }
+    if (users > 0) {
+      return;
+    }
 
-  if (painter) {
-    const { gl, texture, program, buffer } = painter;
-    gl.deleteBuffer(buffer);
-    gl.deleteTexture(texture);
-    gl.deleteProgram(program);
-    gl.getExtension("WEBGL_lose_context")?.loseContext();
-  }
+    if (painter) {
+      const { gl, texture, program, buffer } = painter;
+      gl.deleteBuffer(buffer);
+      gl.deleteTexture(texture);
+      gl.deleteProgram(program);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+    }
 
-  painter = undefined;
-}
+    painter = undefined;
+  };
 
-export function menuCheckboxPixels(
+export const menuCheckboxPixels = function menuCheckboxPixels(
   name: keyof typeof atlas.sprites,
   scale: number,
   x: number,
@@ -216,4 +217,4 @@ export function menuCheckboxPixels(
   }
 
   return result;
-}
+};

@@ -10,7 +10,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
+import type { MinecraftRenderProp } from "./minecraft-render";
 import { MinecraftText } from "./minecraft-text";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
@@ -25,7 +25,7 @@ const advance = (char: string) =>
 const textWidth = (text: string) =>
   Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
 
-function splitLines(text: string, width?: number) {
+const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -63,7 +63,7 @@ function splitLines(text: string, width?: number) {
   }
 
   return lines;
-}
+};
 
 type MinecraftProseProps = React.HTMLAttributes<HTMLElement> & {
   render?: MinecraftRenderProp;
@@ -90,7 +90,7 @@ const MinecraftProse = ({
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
-  const child = null;
+
   const content = children;
 
   const text = isMinecraftTextContent(content) ? String(content) : null;

@@ -1,6 +1,6 @@
 import { ScrollArea, ScrollBar } from "@grasscn/web/ui/scroll-area";
 
-export function ScrollAreaApiContract() {
+export const ScrollAreaApiContract = function ScrollAreaApiContract() {
   const supported = (
     <ScrollArea scale={3} viewportRef={{ current: null }} type="auto">
       <p>Content</p>
@@ -15,4 +15,4 @@ export function ScrollAreaApiContract() {
   const hoverOnly = <ScrollArea type="hover" />;
 
   return [supported, composed, vertical, horizontal, hoverOnly];
-}
+};

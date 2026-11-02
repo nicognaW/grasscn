@@ -11,11 +11,7 @@ import {
   MinecraftMenuText,
   menuTextNodes,
 } from "./minecraft-menu-text";
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftSurface } from "./minecraft-surface";
@@ -59,7 +55,7 @@ const DropdownMenuTrigger = ({
   );
 };
 
-function useMenuFrame(
+const useMenuFrame = function useMenuFrame(
   ref: React.Ref<HTMLDivElement> | undefined,
   scale: number,
   surface: MenuSurface
@@ -164,11 +160,10 @@ function useMenuFrame(
   }, [node, scale, surface]);
 
   return forwarded;
-}
+};
 
-function contentChildren(
+const contentChildren = function contentChildren(
   children: React.ReactNode,
-  render: unknown,
   surface: MenuSurface
 ) {
   const content = (
@@ -193,7 +188,7 @@ function contentChildren(
   );
 
   return content;
-}
+};
 
 type DropdownMenuContentProps = (MinecraftProps<typeof Primitive.Popup> &
   (Pick<
@@ -262,7 +257,7 @@ const DropdownMenuContent = ({
             )}
             {...props}
           >
-            {contentChildren(children, render, surface)}
+            {contentChildren(children, surface)}
           </Primitive.Popup>
         </Primitive.Positioner>
       </MenuScaleContext.Provider>
@@ -274,9 +269,8 @@ const DropdownMenuGroup = (props: MinecraftProps<typeof Primitive.Group>) => (
   <Primitive.Group data-slot="dropdown-menu-group" {...props} />
 );
 
-function rowChildren(
+const rowChildren = function rowChildren(
   children: React.ReactNode,
-  _render: unknown,
   before?: React.ReactNode,
   after?: React.ReactNode
 ) {
@@ -287,7 +281,7 @@ function rowChildren(
       {after}
     </>
   );
-}
+};
 
 type DropdownMenuItemProps = MinecraftProps<typeof Primitive.Item> & {
   inset?: boolean;
@@ -324,12 +318,12 @@ const DropdownMenuItem = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.Item>
   );
 };
 
-function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
+const checkboxIcon = function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
   const Indicator = radio
     ? Primitive.RadioItemIndicator
     : Primitive.CheckboxItemIndicator;
@@ -353,7 +347,7 @@ function checkboxIcon(scale: 1 | 2 | 3, radio = false) {
       <span className="mc-checkbox-indicator" />
     </Indicator>
   );
-}
+};
 
 const DropdownMenuCheckboxItem = ({
   children,
@@ -384,7 +378,7 @@ const DropdownMenuCheckboxItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale))}
+      {rowChildren(children, checkboxIcon(scale))}
     </Primitive.CheckboxItem>
   );
 };
@@ -422,7 +416,7 @@ const DropdownMenuRadioItem = ({
       }}
       {...props}
     >
-      {rowChildren(children, render, checkboxIcon(scale, true))}
+      {rowChildren(children, checkboxIcon(scale, true))}
     </Primitive.RadioItem>
   );
 };
@@ -452,7 +446,7 @@ const DropdownMenuLabel = ({
       )}
       {...props}
     >
-      {rowChildren(children, render)}
+      {rowChildren(children)}
     </Primitive.GroupLabel>
   );
 };
@@ -533,7 +527,7 @@ const DropdownMenuSubTrigger = ({
       )}
       {...props}
     >
-      {rowChildren(children, render, undefined, arrow)}
+      {rowChildren(children, undefined, arrow)}
     </Primitive.SubmenuTrigger>
   );
 };
@@ -604,7 +598,7 @@ const DropdownMenuSubContent = ({
           )}
           {...props}
         >
-          {contentChildren(children, render, surface)}
+          {contentChildren(children, surface)}
         </Primitive.Popup>
       </Primitive.Positioner>
     </MenuScaleContext.Provider>

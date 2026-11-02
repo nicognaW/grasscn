@@ -1,7 +1,7 @@
 import { Button, buttonVariants } from "@grasscn/web/ui/button";
 
 // Compile-time contract: only native visual variants, with standard web props.
-export function ButtonApiContract() {
+export const ButtonApiContract = function ButtonApiContract() {
   const supported = (
     <Button
       render={<a href="#inventory" />}
@@ -24,4 +24,4 @@ export function ButtonApiContract() {
   const icon = buttonVariants({ size: "icon" });
 
   return [supported, outline, destructive, small, icon];
-}
+};

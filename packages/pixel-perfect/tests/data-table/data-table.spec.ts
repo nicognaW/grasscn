@@ -8,7 +8,13 @@ import { PNG } from "pngjs";
 
 const repo = path.resolve(".");
 
-function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
+const compare = function compare(
+  actual: PNG,
+  expected: PNG,
+  info: any,
+  c: any,
+  part: string
+) {
   let mismatchedPixels = 0;
   const diff = new PNG({ height: actual.height, width: actual.width });
 
@@ -36,7 +42,7 @@ function compare(actual: PNG, expected: PNG, info: any, c: any, part: string) {
     })
   );
   expect(mismatchedPixels).toBe(0);
-}
+};
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -87,7 +93,10 @@ test.describe("DataTable original native label constituents", () => {
           alignment: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) q.set("wrapWidth", String(c.wrapWidth));
+        if (c.wrapWidth != null) {
+          q.set("wrapWidth", String(c.wrapWidth));
+        }
+
         await page.goto(`/?component=data-table&${q}`);
 
         const subject = page.locator(
@@ -98,8 +107,12 @@ test.describe("DataTable original native label constituents", () => {
           subject.locator("[data-mc-label-layout-ready]")
         ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-        for (const text of await subject.locator("[data-mc-label-ready]").all())
+        for (const text of await subject
+          .locator("[data-mc-label-ready]")
+          .all()) {
           await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+        }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

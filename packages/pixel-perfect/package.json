@@ -8,11 +8,11 @@
     "./suite": "./src/selection/suite.ts"
   },
   "scripts": {
-    "test": "bun cli/test.mjs",
-    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.mjs",
+    "test": "bun cli/test.ts",
+    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.ts",
     "verify": "powershell -NoProfile -ExecutionPolicy Bypass -File cli/run-porting.ps1 -Suite all",
-    "full-tests": "bun cli/full-tests.mjs",
-    "list": "bun cli/list.mjs"
+    "full-tests": "bun cli/full-tests.ts",
+    "list": "bun cli/list.ts"
   },
   "devDependencies": {
     "@base-ui/react": "^1.9.0",

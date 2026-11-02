@@ -5,7 +5,7 @@ import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function compare(expected: PNG, actual: PNG) {
+export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -33,9 +33,11 @@ export function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
-export function formsNativeTests(component: "form" | "field") {
+export const formsNativeTests = function formsNativeTests(
+  component: "form" | "field"
+) {
   test.describe.configure({ mode: "parallel" });
   const directories = ["tests/reference/label"];
   test(`${component} pixel comparator detects a changed pixel`, () => {
@@ -144,4 +146,4 @@ export function formsNativeTests(component: "form" | "field") {
       }
     }
   }
-}
+};

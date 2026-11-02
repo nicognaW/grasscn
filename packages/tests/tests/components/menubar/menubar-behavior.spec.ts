@@ -8,10 +8,10 @@ const game = (page: Page) =>
 const world = (page: Page) =>
   page.getByRole("menuitem", { exact: true, name: "World menu" });
 
-async function openMenu(page: Page, query = "") {
+const openMenu = async function openMenu(page: Page, query = "") {
   await page.goto(`/?component=menubar&${query}`);
   await game(page).click();
-}
+};
 
 test("Menubar roving focus skips disabled menus and wraps", async ({
   page,

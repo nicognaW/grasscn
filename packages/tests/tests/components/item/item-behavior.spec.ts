@@ -1,7 +1,7 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
-async function ready(page: any) {
+const ready = async function ready(page: any) {
   await expect(
     page.locator("[data-subject] [data-slot=item-content]")
   ).toHaveAttribute("data-mc-item-content-ready", "true");
@@ -17,7 +17,7 @@ async function ready(page: any) {
     .all()) {
     await expect(text).toHaveAttribute("data-mc-label-ready", "true");
   }
-}
+};
 
 test("Item retains an accessible link name, native thumbnail and DOM ref", async ({
   page,

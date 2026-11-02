@@ -19,7 +19,7 @@ export type UnihexAtlas = Record<
 
 const atlases = new WeakMap<CanvasRenderingContext2D, UnihexAtlas>();
 
-export function setUnihexAtlas(
+export const setUnihexAtlas = function setUnihexAtlas(
   context: CanvasRenderingContext2D,
   atlas?: UnihexAtlas
 ) {
@@ -28,21 +28,23 @@ export function setUnihexAtlas(
   } else {
     atlases.delete(context);
   }
-}
+};
 
-export function positionUnihex(
+export const positionUnihex = function positionUnihex(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-export function disposeUnihex(context: CanvasRenderingContext2D) {
+export const disposeUnihex = function disposeUnihex(
+  context: CanvasRenderingContext2D
+) {
   painters.get(context)?.gl.getExtension("WEBGL_lose_context")?.loseContext();
   painters.delete(context);
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -119,9 +121,9 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function paintUnihexGPU(
+export const paintUnihexGPU = function paintUnihexGPU(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -235,4 +237,4 @@ export function paintUnihexGPU(
   );
 
   return true;
-}
+};

@@ -3,18 +3,20 @@ import { minecraftClickSound } from "./minecraft-sound-assets";
 let masterVolume = 1;
 
 /** Master volume from 0 (muted) to 1; native per-event gain stays unchanged. */
-export function setMinecraftSoundVolume(volume: number) {
+export const setMinecraftSoundVolume = function setMinecraftSoundVolume(
+  volume: number
+) {
   if (Number.isFinite(volume)) {
     masterVolume = Math.min(1, Math.max(0, volume));
   }
-}
+};
 
-export function getMinecraftSoundVolume() {
+export const getMinecraftSoundVolume = function getMinecraftSoundVolume() {
   return masterVolume;
-}
+};
 
 /** Original ui.button.click, with SimpleSoundInstance.forUI's pitch and gain. */
-export function playMinecraftClick() {
+export const playMinecraftClick = function playMinecraftClick() {
   if (typeof Audio === "undefined" || masterVolume === 0) {
     return;
   }
@@ -26,4 +28,4 @@ export function playMinecraftClick() {
   void sound.play().catch(() => {
     /* empty */
   });
-}
+};

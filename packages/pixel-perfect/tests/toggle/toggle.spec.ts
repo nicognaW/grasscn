@@ -13,7 +13,7 @@ const manifest = JSON.parse(
 
 const sha = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -41,7 +41,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Toggle comparator rejects one altered pixel", () => {
   const expected = PNG.sync.read(

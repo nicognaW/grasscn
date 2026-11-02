@@ -11,14 +11,14 @@ interface Painter {
 const painters = new WeakMap<CanvasRenderingContext2D, Painter | null>();
 const origins = new WeakMap<CanvasRenderingContext2D, DOMRect>();
 
-export function positionPopoverGlyphs(
+export const positionPopoverGlyphs = function positionPopoverGlyphs(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -101,9 +101,9 @@ function create(): Painter | null {
   gl.disable(gl.DITHER);
 
   return { buffer, canvas, gl, program, texture };
-}
+};
 
-export function paintPopoverGlyph(
+export const paintPopoverGlyph = function paintPopoverGlyph(
   context: CanvasRenderingContext2D,
   code: number,
   pixels: Uint8Array,
@@ -212,9 +212,11 @@ export function paintPopoverGlyph(
   );
 
   return true;
-}
+};
 
-export function disposePopoverGlyphs(context: CanvasRenderingContext2D) {
+export const disposePopoverGlyphs = function disposePopoverGlyphs(
+  context: CanvasRenderingContext2D
+) {
   const painter = painters.get(context);
 
   if (painter) {
@@ -227,4 +229,4 @@ export function disposePopoverGlyphs(context: CanvasRenderingContext2D) {
 
   painters.delete(context);
   origins.delete(context);
-}
+};

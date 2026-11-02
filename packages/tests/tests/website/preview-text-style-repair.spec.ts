@@ -3,13 +3,13 @@ import type { Locator, Page } from "@grasscn/tests/test";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
-async function open(page: Page, name: string) {
+const open = async function open(page: Page, name: string) {
   await page.goto(`${origin}#${name}`);
 
   return page.locator(`#component-${name}`);
-}
+};
 
-async function labelFits(button: Locator) {
+const labelFits = async function labelFits(button: Locator) {
   await expect
     .poll(async () =>
       button.evaluate((node) => {
@@ -23,7 +23,7 @@ async function labelFits(button: Locator) {
       })
     )
     .toBe(true);
-}
+};
 
 test("Kbd texture fits ASCII, CJK and shortcut labels at every GUI scale", async ({
   page,

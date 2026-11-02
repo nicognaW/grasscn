@@ -23,7 +23,7 @@ const advance = (char: string) =>
 const textWidth = (text: string) =>
   Math.ceil([...text].reduce((width, char) => width + advance(char), 0));
 
-function splitLines(text: string, width?: number) {
+const splitLines = function splitLines(text: string, width?: number) {
   const lines: string[] = [];
 
   for (let remaining of text.split("\n")) {
@@ -61,7 +61,7 @@ function splitLines(text: string, width?: number) {
   }
 
   return lines;
-}
+};
 
 type DisclosureTextProps = React.ComponentProps<"div"> & {
   scale?: 1 | 2 | 3;

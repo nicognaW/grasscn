@@ -32,7 +32,10 @@ type PlayerPreviewProps = React.ComponentProps<"div"> & {
 const vs = `attribute vec3 position;attribute vec2 uv;attribute vec3 normal;uniform mat4 projection;uniform mat4 modelView;varying vec2 vUv;varying vec3 vNormal;void main(){gl_Position=projection*modelView*vec4(position,1.);vUv=uv;vNormal=normal;}`;
 const fs = `precision highp float;uniform sampler2D skin;varying vec2 vUv;varying vec3 vNormal;void main(){vec4 color=texture2D(skin,vUv);if(color.a<.1)discard;vec3 n=sign(vNormal)*floor(abs(vNormal)*127.)/127.;if(!gl_FrontFacing)n=-n;vec3 l0=normalize(vec3(.2,-1.,1.));vec3 l1=normalize(vec3(-.2,-1.,0.));float brightness=min(1.,(max(0.,dot(l0,n))+max(0.,dot(l1,n)))*.6+.4);gl_FragColor=vec4(color.rgb*brightness,color.a);}`;
 
-function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
+const buildRenderer = function buildRenderer(
+  canvas: HTMLCanvasElement,
+  model: "wide" | "slim"
+) {
   const gl = canvas.getContext("webgl2", {
     alpha: true,
     antialias: false,
@@ -334,7 +337,7 @@ function buildRenderer(canvas: HTMLCanvasElement, model: "wide" | "slim") {
       );
     },
   };
-}
+};
 
 // Match JOML's float quaternion construction, including the exact half-turn.
 function nativeCosFromSin(sine: number, angle: number) {

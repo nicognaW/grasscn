@@ -15,7 +15,7 @@ interface Painter {
 let shared: Painter | null | undefined;
 const decoded = new Map<Sprite, Uint8Array>();
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
   canvas.width = 182;
   canvas.height = 5;
@@ -96,9 +96,9 @@ function create(): Painter | null {
   gl.viewport(0, 0, 182, 5);
 
   return { canvas, gl, texture };
-}
+};
 
-function paint(
+const paint = function paint(
   canvas: HTMLCanvasElement,
   background: Sprite,
   foreground: Sprite,
@@ -163,7 +163,7 @@ function paint(
   context.drawImage(shared.canvas, 0, 0);
 
   return true;
-}
+};
 
 export const MinecraftProgressPaint = ({
   background,

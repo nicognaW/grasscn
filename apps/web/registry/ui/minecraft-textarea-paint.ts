@@ -22,7 +22,7 @@ const glyphAdvance = (char: string) =>
 const advance = (text: string) =>
   Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
 
-function wrap(value: string, width: number): Line[] {
+const wrap = function wrap(value: string, width: number): Line[] {
   const lines: Line[] = [];
   let start = 0;
 
@@ -63,7 +63,7 @@ function wrap(value: string, width: number): Line[] {
   }
 
   return lines;
-}
+};
 
 let images:
   | Promise<{
@@ -77,7 +77,7 @@ let images:
   | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
-function loadImages() {
+const loadImages = function loadImages() {
   return (images ??= Promise.all(
     [
       minecraftInputAssets.normal,
@@ -112,9 +112,9 @@ function loadImages() {
       track,
     };
   }));
-}
+};
 
-function sprite(
+const sprite = function sprite(
   context: CanvasRenderingContext2D,
   image: HTMLImageElement,
   dx: number,
@@ -158,9 +158,9 @@ function sprite(
       }
     }
   }
-}
+};
 
-function text(
+const text = function text(
   context: CanvasRenderingContext2D,
   alpha: Uint8ClampedArray,
   value: string,
@@ -212,9 +212,9 @@ function text(
       offset += glyph[2];
     }
   }
-}
+};
 
-export function attachMinecraftTextarea(
+export const attachMinecraftTextarea = function attachMinecraftTextarea(
   node: HTMLTextAreaElement,
   initialScale: number
 ) {
@@ -573,4 +573,4 @@ export function attachMinecraftTextarea(
     node.removeEventListener("pointerup", up);
     node.removeEventListener("pointercancel", up);
   };
-}
+};

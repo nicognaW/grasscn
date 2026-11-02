@@ -1,27 +1,13 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/card/manifest.json"), "utf-8")
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    label?: string;
-    text?: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/card/manifest.json";
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -49,7 +35,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("Card comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(
@@ -78,7 +64,7 @@ for (const c of manifest.cases) {
 
     if (caseText !== null && caseText !== undefined) {
       query.set("text", caseText);
-      query.set("label", c.label!);
+      query.set("label", c.label);
     }
 
     await page.goto(`/?${query}`);
