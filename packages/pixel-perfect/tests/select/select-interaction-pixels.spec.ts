@@ -35,8 +35,9 @@ for (const scale of [1, 2, 3]) {
       await page.goto(`/?component=select&popper=1&scale=${scale}`);
       const trigger = page.getByRole("combobox");
 
-      if (mode === "pointer") await trigger.click();
-      else {
+      if (mode === "pointer") {
+        await trigger.click();
+      } else {
         await trigger.focus();
         await page.keyboard.press("ArrowDown");
       }
@@ -63,15 +64,19 @@ for (const scale of [1, 2, 3]) {
         exact: true,
       });
 
-      if (mode === "pointer") await creative.hover();
-      else {
+      if (mode === "pointer") {
+        await creative.hover();
+      } else {
         await expect(
           page.getByRole("option", { name: "Survival", exact: true })
         ).toBeFocused();
         await page.keyboard.press("ArrowDown");
       }
 
-      if (mode === "keyboard") await expect(creative).toBeFocused();
+      if (mode === "keyboard") {
+        await expect(creative).toBeFocused();
+      }
+
       await expect(creative).toHaveAttribute("data-highlighted", "");
       await expect(
         page.getByLabel("Select changes", { exact: true })

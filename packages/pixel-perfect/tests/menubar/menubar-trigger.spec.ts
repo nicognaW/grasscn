@@ -71,7 +71,10 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           y: String(c.y ?? 16),
         });
 
-        if (open) params.set("open", "1");
+        if (open) {
+          params.set("open", "1");
+        }
+
         await page.goto(`/?${params}`);
         const trigger = page.locator('[data-slot="menubar-trigger"]').first();
         await expect(trigger).toBeVisible();
@@ -80,15 +83,21 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
         });
         await page.mouse.move(0, 0);
 
-        if (c.state === "hover" && !open) await trigger.hover();
+        if (c.state === "hover" && !open) {
+          await trigger.hover();
+        }
 
         if (c.state === "focus") {
           await page.keyboard.press("Tab");
           await expect(trigger).toBeFocused();
         }
 
-        for (const line of await trigger.locator("[data-mc-label-ready]").all())
+        for (const line of await trigger
+          .locator("[data-mc-label-ready]")
+          .all()) {
           await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+        }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

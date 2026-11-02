@@ -31,7 +31,9 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
       const button = page.locator("[data-subject]");
       await page.mouse.move(0, 0);
 
-      if (c.state === "hover") await button.hover();
+      if (c.state === "hover") {
+        await button.hover();
+      }
 
       if (c.state === "focus") {
         await button.focus();
@@ -93,7 +95,9 @@ for (const mode of ["split", "fragments", "empty"]) {
       const button = page.locator("[data-subject]");
       await page.mouse.move(0, 0);
 
-      if (c.state === "hover") await button.hover();
+      if (c.state === "hover") {
+        await button.hover();
+      }
 
       if (c.state === "focus") {
         await button.focus();

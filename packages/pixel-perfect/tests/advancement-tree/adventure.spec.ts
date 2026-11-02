@@ -58,7 +58,10 @@ for (const c of manifest.cases) {
     for (let i = 0; i < a.data.length; i += 4) {
       const same = a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4));
 
-      if (!same) differences += 1;
+      if (!same) {
+        differences += 1;
+      }
+
       diff.data.set(same ? [0, 0, 0, 0] : [255, 0, 255, 255], i);
     }
 

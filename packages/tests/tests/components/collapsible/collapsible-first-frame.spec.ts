@@ -103,7 +103,9 @@ for (const scale of [1, 2, 3]) {
           variant === "wrapped" ? 4 : 3
         );
 
-        if (variant !== "wrapped") expect(finalLines).toEqual(text.split("\n"));
+        if (variant !== "wrapped") {
+          expect(finalLines).toEqual(text.split("\n"));
+        }
 
         for (const frame of frames) {
           expect(frame.display).not.toBe("none");
@@ -111,7 +113,9 @@ for (const scale of [1, 2, 3]) {
           expect(frame.lines.map((line) => line.text)).toEqual(finalLines);
           expect(frame.height).toBe((finalLines.length * 9 + 12) * scale);
 
-          for (const line of frame.lines) expect(line.height).toBe(9 * scale);
+          for (const line of frame.lines) {
+            expect(line.height).toBe(9 * scale);
+          }
         }
 
         await page

@@ -62,34 +62,46 @@ for (const [part, dir] of parts) {
             align: c.alignment ?? "left",
           });
 
-          if (action === "radio") q.set("radio", "1");
+          if (action === "radio") {
+            q.set("radio", "1");
+          }
 
-          if (c.wrapWidth) q.set("wrapWidth", String(c.wrapWidth));
+          if (c.wrapWidth) {
+            q.set("wrapWidth", String(c.wrapWidth));
+          }
 
-          if (c.maxLength != null) q.set("maxLength", String(c.maxLength));
+          if (c.maxLength != null) {
+            q.set("maxLength", String(c.maxLength));
+          }
+
           await page.goto("/?" + q);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
 
-          if (["title", "description", "error", "progress"].includes(part))
+          if (["title", "description", "error", "progress"].includes(part)) {
             await expect(subject).toHaveAttribute(
               "data-mc-label-layout-ready",
               "true"
             );
+          }
 
-          if (part === "input")
+          if (part === "input") {
             await expect(subject).toHaveAttribute("data-mc-ready", "true");
+          }
+
           await page.mouse.move(0, 0);
 
-          if (c.state.startsWith("focus"))
+          if (c.state.startsWith("focus")) {
             await (
               part === "checkbox" ? subject.locator("input") : subject
             ).focus();
+          }
 
-          if (c.state === "hover")
+          if (c.state === "hover") {
             await (
               part === "checkbox" ? subject.locator("input") : subject
             ).hover();
+          }
 
           if (part === "input") {
             const cursor = c.cursor ?? c.text.length,
@@ -110,11 +122,13 @@ for (const [part, dir] of parts) {
           } else {
             for (const glyph of await subject
               .locator("[data-mc-label-ready]")
-              .all())
+              .all()) {
               await expect(glyph).toHaveAttribute(
                 "data-mc-label-ready",
                 "true"
               );
+            }
+
             await page.evaluate(
               async () =>
                 await new Promise((r) =>
@@ -136,10 +150,12 @@ for (const [part, dir] of parts) {
           expect([b.width, b.height]).toEqual([a.width, a.height]);
           let mismatchedPixels = 0;
 
-          for (let i = 0; i < a.data.length; i += 4)
+          for (let i = 0; i < a.data.length; i += 4) {
             mismatchedPixels += Number(
               !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
             );
+          }
+
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({

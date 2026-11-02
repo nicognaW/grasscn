@@ -142,7 +142,9 @@ const ItemFixture = () => {
             <a
               href="#world"
               onClick={(event) => {
-                if (q.has("childCancel")) event.preventDefault();
+                if (q.has("childCancel")) {
+                  event.preventDefault();
+                }
               }}
             />
           )
@@ -177,7 +179,9 @@ const ItemFixture = () => {
             <a
               href="#world"
               onClick={(event) => {
-                if (q.has("childCancel")) event.preventDefault();
+                if (q.has("childCancel")) {
+                  event.preventDefault();
+                }
               }}
             >
               {children}

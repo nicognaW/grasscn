@@ -91,11 +91,13 @@ for (const directory of [
 
         for (const line of await subject
           .locator("[data-mc-popover-unicode-ready]")
-          .all())
+          .all()) {
           await expect(line).toHaveAttribute(
             "data-mc-popover-unicode-ready",
             "true"
           );
+        }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>
