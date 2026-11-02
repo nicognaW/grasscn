@@ -49,6 +49,8 @@
     "registry/**/*.tsx",
     ".next/dev/types/**/*.ts",
     "examples/**/*.tsx",
+    "demos/**/*.ts",
+    "demos/**/*.tsx",
     "scripts/*.mjs",
     "scripts/*.test.tsx",
     "scripts/*.test.ts",
