@@ -70,7 +70,7 @@ const NativeChartText = ({
         } as React.CSSProperties
       }
     >
-      {/[^\u0000-\u007F]/u.test(text) ? (
+      {/\P{ASCII}/u.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />
       ) : (
         <MinecraftText>{text}</MinecraftText>

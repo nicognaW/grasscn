@@ -105,9 +105,9 @@ for (const directory of [
         const dialog = page.getByRole("alertdialog");
 
         const expectedUnicode =
-          Number(/[^\x00-\x7f]/.test(c.label)) +
-          (/[^\x00-\x7f]/.test(c.text) ? c.text.split("\n").length : 0) +
-          c.labels.filter((label: string) => /[^\x00-\x7f]/.test(label)).length;
+          Number(/\P{ASCII}/u.test(c.label)) +
+          (/\P{ASCII}/u.test(c.text) ? c.text.split("\n").length : 0) +
+          c.labels.filter((label: string) => /\P{ASCII}/u.test(label)).length;
 
         if (expectedUnicode) {
           await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(

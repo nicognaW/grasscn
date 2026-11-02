@@ -86,7 +86,7 @@ const MinecraftDisclosureText = ({
 
   const text = isMinecraftTextContent(children) ? String(children) : null;
 
-  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
+  const unicode = text != null && /\P{ASCII}/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;

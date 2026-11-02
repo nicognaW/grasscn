@@ -139,7 +139,7 @@ async function worker() {
 
       await expect(mirror).toHaveAttribute("data-mc-ready", "true");
 
-      if (/[^\u0000-\u007F]/.test(c.text)) {
+      if (/\P{ASCII}/u.test(c.text)) {
         await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
       }
 

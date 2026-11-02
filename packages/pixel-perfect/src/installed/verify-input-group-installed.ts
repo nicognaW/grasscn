@@ -194,7 +194,7 @@ try {
 
           if (
             folder.includes("cjk") ||
-            /[^\u0000-\u007F]/.test((c.text ?? "") + (c.placeholder ?? ""))
+            /\P{ASCII}/u.test((c.text ?? "") + (c.placeholder ?? ""))
           ) {
             await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
           }

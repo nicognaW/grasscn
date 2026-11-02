@@ -109,7 +109,7 @@ for (const directory of [
           page.locator('[data-slot="dialog-overlay"]')
         ).toHaveAttribute("data-mc-backdrop-ready", "true");
 
-        if (/[^\x00-\x7f]/.test((c.label ?? "") + (c.text ?? ""))) {
+        if (/\P{ASCII}/u.test((c.label ?? "") + (c.text ?? ""))) {
           await expect(
             dialog.locator("[data-mc-dialog-unicode-ready]")
           ).toHaveCount(3);
