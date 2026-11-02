@@ -12,7 +12,7 @@ export const MinecraftConfirmationBlur = ({
   identity: string;
 }) => {
   const ref = React.useRef<SVGSVGElement>(null);
-  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/g, "");
+  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const ready = useConfirmationSnapshot(canvas, identity, radius);

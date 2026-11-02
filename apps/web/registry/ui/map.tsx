@@ -272,7 +272,7 @@ const LocatorDot = ({
 
       const pixels = ctx.getImageData(0, 0, 9, 9);
 
-      const raw = /^#[0-9a-f]{6}$/i.test(color)
+      const raw = /^#[0-9a-f]{6}$/iu.test(color)
         ? Number.parseInt(color.slice(1), 16)
         : 0xff_ff_ff;
 
