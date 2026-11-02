@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
 import { repoRoot, webFile } from "@ppt/paths";
+import type { ComponentEvidenceMap } from "@ppt/runtime/map-evidence";
 
 assert.ok(process.argv[2], "Pass a new snapshot directory");
 
@@ -20,12 +21,12 @@ const names = execFileSync(
   .split("\0")
   .filter(Boolean);
 
-const records = [];
+const records: { bytes: number; path: string; sha256: string }[] = [];
 
-for (const name of [...new Set(names)].toSorted()) {
+for (const name of [...new Set(names)].sort()) {
   if (
     name.startsWith("packages/pixel-perfect/tests/reference/") &&
-    !/\.(json|java|mjs)$/.test(name)
+    !/\.(?:json|java|mjs)$/u.test(name)
   ) {
     continue;
   }
@@ -41,9 +42,11 @@ for (const name of [...new Set(names)].toSorted()) {
   });
 }
 
+// SAFETY: the authored component map supplies its existing identity/status snapshot fields.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const map = JSON.parse(
   await readFile(webFile("registry/minecraft-map.json"), "utf-8")
-);
+) as ComponentEvidenceMap;
 
 await writeFile(
   path.join(output, "source-manifest.json"),
@@ -51,11 +54,13 @@ await writeFile(
     {
       bun: Bun.version,
       capturedAt: new Date().toISOString(),
-      components: map.components.map((c) => ({
-        name: c.name,
-        status: c.implementation.status,
-        pixels: c.pixelVerification.status,
-      })),
+      components: map.components.map((c) =>
+        Object.fromEntries([
+          ["name", c.name],
+          ["status", c.implementation.status],
+          ["pixels", c.pixelVerification.status],
+        ])
+      ),
       files: records,
       minecraftVersion: map.minecraftVersion,
       sourceJarSha256: map.sourceJarSha256,

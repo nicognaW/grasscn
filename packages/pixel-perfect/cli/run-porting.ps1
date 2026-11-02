@@ -17,5 +17,5 @@ if($Suite -eq 'full'){
 }else{$runDirectory=Join-Path $repository ('.pixel-perfect-test/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)}
 Push-Location -LiteralPath $pptPackage
 try{$runner=& $node --eval "console.log(require.resolve('@grasscn/tests/run-workload'))";if($LASTEXITCODE -ne 0){throw 'Cannot resolve shared resource runner'}}finally{Pop-Location}
-& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.mjs') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
+& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.ts') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
 exit $LASTEXITCODE
