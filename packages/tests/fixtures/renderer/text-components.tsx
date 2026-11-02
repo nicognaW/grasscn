@@ -73,13 +73,13 @@ const TextComponentsFixture = () => {
     },
     ref,
     style: {
-      "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-      "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
+      "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+      "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
       "--reference-width": q.has("width")
-        ? Number(q.get("width")) * scale + "px"
+        ? `${Number(q.get("width")) * scale}px`
         : undefined,
       "--reference-height": q.has("height")
-        ? Number(q.get("height")) * scale + "px"
+        ? `${Number(q.get("height")) * scale}px`
         : undefined,
     } as React.CSSProperties,
   };
@@ -138,23 +138,23 @@ const TextComponentsFixture = () => {
         style={
           native
             ? ({
-                "--reference-x": (Number(q.get("x") ?? 16) + 8) * scale + "px",
-                "--reference-y": (Number(q.get("y") ?? 16) + 8) * scale + "px",
+                "--reference-x": `${(Number(q.get("x") ?? 16) + 8) * scale}px`,
+                "--reference-y": `${(Number(q.get("y") ?? 16) + 8) * scale}px`,
                 "--reference-width": q.has("width")
-                  ? (Number(q.get("width")) - 16) * scale + "px"
+                  ? `${(Number(q.get("width")) - 16) * scale}px`
                   : undefined,
                 "--reference-height": q.has("height")
-                  ? (Number(q.get("height")) - 16) * scale + "px"
+                  ? `${(Number(q.get("height")) - 16) * scale}px`
                   : undefined,
               } as React.CSSProperties)
             : ({
-                "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-                "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
+                "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+                "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
                 "--reference-width": q.has("width")
-                  ? Number(q.get("width")) * scale + "px"
+                  ? `${Number(q.get("width")) * scale}px`
                   : undefined,
                 "--reference-height": q.has("height")
-                  ? Number(q.get("height")) * scale + "px"
+                  ? `${Number(q.get("height")) * scale}px`
                   : undefined,
               } as React.CSSProperties)
         }

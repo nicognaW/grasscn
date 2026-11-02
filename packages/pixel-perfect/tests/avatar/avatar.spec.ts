@@ -93,7 +93,7 @@ test.describe("Actual original PlayerFaceExtractor", () => {
           alias: "base",
           case: c.name,
           component: "avatar",
-          manifest: dir + "/manifest.json",
+          manifest: `${dir}/manifest.json`,
           mismatchedPixels,
           part: "face",
           tolerance: 0,

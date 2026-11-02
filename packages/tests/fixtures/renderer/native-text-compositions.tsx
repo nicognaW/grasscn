@@ -21,13 +21,13 @@ export const NativeTextCompositionsFixture = () => {
   const height = Number(q.get("height") ?? 9);
 
   const style = {
-    "--mc-pixel": scale + "px",
+    "--mc-pixel": `${scale}px`,
     "--mc-scale": scale,
     "--reference-color": q.get("color") ?? undefined,
-    "--reference-height": height * scale + "px",
-    "--reference-width": width * scale + "px",
-    "--reference-x": Number(q.get("x") ?? 16) * scale + "px",
-    "--reference-y": Number(q.get("y") ?? 16) * scale + "px",
+    "--reference-height": `${height * scale}px`,
+    "--reference-width": `${width * scale}px`,
+    "--reference-x": `${Number(q.get("x") ?? 16) * scale}px`,
+    "--reference-y": `${Number(q.get("y") ?? 16) * scale}px`,
   } as React.CSSProperties;
 
   React.useLayoutEffect(() => {

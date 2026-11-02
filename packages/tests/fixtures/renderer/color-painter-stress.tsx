@@ -48,7 +48,7 @@ export const ColorPainterStressFixture = () => {
           <div
             style={
               {
-                "--mc-pixel": scale + "px",
+                "--mc-pixel": `${scale}px`,
                 "--mc-scale": scale,
               } as React.CSSProperties
             }

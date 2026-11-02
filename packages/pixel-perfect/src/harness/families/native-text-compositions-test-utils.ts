@@ -114,7 +114,7 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
           alias: "base",
           case: c.name,
           component,
-          manifest: directory + "/manifest.json",
+          manifest: `${directory}/manifest.json`,
           mismatchedPixels,
           part:
             component === "code-block"

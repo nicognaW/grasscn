@@ -92,10 +92,10 @@ export const CalendarFixture = () => {
               className="native-reference-geometry native-reference-size"
               style={
                 {
-                  "--reference-x": x + "px",
-                  "--reference-y": y + "px",
-                  "--reference-width": width * scale + "px",
-                  "--reference-height": height * scale + "px",
+                  "--reference-x": `${x}px`,
+                  "--reference-y": `${y}px`,
+                  "--reference-width": `${width * scale}px`,
+                  "--reference-height": `${height * scale}px`,
                 } as React.CSSProperties
               }
             />
@@ -134,10 +134,10 @@ export const CalendarFixture = () => {
                 ? Number(q.get("wrapWidth"))
                 : undefined,
               style: {
-                "--reference-x": x + "px",
-                "--reference-y": y + "px",
-                "--reference-width": width * scale + "px",
-                "--reference-height": height * scale + "px",
+                "--reference-x": `${x}px`,
+                "--reference-y": `${y}px`,
+                "--reference-width": `${width * scale}px`,
+                "--reference-height": `${height * scale}px`,
               } as React.CSSProperties,
               ...{ "data-subject": "true" },
             },
@@ -188,10 +188,10 @@ export const CalendarFixture = () => {
                   className={`${p.className ?? ""} native-reference-geometry native-reference-size`}
                   style={
                     {
-                      "--reference-height": height * scale + "px",
-                      "--reference-width": width * scale + "px",
-                      "--reference-x": x + "px",
-                      "--reference-y": y + "px",
+                      "--reference-height": `${height * scale}px`,
+                      "--reference-width": `${width * scale}px`,
+                      "--reference-x": `${x}px`,
+                      "--reference-y": `${y}px`,
                     } as React.CSSProperties
                   }
                   data-subject={
@@ -211,11 +211,11 @@ export const CalendarFixture = () => {
       style:
         part === "surface"
           ? ({
-              "--reference-height": height * scale + "px",
-              "--reference-padding": (q.has("text") ? 18 * scale : 0) + "px",
-              "--reference-width": width * scale + "px",
-              "--reference-x": x + "px",
-              "--reference-y": y + "px",
+              "--reference-height": `${height * scale}px`,
+              "--reference-padding": `${(q.has("text") ? 18 * scale : 0)}px`,
+              "--reference-width": `${width * scale}px`,
+              "--reference-x": `${x}px`,
+              "--reference-y": `${y}px`,
             } as React.CSSProperties)
           : undefined,
     };
