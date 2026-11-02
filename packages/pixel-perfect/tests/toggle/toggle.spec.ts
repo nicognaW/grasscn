@@ -5,11 +5,22 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
+import type ToggleAssetData from "../reference/toggle/asset-provenance.json";
+
+type ToggleAssetPins = Pick<typeof ToggleAssetData, "assets">;
+
+interface ToggleCaptureManifest {
+  cases: ToggleReferenceCase[];
+}
+
 const directory = "tests/reference/toggle";
 
+// SAFETY: The fixed retained toggle manifest supplies every consumed shared capture field, numeric x/y, string background and boolean checked required by ToggleReferenceCase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as ToggleCaptureManifest;
 
 const sha = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 
@@ -57,12 +68,14 @@ test("Toggle comparator rejects one altered pixel", () => {
 });
 
 test("Toggle embeds the original four opaque recipe-filter PNGs", () => {
+  // SAFETY: The retained Toggle asset-provenance artifact has the four actual recipe-filter asset keys, each with a string sha256; its type-only import describes this exact assets projection.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
   const pins = JSON.parse(
     readFileSync(
       pixelPerfectFile(`${directory}/asset-provenance.json`),
       "utf-8"
     )
-  );
+  ) as ToggleAssetPins;
 
   const css = readFileSync(
     webFile("registry/ui/minecraft-toggle-assets.css"),
@@ -76,7 +89,7 @@ test("Toggle embeds the original four opaque recipe-filter PNGs", () => {
   expect(images).toHaveLength(4);
   expect(images.map(sha).sort()).toEqual(
     Object.values(pins.assets)
-      .map((pin: any) => pin.sha256)
+      .map((pin) => pin.sha256)
       .sort()
   );
 

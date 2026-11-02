@@ -5,11 +5,19 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
+
+interface RadioGroupCaptureManifest {
+  cases: ToggleReferenceCase[];
+}
+
 const directory = "tests/reference/radio-group";
 
+// SAFETY: The fixed retained radio-group manifest supplies every consumed shared capture field, numeric x/y, string background and boolean checked required by ToggleReferenceCase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve this original runtime read/parse phase.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as RadioGroupCaptureManifest;
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
