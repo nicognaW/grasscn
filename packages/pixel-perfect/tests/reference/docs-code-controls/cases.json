@@ -1,0 +1,136 @@
+[
+  {
+    "name": "docs-tabs-preview",
+    "element": "tabs",
+    "labels": [
+      "Preview",
+      "Code"
+    ],
+    "selectedIndex": 0,
+    "targetIndex": 0,
+    "state": "normal",
+    "width": 303,
+    "height": 24,
+    "x": 16,
+    "y": 16,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-tabs-code",
+    "element": "tabs",
+    "labels": [
+      "Preview",
+      "Code"
+    ],
+    "selectedIndex": 1,
+    "targetIndex": 1,
+    "state": "normal",
+    "width": 303,
+    "height": 24,
+    "x": 16,
+    "y": 48,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-tabs-code-focus",
+    "element": "tabs",
+    "labels": [
+      "Preview",
+      "Code"
+    ],
+    "selectedIndex": 1,
+    "targetIndex": 1,
+    "state": "focus",
+    "width": 303,
+    "height": 24,
+    "x": 16,
+    "y": 80,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-copy",
+    "element": "button",
+    "label": "Copy",
+    "state": "normal",
+    "width": 60,
+    "height": 20,
+    "x": 16,
+    "y": 112,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-expand",
+    "element": "button",
+    "label": "Expand",
+    "state": "normal",
+    "width": 60,
+    "height": 20,
+    "x": 16,
+    "y": 144,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-collapse",
+    "element": "button",
+    "label": "Collapse",
+    "state": "normal",
+    "width": 60,
+    "height": 20,
+    "x": 16,
+    "y": 176,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-copy-hover",
+    "element": "button",
+    "label": "Copy",
+    "state": "hover",
+    "width": 60,
+    "height": 20,
+    "x": 16,
+    "y": 208,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-copy-focus",
+    "element": "button",
+    "label": "Copy",
+    "state": "focus",
+    "width": 60,
+    "height": 20,
+    "x": 16,
+    "y": 240,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "docs-code-directive",
+    "element": "label",
+    "label": "\"use client\"",
+    "color": "#55FF55",
+    "wrapWidth": 100,
+    "state": "normal",
+    "width": 100,
+    "height": 9,
+    "x": 16,
+    "y": 272,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  }
+]

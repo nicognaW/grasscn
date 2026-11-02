@@ -12,7 +12,7 @@ for (const scale of [2] as const) {
       page,
     }) => {
       await page.setViewportSize({ height, width });
-      await page.goto(`${preview.replace(/\/$/u, "")}/#/components/chart`);
+      await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
 
       const native = page.locator("[data-chart-native-examples]");
       const fps = native.locator("[data-native-chart=fps]");
@@ -55,7 +55,6 @@ for (const scale of [2] as const) {
       const trigger = page.locator(
         '[data-slot=select-trigger][aria-label="Chart type"]'
       );
-
       await trigger.evaluate((n) => {
         scrollBy(0, n.getBoundingClientRect().top - 80);
       });

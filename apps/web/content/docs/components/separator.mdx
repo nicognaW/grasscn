@@ -1,0 +1,35 @@
+---
+title: Separator
+description: Original menu header and footer separator textures.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Original menu header and footer separator textures.
+
+## Preview
+
+<ComponentExample name="separator-example" />
+
+## Usage
+
+Separator supports only horizontal orientation; vertical requests throw. edge="header" is the default, and edge="footer" selects the other original texture. Its width comes from your layout. Decorative separators use role="none" and aria-hidden by default; the example opts into named separator semantics.
+
+## Composition
+
+Use the header texture before menu content and footer texture before actions. Standalone separators are decorative unless explicitly given semantic role and a name. Rotation is not a supported vertical Separator API.
+
+## Installation
+
+<Installation name="separator" title="Separator" />
+
+## Component source
+
+<ComponentSource name="separator" title="Separator" />
+
+## Interactive playground
+
+<LayoutPlayground name="separator" />

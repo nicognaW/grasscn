@@ -1,0 +1,273 @@
+{
+  "verifiedIntegrationBase": "c1d0f7bb5fc38027b6ecb6789057af7c221e22f7",
+  "verifiedHead": "6f22752",
+  "sourceState": "Owned worktree changes listed below, before merging #17/#19 integration. This is not fresh proof for the final combination.",
+  "ownedSourceSha256": "51b88268d51ecfe3ca39f7f9ed26eb237cb514343d5f4f319f81db5ec96dd788",
+  "files": [
+    {
+      "path": "apps/web/components/component-source.tsx",
+      "sha256": "d7d22f0488c88b5859a1d53f3f6930ffa6de4f29177d096dd7a7dee67794cf8b"
+    },
+    {
+      "path": "apps/web/components/input-playground.tsx",
+      "sha256": "54508cd0313d918b37bc5587ad1afe31eb4d7d48c5dd4bda42eefc4047b369ee"
+    },
+    {
+      "path": "apps/web/components/manual-installation.tsx",
+      "sha256": "f67c037a6ce0235665ee272673077b49c6152928a550852c2b1d2a51f1661812"
+    },
+    {
+      "path": "apps/web/content/docs/components/checkbox.mdx",
+      "sha256": "79fb53f1d585758b36ed81a66aac623c640552f2667bb20c2e42c276cb1f74e0"
+    },
+    {
+      "path": "apps/web/content/docs/components/combobox.mdx",
+      "sha256": "844e190b83bbe1e1b5b5c510af02b3720b6788e646901e8e59698e8b7222675d"
+    },
+    {
+      "path": "apps/web/content/docs/components/field.mdx",
+      "sha256": "17cfbfcaeceb8a5b2325967b75047b81dcff9e8a705c9e9544e92c21e1d98525"
+    },
+    {
+      "path": "apps/web/content/docs/components/form.mdx",
+      "sha256": "9a63ed29b7df51da9718b17879603fbaa354b88992e51d808061bec3195f8a66"
+    },
+    {
+      "path": "apps/web/content/docs/components/input-group.mdx",
+      "sha256": "94e1704e13e07f41dcbde861bf87aaabfec7e17c47cf2913e3cee4877322c3aa"
+    },
+    {
+      "path": "apps/web/content/docs/components/input-otp.mdx",
+      "sha256": "4deedf942a5817d78f7ab7fe79f005a43ccde25cdd6521ae05c928038144f68b"
+    },
+    {
+      "path": "apps/web/content/docs/components/input.mdx",
+      "sha256": "4486deee47ace432e881902e3ae0357af191d7e3d8bbeb91480bf09ea5d02016"
+    },
+    {
+      "path": "apps/web/content/docs/components/label.mdx",
+      "sha256": "02e45ad57e38a0fe1fb3c7c95e9bf89ae99608d0e33786e33f5b153c2984a7ee"
+    },
+    {
+      "path": "apps/web/content/docs/components/native-select.mdx",
+      "sha256": "2f6b916bf9e1d6aa4492a0e55e4c57f58b4ef051ffe7e3b9a8c54e1fd992b5f0"
+    },
+    {
+      "path": "apps/web/content/docs/components/questionnaire.mdx",
+      "sha256": "7a4e837d683e093f119010e370c988e8d2e26299f114e4b9345d385205daa214"
+    },
+    {
+      "path": "apps/web/content/docs/components/radio-group.mdx",
+      "sha256": "1b8c119831720db56278fb7821a53d75edca237a77922f142141e70d959e6cfd"
+    },
+    {
+      "path": "apps/web/content/docs/components/select.mdx",
+      "sha256": "4b681543cf99773732ed5848a656b76d8d74d7ce5e993db4d8fcac92e23fc395"
+    },
+    {
+      "path": "apps/web/content/docs/components/slider.mdx",
+      "sha256": "4be2d07999c48e69572b18704cf99d8af3a1048308ed04b34bfcf6305c5b3b51"
+    },
+    {
+      "path": "apps/web/content/docs/components/switch.mdx",
+      "sha256": "fb16e8fc3c55facbe86a5e4a1742d51b9e692b44a894bed0ae9de0bf30686863"
+    },
+    {
+      "path": "apps/web/content/docs/components/textarea.mdx",
+      "sha256": "ac897f11a83ad6cf3734fbc9942c25ea9003b427023eea4d5f14fe536539a9e8"
+    },
+    {
+      "path": "apps/web/content/docs/components/toggle-group.mdx",
+      "sha256": "d60ffeea26ea79db66ed45b49d3bf7c5106fba30e117a816f9696f4f1ff1761a"
+    },
+    {
+      "path": "apps/web/content/docs/components/toggle.mdx",
+      "sha256": "9f426ec7b01bdbd61f3107e141d64b2388ec94342f86e13968d718dded936d81"
+    },
+    {
+      "path": "apps/web/examples/catalog.ts",
+      "sha256": "712ed803d5d0e2dacadfabe974769e0f490e21c684af7f3c49e39572eebf8934"
+    },
+    {
+      "path": "apps/web/examples/inputs/catalog.ts",
+      "sha256": "79a9a5653d84c958dbc5abefd6902900af4aad5eb78685ec5329431dfce381f8"
+    },
+    {
+      "path": "apps/web/examples/inputs/checkbox-disabled-example.tsx",
+      "sha256": "70109e069e7653813fece6a89f60219401d663e9aba5d79e6e0968d0e2f054e1"
+    },
+    {
+      "path": "apps/web/examples/inputs/checkbox-example.tsx",
+      "sha256": "58aca2b1810e339c002dc123bd0fd428bfc61784b6e51f22e578d39f2c3459b4"
+    },
+    {
+      "path": "apps/web/examples/inputs/combobox-example.tsx",
+      "sha256": "31d478ecb045ff4ea87a6fb3dd01aa65bfcba7e05b3123d635e4a87babeec732"
+    },
+    {
+      "path": "apps/web/examples/inputs/combobox-multiple-example.tsx",
+      "sha256": "b07bc2e5cafa63fe9f197fddedabd069f6254d5ab8edc43d45654b3cb62e725c"
+    },
+    {
+      "path": "apps/web/examples/inputs/field-example.tsx",
+      "sha256": "509d175530ca98f65c4ab51e84d5fda1e183bc7b924c2714a32bbfea1cb9b94c"
+    },
+    {
+      "path": "apps/web/examples/inputs/field-validation-example.tsx",
+      "sha256": "335d86f72989b77e7d44d683f85c4b2805d742cc1c13ede793533f171a166e4d"
+    },
+    {
+      "path": "apps/web/examples/inputs/form-example.tsx",
+      "sha256": "84deb4baacb12c0ff25806ca484e0556a7375af6a155a024fd26f403e06e5599"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-disabled-example.tsx",
+      "sha256": "64a29aa0207144af571f221acf95d1a4d3c9ca3ff1cc7e79f3256f2236c0ec33"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-example.tsx",
+      "sha256": "e11591ff445de6b6e870c8b3d7d404afb07dc79c2585c6b829b66dd82d30ab5b"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-group-example.tsx",
+      "sha256": "a7371659e9b366a0ec800f20b49f0030d1cbf651c2203d74a3948bf8acde653d"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-otp-example.tsx",
+      "sha256": "c64df268cf262f12367b205d60755bcf4b438985664730f22674856e42a930aa"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-otp-readonly-example.tsx",
+      "sha256": "c9eb7d48a96fbd01a84ebed2638743ec674946eece7db16e2c4829408ef059d3"
+    },
+    {
+      "path": "apps/web/examples/inputs/input-readonly-example.tsx",
+      "sha256": "ff1fc096b2c8a19b6b6668f077ec58ea2c7e185d97e6c56d67420a7390c3bf1f"
+    },
+    {
+      "path": "apps/web/examples/inputs/label-example.tsx",
+      "sha256": "edfa2d155381af9072c63c6af4128ebe92fa1ec177f4df16f386e2592644bf97"
+    },
+    {
+      "path": "apps/web/examples/inputs/label-wrapped-example.tsx",
+      "sha256": "6d916224a9aee8ebe34ef995f3889c8a1dd74bfe43b5adca18729f56636eeb72"
+    },
+    {
+      "path": "apps/web/examples/inputs/native-select-disabled-example.tsx",
+      "sha256": "9c95809a3a65c8de92fe652f6a2d44a98e8593d9bfeae5b9a4cae6c338cda474"
+    },
+    {
+      "path": "apps/web/examples/inputs/native-select-example.tsx",
+      "sha256": "d673b854a5d2b4dea66401549cfc9001a999b7f9eae4456cccf5a92ded46ee88"
+    },
+    {
+      "path": "apps/web/examples/inputs/questionnaire-example.tsx",
+      "sha256": "18121742e5678f51bc9cafa026769b63a383e342bae205e558ca95f1ef0c3467"
+    },
+    {
+      "path": "apps/web/examples/inputs/radio-group-disabled-example.tsx",
+      "sha256": "d190841868c80fb652361e9d4db8e5af50e55259b52b78069673fca60b8b8825"
+    },
+    {
+      "path": "apps/web/examples/inputs/radio-group-example.tsx",
+      "sha256": "2b70eb3edebffd6a1fd69325e5d7da259bda206f362a83b02756783bb40332ce"
+    },
+    {
+      "path": "apps/web/examples/inputs/select-example.tsx",
+      "sha256": "be6f2b3a6e59d2d02084734fe5e742905ba59df8254ba95ee3cdee47206b698d"
+    },
+    {
+      "path": "apps/web/examples/inputs/select-placeholder-example.tsx",
+      "sha256": "462e86a30b6adc0a95740a483bacd6f817834ee936fb05ef90235c51fdc1750d"
+    },
+    {
+      "path": "apps/web/examples/inputs/slider-disabled-example.tsx",
+      "sha256": "9509e93eac63533f8c33fce3a85c338591feb0cd334e55660f9a129ce313b7c1"
+    },
+    {
+      "path": "apps/web/examples/inputs/slider-example.tsx",
+      "sha256": "fb0a95198eb0189ad29393f1671ee1fce8630f199fbaa52c004bd7f738caab18"
+    },
+    {
+      "path": "apps/web/examples/inputs/switch-disabled-example.tsx",
+      "sha256": "7251e751ad59314eadc6a66fc3c9616f28e66e2a21f3975253078c280a9b56dd"
+    },
+    {
+      "path": "apps/web/examples/inputs/switch-example.tsx",
+      "sha256": "2752acc0fd005f27976170ec72aee4e946586fdd77d9624b4f260053ec9559cd"
+    },
+    {
+      "path": "apps/web/examples/inputs/textarea-example.tsx",
+      "sha256": "cc04e60addd9742dce2b5705ce8adb5bd8b9f8ef46ec756eb0d3a421f2ac1859"
+    },
+    {
+      "path": "apps/web/examples/inputs/textarea-readonly-example.tsx",
+      "sha256": "d8c00eb869bb26a600e2cf680924e2393350ec707b9f7998df3ee9604d67eb35"
+    },
+    {
+      "path": "apps/web/examples/inputs/toggle-disabled-example.tsx",
+      "sha256": "cc375d813eaa30c8f3cb8171bf897009ec83f8d38f8c1e311a745e14be715467"
+    },
+    {
+      "path": "apps/web/examples/inputs/toggle-example.tsx",
+      "sha256": "44c09db048b6e282aed8e88d2e565b6a0f50f718ebb61856cf0f9332cc172197"
+    },
+    {
+      "path": "apps/web/examples/inputs/toggle-group-example.tsx",
+      "sha256": "d8298f3d90e74b09c9fef637aa643d534342cd8c6e12d48bc23b6f64c35d968f"
+    },
+    {
+      "path": "apps/web/examples/inputs/toggle-group-multiple-example.tsx",
+      "sha256": "5dc323c2a140c27e512386ef26852b5f3f98bf27a7804968a1956a31625d1adc"
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "sha256": "fb7e1fb6a59ca1bcafb1d09bcccf2f98e1223d73af30db05c902d8a7a3bed080"
+    },
+    {
+      "path": "packages/tests/scripts/browser-base-cases.json",
+      "sha256": "ef18996cd6d41cca077cf71f7c552350d3d2922c22b7f771bd6f1627d37a1582"
+    },
+    {
+      "path": "packages/tests/tests/component-source.test.tsx",
+      "sha256": "c42dc2ac95afaaa0cb166001d7f55136066e5f9600809e096262f9f62e35f119"
+    },
+    {
+      "path": "packages/tests/tests/docs-input-pixels.spec.ts",
+      "sha256": "da692c1a2459dd71e36c5eabe8089cbf4e78bda00b58de0c5f42d5a19797951e"
+    },
+    {
+      "path": "packages/tests/tests/docs-inputs.spec.ts",
+      "sha256": "7dd512a26935bcf69c1a31971dee34ed6d02341772e3e77ae403cf84cae2bc58"
+    }
+  ],
+  "checks": {
+    "typecheck": "native18final: both web and test workspaces passed",
+    "productionBuild": "verify18c: Next production build passed under Bun",
+    "visitor": "verify18c: all 9 docs-inputs default-path cases passed",
+    "native": "native18final: all 7 docs-input-pixels cases passed, 0 differing RGBA pixels each",
+    "source": "slider18final: targeted public-render source selection/rejection passed",
+    "focusedInventory": "inventory18:16 collected,16 Base mappings, each resolves once",
+    "format": "verify18c and slider18final scoped Oxfmt passed",
+    "lint": "Not checked: Oxlint could not load eslint-plugin-github (TypeFlags.Intrinsic)",
+    "globalInventory": "Blocked by retired catalog.generated.json/search.generated.json imports; #22 migration work remains"
+  },
+  "resource": {
+    "native18final": {
+      "exit": 0,
+      "peakCpuPercent": 35.984848484848484,
+      "peakRamPercent": 76.83406823468755,
+      "cpuCapPercent": 10
+    },
+    "verify18c": {
+      "exit": 1,
+      "reason": "15 pass, known Slider screenshot selector failure subsequently corrected",
+      "peakCpuPercent": 53.97727272727273,
+      "peakRamPercent": 78.8186754140441
+    },
+    "verify18b": {
+      "exit": 78,
+      "reason": "headroom interruption, incomplete"
+    }
+  }
+}

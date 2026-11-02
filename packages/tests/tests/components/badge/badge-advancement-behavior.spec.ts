@@ -1,6 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 for (const scale of [2]) {
   for (const width of [390, 1440]) {
@@ -8,7 +10,7 @@ for (const scale of [2]) {
       page,
     }) => {
       await page.setViewportSize({ width, height: 1000 });
-      await page.goto(origin + "#badge");
+      await page.goto(origin + "docs/components/badge");
 
       const stage = page.locator('[data-stage="badge"]');
       const badge = stage.locator('[data-slot="badge"]').first();

@@ -1,12 +1,12 @@
-import { readFileSync } from "node:fs";
-
 import { test, expect } from "@grasscn/tests/test";
-import { webFile } from "@tests/paths";
+import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
-const names = JSON.parse(readFileSync(webFile("demos.json"), "utf-8")).map(
-  (c: { name: string }) => c.name
+const names = documentationInventory().playgrounds.map(
+  (component) => component.name
 );
 
 for (const viewport of [
@@ -27,10 +27,9 @@ for (const viewport of [
     await page.setViewportSize(viewport);
 
     for (const name of names) {
-      await page.goto(`${origin}#/components/${name}`);
-      const card = page.locator(`#component-${name}`);
-
-      for (const _scale of [2]) {
+      await page.goto(origin + "docs/components/" + name);
+      const card = page.locator(".documentation-playground");
+      for (const scale of [2]) {
         await expect(card).toBeVisible();
         await expect
           .poll(async () =>

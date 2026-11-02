@@ -2,6 +2,35 @@ import * as React from "react";
 
 import { createConfirmationPainter } from "./minecraft-confirmation-gpu";
 
+interface FixedPseudo {
+  element: HTMLElement;
+  attribute: string;
+  previous: string | null;
+  key: string;
+  pseudo: "::before" | "::after";
+  insets: Record<"top" | "right" | "bottom" | "left", string>;
+  transform: string;
+}
+
+// Pseudo-elements use their originating element's containing block; real elements start at their parent.
+const viewportAnchored = (start: HTMLElement | null) => {
+  for (let parent = start; parent; parent = parent.parentElement) {
+    const style = getComputedStyle(parent);
+
+    if (
+      style.transform !== "none" ||
+      style.perspective !== "none" ||
+      style.filter !== "none" ||
+      style.backdropFilter !== "none" ||
+      /paint|layout|strict|content/u.test(style.contain)
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export function useConfirmationSnapshot(
   canvas: React.RefObject<HTMLCanvasElement | null>,
   identity: string,
@@ -75,6 +104,7 @@ export function useConfirmationSnapshot(
         layoutTop: number;
       }[] = [];
 
+      const pseudos: FixedPseudo[] = [];
       try {
         const { domToCanvas } = await import("modern-screenshot");
         await document.fonts.ready;
@@ -109,29 +139,8 @@ export function useConfirmationSnapshot(
               continue;
             }
 
-            let viewport = true;
-
-            for (
-              let parent = element.parentElement;
-              parent;
-              parent = parent.parentElement
-            ) {
-              const style = getComputedStyle(parent);
-
-              if (
-                style.transform !== "none" ||
-                style.perspective !== "none" ||
-                style.filter !== "none" ||
-                style.backdropFilter !== "none" ||
-                /paint|layout|strict|content/u.test(style.contain)
-              ) {
-                viewport = false;
-                break;
-              }
-            }
-
-            if (viewport) {
-              const previous = element.dataset.mcSnapshotFixed ?? null;
+            if (viewportAnchored(element.parentElement)) {
+              const previous = element.getAttribute("data-mc-snapshot-fixed");
               const key = `${identity}-${fixed.length}`;
               const style = getComputedStyle(element);
 
@@ -152,6 +161,52 @@ export function useConfirmationSnapshot(
                 transform: style.transform,
               });
               element.dataset.mcSnapshotFixed = key;
+            }
+          }
+        }
+
+        if (offsetX || offsetY) {
+          for (const element of document.body.querySelectorAll<HTMLElement>(
+            "*"
+          )) {
+            if (!(element instanceof HTMLElement) || belongs(element)) {
+              continue;
+            }
+
+            for (const pseudo of ["::before", "::after"] as const) {
+              const style = getComputedStyle(element, pseudo);
+
+              if (
+                style.position !== "fixed" ||
+                style.display === "none" ||
+                style.content === "none" ||
+                style.content === "normal" ||
+                !viewportAnchored(element)
+              ) {
+                continue;
+              }
+
+              const attribute =
+                pseudo === "::before"
+                  ? "data-mc-snapshot-before"
+                  : "data-mc-snapshot-after";
+
+              const key = `${identity}-pseudo-${pseudos.length}`;
+              pseudos.push({
+                attribute,
+                element,
+                insets: {
+                  bottom: style.bottom,
+                  left: style.left,
+                  right: style.right,
+                  top: style.top,
+                },
+                key,
+                previous: element.getAttribute(attribute),
+                pseudo,
+                transform: style.transform,
+              });
+              element.setAttribute(attribute, key);
             }
           }
         }
@@ -312,6 +367,57 @@ export function useConfirmationSnapshot(
                 )
               )
             );
+            // Correct only cloned pseudo rules. The live page's viewport paint and original resources stay untouched.
+
+            if (pseudos.length) {
+              const rules = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "style"
+              );
+
+              rules.textContent = pseudos
+                .map(({ attribute, key, pseudo, insets, transform }) => {
+                  const declarations: string[] = [];
+
+                  for (const [near, far, delta] of [
+                    ["left", "right", offsetX],
+                    ["top", "bottom", offsetY],
+                  ] as const) {
+                    if (insets[near] !== "auto") {
+                      declarations.push(
+                        `${near}:calc(${insets[near]} + ${delta}px)!important`
+                      );
+                    }
+
+                    if (insets[far] !== "auto") {
+                      declarations.push(
+                        `${far}:calc(${insets[far]} - ${delta}px)!important`
+                      );
+                    }
+                  }
+
+                  const x =
+                    insets.left === "auto" && insets.right === "auto"
+                      ? offsetX
+                      : 0;
+
+                  const y =
+                    insets.top === "auto" && insets.bottom === "auto"
+                      ? offsetY
+                      : 0;
+                  // A pseudo-element has no real descendants whose containing block a transform could change.
+
+                  if (x || y) {
+                    declarations.push(
+                      `transform:translate(${x}px,${y}px) ${transform === "none" ? "" : transform}!important`
+                    );
+                  }
+
+                  return `[${attribute}=${JSON.stringify(key)}]${pseudo}{${declarations.join(";")}}`;
+                })
+                .join("\n");
+              svg.append(rules);
+            }
           },
           scale: ratio,
           style: {
@@ -340,6 +446,17 @@ export function useConfirmationSnapshot(
             error instanceof Error ? error.message : String(error);
         }
       } finally {
+        for (const item of pseudos) {
+          if (item.element.getAttribute(item.attribute) !== item.key) {
+            continue;
+          }
+
+          if (item.previous === null) {
+            item.element.removeAttribute(item.attribute);
+          } else {
+            item.element.setAttribute(item.attribute, item.previous);
+          }
+        }
         for (const item of fixed) {
           if (item.element.dataset.mcSnapshotFixed !== item.key) {
             continue;

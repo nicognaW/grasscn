@@ -1,0 +1,20 @@
+{
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "sourceMethod": "GuiGraphicsExtractor.item(original GRASS_BLOCK holder with explicit minecraft:grass_block ITEM_MODEL, 16, 16)",
+  "initialization": "Minimal isolated ItemStack supplies the shipped model component because 26.2 title-screen default components are unbound; all model, tint, textures, GUI transform and lighting come from the vanilla renderer. No world is created.",
+  "captureSourceSha256": "aeb1b8a04a40d6edd5179c49313e362cbce38bea65737ade2a1efceb3cceb814",
+  "scales": [
+    3
+  ],
+  "backgrounds": [
+    "#202020"
+  ],
+  "originalCaptureSourceSha256": "587402ae9e021df94109c3db697d7e52eba13c63a9f5f42abc83eca9c77dde25",
+  "caseDefinitionSha256": "68b5be3e64155bbeebce15e4874c08acb9b27a1acdc24b32166523b62d1205c9",
+  "viewport": [
+    1536,
+    900
+  ],
+  "mods": [],
+  "resourcePacks": []
+}

@@ -1,0 +1,161 @@
+.minecraft-docs-layout {
+  display: grid;
+  grid-template-columns: 224px minmax(0, 1fr) 224px;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  background: #0009;
+}
+.minecraft-docs-layout > .minecraft-document {
+  width: 100%;
+  max-width: none;
+  background: transparent;
+  min-width: 0;
+  padding: 40px 24px 64px;
+}
+.minecraft-docs-sidebar,
+.minecraft-docs-toc {
+  position: sticky;
+  top: 0;
+  padding: 24px 12px;
+  max-height: 100dvh;
+  overflow: auto;
+  --mc-scale: 2;
+  overscroll-behavior: contain;
+}
+.minecraft-docs-layout nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.minecraft-docs-layout nav li {
+  margin: 0 0 4px;
+}
+.minecraft-docs-sidebar nav a,
+.minecraft-docs-toc nav a {
+  display: block;
+  padding: 8px 12px;
+  min-height: 32px;
+  color: #aaa;
+  outline-offset: -2px;
+  overflow-wrap: anywhere;
+}
+.minecraft-docs-layout nav a:focus-visible {
+  color: #ffff55;
+  --mc-ink: #ffff55;
+  --mc-shadow: #3f3f15;
+}
+@media (hover: hover) and (pointer: fine) {
+  .minecraft-docs-layout nav a:hover {
+    color: #ffff55;
+    --mc-ink: #ffff55;
+    --mc-shadow: #3f3f15;
+  }
+}
+.minecraft-docs-layout nav a[aria-current="page"] {
+  background: #ffffff14;
+  color: #fff;
+  box-shadow: inset 2px 0 #aaa;
+}
+.minecraft-docs-layout nav [data-nav-heading] {
+  padding: 16px 12px 12px;
+  color: #fff;
+}
+.minecraft-nav-heading {
+  display: block;
+  padding: 12px 0 8px;
+}
+.minecraft-docs-mobile-toggle {
+  display: none;
+}
+.minecraft-docs-toc nav > .mc-bitmap {
+  margin-bottom: 12px;
+}
+.minecraft-docs-toc [data-depth="3"] {
+  padding-left: 8px;
+}
+.minecraft-docs-toc [data-depth="4"] {
+  padding-left: 16px;
+}
+.minecraft-prose [id] {
+  scroll-margin-top: 24px;
+}
+@media (max-width: 1100px) {
+  .minecraft-docs-layout {
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+  .minecraft-docs-toc {
+    grid-column: 2;
+    position: static;
+    padding: 0 24px 24px;
+  }
+}
+@media (max-width: 720px) {
+  .minecraft-docs-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .minecraft-docs-sidebar {
+    width: 100%;
+    position: static;
+    max-height: none;
+    border-bottom: 2px solid #555;
+  }
+  .minecraft-docs-mobile-toggle {
+    display: inline-flex;
+    margin-bottom: 4px;
+  }
+  .minecraft-docs-sidebar nav[data-mobile-open="false"] {
+    display: none;
+  }
+  .minecraft-docs-sidebar nav > ul,
+  .minecraft-docs-sidebar nav li > ul {
+    display: block;
+  }
+  .minecraft-docs-sidebar nav[data-mobile-open="true"] {
+    max-height: 50dvh;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .minecraft-docs-sidebar nav li {
+    margin: 0;
+  }
+  .minecraft-docs-sidebar nav li:has(> ul) {
+    width: 100%;
+  }
+  .minecraft-docs-layout > .minecraft-document {
+    padding: 32px 20px;
+  }
+  .minecraft-docs-toc {
+    width: 100%;
+  }
+}
+
+/* Documentation chrome keeps both scrollbar pixels and text at integer GUI 2. */
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-track,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-thumb,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-button,
+:is(
+  .minecraft-docs-sidebar,
+  .minecraft-docs-sidebar nav,
+  .minecraft-docs-toc
+)::-webkit-scrollbar-corner {
+  --mc-scale: 2;
+}

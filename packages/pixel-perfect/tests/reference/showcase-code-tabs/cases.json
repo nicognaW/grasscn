@@ -1,0 +1,38 @@
+[
+  {
+    "name": "showcase-tabs-preview",
+    "element": "tabs",
+    "labels": [
+      "Preview",
+      "Code"
+    ],
+    "selectedIndex": 0,
+    "targetIndex": 0,
+    "state": "normal",
+    "width": 120,
+    "height": 24,
+    "x": 16,
+    "y": 16,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  },
+  {
+    "name": "showcase-tabs-code",
+    "element": "tabs",
+    "labels": [
+      "Preview",
+      "Code"
+    ],
+    "selectedIndex": 1,
+    "targetIndex": 1,
+    "state": "normal",
+    "width": 120,
+    "height": 24,
+    "x": 16,
+    "y": 48,
+    "page": 0,
+    "timeMs": 0,
+    "background": "#202020"
+  }
+]

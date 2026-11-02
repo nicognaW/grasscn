@@ -1,6 +1,8 @@
 import { test, expect } from "@grasscn/tests/test";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 for (const width of [320, 390, 768, 1024, 1565]) {
   test(`homepage examples render without overflow or runtime errors at ${width}px`, async ({
@@ -71,12 +73,17 @@ test("homepage links, search and component gallery remain connected", async ({
 
   const search = page.getByRole("combobox", {
     exact: true,
-    name: "Search components",
+    name: "Search documentation",
   });
 
-  await search.fill("textarea");
-  await search.press("Enter");
-  await expect(page.locator("#component-textarea")).toBeVisible();
+  await search.fill("Textarea");
+  await page
+    .getByRole("option", { exact: true, name: "Textarea" })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { exact: true, name: "Textarea" })
+  ).toBeVisible();
   await page
     .getByRole("banner")
     .getByRole("link", { exact: true, name: "grasscn home" })
@@ -87,7 +94,7 @@ test("homepage links, search and component gallery remain connected", async ({
     .click();
   await expect(
     page
-      .getByRole("navigation", { exact: true, name: "Components" })
+      .getByRole("navigation", { exact: true, name: "Documentation" })
       .getByRole("link", { exact: true, name: "Button" })
   ).toBeVisible();
   await page.goBack();
@@ -146,7 +153,6 @@ test("chat sends CJK, charts switch, and payout threshold can be saved", async (
   ).toHaveAttribute("aria-pressed", "true");
 
   const slider = page.getByRole("slider", {
-    exact: true,
     name: "Payout threshold",
   });
 
@@ -169,13 +175,16 @@ test("installation picker copies the selected real registry command", async ({
   await page
     .getByRole("combobox", { exact: true, name: "Component to install" })
     .click();
-  await page.getByRole("option", { exact: true, name: "card" }).click();
-  await page.getByRole("button", { exact: true, name: "Copy" }).click();
-  await expect(
-    page.getByRole("button", { exact: true, name: "Copied" })
-  ).toBeVisible();
-  expect(await page.evaluate(async () => navigator.clipboard.readText())).toBe(
-    "npx shadcn@latest add http://127.0.0.1:5173/r/card.json"
+  await page.getByRole("option", { name: "card", exact: true }).click();
+  await page
+    .locator(".grass-install")
+    .getByRole("button", { exact: true, name: "Copy" })
+    .click();
+  await expect(page.locator(".grass-install").getByRole("status")).toHaveText(
+    "Copied"
+  );
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+    `npx shadcn@latest add ${new URL(origin).origin}/r/card.json`
   );
 });
 

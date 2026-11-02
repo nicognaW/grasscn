@@ -13,7 +13,7 @@ for (const scale of [2] as const) {
 
         await page.setViewportSize({ width, height });
         await page.goto(
-          `${preview.replace(/\/$/u, "")}/#/components/${position === "default" ? "chart" : "select"}`
+          `${preview.replace(/\/$/u, "")}/docs/components/${position === "default" ? "chart" : "select"}`
         );
 
         const trigger = page.locator(
@@ -58,11 +58,11 @@ for (const scale of [2] as const) {
 
         if (scroll.maximum > 0)
           await expect
-            .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+            .poll(async () => viewport.evaluate((n) => n.scrollTop))
             .not.toBe(scroll.top);
         else
           await expect
-            .poll(async () => await viewport.evaluate((n) => n.scrollTop))
+            .poll(async () => viewport.evaluate((n) => n.scrollTop))
             .toBe(0);
         await page.evaluate(async () => {
           const frameCompletion = Promise.withResolvers<void>();
@@ -105,7 +105,16 @@ for (const scale of [2] as const) {
           Math.min(270, before.width / scale - 30) * scale
         );
 
-        if (scroll.maximum > 0) {
+        const settledMaximum = await viewport.evaluate(
+          (n) => n.scrollHeight - n.clientHeight
+        );
+
+        await expect(popup).toHaveAttribute(
+          "data-mc-select-scrollable",
+          String(settledMaximum > 0)
+        );
+
+        if (settledMaximum > 0) {
           const bounds = (await bar.boundingBox())!;
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width

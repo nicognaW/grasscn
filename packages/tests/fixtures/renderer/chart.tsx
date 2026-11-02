@@ -28,6 +28,14 @@ const style = {
 };
 
 const ApiFixture = () => {
+  let apiScale: 1 | 2 | 3 = 2;
+
+  if (scale === 1) {
+    apiScale = 1;
+  } else if (scale === 3) {
+    apiScale = 3;
+  }
+
   const [wide, setWide] = React.useState(false);
   const [dark, setDark] = React.useState(false);
   const [revision, setRevision] = React.useState(0);
@@ -63,7 +71,7 @@ const ApiFixture = () => {
       <ChartContainer
         id="world-activity"
         config={config}
-        scale={2}
+        scale={apiScale}
         initialDimension={{ height: 300, width: 480 }}
         style={{ height: 300, width: wide ? 600 : 480 }}
       >

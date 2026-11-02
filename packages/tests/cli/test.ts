@@ -3,8 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { foregroundLease } from "@grasscn/tests/coordination";
-import { packageBin } from "@grasscn/tests/tooling";
 import { testRoot } from "@tests/paths";
+import { packageBin } from "@tests/tooling";
 
 const args = process.argv.slice(2);
 const releaseForeground = foregroundLease();
@@ -26,7 +26,7 @@ const execute = (command: string[]) => {
 try {
   const units = fs
     .readdirSync(path.join(testRoot, "tests/unit"))
-    .filter((name) => name.endsWith(".test.ts"))
+    .filter((name) => /\.test\.[cm]?[jt]sx?$/u.test(name))
     .map((name) => path.join(testRoot, "tests/unit", name));
 
   const unitStatus = args.includes("--list")

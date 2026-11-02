@@ -1,0 +1,49 @@
+---
+title: Dropdown Menu
+description: World commands with Minecraft menu constituents.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+World commands with Minecraft menu constituents.
+
+## Preview
+
+<ComponentExample name="dropdown-menu-example" />
+
+## Usage
+
+The example records a real action callback and controls a coordinate checkbox with `checked` and `onCheckedChange`. `closeOnClick={false}` keeps the checkbox menu open while changing the preference.
+
+## Composition
+
+Content owns portal/positioning, defaults to bottom/start with sideOffset 4, and accepts `surface="popup"` or `"suggestions"`. Use Group with Label, RadioGroup with RadioItem, and Sub with SubTrigger/SubContent for their respective behaviors. Shortcuts only display hints.
+
+## Interaction and limits
+
+Only the default Item variant is supported; destructive styling throws. Menu rows, checkbox captions and panel artwork have declared native cases. Their combined dropdown arrangement and browser keyboard interactions remain web adaptations. Persist preference state in your application.
+
+See the [upstream API](https://base-ui.com/react/components/menu) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="dropdown-menu"
+  title="Dropdown Menu"
+  initialFile="dropdown-menu.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="dropdown-menu"
+  title="Dropdown Menu"
+  initialFile="registry/ui/dropdown-menu.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="dropdown-menu" />

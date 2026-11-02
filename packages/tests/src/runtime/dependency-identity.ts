@@ -2,9 +2,10 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-import { JSON5, version } from "bun";
+import { version } from "bun";
+import { workspaceNames } from "./verification-types.ts";
 
-const digest = (bytes: Uint8Array) =>
+const digest = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
 
 // A lock identifies intended dependencies; installed bytes identify what ran.
@@ -74,14 +75,9 @@ export const installedDependencyIdentity = function installedDependencyIdentity(
 
   visit(modules, "node_modules");
 
-  // SAFETY: bun.lock is the installed Bun workspace lock; only its workspace names are consumed.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The pinned Bun lockfile owns this workspace-name map.
-  const lockfile = JSON5.parse(fs.readFileSync(lock, "utf-8")) as {
-    workspaces?: Record<string, object>;
-  };
-  const workspaces = lockfile.workspaces ?? {};
+  const workspaces = workspaceNames(fs.readFileSync(lock, "utf-8"));
 
-  for (const workspace of Object.keys(workspaces).sort()) {
+  for (const workspace of workspaces.toSorted()) {
     if (!workspace) {
       continue;
     }
@@ -99,6 +95,7 @@ export const installedDependencyIdentity = function installedDependencyIdentity(
 
   return {
     bun: version,
+    bunOptionsSha256: digest(process.env.BUN_OPTIONS ?? ""),
     files,
     installedSha256: hash.digest("hex"),
     lockSha256: digest(fs.readFileSync(lock)),

@@ -1,9 +1,9 @@
-import { readFileSync } from "node:fs";
-
 import { test, expect } from "@grasscn/tests/test";
-import { webFile } from "@tests/paths";
+import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 for (const scale of [2]) {
   test(`Form embeds Field with accessible validation, CJK, multiline notes and reset GUI${scale}`, async ({
@@ -11,29 +11,29 @@ for (const scale of [2]) {
   }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    await page.goto(`${origin}#field`);
-    await expect(page.locator(".component-card")).toHaveCount(1);
-    const card = page.locator("#component-form");
+    await page.goto(`${origin}docs/components/form`);
+    await expect(page.locator(".documentation-playground")).toHaveCount(1);
+    const card = page.locator(".documentation-playground");
     await expect(card).toBeVisible();
-    await expect(page.locator("h1")).toHaveText("Form");
-
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      "Form"
+    );
     const form = card.getByRole("form", { name: "Player and world settings" });
 
     const name = form.getByRole("textbox", {
-      name: "Player name",
       exact: true,
+      name: "Player name",
     });
 
     const world = form.getByRole("textbox", {
-      name: "World name",
       exact: true,
+      name: "World name",
     });
 
     const notes = form.getByRole("textbox", {
       exact: true,
       name: "Journey notes",
     });
-
     await expect(form.locator("[data-slot=field-set]")).toHaveCount(1);
     await expect(form.locator("[data-slot=field]")).toHaveCount(3);
     await form
@@ -120,30 +120,32 @@ for (const scale of [2]) {
   });
 }
 
-test("Field is consolidated into Form", async ({ page }) => {
-  await page.goto(`${origin}#/components/field`);
-  await expect(page.locator("[data-stage=form]")).toHaveCount(1);
-  await expect(page.locator("[data-stage=field]")).toHaveCount(1);
-  await expect(page.locator("#component-field")).toHaveCount(0);
-  const nav = page.getByRole("navigation", { name: "Components" });
+test("Field is independently documented while installed through Form", async ({
+  page,
+}) => {
+  await page.goto(`${origin}docs/components/field`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    "Field"
+  );
+  const nav = page.getByRole("navigation", { name: "Documentation" });
   await expect(
     nav.getByRole("link", { exact: true, name: "Form" })
   ).toHaveCount(1);
   await expect(
     nav.getByRole("link", { exact: true, name: "Field" })
-  ).toHaveCount(0);
-  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf-8"));
+  ).toHaveCount(1);
 
-  const form = registry.items.find(
-    (item: { name: string }) => item.name === "form"
-  );
-
+  const registry = documentationRegistry();
+  const form = registry.find((item) => item.name === "form");
+  expect(form).toBeDefined();
   expect(
-    form.files.some(
-      (file: { path: string }) => file.path === "registry/ui/field.tsx"
-    )
+    form?.files?.some((file) => file.path === "registry/ui/field.tsx")
   ).toBe(true);
-  expect(
-    registry.items.some((item: { name: string }) => item.name === "field")
-  ).toBe(false);
+  expect(registry.some((item) => item.name === "field")).toBe(false);
+  await expect(
+    page.getByRole("region", {
+      exact: true,
+      name: "Field implementation source",
+    })
+  ).toContainText("components/ui/field.tsx");
 });

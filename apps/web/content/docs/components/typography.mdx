@@ -1,0 +1,35 @@
+---
+title: Typography
+description: Semantic HTML with Minecraft bitmap text, wrapping and shadows.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Semantic HTML with Minecraft bitmap text, wrapping and shadows.
+
+## Preview
+
+<ComponentExample name="typography-example" />
+
+## Usage
+
+Typography is the MinecraftProse alias: as="span", scale=2, align="left" by default. Semantic H1-H4/P/Blockquote/InlineCode/Lead/Large/Small/Muted wrappers preserve HTML meaning without inventing larger native heading glyphs. maxWidth is measured in logical pixels; scalar text gets measured wrapping, while rich React children have separate composition behavior.
+
+## Composition
+
+TypographyList and TypographyTable provide raw semantic containers; supply real list items, headings and cells. Use TypographyInlineCode inside prose and the installable Code Block for multiline source. Rich links remain responsible for their own focus affordance and accessible destination.
+
+## Installation
+
+<Installation name="typography" title="Typography" />
+
+## Component source
+
+<ComponentSource name="typography" title="Typography" />
+
+## Interactive playground
+
+<LayoutPlayground name="typography" />

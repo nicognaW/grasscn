@@ -1,0 +1,45 @@
+---
+title: Toggle
+description: A pressable Minecraft recipe-filter icon.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+A pressable Minecraft recipe-filter icon.
+
+## Preview
+
+<ComponentExample name="toggle-example" />
+
+## Usage
+
+Import `Toggle` from `@/components/ui/toggle`. Bind `pressed`/`onPressedChange(next, details)` or initialize `defaultPressed`. The primary example intentionally has no text children: its native artwork is the recipe-filter icon.
+
+## Composition
+
+Provide `aria-label` for the icon's action. Use [Toggle Group](/docs/components/toggle-group) for related choices with shared keyboard navigation. `toggleVariants` is exported for styling composition, but does not broaden supported appearance.
+
+## API and accessibility
+
+Only the default `variant` and `size` are supported; other values throw. The icon measures 26 by 16 logical pixels and scale defaults to 2. Adding text or rich children is a web composition outside the native icon claim. The playground includes disabled state.
+
+See the [underlying API](https://base-ui.com/react/components/toggle) for shared semantics.
+
+## Disabled filter
+
+<ComponentExample name="toggle-disabled-example" title="Disabled filter" />
+
+## Installation
+
+<Installation name="toggle" title="Toggle" />
+
+## Component source
+
+<ComponentSource name="toggle" title="Toggle" />
+
+## Interactive playground
+
+<InputPlayground name="toggle" />

@@ -1,14 +1,13 @@
-import { spawn, execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile, readdir, stat } from "node:fs/promises";
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-import type {
-  CheckpointCatalogue,
-  CheckpointResult,
-  ReusableBrowserTest,
-} from "@grasscn/tests/checkpoints";
+import {
+  baseCatalogue,
+  collectBrowserCases,
+  classifyBrowserCases,
+} from "@grasscn/pixel-perfect/suite";
 import {
   reusableBrowserTests,
   browserFilePattern,
@@ -18,38 +17,48 @@ import {
   fixtureManifest,
   serveProductionFixture,
 } from "@grasscn/tests/fixture";
+import {
+  stampProductionBuild,
+  serveNextProduction,
+  sourceIdentity,
+  productionBuildIdentity,
+  readPreparedProductionBuild,
+} from "@grasscn/tests/next-production";
 import { packageBin } from "@grasscn/tests/tooling";
+import {
+  browserReuseResults,
+  readVerificationState,
+  checkpointSummary,
+  expectedCheckpoint,
+  checkpointResult,
+  browserCollectionReport,
+  verificationWebsite,
+} from "@grasscn/tests/verification-types";
 import { serveFullHosts } from "@ppt/full-runs/hosts";
-import type { AuthorizedFullRun } from "@ppt/full-runs/run";
 import { assertFullBrowserExecution } from "@ppt/full-runs/run";
 import {
   repoRoot,
-  webRoot,
   testRoot,
   pixelPerfectRoot,
   repositoryFile,
-  webFile,
 } from "@ppt/paths";
 import type {
   PreviousVerification,
   RuntimeVerificationEnvironment,
   RuntimeVerificationReceipt,
-  RuntimeCheckpointSummary,
 } from "@ppt/runtime/verification-protocol";
-import type { BrowserCase } from "@ppt/selection/suite";
-import {
-  baseCatalogue,
-  collectBrowserCases,
-  classifyBrowserCases,
-} from "@ppt/selection/suite";
-import type { ViteDevServer } from "vite";
 
 const hasText = (value: string | null | undefined): value is string =>
   Boolean(value);
 
-const root = repoRoot;
+
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
+const phase = process.env.GRASSCN_VERIFY_PHASE ?? "all";
+
+if (!["all", "prepare", "browser"].includes(phase)) {
+  throw new Error("Use prepare, browser or all verification phase");
+}
 
 if (!Number.isInteger(workers) || workers < 1 || workers > 8) {
   throw new Error("Use 1-8 browser workers");
@@ -66,9 +75,12 @@ if (suite === "pixels") {
 }
 
 const fullMode = suite === "full";
-const fullRun = fullMode ? assertFullBrowserExecution([]) : null;
 
-if (fullMode) {
+const fullRun = fullMode
+  ? assertFullBrowserExecution([])
+  : null;
+
+if (fullRun !== null) {
   for (const name of [
     "POPOVER_SURFACE_ONLY",
     "GRASSCN_TRADING_SCROLL_REFERENCE",
@@ -80,11 +92,7 @@ if (fullMode) {
     }
   }
 
-  // SAFETY: Full mode is the branch that just authorized and returned this run.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const approvedRun = fullRun as AuthorizedFullRun;
-
-  const { fixturePort, previewPort, proxyPort } = approvedRun.plan.execution;
+  const { fixturePort, previewPort, proxyPort } = fullRun.plan.execution;
   process.env.GRASSCN_BROWSER_SCOPE = "full";
   process.env.GRASSCN_FULL_PROXY_PORT = String(proxyPort);
   process.env.GRASSCN_FIXTURE_URL = `http://127.0.0.1:${fixturePort}`;
@@ -113,55 +121,7 @@ if (managedFixture && !fullMode) {
 
 await mkdir(output, { recursive: true });
 
-const git = (args: string[]) =>
-  execFileSync("git", args, {
-    cwd: root,
-    encoding: "utf-8",
-    maxBuffer: 16 * 1024 * 1024,
-  }).trim();
-
-const identity = async function identity() {
-  const names = [
-    ...new Set(
-      git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"])
-        .split("\0")
-        .filter(Boolean)
-    ),
-  ].sort();
-
-  const hash = createHash("sha256");
-
-  for (const name of names) {
-    let bytes: Buffer;
-
-    try {
-      bytes = await readFile(repositoryFile(name));
-    } catch (error) {
-      // SAFETY: the Node filesystem call supplies its error/code contract.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const failure = error as NodeJS.ErrnoException;
-
-      if (failure.code !== "ENOENT") {
-        throw error;
-      }
-
-      bytes = Buffer.from("<deleted>");
-    }
-
-    hash
-      .update(name)
-      .update("\0")
-      .update(createHash("sha256").update(bytes).digest())
-      .update("\0");
-  }
-
-  return {
-    commit: git(["rev-parse", "HEAD"]),
-    status: git(["status", "--porcelain=v1"]),
-    treeSha256: hash.digest("hex"),
-  };
-};
-
+const identity = sourceIdentity;
 const before = await identity();
 
 const environment: RuntimeVerificationEnvironment = {
@@ -190,6 +150,7 @@ for (const executable of [
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
 ]) {
   try {
+    // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     const info = await stat(executable);
     environment.edge = { executable, modified: info.mtimeMs, size: info.size };
     break;
@@ -214,21 +175,19 @@ environment.browserSelection = fullMode ? "full" : "base";
 
 environment.nonPptIncluded = false;
 
-if (fullMode) {
-  // SAFETY: Full mode has the authorized run returned before environment construction.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const approvedRun = fullRun as AuthorizedFullRun;
-
+if (fullRun !== null) {
   environment.fullRun = {
-    approvalEvent: approvedRun.approval.eventId,
-    issue: approvedRun.number,
-    planHash: approvedRun.planHash,
+    approvalEvent: fullRun.approval.eventId,
+    issue: fullRun.number,
+    planHash: fullRun.planHash,
   };
 }
 
 environment.fixtureMode = managedFixture
   ? "production"
   : "provided-or-development";
+
+environment.websiteMode = "owned-bun-next-production";
 
 const report: RuntimeVerificationReceipt = {
   browserScope: fullMode ? "full" : "base",
@@ -237,7 +196,7 @@ const report: RuntimeVerificationReceipt = {
   environment,
   passed: false,
   pptOnly: true,
-  scope: `${fullMode ? "Approved Full PPTs only" : "Base PPTs only"}. No fresh native launch or shadcn CLI installation; no merge performed.`,
+  scope: `${fullMode ? "Approved Full" : "Base"} browser selection only. No fresh native launch or shadcn CLI installation; no merge performed.`,
   source: before,
   startedAt: new Date().toISOString(),
   suite,
@@ -245,8 +204,9 @@ const report: RuntimeVerificationReceipt = {
 
 const receipt = path.join(output, "verification.json");
 
-const save = async () =>
-  writeFile(receipt, `${JSON.stringify(report, null, 2)}\n`);
+const save = async () => {
+  await writeFile(receipt, `${JSON.stringify(report, null, 2)}\n`);
+};
 
 const cacheAllowed =
   environment.installedDependencies !== null &&
@@ -269,13 +229,13 @@ for (const folder of await readdir(path.dirname(output))) {
       "verification.json"
     );
 
-    // SAFETY: prior attempts write this receipt shape; existing source/environment checks follow.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const candidate = JSON.parse(
-      await readFile(filename, "utf-8")
-    ) as Partial<RuntimeVerificationReceipt>;
+    // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+    // SAFETY: this route reads owned verification.json receipts: current/legacy report writers emit ISO startedAt text; minimal historical states may omit it, preserving the checkpoint filename fallback.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain the actual optional timestamp projection alongside the existing source/environment filters and undefined result.
+    const candidate = readVerificationState(await readFile(filename, "utf-8")) as PreviousVerification["report"] | undefined;
 
     if (
+      candidate !== undefined &&
       cacheAllowed &&
       candidate.source?.treeSha256 === before.treeSha256 &&
       candidate.source?.commit === before.commit &&
@@ -297,12 +257,13 @@ for (const folder of await readdir(path.dirname(output))) {
 await save();
 
 const steps: [name: string, args: string[]][] = [
-  ["prepare-preview", [path.join(webRoot, "scripts/prepare-preview.mjs")]],
+  ["generate", [packageBin("turbo", "turbo", repoRoot), "run", "generate"]],
   [
     "types",
     [
       packageBin("uncheck", "uncheck", repoRoot),
       "--only=tsc",
+      "--require=tsc",
       "--cwd",
       repoRoot,
     ],
@@ -317,56 +278,63 @@ const steps: [name: string, args: string[]][] = [
     "porting-evidence",
     [path.join(pixelPerfectRoot, "src/runtime/check-porting-evidence.ts")],
   ],
-];
-
-const unitFiles = await readdir(path.join(pixelPerfectRoot, "tests/unit"));
-
-steps.push([
-  "evidence-negative-controls",
+  ["unit-contracts", ["run", "test:unit"]],
   [
-    "test",
-    "--timeout",
-    "120000",
-    ...unitFiles.flatMap((name) =>
-      name.endsWith(".test.ts")
-        ? [path.join(pixelPerfectRoot, "tests/unit", name)]
-        : []
-    ),
+    "production-build",
+    [packageBin("turbo", "turbo", repoRoot), "run", "build"],
   ],
-]);
-
-if (suite === "all" || fullMode) {
-  steps.push(
-    ["registry-build", [packageBin("shadcn", "shadcn", webRoot), "build"]],
-    [
-      "built-primitives",
-      [path.join(testRoot, "src/checks/check-primitives.ts"), "--built"],
-    ],
-    [
-      "preview-build",
-      [
-        packageBin("vite", "vite", webRoot),
-        "build",
-        "--config",
-        path.join(webRoot, "vite.config.ts"),
-      ],
-    ]
-  );
-}
+  [
+    "built-primitives",
+    [path.join(testRoot, "src/checks/check-primitives.ts"), "--built"],
+  ],
+];
 
 if (managedFixture) {
   steps.push(["fixture-build", [path.join(testRoot, "cli/build-fixture.ts")]]);
 }
 
-const selectedCases = fullMode
-  ? classifyBrowserCases(collectBrowserCases()).full
-  : null;
+if (phase === "browser") {
+  const prepared = readVerificationState(
+    await readFile(path.join(output, "prepared.json"), "utf-8")
+  );
+
+  assert.ok(prepared?.websiteBuild, "Prepared website build identity required");
+
+  if (
+    prepared.source?.commit !== before.commit ||
+    prepared.source?.treeSha256 !== before.treeSha256 ||
+    JSON.stringify(prepared.environment) !== JSON.stringify(environment)
+  ) {
+    throw new Error("Prepared verification source/environment changed");
+  }
+
+  const build = await productionBuildIdentity({ source: before });
+
+  if (build.outputSha256 !== prepared.websiteBuild?.outputSha256) {
+    throw new Error("Prepared Next output changed");
+  }
+
+  if (
+    managedFixture &&
+    fixtureManifest().sha256 !== prepared.fixtureBundle?.sha256
+  ) {
+    throw new Error("Prepared fixture output changed");
+  }
+
+  steps.length = 0;
+  report.preparation = prepared;
+  report.websiteBuild = prepared.websiteBuild;
+}
+
+const classifiedCases = (
+  classifyBrowserCases(collectBrowserCases())
+);
+
+const selectedCases = fullMode ? classifiedCases.full : classifiedCases.base;
 
 // Retain exact case identities for historical reporting, independently of future source.
-if (fullMode) {
-  // SAFETY: Full mode selected this exact array from the Full partition above.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  report.fullCases = selectedCases as BrowserCase[];
+if (fullRun !== null) {
+  report.fullCases = selectedCases;
   await save();
 }
 
@@ -374,111 +342,144 @@ const browserFiles = [
   ...new Set((selectedCases ?? baseCatalogue()).map((test) => test.file)),
 ].sort();
 
-for (const file of browserFiles) {
-  steps.push([
-    `browser:${file}`,
-    [
-      packageBin("@playwright/test", "playwright"),
-      "test",
-      "--config",
-      path.join(pixelPerfectRoot, "playwright.config.ts"),
-      browserFilePattern(file),
-      `--workers=${workers}`,
-      ...(workers > 1 ? ["--fully-parallel"] : []),
-      `--output=${path.join(output, "browser", file)}`,
-    ],
-  ]);
+if (phase !== "prepare") {
+  for (const file of browserFiles) {
+    steps.push([
+      `browser:${file}`,
+      [
+        packageBin("@playwright/test", "playwright", pixelPerfectRoot),
+        "test",
+        "--config",
+        path.join(pixelPerfectRoot, "playwright.config.ts"),
+        browserFilePattern(file),
+        `--workers=${workers}`,
+        ...(workers > 1 ? ["--fully-parallel"] : []),
+        `--output=${path.join(output, "browser", file)}`,
+      ],
+    ]);
+  }
 }
 
 let fixtureHost: Awaited<ReturnType<typeof serveProductionFixture>> | undefined;
+
 let fullHosts: Awaited<ReturnType<typeof serveFullHosts>> | undefined;
-let previewHost: ViteDevServer | undefined;
+
+let previewHost: Awaited<ReturnType<typeof serveNextProduction>> | undefined;
 let testFailures = false;
 
 try {
   for (const [name, args] of steps) {
+    if (
+      name === "production-build" &&
+      process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
+    ) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      report.websiteBuild = await readPreparedProductionBuild({
+        source: before,
+      });
+      report.checks.push({
+        exitCode: 0,
+        name,
+        reusedCompletedBuild: true,
+        verifiedCommand: report.websiteBuild.verifiedCommand,
+      });
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      await save();
+      continue;
+    }
+
     // Rebuild generated outputs and rerun prechecks. Browser passes are reused
     // individually below, with current test status and artifact hashes checked.
     console.log(`\nLocal verification: ${name}`);
     const browserEnvironment: NodeJS.ProcessEnv = {};
-    let reusedTests: ReusableBrowserTest[] = [];
-
-    if (
-      (name.startsWith("browser:") || name === "general-tests") &&
-      managedFixture &&
-      !fixtureHost &&
-      !fullHosts
-    ) {
-      report.fixtureBundle = fixtureManifest();
-      await writeFile(
-        path.join(output, "fixture-bundle.json"),
-        `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
-      );
-
-      if (fullMode) {
-        // SAFETY: host startup is inside the authorized Full-mode branch.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const approvedRun = fullRun as AuthorizedFullRun;
-
-        fullHosts = await serveFullHosts(approvedRun.plan);
-      } else {
-        fixtureHost = await serveProductionFixture();
-      }
-
-      let previewReady = false;
-
-      try {
-        const response = await fetch(
-          process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/",
-          { signal: AbortSignal.timeout(2500) }
-        );
-
-        previewReady = response.ok;
-        await response.body?.cancel();
-      } catch {
-        // Preserve the existing unavailable/incomplete-evidence fallback.
-      }
-
-      if (!previewReady) {
-        if (hasText(process.env.GRASSCN_PREVIEW_URL)) {
-          throw new Error("The configured preview server is unavailable");
-        }
-
-        const { createServer } = await import("vite");
-        previewHost = await createServer({
-          configFile: webFile("vite.config.ts"),
-        });
-        await previewHost.listen();
-      }
-
-      await save();
-    }
+    let reusedTests: ReturnType<typeof browserReuseResults> = [];
 
     if (name.startsWith("browser:")) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      await writeFile(
+        path.join(output, "verification-phase.json"),
+        JSON.stringify({ phase: "browser", source: before })
+      );
+
+      if (managedFixture && !fixtureHost && !fullHosts) {
+        report.fixtureBundle = fixtureManifest();
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+        await writeFile(
+          path.join(output, "fixture-bundle.json"),
+          `${JSON.stringify(report.fixtureBundle, null, 2)}\n`
+        );
+
+        if (fullRun === null) {
+          // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+          fixtureHost = await serveProductionFixture();
+        } else {
+          // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+          fullHosts = await serveFullHosts(fullRun.plan);
+        }
+
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+        await save();
+      }
+
+      if (!previewHost && !fullHosts) {
+        if ((process.env.GRASSCN_PREVIEW_URL ?? "") !== "") {
+          throw new Error(
+            "Ordinary verification owns its Next production server; do not provide a foreground preview URL"
+          );
+        }
+
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+        previewHost = await serveNextProduction({
+          expectedSource: before,
+          port: Number(process.env.GRASSCN_VERIFICATION_PREVIEW_PORT ?? 5176),
+        });
+        process.env.GRASSCN_PREVIEW_URL = `${previewHost.url}/`;
+      }
+
+      const website = verificationWebsite(
+        previewHost?.identity ?? fullHosts?.websiteIdentity
+      );
+
+      report.websiteBuild = {
+        buildId: website.buildId,
+        outputSha256: website.outputSha256,
+        source: website.source,
+      };
+      browserEnvironment.GRASSCN_WEBSITE_IDENTITY = JSON.stringify(
+        report.websiteBuild
+      );
+
       const file = name.slice("browser:".length);
       const directory = path.join(output, "checkpoints", file);
 
-      // SAFETY: managed fixture startup records its bundle before browser cache selection; retain missing-bundle behavior.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-      const initialFixture = report.fixtureBundle as ReturnType<
-        typeof fixtureManifest
-      >;
-
-      reusedTests = await reusableBrowserTests(
-        previous.filter(
-          (candidate) =>
-            candidate.report.suite === suite &&
-            (!managedFixture ||
-              candidate.report.fixtureBundle?.sha256 === initialFixture.sha256)
-        ),
-        file,
-        pixelPerfectRoot,
-        repoRoot
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      reusedTests = browserReuseResults(
+        // eslint-disable-next-line no-await-in-loop -- Read the previous stage checkpoints before selecting retained tests for this browser file.
+        await reusableBrowserTests(
+          previous.filter(
+            (candidate) =>
+              candidate.report.suite === suite &&
+              candidate.report.websiteBuild?.outputSha256 ===
+                // SAFETY: this synchronous filter follows the current browser owner's websiteIdentity assignment above.
+                // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Read the same owned website hash without adding a guard or changing cache eligibility.
+                (report.websiteBuild as NonNullable<RuntimeVerificationReceipt["websiteBuild"]>).outputSha256 &&
+              (!managedFixture ||
+                candidate.report.fixtureBundle?.sha256 ===
+                  // SAFETY: this arm executes only for managedFixture; its startup branch records the fixture bundle before assigning either host.
+                  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the existing short-circuited bundle SHA read and missing-state behavior.
+                  (report.fixtureBundle as NonNullable<RuntimeVerificationReceipt["fixtureBundle"]>).sha256)
+          ),
+          file,
+          pixelPerfectRoot,
+          repoRoot
+        )
       );
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await mkdir(directory, { recursive: true });
 
       if (reusedTests.length) {
         const list = path.join(directory, "retained-tests.txt");
+        // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
         await writeFile(
           list,
           `${reusedTests.map((test) => test.line).join("\n")}\n`
@@ -490,16 +491,12 @@ try {
       }
 
       args.push(
-        `--reporter=list,${fullMode ? "json," : ""}${fileURLToPath(import.meta.resolve("@grasscn/tests/checkpoint-reporter"))}`
+        `--reporter=list,json,${path.join(testRoot, "src/runtime/checkpoint-reporter.ts")}`
       );
-
-      if (fullMode) {
-        browserEnvironment.PLAYWRIGHT_JSON_OUTPUT_NAME = path.join(
-          directory,
-          "playwright.json"
-        );
-      }
-
+      browserEnvironment.PLAYWRIGHT_JSON_OUTPUT_NAME = path.join(
+        directory,
+        "playwright.json"
+      );
       browserEnvironment.GRASSCN_CHECKPOINT_REPORT_DIR = directory;
     }
 
@@ -508,13 +505,18 @@ try {
     try {
       const commandArgs = [...args];
 
+      if (commandArgs[0].startsWith("scripts/")) {
+        commandArgs[0] = repositoryFile(commandArgs[0]);
+      }
+
       const child = spawn(process.execPath, commandArgs, {
-        cwd: ["registry-build", "preview-build"].includes(name)
-          ? webRoot
+        cwd: ["generate", "production-build"].includes(name)
+          ? repoRoot
           : pixelPerfectRoot,
         env: {
           ...process.env,
           GOMAXPROCS: "1",
+          GOMEMLIMIT: process.env.GOMEMLIMIT ?? "768MiB",
           RAYON_NUM_THREADS: "1",
           ...browserEnvironment,
         },
@@ -543,56 +545,61 @@ try {
     report.checks.push(check);
     await save();
 
-    if (code !== 0) {
-      if (name === "general-tests") {
-        testFailures = true;
-        continue;
-      }
+    if (name === "production-build" && code === 0) {
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      report.websiteBuild = await stampProductionBuild({
+        source: before,
+        verifiedCommand: [process.execPath, ...args],
+        verifiedExitCode: code,
+      });
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      await save();
+    }
 
+    if (name === "fixture-build" && code === 0) {
+      report.fixtureBundle = fixtureManifest();
+      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+      await save();
+    }
+
+    if (code !== 0) {
       if (fullMode && name.startsWith("browser:")) {
         const file = name.slice("browser:".length);
         const directory = path.join(output, "checkpoints", file);
 
-        let summary: RuntimeCheckpointSummary | undefined;
+        let summary: ReturnType<typeof checkpointSummary>;
 
         try {
-          // SAFETY: checkpoint reporting writes this summary; original completeness checks remain.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          summary = JSON.parse(
+          summary = checkpointSummary(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "summary.json"), "utf-8")
-          ) as RuntimeCheckpointSummary;
+          );
         } catch {
-          // Preserve the existing unavailable/incomplete-evidence fallback.
+          // Missing or incomplete checkpoint artifacts cannot prove collection completed.
         }
 
         let collectionComplete = false;
 
         try {
-          // SAFETY: checkpoint reporter owns the expected declaration catalogue.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          const expected = JSON.parse(
+          const expected = expectedCheckpoint(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "expected.json"), "utf-8")
-          ) as CheckpointCatalogue;
+            // eslint-disable-next-line no-await-in-loop -- Complete each retained checkpoint read or generated-input restoration before advancing to the next dependent stage.
+          );
 
-          const journal = await readFile(
+          // eslint-disable-next-line no-await-in-loop -- Finish reading this failed browser file journal before advancing Full collection.
+          const checkpointResultsBytes = await readFile(
             path.join(directory, "results.jsonl"),
             "utf-8"
           );
 
-          const results = journal
-            .trim()
-            .split("\n")
-            .flatMap((line) => {
-              if (!line) {
-                return [];
-              }
-
-              // SAFETY: complete journal lines are owned checkpoint result records.
-              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-              const result = JSON.parse(line) as CheckpointResult;
-
-              return [result];
-            });
+          const results =
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
+            checkpointResultsBytes
+              .trim()
+              .split("\n")
+              .filter(Boolean)
+              .map(checkpointResult);
 
           const terminal = new Set(
             results.flatMap((result) =>
@@ -600,11 +607,10 @@ try {
             )
           );
 
-          // SAFETY: Playwright writes the terminal JSON report; original error checks remain.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-          const browserReport = JSON.parse(
+          const browserReport = browserCollectionReport(
+            // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
             await readFile(path.join(directory, "playwright.json"), "utf-8")
-          ) as { errors?: { message?: string }[] };
+          );
 
           collectionComplete =
             !Boolean(browserReport.errors?.length) &&
@@ -670,18 +676,31 @@ try {
     }
   }
 
-  report.completed = true;
-  report.passed = !testFailures;
+  report.completed = phase !== "prepare";
+  report.prepared = phase === "prepare";
+  report.passed = phase !== "prepare" && !testFailures;
+
+  if (phase === "prepare") {
+    await writeFile(
+      path.join(output, "prepared.json"),
+      `${JSON.stringify(
+        {
+          environment,
+          fixtureBundle: report.fixtureBundle,
+          source: before,
+          websiteBuild: report.websiteBuild,
+        },
+        null,
+        2
+      )}\n`
+    );
+  }
 
   if (testFailures) {
     process.exitCode = 1;
   }
 } catch (error) {
-  // SAFETY: owned checks and Node/browser-host APIs reject with Error instances.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-  const failure = error as Error;
-
-  report.error = failure.message;
+  report.error = String(error instanceof Error ? error.message : error);
   process.exitCode = 1;
 } finally {
   await fullHosts?.close();

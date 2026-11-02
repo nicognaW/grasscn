@@ -17,11 +17,18 @@
     "./case-paths": "./src/runtime/case-paths.ts",
     "./run-workload": "./src/runtime/run-workload.ps1",
     "./hosts": "./src/runtime/hosts.ts",
+    "./next-production": "./src/runtime/next-production.mjs",
+    "./isolated-host-routing": "./src/runtime/isolated-host-routing.mjs",
+    "./consumer-boundary": "./src/installed/consumer-boundary.mjs",
+    "./consumer-registry": "./src/installed/consumer-registry.mjs",
+    "./consumer-validation": "./src/installed/consumer-validation-types.ts",
+    "./prepared-consumers": "./src/installed/prepared-consumers.mjs",
+    "./verification-types": "./src/runtime/verification-types.ts",
     "./tooling": "./src/tooling.ts"
   },
   "scripts": {
     "test": "bun cli/test.ts",
-    "test:unit": "bun test --timeout 120000 ./tests/unit/*.test.ts",
+    "test:unit": "bun test --timeout 120000 ./tests/unit",
     "dev": "bun --bun vite --config vite.config.ts",
     "fixture:build": "bun cli/build-fixture.ts"
   },

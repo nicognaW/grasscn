@@ -8,8 +8,8 @@
       "components": ["tabs"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/tabs",
-        "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced."
+        "route": "/docs/components/tabs#interactive-playground",
+        "reason": "Default World settings tab strip at the website fixed GUI scale; no label or state variant is introduced. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": ["Tabs preview preserves native tab bar at scale 2"]
     },
@@ -19,8 +19,8 @@
       "components": ["select"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/select",
-        "reason": "Default Survival cycle button at the website fixed GUI scale."
+        "route": "/docs/components/select#interactive-playground",
+        "reason": "Default Survival cycle button at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": ["Select preview preserves native cycle button at scale 2"]
     },
@@ -30,8 +30,8 @@
       "components": ["radio-group"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/radio-group",
-        "reason": "The default selected Survival option at the website fixed GUI scale."
+        "route": "/docs/components/radio-group#interactive-playground",
+        "reason": "The default selected Survival option at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": [
         "Radio Group preview preserves native widget pixels at scale 2"
@@ -43,8 +43,8 @@
       "components": ["switch"],
       "evidence": {
         "kind": "website-default",
-        "route": "/components/switch",
-        "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale."
+        "route": "/docs/components/switch#interactive-playground",
+        "reason": "The default unchecked Enable clouds switch at the website fixed GUI scale. This exact default is the retained additional interactive playground; it does not imply native coverage of primary MDX content."
       },
       "titlePath": ["Switch preview preserves native on/off pixels at scale 2"]
     },
@@ -68,17 +68,6 @@
         "kind": "website-default",
         "route": "/components/checkbox",
         "reason": "Default website Enable shadows checkbox: unchecked normal GUI2; the existing preview pixel check uses this exact reference."
-      }
-    },
-    {
-      "file": "slider/slider.spec.ts",
-      "title": "Control native pixels: slider-w200-v500-normal-s2.png",
-      "titlePath": ["Control native pixels: slider-w200-v500-normal-s2.png"],
-      "components": ["slider"],
-      "evidence": {
-        "kind": "website-default",
-        "route": "/components/slider",
-        "reason": "Default website Volume slider: 200 logical pixels, 50% value, normal GUI2."
       }
     },
     {
@@ -137,6 +126,265 @@
         "kind": "website-default",
         "route": "/components/progress",
         "reason": "Default website Progress is the unnotched half-filled bar at GUI2; its existing preview pixel check uses this exact reference."
+      }
+    },
+    {
+      "file": "integration/website/docs-navigation-pixels.spec.ts",
+      "title": "documentation header Components matches its captured Minecraft Button",
+      "titlePath": [
+        "documentation header Components matches its captured Minecraft Button"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "The default desktop header Components link is the actual scale2/logical100x20 Button on #202020. This single declared native constituent case does not select other labels, states or scales."
+      }
+    },
+    {
+      "file": "integration/website/docs-navigation-pixels.spec.ts",
+      "title": "documentation search placeholder matches its captured Minecraft input",
+      "titlePath": [
+        "documentation search placeholder matches its captured Minecraft input"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "The initial default desktop header search displays Find documentation... in its scale2/logical200x20 input on #202020. One unfocused default case, no scale or content matrix."
+      }
+    },
+    {
+      "file": "integration/website/docs-navigation-pixels.spec.ts",
+      "title": "documentation prose search typing matches its captured Minecraft input",
+      "titlePath": [
+        "documentation prose search typing matches its captured Minecraft input"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "The actual default prose-search journey types hear after Ctrl K in the scale2/logical200x20 header input. Caret-on phase is fixed using the existing Input test method. No other query, focus phase or scale is selected."
+      }
+    },
+    {
+      "file": "integration/website/next-foundation.spec.ts",
+      "title": "the default MDX component page renders within the Minecraft website shell",
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Default authored MDX component page, shared navigation, Minecraft typography, retained normal-w200-s2 Button, and existing 390px mobile composition with source overflow contained within its code view."
+      },
+      "titlePath": [
+        "the default MDX component page renders within the Minecraft website shell"
+      ]
+    },
+    {
+      "file": "integration/website/docs-example-pixels.spec.ts",
+      "title": "default documentation code controls match their Minecraft reference cases",
+      "titlePath": [
+        "default documentation code controls match their Minecraft reference cases"
+      ],
+      "components": ["website", "button", "tabs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Scale2 default primary Preview tab, keyboard-selected Code tab, normal Copy button, actual highlighted directive, and default implementation Expand/Collapse buttons. Only these6 declared cases are selected; extra captured scales/states remain outside this case."
+      }
+    },
+    {
+      "file": "integration/website/docs-installation-pixels.spec.ts",
+      "title": "default installation controls match their captured Minecraft content and states",
+      "titlePath": [
+        "default installation controls match their captured Minecraft content and states"
+      ],
+      "components": ["website", "button", "tabs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button#installation",
+        "reason": "Actual scale2 CLI/Manual strips, all four visible package-manager selections, every registry-derived default Manual file selector, Download/Load/Copy full file actions and loaded-resource disabled Load on the integrated Button page. Retry and other native scales remain outside this browser case."
+      }
+    },
+    {
+      "file": "integration/website/next-showcase.spec.ts",
+      "title": "homepage default checkbox retains its captured Minecraft pixels",
+      "titlePath": [
+        "homepage default checkbox retains its captured Minecraft pixels"
+      ],
+      "components": ["website", "checkbox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/",
+        "reason": "The initial Remember me checked Checkbox at scale 2 in the default Essentials homepage panel, integrated context compared to the unchanged native checked-normal captured reference."
+      }
+    },
+    {
+      "file": "integration/website/next-showcase.spec.ts",
+      "title": "chart showcase default frame timing matches its original Minecraft renderer",
+      "titlePath": [
+        "chart showcase default frame timing matches its original Minecraft renderer"
+      ],
+      "components": ["website", "chart"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default Frame timing panel uses all 240 maintained samples, frame rate limit 120, logical width 242, scale 1 at the standard desktop viewport; compare original FpsDebugChart capture from independently repeatable native launches."
+      }
+    },
+    {
+      "file": "integration/website/next-showcase.spec.ts",
+      "title": "chart example tabs remain visible and match their Minecraft modes",
+      "titlePath": [
+        "chart example tabs remain visible and match their Minecraft modes"
+      ],
+      "components": ["website", "chart", "tabs"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/charts",
+        "reason": "Default API response time chart Preview/Code controls must both be fully visible; compare the normal selected Preview and selected Code modes, with focus moved into the Copy action as in the default code-copy journey. Chart-only width 120 logical at scale 2."
+      }
+    },
+    {
+      "file": "integration/website/layout-documentation.spec.ts",
+      "title": "default layout documentation Separator and Progress match retained native cases",
+      "titlePath": [
+        "default layout documentation Separator and Progress match retained native cases"
+      ],
+      "components": ["website", "layout"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/separator",
+        "reason": "Only the initial scale2 header/footer separators at logical width200 and pink unnotched half-filled Progress on #202020, matching the real default previews; no extra states."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: checkbox",
+      "titlePath": ["Input docs native default: checkbox"],
+      "components": ["checkbox"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/checkbox",
+        "reason": "Unchecked Enable shadows Checkbox 17x17 logical, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: input",
+      "titlePath": ["Input docs native default: input"],
+      "components": ["input"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/input",
+        "reason": "Unfocused Hello Minecraft input 200x20 logical, normal GUI2. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: textarea",
+      "titlePath": ["Input docs native default: textarea"],
+      "components": ["textarea"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/textarea",
+        "reason": "Unfocused Line one/newline/Line two/newline/Line three textarea 200x80 logical, normal GUI2. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: select",
+      "titlePath": ["Input docs native default: select"],
+      "components": ["select"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/select",
+        "reason": "Closed Survival trigger 200x20 logical, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: radio-group",
+      "titlePath": ["Input docs native default: radio-group"],
+      "components": ["radio-group"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/radio-group",
+        "reason": "Selected Survival square radio widget, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: switch",
+      "titlePath": ["Input docs native default: switch"],
+      "components": ["switch"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/switch",
+        "reason": "Unchecked Enable clouds OFF control, normal GUI2, #202020. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/docs-input-pixels.spec.ts",
+      "title": "Input docs native default: slider",
+      "titlePath": ["Input docs native default: slider"],
+      "components": ["slider"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/slider",
+        "reason": "Actual primary Volume: 50% single thumb, value50/min0/max100, 200x20 logical, normal GUI2, #202020. New two-launch native case replaces invalid old iIl! MW@09 label mapping; GUI1/3 native provenance does not select browser variants. The real primary example is captured in its integrated documentation context without altering its content or geometry."
+      }
+    },
+    {
+      "file": "integration/website/minecraft-documentation.spec.ts",
+      "title": "documentation empty Hotbar matches native selection zero on explicit backdrop",
+      "titlePath": [
+        "documentation empty Hotbar matches native selection zero on explicit backdrop"
+      ],
+      "components": ["hotbar"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/hotbar",
+        "reason": "Actual primary empty nine-slot Hotbar at scale2, selection0, uniform #202020; exactly retained native hotbar-0-s2 input and geometry. Other states/scales remain outside selection."
+      }
+    },
+    {
+      "file": "integration/website/overlay-documentation.spec.ts",
+      "title": "default documentation packaged avatar faces match native PlayerFaceExtractor",
+      "titlePath": [
+        "default documentation packaged avatar faces match native PlayerFaceExtractor"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/avatar",
+        "reason": "The packaged Steve and Alex faces displayed by the default Avatar example atscale2 match their exact16logical hat/upright dark native PlayerFaceExtractor cases. No other skins,sizes or scales."
+      }
+    },
+    {
+      "file": "integration/website/docs-mobile-tabs.spec.ts",
+      "title": "mobile documentation Preview and Code remain visible and match compact native tabs",
+      "titlePath": [
+        "mobile documentation Preview and Code remain visible and match compact native tabs"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs/components/button",
+        "reason": "Actual390px default Button documentation uses the production240px Preview/Code strip (120logical GUI2) on#202020, matching the independently captured normal Preview/Code selections. Both controls remain visible without test geometry rewriting; no viewport/content/state matrix."
+      }
+    },
+    {
+      "file": "integration/website/docs-header-branding.spec.ts",
+      "title": "default header grass at intrinsic SVG size matches original Minecraft GUI3",
+      "titlePath": [
+        "default header grass at intrinsic SVG size matches original Minecraft GUI3"
+      ],
+      "components": ["website"],
+      "evidence": {
+        "kind": "website-default",
+        "route": "/docs",
+        "reason": "Actual default header preserves the byte-pinned176x64SVG with48pxgrass GUI3 on#202020. One1536x900/DPR1 constituent compares to two original renderer launches; composite badge/header remain web adaptations. No DOM-forced geometry or extra native variant."
       }
     }
   ]

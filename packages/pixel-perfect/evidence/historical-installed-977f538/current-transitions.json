@@ -1,0 +1,2246 @@
+{
+  "schemaVersion": 1,
+  "originCommit": "977f538ddc56c7a432b49f96f41382282a65ff71",
+  "scope": "Recognized current source drift only; no pixel-verification grant.",
+  "files": [
+    {
+      "sourcePath": "registry/blocks/chart-analytics.tsx",
+      "historicalSha256": "6ededb7b06d511e8ba34c8d7538388fde41303166348e296380e01915dec7a8c",
+      "currentSha256": "edc51ed6277feeb8274879ca6bc129092d9018bf6ba593c7b7e29cc56e109e38",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/chart-fps.tsx",
+      "historicalSha256": "7ca3da9e4c0cedef2441f3cc25ed758d04c9c84bfb4080a49279fb253a955575",
+      "currentSha256": "7409aec09a2fd919bd5d4d2a7df964234801fb7421ce57f6c08b4d629b721238",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/chart-profiler.tsx",
+      "historicalSha256": "667a03e7b800bef7274de9e93668a16b281ade5a582196edec6d5cc23aa42045",
+      "currentSha256": "476e63bc1d26ba72bfb3ab7645f99985d6278e0ca5fe7002388dbfb77b4a43b1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/data-table-features.ts",
+      "historicalSha256": "1b8c0adaa81b0491026a07c4493d5abb87d38f7fe503c7db5f545cc8bf9712e4",
+      "currentSha256": "5d11930edea3bf65a44fe68ea55a310f75b905b896c15757beb9bd35a0df568c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/data-table.tsx",
+      "historicalSha256": "8c4ac8bec5723f8e201a857085c78d47c8b5cbf37c9e5828d719447f166e8729",
+      "currentSha256": "765ae4832005fd0c65f201b5eb07dfa3429c14ad9f6187a9a4e8921a9c5424b5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/date-picker.tsx",
+      "historicalSha256": "43cbbbf96801dd4625a41ff5591b002ec2927cc38d5809c16ce19d53b40bd83e",
+      "currentSha256": "39959fbc636521f2d1ec2db8b539be28c08794acf99c7193564fc3dfd6265d82",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/blocks/form.tsx",
+      "historicalSha256": "832f8c23fbc9af9685fe07841eedca838fbcb9d3c0ad2f9572c3a3f9a1db25b2",
+      "currentSha256": "ca787154fabb844fc13d2cfa344e0717ec119cb1ceaf43b46d4d879b3095a93b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/hooks/use-highlighted-code.ts",
+      "historicalSha256": "1223f08049fec9676aca84205a9cac48aac013eb7781e0bfe3d5b9f84ad4a53a",
+      "currentSha256": "3c16a2cf21969a7f2dcdc4ccd4c267695cd4a1372067138c3937319543409198",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/lib/highlighter.tsx",
+      "historicalSha256": "e3b05792b714c5909a23dd144604d0c0790f7bd17ee15167cf1cd91290b449ab",
+      "currentSha256": "b7ee41211a059d414c70f984c8a1a53f5b46e19800f76ac60e766c30f1f6156d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/advancement-tree.tsx",
+      "historicalSha256": "3935bee6bb9a0d5409efe977e05852074b73caf99830396e3c92cdcaeb6caea5",
+      "currentSha256": "31c19717678a4bab00ea4c8c481edc4fc10f5c796b9231ac9af49c0735a7f175",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/alert-dialog.tsx",
+      "historicalSha256": "80ac0b69d2b655c7a11004612f345ddaefedb106308d3a550e5513e88f8dab9d",
+      "currentSha256": "b949c6712f2ef206b5a298e3396156fd4f4656b7dd264d3a302c0fdedc9b4cbb",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/aspect-ratio.tsx",
+      "historicalSha256": "4a40bfeb5e7ed9c29cfc97236921cddd08f13cb3a841eadd15700753ff701ef9",
+      "currentSha256": "e5552fc820fbe4dc57ce237b06d601b72f2b826b8a98b46ea3330b45f03fcfda",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/attachment.tsx",
+      "historicalSha256": "8e82e26ce2dd2f185adc4706f16a03521947b4a5d2e0c36187cc0d3502b2e116",
+      "currentSha256": "8dc8a89379fb506c02324572c867f3f54dee8db5c4d9073fe7ed10154341ded5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/avatar.tsx",
+      "historicalSha256": "7cf0586b863313ba492219ddce00e3448232e9ecc18beba37f5429ed920098a4",
+      "currentSha256": "3f9f2c199e929166e7ddd5cc81f11b0318a9bcc42a0f4086675f5994cca07e26",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/badge.tsx",
+      "historicalSha256": "6bbd3cd40040bdcfb8f9b5ae980db90b0a9d2733cfa2053860b5f77cc667dad5",
+      "currentSha256": "b1f87e161da8e9f56d7ad45dc5882def80df6684356c359cd9b9037f97eded44",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/book.tsx",
+      "historicalSha256": "ec4ed471230eaf3ec63af5fc93658423731eefca8c7b3d2a6a0cfe07b9eca94b",
+      "currentSha256": "b35174dfceb06f43b552b3473360e6e2651abd4950bf344eebb8b18833b9c5bc",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/breadcrumb.tsx",
+      "historicalSha256": "16b739d6584167c8ffe8f9fa327219a2823f4893bdd950a498216c4c9ca86fc8",
+      "currentSha256": "254d33eecc187d09571ad1e850fdbcfcd240e0e23f391e1617efce2b1308f5f4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/bubble.tsx",
+      "historicalSha256": "00dfee54970c68ac72aa0d26e3b0a2072e5b062a5254ef1473f773a4f6f7b30f",
+      "currentSha256": "e6b17e50222cf2a4a5c287e0990e05abf7712d99c6e499e33af166b852873ba0",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/button-group.tsx",
+      "historicalSha256": "676f853cc770f9554fc64e7520252297aadd5629a161a86af274de0c9371a511",
+      "currentSha256": "778f73991335b6b8fed5e3899500fd9e05fd66288d4f8a805bb9bbc72f0815c2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/button.tsx",
+      "historicalSha256": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+      "currentSha256": "547a8dd8938f373e07fb29e1c268e34ae7d688d475c2fcc6a5de62f586de4a9f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/calendar.tsx",
+      "historicalSha256": "9e86a741a25be81a02fc63af7895bb9330ba4d41c8a60b5b6553ba6bf954de4b",
+      "currentSha256": "9a7949c58a75603908fbbae90f5511a11c57ead2a8de32595e427f7ebb7532a4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/card.tsx",
+      "historicalSha256": "176a44244aae26f55970940e91d2fc969cbfacbdf0e11a6a2ad7db98a58b8aea",
+      "currentSha256": "adc49f9030325990b7dffcc57de972590d91263554e2712e3435ee1cb55346b0",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/carousel.tsx",
+      "historicalSha256": "786bf548ea4d5a385e22421f624e6b807824c277d27d21a0f45430504aebccee",
+      "currentSha256": "929230d32fcd1a16cfc1b606d9a876d3af77c3b0f6fb90c480392c9e5477b300",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/chart.tsx",
+      "historicalSha256": "9509734db423af0b769cfac3fb04be2fdc9e14be5c056429020e64fe15590f07",
+      "currentSha256": "48d0b9c70406b90dfbf0f35e4930aefa05ec8c4b75f70b2f364426abac35b1d1",
+      "classification": "owned-behavior-repair",
+      "reason": "Owned default tooltip native numeric glyph, minimum readable integer GUI2/GUI3 and four-logical-pixel default label/value separation repair. Original assets and custom formatter ReactNode API are preserved. Historical proof authenticates only the archived source; fresh current runtime and installation checks remain required, and no current native pixel equivalence is granted.",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted",
+      "introducedAfter": "1985ecf452b21389b8e1f99fd883536509814cb3",
+      "upstreamIntroducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7"
+    },
+    {
+      "sourcePath": "registry/ui/checkbox.tsx",
+      "historicalSha256": "3a4c98239c5d177bcf0dc600dabd96ee40473fb463c677ec511c6a5dddd76223",
+      "currentSha256": "7488e073bceaaeaa1d3110c73b0595e91fde6f2e1d9dc2148dc2d7cf4b7f2608",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/code-block.tsx",
+      "historicalSha256": "27dca576064c5eec4439702bfcc2364310850a30045be9a33686201da02cc568",
+      "currentSha256": "139b8f50548865c4b33d1484db04b65b240348c1971ff6bd912bdf5c05e1ff16",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/collapsible.tsx",
+      "historicalSha256": "821cdfd14d64a834c5fd99e19ff7c91043fcc078065f03bf112935839212a06a",
+      "currentSha256": "8ee2e89e713146d0d41c6f6f53f9032612c2a63106fbee16764cd5906c7ff2f8",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/combobox.tsx",
+      "historicalSha256": "01b0274e71dbd99f6928e91e773c5b852e6995ca8eac985d19f890a8c0d53044",
+      "currentSha256": "a08577be82dfc6f3b318215d7029fd161a550b163e4ddd5acf17ba214af92bd0",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/command.tsx",
+      "historicalSha256": "a0124f910ff2bbc98e1e47e2e48bd10531e6916994f9605e5176fddf7cbb2c31",
+      "currentSha256": "f74a2530912f82d76239e00f4390b89f8b58470dc37b2071842cb984f9109457",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "8b7eb8000c37ba8c74f16c92a3dfbc5fc7c88fdbf6c3d392f6734d9581612183",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/context-menu.tsx",
+      "historicalSha256": "cf24fc15cd382c43b143c4db40883ba787edc16e4611317db234225a1d364be5",
+      "currentSha256": "5dbcb7318840ff33fe087f0be6a4e6cbc4d57df8db3cc34b41a0010d5b683d06",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/dialog.tsx",
+      "historicalSha256": "6d10a6fc448f7d742be70cfe5d34feacb36bee55ce934b23bf505f52ee081a09",
+      "currentSha256": "772b405a451d30edb13f6e6dd503231fcb0cc436482343fbe7ce7188c1077ba5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/drawer.tsx",
+      "historicalSha256": "cb823cb078eaa93e0fd080793afe7a45b44e1aa49ef2fb7cde83617a2ad53d1c",
+      "currentSha256": "86fe36da133745245732291ef18e30fc6f0a5b546a5566fed32f015f609a2c3b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/dropdown-menu.tsx",
+      "historicalSha256": "8eb7905d6795ad7a9de0123e77c0e56c89982741faa71221bb9cb0744eda0f6c",
+      "currentSha256": "51d45e1314e70b492751a45ac510cc89e12f8214f9fe367d426f05d7aeccc4af",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/empty.tsx",
+      "historicalSha256": "9f706fd86cd8779b0ce7f3ac33bba953bcc5cba1ce3c52bf3511abef52c7fca9",
+      "currentSha256": "eb56e38cfbffb0cf49ef73c5f5cb0e530bea325d92cc0be0f81ed681ec1752c3",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/field.tsx",
+      "historicalSha256": "a498f402118bb79e0abd1768b4ea0af1569d253251235425b7f7160fd393a0e5",
+      "currentSha256": "efa99093e5ff844bafc19f7573d4ebdf8b0d038837c501c9a5ad15c5772430a6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/hotbar.tsx",
+      "historicalSha256": "e8f67159878d060adabacc5588141153445c6a116a079c459d1529ceb245717d",
+      "currentSha256": "cbabb0144f592f3eec05c3191ec1d4aecd5612bee1aab9d003043bc7055ac9ed",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/hud.tsx",
+      "historicalSha256": "5573985864fbf776d8b4c89b406fe7fb057a0dc957c004fdb1274839ee196383",
+      "currentSha256": "3b35412a1797357dd928a8ce254275142dffb476dbb2a0193e15ed97f5db8191",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/input-group.tsx",
+      "historicalSha256": "bcaf2d9b9775db3a08e3eaa4e79d85106fb1a9fa13de12b44f31bf425a5c1232",
+      "currentSha256": "fd7c247349fb1c2aff3265490c49a1bd2fecea45c450668e63156d45d800f3c6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/input-otp.tsx",
+      "historicalSha256": "ecc9ecac51484e523e9a239e7f95defcaa7d5a0ed598f5886904182432198498",
+      "currentSha256": "2496d99c33ee9b34315e5a992ba05545ce850616f0fcb6b479b2952158e84f70",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/input.tsx",
+      "historicalSha256": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+      "currentSha256": "572ca7d309d20a568382b9d3594db3ede6a8f6492c5330d5b0b8d358d203f569",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "e4e8fe38872b64e4a0e3b23fc15e3e5cd5033c1f3bc3d86a89aa7c89da7a732f",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/item.tsx",
+      "historicalSha256": "6b8c52f680dde09772464bd51d0121cf3732d798f37fb15ff8ed202d4b196f89",
+      "currentSha256": "2692656cc84706d2cec04804b55f3486dd3f09c58ffa76530a2fb13455eb1ee9",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/kbd.tsx",
+      "historicalSha256": "23113dae6b76e22fe02104312e332c23b28a6358d2a1473ca241078a407560af",
+      "currentSha256": "1761a48dd8bbe6f705906faf1d9b20ca08b7a438a434c6b37fa3bb825f614156",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/label.tsx",
+      "historicalSha256": "efebd9ebb0e00fe099457c3e10108c5f8b2c1304755b6e6d633700b5c67f6e42",
+      "currentSha256": "1aa23ed576955bd7910013c989a2aa4d96272e320b0cdbb7887563dfb296a17c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/map.tsx",
+      "historicalSha256": "e4a7c2dee907965cb897c3333be0e61c1295cd69936bc78cbe0190658535a5b5",
+      "currentSha256": "e2c2231b520a9d477a8d710ce8eea396498db424c26d54b8d92e047d8b2bf871",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/marker.tsx",
+      "historicalSha256": "b91cabfd7c6fd4f1197578bfc82bf91318b44627f4e5cf060eb9c0d6f10869af",
+      "currentSha256": "ec6522fc45c14934c5661132b600e27c5d0ab3612e4244ce052257ae07e8ba81",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/menubar.tsx",
+      "historicalSha256": "ed088fb8c9d4044c67bfd4ee23fcb6e712dc0b2f25017eeccee484fc984e205f",
+      "currentSha256": "dcd985d7ce4baaf234cb6ee22b2db1012ed0013ab3859999f0dcedcc0608d54f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/message-scroller.tsx",
+      "historicalSha256": "12ed8e9504e2c3bdaba231e138c90e92ebd60a5014c97257b4b1ff024e5a5b52",
+      "currentSha256": "282717547e7dec2f8b00123c0533b88910c02f9ca2c5270c8c55089171642099",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/message.tsx",
+      "historicalSha256": "86ef06bbc482f675ad46f8ce547e769aa16e27c17b106fb3f583b558c64b26c0",
+      "currentSha256": "7433f76e28ee1e9ba6cbacdb288f0ab0ed0d492330a551aac47148ccc31b511b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-advancement-tree.css",
+      "historicalSha256": "798db8f8b6f5cec33c0f95b33d115bc7ce5ec341beba049e964b325090861e8d",
+      "currentSha256": "2bba1b9da108b43c7e9c40f359ea5ddad10771b4c0e80e273cc34d7627c42c05",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-adventure-image.tsx",
+      "historicalSha256": "d457c33d4600b705ea0a9d4f094e09042428256efe356492fcae94b9b6cfb09d",
+      "currentSha256": "ebe4ed1f0ee84c59c3dd3065238d2f881c31a0274834dd28799dbd847241f5a4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-alert-dialog.css",
+      "historicalSha256": "dba513f92ab8923c54103f3360586f9cf0b84ef5cd754001bca1eacc9f0bd199",
+      "currentSha256": "36d1163d9e9859d38f8b28a1eccf1d7ec95405b3807044423603ff990da34ba5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "4d79e2adc8b95dfa75cf8bb10afaecc8d46f272f9385476d1b8af9118468c435",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-assets.css",
+      "historicalSha256": "8d11256ea8da91583febf8581a966b1d35941c46b45c7062edde1633ae6701fd",
+      "currentSha256": "2fb52ffd96ad403cae9124925e6518ecf71e30d056b27a7d0d7beea819c8cc21",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-attachment.css",
+      "historicalSha256": "bf9b8a42a04d96de71f8e8a48cc47d9b99219286056889bc0e6523ecf1a18e75",
+      "currentSha256": "7feb63ea42d3e0037c52f19353c74c847af4d1fc6ac159a149e82e2afe027476",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-avatar-assets.ts",
+      "historicalSha256": "fd93027ca25a8ed525ca9c98c1fab754c5192725703ff33246f24d065c8b2250",
+      "currentSha256": "a8f1dfff555defacfef94d4485914ba435519cc50eb075be2a120b537b339af6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "previousAcceptedCurrentSha256": "3eca2891f125987309ce66e8c3527775d458341b29186bf2fcd785150f94f5d4",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-avatar-paint.ts",
+      "historicalSha256": "cec671f3a9fe94f6458cf4c8f2e5da2fc0753b5f3c82dede60e4509071858b9d",
+      "currentSha256": "9bda3e9ccfd79e66336d6e936a6b4ee612d18ffc0daf85d3fea782eac3060945",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-avatar.css",
+      "historicalSha256": "2228e22f504c05485006ed9902f32b77de6729116b1373bd2f1767c910cef2e0",
+      "currentSha256": "ce01b69c6c7859d7a29b782d5909c6925d59fbd7728ff9c12fed4784a60b1fb0",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-badge-assets.ts",
+      "historicalSha256": "efe6c0009f1bbe369f4540b7a84f03638994154152ba02ced24adef13b51c6f3",
+      "currentSha256": "7e5b410c0e7f729bd968f463760c02649e0e1a2990fe274a7907a27f41f8d3f3",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-badge.css",
+      "historicalSha256": "3dde9bae2a2e05a7db38bf3f38e0e50166b513806630c973e8e00a4c58f419c3",
+      "currentSha256": "9575bc05e43ef06a35fe29c64f7e9d1d23a08c78e23aa22a1152aa1a9853f472",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-book-sound.ts",
+      "historicalSha256": "a5fba28de377db0cac493da97a5a3ea7c2f0c2e30715d729adb16dfa4def74bd",
+      "currentSha256": "c237940e0dc5ec624d98afa1efaa3e9a6011e21395a77792ce257f4d5acd2cf6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-book.css",
+      "historicalSha256": "58d69fd959a9c9b638f7d0770c25b10098dcad6c7fffa158845a4efac189dcf8",
+      "currentSha256": "dde738eb2d0f7eab27f2cd3bd8f328ad03f3bf5240d577acc10b8cb6aba51979",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-breadcrumb.css",
+      "historicalSha256": "80e617b5b19926ce07377384e89b8b165d6575d0f0ac4c4abdfc73ef923ad2a4",
+      "currentSha256": "03cead8986d9e250351a4a3d08718419ea35bbf487f334a90d5411613de4a76b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-bubble.css",
+      "historicalSha256": "75fde0a1f1edbe50d024c6eb603dd2d1e12eea77613ff7f8773a1ccd4e5545a9",
+      "currentSha256": "974045b633135220deefc270ab7408d86e3cbf4960d8ca98ed1fd4b00e841ee7",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-button-group.css",
+      "historicalSha256": "72853327f1d1d81cba70b5b1c34e272cbe27d5ff5451419eaf43abf432d654ee",
+      "currentSha256": "c2258043d21dfbdb4ec8255b3d7a5eda34019c5c644e46d87f2c5e7510c3d116",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-button.css",
+      "historicalSha256": "83c6b909bb5131a81ac631ee756b79c884c668be16065e9879b760a00a76df78",
+      "currentSha256": "8de0ba20d947649fbc4696ffa69a0901cb67c0fb478da8c78464353948bd5678",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "892ea0070b0a34194089d689bb1c51cc834f10c43e0f9d9969915ba77066e8d2",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-calendar.css",
+      "historicalSha256": "394625af08d90e1ac283c37e71b2e262d63b4a3ee323c11e5a6726dafe90ad06",
+      "currentSha256": "39f738b08dc73290ca93e1f2422ae58cd35731e039743f7e84e7949b18fff87e",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-card-sprite.ts",
+      "historicalSha256": "65e33d0bc7a6de883e1b0242cf5ad58a7fdf44c980a1d88b5971204d0a7152b0",
+      "currentSha256": "b3ca3218aa039cb9a9fb374712b9c88d0b1c9ed6d5f6be73a524029115cf9829",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-card-text.tsx",
+      "historicalSha256": "de837b6b062595274e3126604cc4ff232b1bca4c95cef85b7e8c2b8c81ef3714",
+      "currentSha256": "bfce043d7ac864c557e9f3bdb62d5529616615ec3ac0af218cc41ebe85e3fc5b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-card.css",
+      "historicalSha256": "e3d1f8338939f508b7a62f9d8267cd0c2d54cff91e944a98e23521c4acc04daf",
+      "currentSha256": "bd14aff027a9389f7b90d6ea267f474ed862b72321edc6adbc23372d893ada17",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "54d31bdff26e9f69185d66b2d5d21e634b676e60f0d4920449932a2d888145ad",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-carousel.css",
+      "historicalSha256": "b0f8b386553631d3fbb6576a95f61b6325e2f814c67a3a2de3b218c74eb62a53",
+      "currentSha256": "56a896dc2aab9b77438fb831613156daada1a7255f0d95570574db20625d6889",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-chart-context.tsx",
+      "historicalSha256": "14fd84478494adab179e465f04000fc9c8aa05a73ab8656dbc49f76b97c18749",
+      "currentSha256": "6af85eca09e9ddab917c8e2cca5af43ca38a28e0360db6fabed2f88980506ae4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-chart-native.tsx",
+      "historicalSha256": "bcf6cb2cba18c69fa2c90acfcd0f8a44dc92640a33caf96d28d2974cee09935c",
+      "currentSha256": "fe4bc9970c47888c1136c50239beec1ad8e2e6695531e9b370edbd039155af5d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-chart.css",
+      "historicalSha256": "e4908a3e6aa9312cdf13c60571365c35dcf6d09db799b821de3113c51afb3e21",
+      "currentSha256": "dfe9247f0bcd72c28b583a2104ead88093a6f2503bc933e441bc08f77effa5a5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "e283246f839490b1f63ef95dbe130b77cbd2e426df15cf0d0f8f9e7a2320b528",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-chat-text.tsx",
+      "historicalSha256": "9051a38a533664acf7def8961d2592913a3af6a51047f1137600a1990a032c06",
+      "currentSha256": "c818ca244127da0b3632822256ff9c16ddea5530ecf6add17d9f079c6e282a1a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-checkbox.css",
+      "historicalSha256": "dd9ca05f5bf3f9aabf00c0c9120d2cb1ec52f362bdec3a4a5f3dee927f0de3d7",
+      "currentSha256": "7cd5092d805fbe1ce385bc255716ed9a6a97ccc41fd4cd03b686e7ce2f0b8de8",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-code-block.css",
+      "historicalSha256": "f39b3ecce8774e8ad4afc5745b117187dac2752b59fd1486471f3549874ca526",
+      "currentSha256": "761ce911a4b2c3d76b21e7b31ff63315a8c3b526c18cada501415ad711d15e45",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "bd4cd9a578366b35a183866b1c9c86596c6eaf205262d51107cd795eaa7f99c2",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-collapsible-text.tsx",
+      "historicalSha256": "ccef6e132f84311403b0caaaef52ebdc361620ffb06ec357972b3681a5287426",
+      "currentSha256": "b2e3b392db364d0ff067650134402814b35027b2f6b2e214b1bf92d64b2915b8",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-collapsible.css",
+      "historicalSha256": "c972aea55017eb0b372df56b1afdaf522ab7b6572837eaed56125b9f0faf6c6b",
+      "currentSha256": "562f71e0058a0036f0959ab4c57dc7c330832734417245a392ec2b8e8051e4b4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "c65e5a500aa91b0296760893b94abf7ba9ce146b744e931b8505f86bf7c369c4",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-color-unicode-gpu.ts",
+      "historicalSha256": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+      "currentSha256": "035fd9ac06d53f2709af2f88293895761b70e706bd209b8fc3c907a6e62a89b6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-color-unicode.tsx",
+      "historicalSha256": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+      "currentSha256": "a1cc1de51b2fc608f26ba52d5e622e3edc4b9a634c0985c1c5dca30071f7c697",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-command.css",
+      "historicalSha256": "6a598b1d4aa05938bd142a5a426c2f2cfddeb83afada3767816719f04dbd3b69",
+      "currentSha256": "c2a709ec76d66804354b0ff42dd05616742ea976b5c875e3dec5277f913a28d2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-assets.ts",
+      "historicalSha256": "270bde6802bb50824befcfa7074bc08638e47285a8c5b24441b1a9929981b668",
+      "currentSha256": "c91e27786ecb3b186fdeb9fc2d8dffb711b59570d7b570e8625b2889cfe9ba92",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "5f145ffd43b036cb7f1a43db675ca660d850548fac61c09e241d3393a9557164",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-blur.tsx",
+      "historicalSha256": "0a74de67129ca1b54f4a285ebafce90373755a75b15b83ca03054a880e851ad0",
+      "currentSha256": "fbffb5b2ab43002d48e81eeb81ab4a1b37e2bf96e33a0d215d608a2a8e7aba0f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-gpu.ts",
+      "historicalSha256": "679a9e7d5756961a3f19ded44679f8024edfc40335dab602eb3da1b5081f3281",
+      "currentSha256": "4031ff095b366eb75849fe1d5cce3c2188e9f509c972360b2eea87f71be7a6d3",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-snapshot.ts",
+      "historicalSha256": "c93a6fe94b5c4bf759a97bf801fc9f3c55f97ede73f91c2e328838a31c5aac4a",
+      "currentSha256": "36524473c5c74b9c743b0dcb306307436d38f8cfbc6b948bde2c86656b8fdf3e",
+      "classification": "owned-behavior-repair",
+      "reason": "Merged owned viewport-fixed pseudo/containing-block repair with approved PR37 functional control-flow/dataset cleanup. Current bytes are the exact combined integration blob, intentionally distinct from accepted main. Historical proof applies only to its archived source; current behavior and exact RGBA require fresh verification. Semantic equivalence and current verification are not granted.",
+      "introducedAfter": "bb758ab3146a4e572297cca5f3bb839876a2dde6",
+      "introducedBy": "3ab7252100fdd408d2da525b91037e4733c6932d",
+      "upstreamIntroducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedIntegrationSnapshot": "3ab7252100fdd408d2da525b91037e4733c6932d",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-confirmation-text.tsx",
+      "historicalSha256": "3658ee6c348f5237ea7c4583f0bb49f9453fd21b15e553e68b3d01239f8adcd5",
+      "currentSha256": "a6e53c760cbfdc06e5923e88ffdd6dd25e6242a498c02f12107a64da1adfa4ed",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-control-assets.css",
+      "historicalSha256": "0dcb4fa5e9bbd55b3798c9b2e08d1d0b5d378161b73b9f24bc5fdd0ed5719314",
+      "currentSha256": "7e99bd86a44eba7b6fda9a62903d8b4af0614bd95abadbefa03b4d021c752c75",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog-backdrop.tsx",
+      "historicalSha256": "095036a4849b7c564ae8d05ca3ab45506e6826dffecc08f40bf2f16ffde130d9",
+      "currentSha256": "7f1250fd964b77e9553f8e253745b6b82129491277f612430190f39a3f8f1449",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog-gpu.ts",
+      "historicalSha256": "6697784b7b254ed3c5dba6e8207753113cf3d96b87eb90e22f92b961d150ad0d",
+      "currentSha256": "3a76785af8f0cf9444350fa05b87d88b19e1cc94f39b63c69c18409dd5a8d045",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog-text.tsx",
+      "historicalSha256": "49e0f8b569929f5cad7ba55309cef51e16b7a83c9849db61456998746962f8a1",
+      "currentSha256": "730c6b44814c3bc7bad4fdd9a645ca70cc4ab1e4f25eddf3b6e969887f6bbd07",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog-unicode.tsx",
+      "historicalSha256": "645a23541683afb593f379327ad44567b182229891b71029ed3779dd1f205606",
+      "currentSha256": "7525bea1df0e4911e626dbe6ae3b1849d31c6ae512848027c6abb72e6960e6e1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-dialog.css",
+      "historicalSha256": "f87f33257972591faed23a66369a250b4453fe0e48702e72edc31ec05088e005",
+      "currentSha256": "1ec581eee6efff5cbb9a512177e2d78a810b6658b275e7af25110d88bf47051a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "98a4a10f0f63649020f4ccc0f6211bfcacc35e6084b3b86a33412903f58cfb6b",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-disclosure-text.tsx",
+      "historicalSha256": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+      "currentSha256": "e6d6e02fbb69a73590e9fcaa73ea5f3def9f6af5d17b8d3f9e58258572bcab46",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-document-text.tsx",
+      "historicalSha256": "5484b222e3d8e010a9f8ae70ce615f8f5127b175f975882a90a5ed9bc77565dd",
+      "currentSha256": "01630079b2548fb9adfaac9c944619bcbb034f1f899d207a9cb357399f901847",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-drawer.css",
+      "historicalSha256": "0fa978e2bda8c3d044fb75fa8dc38473ebabcf5a0889c43a642a7d007f97b888",
+      "currentSha256": "d74bf53c8f1cce5de40e77e935fa03e965a219e0ddad7e346abb6da39a154a3d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-empty.css",
+      "historicalSha256": "8bc866fe3f4dba0b6091b785efae9c2a846518d05c432fe623b8cfc069f3f931",
+      "currentSha256": "aa22eec8a98b8ac215df9037d36850a9ea089780d49a98895bf16bb5005f0868",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-field.css",
+      "historicalSha256": "2ebf81f304605ef3e9d451e79c48f8c9c4b5842ecd6d11ac8031c5706b62cbb9",
+      "currentSha256": "7f5260deaf87cc0cec63a24ef0770b9e1a8061d068a5dc2796a9ebbda3dce210",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-hotbar.css",
+      "historicalSha256": "c3eebbce1d03168d101d4b33529b577aaf67f6498a8d93946b95cf351241fec4",
+      "currentSha256": "e2708ea8dfb677a4b3f90b5331ecba9a58057804e2126d9bab762b5a04c994bf",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-hud.css",
+      "historicalSha256": "3b4a6da919ca58b568eaf7e275de6ec1f2ce8ee6178dc0b075c4707e9740ae9b",
+      "currentSha256": "078d66adf2bd15561ee90aff1983920070b2512a9191d80a278c9c860e18b5cf",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input-assets.ts",
+      "historicalSha256": "97209a6761d16e5b400ba40101c50e2e1055862b0e352d6a9aa5edfd7aac4806",
+      "currentSha256": "7536ebefacde10a5d949fb595f47ba4a7e033c4feb07b951faca83be97bfd1af",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input-group.css",
+      "historicalSha256": "6cc90851964f16f77109dd840ac1cb17500a3cfd9f8a39998c3e5827526448cd",
+      "currentSha256": "4952cc04f469b72ec5fb6b4e686f28f3efb52798a49f723f29ceb4e9091ddf29",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input-otp.css",
+      "historicalSha256": "2cec781c91e7efd571a1e8d500156d39fb0b4a2efda446aa645b0d90286e48a8",
+      "currentSha256": "0ab71736033f9a770adec3e229cdf94e2b38e38b3fab57d0c6921f610b572919",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input-paint.ts",
+      "historicalSha256": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+      "currentSha256": "7e8c16640527ccaa644b113276cae42ab0bdf0cfdecc658ddf6c4aa05eb0f467",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-input.css",
+      "historicalSha256": "5ecf3e092eb265ffd0e23e8f84f86c377b1cf1418c5a6f74685e97bf72bf7473",
+      "currentSha256": "0c67da1a0dcaa45d68301c68cb305009d7275493765ca9e2740d5eebf492c053",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "91ba967334ac7c5b454676c0cc7ddba74d11fdeb2f07439e4f6e31d1d734a83f",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item-assets.ts",
+      "historicalSha256": "664334ee38d179ed1d25949f10cfdae8692ba2b2a2adb5e8785624a517379484",
+      "currentSha256": "616a6f73fd5ef7b0c7b062aaba5a25f99f1453b307b357397802881882570e72",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item-media-gpu.ts",
+      "historicalSha256": "245ca0974f72d95661d90bb67454c7e080470d274481d73882b759193405a753",
+      "currentSha256": "12d88985fdd1d2a97d69e0f077e12cf42cb2b297082c62e5e8d0cee04779f511",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item-media.tsx",
+      "historicalSha256": "1d0331544918a793d86b6f4d0e00afe00df0b76a49cc24e98ac95743afe8333f",
+      "currentSha256": "132b800b81f62b8432f2761a37dbfe51473809fc29a1b3d82a852175cfab8ea7",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item-text.tsx",
+      "historicalSha256": "9a41dc345e99aba13955286fd25270e048097d145793345c2815eb588cfaeda3",
+      "currentSha256": "aa5757f923e426daf7b05f8d407a6c01c5493e8e99869098d18e83cf52016c30",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-item.css",
+      "historicalSha256": "19b654ef8dba26501c8a1e08f00d1621b1c4d58af1bdac64b457be66ab34e0e4",
+      "currentSha256": "b10691f5c660a485ed947f0558a6daed0ede078f5969e83ebaa5798afb0bd714",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "276d1ebb01849481731de65e180b06c00d24e713d06715288e4026b008f99c1c",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-kbd.css",
+      "historicalSha256": "eef369ef7fb5d53e2b13d5d259ae5b9d7222b88fc8c2e0928ab4f33c6c6cf358",
+      "currentSha256": "897615398ec04c87d50f6fadf376c0148dea7b59d1919b696aa24c42cd8f37a5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-label.css",
+      "historicalSha256": "fb67bd5bc33a0fd02f7a04d2c326e3c829c1ee91f9d7696ec2ced0a22ce127b2",
+      "currentSha256": "d42fca8782269aec943f4cc27b6c7073b60236925fef808dc02006d6c42090ea",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "d71ea79baeda301d5341d63c8c5a686ab5fa2cebe352ebfeaf7f5a6502b474ba",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-loading-glyphs.ts",
+      "historicalSha256": "08dca8ac5fd51142585c00ca520f062e99146966cc1100c126e5e0671b6fde0f",
+      "currentSha256": "1d33566a09f3ef8ed4d43f92cc336c448e77c651bc7a85386c5a45e945fb968c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "previousAcceptedCurrentSha256": "f5a9fe801859615fe7d5b6e970285b42440524c8044e84e6f21ff3cb244537b1",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-map-gpu.ts",
+      "historicalSha256": "8139bfec27cf43cfb244ad4cc775c202b0cfeb154b38f732843646234e407858",
+      "currentSha256": "9679cfc272b73fcdfc3264ecfbca8ffc97386d5162deddfe06e4218c5a4c4e11",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-map-palette.ts",
+      "historicalSha256": "4e672af89db13fe5cb39206d46a1f6fabf0d167ecc49f7a91b65f9c24f8daf1a",
+      "currentSha256": "da4fa39cdb581e771ed6dfaaac2abb5deb800ba8b98a0879e0480246fab4ca85",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-map.css",
+      "historicalSha256": "30c7a32370cddb1776f4999c47904efd4f517b7dce8d1df2685e6510347c7f37",
+      "currentSha256": "ad0a4b1394efd2f3eac65c746aabe3b67d4a5c17151f49f15f7e6779441a000f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-marker.css",
+      "historicalSha256": "21443a59b6c27a32a9483d32b389dccee9a09e6ed2f3c74eea5138125ba268c8",
+      "currentSha256": "eae65065434ef3bef57cbe2062de1e76bf696a0b95ee9bbcd688af98ddced5ce",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "9e22b7d493bada1fe655eb848d74748e231d594ac85b44b678b053587b63dc51",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu-checkbox-gpu.ts",
+      "historicalSha256": "f80138bbbf9fb4067daa3442e78d927f9a6fd4c128761700a674d64c0fde7e06",
+      "currentSha256": "747aefe345045c29849b929706b7b707104b3881a9a770fde603ef7f93121ade",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu-checkbox.tsx",
+      "historicalSha256": "ced5a5d06cdb29987ccf772a84897f168540af0f1e305b2ef954e023cb62bfc6",
+      "currentSha256": "8cc0a14ec2c02c5113fce7f0a8a3edf1c0d9400d123b0e7a22e35b94a7d26fcf",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu-gpu.ts",
+      "historicalSha256": "0161759b46f205a6a4a70cdb20772725d50b7e21ab31f9255c4e9982f3314bab",
+      "currentSha256": "0e72c644925360a7a691e331c470dc9618975ec0fce056744c32e12cda229610",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu-text.tsx",
+      "historicalSha256": "376517436d6fc424ae6a98b973d64c6fa70c31d2787f76945ea861faff405c29",
+      "currentSha256": "f548564b04ef98b1d896e6c925653bc11aa198e37989ba3a386e64c2ba7864ab",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu-unicode.tsx",
+      "historicalSha256": "24d6f80ba9cd7edcc616173c0bef976e0e8bf7b0b65b637841c8130df3a9cf29",
+      "currentSha256": "388fe7475836197363d1e194a5e25b8495662f4f6f1e00fb5a2da6a0978b08e9",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menu.css",
+      "historicalSha256": "5b7dfc923e037da34b85808ea20698bff4716b93c2428ecce420e6c337e37a58",
+      "currentSha256": "6678ebc6ca0ee92f2da07f8605b7b41004801958373bd6705e0b9c969e87bf9b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "06b29fdae85a2ff5d1743d40551e7764acb16acf54e54e7ec6539f53d5c27a12",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-menubar.css",
+      "historicalSha256": "b41e7b5403f34a6b4a9eef814b7846fcc464e6df86ee7e3229a701e728933109",
+      "currentSha256": "1dd0b3810d72b1e980784b65cd16440763011721601fa4fbea874ffb266aa02d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-message-scroller.css",
+      "historicalSha256": "afacd198a3c2e3efc012440fec1d2e5f613ab71ebcd7ae155f4b0166a06293d5",
+      "currentSha256": "cab9d8007ea07ec82bad8602995a3ceaf0c160e1f330b1a35e994ad6e11d1edb",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-message.css",
+      "historicalSha256": "aa4cf616d1ff5749b40b32898c31a2f654ec35ca11309054528f30b1e8381210",
+      "currentSha256": "fa145c5959cf472dc0a970b69d252d3da115e236d722123bd774591b891a022e",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "55d9ae30b1da03c267fb61cf1aefa3dbc8eda0f3b86ba955412a95fe50232dc4",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-native-select.css",
+      "historicalSha256": "8a22eeda84a644a9a82da10e9055b401bc14631978aadf5043bc5f904d18cbc4",
+      "currentSha256": "f948f4a12dbbb1d203e9964dd3edc2ffdcb791c5a7e1ed6dcfa522da2daba73a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "84f6096895e09851f51f94a52384c2592c09dce5b32e48f898ec05f92671ca0b",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-otp-paint.ts",
+      "historicalSha256": "31af519a94458c6540da621c3e512485a712208fc8efff85cc2baa5b6ab5787e",
+      "currentSha256": "91199feb5f6fb3be49d60a574137e40f9f8ec6a991465f39e693163a9805368c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-pagination.css",
+      "historicalSha256": "3f9474dff2b595586e28fdd0f2350744ef5c895d64c5821fe751cb7f113c1819",
+      "currentSha256": "47b904321d1144fb16918e1b85744e8b6b0cf144cf9319f6838d85f592560e5c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-list.css",
+      "historicalSha256": "91115256194789559ebdb73801ce935cff741a78ff1ee1a65ef1b956dba56d5c",
+      "currentSha256": "fe298a9049b0712df4bf75332a2a866efa1a985777a23fe2625379d068f1c032",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "7d5ee123b509e405f9ba16d4b894f55d253e5d7c147ea6395421a5ba50eb5529",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-mesh.ts",
+      "historicalSha256": "c776c30b76561b67f8684850c34138950ce1d8ab12290589897defc96fd609e8",
+      "currentSha256": "e3fa2f7c653b21d598dfa8d5e654909b567ebaaaf5007d9cbd0f2d97a63120cc",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-preview.css",
+      "historicalSha256": "bc0d0bc5f228510fb70234d415573a1c282347e24d78407507f0b50f309cdb03",
+      "currentSha256": "a9c2d03b3271c24ea138ec3863e15a110aed97e7046cdcad0b44a5b5dab9bbfd",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "4a81bdec5584ff9368b1dab3385e176286aed525e14ceb2bb5f5247c49b12153",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-player-skin.ts",
+      "historicalSha256": "c528efd99256df1186f02411c55ec42f2f665337105fe9ab3ab222186a238a5e",
+      "currentSha256": "a2095102262fd3236d9727c123a3c905c4366faca26519e93b378251d5c2747d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-popover-gpu.ts",
+      "historicalSha256": "87373f715cf4927a7ef373f9b060ca05bbf82b9271c1b64437a3ca0f50669e64",
+      "currentSha256": "896e604a278b61f0191b414f5cde7ef76e80bdcd55dda2f586f840e8cbc75f8e",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-popover-text.tsx",
+      "historicalSha256": "168419d0119c6c202a902624876d4f195a60ebbf0dd87b3ee09c27912ac13862",
+      "currentSha256": "616bdf884ca7f24c8be5271261efcd89eff9e91445596191a31423a27d2de632",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-popover-unicode.tsx",
+      "historicalSha256": "74def4fa4730133fdfd4ffd8f8401a811e7ef11ceff5a1d4daa7ef6c6d2227b8",
+      "currentSha256": "b592aa1d6bdfd6348f5d60ca09647a97f183e40f4e2b4a8cdf06427284abdc42",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-popover.css",
+      "historicalSha256": "dc02d7e7f68e6bfcc83ff5057b260bfbadea4ca84de8c460ca9879869a877ce2",
+      "currentSha256": "25bb4027bedd7fb7a9a3ad2c7e443d11cad646d7857eb5f1b392ee728fe76cab",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-progress-assets.ts",
+      "historicalSha256": "1e559758fd38512663f1b11d27d77e2b891a80e769a7244833031469c88a58aa",
+      "currentSha256": "0f2c04f4e6f5a02c2bfd0066785895505b08cbde70d316379ebd101fc0bd65bd",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-progress-paint.tsx",
+      "historicalSha256": "d343599726dbe3495775f9ac001b04cdeeda7f5f3f2d18397290af25aef33762",
+      "currentSha256": "e1a75a8fd08418d846df6212ecd4c1b603beecca18a7a2dfd467594987c1eba7",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-progress.css",
+      "historicalSha256": "dcda060c95013c3e2b5b6fff8c36a48698e5377b616c3b1f10ec11d5a4543b94",
+      "currentSha256": "bdc8f95a86e0cddb22972f3352ac02df990ddba09cdae7129e0158f2bd03d5fc",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-prose.tsx",
+      "historicalSha256": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c",
+      "currentSha256": "758f440e314a45fb9584147c787a39be17f3098f5c7afdeefb2d4ee20f1b8787",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-questionnaire.css",
+      "historicalSha256": "2e788b82e48db055202530b8a7e2480468fa2bf823132a9a469845bd27159121",
+      "currentSha256": "53db08f324cbea9bebf79d161e55fb75d8757b0d635cfdf3ce2e18ad30cae9a2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "7f1b4e133de0d8a0a0a9529fcda1209538e355e27498061cf7abfb2fa0b9617b",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-radio-group.css",
+      "historicalSha256": "4deaeee2c4fddae94f13d47145e94e9fb78754340a701000e94c24885a1470de",
+      "currentSha256": "a8d2ce2a6454c317945a9b88996082ffb4dfc59724dd6182832b3c1442604831",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-render.tsx",
+      "historicalSha256": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+      "currentSha256": "394113f2fcf17fe0abe670e77606fd28f191eae1068a680fe97d84992adbf076",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-resizable.css",
+      "historicalSha256": "5adb145627a0e41d118b3368504dd6832d9f7da19341ac4002b2f84cc818e939",
+      "currentSha256": "4c69ac98f25dbf9a1ed5cdfbb0d7f69656f166c31f0048ea341e00e86314e0eb",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-scroll-area.css",
+      "historicalSha256": "47cf32b0dbefe7cd8ddade703e78c38e23619d9390a885b026655b420faab576",
+      "currentSha256": "27cf549bd4aea9e1368e37e1d2fbbd57c27c3d67b4745a3607fbe493c81046ed",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-select-assets.ts",
+      "historicalSha256": "097445bd17dda213c9c706880f8fc1e47f86c12cae3a58b7a641c67aa53074d9",
+      "currentSha256": "f87b222a6da872bb3a007c31d565029658f940117db78670d4169636f9367ab1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-select.css",
+      "historicalSha256": "c2319bcf9af4dee734063bc27511a16f00afd3d815f33b2bf8bcbcb55f992208",
+      "currentSha256": "562956d43551877ed9df13e61d23734d4826c945e98381f7626297ed749f9dd1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "9cbcc2d090dd93ce06228821605fbfdcf5923a6c938d8998e578c1184fd0a56f",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-selectable-text.css",
+      "historicalSha256": "3f6912d9f184bc7fc1edfc9b971eed6241cfabf70f0819f9808d3273ddde92ff",
+      "currentSha256": "d1c5741d392a2c3973673d2cb2d30dabf7495752d935920fc2e0b4cf79598854",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "9f8e086cb3f8248bc9196c4073de5fbdabf19579b90fe2fdd3990550fa21b3c7",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-selectable-text.tsx",
+      "historicalSha256": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+      "currentSha256": "3e43c57023465f79389a94a4ec42b05290498e1cf62c907393a31cac5ddd4d5c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "e9e003a42a8b3fdb72d729ffa8f92f58b6d15052cd8522e5b6a97e46c6510019",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-separator-assets.ts",
+      "historicalSha256": "47bb6d6efdb69afa1f10bd08fb78c7e40c106b4bf8a247da37c77933587964ed",
+      "currentSha256": "a19fd3c51d457e40d78dd0cc0eb811a2ca69531bd4dc555897545757486584c8",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sheet.css",
+      "historicalSha256": "8119d3f6d7b9d3ce1d25941cbdb36471b4518634b74a040d0fe968bfa3be5b33",
+      "currentSha256": "1460dec9be7ff1b2c2594b59a26e3933685310308c2fd907d07d9e6c384634d4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sidebar.css",
+      "historicalSha256": "e08046d914159e32051d957d56d49d49f765d76fa492b11e8b9034ac029f722f",
+      "currentSha256": "66f3566ae13dc213df8fc78c1035ed5d2083b11e6256a6f12c9ddbd01bbd324f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sign-gpu.ts",
+      "historicalSha256": "c274cd485bebe84e2b74019d9b1c877aae1549bfef78e50aecc44399d1c8fd3f",
+      "currentSha256": "4a8f97b9bbd15e473d4a80e43598a0bb07e5a25ee1117d725e9659ea42e9cf54",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sign-paint.tsx",
+      "historicalSha256": "f29ef6aee2087facf375787ec17f687c69cebd552aa84a9365d3c28cd54de1d0",
+      "currentSha256": "7fc84e7e4106b3bdff354fe554a311f3e9f6288e7a1e3b1392711fb2543648d5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sign.css",
+      "historicalSha256": "b8353e9c1172d52f129473b8e3bd4f1bb3c2e0462e9d7eeb61056ed8583efdc1",
+      "currentSha256": "103556a1b3fb3a95bba3b387807919eed6663a9843c7ad9130586674c92d51d5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-slider.css",
+      "historicalSha256": "75d67578bf12ca8b32e2ef6a823bee384073b0861178eaded7de3fd3cde06a1a",
+      "currentSha256": "83721a5bcc65b06e708aec02d05848a1bd3cb20ba7b0f2b4e4f0faaa3dc117c3",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sonner.css",
+      "historicalSha256": "9bc3eee883b9009db9bfb49187ba7ec823e6ca8f77b8cc3714c684d73ece9d26",
+      "currentSha256": "47755db21f40af095186aad631f91ef114bffdc477ef04d880ed91b5b7f114d2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "52a912d8f623a3596b658ad3f6fb38ffbea605ed9434c61148738e48531d6c1f",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sound-assets.ts",
+      "historicalSha256": "c82bfeb80e6822d1c34d0be76797dc52549bcf8b59b8aac0c8b0f0b2f6fe2315",
+      "currentSha256": "b5c25b5f1bb56e3fdfbf8f76199983f92e8899424a5c47ef5816bbd63a6ef174",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-sound.ts",
+      "historicalSha256": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+      "currentSha256": "a70ea433d3bbaf262e348ed0a92cb773247abb07795d834826d493da232cd954",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-spinner.css",
+      "historicalSha256": "185e7ce09a8d08a0eaa965038dcbadd2a58b5f60487f564e20d1ee93993b0d11",
+      "currentSha256": "fc309461b9aca97de2890acb25c4bf1fd6cedecedc451a30d355785eb6cd3164",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-surface.css",
+      "historicalSha256": "7eae1e04ca4fcff3a04d00692882bd54bd9880b9d62c64fbfe693363d1bddaab",
+      "currentSha256": "bc7b98fc310f69380daf8c92943baff3e8b4db8ce7da812bed5d604e546272f5",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-surface.tsx",
+      "historicalSha256": "f3f277211395f2532baef09a7de9cc92225c794088f4e23414df1e4034f4a31a",
+      "currentSha256": "8d0fdfae9be3a11aba64a1c05212e9ffe44b140f676f6b4b4523c93b28376cd1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-switch.css",
+      "historicalSha256": "1bce9cb27aa840ecda64570a5287006a9465716c064cf58d0c466014ba3395d8",
+      "currentSha256": "60d3b981048093273780d97d5033b4108af10c5f32ebd62b9fbad4f1ce924636",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-table.css",
+      "historicalSha256": "e3e93321b45b34538bd5422fbfadc292619566ae9772bd9c300d98c0247e73a6",
+      "currentSha256": "420d7cd08f9c28bb811ed04f43b89e35390c14a834098e6d7d3ff050ec583d0f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "454bfd128dbc96c6d71a45e7f68399caaf7774c6c7755a32f26f484a5e1562ed",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tabs-assets.ts",
+      "historicalSha256": "a0b1e362c2764d87e4d42dec03421cf1bc83f589a4f3ba741a106b57a968b079",
+      "currentSha256": "dcddab41c7d459e9f4c4cc2453f3b7b7524ec43d22f6123ff10eed46111a888f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tabs.css",
+      "historicalSha256": "8183c38e3c30e8100d09e217ad30e051762b37cf928f48553dd0de5f54d18914",
+      "currentSha256": "7f8eef05ad45975f993c47d655ae1c7c52cf7824ea3dbf646d2bfa8008ed57dc",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "9d0eabd7a6e2736aeb7708e9eb74f09de007e61d4b562f94022ba265fbab4185",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-text-assets.css",
+      "historicalSha256": "87825d3e1b54846d1bffbf81d853430b4848dc908132b7496589bcd3d5161cd6",
+      "currentSha256": "e560e1374785203aecd7684376d14676a483f84ac7185e47cbdab64bb930127b",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-text.css",
+      "historicalSha256": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+      "currentSha256": "dda19c84deeb0fa04c4853ef1471958faad9ea0118422415263ebd24cbecb814",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-text.tsx",
+      "historicalSha256": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+      "currentSha256": "b2ffb8ea6cda284f411c077299187375e18d62f5e80dce2c95e46728ec0cba15",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-textarea-assets.ts",
+      "historicalSha256": "999f3508da015737d2ac225b48a85b2006e9b4a02805a89a40ff9c7f46cddd59",
+      "currentSha256": "62eae03778259712249f2fd5b2f62554468b988eb448ae8b5fdbe6442a702487",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-textarea-paint.ts",
+      "historicalSha256": "eeaeb0f6b5a7be0951b3d79b16118952ac5ffb7e3de24975fb867f1d456da882",
+      "currentSha256": "6a0ab81043fe7efebfdad3f6da4fd67afc3bb80bd8ec09925fadccd83e635e14",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-textarea.css",
+      "historicalSha256": "15af273be70afd4580ad46b6d65a721340d839bbf48a9835aed9705356e923f4",
+      "currentSha256": "e3acbfab1ff6cf4c20231273a3a497172a6c1d03a48a6838b694d9aa9f53c511",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "dcd0e1c234c468fc8f9d499c161b262cb9a583f4c0b12fcb4a18ed09d890d942",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-backdrop.tsx",
+      "historicalSha256": "af11440e3df8917377b6eab17cc9d8c21de96434ceb39d3842c45929ba56192a",
+      "currentSha256": "a567ec04faa3c5c5f7356f8f679f6c3afec57c133570c7a23e9ee3cc4cef4214",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-gpu.ts",
+      "historicalSha256": "75551824f617ca74bddc51040155ff75c3dfe9d1fb4af404af484abaac453a1d",
+      "currentSha256": "613b29db70eed5b05c4d8b42149566a4244e3d4ab4d0cdf5697b2ecccae31f5a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-graphic.tsx",
+      "historicalSha256": "7d1fe83115afccb326318f6a4e4a504a3d0f9600566ea42dec54adc1a61056eb",
+      "currentSha256": "8520fa49120189d41dabaed5aa87c81aa751a19cfe9f75e5b06b17774088c15d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-layout.ts",
+      "historicalSha256": "41d2a90b38f016dfd7eb1a0a975594bb90bcacc7d811ccc34d3c5ca3097519c2",
+      "currentSha256": "8401ece2b72c09f5e51657f5ddfd4b87521c817997dd7c3fa8a63a6e4de86b33",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-sound-assets.ts",
+      "historicalSha256": "8c321e08a4fe50ed240a3d567a8e70121ff840912d36abc83a1e0eaa06bebc59",
+      "currentSha256": "35385a8d967074a00f64f93261ef45ce608107049f6b761d6f65c0c4aa140acd",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toast-sound.ts",
+      "historicalSha256": "d3e1577ad76327e0f556310a7f0a5bde38bbf5f423358a8fdfa5aeb25689203f",
+      "currentSha256": "5a8bfe9a1656768529e1ce2a09afeddb6e6b6630d607c326fb36abb696d078ae",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toggle-assets.css",
+      "historicalSha256": "f66c7a7c8e7662c2c883e4f078deb6724681f00620305557cc2cb35b98658ac1",
+      "currentSha256": "fa755f0301b7b4f1449ea3548ab59ad36b435952501ba4c52cac068cb8801d41",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toggle-group.css",
+      "historicalSha256": "f35bd27b108e2a175abd77c87c122d544fa2640da4e3a21b04c851a3f7c8e4cd",
+      "currentSha256": "0975278f7d5741a9daf5e5e63baa07fe2f58db6ec33f62d455a44afce81a4c18",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-toggle.css",
+      "historicalSha256": "513cca885faed5ef229c5e9fc6fadf5529b39fb102d2eac5585da6822ef8619e",
+      "currentSha256": "5b18bf0e9433569f160ea54b32afbb9262be55c3696368de655abdc383b93fa4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip-gpu.ts",
+      "historicalSha256": "151e5b574c2ccb69280f0858ddd06482913fa873b1f63c3b2e6f3a2972169ac8",
+      "currentSha256": "fba72e4520fb361a4988b601325e677cdb4732948d4708bd17c41745d858945a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip-layout.ts",
+      "historicalSha256": "1bd4fe8f1d9505bf5a28b777dd4ff1694947327b680279754a53ce6c464c9924",
+      "currentSha256": "55dfca0002da143ed717b33bf22393a0060facf24c5848dc88e8205fb856f413",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip-paint.tsx",
+      "historicalSha256": "1506c46197022204a537c18b0fa686fc6348b9774f48707dfae8d1694f675e63",
+      "currentSha256": "c56126d3c7027805b6fd8db1235c90240c542b5b3953d38a08b7de3ec5ed5a8a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip-sprites.ts",
+      "historicalSha256": "57cb1306ee7b28849c5958cc48b98a8c04a83a31e8008a00d43593b22c558e4e",
+      "currentSha256": "0473e83fb6115f045c9987e7c95e62fbc574c4d6056b5128d44b0bbc2d17cdd2",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-tooltip.css",
+      "historicalSha256": "1bb1f4d8ef428b88faed118c81c770b0639636c42f730d69f4b0662769e187a4",
+      "currentSha256": "fd27dcd0dd3d7794bac41c17f10af400fed5607951278be8ff8a6fbad273de28",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source, including earlier accepted source transitions. Exact current bytes match main46; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "previousAcceptedCurrentSha256": "1e2b920ffc3d318bcd25cdc1cb0fdd2dddefad25ce4a969e1e31cecb60e2d9be",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-trace.css",
+      "historicalSha256": "bad98db3830bea8ad852fa86d3e03bc3c5a497a456cae888a6ca9d5c382109a4",
+      "currentSha256": "bddfdf12e588e1c722d5bb751ab06bcb9d3ae6fa08407ae2f00ce6efa22bb7ff",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-trading-sound-assets.ts",
+      "historicalSha256": "826e0fbf16f3b7d923eb92600920cfa9033259e849c6381ce2463f18e9e6571e",
+      "currentSha256": "8612e65784174cc5c858ad29205e7e7756af848c768e441bb978c74d74e6094f",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-trading-sound.ts",
+      "historicalSha256": "61897f9a3cd7686f628d78fc30389a516b1026e5cc3357aa8caae6eaf814fbd9",
+      "currentSha256": "866ba7ba9a0e349ec5308ee3c892b9c02680f05084b9a7f116955c832553543a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-trading.css",
+      "historicalSha256": "5547f0f6e26657e7346ce9f341fab5fa0bd65ceb4c66d3729332b8ba5f067352",
+      "currentSha256": "8bef72b49bc866b4107e11801514e99d47e5018048a5e505928f3a34be485519",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-typography.css",
+      "historicalSha256": "aca5261c56cc6a35023566cb8c278587e835091bf69d09df05797660aebdf9f6",
+      "currentSha256": "ea4f0d3caa026593561152bf54971958f05808e2beceb55161036b59d8591c8a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved main46 authored formatter/import/path-refactor source. Current bytes exactly match the accepted main Git blob; semantic equivalence is not asserted and no current verification is granted.",
+      "introducedBy": "61683f0121a26e8e8424a78133488016fc5c12fa",
+      "acceptedMainSnapshot": "46cdc9f4fa75cac386c7d45be656d3954aa4be37",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unicode-label.tsx",
+      "historicalSha256": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+      "currentSha256": "ba5cf2e5f915a46bde52a2d00b4488668d410a16a1707a62651451c0c23c3218",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont-atlas.ts",
+      "historicalSha256": "4c54b49f0560130e6001cbdd036e4e346faaf031a16cf7c2bcb0faa5db39fe63",
+      "currentSha256": "11c88168192b62e4a0609c890a66b4ed890e93c0d296a9b8b4a8dac2aa74a917",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont-gpu.ts",
+      "historicalSha256": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+      "currentSha256": "a8a46162b4bba36da4a838e168aeb859624add16fc57ee9d0b0a9497d24cef25",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont-metrics.css",
+      "historicalSha256": "aed17fab4ad927dc767f0fc48f5f08abe7858bdb6e9b7a69a1a391ea1faadf1f",
+      "currentSha256": "2da1d53bbe1d8096667892207ea32a7aa2da903c2bde42c7444f54bb191470b1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Preexisting source transition707ffdd; current bytes equal main4caf. Exact before/current hashes record drift only, without an appearance-equivalence or verification grant.",
+      "introducedBy": "707ffdd049c0e90f4745aeaeb179eee9fb2b5fe1"
+    },
+    {
+      "sourcePath": "registry/ui/minecraft-unifont.ts",
+      "historicalSha256": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+      "currentSha256": "ac5343b7af95a21aef2da8e8de5c2540d47b7a004ce4fe5e91f2b56a903b4915",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/native-select.tsx",
+      "historicalSha256": "be2f0045361b370a7d9edc7c20b6b36359ce4182963ed22b6d237d706c22fc3a",
+      "currentSha256": "3079feb4793fb6e326a47b55470b271ae0f96af37ace650ddece4f4d59710377",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/pagination.tsx",
+      "historicalSha256": "a0267350b739156079b008b2aa38404e8962de2770868a2462d3aa564df08749",
+      "currentSha256": "723082ca1d62fbd0e376723e3ce0c38aec9d2f87909c3177a24e1e01bd88111e",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/player-list.tsx",
+      "historicalSha256": "71fd3f178d3330523ee1bc79522229b7c0c2cacd48abee4124421ab588078c34",
+      "currentSha256": "ac77efea4351999ec5fe4ad071d3958acbc9689fad546fe826e12811be93cc40",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/player-preview.tsx",
+      "historicalSha256": "65a67363e52dbb3e93f98d88bff3d1323fca96e6d062e97f63ea1ae69854b35e",
+      "currentSha256": "988b0c44806770b342c43670176bdd7328ae0aecc0adfa69b5087fb3aefcfc33",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/popover.tsx",
+      "historicalSha256": "b5df6c846949872afdf1d7f23a927c9dc8f092ce205bd457836bf98962a842f3",
+      "currentSha256": "51b7bb799d685424d79002f4f9f937f532927089a54c5876e32f63ff0be034d4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/progress.tsx",
+      "historicalSha256": "3d22e970de5bdfc7fa92a6fdbe17960364e7a45fec73624694cd3f24a0e4c770",
+      "currentSha256": "0c2c0313cfb52c60c02cb193e9f38c98578c89314d836eff8f4613c040f4d1af",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/questionnaire.tsx",
+      "historicalSha256": "6eaf5e66acc27a1903754a36df4b494fca6e2df90fbf65e0532fdeff747242ab",
+      "currentSha256": "1fac64ffdf8d5f38bc39d87bf4482947e2af2417483266ce86cb96c512d67992",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/radio-group.tsx",
+      "historicalSha256": "8f70ec8668763cb6ec9eb6d215f335b8c993c41e03fd91a08172b25d1bdd266f",
+      "currentSha256": "2e3ecaf06ab8a7bb2e72ee18e7c99a02c92fce4990c720cfd3d13b94177dcaa6",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/resizable.tsx",
+      "historicalSha256": "6c65f9f87fac4838634be558b3031783ef7d13fe7eec619be1f760229c0b293f",
+      "currentSha256": "d8c452e6d8f459c5afa9ec41368f32e48dd516d94ffb7b0f974c4d43831607f1",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/scroll-area.tsx",
+      "historicalSha256": "9a98a8c15c7984e7831e15bdb599fecaf83c50ad6eec9247b1378f050af5a3c1",
+      "currentSha256": "e50228addbfb37bd356050ac42709cc6b79182848cecc5363716603fb2bdd570",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/select.tsx",
+      "historicalSha256": "a9111d6f712d795fd7a9ab27d2c763d13cf13fc11e7c414ee3380da6b99c55b9",
+      "currentSha256": "f486b93324e076d4eeea2c706ac6f8eea822830a3a617cf6c07c9c78190c679a",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/separator.tsx",
+      "historicalSha256": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+      "currentSha256": "2252925aa3bc8d6c025e651391d7d972a9dd06f45005640e4d383fb34e1886cd",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/sheet.tsx",
+      "historicalSha256": "74a067dbea721fba95e2c40cf8b87162a38a862e732d73f36d3c92bfe152069c",
+      "currentSha256": "bd9ab4ea05cf12dfe34b67a6ac9e5d5e637064a87badcaa999f8b0c63e3c4090",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/sidebar.tsx",
+      "historicalSha256": "21d954153f8ed5255f3cde6225c9349ebdb1ea155cdd32765c82fef6becc8134",
+      "currentSha256": "e5db8d9c5731ae12637d9942cd1e1e379ae893844c1b35dab0367a8486c4cc36",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/sign.tsx",
+      "historicalSha256": "a5d2379dcb8d6928773921d4cd1ed447bebf6da68dd0fbaab443d18af432370d",
+      "currentSha256": "bc9eb21c2ee6b928f3e66fcaef6e5d9555dd5ad97bf63a3f64c5a367c1f727f9",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/slider.tsx",
+      "historicalSha256": "2e4a5db729353aa070b8d2ea605396702ddf7d765fa14b1550db21ed4aad7b0e",
+      "currentSha256": "5fcfb03583d9a6cb6851322c1f8d2fde9a8fb9dedba7315c1dc6c239185aed40",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/sonner.tsx",
+      "historicalSha256": "d6a9b699eb06d590ff9cea1710fa538a9e3ec6df18b2f69a18ba37f62a228b76",
+      "currentSha256": "87c71e05e113495fd1d00d6fdcb98c7098d9e095756f07cfc326d9a5e392f528",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "727c69487a6175636d76cc86d1f15ef71207b843282cc64ca76cae54b84cea60",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/spinner.tsx",
+      "historicalSha256": "c942bf39a66863de1c7b63f3c668fd0a3663c3a21022338e32b470d54299bc74",
+      "currentSha256": "fe78bf249cd77206d5da841452d5044a9140a88bb2d646a3ac5aff6f470de01d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/switch.tsx",
+      "historicalSha256": "8d045c75c66d28f96d7363bb74535fe4d1dbbf34b226d388fb5d71a68673acb2",
+      "currentSha256": "475505638067c1c587db022a1c1ea17c734dd0469c036c66ebb516f256ab55c7",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/table.tsx",
+      "historicalSha256": "31b3ca2f5c883b77fcfd344df58e34cb518927aebc6d6441de66b6ecf6003e8f",
+      "currentSha256": "9fe55dd828991b2f06ccc88218bcac30049b846119847ef02dd1ab3da7dfe22d",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/tabs.tsx",
+      "historicalSha256": "ceefc64e05610310728031bab301e2470ffd193c0b5cf64d70e748f42715d534",
+      "currentSha256": "9d358af03ff38de0bcb9db8a5ca3e6afa741720adc639af0f7c5d4f05562b018",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "3498be60365ff5f8a56e0a396337b04a6cba66d164f800025d51c078a2b1d5e4",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/textarea.tsx",
+      "historicalSha256": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+      "currentSha256": "659b9d3d291f7763a2c3be24b734da5ec2a2954394788b532f3e1963ced1e1bb",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "previousAcceptedCurrentSha256": "b10d5ae2b9b66d6964e549ddd7eb98f1df53887add8a330cf5103c85f04d6d5a",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/toggle-group.tsx",
+      "historicalSha256": "87b58a96bfedf523fe6a3252a3af6e579ac9ca5b7835cfd0b83dd9f423f400f6",
+      "currentSha256": "3caf2770e9bc703932f3e7a0667ee1420756034d2ae4672e56e6dcf1bde58dc4",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/toggle.tsx",
+      "historicalSha256": "b945909fd65036ec9158c86786c8c5316732c7b8cfee5e45e3af4b7dd7f3a34f",
+      "currentSha256": "cfb1a393fd28b34b852ebcc8cafae8e9eb0521dd23ce294c113f6a009edefc1e",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/tooltip.tsx",
+      "historicalSha256": "b3f2c7a863d163845493171588a3614aa8a9e1867e41fb55b5e2b03a1e1db256",
+      "currentSha256": "b22219444485db51c54117ee1888fca061b26eca9c3718948a7e8af1463d453c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/trace.tsx",
+      "historicalSha256": "84403d8a7237f515e4b9dd482a2ca2c18682ee7534faa53acbd9264834b82fe0",
+      "currentSha256": "cb4492c77a94a8a9f34872d6a68bb997ef096482fc76a9a70414ca970ded0897",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/trading.tsx",
+      "historicalSha256": "a4089c33d30fab16bc66e2238f91ba66ce3cfca27f35f5e380675317fc780d35",
+      "currentSha256": "74110856822ebdecc43a560c645383efd29f2baea79f78286f0a4a5fd611838c",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    },
+    {
+      "sourcePath": "registry/ui/typography.tsx",
+      "historicalSha256": "67239d094f0704eede0e9235c6e5fd8dad591b711caba7ea72bdacf790606cb3",
+      "currentSha256": "b91a03fb8d6d124a1281a3f816f2c7e50d25df94241b199e5e0237a5e3ae7f79",
+      "classification": "preexisting-main-source-drift",
+      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
+      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+      "currentSemanticEquivalence": "not-asserted"
+    }
+  ]
+}

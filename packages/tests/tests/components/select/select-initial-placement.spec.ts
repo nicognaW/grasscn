@@ -12,10 +12,11 @@ for (const scale of [2] as const) {
         const height = mobile ? 844 : 955;
 
         await page.setViewportSize({ width, height });
-        await page.goto(`${preview.replace(/\/$/u, "")}/#/components/${route}`);
+        await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/${route}`);
 
         if (route === "date-picker")
           await page
+            .locator(".documentation-playground")
             .getByRole("button", { name: "Pick a range", exact: true })
             .click();
 

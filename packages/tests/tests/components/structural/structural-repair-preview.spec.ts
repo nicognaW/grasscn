@@ -1,13 +1,14 @@
 import { test, expect } from "@grasscn/tests/test";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
-for (const scale of [2]) {
-  for (const name of ["collapsible"]) {
+for (const scale of [2])
+  for (const name of ["collapsible"])
     test(`${name} editorcontrols respectGUIscale${scale}`, async ({ page }) => {
-      await page.goto(`${origin}#${name}`);
-      const card = page.locator(`#component-${name}`);
-
+      await page.goto(`${origin}docs/components/${name}`);
+      const card = page.locator(".documentation-playground");
       for (const control of await card
         .locator(
           ".demo-options input,.demo-options textarea,.demo-options button"
@@ -20,45 +21,69 @@ for (const scale of [2]) {
         ).toBe(scale);
       }
     });
-  }
-}
 
 for (const scale of [2]) {
-  test(`Sidebar search staysinside native6pixelpopupframe${scale}`, async ({
+  test(`Retained Data Table and Resizable playground controls preserve behavior at scale${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ height: 1000, width: 1440 });
-    await page.goto(`${origin}#data-table`);
-    const world = page.getByRole("button", { exact: true, name: "World" });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto(`${origin}docs/components/data-table`);
+
+    const table = page.getByRole("region", {
+      exact: true,
+      name: "Interactive data-table playground",
+    });
+
+    const world = table.getByRole("button", { exact: true, name: "World" });
+    await expect(table.getByRole("columnheader").first()).toHaveAttribute(
+      "aria-sort",
+      "none"
+    );
     await world.click();
-    await expect(page.getByRole("columnheader").first()).toHaveAttribute(
+    await expect(table.getByRole("columnheader").first()).toHaveAttribute(
       "aria-sort",
       "ascending"
     );
-    await page.getByRole("button", { exact: true, name: "Next" }).click();
-    await page
+    await world.click();
+    await expect(table.getByRole("columnheader").first()).toHaveAttribute(
+      "aria-sort",
+      "descending"
+    );
+    await world.click();
+    await expect(table.getByRole("columnheader").first()).toHaveAttribute(
+      "aria-sort",
+      "none"
+    );
+    await world.click();
+    await table.getByRole("button", { exact: true, name: "Next" }).click();
+    await table
       .getByRole("textbox", { name: "Filter worlds" })
-      .fill("\u4F60\u597D");
+      .fill("\u4f60\u597d");
 
-    const cell = page.getByRole("cell", {
+    const cell = table.getByRole("cell", {
       exact: true,
-      name: "\u4f60\u597d\uff0c\u4e16\u754c",
+      name: "\u4F60\u597D\uFF0C\u4E16\u754C",
     });
 
     await expect(cell).toBeVisible();
     await cell.click();
-    await expect(page.getByLabel("World selection")).toContainText(
+    await expect(table.getByLabel("World selection")).toContainText(
       "1 selected / Page 1 of 1"
     );
-    await page
+    await table
       .getByRole("textbox", { name: "Filter worlds" })
       .fill("not-a-world");
-    await expect(page.getByLabel("World selection")).toContainText(
+    await expect(table.getByLabel("World selection")).toContainText(
       "Page 0 of 0"
     );
-    await page.goto(`${origin}#resizable`);
+    await page.goto(`${origin}docs/components/resizable`);
 
-    const handle = page.getByRole("separator", {
+    const resizable = page.getByRole("region", {
+      exact: true,
+      name: "Interactive resizable playground",
+    });
+
+    const handle = resizable.getByRole("separator", {
       name: "Resize inventory panels",
     });
 
@@ -67,11 +92,11 @@ for (const scale of [2]) {
     await expect
       .poll(async () => Number(await handle.getAttribute("aria-valuenow")))
       .toBeGreaterThan(50);
-    await page
+    await resizable
       .getByRole("button", { exact: true, name: "Reset panels" })
       .click();
     await expect(handle).toHaveAttribute("aria-valuenow", "50");
-    await page
+    await resizable
       .getByRole("button", { exact: true, name: "Change direction" })
       .click();
     await handle.focus();

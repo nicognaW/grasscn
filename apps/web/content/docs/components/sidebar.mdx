@@ -1,0 +1,38 @@
+---
+title: Sidebar
+description: Minecraft navigation compositions with a provider-owned state model.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Minecraft navigation compositions with a provider-owned state model.
+
+## Preview
+
+<ComponentExample name="sidebar-example" />
+
+## Usage
+
+SidebarProvider is required; useSidebar throws outside it. The primary example explicitly uses collapsible="none" to remain inside its preview. The actual Sidebar default is offcanvas, side="left", variant="sidebar"; icon and none are also supported collapse modes. Other visual variants throw.
+
+## Composition
+
+The responsive example below uses the actual default offcanvas mode, SidebarTrigger and controlled open/onOpenChange. At widths up to 767px a separate openMobile state drives Sheet; desktop open does not control mobile visibility. Control/Command+B toggles globally. The provider writes sidebar_state for seven days but never reads it: pass your chosen defaultOpen explicitly to restore a stored preference.
+
+<ComponentExample name="sidebar-responsive" />
+
+## Installation
+
+<Installation name="sidebar" title="Sidebar" />
+
+## Component source
+
+<ComponentSource name="sidebar" title="Sidebar" />
+
+## Interactive playground
+
+<LayoutPlayground name="sidebar" />
+The responsive example gives its provider a transform to contain desktop fixed positioning within the example. Omit that containing context for a viewport-wide application sidebar. Its mobile Sheet is still a portal overlay.

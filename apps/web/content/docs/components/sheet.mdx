@@ -1,0 +1,45 @@
+---
+title: Sheet
+description: An edge panel composed with Minecraft popup artwork.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+An edge panel composed with Minecraft popup artwork.
+
+## Preview
+
+<ComponentExample name="sheet-example" />
+
+## Usage
+
+`Sheet` uses Base UI Dialog and supplies scale 2. Content defaults to the right edge and also supports left, top and bottom. This example supplies a visibly labelled Done action and disables the automatic close button.
+
+## Composition
+
+Content owns Portal, Overlay and its card context. Header contains Title and Description; Footer contains `SheetClose`. Set `showCloseButton={false}` when providing your own labelled footer close: the current automatic Close has no children.
+
+## Interaction and limits
+
+Preserve Title and an accessible close action for modal keyboard users. Sheet placement and motion are web adaptations; the card and label constituents have native references, but no vanilla Minecraft edge-sheet widget is claimed.
+
+See the [upstream API](https://base-ui.com/react/components/dialog) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="sheet" title="Sheet" initialFile="sheet.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="sheet"
+  title="Sheet"
+  initialFile="registry/ui/sheet.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="sheet" />

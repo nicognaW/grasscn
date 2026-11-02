@@ -1,0 +1,201 @@
+{
+  "status": "passed",
+  "website": "http://127.0.0.1:5185",
+  "bun": "1.4.4",
+  "consumers": [
+    {
+      "framework": "vite",
+      "directory": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-15\\.pixel-perfect-test\\manual-consumers\\1793530760054\\vite",
+      "actualSha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87",
+      "packageSha256": "391f9cb642972dcdae8372668ded36de618b10530713b3ec7ada1e1445723e50",
+      "lockSha256": "012645bd754e450589e90f868e1961664315527f8a902b485bf415a610ecfb20",
+      "items": [
+        {
+          "name": "button",
+          "files": 13,
+          "dependencies": [
+            "class-variance-authority",
+            "@base-ui/react"
+          ]
+        },
+        {
+          "name": "code-block",
+          "files": 30,
+          "dependencies": [
+            "class-variance-authority",
+            "shiki@4.5.0",
+            "@base-ui/react"
+          ]
+        },
+        {
+          "name": "form",
+          "files": 35,
+          "dependencies": [
+            "react-hook-form",
+            "class-variance-authority",
+            "@base-ui/react",
+            "@hookform/resolvers",
+            "zod"
+          ]
+        }
+      ],
+      "downloadedFiles": {
+        "components/ui/button.tsx": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+        "components/ui/minecraft-font.ts": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+        "components/ui/minecraft-button.css": "892ea0070b0a34194089d689bb1c51cc834f10c43e0f9d9969915ba77066e8d2",
+        "components/ui/minecraft-assets.css": "2fb52ffd96ad403cae9124925e6518ecf71e30d056b27a7d0d7beea819c8cc21",
+        "components/ui/minecraft-sound.ts": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+        "components/ui/minecraft-sound-assets.ts": "b5c25b5f1bb56e3fdfbf8f76199983f92e8899424a5c47ef5816bbd63a6ef174",
+        "components/ui/minecraft-unicode-label.tsx": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+        "components/ui/minecraft-input-assets.ts": "7536ebefacde10a5d949fb595f47ba4a7e033c4feb07b951faca83be97bfd1af",
+        "components/ui/minecraft-unifont.ts": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+        "components/ui/minecraft-unifont-data.ts": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+        "components/ui/minecraft-unifont-atlas.ts": "11c88168192b62e4a0609c890a66b4ed890e93c0d296a9b8b4a8dac2aa74a917",
+        "components/ui/minecraft-unifont-gpu.ts": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+        "components/ui/minecraft-render.tsx": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+        "hooks/use-highlighted-code.ts": "1223f08049fec9676aca84205a9cac48aac013eb7781e0bfe3d5b9f84ad4a53a",
+        "lib/highlighter.tsx": "e3b05792b714c5909a23dd144604d0c0790f7bd17ee15167cf1cd91290b449ab",
+        "components/ui/code-block.tsx": "27dca576064c5eec4439702bfcc2364310850a30045be9a33686201da02cc568",
+        "components/ui/message.tsx": "86ef06bbc482f675ad46f8ce547e769aa16e27c17b106fb3f583b558c64b26c0",
+        "components/ui/minecraft-chat-atlas.ts": "67011be48111d024b44542db779fcf713565e9ea3739cfdcd4308a0eea5e3e8c",
+        "components/ui/minecraft-chat-text.tsx": "9051a38a533664acf7def8961d2592913a3af6a51047f1137600a1990a032c06",
+        "components/ui/minecraft-code-block.css": "bd4cd9a578366b35a183866b1c9c86596c6eaf205262d51107cd795eaa7f99c2",
+        "components/ui/minecraft-color-unicode-gpu.ts": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+        "components/ui/minecraft-color-unicode.tsx": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+        "components/ui/minecraft-label.css": "d71ea79baeda301d5341d63c8c5a686ab5fa2cebe352ebfeaf7f5a6502b474ba",
+        "components/ui/minecraft-loading-glyphs.ts": "f5a9fe801859615fe7d5b6e970285b42440524c8044e84e6f21ff3cb244537b1",
+        "components/ui/minecraft-message.css": "55d9ae30b1da03c267fb61cf1aefa3dbc8eda0f3b86ba955412a95fe50232dc4",
+        "components/ui/minecraft-selectable-text.css": "33a4c7b458b63d8c7a32bda63cf013c39f3b0efe2de53a482b440870b3c53056",
+        "components/ui/minecraft-selectable-text.tsx": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+        "components/ui/minecraft-text-assets.css": "e560e1374785203aecd7684376d14676a483f84ac7185e47cbdab64bb930127b",
+        "components/ui/minecraft-unifont-metrics.css": "2da1d53bbe1d8096667892207ea32a7aa2da903c2bde42c7444f54bb191470b1",
+        "components/ui/minecraft-disclosure-metrics.ts": "13aa42ea937b16e39ff0ba567a563aa0b227e39e4617419eab91bc341ba4175d",
+        "components/form.tsx": "832f8c23fbc9af9685fe07841eedca838fbcb9d3c0ad2f9572c3a3f9a1db25b2",
+        "components/ui/minecraft-disclosure-text.tsx": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+        "components/ui/minecraft-label-atlas.ts": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+        "components/ui/minecraft-text.tsx": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+        "components/ui/minecraft-text.css": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+        "components/ui/textarea.tsx": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+        "components/ui/minecraft-textarea.css": "d4df6c6414f2a37c1f73f51ac4c49a001c5a8fd00d65f51bbeda5647c6612b2d",
+        "components/ui/minecraft-textarea-paint.ts": "eeaeb0f6b5a7be0951b3d79b16118952ac5ffb7e3de24975fb867f1d456da882",
+        "components/ui/minecraft-textarea-assets.ts": "62eae03778259712249f2fd5b2f62554468b988eb448ae8b5fdbe6442a702487",
+        "components/ui/input.tsx": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+        "components/ui/minecraft-input.css": "63c5b1605632b719a575d53132b4ad882e7d914f9695cd9731704b0446acab56",
+        "components/ui/minecraft-input-paint.ts": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+        "components/ui/field.tsx": "a498f402118bb79e0abd1768b4ea0af1569d253251235425b7f7160fd393a0e5",
+        "components/ui/separator.tsx": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+        "components/ui/minecraft-separator.css": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+        "components/ui/minecraft-separator-assets.ts": "a19fd3c51d457e40d78dd0cc0eb811a2ca69531bd4dc555897545757486584c8",
+        "components/ui/label.tsx": "efebd9ebb0e00fe099457c3e10108c5f8b2c1304755b6e6d633700b5c67f6e42",
+        "components/ui/minecraft-field.css": "2ebf81f304605ef3e9d451e79c48f8c9c4b5842ecd6d11ac8031c5706b62cbb9",
+        "components/ui/minecraft-prose.tsx": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c"
+      },
+      "typecheck": "passed",
+      "build": "passed",
+      "render": {
+        "differentPixels": 0,
+        "totalPixels": 16000,
+        "referenceSha256": "df62aa575215cf6cc5ab30488a19a53bfda5a32b85c3389da01bcb6968e1934c"
+      }
+    },
+    {
+      "framework": "next",
+      "directory": "C:\\Users\\admin\\Documents\\Codex\\2026-10-28\\hel\\outputs\\grasscn\\.native-reference\\nx-15\\.pixel-perfect-test\\manual-consumers\\1793530760054\\next",
+      "actualSha256": "938676478b16b5233255e2399c9c5d462cf677ddd12ff490480567162e6c0e87",
+      "packageSha256": "d96b390d12b9cf13714f24691c386896747c686e0b1781be84e69758e676094f",
+      "lockSha256": "1712fb6e475e603bdb924038a0ae126c2e6927208b4da3efb8c7f79c531bed6e",
+      "items": [
+        {
+          "name": "button",
+          "files": 13,
+          "dependencies": [
+            "class-variance-authority",
+            "@base-ui/react"
+          ]
+        },
+        {
+          "name": "code-block",
+          "files": 30,
+          "dependencies": [
+            "class-variance-authority",
+            "shiki@4.5.0",
+            "@base-ui/react"
+          ]
+        },
+        {
+          "name": "form",
+          "files": 35,
+          "dependencies": [
+            "react-hook-form",
+            "class-variance-authority",
+            "@base-ui/react",
+            "@hookform/resolvers",
+            "zod"
+          ]
+        }
+      ],
+      "downloadedFiles": {
+        "components/ui/button.tsx": "2419afacc851181b5f23dc4ee616a0bc1f854fade453b680104f528594ec0756",
+        "components/ui/minecraft-font.ts": "c3e4a964795ba13965b66e50b762af48062e401ef335253c02e6a1acdd54e395",
+        "components/ui/minecraft-button.css": "892ea0070b0a34194089d689bb1c51cc834f10c43e0f9d9969915ba77066e8d2",
+        "components/ui/minecraft-assets.css": "2fb52ffd96ad403cae9124925e6518ecf71e30d056b27a7d0d7beea819c8cc21",
+        "components/ui/minecraft-sound.ts": "5dfc9072f312a28f6923af09c4d85cc9ca58085456144c3fc1428c7f4196b465",
+        "components/ui/minecraft-sound-assets.ts": "b5c25b5f1bb56e3fdfbf8f76199983f92e8899424a5c47ef5816bbd63a6ef174",
+        "components/ui/minecraft-unicode-label.tsx": "accabc5f1735495795b4ccb96c46b73597f70a6c25aa98a530a378cf15eba995",
+        "components/ui/minecraft-input-assets.ts": "7536ebefacde10a5d949fb595f47ba4a7e033c4feb07b951faca83be97bfd1af",
+        "components/ui/minecraft-unifont.ts": "94164f03c8fbbacbf2c872cff53c80a3618076f08ed5839235d3c3dce43bc68d",
+        "components/ui/minecraft-unifont-data.ts": "983f6e2c009f149a2c7aa67e705478a2561b250a5e9b4f498705a3067b4f848f",
+        "components/ui/minecraft-unifont-atlas.ts": "11c88168192b62e4a0609c890a66b4ed890e93c0d296a9b8b4a8dac2aa74a917",
+        "components/ui/minecraft-unifont-gpu.ts": "15c11e028145aa2d815cdba553cfafa9de9b4f17ee3dc9679423dc61952397a6",
+        "components/ui/minecraft-render.tsx": "d177efd2998e904b545022b648dc536dc4dbe46b1d526131328638de690c7f83",
+        "hooks/use-highlighted-code.ts": "1223f08049fec9676aca84205a9cac48aac013eb7781e0bfe3d5b9f84ad4a53a",
+        "lib/highlighter.tsx": "e3b05792b714c5909a23dd144604d0c0790f7bd17ee15167cf1cd91290b449ab",
+        "components/ui/code-block.tsx": "27dca576064c5eec4439702bfcc2364310850a30045be9a33686201da02cc568",
+        "components/ui/message.tsx": "86ef06bbc482f675ad46f8ce547e769aa16e27c17b106fb3f583b558c64b26c0",
+        "components/ui/minecraft-chat-atlas.ts": "67011be48111d024b44542db779fcf713565e9ea3739cfdcd4308a0eea5e3e8c",
+        "components/ui/minecraft-chat-text.tsx": "9051a38a533664acf7def8961d2592913a3af6a51047f1137600a1990a032c06",
+        "components/ui/minecraft-code-block.css": "bd4cd9a578366b35a183866b1c9c86596c6eaf205262d51107cd795eaa7f99c2",
+        "components/ui/minecraft-color-unicode-gpu.ts": "8c3076ad6389d0404dab2a0a68ed0f993fe58947cfbcea9898267c91e6997e32",
+        "components/ui/minecraft-color-unicode.tsx": "5c30151e1e281f4399a3d3f1579e6742ad169865ae9594820e666d7409986581",
+        "components/ui/minecraft-label.css": "d71ea79baeda301d5341d63c8c5a686ab5fa2cebe352ebfeaf7f5a6502b474ba",
+        "components/ui/minecraft-loading-glyphs.ts": "f5a9fe801859615fe7d5b6e970285b42440524c8044e84e6f21ff3cb244537b1",
+        "components/ui/minecraft-message.css": "55d9ae30b1da03c267fb61cf1aefa3dbc8eda0f3b86ba955412a95fe50232dc4",
+        "components/ui/minecraft-selectable-text.css": "33a4c7b458b63d8c7a32bda63cf013c39f3b0efe2de53a482b440870b3c53056",
+        "components/ui/minecraft-selectable-text.tsx": "78d83a1ba01495f424991cbd8fc431eea8e082e9f8bd87232c2c04b8c8a17a99",
+        "components/ui/minecraft-text-assets.css": "e560e1374785203aecd7684376d14676a483f84ac7185e47cbdab64bb930127b",
+        "components/ui/minecraft-unifont-metrics.css": "2da1d53bbe1d8096667892207ea32a7aa2da903c2bde42c7444f54bb191470b1",
+        "components/ui/minecraft-disclosure-metrics.ts": "13aa42ea937b16e39ff0ba567a563aa0b227e39e4617419eab91bc341ba4175d",
+        "components/form.tsx": "832f8c23fbc9af9685fe07841eedca838fbcb9d3c0ad2f9572c3a3f9a1db25b2",
+        "components/ui/minecraft-disclosure-text.tsx": "561435c8565b9199e08ddfc7cb9b89e2d96e1c1d468866d14b54392bb4cac5cc",
+        "components/ui/minecraft-label-atlas.ts": "6c9712f470830223a30d7d280dc186d2c76a6be1f8198e08b1f6f68994d82d2f",
+        "components/ui/minecraft-text.tsx": "07c9e2d43304e797f5e09426f48e4643aae3dd3c107dea895cdec11d13cdf074",
+        "components/ui/minecraft-text.css": "8c3e4b4d77339be7bf2612dae033c19b97f25cd01fba1b07ce2c389eb625376f",
+        "components/ui/textarea.tsx": "0ecf34a7a6f211aab8971ed8a8441e21b33bb7bbaf53dce9243f78f171bd8481",
+        "components/ui/minecraft-textarea.css": "d4df6c6414f2a37c1f73f51ac4c49a001c5a8fd00d65f51bbeda5647c6612b2d",
+        "components/ui/minecraft-textarea-paint.ts": "eeaeb0f6b5a7be0951b3d79b16118952ac5ffb7e3de24975fb867f1d456da882",
+        "components/ui/minecraft-textarea-assets.ts": "62eae03778259712249f2fd5b2f62554468b988eb448ae8b5fdbe6442a702487",
+        "components/ui/input.tsx": "155b025046d9e514c20ca357b940765afb09e7db0f7015fd5a3e1293a249843d",
+        "components/ui/minecraft-input.css": "63c5b1605632b719a575d53132b4ad882e7d914f9695cd9731704b0446acab56",
+        "components/ui/minecraft-input-paint.ts": "b660a234322e3b5f0a8034d479577c7dd441627cba90610630557e1b7d85c7a0",
+        "components/ui/field.tsx": "a498f402118bb79e0abd1768b4ea0af1569d253251235425b7f7160fd393a0e5",
+        "components/ui/separator.tsx": "f58cad99292edb6e2575802b7b9eca55775993fca9c244bf8f08f383b7ef80b2",
+        "components/ui/minecraft-separator.css": "f00a6ec40b66507b6ca47ec876abdce8ed566656be6160fda98809dcac1d6f84",
+        "components/ui/minecraft-separator-assets.ts": "a19fd3c51d457e40d78dd0cc0eb811a2ca69531bd4dc555897545757486584c8",
+        "components/ui/label.tsx": "efebd9ebb0e00fe099457c3e10108c5f8b2c1304755b6e6d633700b5c67f6e42",
+        "components/ui/minecraft-field.css": "2ebf81f304605ef3e9d451e79c48f8c9c4b5842ecd6d11ac8031c5706b62cbb9",
+        "components/ui/minecraft-prose.tsx": "d4d94b4e2f948b6b6f22c8e97493279b2a5f2462097ba895edc6c270f0a2c44c"
+      },
+      "typecheck": "passed",
+      "build": "passed",
+      "render": {
+        "differentPixels": 0,
+        "totalPixels": 16000,
+        "referenceSha256": "df62aa575215cf6cc5ab30488a19a53bfda5a32b85c3389da01bcb6968e1934c"
+      }
+    }
+  ],
+  "sourceCommit": "58db20a6ceb37cd7b93e88f0449d3f5f9b6f4937",
+  "browserVersion": "156.0.4314.58",
+  "exampleSha256": "ad548f2e30664e24ea00863bc270bdcfafa09f344d001a0e99d20937e0b1a521",
+  "publicManifestSha256": "01ed2a42e1b309c4c756702365b3c427d91d99e4b73faa4cd54179c449aa9d5d"
+}

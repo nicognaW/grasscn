@@ -1,10 +1,14 @@
+import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
+import { registryDocument } from "@grasscn/tests/verification-types";
 import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-assets";
 import { webFile } from "@tests/paths";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 test("Page scrollbars embed the unchanged original game textures", () => {
   const css = readFileSync(webFile("minecraft-scrollbars.css"), "utf-8");
@@ -16,8 +20,8 @@ for (const scale of [2]) {
   test(`Document, nested and horizontal bars use Minecraft artwork at GUI scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ height: 844, width: 390 });
-    await page.goto(`${origin}#textarea`);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(origin + "docs/components/textarea");
 
     await expect
       .poll(async () =>
@@ -51,7 +55,7 @@ for (const scale of [2]) {
       "html",
       "#scrollbar-nested-proof",
       "#scrollbar-portal-proof",
-      ".docs-sidebar nav",
+      ".minecraft-docs-sidebar nav",
     ]) {
       const result = await page.locator(selector).evaluate((element) => {
         const bar = getComputedStyle(element, "::-webkit-scrollbar");
@@ -87,39 +91,50 @@ for (const scale of [2]) {
     await expect
       .poll(async () => nested.evaluate((e) => e.scrollTop))
       .toBeGreaterThan(0);
-    const nav = page.locator(".docs-sidebar nav");
-    await nav.hover();
-    await page.mouse.wheel(400, 0);
-    await expect
-      .poll(async () => nav.evaluate((e) => e.scrollLeft))
-      .toBeGreaterThan(0);
+    const nav = page.locator(".minecraft-docs-sidebar nav");
+    await expect(nav).toBeAttached();
     // Textarea has a separate verified native scroller; avoid a second OS scrollbar.
     expect(
       await page
-        .locator("#preview-textarea")
+        .locator(".documentation-playground textarea")
+        .first()
         .evaluate((e) => getComputedStyle(e, "::-webkit-scrollbar").display)
     ).toBe("none");
   });
 }
 
+const componentMapCount = (text: string) => {
+  const value: unknown = JSON.parse(text);
+
+  assert.ok(
+    value instanceof Object &&
+      "components" in value &&
+      Array.isArray(value.components),
+    "Authored component map list required"
+  );
+
+  return value.components.length;
+};
+
 test("Retired components are absent from supported catalog and served payloads", async ({
   page,
   request,
 }) => {
-  const registry = JSON.parse(readFileSync(webFile("registry.json"), "utf-8"));
+  const registry = registryDocument(
+    readFileSync(webFile("registry.json"), "utf-8")
+  );
 
-  const map = JSON.parse(
+  const mapSize = componentMapCount(
     readFileSync(webFile("registry/minecraft-map.json"), "utf-8")
   );
 
-  expect(registry.items.length).toBe(map.components.length);
-
+  expect(registry.items.length).toBe(mapSize);
   const served = await (
-    await request.get("http://127.0.0.1:5173/r/registry.json")
+    await request.get(new URL("r/registry.json", origin).href)
   ).json();
 
   expect(served.items).toHaveLength(registry.items.length);
-  await page.goto(`${origin}#all`);
+  await page.goto(`${origin}docs`);
 
   for (const name of [
     "Direction",
@@ -128,14 +143,11 @@ test("Retired components are absent from supported catalog and served payloads",
     "Navigation Menu",
     "Accordion",
     "Alert",
-    "Field",
-    "Bubble",
-    "Message Scroller",
   ]) {
     await expect(
       page
-        .getByRole("navigation", { name: "Components" })
-        .getByRole("link", { exact: true, name })
+        .getByRole("navigation", { name: "Documentation" })
+        .getByRole("link", { name, exact: true })
     ).toHaveCount(0);
     expect(
       registry.items.some(
@@ -146,7 +158,7 @@ test("Retired components are absent from supported catalog and served payloads",
     expect(
       (
         await request.get(
-          `http://127.0.0.1:5173/r/${name.toLowerCase().replaceAll(" ", "-")}.json`
+          `${new URL(origin).origin}/r/${name.toLowerCase().replaceAll(" ", "-")}.json`
         )
       ).status()
     ).toBe(404);

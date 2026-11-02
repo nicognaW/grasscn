@@ -1,0 +1,203 @@
+.showcase-layout {
+  max-width: 1600px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  min-height: calc(100vh - 80px);
+  background: #000a;
+}
+.showcase-sidebar {
+  position: sticky;
+  top: 80px;
+  height: calc(100dvh - 80px);
+  padding: 32px 20px;
+  background: #0008;
+  border-right: 2px solid #555;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.showcase-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: auto;
+  min-height: 0;
+  padding: 2px 8px 2px 2px;
+}
+.showcase-sidebar .mc-button {
+  width: 100%;
+  height: 40px;
+  flex: none;
+}
+.showcase-sidebar .mc-button[aria-current="page"] {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+.showcase-index-link {
+  color: #aaa;
+  padding: 6px 8px;
+}
+.showcase-main {
+  padding: 40px 40px 64px;
+  min-width: 0;
+  max-width: 1200px;
+  width: 100%;
+}
+.showcase-breadcrumb {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  color: #aaa;
+  --showcase-text-scale: 1;
+}
+.showcase-layout .document-text {
+  --mc-scale: var(--showcase-text-scale, 2);
+  --mc-ink: currentColor;
+  line-height: inherit;
+}
+.showcase-intro {
+  margin-bottom: 36px;
+}
+.showcase-intro h1 {
+  --showcase-text-scale: 5;
+  margin: 0 0 16px;
+  line-height: 48px;
+  font-weight: 400;
+}
+.showcase-intro p,
+.chart-example p,
+.charts-install p {
+  color: #aaa;
+  --mc-shadow: #2a2a2a;
+  line-height: 24px;
+  margin: 0;
+}
+.charts-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.charts-examples:has(> .chart-example:only-child) {
+  grid-template-columns: 1fr;
+}
+.chart-example {
+  padding: 24px;
+  gap: 16px;
+  min-width: 0;
+}
+.chart-example h2,
+.charts-install h2 {
+  --showcase-text-scale: 3;
+  line-height: 32px;
+  font-weight: 400;
+  margin: 0;
+}
+.chart-example .minecraft-example {
+  padding: 2px;
+  overflow: auto;
+  min-width: 0;
+}
+.chart-example .mc-chart {
+  max-width: 100%;
+}
+.chart-type-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.chart-type-links .mc-button {
+  width: 100%;
+  height: 40px;
+}
+.charts-install {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.charts-install > a {
+  color: #55ff55;
+  --mc-shadow: #153f15;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.showcase-main .documentation-tabs-scroll [data-slot="tabs-list"] {
+  width: 606px;
+}
+@media (max-width: 1200px) {
+  .showcase-main {
+    padding: 32px 28px 48px;
+  }
+  .charts-examples {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 900px) {
+  .showcase-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .showcase-sidebar {
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 16px;
+    border-right: 0;
+    border-bottom: 2px solid #555;
+  }
+  .showcase-sidebar nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .showcase-sidebar .mc-button {
+    width: 200px;
+  }
+  .showcase-main {
+    padding: 28px 24px 48px;
+  }
+}
+@media (max-width: 600px) {
+  .showcase-main {
+    padding: 24px 16px 40px;
+  }
+  .showcase-intro h1 {
+    --showcase-text-scale: 4;
+    line-height: 40px;
+  }
+  .chart-example {
+    padding: 20px;
+  }
+  .chart-type-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.minecraft-site:has(.showcase-layout) {
+  background-color: #555;
+  background-image: url("../../assets/dirt.png");
+  background-blend-mode: multiply;
+  background-size: 64px 64px;
+}
+
+.showcase-sidebar .mc-button[aria-current="page"] {
+  outline: none;
+  --mc-image: var(--mc-highlighted-image);
+  --mc-piece-0: var(--mc-highlighted-0);
+  --mc-piece-1: var(--mc-highlighted-1);
+  --mc-piece-2: var(--mc-highlighted-2);
+  --mc-piece-3: var(--mc-highlighted-3);
+  --mc-piece-4: var(--mc-highlighted-4);
+  --mc-piece-5: var(--mc-highlighted-5);
+  --mc-piece-6: var(--mc-highlighted-6);
+  --mc-piece-7: var(--mc-highlighted-7);
+  --mc-piece-8: var(--mc-highlighted-8);
+}
+
+.charts-install > .documentation-install-command {
+  width: 100%;
+  min-width: 0;
+}

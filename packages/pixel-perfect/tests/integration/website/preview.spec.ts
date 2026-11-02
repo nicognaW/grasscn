@@ -2,10 +2,12 @@ import { readFile } from "node:fs/promises";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { Locator, Page } from "@grasscn/pixel-perfect/test";
-import { pixelPerfectFile } from "@ppt/paths";
+import { referenceFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 const focusByKeyboard = async function focusByKeyboard(
   page: Page,
@@ -31,8 +33,9 @@ const nativePixels = async function nativePixels(
   const actual = PNG.sync.read(
     await locator.screenshot({ animations: "disabled" })
   );
-
-  const expected = PNG.sync.read(await readFile(pixelPerfectFile(file)));
+  const expected = PNG.sync.read(
+    await readFile(referenceFile(file.replace(/^tests\/reference\//u, "")))
+  );
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -45,11 +48,13 @@ const nativePixels = async function nativePixels(
 
 for (const scale of [2]) {
   test(`Preview native pixels at scale ${scale}`, async ({ page }) => {
-    await page.setViewportSize({ height: 1000, width: 1440 });
-    await page.goto(`${origin}#button`);
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto(`${origin}docs/components/button`);
 
     const button = page
-      .locator('#component-button [data-stage="button"] [data-slot="button"]')
+      .locator(
+        '.documentation-playground [data-stage="button"] [data-slot="button"]'
+      )
       .first();
 
     await page.mouse.move(0, 0);
@@ -70,13 +75,17 @@ for (const scale of [2]) {
     );
     await nativePixels(
       page
-        .locator('#component-button [data-stage="button"] [data-slot="button"]')
+        .locator(
+          '.documentation-playground [data-stage="button"] [data-slot="button"]'
+        )
         .nth(1),
       `tests/reference/captures/disabled-w200-s${scale}.png`
     );
-    await page.goto(`${origin}#checkbox`);
+    await page.goto(`${origin}docs/components/checkbox`);
 
-    const checkbox = page.getByRole("checkbox", { name: "Enable shadows" });
+    const checkbox = page
+      .locator(".documentation-playground")
+      .getByRole("checkbox", { name: "Enable shadows" });
     await page.mouse.move(0, 0);
     await nativePixels(
       checkbox,
@@ -88,13 +97,15 @@ for (const scale of [2]) {
       `tests/reference/controls/captures/checkbox-unchecked-focus-s${scale}.png`
     );
     await nativePixels(
-      page.getByRole("checkbox", { name: "Unavailable" }),
+      page
+        .locator(".documentation-playground")
+        .getByRole("checkbox", { name: "Unavailable" }),
       `tests/reference/controls/captures/checkbox-checked-disabled-s${scale}.png`
     );
-    await page.goto(`${origin}#slider`);
+    await page.goto(`${origin}docs/components/slider`);
 
     const slider = page
-      .locator('#component-slider [data-slot="slider"]')
+      .locator('.documentation-playground [data-slot="slider"]')
       .first();
 
     await slider.hover();
@@ -103,51 +114,42 @@ for (const scale of [2]) {
       `tests/reference/slider/captures/slider-w200-v500-hover-s${scale}.png`
     );
     await nativePixels(
-      page.locator('#component-slider [data-slot="slider"]').nth(1),
+      page.locator('.documentation-playground [data-slot="slider"]').nth(1),
       `tests/reference/slider/captures/slider-w200-v500-disabled-s${scale}.png`
     );
-    await page.goto(`${origin}#input`);
+    await page.goto(`${origin}docs/components/input`);
 
-    const input = page.getByRole("textbox", {
-      exact: true,
-      name: "Demo input",
-    });
-
+    const input = page
+      .locator(".documentation-playground")
+      .getByRole("textbox", { name: "Demo input", exact: true });
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
       input,
       `tests/reference/input/captures/input-w200-normal-c39-s${scale}.png`
     );
-
-    const readonly = page.getByRole("textbox", {
-      exact: true,
-      name: "Read-only demo input",
-    });
+    const readonly = page
+      .locator(".documentation-playground")
+      .getByRole("textbox", { exact: true, name: "Read-only demo input" });
 
     await expect(readonly).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       readonly,
       `tests/reference/input/captures/input-w200-readonly-c44-s${scale}.png`
     );
-
-    const disabled = page.getByRole("textbox", {
-      exact: true,
-      name: "Disabled demo input",
-    });
-
+    const disabled = page
+      .locator(".documentation-playground")
+      .getByRole("textbox", { name: "Disabled demo input", exact: true });
     await expect(disabled).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       disabled,
       `tests/reference/input/captures/input-w200-disabled-c41-s${scale}.png`
     );
-    await page.goto(`${origin}#textarea`);
+    await page.goto(`${origin}docs/components/textarea`);
 
-    const textarea = page.getByRole("textbox", {
-      exact: true,
-      name: "Demo textarea",
-    });
-
+    const textarea = page
+      .locator(".documentation-playground")
+      .getByRole("textbox", { name: "Demo textarea", exact: true });
     await expect(textarea).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -156,7 +158,10 @@ for (const scale of [2]) {
     );
 
     for (const name of ["Read-only demo textarea", "Disabled demo textarea"]) {
-      const field = page.getByRole("textbox", { exact: true, name });
+      const field = page
+        .locator(".documentation-playground")
+        .getByRole("textbox", { exact: true, name });
+
       await expect(field).toHaveAttribute("data-mc-ready", "true");
       await nativePixels(
         field,
@@ -164,49 +169,44 @@ for (const scale of [2]) {
       );
     }
 
-    await page.goto(`${origin}#separator`);
+    await page.goto(`${origin}docs/components/separator`);
 
     await nativePixels(
-      page.getByRole("separator", {
-        exact: true,
-        name: "Menu header separator",
-      }),
+      page
+        .locator(".documentation-playground")
+        .getByRole("separator", { name: "Menu header separator", exact: true }),
       `tests/reference/separator/captures/separator-c6-s${scale}.png`
     );
     await nativePixels(
-      page.getByRole("separator", {
-        exact: true,
-        name: "Menu footer separator",
-      }),
+      page
+        .locator(".documentation-playground")
+        .getByRole("separator", { exact: true, name: "Menu footer separator" }),
       `tests/reference/separator/captures/separator-c24-s${scale}.png`
     );
-    await page.goto(`${origin}#scroll-area`);
+    await page.goto(`${origin}docs/components/scroll-area`);
 
-    const scrollArea = page.getByRole("region", {
-      exact: true,
-      name: "Demo scroll area",
-    });
-
+    const scrollArea = page
+      .locator(".documentation-playground")
+      .getByRole("region", { name: "Demo scroll area", exact: true });
     await expect(scrollArea).toHaveAttribute("data-mc-scroll-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
       scrollArea,
       `tests/reference/scroll-area/captures/scroll-area-c69-s${scale}.png`
     );
-    await page.goto(`${origin}#progress`);
+    await page.goto(`${origin}docs/components/progress`);
 
-    const progress = page.getByRole("progressbar", {
-      exact: true,
-      name: "Demo progress",
-    });
-
+    const progress = page
+      .locator(".documentation-playground")
+      .getByRole("progressbar", { name: "Demo progress", exact: true });
     await page.mouse.move(0, 0);
     await nativePixels(
       progress,
       `tests/reference/progress/captures/progress-c6-s${scale}.png`
     );
     await page
-      .getByRole("button", { exact: true, name: "Boss bar notches: None" })
+      .locator(".documentation-playground")
+      .getByRole("button", { name: "Boss bar notches: None", exact: true })
       .click();
     await expect(progress.locator("canvas")).toHaveAttribute(
       "data-mc-progress-painted",
@@ -224,8 +224,7 @@ test("Preview text fields share the native focused Input pixels", async ({
 }) => {
   await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
   await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
-  await page.goto(`${origin}#button`);
-
+  await page.goto(`${origin}docs/components/button`);
   const fields = [
     { name: "Button label", path: "button" },
     { name: "Demo input", path: "input" },
@@ -234,8 +233,11 @@ test("Preview text fields share the native focused Input pixels", async ({
 
   // Match a captured vanilla case so preview CSS cannot add a second focus ring.
   for (const entry of fields) {
-    await page.goto(`${origin}#/components/${entry.path}`);
-    const field = page.getByLabel(entry.name, { exact: true });
+    await page.goto(`${origin}docs/components/${entry.path}`);
+
+    const field = page
+      .locator(".documentation-playground")
+      .getByLabel(entry.name, { exact: true });
     await field.fill("");
     await field.evaluate((element) => {
       const input = element as HTMLInputElement;
@@ -257,14 +259,12 @@ for (const scale of [2]) {
   test(`Tabs preview preserves native tab bar at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ height: 900, width: 1536 });
-    await page.goto(`${origin}#tabs`);
+    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.goto(`${origin}docs/components/tabs`);
 
-    const list = page.getByRole("tablist", {
-      exact: true,
-      name: "World settings",
-    });
-
+    const list = page
+      .locator(".documentation-playground")
+      .getByRole("tablist", { name: "World settings", exact: true });
     await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -278,14 +278,12 @@ for (const scale of [2]) {
   test(`Select preview preserves native cycle button at scale ${scale}`, async ({
     page,
   }) => {
-    await page.setViewportSize({ height: 900, width: 1536 });
-    await page.goto(`${origin}#select`);
+    await page.setViewportSize({ width: 1536, height: 900 });
+    await page.goto(`${origin}docs/components/select`);
 
-    const trigger = page.getByRole("combobox", {
-      exact: true,
-      name: "Demo game mode",
-    });
-
+    const trigger = page
+      .locator(".documentation-playground")
+      .getByRole("combobox", { name: "Demo game mode", exact: true });
     await expect(trigger).toHaveText("Survival");
     await expect(trigger).toHaveAttribute("data-mc-select-ready", "true");
     await page.mouse.move(0, 0);
@@ -300,12 +298,12 @@ for (const scale of [2]) {
   test(`Radio Group preview preserves native widget pixels at scale ${scale}`, async ({
     page,
   }) => {
-    await page.goto(`${origin}#radio-group`);
+    await page.goto(`${origin}docs/components/radio-group`);
 
     const radio = page
-      .getByRole("radiogroup", { exact: true, name: "Demo radio game mode" })
-      .getByRole("radio", { exact: true, name: "Survival" });
-
+      .locator(".documentation-playground")
+      .getByRole("radiogroup", { name: "Demo radio game mode", exact: true })
+      .getByRole("radio", { name: "Survival", exact: true });
     await expect(radio).toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -319,13 +317,11 @@ for (const scale of [2]) {
   test(`Switch preview preserves native on/off pixels at scale ${scale}`, async ({
     page,
   }) => {
-    await page.goto(`${origin}#switch`);
+    await page.goto(`${origin}docs/components/switch`);
 
-    const control = page.getByRole("switch", {
-      exact: true,
-      name: "Enable clouds",
-    });
-
+    const control = page
+      .locator(".documentation-playground")
+      .getByRole("switch", { name: "Enable clouds", exact: true });
     await expect(control).not.toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(

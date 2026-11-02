@@ -1,0 +1,53 @@
+---
+title: Date Picker
+description: Copyable single-date and range recipes using Calendar and Popover.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Copyable single-date and range recipes using Calendar and Popover.
+
+## Preview
+
+<ComponentExample name="date-picker-example" />
+
+## Usage
+
+The installed block exports `DatePickerDemo` and `DatePickerRangeDemo`, each accepting scale. There is no generic DatePicker export. The single example keeps Date state internally; the range example owns a DateRange and displays two months.
+
+## Composition
+
+The recipes combine PopoverTrigger, width-auto/padding-zero PopoverContent and Calendar. Single opens October 2026 by default. Range uses bounded dropdown captions from January 2020 through December 2030. date-fns formats the trigger labels with PPP or PP.
+
+## Two-month range
+
+<ComponentExample name="date-picker-range-example" />
+
+## Interaction and limits
+
+Selection does not automatically close the Popover. These blocks have no name or hidden-input form-submission contract: adapt the copied recipe to persist dates, serialize your form value or control open state. Full date-picker layout is a web adaptation built from declared native constituents.
+
+See the [upstream API](https://daypicker.dev/docs/selection-modes) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="date-picker"
+  title="Date Picker"
+  initialFile="date-picker.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="date-picker"
+  title="Date Picker"
+  initialFile="registry/blocks/date-picker.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="date-picker" />

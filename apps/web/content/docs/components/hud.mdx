@@ -1,0 +1,50 @@
+---
+title: HUD
+description: Compose independent status meters and an experience bar.
+aliases: [HealthMeter, ArmorMeter, HungerMeter, AirMeter, ExperienceBar]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Compose independent status meters and an experience bar.
+
+## Preview
+
+<ComponentExample name="hud-example" />
+
+## Usage
+
+Import the meter exports from `@/components/ui/hud`. There is no `HUD` root component. `value` is required. Health, armor and hunger use a default maximum of 20; air defaults to 10. `ExperienceBar` takes a fraction from 0 to 1, so 0.45 means 45 percent.
+
+The primary composition owns health state and uses `Button` from the separately installed `button` item to apply damage or restore health.
+
+## Composition
+
+Lay out meters in your own container. `HealthMeter` accepts `condition`: `normal`, `poisoned`, `withered`, `frozen` or `absorbing`. `max` changes icon count within the supported cap of ten icons; health/armor/hunger cap at 20 and air at 10. Nonfinite values render as zero.
+
+All pieces expose `role="meter"` with numeric minimum, maximum and current values. Supply `aria-label` when the default kind name is insufficient. They are display components with no built-in damage or progression callbacks.
+
+## Installation
+
+<Installation name="hud" title="HUD" />
+
+The primary damage/heal controls additionally use the `button` item. Install Button when copying those controls; the meters themselves do not require it.
+
+<Installation name="button" title="Example controls: Button" />
+
+## Component source
+
+<ComponentSource name="hud" title="HUD" />
+
+## Interactive playground
+
+<MinecraftPlayground name="hud" />
+
+## Verified coverage and limitations
+
+The separate sprites and declared meter values retain their native evidence. This vertical layout and damage/heal buttons are web adaptations. A full in-game HUD, damage blinking, jitter, extended absorption and arbitrary maximums are outside this composition's claim.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

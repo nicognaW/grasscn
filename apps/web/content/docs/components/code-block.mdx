@@ -1,0 +1,38 @@
+---
+title: Code Block
+description: Selectable code and copy actions using Minecraft text and palette.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Selectable code and copy actions using Minecraft text and palette.
+
+## Preview
+
+<ComponentExample name="code-block-example" />
+
+## Usage
+
+This page previews the installable CodeBlock renderer. The surrounding preview/code switch and source viewers belong to the documentation site. CodeBlockContent defaults to wrap=false, lineNumbers=false and startLine=1. CopyButton needs the exact source value: it never extracts or reconstructs text from rendered children.
+
+## Composition
+
+For syntax highlighting install the delivered useHighlightedCode hook and highlight-code library with Shiki, then render returned lines through CodeBlockLine. Diff variants added/removed/highlighted are shown below. Copy feedback follows the clipboard promise, announces success politely, resets after two seconds and leaves success unset when the clipboard is unavailable or rejects the request. This installed button does not announce a failure; add application feedback if your workflow requires it.
+
+<ComponentExample name="code-block-diff" />
+
+## Installation
+
+<Installation name="code-block" title="Code Block" />
+
+## Component source
+
+<ComponentSource name="code-block" title="Code Block" />
+
+## Interactive playground
+
+<LayoutPlayground name="code-block" />
+

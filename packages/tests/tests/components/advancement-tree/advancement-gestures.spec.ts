@@ -15,9 +15,22 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
     await page.setViewportSize({ height: 1000, width });
     await page.goto("http://127.0.0.1:5176/components/advancement-tree");
 
+    const browse = page.getByRole("button", {
+      exact: true,
+      name: "Browse documentation",
+    });
+
+    // eslint-disable-next-line no-await-in-loop -- This page must expose its mobile tree before the current viewport's clipping checks.
+    const mobileNavigation = await browse.isVisible();
+
+    if (mobileNavigation) {
+      // eslint-disable-next-line no-await-in-loop -- Complete this viewport's navigation before resizing the same page.
+      await browse.click();
+    }
+
     const navigation = page.getByRole("navigation", {
       exact: true,
-      name: "Components",
+      name: "Documentation",
     });
 
     await expect(
@@ -56,13 +69,12 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
 test("small pointer movement still selects an advancement", async ({
   page,
 }) => {
-  await page.goto(`${fixture}?scale=2&mask=1`);
+  await page.goto(fixture + "?scale=2&mask=1");
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
   const box = (await node.boundingBox())!;
-
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2 + 5, box.y + box.height / 2);
@@ -80,13 +92,12 @@ test("dragging from a node pans without selecting and does not block keyboard se
       warnings.push(message.text());
     }
   });
-  await page.goto(`${fixture}?scale=2&mask=1`);
+  await page.goto(fixture + "?scale=2&mask=1");
 
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
   const plane = page.locator(".mc-advancement-plane");
   const before = await plane.getAttribute("style");
   const box = (await node.boundingBox())!;
-
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(
@@ -114,14 +125,11 @@ test("dragging from a node pans without selecting and does not block keyboard se
 test("cancelled drag permits the next click and keyboard selection", async ({
   page,
 }) => {
-  await page.goto(`${fixture}?scale=2&mask=1`);
-
+  await page.goto(fixture + "?scale=2&mask=1");
   const tree = page.getByRole("group", { name: "Advancement tree" });
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
-
-  const box = (await node.boundingBox())!;
-  const plane = page.locator(".mc-advancement-plane");
-
+  const box = (await node.boundingBox())!,
+    plane = page.locator(".mc-advancement-plane");
   await node.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toBeVisible();
   await page.mouse.down();

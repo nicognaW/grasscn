@@ -1,0 +1,48 @@
+---
+title: Toggle Group
+description: One or several recipe-filter selections with array values.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+One or several recipe-filter selections with array values.
+
+## Preview
+
+<ComponentExample name="toggle-group-example" />
+
+## Usage
+
+Import `ToggleGroup` and `ToggleGroupItem` from `@/components/ui/toggle-group`. Values are arrays even with `multiple={false}`. The primary example uses `string[]`, `value` and `onValueChange(next, details)`; do not use a string value or a Radix-style `type` prop.
+
+## Composition
+
+Give every item a distinct `value` and accessible name. Single selection may be deselected to an empty array. Set `multiple` to allow several pressed items. Items inherit scale, default appearance and group disabled state; the group's `spacing` defaults to 2 logical pixels.
+
+## API and accessibility
+
+Only default `variant`/`size` are supported. Native recipe-filter sprites apply to individual items; group geometry, exclusive selection and navigation are web adaptations. See [Toggle](/docs/components/toggle) for the childless icon appearance.
+
+See the [underlying API](https://base-ui.com/react/components/toggle-group) for shared semantics.
+
+## Several stations
+
+<ComponentExample
+  name="toggle-group-multiple-example"
+  title="Several stations"
+/>
+
+## Installation
+
+<Installation name="toggle-group" title="Toggle Group" />
+
+## Component source
+
+<ComponentSource name="toggle-group" title="Toggle Group" />
+
+## Interactive playground
+
+<InputPlayground name="toggle-group" />

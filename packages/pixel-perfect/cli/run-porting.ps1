@@ -1,4 +1,4 @@
-param([ValidateSet('regressions','pixels','all','full')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
+param([ValidateSet('regressions','pixels','all','full')][string]$Suite='regressions',[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=10,[ValidateRange(50,80)][int]$CpuStopPercent=75)
 $ErrorActionPreference='Stop'
 $pptPackage=Split-Path -Parent $PSScriptRoot
 $repository=Split-Path -Parent (Split-Path -Parent $pptPackage)
@@ -17,5 +17,5 @@ if($Suite -eq 'full'){
 }else{$runDirectory=Join-Path $repository ('.pixel-perfect-test/porting/'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfff')+'-'+$Suite)}
 Push-Location -LiteralPath $pptPackage
 try{$runner=& $node --eval "console.log(require.resolve('@grasscn/tests/run-workload'))";if($LASTEXITCODE -ne 0){throw 'Cannot resolve shared resource runner'}}finally{Pop-Location}
-& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.ts') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
+& $runner -WorkDirectory $pptPackage -Workload (Join-Path $pptPackage 'src/runtime/verify-porting.ts') -WorkloadArguments @($Suite,$runDirectory,$Workers.ToString()) -OutputDirectory $runDirectory -LowPriority:$lowPriority -BuildThenBrowser -BeforeStart $beforeStart -Workers $Workers -CpuPercent $CpuPercent -CpuStopPercent $CpuStopPercent
 exit $LASTEXITCODE

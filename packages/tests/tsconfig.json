@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "strict": true,
+    "allowJs": true,
     "noEmit": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -15,17 +16,27 @@
       "@tests/*": ["../tests/src/*"],
       "@tests/paths": ["../tests/src/paths.ts"]
     },
-    "types": ["node", "vite/client"],
+    "types": ["bun", "node", "vite/client"],
     "resolveJsonModule": true
   },
   "include": [
     "cli/**/*.ts",
     "src/**/*.ts",
     "src/**/*.mts",
+    "src/**/*.mjs",
+    "cli/**/*.mjs",
     "fixtures/**/*.ts",
     "fixtures/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
+    "tests/unit/**/*.mjs",
     "*.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests/**/source-input/**",
+    "../../test-results",
+    "../../.pixel-perfect-test",
+    "../../.native-reference"
   ]
 }

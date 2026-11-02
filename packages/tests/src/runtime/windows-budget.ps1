@@ -14,7 +14,7 @@ public static class GrasscnBudget {
   public ulong Total,Available,TotalPage,AvailablePage,TotalVirtual,AvailableVirtual,ExtendedVirtual;
  }
  [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern IntPtr CreateJobObject(IntPtr attributes,string name);
- [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] static extern bool SetCpu(IntPtr job,int info,ref Cpu value,uint size);
+ [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] public static extern bool SetCpu(IntPtr job,int info,ref Cpu value,uint size);
  [DllImport("kernel32.dll",EntryPoint="SetInformationJobObject",SetLastError=true)] static extern bool SetExtended(IntPtr job,int info,ref Extended value,uint size);
  [DllImport("kernel32.dll",EntryPoint="QueryInformationJobObject",SetLastError=true)] public static extern bool ReadCpu(IntPtr job,int info,out Cpu value,uint size,IntPtr length);
  [DllImport("kernel32.dll",SetLastError=true)] public static extern bool AssignProcessToJobObject(IntPtr job,IntPtr process);
@@ -26,10 +26,13 @@ public static class GrasscnBudget {
  public static long[] Times(){long i,k,u;if(!GetSystemTimes(out i,out k,out u))throw new Exception("GetSystemTimes failed");return new long[]{i,k,u};}
  public static Memory Ram(){var m=new Memory();if(!GlobalMemoryStatusEx(m))throw new Exception("Memory sample failed");return m;}
  public static IntPtr Create(uint cpuPercent,ulong memoryBytes){
+  return Create(cpuPercent,memoryBytes,cpuPercent);
+ }
+ public static IntPtr Create(uint cpuPercent,ulong memoryBytes,uint affinityCpuPercent){
   var job=CreateJobObject(IntPtr.Zero,null);if(job==IntPtr.Zero)throw new Exception("CreateJobObject "+Marshal.GetLastWin32Error());
   var cpu=new Cpu{Flags=5,Rate=cpuPercent*100};
   if(!SetCpu(job,15,ref cpu,(uint)Marshal.SizeOf(cpu)))throw new Exception("CPU cap "+Marshal.GetLastWin32Error());
-  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(16,Math.Max(1,(int)Math.Ceiling(Environment.ProcessorCount*cpuPercent/100.0))))-1);limits.JobMemory=(UIntPtr)memoryBytes;
+  var limits=new Extended();limits.Basic.Flags=0x10|0x200|0x2000;limits.Basic.Affinity=(UIntPtr)((1UL << Math.Min(16,Math.Max(1,(int)Math.Ceiling(Environment.ProcessorCount*affinityCpuPercent/100.0))))-1);limits.JobMemory=(UIntPtr)memoryBytes;
   if(!SetExtended(job,9,ref limits,(uint)Marshal.SizeOf(limits)))throw new Exception("Memory cap "+Marshal.GetLastWin32Error());
   return job;
  }

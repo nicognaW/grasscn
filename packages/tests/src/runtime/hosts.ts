@@ -6,32 +6,17 @@ import type { Duplex } from "node:stream";
 
 import { serveProductionFixture } from "@grasscn/tests/fixture";
 import { webRoot } from "@tests/paths";
-import type { PreviewServer } from "vite";
 
-const isMissingRegistryItem = (
-  error: unknown
-): error is NodeJS.ErrnoException =>
-  error instanceof Error && "code" in error && error.code === "ENOENT";
+import {
+  isolatedHttpTarget,
+  isolatedTunnelTarget,
+} from "./isolated-host-routing.mjs";
+import { serveNextProduction } from "./next-production.mjs";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
-export async function serveVerificationHosts({
-  fixturePort,
-  previewPort,
-  proxyPort,
-}: {
-  fixturePort: number;
-  previewPort: number;
-  proxyPort: number;
-}) {
-  const owned = new Set([fixturePort, previewPort]);
-
-  const map = new Map([
-    [5174, fixturePort],
-    [5178, fixturePort],
-    [5176, previewPort],
-  ]);
-
+export async function serveVerificationHosts(execution: {fixturePort: number; previewPort: number; proxyPort: number}) {
+  const { fixturePort, previewPort, proxyPort } = execution;
   const sockets = new Set<Duplex>();
 
   const track = <Socket extends Duplex>(socket: Socket) => {
@@ -50,26 +35,22 @@ export async function serveVerificationHosts({
   };
 
   let fixture: Awaited<ReturnType<typeof serveProductionFixture>> | undefined;
-  let preview: PreviewServer | undefined;
+  let preview: Awaited<ReturnType<typeof serveNextProduction>> | undefined;
   let proxy: http.Server | undefined;
 
   try {
     fixture = await serveProductionFixture({ port: fixturePort });
-    const { preview: startPreview } = await import("vite");
-    preview = await startPreview({
-      configFile: path.join(webRoot, "vite.config.ts"),
-      preview: { host: "127.0.0.1", port: previewPort, strictPort: true },
-    });
-    const proxyServer = http.createServer(async (request, response) => {
+    preview = await serveNextProduction({ port: previewPort });
+
+    /**
+     * @param {import("node:http").IncomingMessage} request - Browser proxy request.
+     * @param {import("node:http").ServerResponse} response - Owned proxy response.
+     */
+    const handleRequest = async (request: http.IncomingMessage, response: http.ServerResponse) => {
       let target;
 
       try {
-        target = new URL(
-          // SAFETY: IncomingMessage.url is present for native HTTP server requests.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the server API URL and existing invalid-route catch behavior.
-          request.url as string,
-          `http://${request.headers.host}`
-        );
+        target = new URL(request.url ?? "", `http://${request.headers.host}`);
 
         if (
           target.protocol !== "http:" ||
@@ -86,7 +67,7 @@ export async function serveVerificationHosts({
             return;
           }
 
-          const match = /^\/r\/(?<item>[a-zA-Z0-9_-]+\.json)$/u.exec(
+          const match = /^\/r\/(?<file>[a-zA-Z0-9_-]+\.json)$/u.exec(
             target.pathname
           );
 
@@ -100,7 +81,7 @@ export async function serveVerificationHosts({
 
           try {
             const content = await readFile(
-              path.join(webRoot, "public/r", match[1])
+              path.join(webRoot, "public/r", match.groups?.file ?? "")
             );
 
             response
@@ -109,15 +90,20 @@ export async function serveVerificationHosts({
               })
               .end(request.method === "HEAD" ? undefined : content);
           } catch (error) {
+            const missing =
+              error instanceof Error &&
+              "code" in error &&
+              error.code === "ENOENT";
+
             response
-              .writeHead(isMissingRegistryItem(error) ? 404 : 500, {
+              .writeHead(missing ? 404 : 500, {
                 "Content-Type": "application/json",
               })
               .end(
                 request.method === "HEAD"
                   ? undefined
                   : JSON.stringify({
-                      error: isMissingRegistryItem(error)
+                      error: missing
                         ? "Registry item not found"
                         : "Unable to read registry",
                     })
@@ -127,14 +113,11 @@ export async function serveVerificationHosts({
           return;
         }
 
-        const port = map.get(Number(target.port)) ?? Number(target.port);
-
-        if (!owned.has(port)) {
-          throw new Error("Unowned browser port");
-        }
-
-        target.hostname = "127.0.0.1";
-        target.port = String(port);
+        target = isolatedHttpTarget(
+          request.url ?? "",
+          request.headers.host ?? "",
+          execution
+        );
       } catch {
         response.writeHead(502);
         response.end("Verification only serves its isolated snapshot");
@@ -162,31 +145,27 @@ export async function serveVerificationHosts({
         response.end();
       });
       request.pipe(upstream);
+    };
+
+    const proxyServer = http.createServer((request, response) => {
+      handleRequest(request, response).catch(() => {
+        if (!response.headersSent) {
+          response.writeHead(502);
+        }
+
+        response.end("Verification proxy request failed");
+      });
     });
-    proxyServer.on("connection", track);
+    proxyServer.on("connection", (socket) => {
+      track(socket);
+    });
     proxyServer.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
       let port;
 
       try {
-        const target = new URL(`http://${request.url}`);
-
-        if (
-          !["127.0.0.1", "localhost"].includes(target.hostname) ||
-          target.host !== request.url
-        ) {
-          throw new Error("Unowned tunnel");
-        }
-
-        port =
-          target.port === "5173"
-            ? proxyPort
-            : (map.get(Number(target.port)) ?? Number(target.port));
-
-        if (target.port !== "5173" && !owned.has(port)) {
-          throw new Error("Unowned tunnel port");
-        }
+        port = isolatedTunnelTarget(request.url ?? "", execution);
       } catch {
         socket.end("HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n");
 
@@ -221,17 +200,15 @@ export async function serveVerificationHosts({
     });
     proxy = proxyServer;
     const listening = Promise.withResolvers<void>();
-
     try {
       proxyServer.once("error", listening.reject);
       proxyServer.listen(proxyPort, "127.0.0.1", listening.resolve);
     } catch (error) {
       listening.reject(error);
     }
-
     await listening.promise;
-    const ownedFixture = fixture;
     const ownedPreview = preview;
+    const ownedFixture = fixture;
 
     return {
       close: async () => {
@@ -243,31 +220,17 @@ export async function serveVerificationHosts({
             resolve();
           });
         });
-        // oxlint-disable-next-line promise/avoid-new -- Preserve existing close completion and ignored callback errors.
-        await new Promise<void>((resolve) => {
-          ownedPreview.httpServer.close(() => {
-            resolve();
-          });
-        });
+        await ownedPreview.close();
         await ownedFixture.close();
       },
-      fixtureBundleUrl: fixture.url,
+      fixtureBundleUrl: ownedFixture.url,
+      websiteIdentity: ownedPreview.identity,
     };
   } catch (error) {
     closeSockets();
     proxy?.closeAllConnections();
     proxy?.close();
-
-    if (preview) {
-      const ownedPreview = preview;
-      // oxlint-disable-next-line promise/avoid-new -- Cleanup preserves the existing resolve-on-close-callback behavior.
-      await new Promise<void>((resolve) => {
-        ownedPreview.httpServer.close(() => {
-          resolve();
-        });
-      });
-    }
-
+    await preview?.close();
     await fixture?.close();
     throw error;
   }

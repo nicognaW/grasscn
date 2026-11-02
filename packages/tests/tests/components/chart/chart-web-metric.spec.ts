@@ -55,7 +55,7 @@ for (const scale of [2] as const) {
   test(`F3 web-data demo updates native bars and browser-share 3D profiler GUI${scale}`, async ({
     page,
   }) => {
-    await page.goto(`${preview.replace(/\/$/u, "")}/#/components/chart`);
+    await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
 
     const section = page.locator("[data-f3-web-data]");
     const metric = section.locator("[data-web-chart=metric]");

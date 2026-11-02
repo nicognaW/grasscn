@@ -1,14 +1,8 @@
-import type { ReusableBrowserTest } from "@grasscn/tests/checkpoints";
+import type { CheckpointCandidate } from "@grasscn/tests/checkpoints";
 import type { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import type { fixtureManifest } from "@grasscn/tests/fixture";
+import type { VerificationReport, VerificationState } from "@grasscn/tests/verification-types";
 import type { FullEnvironment } from "@ppt/full-runs/plan";
 import type { BrowserCase } from "@ppt/selection/suite";
-
-export interface RuntimeSourceIdentity {
-  commit: string;
-  status: string;
-  treeSha256: string;
-}
 
 export interface RuntimeVerificationEnvironment {
   arch: string;
@@ -28,39 +22,17 @@ export interface RuntimeVerificationEnvironment {
   nonPptIncluded?: boolean;
   fullRun?: { approvalEvent: number; issue: number; planHash: string };
   fixtureMode?: "production" | "provided-or-development";
+  websiteMode?: "owned-bun-next-production";
 }
 
-export interface RuntimeVerificationReceipt {
+export interface RuntimeVerificationReceipt extends VerificationReport {
   browserScope: "full" | "base";
-  checks: {
-    exitCode: number;
-    name: string;
-    reusedTests?: ReusableBrowserTest[];
-  }[];
-  completed: boolean;
   environment: RuntimeVerificationEnvironment;
-  passed: boolean;
   pptOnly: true;
-  scope: string;
-  source: RuntimeSourceIdentity;
-  startedAt: string;
   suite: string;
   fullCases?: BrowserCase[];
-  fixtureBundle?: ReturnType<typeof fixtureManifest>;
-  fixtureBundleAfter?: ReturnType<typeof fixtureManifest>;
-  sourceAfter?: RuntimeSourceIdentity;
-  dependenciesAfter?: ReturnType<typeof installedDependencyIdentity>;
-  error?: string;
-  finishedAt?: string;
 }
-
 export interface PreviousVerification {
   filename: string;
-  report: Partial<RuntimeVerificationReceipt>;
-}
-
-export interface RuntimeCheckpointSummary {
-  status: string;
-  counts: { failed: number; timedOut: number; interrupted: number };
-  changedSources?: string[];
+  report: VerificationState & CheckpointCandidate["report"];
 }

@@ -1,0 +1,27 @@
+{
+  "nativeLaunches": 2,
+  "scope": "Actual documentation single-thumb Volume: 50% default; nativeGUI1/2/3 provenance, browserGUI2only",
+  "cases": [
+    {
+      "name": "docs-slider-volume-50-s1.png",
+      "width": 200,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "ff4dc505e877fcf915b0636188f7870a33e29764b10872e4c686a477a73a1da5"
+    },
+    {
+      "name": "docs-slider-volume-50-s2.png",
+      "width": 400,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "ea9bae729c434fb9beb0dbcd6c886e7dfe95c6f978da9d80db5ff6fb7c95f1e9"
+    },
+    {
+      "name": "docs-slider-volume-50-s3.png",
+      "width": 600,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9db0609b1aeeeb818a6fd854508eb3f86b2ef5ab1c1c462403b7618934c977aa"
+    }
+  ]
+}

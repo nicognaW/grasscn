@@ -1,0 +1,113 @@
+{
+  "source": "Original Minecraft GuiGraphicsExtractor.item; isolated test screen supplies one original grass stack, position and background",
+  "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+  "caseDefinitionSha256": "68b5be3e64155bbeebce15e4874c08acb9b27a1acdc24b32166523b62d1205c9",
+  "captureSourceSha256": "aeb1b8a04a40d6edd5179c49313e362cbce38bea65737ade2a1efceb3cceb814",
+  "repeatDecodedRgbaEqual": true,
+  "launches": [
+    {
+      "launch": "native-one",
+      "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+      "sourceMethod": "GuiGraphicsExtractor.item(original GRASS_BLOCK holder with explicit minecraft:grass_block ITEM_MODEL, 16, 16)",
+      "initialization": "Minimal isolated ItemStack supplies the shipped model component because 26.2 title-screen default components are unbound; all model, tint, textures, GUI transform and lighting come from the vanilla renderer. No world is created.",
+      "captureSourceSha256": "aeb1b8a04a40d6edd5179c49313e362cbce38bea65737ade2a1efceb3cceb814",
+      "scales": [
+        3
+      ],
+      "backgrounds": [
+        "#202020"
+      ],
+      "originalCaptureSourceSha256": "587402ae9e021df94109c3db697d7e52eba13c63a9f5f42abc83eca9c77dde25",
+      "caseDefinitionSha256": "68b5be3e64155bbeebce15e4874c08acb9b27a1acdc24b32166523b62d1205c9",
+      "viewport": [
+        1536,
+        900
+      ],
+      "mods": [],
+      "resourcePacks": [],
+      "images": {
+        "grass-block-header-s3.png": {
+          "file": "grass-block-header-s3.png",
+          "sha256": "789f45d55314bb435c8ef43f4f12c95a2050a9fc525f1ba3ae3ee6406feb36ff",
+          "decodedRgbaSha256": "b6377f4b1ba04edbe1c5f8684888dedd6c000d218f52293f83bb9f6eef892d62",
+          "width": 48,
+          "height": 48
+        },
+        "frames/grass-block-header-s3.png": {
+          "file": "frames/grass-block-header-s3.png",
+          "sha256": "66553f4448b8e469be88dac406340ea27992630ea5da9c62056fe0718292878c",
+          "decodedRgbaSha256": "378b0ee3331becffd5f7005896ed67b5f439043bc3f08ca76ce1feb2b160a001",
+          "width": 1536,
+          "height": 900
+        }
+      }
+    },
+    {
+      "launch": "native-two",
+      "sourceJarSha256": "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
+      "sourceMethod": "GuiGraphicsExtractor.item(original GRASS_BLOCK holder with explicit minecraft:grass_block ITEM_MODEL, 16, 16)",
+      "initialization": "Minimal isolated ItemStack supplies the shipped model component because 26.2 title-screen default components are unbound; all model, tint, textures, GUI transform and lighting come from the vanilla renderer. No world is created.",
+      "captureSourceSha256": "aeb1b8a04a40d6edd5179c49313e362cbce38bea65737ade2a1efceb3cceb814",
+      "scales": [
+        3
+      ],
+      "backgrounds": [
+        "#202020"
+      ],
+      "originalCaptureSourceSha256": "587402ae9e021df94109c3db697d7e52eba13c63a9f5f42abc83eca9c77dde25",
+      "caseDefinitionSha256": "68b5be3e64155bbeebce15e4874c08acb9b27a1acdc24b32166523b62d1205c9",
+      "viewport": [
+        1536,
+        900
+      ],
+      "mods": [],
+      "resourcePacks": [],
+      "images": {
+        "grass-block-header-s3.png": {
+          "file": "grass-block-header-s3.png",
+          "sha256": "789f45d55314bb435c8ef43f4f12c95a2050a9fc525f1ba3ae3ee6406feb36ff",
+          "decodedRgbaSha256": "b6377f4b1ba04edbe1c5f8684888dedd6c000d218f52293f83bb9f6eef892d62",
+          "width": 48,
+          "height": 48
+        },
+        "frames/grass-block-header-s3.png": {
+          "file": "frames/grass-block-header-s3.png",
+          "sha256": "66553f4448b8e469be88dac406340ea27992630ea5da9c62056fe0718292878c",
+          "decodedRgbaSha256": "378b0ee3331becffd5f7005896ed67b5f439043bc3f08ca76ce1feb2b160a001",
+          "width": 1536,
+          "height": 900
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "grass-block-header-s3.png",
+      "element": "original GRASS_BLOCK inventory item",
+      "scale": 3,
+      "background": "#202020",
+      "logicalBounds": {
+        "x": 16,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "viewport": [
+        1536,
+        900
+      ],
+      "language": "en_us",
+      "mods": [],
+      "resourcePacks": [],
+      "minimumStableFrames": 20,
+      "minimumStableMilliseconds": 1000,
+      "file": "grass-block-header-s3.png",
+      "sha256": "789f45d55314bb435c8ef43f4f12c95a2050a9fc525f1ba3ae3ee6406feb36ff",
+      "decodedRgbaSha256": "b6377f4b1ba04edbe1c5f8684888dedd6c000d218f52293f83bb9f6eef892d62",
+      "width": 48,
+      "height": 48,
+      "path": "native-one/grass-block-header-s3.png"
+    }
+  ],
+  "scope": "Single normal grass constituent at GUI3 on#202020; the composite SVG badge and overall header are web adaptations without whole-composition native identity."
+}

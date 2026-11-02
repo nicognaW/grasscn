@@ -1,0 +1,50 @@
+---
+title: Hotbar
+description: Nine selectable slots with controlled keyboard selection.
+aliases: [Hotbar, HotbarItem, HotbarProps]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Nine selectable slots with controlled keyboard selection.
+
+## Preview
+
+<ComponentExample name="hotbar-example" />
+
+## Usage
+
+Import `Hotbar` from `@/components/ui/hotbar`. It always renders nine slots. Omitted `items` leave accessible `Slot 1` through `Slot 9` buttons; more than nine items throws. `value` and `defaultValue` must be integer indices from 0 through 8.
+
+The primary example uses empty slots and an explicit `background="#202020"`. This requests native RGBA compositing against that uniform backdrop; the transparent layered path used when background is omitted has different compositing conditions.
+
+## Composition
+
+Each optional item has `id`, `label`, `icon` and `disabled`. Pair `value` with `onValueChange` for a tool palette; the named example supplies its nine labels inline. Selection is a slot index, including unpopulated slots. Icons and application actions belong to the caller.
+
+The root is a toolbar with pressed buttons and roving tab focus. Use 1 through 9, Left/Right, Home/End or the wheel while focus is inside. A disabled target is not automatically skipped to another enabled slot.
+
+### Hotbar Tools
+
+<ComponentExample name="hotbar-tools" />
+
+## Installation
+
+<Installation name="hotbar" title="Hotbar" />
+
+## Component source
+
+<ComponentSource name="hotbar" title="Hotbar" />
+
+## Interactive playground
+
+<MinecraftPlayground name="hotbar" />
+
+## Verified coverage and limitations
+
+Exact empty-slot captures require the same selection, GUI scale, backdrop and browser raster conditions. Custom tool labels/icons, focus indicators and transparent composition are separate cases; this page does not broaden their verified coverage.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

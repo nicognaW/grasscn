@@ -1,0 +1,169 @@
+@import "tailwindcss";
+@import "../registry/ui/minecraft-components.css";
+@import "../registry/ui/minecraft-text-assets.css";
+@import "../minecraft-theme-assets.css";
+@import "../minecraft-scrollbars.css";
+@source "../registry";
+@source "../components";
+
+:root {
+  font-family: "Minecraft Bitmap", monospace;
+  color: #fff;
+  color-scheme: dark;
+  font-size: 16px;
+  line-height: 24px;
+  font-synthesis: none;
+  image-rendering: pixelated;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #202020;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+:is(
+  .minecraft-prose-link,
+  .minecraft-brand,
+  .minecraft-github,
+  .minecraft-header-text-link,
+  .skip-link
+):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+.minecraft-site {
+  min-height: 100dvh;
+  background: var(--preview-menu) repeat;
+  background-size: 32px 32px;
+}
+.minecraft-header {
+  min-height: 80px;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: #202020;
+  border-bottom: 4px solid #555;
+}
+.minecraft-brand {
+  --mc-scale: 3;
+  display: inline-flex;
+  flex: none;
+  width: 176px;
+  height: 64px;
+}
+.minecraft-header nav {
+  display: flex;
+  flex: 1;
+}
+.minecraft-header .mc-button {
+  width: 200px;
+}
+.minecraft-github {
+  --mc-scale: 2;
+}
+.minecraft-document {
+  max-width: 1200px;
+  min-height: calc(100dvh - 160px);
+  margin: 0 auto;
+  padding: 48px 40px 64px;
+  background: #0009;
+}
+.minecraft-document > [data-slot="typography-h1"] {
+  display: flex;
+  --mc-scale: 3;
+  margin-bottom: 32px;
+}
+.minecraft-prose {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.minecraft-paragraph > p,
+.document-heading {
+  display: flex;
+  max-width: 100%;
+}
+.minecraft-paragraph > p {
+  white-space: normal;
+}
+.minecraft-paragraph {
+  width: 100%;
+  min-width: 0;
+}
+.minecraft-example {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  overflow: auto;
+  background: #202020;
+}
+.minecraft-docs-layout .minecraft-example:not(.documentation-playground) {
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  min-height: 320px;
+  padding: 48px 32px;
+  background: #202020;
+  border: 2px solid #555;
+  box-shadow: inset 2px 2px #080808;
+}
+.minecraft-example > * {
+  flex-shrink: 0;
+}
+.minecraft-prose-link {
+  color: #55ff55;
+  --mc-ink: #55ff55;
+  --mc-shadow: #153f15;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.minecraft-footer {
+  min-height: 80px;
+  padding: 24px 32px;
+  background: #202020;
+  border-top: 4px solid #555;
+}
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  background: #000;
+  padding: 8px;
+}
+.skip-link:focus {
+  top: 8px;
+}
+@media (max-width: 720px) {
+  .minecraft-docs-layout .minecraft-example:not(.documentation-playground) {
+    padding: 32px 16px;
+    min-height: 280px;
+  }
+  .minecraft-header {
+    padding: 16px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .minecraft-header nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .minecraft-github {
+    margin-left: auto;
+  }
+  .minecraft-document {
+    padding: 32px 20px;
+  }
+  .minecraft-prose {
+    width: 100%;
+    overflow-wrap: anywhere;
+  }
+}

@@ -167,13 +167,17 @@ ${colorConfig
 
 const ChartText = ({
   children,
+  scale: explicitScale,
 }: {
   children: React.ReactNode;
+  scale?: 1 | 2 | 3;
 }): React.ReactNode => {
   const { scale } = useChart();
 
   return isMinecraftTextContent(children) ? (
-    <MinecraftDisclosureText scale={scale}>{children}</MinecraftDisclosureText>
+    <MinecraftDisclosureText scale={explicitScale ?? scale}>
+      {children}
+    </MinecraftDisclosureText>
   ) : (
     children
   );
@@ -209,7 +213,12 @@ const ChartTooltipContent = ({
     >,
     "accessibilityLayer"
   >) => {
-  const { config } = useChart();
+  const { config, scale } = useChart();
+  const tooltipScale = scale === 3 ? 3 : 2;
+
+  const tooltipStyle: React.CSSProperties & { "--mc-scale": number } = {
+    "--mc-scale": tooltipScale,
+  };
 
   const tooltipLabel = React.useMemo(() => {
     if (hideLabel || !payload?.length) {
@@ -239,7 +248,7 @@ const ChartTooltipContent = ({
 
     return (
       <div className={cn("font-medium", labelClassName)}>
-        <ChartText>{value}</ChartText>
+        <ChartText scale={tooltipScale}>{value}</ChartText>
       </div>
     );
   }, [
@@ -250,6 +259,7 @@ const ChartTooltipContent = ({
     labelClassName,
     config,
     labelKey,
+    tooltipScale,
   ]);
 
   if (!(active ?? false) || !payload?.length) {
@@ -260,6 +270,7 @@ const ChartTooltipContent = ({
 
   return (
     <div
+      style={tooltipStyle}
       className={cn(
         "mc-chart-tooltip grid min-w-[8rem] items-start gap-1.5 text-xs [&>*:not(.mc-surface)]:relative",
         className
@@ -314,23 +325,25 @@ const ChartTooltipContent = ({
                     )}
                     <div
                       className={cn(
-                        "flex flex-1 justify-between leading-none",
+                        "flex flex-1 justify-between gap-[calc(4*var(--mc-pixel))] leading-none",
                         nestLabel ? "items-end" : "items-center"
                       )}
                     >
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
                         <span className="text-muted-foreground">
-                          <ChartText>
+                          <ChartText scale={tooltipScale}>
                             {itemConfig?.label ?? item.name}
                           </ChartText>
                         </span>
                       </div>
                       {item.value != null && (
-                        <span className="text-foreground font-mono font-medium tabular-nums">
-                          {typeof item.value === "number"
-                            ? item.value.toLocaleString()
-                            : String(item.value)}
+                        <span className="text-foreground tabular-nums">
+                          <ChartText scale={tooltipScale}>
+                            {typeof item.value === "number"
+                              ? item.value.toLocaleString()
+                              : String(item.value)}
+                          </ChartText>
                         </span>
                       )}
                     </div>

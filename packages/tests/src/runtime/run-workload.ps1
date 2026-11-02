@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$WorkDirectory,[Parameter(Mandatory=$true)][string]$Workload,[string[]]$WorkloadArguments=@(),[Parameter(Mandatory=$true)][string]$OutputDirectory,[switch]$LowPriority,[scriptblock]$BeforeStart,[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
+param([Parameter(Mandatory=$true)][string]$WorkDirectory,[Parameter(Mandatory=$true)][string]$Workload,[string[]]$WorkloadArguments=@(),[Parameter(Mandatory=$true)][string]$OutputDirectory,[switch]$LowPriority,[switch]$BuildThenBrowser,[scriptblock]$BeforeStart,[ValidateRange(1,8)][int]$Workers=1,[ValidateRange(1,40)][int]$CpuPercent=5,[ValidateRange(50,80)][int]$CpuStopPercent=65)
 $ErrorActionPreference='Stop'
 $runDirectory=[IO.Path]::GetFullPath($OutputDirectory)
 $node=(Get-Command bun).Source
@@ -32,16 +32,17 @@ try {
  . (Join-Path $PSScriptRoot 'windows-budget.ps1')
 $baseline=[GrasscnBudget]::Ram()
 $usedBytes=$baseline.Total-$baseline.Available
-$headroom=[Math]::Min(10GB,[Math]::Floor($baseline.Total*.89-$usedBytes))
+$headroom=[Math]::Min(4GB,[Math]::Floor($baseline.Total*.87-$usedBytes))
 if($baseline.Load -ge 86 -or $headroom -lt .4GB){throw 'Insufficient headroom to start safely; no browser workers launched.'}
 $memoryBudget=[uint64]$headroom
 
 $cpuBefore=[GrasscnBudget]::Times();Start-Sleep -Seconds 1;$cpuAfter=[GrasscnBudget]::Times();$cpuDelta=($cpuAfter[1]-$cpuBefore[1])+($cpuAfter[2]-$cpuBefore[2]);$baselineCpu=100.*(1-($cpuAfter[0]-$cpuBefore[0])/$cpuDelta)
-$cpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor($CpuStopPercent-5-$baselineCpu)))
+$requestedCpuBudget=[uint32][Math]::Max(1,[Math]::Min($CpuPercent,[Math]::Floor($CpuStopPercent-5-$baselineCpu)))
+$cpuBudget=if($BuildThenBrowser){[uint32][Math]::Min(4,$requestedCpuBudget)}else{$requestedCpuBudget}
 
-$logicalProcessorLimit=[Math]::Min(16,[Math]::Max(1,[Math]::Ceiling([Environment]::ProcessorCount*$cpuBudget/100.0)))
+$logicalProcessorLimit=[Math]::Min(16,[Math]::Max(1,[Math]::Ceiling([Environment]::ProcessorCount*$requestedCpuBudget/100.0)))
 if($baselineCpu+100.*$logicalProcessorLimit/[Environment]::ProcessorCount -gt $CpuStopPercent){throw 'CPU preflight exceeds the verification headroom budget.'}
-$job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget)
+$job=[GrasscnBudget]::Create($cpuBudget,$memoryBudget,$requestedCpuBudget)
 $limits=[GrasscnBudget+Cpu]::new()
 if(-not [GrasscnBudget]::ReadCpu($job,15,[ref]$limits,8,[IntPtr]::Zero)){throw 'Unable to read back CPU cap'}
 if($limits.Flags -ne 5 -or $limits.Rate -ne $cpuBudget*100){throw 'CPU cap readback mismatch'}
@@ -55,6 +56,7 @@ $budgetGate=Join-Path $runDirectory ('budget-ready-'+[Guid]::NewGuid().ToString(
 $launchArguments=@((Join-Path $PSScriptRoot 'guarded-entry.ts'),$budgetGate,$Workload)+$WorkloadArguments
 $argsList=@($launchArguments|ForEach-Object{'"'+$_.Replace('"','\"')+'"'})
 $env:GOMAXPROCS='1'
+$env:GOMEMLIMIT='768MiB'
 $env:RAYON_NUM_THREADS='1'
 $process=$null;$reason='completed' ;$peakCpu=0.;$peakRam=0.;$count=0
 try {
@@ -67,6 +69,17 @@ try {
  $before=[GrasscnBudget]::Times()
  while(-not $process.HasExited){
   Start-Sleep -Milliseconds 500
+  $phaseFile=Join-Path $runDirectory 'verification-phase.json'
+  if($BuildThenBrowser -and $cpuBudget -ne $requestedCpuBudget -and (Test-Path -LiteralPath $phaseFile)){
+   try{$verificationPhase=Get-Content -LiteralPath $phaseFile -Raw|ConvertFrom-Json}catch{$verificationPhase=$null}
+   if($verificationPhase.phase -eq 'browser'){
+    $phaseLimits=[GrasscnBudget+Cpu]::new();$phaseLimits.Flags=5;$phaseLimits.Rate=$requestedCpuBudget*100
+    if(-not [GrasscnBudget]::SetCpu($job,15,[ref]$phaseLimits,8)){throw 'Cannot enforce browser phase CPU cap'}
+    if(-not [GrasscnBudget]::ReadCpu($job,15,[ref]$limits,8,[IntPtr]::Zero) -or $limits.Rate -ne $phaseLimits.Rate -or $limits.Flags -ne 5){throw 'Browser phase CPU cap readback mismatch'}
+    $cpuBudget=$requestedCpuBudget
+    [pscustomobject]@{Phase='browser';CpuHardCapPercent=$cpuBudget;CpuReadback=$limits.Rate;At=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $runDirectory 'browser-resource-policy.json')
+   }
+  }
   $after=[GrasscnBudget]::Times();$total=($after[1]-$before[1])+($after[2]-$before[2]);$idle=$after[0]-$before[0]
   $cpu=if($total -gt 0){100.*($total-$idle)/$total}else{0.};$before=$after
   $ram=[GrasscnBudget]::Ram();$ramPercent=100.*($ram.Total-$ram.Available)/$ram.Total

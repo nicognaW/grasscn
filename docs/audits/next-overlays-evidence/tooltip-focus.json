@@ -1,0 +1,52 @@
+[
+  {
+    "name": "programmaticfocus",
+    "active": {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Inspect pickaxe"
+    },
+    "tooltipRoles": 0,
+    "contents": 1
+  },
+  {
+    "name": "clickPreview",
+    "active": {
+      "tag": "BUTTON",
+      "role": "tab",
+      "text": "Preview"
+    },
+    "tooltipRoles": 0,
+    "contents": 0
+  },
+  {
+    "name": "Tab1",
+    "active": {
+      "tag": "DIV",
+      "role": "tabpanel",
+      "text": "Inspect pickaxe"
+    },
+    "tooltipRoles": 0,
+    "contents": 0
+  },
+  {
+    "name": "Tab2",
+    "active": {
+      "tag": "BUTTON",
+      "role": null,
+      "text": "Inspect pickaxe"
+    },
+    "tooltipRoles": 0,
+    "contents": 1
+  },
+  {
+    "name": "Tab3",
+    "active": {
+      "tag": "A",
+      "role": null,
+      "text": "upstream API"
+    },
+    "tooltipRoles": 0,
+    "contents": 0
+  }
+]

@@ -9,18 +9,23 @@ for (const scale of [2] as const) {
   }, info) => {
     await page.setViewportSize({ height: 900, width: 1536 });
     await page.goto(`${preview.replace(/\/$/u, "")}/#drawer`);
+
+    const trigger = page
+      .getByRole("region", {
+        exact: true,
+        name: "Interactive drawer playground",
+      })
+      .getByRole("button", { exact: true, name: "Open drawer" });
+
     await expect
-      .poll(async () =>
-        page
-          .getByRole("button", { exact: true, name: "Open drawer" })
-          .evaluate((n) =>
+      .poll(
+        async () =>
+          await trigger.evaluate((n) =>
             getComputedStyle(n).getPropertyValue("--mc-scale").trim()
           )
       )
       .toBe(String(scale));
-    await page
-      .getByRole("button", { exact: true, name: "Open drawer" })
-      .scrollIntoViewIfNeeded();
+    await trigger.scrollIntoViewIfNeeded();
     await page.evaluate(() => {
       const s = document.createElement("div");
       s.id = "backdrop-sentinel";
@@ -36,7 +41,7 @@ for (const scale of [2] as const) {
       document.body.append(s);
     });
 
-    const first = await page.evaluate(async () => {
+    const first = await trigger.evaluate(async (button: HTMLButtonElement) => {
       const mutationCompletion = Promise.withResolvers<{
         ready: string | null;
         opacity: string;
@@ -70,9 +75,7 @@ for (const scale of [2] as const) {
         });
 
         observer.observe(document.body, { childList: true, subtree: true });
-        document
-          .querySelector<HTMLButtonElement>("[data-slot=drawer-trigger]")!
-          .click();
+        button.click();
       } catch (error) {
         mutationCompletion.reject(error);
       }
@@ -87,7 +90,8 @@ for (const scale of [2] as const) {
     const states: unknown[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
-      const state = await page.evaluate((ms) => {
+      // eslint-disable-next-line no-await-in-loop -- Capture each paused animation frame before advancing the same owned popup.
+      const state = await page.evaluate((frame) => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"
         )!;
@@ -99,16 +103,27 @@ for (const scale of [2] as const) {
         for (const n of [overlay, content]) {
           for (const a of n.getAnimations()) {
             a.pause();
-            a.currentTime = ms;
+            a.currentTime = frame;
           }
         }
 
+        const rect = overlay.getBoundingClientRect();
+
         return {
-          ms,
+          ms: frame,
           opacity: getComputedStyle(overlay).opacity,
           panelTransform: getComputedStyle(content).transform,
-          ready: overlay.getAttribute("data-mc-backdrop-ready"),
-          rect: overlay.getBoundingClientRect().toJSON(),
+          ready: overlay.dataset.mcBackdropReady ?? null,
+          rect: {
+            bottom: rect.bottom,
+            height: rect.height,
+            left: rect.left,
+            right: rect.right,
+            top: rect.top,
+            width: rect.width,
+            x: rect.x,
+            y: rect.y,
+          },
           transform: getComputedStyle(overlay).transform,
         };
       }, ms);
@@ -155,11 +170,9 @@ test("Drawer stays visible during its closing transition, then restores focus", 
 }) => {
   await page.goto(`${preview.replace(/\/$/u, "")}/components/drawer`);
 
-  const trigger = page.getByRole("button", {
-    exact: true,
-    name: "Open drawer",
-  });
-
+  const trigger = page
+    .getByRole("region", { exact: true, name: "Interactive drawer playground" })
+    .getByRole("button", { exact: true, name: "Open drawer" });
   await trigger.click();
   const panel = page.locator("[data-slot=drawer-content]");
   await expect(panel).toBeVisible();

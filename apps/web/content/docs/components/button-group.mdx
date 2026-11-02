@@ -1,0 +1,35 @@
+---
+title: Button Group
+description: Related actions composed from Minecraft buttons and labels.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Related actions composed from Minecraft buttons and labels.
+
+## Preview
+
+<ComponentExample name="button-group-example" />
+
+## Usage
+
+ButtonGroup defaults to horizontal orientation and supplies role="group". Give the group a purpose-specific accessible name. ButtonGroupText uses the inherited scale with optional logical maxWidth and align. ButtonGroupSeparator defaults to vertical, unlike the standalone Separator component.
+
+## Composition
+
+Use ButtonGroupText for the current action result and separators only between related actions. Vertical groups are supported layouts, but a rotated vertical separator is a web adaptation. Install Button alongside the group rather than expecting the group export to create action buttons.
+
+## Installation
+
+<Installation name="button-group" title="Button Group" />
+
+## Component source
+
+<ComponentSource name="button-group" title="Button Group" />
+
+## Interactive playground
+
+<LayoutPlayground name="button-group" />
