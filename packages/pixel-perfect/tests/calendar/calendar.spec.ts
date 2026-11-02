@@ -5,7 +5,7 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-function different(a: PNG, b: PNG) {
+const different = function different(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);
   let count = 0;
 
@@ -16,7 +16,7 @@ function different(a: PNG, b: PNG) {
   }
 
   return count;
-}
+};
 
 for (const component of ["calendar", "date-picker"]) {
   test(`${component} comparator rejects a one-pixel mutation`, () => {

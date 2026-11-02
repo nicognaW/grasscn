@@ -18,6 +18,9 @@ export const pixelPerfectTestRoot = path.join(repoRoot, ".pixel-perfect-test");
 export const pixelPerfectFile = (name: string) =>
   path.resolve(pixelPerfectRoot, name);
 
-export function referenceFile(name: string, root = referenceRoot) {
+export const referenceFile = function referenceFile(
+  name: string,
+  root = referenceRoot
+) {
   return ownedReferenceFile(name, root);
-}
+};
