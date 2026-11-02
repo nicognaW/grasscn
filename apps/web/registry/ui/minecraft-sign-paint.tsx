@@ -112,26 +112,28 @@ export const MinecraftSignPaint = ({
               x++
             ) {
               const sx = Math.max(
-                  0,
-                  Math.min(
-                    source.width - 1,
-                    Math.floor(
-                      f(f((x + 0.5 - left) / (right - left)) * source.width)
-                    )
+                0,
+                Math.min(
+                  source.width - 1,
+                  Math.floor(
+                    f(f((x + 0.5 - left) / (right - left)) * source.width)
                   )
-                ),
-                sy = Math.max(
-                  0,
-                  Math.min(
-                    source.height - 1,
-                    Math.floor(
-                      f(f((y + 0.5 - top) / (bottom - top)) * source.height)
-                    )
+                )
+              );
+
+              const sy = Math.max(
+                0,
+                Math.min(
+                  source.height - 1,
+                  Math.floor(
+                    f(f((y + 0.5 - top) / (bottom - top)) * source.height)
                   )
-                ),
-                i = (sy * source.width + sx) * 4,
-                j = (y * width + x) * 4,
-                alpha = source.data[i + 3] / 255;
+                )
+              );
+
+              const i = (sy * source.width + sx) * 4;
+              const j = (y * width + x) * 4;
+              const alpha = source.data[i + 3] / 255;
 
               if (!alpha) {
                 continue;
@@ -140,6 +142,7 @@ export const MinecraftSignPaint = ({
               for (let k = 0; k < 3; k++) {
                 output.data[j + k] = source.data[i + k];
               }
+
               output.data[j + 3] = source.data[i + 3];
             }
           }

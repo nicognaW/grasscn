@@ -108,8 +108,8 @@ const MinecraftItemText = ({
           return line;
         }
 
-        let value = "",
-          used = 0;
+        let value = "";
+        let used = 0;
 
         for (const char of Array.from(line)) {
           const next = advance(char);

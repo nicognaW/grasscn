@@ -145,11 +145,12 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
 
         expect(sha(expectedBytes)).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          { mismatchedPixels, diff } = compare(
-            PNG.sync.read(expectedBytes),
-            PNG.sync.read(actualBytes)
-          );
+        const actualBytes = await subject.screenshot();
+
+        const { mismatchedPixels, diff } = compare(
+          PNG.sync.read(expectedBytes),
+          PNG.sync.read(actualBytes)
+        );
 
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

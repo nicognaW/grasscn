@@ -140,8 +140,8 @@ const sprite = function sprite(
     ) {
       for (let oy = 0; oy < dh[row]; oy += heights[row] * scale) {
         for (let ox = 0; ox < dw[col]; ox += widths[col] * scale) {
-          const w = Math.min(widths[col] * scale, dw[col] - ox),
-            h = Math.min(heights[row] * scale, dh[row] - oy);
+          const w = Math.min(widths[col] * scale, dw[col] - ox);
+          const h = Math.min(heights[row] * scale, dh[row] - oy);
 
           context.drawImage(
             image,

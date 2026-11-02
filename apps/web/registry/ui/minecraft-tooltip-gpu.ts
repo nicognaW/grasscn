@@ -185,8 +185,8 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
         } else {
           for (let dy = 0; dy < heights[row]; dy += sizes[row] * scale) {
             for (let dx = 0; dx < widths[col]; dx += sizes[col] * scale) {
-              const w = Math.min(sizes[col] * scale, widths[col] - dx),
-                h = Math.min(sizes[row] * scale, heights[row] - dy);
+              const w = Math.min(sizes[col] * scale, widths[col] - dx);
+              const h = Math.min(sizes[row] * scale, heights[row] - dy);
 
               draw(
                 x + dx,

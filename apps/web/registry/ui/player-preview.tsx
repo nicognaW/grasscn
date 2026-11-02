@@ -230,10 +230,10 @@ const buildRenderer = function buildRenderer(
 
       for (let q = 0; q < source.length; q += 4) {
         for (const i of [0, 1, 2, 2, 3, 0]) {
-          const v = source[q + i],
-            tx = f(f(a * v[8]) + f(f(b * v[10]) + canvas.width * 0.5)),
-            ty = f(f(ys * v[9]) + baseY),
-            tz = f(f(c * v[8]) + f(d * v[10]));
+          const v = source[q + i];
+          const tx = f(f(a * v[8]) + f(f(b * v[10]) + canvas.width * 0.5));
+          const ty = f(f(ys * v[9]) + baseY);
+          const tz = f(f(c * v[8]) + f(d * v[10]));
 
           data.set(
             [

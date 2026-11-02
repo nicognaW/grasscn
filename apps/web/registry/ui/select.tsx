@@ -199,9 +199,9 @@ const SelectTrigger = ({
       return;
     }
 
-    let frame = 0,
-      loading = false,
-      stopped = false;
+    let frame = 0;
+    let loading = false;
+    let stopped = false;
 
     const measure = () => {
       const label = element.querySelector<HTMLElement>(
@@ -347,10 +347,10 @@ const SelectContent = ({
       return;
     }
 
-    let frame = 0,
-      placed = "",
-      placedHeight = "",
-      placedTop = "";
+    let frame = 0;
+    let placed = "";
+    let placedHeight = "";
+    let placedTop = "";
 
     const measure = () => {
       const width = Math.floor(viewport.clientWidth / scale);
