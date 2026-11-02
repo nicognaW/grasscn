@@ -3,7 +3,22 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { PNG } from "pngjs";
+
+interface StructuralReferenceCase extends CapturedReferenceCase {
+  alignment?: string;
+  background?: string;
+  label?: string;
+  wrapWidth?: number;
+  x?: number;
+  y?: number;
+}
+
+interface StructuralReferenceManifest {
+  background: string;
+  cases: StructuralReferenceCase[];
+}
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -60,9 +75,11 @@ test.describe("Structural native constituents", () => {
         ? ["tests/reference/label", "tests/reference/separator"]
         : []),
     ]) {
+      // SAFETY: The four literal reference routes own this retained capture core and real optional label/layout fields; parsed metadata stays intact.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Consume only the declared structural manifests without changing the fresh read or existing fallbacks.
       const manifest = JSON.parse(
         readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-      );
+      ) as StructuralReferenceManifest;
 
       const part = directory.endsWith("/label")
         ? "text"
