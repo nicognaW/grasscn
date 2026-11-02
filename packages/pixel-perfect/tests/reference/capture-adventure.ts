@@ -348,9 +348,9 @@ const cases: ControlCaptureCase[] = [];
 
 let layouts: Record<string, NativeCaptureLayout | undefined> = {};
 
-// SAFETY: retained native harness NativeLayout records emit width, height, renderedLines and optional tabRects.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete current and retained Java producer layouts share this consumed record shape.
 try {
+  // SAFETY: retained native harness NativeLayout records emit width, height, renderedLines and optional tabRects.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete current and retained Java producer layouts share this consumed record shape.
   layouts = JSON.parse(
     await readFile(path.join(outputDir, "layout.json"), "utf8")
   ) as Record<string, NativeCaptureLayout | undefined>;
