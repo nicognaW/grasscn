@@ -312,12 +312,16 @@ const Toaster = function Toaster({
         let model = entries.get(node);
 
         if (!model) {
+          const toastBounds = node.getBoundingClientRect();
+          const toastKey = sequence.current;
+          sequence.current = toastKey + 1;
+
           model = {
-            bounds: node.getBoundingClientRect(),
+            bounds: toastBounds,
             buttons: [],
             ghost: false,
             height: 32,
-            key: sequence.current++,
+            key: toastKey,
             message: description?.textContent ?? null,
             motion: { current: { phase: "entering", start: Date.now() } },
             node,
