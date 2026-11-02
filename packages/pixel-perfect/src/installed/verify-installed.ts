@@ -354,7 +354,9 @@ try {
         const subject = page.locator(`[data-slot="${name}-content"]`);
         await expect(subject).toHaveAttribute("data-mc-menu-ready", "true");
         await page.mouse.move(0, 0);
-        await subject.evaluate((node: HTMLElement) => node.focus());
+        await subject.evaluate((node: HTMLElement) => {
+          node.focus();
+        });
 
         if (Number(c.selectedIndex) >= 0) {
           await subject.getByRole("menuitem").nth(c.selectedIndex!).focus();
@@ -1227,12 +1229,13 @@ try {
       const anchor = c.anchor ?? cursor;
 
       await subject.evaluate(
-        (node: HTMLInputElement | HTMLTextAreaElement, selection) =>
+        (node: HTMLInputElement | HTMLTextAreaElement, selection) => {
           node.setSelectionRange(
             Math.min(selection.cursor, selection.anchor),
             Math.max(selection.cursor, selection.anchor),
             selection.cursor < selection.anchor ? "backward" : "forward"
-          ),
+          );
+        },
         { anchor, cursor }
       );
 
