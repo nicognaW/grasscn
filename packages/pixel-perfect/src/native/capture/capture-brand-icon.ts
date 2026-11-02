@@ -3,7 +3,23 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, pixelPerfectFile } from "@ppt/paths";
+import { pixelPerfectFile } from "@ppt/paths";
+
+interface NativeLibraryRule {
+  action: "allow" | "disallow";
+  os?: { name?: string; arch?: string };
+}
+
+interface NativeVersionLibrary {
+  name: string;
+  rules?: NativeLibraryRule[];
+  downloads?: { artifact?: { path: string } };
+}
+
+interface NativeVersionMetadata {
+  libraries: NativeVersionLibrary[];
+  assetIndex: { id: string };
+}
 
 const [version, java, work, output] = process.argv
   .slice(2)
@@ -19,7 +35,9 @@ const instance = path.basename(version);
 const minecraftRoot = path.resolve(version, "../..");
 const jar = path.join(version, `${instance}.jar`);
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
 const sourceJarSha256 = hash(await readFile(jar));
 
 if (
@@ -29,11 +47,15 @@ if (
   throw new Error("Unexpected Minecraft artifact");
 }
 
-const metadata = JSON.parse(
-  await readFile(path.join(version, `${instance}.json`))
-);
+const metadataBytes = await readFile(path.join(version, `${instance}.json`));
 
-const permitted = (library) => {
+// SAFETY: the installed Minecraft version metadata owns the native library rules, artifact paths and asset-index ID consumed below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const metadata = JSON.parse(
+  metadataBytes.toString("utf-8")
+) as NativeVersionMetadata;
+
+const permitted = (library: NativeVersionLibrary) => {
   if (!library.rules) {
     return true;
   }
@@ -41,11 +63,19 @@ const permitted = (library) => {
   let allowed = false;
 
   for (const rule of library.rules) {
-    if (rule.os?.name && rule.os.name !== "windows") {
+    if (
+      rule.os?.name !== undefined &&
+      rule.os.name !== "" &&
+      rule.os.name !== "windows"
+    ) {
       continue;
     }
 
-    if (rule.os?.arch && ![process.arch, "x86_64"].includes(rule.os.arch)) {
+    if (
+      rule.os?.arch !== undefined &&
+      rule.os.arch !== "" &&
+      ![process.arch, "x86_64"].includes(rule.os.arch)
+    ) {
       continue;
     }
 
@@ -68,13 +98,16 @@ const libraries = metadata.libraries
   .filter(permitted)
   .filter(
     (library) =>
-      !/^(net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/.test(
+      !/^(?:net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
         library.name
       )
   )
-  .map((library) => library.downloads?.artifact?.path)
-  .filter(Boolean)
-  .map((relative) => path.join(minecraftRoot, "libraries", relative));
+  .flatMap((library) => {
+    const relative = library.downloads?.artifact?.path;
+    return relative !== undefined && relative !== ""
+      ? [path.join(minecraftRoot, "libraries", relative)]
+      : [];
+  });
 
 const classpath = [classes, jar, ...libraries].join(path.delimiter);
 
@@ -82,10 +115,10 @@ const source = pixelPerfectFile(
   path.join("tests/reference/GrassIconReferenceMain.java")
 );
 
-const quote = (argument) =>
+const quote = (argument: string) =>
   `"${argument.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
-async function run(name, args) {
+const run = async function run(name: string, args: string[]) {
   const argsFile = path.join(work, `${name}.args`);
   await writeFile(argsFile, args.map(quote).join("\n"));
 
@@ -107,7 +140,7 @@ async function run(name, args) {
   }
 
   return result.stdout;
-}
+};
 
 await run("javac", [
   "-encoding",

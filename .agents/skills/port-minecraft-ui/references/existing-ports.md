@@ -43,7 +43,7 @@ Run these directly when needed; they are not routine package commands:
 
 - `bun packages/pixel-perfect/tests/reference/capture.mjs <version-directory> <java-bin>` captures Button reference cases.
 - `bun packages/pixel-perfect/tests/reference/capture-controls.mjs <version-directory> <java-bin> [case-file]` captures the selected control corpus.
-- `bun packages/pixel-perfect/src/native/verify-reference-repeat.mjs <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
+- `bun packages/pixel-perfect/src/native/verify-reference-repeat.ts <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
 - `bun packages/pixel-perfect/src/native/generate/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
 - `bun packages/pixel-perfect/src/runtime/check-map.ts --list` lists component mappings.
 
