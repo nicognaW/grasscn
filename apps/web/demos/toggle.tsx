@@ -22,11 +22,11 @@ export default function ToggleDemo({ scale }: DemoProps) {
           <Input
             aria-label="Toggle filter label"
             value={label}
-            onChange={(event) => setLabel(event.target.value)}
+            onChange={(event) => { setLabel(event.target.value); }}
             className="w-75"
           />
         </label>
-        <Button onClick={() => setDisabled((v) => !v)}>
+        <Button onClick={() => { setDisabled((v) => !v); }}>
           {disabled ? "Enable filter" : "Disable filter"}
         </Button>
       </div>

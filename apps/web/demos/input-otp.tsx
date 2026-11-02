@@ -27,7 +27,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
               "--demo-width": `${80 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setValue("世界你好中文")}
+          onClick={() => { setValue("世界你好中文"); }}
         >
           CJK sample
         </Button>
@@ -40,7 +40,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
               "--demo-width": `${65 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setValue("")}
+          onClick={() => { setValue(""); }}
         >
           Clear
         </Button>
@@ -54,7 +54,7 @@ export default function InputOTPDemo({ scale }: DemoProps) {
             maxLength={6}
             value={value}
             onChange={setValue}
-            onComplete={() => setComplete((count) => count + 1)}
+            onComplete={() => { setComplete((count) => count + 1); }}
             inputMode="text"
             pushPasswordManagerStrategy="none"
           >

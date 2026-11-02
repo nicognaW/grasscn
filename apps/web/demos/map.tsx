@@ -84,14 +84,14 @@ export default function MapDemo({ scale }: DemoProps) {
       <div className="flex gap-3 flex-wrap">
         <Button
           scale={scale}
-          onClick={() => setHeading((h) => (h + 345) % 360)}
+          onClick={() => { setHeading((h) => (h + 345) % 360); }}
         >
           Turn left
         </Button>
-        <Button scale={scale} onClick={() => setHeading((h) => (h + 15) % 360)}>
+        <Button scale={scale} onClick={() => { setHeading((h) => (h + 15) % 360); }}>
           Turn right
         </Button>
-        <Button scale={scale} onClick={() => setHeading(0)}>
+        <Button scale={scale} onClick={() => { setHeading(0); }}>
           Face north
         </Button>
       </div>

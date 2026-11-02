@@ -18,7 +18,7 @@ export function Demo({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
         id="native-mode"
         scale={scale}
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => { setValue(event.target.value); }}
       >
         <NativeSelectOptGroup label="Game modes">
           <NativeSelectOption value="survival">Survival</NativeSelectOption>

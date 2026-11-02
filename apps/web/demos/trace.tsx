@@ -27,13 +27,13 @@ export default function TraceDemo({ scale }: DemoProps) {
             } satisfies DemoVariables as DemoVariables
           }
           onClick={() =>
-            setStatus((value) =>
+            { setStatus((value) =>
               value === "running"
                 ? "error"
                 : value === "error"
                   ? "pending"
                   : "running"
-            )
+            ); }
           }
         >
           Change status

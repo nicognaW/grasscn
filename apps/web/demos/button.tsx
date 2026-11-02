@@ -18,7 +18,7 @@ export default function ButtonDemo({ scale }: DemoProps) {
             aria-label="Button label"
             value={label}
             maxLength={24}
-            onChange={(event) => setLabel(event.target.value)}
+            onChange={(event) => { setLabel(event.target.value); }}
           />
         </label>
         <Button
@@ -38,7 +38,7 @@ export default function ButtonDemo({ scale }: DemoProps) {
           <Button
             scale={scale}
             style={{ width: width * scale }}
-            onClick={() => setCount((value) => value + 1)}
+            onClick={() => { setCount((value) => value + 1); }}
           >
             {label || " "}
           </Button>

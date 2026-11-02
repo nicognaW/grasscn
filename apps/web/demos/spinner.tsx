@@ -20,7 +20,7 @@ export default function SpinnerDemo({ scale }: DemoProps) {
               "--demo-width": `${90 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setPaused((value) => !value)}
+          onClick={() => { setPaused((value) => !value); }}
         >
           {paused ? "Animate" : "Pause"}
         </Button>
@@ -34,7 +34,7 @@ export default function SpinnerDemo({ scale }: DemoProps) {
             } satisfies DemoVariables as DemoVariables
           }
           disabled={!paused}
-          onClick={() => setTime((value) => value + 300)}
+          onClick={() => { setTime((value) => value + 300); }}
         >
           Next phase
         </Button>

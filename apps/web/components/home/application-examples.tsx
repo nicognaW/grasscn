@@ -40,7 +40,7 @@ export function Savings() {
       </div>
       <Action
         disabled={value === 5000}
-        onClick={() => setValue((v) => Math.min(5000, v + 250))}
+        onClick={() => { setValue((v) => Math.min(5000, v + 250)); }}
       >
         {value === 5000 ? "Goal reached" : "Add $250"}
       </Action>
@@ -188,7 +188,7 @@ export function Plan() {
             : "Flexible monthly billing"}
         </DocumentText>
       </p>
-      <Action onClick={() => setSaved(true)}>Save plan</Action>
+      <Action onClick={() => { setSaved(true); }}>Save plan</Action>
       <output
         aria-label="Plan status"
         aria-live="polite"

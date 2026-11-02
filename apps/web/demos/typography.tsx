@@ -15,7 +15,7 @@ export default function TypographyDemo({ scale }: DemoProps) {
             aria-label="Typography text"
             value={text}
             scale={scale}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => { setText(event.target.value); }}
             style={{ width: 320, height: 100 }}
           />
         </label>

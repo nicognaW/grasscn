@@ -45,7 +45,7 @@ export default function TradingDemo({ scale }: DemoProps) {
           offers={offers}
           selectedId={selected}
           onSelectedIdChange={setSelected}
-          onTrade={() => setCompleted((n) => n + 1)}
+          onTrade={() => { setCompleted((n) => n + 1); }}
         />
       </div>
       <output aria-live="polite">

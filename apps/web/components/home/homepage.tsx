@@ -62,7 +62,7 @@ function Controls() {
   return (
     <Panel title="Small pieces. Big possibilities." tag="THE ESSENTIALS">
       <div className="grass-inline">
-        <Action onClick={() => setClicks((v) => v + 1)}>Click me</Action>
+        <Action onClick={() => { setClicks((v) => v + 1); }}>Click me</Action>
         <Action disabled>Disabled</Action>
       </div>
       <Input scale={2} aria-label="Example name" placeholder="Your name" />
@@ -78,7 +78,7 @@ function Controls() {
             id="home-remember"
             scale={2}
             checked={checked}
-            onCheckedChange={(v) => setChecked(v === true)}
+            onCheckedChange={(v) => { setChecked(v === true); }}
           />
           <Label htmlFor="home-remember" scale={2}>
             Remember me
@@ -134,7 +134,7 @@ function Analytics() {
             key={v}
             scale={1}
             aria-pressed={type === v}
-            onClick={() => setType(v)}
+            onClick={() => { setType(v); }}
           >
             {(typeof v === "number" ? v : v[0]).toUpperCase() + v.slice(1)}
           </Button>
@@ -198,7 +198,7 @@ function Project() {
             scale={2}
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => { setName(e.target.value); }}
           />
         </label>
         <div className="grass-form-row">
@@ -211,7 +211,7 @@ function Project() {
               min="1"
               required
               value={budget}
-              onChange={(e) => setBudget(e.target.value)}
+              onChange={(e) => { setBudget(e.target.value); }}
             />
           </label>
           <label>
@@ -224,7 +224,7 @@ function Project() {
               }}
               scale={2}
               value={category}
-              onValueChange={(value) => setCategory(value ?? "")}
+              onValueChange={(value) => { setCategory(value ?? ""); }}
             >
               <SelectTrigger aria-label="Project category">
                 <SelectValue />
@@ -285,7 +285,7 @@ function Team() {
           </div>
         ))}
       </div>
-      <Action onClick={() => setInvited(true)} disabled={invited}>
+      <Action onClick={() => { setInvited(true); }} disabled={invited}>
         {invited ? "Invitation ready" : "Invite teammate"}
       </Action>
       {invited && (
@@ -314,7 +314,7 @@ function Tasks() {
               id={`home-task-${i}`}
               checked={done[i]}
               onCheckedChange={(v) =>
-                setDone((old) => old.map((x, j) => (j === i ? v === true : x)))
+                { setDone((old) => old.map((x, j) => (j === i ? v === true : x))); }
               }
             />
             <label
@@ -443,7 +443,7 @@ function Preferences() {
           style={{ width: 64 }}
         />
       </div>
-      <Action onClick={() => setSaved(true)}>Save preferences</Action>
+      <Action onClick={() => { setSaved(true); }}>Save preferences</Action>
       <output
         aria-live="polite"
         aria-label="Preferences status"
@@ -507,7 +507,7 @@ function Chat() {
           aria-label="Team message"
           placeholder="Say something nice..."
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
+          onChange={(e) => { setDraft(e.target.value); }}
         />
         <Action type="submit" disabled={!draft.trim()}>
           Send
@@ -535,7 +535,7 @@ function Performance() {
   React.useLayoutEffect(() => {
     const el = container.current!;
     const measure = () =>
-      setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth))));
+      { setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth)))); };
     measure();
     const o = new ResizeObserver(measure);
     o.observe(el);
@@ -568,7 +568,7 @@ function Performance() {
         </span>
         <button
           className="grass-text-link"
-          onClick={() => setSample((v) => v + 1)}
+          onClick={() => { setSample((v) => v + 1); }}
         >
           <DocumentText>Refresh sample</DocumentText>
         </button>
@@ -615,7 +615,7 @@ function Payout() {
           <DocumentText>$1,000 max</DocumentText>
         </span>
       </div>
-      <Action onClick={() => setSaved(true)}>Save threshold</Action>
+      <Action onClick={() => { setSaved(true); }}>Save threshold</Action>
       <output
         className="grass-note"
         aria-live="polite"

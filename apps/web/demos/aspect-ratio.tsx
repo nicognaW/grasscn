@@ -28,7 +28,7 @@ export default function AspectRatioDemo({ scale }: DemoProps) {
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
               ({"--demo-width": `${70 * scale}px`} satisfies DemoVariables) as DemoVariables}
             aria-pressed={ratio === value}
-            onClick={() => setRatio(Number(value))}
+            onClick={() => { setRatio(Number(value)); }}
           >
             {String(label)}
           </Button>

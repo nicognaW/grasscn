@@ -75,11 +75,11 @@ export default function AdvancementDemo({ scale }: DemoProps) {
           <Button
             scale={scale}
             onClick={() =>
-              setNodes((old) =>
+              { setNodes((old) =>
                 old.map((n) =>
                   n.id === selected ? { ...n, completed: !n.completed } : n
                 )
-              )
+              ); }
             }
             className="w-(--demo-width) max-w-full" style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -89,7 +89,7 @@ export default function AdvancementDemo({ scale }: DemoProps) {
           </Button>
           <Button
             scale={scale}
-            onClick={() => setReset((v) => v + 1)}
+            onClick={() => { setReset((v) => v + 1); }}
             className="w-(--demo-width) max-w-full" style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
               ({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}

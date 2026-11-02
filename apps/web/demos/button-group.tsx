@@ -28,7 +28,7 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
           <Input
             aria-label="Button group title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => { setTitle(e.target.value); }}
             className="w-60"
           />
         </label>
@@ -43,9 +43,9 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
             } satisfies DemoVariables as DemoVariables
           }
           onClick={() =>
-            setOrientation((v) =>
+            { setOrientation((v) =>
               v === "horizontal" ? "vertical" : "horizontal"
-            )
+            ); }
           }
         >
           Change layout
@@ -73,7 +73,7 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
             scale={scale}
             type="button"
             style={{ width: buttonWidth * scale }}
-            onClick={() => setAction("World created")}
+            onClick={() => { setAction("World created"); }}
           >
             Create
           </Button>
@@ -87,7 +87,7 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
             scale={scale}
             type="button"
             style={{ width: buttonWidth * scale }}
-            onClick={() => setAction("World loaded")}
+            onClick={() => { setAction("World loaded"); }}
           >
             Load
           </Button>

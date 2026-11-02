@@ -17,7 +17,7 @@ export default function CheckboxDemo({ scale }: DemoProps) {
             id="preview-checkbox"
             scale={scale}
             checked={checked}
-            onCheckedChange={(value) => setChecked(value === true)}
+            onCheckedChange={(value) => { setChecked(value === true); }}
           />
           <label htmlFor="preview-checkbox">Enable shadows</label>
         </div>

@@ -36,15 +36,15 @@ export default function ProgressDemo({ scale }: DemoProps) {
         <Button
           aria-label={`Boss bar color: ${colorName}`}
           onClick={() =>
-            setColor(colors[(colors.indexOf(color) + 1) % colors.length])
+            { setColor(colors[(colors.indexOf(color) + 1) % colors.length]); }
           }
         >{`Color: ${colorName}`}</Button>
         <Button
           aria-label={`Boss bar notches: ${notchName}`}
           onClick={() =>
-            setOverlay(
+            { setOverlay(
               overlays[(overlays.indexOf(overlay) + 1) % overlays.length]
-            )
+            ); }
           }
         >{`Notches: ${notchName}`}</Button>
       </div>

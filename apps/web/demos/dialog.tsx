@@ -20,7 +20,7 @@ export default function DialogDemo({ scale }: DemoProps) {
           <Input
             aria-label="Dialog title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => { setTitle(e.target.value); }}
             className="w-60"
           />
         </label>
@@ -29,7 +29,7 @@ export default function DialogDemo({ scale }: DemoProps) {
           <Textarea
             aria-label="Dialog message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => { setMessage(e.target.value); }}
             style={{ width: 320, height: 100 }}
           />
         </label>

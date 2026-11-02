@@ -21,7 +21,7 @@ export default function ItemDemo({ scale }: DemoProps) {
             aria-label="Item world name"
             scale={scale}
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => { setName(event.target.value); }}
             className="w-70"
           />
         </label>
@@ -31,7 +31,7 @@ export default function ItemDemo({ scale }: DemoProps) {
             aria-label="Item world information"
             scale={scale}
             value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            onChange={(event) => { setDescription(event.target.value); }}
             style={{ width: 320, height: 100 }}
           />
         </label>
@@ -94,7 +94,7 @@ export default function ItemDemo({ scale }: DemoProps) {
                   "--demo-width": `${80 * scale}px`,
                 } satisfies DemoVariables as DemoVariables
               }
-              onClick={() => setOpens((v) => v + 1)}
+              onClick={() => { setOpens((v) => v + 1); }}
             >
               Open
             </Button>

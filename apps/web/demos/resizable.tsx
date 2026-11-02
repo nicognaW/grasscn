@@ -88,7 +88,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
                   <Button
                     key={label}
                     scale={scale}
-                    onClick={() => setSelected(label)}
+                    onClick={() => { setSelected(label); }}
                     className="w-full" 
                   >
                     {label}
@@ -117,7 +117,7 @@ export default function ResizableDemo({ scale }: DemoProps) {
                   <Button
                     key={label}
                     scale={scale}
-                    onClick={() => setSelected(label)}
+                    onClick={() => { setSelected(label); }}
                     className="w-full" 
                   >
                     {label}
