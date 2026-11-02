@@ -13,7 +13,7 @@ const bytes = readFileSync(referenceFile("title-splash/oracle-104.csv"));
 const rows = bytes
   .toString("utf-8")
   .trim()
-  .split(/\r?\n/)
+  .split(/\r?\n/u)
   .filter((line) => !line.startsWith("#"))
   .map((line) => line.split(",").map(Number));
 

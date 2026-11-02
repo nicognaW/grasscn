@@ -49,7 +49,7 @@ test("Avatar fallback delay, native default face and rich custom fallback remain
   await expect(page.locator("#linked strong")).toHaveText("Player");
   await page.locator("#linked").focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#player$/);
+  await expect(page).toHaveURL(/#player$/u);
 });
 
 test("Avatar badge/group/count preserve composition and semantics", async ({

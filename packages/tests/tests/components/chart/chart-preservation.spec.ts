@@ -12,7 +12,7 @@ for (const scale of [2] as const) {
       page,
     }) => {
       await page.setViewportSize({ height, width });
-      await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
+      await page.goto(`${preview.replace(/\/$/u, "")}/#/components/chart`);
 
       const native = page.locator("[data-chart-native-examples]");
       const fps = native.locator("[data-native-chart=fps]");

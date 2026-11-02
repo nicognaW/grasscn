@@ -219,7 +219,7 @@ const CodeBlockContent = ({
     <code data-slot="code-block-code">
       {lineNumbers && typeof children === "string"
         ? children
-            .replace(/\n$/, "")
+            .replace(/\n$/u, "")
             .split("\n")
             .map((line, index) => (
               <CodeBlockLine key={index}>{line}</CodeBlockLine>

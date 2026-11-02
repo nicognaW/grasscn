@@ -7,7 +7,7 @@ test("Marker asChild preserves link, keyboard activation, ref and original rich 
   await expect(page.getByRole("link")).toHaveAttribute("href", "#marker");
   await page.getByRole("link").focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#marker$/);
+  await expect(page).toHaveURL(/#marker$/u);
   await expect(page.locator("#events")).toHaveText("1");
   await page.locator("#read-marker-ref").click();
   await expect(page.locator("#marker-ref")).toHaveText("A");

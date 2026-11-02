@@ -289,7 +289,7 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
 
     const supported =
       characters.every(
-        (char) => /^[\u0020-\u007E\n]$/.test(char) || getUnihexGlyph(char)
+        (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
       ) && style.direction !== "rtl";
 
     node.dataset.mcBitmap = String(supported);

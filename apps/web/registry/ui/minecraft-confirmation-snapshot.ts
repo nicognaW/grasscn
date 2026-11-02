@@ -123,7 +123,7 @@ export function useConfirmationSnapshot(
                 style.perspective !== "none" ||
                 style.filter !== "none" ||
                 style.backdropFilter !== "none" ||
-                /paint|layout|strict|content/.test(style.contain)
+                /paint|layout|strict|content/u.test(style.contain)
               ) {
                 viewport = false;
                 break;

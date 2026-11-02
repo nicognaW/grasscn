@@ -11,7 +11,7 @@ test("buttonVariants styles a standalone link with the Minecraft skin", async ({
   await expect(link).toHaveCSS("font-family", '"Minecraft Bitmap", monospace');
   await link.focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#utility$/);
+  await expect(page).toHaveURL(/#utility$/u);
 });
 
 test("default button uses native proportions and supports keyboard activation", async ({
@@ -33,5 +33,5 @@ test("default button uses native proportions and supports keyboard activation", 
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Continue" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#destination$/);
+  await expect(page).toHaveURL(/#destination$/u);
 });
