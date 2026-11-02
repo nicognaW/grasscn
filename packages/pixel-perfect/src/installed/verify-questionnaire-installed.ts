@@ -3,30 +3,39 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import type { Page } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
-import {
-  pixelPerfectTestRoot,
-  repoRoot,
-  webFile,
-  pixelPerfectFile,
-} from "@ppt/paths";
+import type {
+  QuestionnaireCaptureManifest,
+  QuestionnaireCaseResult,
+  QuestionnairePartProof,
+  LabelCaptureManifest,
+} from "@ppt/installed/installed-compositions-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 
 const [consumerArg, urlArg, partsArg] = process.argv.slice(2);
 const consumer = path.resolve(consumerArg);
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
-const item = JSON.parse(
-  fs.readFileSync(webFile(path.join("registry.json")))
-).items.find((i) => i.name === "questionnaire");
+// SAFETY: the authored registry owns this fresh source descriptor read.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
 
+const item = registry.items.find((i) => i.name === "questionnaire");
+
+// SAFETY: the initialized shadcn consumer components.json owns the optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
-  fs.readFileSync(path.join(consumer, "components.json"))
-);
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as { rsc?: boolean };
 
-const canonical = (b) => {
+const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -39,7 +48,7 @@ const canonical = (b) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -52,11 +61,11 @@ const files = item.files.map((f) => {
   return { installedSha256: hash(b), path: name, sourceSha256: hash(a) };
 });
 
-const pageErrors = [];
+const pageErrors: string[] = [];
 const browser = await chromium.launch({ channel: "msedge" });
 
 let count = 0;
-let page;
+let page: Page | undefined;
 
 try {
   for (const [part, dir] of [
@@ -69,22 +78,29 @@ try {
     ["action", "button-cjk"],
     ["input", "input"],
   ].filter(([part]) => !partsArg || partsArg.split(",").includes(part))) {
+    // SAFETY: the existing part directory table selects the Label/Controls/Button/Input capture producers.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire constituent capture producer boundary.
     const m = JSON.parse(
-      fs.readFileSync(
-        `${pixelPerfectFile(path.join("tests/reference", dir))}/manifest.json`
-      )
-    );
+      fs
+        .readFileSync(
+          `${pixelPerfectFile(path.join("tests/reference", dir))}/manifest.json`
+        )
+        .toString()
+    ) as QuestionnaireCaptureManifest;
 
     const cases = [];
 
     for (const c of m.cases) {
-      const record = { mismatchedPixels: 0, name: c.name };
+      const record: QuestionnaireCaseResult = {
+        mismatchedPixels: 0,
+        name: c.name,
+      };
 
       for (const action of part === "action"
-        ? ["next", "previous", "skip", "submit"]
+        ? (["next", "previous", "skip", "submit"] as const)
         : part === "checkbox"
-          ? ["next", "radio"]
-          : ["next"]) {
+          ? (["next", "radio"] as const)
+          : (["next"] as const)) {
         let shouldCreatePage = part === "input";
 
         if (!shouldCreatePage) {
@@ -135,17 +151,17 @@ try {
         }
 
         if (c.wrapWidth) {
-          q.set("wrapWidth", c.wrapWidth);
+          q.set("wrapWidth", String(c.wrapWidth));
         }
 
         const optionalMaxLength = c.maxLength;
 
         if (optionalMaxLength !== null && optionalMaxLength !== undefined) {
-          q.set("maxLength", c.maxLength);
+          q.set("maxLength", String(c.maxLength));
         }
 
-        await page.goto(`${urlArg}?${q}`);
-        const subject = page.locator("#subject");
+        await page!.goto(`${urlArg}?${q}`);
+        const subject = page!.locator("#subject");
         await expect(subject).toBeVisible();
 
         if (["title", "description", "error", "progress"].includes(part)) {
@@ -159,7 +175,7 @@ try {
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         }
 
-        await page.mouse.move(0, 0);
+        await page!.mouse.move(0, 0);
 
         if (c.state.startsWith("focus")) {
           await (
@@ -174,19 +190,21 @@ try {
         }
 
         if (part === "input") {
-          const cursor = c.cursor ?? c.text.length;
+          const cursor = c.cursor ?? c.text!.length;
           const anchor = c.anchor ?? cursor;
 
           await subject.evaluate(
             (input, p) =>
-              input.setSelectionRange(
+              // SAFETY: the input constituent fixture renders #subject as an HTML input with selection support.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact input constituent HTML DOM API boundary.
+              (input as HTMLInputElement).setSelectionRange(
                 Math.min(p.cursor, p.anchor),
                 Math.max(p.cursor, p.anchor),
                 p.cursor < p.anchor ? "backward" : "forward"
               ),
             { anchor, cursor }
           );
-          await page.clock.runFor(c.caretMs);
+          await page!.clock.runFor(c.caretMs!);
           await expect(subject).toHaveAttribute("data-mc-ready", "true");
         } else {
           for (const glyph of await subject
@@ -195,7 +213,7 @@ try {
             await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
           }
 
-          await page.evaluate(
+          await page!.evaluate(
             async () =>
               new Promise((r) =>
                 requestAnimationFrame(() => requestAnimationFrame(r))
@@ -245,9 +263,12 @@ try {
           throw new Error(`${part} ${c.name} ${n} pixels`);
         }
 
-        record[
-          action === "next" ? "decodedRgbaSha256" : `${action}DecodedRgbaSha256`
-        ] = hash(a.data);
+        const field: keyof QuestionnaireCaseResult =
+          action === "next"
+            ? "decodedRgbaSha256"
+            : `${action}DecodedRgbaSha256`;
+
+        record[field] = hash(a.data);
       }
 
       cases.push(record);
@@ -330,23 +351,28 @@ if (
     path.join("tests/reference/questionnaire")
   );
 
-  const reports = textParts.map((part) =>
-    JSON.parse(
-      fs.readFileSync(
-        path.join(directory, `${part}-installation-verification.json`),
-        "utf-8"
-      )
-    )
+  const reports = textParts.map(
+    (part) =>
+      // SAFETY: the earlier loop writes each text part proof with these source, browser and case result fields.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact verifier-owned Questionnaire part report boundary.
+      JSON.parse(
+        fs.readFileSync(
+          path.join(directory, `${part}-installation-verification.json`),
+          "utf-8"
+        )
+      ) as QuestionnairePartProof
   );
 
   const base = reports[0];
 
+  // SAFETY: the combined text proof reads the existing Label captured-reference producer here.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Label captured-reference producer boundary.
   const manifest = JSON.parse(
     fs.readFileSync(
       pixelPerfectFile(path.join("tests/reference/label/manifest.json")),
       "utf-8"
     )
-  );
+  ) as LabelCaptureManifest;
 
   for (const report of reports) {
     assert.deepEqual(report.files, files);
@@ -368,8 +394,8 @@ if (
     );
 
     for (const record of records) {
-      assert.equal(record.mismatchedPixels, 0);
-      assert.equal(record.decodedRgbaSha256, expected);
+      assert.equal(record!.mismatchedPixels, 0);
+      assert.equal(record!.decodedRgbaSha256, expected);
     }
 
     return {
@@ -379,7 +405,7 @@ if (
           .slice(1)
           .map((part, index) => [
             `${part}DecodedRgbaSha256`,
-            records[index + 1].decodedRgbaSha256,
+            records[index + 1]!.decodedRgbaSha256,
           ])
       ),
     };

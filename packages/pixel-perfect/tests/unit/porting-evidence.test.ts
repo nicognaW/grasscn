@@ -51,6 +51,8 @@ test("evidence chain rejects corrupted inputs, generated outputs and stale trace
       const original = await readFile(target);
       const changed = Buffer.from(original);
 
+      // Deliberately flip one frozen-input bit to prove the integrity chain rejects corruption.
+      // oxlint-disable-next-line eslint/no-bitwise
       changed[0] ^= 1;
       await writeFile(target, changed);
       await assert.rejects(verifyPortingEvidence(root));

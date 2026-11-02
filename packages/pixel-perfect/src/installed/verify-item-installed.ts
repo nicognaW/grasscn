@@ -6,12 +6,18 @@ import path from "node:path";
 
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import {
-  repoRoot,
-  webFile,
-  repositoryFile,
-  pixelPerfectFile,
-} from "@ppt/paths";
+import type {
+  ItemVerificationTask,
+  InstalledItemResult,
+  DecodedPixels,
+  ItemCaptureManifest,
+} from "@ppt/installed/installed-compositions-protocol";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+  InstalledTextFailure,
+} from "@ppt/installed/text-verification-protocol";
+import { webFile, repositoryFile, pixelPerfectFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
@@ -20,30 +26,44 @@ const [consumerArgument, origin, definitionArgument, manifestArgument] =
 
 assert.ok(
   consumerArgument && origin,
-  "Usage: bun src/installed/verify-item-installed.mjs <consumer> <fixture-url> [registry-item-file] [registered-native-manifest]"
+  "Usage: bun src/installed/verify-item-installed.ts <consumer> <fixture-url> [registry-item-file] [registered-native-manifest]"
 );
 
 const consumer = path.resolve(consumerArgument);
-const sha = (b) => createHash("sha256").update(b).digest("hex");
-const tasks = [];
-const negativeControls = [];
+const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
+const tasks: ItemVerificationTask[] = [];
+const negativeControls: string[] = [];
 
-const item = definitionArgument
-  ? JSON.parse(fs.readFileSync(path.resolve(definitionArgument), "utf-8"))
-  : JSON.parse(
-      fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
-    ).items.find((item) => item.name === "item");
+let item: InstalledTextItem | undefined;
+
+if (definitionArgument) {
+  // SAFETY: the supplied registry descriptor owns the exact Item source list.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete supplied Item descriptor boundary.
+  item = JSON.parse(
+    fs.readFileSync(path.resolve(definitionArgument), "utf-8")
+  ) as InstalledTextItem;
+} else {
+  // SAFETY: the authored registry document owns this existing Item lookup.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+  const registry = JSON.parse(
+    fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
+  ) as InstalledTextRegistry;
+
+  item = registry.items.find((item) => item.name === "item");
+}
 
 assert.ok(
   item?.name === "item",
   "Need an actual shadcn Item registry definition"
 );
 
+// SAFETY: the initialized shadcn consumer components.json owns the optional rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
   fs.readFileSync(path.join(consumer, "components.json"), "utf-8")
-);
+) as { rsc?: boolean };
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -107,9 +127,11 @@ for (const [part, directory] of [
 ]) {
   const manifestFile = `tests/reference/${directory}/manifest.json`;
 
+  // SAFETY: the existing registered Item/Label/Separator selection owns this fresh capture read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete registered Item constituent capture boundary.
   const manifest = JSON.parse(
     fs.readFileSync(evidenceFile(manifestFile), "utf-8")
-  );
+  ) as ItemCaptureManifest;
 
   if (manifestArgument && manifestArgument !== manifestFile) {
     continue;
@@ -133,8 +155,8 @@ for (const [part, directory] of [
 
 const browser = await chromium.launch({ channel: "msedge" });
 const browserVersion = browser.version();
-const results = [];
-const errors = [];
+const results: InstalledItemResult[] = [];
+const errors: string[] = [];
 
 let next = 0;
 
@@ -144,7 +166,7 @@ const failures = repositoryFile(
 
 fs.mkdirSync(failures, { recursive: true });
 
-function compare(a, b) {
+function compare(a: DecodedPixels, b: DecodedPixels) {
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error(`Dimensions ${a.width}x${a.height}/${b.width}x${b.height}`);
   }
@@ -265,7 +287,7 @@ async function worker() {
 
         if (c.state === "icon-hover") {
           const box = await subject.boundingBox();
-          await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
+          await page.mouse.move(box!.x + 18 * c.scale, box!.y + 18 * c.scale);
         }
 
         if (c.state === "focus") {
@@ -350,7 +372,10 @@ async function worker() {
           PNG.sync.write(diff)
         );
       }
-    } catch (error) {
+    } catch (failure) {
+      // SAFETY: preserve the existing message projection from the owned Node/PNG/Playwright APIs without normalizing arbitrary rejections.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Item failure message projection boundary.
+      const error = failure as InstalledTextFailure;
       const message = `${part}/${plain ? "plain/" : ""}${c.name}: ${error.message}`;
       errors.push(message);
       console.log(message);
@@ -392,9 +417,11 @@ for (const [manifestFile, output, _part] of [
     continue;
   }
 
+  // SAFETY: the existing registered Item/Label/Separator selection owns this fresh capture read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete registered Item constituent capture boundary.
   const manifest = JSON.parse(
     fs.readFileSync(evidenceFile(manifestFile), "utf-8")
-  );
+  ) as ItemCaptureManifest;
 
   const cases = manifest.cases.map((c) => {
     const matching = results.filter(

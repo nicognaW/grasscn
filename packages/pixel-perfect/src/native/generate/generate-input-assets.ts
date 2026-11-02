@@ -3,9 +3,15 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SpriteMetadata,
+  EmbeddedAssetSource,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
@@ -13,17 +19,20 @@ if (!input) {
   );
 }
 
+// SAFETY: the retained native inventory pins the sprite/metadata inputs used below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory;
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
-const assets = {};
-const provenance = {};
+const assets: Record<string, string> = {};
+const provenance: Record<string, EmbeddedAssetSource> = {};
 
 for (const [key, file, member] of [
   [
@@ -40,24 +49,39 @@ for (const [key, file, member] of [
 ]) {
   const bytes = await readFile(path.join(input, file));
 
-  if (hash(bytes) !== inventory.assets[member].sha256) {
+  // SAFETY: these literal sprite/font members belong to the complete pinned native inventory.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const original = inventory.assets[member] as InventoryAsset;
+
+  if (hash(bytes) !== original.sha256) {
     throw new Error(`Original source changed: ${member}`);
   }
 
   assets[key] = `data:image/png;base64,${bytes.toString("base64")}`;
-  provenance[member] = Object.fromEntries([
+
+  const fields = Object.fromEntries([
     ["sha256", hash(bytes)],
     ["embeddedBytes", "unchanged"],
   ]);
 
+  // SAFETY: these literal fields produce the unchanged embedded sprite pin, later augmented only by metadata.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  provenance[member] = fields as typeof fields & EmbeddedAssetSource;
+
   if (key !== "atlas") {
     const metadata = await readFile(path.join(input, `${file}.mcmeta`));
 
-    if (hash(metadata) !== inventory.assets[member].metadataSha256) {
+    if (hash(metadata) !== original.metadataSha256) {
       throw new Error(`Metadata changed: ${member}`);
     }
 
-    provenance[member].scaling = JSON.parse(metadata).gui.scaling;
+    // SAFETY: the just hash-matched mcmeta file owns the original nine-slice geometry.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const metadataDocument = JSON.parse(
+      metadata.toString("utf-8")
+    ) as SpriteMetadata;
+
+    provenance[member].scaling = metadataDocument.gui.scaling;
     provenance[member].metadataSha256 = hash(metadata);
   }
 }
