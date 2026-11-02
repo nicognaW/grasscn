@@ -111,20 +111,22 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
   }
 
   expect(
-    await page.evaluate(() =>
-      // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      (window as GpuTrackingWindow).__gpu.length
+    await page.evaluate(
+      () =>
+        // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
+        (window as GpuTrackingWindow).__gpu.length
     )
   ).toBe(1);
   await page.getByRole("button", { name: "Toggle siblings" }).click();
   await expect(page.locator("[data-stress-label]")).toHaveCount(0);
   await verify(2);
   expect(
-    await page.evaluate(() =>
-      // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      (window as GpuTrackingWindow).__gpu.length
+    await page.evaluate(
+      () =>
+        // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
+        (window as GpuTrackingWindow).__gpu.length
     )
   ).toBe(1);
   await page.getByRole("button", { name: "Toggle all" }).click();
@@ -146,10 +148,11 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
 
   await verify(3);
   expect(
-    await page.evaluate(() =>
-      // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      (window as GpuTrackingWindow).__gpu.length
+    await page.evaluate(
+      () =>
+        // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
+        (window as GpuTrackingWindow).__gpu.length
     )
   ).toBe(2);
   expect(
@@ -194,7 +197,9 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (
-      /[tT][oO][oO] [mM][aA][nN][yY] [aA][cC][tT][iI][vV][eE] [wW][eE][bB][gG][lL]|[sS][hH][aA][dD][eE][rR] [fF][aA][iI][lL][eE][dD]|[pP][rR][oO][gG][rR][aA][mM] [fF][aA][iI][lL][eE][dD]/u.test(message.text())
+      /[tT][oO][oO] [mM][aA][nN][yY] [aA][cC][tT][iI][vV][eE] [wW][eE][bB][gG][lL]|[sS][hH][aA][dD][eE][rR] [fF][aA][iI][lL][eE][dD]|[pP][rR][oO][gG][rR][aA][mM] [fF][aA][iI][lL][eE][dD]/u.test(
+        message.text()
+      )
     ) {
       warnings.push(message.text());
     }
@@ -245,10 +250,11 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   }
 
   expect(
-    await page.evaluate(() =>
-      // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      (window as GpuTrackingWindow).__gpu.length
+    await page.evaluate(
+      () =>
+        // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
+        (window as GpuTrackingWindow).__gpu.length
     )
   ).toBe(1);
   expect(
@@ -316,10 +322,11 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
   }
 
   expect(
-    await page.evaluate(() =>
-      // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
-      (window as GpuTrackingWindow).__gpu.length
+    await page.evaluate(
+      () =>
+        // SAFETY: this test initScript establishes the writable tracker; later callbacks retain direct failure if initialization is absent.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact initialized GPU tracker Window boundary.
+        (window as GpuTrackingWindow).__gpu.length
     )
   ).toBe(2);
   expect(

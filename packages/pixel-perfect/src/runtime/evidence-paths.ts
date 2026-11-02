@@ -47,7 +47,9 @@ export const evidenceFile = function evidenceFile(
   }
 
   if (logical === "tests/reference" || logical.startsWith("tests/reference/")) {
-    const relative = logical.slice("tests/reference".length).replace(/^\//u, "");
+    const relative = logical
+      .slice("tests/reference".length)
+      .replace(/^\//u, "");
     const shared = sharedReferenceFile(relative);
 
     return fs.existsSync(shared) ? shared : referenceFile(relative);
