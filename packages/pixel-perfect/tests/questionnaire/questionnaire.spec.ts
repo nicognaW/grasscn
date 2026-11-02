@@ -136,6 +136,7 @@ for (const [part, dir] of parts) {
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation; no property read or fallback is added.
             const cursor =
               c.cursor ?? (c as QuestionnaireInputCase).text.length;
+
             const anchor = c.anchor ?? cursor;
 
             await subject.evaluate(

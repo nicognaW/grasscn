@@ -50,6 +50,7 @@ export const evidenceFile = function evidenceFile(
     const relative = logical
       .slice("tests/reference".length)
       .replace(/^\//u, "");
+
     const shared = sharedReferenceFile(relative);
 
     return fs.existsSync(shared) ? shared : referenceFile(relative);

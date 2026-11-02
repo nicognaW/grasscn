@@ -60,6 +60,7 @@ export async function serveVerificationHosts({
       configFile: path.join(webRoot, "vite.config.ts"),
       preview: { host: "127.0.0.1", port: previewPort, strictPort: true },
     });
+
     const proxyServer = http.createServer(async (request, response) => {
       let target;
 
@@ -163,6 +164,7 @@ export async function serveVerificationHosts({
       });
       request.pipe(upstream);
     });
+
     proxyServer.on("connection", track);
     proxyServer.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the

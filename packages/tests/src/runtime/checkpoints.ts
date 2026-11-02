@@ -13,6 +13,7 @@ import type {
 } from "@tests/runtime/checkpoint-protocol";
 
 export { browserFilePattern } from "@grasscn/tests/case-paths";
+
 export type {
   BrowserVerification,
   CheckpointCandidate,
@@ -25,6 +26,7 @@ export type {
 
 const digest = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
+
 const hasReplayableTestIdentity = (
   record: CheckpointResult
 ): record is CheckpointResult & { file: string; title: string[] } =>

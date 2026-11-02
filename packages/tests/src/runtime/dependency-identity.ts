@@ -79,6 +79,7 @@ export const installedDependencyIdentity = function installedDependencyIdentity(
   const lockfile = JSON5.parse(fs.readFileSync(lock, "utf-8")) as {
     workspaces?: Record<string, object>;
   };
+
   const workspaces = lockfile.workspaces ?? {};
 
   for (const workspace of Object.keys(workspaces).sort()) {

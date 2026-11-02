@@ -67,6 +67,7 @@ const fixture = async function fixture(
 
     const hash = (value: string) =>
       createHash("sha256").update(value).digest("hex");
+
     const id = "test-id";
 
     const record = {
@@ -256,6 +257,7 @@ test("nested helper-defined checkpoints retain only both source-identical inputs
     await mkdir(path.join(root, "src"));
     await writeFile(path.join(root, owner), "wrapper source");
     await writeFile(path.join(root, definition), "helper source");
+
     const hash = (value: string) =>
       createHash("sha256").update(value).digest("hex");
 

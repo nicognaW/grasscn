@@ -146,11 +146,14 @@ export default class CheckpointReporter implements Reporter {
   }
   sourceHash(file: string): string {
     const retained = this.sources.get(file);
+
     if (retained !== undefined) {
       return retained;
     }
+
     const hash = this.hash(file);
     this.sources.set(file, hash);
+
     return hash;
   }
   hash(file: string) {

@@ -437,6 +437,7 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
               selectionLine.begin,
               Math.min(cursor, anchor)
             );
+
             const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
 
             if (end < begin) {

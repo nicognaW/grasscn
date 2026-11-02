@@ -116,6 +116,7 @@ test("Switch uses original click audio once per activation, and respects cancell
       return Promise.resolve();
     };
   });
+
   const sounds = async () =>
     page.evaluate(
       () =>
@@ -123,6 +124,7 @@ test("Switch uses original click audio once per activation, and respects cancell
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
         (window as typeof window & SwitchAudioState).switchSounds
     );
+
   await page.goto("/?component=switch");
   const control = page.getByRole("switch");
   await control.hover();

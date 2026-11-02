@@ -221,6 +221,7 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
       return Promise.resolve();
     };
   });
+
   const voices = async () =>
     page.evaluate(
       () =>
@@ -228,6 +229,7 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
         (window as typeof window & DropdownPlaybackState).__menuSounds
     );
+
   await page.goto("/?component=dropdown-menu");
   const trigger = page.getByRole("button", { exact: true, name: "Game menu" });
   await trigger.hover();

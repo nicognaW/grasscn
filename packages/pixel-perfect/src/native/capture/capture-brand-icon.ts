@@ -104,6 +104,7 @@ const libraries = metadata.libraries
   )
   .flatMap((library) => {
     const relative = library.downloads?.artifact?.path;
+
     return relative !== undefined && relative !== ""
       ? [path.join(minecraftRoot, "libraries", relative)]
       : [];
