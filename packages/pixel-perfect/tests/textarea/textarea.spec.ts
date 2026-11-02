@@ -119,13 +119,13 @@ for (const c of manifest.cases) {
     await page.mouse.move(0, 0);
     await area.evaluate(
       (node, settings) => {
-        const area = node as HTMLTextAreaElement;
-        area.setSelectionRange(
+        const textareaElement = node as HTMLTextAreaElement;
+        textareaElement.setSelectionRange(
           Math.min(settings.cursor, settings.anchor),
           Math.max(settings.cursor, settings.anchor),
           settings.cursor < settings.anchor ? "backward" : "forward"
         );
-        area.scrollTop = settings.scroll;
+        textareaElement.scrollTop = settings.scroll;
       },
       {
         anchor: c.anchor ?? c.cursor ?? c.text.length,

@@ -74,11 +74,11 @@ test.describe("Switch native matrix", () => {
       const subject = page.locator("[data-subject]");
       await expect(subject).toBeVisible();
       await subject.evaluate(
-        (node, c) =>
+        (node, switchCase) =>
           Object.assign(node.style, {
-            left: `${c.x * c.scale}px`,
+            left: `${switchCase.x * switchCase.scale}px`,
             position: "fixed",
-            top: `${c.y * c.scale}px`,
+            top: `${switchCase.y * switchCase.scale}px`,
           }),
         c
       );

@@ -230,8 +230,8 @@ const SelectFixture = () => {
   const controls = (
     <>
       <Select
-        items={titles.map((label, index) => ({
-          label,
+        items={titles.map((optionLabel, index) => ({
+          label: optionLabel,
           value: `item-${index}`,
         }))}
         name={params.has("form") ? "mode" : undefined}
@@ -671,9 +671,9 @@ const ContextFixture = () => {
     ) : part === "menu-disabled" ? (
       <ContextMenuItem disabled>{nativeLabel}</ContextMenuItem>
     ) : (
-      labels.map((label, index) => (
+      labels.map((contextItemLabel, index) => (
         <ContextMenuItem key={index} data-native-index={index}>
-          {label}
+          {contextItemLabel}
         </ContextMenuItem>
       ))
     );
@@ -1061,9 +1061,9 @@ const MenubarFixture = () => {
     ) : part === "menu-disabled" ? (
       <MenubarItem disabled>{nativeLabel}</MenubarItem>
     ) : (
-      labels.map((label, index) => (
+      labels.map((menubarItemLabel, index) => (
         <MenubarItem key={index} data-native-index={index}>
-          {label}
+          {menubarItemLabel}
         </MenubarItem>
       ))
     );
@@ -1344,9 +1344,9 @@ const DropdownFixture = () => {
     ) : part === "menu-disabled" ? (
       <DropdownMenuItem disabled>{nativeLabel}</DropdownMenuItem>
     ) : (
-      labels.map((label, index) => (
+      labels.map((dropdownItemLabel, index) => (
         <DropdownMenuItem key={index} data-native-index={index}>
-          {label}
+          {dropdownItemLabel}
         </DropdownMenuItem>
       ))
     );
@@ -2113,7 +2113,7 @@ const DialogFixture = () => {
             )}
           </DialogHeader>
           <DialogFooter>
-            {labels.map((label, index) => (
+            {labels.map((actionLabel, index) => (
               <Button
                 key={index}
                 scale={scale}
@@ -2122,7 +2122,7 @@ const DialogFixture = () => {
                   setActions((current) => current + 1);
                 }}
               >
-                {label}
+                {actionLabel}
               </Button>
             ))}
           </DialogFooter>

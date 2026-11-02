@@ -23,15 +23,15 @@ const positions = [
 ];
 
 const nodes: React.ComponentProps<typeof AdvancementTree>["nodes"] =
-  positions.map(([x, y], i) => ({
+  positions.map(([nodeX, nodeY], i) => ({
     // oxlint-disable-next-line no-bitwise -- Each bit of this fixture mask selects one completed node, preserving signed 32-bit mask semantics.
     completed: !!(mask & (1 << i)),
     id: String(i),
     kind: i === 0 ? "task" : i === 1 ? "goal" : "challenge",
     parentId: i ? String(i === 3 ? 1 : 0) : undefined,
     title: `Milestone ${i}`,
-    x,
-    y,
+    x: nodeX,
+    y: nodeY,
   }));
 
 // SAFETY: owned Adventure callers serialize DraftDemos samples and optional native positions into this query.

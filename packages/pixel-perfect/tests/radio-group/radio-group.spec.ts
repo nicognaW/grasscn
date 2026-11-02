@@ -70,11 +70,11 @@ for (const c of manifest.cases) {
     const subject = page.locator("[data-subject]");
     await expect(subject).toBeVisible();
     await subject.evaluate(
-      (node, c) =>
+      (node, radioCase) =>
         Object.assign(node.style, {
-          left: `${c.x * c.scale}px`,
+          left: `${radioCase.x * radioCase.scale}px`,
           position: "fixed",
-          top: `${c.y * c.scale}px`,
+          top: `${radioCase.y * radioCase.scale}px`,
         }),
       c
     );

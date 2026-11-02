@@ -20,12 +20,12 @@ for (const scale of [1, 2, 3] as const) {
       );
       const trigger = page.locator("#select-trigger");
       await trigger.evaluate(
-        (n, { scale, mobile }) =>
+        (n, { scale: renderScale, mobile: isMobile }) =>
           Object.assign(n.style, {
             position: "fixed",
-            left: mobile ? "40px" : "500px",
+            left: isMobile ? "40px" : "500px",
             top: "300px",
-            width: `${Math.min(200 * scale, 300)}px`,
+            width: `${Math.min(200 * renderScale, 300)}px`,
           }),
         { scale, mobile }
       );

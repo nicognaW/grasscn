@@ -104,7 +104,7 @@ const fixture = async function fixture(
     const save = async (records: object[]) =>
       writeFile(
         journal,
-        `${records.map((record) => JSON.stringify(record)).join("\n")}\n`
+        `${records.map((checkpointRecord) => JSON.stringify(checkpointRecord)).join("\n")}\n`
       );
 
     await run({ candidate, file, journal, output, record, root, save });

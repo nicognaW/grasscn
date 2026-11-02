@@ -1181,11 +1181,11 @@ try {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact positioned capture producer boundary.
       const positionedCase = c as PositionedReferenceCase;
       await subject.evaluate(
-        (node: HTMLElement, c: PositionedReferenceCase) =>
+        (node: HTMLElement, placementCase: PositionedReferenceCase) =>
           Object.assign(node.style, {
-            left: `${c.x * c.scale}px`,
+            left: `${placementCase.x * placementCase.scale}px`,
             position: "fixed",
-            top: `${c.y * c.scale}px`,
+            top: `${placementCase.y * placementCase.scale}px`,
           }),
         positionedCase
       );

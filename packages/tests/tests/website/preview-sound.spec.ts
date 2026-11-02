@@ -91,8 +91,8 @@ test("Preview Volume controls button, checkbox and slider sounds across pages", 
       .getByRole("navigation", { exact: true, name: "Documentation" })
       .getByRole("link", { exact: true, name })
       .click();
-    await page.evaluate((previous) => {
-      (window as any).__previewVoices = previous;
+    await page.evaluate((previousVoices) => {
+      (window as any).__previewVoices = previousVoices;
     }, previous);
   };
   const volume = page

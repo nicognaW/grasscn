@@ -43,12 +43,12 @@ test("trading original sound bytes decode in the browser", async ({ page }) => {
 
   await page.goto(url());
 
-  const durations = await page.evaluate(async (clips) => {
+  const durations = await page.evaluate(async (audioClips) => {
     const context = new AudioContext();
 
     try {
       return await Promise.all(
-        clips.map(
+        audioClips.map(
           async (clip) =>
             (
               await context.decodeAudioData(

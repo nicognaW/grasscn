@@ -18,17 +18,17 @@ for (const scale of [2] as const) {
       );
       // Isolate a real narrow/padded consumer container from unrelated page-header overflow.
       await chart.evaluate(
-        (node, { scale, container }) => {
+        (node, { scale: renderScale, container: containerKind }) => {
           const wrapper = document.createElement("div");
-          wrapper.style.width = `${(container === "narrow" ? 72 : 100) * scale}px`;
+          wrapper.style.width = `${(containerKind === "narrow" ? 72 : 100) * renderScale}px`;
           wrapper.style.overflow = "auto";
-          wrapper.dataset.integerChartContainer = container;
+          wrapper.dataset.integerChartContainer = containerKind;
           node.before(wrapper);
           wrapper.append(node);
           node.style.width = "100%";
 
-          if (container === "padded") {
-            node.style.padding = `${7 * scale}px`;
+          if (containerKind === "padded") {
+            node.style.padding = `${7 * renderScale}px`;
           }
         },
         { container, scale }
