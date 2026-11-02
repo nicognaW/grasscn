@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+import type labelReference from "../../../tests/reference/label/manifest.json";
 
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -41,9 +42,11 @@ export const formsNativeTests = function formsNativeTests(
   test.describe.configure({ mode: "parallel" });
   const directories = ["tests/reference/label"];
   test(`${component} pixel comparator detects a changed pixel`, () => {
+    // SAFETY: the sole literal directory reads the retained label manifest, whose cases own a name.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact imported retained-artifact type at the comparator boundary.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directories[0]}/manifest.json`), "utf-8")
-    );
+    ) as typeof labelReference;
 
     const expected = PNG.sync.read(
       readFileSync(

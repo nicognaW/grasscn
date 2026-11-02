@@ -4,6 +4,14 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+import type buttonReference from "../../../tests/reference/manifest.json";
+import type labelReference from "../../../tests/reference/label/manifest.json";
+import type tooltipReference from "../../../tests/reference/tooltip/manifest.json";
+
+type TextReference =
+  | typeof buttonReference
+  | typeof labelReference
+  | typeof tooltipReference;
 
 export const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
@@ -48,9 +56,11 @@ export const nativeTextTests = function nativeTextTests(
         : ["tests/reference/label"];
 
   test(`${component} pixel comparator detects a changed pixel`, () => {
+    // SAFETY: the first directory is retained button, label or tooltip; every case in those manifests owns a name.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact imported retained-artifact union at the comparator boundary.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directories[0]}/manifest.json`), "utf-8")
-    );
+    ) as TextReference;
 
     const expected = PNG.sync.read(
       readFileSync(
