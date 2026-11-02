@@ -51,7 +51,6 @@ test("SystemToast uses the UVs and metrics observed in its normalized native con
   ) as typeof CapturedData1;
 
   // SAFETY: This read consumes the same pinned tests/reference/toast/toast-atlas.json producer data described by the type-only import; retain the runtime read and parse phase.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const observed = Object.values(
     JSON.parse(
       readFileSync(

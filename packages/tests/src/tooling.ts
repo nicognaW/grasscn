@@ -29,7 +29,6 @@ export const packageBin = function packageBin(
       const candidate = path.join(folder, "package.json");
 
       // SAFETY: candidate manifests belong to the installed dependency being resolved; only its declared package name is inspected.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Installed package.json owns this metadata contract.
       const candidateManifest = fs.existsSync(candidate)
         ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: installed package.json owns this package-name contract.
           (JSON.parse(fs.readFileSync(candidate, "utf-8")) as PackageManifest)

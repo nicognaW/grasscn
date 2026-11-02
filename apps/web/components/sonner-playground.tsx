@@ -19,9 +19,8 @@ export const SonnerPlayground = ({ scale }: { scale: 1 | 2 | 3 }) => {
 
   return (
     <>
-      <div /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+      <div 
         className="demo-options"
-        /* eslint-enable shadcn/no-unknown-classes */
       >
         <label>
           Title

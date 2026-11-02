@@ -173,6 +173,5 @@ export const DocumentSearch = ({ pages }: { pages: SearchPage[] }) => {
         )}
       </Command>
     </div>
-    /* eslint-enable jsx-a11y/no-noninteractive-element-interactions */
   );
 };

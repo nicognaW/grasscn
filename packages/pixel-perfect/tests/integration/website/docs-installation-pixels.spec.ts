@@ -119,7 +119,6 @@ test("default installation controls match their captured Minecraft content and s
 
   await expect(managers).toHaveAttribute("data-mc-tabs-ready", "true");
 
-  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
   for (const manager of ["npm", "pnpm", "Yarn", "Bun"]) {
     await managers.getByRole("tab", { exact: true, name: manager }).click();
     // Continue to the copy action: the reference declares an unfocused strip.
@@ -130,7 +129,6 @@ test("default installation controls match their captured Minecraft content and s
       `install-pm-${manager.toLowerCase()}`
     );
   }
-  /* eslint-enable no-await-in-loop */
 
   await methods.getByRole("tab", { exact: true, name: "Manual" }).click();
   await page.keyboard.press("Tab");
@@ -152,7 +150,6 @@ test("default installation controls match their captured Minecraft content and s
     inventory.files.length
   );
 
-  /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
   for (const file of inventory.files) {
     const label = file.source.split("/").at(-1);
 
@@ -204,7 +201,6 @@ test("default installation controls match their captured Minecraft content and s
     await page.mouse.move(0, 0);
     await pixels(await button.screenshot(), reference.name);
   }
-  /* eslint-enable no-await-in-loop */
 
   await selectors
     .getByRole("button", { exact: true, name: "minecraft-unifont-data.ts" })

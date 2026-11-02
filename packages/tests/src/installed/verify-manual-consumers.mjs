@@ -302,7 +302,6 @@ try {
         ),
     };
 
-    /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
     for (const [slug, title, filename] of [
       ["form", "Form example", "form"],
       ["code-block", "Code Block example", "code-block"],
@@ -348,21 +347,18 @@ try {
           )
         );
     }
-    /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
     report.copiedExamples = Object.fromEntries(
       Object.entries(copiedExamples).map(([name, code]) => [name, hash(code)])
     );
     manifests = [];
 
-    /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
     for (const name of new Set(Object.values(exampleItems).flat())) {
       /** @type {Response} */
       const response = await fetch(`${origin}/api/installation/${name}`);
       assert.ok(response.ok, `Public ${name} inventory available`);
       manifests.push(parseManualManifest(await response.json()));
     }
-    /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
     for (const [name, code] of Object.entries(copiedExamples)) {
       assertExamplePrerequisites(code, exampleItems[name], manifests);
@@ -421,7 +417,6 @@ try {
         versionAt > 0 ? specifier.slice(versionAt + 1) : "latest";
     }
 
-    /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Consumer stages share one browser, clipboard and resource budget; each stage completes before the next. */
     // eslint-disable-next-line no-unreachable-loop -- Preparation continues and runtime closes the host before advancing through both fixed framework entries.
     for (const framework of ["vite", "next"]) {
       const consumer = path.join(projectRoot, framework);
@@ -1268,7 +1263,6 @@ try {
       await server.exited;
       server = undefined;
     }
-    /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
     assert.deepEqual(
       await sourceIdentity(root),

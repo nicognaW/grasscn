@@ -23,7 +23,6 @@ const definition = parseHeaderCase(definitions.toString("utf-8"));
 /** @type {(import("../../src/runtime/docs-reference-types.ts").HeaderCapture & {images: Record<string, import("../../src/runtime/docs-reference-types.ts").ImageIdentity>, launch: string})[]} */
 const captures = [];
 
-/* eslint-disable no-await-in-loop -- Read native provenance and output identities in declared order before recording their verification. */
 for (const launch of ["native-one", "native-two"]) {
   const directory = path.join(root, launch);
 
@@ -65,7 +64,6 @@ for (const launch of ["native-one", "native-two"]) {
 
   captures.push({ launch, ...capture, images });
 }
-/* eslint-enable no-await-in-loop */
 
 if (captures[0].captureSourceSha256 !== captures[1].captureSourceSha256) {
   throw new Error("Native harness changed between launches");

@@ -595,12 +595,10 @@ test("Mobile component pages contain default previews before and after paragraph
       )
     ).toBe(true);
     await expect(page.locator(".documentation-playground")).toBeVisible();
-    // eslint-disable-next-line no-await-in-loop -- Wait for this page's real selection font metrics before measuring its ready layout.
     await page.evaluate(async () => {
       await document.fonts.ready;
     });
     expect(
-      // eslint-disable-next-line no-await-in-loop -- Measure this document after its own paragraphs settle before navigating the shared page.
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth
       )

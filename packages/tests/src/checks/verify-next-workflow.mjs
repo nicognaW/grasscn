@@ -135,13 +135,11 @@ const preserveInstalledDependencies = async () => {
     );
 
     try {
-      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const info = await lstat(target);
       assert.ok(
         info.isDirectory() || info.isSymbolicLink(),
         "Expected an installed dependency directory"
       );
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const physical = await realpath(target);
       assert.ok(
         physical.startsWith(root + path.sep),
@@ -163,7 +161,6 @@ const preserveInstalledDependencies = async () => {
     (left, right) => right.target.length - left.target.length
   );
   for (const [index, item] of targetsByDepth.entries()) {
-    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     await rename(item.target, path.join(backup, String(index)));
   }
 
@@ -191,12 +188,10 @@ const generatedDocsIdentity = async () => {
       const filename = path.join(folder, entry.name);
 
       if (entry.isDirectory()) {
-        // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
         await visit(filename);
       } else if (entry.isFile()) {
         hash
           .update(path.relative(webRoot, filename))
-          // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
           .update(await readFile(filename));
       }
     }
@@ -235,10 +230,8 @@ try {
     ["uncheck", "uncheck", repoRoot],
     ["shadcn", "shadcn", webRoot],
   ]) {
-    // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const physical = await realpath(packageBin(name, binary, from));
     assert.ok(
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       physical.startsWith((await realpath(repoRoot)) + path.sep) &&
         physical.includes(`${path.sep}node_modules${path.sep}`),
       "Fresh toolchain must resolve inside this source workspace"
@@ -278,15 +271,12 @@ try {
 
   for (const [index, name] of outputPaths.entries()) {
     const target = path.resolve(webRoot, name);
-    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const resolved = await realpath(target);
 
     assert.ok(
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       resolved.startsWith((await realpath(webRoot)) + path.sep),
       "Generated backup must stay in this web workspace"
     );
-    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     await rename(target, path.join(backup, String(index)));
   }
 
@@ -356,13 +346,10 @@ try {
   report.invalidation = [];
 
   for (const probe of probes) {
-    // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     const original = await readFile(probe.file);
 
     try {
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       await writeFile(probe.file, probe.change(original));
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const changed = await taskHashes(`${probe.name}-hashes`);
       assert.notEqual(
         changed[probe.task],
@@ -374,7 +361,6 @@ try {
         hashes["@grasscn/web#build"],
         `${probe.name} did not invalidate web build`
       );
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       const log = await run(`${probe.name}-generation`, probe.run);
       assert.match(
         log,
@@ -388,7 +374,6 @@ try {
         task: probe.task,
       });
     } finally {
-      // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
       await writeFile(probe.file, original);
     }
   }

@@ -51,7 +51,6 @@ pixelPerfectTest(
       )
     );
 
-    /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
     for (const [index, name] of [
       "wide-steve-16-hat-upright-dark-s2.png",
       "slim-alex-16-hat-upright-dark-s2.png",
@@ -93,6 +92,5 @@ pixelPerfectTest(
       );
       expect(differingPixels).toBe(0);
     }
-    /* eslint-enable no-await-in-loop */
   }
 );

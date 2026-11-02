@@ -32,7 +32,6 @@ export const assertExternalProject = async (project, excludedRoots) => {
   const resolved = await realpath(project);
 
   for (const root of excludedRoots) {
-    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const excluded = await realpath(root);
     assert.ok(
       !within(resolved, excluded) && !within(excluded, resolved),
@@ -104,7 +103,6 @@ export const assertIndependentDependencies = async (project) => {
     let ancestorModules = false;
 
     try {
-      // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
       const ancestorStat = await stat(path.join(ancestor, "node_modules"));
       ancestorModules = ancestorStat.isDirectory();
     } catch (error) {
@@ -140,7 +138,6 @@ export const assertIndependentDependencies = async (project) => {
       resolved = require.resolve(name);
     }
 
-    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const physical = await realpath(resolved);
     assert.ok(
       within(physical, ownedModules),
@@ -150,7 +147,6 @@ export const assertIndependentDependencies = async (project) => {
 
     while (within(directory, ownedModules)) {
       try {
-        // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
         const bytes = await readFile(path.join(directory, "package.json"));
         /** @type {unknown} */
         const installed = JSON.parse(bytes.toString("utf-8"));
@@ -203,11 +199,9 @@ export const directoryIdentity = async (
       );
 
       if (entry.isDirectory()) {
-        // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
         await visit(filename);
       } else if (entry.isFile()) {
         files[filename.replaceAll(path.sep, "/")] = sha256(
-          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
           await readFile(path.join(directory, filename))
         );
       }

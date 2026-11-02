@@ -183,7 +183,6 @@ export default class CheckpointReporter implements Reporter {
     );
 
     // SAFETY: the named attachment is emitted by our verification fixture with this protocol.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve attachment payload bytes and the fixture-owned contract.
     const verification = attachment
       ? // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- SAFETY: the named attachment is emitted by the general verification fixture.
         (JSON.parse(

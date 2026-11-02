@@ -28,9 +28,7 @@ export const ComponentSource = async ({
   if (index < 0) {
     return (
       <DocumentText
-        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
         role="alert"
-        /* eslint-enable jsx-a11y/prefer-tag-over-role */
       >
         Component source unavailable: {name}
       </DocumentText>
@@ -48,9 +46,7 @@ export const ComponentSource = async ({
   if (!source) {
     return (
       <DocumentText
-        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
         role="alert"
-        /* eslint-enable jsx-a11y/prefer-tag-over-role */
       >
         Component source could not be loaded: {name}. Reload this page to retry.
       </DocumentText>

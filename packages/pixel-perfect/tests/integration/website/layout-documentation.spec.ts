@@ -33,7 +33,6 @@ const rgbaDifferences = (actual: PNG, expected: PNG) => {
 pixelPerfectTest(
   "default layout documentation Separator and Progress match retained native cases",
   async ({ page }, info) => {
-    /* eslint-disable no-await-in-loop -- Apply each declared browser state and capture its evidence before changing that same page. */
     for (const [slug, slot, names] of [
       [
         "separator",
@@ -107,6 +106,5 @@ pixelPerfectTest(
         expect(differentPixels, name).toBe(0);
       }
     }
-    /* eslint-enable no-await-in-loop */
   }
 );

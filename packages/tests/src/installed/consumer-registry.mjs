@@ -21,7 +21,6 @@ export const fetchPublicRegistry = async (origin, items, source) => {
       "Safe registry item identity required"
     );
     const url = `${origin}/r/${item.name}.json`;
-    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const response = await fetch(url);
     assert.ok(
       response.ok &&
@@ -29,10 +28,8 @@ export const fetchPublicRegistry = async (origin, items, source) => {
           true,
       `Public JSON registry item unavailable: ${url}`
     );
-    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const bytes = Buffer.from(await response.arrayBuffer());
 
-    // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const built = await readFile(
       path.join(source, "apps/web/public/r", `${item.name}.json`)
     );
@@ -72,15 +69,12 @@ export const assertRegistryInstallation = async (
   for (const { payload } of payloads.values()) {
     for (const file of payload.files) {
       const target = installedRegistryFile(file, consumer, settings);
-      // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
       const targetStat = await stat(target);
       assert.ok(
         targetStat.isFile(),
         `Missing CLI-installed file: ${file.path}`
       );
-      // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
       const physicalTarget = await realpath(target);
-      // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
       const physicalConsumer = await realpath(consumer);
       assert.ok(
         physicalTarget.startsWith(physicalConsumer + path.sep),
@@ -95,7 +89,6 @@ export const assertRegistryInstallation = async (
   const installed = {};
 
   for (const [original, filename] of targets) {
-    // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
     const bytes = await readFile(filename);
     installed[path.relative(consumer, filename).replaceAll(path.sep, "/")] =
       sha256(bytes);
@@ -144,7 +137,6 @@ export const assertRegistryInstallation = async (
         let isFile = false;
 
         try {
-          // oxlint-disable-next-line eslint/no-await-in-loop, react-doctor/async-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
           const candidateStat = await stat(candidate);
           isFile = candidateStat.isFile();
         } catch {
@@ -152,9 +144,7 @@ export const assertRegistryInstallation = async (
         }
 
         if (isFile) {
-          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
           const physicalCandidate = await realpath(candidate);
-          // oxlint-disable-next-line eslint/no-await-in-loop -- Resolve one physical dependency or file at a time to bound filesystem handles and preserve rejection order.
           const physicalConsumer = await realpath(consumer);
           assert.ok(
             physicalCandidate.startsWith(physicalConsumer + path.sep),

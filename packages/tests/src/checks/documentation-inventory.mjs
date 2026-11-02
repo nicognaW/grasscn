@@ -14,7 +14,6 @@ import { webRoot } from "@grasscn/tests/paths";
 // eslint-disable-next-line anti-slop/no-runtime-typeof -- String fields are validated at the authored metadata boundary.
 const isString = (value) => typeof value === "string";
 
-// eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Metadata members remain unknown until field guards validate their owner contract.
 /**
  * @param {unknown} value - Raw authored JSON.
  * @returns {value is Record<string, unknown>} Whether metadata is an object.

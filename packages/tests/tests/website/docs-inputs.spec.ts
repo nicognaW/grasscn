@@ -236,7 +236,6 @@ test("Input family docs copy complete executable primary examples", async ({
 }) => {
   test.setTimeout(180_000);
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const name of [
     "checkbox",
     "slider",
@@ -268,7 +267,6 @@ test("Input family docs copy complete executable primary examples", async ({
 
     expect(await page.evaluate(() => window.copied)).toBe(code);
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("Input docs default layouts fit desktop and narrow viewports", async ({
@@ -277,7 +275,6 @@ test("Input docs default layouts fit desktop and narrow viewports", async ({
   test.setTimeout(120_000);
 
   for (const width of [1536, 390]) {
-    /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
     for (const name of ["form", "combobox"]) {
       await page.setViewportSize({ height: 900, width });
       const example = await primary(page, name);
@@ -289,6 +286,5 @@ test("Input docs default layouts fit desktop and narrow viewports", async ({
         path: info.outputPath(`${name}-${width}-actual.png`),
       });
     }
-    /* eslint-enable no-await-in-loop */
   }
 });

@@ -133,7 +133,6 @@ for (const [part, dir] of parts) {
 
           if (part === "input") {
             // SAFETY: Only the per-iteration [input, input] route enters this branch; its retained Input cases have required string text, as the type-only artifact import records.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation; no property read or fallback is added.
             const cursor =
               c.cursor ?? (c as QuestionnaireInputCase).text.length;
 

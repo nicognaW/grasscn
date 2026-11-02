@@ -18,9 +18,7 @@ export const Installation = async ({
   if (!manifest) {
     return (
       <DocumentText
-        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
         role="alert"
-        /* eslint-enable jsx-a11y/prefer-tag-over-role */
       >
         Installation unavailable: {name}
       </DocumentText>

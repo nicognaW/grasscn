@@ -25,14 +25,11 @@ const offers: TradeOffer[] = [
     cost: {
       count: 1,
       icon: (
-        /* eslint-disable next/no-img-element, react-doctor/nextjs-no-img-element -- Copyable Next and Vite examples retain exact native texture bytes and integer icon sizing. */
         <img
           src={emerald}
-          alt="" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+          alt="" 
           style={iconStyle}
-          /* eslint-enable shadcn/no-inline-styles */
         />
-        /* eslint-enable next/no-img-element, react-doctor/nextjs-no-img-element */
       ),
       label: "Emerald",
     },
@@ -41,14 +38,11 @@ const offers: TradeOffer[] = [
     result: {
       count: 1,
       icon: (
-        /* eslint-disable next/no-img-element, react-doctor/nextjs-no-img-element -- Copyable Next and Vite examples retain exact native texture bytes and integer icon sizing. */
         <img
           src={bread}
-          alt="" /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
+          alt="" 
           style={iconStyle}
-          /* eslint-enable shadcn/no-inline-styles */
         />
-        /* eslint-enable next/no-img-element, react-doctor/nextjs-no-img-element */
       ),
       label: "Bread",
     },

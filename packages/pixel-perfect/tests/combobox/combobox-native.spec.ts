@@ -158,7 +158,6 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
 
         if (c.state.endsWith("hover")) {
           // SAFETY: Within the Suggestions route, the existing hover-state guard selects exactly the retained hover cases, all with numeric targetIndex.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual closed-route/variant contract at the existing guard; no added property read or validation.
           await subject
             .getByRole("option")
             .nth((c as ComboboxHoveredSuggestionCase).targetIndex)

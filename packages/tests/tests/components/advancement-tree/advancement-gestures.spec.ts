@@ -20,11 +20,9 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       name: "Browse documentation",
     });
 
-    // eslint-disable-next-line no-await-in-loop -- This page must expose its mobile tree before the current viewport's clipping checks.
     const mobileNavigation = await browse.isVisible();
 
     if (mobileNavigation) {
-      // eslint-disable-next-line no-await-in-loop -- Complete this viewport's navigation before resizing the same page.
       await browse.click();
     }
 
