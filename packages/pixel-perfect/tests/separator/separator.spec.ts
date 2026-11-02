@@ -7,24 +7,7 @@ import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-as
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(
-    pixelPerfectFile("tests/reference/separator/manifest.json"),
-    "utf-8"
-  )
-) as {
-  cases: {
-    name: string;
-    width: number;
-    height: number;
-    scale: number;
-    background: string;
-    x: number;
-    y: number;
-    state: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/separator/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([

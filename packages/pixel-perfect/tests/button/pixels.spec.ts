@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -7,18 +6,7 @@ import { test, expect } from "@grasscn/tests/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const manifest = JSON.parse(
-  readFileSync(pixelPerfectFile("tests/reference/manifest.json"), "utf-8")
-) as {
-  cases: {
-    name: string;
-    scale: number;
-    width: number;
-    label: string;
-    state: string;
-    sha256: string;
-  }[];
-};
+import manifest from "../reference/manifest.json";
 
 for (const reference of manifest.cases) {
   test(`vanilla pixels: ${reference.name}`, async ({ page }, testInfo) => {
