@@ -47,9 +47,6 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "tests/unit/**/*.mjs",
-    "tests/reference/capture.mjs",
-    "tests/reference/capture-controls.mjs",
-    "tests/reference/capture-adventure.mjs",
     "tests/reference/capture-header-branding.mjs",
     "tests/reference/verify-header-branding.mjs",
     "*.config.ts"

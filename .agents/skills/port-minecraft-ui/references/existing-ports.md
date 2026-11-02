@@ -7,7 +7,7 @@ Paths are relative to the Git root. Read the files themselves for current comman
 | Boundary | Existing material | Adaptation rule |
 | --- | --- | --- |
 | Coverage and provenance | `apps/web/registry/minecraft-map.json`, `packages/pixel-perfect/tests/reference/` | Start with the selected component's captured references, conditions and limitations. Preserve existing evidence when adding cases. |
-| Capture launch | `packages/pixel-perfect/tests/reference/capture.mjs`, `packages/pixel-perfect/tests/reference/capture-controls.mjs` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
+| Capture launch | `packages/pixel-perfect/tests/reference/capture.ts`, `packages/pixel-perfect/tests/reference/capture-controls.ts` | Reuse isolation, source identity, stabilization, exact crops and separate output directories. Each harness and artifact pin has a declared scope. |
 | Component-specific capture | `packages/pixel-perfect/tests/reference/*/source/ControlsReferenceMain.java` | Adapt the relevant original Minecraft element, content and input sequences. Retain source and repeatability evidence. |
 | Pixel comparison | `packages/pixel-perfect/tests/button/pixels.spec.ts`, `packages/pixel-perfect/tests/advancement-tree/adventure.spec.ts`, `packages/pixel-perfect/tests/native-expansion/native-expansion.spec.ts` | Reuse strict decoded-RGBA comparisons and failure artifacts; adapt the locator and case schema. |
 | Interaction sequences | `packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts`, `packages/tests/tests/components/trading/trading-scroll.spec.ts`, `packages/tests/tests/components/player-preview/player-custom-skin.spec.ts` | Exercise the public API, transitions, competing gestures, burst input and content replacement. Read `interactions.md` for applicability. |
@@ -41,8 +41,8 @@ Consumer installation and ordinary browser regressions use the packaged assets a
 
 Run these directly when needed; they are not routine package commands:
 
-- `bun packages/pixel-perfect/tests/reference/capture.mjs <version-directory> <java-bin>` captures Button reference cases.
-- `bun packages/pixel-perfect/tests/reference/capture-controls.mjs <version-directory> <java-bin> [case-file]` captures the selected control corpus.
+- `bun packages/pixel-perfect/tests/reference/capture.ts <version-directory> <java-bin>` captures Button reference cases.
+- `bun packages/pixel-perfect/tests/reference/capture-controls.ts <version-directory> <java-bin> [case-file]` captures the selected control corpus.
 - `bun packages/pixel-perfect/src/native/verify-reference-repeat.ts <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
 - `bun packages/pixel-perfect/src/native/generate/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
 - `bun packages/pixel-perfect/src/runtime/check-map.ts --list` lists component mappings.

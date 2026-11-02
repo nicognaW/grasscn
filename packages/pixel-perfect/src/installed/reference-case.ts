@@ -1,4 +1,4 @@
-/** Shared capture identity emitted by capture.mjs and capture-controls.mjs. */
+/** Shared capture identity emitted by the native capture launchers. */
 export interface CapturedReferenceCase {
   name: string;
   sha256: string;
