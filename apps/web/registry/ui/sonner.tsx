@@ -306,7 +306,7 @@ const Toaster = function Toaster({
           node.querySelector<HTMLElement>("[data-description]");
 
         const rich = !!(
-          title?.childElementCount ?? description?.childElementCount
+          (title?.childElementCount ?? description?.childElementCount ?? 0)
         );
 
         let model = entries.get(node);

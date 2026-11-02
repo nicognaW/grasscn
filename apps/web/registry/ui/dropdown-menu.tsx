@@ -372,7 +372,7 @@ const DropdownMenuCheckboxItem = ({
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
-        if (!props.disabled) {
+        if (!(props.disabled ?? false)) {
           playMinecraftClick();
         }
       }}
@@ -410,7 +410,7 @@ const DropdownMenuRadioItem = ({
       onClick={(event) => {
         onClick?.(event);
 
-        if (!props.disabled) {
+        if (!(props.disabled ?? false)) {
           playMinecraftClick();
         }
       }}

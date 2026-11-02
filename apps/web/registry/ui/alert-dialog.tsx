@@ -337,7 +337,7 @@ const AlertDialogHeader = ({
   return (
     <div
       data-slot="alert-dialog-header"
-      tabIndex={tabIndex ?? (compact ? 0 : undefined)}
+      tabIndex={tabIndex ?? ((compact ?? false) ? 0 : undefined)}
       className={cn(`mc-alert-dialog-header`, className)}
       {...props}
     />

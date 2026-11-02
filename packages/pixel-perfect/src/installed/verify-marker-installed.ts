@@ -121,7 +121,7 @@ try {
         width: String(c.width),
         x: String(c.x),
         y: String(c.y),
-        ...(c.wrapWidth ? { wrapWidth: String(c.wrapWidth) } : {}),
+        ...((c.wrapWidth ?? 0) ? { wrapWidth: String(c.wrapWidth) } : {}),
       });
 
       await page!.goto(`${urlArg}?${q}`);

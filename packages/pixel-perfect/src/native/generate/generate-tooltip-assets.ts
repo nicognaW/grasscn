@@ -104,7 +104,7 @@ for (const name of ["background", "frame"]) {
   const aw = Math.round(image.width / (native.u1 - native.u0));
   const ah = Math.round(image.height / (native.v1 - native.v0));
 
-  if (atlasWidth && (aw !== atlasWidth || ah !== atlasHeight)) {
+  if ((atlasWidth ?? 0) && (aw !== atlasWidth || ah !== atlasHeight)) {
     throw new Error("Tooltip sprites use different atlases");
   }
 

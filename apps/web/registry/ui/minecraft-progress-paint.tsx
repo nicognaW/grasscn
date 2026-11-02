@@ -106,7 +106,7 @@ const paint = function paint(
   notchForeground: Sprite,
   filled: number
 ) {
-  if (shared?.gl.isContextLost()) {
+  if ((shared?.gl.isContextLost() ?? false)) {
     shared = undefined;
   }
 

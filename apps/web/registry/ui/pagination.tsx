@@ -61,7 +61,7 @@ const PaginationLink = ({
     <Button
       render={
         <a
-          aria-current={isActive ? "page" : undefined}
+          aria-current={(isActive ?? false) ? "page" : undefined}
           data-slot="pagination-link"
           data-active={isActive ?? undefined}
           {...props}
@@ -123,7 +123,7 @@ const PaginationArrow = ({
         (__style) =>
           ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
       )}
-      aria-current={isActive ? "page" : undefined}
+      aria-current={(isActive ?? false) ? "page" : undefined}
       {...props}
       onClick={(event) => {
         if (

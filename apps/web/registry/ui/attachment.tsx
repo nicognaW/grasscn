@@ -244,7 +244,7 @@ const AttachmentAction = ({
       disabled={inactive}
       aria-disabled={inactive ?? props["aria-disabled"]}
       onClickCapture={(event) => {
-        if (inactive) {
+        if ((inactive ?? false)) {
           event.preventDefault();
           event.stopPropagation();
 
@@ -281,7 +281,7 @@ const AttachmentTrigger = ({
       aria-disabled={inactive ?? undefined}
       {...props}
       onClickCapture={(event) => {
-        if (inactive) {
+        if ((inactive ?? false)) {
           event.preventDefault();
           event.stopPropagation();
 
@@ -293,7 +293,7 @@ const AttachmentTrigger = ({
       onClick={(event) => {
         onClick?.(event);
         queueMicrotask(() => {
-          if (!event.defaultPrevented && !inactive) {
+          if (!event.defaultPrevented && !(inactive ?? false)) {
             playMinecraftClick();
           }
         });

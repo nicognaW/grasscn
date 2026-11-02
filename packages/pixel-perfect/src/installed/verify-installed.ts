@@ -687,7 +687,7 @@ try {
         params.set("disabledIndex", String(c.disabledIndex));
       }
 
-      if (c.checked) {
+      if ((c.checked ?? false)) {
         params.set("patterned", "1");
       }
 
@@ -1075,7 +1075,7 @@ try {
           await subject.focus();
         }
       } else {
-        const list = selectedCase.contentHeight
+        const list = (selectedCase.contentHeight ?? 0)
           ? subject.locator('[data-slot="tabs-list"]')
           : subject;
 

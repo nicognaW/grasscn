@@ -39,18 +39,18 @@ export default defineConfig({
     proxy: proxyPort ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
     viewport: { height: 900, width: 1280 },
   },
-  webServer: process.env.GRASSCN_FIXTURE_URL
+  webServer: (process.env.GRASSCN_FIXTURE_URL ?? "")
     ? undefined
     : [
         {
           command: "bun --bun vite --config vite.config.ts",
           url: "http://127.0.0.1:5174",
-          reuseExistingServer: !process.env.CI,
+          reuseExistingServer: !(process.env.CI ?? ""),
         },
         {
           command: "bun run --cwd ../../apps/web dev",
           url: "http://127.0.0.1:5176",
-          reuseExistingServer: !process.env.CI,
+          reuseExistingServer: !(process.env.CI ?? ""),
         },
       ],
   workers: 1,

@@ -140,7 +140,7 @@ export const itemMediaPixels = function itemMediaPixels(
   x: number,
   y: number
 ) {
-  if (painter?.gl.isContextLost()) {
+  if ((painter?.gl.isContextLost() ?? false)) {
     painter = undefined;
   }
 

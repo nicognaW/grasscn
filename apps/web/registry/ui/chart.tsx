@@ -221,7 +221,7 @@ const ChartTooltipContent = ({
     const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
     const value =
-      !labelKey && typeof label === "string"
+      !(labelKey ?? "") && typeof label === "string"
         ? (config[label]?.label ?? label)
         : itemConfig?.label;
 
@@ -252,7 +252,7 @@ const ChartTooltipContent = ({
     labelKey,
   ]);
 
-  if (!active || !payload?.length) {
+  if (!(active ?? false) || !payload?.length) {
     return null;
   }
 

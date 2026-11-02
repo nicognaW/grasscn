@@ -107,10 +107,10 @@ const ToggleGroupItem = ({
           ({ "--mc-scale": resolvedScale, ...__style }) as React.CSSProperties
       )}
       {...props}
-      aria-disabled={resolvedDisabled ? true : props["aria-disabled"]}
+      aria-disabled={(resolvedDisabled ?? false) ? true : props["aria-disabled"]}
       onPointerDown={(event) => {
         if (
-          resolvedDisabled ||
+          (resolvedDisabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled")
         ) {
           event.preventDefault();
@@ -122,7 +122,7 @@ const ToggleGroupItem = ({
       }}
       onClick={(event) => {
         if (
-          resolvedDisabled ||
+          (resolvedDisabled ?? false) ||
           Object.hasOwn(event.currentTarget.dataset, "disabled") ||
           event.currentTarget.getAttribute("aria-disabled") === "true"
         ) {
@@ -133,7 +133,7 @@ const ToggleGroupItem = ({
 
         onClick?.(event);
 
-        if (!event.defaultPrevented && !event.baseUIHandlerPrevented) {
+        if (!event.defaultPrevented && !(event.baseUIHandlerPrevented ?? false)) {
           playMinecraftClick();
         }
       }}
