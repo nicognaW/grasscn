@@ -11,7 +11,7 @@ createServer(async (request, response) => {
     return;
   }
   // Serve only registry JSON, never source files or HTML.
-  const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/.exec(pathname);
+  const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/u.exec(pathname);
   if (!match) {
     response.writeHead(404, { "Content-Type": "application/json" });
     response.end(

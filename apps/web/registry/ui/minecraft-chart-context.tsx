@@ -106,13 +106,13 @@ export function chartColorChannels(
       "#55ff55";
   }
 
-  if (/^#[\da-f]{6}$/i.test(color)) {
+  if (/^#[\da-f]{6}$/iu.test(color)) {
     return [1, 3, 5].map((index) =>
       Number.parseInt(color.slice(index, index + 2), 16)
     );
   }
 
-  if (/^#[\da-f]{3}$/i.test(color)) {
+  if (/^#[\da-f]{3}$/iu.test(color)) {
     return [1, 2, 3].map((index) =>
       Number.parseInt(color[index] + color[index], 16)
     );

@@ -47,7 +47,7 @@ const SignBoard = ({
     throw Error("Minecraft signs contain up to four lines");
   }
 
-  if (!/^#[0-9a-f]{6}$/i.test(color)) {
+  if (!/^#[0-9a-f]{6}$/iu.test(color)) {
     throw Error("Sign color must be a six-digit hex color");
   }
 

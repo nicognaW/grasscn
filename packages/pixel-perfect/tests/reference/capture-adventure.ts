@@ -76,7 +76,7 @@ if (
 
 for (const c of definitions) {
   if (
-    !/^[a-z0-9-]+$/.test(c.name) ||
+    !/^[a-z0-9-]+$/u.test(c.name) ||
     ![c.x, c.y, c.width, c.height, c.page ?? 0].every(Number.isInteger) ||
     c.x < 0 ||
     c.y < 0 ||
@@ -216,7 +216,7 @@ const libraries = metadata.libraries
 
   .filter(
     (library) =>
-      !/^(net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/.test(
+      !/^(net\.fabricmc|net\.fabricmc\.|org\.ow2\.asm|io\.github\.llamalad7):/u.test(
         library.name
       )
   )
@@ -434,7 +434,7 @@ const manifest: ControlCaptureManifest = {
 
 if (
   definitions.some((c) =>
-    /[^\x00-\x7f]/.test(
+    /\P{ASCII}/u.test(
       (c.text ?? "") + (c.label ?? "") + (c.labels ?? []).join("")
     )
   )

@@ -76,7 +76,7 @@ export default function PlayerDemo({ scale }: DemoProps) {
         onSubmit={(event) => {
           event.preventDefault();
 
-          if (/^[A-Za-z0-9_]{1,16}$/.test(name.trim()))
+          if (/^[A-Za-z0-9_]{1,16}$/u.test(name.trim()))
             setUsername(name.trim());
         }}
         className="flex gap-3 flex-wrap"
@@ -98,7 +98,7 @@ export default function PlayerDemo({ scale }: DemoProps) {
         <Button
           type="submit"
           scale={scale}
-          disabled={!/^[A-Za-z0-9_]{1,16}$/.test(name.trim())}
+          disabled={!/^[A-Za-z0-9_]{1,16}$/u.test(name.trim())}
           className="w-(--demo-width)"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */

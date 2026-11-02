@@ -11,7 +11,7 @@ interface Band {
 // SVG's channel lookup truncates; the half-unit bias reproduces GPU rounding.
 export const MinecraftDialogBackdrop = () => {
   const ref = React.useRef<SVGSVGElement>(null);
-  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/g, "");
+  const id = React.useId().replaceAll(/[^a-zA-Z0-9_-]/gu, "");
 
   const [bands, setBands] = React.useState<Band[]>([]);
   React.useLayoutEffect(() => {
