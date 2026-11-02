@@ -11,8 +11,8 @@ export default function ToggleDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
 
   const [pressed, setPressed] = React.useState(false);
-    const [disabled, setDisabled] = React.useState(false);
-    const [label, setLabel] = React.useState("Only craftable recipes");
+  const [disabled, setDisabled] = React.useState(false);
+  const [label, setLabel] = React.useState("Only craftable recipes");
 
   return (
     <>

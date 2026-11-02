@@ -7,8 +7,8 @@ import type {DemoProps} from "../types"
 
 export default function AttachmentDemo({ scale }: DemoProps) {
   const [name, setName] = React.useState("New World.zip");
-    const [opened, setOpened] = React.useState(0);
-    const [removed, setRemoved] = React.useState(false);
+  const [opened, setOpened] = React.useState(0);
+  const [removed, setRemoved] = React.useState(false);
 
   return (
     <>

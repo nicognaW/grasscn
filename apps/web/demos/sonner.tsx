@@ -8,10 +8,10 @@ import type {DemoProps} from "../types"
 
 export default function SonnerDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("World saved");
-    const [message, setMessage] = React.useState(
-      "Your progress has been saved.\n世界已保存"
-    );
-    const [shown, setShown] = React.useState(0);
+  const [message, setMessage] = React.useState(
+    "Your progress has been saved.\n世界已保存"
+  );
+  const [shown, setShown] = React.useState(0);
 
   return (
     <>

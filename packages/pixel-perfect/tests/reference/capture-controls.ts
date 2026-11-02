@@ -165,8 +165,9 @@ function permitted(library: MinecraftCaptureLibrary) {
         process.arch,
         process.arch === "x64" ? "x86_64" : process.arch,
       ].includes(rule.os.arch)
-    )
-      { continue; }
+    ) {
+      continue;
+    }
 
     allowed = rule.action === "allow";
   }
@@ -219,10 +220,11 @@ async function javaCommand(
     `${result.stdout ?? ""}\n${result.stderr ?? ""}`
   );
 
-  if (result.error || result.status !== 0)
-    { throw new Error(
+  if (result.error || result.status !== 0) {
+    throw new Error(
       `${command} failed. See ${path.join(runtime, `${command}.log`)}\n${result.error ?? result.stderr}`
-    ); }
+    );
+  }
 
   return result.stdout;
 }
@@ -320,8 +322,8 @@ try {
   }
 }
 
-for (const scale of [1, 2, 3])
-  { for (const definition of definitions) {
+for (const scale of [1, 2, 3]) {
+  for (const definition of definitions) {
     const name = definition.name + "-s" + scale + ".png";
 
     const bytes = await readFile(path.join(captures, name));
@@ -336,7 +338,8 @@ for (const scale of [1, 2, 3])
       scale,
       sha256: sha256(bytes),
     });
-  } }
+  }
+}
 
 const pages = [...new Set(definitions.map((c) => c.page ?? 0))].sort(
   (a, b) => a - b
@@ -350,8 +353,8 @@ await mkdir(path.join(outputDir, "frames"), { recursive: true });
 
 const frameRecords = [];
 
-for (const page of pages)
-  { for (const scale of [1, 2, 3]) {
+for (const page of pages) {
+  for (const scale of [1, 2, 3]) {
     const name = `native-controls-${pages.length > 1 ? `p${page}-` : ""}s${scale}.png`;
 
     const bytes = await readFile(path.join(frames, name));
@@ -359,7 +362,8 @@ for (const page of pages)
     await writeFile(path.join(outputDir, "frames", name), bytes);
 
     frameRecords.push({ name, sha256: sha256(bytes) });
-  } }
+  }
+}
 
 const manifest: ControlCaptureManifest = {
   source:

@@ -49,7 +49,7 @@ const types: {
 
 export default function ChartDemo({ scale }: DemoProps) {
   const stage = React.useRef<HTMLDivElement>(null);
-    const [contentWidth, setContentWidth] = React.useState(80);
+  const [contentWidth, setContentWidth] = React.useState(80);
 
   React.useLayoutEffect(() => {
     const measure = () => {
@@ -82,14 +82,14 @@ export default function ChartDemo({ scale }: DemoProps) {
   );
 
   const [type, setType] = React.useState<AnalyticsChartType>("area");
-    const [period, setPeriod] = React.useState("6");
-    const [device, setDevice] = React.useState("both");
+  const [period, setPeriod] = React.useState("6");
+  const [device, setDevice] = React.useState("both");
 
   const [step, setStep] = React.useState(0);
-    const [limit, setLimit] = React.useState(120);
+  const [limit, setLimit] = React.useState(120);
 
   const [metric, setMetric] = React.useState("latency");
-    const [webStep, setWebStep] = React.useState(0);
+  const [webStep, setWebStep] = React.useState(0);
 
   const webSamples = React.useMemo(
     () =>
@@ -105,10 +105,10 @@ export default function ChartDemo({ scale }: DemoProps) {
 
   const browserData = React.useMemo(() => {
     const rows = browsers.map((row, i) => ({
-        ...row,
-        visitors: row.visitors + (webStep % 3) * (i + 1) * 5,
-      }));
-      const total = rows.reduce((sum, row) => sum + row.visitors, 0);
+      ...row,
+      visitors: row.visitors + (webStep % 3) * (i + 1) * 5,
+    }));
+    const total = rows.reduce((sum, row) => sum + row.visitors, 0);
 
     return rows.map((row) => ({ name: row.name, visitors: row.visitors }));
   }, [webStep]);

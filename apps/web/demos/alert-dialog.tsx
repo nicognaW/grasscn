@@ -19,8 +19,8 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
   const [open, setOpen] = React.useState(false);
 
   const [title, setTitle] = React.useState("Are you sure?");
-    const [message, setMessage] = React.useState("This action cannot be undone.");
-    const [confirmed, setConfirmed] = React.useState(0);
+  const [message, setMessage] = React.useState("This action cannot be undone.");
+  const [confirmed, setConfirmed] = React.useState(0);
 
   return (
     <>

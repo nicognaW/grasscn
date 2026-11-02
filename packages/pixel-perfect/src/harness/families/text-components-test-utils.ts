@@ -146,7 +146,9 @@ export const nativeTextTests = function nativeTextTests(
             align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) { params.set("wrapWidth", String(c.wrapWidth)); }
+          if (c.wrapWidth != null) {
+            params.set("wrapWidth", String(c.wrapWidth));
+          }
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(subject).toHaveAttribute(
@@ -161,7 +163,9 @@ export const nativeTextTests = function nativeTextTests(
           await page.mouse.move(0, 0);
 
           if (component === "kbd") {
-            if (c.state === "hover") { await subject.hover(); }
+            if (c.state === "hover") {
+              await subject.hover();
+            }
 
             if (c.state === "focus") {
               await subject.focus();
@@ -171,20 +175,22 @@ export const nativeTextTests = function nativeTextTests(
             }
           }
 
-          if (component === "badge")
-            { await expect(
+          if (component === "badge") {
+            await expect(
               subject.locator("[data-mc-tooltip-painted]")
-            ).toHaveAttribute("data-mc-tooltip-painted", "true"); }
-          else if (component !== "kbd")
-            { await expect(subject).toHaveAttribute(
+            ).toHaveAttribute("data-mc-tooltip-painted", "true");
+          } else if (component !== "kbd") {
+            await expect(subject).toHaveAttribute(
               "data-mc-label-layout-ready",
               "true"
-            ); }
+            );
+          }
 
           for (const line of await subject
             .locator("[data-mc-label-ready]")
-            .all())
-            { await expect(line).toHaveAttribute("data-mc-label-ready", "true"); }
+            .all()) {
+            await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+          }
           await page.evaluate(async () => {
             const frameCompletion = Promise.withResolvers<void>();
 

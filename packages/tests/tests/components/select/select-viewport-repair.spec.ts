@@ -4,8 +4,8 @@ const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
 for (const scale of [2] as const) {
   for (const position of ["default", "popper"] as const) {
-    for (const short of [false, true])
-      { test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short ? "short" : "scrolled"}`, async ({
+    for (const short of [false, true]) {
+      test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short ? "short" : "scrolled"}`, async ({
         page,
       }) => {
         const width = 390;
@@ -128,6 +128,7 @@ for (const scale of [2] as const) {
         }
         await page.keyboard.press("Escape");
         await expect(trigger).toBeFocused();
-      }); }
+      });
+    }
   }
 }

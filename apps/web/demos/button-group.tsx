@@ -15,10 +15,10 @@ export default function ButtonGroupDemo({ scale }: DemoProps) {
   );
 
   const [orientation, setOrientation] = React.useState<
-      "horizontal" | "vertical"
-    >("horizontal");
-    const [title, setTitle] = React.useState("World actions");
-    const [action, setAction] = React.useState("Ready");
+    "horizontal" | "vertical"
+  >("horizontal");
+  const [title, setTitle] = React.useState("World actions");
+  const [action, setAction] = React.useState("Ready");
 
   return (
     <>

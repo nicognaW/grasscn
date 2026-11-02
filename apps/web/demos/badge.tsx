@@ -7,8 +7,8 @@ import type { DemoProps } from "../types";
 
 export default function BadgeDemo({ scale }: DemoProps) {
   const [text, setText] = React.useState("Diamonds!");
-    const [earned, setEarned] = React.useState(true);
-    const [clicks, setClicks] = React.useState(0);
+  const [earned, setEarned] = React.useState(true);
+  const [clicks, setClicks] = React.useState(0);
 
   return (
     <>

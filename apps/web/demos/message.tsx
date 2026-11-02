@@ -25,11 +25,13 @@ const history: Line[] = [
 
 function History({ scale }: DemoProps) {
   const [messages, setMessages] = React.useState(history);
-    const [text, setText] = React.useState("The updated design looks great.");
-    const api = useMessageScroller();
+  const [text, setText] = React.useState("The updated design looks great.");
+  const api = useMessageScroller();
 
   const send = () => {
-    if (!text.trim()) { return; }
+    if (!text.trim()) {
+      return;
+    }
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };

@@ -6,7 +6,7 @@ import type { DemoProps } from '../types';
 
 export default function HudDemo({ scale }: DemoProps) {
   const [health, setHealth] = React.useState(17);
-    const [progress, setProgress] = React.useState(0.45);
+  const [progress, setProgress] = React.useState(0.45);
 
   return (
     <div

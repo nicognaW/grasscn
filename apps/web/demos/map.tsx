@@ -6,8 +6,8 @@ import {getWorldMapPixels} from './map-world-data'
 
 export default function MapDemo({ scale }: DemoProps) {
   const [heading, setHeading] = React.useState(0);
-    const [selected, setSelected] = React.useState("Home");
-    const [point, setPoint] = React.useState<{ x: number; y: number }>();
+  const [selected, setSelected] = React.useState("Home");
+  const [point, setPoint] = React.useState<{ x: number; y: number }>();
 
   const pixels = React.useMemo(getWorldMapPixels, []);
 

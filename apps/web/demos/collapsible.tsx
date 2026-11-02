@@ -8,10 +8,10 @@ import type {DemoProps} from "../types"
 
 export default function CollapsibleDemo({ scale }: DemoProps) {
   const [title, setTitle] = React.useState("World details");
-    const [message, setMessage] = React.useState(
-      "Hello Minecraft\nYour next adventure starts here."
-    );
-    const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState(
+    "Hello Minecraft\nYour next adventure starts here."
+  );
+  const [open, setOpen] = React.useState(false);
 
   return (
     <>

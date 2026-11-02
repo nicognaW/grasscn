@@ -11,16 +11,16 @@ export default function SidebarDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
 
   const [search, setSearch] = React.useState("");
-    const [selected, setSelected] = React.useState("Survival");
-    const [action, setAction] = React.useState("Ready");
-    const worlds = [
-      "Survival",
-      "Creative",
-      "Adventure",
-      "你好，世界",
-      "Skyblock",
-      "Hardcore",
-    ].filter((name) => name.toLowerCase().includes(search.toLowerCase()));
+  const [selected, setSelected] = React.useState("Survival");
+  const [action, setAction] = React.useState("Ready");
+  const worlds = [
+    "Survival",
+    "Creative",
+    "Adventure",
+    "你好，世界",
+    "Skyblock",
+    "Hardcore",
+  ].filter((name) => name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <>
@@ -31,8 +31,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
             if (
               (event.ctrlKey || event.metaKey) &&
               event.key.toLowerCase() === "b"
-            )
-              { event.preventDefault(); }
+            ) {
+              event.preventDefault();
+            }
           }}
           style={
             {
