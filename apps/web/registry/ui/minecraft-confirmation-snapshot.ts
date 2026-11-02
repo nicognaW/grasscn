@@ -8,7 +8,7 @@ export function useConfirmationSnapshot(
   radius: number
 ) {
   const [ready, setReady] = React.useState(false);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     const node = canvas.current!;
     const host = node.parentElement!;
 

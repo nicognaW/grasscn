@@ -12,7 +12,7 @@ export const CollapsibleFirstFrameFixture = () => {
   const warm = q.has("warm");
   const [ready, setReady] = React.useState(!warm);
 
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     if (warm) {
       let live = true;
       void loadUnihex().then(() => {
