@@ -370,7 +370,7 @@ const sidebarControlLabel = function sidebarControlLabel(
   return parts.map((child, index) => (
     <React.Fragment key={index}>
       {typeof child === "string" ? (
-        /^[\u0020-\u007E]*$/.test(child) ? (
+        /^[\u0020-\u007E]*$/u.test(child) ? (
           <MinecraftText className="mc-text">{child}</MinecraftText>
         ) : (
           <MinecraftUnicodeLabel text={child} />

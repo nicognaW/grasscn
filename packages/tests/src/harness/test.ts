@@ -35,7 +35,7 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
         });
 
       const metrics = files
-        .filter((file) => /\.json$/i.test(file))
+        .filter((file) => /\.[jJ][sS][oO][nN]$/u.test(file))
         .map((file) => {
           try {
             return {

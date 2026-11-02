@@ -54,14 +54,14 @@ const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll("\r\n", "\n")
-    .replaceAll(/\/\*[\s\S]*?\*\//g, "")
+    .replaceAll(/\/\*[\s\S]*?\*\//gu, "")
     .trim();
 
   if (settings.rsc === false) {
-    t = t.replace(/^["']use client["'];?\s*/, "");
+    t = t.replace(/^["']use client["'];?\s*/u, "");
   }
 
-  return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
+  return t.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
 const files = item!.files.map((f) => {

@@ -26,7 +26,7 @@ const keyText = function keyText(content: React.ReactNode): React.ReactNode {
 
   const text = String(content);
 
-  if (!/^[\u0020-\u007E]*$/.test(text)) {
+  if (!/^[\u0020-\u007E]*$/u.test(text)) {
     return <MinecraftUnicodeLabel text={text} />;
   }
 

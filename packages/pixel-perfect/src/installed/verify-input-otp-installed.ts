@@ -44,14 +44,14 @@ const files = [];
 const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
-    .replaceAll(/\/\*[\s\S]*?\*\//g, "")
+    .replaceAll(/\/\*[\s\S]*?\*\//gu, "")
     .trim();
 
   if (settings.rsc === false) {
-    text = text.replace(/^["']use client["'];?\s*/, "");
+    text = text.replace(/^["']use client["'];?\s*/u, "");
   }
 
-  return text.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
+  return text.replace(/^(?:\/\/[^\n]*\n\s*)+/u, "");
 };
 
 for (const entry of item!.files) {

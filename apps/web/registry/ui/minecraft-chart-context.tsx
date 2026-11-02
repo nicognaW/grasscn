@@ -95,7 +95,7 @@ export function chartColorChannels(
   color: string,
   element?: Element | null
 ): number[] {
-  const variable = /^var\(\s*(--[^,)]+)(?:,\s*([^)]*))?\)/.exec(color);
+  const variable = /^var\(\s*(--[^,)]+)(?:,\s*([^)]*))?\)/u.exec(color);
 
   if (variable) {
     color =
@@ -501,7 +501,7 @@ export const ChartPixelSurface = ({
         const points = (
           element
             .getAttribute("points")
-            ?.match(/[-+]?(?:\d*\.)?\d+(?:e[-+]?\d+)?/gi) ?? []
+            ?.match(/[-+]?(?:\d*\.)?\d+(?:[eE][-+]?\d+)?/gu) ?? []
         ).map(Number);
 
         for (let i = 0; i + 1 < points.length; i += 2) {

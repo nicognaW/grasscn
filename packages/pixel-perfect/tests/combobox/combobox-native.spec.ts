@@ -124,7 +124,7 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         );
 
         const unicodeCount = c.labels.filter((label: string) =>
-          /[^\x20-\x7E]/.test(label)
+          /[^\u0020-\u007E]/u.test(label)
         ).length;
 
         await expect(subject.locator("[data-mc-menu-text-ready]")).toHaveCount(
