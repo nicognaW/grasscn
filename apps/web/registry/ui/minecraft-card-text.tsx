@@ -127,18 +127,18 @@ export const MinecraftCardText = ({
                   const [x, y, advance] =
                     minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32];
 
-                  return (
-                    <span
-                      className="mc-card-bold-glyph"
-                      key={i}
-                      style={
-                        {
+                  const glyphStyle: CardBoldGlyphStyle = {
                           "--mc-advance": advance + 1,
                           "--mc-glyph-x": x,
                           "--mc-glyph-y": y,
                           visibility: char === " " ? "hidden" : undefined,
-                        } satisfies CardBoldGlyphStyle
-                      }
+                        };
+
+                  return (
+                    <span
+                      className="mc-card-bold-glyph"
+                      key={i}
+                      style={glyphStyle}
                     >
                       <i />
                       <i />
