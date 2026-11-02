@@ -276,9 +276,9 @@ try {
         { sha256: value.sha256, url: value.url },
       ])
     );
-    report.currentItemNames = registry.items
-      .map((item) => item.name)
-      .toSorted();
+    const sortedCurrentItemNames = registry.items.map((item) => item.name);
+    sortedCurrentItemNames.sort();
+    report.currentItemNames = sortedCurrentItemNames;
 
     const initializedDependencies =
       await assertIndependentDependencies(consumer);

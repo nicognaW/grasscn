@@ -44,7 +44,7 @@ export const groupSearchResults = (
     return [];
   }
 
-  return [...grouped]
+  const rankedResults = [...grouped]
     .map(([url, matches], index) => {
       const page = catalog.get(url);
 
@@ -106,10 +106,10 @@ export const groupSearchResults = (
         },
         score,
       };
-    })
-    .toSorted(
-      (first, second) =>
-        second.score - first.score || first.index - second.index
-    )
-    .map((entry) => entry.result);
+    });
+  rankedResults.sort(
+    (first, second) =>
+      second.score - first.score || first.index - second.index
+  );
+  return rankedResults.map((entry) => entry.result);
 };

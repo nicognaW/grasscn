@@ -22,18 +22,17 @@ export const consumerBuildIdentity = async (directory, framework) => {
     )
   );
 
+  const sortedFiles = Object.entries(files);
+  sortedFiles.sort(([first], [second]) => {
+    if (first < second) {
+      return -1;
+    }
+
+    return Number(first > second);
+  });
+
   return {
     files,
-    sha256: sha256(
-      JSON.stringify(
-        Object.entries(files).toSorted(([first], [second]) => {
-          if (first < second) {
-            return -1;
-          }
-
-          return Number(first > second);
-        })
-      )
-    ),
+    sha256: sha256(JSON.stringify(sortedFiles)),
   };
 };

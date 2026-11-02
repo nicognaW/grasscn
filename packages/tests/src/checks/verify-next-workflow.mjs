@@ -158,9 +158,11 @@ const preserveInstalledDependencies = async () => {
   const backup = path.join(directory, "installed-dependency-backup");
   await mkdir(backup);
 
-  for (const [index, item] of targets
-    .toSorted((left, right) => right.target.length - left.target.length)
-    .entries()) {
+  const targetsByDepth = targets.slice();
+  targetsByDepth.sort(
+    (left, right) => right.target.length - left.target.length
+  );
+  for (const [index, item] of targetsByDepth.entries()) {
     // eslint-disable-next-line no-await-in-loop -- Complete each backup, source mutation and cache probe before the next dependent stage.
     await rename(item.target, path.join(backup, String(index)));
   }
@@ -181,9 +183,11 @@ const generatedDocsIdentity = async () => {
   const visit = async (folder) => {
     const entries = await readdir(folder, { withFileTypes: true });
 
-    for (const entry of entries.toSorted((left, right) =>
+    const sortedEntries = entries.slice();
+    sortedEntries.sort((left, right) =>
       left.name.localeCompare(right.name)
-    )) {
+    );
+    for (const entry of sortedEntries) {
       const filename = path.join(folder, entry.name);
 
       if (entry.isDirectory()) {

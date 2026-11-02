@@ -158,12 +158,13 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
 
     const bound = compile(project, paths);
     assert.equal(bound.status, 0, bound.output);
-    assert.deepEqual(
-      [...configuredPaths.keys()]
-        .filter((name) => name.startsWith(`${manifest.name}/`))
-        .toSorted(),
-      publicJavaScript.map(([subpath]) => alias(subpath)).toSorted()
+    const sortedConfiguredAliases = [...configuredPaths.keys()].filter((name) =>
+      name.startsWith(`${manifest.name}/`)
     );
+    sortedConfiguredAliases.sort();
+    const sortedPublicAliases = publicJavaScript.map(([subpath]) => alias(subpath));
+    sortedPublicAliases.sort();
+    assert.deepEqual(sortedConfiguredAliases, sortedPublicAliases);
 
     for (const [subpath, target] of publicJavaScript) {
       const prefix = `======== Module name '${alias(subpath)}' was successfully resolved to '`;

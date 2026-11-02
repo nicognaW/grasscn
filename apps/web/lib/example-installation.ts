@@ -25,11 +25,15 @@ export const exampleInstallation = (code: string): string[] => {
 
     const basename = target.split("/").at(-1);
 
-    const owner =
-      candidates.find((item) => item.name === basename) ??
-      candidates
-        .toSorted((left, right) => left.files.length - right.files.length)
-        .at(0);
+    let owner = candidates.find((item) => item.name === basename);
+
+    if (owner === undefined) {
+      const candidatesByFileCount = candidates.slice();
+      candidatesByFileCount.sort(
+        (left, right) => left.files.length - right.files.length
+      );
+      owner = candidatesByFileCount.at(0);
+    }
 
     if (owner === undefined) {
       throw new Error(
@@ -40,5 +44,7 @@ export const exampleInstallation = (code: string): string[] => {
     names.add(owner.name);
   }
 
-  return [...names].toSorted();
+  const sortedNames = [...names];
+  sortedNames.sort();
+  return sortedNames;
 };

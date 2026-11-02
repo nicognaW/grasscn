@@ -35,7 +35,8 @@ export const sourceIdentity = async (directory = repoRoot) => {
         .split("\0")
         .filter(Boolean)
     ),
-  ].toSorted();
+  ];
+  files.sort();
 
   const hash = createHash("sha256");
 
@@ -85,8 +86,9 @@ export const productionBuildIdentity = async ({
   /** @param {string} folder - Verification input. */
   const visit = async (folder) => {
     const entries = await readdir(folder);
+    entries.sort();
 
-    for (const name of entries.toSorted()) {
+    for (const name of entries) {
       const file = path.join(folder, name);
       const relative = path.relative(directory, file).replaceAll(path.sep, "/");
 
@@ -170,8 +172,9 @@ const preparationIdentity = async (root, directory) => {
   /** @param {string} folder - Verification input. */
   const visit = async (folder) => {
     const entries = await readdir(folder);
+    entries.sort();
 
-    for (const name of entries.toSorted()) {
+    for (const name of entries) {
       const filename = path.join(folder, name);
       // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       const info = await lstat(filename);

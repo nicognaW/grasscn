@@ -52,8 +52,8 @@ try {
 
       const exports = project.checker
         .getExportsOfModule(entryModule)
-        .map((symbol) => symbol.name)
-        .toSorted();
+        .map((symbol) => symbol.name);
+      exports.sort();
 
       if (!exports.length) {
         throw new Error(`${name}: no public exports in the registry entry`);
