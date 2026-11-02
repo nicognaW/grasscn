@@ -3,6 +3,7 @@
 @import "../registry/ui/minecraft-text-assets.css";
 @import "../minecraft-theme-assets.css";
 @import "../minecraft-scrollbars.css";
+@import "../components/demo-utilities.css";
 @source "../registry";
 @source "../components";
 

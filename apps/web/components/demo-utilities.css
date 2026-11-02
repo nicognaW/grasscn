@@ -1,0 +1,8 @@
+@utility demo-result {
+  .documentation-playground & {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
