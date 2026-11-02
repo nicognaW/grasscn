@@ -23,7 +23,6 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: calc(var(--mc-progress-filled) * var(--mc-pixel));
     overflow: hidden;
     pointer-events: none;
   }

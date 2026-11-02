@@ -18,10 +18,6 @@ interface ProgressSurfaceStyle extends React.CSSProperties {
   "--mc-progress-image": string;
 }
 
-interface ProgressIndicatorStyle extends React.CSSProperties {
-  "--mc-progress-filled": number;
-}
-
 type BossBarColor =
   | "pink"
   | "blue"
@@ -107,10 +103,6 @@ const Progress = ({
     ? { "--mc-progress-image": `url("${notchBackground}")` }
     : undefined;
 
-  const indicatorStyle: ProgressIndicatorStyle = {
-    "--mc-progress-filled": filled,
-  };
-
   const foregroundStyle: ProgressSurfaceStyle = {
     "--mc-progress-image": `url("${foreground}")`,
   };
@@ -147,7 +139,7 @@ const Progress = ({
           data-slot="progress-indicator"
           aria-hidden="true"
           className="mc-progress-indicator"
-          style={indicatorStyle}
+          style={{ height: "100%", width: `calc(${filled} * var(--mc-pixel))` }}
         >
           <span className="mc-progress-surface" style={foregroundStyle} />
           {notchForeground && (
