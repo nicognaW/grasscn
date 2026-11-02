@@ -139,7 +139,9 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   }
 
   return (
+    // oxlint-disable-next-line shadcn/no-inline-styles -- Upstream ChartStyle emits scoped theme variables for runtime ChartConfig series names.
     <style
+      // oxlint-disable-next-line react/no-danger -- Preserve upstream ChartStyle's per-chart theme-variable stylesheet.
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
