@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { version } from "bun";
-import { workspaceNames } from "./verification-types.ts";
+import { workspaceNames } from "@tests/runtime/verification-types";
 
 const digest = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");

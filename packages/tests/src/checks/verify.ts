@@ -16,8 +16,8 @@ import {
 import { repoRoot, testRoot } from "@tests/paths";
 import { packageBin } from "@tests/tooling";
 
-import { readVerificationState } from "../runtime/verification-types.ts";
-import type { VerificationReport } from "../runtime/verification-types.ts";
+import { readVerificationState } from "@tests/runtime/verification-types";
+import type { VerificationReport } from "@tests/runtime/verification-types";
 
 const [output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);

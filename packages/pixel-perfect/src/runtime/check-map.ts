@@ -33,7 +33,7 @@ import {
   assertHistoricalUtilitySources,
   validateHistoricalEvidence,
   historicalMapComponents,
-} from "./historical-evidence.ts";
+} from "@ppt/runtime/historical-evidence";
 
 const root = repoRoot;
 
