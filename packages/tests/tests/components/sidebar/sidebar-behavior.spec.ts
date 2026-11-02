@@ -2,6 +2,15 @@ import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
+
+interface SidebarClickAudioState {
+  sounds: RecordedPitchedPlayback[];
+}
+
+interface SidebarPreventedAudioState {
+  sounds: number;
+}
 
 const runtimeErrors = new WeakMap<object, string[]>();
 
@@ -236,9 +245,13 @@ test("Sidebar uses the original click sound once per accepted native-button acti
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = [];
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds.push({
+    // SAFETY: This init script owns this test document's pitched-playback trace and creates its empty array before installing play.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds = [];
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: The same test initializer creates this trace; the unchanged play mock appends pitch, source and volume from its media receiver.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarClickAudioState).sounds.push({
         pitch: this.playbackRate,
         source: this.src,
         volume: this.volume,
@@ -249,26 +262,46 @@ test("Sidebar uses the original click sound once per accepted native-button acti
   });
   await page.goto("/?component=sidebar");
   await page.locator("#menu-worlds").hover();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);
+  expect(await page.evaluate(() =>
+    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds
+  )).toEqual([]);
   await page.locator("#menu-worlds").click();
   await page.locator("#toggle").click();
-  expect(await page.evaluate(() => (window as any).sounds)).toEqual([
+  expect(await page.evaluate(() =>
+    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds
+  )).toEqual([
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
     { pitch: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
   await page.locator("#disabled").dispatchEvent("click");
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(2);
+  expect((await page.evaluate(() =>
+    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds
+  )).length).toBe(2);
   await page.keyboard.press("Control+b");
-  expect((await page.evaluate(() => (window as any).sounds)).length).toBe(2);
+  expect((await page.evaluate(() =>
+    // SAFETY: This paired reader runs after navigation initializes the pitched-playback trace; no other state shape is asserted here.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarClickAudioState).sounds
+  )).length).toBe(2);
 });
 
 test("Sidebar prevented trigger activation stays silent and does not change state", async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    (window as any).sounds = 0;
-    HTMLMediaElement.prototype.play = function play() {
-      (window as any).sounds += 1;
+    // SAFETY: This separate init script owns a numeric play counter and initializes it before installing its counter-only mock.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarPreventedAudioState).sounds = 0;
+    HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
+      // SAFETY: This test initializes sounds to0; the unchanged mock increments that numeric counter once per play invocation.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+      (window as typeof window & SidebarPreventedAudioState).sounds += 1;
 
       return Promise.resolve();
     };
@@ -277,5 +310,9 @@ test("Sidebar prevented trigger activation stays silent and does not change stat
   const button = page.locator("[data-subject]");
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "true");
-  expect(await page.evaluate(() => (window as any).sounds)).toBe(0);
+  expect(await page.evaluate(() =>
+    // SAFETY: This paired reader runs after navigation initializes this test's numeric play counter; no playback-array contract is assumed.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
+    (window as typeof window & SidebarPreventedAudioState).sounds
+  )).toBe(0);
 });
