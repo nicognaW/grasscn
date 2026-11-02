@@ -90,7 +90,6 @@ for (const scale of [2] as const) {
     const states: unknown[] = [];
 
     for (const ms of [0, 16, 32, 50, 100, 200, 500]) {
-      // eslint-disable-next-line no-await-in-loop -- Capture each paused animation frame before advancing the same owned popup.
       const state = await page.evaluate((frame) => {
         const overlay = document.querySelector<HTMLElement>(
           "[data-slot=drawer-overlay]"

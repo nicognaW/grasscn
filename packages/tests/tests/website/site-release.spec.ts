@@ -43,7 +43,6 @@ test("all production sections share navigation and omit internal status content"
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
 
-  /* eslint-disable no-await-in-loop -- Navigate and verify each section sequentially in the same browser page. */
   for (const path of [
     "",
     "docs",
@@ -59,7 +58,6 @@ test("all production sections share navigation and omit internal status content"
     await expect(page.locator("h1")).toBeVisible();
     expect(await page.locator("body").textContent()).not.toMatch(internal);
   }
-  /* eslint-enable no-await-in-loop */
 
   expect(errors).toEqual([]);
 });

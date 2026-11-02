@@ -48,7 +48,9 @@ interface NormalVerificationEnvironment {
   arch: string;
   bun: string;
   ci: string | null;
-  installedDependencies: NonNullable<ReturnType<typeof installedDependencyIdentity>>;
+  installedDependencies: NonNullable<
+    ReturnType<typeof installedDependencyIdentity>
+  >;
   locale: string;
   platform: NodeJS.Platform;
   pptIncluded: false;
@@ -78,7 +80,6 @@ for (const executable of [
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
 ]) {
   try {
-    // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     const info = await stat(executable);
     environment.edge = { executable, modified: info.mtimeMs, size: info.size };
     break;
@@ -203,13 +204,11 @@ if (phase !== "prepare") {
 let hosts: Awaited<ReturnType<typeof serveVerificationHosts>> | undefined;
 
 try {
-  /* oxlint-disable no-await-in-loop -- Build steps consume earlier outputs; save each receipt and fail before starting the next step. */
   for (const [name, args, cwd] of steps) {
     if (
       name === "production-build" &&
       process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
     ) {
-      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       report.websiteBuild = await readPreparedProductionBuild({ source });
       report.checks.push({
         exitCode: 0,
@@ -217,7 +216,6 @@ try {
         reusedCompletedBuild: true,
         verifiedCommand: report.websiteBuild.verifiedCommand,
       });
-      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await save();
       continue;
     }
@@ -225,12 +223,10 @@ try {
     let browserEnvironment: NodeJS.ProcessEnv = {};
 
     if (name === "normal-browser") {
-      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       await writeFile(
         path.join(output, "verification-phase.json"),
         JSON.stringify({ phase: "browser", source })
       );
-      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       hosts = await serveVerificationHosts({
         fixturePort: 5284,
         previewPort: 5286,
@@ -290,12 +286,10 @@ try {
     const code = exitCode ?? (signal === null ? 0 : 1);
 
     report.checks.push({ exitCode: code, name });
-    // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     await save();
     assert.equal(code, 0, `${name} failed`);
 
     if (name === "production-build") {
-      // eslint-disable-next-line no-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
       report.websiteBuild = await stampProductionBuild({
         source,
         verifiedCommand: [process.execPath, ...args],
@@ -324,7 +318,8 @@ try {
     fixtureManifest().sha256,
     // SAFETY: successful fixture-build records this bundle, or the browser phase restores it after the existing prepared-receipt assertion.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed stage list must finish successfully before this unchanged SHA read.
-    (report.fixtureBundle as NonNullable<VerificationReport["fixtureBundle"]>).sha256,
+    (report.fixtureBundle as NonNullable<VerificationReport["fixtureBundle"]>)
+      .sha256,
     "Independent fixture changed during normal verification"
   );
   const awaitedIdentity2 = await productionBuildIdentity({ source });
@@ -332,7 +327,8 @@ try {
     awaitedIdentity2.outputSha256,
     // SAFETY: production-build stamps this identity, or the browser phase restores its asserted prepared website identity.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The closed successful stage flow owns this exact output hash read.
-    (report.websiteBuild as NonNullable<VerificationReport["websiteBuild"]>).outputSha256,
+    (report.websiteBuild as NonNullable<VerificationReport["websiteBuild"]>)
+      .outputSha256,
     "Next output changed during normal verification"
   );
 

@@ -30,13 +30,17 @@ export default function TabsDemo({ scale }: DemoProps) {
           <Input
             aria-label="First tab title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-45"
           />
         </label>
         <Button
           aria-pressed={disabled}
-          onClick={() => setDisabled((current) => !current)}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
         >{`More tab: ${disabled ? "Disabled" : "Enabled"}`}</Button>
       </div>
       <div ref={stage.ref} className="demo-stage" data-stage="tabs">
@@ -63,7 +67,9 @@ export default function TabsDemo({ scale }: DemoProps) {
                 aria-label="Tabs world name"
                 scale={scale}
                 value={world}
-                onChange={(event) => setWorld(event.target.value)}
+                onChange={(event) => {
+                  setWorld(event.target.value);
+                }}
                 className="w-(--demo-width)"
                 style={
                   /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -80,7 +86,9 @@ export default function TabsDemo({ scale }: DemoProps) {
                 id="tabs-structures"
                 scale={scale}
                 checked={structures}
-                onCheckedChange={(next) => setStructures(next === true)}
+                onCheckedChange={(next) => {
+                  setStructures(next === true);
+                }}
               />
               <Label
                 htmlFor="tabs-structures"

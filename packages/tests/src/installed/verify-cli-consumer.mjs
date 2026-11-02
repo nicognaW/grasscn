@@ -372,7 +372,6 @@ try {
       }
     );
 
-    /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- Readiness retries must observe the same owned server before retrying. */
     for (let attempt = 0; ; attempt += 1) {
       assert.ok(
         server.exitCode === null,
@@ -395,7 +394,6 @@ try {
       );
       await Bun.sleep(500);
     }
-    /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
     const observerRequire = createRequire(path.join(testRoot, "package.json"));
 

@@ -182,7 +182,6 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
         {/* eslint-enable jsx-a11y/control-has-associated-label */}
         {bulk ? (
           <>
-            {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
             <Button
               /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control"
@@ -194,8 +193,7 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
             >
               Load
             </Button>
-            {/* eslint-enable jsx-a11y/control-has-associated-label */}
-            {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
+
             <Button
               /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
               className="documentation-control documentation-full-copy"
@@ -207,19 +205,14 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
             >
               Copy full file
             </Button>
-            {/* eslint-enable jsx-a11y/control-has-associated-label */}
           </>
         ) : null}
       </div>
       {loading ? <DocumentText>Loading file</DocumentText> : null}
       {failure ? (
-        <div
-          /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-          role="alert"
-          /* eslint-enable jsx-a11y/prefer-tag-over-role */
-        >
+        <div role="alert">
           <DocumentText>File could not be loaded.</DocumentText>
-          {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
+
           <Button /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
             className="documentation-control"
             /* eslint-enable shadcn/no-unknown-classes */ onClick={() => {
@@ -228,7 +221,6 @@ const FileSource = ({ file }: { file: InstallationFile }) => {
           >
             Retry
           </Button>
-          {/* eslint-enable jsx-a11y/control-has-associated-label */}
         </div>
       ) : null}
       {bulk ? (
@@ -345,7 +337,6 @@ export const ManualInstallation = ({
               className="documentation-manual-file-entry"
               /* eslint-enable shadcn/no-unknown-classes */
             >
-              {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
               <Button
                 /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
                 className="documentation-manual-file"
@@ -357,7 +348,7 @@ export const ManualInstallation = ({
               >
                 {file.source.split("/").at(-1)}
               </Button>
-              {/* eslint-enable jsx-a11y/control-has-associated-label */}
+
               <DocumentParagraph>{file.destination}</DocumentParagraph>
             </div>
           ))}
@@ -366,11 +357,7 @@ export const ManualInstallation = ({
       {selected ? (
         <FileSource key={selected.url} file={selected} />
       ) : (
-        <DocumentText
-          /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-          role="alert"
-          /* eslint-enable jsx-a11y/prefer-tag-over-role */
-        >
+        <DocumentText role="alert">
           Installation files unavailable.
         </DocumentText>
       )}

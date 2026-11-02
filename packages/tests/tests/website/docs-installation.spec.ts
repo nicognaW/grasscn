@@ -95,7 +95,6 @@ test("Button installation copies and remembers the visitor package manager", asy
     pnpm: `pnpm dlx shadcn@latest add ${origin}/r/button.json`,
   };
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const [manager, command] of Object.entries(commands)) {
     await installation.getByRole("tab", { exact: true, name: manager }).click();
     await installation
@@ -104,7 +103,6 @@ test("Button installation copies and remembers the visitor package manager", asy
     await expect(installation.getByRole("status")).toHaveText("Copied");
     expect(await page.evaluate(() => window.copied)).toBe(command);
   }
-  /* eslint-enable no-await-in-loop */
 
   await installation.getByRole("tab", { exact: true, name: "Bun" }).focus();
   await page.keyboard.press("ArrowLeft");
@@ -158,7 +156,6 @@ test("Button manual installation exposes complete files and defers large resourc
 
   await expect(files.getByRole("button")).toHaveCount(item.files.length);
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const file of item.files) {
     await expect(
       files.getByRole("button", {
@@ -167,7 +164,6 @@ test("Button manual installation exposes complete files and defers large resourc
       })
     ).toBeAttached();
   }
-  /* eslint-enable no-await-in-loop */
 
   await page.evaluate(() => {
     Object.defineProperty(navigator, "clipboard", {

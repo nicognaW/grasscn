@@ -67,7 +67,9 @@ export default function PlayerDemo({ scale }: DemoProps) {
               "--demo-width": `${90 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setReset((v) => v + 1)}
+          onClick={() => {
+            setReset((v) => v + 1);
+          }}
         >
           Reset view
         </Button>
@@ -83,7 +85,9 @@ export default function PlayerDemo({ scale }: DemoProps) {
       >
         <Input
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => {
+            setName(event.target.value);
+          }}
           aria-label="Player name"
           scale={scale}
           maxLength={16}

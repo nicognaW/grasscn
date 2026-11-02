@@ -46,7 +46,9 @@ export default function AvatarDemo({ scale }: DemoProps) {
             pattern="[A-Za-z0-9_]{1,16}"
             maxLength={16}
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
             className="w-full"
           />
         </label>

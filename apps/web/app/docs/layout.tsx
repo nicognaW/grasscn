@@ -6,11 +6,7 @@ import { source } from "../../lib/source";
 import "../../components/document-navigation.css";
 
 const DocsLayout = ({ children }: { children: ReactNode }) => (
-  <div
-    /* eslint-disable shadcn/no-unknown-classes -- Defined by the document-navigation.css imported above. */
-    className="minecraft-docs-layout"
-    /* eslint-enable shadcn/no-unknown-classes */
-  >
+  <div className="minecraft-docs-layout">
     <DocumentationNavigation tree={source.pageTree} />
     {children}
   </div>

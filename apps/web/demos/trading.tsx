@@ -36,16 +36,17 @@ export default function TradingDemo({ scale }: DemoProps) {
     <div
       className="demo-stage demo-stage-display-grid demo-stage-gap-16 max-w-full"
       data-stage="trading"
-      
     >
-      <div className="max-w-full overflow-x-auto" >
+      <div className="max-w-full overflow-x-auto">
         <Trading
           scale={scale}
           title="Village market"
           offers={offers}
           selectedId={selected}
           onSelectedIdChange={setSelected}
-          onTrade={() => setCompleted((n) => n + 1)}
+          onTrade={() => {
+            setCompleted((n) => n + 1);
+          }}
         />
       </div>
       <output aria-live="polite">

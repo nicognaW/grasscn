@@ -8,7 +8,6 @@ const AspectRatioExample = () => (
     /* eslint-enable shadcn/no-inline-styles */
   >
     <AspectRatio ratio={16 / 9}>
-      {/* eslint-disable next/no-img-element, react-doctor/nextjs-no-img-element -- Copyable Next and Vite examples retain exact native texture bytes and integer icon sizing. */}
       <img
         width="160"
         height="90"
@@ -18,7 +17,6 @@ const AspectRatioExample = () => (
         style={{ height: "100%", imageRendering: "pixelated", width: "100%" }}
         /* eslint-enable shadcn/no-inline-styles */
       />
-      {/* eslint-enable next/no-img-element, react-doctor/nextjs-no-img-element */}
     </AspectRatio>
   </div>
 );

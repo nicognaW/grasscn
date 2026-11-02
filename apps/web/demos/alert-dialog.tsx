@@ -30,8 +30,10 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
           <Input
             aria-label="Alert dialog title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            className="w-60" 
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+            className="w-60"
           />
         </label>
         <label>
@@ -39,7 +41,9 @@ export default function AlertDialogDemo({ scale }: DemoProps) {
           <Textarea
             aria-label="Alert dialog message"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
             style={{ width: 320, height: 100 }}
           />
         </label>

@@ -57,7 +57,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
                 aria-label="Find sidebar worlds"
                 placeholder="Search worlds..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
             </SidebarHeader>
             <SidebarSeparator />
@@ -70,7 +72,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
                       <SidebarMenuItem key={name}>
                         <SidebarMenuButton
                           isActive={selected === name}
-                          onClick={() => setSelected(name)}
+                          onClick={() => {
+                            setSelected(name);
+                          }}
                         >
                           {name}
                         </SidebarMenuButton>
@@ -81,7 +85,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
                     ))}
                     <SidebarMenuItem>
                       <SidebarMenuButton
-                        onClick={() => setSelected("Settings")}
+                        onClick={() => {
+                          setSelected("Settings");
+                        }}
                       >
                         Settings
                       </SidebarMenuButton>
@@ -89,7 +95,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
                         <SidebarMenuSubItem>
                           <SidebarMenuSubButton
                             href="#sidebar"
-                            onClick={() => setSelected("Game options")}
+                            onClick={() => {
+                              setSelected("Game options");
+                            }}
                           >
                             Game options
                           </SidebarMenuSubButton>
@@ -103,7 +111,11 @@ export default function SidebarDemo({ scale }: DemoProps) {
             <SidebarFooter>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton onClick={() => setSelected("Main menu")}>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      setSelected("Main menu");
+                    }}
+                  >
                     Main menu
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -149,7 +161,9 @@ export default function SidebarDemo({ scale }: DemoProps) {
                   <Button
                     scale={scale}
                     className="w-full"
-                    onClick={() => setAction("Play requested: " + selected)}
+                    onClick={() => {
+                      setAction("Play requested: " + selected);
+                    }}
                   >
                     Play world
                   </Button>

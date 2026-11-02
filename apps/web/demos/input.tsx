@@ -5,6 +5,7 @@ import type { DemoProps } from "../types";
 
 export default function InputDemo({ scale }: DemoProps) {
   const [value, setValue] = React.useState("Hello Minecraft");
+
   return (
     <>
       <div className="demo-stage" data-stage="input">
@@ -17,7 +18,9 @@ export default function InputDemo({ scale }: DemoProps) {
             aria-label="Demo input"
             scale={scale}
             value={value}
-            onChange={(event) => setValue(event.target.value)}
+            onChange={(event) => {
+              setValue(event.target.value);
+            }}
             placeholder="Search..."
           />
         </div>

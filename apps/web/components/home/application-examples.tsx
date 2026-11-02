@@ -11,6 +11,7 @@ import { Panel, Action } from "./showcase-panel";
 
 export function Savings() {
   const [value, setValue] = React.useState(3250);
+
   return (
     <Panel
       title="Make room for your next idea."
@@ -40,7 +41,9 @@ export function Savings() {
       </div>
       <Action
         disabled={value === 5000}
-        onClick={() => setValue((v) => Math.min(5000, v + 250))}
+        onClick={() => {
+          setValue((v) => Math.min(5000, v + 250));
+        }}
       >
         {value === 5000 ? "Goal reached" : "Add $250"}
       </Action>
@@ -64,6 +67,7 @@ export const Schedule = () => {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(2026, 10, 2)
   );
+
   return (
     <Panel
       title="Find a day that works."
@@ -105,9 +109,11 @@ export const Schedule = () => {
     </Panel>
   );
 };
+
 export function Feedback() {
   const [text, setText] = React.useState("");
   const [sent, setSent] = React.useState(false);
+
   return (
     <Panel
       title="Help shape what comes next."
@@ -154,9 +160,11 @@ export function Feedback() {
     </Panel>
   );
 }
+
 export function Plan() {
   const [plan, setPlan] = React.useState("monthly");
   const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel
       title="A plan for your next chapter."
@@ -188,7 +196,13 @@ export function Plan() {
             : "Flexible monthly billing"}
         </DocumentText>
       </p>
-      <Action onClick={() => setSaved(true)}>Save plan</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save plan
+      </Action>
       <output
         aria-label="Plan status"
         aria-live="polite"

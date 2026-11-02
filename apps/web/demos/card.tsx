@@ -51,7 +51,12 @@ export default function CardDemo({ scale }: DemoProps) {
               />
             </CardContent>
             <CardFooter>
-              <Button scale={scale} onClick={() => setSaved(true)}>
+              <Button
+                scale={scale}
+                onClick={() => {
+                  setSaved(true);
+                }}
+              >
                 Done
               </Button>
             </CardFooter>

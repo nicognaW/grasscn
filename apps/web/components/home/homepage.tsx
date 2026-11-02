@@ -46,23 +46,33 @@ const traffic = [
   { name: "May", visitors: 309, returning: 210 },
   { name: "Jun", visitors: 354, returning: 240 },
 ];
+
 const chartConfig = {
   visitors: { label: "Visitors", color: "#55ff55" },
   returning: { label: "Returning", color: "#55ffff" },
 };
+
 const team = [
   { name: "Alex Morgan", role: "Design engineer", skin: "slim/alex" },
   { name: "Jordan Lee", role: "Frontend developer", skin: "wide/steve" },
   { name: "Sam Rivera", role: "Product designer", skin: "wide/kai" },
 ] as const;
+
 function Controls() {
   const [clicks, setClicks] = React.useState(0);
   const [checked, setChecked] = React.useState(true);
   const [enabled, setEnabled] = React.useState(true);
+
   return (
     <Panel title="Small pieces. Big possibilities." tag="THE ESSENTIALS">
       <div className="grass-inline">
-        <Action onClick={() => setClicks((v) => v + 1)}>Click me</Action>
+        <Action
+          onClick={() => {
+            setClicks((v) => v + 1);
+          }}
+        >
+          Click me
+        </Action>
         <Action disabled>Disabled</Action>
       </div>
       <Input scale={2} aria-label="Example name" placeholder="Your name" />
@@ -78,7 +88,9 @@ function Controls() {
             id="home-remember"
             scale={2}
             checked={checked}
-            onCheckedChange={(v) => setChecked(v === true)}
+            onCheckedChange={(v) => {
+              setChecked(v === true);
+            }}
           />
           <Label htmlFor="home-remember" scale={2}>
             Remember me
@@ -105,8 +117,10 @@ function Controls() {
     </Panel>
   );
 }
+
 function Analytics() {
   const [type, setType] = React.useState<AnalyticsChartType>("bar");
+
   return (
     <Panel
       title="A good month to grow."
@@ -134,7 +148,9 @@ function Analytics() {
             key={v}
             scale={1}
             aria-pressed={type === v}
-            onClick={() => setType(v)}
+            onClick={() => {
+              setType(v);
+            }}
           >
             {(typeof v === "number" ? v : v[0]).toUpperCase() + v.slice(1)}
           </Button>
@@ -173,11 +189,13 @@ function Analytics() {
     </Panel>
   );
 }
+
 function Project() {
   const [name, setName] = React.useState("Website redesign");
   const [budget, setBudget] = React.useState("2400");
   const [category, setCategory] = React.useState("design");
   const [saved, setSaved] = React.useState("");
+
   return (
     <Panel
       title="Start something new."
@@ -198,7 +216,9 @@ function Project() {
             scale={2}
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </label>
         <div className="grass-form-row">
@@ -211,7 +231,9 @@ function Project() {
               min="1"
               required
               value={budget}
-              onChange={(e) => setBudget(e.target.value)}
+              onChange={(e) => {
+                setBudget(e.target.value);
+              }}
             />
           </label>
           <label>
@@ -224,7 +246,9 @@ function Project() {
               }}
               scale={2}
               value={category}
-              onValueChange={(value) => setCategory(value ?? "")}
+              onValueChange={(value) => {
+                setCategory(value ?? "");
+              }}
             >
               <SelectTrigger aria-label="Project category">
                 <SelectValue />
@@ -260,8 +284,10 @@ function Project() {
     </Panel>
   );
 }
+
 function Team() {
   const [invited, setInvited] = React.useState(false);
+
   return (
     <Panel
       title="Better, together."
@@ -285,7 +311,12 @@ function Team() {
           </div>
         ))}
       </div>
-      <Action onClick={() => setInvited(true)} disabled={invited}>
+      <Action
+        onClick={() => {
+          setInvited(true);
+        }}
+        disabled={invited}
+      >
         {invited ? "Invitation ready" : "Invite teammate"}
       </Action>
       {invited && (
@@ -296,14 +327,17 @@ function Team() {
     </Panel>
   );
 }
+
 function Tasks() {
   const [done, setDone] = React.useState([true, true, false, false]);
+
   const tasks = [
     "Define the design tokens",
     "Build the component library",
     "Polish the onboarding flow",
     "Ship something memorable",
   ];
+
   return (
     <Panel title="One step closer to shipped." tag="LAUNCH CHECKLIST">
       <div className="grass-task-list">
@@ -313,9 +347,9 @@ function Tasks() {
               scale={2}
               id={`home-task-${i}`}
               checked={done[i]}
-              onCheckedChange={(v) =>
-                setDone((old) => old.map((x, j) => (j === i ? v === true : x)))
-              }
+              onCheckedChange={(v) => {
+                setDone((old) => old.map((x, j) => (j === i ? v === true : x)));
+              }}
             />
             <label
               htmlFor={`home-task-${i}`}
@@ -339,6 +373,7 @@ function Tasks() {
     </Panel>
   );
 }
+
 function Revenue() {
   return (
     <Panel title="Your work, paying off." tag="THIS MONTH">
@@ -395,10 +430,12 @@ function Revenue() {
     </Panel>
   );
 }
+
 function Preferences() {
   const [email, setEmail] = React.useState(true);
   const [release, setRelease] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel title="Keep the good stuff coming." tag="NOTIFICATIONS">
       <div className="grass-preference">
@@ -443,7 +480,13 @@ function Preferences() {
           style={{ width: 64 }}
         />
       </div>
-      <Action onClick={() => setSaved(true)}>Save preferences</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save preferences
+      </Action>
       <output
         aria-live="polite"
         aria-label="Preferences status"
@@ -458,17 +501,22 @@ function Preferences() {
     </Panel>
   );
 }
+
 function Chat() {
   const [draft, setDraft] = React.useState("");
+
   const [messages, setMessages] = React.useState([
     { author: "Alex", text: "The new dashboard looks great!" },
     { author: "Jordan", text: "Those pixel charts are so good." },
   ]);
+
   const list = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const el = list.current;
+
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages]);
+
   return (
     <Panel
       title="A little more human."
@@ -493,6 +541,7 @@ function Chat() {
         className="grass-chat-compose"
         onSubmit={(e) => {
           e.preventDefault();
+
           if (draft.trim()) {
             setMessages((old) => [
               ...old,
@@ -507,7 +556,9 @@ function Chat() {
           aria-label="Team message"
           placeholder="Say something nice..."
           value={draft}
-          onChange={(e) => setDraft(e.target.value)}
+          onChange={(e) => {
+            setDraft(e.target.value);
+          }}
         />
         <Action type="submit" disabled={!draft.trim()}>
           Send
@@ -519,8 +570,10 @@ function Chat() {
     </Panel>
   );
 }
+
 function Performance() {
   const [sample, setSample] = React.useState(0);
+
   const data = React.useMemo(
     () =>
       Array.from(
@@ -530,17 +583,23 @@ function Performance() {
       ),
     [sample]
   );
+
   const container = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(140);
   React.useLayoutEffect(() => {
     const el = container.current!;
-    const measure = () =>
+
+    const measure = () => {
       setWidth(Math.max(40, Math.min(242, Math.floor(el.clientWidth))));
+    };
+
     measure();
     const o = new ResizeObserver(measure);
     o.observe(el);
+
     return () => o.disconnect();
   }, []);
+
   return (
     <Panel
       title="Old-school pixels. Live insights."
@@ -568,7 +627,9 @@ function Performance() {
         </span>
         <button
           className="grass-text-link"
-          onClick={() => setSample((v) => v + 1)}
+          onClick={() => {
+            setSample((v) => v + 1);
+          }}
         >
           <DocumentText>Refresh sample</DocumentText>
         </button>
@@ -576,9 +637,11 @@ function Performance() {
     </Panel>
   );
 }
+
 function Payout() {
   const [amount, setAmount] = React.useState(250);
   const [saved, setSaved] = React.useState(false);
+
   return (
     <Panel
       title="Set your own pace."
@@ -615,7 +678,13 @@ function Payout() {
           <DocumentText>$1,000 max</DocumentText>
         </span>
       </div>
-      <Action onClick={() => setSaved(true)}>Save threshold</Action>
+      <Action
+        onClick={() => {
+          setSaved(true);
+        }}
+      >
+        Save threshold
+      </Action>
       <output
         className="grass-note"
         aria-live="polite"
@@ -628,8 +697,10 @@ function Payout() {
     </Panel>
   );
 }
+
 function Install() {
   const [item, setItem] = React.useState("button");
+
   return (
     <section
       className="grass-install"

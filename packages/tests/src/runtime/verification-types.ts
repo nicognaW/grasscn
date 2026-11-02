@@ -187,7 +187,6 @@ const isSnapshot = (value: unknown): value is ConsumerSnapshot =>
   isWebsite(value.websiteIdentity) &&
   isEnvironment(value.environment);
 
-// eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Journey-specific fields stay unknown until their existing verification stage consumes them.
 // eslint-disable-next-line anti-slop/no-unsafe-dictionary-type -- Only this parsed snapshot boundary retains unconsumed journey fields as unknown.
 type RawConsumerSnapshot = ConsumerSnapshot & Record<string, unknown>;
 

@@ -19,13 +19,10 @@ test("canonical documentation independently exposes grouped public parts and omi
       inventory.pages.find((item) => item.name === name)?.registryItem
     ).toBe(owner);
     expect(inventory.items).not.toContain(name);
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await page.goto(`${origin}docs/components/${name}`);
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
       title
     );
-    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
     await expect(
       page.getByRole("heading", { exact: true, name: "Installation" })
     ).toBeVisible();

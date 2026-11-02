@@ -25,7 +25,9 @@ export default function LabelDemo({ scale }: DemoProps) {
           }
           scale={scale}
           value={text}
-          onChange={(event) => setText(event.target.value)}
+          onChange={(event) => {
+            setText(event.target.value);
+          }}
         />
       </div>
       <div className="demo-stage" data-stage="label">

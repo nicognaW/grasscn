@@ -311,7 +311,6 @@ export const completedRunReport = function completedRunReport(
       );
 
       // SAFETY: the retained checkpoint reporter writes this declaration catalogue; existing schema/source checks remain below.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       const expected = readRetainedCatalogue(expectedFile);
 
       if (
@@ -624,7 +623,6 @@ export const completedRunReport = function completedRunReport(
 
         records.set(key, result);
         // SAFETY: these ordered entries preserve one exact case-history record.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         history.set(key, [
           ...(history.get(key) ?? []),
           // SAFETY: these ordered entries define the owned case-history record.
@@ -649,7 +647,6 @@ export const completedRunReport = function completedRunReport(
         );
 
         // SAFETY: the checkpoint reporter writes this terminal summary; original completeness checks remain below.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         const summary = readRetainedSummary(summaryFile);
 
         const browserFile = beneath(
@@ -658,7 +655,6 @@ export const completedRunReport = function completedRunReport(
         );
 
         // SAFETY: Playwright JSON reporter writes its root errors array; original completion checks remain below.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         const browser = readRetainedBrowserReport(browserFile);
 
         retainedEvidence.push(
@@ -862,7 +858,6 @@ export const publishReport = function publishReport(
 ) {
   const { run, report } = completedRunReport(number);
   // SAFETY: this file is the contributor's completed finding-review document, validated immediately below.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const review = readFindingReview(reviewFile);
 
   validateReview(report, review);
@@ -894,7 +889,6 @@ export const publishReport = function publishReport(
   const journalFile = path.join(directory, "publication.json");
 
   // SAFETY: prior publication writes this journal; preserve all extra persisted fields.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const journal: PublicationJournal = fs.existsSync(journalFile)
     ? readPublicationJournal(journalFile)
     : { groups: {} };
@@ -929,7 +923,6 @@ export const publishReport = function publishReport(
     // Paginate bodies rather than relying on eventually indexed search. After an ambiguous
     // API error, stop; a later invocation scans operation markers before retrying writes.
     // SAFETY: the paginated issue-list endpoint returns arrays of REST issue records.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const issues = readIssuePages([
       "--paginate",
       "--slurp",
@@ -939,7 +932,6 @@ export const publishReport = function publishReport(
       .filter((issue) => !issue.pull_request);
 
     // SAFETY: the paginated repository-comment endpoint returns arrays of REST comment records.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const repositoryComments = review.groups.length
       ? readCommentPages([
           "--paginate",
@@ -1010,7 +1002,6 @@ export const publishReport = function publishReport(
       }
 
       // SAFETY: these ordered entries define the retained finding and its reviewed evidence binding.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       atomic(
         path.join(directory, `finding-${hash(group.problemKey)}.json`),
         // SAFETY: these ordered entries bind the reviewed finding to its report.
@@ -1037,8 +1028,6 @@ export const publishReport = function publishReport(
 
       // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
 
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-
       const comments = readCommentPages([
         "--paginate",
         "--slurp",
@@ -1049,7 +1038,6 @@ export const publishReport = function publishReport(
         !comments.some((comment) => comment.body?.includes(occurrence) === true)
       ) {
         // SAFETY: the create-comment endpoint returns a REST issue-comment record.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         const comment = writeIssueComment(
           `repos/${run.repo}/issues/${issue.number}/comments`,
           {
@@ -1077,8 +1065,6 @@ export const publishReport = function publishReport(
 
     // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
 
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-
     const comments = readCommentPages([
       "--paginate",
       "--slurp",
@@ -1094,7 +1080,6 @@ export const publishReport = function publishReport(
     }
 
     // SAFETY: comment update/create endpoints both return a REST issue-comment record.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const comment = existing.length
       ? writeIssueComment(
           `repos/${run.repo}/issues/comments/${existing[0].id}`,
@@ -1126,7 +1111,6 @@ export const repairHandoff = function repairHandoff(
 ) {
   const { run, report } = completedRunReport(number);
   // SAFETY: this file is the contributor's completed finding-review document, validated immediately below.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const review = readFindingReview(reviewFile);
 
   validateReview(report, review);
@@ -1142,7 +1126,6 @@ export const repairHandoff = function repairHandoff(
   const journalFile = path.join(directory, "publication.json");
 
   // SAFETY: the publication writer owns this journal's finding bindings.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const published = fs.existsSync(journalFile)
     ? readPublicationJournal(journalFile).groups?.[group.problemKey]
     : null;

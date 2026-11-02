@@ -16,7 +16,6 @@ test("Minecraft documentation delivers maintained examples for all nine installa
 }) => {
   test.setTimeout(120_000);
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of [
     "advancement-tree",
     "book",
@@ -61,7 +60,6 @@ test("Minecraft documentation delivers maintained examples for all nine installa
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("Minecraft primary examples expose paging selection status and trade callbacks", async ({

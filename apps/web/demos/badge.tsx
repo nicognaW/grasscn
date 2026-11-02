@@ -19,7 +19,9 @@ export default function BadgeDemo({ scale }: DemoProps) {
             aria-label="Badge text"
             scale={scale}
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             className="w-(--demo-width) max-w-full"
             style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -31,7 +33,9 @@ export default function BadgeDemo({ scale }: DemoProps) {
         </label>
         <Button
           scale={scale}
-          onClick={() => setEarned((value) => !value)}
+          onClick={() => {
+            setEarned((value) => !value);
+          }}
           className="w-(--demo-width) max-w-full"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -68,7 +72,14 @@ export default function BadgeDemo({ scale }: DemoProps) {
         <div className="demo-pair demo-pair-max-width-full">
           <span>GOAL / LINK</span>
           <Badge
-            render={<a href="#badge" onClick={() => setClicks((v) => v + 1)} />}
+            render={
+              <a
+                href="#badge"
+                onClick={() => {
+                  setClicks((v) => v + 1);
+                }}
+              />
+            }
             scale={scale}
             achievement="goal"
           >

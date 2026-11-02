@@ -19,7 +19,9 @@ export default function AttachmentDemo({ scale }: DemoProps) {
             aria-label="Attachment name"
             scale={scale}
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
             className="w-70 max-w-full"
           />
         </label>
@@ -33,7 +35,9 @@ export default function AttachmentDemo({ scale }: DemoProps) {
             } satisfies DemoVariables as DemoVariables
           }
           disabled={!removed}
-          onClick={() => setRemoved(false)}
+          onClick={() => {
+            setRemoved(false);
+          }}
         >
           Restore file
         </Button>
@@ -54,12 +58,16 @@ export default function AttachmentDemo({ scale }: DemoProps) {
             </AttachmentContent>
             <AttachmentTrigger
               aria-label="Preview world archive"
-              onClick={() => setOpened((value) => value + 1)}
+              onClick={() => {
+                setOpened((value) => value + 1);
+              }}
             />
             <AttachmentActions>
               <AttachmentAction
                 aria-label="Remove archive"
-                onClick={() => setRemoved(true)}
+                onClick={() => {
+                  setRemoved(true);
+                }}
               >
                 X
               </AttachmentAction>

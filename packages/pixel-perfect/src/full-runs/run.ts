@@ -202,7 +202,6 @@ export const authorizeFullRun = function authorizeFullRun(
   }
 
   // SAFETY: GitHub collaborator-permission endpoint supplies both named role fields.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const permission = gh([
     "api",
     `repos/${data.repo}/collaborators/${approval.actor.login}/permission`,
@@ -250,7 +249,6 @@ export const authorizeFullRun = function authorizeFullRun(
   const paths = fullRunPaths(data.number);
 
   // SAFETY: the durable state is produced by writeRunState; the completed-phase guard is unchanged.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const localState = fs.existsSync(paths.state)
     ? readControlState(paths.state)
     : null;
@@ -335,7 +333,6 @@ export const writeRunState = function writeRunState(
   fs.mkdirSync(run.paths.directory, { recursive: true });
 
   // SAFETY: the run writer supplies durable state; all original identity checks remain.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const previous = fs.existsSync(run.paths.state)
     ? readControlState(run.paths.state)
     : {};
@@ -396,7 +393,6 @@ const claimRun = function claimRun(run: AuthorizedFullRun, resume: boolean) {
   fs.mkdirSync(run.paths.directory, { recursive: true });
 
   // SAFETY: the run writer supplies durable state; all original identity checks remain.
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const previous = fs.existsSync(run.paths.state)
     ? readExecutorState(run.paths.state)
     : null;
@@ -592,14 +588,12 @@ const execute = async function execute(number: number, resume: boolean) {
     const directory = attempt;
 
     // SAFETY: verify-porting writes this attempt receipt; existing completed/passed checks remain.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const receipt =
       directory && fs.existsSync(path.join(directory, "verification.json"))
         ? readExecutionReceipt(path.join(directory, "verification.json"))
         : null;
 
     // SAFETY: the guarded workload writes this named resource summary.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const resources =
       directory && fs.existsSync(path.join(directory, "resource-summary.json"))
         ? readExecutionResources(path.join(directory, "resource-summary.json"))
@@ -747,7 +741,6 @@ export const main = async function main(args = process.argv.slice(2)) {
     }
 
     // SAFETY: non-report commands reject a missing review option immediately above.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     let result:
       | ReturnType<typeof reporter.prepareReport>
       | ReturnType<typeof reporter.publishReport>
@@ -816,7 +809,6 @@ export const main = async function main(args = process.argv.slice(2)) {
         ),
         issue: run.issue.html_url,
         // SAFETY: the status command reads the run writer's durable state without normalization.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         local: fs.existsSync(paths.state)
           ? readControlState(paths.state)
           : null,

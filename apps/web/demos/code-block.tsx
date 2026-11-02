@@ -4,6 +4,7 @@ import {useHighlightedCode} from "../registry/hooks/use-highlighted-code"
 import {Textarea} from "../registry/ui/textarea"
 import {Checkbox} from "../registry/ui/checkbox"
 import type {DemoProps} from "../types"
+
 export default function CodeBlockDemo({ scale }: DemoProps) {
   const [code, setCode] = React.useState(
       'const greeting = "Hello 世界";\n\n// Keep building!'
@@ -11,6 +12,7 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
     [wrap, setWrap] = React.useState(false),
     [numbers, setNumbers] = React.useState(true),
     lines = useHighlightedCode(code, "typescript");
+
   return (
     <>
       <div className="demo-options">
@@ -20,7 +22,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
             aria-label="Code block source"
             scale={scale}
             value={code}
-            onChange={(event) => setCode(event.target.value)}
+            onChange={(event) => {
+              setCode(event.target.value);
+            }}
             style={{ width: 340, height: 120 }}
           />
         </label>
@@ -28,7 +32,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
           <Checkbox
             scale={scale}
             checked={wrap}
-            onCheckedChange={(value) => setWrap(value === true)}
+            onCheckedChange={(value) => {
+              setWrap(value === true);
+            }}
           />
           Wrap
         </label>
@@ -36,7 +42,9 @@ export default function CodeBlockDemo({ scale }: DemoProps) {
           <Checkbox
             scale={scale}
             checked={numbers}
-            onCheckedChange={(value) => setNumbers(value === true)}
+            onCheckedChange={(value) => {
+              setNumbers(value === true);
+            }}
           />
           Line numbers
         </label>

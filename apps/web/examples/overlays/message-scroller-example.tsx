@@ -14,7 +14,9 @@ import {
   MessageScrollerButton,
   useMessageScroller,
 } from "@/components/ui/message-scroller";
+
 type Line = { author?: string; text: string; system?: boolean };
+
 const history: Line[] = [
   { author: "Steve", text: "The dashboard is ready for review." },
   { author: "Alex", text: "带上你的镐子。" },
@@ -29,15 +31,18 @@ const history: Line[] = [
   { author: "Alex", text: "明天继续。" },
   { system: true, text: "Changes saved." },
 ];
+
 function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
   const [messages, setMessages] = React.useState(history);
   const [text, setText] = React.useState("The updated design looks great.");
   const api = useMessageScroller();
+
   const send = () => {
     if (!text.trim()) return;
     setMessages((values) => [...values, { author: "You", text }]);
     setText("");
   };
+
   return (
     <>
       <form
@@ -52,7 +57,9 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
             aria-label="Message text"
             scale={scale}
             value={text}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             style={{ width: 180 * scale, maxWidth: "100%" }}
           />
         </label>
@@ -132,6 +139,7 @@ function History({ scale = 2 }: { scale?: 1 | 2 | 3 }) {
     </>
   );
 }
+
 export default function MessageDemo(props: { scale?: 1 | 2 | 3 }) {
   return (
     <MessageScrollerProvider

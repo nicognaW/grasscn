@@ -4,21 +4,29 @@ import { Button } from "../registry/ui/button";
 import { Label } from "../registry/ui/label";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
+
 export default function ToggleGroupDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale),
     id = React.useId();
+
   const [single, setSingle] = React.useState("crafting"),
     [multiple, setMultiple] = React.useState<string[]>(["crafting"]),
     [disabled, setDisabled] = React.useState(false);
+
   const filters = [
     { value: "crafting", label: "Crafting recipes" },
     { value: "furnace", label: "Furnace recipes" },
     { value: "stonecutter", label: "Stonecutter recipes" },
   ];
+
   return (
     <>
       <div className="demo-options">
-        <Button onClick={() => setDisabled((v) => !v)}>
+        <Button
+          onClick={() => {
+            setDisabled((v) => !v);
+          }}
+        >
           {disabled ? "Enable filters" : "Disable filters"}
         </Button>
         <Button
@@ -46,7 +54,9 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
                   ? single
                   : [single]
             }
-            onValueChange={(__values) => setSingle(__values[0] ?? "")}
+            onValueChange={(__values) => {
+              setSingle(__values[0] ?? "");
+            }}
             disabled={disabled}
             multiple={false}
           >
@@ -79,7 +89,9 @@ export default function ToggleGroupDemo({ scale }: DemoProps) {
                   ? multiple
                   : [multiple]
             }
-            onValueChange={(__values) => setMultiple(__values)}
+            onValueChange={(__values) => {
+              setMultiple(__values);
+            }}
             disabled={disabled}
             multiple={true}
           >

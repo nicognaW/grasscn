@@ -41,7 +41,6 @@ test("layout documentation exposes its actual examples and complete source", asy
     "trace",
   ];
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of slugs) {
     await page.goto(`${origin}/docs/components/${slug}`);
 
@@ -86,7 +85,6 @@ test("layout documentation exposes its actual examples and complete source", asy
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("default composed documentation examples retain their owned state and callbacks", async ({

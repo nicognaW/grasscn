@@ -22,7 +22,9 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
             scale={scale}
             aria-label="Collapsible title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
             className="w-(--demo-width) max-w-full"
             style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -38,7 +40,9 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
             scale={scale}
             aria-label="Collapsible message"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
             style={{ width: 160 * scale, maxWidth: "100%", height: 50 * scale }}
           />
         </label>
@@ -52,7 +56,9 @@ export default function CollapsibleDemo({ scale }: DemoProps) {
               "--demo-width": `${120 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => {
+            setOpen((value) => !value);
+          }}
         >
           {open ? "Hide details" : "Show details"}
         </Button>

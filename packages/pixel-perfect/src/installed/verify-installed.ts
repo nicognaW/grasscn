@@ -791,7 +791,6 @@ try {
     }
 
     // SAFETY: remaining fixture controls dispatch by their captured element discriminator.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered fixture-control protocol at the capture boundary.
     const c = referenceCase as FixtureReferenceCase;
 
     const params = new URLSearchParams({

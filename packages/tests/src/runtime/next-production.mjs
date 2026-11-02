@@ -44,7 +44,6 @@ export const sourceIdentity = async (directory = repoRoot) => {
     let bytes;
 
     try {
-      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       bytes = await readFile(path.join(directory, file));
     } catch (error) {
       if (
@@ -102,7 +101,6 @@ export const productionBuildIdentity = async ({
         continue;
       }
 
-      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       const info = await lstat(file);
       assert.ok(
         !info.isSymbolicLink(),
@@ -110,10 +108,8 @@ export const productionBuildIdentity = async ({
       );
 
       if (info.isDirectory()) {
-        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         await visit(file);
       } else {
-        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         files.push({ path: relative, sha256: digest(await readFile(file)) });
       }
     }
@@ -176,7 +172,6 @@ const preparationIdentity = async (root, directory) => {
 
     for (const name of entries) {
       const filename = path.join(folder, name);
-      // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       const info = await lstat(filename);
 
       assert.ok(
@@ -185,12 +180,10 @@ const preparationIdentity = async (root, directory) => {
       );
 
       if (info.isDirectory()) {
-        // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
         await visit(filename);
       } else {
         generated.push({
           path: path.relative(directory, filename).replaceAll(path.sep, "/"),
-          // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
           sha256: digest(await readFile(filename)),
         });
       }

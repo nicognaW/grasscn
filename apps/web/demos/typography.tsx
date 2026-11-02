@@ -3,9 +3,11 @@ import {TypographyH1,TypographyH2,TypographyP,TypographyBlockquote,TypographyInl
 import {Textarea} from "../registry/ui/textarea"
 import type {DemoProps} from "../types"
 import {useDemoWidth} from "../use-demo-width"
+
 export default function TypographyDemo({ scale }: DemoProps) {
   const stage = useDemoWidth(scale);
   const [text, setText] = React.useState("Hello 世界\nWelcome to your world");
+
   return (
     <>
       <div className="demo-options">
@@ -15,7 +17,9 @@ export default function TypographyDemo({ scale }: DemoProps) {
             aria-label="Typography text"
             value={text}
             scale={scale}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+            }}
             style={{ width: 320, height: 100 }}
           />
         </label>

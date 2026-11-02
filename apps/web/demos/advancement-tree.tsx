@@ -59,7 +59,6 @@ export default function AdvancementDemo({ scale }: DemoProps) {
       <div
         className="demo-stage demo-stage-display-grid demo-stage-gap-16"
         data-stage="advancement-tree"
-        
       >
         <AdvancementTree
           key={reset}
@@ -71,28 +70,38 @@ export default function AdvancementDemo({ scale }: DemoProps) {
         />
         <strong>{node.title}</strong>
         <p>{node.description}</p>
-        <div className="flex flex-wrap gap-3" >
+        <div className="flex flex-wrap gap-3">
           <Button
             scale={scale}
-            onClick={() =>
+            onClick={() => {
               setNodes((old) =>
                 old.map((n) =>
                   n.id === selected ? { ...n, completed: !n.completed } : n
                 )
-              )
-            }
-            className="w-(--demo-width) max-w-full" style={
+              );
+            }}
+            className="w-(--demo-width) max-w-full"
+            style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              ({"--demo-width": `${200 * scale}px`} satisfies DemoVariables) as DemoVariables}
+              {
+                "--demo-width": `${200 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
           >
             {node.completed ? "Mark incomplete" : "Complete milestone"}
           </Button>
           <Button
             scale={scale}
-            onClick={() => setReset((v) => v + 1)}
-            className="w-(--demo-width) max-w-full" style={
+            onClick={() => {
+              setReset((v) => v + 1);
+            }}
+            className="w-(--demo-width) max-w-full"
+            style={
               /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
-              ({"--demo-width": `${100 * scale}px`} satisfies DemoVariables) as DemoVariables}
+              {
+                "--demo-width": `${100 * scale}px`,
+              } satisfies DemoVariables as DemoVariables
+            }
           >
             Reset view
           </Button>

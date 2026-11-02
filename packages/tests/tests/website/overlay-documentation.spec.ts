@@ -45,7 +45,6 @@ test("overlay documentation exposes exact examples, own grouped source and retai
     errors.push(`${page.url()}: ${error.message}`)
   );
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of slugs) {
     await page.goto(`${origin}/docs/components/${slug}`);
 
@@ -112,7 +111,6 @@ test("overlay documentation exposes exact examples, own grouped source and retai
       page.locator(".minecraft-prose").getByRole("alert")
     ).toHaveCount(0);
   }
-  /* eslint-enable no-await-in-loop */
 
   expect(errors).toEqual([]);
 });
@@ -158,7 +156,6 @@ test("documentation confirmation callbacks update once and close their actual mo
 test("documentation edge panels expose labelled Done actions", async ({
   page,
 }) => {
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of ["sheet", "drawer"]) {
     await page.goto(`${origin}/docs/components/${slug}`);
     const example = page.locator(".documentation-example").first();
@@ -180,7 +177,6 @@ test("documentation edge panels expose labelled Done actions", async ({
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
   }
-  /* eslint-enable no-await-in-loop */
 });
 
 test("documentation menu and command examples dispatch real selections", async ({
@@ -381,7 +377,6 @@ test("overlay documentation remains usable at its default mobile width", async (
 }, info) => {
   await page.setViewportSize({ height: 844, width: 390 });
 
-  /* eslint-disable no-await-in-loop -- Complete each interaction and assertion on the current page before navigating or changing its state. */
   for (const slug of ["dialog", "data-table", "message-scroller", "chart"]) {
     await page.goto(`${origin}/docs/components/${slug}`);
     await expect(page.locator(".documentation-example").first()).toBeVisible();
@@ -393,5 +388,4 @@ test("overlay documentation remains usable at its default mobile width", async (
       path: info.outputPath(`${slug}-390-actual.png`),
     });
   }
-  /* eslint-enable no-await-in-loop */
 });

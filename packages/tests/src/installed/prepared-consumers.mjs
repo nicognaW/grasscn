@@ -207,7 +207,6 @@ export const readPreparedConsumerProjects = async ({
         "Artifact must remain within its receipt owner"
       );
       assert.equal(
-        // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
         sha256(await readFile(file)),
         digest,
         `Ordinary consumer artifact changed: ${name}`
@@ -277,7 +276,6 @@ export const readPreparedConsumerProjects = async ({
       assert.deepEqual(observed.installedBytes, project.installedBytes);
     }
 
-    // eslint-disable-next-line no-await-in-loop -- Validate retained artifacts and each prepared installation before starting its owned runtime.
     await validatePreparedProject(project);
   }
 

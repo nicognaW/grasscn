@@ -31,7 +31,9 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
         </Button>
         <Button
           aria-pressed={disabled}
-          onClick={() => setDisabled((current) => !current)}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
         >{`Scrolling: ${disabled ? "Off" : "On"}`}</Button>
       </div>
       <div className="demo-stage" data-stage="scroll-area">
@@ -45,8 +47,9 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
             viewportRef={viewport}
             viewportProps={{
               "aria-label": "Scrollable rows",
-              onScroll: (event) =>
-                setOffset(Math.round(event.currentTarget.scrollTop / scale)),
+              onScroll: (event) => {
+                setOffset(Math.round(event.currentTarget.scrollTop / scale));
+              },
             }}
             style={{ width: 200 * scale, maxWidth: "100%", height: 64 * scale }}
           >
@@ -73,7 +76,9 @@ export default function ScrollAreaDemo({ scale }: DemoProps) {
                   <Button
                     scale={scale}
                     className="w-full"
-                    onClick={() => setSelected(index + 1)}
+                    onClick={() => {
+                      setSelected(index + 1);
+                    }}
                   >{`Row ${index + 1}`}</Button>
                 </div>
               ))}

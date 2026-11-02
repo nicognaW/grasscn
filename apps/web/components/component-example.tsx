@@ -20,13 +20,7 @@ export const ComponentExample = async ({
 }) => {
   if (!Object.hasOwn(examples, name)) {
     return (
-      <DocumentText
-        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-        role="alert"
-        /* eslint-enable jsx-a11y/prefer-tag-over-role */
-      >
-        Example unavailable: {name}
-      </DocumentText>
+      <DocumentText role="alert">Example unavailable: {name}</DocumentText>
     );
   }
 
@@ -45,11 +39,7 @@ export const ComponentExample = async ({
 
   if (code === undefined) {
     return (
-      <DocumentText
-        /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-        role="alert"
-        /* eslint-enable jsx-a11y/prefer-tag-over-role */
-      >
+      <DocumentText role="alert">
         Example source could not be loaded: {name}. Reload this page to retry.
       </DocumentText>
     );

@@ -85,7 +85,6 @@ for (const kind of ["fps", "pie"]) {
       expect(hash(bytes)).toBe(c.sha256);
       expect(hash(frameBytes)).toBe(
         // SAFETY: Each retained FPS/Pie case page/scale has exactly one frame pin in its paired manifest; this bounded retained relation preserves the original lookup and raw failure path.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact bounded manifest-to-frame relation; no generic guaranteed-find contract.
         (
           m.frames.find(
             (f: { name: string }) => f.name === frameName

@@ -229,7 +229,6 @@ try {
   browser = await chromium.launch({ channel: "msedge", headless: true });
   report.environment.browserVersion = browser.version();
 
-  /* eslint-disable no-await-in-loop, react-doctor/async-await-in-loop -- One owned consumer host is observed and closed before starting the next. */
   for (const [index, project] of projects.entries()) {
     assert.equal(
       project.browserVersion,
@@ -285,7 +284,6 @@ try {
     await host.close();
     host = undefined;
   }
-  /* eslint-enable no-await-in-loop, react-doctor/async-await-in-loop */
 
   assert.deepEqual(
     await sourceIdentity(),

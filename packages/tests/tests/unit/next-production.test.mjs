@@ -57,7 +57,6 @@ test("production identity separates Next response cache from compiled pages, chu
         path.join(directory, filename),
         "changed immutable output"
       );
-      // eslint-disable-next-line no-await-in-loop -- Verify each immutable output independently, restoring it before the next change.
       const changed = await productionBuildIdentity({ directory, source });
       assert.notEqual(changed.outputSha256, baseline.outputSha256, filename);
       fs.writeFileSync(path.join(directory, filename), `original ${filename}`);
@@ -197,7 +196,6 @@ test("prepared production requires a completed matching build instead of silentl
     ]) {
       const original = fs.readFileSync(filename);
       fs.writeFileSync(filename, "changed bytes");
-      // eslint-disable-next-line no-await-in-loop -- Read and hash snapshot entries in stable order while bounding retained file buffers.
       await assert.rejects(
         async () => await readPreparedProductionBuild(options),
         /changed/iu

@@ -18,13 +18,17 @@ export default function SwitchDemo({ scale }: DemoProps) {
           <Input
             aria-label="Switch setting label"
             value={label}
-            onChange={(event) => setLabel(event.target.value)}
+            onChange={(event) => {
+              setLabel(event.target.value);
+            }}
             className="w-45"
           />
         </label>
         <Button
           aria-pressed={disabled}
-          onClick={() => setDisabled((current) => !current)}
+          onClick={() => {
+            setDisabled((current) => !current);
+          }}
         >{`Switch: ${disabled ? "Disabled" : "Enabled"}`}</Button>
       </div>
       <div className="demo-stage" data-stage="switch">

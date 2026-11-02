@@ -92,13 +92,11 @@ export const serveOwnedHttpProcess = async ({
 
       if (logs.includes(readyText)) {
         try {
-          // eslint-disable-next-line no-await-in-loop -- One bounded readiness probe at a time.
           const response = await fetch(url, {
             signal: AbortSignal.timeout(2500),
           });
 
           const ready = response.ok;
-          // eslint-disable-next-line no-await-in-loop -- Release each response before retrying.
           await response.body?.cancel();
 
           if (ready) {
@@ -109,7 +107,6 @@ export const serveOwnedHttpProcess = async ({
         }
       }
 
-      // eslint-disable-next-line no-await-in-loop -- Readiness is sequential and deadline bounded.
       await delay(100);
     }
 

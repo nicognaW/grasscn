@@ -28,7 +28,6 @@ if (!version || !java || !work || !output) {
   );
 }
 
-/* eslint-disable no-await-in-loop -- Read native provenance and output identities in declared order before recording their verification. */
 for (const directory of [work, output]) {
   try {
     const completedValue1 = await readdir(directory);
@@ -44,7 +43,6 @@ for (const directory of [work, output]) {
     }
   }
 }
-/* eslint-enable no-await-in-loop */
 
 const definition = await readFile(path.join(here, "branding-header/case.json"));
 const actualCase = parseHeaderCase(definition.toString("utf-8"));
@@ -227,7 +225,6 @@ await writeFile(
 
 const file = actualCase.name;
 
-/* eslint-disable no-await-in-loop -- Read native provenance and output identities in declared order before recording their verification. */
 for (const relative of [file, `frames/${file}`]) {
   const bytes = await readFile(path.join(output, relative));
   const image = PNG.sync.read(bytes);
@@ -236,6 +233,5 @@ for (const relative of [file, `frames/${file}`]) {
     `${JSON.stringify({ decodedRgbaSha256: hash(image.data), file: relative, height: image.height, sha256: hash(bytes), width: image.width }, null, 2)}\n`
   );
 }
-/* eslint-enable no-await-in-loop */
 
 console.log("Captured original header grass constituent: GUI3 on#202020");

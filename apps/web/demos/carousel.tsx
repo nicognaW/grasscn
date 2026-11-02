@@ -12,7 +12,11 @@ export default function CarouselDemo({ scale }: DemoProps) {
 
   React.useEffect(() => {
     if (!api) return;
-    const update = () => setSelected(api.selectedScrollSnap());
+
+    const update = () => {
+      setSelected(api.selectedScrollSnap());
+    };
+
     update();
     api.on("select", update);
 
@@ -34,7 +38,9 @@ export default function CarouselDemo({ scale }: DemoProps) {
               "--demo-width": `${120 * scale}px`,
             } satisfies DemoVariables as DemoVariables
           }
-          onClick={() => setVertical((v) => !v)}
+          onClick={() => {
+            setVertical((v) => !v);
+          }}
         >
           Change direction
         </Button>

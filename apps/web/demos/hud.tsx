@@ -27,7 +27,9 @@ export default function HudDemo({ scale }: DemoProps) {
       <div className="flex gap-3 flex-wrap">
         <Button
           scale={scale}
-          onClick={() => setHealth((v) => Math.max(0, v - 3))}
+          onClick={() => {
+            setHealth((v) => Math.max(0, v - 3));
+          }}
           className="w-(--demo-width)"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */
@@ -40,7 +42,9 @@ export default function HudDemo({ scale }: DemoProps) {
         </Button>
         <Button
           scale={scale}
-          onClick={() => setHealth(20)}
+          onClick={() => {
+            setHealth(20);
+          }}
           className="w-(--demo-width)"
           style={
             /* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */

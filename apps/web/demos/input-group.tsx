@@ -20,7 +20,6 @@ export default function InputGroupDemo({ scale }: DemoProps) {
       <div
         className="demo-stage demo-stage-display-grid grid-cols-1 demo-stage-gap-16"
         data-stage="input-group"
-        
       >
         <InputGroup
           scale={scale}
@@ -32,7 +31,9 @@ export default function InputGroupDemo({ scale }: DemoProps) {
           <InputGroupInput
             aria-label="Player name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
         </InputGroup>
         <InputGroup
@@ -42,12 +43,16 @@ export default function InputGroupDemo({ scale }: DemoProps) {
           <InputGroupTextarea
             aria-label="Chat message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
           />
           <InputGroupAddon align="block-end">
             <InputGroupText>Chat</InputGroupText>
             <InputGroupButton
-              onClick={() => setSent(name + ": " + message)}
+              onClick={() => {
+                setSent(name + ": " + message);
+              }}
               style={{ width: 60 * scale }}
             >
               Send
