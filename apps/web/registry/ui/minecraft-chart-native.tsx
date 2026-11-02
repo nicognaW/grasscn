@@ -305,7 +305,7 @@ export const chartProfilerColor = function chartProfilerColor(name: string) {
   let hash = 0;
 
   for (let i = 0; i < name.length; i += 1) {
-    // oxlint-disable-next-line unicorn/prefer-code-point -- The native profiler hashes UTF-16 code units in Java string order; code points change astral-name colors.
+    // oxlint-disable-next-line unicorn/prefer-code-point -- The native profiler hashes successive UTF-16 code units; code points change astral-name colors.
     hash = Math.trunc(Math.imul(hash, 31) + name.charCodeAt(i));
   }
 
