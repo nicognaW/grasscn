@@ -8,8 +8,8 @@ for (const scale of [2] as const) {
       test(`Select ${position} remains anchored during wheel scrolling GUI${scale} ${short ? "short" : "scrolled"}`, async ({
         page,
       }) => {
-        const width = 390,
-          height = short ? 280 : 844;
+        const width = 390;
+        const height = short ? 280 : 844;
 
         await page.setViewportSize({ width, height });
         await page.goto(
@@ -36,8 +36,8 @@ for (const scale of [2] as const) {
         await expect(popup).toBeVisible();
         await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
 
-        const before = (await popup.boundingBox())!,
-          anchor = (await trigger.boundingBox())!;
+        const before = (await popup.boundingBox())!;
+        const anchor = (await trigger.boundingBox())!;
 
         expect(before.x).toBeGreaterThanOrEqual(0);
         expect(before.x + before.width).toBeLessThanOrEqual(width);
@@ -90,10 +90,11 @@ for (const scale of [2] as const) {
         ).toBeLessThanOrEqual(10 * scale);
 
         const row = await popup
-            .locator("[data-slot=select-item]")
-            .last()
-            .boundingBox(),
-          bar = popup.locator(".mc-select-scrollbar");
+          .locator("[data-slot=select-item]")
+          .last()
+          .boundingBox();
+
+        const bar = popup.locator(".mc-select-scrollbar");
 
         expect(row!.width).toBe(
           Math.min(270, before.width / scale - 30) * scale

@@ -54,10 +54,11 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
         })
       );
 
-      const actual = PNG.sync.read(actualBytes),
-        expected = PNG.sync.read(
-          readFileSync(pixelPerfectFile(`tests/reference/captures/${c.name}`))
-        );
+      const actual = PNG.sync.read(actualBytes);
+
+      const expected = PNG.sync.read(
+        readFileSync(pixelPerfectFile(`tests/reference/captures/${c.name}`))
+      );
 
       expect([actual.width, actual.height]).toEqual([
         expected.width,
@@ -123,12 +124,13 @@ for (const mode of ["split", "fragments", "empty"]) {
         })
       );
 
-      const a = PNG.sync.read(actualBytes),
-        e = PNG.sync.read(
-          readFileSync(
-            pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
-          )
-        );
+      const a = PNG.sync.read(actualBytes);
+
+      const e = PNG.sync.read(
+        readFileSync(
+          pixelPerfectFile(`tests/reference/button-cjk/captures/${c.name}`)
+        )
+      );
 
       expect([a.width, a.height]).toEqual([e.width, e.height]);
       expect(a.data.equals(e.data)).toBe(true);

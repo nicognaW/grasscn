@@ -126,9 +126,9 @@ test.describe("Table original native label constituents", () => {
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-        const actualBytes = await subject.screenshot(),
-          actual = PNG.sync.read(actualBytes),
-          expected = PNG.sync.read(bytes);
+        const actualBytes = await subject.screenshot();
+        const actual = PNG.sync.read(actualBytes);
+        const expected = PNG.sync.read(bytes);
 
         expect([actual.width, actual.height]).toEqual([
           expected.width,

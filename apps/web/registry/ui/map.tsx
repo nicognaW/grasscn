@@ -131,15 +131,16 @@ const MinecraftMap = ({
             return;
           }
 
-          const bounds = canvas.getBoundingClientRect(),
-            output = mapGpuPixels(
-              image,
-              images,
-              markers,
-              scale,
-              bounds.x,
-              bounds.y
-            );
+          const bounds = canvas.getBoundingClientRect();
+
+          const output = mapGpuPixels(
+            image,
+            images,
+            markers,
+            scale,
+            bounds.x,
+            bounds.y
+          );
 
           if (output) {
             canvas.width = 128 * scale;

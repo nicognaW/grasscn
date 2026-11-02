@@ -150,9 +150,9 @@ for (const directory of [
             c.sha256
           );
 
-          const actualBytes = await subject.screenshot(),
-            actual = PNG.sync.read(actualBytes),
-            expected = PNG.sync.read(expectedBytes);
+          const actualBytes = await subject.screenshot();
+          const actual = PNG.sync.read(actualBytes);
+          const expected = PNG.sync.read(expectedBytes);
 
           const { mismatchedPixels, diff } = compareRgba(expected, actual);
           writeFileSync(info.outputPath("actual.png"), actualBytes);

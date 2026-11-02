@@ -117,11 +117,12 @@ for (const c of manifest.cases) {
 
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);
 
-      const actual = await subject.screenshot(),
-        { mismatchedPixels, diff } = compare(
-          PNG.sync.read(bytes),
-          PNG.sync.read(actual)
-        );
+      const actual = await subject.screenshot();
+
+      const { mismatchedPixels, diff } = compare(
+        PNG.sync.read(bytes),
+        PNG.sync.read(actual)
+      );
 
       writeFileSync(info.outputPath("actual.png"), actual);
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

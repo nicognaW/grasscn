@@ -104,8 +104,8 @@ for (const [part, dir] of parts) {
           }
 
           if (part === "input") {
-            const cursor = c.cursor ?? c.text.length,
-              anchor = c.anchor ?? cursor;
+            const cursor = c.cursor ?? c.text.length;
+            const anchor = c.anchor ?? cursor;
 
             await subject.evaluate(
               (el, p) => {
@@ -138,11 +138,15 @@ for (const [part, dir] of parts) {
           }
 
           const bytes = readFileSync(
-              pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
-            ),
-            actualBytes = await subject.screenshot({ animations: "disabled" }),
-            a = PNG.sync.read(bytes),
-            b = PNG.sync.read(actualBytes);
+            pixelPerfectFile(`tests/reference/${dir}/captures/${c.name}`)
+          );
+
+          const actualBytes = await subject.screenshot({
+            animations: "disabled",
+          });
+
+          const a = PNG.sync.read(bytes);
+          const b = PNG.sync.read(actualBytes);
 
           expect(createHash("sha256").update(bytes).digest("hex")).toBe(
             c.sha256

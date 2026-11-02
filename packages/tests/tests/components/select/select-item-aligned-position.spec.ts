@@ -5,8 +5,8 @@ for (const scale of [1, 2, 3] as const) {
     test(`Explicit item-aligned mode aligns the selected row GUI${scale} ${mobile ? "mobile" : "desktop"}`, async ({
       page,
     }) => {
-      const width = mobile ? 390 : 1536,
-        height = mobile ? 844 : 900;
+      const width = mobile ? 390 : 1536;
+      const height = mobile ? 844 : 900;
 
       await page.setViewportSize({ width, height });
 
@@ -31,14 +31,14 @@ for (const scale of [1, 2, 3] as const) {
       );
       await trigger.click();
 
-      const popup = page.locator("#select-popup"),
-        selected = popup.locator("[data-selected]");
+      const popup = page.locator("#select-popup");
+      const selected = popup.locator("[data-selected]");
 
       await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
       await expect
         .poll(async () => {
-          const row = (await selected.boundingBox())!,
-            anchor = (await trigger.boundingBox())!;
+          const row = (await selected.boundingBox())!;
+          const anchor = (await trigger.boundingBox())!;
 
           return Math.abs(
             row.y + row.height / 2 - anchor.y - anchor.height / 2
