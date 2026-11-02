@@ -2,7 +2,9 @@ import { test, expect } from "@grasscn/tests/test";
 import { nativeTextGap } from "@tests/harness/native-text-gap";
 import { PNG } from "pngjs";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176"
+).replace(/\/$/u, "");
 
 const bluePixel = (data: Uint8Array, index: number) =>
   data[index] === 0 && data[index + 1] === 0 && data[index + 2] === 255;
