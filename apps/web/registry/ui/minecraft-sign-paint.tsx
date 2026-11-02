@@ -140,7 +140,7 @@ export const MinecraftSignPaint = ({
                 continue;
               }
 
-              for (let k = 0; k < 3; k++) {
+              for (let k = 0; k < 3; k += 1) {
                 output.data[j + k] = source.data[i + k];
               }
 
@@ -201,12 +201,12 @@ export const MinecraftSignPaint = ({
 
               x += glyph[2];
             } else {
-              const glyph = getUnihexGlyph(char);
+              const unicodeGlyph = getUnihexGlyph(char);
 
-              if (glyph) {
+              if (unicodeGlyph) {
                 sc.fillStyle = "#ffffff";
-                paintUnihex(sc, glyph, x, 0, 1);
-                x += glyph.advance;
+                paintUnihex(sc, unicodeGlyph, x, 0, 1);
+                x += unicodeGlyph.advance;
               }
             }
           }

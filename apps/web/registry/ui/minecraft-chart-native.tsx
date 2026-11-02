@@ -70,7 +70,7 @@ const NativeChartText = ({
         } as React.CSSProperties
       }
     >
-      {/[^\u0000-\u007F]/u.test(text) ? (
+      {/\P{ASCII}/u.test(text) ? (
         <MinecraftColorUnicodeLabel text={text} />
       ) : (
         <MinecraftText>{text}</MinecraftText>
@@ -143,12 +143,12 @@ const ChartFpsFrame = ({
         const bottom = Math.min(y + 9, baseline);
         const left = Math.round(bar.x / scale);
 
-        const width = Math.min(
+        const labelOverlapWidth = Math.min(
           Math.round(bar.width / scale),
           widthOf(text) + 2 - left
         );
 
-        if (width <= 0 || bottom <= top) {
+        if (labelOverlapWidth <= 0 || bottom <= top) {
           return null;
         }
 
@@ -167,7 +167,7 @@ const ChartFpsFrame = ({
               height: (bottom - top) * scale,
               left: left * scale,
               top: top * scale,
-              width: width * scale,
+              width: labelOverlapWidth * scale,
             }}
           />
         );

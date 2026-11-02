@@ -83,7 +83,7 @@ const MinecraftMap = ({
     canvas.height = 128;
     setGpuReady(false);
 
-    for (let i = 0; i < pixels.length; i++) {
+    for (let i = 0; i < pixels.length; i += 1) {
       const color = pixels[i];
       const rgba = minecraftMapPalette[color];
       const j = i * 4;
@@ -117,13 +117,13 @@ const MinecraftMap = ({
           async (src) =>
             // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
             await new Promise<HTMLImageElement>((resolve, reject) => {
-              const image = new Image();
-              image.onload = () => {
-                resolve(image);
+              const loadedImage = new Image();
+              loadedImage.onload = () => {
+                resolve(loadedImage);
               };
 
-              image.onerror = reject;
-              image.src = src;
+              loadedImage.onerror = reject;
+              loadedImage.src = src;
             })
         )
       )

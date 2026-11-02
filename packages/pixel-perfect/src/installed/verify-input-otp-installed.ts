@@ -29,7 +29,7 @@ const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((item) => item.name === "input-otp");
+const item = registry.items.find((registryItem) => registryItem.name === "input-otp");
 
 // SAFETY: the initialized shadcn components.json owns the existing rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
@@ -139,7 +139,7 @@ async function worker() {
 
       await expect(mirror).toHaveAttribute("data-mc-ready", "true");
 
-      if (/[^\u0000-\u007F]/.test(c.text)) {
+      if (/\P{ASCII}/u.test(c.text)) {
         await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
       }
 

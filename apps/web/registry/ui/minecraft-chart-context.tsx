@@ -563,7 +563,7 @@ export const ChartPixelSurface = ({
               ? []
               : style.strokeDasharray
                   .split(/[ ,]+/u)
-                  .map((value) => Number.parseFloat(value))
+                  .map((dashToken) => Number.parseFloat(dashToken))
           );
           mask.stroke(path);
         } else {

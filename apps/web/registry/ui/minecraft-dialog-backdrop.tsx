@@ -88,7 +88,7 @@ export const MinecraftDialogBackdrop = () => {
       gl.readPixels(0, 0, 1, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
       const next: Band[] = [];
 
-      for (let y = 0; y < height; y++) {
+      for (let y = 0; y < height; y += 1) {
         const alpha = pixels[(height - y - 1) * 4 + 3];
         const last = next.at(-1);
 

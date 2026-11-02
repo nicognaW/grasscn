@@ -210,7 +210,7 @@ const SelectTrigger = ({
 
       const text = label.textContent ?? "";
 
-      if (/[^\u0000-\u007F]/u.test(text) && !loading) {
+      if (/\P{ASCII}/u.test(text) && !loading) {
         loading = true;
         void loadUnihex().then(() => {
           if (!stopped) {

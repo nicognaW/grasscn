@@ -197,7 +197,7 @@ const text = function text(
 
       if (char !== " ") {
         for (let py = 0; py < 8; py += 1) {
-          for (let px = 0; px < 8; px++) {
+          for (let px = 0; px < 8; px += 1) {
             if (alpha[((glyph[1] + py) * 128 + glyph[0] + px) * 4 + 3]) {
               context.fillRect(
                 (offset + px + Number(shadow)) * scale,
@@ -432,22 +432,22 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
         }
 
         if (cursor !== anchor) {
-          for (const [row, line] of lines.entries()) {
-            const begin = Math.max(line.begin, Math.min(cursor, anchor));
-            const end = Math.min(line.end, Math.max(cursor, anchor));
+          for (const [selectionRowIndex, selectionLine] of lines.entries()) {
+            const begin = Math.max(selectionLine.begin, Math.min(cursor, anchor));
+            const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
 
             if (end < begin) {
               continue;
             }
 
-            const left = 4 + advance(value.slice(line.begin, begin));
+            const left = 4 + advance(value.slice(selectionLine.begin, begin));
 
             const right =
-              Math.max(cursor, anchor) > line.end
+              Math.max(cursor, anchor) > selectionLine.end
                 ? pane
-                : 4 + advance(value.slice(line.begin, end));
+                : 4 + advance(value.slice(selectionLine.begin, end));
 
-            const top = 4 + row * 9 - scroll;
+            const top = 4 + selectionRowIndex * 9 - scroll;
 
             const x0 = Math.max(1, left);
             const x1 = Math.min(pane - 1, right);

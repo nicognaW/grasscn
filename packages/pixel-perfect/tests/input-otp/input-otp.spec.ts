@@ -43,7 +43,7 @@ for (const c of manifest.cases) {
 
     await expect(mirror).toHaveAttribute("data-mc-ready", "true");
 
-    if (/[^\x00-\x7F]/.test(c.text)) {
+    if (/\P{ASCII}/u.test(c.text)) {
       await expect(mirror).toHaveAttribute("data-mc-bitmap", "true");
     }
 

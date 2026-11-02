@@ -77,7 +77,7 @@ try {
     ["action", "."],
     ["action", "button-cjk"],
     ["input", "input"],
-  ].filter(([part]) => !partsArg || partsArg.split(",").includes(part))) {
+  ].filter(([constituentPart]) => !partsArg || partsArg.split(",").includes(constituentPart))) {
     // SAFETY: the existing part directory table selects the Label/Controls/Button/Input capture producers.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Questionnaire constituent capture producer boundary.
     const m = JSON.parse(

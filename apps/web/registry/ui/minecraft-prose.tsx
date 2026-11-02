@@ -95,7 +95,7 @@ const MinecraftProse = ({
 
   const text = isMinecraftTextContent(content) ? String(content) : null;
 
-  const unicode = text !== null && /[^\u0000-\u007F]/u.test(text);
+  const unicode = text !== null && /\P{ASCII}/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;

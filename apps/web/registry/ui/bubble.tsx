@@ -190,7 +190,7 @@ const BubbleContent = ({
           : "";
 
   const text = plainText(content);
-  const unicode = /[^\u0000-\u007F]/u.test(text);
+  const unicode = /\P{ASCII}/u.test(text);
 
   React.useLayoutEffect(() => {
     let live = true;

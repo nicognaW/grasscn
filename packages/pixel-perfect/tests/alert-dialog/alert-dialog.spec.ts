@@ -65,20 +65,20 @@ test("AlertDialog comparator catches one changed pixel", () => {
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const directory of [
+for (const constituentDirectory of [
   "tests/reference/alert-dialog-backdrop",
   "tests/reference/alert-dialog",
 ]) {
-  test.describe(`Original confirmation screen ${directory}`, () => {
+  test.describe(`Original confirmation screen ${constituentDirectory}`, () => {
     // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const manifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+    const constituentManifest = JSON.parse(
+      readFileSync(pixelPerfectFile(`${constituentDirectory}/manifest.json`), "utf-8")
     ) as ConfirmationReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
 
-    for (const c of manifest.cases) {
+    for (const c of constituentManifest.cases) {
       test(`AlertDialog native pixels: ${c.name}`, async ({
         page,
       }, testInfo) => {
@@ -114,9 +114,9 @@ for (const directory of [
         const dialog = page.getByRole("alertdialog");
 
         const expectedUnicode =
-          Number(/[^\x00-\x7f]/.test(c.label)) +
-          (/[^\x00-\x7f]/.test(c.text) ? c.text.split("\n").length : 0) +
-          c.labels.filter((label: string) => /[^\x00-\x7f]/.test(label)).length;
+          Number(/\P{ASCII}/u.test(c.label)) +
+          (/\P{ASCII}/u.test(c.text) ? c.text.split("\n").length : 0) +
+          c.labels.filter((label: string) => /\P{ASCII}/u.test(label)).length;
 
         if (expectedUnicode) {
           await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(
@@ -167,7 +167,7 @@ for (const directory of [
         );
 
         const bytes = readFileSync(
-          pixelPerfectFile(`${directory}/captures/${c.name}`)
+          pixelPerfectFile(`${constituentDirectory}/captures/${c.name}`)
         );
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);

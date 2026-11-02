@@ -88,9 +88,9 @@ export const AnalyticsChartExample = ({
         dataKey="name"
         tickLine={false}
         axisLine={false}
-        tick={(props) => (
+        tick={(tickProps) => (
           <ChartAxisTick
-            {...props}
+            {...tickProps}
             tickFormatter={(value) => String(value).slice(0, 3)}
             dy={4 * scale}
           />

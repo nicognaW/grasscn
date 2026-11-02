@@ -76,20 +76,20 @@ test("Dialog comparator catches a one-pixel change", () => {
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const directory of [
+for (const constituentDirectory of [
   "tests/reference/dialog",
   "tests/reference/dialog-extra",
 ]) {
-  test.describe(`Dialog native viewport matrix ${directory}`, () => {
+  test.describe(`Dialog native viewport matrix ${constituentDirectory}`, () => {
     // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    const manifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+    const constituentManifest = JSON.parse(
+      readFileSync(pixelPerfectFile(`${constituentDirectory}/manifest.json`), "utf-8")
     ) as DialogReferenceManifest;
 
     test.describe.configure({ mode: "parallel" });
 
-    for (const c of manifest.cases) {
+    for (const c of constituentManifest.cases) {
       test(`Dialog native pixels: ${c.name}`, async ({ page }, testInfo) => {
         await page.setViewportSize({ width: 1536, height: 900 });
 
@@ -125,7 +125,7 @@ for (const directory of [
           page.locator('[data-slot="dialog-overlay"]')
         ).toHaveAttribute("data-mc-backdrop-ready", "true");
 
-        if (/[^\x00-\x7f]/.test((c.label ?? "") + (c.text ?? ""))) {
+        if (/\P{ASCII}/u.test((c.label ?? "") + (c.text ?? ""))) {
           await expect(
             dialog.locator("[data-mc-dialog-unicode-ready]")
           ).toHaveCount(3);
@@ -195,7 +195,7 @@ for (const directory of [
         );
 
         const bytes = readFileSync(
-          pixelPerfectFile(`${directory}/captures/${c.name}`)
+          pixelPerfectFile(`${constituentDirectory}/captures/${c.name}`)
         );
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);

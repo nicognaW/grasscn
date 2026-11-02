@@ -26,15 +26,15 @@ const create = function create(): Painter | null {
   }
 
   const shader = (kind: number, source: string) => {
-    const shader = gl.createShader(kind)!;
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
+    const shaderHandle = gl.createShader(kind)!;
+    gl.shaderSource(shaderHandle, source);
+    gl.compileShader(shaderHandle);
 
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      throw new Error(gl.getShaderInfoLog(shader) ?? "Checkbox shader failed");
+    if (!gl.getShaderParameter(shaderHandle, gl.COMPILE_STATUS)) {
+      throw new Error(gl.getShaderInfoLog(shaderHandle) ?? "Checkbox shader failed");
     }
 
-    return shader;
+    return shaderHandle;
   };
 
   const vertex = shader(

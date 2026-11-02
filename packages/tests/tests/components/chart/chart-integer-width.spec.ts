@@ -70,8 +70,8 @@ for (const scale of [2] as const) {
         for (let x = 0; x + scale <= image.width; x += scale) {
           const start = (y * image.width + x) * 4;
 
-          for (let dy = 0; dy < scale; dy++)
-            for (let dx = 0; dx < scale; dx++) {
+          for (let dy = 0; dy < scale; dy += 1)
+            for (let dx = 0; dx < scale; dx += 1) {
               const offset = ((y + dy) * image.width + x + dx) * 4;
 
               if (

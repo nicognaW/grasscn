@@ -415,8 +415,8 @@ const AdvancementTree = ({
               key={node.id}
               open={!isDragging && tooltipId === node.id}
               onOpenChange={(open) => {
-                setTooltipId((current) =>
-                  open ? node.id : current === node.id ? null : current
+                setTooltipId((previousTooltipId) =>
+                  open ? node.id : previousTooltipId === node.id ? null : previousTooltipId
                 );
               }}
             >

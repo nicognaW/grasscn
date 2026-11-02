@@ -321,7 +321,7 @@ const TabsTrigger = ({
       }
     };
 
-    const unicode = text !== null && /[^\u0000-\u007F]/u.test(text);
+    const unicode = text !== null && /\P{ASCII}/u.test(text);
 
     if (unicode) {
       void loadUnihex().then(() => {

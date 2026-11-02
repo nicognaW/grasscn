@@ -128,8 +128,8 @@ export const MinecraftUnicodeLabel = ({
 
                 if (glyph) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++) {
-                      for (let px = 0; px < 8; px++) {
+                    for (let y = 0; y < 8; y += 1) {
+                      for (let px = 0; px < 8; px += 1) {
                         if (
                           pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]
                         ) {
@@ -144,10 +144,10 @@ export const MinecraftUnicodeLabel = ({
                     }
                   }
                 } else {
-                  const glyph = getUnihexGlyph(char)!;
+                  const unicodeGlyph = getUnihexGlyph(char)!;
                   paintUnihex(
                     context,
-                    glyph,
+                    unicodeGlyph,
                     x + (shadow ? 0.5 : 0),
                     shadow ? 0.5 : 0,
                     scale

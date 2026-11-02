@@ -130,13 +130,13 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
     sw: number,
     sh: number
   ) => {
-    const x = originX + dx;
-    const y = originY + dy;
+    const quadX = originX + dx;
+    const quadY = originY + dy;
 
-    const a = [x, y, u / atlas.width, v / atlas.height];
-    const b = [x, y + h, u / atlas.width, (v + sh) / atlas.height];
-    const c = [x + w, y + h, (u + sw) / atlas.width, (v + sh) / atlas.height];
-    const d = [x + w, y, (u + sw) / atlas.width, v / atlas.height];
+    const a = [quadX, quadY, u / atlas.width, v / atlas.height];
+    const b = [quadX, quadY + h, u / atlas.width, (v + sh) / atlas.height];
+    const c = [quadX + w, quadY + h, (u + sw) / atlas.width, (v + sh) / atlas.height];
+    const d = [quadX + w, quadY, (u + sw) / atlas.width, v / atlas.height];
 
     gl.bufferData(
       gl.ARRAY_BUFFER,
@@ -162,19 +162,19 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
     ];
 
     for (
-      let row = 0, sy = 0, y = 0;
+      let row = 0, sy = 0, rowOffsetY = 0;
       row < 3;
-      y += heights[row], sy += sizes[row], row += 1
+      rowOffsetY += heights[row], sy += sizes[row], row += 1
     ) {
       for (
-        let col = 0, sx = 0, x = 0;
+        let col = 0, sx = 0, columnOffsetX = 0;
         col < 3;
-        x += widths[col], sx += sizes[col], col += 1
+        columnOffsetX += widths[col], sx += sizes[col], col += 1
       ) {
         if (sprite.stretch) {
           draw(
-            x,
-            y,
+            columnOffsetX,
+            rowOffsetY,
             widths[col],
             heights[row],
             sx + location.x,
@@ -189,8 +189,8 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
               const h = Math.min(sizes[row] * scale, heights[row] - dy);
 
               draw(
-                x + dx,
-                y + dy,
+                columnOffsetX + dx,
+                rowOffsetY + dy,
                 w,
                 h,
                 sx + location.x,
@@ -218,10 +218,10 @@ export const gpuTooltipPixels = function gpuTooltipPixels(
     raw
   );
 
-  for (let y = 0; y < height; y += 1) {
+  for (let pixelRow = 0; pixelRow < height; pixelRow += 1) {
     result.set(
-      raw.subarray((height - y - 1) * width * 4, (height - y) * width * 4),
-      y * width * 4
+      raw.subarray((height - pixelRow - 1) * width * 4, (height - pixelRow) * width * 4),
+      pixelRow * width * 4
     );
   }
 

@@ -15,10 +15,10 @@ const manifest = JSON.parse(
 
 for (const mode of ["split", "fragments", "empty", "numeric"]) {
   for (const c of manifest.cases.filter(
-    (c: { width: number; label: string }) =>
+    (buttonCase: { width: number; label: string }) =>
       mode === "numeric"
-        ? c.width === 103 && c.label.endsWith("09")
-        : c.width === 200 && c.label === "Button"
+        ? buttonCase.width === 103 && buttonCase.label.endsWith("09")
+        : buttonCase.width === 200 && buttonCase.label === "Button"
   )) {
     test(`Button${mode}composed native label:${c.name}`, async ({
       page,

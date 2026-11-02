@@ -84,7 +84,7 @@ const manifest = JSON.parse(
 
         if (
           folder.includes("cjk") ||
-          /[^\x00-\x7F]/.test((c.text ?? "") + (c.placeholder ?? ""))
+          /\P{ASCII}/u.test((c.text ?? "") + (c.placeholder ?? ""))
         ) {
           await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
         }

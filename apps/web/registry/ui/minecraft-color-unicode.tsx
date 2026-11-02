@@ -67,7 +67,7 @@ export const MinecraftColorUnicodeLabel = ({
     setColorUnihexAtlas(context, atlas);
     setBitmap(false);
     Promise.all([
-      /[^\u0000-\u007F]/u.test(text) ? loadUnihex() : Promise.resolve(),
+      /\P{ASCII}/u.test(text) ? loadUnihex() : Promise.resolve(),
       loadAlpha(),
     ])
       .then(([, pixels]) => {
@@ -140,8 +140,8 @@ export const MinecraftColorUnicodeLabel = ({
 
                 if (glyph) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++) {
-                      for (let px = 0; px < 8; px++) {
+                    for (let y = 0; y < 8; y += 1) {
+                      for (let px = 0; px < 8; px += 1) {
                         if (
                           pixels[((glyph[1] + y) * 128 + glyph[0] + px) * 4 + 3]
                         ) {
@@ -156,10 +156,10 @@ export const MinecraftColorUnicodeLabel = ({
                     }
                   }
                 } else {
-                  const glyph = getUnihexGlyph(char)!;
+                  const unicodeGlyph = getUnihexGlyph(char)!;
                   paintUnihex(
                     context,
-                    glyph,
+                    unicodeGlyph,
                     x + (shadow ? 0.5 : 0),
                     shadow ? 0.5 : 0,
                     scale

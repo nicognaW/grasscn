@@ -141,8 +141,8 @@ const roots = manifests.flatMap((pkg) =>
 const cmdkClosure = new Set<string>();
 
 const pending = roots
-  .filter((root) => cmdk(root.name))
-  .map((root) => root.location)
+  .filter((dependencyRoot) => cmdk(dependencyRoot.name))
+  .map((dependencyRoot) => dependencyRoot.location)
   .filter(
     (location): location is string =>
       location !== undefined && location.length > 0
@@ -173,8 +173,8 @@ for (
 const outsideCmdk = new Set<string>();
 
 const outsidePending = roots
-  .filter((root) => !cmdk(root.name))
-  .map((root) => root.location)
+  .filter((dependencyRoot) => !cmdk(dependencyRoot.name))
+  .map((dependencyRoot) => dependencyRoot.location)
   .filter(
     (location): location is string =>
       location !== undefined && location.length > 0
@@ -232,14 +232,14 @@ for (const location of Object.keys(packages)) {
   }
 
   for (const field of transitiveFields) {
-    for (const name of Object.keys(pkg[field] ?? {})) {
+    for (const dependencyName of Object.keys(pkg[field] ?? {})) {
       if (
-        vaul(name) ||
-        (radix(name) &&
+        vaul(dependencyName) ||
+        (radix(dependencyName) &&
           (!cmdkClosure.has(location) ||
-            !dependencyIsInCommandClosure(location, name)))
+            !dependencyIsInCommandClosure(location, dependencyName)))
       ) {
-        failures.push(`transitive ${field}: ${location} -> ${name}`);
+        failures.push(`transitive ${field}: ${location} -> ${dependencyName}`);
       }
     }
   }

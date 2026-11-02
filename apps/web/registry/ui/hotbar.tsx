@@ -50,13 +50,13 @@ const HotbarPaint = ({
       const asset = hotbarRgba[name];
       const bytes = Uint8Array.from(atob(asset.rgba), (c) => c.charCodeAt(0));
 
-      for (let y = 0; y < asset.height; y++) {
-        for (let x = 0; x < asset.width; x++) {
+      for (let y = 0; y < asset.height; y += 1) {
+        for (let x = 0; x < asset.width; x += 1) {
           const from = (y * asset.width + x) * 4;
           const to = ((y + top) * 184 + x + left) * 4;
           const alpha = bytes[from + 3] / 255;
 
-          for (let k = 0; k < 3; k++) {
+          for (let k = 0; k < 3; k += 1) {
             image.data[to + k] = Math.round(
               bytes[from + k] * alpha + image.data[to + k] * (1 - alpha)
             );

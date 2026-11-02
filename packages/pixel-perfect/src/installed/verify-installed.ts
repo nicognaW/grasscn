@@ -706,11 +706,11 @@ try {
         const confirmationText = c.text!;
 
         const count =
-          Number(/[^\u0000-\u007F]/.test(c.label)) +
-          (/[^\u0000-\u007F]/.test(confirmationText)
+          Number(/\P{ASCII}/u.test(c.label)) +
+          (/\P{ASCII}/u.test(confirmationText)
             ? confirmationText.split("\n").length
             : 0) +
-          c.labels.filter((label) => /[^\u0000-\u007F]/.test(label)).length;
+          c.labels.filter((label) => /\P{ASCII}/u.test(label)).length;
 
         if (count) {
           await expect(dialog.locator("[data-mc-label-ready]")).toHaveCount(
@@ -732,7 +732,7 @@ try {
           page.locator('[data-slot="dialog-overlay"]')
         ).toHaveAttribute("data-mc-backdrop-ready", "true");
 
-        if (/[^\u0000-\u007F]/.test((c.label ?? "") + (c.text ?? ""))) {
+        if (/\P{ASCII}/u.test((c.label ?? "") + (c.text ?? ""))) {
           await expect(
             dialog.locator("[data-mc-dialog-unicode-ready]")
           ).toHaveCount(3);
