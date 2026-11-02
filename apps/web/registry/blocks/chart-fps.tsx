@@ -65,6 +65,7 @@ export const FpsChartExample = ({
   };
   // Preserve eager color reads after the style spread. Recharts can skip
   // rectangles before it invokes the renderer.
+
   const fills = rows.map((row) =>
     chartFpsColor(
       ((Number(row[dataKey]) - domain[0]) / (domain[1] - domain[0])) *
@@ -94,8 +95,8 @@ export const FpsChartExample = ({
           dataKey={dataKey}
           isAnimationActive={false}
           // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
-          shape={(props) => (
-            <ChartPixelBar {...props} fill={fills[props.originalDataIndex]} />
+          shape={(barProps) => (
+            <ChartPixelBar {...barProps} fill={fills[barProps.originalDataIndex]} />
           )}
         />
         <ChartFpsFrame
