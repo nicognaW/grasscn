@@ -5,19 +5,7 @@ import path from "node:path";
 
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import type {
-  ComponentEvidenceMap,
-  ComponentCatalog,
-  NativeInventory,
-  EvidenceRegistry,
-  NativeCaptureManifest,
-  NativeGlyphCaptureManifest,
-  UtilityBehaviorEvidence,
-  InstallationEvidence,
-  UtilityInstallationEvidence,
-  RepeatabilityEvidence,
   RepeatedEvidenceCase,
-  GlyphProvenance,
-  GlyphObservationEvidence,
   UpstreamRegistryCatalog,
   EvidenceRegistryItem,
   PixelEvidenceCase,
