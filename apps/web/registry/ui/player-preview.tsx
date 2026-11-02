@@ -255,9 +255,9 @@ const buildRenderer = function buildRenderer(
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
       const order = Array.from({ length: source.length / 4 }, (_, i) => i).sort(
-        (a, b) =>
-          Math.fround(Math.fround(data[a * 48 + 2] + data[a * 48 + 18]) * 0.5) -
-          Math.fround(Math.fround(data[b * 48 + 2] + data[b * 48 + 18]) * 0.5)
+        (leftQuadIndex, rightQuadIndex) =>
+          Math.fround(Math.fround(data[leftQuadIndex * 48 + 2] + data[leftQuadIndex * 48 + 18]) * 0.5) -
+          Math.fround(Math.fround(data[rightQuadIndex * 48 + 2] + data[rightQuadIndex * 48 + 18]) * 0.5)
       );
 
       const sorted = new Float32Array(data.length);

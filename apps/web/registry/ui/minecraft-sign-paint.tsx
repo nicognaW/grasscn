@@ -200,12 +200,12 @@ export const MinecraftSignPaint = ({
 
               x += glyph[2];
             } else {
-              const glyph = getUnihexGlyph(char);
+              const unicodeGlyph = getUnihexGlyph(char);
 
-              if (glyph) {
+              if (unicodeGlyph) {
                 sc.fillStyle = "#ffffff";
-                paintUnihex(sc, glyph, x, 0, 1);
-                x += glyph.advance;
+                paintUnihex(sc, unicodeGlyph, x, 0, 1);
+                x += unicodeGlyph.advance;
               }
             }
           }

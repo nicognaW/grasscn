@@ -49,7 +49,7 @@ if (definitionArgument) {
     fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
   ) as InstalledTextRegistry;
 
-  item = registry.items.find((item) => item.name === "item");
+  item = registry.items.find((registryItem) => registryItem.name === "item");
 }
 
 assert.ok(

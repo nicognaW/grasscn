@@ -31,9 +31,9 @@ export const CustomApiFixture = () => {
         ref={tree}
         nodes={[{ id: "root", title: "Root", x: 0, y: 0 }]}
         defaultPan={{ x: 20, y: 20 }}
-        onClickCapture={(event) => {
+        onClickCapture={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
         onSelectedIdChange={(id) => {
@@ -42,14 +42,14 @@ export const CustomApiFixture = () => {
       />
       <Hotbar
         ref={hotbar}
-        onClickCapture={(event) => {
+        onClickCapture={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
-        onWheelCapture={(event) => {
+        onWheelCapture={(wheelEvent) => {
           if (cancel) {
-            event.preventDefault();
+            wheelEvent.preventDefault();
           }
         }}
         onValueChange={(value) => {
@@ -58,9 +58,9 @@ export const CustomApiFixture = () => {
       />
       <MinecraftMap
         pixels={new Uint8Array(16_384)}
-        onClick={(event) => {
+        onClick={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
         onMapClick={(point) => {
@@ -70,9 +70,9 @@ export const CustomApiFixture = () => {
       <Book
         pages={["First", "Second"]}
         turnSound={false}
-        onClickCapture={(event) => {
+        onClickCapture={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
         onPageChange={(page) => {
@@ -81,9 +81,9 @@ export const CustomApiFixture = () => {
       />
       <PlayerList
         players={[{ id: "sample", name: "Sample player" }]}
-        onClickCapture={(event) => {
+        onClickCapture={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
         onPlayerSelect={(id) => {
@@ -105,9 +105,9 @@ export const CustomApiFixture = () => {
             result: { icon: null, label: "Reward" },
           },
         ]}
-        onClickCapture={(event) => {
+        onClickCapture={(clickEvent) => {
           if (cancel) {
-            event.preventDefault();
+            clickEvent.preventDefault();
           }
         }}
         onSelectedIdChange={(id) => {

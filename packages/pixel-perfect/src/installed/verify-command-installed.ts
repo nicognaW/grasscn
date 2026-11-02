@@ -29,7 +29,7 @@ const registry = JSON.parse(
   await readFile(webFile(path.join("registry.json")), "utf-8")
 ) as InstalledTextRegistry;
 
-const item = registry.items.find((item) => item.name === "command");
+const item = registry.items.find((registryItem) => registryItem.name === "command");
 
 // SAFETY: the initialized shadcn consumer configuration owns its optional rsc setting.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.

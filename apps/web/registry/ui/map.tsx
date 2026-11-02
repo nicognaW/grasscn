@@ -116,13 +116,13 @@ const MinecraftMap = ({
         ].map(
           async (src) =>
             await new Promise<HTMLImageElement>((resolve, reject) => {
-              const image = new Image();
-              image.onload = () => {
-                resolve(image);
+              const loadedImage = new Image();
+              loadedImage.onload = () => {
+                resolve(loadedImage);
               };
 
-              image.onerror = reject;
-              image.src = src;
+              loadedImage.onerror = reject;
+              loadedImage.src = src;
             })
         )
       )

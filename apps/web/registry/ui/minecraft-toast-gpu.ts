@@ -236,11 +236,11 @@ export const paintToast = function paintToast(
       const e = [edgeLeft, top, u0, v0];
       const f = [edgeLeft, bottom, u0, v1];
       const g = [edgeRight, bottom, u0, v1];
-      const h = [edgeRight, top, u0, v0];
+      const edgeTopRightVertex = [edgeRight, top, u0, v0];
 
       gl.bufferData(
         gl.ARRAY_BUFFER,
-        new Float32Array([...e, ...f, ...g, ...g, ...h, ...e]),
+        new Float32Array([...e, ...f, ...g, ...g, ...edgeTopRightVertex, ...e]),
         gl.STREAM_DRAW
       );
       gl.drawArrays(gl.TRIANGLES, 0, 6);

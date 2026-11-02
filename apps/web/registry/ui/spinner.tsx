@@ -81,13 +81,13 @@ const Spinner = ({
       {...props}
     >
       <g aria-hidden="true" fill="#202020">
-        {pixels.map(([x, y], index) => (
-          <rect key={index} x={x + 1} y={y + 1} width="1" height="1" />
+        {pixels.map(([pixelX, y], index) => (
+          <rect key={index} x={pixelX + 1} y={y + 1} width="1" height="1" />
         ))}
       </g>
       <g aria-hidden="true" fill="#808080">
-        {pixels.map(([x, y], index) => (
-          <rect key={index} x={x} y={y} width="1" height="1" />
+        {pixels.map(([pixelX, y], index) => (
+          <rect key={index} x={pixelX} y={y} width="1" height="1" />
         ))}
       </g>
       {children}

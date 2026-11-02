@@ -23,7 +23,7 @@ export const api = (
     scale={3}
     opts={opts}
     plugins={plugins}
-    setApi={(api: CarouselApi) => api?.scrollTo(1, true)}
+    setApi={(carouselApi: CarouselApi) => carouselApi?.scrollTo(1, true)}
     onKeyDownCapture={(e) => {
       e.currentTarget.focus();
     }}

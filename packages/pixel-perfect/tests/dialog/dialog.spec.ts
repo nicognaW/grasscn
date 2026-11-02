@@ -62,18 +62,18 @@ test("Dialog comparator catches a one-pixel change", () => {
   expect(compare(expected, actual).mismatchedPixels).toBe(1);
 });
 
-for (const directory of [
+for (const constituentDirectory of [
   "tests/reference/dialog",
   "tests/reference/dialog-extra",
 ]) {
-  test.describe(`Dialog native viewport matrix ${directory}`, () => {
-    const manifest = JSON.parse(
-      readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
+  test.describe(`Dialog native viewport matrix ${constituentDirectory}`, () => {
+    const constituentManifest = JSON.parse(
+      readFileSync(pixelPerfectFile(`${constituentDirectory}/manifest.json`), "utf-8")
     );
 
     test.describe.configure({ mode: "parallel" });
 
-    for (const c of manifest.cases) {
+    for (const c of constituentManifest.cases) {
       test(`Dialog native pixels: ${c.name}`, async ({ page }, testInfo) => {
         await page.setViewportSize({ width: 1536, height: 900 });
 
@@ -171,7 +171,7 @@ for (const directory of [
         );
 
         const bytes = readFileSync(
-          pixelPerfectFile(`${directory}/captures/${c.name}`)
+          pixelPerfectFile(`${constituentDirectory}/captures/${c.name}`)
         );
 
         expect(createHash("sha256").update(bytes).digest("hex")).toBe(c.sha256);

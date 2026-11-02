@@ -431,22 +431,22 @@ export const attachMinecraftTextarea = function attachMinecraftTextarea(
         }
 
         if (cursor !== anchor) {
-          for (const [row, line] of lines.entries()) {
-            const begin = Math.max(line.begin, Math.min(cursor, anchor));
-            const end = Math.min(line.end, Math.max(cursor, anchor));
+          for (const [selectionRowIndex, selectionLine] of lines.entries()) {
+            const begin = Math.max(selectionLine.begin, Math.min(cursor, anchor));
+            const end = Math.min(selectionLine.end, Math.max(cursor, anchor));
 
             if (end < begin) {
               continue;
             }
 
-            const left = 4 + advance(value.slice(line.begin, begin));
+            const left = 4 + advance(value.slice(selectionLine.begin, begin));
 
             const right =
-              Math.max(cursor, anchor) > line.end
+              Math.max(cursor, anchor) > selectionLine.end
                 ? pane
-                : 4 + advance(value.slice(line.begin, end));
+                : 4 + advance(value.slice(selectionLine.begin, end));
 
-            const top = 4 + row * 9 - scroll;
+            const top = 4 + selectionRowIndex * 9 - scroll;
 
             const x0 = Math.max(1, left);
             const x1 = Math.min(pane - 1, right);

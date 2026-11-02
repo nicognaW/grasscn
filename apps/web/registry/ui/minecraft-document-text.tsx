@@ -143,12 +143,12 @@ const MinecraftDocumentText = ({
 
               x += glyph[2];
             } else {
-              const glyph = getUnihexGlyph(char);
+              const unicodeGlyph = getUnihexGlyph(char);
 
-              if (glyph) {
+              if (unicodeGlyph) {
                 ctx.fillStyle = color;
-                paintUnihex(ctx, glyph, x, lineIndex * 9, scale);
-                x += glyph.advance;
+                paintUnihex(ctx, unicodeGlyph, x, lineIndex * 9, scale);
+                x += unicodeGlyph.advance;
               }
             }
           }

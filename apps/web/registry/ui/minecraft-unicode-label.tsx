@@ -143,10 +143,10 @@ export const MinecraftUnicodeLabel = ({
                     }
                   }
                 } else {
-                  const glyph = getUnihexGlyph(char)!;
+                  const unicodeGlyph = getUnihexGlyph(char)!;
                   paintUnihex(
                     context,
-                    glyph,
+                    unicodeGlyph,
                     x + (shadow ? 0.5 : 0),
                     shadow ? 0.5 : 0,
                     scale

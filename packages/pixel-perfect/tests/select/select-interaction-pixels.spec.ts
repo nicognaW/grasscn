@@ -18,16 +18,16 @@ for (const scale of [1, 2, 3]) {
       page,
     }, testInfo) => {
       const c = manifest.cases.find(
-        (c: any) =>
-          c.element === "select-list" &&
-          c.width === 300 &&
-          c.height === 80 &&
-          c.labels.length === 3 &&
-          c.selectedIndex === 1 &&
-          c.state === "focus" &&
-          c.background === "#202020" &&
-          c.disabledIndex == null &&
-          c.scale === scale
+        (selectListCase: any) =>
+          selectListCase.element === "select-list" &&
+          selectListCase.width === 300 &&
+          selectListCase.height === 80 &&
+          selectListCase.labels.length === 3 &&
+          selectListCase.selectedIndex === 1 &&
+          selectListCase.state === "focus" &&
+          selectListCase.background === "#202020" &&
+          selectListCase.disabledIndex == null &&
+          selectListCase.scale === scale
       );
 
       expect(c).toBeTruthy();

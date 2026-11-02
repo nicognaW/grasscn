@@ -99,8 +99,8 @@ export const createConfirmationPainter = function createConfirmationPainter(
         gl.deleteProgram(program);
       }
 
-      for (const shader of shaders) {
-        gl.deleteShader(shader);
+      for (const shaderHandle of shaders) {
+        gl.deleteShader(shaderHandle);
       }
 
       for (const texture of textures) {

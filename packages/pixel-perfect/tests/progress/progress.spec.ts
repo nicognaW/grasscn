@@ -202,7 +202,7 @@ for (const scale of [1, 2, 3]) {
     page,
   }, testInfo) => {
     const c = manifest.cases.find(
-      (c) => c.name === `progress-c18-s${scale}.png`
+      (progressCase) => progressCase.name === `progress-c18-s${scale}.png`
     )!;
 
     await page.goto(

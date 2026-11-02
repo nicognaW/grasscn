@@ -143,21 +143,21 @@ const ModelGraphic = function ModelGraphic({
   const [height, setHeight] = React.useState(model.height);
 
   const update = React.useCallback(
-    (width: number, height: number) => {
+    (width: number, graphicHeight: number) => {
       model.width = width;
-      model.height = height;
-      setHeight(height);
+      model.height = graphicHeight;
+      setHeight(graphicHeight);
 
       if (model.node.isConnected) {
         const actions = model.node.querySelector(
           "[data-button],[data-close-button]"
         );
 
-        const total = height + (actions ? 26 : 0);
+        const total = graphicHeight + (actions ? 26 : 0);
 
         model.node.style.width = `${width * scale}px`;
         model.node.style.height = `${total * scale}px`;
-        model.node.style.setProperty("--mc-toast-height", String(height));
+        model.node.style.setProperty("--mc-toast-height", String(graphicHeight));
         model.bounds = model.node.getBoundingClientRect();
         model.geometryChanged?.();
       }
@@ -243,7 +243,7 @@ const Toaster = function Toaster({
       for (const list of host.querySelectorAll<HTMLElement>(
         "[data-sonner-toaster]"
       )) {
-        let offset = 0;
+        let stackOffset = 0;
 
         const nodes = [
           ...list.querySelectorAll<HTMLElement>("[data-sonner-toast]"),
@@ -256,13 +256,13 @@ const Toaster = function Toaster({
             continue;
           }
 
-          node.style.setProperty("--mc-native-offset", `${offset}px`);
+          node.style.setProperty("--mc-native-offset", `${stackOffset}px`);
 
           const actions = node.querySelector(
             "[data-button],[data-close-button]"
           );
 
-          offset +=
+          stackOffset +=
             (model.rich
               ? node.offsetHeight
               : (model.height + (actions ? 26 : 0)) * scale) + gap;

@@ -19,11 +19,11 @@ for (const component of ["dropdown-menu", "context-menu", "menubar"]) {
       await page.setViewportSize({ height: 900, width: 1536 });
 
       const c = manifest.cases.find(
-        (c: any) =>
-          c.element === "menu-separator" &&
-          c.width === 200 &&
-          c.background === "#202020" &&
-          c.scale === scale
+        (menuSeparatorCase: any) =>
+          menuSeparatorCase.element === "menu-separator" &&
+          menuSeparatorCase.width === 200 &&
+          menuSeparatorCase.background === "#202020" &&
+          menuSeparatorCase.scale === scale
       );
 
       const params = new URLSearchParams({
