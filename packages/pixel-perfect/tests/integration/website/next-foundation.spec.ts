@@ -27,10 +27,17 @@ test("the default MDX component page renders within the Minecraft website shell"
   await expect(
     page.getByRole("link", { name: "grasscn home" })
   ).toHaveAttribute("href", "/");
-  await expect(page.locator("[data-slot=typography-h1]")).toHaveAttribute(
-    "data-mc-label-layout-ready",
-    "true"
-  );
+  const heading = page.getByRole("heading", { exact: true, name: "Button" });
+  await expect(heading.locator(".mc-text-accessible")).toHaveText("Button");
+  await expect(heading.locator(".mc-text-pixels .mc-glyph")).toHaveCount(6);
+  await expect(heading.locator(".document-text")).toHaveCSS("--mc-scale", "3");
+  expect(
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+
+      return document.fonts.check('24px "Minecraft Bitmap"');
+    })
+  ).toBe(true);
 
   const image = await page
     .getByRole("region", { exact: true, name: "Button example" })
