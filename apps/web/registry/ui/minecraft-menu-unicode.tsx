@@ -41,7 +41,18 @@ export const MenuUnicodeLine = ({
   width: number;
 }) => {
   const ref = React.useRef<HTMLCanvasElement>(null);
-  const [ready, setReady] = React.useState(false);
+
+  const input = React.useMemo(
+    () => ({ bold, scale, text, width }),
+    [bold, scale, text, width]
+  );
+
+  const [completion, setCompletion] = React.useState<{
+    input: typeof input;
+    supported: boolean;
+  }>();
+
+  const ready = completion?.input === input && completion.supported;
 
   React.useLayoutEffect(() => {
     let disposed = false;
@@ -51,13 +62,12 @@ export const MenuUnicodeLine = ({
     const canvas = ref.current!;
     const context = canvas.getContext("2d")!;
 
-    setReady(false);
     void Promise.all([loadUnihex(), loadAlpha()]).then(([, source]) => {
       if (disposed) {
         return;
       }
 
-      const glyphs = [...text].map((char) => {
+      const glyphs = [...input.text].map((char) => {
         const code = char.codePointAt(0)!;
         const ascii = minecraftGlyphs[code - 32];
         const uni = getUnihexGlyph(char);
@@ -122,8 +132,8 @@ export const MenuUnicodeLine = ({
 
         if (next !== signature) {
           signature = next;
-          canvas.width = Math.max(1, width * scale);
-          canvas.height = 9 * scale;
+          canvas.width = Math.max(1, input.width * input.scale);
+          canvas.height = 9 * input.scale;
           context.imageSmoothingEnabled = false;
           positionMenuGlyphs(context, bounds);
           let supported = true;
@@ -134,7 +144,7 @@ export const MenuUnicodeLine = ({
               context.fillStyle = shadow ? shade : ink;
 
               if (glyph.char !== " ") {
-                for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
+                for (let copy = 0; copy < (input.bold ? 2 : 1); copy++) {
                   supported =
                     paintMenuGlyph(
                       context,
@@ -146,17 +156,21 @@ export const MenuUnicodeLine = ({
                         copy * glyph.boldOffset +
                         (shadow ? glyph.shadowOffset : 0),
                       shadow ? glyph.shadowOffset : 0,
-                      scale,
-                      bold
+                      input.scale,
+                      input.bold
                     ) && supported;
                 }
               }
             }
 
-            x += glyph.advance + (bold ? glyph.boldOffset : 0);
+            x += glyph.advance + (input.bold ? glyph.boldOffset : 0);
           }
 
-          setReady(supported);
+          setCompletion((previous) =>
+            previous?.input === input && previous.supported === supported
+              ? previous
+              : { input, supported }
+          );
         }
 
         frame = requestAnimationFrame(tick);
@@ -170,7 +184,7 @@ export const MenuUnicodeLine = ({
       cancelAnimationFrame(frame);
       disposeMenuGlyphs(context);
     };
-  }, [text, bold, scale, width]);
+  }, [input]);
 
   return (
     <span

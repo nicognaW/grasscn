@@ -3,11 +3,7 @@
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { minecraftSeparatorAssets } from "./minecraft-separator-assets";
 

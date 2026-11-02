@@ -163,7 +163,11 @@ ${colorConfig
   );
 };
 
-const ChartText = ({ children }: { children: React.ReactNode }) => {
+const ChartText = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactNode => {
   const { scale } = useChart();
 
   return isMinecraftTextContent(children) ? (

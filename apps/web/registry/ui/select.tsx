@@ -163,7 +163,7 @@ const SelectValue = ({
       {children === undefined
         ? undefined
         : typeof children === "function"
-          ? (value) => textSkin(children(value))
+          ? (value): React.ReactNode => textSkin(children(value))
           : textSkin(children)}
     </SelectPrimitive.Value>
   );
@@ -261,7 +261,6 @@ const SelectTrigger = ({
       cancelAnimationFrame(frame);
     };
   }, [element, scale]);
-  const child = null;
 
   const contents = (
     <>
@@ -404,7 +403,6 @@ const SelectContent = ({
       cancelAnimationFrame(frame);
     };
   }, [element, viewport, scale, alignItemWithTrigger, anchorId]);
-  const child = null;
 
   const contents = (
     <>
@@ -573,8 +571,6 @@ const SelectItem = ({
   render,
   ...props
 }: MinecraftProps<typeof SelectPrimitive.Item>) => {
-  const child = null;
-
   const contents = (
     <span className="mc-select-item-label">
       <SelectPrimitive.ItemText>{textSkin(children)}</SelectPrimitive.ItemText>

@@ -12,10 +12,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type {
-  MinecraftProps,
-  MinecraftPolymorphicProps,
-} from "./minecraft-render";
+import type { MinecraftPolymorphicProps } from "./minecraft-render";
 import { minecraftTextWidth } from "./minecraft-tooltip-layout";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
@@ -75,7 +72,6 @@ const Badge = ({
     };
   }, [scale]);
 
-  const child = null;
   const content = children;
 
   const plain = isMinecraftTextContent(content) ? String(content) : undefined;

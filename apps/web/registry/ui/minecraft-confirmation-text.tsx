@@ -57,7 +57,9 @@ function wrap(text: string, maximum: number) {
   return lines;
 }
 
-export function confirmationButtonText(children: React.ReactNode) {
+export function confirmationButtonText(
+  children: React.ReactNode
+): React.ReactNode {
   return isMinecraftTextContent(children) &&
     /[^\u0020-\u007E]/u.test(String(children)) ? (
     <MinecraftUnicodeLabel

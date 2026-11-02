@@ -4,11 +4,7 @@ import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import * as React from "react";
 
-import {
-  minecraftClasses as cn,
-  minecraftStyle,
-  MinecraftRender,
-} from "./minecraft-render";
+import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import type { MinecraftProps } from "./minecraft-render";
 import { playMinecraftClick } from "./minecraft-sound";
 
@@ -87,8 +83,6 @@ const RadioGroupItem = ({
   const context = React.useContext(RadioContext);
   const scale = explicitScale ?? context.scale;
   const disabled = itemDisabled || context.disabled;
-
-  const child = null;
 
   const indicator = (
     <RadioPrimitive.Indicator

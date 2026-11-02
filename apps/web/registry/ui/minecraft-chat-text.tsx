@@ -12,7 +12,7 @@ import {
   minecraftStyle,
   MinecraftRender,
 } from "./minecraft-render";
-import type { MinecraftProps, MinecraftRenderProp } from "./minecraft-render";
+import type { MinecraftRenderProp } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
@@ -93,7 +93,7 @@ const MinecraftChatText = ({
   React.useImperativeHandle(ref, () => node.current!, []);
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
-  const child = null;
+
   const content = children;
 
   const accessibleText = isMinecraftTextContent(content)
@@ -119,6 +119,7 @@ const MinecraftChatText = ({
           if (used + next > clipWidth - textWidth("...")) {
             break;
           }
+
           value += char;
           used += next;
         }

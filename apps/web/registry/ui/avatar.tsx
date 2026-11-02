@@ -14,7 +14,6 @@ import {
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
-  MinecraftRender,
   type MinecraftProps,
 } from "./minecraft-render";
 
