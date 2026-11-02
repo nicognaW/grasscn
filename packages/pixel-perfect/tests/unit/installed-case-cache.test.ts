@@ -61,6 +61,8 @@ test("installed case checkpoints require all aliases, exact pixels and matching 
       ),
       null
     );
+    // Deliberately flip one pixel bit to prove exact cache comparisons reject corruption.
+    // oxlint-disable-next-line eslint/no-bitwise
     png.data[0] ^= 1;
     const changed = PNG.sync.write(png);
     assert.equal(
