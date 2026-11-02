@@ -166,7 +166,7 @@ export const paintUnihexGPU = function paintUnihexGPU(
 
   const ink = fill.startsWith("#")
     ? Number.parseInt(fill.slice(1, 3), 16)
-    : (fill.match(/[\d.]+/g)?.map(Number)?.[0] ?? 224);
+    : (fill.match(/[\d.]+/gu)?.map(Number)?.[0] ?? 224);
 
   gl.uniform1f(gl.getUniformLocation(program, "ink"), ink / 255);
   gl.clearColor(0, 0, 0, 0);

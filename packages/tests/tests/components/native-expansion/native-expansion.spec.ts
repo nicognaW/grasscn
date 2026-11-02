@@ -45,7 +45,7 @@ test("book navigation and native page-turn sound", async ({ page }) => {
   ).toContainText("Second page");
   const sound = await page.evaluate(() => (window as any).bookAudio);
   expect(sound).toHaveLength(1);
-  expect(sound[0].src).toMatch(/^data:audio\/ogg;base64,/);
+  expect(sound[0].src).toMatch(/^data:audio\/ogg;base64,/u);
   expect(sound[0].volume).toBe(0.5);
   expect(sound[0].rate).toBe(1);
   await book.focus();

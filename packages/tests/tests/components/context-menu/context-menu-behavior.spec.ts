@@ -37,7 +37,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   ]);
   await page.keyboard.press("Home");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -65,7 +65,7 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
 
 test("Context Menu invokes an action once and closes", async ({ page }) => {
   await openMenu(page);
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
@@ -181,7 +181,7 @@ test("Context Menu opening and hovering stay silent; checkbox activation plays t
 }) => {
   await recordAudioPlayback(page);
   await openMenu(page, "keepOpen");
-  await page.getByRole("menuitem", { name: /Resume game/ }).hover();
+  await page.getByRole("menuitem", { name: /Resume game/u }).hover();
   expect(await recordedAudioPlayback(page)).toEqual([]);
   await page
     .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })

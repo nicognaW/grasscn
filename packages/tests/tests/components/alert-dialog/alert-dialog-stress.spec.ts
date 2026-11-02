@@ -34,7 +34,7 @@ for (const selection of ["alert-dialog"]) {
 
       await expect(overlay).toHaveAttribute(
         "data-mc-confirmation-frame",
-        /^[1-9]\d*$/
+        /^[1-9]\d*$/u
       );
       await expect(dialog.locator('[data-mc-label-ready="false"]')).toHaveCount(
         0
@@ -107,7 +107,7 @@ for (const scene of ["fixed-pseudo", "nested-fixed"]) {
     const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
     await expect(overlay).toHaveAttribute(
       "data-mc-confirmation-frame",
-      /^[1-9]\d*$/
+      /^[1-9]\d*$/u
     );
 
     const pixel = await overlay.locator("canvas").evaluate((node, scene) => {

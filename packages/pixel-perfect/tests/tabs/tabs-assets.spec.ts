@@ -11,7 +11,7 @@ const json = (file: string) =>
   JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
 
 const decode = (uri: string) =>
-  Buffer.from(/base64,([A-Za-z0-9+/=]+)/.exec(uri)![1], "base64");
+  Buffer.from(/base64,([A-Za-z0-9+/=]+)/u.exec(uri)![1], "base64");
 
 test("Tabs preserve original texture bytes and exact nine-slice pixels", () => {
   const provenance = json("tests/reference/tabs/asset-provenance.json");
