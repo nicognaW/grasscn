@@ -109,7 +109,7 @@ const Hotbar = ({
   ...props
 }: HotbarProps) => {
   if (items.length > 9) {
-    throw Error("A Minecraft hotbar has nine slots");
+    throw new Error("A Minecraft hotbar has nine slots");
   }
 
   const [internal, setInternal] = React.useState(defaultValue);
@@ -120,7 +120,7 @@ const Hotbar = ({
   React.useImperativeHandle(forwardedRef, () => root.current!, []);
 
   if (!Number.isInteger(current) || current < 0 || current > 8) {
-    throw Error("Hotbar value must be a slot from 0 to 8");
+    throw new Error("Hotbar value must be a slot from 0 to 8");
   }
 
   const select = React.useCallback(

@@ -26,7 +26,7 @@ for (const selection of ["alert-dialog"]) {
       await page
         .getByLabel("Alert dialog message", { exact: true })
         .fill(
-          Array(14)
+          new Array(14)
             .fill("这是一个很长的描述。请确认您是否删除世界。")
             .join("\n")
         );

@@ -55,7 +55,7 @@ const Marker = ({
   ...props
 }: MarkerProps) => {
   if (!["default", "separator", "border"].includes(variant ?? "default")) {
-    throw Error("Unsupported Minecraft marker layout");
+    throw new Error("Unsupported Minecraft marker layout");
   }
 
   const Root = MinecraftRender;

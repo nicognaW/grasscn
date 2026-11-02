@@ -54,7 +54,7 @@ const Attachment = ({
   ...props
 }: AttachmentProps) => {
   if (size !== "default") {
-    throw Error(
+    throw new Error(
       "Minecraft attachment rows support the original default size only"
     );
   }

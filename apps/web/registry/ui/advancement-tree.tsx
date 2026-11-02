@@ -80,13 +80,13 @@ const AdvancementTree = ({
 
   for (const node of nodes) {
     if (ids.has(node.id)) {
-      throw Error(`Duplicate advancement id: ${node.id}`);
+      throw new Error(`Duplicate advancement id: ${node.id}`);
     }
 
     ids.add(node.id);
 
     if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) {
-      throw Error("Advancement positions must be finite");
+      throw new Error("Advancement positions must be finite");
     }
   }
 
@@ -100,7 +100,7 @@ const AdvancementTree = ({
 
   for (const node of nodes) {
     if (node.parentId && !ids.has(node.parentId)) {
-      throw Error(`Missing advancement parent: ${node.parentId}`);
+      throw new Error(`Missing advancement parent: ${node.parentId}`);
     }
 
     const visited = new Set([node.id]);
@@ -108,7 +108,7 @@ const AdvancementTree = ({
 
     while (parent) {
       if (visited.has(parent)) {
-        throw Error("Advancement parents must not form a cycle");
+        throw new Error("Advancement parents must not form a cycle");
       }
 
       visited.add(parent);

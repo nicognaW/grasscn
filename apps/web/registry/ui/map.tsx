@@ -50,7 +50,7 @@ const MinecraftMap = ({
   ...props
 }: MinecraftMapProps) => {
   if (pixels.length !== 16_384) {
-    throw Error("Minecraft maps require exactly128脳128 palette bytes");
+    throw new Error("Minecraft maps require exactly128脳128 palette bytes");
   }
 
   const ref = React.useRef<HTMLCanvasElement>(null);

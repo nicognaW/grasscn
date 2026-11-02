@@ -225,7 +225,7 @@ const Toaster = function Toaster({
   ...props
 }: ToasterProps) {
   if (richColors || !expand) {
-    throw Error(
+    throw new Error(
       "Minecraft notifications support the native palette and expanded stack only"
     );
   }

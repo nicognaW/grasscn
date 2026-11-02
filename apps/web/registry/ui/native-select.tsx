@@ -33,7 +33,7 @@ const NativeSelect = ({
   ...props
 }: NativeSelectProps) => {
   if (size !== "default") {
-    throw Error(
+    throw new Error(
       "Minecraft native select supports the original default CycleButton height only"
     );
   }

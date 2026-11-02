@@ -141,7 +141,7 @@ const Calendar = ({
   );
 
   if (buttonVariant !== "default") {
-    throw Error(
+    throw new Error(
       "Minecraft Calendar supports the native default button appearance only"
     );
   }

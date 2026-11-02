@@ -48,7 +48,7 @@ const Avatar = function Avatar({
   const scale = providedScale ?? inherited;
 
   if (!["default", "sm", "lg"].includes(size)) {
-    throw Error("Unsupported native avatar size");
+    throw new Error("Unsupported native avatar size");
   }
 
   return (

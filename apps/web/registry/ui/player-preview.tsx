@@ -147,7 +147,7 @@ const buildRenderer = function buildRenderer(
     },
     load(image: HTMLImageElement) {
       if (image.naturalWidth !== 64 || image.naturalHeight !== 64) {
-        throw Error("Player skins must be64×64 PNG images");
+        throw new Error("Player skins must be64×64 PNG images");
       }
 
       gl.bindTexture(gl.TEXTURE_2D, texture);

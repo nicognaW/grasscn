@@ -44,11 +44,11 @@ const SignBoard = ({
   hanging?: boolean;
 }) => {
   if (lines.length > 4) {
-    throw Error("Minecraft signs contain up to four lines");
+    throw new Error("Minecraft signs contain up to four lines");
   }
 
   if (!/^#[0-9a-f]{6}$/iu.test(color)) {
-    throw Error("Sign color must be a six-digit hex color");
+    throw new Error("Sign color must be a six-digit hex color");
   }
 
   const raw = Number.parseInt(color.slice(1), 16),

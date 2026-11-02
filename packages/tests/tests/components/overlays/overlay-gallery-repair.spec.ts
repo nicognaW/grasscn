@@ -68,7 +68,7 @@ for (const scale of [2]) {
       .getByLabel("Alert dialog message", { exact: true })
       .fill(
         [
-          ...Array(14).fill("这是一个很长的描述。请确认您是否删除世界。"),
+          ...new Array(14).fill("这是一个很长的描述。请确认您是否删除世界。"),
           "LAST世界",
         ].join("\n")
       );
@@ -130,7 +130,7 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await page.goto(`${origin}docs/components/alert-dialog`);
   await page
     .getByLabel("Alert dialog message", { exact: true })
-    .fill(Array(14).fill("Long description 世界").join("\n"));
+    .fill(new Array(14).fill("Long description 世界").join("\n"));
   await page.getByRole("button", { name: "Open confirmation" }).click();
   const dialog = page.getByRole("alertdialog");
   await expect(dialog).toHaveAttribute("data-mc-confirmation-compact", "true");
