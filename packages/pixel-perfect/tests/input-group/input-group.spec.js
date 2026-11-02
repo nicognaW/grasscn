@@ -141,12 +141,19 @@ for (const [folder, part] of [
       } else {
         await page.evaluate(
           async () =>
-            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
-            await new Promise((resolve) => {
-              requestAnimationFrame(() => {
-                requestAnimationFrame(resolve);
-              });
-            })
+            {
+              const frameCompletion = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return await frameCompletion.promise;
+            }
         );
       }
 

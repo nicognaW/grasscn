@@ -106,14 +106,21 @@ export const formsNativeTests = function formsNativeTests(
             await expect(line).toHaveAttribute("data-mc-label-ready", "true");
           await page.evaluate(
             async () =>
-              // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
-              await new Promise<void>((resolve) => {
-                requestAnimationFrame(() => {
+              {
+                const frameCompletion = Promise.withResolvers<void>();
+
+                try {
                   requestAnimationFrame(() => {
-                    resolve();
+                    requestAnimationFrame(() => {
+                      frameCompletion.resolve();
+                    });
                   });
-                });
-              })
+                } catch (error) {
+                  frameCompletion.reject(error);
+                }
+
+                return await frameCompletion.promise;
+              }
           );
 
           const bytes = readFileSync(

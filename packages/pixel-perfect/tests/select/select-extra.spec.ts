@@ -129,14 +129,21 @@ test.describe("Select CJK native matrix", () => {
 
       await page.evaluate(
         async () =>
-          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
-          new Promise<void>((resolve) => {
-            requestAnimationFrame(() => {
+          {
+            const frameCompletion = Promise.withResolvers<void>();
+
+            try {
               requestAnimationFrame(() => {
-                resolve();
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
               });
-            });
-          })
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            return frameCompletion.promise;
+          }
       );
 
       for (const label of await subject

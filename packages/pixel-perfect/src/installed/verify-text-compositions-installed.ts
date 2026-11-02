@@ -237,21 +237,33 @@ async function worker() {
         await Promise.all(
           images.map(
             async (src) =>
-              // oxlint-disable-next-line promise/avoid-new -- Both image load and error deliberately complete this browser image barrier.
-              new Promise((resolve) => {
-                const image = new Image();
-                image.onload = image.onerror = resolve;
-                // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-                image.src = src!;
-              })
+              {
+                const imageCompletion = Promise.withResolvers();
+
+                try {
+                  const image = new Image();
+                  image.onload = image.onerror = imageCompletion.resolve;
+                  // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
+                  image.src = src!;
+                } catch (error) {
+                  imageCompletion.reject(error);
+                }
+
+                return imageCompletion.promise;
+              }
           )
         );
-        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
-        await new Promise((resolve) => {
+        const frameCompletion = Promise.withResolvers();
+
+        try {
           requestAnimationFrame(() => {
-            requestAnimationFrame(resolve);
+            requestAnimationFrame(frameCompletion.resolve);
           });
-        });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
       });
 
       const expectedBytes = fs.readFileSync(

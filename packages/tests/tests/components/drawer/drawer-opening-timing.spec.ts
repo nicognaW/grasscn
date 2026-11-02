@@ -38,41 +38,48 @@ for (const scale of [2] as const) {
 
     const first = await page.evaluate(
       async () =>
-        // oxlint-disable-next-line promise/avoid-new -- Observe the opening DOM mutation before paint; no Promise API preserves this sampling point.
-        new Promise<{ ready: string | null; opacity: string }>((resolve) => {
-          const observer = new MutationObserver(() => {
-            const overlay = document.querySelector<HTMLElement>(
-              "[data-slot=drawer-overlay]"
-            );
+        {
+          const mutationCompletion = Promise.withResolvers<{ ready: string | null; opacity: string }>();
 
-            const content = document.querySelector(
-              "[data-slot=drawer-content]"
-            );
+          try {
+            const observer = new MutationObserver(() => {
+              const overlay = document.querySelector<HTMLElement>(
+                "[data-slot=drawer-overlay]"
+              );
 
-            if (!overlay || !content) {
-              return;
-            }
+              const content = document.querySelector(
+                "[data-slot=drawer-content]"
+              );
 
-            observer.disconnect();
-
-            for (const n of [overlay, content]) {
-              for (const a of n.getAnimations()) {
-                a.pause();
-                a.currentTime = 0;
+              if (!overlay || !content) {
+                return;
               }
-            }
 
-            resolve({
-              opacity: getComputedStyle(overlay).opacity,
-              ready: overlay.getAttribute("data-mc-backdrop-ready"),
+              observer.disconnect();
+
+              for (const n of [overlay, content]) {
+                for (const a of n.getAnimations()) {
+                  a.pause();
+                  a.currentTime = 0;
+                }
+              }
+
+              mutationCompletion.resolve({
+                opacity: getComputedStyle(overlay).opacity,
+                ready: overlay.getAttribute("data-mc-backdrop-ready"),
+              });
             });
-          });
 
-          observer.observe(document.body, { childList: true, subtree: true });
-          document
-            .querySelector<HTMLButtonElement>("[data-slot=drawer-trigger]")!
-            .click();
-        })
+            observer.observe(document.body, { childList: true, subtree: true });
+            document
+              .querySelector<HTMLButtonElement>("[data-slot=drawer-trigger]")!
+              .click();
+          } catch (error) {
+            mutationCompletion.reject(error);
+          }
+
+          return mutationCompletion.promise;
+        }
     );
 
     // No waiting for backdrop-ready or animation end: inspect the first mounted frame.
@@ -168,33 +175,40 @@ test("Drawer stays visible during its closing transition, then restores focus", 
 
   const closing = await page.evaluate(
     async () =>
-      // oxlint-disable-next-line promise/avoid-new -- Observe the closing attribute mutation before hiding and retain its animation/style snapshot.
-      new Promise<{ ending: boolean; display: string }>((resolve) => {
-        const panel = document.querySelector<HTMLElement>(
-          "[data-slot=drawer-content]"
-        )!;
+      {
+        const mutationCompletion2 = Promise.withResolvers<{ ending: boolean; display: string }>();
 
-        const observer = new MutationObserver(() => {
-          if (!Object.hasOwn(panel.dataset, "endingStyle")) {
-            return;
-          }
+        try {
+          const panel = document.querySelector<HTMLElement>(
+            "[data-slot=drawer-content]"
+          )!;
 
-          observer.disconnect();
-          const { display } = getComputedStyle(panel);
+          const observer = new MutationObserver(() => {
+            if (!Object.hasOwn(panel.dataset, "endingStyle")) {
+              return;
+            }
 
-          for (const animation of panel.getAnimations()) {
-            animation.pause();
-            animation.currentTime = 100;
-          }
+            observer.disconnect();
+            const { display } = getComputedStyle(panel);
 
-          resolve({ display, ending: true });
-        });
+            for (const animation of panel.getAnimations()) {
+              animation.pause();
+              animation.currentTime = 100;
+            }
 
-        observer.observe(panel, { attributes: true });
-        document
-          .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
-          .click();
-      })
+            mutationCompletion2.resolve({ display, ending: true });
+          });
+
+          observer.observe(panel, { attributes: true });
+          document
+            .querySelector<HTMLButtonElement>("[data-slot=drawer-close]")!
+            .click();
+        } catch (error) {
+          mutationCompletion2.reject(error);
+        }
+
+        return mutationCompletion2.promise;
+      }
   );
 
   expect(closing.ending).toBe(true);

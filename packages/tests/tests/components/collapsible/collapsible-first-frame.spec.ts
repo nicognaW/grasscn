@@ -42,13 +42,18 @@ for (const scale of [1, 2, 3]) {
           const frames = [];
 
           for (const milestone of [0, 16, 32, 50, 100]) {
-            // oxlint-disable-next-line promise/avoid-new -- Keep the sample deadline on this evaluated page clock; Node timer Promises change realms.
-            await new Promise((resolve) => {
+            const samplingCompletion = Promise.withResolvers();
+
+            try {
               setTimeout(
-                resolve,
+                samplingCompletion.resolve,
                 Math.max(0, milestone - (performance.now() - start))
               );
-            });
+            } catch (error) {
+              samplingCompletion.reject(error);
+            }
+
+            await samplingCompletion.promise;
 
             const content = document.querySelector<HTMLElement>(
               '[data-slot="collapsible-content"]'

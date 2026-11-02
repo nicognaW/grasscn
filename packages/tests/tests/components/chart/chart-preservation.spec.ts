@@ -97,14 +97,21 @@ for (const scale of [2] as const) {
 
       await page.evaluate(
         async () =>
-          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
-          new Promise<void>((r) => {
-            requestAnimationFrame(() => {
+          {
+            const frameCompletion = Promise.withResolvers<void>();
+
+            try {
               requestAnimationFrame(() => {
-                r();
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
               });
-            });
-          })
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            return frameCompletion.promise;
+          }
       );
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
       const after = (await popup.boundingBox())!;
