@@ -3,10 +3,15 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SpriteMetadata,
+} from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
@@ -14,19 +19,22 @@ if (!input) {
   );
 }
 
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
 const member = "assets/minecraft/textures/gui/sprites/popup/background.png";
 
 const bytes = await readFile(path.join(input, "background.png"));
 const metadata = await readFile(path.join(input, "background.png.mcmeta"));
 
-const hash = (data) => createHash("sha256").update(data).digest("hex");
+const hash = (data: Uint8Array) =>
+  createHash("sha256").update(data).digest("hex");
 
 if (
   hash(bytes) !== inventory.assets[member].sha256 ||
@@ -36,14 +44,24 @@ if (
 }
 
 const image = PNG.sync.read(bytes);
-const { scaling } = JSON.parse(metadata).gui;
-const { border } = scaling;
+
+// SAFETY: the hash-matched original mcmeta document supplies the native sprite nine-slice geometry.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const metadataDocument = JSON.parse(
+  metadata.toString("utf-8")
+) as SpriteMetadata;
+
+const { scaling } = metadataDocument.gui;
+
+// SAFETY: the original popup background mcmeta uses a uniform numeric border (the retained catalog pins its bytes).
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const border = scaling.border as number;
 
 const widths = [border, image.width - border * 2, border];
 const heights = [border, image.height - border * 2, border];
 
-const uri = (bytes) =>
-  `url("data:image/png;base64,${bytes.toString("base64")}")`;
+const uri = (data: Buffer) =>
+  `url("data:image/png;base64,${data.toString("base64")}")`;
 
 const pieces = [];
 
@@ -67,12 +85,12 @@ await writeFile(
       ["height", image.height],
       [
         "border",
-        Object.fromEntries([
-          ["left", border],
-          ["top", border],
-          ["right", border],
-          ["bottom", border],
-        ]),
+        {
+          left: border,
+          top: border,
+          right: border,
+          bottom: border,
+        },
       ],
       ["stretch", scaling.stretch_inner ?? false],
       ["image", uri(bytes)],
