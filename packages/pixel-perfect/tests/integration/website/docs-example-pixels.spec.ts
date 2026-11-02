@@ -131,11 +131,20 @@ test("default documentation code controls match their Minecraft reference cases"
       .first()
   ).toHaveCSS("color", "rgb(85, 255, 85)");
   await directive.scrollIntoViewIfNeeded();
-  const bounds = await directive.boundingBox();
+  const nativeText = directive.locator(".mc-text-pixels");
+  const bounds = await nativeText.first().boundingBox();
 
   if (!bounds) {
     throw new Error("The executable directive is unavailable");
   }
+
+  // The selectable inline line box has font ascent; the native label owns the reference origin.
+  const paintRows = await nativeText.evaluateAll((elements) =>
+    elements.map((element) => element.getBoundingClientRect().y)
+  );
+
+  expect(paintRows.length).toBeGreaterThan(0);
+  expect(paintRows.every((y) => y === bounds.y)).toBe(true);
 
   await pixels(
     await page.screenshot({
