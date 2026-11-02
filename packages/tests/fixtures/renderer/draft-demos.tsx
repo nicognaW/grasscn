@@ -62,17 +62,29 @@ export default function DraftDemos({
       sample.state === "saved-world"
         ? getWorldMapPixels()
         : Uint8Array.from({ length: 16_384 }, (_, i) =>
-            sample.state === "palette"
-              ? i % 256
-              : sample.state === "empty"
-                ? 0
-                : Math.floor(i / 128) < 40
-                  ? 6
-                  : i % 128 < 48
-                    ? 50
-                    : Math.floor(i / 128) > 100
-                      ? 10
-                      : 34
+            {
+          if (sample.state === "palette") {
+            return i % 256;
+          }
+
+          if (sample.state === "empty") {
+            return 0;
+          }
+
+          if (Math.floor(i / 128) < 40) {
+            return 6;
+          }
+
+          if (i % 128 < 48) {
+            return 50;
+          }
+
+          if (Math.floor(i / 128) > 100) {
+            return 10;
+          }
+
+          return 34;
+        }
           ),
     [sample.state]
   );

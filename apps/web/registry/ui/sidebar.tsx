@@ -756,13 +756,19 @@ const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => (
 const plainText = function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
     .map((child) =>
-      isMinecraftTextContent(child)
-        ? String(child)
-        : React.isValidElement<{
+      {
+      if (isMinecraftTextContent(child)) {
+        return String(child);
+      }
+
+      if (React.isValidElement<{
               children?: React.ReactNode;
-            }>(child) && child.type !== "svg"
-          ? plainText(child.props.children)
-          : ""
+            }>(child) && child.type !== "svg") {
+        return plainText(child.props.children);
+      }
+
+      return "";
+    }
     )
     .join("");
 };

@@ -179,15 +179,23 @@ const BubbleContent = ({
       : original;
 
   const plainText = (value: React.ReactNode): string =>
-    isMinecraftTextContent(value)
-      ? String(value)
-      : Array.isArray(value)
-        ? value.map(plainText).join("")
-        : React.isValidElement<{
+    {
+    if (isMinecraftTextContent(value)) {
+      return String(value);
+    }
+
+    if (Array.isArray(value)) {
+      return value.map(plainText).join("");
+    }
+
+    if (React.isValidElement<{
               children?: React.ReactNode;
-            }>(value)
-          ? plainText(value.props.children)
-          : "";
+            }>(value)) {
+      return plainText(value.props.children);
+    }
+
+    return "";
+  };
 
   const text = plainText(content);
   const unicode = /\P{ASCII}/u.test(text);
