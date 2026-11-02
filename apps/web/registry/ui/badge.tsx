@@ -77,7 +77,7 @@ const Badge = ({
   const plain = isMinecraftTextContent(content) ? String(content) : undefined;
 
   const [, refreshFont] = React.useState(0);
-  React.useEffect(() => {
+  React.useEffect((): ReturnType<React.EffectCallback> => {
     if (
       plain === undefined ||
       ![...plain].some((char) => char.codePointAt(0)! > 127)

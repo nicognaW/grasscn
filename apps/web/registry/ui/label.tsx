@@ -93,7 +93,7 @@ const Label = ({
   const text = isMinecraftTextContent(children) ? String(children) : null;
 
   const unicode = text !== null && /\P{ASCII}/u.test(text);
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): ReturnType<React.EffectCallback> => {
     if (unicode) {
       let live = true;
       void loadUnihex().then(() => {
