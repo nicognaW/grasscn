@@ -4,28 +4,37 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 if (!directory) {
   throw new Error("Pass the original boss-bar PNG directory");
 }
 
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
-const sources = {};
-const assets = {};
-const rgba = {};
+const sources: Record<
+  string,
+  { sha256: string; width: number; height: number; decodedRgbaSha256: string }
+> = {};
+
+const assets: Record<string, string> = {};
+
+const rgba: Record<string, string> = {};
 
 for (const [member, pin] of Object.entries(inventory.assets).filter(
-  ([member]) => member.includes("/sprites/boss_bar/")
+  ([assetMember]) => assetMember.includes("/sprites/boss_bar/")
 )) {
   const filename = path.basename(member);
   const bytes = await readFile(path.join(directory, filename));
@@ -33,15 +42,12 @@ for (const [member, pin] of Object.entries(inventory.assets).filter(
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   assert.equal(sha256, pin.sha256);
   const decoded = PNG.sync.read(bytes);
-  sources[member] = Object.fromEntries([
-    ["sha256", sha256],
-    ["width", pin.width],
-    ["height", pin.height],
-    [
-      "decodedRgbaSha256",
-      createHash("sha256").update(decoded.data).digest("hex"),
-    ],
-  ]);
+  sources[member] = {
+    sha256,
+    width: pin.width,
+    height: pin.height,
+    decodedRgbaSha256: createHash("sha256").update(decoded.data).digest("hex"),
+  };
   assets[filename.slice(0, -4)] =
     `data:image/png;base64,${bytes.toString("base64")}`;
   rgba[filename.slice(0, -4)] = decoded.data.toString("base64");

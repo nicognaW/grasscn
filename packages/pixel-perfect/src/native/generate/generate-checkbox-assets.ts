@@ -3,10 +3,12 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
@@ -14,20 +16,39 @@ if (!input) {
   );
 }
 
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
 const css = [
   "/* Minecraft original textures: Mojang Studios. Native-sized derivatives use the documented nearest-sampling rule. */",
   ":root {",
 ];
 
-const assets = {};
-const hash = (data) => createHash("sha256").update(data).digest("hex");
+const assets: Record<
+  string,
+  {
+    sha256: string;
+    embeddedBytes: string;
+    derivatives: {
+      scale: number;
+      width: number;
+      height: number;
+      sha256: string;
+    }[];
+  }
+> = {};
+
+const hash = (data: Uint8Array) =>
+  createHash("sha256").update(data).digest("hex");
+
+const uri = (data: Buffer) =>
+  `url("data:image/png;base64,${data.toString("base64")}")`;
 
 for (const name of [
   "checkbox",
@@ -44,9 +65,6 @@ for (const name of [
 
   const source = PNG.sync.read(bytes);
   const variable = name.replaceAll("_", "-");
-
-  const uri = (data) =>
-    `url("data:image/png;base64,${data.toString("base64")}")`;
 
   css.push(`  --mc-${variable}: ${uri(bytes)};`);
   const derivatives = [];
@@ -72,21 +90,19 @@ for (const name of [
 
     const derived = PNG.sync.write(target);
     css.push(`  --mc-${variable}-native-s${scale}: ${uri(derived)};`);
-    derivatives.push(
-      Object.fromEntries([
-        ["scale", scale],
-        ["width", size],
-        ["height", size],
-        ["sha256", hash(derived)],
-      ])
-    );
+    derivatives.push({
+      scale,
+      width: size,
+      height: size,
+      sha256: hash(derived),
+    });
   }
 
-  assets[member] = Object.fromEntries([
-    ["sha256", hash(bytes)],
-    ["embeddedBytes", "unchanged"],
-    ["derivatives", derivatives],
-  ]);
+  assets[member] = {
+    sha256: hash(bytes),
+    embeddedBytes: "unchanged",
+    derivatives,
+  };
 }
 
 css.push("}");

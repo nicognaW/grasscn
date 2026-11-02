@@ -4,27 +4,36 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { InventoryAsset } from "@ppt/native/generate/asset-protocol";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 assert.ok(
   directory,
   "Pass a directory containing the four original recipe_book/page_*.png assets"
 );
 
+// SAFETY: the retained native inventory is produced by the catalog exporter and pins these original assets.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 let css = "@layer components {\n";
-const sources = {};
+
+const sources: Record<
+  string,
+  { sha256: string; width: number; height: number; alphaValues: number[] }
+> = {};
 
 for (const direction of ["backward", "forward"]) {
   css += `.mc-pagination-arrow[data-direction="${direction}"] {\n`;
@@ -43,12 +52,12 @@ for (const direction of ["backward", "forward"]) {
         .every((alpha) => alpha === 0 || alpha === 255)
     );
     css += ` --mc-pagination-arrow${highlighted ? "-highlighted" : ""}:url("data:image/png;base64,${bytes.toString("base64")}");\n`;
-    sources[member] = Object.fromEntries([
-      ["sha256", hash(bytes)],
-      ["width", image.width],
-      ["height", image.height],
-      ["alphaValues", [0, 255]],
-    ]);
+    sources[member] = {
+      sha256: hash(bytes),
+      width: image.width,
+      height: image.height,
+      alphaValues: [0, 255],
+    };
   }
 
   css += "}\n";
