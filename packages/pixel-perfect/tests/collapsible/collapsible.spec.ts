@@ -91,6 +91,7 @@ for (const directory of [
           if (expanded) {
             params.set("expanded", "1");
           }
+
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(page.locator('[data-slot="collapsible"]')).toHaveCount(
@@ -124,6 +125,7 @@ for (const directory of [
             .all()) {
             await expect(label).toHaveAttribute("data-mc-label-ready", "true");
           }
+
           await page.evaluate(
             async () =>
               await new Promise<void>((resolve) =>

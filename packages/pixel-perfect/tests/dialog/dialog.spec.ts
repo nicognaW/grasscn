@@ -98,6 +98,7 @@ for (const directory of [
         if (c.checked) {
           query.set("patterned", "1");
         }
+
         await page.goto(`/?${query}`);
         await page.addStyleTag({
           content: `html,body{background:${c.background}} #root{opacity:0}`,
@@ -133,6 +134,7 @@ for (const directory of [
         if (c.state === "focus") {
           await button.focus();
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

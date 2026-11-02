@@ -82,6 +82,7 @@ for (const c of manifest.cases) {
           .first()
           .focus();
       }
+
       await page.mouse.move(0, 0);
       await expect(
         subject.locator('[data-mc-menu-text-ready="false"]')
@@ -95,6 +96,7 @@ for (const c of manifest.cases) {
           "true"
         );
       }
+
       await page.evaluate(
         async () =>
           await new Promise<void>((resolve) =>

@@ -74,6 +74,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
         if (open) {
           params.set("open", "1");
         }
+
         await page.goto(`/?${params}`);
         const trigger = page.locator('[data-slot="menubar-trigger"]').first();
         await expect(trigger).toBeVisible();
@@ -96,6 +97,7 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           .all()) {
           await expect(line).toHaveAttribute("data-mc-label-ready", "true");
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

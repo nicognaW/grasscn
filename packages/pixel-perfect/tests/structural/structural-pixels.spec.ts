@@ -107,6 +107,7 @@ test.describe("Structural native constituents", () => {
               if (active) {
                 params.set("active", "1");
               }
+
               await page.goto(`/?${params}`);
               const subject = page.locator("[data-subject]");
               await expect(subject).toBeVisible();
@@ -152,6 +153,7 @@ test.describe("Structural native constituents", () => {
                   "true"
                 );
               }
+
               await page.evaluate(
                 async () =>
                   await new Promise<void>((resolve) =>

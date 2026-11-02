@@ -165,6 +165,7 @@ test.describe("Sidebar original native constituent cases", () => {
             if (active) {
               params.set("active", "1");
             }
+
             await page.goto(`/?component=sidebar&${params}`);
             const subject = page.locator("[data-subject]");
             await expect(subject).toHaveAttribute(

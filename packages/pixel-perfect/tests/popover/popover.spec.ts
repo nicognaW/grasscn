@@ -97,6 +97,7 @@ for (const directory of [
             "true"
           );
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

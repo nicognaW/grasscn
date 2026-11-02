@@ -105,6 +105,7 @@ for (const component of ["calendar", "date-picker"]) {
             if (c.wrapWidth) {
               q.set("wrapWidth", String(c.wrapWidth));
             }
+
             await page.goto("/?" + q);
             await expect(page.locator("[data-subject]")).toBeVisible();
 
@@ -134,6 +135,7 @@ for (const component of ["calendar", "date-picker"]) {
                 );
               }
             }
+
             await page.mouse.move(0, 0);
 
             if (
@@ -146,6 +148,7 @@ for (const component of ["calendar", "date-picker"]) {
             if (alias === "base" && c.state === "focus") {
               await page.locator("[data-subject]").focus();
             }
+
             await page.evaluate(
               async () =>
                 await new Promise((r) =>

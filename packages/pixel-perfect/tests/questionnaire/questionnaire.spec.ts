@@ -73,6 +73,7 @@ for (const [part, dir] of parts) {
           if (c.maxLength != null) {
             q.set("maxLength", String(c.maxLength));
           }
+
           await page.goto("/?" + q);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
@@ -87,6 +88,7 @@ for (const [part, dir] of parts) {
           if (part === "input") {
             await expect(subject).toHaveAttribute("data-mc-ready", "true");
           }
+
           await page.mouse.move(0, 0);
 
           if (c.state.startsWith("focus")) {
@@ -126,6 +128,7 @@ for (const [part, dir] of parts) {
                 "true"
               );
             }
+
             await page.evaluate(
               async () =>
                 await new Promise((r) =>
@@ -152,6 +155,7 @@ for (const [part, dir] of parts) {
               !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
             );
           }
+
           writeFileSync(
             info.outputPath("metrics.json"),
             JSON.stringify({

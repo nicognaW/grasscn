@@ -76,6 +76,7 @@ for (const scale of [1, 2, 3]) {
       if (mode === "keyboard") {
         await expect(creative).toBeFocused();
       }
+
       await expect(creative).toHaveAttribute("data-highlighted", "");
       await expect(
         page.getByLabel("Select changes", { exact: true })

@@ -69,6 +69,7 @@ for (const [part, directory] of [
         if (mode === "button") {
           q.set("button", "1");
         }
+
         await page.goto(`/?${q}`);
         const subject = page.locator("[data-subject]");
         await expect(subject).toHaveAttribute(
@@ -91,6 +92,7 @@ for (const [part, directory] of [
               "true"
             );
           }
+
           const media = subject.locator("[data-mc-item-media-ready]");
           await expect(media).toHaveAttribute(
             "data-mc-item-media-ready",
@@ -123,6 +125,7 @@ for (const [part, directory] of [
             "true"
           );
         }
+
         await page.addStyleTag({
           content:
             "#read-ref,#resize,#tag,#events,#actions{visibility:hidden!important}",
@@ -133,6 +136,7 @@ for (const [part, directory] of [
           .all()) {
           await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

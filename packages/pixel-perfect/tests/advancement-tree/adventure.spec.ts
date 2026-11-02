@@ -61,6 +61,7 @@ for (const c of manifest.cases) {
       if (!same) {
         differences += 1;
       }
+
       diff.data.set(same ? [0, 0, 0, 0] : [255, 0, 255, 255], i);
     }
 

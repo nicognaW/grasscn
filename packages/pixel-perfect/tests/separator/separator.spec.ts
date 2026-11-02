@@ -68,6 +68,7 @@ for (const asChild of [false, true]) {
       if (asChild) {
         query.set("asChild", "1");
       }
+
       await page.goto(`/?${query}`);
       await page.addStyleTag({
         content: `html,body { background: ${c.background}; } #root > :not([data-subject]) { visibility: hidden; } [data-subject] { position: fixed; left: ${c.x * c.scale}px; top: ${c.y * c.scale}px; }`,

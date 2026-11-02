@@ -94,6 +94,7 @@ test.describe("Table original native label constituents", () => {
         if (c.wrapWidth != null) {
           q.set("wrapWidth", String(c.wrapWidth));
         }
+
         await page.goto(`/?component=table&${q}`);
         const subject = page.locator("[data-subject]");
         await expect(
@@ -105,6 +106,7 @@ test.describe("Table original native label constituents", () => {
           .all()) {
           await expect(text).toHaveAttribute("data-mc-label-ready", "true");
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

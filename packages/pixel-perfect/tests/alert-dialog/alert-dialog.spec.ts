@@ -92,6 +92,7 @@ for (const directory of [
         if (c.disabledIndex != null) {
           query.set("disabledIndex", String(c.disabledIndex));
         }
+
         await page.goto(`/?${query}`);
         await page.addStyleTag({
           content: `html,body{background:${c.background}} #root{opacity:0}`,
@@ -136,6 +137,7 @@ for (const directory of [
         if (c.state === "focus") {
           await button.focus();
         }
+
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>
