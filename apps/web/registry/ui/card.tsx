@@ -25,10 +25,10 @@ const Card = ({
   <div
     data-slot="card"
     className={cn("mc-card", className)}
-    style={minecraftStyle(
-      style,
-      (__style): CardScaleStyle => ({ "--mc-scale": scale, ...__style })
-    )}
+    style={minecraftStyle(style, (__style): CardScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
     {...props}
   >
     <MinecraftSurface sprite={minecraftCardSprite} />

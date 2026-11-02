@@ -63,15 +63,11 @@ const ToggleGroup = ({
         data-slot="toggle-group"
         disabled={disabled}
         className={cn(`mc-toggle-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): ToggleGroupSpacingStyle =>
-            ({
-              "--mc-scale": scale,
-              "--mc-toggle-spacing": spacing,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): ToggleGroupSpacingStyle => ({
+          "--mc-scale": scale,
+          "--mc-toggle-spacing": spacing,
+          ...__style,
+        }))}
         {...props}
       >
         {children}
@@ -111,11 +107,10 @@ const ToggleGroupItem = ({
         toggleVariants({ size: resolvedSize, variant: resolvedVariant }),
         className
       )}
-      style={minecraftStyle(
-        style,
-        (__style): ToggleGroupScaleStyle =>
-          ({ "--mc-scale": resolvedScale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ToggleGroupScaleStyle => ({
+        "--mc-scale": resolvedScale,
+        ...__style,
+      }))}
       {...props}
       aria-disabled={
         (resolvedDisabled ?? false) ? true : props["aria-disabled"]

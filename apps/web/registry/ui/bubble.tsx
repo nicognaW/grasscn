@@ -40,11 +40,10 @@ const BubbleGroup = ({
       <div
         data-slot="bubble-group"
         className={cn(`mc-bubble-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): BubbleScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): BubbleScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </MessageScale>
@@ -94,15 +93,11 @@ const Bubble = ({
           data-from={from}
           data-author={author}
           className={cn(`mc-bubble`, className)}
-          style={minecraftStyle(
-            style,
-            (__style): BubbleScaleStyle =>
-              ({
-                "--mc-scale": scale,
-                ...(from === "system" ? { color: "#ffff55" } : {}),
-                ...__style,
-              })
-          )}
+          style={minecraftStyle(style, (__style): BubbleScaleStyle => ({
+            "--mc-scale": scale,
+            ...(from === "system" ? { color: "#ffff55" } : {}),
+            ...__style,
+          }))}
           {...props}
         />
       </MessageAuthor>
@@ -182,8 +177,7 @@ const BubbleContent = ({
       ? `<${author}> ${original}`
       : original;
 
-  const plainText = (value: React.ReactNode): string =>
-    {
+  const plainText = (value: React.ReactNode): string => {
     if (isMinecraftTextContent(value)) {
       return String(value);
     }
@@ -192,9 +186,11 @@ const BubbleContent = ({
       return value.map(plainText).join("");
     }
 
-    if (React.isValidElement<{
-              children?: React.ReactNode;
-            }>(value)) {
+    if (
+      React.isValidElement<{
+        children?: React.ReactNode;
+      }>(value)
+    ) {
       return plainText(value.props.children);
     }
 

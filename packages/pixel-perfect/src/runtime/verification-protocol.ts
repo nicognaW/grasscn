@@ -1,6 +1,9 @@
 import type { CheckpointCandidate } from "@grasscn/tests/checkpoints";
 import type { installedDependencyIdentity } from "@grasscn/tests/dependency-identity";
-import type { VerificationReport, VerificationState } from "@grasscn/tests/verification-types";
+import type {
+  VerificationReport,
+  VerificationState,
+} from "@grasscn/tests/verification-types";
 import type { FullEnvironment } from "@ppt/full-runs/plan";
 import type { BrowserCase } from "@ppt/selection/suite";
 

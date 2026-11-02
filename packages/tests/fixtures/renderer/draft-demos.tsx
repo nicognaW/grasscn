@@ -61,31 +61,29 @@ export default function DraftDemos({
     () =>
       sample.state === "saved-world"
         ? getWorldMapPixels()
-        : Uint8Array.from({ length: 16_384 }, (_, i) =>
-            {
-          if (sample.state === "palette") {
-            return i % 256;
-          }
+        : Uint8Array.from({ length: 16_384 }, (_, i) => {
+            if (sample.state === "palette") {
+              return i % 256;
+            }
 
-          if (sample.state === "empty") {
-            return 0;
-          }
+            if (sample.state === "empty") {
+              return 0;
+            }
 
-          if (Math.floor(i / 128) < 40) {
-            return 6;
-          }
+            if (Math.floor(i / 128) < 40) {
+              return 6;
+            }
 
-          if (i % 128 < 48) {
-            return 50;
-          }
+            if (i % 128 < 48) {
+              return 50;
+            }
 
-          if (Math.floor(i / 128) > 100) {
-            return 10;
-          }
+            if (Math.floor(i / 128) > 100) {
+              return 10;
+            }
 
-          return 34;
-        }
-          ),
+            return 34;
+          }),
     [sample.state]
   );
 

@@ -199,17 +199,13 @@ const TooltipContent = ({
           ref={setNode}
           data-slot="tooltip-content"
           className={cn("mc-tooltip", className)}
-          style={minecraftStyle(
-            style,
-            (__style): TooltipPaintStyle =>
-              ({
-                "--mc-scale": scale,
-                "--mc-tooltip-height": height,
-                "--mc-tooltip-max": maxWidth,
-                "--mc-tooltip-width": width,
-                ...__style,
-              })
-          )}
+          style={minecraftStyle(style, (__style): TooltipPaintStyle => ({
+            "--mc-scale": scale,
+            "--mc-tooltip-height": height,
+            "--mc-tooltip-max": maxWidth,
+            "--mc-tooltip-width": width,
+            ...__style,
+          }))}
           {...props}
         >
           {content}

@@ -50,13 +50,12 @@ const MessageScroller = function MessageScroller({
           className={cn(`mc-message-scroller`, className)}
           style={minecraftStyle(
             style,
-            (__style): MessageScrollerPaintStyle =>
-              ({
-                "--mc-scale": scale,
-                "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
-                "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
-                ...__style,
-              })
+            (__style): MessageScrollerPaintStyle => ({
+              "--mc-scale": scale,
+              "--mc-thumb": `url("${minecraftTextareaAssets.scroller}")`,
+              "--mc-track": `url("${minecraftTextareaAssets.scroller_background}")`,
+              ...__style,
+            })
           )}
           {...props}
         />

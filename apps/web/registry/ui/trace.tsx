@@ -27,11 +27,10 @@ const Trace = ({
     <div
       data-slot="trace"
       className={cn(`mc-trace`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): TraceScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): TraceScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </MessageScale>

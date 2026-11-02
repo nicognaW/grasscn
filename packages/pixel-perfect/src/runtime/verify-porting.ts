@@ -51,7 +51,6 @@ import type {
 const hasText = (value: string | null | undefined): value is string =>
   Boolean(value);
 
-
 const [suite, output, workerArgument = "1"] = process.argv.slice(2);
 const workers = Number(workerArgument);
 const phase = process.env.GRASSCN_VERIFY_PHASE ?? "all";
@@ -76,9 +75,7 @@ if (suite === "pixels") {
 
 const fullMode = suite === "full";
 
-const fullRun = fullMode
-  ? assertFullBrowserExecution([])
-  : null;
+const fullRun = fullMode ? assertFullBrowserExecution([]) : null;
 
 if (fullRun !== null) {
   for (const name of [
@@ -232,7 +229,9 @@ for (const folder of await readdir(path.dirname(output))) {
     // eslint-disable-next-line no-await-in-loop, react-doctor/async-await-in-loop -- Each verification stage consumes prior outputs and records its receipt before the next stage.
     // SAFETY: this route reads owned verification.json receipts: current/legacy report writers emit ISO startedAt text; minimal historical states may omit it, preserving the checkpoint filename fallback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Retain the actual optional timestamp projection alongside the existing source/environment filters and undefined result.
-    const candidate = readVerificationState(await readFile(filename, "utf-8")) as PreviousVerification["report"] | undefined;
+    const candidate = readVerificationState(
+      await readFile(filename, "utf-8")
+    ) as PreviousVerification["report"] | undefined;
 
     if (
       candidate !== undefined &&
@@ -326,9 +325,7 @@ if (phase === "browser") {
   report.websiteBuild = prepared.websiteBuild;
 }
 
-const classifiedCases = (
-  classifyBrowserCases(collectBrowserCases())
-);
+const classifiedCases = classifyBrowserCases(collectBrowserCases());
 
 const selectedCases = fullMode ? classifiedCases.full : classifiedCases.base;
 
@@ -462,12 +459,20 @@ try {
               candidate.report.websiteBuild?.outputSha256 ===
                 // SAFETY: this synchronous filter follows the current browser owner's websiteIdentity assignment above.
                 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Read the same owned website hash without adding a guard or changing cache eligibility.
-                (report.websiteBuild as NonNullable<RuntimeVerificationReceipt["websiteBuild"]>).outputSha256 &&
+                (
+                  report.websiteBuild as NonNullable<
+                    RuntimeVerificationReceipt["websiteBuild"]
+                  >
+                ).outputSha256 &&
               (!managedFixture ||
                 candidate.report.fixtureBundle?.sha256 ===
                   // SAFETY: this arm executes only for managedFixture; its startup branch records the fixture bundle before assigning either host.
                   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Preserve the existing short-circuited bundle SHA read and missing-state behavior.
-                  (report.fixtureBundle as NonNullable<RuntimeVerificationReceipt["fixtureBundle"]>).sha256)
+                  (
+                    report.fixtureBundle as NonNullable<
+                      RuntimeVerificationReceipt["fixtureBundle"]
+                    >
+                  ).sha256)
           ),
           file,
           pixelPerfectRoot,

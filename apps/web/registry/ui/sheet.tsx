@@ -134,11 +134,10 @@ const SheetContent = ({
             data-slot="sheet-content"
             data-side={side}
             className={cn(`mc-card mc-sheet-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style): SheetScaleStyle =>
-                ({ "--mc-scale": scale, ...__style })
-            )}
+            style={minecraftStyle(style, (__style): SheetScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {content}

@@ -163,17 +163,13 @@ const Badge = ({
       data-achievement={achievement}
       data-earned={String(earned)}
       className={cn(badgeVariants({ variant }), className)}
-      style={minecraftStyle(
-        style,
-        (__style): BadgePaintStyle =>
-          ({
-            "--mc-badge-emblem": `url("${minecraftBadgeAssets[`${achievement}_${earned ? "obtained" : "unobtained"}`]}")`,
-            "--mc-badge-natural": `${Math.min(maxWidth, natural) + 37}px`,
-            "--mc-badge-panel": `url("${earned ? minecraftBadgeAssets.obtained : minecraftBadgeAssets.unobtained}")`,
-            "--mc-scale": scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): BadgePaintStyle => ({
+        "--mc-badge-emblem": `url("${minecraftBadgeAssets[`${achievement}_${earned ? "obtained" : "unobtained"}`]}")`,
+        "--mc-badge-natural": `${Math.min(maxWidth, natural) + 37}px`,
+        "--mc-badge-panel": `url("${earned ? minecraftBadgeAssets.obtained : minecraftBadgeAssets.unobtained}")`,
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rendered}

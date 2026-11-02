@@ -32,11 +32,10 @@ const InputGroup = ({
       // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- Preserve shadcn InputGroup's div group and div props/ref contract.
       role="group"
       className={cn(`mc-input-group`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): InputGroupScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): InputGroupScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </InputGroupScale.Provider>

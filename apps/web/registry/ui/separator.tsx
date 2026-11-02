@@ -44,15 +44,11 @@ const Separator = ({
       role={role}
       aria-hidden={role === "none" ? true : undefined}
       className={cn(`mc-separator`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): SeparatorPaintStyle =>
-          ({
-            "--mc-scale": scale,
-            "--mc-separator-texture": `url("${minecraftSeparatorAssets[edge]}")`,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): SeparatorPaintStyle => ({
+        "--mc-scale": scale,
+        "--mc-separator-texture": `url("${minecraftSeparatorAssets[edge]}")`,
+        ...__style,
+      }))}
       {...props}
     />
   );

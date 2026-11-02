@@ -239,11 +239,10 @@ const ContextMenuContent = ({
             data-surface={surface}
             ref={forwarded}
             className={cn("mc-menu-content", className)}
-            style={minecraftStyle(
-              style,
-              (__style): ContextMenuScaleStyle =>
-                ({ "--mc-scale": scale, ...__style })
-            )}
+            style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {contentChildren(children, surface)}
@@ -300,11 +299,10 @@ const ContextMenuItem = ({
       data-slot="context-menu-item"
       data-inset={inset}
       className={cn("mc-menu-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): ContextMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -353,11 +351,10 @@ const ContextMenuCheckboxItem = ({
       render={render}
       data-slot="context-menu-checkbox-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): ContextMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
@@ -391,11 +388,10 @@ const ContextMenuRadioItem = ({
       render={render}
       data-slot="context-menu-radio-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): ContextMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onClick={(event) => {
         onClick?.(event);
 
@@ -428,11 +424,10 @@ const ContextMenuLabel = ({
       data-slot="context-menu-label"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-label", className)}
-      style={minecraftStyle(
-        style,
-        (__style): ContextMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -509,11 +504,10 @@ const ContextMenuSubTrigger = ({
       data-slot="context-menu-sub-trigger"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
-      style={minecraftStyle(
-        style,
-        (__style): ContextMenuScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children, undefined, arrow)}
@@ -580,11 +574,10 @@ const ContextMenuSubContent = ({
           data-surface={surface}
           ref={forwarded}
           className={cn("mc-menu-content", className)}
-          style={minecraftStyle(
-            style,
-            (__style): ContextMenuScaleStyle =>
-              ({ "--mc-scale": scale, ...__style })
-          )}
+          style={minecraftStyle(style, (__style): ContextMenuScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         >
           {contentChildren(children, surface)}

@@ -55,15 +55,11 @@ const Avatar = function Avatar({
         data-slot="avatar"
         data-size={size}
         className={cn(`mc-avatar`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): AvatarPaintStyle =>
-            ({
-              "--mc-avatar-size": { default: 16, lg: 20, sm: 12 }[size],
-              "--mc-scale": scale,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): AvatarPaintStyle => ({
+          "--mc-avatar-size": { default: 16, lg: 20, sm: 12 }[size],
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </AvatarContext.Provider>
@@ -247,11 +243,10 @@ const AvatarGroup = function AvatarGroup({
       <div
         data-slot="avatar-group"
         className={cn(`mc-avatar-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): AvatarScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): AvatarScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       >
         {children}

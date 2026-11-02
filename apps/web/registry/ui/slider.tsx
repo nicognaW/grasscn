@@ -114,11 +114,10 @@ const Slider = ({
         disabled={disabled}
         orientation={orientation}
         thumbAlignment="edge"
-        style={minecraftStyle(
-          style,
-          (__style): SliderScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): SliderScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onValueChange={(next, details) => {
           onValueChange?.(next, details);
 

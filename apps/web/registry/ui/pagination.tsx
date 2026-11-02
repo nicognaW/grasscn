@@ -122,11 +122,10 @@ const PaginationArrow = ({
       }
       data-direction={direction}
       className={cn(`mc-pagination-arrow`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): PaginationScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): PaginationScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       aria-current={(isActive ?? false) ? "page" : undefined}
       {...props}
       onClick={(event) => {
@@ -179,10 +178,10 @@ const PaginationEllipsis = ({
     aria-hidden="true"
     data-slot="pagination-ellipsis"
     className={cn(`mc-pagination-ellipsis`, className)}
-    style={minecraftStyle(
-      style,
-      (__style): PaginationScaleStyle => ({ "--mc-scale": scale, ...__style })
-    )}
+    style={minecraftStyle(style, (__style): PaginationScaleStyle => ({
+      "--mc-scale": scale,
+      ...__style,
+    }))}
     {...props}
   >
     <MinecraftText>...</MinecraftText>

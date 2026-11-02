@@ -203,16 +203,12 @@ const Trading = ({
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? title}
         className={cn(`mc-trading`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): TradingScaleStyle =>
-            ({
-              "--mc-scale": scale,
-              height: 166 * scale,
-              width: 276 * scale,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): TradingScaleStyle => ({
+          "--mc-scale": scale,
+          height: 166 * scale,
+          width: 276 * scale,
+          ...__style,
+        }))}
       >
         <AdventureImage
           texture="gui/container/villager"

@@ -68,11 +68,10 @@ const RadioGroup = function RadioGroup<Value = string>({
         }}
         data-slot="radio-group"
         className={cn(`mc-radio-group`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): RadioGroupScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): RadioGroupScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         {...props}
       />
     </RadioContext.Provider>
@@ -109,18 +108,14 @@ const RadioGroupItem = ({
       render={render}
       data-slot="radio-group-item"
       className={cn(`mc-checkbox mc-radio-item`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): RadioGroupItemPaintStyle =>
-          ({
-            "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-            "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
-            "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
-            "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
-            "--mc-scale": scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): RadioGroupItemPaintStyle => ({
+        "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
+        "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+        "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+        "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       disabled={disabled}
       aria-disabled={disabled ? true : props["aria-disabled"]}

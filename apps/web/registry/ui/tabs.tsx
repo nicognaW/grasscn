@@ -137,11 +137,10 @@ const Tabs = ({
         data-slot="tabs"
         orientation={orientation}
         className={cn(`mc-tabs`, className)}
-        style={minecraftStyle(
-          style,
-          (__style): TabsScaleStyle =>
-            ({ "--mc-scale": scale, ...__style })
-        )}
+        style={minecraftStyle(style, (__style): TabsScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        }))}
         onValueChange={(next, details) => {
           requested.current = details.reason === "none" ? next : undefined;
           cancelAnimationFrame(expiry.current);
@@ -227,14 +226,10 @@ const TabsList = ({
       data-slot="tabs-list"
       data-variant={variant}
       className={cn(`${tabsListVariants({ variant })} `, className)}
-      style={minecraftStyle(
-        style,
-        (__style): TabsHeaderStyle =>
-          ({
-            "--mc-tab-header": assets.textures.header_separator,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): TabsHeaderStyle => ({
+        "--mc-tab-header": assets.textures.header_separator,
+        ...__style,
+      }))}
       {...props}
     >
       {content}

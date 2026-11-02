@@ -245,19 +245,15 @@ const AdvancementTree = ({
         className={cn(`mc-advancement-tree`, className)}
         role={props.role ?? "group"}
         aria-label={props["aria-label"] ?? "Advancement tree"}
-        style={minecraftStyle(
-          style,
-          (__style): AdvancementTreeScaleStyle =>
-            ({
-              "--mc-scale": scale,
-              backgroundImage: `url("${background}")`,
-              backgroundPosition: `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
-              backgroundSize: `${16 * scale}px ${16 * scale}px`,
-              height: height * scale,
-              width: width * scale,
-              ...__style,
-            })
-        )}
+        style={minecraftStyle(style, (__style): AdvancementTreeScaleStyle => ({
+          "--mc-scale": scale,
+          backgroundImage: `url("${background}")`,
+          backgroundPosition: `${(Math.floor(position.x) % 16) * scale}px ${(Math.floor(position.y) % 16) * scale}px`,
+          backgroundSize: `${16 * scale}px ${16 * scale}px`,
+          height: height * scale,
+          width: width * scale,
+          ...__style,
+        }))}
         onKeyDown={(event) => {
           onKeyDown?.(event);
 
@@ -419,8 +415,7 @@ const AdvancementTree = ({
               key={node.id}
               open={!isDragging && tooltipId === node.id}
               onOpenChange={(open) => {
-                setTooltipId((previousTooltipId) =>
-                  {
+                setTooltipId((previousTooltipId) => {
                   if (open) {
                     return node.id;
                   }
@@ -430,8 +425,7 @@ const AdvancementTree = ({
                   }
 
                   return previousTooltipId;
-                }
-                );
+                });
               }}
             >
               <TooltipTrigger

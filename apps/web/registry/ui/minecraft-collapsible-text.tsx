@@ -147,15 +147,14 @@ const MinecraftCollapsibleText = ({
       className={cn(`mc-label`, className)}
       style={minecraftStyle(
         style,
-        (__style): MinecraftCollapsibleTextScaleStyle =>
-          ({
-            "--mc-scale": scale,
-            width:
-              typeof maxWidth === "undefined" || maxWidth === null
-                ? undefined
-                : maxWidth * scale,
-            ...__style,
-          })
+        (__style): MinecraftCollapsibleTextScaleStyle => ({
+          "--mc-scale": scale,
+          width:
+            typeof maxWidth === "undefined" || maxWidth === null
+              ? undefined
+              : maxWidth * scale,
+          ...__style,
+        })
       )}
       {...props}
     >

@@ -43,11 +43,10 @@ const Questionnaire = ({
     <Primitive.Root
       data-slot="questionnaire"
       className={cn(`mc-questionnaire`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): QuestionnaireScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): QuestionnaireScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </QuestionnaireScale>
@@ -184,16 +183,15 @@ const QuestionnaireChoice = ({
               className={`mc-checkbox ${input.className ?? ""}`}
               style={minecraftStyle(
                 input.style,
-                (__style): QuestionnaireCheckboxStyle =>
-                  ({
-                    "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
-                    "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
-                    "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
-                    "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
-                    "--mc-scale": scale,
-                    appearance: "none",
-                    ...__style,
-                  })
+                (__style): QuestionnaireCheckboxStyle => ({
+                  "--mc-checkbox-checked": `var(--mc-checkbox-selected-native-s${scale})`,
+                  "--mc-checkbox-checked-focused": `var(--mc-checkbox-selected-highlighted-native-s${scale})`,
+                  "--mc-checkbox-focused": `var(--mc-checkbox-highlighted-native-s${scale})`,
+                  "--mc-checkbox-normal": `var(--mc-checkbox-native-s${scale})`,
+                  "--mc-scale": scale,
+                  appearance: "none",
+                  ...__style,
+                })
               )}
               onClick={(event) => {
                 input.onClick?.(event);

@@ -47,11 +47,10 @@ const Command = ({
     <CommandPrimitive
       data-slot="command"
       className={cn(`mc-command`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): CommandScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): CommandScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </MenuScaleContext.Provider>

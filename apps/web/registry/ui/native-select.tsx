@@ -110,8 +110,10 @@ const NativeSelect = ({
       className={`mc-native-select-wrapper ${(multiple ?? false) ? "mc-native-select-multiple" : ""} ${wrapperProps?.className ?? ""}`}
       style={minecraftStyle(
         wrapperProps?.style,
-        (__style): NativeSelectScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
+        (__style): NativeSelectScaleStyle => ({
+          "--mc-scale": scale,
+          ...__style,
+        })
       )}
     >
       <select

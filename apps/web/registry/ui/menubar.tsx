@@ -40,11 +40,10 @@ const Menubar = ({
     <MenubarPrimitive
       data-slot="menubar"
       className={cn("mc-menubar", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     />
   </MenuScaleContext.Provider>
@@ -272,11 +271,10 @@ const MenubarContent = ({
             data-surface={surface}
             ref={forwarded}
             className={cn("mc-menu-content", className)}
-            style={minecraftStyle(
-              style,
-              (__style): MenubarScaleStyle =>
-                ({ "--mc-scale": scale, ...__style })
-            )}
+            style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {contentChildren(children, surface)}
@@ -333,11 +331,10 @@ const MenubarItem = ({
       data-slot="menubar-item"
       data-inset={inset}
       className={cn("mc-menu-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -386,11 +383,10 @@ const MenubarCheckboxItem = ({
       render={render}
       data-slot="menubar-checkbox-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
 
@@ -424,11 +420,10 @@ const MenubarRadioItem = ({
       render={render}
       data-slot="menubar-radio-item"
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       onClick={(event) => {
         onClick?.(event);
 
@@ -461,11 +456,10 @@ const MenubarLabel = ({
       data-slot="menubar-label"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-label", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children)}
@@ -542,11 +536,10 @@ const MenubarSubTrigger = ({
       data-slot="menubar-sub-trigger"
       data-inset={inset}
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
-      style={minecraftStyle(
-        style,
-        (__style): MenubarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {rowChildren(children, undefined, arrow)}
@@ -612,11 +605,10 @@ const MenubarSubContent = ({
           data-surface={surface}
           ref={forwarded}
           className={cn("mc-menu-content", className)}
-          style={minecraftStyle(
-            style,
-            (__style): MenubarScaleStyle =>
-              ({ "--mc-scale": scale, ...__style })
-          )}
+          style={minecraftStyle(style, (__style): MenubarScaleStyle => ({
+            "--mc-scale": scale,
+            ...__style,
+          }))}
           {...props}
         >
           {contentChildren(children, surface)}

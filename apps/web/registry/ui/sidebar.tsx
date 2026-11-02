@@ -201,17 +201,13 @@ const SidebarProvider = ({
         <div
           data-slot="sidebar-wrapper"
           className={cn(`mc-sidebar-wrapper`, className)}
-          style={minecraftStyle(
-            style,
-            (__style): SidebarWidthStyle =>
-              ({
-                "--mc-scale": scale,
-                "--sidebar-width": `${120 * scale}px`,
-                "--sidebar-width-icon": `${36 * scale}px`,
-                "--sidebar-width-mobile": `${140 * scale}px`,
-                ...__style,
-              })
-          )}
+          style={minecraftStyle(style, (__style): SidebarWidthStyle => ({
+            "--mc-scale": scale,
+            "--sidebar-width": `${120 * scale}px`,
+            "--sidebar-width-icon": `${36 * scale}px`,
+            "--sidebar-width-mobile": `${140 * scale}px`,
+            ...__style,
+          }))}
           {...props}
         >
           {children}
@@ -766,21 +762,22 @@ const SidebarMenuItem = ({ className, ...props }: MinecraftProps<"li">) => (
 
 const plainText = function plainText(children: React.ReactNode): string {
   return React.Children.toArray(children)
-    .map((child) =>
-      {
+    .map((child) => {
       if (isMinecraftTextContent(child)) {
         return String(child);
       }
 
-      if (React.isValidElement<{
-              children?: React.ReactNode;
-            }>(child) && child.type !== "svg") {
+      if (
+        React.isValidElement<{
+          children?: React.ReactNode;
+        }>(child) &&
+        child.type !== "svg"
+      ) {
         return plainText(child.props.children);
       }
 
       return "";
-    }
-    )
+    })
     .join("");
 };
 
@@ -958,11 +955,10 @@ const SidebarMenuSkeleton = ({
       data-sidebar="menu-skeleton"
       aria-busy="true"
       className={cn(`mc-sidebar-menu-skeleton`, className)}
-      style={minecraftStyle(
-        style,
-        (__style): SidebarScaleStyle =>
-          ({ "--mc-scale": scale, ...__style })
-      )}
+      style={minecraftStyle(style, (__style): SidebarScaleStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
     >
       {showIcon ? (

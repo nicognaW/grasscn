@@ -52,9 +52,9 @@ export const BaseUICompositionFixture = () => {
         className={(state) =>
           state.checked ? "state-checked" : "state-unchecked"
         }
-        style={(state): CompositionCheckedStyle =>
-          ({ "--checked-state": state.checked ? 1 : 0 })
-        }
+        style={(state): CompositionCheckedStyle => ({
+          "--checked-state": state.checked ? 1 : 0,
+        })}
       />
       <Field.Root disabled={disabled}>
         <Field.Label>Inherited field</Field.Label>
@@ -83,9 +83,9 @@ export const BaseUICompositionFixture = () => {
         <DialogTrigger>Open stateful dialog</DialogTrigger>
         <DialogContent
           className={(state) => (state.open ? "state-open" : "state-closed")}
-          style={(state): CompositionOpenStyle =>
-            ({ "--open-state": state.open ? 1 : 0 })
-          }
+          style={(state): CompositionOpenStyle => ({
+            "--open-state": state.open ? 1 : 0,
+          })}
         >
           <DialogTitle>Native state</DialogTitle>
         </DialogContent>

@@ -66,16 +66,12 @@ const Book = ({
       tabIndex={props.tabIndex ?? 0}
       role={props.role ?? "group"}
       aria-label={props["aria-label"] ?? "Book"}
-      style={minecraftStyle(
-        style,
-        (__style): BookScaleStyle =>
-          ({
-            "--mc-scale": scale,
-            height: 192 * scale,
-            width: 192 * scale,
-            ...__style,
-          })
-      )}
+      style={minecraftStyle(style, (__style): BookScaleStyle => ({
+        "--mc-scale": scale,
+        height: 192 * scale,
+        width: 192 * scale,
+        ...__style,
+      }))}
       onKeyDown={(event) => {
         onKeyDown?.(event);
 

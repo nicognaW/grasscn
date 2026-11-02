@@ -316,11 +316,10 @@ const AlertDialogContent = ({
             data-mc-confirmation-id={identity}
             ref={forwarded}
             className={cn(`mc-alert-dialog-content`, className)}
-            style={minecraftStyle(
-              style,
-              (__style): AlertDialogScaleStyle =>
-                ({ "--mc-scale": scale, ...__style })
-            )}
+            style={minecraftStyle(style, (__style): AlertDialogScaleStyle => ({
+              "--mc-scale": scale,
+              ...__style,
+            }))}
             {...props}
           >
             {children}
