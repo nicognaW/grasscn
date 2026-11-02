@@ -51,13 +51,21 @@ for (const kind of ["fps", "pie"]) {
 
       await page.evaluate(
         async () =>
-          new Promise<void>((r) =>
-            requestAnimationFrame(() =>
+          {
+            const frameCompletion = Promise.withResolvers<void>();
+
+            try {
               requestAnimationFrame(() => {
-                r();
-              })
-            )
-          )
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            return frameCompletion.promise;
+          }
       );
 
       const bytes = readFileSync(

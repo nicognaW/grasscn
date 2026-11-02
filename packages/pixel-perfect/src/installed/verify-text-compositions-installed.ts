@@ -237,17 +237,33 @@ async function worker() {
         await Promise.all(
           images.map(
             async (src) =>
-              new Promise((resolve) => {
-                const image = new Image();
-                image.onload = image.onerror = resolve;
-                // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-                image.src = src!;
-              })
+              {
+                const imageCompletion = Promise.withResolvers();
+
+                try {
+                  const image = new Image();
+                  image.onload = image.onerror = imageCompletion.resolve;
+                  // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
+                  image.src = src!;
+                } catch (error) {
+                  imageCompletion.reject(error);
+                }
+
+                return imageCompletion.promise;
+              }
           )
         );
-        await new Promise((resolve) =>
-          requestAnimationFrame(() => requestAnimationFrame(resolve))
-        );
+        const frameCompletion = Promise.withResolvers();
+
+        try {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(frameCompletion.resolve);
+          });
+        } catch (error) {
+          frameCompletion.reject(error);
+        }
+
+        await frameCompletion.promise;
       });
 
       const expectedBytes = fs.readFileSync(

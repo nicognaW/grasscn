@@ -26,6 +26,7 @@ const loadImages = function loadImages() {
   return (images ??= Promise.all(
     Object.values(minecraftInputAssets).map(
       (src) =>
+        // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and its existing custom load Error.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
           image.onload = () => {

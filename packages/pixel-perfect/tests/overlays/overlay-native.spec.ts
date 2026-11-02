@@ -142,13 +142,21 @@ for (const component of ["sheet", "drawer"]) {
 
             await page.evaluate(
               async () =>
-                new Promise<void>((resolve) =>
-                  requestAnimationFrame(() =>
+                {
+                  const frameCompletion = Promise.withResolvers<void>();
+
+                  try {
                     requestAnimationFrame(() => {
-                      resolve();
-                    })
-                  )
-                )
+                      requestAnimationFrame(() => {
+                        frameCompletion.resolve();
+                      });
+                    });
+                  } catch (error) {
+                    frameCompletion.reject(error);
+                  }
+
+                  return frameCompletion.promise;
+                }
             );
 
             const expectedBytes = readFileSync(

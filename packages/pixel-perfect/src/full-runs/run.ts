@@ -553,7 +553,9 @@ const execute = async function execute(number: number, resume: boolean) {
     );
     fs.mkdirSync(run.paths.attempts, { recursive: true });
 
-    const code = await new Promise<number>((resolve, reject) => {
+    const completion = Promise.withResolvers<number>();
+
+    try {
       child = spawn(
         "powershell",
         [
@@ -577,11 +579,15 @@ const execute = async function execute(number: number, resume: boolean) {
           stdio: "inherit",
         }
       );
-      child.once("error", reject);
+      child.once("error", completion.reject);
       child.once("exit", (value) => {
-        resolve(value ?? 1);
+        completion.resolve(value ?? 1);
       });
-    });
+    } catch (error) {
+      completion.reject(error);
+    }
+
+    const code = await completion.promise;
 
     const directory = attempt;
 

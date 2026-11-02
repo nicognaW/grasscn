@@ -151,13 +151,21 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
 
         await page.evaluate(
           async () =>
-            new Promise<void>((r) =>
-              requestAnimationFrame(() =>
+            {
+              const frameCompletion = Promise.withResolvers<void>();
+
+              try {
                 requestAnimationFrame(() => {
-                  r();
-                })
-              )
-            )
+                  requestAnimationFrame(() => {
+                    frameCompletion.resolve();
+                  });
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return frameCompletion.promise;
+            }
         );
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");

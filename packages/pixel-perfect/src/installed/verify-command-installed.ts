@@ -211,9 +211,19 @@ try {
 
           await page.evaluate(
             async () =>
-              new Promise((resolve) =>
-                requestAnimationFrame(() => requestAnimationFrame(resolve))
-              )
+              {
+                const frameCompletion = Promise.withResolvers();
+
+                try {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(frameCompletion.resolve);
+                  });
+                } catch (error) {
+                  frameCompletion.reject(error);
+                }
+
+                return frameCompletion.promise;
+              }
           );
         } else {
           await expect(subject).toHaveAttribute("data-mc-ready", "true");

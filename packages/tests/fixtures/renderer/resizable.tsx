@@ -68,7 +68,9 @@ export const ResizableFixture = () => {
       <button
         type="button"
         id="set-layout"
-        onClick={() => group.current?.setLayout({ left: 25, right: 75 })}
+        onClick={() => {
+          group.current?.setLayout({ left: 25, right: 75 });
+        }}
       >
         Set layout
       </button>

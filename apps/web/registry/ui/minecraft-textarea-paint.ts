@@ -87,6 +87,7 @@ const loadImages = function loadImages() {
       minecraftTextareaAssets.scroller_background,
     ].map(
       (src) =>
+        // oxlint-disable-next-line promise/avoid-new -- Preserve the cached texture-load event bridge and raw load-error event.
         new Promise<HTMLImageElement>((resolve, reject) => {
           const image = new Image();
           image.onload = () => {

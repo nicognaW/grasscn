@@ -146,9 +146,19 @@ const manifest = JSON.parse(
       } else {
         await page.evaluate(
           async () =>
-            await new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            {
+              const frameCompletion = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return await frameCompletion.promise;
+            }
         );
       }
 

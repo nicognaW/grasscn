@@ -100,13 +100,21 @@ for (const directory of [
 
         await page.evaluate(
           async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
+            {
+              const frameCompletion = Promise.withResolvers<void>();
+
+              try {
                 requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
+                  requestAnimationFrame(() => {
+                    frameCompletion.resolve();
+                  });
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return await frameCompletion.promise;
+            }
         );
         const bounds = (await subject.boundingBox())!;
         expect(bounds.x).toBe(c.x * c.scale);

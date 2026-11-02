@@ -72,9 +72,19 @@ for (const dir of ["label", "separator"]) {
 
         await page.evaluate(
           async () =>
-            new Promise((r) =>
-              requestAnimationFrame(() => requestAnimationFrame(r))
-            )
+            {
+              const frameCompletion = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return frameCompletion.promise;
+            }
         );
 
         const bytes = readFileSync(

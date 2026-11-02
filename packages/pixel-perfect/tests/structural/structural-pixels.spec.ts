@@ -156,13 +156,21 @@ test.describe("Structural native constituents", () => {
 
               await page.evaluate(
                 async () =>
-                  await new Promise<void>((resolve) =>
-                    requestAnimationFrame(() =>
+                  {
+                    const frameCompletion = Promise.withResolvers<void>();
+
+                    try {
                       requestAnimationFrame(() => {
-                        resolve();
-                      })
-                    )
-                  )
+                        requestAnimationFrame(() => {
+                          frameCompletion.resolve();
+                        });
+                      });
+                    } catch (error) {
+                      frameCompletion.reject(error);
+                    }
+
+                    return await frameCompletion.promise;
+                  }
               );
 
               const expectedBytes = readFileSync(

@@ -112,13 +112,21 @@ for (const c of manifest.cases) {
 
     await page.evaluate(
       async () =>
-        new Promise<void>((resolve) =>
-          requestAnimationFrame(() =>
+        {
+          const frameCompletion = Promise.withResolvers<void>();
+
+          try {
             requestAnimationFrame(() => {
-              resolve();
-            })
-          )
-        )
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          return frameCompletion.promise;
+        }
     );
     const bounds = (await subject.boundingBox())!;
     expect(bounds.x).toBe(c.x * c.scale);

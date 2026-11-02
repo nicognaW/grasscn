@@ -232,9 +232,19 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            {
+              const frameCompletion = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion.resolve);
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return frameCompletion.promise;
+            }
         );
 
         const expectedBytes = await readFile(
@@ -396,9 +406,19 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            {
+              const frameCompletion2 = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion2.resolve);
+                });
+              } catch (error) {
+                frameCompletion2.reject(error);
+              }
+
+              return frameCompletion2.promise;
+            }
         );
         const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
@@ -486,9 +506,19 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            {
+              const frameCompletion3 = Promise.withResolvers();
+
+              try {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(frameCompletion3.resolve);
+                });
+              } catch (error) {
+                frameCompletion3.reject(error);
+              }
+
+              return frameCompletion3.promise;
+            }
         );
         const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
@@ -575,9 +605,19 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          {
+            const frameCompletion4 = Promise.withResolvers();
+
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(frameCompletion4.resolve);
+              });
+            } catch (error) {
+              frameCompletion4.reject(error);
+            }
+
+            return frameCompletion4.promise;
+          }
       );
       const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
@@ -721,9 +761,19 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          {
+            const frameCompletion5 = Promise.withResolvers();
+
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(frameCompletion5.resolve);
+              });
+            } catch (error) {
+              frameCompletion5.reject(error);
+            }
+
+            return frameCompletion5.promise;
+          }
       );
 
       const bytes = await readFile(
@@ -1119,9 +1169,19 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          {
+            const frameCompletion6 = Promise.withResolvers();
+
+            try {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(frameCompletion6.resolve);
+              });
+            } catch (error) {
+              frameCompletion6.reject(error);
+            }
+
+            return frameCompletion6.promise;
+          }
       );
 
       for (const label of await subject

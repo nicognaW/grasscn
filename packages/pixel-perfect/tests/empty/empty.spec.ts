@@ -86,13 +86,21 @@ for (const [part, directory] of [
 
       await page.evaluate(
         async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
+          {
+            const frameCompletion = Promise.withResolvers<void>();
+
+            try {
               requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            return frameCompletion.promise;
+          }
       );
 
       const expectedBytes = readFileSync(

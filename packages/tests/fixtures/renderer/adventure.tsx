@@ -67,9 +67,9 @@ createRoot(document.querySelector<HTMLElement>("#root")!).render(
       nodes={nodes}
       scale={scale}
       defaultPan={{ x, y }}
-      onSelectedIdChange={(id) =>
-        (document.documentElement.dataset.selected = id)
-      }
+      onSelectedIdChange={(id) => {
+        document.documentElement.dataset.selected = id;
+      }}
       data-subject="true"
     />
   ) : (

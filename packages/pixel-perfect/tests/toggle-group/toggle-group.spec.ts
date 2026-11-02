@@ -128,13 +128,21 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
 
         await page.evaluate(
           async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
+            {
+              const frameCompletion = Promise.withResolvers<void>();
+
+              try {
                 requestAnimationFrame(() => {
-                  resolve();
-                })
-              )
-            )
+                  requestAnimationFrame(() => {
+                    frameCompletion.resolve();
+                  });
+                });
+              } catch (error) {
+                frameCompletion.reject(error);
+              }
+
+              return await frameCompletion.promise;
+            }
         );
         const bounds = (await subject.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);

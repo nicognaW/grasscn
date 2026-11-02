@@ -11,6 +11,7 @@ let bitmap: Promise<HTMLImageElement> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 const fontImage = function fontImage() {
+  // oxlint-disable-next-line promise/avoid-new -- Keep this cached Image event Promise, including its loaded-element result and rejection.
   return (bitmap ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {

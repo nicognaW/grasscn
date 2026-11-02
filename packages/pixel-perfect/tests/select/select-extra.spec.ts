@@ -129,13 +129,21 @@ test.describe("Select CJK native matrix", () => {
 
       await page.evaluate(
         async () =>
-          new Promise<void>((resolve) =>
-            requestAnimationFrame(() =>
+          {
+            const frameCompletion = Promise.withResolvers<void>();
+
+            try {
               requestAnimationFrame(() => {
-                resolve();
-              })
-            )
-          )
+                requestAnimationFrame(() => {
+                  frameCompletion.resolve();
+                });
+              });
+            } catch (error) {
+              frameCompletion.reject(error);
+            }
+
+            return frameCompletion.promise;
+          }
       );
 
       for (const label of await subject

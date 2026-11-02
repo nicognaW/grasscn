@@ -155,9 +155,19 @@ for (const component of ["calendar", "date-picker"]) {
 
             await page.evaluate(
               async () =>
-                await new Promise((r) =>
-                  requestAnimationFrame(() => requestAnimationFrame(r))
-                )
+                {
+                  const frameCompletion = Promise.withResolvers();
+
+                  try {
+                    requestAnimationFrame(() => {
+                      requestAnimationFrame(frameCompletion.resolve);
+                    });
+                  } catch (error) {
+                    frameCompletion.reject(error);
+                  }
+
+                  return await frameCompletion.promise;
+                }
             );
 
             const bytes = readFileSync(

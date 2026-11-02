@@ -22,13 +22,21 @@ for (const reason of ["disabled", "missing"]) {
     ).toHaveAttribute("aria-selected", "true");
     await page.evaluate(
       async () =>
-        new Promise<void>((resolve) =>
-          requestAnimationFrame(() =>
+        {
+          const frameCompletion = Promise.withResolvers<void>();
+
+          try {
             requestAnimationFrame(() => {
-              resolve();
-            })
-          )
-        )
+              requestAnimationFrame(() => {
+                frameCompletion.resolve();
+              });
+            });
+          } catch (error) {
+            frameCompletion.reject(error);
+          }
+
+          return frameCompletion.promise;
+        }
     );
     expect(await page.evaluate(() => (window as any).voices)).toBe(0);
   });
