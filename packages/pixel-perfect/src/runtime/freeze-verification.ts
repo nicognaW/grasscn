@@ -5,13 +5,12 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
 import { repoRoot } from "@ppt/paths";
-import type { ComponentEvidenceMap } from "@ppt/runtime/map-evidence";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
-
 import {
   validateHistoricalEvidence,
   historicalMapComponents,
 } from "@ppt/runtime/historical-evidence";
+import type { ComponentEvidenceMap } from "@ppt/runtime/map-evidence";
 
 assert.ok(process.argv[2], "Pass a new snapshot directory");
 
