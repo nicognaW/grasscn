@@ -7,6 +7,7 @@ import { minecraftTextareaAssets } from "@grasscn/web/ui/minecraft-textarea-asse
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/scroll-area/asset-provenance.json";
 import manifest from "../reference/scroll-area/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
@@ -116,12 +117,14 @@ for (const c of manifest.cases) {
 }
 
 test("ScrollArea retains original scroller PNG bytes and nine-slice metadata", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/scroll-area/asset-provenance.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/scroll-area/asset-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   for (const name of ["scroller", "scroller_background"] as const) {
     const bytes = Buffer.from(

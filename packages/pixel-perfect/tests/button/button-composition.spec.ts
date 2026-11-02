@@ -4,9 +4,14 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData1 from "../reference/button-cjk/manifest.json";
+import type CapturedData0 from "../reference/manifest.json";
+
+// SAFETY: This read consumes the same pinned tests/reference/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile("tests/reference/manifest.json"), "utf-8")
-);
+) as typeof CapturedData0;
 
 for (const mode of ["split", "fragments", "empty", "numeric"]) {
   for (const c of manifest.cases.filter(
@@ -69,12 +74,14 @@ for (const mode of ["split", "fragments", "empty", "numeric"]) {
   }
 }
 
+// SAFETY: This read consumes the same pinned tests/reference/button-cjk/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const cjk = JSON.parse(
   readFileSync(
     pixelPerfectFile("tests/reference/button-cjk/manifest.json"),
     "utf-8"
   )
-);
+) as typeof CapturedData1;
 
 for (const mode of ["split", "fragments", "empty"]) {
   for (const c of cjk.cases) {

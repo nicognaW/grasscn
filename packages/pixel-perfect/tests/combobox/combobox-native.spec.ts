@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
@@ -27,9 +28,9 @@ test.afterEach(({ page, browser }, info) => {
 const compare = function compare(
   bytes: Buffer,
   expectedBytes: Buffer,
-  c: any,
+  c: { name: string },
   kind: string,
-  info: any
+  info: TestInfo
 ) {
   const a = PNG.sync.read(bytes);
   const e = PNG.sync.read(expectedBytes);

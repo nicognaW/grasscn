@@ -5,6 +5,8 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/label/manifest.json";
+
 const dir = "tests/reference/avatar";
 
 const manifest = JSON.parse(
@@ -103,9 +105,11 @@ test.describe("Actual original PlayerFaceExtractor", () => {
   }
 });
 
+// SAFETY: This read consumes the same pinned tests/reference/label/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const labels = JSON.parse(
   readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf-8")
-);
+) as typeof CapturedData0;
 
 test.describe("AvatarFallback original Label constituents", () => {
   test.describe.configure({ mode: "parallel" });
