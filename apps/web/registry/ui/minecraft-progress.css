@@ -9,6 +9,7 @@
     image-rendering: pixelated;
   }
   .mc-progress-surface {
+    background-image: var(--mc-progress-image);
     position: absolute;
     display: block;
     inset: 0;

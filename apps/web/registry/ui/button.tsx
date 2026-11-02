@@ -18,6 +18,16 @@ import "./minecraft-button.css";
 import { playMinecraftClick } from "./minecraft-sound";
 import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 
+interface ButtonStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
+interface ButtonGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
 const bitmapText = function bitmapText(
   content: React.ReactNode
 ): React.ReactNode {
@@ -95,18 +105,17 @@ const bitmapText = function bitmapText(
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
 
+          const glyphStyle: ButtonGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
+
           return (
             <span
               key={index}
-              className="mc-glyph"
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
-              }
+              className={cn("mc-glyph", char === " " && "mc-glyph-space")}
+              style={glyphStyle}
             />
           );
         })}
@@ -170,11 +179,10 @@ const Button = ({
       data-variant={variant}
       data-size={size}
       className={cn(cn(buttonVariants({ size, variant }), className))}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): ButtonStyle => ({
+        "--mc-scale": scale,
+        ...__style,
+      }))}
       {...props}
       onClick={(event) => {
         onClick?.(event);
