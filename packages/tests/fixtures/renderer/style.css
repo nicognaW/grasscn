@@ -18,3 +18,9 @@ body {
 output {
   color: white;
 }
+
+.fixture-corner-control {
+  bottom: 8px;
+  position: fixed;
+  right: 8px;
+}
