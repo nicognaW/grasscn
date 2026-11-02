@@ -4,32 +4,45 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 
-import {
-  pixelPerfectTestRoot,
-  repoRoot,
-  webFile,
-  pixelPerfectFile,
-} from "@ppt/paths";
+import type * as Playwright from "@playwright/test";
+import type { Page } from "@playwright/test";
+import type { AttachmentCaptureManifest } from "@ppt/installed/constituent-capture-protocol";
+import type { InstalledTextRegistry } from "@ppt/installed/text-verification-protocol";
+import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import type * as PngJs from "pngjs";
 
 fs.mkdirSync(pixelPerfectTestRoot, { recursive: true });
 
 const [consumerArg, urlArg] = process.argv.slice(2);
 const consumer = path.resolve(consumerArg);
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 const require = createRequire(import.meta.url);
-const { chromium, expect } = require("@playwright/test");
-const { PNG } = require("pngjs");
+
+const { chromium, expect } =
+  // SAFETY: createRequire resolves the installed Playwright package at this unchanged load point.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Playwright module API boundary.
+  require("@playwright/test") as typeof Playwright;
+
+// SAFETY: createRequire resolves the installed pngjs decoder used by this comparator.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
+const { PNG } = require("pngjs") as typeof PngJs;
 const browser = await chromium.launch({ channel: "msedge" });
 
-const item = JSON.parse(
-  fs.readFileSync(webFile(path.join("registry.json")))
-).items.find((i) => i.name === "attachment");
+// SAFETY: registry.json owns the installed source descriptor metadata read here.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+const registry = JSON.parse(
+  fs.readFileSync(webFile(path.join("registry.json"))).toString()
+) as InstalledTextRegistry;
 
+const item = registry.items.find((i) => i.name === "attachment");
+
+// SAFETY: the initialized shadcn components.json owns the existing rsc setting.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
-  fs.readFileSync(path.join(consumer, "components.json"))
-);
+  fs.readFileSync(path.join(consumer, "components.json")).toString()
+) as { rsc?: boolean };
 
-const canonical = (b) => {
+const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -42,7 +55,7 @@ const canonical = (b) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const name = path.basename(f.path);
   const a = fs.readFileSync(webFile(path.join(f.path)));
   const b = fs.readFileSync(path.join(consumer, "src/components/ui", name));
@@ -55,21 +68,25 @@ const files = item.files.map((f) => {
   return { installedSha256: hash(b), path: name, sourceSha256: hash(a) };
 });
 
-const pageErrors = [];
+const pageErrors: string[] = [];
 
 try {
-  let page;
+  let page: Page | undefined;
 
   for (const [part, dir] of [
     ["row", "item"],
     ["action", "."],
     ["action", "button-cjk"],
   ]) {
+    // SAFETY: the existing attachment manifest selection reads its captured-reference producer at this point.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact attachment capture producer boundary.
     const m = JSON.parse(
-      fs.readFileSync(
-        `${pixelPerfectFile(path.join("tests/reference", dir))}/manifest.json`
-      )
-    );
+      fs
+        .readFileSync(
+          `${pixelPerfectFile(path.join("tests/reference", dir))}/manifest.json`
+        )
+        .toString()
+    ) as AttachmentCaptureManifest;
 
     const cases = [];
 
@@ -85,7 +102,7 @@ try {
         });
       }
 
-      page.on("pageerror", (e) => pageErrors.push(e.message));
+      page!.on("pageerror", (e) => pageErrors.push(e.message));
 
       const c = m.cases[i];
 
@@ -105,10 +122,10 @@ try {
         y: String(c.y ?? 16),
       });
 
-      await page.goto(`${urlArg}?${q}`);
-      const subject = page.locator("#subject");
+      await page!.goto(`${urlArg}?${q}`);
+      const subject = page!.locator("#subject");
       await expect(subject).toBeVisible();
-      await page.mouse.move(0, 0);
+      await page!.mouse.move(0, 0);
 
       if (part === "row") {
         await expect(
@@ -134,13 +151,13 @@ try {
 
         if (c.state === "icon-hover") {
           const b = await subject.boundingBox();
-          await page.mouse.move(b.x + 18 * c.scale, b.y + 18 * c.scale);
+          await page!.mouse.move(b!.x + 18 * c.scale, b!.y + 18 * c.scale);
         }
 
         if (c.state === "focus") {
           await subject.focus();
-          await page.keyboard.press("Tab");
-          await page.keyboard.press("Shift+Tab");
+          await page!.keyboard.press("Tab");
+          await page!.keyboard.press("Shift+Tab");
           await expect(subject).toBeFocused();
         }
 
@@ -166,7 +183,7 @@ try {
         await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
       }
 
-      await page.evaluate(
+      await page!.evaluate(
         async () =>
           new Promise((r) =>
             requestAnimationFrame(() => requestAnimationFrame(r))
