@@ -416,10 +416,7 @@ const Scoreboard = ({
           className="mc-scoreboard-row"
           style={{
             height: 9 * scale,
-            left: 0,
-            position: "absolute",
             top: (10 + i * 9) * scale,
-            width: "100%",
           }}
         >
           <span role="cell" style={{ left: 2 * scale, position: "absolute" }}>
