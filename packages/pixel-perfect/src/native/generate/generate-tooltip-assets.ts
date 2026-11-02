@@ -3,10 +3,17 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type {
+  InventoryAsset,
+  SpriteMetadata,
+  SpriteSource,
+} from "@ppt/native/generate/asset-protocol";
+import type { GlyphUV } from "@ppt/native/generate/glyph-atlas";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
+import type { NativeInventory } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
@@ -14,26 +21,50 @@ if (!input) {
   );
 }
 
+// SAFETY: inspect-ui-catalog.py emits a complete asset table from the pinned archive, including the literal members consumed here.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const inventory = JSON.parse(
   await readFile(
     pixelPerfectFile("tests/reference/catalog/native-inventory.json"),
     "utf-8"
   )
-);
+) as NativeInventory & { assets: Record<string, InventoryAsset> };
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
-const sprites = {};
-const sources = {};
+const sprites: Record<
+  string,
+  {
+    width: number;
+    height: number;
+    border: { left: number; top: number; right: number; bottom: number };
+    stretch: boolean;
+    image: string;
+    rgba: string;
+    pieces: string[];
+  }
+> = {};
+
+const sources: Record<string, SpriteSource> = {};
 
 const placementBytes = await readFile(
   pixelPerfectFile("tests/reference/tooltip/atlas-placement.json")
 );
 
-const placement = JSON.parse(placementBytes);
-const locations = {};
-let atlasHeight;
-let atlasWidth;
+// SAFETY: the retained AtlasProbeMain output maps original sprite identities to observed native atlas UV coordinates.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const placement = JSON.parse(placementBytes.toString("utf-8")) as Record<
+  string,
+  GlyphUV
+>;
+
+const locations: Record<string, { x: number; y: number }> = {};
+let atlasHeight: number | undefined;
+let atlasWidth: number | undefined;
+
+const uri = (data: Buffer) =>
+  `url("data:image/png;base64,${data.toString("base64")}")`;
 
 for (const name of ["background", "frame"]) {
   const member = `assets/minecraft/textures/gui/sprites/tooltip/${name}.png`;
@@ -49,8 +80,18 @@ for (const name of ["background", "frame"]) {
   }
 
   const image = PNG.sync.read(bytes);
-  const { scaling } = JSON.parse(metadata).gui;
-  const b = scaling.border;
+
+  // SAFETY: original tooltip mcmeta bytes have just matched the retained inventory metadata hash.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const metadataDocument = JSON.parse(
+    metadata.toString("utf-8")
+  ) as SpriteMetadata;
+
+  const { scaling } = metadataDocument.gui;
+
+  // SAFETY: both original tooltip sprite metadata records use uniform numeric borders.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const b = scaling.border as number;
 
   const native = Object.entries(placement).find(([key]) =>
     key.includes(`texture=minecraft:tooltip/${name}]`)
@@ -77,9 +118,6 @@ for (const name of ["background", "frame"]) {
   const widths = [b, image.width - 2 * b, b];
   const heights = [b, image.height - 2 * b, b];
 
-  const uri = (data) =>
-    `url("data:image/png;base64,${data.toString("base64")}")`;
-
   const pieces = [];
 
   for (let row = 0, y = 0; row < 3; row += 1) {
@@ -94,38 +132,30 @@ for (const name of ["background", "frame"]) {
     y += heights[row];
   }
 
-  sprites[name] = Object.fromEntries([
-    ["width", image.width],
-    ["height", image.height],
-    [
-      "border",
-      Object.fromEntries([
-        ["left", b],
-        ["top", b],
-        ["right", b],
-        ["bottom", b],
-      ]),
-    ],
-    ["stretch", scaling.stretch_inner ?? false],
-    ["image", uri(bytes)],
-    ["rgba", image.data.toString("base64")],
-    ["pieces", pieces],
-  ]);
-  sources[member] = Object.fromEntries([
-    ["sha256", hash(bytes)],
-    ["metadataSha256", hash(metadata)],
-    ["scaling", scaling],
-  ]);
+  sprites[name] = {
+    width: image.width,
+    height: image.height,
+    border: { left: b, top: b, right: b, bottom: b },
+    stretch: scaling.stretch_inner ?? false,
+    image: uri(bytes),
+    rgba: image.data.toString("base64"),
+    pieces,
+  };
+  sources[member] = {
+    sha256: hash(bytes),
+    metadataSha256: hash(metadata),
+    scaling,
+  };
 }
 
 await writeFile(
   webFile("registry/ui/minecraft-tooltip-sprites.ts"),
   `// Original Minecraft artwork: Mojang Studios. Pieces are exact crops of original PNGs.\nexport const minecraftTooltipSprites = ${JSON.stringify(sprites)} as const\nexport const minecraftTooltipAtlas = ${JSON.stringify(
-    Object.fromEntries([
-      ["width", atlasWidth],
-      ["height", atlasHeight],
-      ["locations", locations],
-    ])
+    {
+      width: atlasWidth,
+      height: atlasHeight,
+      locations,
+    }
   )} as const\n`
 );
 
