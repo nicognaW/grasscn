@@ -13,6 +13,10 @@ import { playMinecraftClick } from "./minecraft-sound";
 
 import "./minecraft-toggle.css";
 
+interface ToggleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const toggleVariants = cva("mc-toggle", {
   defaultVariants: { size: "default", variant: "default" },
   variants: { size: { default: "" }, variant: { default: "" } },
@@ -50,8 +54,8 @@ const Toggle = ({
       className={cn(toggleVariants({ size, variant }), className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): ToggleScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
       aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}

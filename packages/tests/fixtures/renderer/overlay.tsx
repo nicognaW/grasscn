@@ -54,7 +54,7 @@ export const OverlayFixture = () => {
     transform: "none",
     width: width * scale,
     willChange: "auto",
-  } as React.CSSProperties;
+  } satisfies React.CSSProperties;
 
   const isDrawer = component === "drawer";
   const Root = isDrawer ? Drawer.Drawer : Sheet.Sheet;

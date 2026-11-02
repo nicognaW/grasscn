@@ -10,6 +10,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 import "./minecraft-input.css";
 import "./minecraft-input-otp.css";
 
+interface InputOtpScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 const OTPStyle = React.createContext<{
@@ -97,8 +101,8 @@ const InputOTPSlot = ({
       className={cn(`mc-otp-slot`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): InputOtpScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

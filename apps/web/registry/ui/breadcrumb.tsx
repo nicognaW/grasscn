@@ -8,6 +8,10 @@ import type { MinecraftPolymorphicProps } from "./minecraft-render";
 
 import "./minecraft-breadcrumb.css";
 
+interface BreadcrumbScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const BreadcrumbScale = React.createContext<1 | 2 | 3>(2);
 
 const Breadcrumb = ({
@@ -23,8 +27,8 @@ const Breadcrumb = ({
       data-slot="breadcrumb"
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): BreadcrumbScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />

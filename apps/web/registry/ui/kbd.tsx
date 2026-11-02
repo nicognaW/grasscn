@@ -13,6 +13,10 @@ import { MinecraftUnicodeLabel } from "./minecraft-unicode-label";
 import "./minecraft-button.css";
 import "./minecraft-kbd.css";
 
+interface KbdScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const keyText = function keyText(content: React.ReactNode): React.ReactNode {
   if (Array.isArray(content)) {
     return content.map((child, index) => (
@@ -93,8 +97,8 @@ const Kbd = ({ children, className, scale = 2, style, ...props }: KbdProps) => {
       className={cn(`mc-button mc-kbd`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): KbdScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

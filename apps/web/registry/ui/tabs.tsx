@@ -21,6 +21,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-tabs.css";
 
+interface TabsScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext(2);
 
 const useLocalRef = function useLocalRef<T extends HTMLElement>(
@@ -131,8 +135,8 @@ const Tabs = ({
         className={cn(`mc-tabs`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): TabsScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         onValueChange={(next, details) => {
           requested.current = details.reason === "none" ? next : undefined;

@@ -20,6 +20,10 @@ import { playMinecraftClick } from "./minecraft-sound";
 import "./minecraft-item.css";
 import "./minecraft-attachment.css";
 
+interface AttachmentScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const AttachmentContext = React.createContext<{
   scale: 1 | 2 | 3;
   disabled: boolean;
@@ -94,8 +98,8 @@ const Attachment = ({
         className={cn(`mc-item mc-attachment`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): AttachmentScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
         onClickCapture={(event) => {

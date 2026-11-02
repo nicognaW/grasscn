@@ -12,6 +12,10 @@ import { playMinecraftClick } from "./minecraft-sound";
 import "./minecraft-checkbox.css";
 import "./minecraft-questionnaire.css";
 
+interface QuestionnaireScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const QuestionnaireScale = React.createContext<1 | 2 | 3>(2);
 
 interface TextProps {
@@ -33,8 +37,8 @@ const Questionnaire = ({
       className={cn(`mc-questionnaire`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): QuestionnaireScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />

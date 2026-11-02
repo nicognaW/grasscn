@@ -14,6 +14,10 @@ import type { MinecraftProps } from "./minecraft-render";
 
 import "./minecraft-collapsible.css";
 
+interface CollapsibleScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const ScaleContext = React.createContext<1 | 2 | 3>(2);
 
 type CollapsibleProps = MinecraftProps<typeof Primitive.Root> & {
@@ -32,8 +36,8 @@ const Collapsible = ({
       className={cn("mc-collapsible", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): CollapsibleScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />
@@ -158,8 +162,8 @@ const CollapsibleContent = ({
       className={cn("mc-collapsible-content", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): CollapsibleScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

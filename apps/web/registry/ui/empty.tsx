@@ -14,6 +14,10 @@ import {
 
 import "./minecraft-empty.css";
 
+interface EmptyScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const EmptyScale = React.createContext<1 | 2 | 3>(2);
 
 type EmptyProps = React.ComponentProps<"div"> & {
@@ -72,8 +76,8 @@ const Empty = ({
         className={cn(`mc-empty`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): EmptyScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         {...props}
       >

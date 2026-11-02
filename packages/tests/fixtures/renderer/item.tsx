@@ -103,7 +103,7 @@ const ItemFixture = () => {
     position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: width * scale,
-  } as React.CSSProperties;
+  } satisfies React.CSSProperties;
 
   const subject =
     part === "title" ? (

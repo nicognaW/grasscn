@@ -20,6 +20,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-sonner.css";
 
+interface SonnerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface ActionModel {
   node: HTMLButtonElement;
   label: string;
@@ -470,8 +474,8 @@ const Toaster = function Toaster({
         richColors={false}
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): SonnerScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         toastOptions={{ ...toastOptions, unstyled: true }}
         {...props}

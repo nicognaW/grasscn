@@ -10,6 +10,10 @@ import { Textarea } from "./textarea";
 
 import "./minecraft-input-group.css";
 
+interface InputGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 const InputGroupScale = React.createContext<Scale>(2);
@@ -30,8 +34,8 @@ const InputGroup = ({
       className={cn(`mc-input-group`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): InputGroupScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     />

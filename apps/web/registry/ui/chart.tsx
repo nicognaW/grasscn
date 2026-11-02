@@ -32,6 +32,10 @@ import type { TooltipValueType } from "recharts";
 
 import { ChartGeometryProvider } from "./minecraft-chart-context";
 
+interface ChartScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
 const INITIAL_DIMENSION = { height: 200, width: 320 } as const;
@@ -108,8 +112,8 @@ const ChartContainer = ({
           data-chart={chartId}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): ChartScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           className={cn(
             "mc-chart [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",

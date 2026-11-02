@@ -11,6 +11,10 @@ import { MinecraftText } from "./minecraft-text";
 import "./minecraft-button.css";
 import "./minecraft-switch.css";
 
+interface SwitchScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type SwitchProps = MinecraftProps<typeof SwitchPrimitive.Root> & {
   scale?: 1 | 2 | 3;
   size?: "default";
@@ -66,8 +70,8 @@ const Switch = ({
       className={cn(`mc-button mc-switch`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): SwitchScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
       aria-disabled={(disabled ?? false) ? true : props["aria-disabled"]}

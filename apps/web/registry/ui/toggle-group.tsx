@@ -11,6 +11,10 @@ import { toggleVariants } from "./toggle";
 
 import "./minecraft-toggle-group.css";
 
+interface ToggleGroupScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface Appearance {
   scale?: 1 | 2 | 3;
   variant?: "default";
@@ -103,8 +107,8 @@ const ToggleGroupItem = ({
       )}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": resolvedScale, ...__style }) as React.CSSProperties
+        (__style): ToggleGroupScaleStyle =>
+          ({ "--mc-scale": resolvedScale, ...__style })
       )}
       {...props}
       aria-disabled={

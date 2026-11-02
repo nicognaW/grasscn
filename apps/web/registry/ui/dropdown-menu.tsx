@@ -20,6 +20,10 @@ import { Separator } from "./separator";
 import "./minecraft-checkbox.css";
 import "./minecraft-menu.css";
 
+interface DropdownMenuScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type MenuSurface = "popup" | "suggestions";
 
 const DropdownMenu = ({
@@ -252,8 +256,8 @@ const DropdownMenuContent = ({
             className={cn("mc-menu-content", className)}
             style={minecraftStyle(
               style,
-              (__style) =>
-                ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+              (__style): DropdownMenuScaleStyle =>
+                ({ "--mc-scale": scale, ...__style })
             )}
             {...props}
           >
@@ -313,8 +317,8 @@ const DropdownMenuItem = ({
       className={cn("mc-menu-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): DropdownMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -366,8 +370,8 @@ const DropdownMenuCheckboxItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): DropdownMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onCheckedChange={(next, details) => {
         onCheckedChange?.(next, details);
@@ -404,8 +408,8 @@ const DropdownMenuRadioItem = ({
       className={cn("mc-menu-item mc-menu-checkbox-item", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): DropdownMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       onClick={(event) => {
         onClick?.(event);
@@ -441,8 +445,8 @@ const DropdownMenuLabel = ({
       className={cn("mc-menu-item mc-menu-label", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): DropdownMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -522,8 +526,8 @@ const DropdownMenuSubTrigger = ({
       className={cn("mc-menu-item mc-menu-sub-trigger", className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): DropdownMenuScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >
@@ -593,8 +597,8 @@ const DropdownMenuSubContent = ({
           className={cn("mc-menu-content", className)}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): DropdownMenuScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           {...props}
         >

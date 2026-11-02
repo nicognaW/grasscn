@@ -13,6 +13,10 @@ import {
 } from "./minecraft-render";
 import { MinecraftSelectableText } from "./minecraft-selectable-text";
 
+interface CodeBlockScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const CodeScale = React.createContext<1 | 2 | 3>(2);
 
 type CodeBlockProps = React.ComponentProps<"div"> & {
@@ -43,8 +47,8 @@ const CodeBlock = ({
           className={cn(`mc-code-block`, className)}
           style={minecraftStyle(
             style,
-            (__style) =>
-              ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+            (__style): CodeBlockScaleStyle =>
+              ({ "--mc-scale": scale, ...__style })
           )}
           {...props}
         />

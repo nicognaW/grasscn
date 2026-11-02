@@ -8,6 +8,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-hotbar.css";
 
+interface HotbarScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface HotbarItem {
   id: string;
   label: string;
@@ -180,13 +184,13 @@ const Hotbar = ({
       className={cn(`mc-hotbar`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
+        (__style): HotbarScaleStyle =>
           ({
             "--mc-scale": scale,
             height: 23 * scale,
             width: 184 * scale,
             ...__style,
-          }) as React.CSSProperties
+          })
       )}
       onKeyDown={(event) => {
         onKeyDown?.(event);

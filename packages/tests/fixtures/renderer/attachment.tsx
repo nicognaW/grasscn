@@ -31,7 +31,7 @@ export const AttachmentFixture = () => {
     position: "fixed",
     top: Number(q.get("y") ?? 16) * scale,
     width: Number(q.get("width") ?? 270) * scale,
-  } as React.CSSProperties;
+  } satisfies React.CSSProperties;
 
   if (q.has("native")) {
     if (q.get("part") === "action") {

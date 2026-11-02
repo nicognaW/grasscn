@@ -40,6 +40,10 @@ import {
 
 import "./minecraft-sidebar.css";
 
+interface SidebarScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type Scale = 1 | 2 | 3;
 
 interface SidebarState {
@@ -943,8 +947,8 @@ const SidebarMenuSkeleton = ({
       className={cn(`mc-sidebar-menu-skeleton`, className)}
       style={minecraftStyle(
         style,
-        (__style) =>
-          ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+        (__style): SidebarScaleStyle =>
+          ({ "--mc-scale": scale, ...__style })
       )}
       {...props}
     >

@@ -17,6 +17,10 @@ import {
 
 import "./minecraft-trading.css";
 
+interface TradingScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 interface TradeItem {
   label: string;
   icon: React.ReactNode;
@@ -201,13 +205,13 @@ const Trading = ({
         className={cn(`mc-trading`, className)}
         style={minecraftStyle(
           style,
-          (__style) =>
+          (__style): TradingScaleStyle =>
             ({
               "--mc-scale": scale,
               height: 166 * scale,
               width: 276 * scale,
               ...__style,
-            }) as React.CSSProperties
+            })
         )}
       >
         <AdventureImage

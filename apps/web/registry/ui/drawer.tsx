@@ -15,6 +15,10 @@ import { MinecraftSurface } from "./minecraft-surface";
 import "./minecraft-card.css";
 import "./minecraft-drawer.css";
 
+interface DrawerScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const DrawerScale = React.createContext<1 | 2 | 3>(2);
 
 const DrawerDirection = React.createContext<
@@ -154,12 +158,12 @@ const DrawerContent = ({
               className={cn(`mc-card mc-drawer-content`, className)}
               style={minecraftStyle(
                 style,
-                (__style) =>
+                (__style): DrawerScaleStyle =>
                   ({
                     "--mc-scale": scale,
                     pointerEvents: "auto",
                     ...__style,
-                  }) as React.CSSProperties
+                  })
               )}
               {...props}
             >

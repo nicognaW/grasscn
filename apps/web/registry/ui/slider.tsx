@@ -16,6 +16,10 @@ import { MinecraftSurface } from "./minecraft-surface";
 import "./minecraft-slider.css";
 import { MinecraftText } from "./minecraft-text";
 
+interface SliderScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const Slider = ({
   className,
   defaultValue,
@@ -111,8 +115,8 @@ const Slider = ({
         thumbAlignment="edge"
         style={minecraftStyle(
           style,
-          (__style) =>
-            ({ "--mc-scale": scale, ...__style }) as React.CSSProperties
+          (__style): SliderScaleStyle =>
+            ({ "--mc-scale": scale, ...__style })
         )}
         onValueChange={(next, details) => {
           onValueChange?.(next, details);

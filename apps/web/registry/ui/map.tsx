@@ -11,6 +11,10 @@ import { minecraftClasses as cn, minecraftStyle } from "./minecraft-render";
 
 import "./minecraft-map.css";
 
+interface MapScaleStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 type MapDecoration = keyof typeof adventureAssets extends infer K
   ? K extends `map/decorations/${infer N}`
     ? N
@@ -346,7 +350,7 @@ const LocatorBar = ({
     className={cn(`mc-locator-bar`, className)}
     style={minecraftStyle(
       style,
-      (__style) =>
+      (__style): MapScaleStyle =>
         ({
           "--mc-scale": scale,
           borderImageRepeat: "repeat",
@@ -356,7 +360,7 @@ const LocatorBar = ({
           height: 5 * scale,
           width: 182 * scale,
           ...__style,
-        }) as React.CSSProperties
+        })
     )}
   >
     {markers.map((marker) => {
