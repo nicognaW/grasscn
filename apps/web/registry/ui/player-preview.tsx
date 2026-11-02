@@ -254,7 +254,8 @@ const buildRenderer = function buildRenderer(
 
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
-      const order = Array.from({ length: source.length / 4 }, (_, i) => i).sort(
+      const nativeSortValues = Array.from({ length: source.length / 4 }, (_, i) => i);
+      nativeSortValues.sort(
         (leftQuadIndex, rightQuadIndex) =>
           Math.fround(
             Math.fround(
@@ -267,6 +268,7 @@ const buildRenderer = function buildRenderer(
             ) * 0.5
           )
       );
+      const order = nativeSortValues;
 
       const sorted = new Float32Array(data.length);
 

@@ -96,9 +96,11 @@ const names = map.components.map((component) => component.name);
 
 assert.equal(new Set(names).size, names.length, "Duplicate component mapping");
 
-const union = [
+const nativeSortValues = [
   ...new Set(catalog.sources.flatMap((source) => source.names)),
-].sort();
+];
+nativeSortValues.sort();
+const union = nativeSortValues;
 
 assert.deepEqual(
   catalog.names,

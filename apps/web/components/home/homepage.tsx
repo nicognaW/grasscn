@@ -56,9 +56,9 @@ const team = [
   { name: "Sam Rivera", role: "Product designer", skin: "wide/kai" },
 ] as const;
 function Controls() {
-  const [clicks, setClicks] = React.useState(0),
-    [checked, setChecked] = React.useState(true),
-    [enabled, setEnabled] = React.useState(true);
+  const [clicks, setClicks] = React.useState(0);
+  const [checked, setChecked] = React.useState(true);
+  const [enabled, setEnabled] = React.useState(true);
   return (
     <Panel title="Small pieces. Big possibilities." tag="THE ESSENTIALS">
       <div className="grass-inline">
@@ -174,10 +174,10 @@ function Analytics() {
   );
 }
 function Project() {
-  const [name, setName] = React.useState("Website redesign"),
-    [budget, setBudget] = React.useState("2400"),
-    [category, setCategory] = React.useState("design"),
-    [saved, setSaved] = React.useState("");
+  const [name, setName] = React.useState("Website redesign");
+  const [budget, setBudget] = React.useState("2400");
+  const [category, setCategory] = React.useState("design");
+  const [saved, setSaved] = React.useState("");
   return (
     <Panel
       title="Start something new."
@@ -396,9 +396,9 @@ function Revenue() {
   );
 }
 function Preferences() {
-  const [email, setEmail] = React.useState(true),
-    [release, setRelease] = React.useState(false),
-    [saved, setSaved] = React.useState(false);
+  const [email, setEmail] = React.useState(true);
+  const [release, setRelease] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
   return (
     <Panel title="Keep the good stuff coming." tag="NOTIFICATIONS">
       <div className="grass-preference">
@@ -459,11 +459,11 @@ function Preferences() {
   );
 }
 function Chat() {
-  const [draft, setDraft] = React.useState(""),
-    [messages, setMessages] = React.useState([
-      { author: "Alex", text: "The new dashboard looks great!" },
-      { author: "Jordan", text: "Those pixel charts are so good." },
-    ]);
+  const [draft, setDraft] = React.useState("");
+  const [messages, setMessages] = React.useState([
+    { author: "Alex", text: "The new dashboard looks great!" },
+    { author: "Jordan", text: "Those pixel charts are so good." },
+  ]);
   const list = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     const el = list.current;
@@ -530,8 +530,8 @@ function Performance() {
       ),
     [sample]
   );
-  const container = React.useRef<HTMLDivElement>(null),
-    [width, setWidth] = React.useState(140);
+  const container = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState(140);
   React.useLayoutEffect(() => {
     const el = container.current!;
     const measure = () =>
@@ -577,8 +577,8 @@ function Performance() {
   );
 }
 function Payout() {
-  const [amount, setAmount] = React.useState(250),
-    [saved, setSaved] = React.useState(false);
+  const [amount, setAmount] = React.useState(250);
+  const [saved, setSaved] = React.useState(false);
   return (
     <Panel
       title="Set your own pace."

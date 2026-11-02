@@ -335,9 +335,11 @@ if (fullRun !== null) {
   await save();
 }
 
-const browserFiles = [
+const nativeSortValues = [
   ...new Set((selectedCases ?? baseCatalogue()).map((test) => test.file)),
-].sort();
+];
+nativeSortValues.sort();
+const browserFiles = nativeSortValues;
 
 if (phase !== "prepare") {
   for (const file of browserFiles) {

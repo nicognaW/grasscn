@@ -44,7 +44,9 @@ export function fixtureManifest(
   const files: { path: string; sha256: string }[] = [];
 
   function visit(folder: string) {
-    for (const name of fs.readdirSync(folder).sort()) {
+    const nativeSortValues = fs.readdirSync(folder);
+    nativeSortValues.sort();
+    for (const name of nativeSortValues) {
       const file = path.join(folder, name);
       const info = fs.lstatSync(file);
 

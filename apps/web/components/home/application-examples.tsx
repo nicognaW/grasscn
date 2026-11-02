@@ -106,8 +106,8 @@ export const Schedule = () => {
   );
 };
 export function Feedback() {
-  const [text, setText] = React.useState(""),
-    [sent, setSent] = React.useState(false);
+  const [text, setText] = React.useState("");
+  const [sent, setSent] = React.useState(false);
   return (
     <Panel
       title="Help shape what comes next."
@@ -155,8 +155,8 @@ export function Feedback() {
   );
 }
 export function Plan() {
-  const [plan, setPlan] = React.useState("monthly"),
-    [saved, setSaved] = React.useState(false);
+  const [plan, setPlan] = React.useState("monthly");
+  const [saved, setSaved] = React.useState(false);
   return (
     <Panel
       title="A plan for your next chapter."

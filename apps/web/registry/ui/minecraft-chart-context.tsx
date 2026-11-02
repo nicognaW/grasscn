@@ -448,8 +448,9 @@ export const ChartPixelSurface = ({
       }
 
       // Keep the real SVG shapes for Recharts interaction; only the pixel surface paints them.
-      if (!Object.hasOwn(element.dataset, "mcPixelSource"))
+      if (!Object.hasOwn(element.dataset, "mcPixelSource")) {
         element.dataset.mcPixelSource = "";
+      }
       const style = getComputedStyle(element);
 
       let opacity = 1;

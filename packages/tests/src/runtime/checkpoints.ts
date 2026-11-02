@@ -154,11 +154,13 @@ export const reusableBrowserTests = async function reusableBrowserTests(
   const spec = path.resolve(root, "tests", file);
   const source = digest(await readFile(spec));
 
-  for (const candidate of [...candidates].sort((a, b) =>
+  const nativeSortValues = [...candidates];
+  nativeSortValues.sort((a, b) =>
     (a.report.startedAt ?? a.filename).localeCompare(
       b.report.startedAt ?? b.filename
     )
-  )) {
+  );
+  for (const candidate of nativeSortValues) {
     const run = path.dirname(candidate.filename);
     const directory = path.join(run, "checkpoints", file);
 

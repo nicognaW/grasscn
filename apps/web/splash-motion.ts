@@ -3,8 +3,8 @@
 const f = Math.fround;
 const sineIndexScale = 10430.378350470453;
 const angle = f(-0.34906584);
-const rotationCos = f(Math.cos(angle)),
-  rotationSin = f(Math.sin(angle));
+const rotationCos = f(Math.cos(angle));
+const rotationSin = f(Math.sin(angle));
 
 export function splashMotion(timeMillis: number, textWidth: number) {
   const phase = f(f(f(Math.trunc(timeMillis) % 1000) / f(1000)) * f(6.2831855));

@@ -78,8 +78,9 @@ for (const scale of [2] as const) {
                 !image.data
                   .subarray(start, start + 4)
                   .equals(image.data.subarray(offset, offset + 4))
-              )
+              ) {
                 differing += 1;
+              }
             }
         }
       }
