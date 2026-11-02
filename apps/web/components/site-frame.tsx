@@ -9,6 +9,7 @@ import type { SearchPage } from "../lib/search-results";
 import { Button } from "../registry/ui/button";
 import { MinecraftText } from "../registry/ui/minecraft-text";
 import { DocumentSearch } from "./document-search";
+import { DocumentSelection } from "./document-selection";
 
 export const SiteFrame = ({
   children,
@@ -21,6 +22,7 @@ export const SiteFrame = ({
 
   return (
     <div className="minecraft-site">
+      <DocumentSelection />
       <a className="skip-link" href="#content">
         <MinecraftText>Skip to content</MinecraftText>
       </a>

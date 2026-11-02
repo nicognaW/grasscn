@@ -58,12 +58,32 @@
   text-shadow: none;
   -webkit-text-fill-color: transparent;
   user-select: text;
-  cursor: text;
+  cursor: inherit;
 }
-/* Preserve the bitmap foreground while the browser highlights the copyable text. */
+.document-text::selection,
+.document-text ::selection {
+  background: #fff;
+  color: #0000ff;
+  text-shadow: none;
+}
 .document-text .mc-text-accessible::selection {
   color: transparent;
-  background-color: Highlight;
+  -webkit-text-fill-color: transparent;
+}
+.document-text .mc-text-pixels[data-document-selected] {
+  filter: none;
+}
+.document-text .mc-text-pixels[data-document-selected] > .mc-glyph {
+  filter: drop-shadow(
+    var(--mc-pixel) var(--mc-pixel) 0 var(--mc-shadow, #3f3f3f)
+  );
+}
+.document-text .mc-text-pixels > .mc-glyph[data-document-selected] {
+  background-color: #0000ff;
+  filter: none;
+}
+.document-text canvas[data-document-selection] {
+  z-index: 2;
 }
 
 :is(button, [role="option"]) .document-text .mc-text-accessible {
