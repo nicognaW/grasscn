@@ -8,6 +8,12 @@ import {
 
 import "./minecraft-text.css";
 
+interface MinecraftGlyphStyle extends React.CSSProperties {
+  "--mc-advance": number;
+  "--mc-glyph-x": number;
+  "--mc-glyph-y": number;
+}
+
 const MinecraftText = ({
   children,
   className,
@@ -30,18 +36,17 @@ const MinecraftText = ({
         {Array.from(text, (char, index) => {
           const [x, y, advance] = minecraftGlyphs[char.charCodeAt(0) - 32];
 
+          const glyphStyle: MinecraftGlyphStyle = {
+            "--mc-advance": advance,
+            "--mc-glyph-x": x,
+            "--mc-glyph-y": y,
+          };
+
           return (
             <span
               key={index}
-              className="mc-glyph"
-              style={
-                {
-                  "--mc-advance": advance,
-                  "--mc-glyph-x": x,
-                  "--mc-glyph-y": y,
-                  visibility: char === " " ? "hidden" : undefined,
-                } as React.CSSProperties
-              }
+              className={cn("mc-glyph", char === " " && "mc-glyph-space")}
+              style={glyphStyle}
             />
           );
         })}

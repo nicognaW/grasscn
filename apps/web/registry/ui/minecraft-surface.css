@@ -1,6 +1,8 @@
 @layer theme, base, components, utilities;
 @layer components {
   .mc-surface {
+    grid-template-columns: var(--mc-surface-columns);
+    grid-template-rows: var(--mc-surface-rows);
     position: absolute;
     inset: 0;
     display: grid;
@@ -8,6 +10,8 @@
     image-rendering: pixelated;
   }
   .mc-surface > span {
+    background-image: var(--mc-surface-image);
+    background-size: var(--mc-surface-size);
     background-repeat: repeat;
   }
 }

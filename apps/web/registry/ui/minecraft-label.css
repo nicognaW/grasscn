@@ -1,5 +1,6 @@
 @layer components {
   .mc-label {
+    width: var(--mc-label-width, auto);
     --mc-pixel: calc(1px * var(--mc-scale, 2));
     display: inline-flex;
     flex-direction: column;
@@ -13,6 +14,7 @@
     text-shadow: var(--mc-pixel) var(--mc-pixel) #3f3f3f;
   }
   .mc-label-line {
+    padding-left: calc(var(--mc-label-line-padding) * 1px);
     display: block;
     box-sizing: border-box;
     height: calc(9 * var(--mc-pixel));

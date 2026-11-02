@@ -17,6 +17,15 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface LabelStyle extends React.CSSProperties {
+  "--mc-scale": number;
+  "--mc-label-width": string | undefined;
+}
+
+interface LabelLineStyle extends React.CSSProperties {
+  "--mc-label-line-padding": number;
+}
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
@@ -138,41 +147,42 @@ const Label = ({
       data-slot="label"
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            width: maxWidth == null ? undefined : maxWidth * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): LabelStyle => ({
+        "--mc-scale": scale,
+        "--mc-label-width":
+          maxWidth == null ? undefined : `${maxWidth * scale}px`,
+        ...__style,
+      }))}
       {...props}
     >
       {supported ? (
         <>
-          {lines.map((line, index) => (
-            <span
-              aria-hidden="true"
-              className="mc-label-line"
-              key={index}
-              style={{
-                paddingLeft:
-                  align === "center"
-                    ? (Math.floor((width - widest) / 2) +
-                        Math.floor(widest / 2) -
-                        Math.floor(textWidth(line) / 2)) *
-                      scale
-                    : 0,
-              }}
-            >
-              {/^[\u0020-\u007E]*$/u.test(line) ? (
-                <MinecraftText>{line}</MinecraftText>
-              ) : (
-                <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
-              )}
-            </span>
-          ))}
+          {lines.map((line, index) => {
+            const lineStyle: LabelLineStyle = {
+              "--mc-label-line-padding":
+                align === "center"
+                  ? (Math.floor((width - widest) / 2) +
+                      Math.floor(widest / 2) -
+                      Math.floor(textWidth(line) / 2)) *
+                    scale
+                  : 0,
+            };
+
+            return (
+              <span
+                aria-hidden="true"
+                className="mc-label-line"
+                key={index}
+                style={lineStyle}
+              >
+                {/^[\u0020-\u007E]*$/u.test(line) ? (
+                  <MinecraftText>{line}</MinecraftText>
+                ) : (
+                  <MinecraftUnicodeLabel text={line} atlas={labelUnihexAtlas} />
+                )}
+              </span>
+            );
+          })}
           <span className="mc-text-accessible">{text}</span>
         </>
       ) : (
