@@ -4,7 +4,8 @@ import * as React from "react";
 
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
-  isMinecraftTextContent,
+  isMinecraftEmptyChild,
+  isMinecraftTextScalar,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -21,11 +22,11 @@ const literalText = function literalText(
   let result = "";
 
   const visit = (node: React.ReactNode) => {
-    if (node === null || node === undefined || typeof node === "boolean") {
+    if (isMinecraftEmptyChild(node)) {
       return;
     }
 
-    if (isMinecraftTextContent(node) || typeof node === "bigint") {
+    if (isMinecraftTextScalar(node)) {
       result += String(node);
 
       return;

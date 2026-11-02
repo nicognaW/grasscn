@@ -8,6 +8,8 @@ import { Card } from "./card";
 import { Input } from "./input";
 import { MinecraftDisclosureText } from "./minecraft-disclosure-text";
 import {
+  isMinecraftEmptyChild,
+  isMinecraftTextScalar,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -337,7 +339,7 @@ const sidebarControlLabel = function sidebarControlLabel(
   };
 
   const visit = (child: React.ReactNode) => {
-    if (child === null || child === undefined || typeof child === "boolean") {
+    if (isMinecraftEmptyChild(child)) {
       return;
     }
 
@@ -356,7 +358,7 @@ const sidebarControlLabel = function sidebarControlLabel(
       return;
     }
 
-    if (isMinecraftTextContent(child) || typeof child === "bigint") {
+    if (isMinecraftTextScalar(child)) {
       run += String(child);
     } else {
       flush();

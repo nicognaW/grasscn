@@ -5,6 +5,7 @@ import * as React from "react";
 import "./minecraft-message.css";
 import { MinecraftChatText } from "./minecraft-chat-text";
 import {
+  isMinecraftEmptyChild,
   isMinecraftTextContent,
   minecraftClasses as cn,
   minecraftStyle,
@@ -78,11 +79,8 @@ const MessageAvatar = ({
 
 const isChatInline = function isChatInline(value: React.ReactNode): boolean {
   if (
-    value === null ||
-    value === undefined ||
-    typeof value === "boolean" ||
-    typeof value === "string" ||
-    typeof value === "number"
+    isMinecraftEmptyChild(value) ||
+    isMinecraftTextContent(value)
   ) {
     return true;
   }
