@@ -46,7 +46,7 @@ test("Toggle Group preview exposes independent single and multiple values", asyn
 
   const single = page
       .locator(".documentation-playground")
-      .getByRole("group", { name: "One recipe station" }),
+      .getByRole("group", { name: "One recipe station" }); const 
     multiple = page
       .locator(".documentation-playground")
       .getByRole("group", { name: "Several recipe stations" });

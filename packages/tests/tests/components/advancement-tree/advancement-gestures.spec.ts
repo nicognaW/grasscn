@@ -128,7 +128,7 @@ test("cancelled drag permits the next click and keyboard selection", async ({
   await page.goto(fixture + "?scale=2&mask=1");
   const tree = page.getByRole("group", { name: "Advancement tree" });
   const node = page.getByRole("button", { exact: true, name: "Milestone 1" });
-  const box = (await node.boundingBox())!,
+  const box = (await node.boundingBox())!; const 
     plane = page.locator(".mc-advancement-plane");
   await node.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toBeVisible();

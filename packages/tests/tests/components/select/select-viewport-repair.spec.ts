@@ -52,18 +52,18 @@ for (const scale of [2] as const) {
           maximum: n.scrollHeight - n.clientHeight,
         }));
 
-        if (short) expect(scroll.maximum).toBeGreaterThan(0);
+        if (short) { expect(scroll.maximum).toBeGreaterThan(0); }
         await viewport.hover();
         await page.mouse.wheel(0, scroll.top > 0 ? -1000 : 1000);
 
         if (scroll.maximum > 0)
-          await expect
+          { await expect
             .poll(async () => viewport.evaluate((n) => n.scrollTop))
-            .not.toBe(scroll.top);
+            .not.toBe(scroll.top); }
         else
-          await expect
+          { await expect
             .poll(async () => viewport.evaluate((n) => n.scrollTop))
-            .toBe(0);
+            .toBe(0); }
         await page.evaluate(async () => {
           const frameCompletion = Promise.withResolvers<void>();
 
@@ -82,7 +82,7 @@ for (const scale of [2] as const) {
         const after = (await popup.boundingBox())!;
 
         if ((await popup.getAttribute("data-align-trigger")) !== "true")
-          expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale);
+          { expect(Math.abs(after.y - before.y)).toBeLessThanOrEqual(scale); }
         expect(Math.abs(after.x - before.x)).toBeLessThanOrEqual(scale);
         expect(after.y).toBeGreaterThanOrEqual(0);
         expect(after.y + after.height).toBeLessThanOrEqual(height);
@@ -119,7 +119,7 @@ for (const scale of [2] as const) {
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(
             after.x + after.width
           );
-        } else await expect(bar).toBeHidden();
+        } else { await expect(bar).toBeHidden(); }
         await page.keyboard.press("Escape");
         await expect(trigger).toBeFocused();
       });

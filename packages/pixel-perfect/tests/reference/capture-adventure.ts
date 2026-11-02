@@ -29,10 +29,10 @@ const javaBin = path.resolve(
 );
 
 if (!process.argv[2] && !process.env.MINECRAFT_VERSION_DIR)
-  throw new Error("Pass the Minecraft version directory as argument 1");
+  { throw new Error("Pass the Minecraft version directory as argument 1"); }
 
 if (!process.argv[3] && !process.env.MINECRAFT_JAVA_BIN)
-  throw new Error("Pass the Java 25 bin directory as argument 2");
+  { throw new Error("Pass the Java 25 bin directory as argument 2"); }
 
 const instanceName = path.basename(versionDir);
 
@@ -69,7 +69,7 @@ if (
   !definitions.length ||
   new Set(definitions.map((c) => c.name)).size !== definitions.length
 )
-  throw new Error("Empty or duplicate native cases");
+  { throw new Error("Empty or duplicate native cases"); }
 
 for (const c of definitions) {
   if (
@@ -82,7 +82,7 @@ for (const c of definitions) {
     (c.x + c.width) * 3 > 1536 ||
     (c.y + c.height) * 3 > 900
   )
-    throw new Error(`Invalid reference bounds: ${c.name}`);
+    { throw new Error(`Invalid reference bounds: ${c.name}`); }
 }
 
 const outputDir = path.resolve(
@@ -130,7 +130,7 @@ await mkdir(frozenSourceDirectory, { recursive: true });
 const frozenSource = path.join(
     frozenSourceDirectory,
     "ControlsReferenceMain.java"
-  ),
+  ); const 
   frozenCases = path.join(runtime, "cases.json");
 
 await writeFile(frozenSource, harnessBytes);
@@ -145,7 +145,7 @@ for (const definition of definitions.filter(
   const name = definition.textureFile;
 
   if (path.basename(name) !== name)
-    throw new Error("Texture inputs must use a plain filename");
+    { throw new Error("Texture inputs must use a plain filename"); }
 
   let bytes;
 
@@ -156,7 +156,7 @@ for (const definition of definitions.filter(
   }
 
   if (sha256(bytes) !== definition.textureSha256)
-    throw new Error(`Texture input changed: ${name}`);
+    { throw new Error(`Texture input changed: ${name}`); }
 
   await writeFile(path.join(runtime, name), bytes);
 
@@ -179,12 +179,12 @@ const platformName =
       : "linux";
 
 function permitted(library: MinecraftCaptureLibrary) {
-  if (!library.rules) return true;
+  if (!library.rules) { return true; }
 
   let allowed = false;
 
   for (const rule of library.rules) {
-    if (rule.os?.name && rule.os.name !== platformName) continue;
+    if (rule.os?.name && rule.os.name !== platformName) { continue; }
 
     if (
       rule.os?.arch &&
@@ -339,10 +339,10 @@ const captureTimeout = Math.max(
 const output = await javaCommand("java", javaArgs, captureTimeout);
 
 if (!output.includes("REGISTRY_REFERENCE_COMPLETE"))
-  throw new Error("Client exited without completing reference captures");
+  { throw new Error("Client exited without completing reference captures"); }
 
 if (sha256(await readFile(jar)) !== sourceJarSha256)
-  throw new Error("Source JAR changed during capture");
+  { throw new Error("Source JAR changed during capture"); }
 
 const cases: ControlCaptureCase[] = [];
 
@@ -355,7 +355,7 @@ try {
     await readFile(path.join(outputDir, "layout.json"), "utf8")
   ) as Record<string, NativeCaptureLayout | undefined>;
 } catch (error) {
-  if (definitions.some((c) => c.element === "tooltip")) throw error;
+  if (definitions.some((c) => c.element === "tooltip")) { throw error; }
 }
 
 for (const scale of [1, 2, 3])
@@ -381,7 +381,7 @@ const pages = [...new Set(definitions.map((c) => c.page ?? 0))].sort(
 );
 
 if (pages.some((page, index) => page !== index))
-  throw new Error("Native pages must be contiguous from zero");
+  { throw new Error("Native pages must be contiguous from zero"); }
 
 await mkdir(path.join(outputDir, "frames"), { recursive: true });
 
@@ -430,7 +430,7 @@ if (
 
   // SAFETY: the selected official asset index maps resource names to SHA-1 objects and byte sizes; existing checks remain.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific launcher asset-index contract, with original fresh read and later integrity checks preserved.
-  const index = JSON.parse(String(indexBytes)) as MinecraftCaptureAssetIndex,
+  const index = JSON.parse(String(indexBytes)) as MinecraftCaptureAssetIndex; const 
     resources: Record<
       string,
       { sha1: string; sha256: string; size: number } | undefined
@@ -457,7 +457,7 @@ if (
       createHash("sha1").update(bytes).digest("hex") !== entry.hash ||
       bytes.length !== entry.size
     )
-      throw new Error(`Effective font object changed: ${key}`);
+      { throw new Error(`Effective font object changed: ${key}`); }
 
     resources[key] = {
       sha1: entry.hash,
@@ -483,7 +483,7 @@ await writeFile(
 manifest.sourceDirectory = "source";
 
 if (Object.keys(inputResources).length)
-  manifest.inputResources = inputResources;
+  { manifest.inputResources = inputResources; }
 
 await writeFile(
   path.join(outputDir, "manifest.json"),
