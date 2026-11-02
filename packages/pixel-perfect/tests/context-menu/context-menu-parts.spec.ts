@@ -5,6 +5,9 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type nativeReference from "../reference/menu-parts/manifest.json";
+
+
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -37,9 +40,11 @@ const compare = function compare(expected: PNG, actual: PNG) {
 
 const directory = "tests/reference/menu-parts";
 
+// SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof nativeReference;
 
 for (const c of manifest.cases) {
   for (const kind of c.element === "menu-checkbox"

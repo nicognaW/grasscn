@@ -6,6 +6,35 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type buttonReference from "../reference/manifest.json";
+import type inputReference from "../reference/input/manifest.json";
+import type scrollReference from "../reference/scroll-area/manifest.json";
+
+
+type SidebarInputReferenceCase = (typeof inputReference)["cases"][number];
+type SidebarScrollReferenceCase = (typeof scrollReference)["cases"][number];
+
+// This composite consumer forwards only these observed fields from its eight native constituent families.
+// Input-only selection/caret data and Scroll Area values are narrowed at their existing kind branches below.
+interface SidebarReferenceCase extends Pick<(typeof buttonReference)["cases"][number], "name" | "sha256" | "state" | "scale" | "width" | "height"> {
+  x?: number;
+  y?: number;
+  background?: string;
+  label?: string;
+  text?: string;
+  placeholder?: string;
+  maxLength?: number;
+  wrapWidth?: number;
+  alignment?: string;
+  contentHeight?: number;
+  value?: number;
+}
+
+interface SidebarReferenceManifest {
+  background: string;
+  cases: SidebarReferenceCase[];
+}
+
 const repo = path.resolve(".");
 
 const hash = (value: Buffer) =>
@@ -91,12 +120,14 @@ test.describe("Sidebar original native constituent cases", () => {
   for (const [folder, kind] of matrices) {
     const directory = path.join(repo, "tests/reference", folder);
 
+    // SAFETY: these retained native capture producers own this concrete case schema; the existing read/parse phase and verification assertions remain unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const manifest = JSON.parse(
       readFileSync(
         pixelPerfectFile(path.join(directory, "manifest.json")),
         "utf-8"
       )
-    );
+    ) as SidebarReferenceManifest;
 
     for (const c of manifest.cases) {
       const representative =
@@ -156,7 +187,7 @@ test.describe("Sidebar original native constituent cases", () => {
               "alignment",
               "contentHeight",
               "value",
-            ]) {
+            ] as const) {
               if (c[field] != null) {
                 params.set(field, String(c[field]));
               }
@@ -189,6 +220,9 @@ test.describe("Sidebar original native constituent cases", () => {
             await page.mouse.move(0, 0);
 
             if (kind === "input") {
+              // SAFETY: the matrix maps kind input exclusively to the native Input/Input CJK producers with required text/caret fields.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              const inputCase = c as SidebarInputReferenceCase;
               await expect(subject).toHaveAttribute("data-mc-ready", "true");
               await expect(subject).toHaveAttribute("data-mc-bitmap", "true");
 
@@ -201,8 +235,8 @@ test.describe("Sidebar original native constituent cases", () => {
                 await subject.hover();
               }
 
-              const cursor = c.cursor ?? c.text.length;
-              const anchor = c.anchor ?? cursor;
+              const cursor = inputCase.cursor ?? inputCase.text.length;
+              const anchor = inputCase.anchor ?? cursor;
 
               await subject.evaluate(
                 (node, selection) => {
@@ -214,9 +248,12 @@ test.describe("Sidebar original native constituent cases", () => {
                 },
                 { cursor, anchor }
               );
-              await page.clock.runFor(c.caretMs);
+              await page.clock.runFor(inputCase.caretMs);
               await expect(subject).toHaveAttribute("data-mc-ready", "true");
             } else if (kind === "scroll") {
+              // SAFETY: the sole scroll matrix entry reads the native Scroll Area capture, whose value and dimensions are required.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+              const scrollCase = c as SidebarScrollReferenceCase;
               await expect(subject).toHaveAttribute(
                 "data-mc-scroll-ready",
                 "true"
@@ -228,12 +265,12 @@ test.describe("Sidebar original native constituent cases", () => {
 
               await viewport.evaluate((node, scroll) => {
                 node.scrollTop = scroll;
-              }, c.value * c.scale);
+              }, scrollCase.value * c.scale);
               await expect
                 .poll(
                   async () => await viewport.evaluate((node) => node.scrollTop)
                 )
-                .toBe(c.value * c.scale);
+                .toBe(scrollCase.value * c.scale);
 
               if (c.state === "hover") {
                 await subject
