@@ -251,7 +251,7 @@ const BubbleContent = ({
       ref={node as React.Ref<HTMLDivElement>}
       data-slot="bubble-content"
       data-mc-chat-ready={
-        available != null && (!unicode || fontReady) ? "true" : "false"
+        available !== undefined && (!unicode || fontReady) ? "true" : "false"
       }
       className={cn(`mc-bubble-content`, className)}
       {...props}

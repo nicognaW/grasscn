@@ -86,7 +86,7 @@ const MinecraftDisclosureText = ({
 
   const text = isMinecraftTextContent(children) ? String(children) : null;
 
-  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
+  const unicode = text !== null && /[^\u0000-\u007F]/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
@@ -118,7 +118,7 @@ const MinecraftDisclosureText = ({
   }, [scale]);
 
   const supported =
-    text != null &&
+    text !== null &&
     (!unicode || fontReady) &&
     [...text].every(
       (char) =>
@@ -140,7 +140,7 @@ const MinecraftDisclosureText = ({
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: maxWidth == null ? undefined : maxWidth * scale,
+            width: (typeof maxWidth === "undefined" || maxWidth === null) ? undefined : maxWidth * scale,
             ...__style,
           }) as React.CSSProperties
       )}

@@ -272,7 +272,7 @@ const TabsTrigger = ({
       const width = Math.floor(element.clientWidth / scale);
 
       const textWidth =
-        text == null
+        text === null
           ? Math.ceil(
               (element
                 .querySelector<HTMLElement>("[data-mc-tabs-rich]")
@@ -321,7 +321,7 @@ const TabsTrigger = ({
       }
     };
 
-    const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
+    const unicode = text !== null && /[^\u0000-\u007F]/u.test(text);
 
     if (unicode) {
       void loadUnihex().then(() => {
@@ -353,7 +353,7 @@ const TabsTrigger = ({
       <span className="mc-tab-underline" aria-hidden="true" />
       <span className="mc-tab-label-window">
         <span className="mc-tab-label">
-          {text == null ? (
+          {text === null ? (
             <span data-mc-tabs-rich="">{content}</span>
           ) : /^[\u0020-\u007E]*$/u.test(text) ? (
             <MinecraftText>{text}</MinecraftText>

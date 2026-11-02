@@ -166,7 +166,7 @@ const AttachmentContent = ({
       <div
         ref={node}
         data-slot="attachment-content"
-        data-mc-item-content-ready={width != null}
+        data-mc-item-content-ready={width !== undefined}
         className={cn(`mc-item-content mc-attachment-content`, className)}
         {...props}
       />

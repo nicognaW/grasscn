@@ -246,7 +246,7 @@ const ItemContent = ({
       <div
         ref={node}
         data-slot="item-content"
-        data-mc-item-content-ready={width != null}
+        data-mc-item-content-ready={width !== undefined}
         className={cn(`mc-item-content`, className)}
         {...props}
       >
@@ -287,7 +287,7 @@ const ItemTitle = ({
   };
 
   return inside ||
-    providedClip != null ||
+    (typeof providedClip !== "undefined" && providedClip !== null) ||
     props.style?.color != null ||
     Boolean(className) ||
     (typeof props.children !== "string" &&

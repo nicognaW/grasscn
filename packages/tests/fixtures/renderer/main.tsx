@@ -2108,7 +2108,7 @@ const DialogFixture = () => {
         >
           <DialogHeader>
             <DialogTitle>{params.get("label") ?? "World settings"}</DialogTitle>
-            {description != null && (
+            {description !== null && (
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>

@@ -71,11 +71,11 @@ const TableText = ({
   const scale = React.useContext(TableScale);
   const value = literalText(children);
 
-  if (children == null || typeof children === "boolean") {
+  if ((typeof children === "undefined" || children === null) || typeof children === "boolean") {
     return null;
   }
 
-  return value == null ? (
+  return value === null ? (
     children
   ) : (
     <MinecraftDisclosureText

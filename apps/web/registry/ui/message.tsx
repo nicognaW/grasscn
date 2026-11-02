@@ -165,7 +165,7 @@ const MessageContent = ({
       ref={node}
       data-slot="message-content"
       data-mc-chat-surface={scalar ? "true" : undefined}
-      data-mc-chat-ready={width == null ? "false" : "true"}
+      data-mc-chat-ready={width === undefined ? "false" : "true"}
       className={cn(`mc-message-content`, className)}
       {...props}
     >
