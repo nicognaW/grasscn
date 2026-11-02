@@ -104,6 +104,7 @@ const bitmapText = function bitmapText(
           }
 
           const [x, y, advance] = minecraftGlyphs[codePoint - 32];
+
           const glyphStyle: ButtonGlyphStyle = {
             "--mc-advance": advance,
             "--mc-glyph-x": x,

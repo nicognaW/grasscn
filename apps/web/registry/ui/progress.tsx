@@ -98,18 +98,23 @@ const Progress = ({
   }
 
   const content = children;
+
   const backgroundStyle: ProgressSurfaceStyle = {
     "--mc-progress-image": `url("${background}")`,
   };
+
   const notchBackgroundStyle: ProgressSurfaceStyle | undefined = notchBackground
     ? { "--mc-progress-image": `url("${notchBackground}")` }
     : undefined;
+
   const indicatorStyle: ProgressIndicatorStyle = {
     "--mc-progress-filled": filled,
   };
+
   const foregroundStyle: ProgressSurfaceStyle = {
     "--mc-progress-image": `url("${foreground}")`,
   };
+
   const notchForegroundStyle: ProgressSurfaceStyle | undefined = notchForeground
     ? { "--mc-progress-image": `url("${notchForeground}")` }
     : undefined;
