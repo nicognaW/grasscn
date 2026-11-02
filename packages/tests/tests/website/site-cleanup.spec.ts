@@ -100,7 +100,10 @@ test("new homepage examples respond to input", async ({ page }) => {
   await page.getByRole("button", { exact: true, name: "Save plan" }).click();
   await expect(page.getByLabel("Plan status")).toContainText("Annual");
   await page
-    .getByRole("button", { exact: true, name: "Tuesday, November 3rd, 2026" })
+    .getByRole("button", {
+      exact: true,
+      name: /^(?:Today, )?Tuesday, November 3rd, 2026$/u,
+    })
     .click();
   await expect(page.getByLabel("Review date")).toHaveText("November 3, 2026");
 });
