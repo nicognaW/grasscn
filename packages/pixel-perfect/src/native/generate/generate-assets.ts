@@ -4,41 +4,42 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { SpriteMetadata } from "@ppt/native/generate/asset-protocol";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
-import opentype from "opentype.js";
+import { Font, Glyph, Path } from "opentype.js";
 import { PNG } from "pngjs";
 
-const input = process.argv[2];
+const [input] = process.argv.slice(2);
 
 if (!input) {
   throw new Error(
-    "Usage: bun src/native/generate/generate-assets.mjs <extracted-asset-directory>"
+    "Usage: bun src/native/generate/generate-assets.ts <extracted-asset-directory>"
   );
 }
 
 const atlasBytes = await readFile(path.join(input, "ascii.png"));
 const atlas = PNG.sync.read(atlasBytes);
 
+// SAFETY: extracted font/include/default.json owns the bitmap provider records consumed below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const definitions = JSON.parse(
   await readFile(path.join(input, "default.json"), "utf-8")
-);
+) as { providers: { file?: string; ascent: number; chars: string[] }[] };
 
 const provider = definitions.providers.find(
   (p) => p.file === "minecraft:font/ascii.png"
-);
+)!;
 
 const cell = atlas.width / 16;
-const glyphs = [];
+const glyphs: [number, number, number][] = [];
 const unit = 128;
 
 const outlineGlyphs = [
-  new opentype.Glyph(
-    Object.fromEntries([
-      ["name", ".notdef"],
-      ["advanceWidth", 6 * unit],
-      ["path", new opentype.Path()],
-    ])
-  ),
+  new Glyph({
+    name: ".notdef",
+    advanceWidth: 6 * unit,
+    path: new Path(),
+  }),
 ];
 
 for (let code = 32; code <= 126; code += 1) {
@@ -46,11 +47,11 @@ for (let code = 32; code <= 126; code += 1) {
   const row = provider.chars.findIndex((line) => line.includes(char));
   const column = provider.chars[row].indexOf(char);
 
-  const ink = (x, y) =>
+  const ink = (x: number, y: number) =>
     atlas.data[((row * cell + y) * atlas.width + column * cell + x) * 4 + 3] !==
     0;
 
-  const outline = new opentype.Path();
+  const outline = new Path();
   let rightmost = -1;
 
   for (let y = 0; y < cell; y += 1) {
@@ -76,14 +77,12 @@ for (let code = 32; code <= 126; code += 1) {
 
   glyphs.push([column * cell, row * cell, code === 32 ? 4 : rightmost + 2]);
   outlineGlyphs.push(
-    new opentype.Glyph(
-      Object.fromEntries([
-        ["name", `uni${code.toString(16).padStart(4, "0")}`],
-        ["unicode", code],
-        ["advanceWidth", glyphs.at(-1)[2] * unit],
-        ["path", outline],
-      ])
-    )
+    new Glyph({
+      name: `uni${code.toString(16).padStart(4, "0")}`,
+      unicode: code,
+      advanceWidth: glyphs.at(-1)![2] * unit,
+      path: outline,
+    })
   );
 }
 
@@ -92,7 +91,12 @@ await writeFile(
   `// Original ASCII bitmap glyph [x, y, advance] metrics, code points 32..126.\nexport const minecraftGlyphs = ${JSON.stringify(glyphs)} as const\n`
 );
 
-const sources = {
+interface BitmapSourceHashes {
+  "ascii.png": string;
+  [filename: string]: string;
+}
+
+const sources: BitmapSourceHashes = {
   "ascii.png": createHash("sha256").update(atlasBytes).digest("hex"),
 };
 
@@ -100,16 +104,14 @@ let css = `/* Generated from Minecraft assets. Original artwork remains Mojang's
 
 // Class-only buttonVariants() consumers cannot insert bitmap spans. Supply the same
 // glyph shapes as a web font; <Button> uses bitmap masks for verified exact pixels.
-const font = new opentype.Font(
-  Object.fromEntries([
-    ["familyName", "Minecraft Bitmap"],
-    ["styleName", "Regular"],
-    ["unitsPerEm", 8 * unit],
-    ["ascender", 7 * unit],
-    ["descender", -unit],
-    ["glyphs", outlineGlyphs],
-  ])
-);
+const font = new Font({
+  familyName: "Minecraft Bitmap",
+  styleName: "Regular",
+  unitsPerEm: 8 * unit,
+  ascender: 7 * unit,
+  descender: -unit,
+  glyphs: outlineGlyphs,
+});
 
 css += `@font-face { font-family: "Minecraft Bitmap"; src: url("data:font/otf;base64,${Buffer.from(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+0020-007E; }\n`;
 
@@ -132,7 +134,14 @@ for (const [state, filename] of [
   sources[`${filename}.mcmeta`] = createHash("sha256")
     .update(metadata)
     .digest("hex");
-  const b = JSON.parse(metadata).gui.scaling.border;
+
+  // SAFETY: original widget mcmeta supplies a uniform numeric border in the pinned Button sprite inputs.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const metadataDocument = JSON.parse(
+    metadata.toString("utf-8")
+  ) as SpriteMetadata & { gui: { scaling: { border: number } } };
+
+  const b = metadataDocument.gui.scaling.border;
 
   const w = 200 - b * 2;
   const h = 20 - b * 2;
@@ -164,18 +173,13 @@ await writeFile(webFile("registry/ui/minecraft-assets.css"), css);
 await writeFile(
   pixelPerfectFile("tests/reference/asset-provenance.json"),
   `${JSON.stringify(
-    Object.fromEntries([
-      ["minecraftVersion", "26.2"],
-      ["sourceFiles", sources],
-      [
-        "font",
-        "Unchanged original ASCII bitmap atlas; original advances preserved, space advance 4 from Minecraft space provider",
-      ],
-      [
-        "sourceJarSha256",
+    {
+      minecraftVersion: "26.2",
+      sourceFiles: sources,
+      font: "Unchanged original ASCII bitmap atlas; original advances preserved, space advance 4 from Minecraft space provider",
+      sourceJarSha256:
         "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290",
-      ],
-    ]),
+    },
     null,
     2
   )}\n`

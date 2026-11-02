@@ -3,13 +3,15 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { GlyphUV } from "@ppt/native/generate/glyph-atlas";
 import { webFile, pixelPerfectFile } from "@ppt/paths";
-import opentype from "opentype.js";
+import { Font, Glyph, Path } from "opentype.js";
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 // Remove OpenType's wall-clock timestamps and repair the standard checksums.
-function stableFont(buffer) {
+const stableFont = function stableFont(buffer: ArrayBuffer) {
   const bytes = Buffer.from(buffer);
   let record = 12;
 
@@ -33,16 +35,20 @@ function stableFont(buffer) {
 
   bytes.writeUInt32BE(0, offset + 8);
 
-  const sum = (start, length) => {
+  const sum = (start: number, byteLength: number) => {
     let result = 0;
 
-    for (let i = 0; i < length; i += 4) {
+    for (let i = 0; i < byteLength; i += 4) {
       let word = 0;
 
       for (let j = 0; j < 4; j += 1) {
-        word = (word << 8) | (i + j < length ? bytes[start + i + j] : 0);
+        // OpenType checksums pack four original bytes into one unsigned 32-bit word.
+        // oxlint-disable-next-line no-bitwise
+        word = (word << 8) | (i + j < byteLength ? bytes[start + i + j] : 0);
       }
 
+      // OpenType defines checksum addition modulo 2^32.
+      // oxlint-disable-next-line no-bitwise
       result = (result + (word >>> 0)) >>> 0;
     }
 
@@ -50,12 +56,14 @@ function stableFont(buffer) {
   };
 
   bytes.writeUInt32BE(sum(offset, length), record + 4);
+  // The OpenType head.checkSumAdjustment is the unsigned modulo-2^32 difference.
+  // oxlint-disable-next-line no-bitwise
   bytes.writeUInt32BE((0xb1_b0_af_ba - sum(0, bytes.length)) >>> 0, offset + 8);
 
   return bytes;
-}
+};
 
-const directory = process.argv[2];
+const [directory] = process.argv.slice(2);
 
 if (!directory) {
   throw new Error(
@@ -65,13 +73,22 @@ if (!directory) {
 
 const zip = await readFile(path.join(directory, "unifont.zip"));
 
+// SAFETY: the extracted indexed unifont provider owns its native range overrides. Existing ZIP digest verification remains below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const providers = JSON.parse(
   await readFile(path.join(directory, "unifont.json"), "utf-8")
-);
+) as {
+  providers: {
+    hex_file?: string;
+    size_overrides: { from: string; to: string; left: number; right: number }[];
+  }[];
+};
 
+// SAFETY: the extraction provenance records hashes of the indexed font assets. Existing ZIP digest verification remains below.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const provenance = JSON.parse(
   await readFile(path.join(directory, "provenance.json"), "utf-8")
-);
+) as Record<string, { sha256: string; sha1?: string }>;
 
 if (
   createHash("sha256").update(zip).digest("hex") !==
@@ -81,15 +98,15 @@ if (
 }
 
 const overrides = providers.providers
-  .find((provider) => provider.hex_file === "minecraft:font/unifont.zip")
+  .find((provider) => provider.hex_file === "minecraft:font/unifont.zip")!
   .size_overrides.map((range) => [
-    range.from.codePointAt(0),
-    range.to.codePointAt(0),
+    range.from.codePointAt(0)!,
+    range.to.codePointAt(0)!,
     range.left,
     range.right,
   ]);
 
-const isCJK = (code) =>
+const isCJK = (code: number) =>
   (code >= 0x11_00 && code <= 0x11_ff) ||
   (code >= 0x2e_80 && code <= 0x9f_ff) ||
   (code >= 0xa9_60 && code <= 0xa9_7f) ||
@@ -99,12 +116,12 @@ const isCJK = (code) =>
   (code >= 0x1_af_f0 && code <= 0x1_b2_ff) ||
   (code >= 0x2_00_00 && code <= 0x3_23_af);
 
-const groups = new Map();
+const groups = new Map<number, Glyph[]>();
 let count = 0;
 
-for (const line of (
-  await readFile(path.join(directory, "unifont.hex"), "utf-8")
-).split("\n")) {
+const hexSource = await readFile(path.join(directory, "unifont.hex"), "utf-8");
+
+for (const line of hexSource.split("\n")) {
   const [raw, hex] = line.trim().split(":");
 
   if (!hex) {
@@ -128,6 +145,8 @@ for (const line of (
   let right = -1;
 
   for (let x = 0; x < bitWidth; x += 1) {
+    // Original Unihex glyph rows pack at most 32 pixels; read one bit without changing signed/unsigned semantics.
+    // oxlint-disable-next-line no-bitwise
     if (rows.some((row) => (row >>> (bitWidth - 1 - x)) & 1)) {
       left = Math.min(left, x);
       right = Math.max(right, x);
@@ -142,8 +161,7 @@ for (const line of (
   const fixed = overrides.find((range) => code >= range[0] && code <= range[1]);
 
   if (fixed) {
-    left = fixed[2];
-    right = fixed[3];
+    [left, right] = fixed.slice(2);
   }
 
   const plane = Math.floor(code / 65_536);
@@ -152,15 +170,13 @@ for (const line of (
     groups.set(plane, []);
   }
 
-  groups.get(plane).push(
-    new opentype.Glyph(
-      Object.fromEntries([
-        ["name", `uni${raw}`],
-        ["unicode", code],
-        ["advanceWidth", ((right - left + 1) / 2 + 1) * 128],
-        ["path", new opentype.Path()],
-      ])
-    )
+  groups.get(plane)!.push(
+    new Glyph({
+      name: `uni${raw}`,
+      unicode: code,
+      advanceWidth: ((right - left + 1) / 2 + 1) * 128,
+      path: new Path(),
+    })
   );
   count += 1;
 }
@@ -173,28 +189,21 @@ for (const [plane, glyphs] of groups) {
     throw new Error("Unihex metric font plane exceeds OpenType glyph limit");
   }
 
-  const font = new opentype.Font(
-    Object.fromEntries([
-      ["familyName", "Minecraft Unihex Metrics"],
-      ["styleName", "Regular"],
-      ["unitsPerEm", 1024],
-      ["ascender", 896],
-      ["descender", -128],
-      [
-        "glyphs",
-        [
-          new opentype.Glyph(
-            Object.fromEntries([
-              ["name", ".notdef"],
-              ["advanceWidth", 768],
-              ["path", new opentype.Path()],
-            ])
-          ),
-          ...glyphs,
-        ],
-      ],
-    ])
-  );
+  const font = new Font({
+    familyName: "Minecraft Unihex Metrics",
+    styleName: "Regular",
+    unitsPerEm: 1024,
+    ascender: 896,
+    descender: -128,
+    glyphs: [
+      new Glyph({
+        name: ".notdef",
+        advanceWidth: 768,
+        path: new Path(),
+      }),
+      ...glyphs,
+    ],
+  });
 
   css += `@font-face { font-family: "Minecraft Unihex Metrics"; src: url("data:font/otf;base64,${stableFont(font.toArrayBuffer()).toString("base64")}") format("opentype"); font-weight: 400; font-style: normal; font-display: block; unicode-range: U+${(plane * 65_536).toString(16)}-${(plane * 65_536 + 65_535).toString(16)}; }\n`;
 }
@@ -210,7 +219,12 @@ const atlasBytes = await readFile(
   pixelPerfectFile("tests/reference/input-cjk/glyph-atlas.json")
 );
 
-const atlas = JSON.parse(atlasBytes);
+// SAFETY: retained GlyphProbeMain output owns the observed glyph UV record.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const atlas = JSON.parse(atlasBytes.toString("utf-8")) as Record<
+  string,
+  GlyphUV
+>;
 
 await writeFile(
   webFile("registry/ui/minecraft-unifont-atlas.ts"),
@@ -220,25 +234,18 @@ await writeFile(
 await writeFile(
   pixelPerfectFile("tests/reference/input-cjk/asset-provenance.json"),
   `${JSON.stringify(
-    Object.fromEntries([
-      ["assetIndex", "32"],
-      ["locale", "en_us / Japanese glyph filter disabled"],
-      ["sources", provenance],
-      ["glyphCount", count],
-      ["glyphAtlasSha256", hash(atlasBytes)],
-      [
-        "glyphProbeSourceSha256",
-        hash(
-          await readFile(
-            pixelPerfectFile("tests/reference/GlyphProbeMain.java")
-          )
-        ),
-      ],
-      [
-        "rendering",
+    {
+      assetIndex: "32",
+      locale: "en_us / Japanese glyph filter disabled",
+      sources: provenance,
+      glyphCount: count,
+      glyphAtlasSha256: hash(atlasBytes),
+      glyphProbeSourceSha256: hash(
+        await readFile(pixelPerfectFile("tests/reference/GlyphProbeMain.java"))
+      ),
+      rendering:
         "Original indexed Unihex pixels and size overrides; oversample2, shadow offset0.5, native 0.01-texel inset and observed default-font UVs for the tested glyphs. GPU projection uses the actual input screen position and viewport. Advance-only font preserves native DOM hit-testing. Other CJK glyphs retain original pixels but their atlas sampling is unverified.",
-      ],
-    ]),
+    },
     null,
     2
   )}\n`

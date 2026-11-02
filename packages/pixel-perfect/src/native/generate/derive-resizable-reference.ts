@@ -7,6 +7,8 @@ import path from "node:path";
 import { repoRoot, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type scrollManifest from "../../../tests/reference/scroll-area/manifest.json";
+
 const primary = pixelPerfectFile(path.join("tests/reference/scroll-area"));
 
 const repeat = path.resolve(
@@ -16,12 +18,19 @@ const repeat = path.resolve(
 
 const dest = pixelPerfectFile(path.join("tests/reference/resizable"));
 
+// SAFETY: the retained Scroll Area capture producer owns these exact frame/case fields; all source hashes and repeat checks remain active.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
-  fs.readFileSync(path.join(primary, "manifest.json"))
-);
+  fs.readFileSync(path.join(primary, "manifest.json")).toString("utf-8")
+) as typeof scrollManifest;
 
-const again = JSON.parse(fs.readFileSync(path.join(repeat, "manifest.json")));
-const hash = (b) => createHash("sha256").update(b).digest("hex");
+// SAFETY: the independently captured repeat uses the same native capture manifest schema.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
+const again = JSON.parse(
+  fs.readFileSync(path.join(repeat, "manifest.json")).toString("utf-8")
+) as typeof scrollManifest;
+
+const hash = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
 fs.mkdirSync(path.join(dest, "captures"), { recursive: true });
 
@@ -41,9 +50,9 @@ assert.equal(manifest.caseDefinitionSha256, again.caseDefinitionSha256);
 for (const scale of [1, 2, 3]) {
   const sourceCase = manifest.cases.find(
     (c) => c.name === `scroll-area-c54-s${scale}.png`
-  );
+  )!;
 
-  const repeatCase = again.cases.find((c) => c.name === sourceCase.name);
+  const repeatCase = again.cases.find((c) => c.name === sourceCase.name)!;
 
   const sourceBytes = fs.readFileSync(
     path.join(primary, "captures", sourceCase.name)
@@ -103,84 +112,63 @@ for (const scale of [1, 2, 3]) {
   );
   assert.ok(fullCrop.data.equals(crop.data));
   frames.push(frame);
-  cases.push(
-    Object.fromEntries([
-      ["name", name],
-      ["element", "native-scrollbar-thumb-crop"],
-      ["state", "normal"],
-      ["width", 6],
-      ["height", 32],
-      ["x", sourceCase.x + sourceCase.width - 6],
-      ["y", sourceCase.y],
-      ["scale", scale],
-      ["background", sourceCase.background],
-      ["sourceCase", sourceCase.name],
-      ["sha256", hash(first)],
-    ])
-  );
-  repeated.push(
-    Object.fromEntries([
-      ["name", name],
-      ["runOnePngSha256", hash(first)],
-      ["runTwoPngSha256", hash(second)],
-      ["decodedRgbaSha256", hash(crop.data)],
-      ["mismatchedPixels", 0],
-    ])
-  );
-  derivations.push(
-    Object.fromEntries([
-      ["name", name],
-      ["parentManifest", "tests/reference/scroll-area/manifest.json"],
-      ["parentCase", sourceCase.name],
-      ["parentPngSha256", sourceCase.sha256],
-      ["parentRepeatPngSha256", repeatCase.sha256],
-      ["parentFullFrame", frame.name],
-      ["parentFullFrameSha256", frame.sha256],
-      [
-        "cropWithinParent",
-        Object.fromEntries([
-          ["x", x],
-          ["y", y],
-          ["width", width],
-          ["height", height],
-        ]),
-      ],
-      [
-        "cropWithinFullFrame",
-        Object.fromEntries([
-          ["x", (sourceCase.x + sourceCase.width - 6) * scale],
-          ["y", sourceCase.y * scale],
-          ["width", width],
-          ["height", height],
-        ]),
-      ],
-      [
-        "operation",
-        "Exact bitblt crop of decoded original native pixels; no resampling or recoloring",
-      ],
-    ])
-  );
+  cases.push({
+    name,
+    element: "native-scrollbar-thumb-crop",
+    state: "normal",
+    width: 6,
+    height: 32,
+    x: sourceCase.x + sourceCase.width - 6,
+    y: sourceCase.y,
+    scale,
+    background: sourceCase.background,
+    sourceCase: sourceCase.name,
+    sha256: hash(first),
+  });
+  repeated.push({
+    name,
+    runOnePngSha256: hash(first),
+    runTwoPngSha256: hash(second),
+    decodedRgbaSha256: hash(crop.data),
+    mismatchedPixels: 0,
+  });
+  derivations.push({
+    name,
+    parentManifest: "tests/reference/scroll-area/manifest.json",
+    parentCase: sourceCase.name,
+    parentPngSha256: sourceCase.sha256,
+    parentRepeatPngSha256: repeatCase.sha256,
+    parentFullFrame: frame.name,
+    parentFullFrameSha256: frame.sha256,
+    cropWithinParent: { x, y, width, height },
+    cropWithinFullFrame: {
+      x: (sourceCase.x + sourceCase.width - 6) * scale,
+      y: sourceCase.y * scale,
+      width,
+      height,
+    },
+    operation:
+      "Exact bitblt crop of decoded original native pixels; no resampling or recoloring",
+  });
 }
 
-const result = Object.fromEntries([
-  [
-    "source",
+const result = {
+  source:
     "Exact scrollbar-thumb crops from the original native AbstractScrollArea capture. Resizable is a web composition; only the reused grip artwork has a native pixel counterpart.",
-  ],
-  ["minecraftVersion", manifest.minecraftVersion],
-  ["sourceJarSha256", manifest.sourceJarSha256],
-  ["captureSourceSha256", manifest.captureSourceSha256],
-  ["caseDefinitionSha256", manifest.caseDefinitionSha256],
-  ["glyphObservationEnabled", false],
-  ["sourceDirectory", "../scroll-area/source"],
-  ["framesDirectory", "../scroll-area/frames"],
-  ["frames", frames],
-  ["cases", cases],
-  ["guiScales", [1, 2, 3]],
-  ["mods", []],
-  ["resourcePacks", []],
-  ["differenceTolerance", 0],
-]);
+  minecraftVersion: manifest.minecraftVersion,
+  sourceJarSha256: manifest.sourceJarSha256,
+  captureSourceSha256: manifest.captureSourceSha256,
+  caseDefinitionSha256: manifest.caseDefinitionSha256,
+  glyphObservationEnabled: false,
+  sourceDirectory: "../scroll-area/source",
+  framesDirectory: "../scroll-area/frames",
+  frames,
+  cases,
+  guiScales: [1, 2, 3],
+  mods: [],
+  resourcePacks: [],
+  differenceTolerance: 0,
+};
 
 fs.writeFileSync(
   path.join(dest, "manifest.json"),
@@ -200,16 +188,14 @@ assert.equal(
 fs.writeFileSync(
   path.join(dest, "repeatability.json"),
   `${JSON.stringify(
-    Object.fromEntries([
-      ["sourceJarSha256", manifest.sourceJarSha256],
-      ["captureSourceSha256", manifest.captureSourceSha256],
-      ["caseDefinitionSha256", manifest.caseDefinitionSha256],
-      [
-        "method",
+    {
+      sourceJarSha256: manifest.sourceJarSha256,
+      captureSourceSha256: manifest.captureSourceSha256,
+      caseDefinitionSha256: manifest.caseDefinitionSha256,
+      method:
         "Exact crops independently derived and compared from two original native Scroll Area launches; both parent crops and original fullframes retained.",
-      ],
-      ["cases", repeated],
-    ]),
+      cases: repeated,
+    },
     null,
     2
   )}\n`
@@ -218,13 +204,11 @@ fs.writeFileSync(
 fs.writeFileSync(
   path.join(dest, "crop-derivation.json"),
   `${JSON.stringify(
-    Object.fromEntries([
-      [
-        "scope",
+    {
+      scope:
         "Native scrollbar thumb artwork only; no native Resizable widget is asserted.",
-      ],
-      ["cases", derivations],
-    ]),
+      cases: derivations,
+    },
     null,
     2
   )}\n`
