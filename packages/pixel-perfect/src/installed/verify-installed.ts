@@ -43,20 +43,32 @@ if (!consumerDir || !name || !url) {
   );
 }
 
-// SAFETY: this read is the authored registry map, preserving its fresh-read boundary.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The exact registry map owns this JSON document.
-const map = JSON.parse(
-  await readFile(evidenceFile("registry/minecraft-map.json"), "utf-8")
-) as typeof minecraftMap;
+// Keep the original asynchronous read/parse boundary for each concrete producer.
+const readRegistryMap = async () =>
+  // SAFETY: this fresh document is the authored registry map.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The exact registry map owns this JSON document.
+  JSON.parse(
+    await readFile(evidenceFile("registry/minecraft-map.json"), "utf-8")
+  ) as typeof minecraftMap;
 
+const readRegistryItems = async () =>
+  // SAFETY: registry.json is the registry producer for the installed source list.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific authored registry document boundary.
+  JSON.parse(
+    await readFile(evidenceFile("registry.json"), "utf-8")
+  ) as typeof registry;
+
+const readReferenceManifest = async (file: string) =>
+  // SAFETY: the caller checks the component's registered manifest paths before reading this capture.mjs/capture-controls.mjs document.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered capture producer owns the identity/case protocol.
+  JSON.parse(
+    await readFile(evidenceFile(file), "utf-8")
+  ) as InstalledReferenceManifest;
+
+const map = await readRegistryMap();
 const component = map.components.find((c) => c.name === name);
 
-// SAFETY: registry.json is the registry producer for the installed source list.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Specific authored registry document boundary.
-const registeredItems = JSON.parse(
-  await readFile(evidenceFile("registry.json"), "utf-8")
-) as typeof registry;
-
+const registeredItems = await readRegistryItems();
 const item = registeredItems.items.find((candidate) => candidate.name === name);
 
 assert.ok(
@@ -74,11 +86,7 @@ assert.ok(
   "Reference manifest must be registered on the component"
 );
 
-// SAFETY: the existing registration assertion above restricts this to a component's captured native manifest, emitted by capture.mjs or capture-controls.mjs.
-// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Registered capture producer owns the identity/case protocol.
-const manifest = JSON.parse(
-  await readFile(evidenceFile(manifestFile), "utf-8")
-) as InstalledReferenceManifest;
+const manifest = await readReferenceManifest(manifestFile);
 
 const sha = (bytes: Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
