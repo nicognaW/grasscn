@@ -55,6 +55,7 @@ for (const scale of [1, 2, 3] as const) {
       await page.mouse.wheel(0, -100);
       await page.evaluate(
         async () =>
+          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
           await new Promise<void>((r) => {
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {

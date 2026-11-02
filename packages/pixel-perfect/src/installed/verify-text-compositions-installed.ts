@@ -237,6 +237,7 @@ async function worker() {
         await Promise.all(
           images.map(
             async (src) =>
+              // oxlint-disable-next-line promise/avoid-new -- Both image load and error deliberately complete this browser image barrier.
               new Promise((resolve) => {
                 const image = new Image();
                 image.onload = image.onerror = resolve;
@@ -245,9 +246,12 @@ async function worker() {
               })
           )
         );
-        await new Promise((resolve) =>
-          requestAnimationFrame(() => requestAnimationFrame(resolve))
-        );
+        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+        await new Promise((resolve) => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(resolve);
+          });
+        });
       });
 
       const expectedBytes = fs.readFileSync(

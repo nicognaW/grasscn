@@ -115,6 +115,7 @@ const MinecraftMap = ({
           mapAtlasPng,
         ].map(
           async (src) =>
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this Image event bridge, loaded-element result and raw load-error event.
             await new Promise<HTMLImageElement>((resolve, reject) => {
               const image = new Image();
               image.onload = () => {

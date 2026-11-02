@@ -128,13 +128,14 @@ test.describe("Toggle Group native recipe-filter matrix", () => {
 
         await page.evaluate(
           async () =>
-            await new Promise<void>((resolve) =>
-              requestAnimationFrame(() =>
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            await new Promise<void>((resolve) => {
+              requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                   resolve();
-                })
-              )
-            )
+                });
+              });
+            })
         );
         const bounds = (await subject.boundingBox())!;
         expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);

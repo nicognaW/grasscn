@@ -38,6 +38,7 @@ for (const scale of [2] as const) {
 
     const first = await page.evaluate(
       async () =>
+        // oxlint-disable-next-line promise/avoid-new -- Observe the opening DOM mutation before paint; no Promise API preserves this sampling point.
         new Promise<{ ready: string | null; opacity: string }>((resolve) => {
           const observer = new MutationObserver(() => {
             const overlay = document.querySelector<HTMLElement>(
@@ -167,6 +168,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
 
   const closing = await page.evaluate(
     async () =>
+      // oxlint-disable-next-line promise/avoid-new -- Observe the closing attribute mutation before hiding and retain its animation/style snapshot.
       new Promise<{ ending: boolean; display: string }>((resolve) => {
         const panel = document.querySelector<HTMLElement>(
           "[data-slot=drawer-content]"

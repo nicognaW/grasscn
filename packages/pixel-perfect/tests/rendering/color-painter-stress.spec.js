@@ -57,9 +57,12 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
     );
     await page.evaluate(
       async () =>
-        new Promise((r) =>
-          requestAnimationFrame(() => requestAnimationFrame(r))
-        )
+        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+        new Promise((r) => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(r);
+          });
+        })
     );
 
     const expected = PNG.sync.read(
@@ -195,9 +198,12 @@ test("Colored CJK labels recover native pixels after forced GPU context loss", a
     );
     await page.evaluate(
       async () =>
-        new Promise((resolve) =>
-          requestAnimationFrame(() => requestAnimationFrame(resolve))
-        )
+        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+        new Promise((resolve) => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(resolve);
+          });
+        })
     );
 
     const bytes = await page.locator("#subject").screenshot();

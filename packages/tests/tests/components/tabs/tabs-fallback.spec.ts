@@ -22,6 +22,7 @@ for (const reason of ["disabled", "missing"]) {
     ).toHaveAttribute("aria-selected", "true");
     await page.evaluate(
       async () =>
+        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
         new Promise<void>((resolve) => {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {

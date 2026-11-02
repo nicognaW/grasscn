@@ -97,6 +97,7 @@ for (const scale of [2] as const) {
 
       await page.evaluate(
         async () =>
+          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
           new Promise<void>((r) => {
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {

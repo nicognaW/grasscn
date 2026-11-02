@@ -232,9 +232,12 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            new Promise((resolve) => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+              });
+            })
         );
 
         const expectedBytes = await readFile(
@@ -396,9 +399,12 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            new Promise((resolve) => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+              });
+            })
         );
         const bounds = (await subject.boundingBox())!;
         assert.equal(bounds.x, c.x * c.scale);
@@ -486,9 +492,12 @@ try {
 
         await page.evaluate(
           async () =>
-            new Promise((resolve) =>
-              requestAnimationFrame(() => requestAnimationFrame(resolve))
-            )
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            new Promise((resolve) => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+              });
+            })
         );
         const bounds = (await trigger.boundingBox())!;
         assert.deepEqual(
@@ -575,9 +584,12 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+          new Promise((resolve) => {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(resolve);
+            });
+          })
       );
       const bounds = (await subject.boundingBox())!;
       assert.equal(bounds.x, c.x * c.scale);
@@ -721,9 +733,12 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+          new Promise((resolve) => {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(resolve);
+            });
+          })
       );
 
       const bytes = await readFile(
@@ -1119,9 +1134,12 @@ try {
 
       await page.evaluate(
         async () =>
-          new Promise((resolve) =>
-            requestAnimationFrame(() => requestAnimationFrame(resolve))
-          )
+          // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+          new Promise((resolve) => {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(resolve);
+            });
+          })
       );
 
       for (const label of await subject

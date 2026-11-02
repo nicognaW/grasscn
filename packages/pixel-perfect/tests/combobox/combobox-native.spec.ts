@@ -151,13 +151,14 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
 
         await page.evaluate(
           async () =>
-            new Promise<void>((r) =>
-              requestAnimationFrame(() =>
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            new Promise<void>((r) => {
+              requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                   r();
-                })
-              )
-            )
+                });
+              });
+            })
         );
       } else {
         await expect(subject).toHaveAttribute("data-mc-ready", "true");

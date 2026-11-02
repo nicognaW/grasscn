@@ -191,9 +191,9 @@ export default function DraftDemos({
           {...common}
           src={sample.src}
           model={sample.model}
-          onRotationChange={(pose) =>
-            (document.documentElement.dataset.rotation = JSON.stringify(pose))
-          }
+          onRotationChange={(pose) => {
+            document.documentElement.dataset.rotation = JSON.stringify(pose);
+          }}
           skin={
             (sample.src &&
             !["wide/steve", "slim/alex"].includes(sample.state ?? "")
@@ -214,9 +214,9 @@ export default function DraftDemos({
     case "map": {
       content = (
         <MinecraftMap
-          onMapClick={(point) =>
-            (document.documentElement.dataset.mapClick = JSON.stringify(point))
-          }
+          onMapClick={(point) => {
+            document.documentElement.dataset.mapClick = JSON.stringify(point);
+          }}
           {...common}
           pixels={pixels}
           markers={

@@ -155,9 +155,12 @@ for (const component of ["calendar", "date-picker"]) {
 
             await page.evaluate(
               async () =>
-                await new Promise((r) =>
-                  requestAnimationFrame(() => requestAnimationFrame(r))
-                )
+                // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+                await new Promise((r) => {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(r);
+                  });
+                })
             );
 
             const bytes = readFileSync(

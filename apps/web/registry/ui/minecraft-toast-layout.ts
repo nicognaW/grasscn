@@ -15,6 +15,7 @@ let source: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
 const alpha = function alpha() {
+  // oxlint-disable-next-line promise/avoid-new -- Preserve the cached Image load/error bridge and its onload alpha-extraction phase.
   return (source ??= new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => {

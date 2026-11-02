@@ -69,16 +69,20 @@ const ScrollerFixture = () => {
         <MessageScrollerButton direction="start" behavior="instant" />
         <MessageScrollerButton direction="end" behavior="instant" />
       </MessageScroller>
-      <button onClick={() => api.scrollToStart({ behavior: "instant" })}>
+      <button onClick={() => {
+        api.scrollToStart({ behavior: "instant" });
+      }}>
         API start
       </button>
-      <button onClick={() => api.scrollToEnd({ behavior: "instant" })}>
+      <button onClick={() => {
+        api.scrollToEnd({ behavior: "instant" });
+      }}>
         API end
       </button>
       <button
-        onClick={() =>
-          api.scrollToMessage("15", { align: "start", behavior: "instant" })
-        }
+        onClick={() => {
+          api.scrollToMessage("15", { align: "start", behavior: "instant" });
+        }}
       >
         API message
       </button>

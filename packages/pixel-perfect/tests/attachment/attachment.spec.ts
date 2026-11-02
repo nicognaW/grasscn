@@ -104,9 +104,12 @@ for (const [part, dir] of [
 
         await page.evaluate(
           async () =>
-            new Promise((r) =>
-              requestAnimationFrame(() => requestAnimationFrame(r))
-            )
+            // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+            new Promise((r) => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(r);
+              });
+            })
         );
 
         const bytes = readFileSync(

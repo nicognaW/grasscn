@@ -211,9 +211,12 @@ try {
 
           await page.evaluate(
             async () =>
-              new Promise((resolve) =>
-                requestAnimationFrame(() => requestAnimationFrame(resolve))
-              )
+              // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+              new Promise((resolve) => {
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(resolve);
+                });
+              })
           );
         } else {
           await expect(subject).toHaveAttribute("data-mc-ready", "true");

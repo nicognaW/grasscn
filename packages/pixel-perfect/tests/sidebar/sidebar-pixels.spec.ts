@@ -276,13 +276,14 @@ test.describe("Sidebar original native constituent cases", () => {
             if (kind !== "input") {
               await page.evaluate(
                 async () =>
-                  await new Promise<void>((resolve) =>
-                    requestAnimationFrame(() =>
+                  // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+                  await new Promise<void>((resolve) => {
+                    requestAnimationFrame(() => {
                       requestAnimationFrame(() => {
                         resolve();
-                      })
-                    )
-                  )
+                      });
+                    });
+                  })
               );
             }
 

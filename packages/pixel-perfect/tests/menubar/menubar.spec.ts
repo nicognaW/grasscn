@@ -108,13 +108,14 @@ for (const c of manifest.cases) {
 
     await page.evaluate(
       async () =>
-        new Promise<void>((resolve) =>
-          requestAnimationFrame(() =>
+        // oxlint-disable-next-line promise/avoid-new -- Preserve this page-realm two-frame barrier and its existing settlement value.
+        new Promise<void>((resolve) => {
+          requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               resolve();
-            })
-          )
-        )
+            });
+          });
+        })
     );
     const bounds = (await subject.boundingBox())!;
     expect(bounds.x).toBe(c.x * c.scale);

@@ -206,10 +206,18 @@ export async function serveVerificationHosts({
         })
       );
 
-      upstream.on("error", () => socket.destroy());
-      socket.on("error", () => upstream.destroy());
-      socket.once("close", () => upstream.destroy());
-      upstream.once("close", () => socket.destroy());
+      upstream.on("error", () => {
+        socket.destroy();
+      });
+      socket.on("error", () => {
+        upstream.destroy();
+      });
+      socket.once("close", () => {
+        upstream.destroy();
+      });
+      upstream.once("close", () => {
+        socket.destroy();
+      });
     });
     proxy = proxyServer;
     await new Promise<void>((resolve, reject) => {
