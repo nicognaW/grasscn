@@ -53,11 +53,12 @@ import { caseKey } from "@ppt/selection/suite";
 
 export { validateReview } from "@ppt/full-runs/review";
 
+// Retain original JavaScript truthiness for legacy or incomplete receipt fields.
 const hasText = (value: string | null | undefined): value is string =>
-  value !== undefined && value !== null && value !== "";
+  Boolean(value);
 
 const hasNonzeroNumber = (value: number | null | undefined): value is number =>
-  value !== undefined && value !== null && value !== 0 && !Number.isNaN(value);
+  Boolean(value);
 
 const hash = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");

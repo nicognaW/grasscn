@@ -67,8 +67,9 @@ const isLabelObject = (
   label: string | { name?: string }
 ): label is { name?: string } => typeof label !== "string";
 
+// Retain original JavaScript truthiness for legacy or incomplete receipt fields.
 const hasText = (value: string | null | undefined): value is string =>
-  value !== undefined && value !== null && value !== "";
+  Boolean(value);
 
 const hash = (value: string) =>
   createHash("sha256").update(value).digest("hex");
