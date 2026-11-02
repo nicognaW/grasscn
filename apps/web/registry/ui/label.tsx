@@ -19,7 +19,6 @@ import "./minecraft-label.css";
 
 interface LabelStyle extends React.CSSProperties {
   "--mc-scale": number;
-  "--mc-label-width": string | undefined;
 }
 
 interface LabelLineStyle extends React.CSSProperties {
@@ -148,9 +147,8 @@ const Label = ({
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, className)}
       style={minecraftStyle(style, (__style): LabelStyle => ({
-        "--mc-label-width":
-          maxWidth == null ? undefined : `${maxWidth * scale}px`,
         "--mc-scale": scale,
+        width: maxWidth == null ? undefined : maxWidth * scale,
         ...__style,
       }))}
       {...props}

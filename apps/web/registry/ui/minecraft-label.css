@@ -1,6 +1,5 @@
 @layer components {
   .mc-label {
-    width: var(--mc-label-width, auto);
     --mc-pixel: calc(1px * var(--mc-scale, 2));
     display: inline-flex;
     flex-direction: column;
