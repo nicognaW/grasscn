@@ -12,6 +12,12 @@ import {
 } from "./minecraft-unifont-gpu";
 import type { UnihexAtlas } from "./minecraft-unifont-gpu";
 
+import "./minecraft-unicode.css";
+
+interface UnicodeLabelStyle extends React.CSSProperties {
+  "--mc-unicode-width": string;
+}
+
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
@@ -172,30 +178,22 @@ export const MinecraftUnicodeLabel = ({
     };
   }, [text, atlas]);
 
+  const labelStyle: UnicodeLabelStyle = {
+    "--mc-unicode-width":
+      width == null ? "auto" : `calc(${width} * var(--mc-pixel))`,
+  };
+
   return (
     <span
       ref={root}
       data-mc-label-ready={bitmap}
-      style={{
-        display: "inline-block",
-        height: "calc(8 * var(--mc-pixel))",
-        position: "relative",
-        textShadow: "none",
-        width: width == null ? undefined : `calc(${width} * var(--mc-pixel))`,
-      }}
+      className="mc-unicode-label"
+      style={labelStyle}
     >
       <canvas
         ref={canvas}
         aria-hidden="true"
-        style={{
-          height: "calc(9 * var(--mc-pixel))",
-          left: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          top: 0,
-          visibility: bitmap ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="mc-unicode-label-canvas"
       />
       <span className={bitmap ? "mc-text-accessible" : undefined}>{text}</span>
     </span>

@@ -17,6 +17,10 @@ import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
 import "./minecraft-label.css";
 
+interface LabelStyle extends React.CSSProperties {
+  "--mc-scale": number;
+}
+
 const advance = (char: string) =>
   minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??
   getUnihexGlyph(char)?.advance ??
@@ -138,15 +142,11 @@ const Label = ({
       data-slot="label"
       data-mc-label-layout-ready={!unicode || fontReady}
       className={cn(`mc-label`, className)}
-      style={minecraftStyle(
-        style,
-        (__style) =>
-          ({
-            "--mc-scale": scale,
-            width: maxWidth == null ? undefined : maxWidth * scale,
-            ...__style,
-          }) as React.CSSProperties
-      )}
+      style={minecraftStyle(style, (__style): LabelStyle => ({
+        "--mc-scale": scale,
+        width: maxWidth == null ? undefined : maxWidth * scale,
+        ...__style,
+      }))}
       {...props}
     >
       {supported ? (
