@@ -22,7 +22,7 @@ export default function PopoverDemo({ scale }: DemoProps) {
         <PopoverTrigger>Open world options</PopoverTrigger>
         <PopoverContent collisionPadding={8}>
           <PopoverHeader><PopoverTitle>{title || " "}</PopoverTitle><PopoverDescription>{message}</PopoverDescription></PopoverHeader>
-          <form className="grid gap-(--demo-gap)" style={({"--demo-gap": `${6 * scale}px`} satisfies DemoVariables) as DemoVariables} onSubmit={event => { event.preventDefault(); setSaved(true); setOpen(false) }}>
+          <form className="grid gap-(--demo-gap)" style={/* SAFETY: satisfies checks --demo-gap against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-gap": `${6 * scale}px`} satisfies DemoVariables) as DemoVariables} onSubmit={event => { event.preventDefault(); setSaved(true); setOpen(false) }}>
             <label htmlFor="preview-popover-world">World name</label>
             <Input id="preview-popover-world" scale={scale} value={name} onChange={event => { setName(event.target.value); setSaved(false) }} className="w-full"  />
             <Button type="submit" scale={scale} className="w-full" >Done</Button>

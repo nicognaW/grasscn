@@ -19,7 +19,7 @@ export default function ProgressDemo({ scale }: DemoProps) {
     </div>
     <div className="demo-stage" data-stage="progress">
       <div className="demo-pair"><span className="sample-caption">BOSS BAR</span><Progress aria-label="Demo progress" scale={scale} color={color} overlay={overlay} value={value}/></div>
-      <Slider aria-label="Set progress" scale={scale} label={`Progress: ${value}%`} value={[value]} onValueChange={next => setValue((typeof next === "number" ? next : next[0]))} min={0} max={100} step={1} className="w-(--demo-width)" style={({"--demo-width": `${182 * scale}px`} satisfies DemoVariables) as DemoVariables}/>
+      <Slider aria-label="Set progress" scale={scale} label={`Progress: ${value}%`} value={[value]} onValueChange={next => setValue((typeof next === "number" ? next : next[0]))} min={0} max={100} step={1} className="w-(--demo-width)" style={/* SAFETY: satisfies checks --demo-width against the owned variable types; the DemoVariables view exposes their CSSProperties base to React's style prop. */({"--demo-width": `${182 * scale}px`} satisfies DemoVariables) as DemoVariables}/>
     </div>
     <div className="demo-result"><span className="status-dot"/><output aria-label="Progress percentage">{value}%</output><span>Try different colors and segments</span></div>
   </>;
