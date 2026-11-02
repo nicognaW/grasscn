@@ -192,7 +192,7 @@ export const MinecraftColorUnicodeLabel = ({
 
   const labelStyle: ColorUnicodeLabelStyle = {
     "--mc-unicode-width":
-      width == null ? "auto" : `calc(${width} * var(--mc-pixel))`,
+      width === undefined ? "auto" : `calc(${width} * var(--mc-pixel))`,
   };
 
   return (

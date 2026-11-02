@@ -79,7 +79,7 @@ const Badge = ({
   const [, refreshFont] = React.useState(0);
   React.useEffect(() => {
     if (
-      plain == null ||
+      plain === undefined ||
       ![...plain].some((char) => char.codePointAt(0)! > 127)
     ) {
       return;
@@ -108,7 +108,7 @@ const Badge = ({
     );
 
   const natural =
-    plain == null ? maxWidth : Math.max(1, ...plain.split("\n").map(widthOf));
+    plain === undefined ? maxWidth : Math.max(1, ...plain.split("\n").map(widthOf));
 
   const textWidth = Math.max(
     1,

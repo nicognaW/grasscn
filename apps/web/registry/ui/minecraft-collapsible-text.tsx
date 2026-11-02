@@ -88,7 +88,7 @@ const MinecraftCollapsibleText = ({
 
   const text = isMinecraftTextContent(children) ? String(children) : null;
 
-  const unicode = text != null && /[^\u0000-\u007F]/u.test(text);
+  const unicode = text !== null && /[^\u0000-\u007F]/u.test(text);
   React.useLayoutEffect(() => {
     if (unicode) {
       let live = true;
@@ -124,14 +124,14 @@ const MinecraftCollapsibleText = ({
   }, [scale]);
 
   const supported =
-    text != null &&
+    text !== null &&
     (!unicode || fontReady) &&
     [...text].every(
       (char) =>
         char === "\n" || /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     );
 
-  const lines = text == null ? [] : splitLines(text, maxWidth);
+  const lines = text === null ? [] : splitLines(text, maxWidth);
   const widest = Math.max(0, ...lines.map(textWidth));
   const width = containerWidth ?? maxWidth ?? widest;
 
@@ -146,13 +146,13 @@ const MinecraftCollapsibleText = ({
         (__style) =>
           ({
             "--mc-scale": scale,
-            width: maxWidth == null ? undefined : maxWidth * scale,
+            width: (typeof maxWidth === "undefined" || maxWidth === null) ? undefined : maxWidth * scale,
             ...__style,
           }) as React.CSSProperties
       )}
       {...props}
     >
-      {text == null ? (
+      {text === null ? (
         children
       ) : (
         <>

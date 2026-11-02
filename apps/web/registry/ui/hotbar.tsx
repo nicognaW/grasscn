@@ -214,7 +214,7 @@ const Hotbar = ({
           next = 8;
         }
 
-        if (next != null) {
+        if (next !== undefined) {
           event.preventDefault();
           select(next);
 

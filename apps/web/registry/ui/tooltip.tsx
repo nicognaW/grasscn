@@ -110,7 +110,7 @@ const TooltipContent = ({
         : undefined;
 
     const lines =
-      plain == null
+      plain === undefined
         ? undefined
         : wrapMinecraftTooltip(plain, Math.min(maxWidth, available));
 

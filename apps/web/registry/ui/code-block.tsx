@@ -256,7 +256,7 @@ const CodeBlockLine = ({
   variant?: "default" | "added" | "removed" | "highlighted";
 }) => {
   const empty =
-    children == null ||
+    (typeof children === "undefined" || children === null) ||
     children === "" ||
     (Array.isArray(children) && children.length === 0);
 

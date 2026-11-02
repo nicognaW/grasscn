@@ -180,7 +180,7 @@ export const MinecraftUnicodeLabel = ({
 
   const labelStyle: UnicodeLabelStyle = {
     "--mc-unicode-width":
-      width == null ? "auto" : `calc(${width} * var(--mc-pixel))`,
+      width === undefined ? "auto" : `calc(${width} * var(--mc-pixel))`,
   };
 
   return (
