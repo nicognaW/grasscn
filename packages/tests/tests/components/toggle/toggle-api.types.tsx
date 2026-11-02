@@ -11,7 +11,9 @@ const toggle = (
     ref={itemRef}
     scale={3}
     pressed
-    onPressedChange={(value) => value satisfies boolean}
+    onPressedChange={(value) => {
+      value satisfies boolean;
+    }}
   >
     {"Crafting \u4E16\u754C"}
   </Toggle>
@@ -21,7 +23,9 @@ const single = (
   <ToggleGroup
     ref={groupRef}
     value={["a"]}
-    onValueChange={(value) => value satisfies readonly string[]}
+    onValueChange={(value) => {
+      value satisfies readonly string[];
+    }}
     dir="rtl"
     orientation="vertical"
     multiple={false}
@@ -33,7 +37,9 @@ const single = (
 const multiple = (
   <ToggleGroup
     defaultValue={["a"]}
-    onValueChange={(value) => value satisfies readonly string[]}
+    onValueChange={(value) => {
+      value satisfies readonly string[];
+    }}
     spacing={4}
     multiple
   >

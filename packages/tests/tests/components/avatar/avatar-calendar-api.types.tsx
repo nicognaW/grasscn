@@ -19,7 +19,9 @@ const rootRef = React.createRef<HTMLSpanElement>();
       ref={imageRef}
       alt="Steve"
       skin="wide/steve"
-      onLoadingStatusChange={(status) => status.toUpperCase()}
+      onLoadingStatusChange={(status) => {
+        status.toUpperCase();
+      }}
     />
     <AvatarFallback delay={100}>玩家</AvatarFallback>
     <AvatarBadge>1</AvatarBadge>
@@ -33,19 +35,25 @@ const rootRef = React.createRef<HTMLSpanElement>();
 <Calendar
   mode="single"
   selected={new Date()}
-  onSelect={(value) => value?.getDate()}
+  onSelect={(value) => {
+    value?.getDate();
+  }}
 />;
 
 <Calendar
   mode="multiple"
-  onSelect={(value) => value?.map((date) => date.getDate())}
+  onSelect={(value) => {
+    value?.map((date) => date.getDate());
+  }}
 />;
 
 <Calendar
   mode="range"
   required
   selected={{ from: new Date() }}
-  onSelect={(range) => range.from?.getDate()}
+  onSelect={(range) => {
+    range.from?.getDate();
+  }}
 />;
 
 <DatePickerDemo scale={2} />;

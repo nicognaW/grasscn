@@ -39,9 +39,13 @@ const label = React.createRef<HTMLLabelElement>();
   ref={form}
   items={[{ choices: [{ value: "one" }], name: "mode" }]}
   item="mode"
-  onItemChange={(name) => name.toUpperCase()}
+  onItemChange={(name) => {
+    name.toUpperCase();
+  }}
   shortcuts="numbers"
-  onSubmit={(event) => new FormData(event.currentTarget)}
+  onSubmit={(event) => {
+    new FormData(event.currentTarget);
+  }}
 >
   <QuestionnaireProgress
     render={(props, state) => (
@@ -55,7 +59,9 @@ const label = React.createRef<HTMLLabelElement>();
     <QuestionnaireChoice
       ref={label}
       value="one"
-      onChange={(event) => event.currentTarget.checked}
+      onChange={(event) => {
+        event.currentTarget.checked satisfies boolean;
+      }}
     >
       One
     </QuestionnaireChoice>
@@ -64,7 +70,9 @@ const label = React.createRef<HTMLLabelElement>();
       type="password"
       spellCheck
       autoCorrect="on"
-      onChange={(event) => event.currentTarget.value}
+      onChange={(event) => {
+        event.currentTarget.value satisfies string;
+      }}
     />
   </QuestionnaireItem>
   <QuestionnairePrevious />
