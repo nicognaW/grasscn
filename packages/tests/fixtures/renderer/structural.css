@@ -1,0 +1,11 @@
+.fixture-structural-art {
+  width: 40px;
+  height: 40px;
+  background: #50a030;
+  image-rendering: pixelated;
+}
+
+.fixture-structural-events {
+  position: absolute;
+  top: 500px;
+}

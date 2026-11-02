@@ -76,15 +76,7 @@ export const StructuralFixture = () => {
               }
             }}
           >
-            <div
-              id="art"
-              style={{
-                width: 40,
-                height: 40,
-                background: "#50a030",
-                imageRendering: "pixelated",
-              }}
-            />
+            <div id="art" className="fixture-structural-art" />
             {native ? subject : null}
           </AspectRatio>
         </div>
@@ -153,7 +145,7 @@ export const StructuralFixture = () => {
             </>
           ) : null}
         </ButtonGroup>
-        <output id="events" style={{ position: "absolute", top: 500 }}>
+        <output id="events" className="fixture-structural-events">
           {events}
         </output>
         <span
