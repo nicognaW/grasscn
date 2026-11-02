@@ -93,6 +93,7 @@ test("InputOTP comparator rejects one changed native pixel", () => {
 
   const a = PNG.sync.read(PNG.sync.write(e));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   a.data[0] ^= 1;
   expect(compare(e, a).mismatchedPixels).toBe(1);
 });

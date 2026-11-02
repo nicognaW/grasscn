@@ -71,6 +71,7 @@ export const nativeTextTests = function nativeTextTests(
 
     const mutated = PNG.sync.read(PNG.sync.write(expected));
 
+    // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
     mutated.data[0] ^= 1;
     expect(compare(expected, mutated).mismatchedPixels).toBe(1);
   });

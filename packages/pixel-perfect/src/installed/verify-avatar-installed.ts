@@ -182,6 +182,7 @@ try {
 
   const changed = PNG.sync.read(PNG.sync.write(negative));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   changed.data[0] ^= 1;
   let mismatch = 0;
 

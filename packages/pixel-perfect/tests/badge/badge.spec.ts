@@ -24,6 +24,7 @@ test("Badge advancement comparator detects one changed pixel", () => {
 
   const b = PNG.sync.read(PNG.sync.write(a));
 
+  // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
   b.data[0] ^= 1;
   expect(compare(a, b).mismatchedPixels).toBe(1);
 });

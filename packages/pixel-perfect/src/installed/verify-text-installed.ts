@@ -370,6 +370,7 @@ async function worker() {
       const { mismatchedPixels, diff } = compare(expected, actual);
 
       const mutation = PNG.sync.read(PNG.sync.write(expected));
+      // oxlint-disable-next-line eslint/no-bitwise -- Intentional one-bit fault in the cloned PNG data byte; the comparator below must detect exactly one changed pixel.
       mutation.data[0] ^= 1;
       assert.equal(
         compare(expected, mutation).mismatchedPixels,
