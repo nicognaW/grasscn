@@ -8,7 +8,8 @@ import * as React from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import {
-  isMinecraftTextContent,
+  isMinecraftEmptyChild,
+  isMinecraftTextScalar,
   minecraftClasses as cn,
   minecraftStyle,
 } from "./minecraft-render";
@@ -46,7 +47,7 @@ const bitmapText = function bitmapText(
     };
 
     const visit = (child: React.ReactNode) => {
-      if (child === null || child === undefined || typeof child === "boolean") {
+      if (isMinecraftEmptyChild(child)) {
         return;
       }
 
@@ -67,7 +68,7 @@ const bitmapText = function bitmapText(
         return;
       }
 
-      if (isMinecraftTextContent(child) || typeof child === "bigint") {
+      if (isMinecraftTextScalar(child)) {
         run += String(child);
       } else {
         flush();
@@ -83,7 +84,7 @@ const bitmapText = function bitmapText(
     ));
   }
 
-  if (!isMinecraftTextContent(content) && typeof content !== "bigint") {
+  if (!isMinecraftTextScalar(content)) {
     return content;
   }
 

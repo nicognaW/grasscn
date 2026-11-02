@@ -14,6 +14,18 @@ export const isMinecraftTextContent = (
 ): content is string | number =>
   typeof content === "string" || typeof content === "number";
 
+/** Text scalars concatenated by label renderers, including React bigint children. */
+export const isMinecraftTextScalar = (
+  content: React.ReactNode
+): content is string | number | bigint =>
+  isMinecraftTextContent(content) || typeof content === "bigint";
+
+/** React children omitted while collecting visible label or message content. */
+export const isMinecraftEmptyChild = (
+  child: React.ReactNode
+): child is null | undefined | boolean =>
+  child === null || child === undefined || typeof child === "boolean";
+
 export type MinecraftRenderProp = useRender.RenderProp<object>;
 
 export type MinecraftProps<T extends React.ElementType> =
