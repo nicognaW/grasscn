@@ -9,6 +9,12 @@ import {
 import type { MinecraftAvatarSkin } from "@grasscn/web/ui/avatar";
 import * as React from "react";
 
+declare global {
+  interface Window {
+    avatarImageRef?: HTMLImageElement | null;
+  }
+}
+
 export const AvatarFixture = () => {
   const q = new URLSearchParams(location.search);
   const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
@@ -20,7 +26,7 @@ export const AvatarFixture = () => {
       q.get("background") ?? "#202020";
   }, []);
   React.useEffect(() => {
-    (window as any).avatarImageRef = ref.current;
+    window.avatarImageRef = ref.current;
   });
 
   if (q.get("native") === "1") {

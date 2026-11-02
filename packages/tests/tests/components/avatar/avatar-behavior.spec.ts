@@ -11,7 +11,7 @@ test("Avatar uses original player face, image events and forwarded image ref", a
     "true"
   );
   expect(
-    await page.evaluate(() => (window as any).avatarImageRef?.tagName)
+    await page.evaluate(() => window.avatarImageRef?.tagName)
   ).toBe("IMG");
   await expect(page.locator("#loaded [data-slot=avatar-fallback]")).toHaveCount(
     0
