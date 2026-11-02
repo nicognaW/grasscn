@@ -37,17 +37,17 @@ export const evidenceFile = function evidenceFile(
   }
 
   if (logical === "preview" || logical.startsWith("preview/")) {
-    return webFile(logical.slice("preview".length).replace(/^\//, ""));
+    return webFile(logical.slice("preview".length).replace(/^\//u, ""));
   }
 
   if (logical === "tests/fixture" || logical.startsWith("tests/fixture/")) {
     return fixtureFile(
-      logical.slice("tests/fixture".length).replace(/^\//, "")
+      logical.slice("tests/fixture".length).replace(/^\//u, "")
     );
   }
 
   if (logical === "tests/reference" || logical.startsWith("tests/reference/")) {
-    const relative = logical.slice("tests/reference".length).replace(/^\//, "");
+    const relative = logical.slice("tests/reference".length).replace(/^\//u, "");
     const shared = sharedReferenceFile(relative);
 
     return fs.existsSync(shared) ? shared : referenceFile(relative);

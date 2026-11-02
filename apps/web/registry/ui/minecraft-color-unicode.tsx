@@ -102,7 +102,7 @@ export const MinecraftColorUnicodeLabel = ({
 
           const bounds = node.getBoundingClientRect();
 
-          const ink = style.color.match(/[\d.]+/g)?.map(Number) ?? [
+          const ink = style.color.match(/[\d.]+/gu)?.map(Number) ?? [
             255, 255, 255, 1,
           ];
 

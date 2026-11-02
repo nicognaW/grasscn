@@ -123,7 +123,7 @@ export const MenuUnicodeLine = ({
 
         const bounds = canvas.getBoundingClientRect();
         const ink = getComputedStyle(canvas).color;
-        const channels = ink.match(/[\d.]+/g)?.map(Number) ?? [255, 255, 255];
+        const channels = ink.match(/[\d.]+/gu)?.map(Number) ?? [255, 255, 255];
 
         const shade = `rgba(${channels
           .slice(0, 3)

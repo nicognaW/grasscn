@@ -89,7 +89,7 @@ const bitmapText = function bitmapText(
 
   const text = String(content);
 
-  if (!/^[\u0020-\u007E]*$/.test(text)) {
+  if (!/^[\u0020-\u007E]*$/u.test(text)) {
     return <MinecraftUnicodeLabel text={text} />;
   }
 

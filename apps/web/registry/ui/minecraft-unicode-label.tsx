@@ -96,7 +96,7 @@ export const MinecraftUnicodeLabel = ({
           const scale = Number(style.getPropertyValue("--mc-scale")) || 2;
 
           const bounds = node.getBoundingClientRect();
-          const ink = Number(style.color.match(/[\d.]+/g)?.[0] ?? 255);
+          const ink = Number(style.color.match(/[\d.]+/gu)?.[0] ?? 255);
 
           const next = JSON.stringify([
             scale,
