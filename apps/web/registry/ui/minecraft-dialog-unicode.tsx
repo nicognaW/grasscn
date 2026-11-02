@@ -89,14 +89,14 @@ export const DialogUnicodeLine = ({
               const uni = getUnihexGlyph(char);
               const offset = ascii ? 1 : 0.5;
 
-              for (let copy = 0; copy < (bold ? 2 : 1); copy++) {
+              for (let copy = 0; copy < (bold ? 2 : 1); copy += 1) {
                 const dx = x + copy * offset + (shadow ? offset : 0);
                 const dy = shadow ? offset : 0;
 
                 if (ascii) {
                   if (char !== " ") {
-                    for (let y = 0; y < 8; y++) {
-                      for (let px = 0; px < 8; px++) {
+                    for (let y = 0; y < 8; y += 1) {
+                      for (let px = 0; px < 8; px += 1) {
                         if (
                           pixels[((ascii[1] + y) * 128 + ascii[0] + px) * 4 + 3]
                         ) {

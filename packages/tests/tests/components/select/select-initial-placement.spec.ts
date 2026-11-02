@@ -31,7 +31,7 @@ for (const scale of [2] as const) {
         for (
           let index = 0, count = await triggers.count();
           index < count;
-          index++
+          index += 1
         ) {
           const trigger = triggers.nth(index);
           await expect

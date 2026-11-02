@@ -89,8 +89,8 @@ export const MenuUnicodeLine = ({
         const h = ascii ? 8 : 16;
         const pixels = new Uint8Array(w * h * 4);
 
-        for (let y = 0; y < h; y++) {
-          for (let x = 0; x < w; x++) {
+        for (let y = 0; y < h; y += 1) {
+          for (let x = 0; x < w; x += 1) {
             const on = ascii
               ? source[((ascii[1] + y) * 128 + ascii[0] + x) * 4 + 3]
               : uni
@@ -151,7 +151,7 @@ export const MenuUnicodeLine = ({
               context.fillStyle = shadow ? shade : ink;
 
               if (glyph.char !== " ") {
-                for (let copy = 0; copy < (input.bold ? 2 : 1); copy++) {
+                for (let copy = 0; copy < (input.bold ? 2 : 1); copy += 1) {
                   supported =
                     paintMenuGlyph(
                       context,

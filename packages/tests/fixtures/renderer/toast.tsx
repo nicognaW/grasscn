@@ -12,7 +12,7 @@ const SonnerFixture = () => {
   const ids = React.useRef<(string | number)[]>([]);
 
   const show = () => {
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count; i += 1) {
       ids.current.push(
         notify(
           p.has("rich") ? (

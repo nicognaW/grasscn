@@ -83,7 +83,7 @@ const MinecraftMap = ({
     canvas.height = 128;
     setGpuReady(false);
 
-    for (let i = 0; i < pixels.length; i++) {
+    for (let i = 0; i < pixels.length; i += 1) {
       const color = pixels[i];
       const rgba = minecraftMapPalette[color];
       const j = i * 4;

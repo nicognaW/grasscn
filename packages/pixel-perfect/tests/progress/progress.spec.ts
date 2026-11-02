@@ -179,8 +179,8 @@ test("Progress notch painter preserves the background through transparent corner
   for (let y = 0; y < 5; y += 1) {
     for (let x = 0; x < 182; x += 1) {
       if (!original.data[(y * 182 + x) * 4 + 3]) {
-        for (let dy = 0; dy < 2; dy++) {
-          for (let dx = 0; dx < 2; dx++) {
+        for (let dy = 0; dy < 2; dy += 1) {
+          for (let dx = 0; dx < 2; dx += 1) {
             const index = ((y * 2 + dy) * rendered.width + x * 2 + dx) * 4;
             expect(
               rendered.data

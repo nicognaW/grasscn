@@ -139,7 +139,7 @@ export const MinecraftSignPaint = ({
                 continue;
               }
 
-              for (let k = 0; k < 3; k++) {
+              for (let k = 0; k < 3; k += 1) {
                 output.data[j + k] = source.data[i + k];
               }
 
