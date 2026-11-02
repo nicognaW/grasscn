@@ -50,7 +50,7 @@ const Avatar = function Avatar({
           style,
           (__style) =>
             ({
-              "--mc-avatar-size": { sm: 12, default: 16, lg: 20 }[size],
+              "--mc-avatar-size": { default: 16, lg: 20, sm: 12 }[size],
               "--mc-scale": scale,
               ...__style,
             }) as React.CSSProperties
