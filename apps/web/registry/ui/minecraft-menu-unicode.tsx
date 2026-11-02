@@ -10,6 +10,13 @@ import {
 } from "./minecraft-menu-gpu";
 import { getUnihexGlyph, loadUnihex } from "./minecraft-unifont";
 
+import "./minecraft-unicode.css";
+
+interface MenuUnicodeStyle extends React.CSSProperties {
+  "--mc-menu-unicode-height": string;
+  "--mc-menu-unicode-width": string;
+}
+
 let alpha: Promise<Uint8ClampedArray> | undefined;
 
 // oxlint-disable-next-line typescript/promise-function-async -- Return the cached image Promise itself, including rejection; async would wrap its identity.
@@ -186,29 +193,20 @@ export const MenuUnicodeLine = ({
     };
   }, [input]);
 
+  const lineStyle: MenuUnicodeStyle = {
+    "--mc-menu-unicode-height": `${9 * scale}px`,
+    "--mc-menu-unicode-width": `${width * scale}px`,
+  };
+
   return (
-    <span
-      style={{
-        display: "block",
-        height: 9 * scale,
-        position: "relative",
-        width: width * scale,
-      }}
-    >
+    <span className="mc-menu-unicode" style={lineStyle}>
       <canvas
         ref={ref}
         data-mc-menu-unicode-ready={ready}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          left: 0,
-          position: "absolute",
-          top: 0,
-          visibility: ready ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="mc-menu-unicode-canvas"
       />
-      <span style={{ visibility: ready ? "hidden" : "visible" }}>{text}</span>
+      <span className="mc-menu-unicode-fallback">{text}</span>
     </span>
   );
 };
