@@ -3,18 +3,27 @@ import { readFileSync } from "node:fs";
 import { test, expect } from "@grasscn/tests/test";
 import { referenceFile } from "@tests/paths";
 
+type TradingScrollEvent =
+  | { amount: number; kind: "wheel"; result: number; start: number }
+  | { kind: "press"; result: number; start: number }
+  | { kind: "drag"; result: number; start: number; y: number };
+
+type TradingScrollProbes = Record<
+  "0" | "1" | "7" | "8" | "9" | "14" | "25" | "80",
+  TradingScrollEvent[]
+>;
+
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
 
+// SAFETY: This owned General fixture records the retained producer's wheel/press/drag shapes
+// for exactly eight offer counts; wheel has amount, drag has y, and press has neither.
 const probes = JSON.parse(
   readFileSync(
     referenceFile(`trading/scrollbar/trading-scroll-events.json`),
     "utf-8"
   )
-) as Record<
-  string,
-  { kind: string; start: number; amount?: number; y?: number; result: number }[]
->;
+) as TradingScrollProbes;
 
 for (const [count, events] of Object.entries(probes)) {
   test(`native trading scroll gestures with ${count} offers`, async ({
@@ -47,7 +56,7 @@ for (const [count, events] of Object.entries(probes)) {
 
       if (event.kind === "wheel") {
         await root.dispatchEvent("wheel", {
-          deltaY: -event.amount! * 100,
+          deltaY: -event.amount * 100,
           deltaMode: 0,
         });
       }
@@ -59,7 +68,7 @@ for (const [count, events] of Object.entries(probes)) {
       }
 
       if (event.kind === "drag") {
-        await page.mouse.move(bounds.x + 6, bounds.y + (event.y! - 18) * 2);
+        await page.mouse.move(bounds.x + 6, bounds.y + (event.y - 18) * 2);
       }
 
       await expect(

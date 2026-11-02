@@ -121,7 +121,7 @@ for (const scale of [2]) {
 
     const input = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Demo input", exact: true });
+      .getByRole("textbox", { exact: true, name: "Demo input" });
     await expect(input).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -139,7 +139,7 @@ for (const scale of [2]) {
     );
     const disabled = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Disabled demo input", exact: true });
+      .getByRole("textbox", { exact: true, name: "Disabled demo input" });
     await expect(disabled).toHaveAttribute("data-mc-ready", "true");
     await nativePixels(
       disabled,
@@ -149,7 +149,7 @@ for (const scale of [2]) {
 
     const textarea = page
       .locator(".documentation-playground")
-      .getByRole("textbox", { name: "Demo textarea", exact: true });
+      .getByRole("textbox", { exact: true, name: "Demo textarea" });
     await expect(textarea).toHaveAttribute("data-mc-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -174,7 +174,7 @@ for (const scale of [2]) {
     await nativePixels(
       page
         .locator(".documentation-playground")
-        .getByRole("separator", { name: "Menu header separator", exact: true }),
+        .getByRole("separator", { exact: true, name: "Menu header separator" }),
       `tests/reference/separator/captures/separator-c6-s${scale}.png`
     );
     await nativePixels(
@@ -187,7 +187,7 @@ for (const scale of [2]) {
 
     const scrollArea = page
       .locator(".documentation-playground")
-      .getByRole("region", { name: "Demo scroll area", exact: true });
+      .getByRole("region", { exact: true, name: "Demo scroll area" });
     await expect(scrollArea).toHaveAttribute("data-mc-scroll-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -198,7 +198,7 @@ for (const scale of [2]) {
 
     const progress = page
       .locator(".documentation-playground")
-      .getByRole("progressbar", { name: "Demo progress", exact: true });
+      .getByRole("progressbar", { exact: true, name: "Demo progress" });
     await page.mouse.move(0, 0);
     await nativePixels(
       progress,
@@ -206,7 +206,7 @@ for (const scale of [2]) {
     );
     await page
       .locator(".documentation-playground")
-      .getByRole("button", { name: "Boss bar notches: None", exact: true })
+      .getByRole("button", { exact: true, name: "Boss bar notches: None" })
       .click();
     await expect(progress.locator("canvas")).toHaveAttribute(
       "data-mc-progress-painted",
@@ -264,7 +264,7 @@ for (const scale of [2]) {
 
     const list = page
       .locator(".documentation-playground")
-      .getByRole("tablist", { name: "World settings", exact: true });
+      .getByRole("tablist", { exact: true, name: "World settings" });
     await expect(list).toHaveAttribute("data-mc-tabs-ready", "true");
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -283,7 +283,7 @@ for (const scale of [2]) {
 
     const trigger = page
       .locator(".documentation-playground")
-      .getByRole("combobox", { name: "Demo game mode", exact: true });
+      .getByRole("combobox", { exact: true, name: "Demo game mode" });
     await expect(trigger).toHaveText("Survival");
     await expect(trigger).toHaveAttribute("data-mc-select-ready", "true");
     await page.mouse.move(0, 0);
@@ -302,8 +302,8 @@ for (const scale of [2]) {
 
     const radio = page
       .locator(".documentation-playground")
-      .getByRole("radiogroup", { name: "Demo radio game mode", exact: true })
-      .getByRole("radio", { name: "Survival", exact: true });
+      .getByRole("radiogroup", { exact: true, name: "Demo radio game mode" })
+      .getByRole("radio", { exact: true, name: "Survival" });
     await expect(radio).toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(
@@ -321,7 +321,7 @@ for (const scale of [2]) {
 
     const control = page
       .locator(".documentation-playground")
-      .getByRole("switch", { name: "Enable clouds", exact: true });
+      .getByRole("switch", { exact: true, name: "Enable clouds" });
     await expect(control).not.toBeChecked();
     await page.mouse.move(0, 0);
     await nativePixels(

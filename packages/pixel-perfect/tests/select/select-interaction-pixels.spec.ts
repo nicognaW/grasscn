@@ -60,15 +60,15 @@ for (const scale of [1, 2, 3]) {
       await page.mouse.move(0, 0);
 
       const creative = page.getByRole("option", {
-        name: "Creative",
         exact: true,
+        name: "Creative",
       });
 
       if (mode === "pointer") {
         await creative.hover();
       } else {
         await expect(
-          page.getByRole("option", { name: "Survival", exact: true })
+          page.getByRole("option", { exact: true, name: "Survival" })
         ).toBeFocused();
         await page.keyboard.press("ArrowDown");
       }

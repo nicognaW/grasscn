@@ -62,7 +62,7 @@ for (const selection of ["alert-dialog"]) {
         "Dark Minecraft page must not turn white"
       ).toBeLessThan(200);
       expect(warnings).toEqual([]);
-      await dialog.getByRole("button", { name: "No", exact: true }).click();
+      await dialog.getByRole("button", { exact: true, name: "No" }).click();
       await expect(dialog).toHaveCount(0);
       await expect(
         stage.getByRole("button", { name: "Open confirmation" })

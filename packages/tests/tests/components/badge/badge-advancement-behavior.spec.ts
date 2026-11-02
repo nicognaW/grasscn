@@ -22,13 +22,13 @@ for (const scale of [2]) {
       ).toHaveCount(0);
       await expect(badge).toContainText("挑战完成！");
       await page
-        .getByRole("button", { name: "Reset challenge", exact: true })
+        .getByRole("button", { exact: true, name: "Reset challenge" })
         .click();
       await expect(badge).toHaveAttribute("data-earned", "false");
 
       const link = page.getByRole("link", {
-        name: "View recipes",
         exact: true,
+        name: "View recipes",
       });
 
       await link.focus();
