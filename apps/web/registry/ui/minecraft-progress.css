@@ -9,6 +9,7 @@
     image-rendering: pixelated;
   }
   .mc-progress-surface {
+    background-image: var(--mc-progress-image);
     position: absolute;
     display: block;
     inset: 0;
@@ -22,6 +23,7 @@
     top: 0;
     left: 0;
     height: 100%;
+    width: calc(var(--mc-progress-filled) * var(--mc-pixel));
     overflow: hidden;
     pointer-events: none;
   }
