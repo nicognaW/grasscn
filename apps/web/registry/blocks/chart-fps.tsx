@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis } from "recharts";
+import { BarChart, Bar, XAxis, YAxis } from "recharts";
 
 import {
   ChartContainer,
@@ -56,18 +56,30 @@ export const FpsChartExample = ({
       )
     : [];
 
+  const containerStyle: React.CSSProperties = {
+    aspectRatio: "auto",
+    height: 69 * scale,
+    position: "relative",
+    width: width * scale,
+    ...style,
+  };
+  // Preserve eager color reads after the style spread. Recharts can skip
+  // rectangles before it invokes the renderer.
+
+  const fills = rows.map((row) =>
+    chartFpsColor(
+      ((Number(row[dataKey]) - domain[0]) / (domain[1] - domain[0])) *
+        (1000 / 30) *
+        1e6
+    )
+  );
+
   return (
     <ChartContainer
       {...props}
       config={{ [dataKey]: { color: "#55ff55", label: dataKey } }}
       scale={scale}
-      style={{
-        aspectRatio: "auto",
-        height: 69 * scale,
-        position: "relative",
-        width: width * scale,
-        ...style,
-      }}
+      style={containerStyle}
     >
       <BarChart
         accessibilityLayer
@@ -83,19 +95,13 @@ export const FpsChartExample = ({
           dataKey={dataKey}
           isAnimationActive={false}
           // oxlint-disable-next-line anti-slop/no-shape-in-symbol-names -- Recharts requires this renderer prop's spelling.
-          shape={ChartPixelBar}
-        >
-          {rows.map((row, index) => (
-            <Cell
-              key={index}
-              fill={chartFpsColor(
-                ((Number(row[dataKey]) - domain[0]) / (domain[1] - domain[0])) *
-                  (1000 / 30) *
-                  1e6
-              )}
+          shape={(barProps) => (
+            <ChartPixelBar
+              {...barProps}
+              fill={fills[barProps.originalDataIndex]}
             />
-          ))}
-        </Bar>
+          )}
+        />
         <ChartFpsFrame
           labels={labels}
           framerateLimit={framerateLimit}

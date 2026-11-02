@@ -24,6 +24,16 @@ export default defineConfig({
   options: { typeAware: true },
   overrides: [
     {
+      // Recharts invokes this renderer directly; retain the default render* props.
+      files: ["**/apps/web/registry/blocks/chart-fps.tsx"],
+      rules: {
+        "react/no-unstable-nested-components": [
+          "error",
+          { propNamePattern: "{render*,shape}" },
+        ],
+      },
+    },
+    {
       // Compile-only contracts test accepted public props, not rendered styles.
       files: ["**/packages/tests/tests/components/**/*-api.types.tsx"],
       rules: {
