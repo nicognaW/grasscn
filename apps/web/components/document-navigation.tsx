@@ -3,10 +3,11 @@
 import type { Node, Root } from "fumadocs-core/page-tree";
 import type { TOCItemType } from "fumadocs-core/toc";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "../registry/ui/button";
-import { MinecraftText } from "../registry/ui/minecraft-text";
+import { DocumentText } from "./document-text";
 
 const TreeNodes = ({
   nodes,
@@ -22,14 +23,12 @@ const TreeNodes = ({
       if (node.type === "separator") {
         return (
           <li
-            /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
-            key={node.$id ?? index}
+            /* eslint-disable react-doctor/no-array-index-as-key -- Fumadocs separators retain their immutable tree position when no source id exists. */
+            key={node.$id ?? `separator-${index}`}
             /* eslint-enable react-doctor/no-array-index-as-key */
-            /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
-            className="minecraft-nav-heading"
-            /* eslint-enable shadcn/no-unknown-classes */
+            data-nav-heading=""
           >
-            <MinecraftText>{node.name}</MinecraftText>
+            <DocumentText>{node.name}</DocumentText>
           </li>
         );
       }
@@ -37,41 +36,24 @@ const TreeNodes = ({
       if (node.type === "folder") {
         return (
           <li
-            /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
-            key={node.$id ?? index}
+            /* eslint-disable react-doctor/no-array-index-as-key -- Fumadocs folders retain their immutable tree position when no source id exists. */
+            key={node.$id ?? `folder-${index}`}
             /* eslint-enable react-doctor/no-array-index-as-key */
           >
             {node.index ? (
-              /* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */
-              <Button
-                nativeButton={false}
-                render={
-                  <Link
-                    href={node.index.url}
-
-                    /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-                    role="link"
-                    /* eslint-enable jsx-a11y/prefer-tag-over-role */
-
-                    aria-current={
-                      currentUrl === node.index.url ? "page" : undefined
-                    }
-                    onClick={onNavigate}
-                  />
+              <Link
+                href={node.index.url}
+                aria-current={
+                  currentUrl === node.index.url ? "page" : undefined
                 }
-                scale={1}
+                onClick={onNavigate}
               >
-                {node.name}
-              </Button>
+                <DocumentText>{node.name}</DocumentText>
+              </Link>
             ) : (
-              /* eslint-enable jsx-a11y/control-has-associated-label */
-
-              <span /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
-                className="minecraft-nav-heading"
-                /* eslint-enable shadcn/no-unknown-classes */
-              >
-                <MinecraftText>{node.name}</MinecraftText>
-              </span>
+              <div data-nav-heading="">
+                <DocumentText>{node.name}</DocumentText>
+              </div>
             )}
             <TreeNodes
               nodes={node.children}
@@ -83,57 +65,35 @@ const TreeNodes = ({
       }
 
       return (
-        <li
-          /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
-          key={node.url}
-          /* eslint-enable react-doctor/no-array-index-as-key */
-        >
-          {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
-          <Button
-            nativeButton={false}
-            render={
-              <Link
-                href={node.url}
-
-                /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
-                role="link"
-                /* eslint-enable jsx-a11y/prefer-tag-over-role */
-
-                aria-current={currentUrl === node.url ? "page" : undefined}
-                onClick={onNavigate}
-              />
-            }
-            scale={1}
+        <li key={node.url}>
+          <Link
+            href={node.url}
+            aria-current={currentUrl === node.url ? "page" : undefined}
+            onClick={onNavigate}
           >
-            {node.name}
-          </Button>
-          {/* eslint-enable jsx-a11y/control-has-associated-label */}
+            <DocumentText>{node.name}</DocumentText>
+          </Link>
         </li>
       );
     })}
   </ul>
 );
 
-export const DocumentationNavigation = ({
-  tree,
-  currentUrl,
-}: {
-  tree: Root;
-  currentUrl: string;
-}) => {
+export const DocumentationNavigation = ({ tree }: { tree: Root }) => {
+  const currentUrl = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
-    <aside /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
+    <aside
+      /* eslint-disable shadcn/no-unknown-classes -- Defined in the explicitly imported document-navigation.css. */
       className="minecraft-docs-sidebar"
       /* eslint-enable shadcn/no-unknown-classes */
     >
-      {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
       <Button
-        /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
+        /* eslint-disable shadcn/no-unknown-classes -- Defined in the explicitly imported document-navigation.css. */
         className="minecraft-docs-mobile-toggle"
         /* eslint-enable shadcn/no-unknown-classes */
-        scale={1}
+        scale={2}
         aria-expanded={open}
         aria-controls="documentation-tree"
         onClick={() => {
@@ -142,7 +102,6 @@ export const DocumentationNavigation = ({
       >
         Browse documentation
       </Button>
-      {/* eslint-enable jsx-a11y/control-has-associated-label */}
       <nav
         id="documentation-tree"
         aria-label="Documentation"
@@ -166,36 +125,21 @@ export const TableOfContents = ({ items }: { items: TOCItemType[] }) => {
   }
 
   return (
-    <aside /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/document-navigation.css and loaded by the documentation layout. */
+    <aside
+      /* eslint-disable shadcn/no-unknown-classes -- Defined in the explicitly imported document-navigation.css. */
       className="minecraft-docs-toc"
       /* eslint-enable shadcn/no-unknown-classes */
     >
       <nav aria-label="On this page">
-        <MinecraftText>On this page</MinecraftText>
+        <div data-nav-heading="">
+          <DocumentText>On this page</DocumentText>
+        </div>
         <ul>
           {items.map((item) => (
-            <li
-              /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
-              key={item.url}
-              /* eslint-enable react-doctor/no-array-index-as-key */
-              data-depth={item.depth}
-            >
-              {/* eslint-disable jsx-a11y/control-has-associated-label -- The composed native control derives its accessible label from its visible rendered children. */}
-              <Button
-                nativeButton={false}
-                render={
-                  <a
-                    href={item.url}
-                    /* eslint-disable jsx-a11y/prefer-tag-over-role, jsx-a11y/no-redundant-roles -- Base UI Button supplies button semantics unless its anchor render explicitly restores the link role. */
-                    role="link"
-                    /* eslint-enable jsx-a11y/prefer-tag-over-role, jsx-a11y/no-redundant-roles */
-                  />
-                }
-                scale={1}
-              >
-                {item.title}
-              </Button>
-              {/* eslint-enable jsx-a11y/control-has-associated-label */}
+            <li key={item.url} data-depth={item.depth}>
+              <a href={item.url}>
+                <DocumentText>{item.title}</DocumentText>
+              </a>
             </li>
           ))}
         </ul>

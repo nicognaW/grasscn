@@ -105,6 +105,19 @@ a {
   overflow: auto;
   background: #202020;
 }
+.minecraft-docs-layout .minecraft-example {
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  min-height: 320px;
+  padding: 48px 32px;
+  background: #181818;
+  border: 2px solid #555;
+  box-shadow: inset 2px 2px #080808;
+}
+.minecraft-example > * {
+  flex-shrink: 0;
+}
 .minecraft-prose-link {
   color: #55ff55;
   --mc-ink: #55ff55;
@@ -130,6 +143,10 @@ a {
   top: 8px;
 }
 @media (max-width: 720px) {
+  .minecraft-docs-layout .minecraft-example {
+    padding: 32px 16px;
+    min-height: 280px;
+  }
   .minecraft-header {
     padding: 16px;
     gap: 16px;

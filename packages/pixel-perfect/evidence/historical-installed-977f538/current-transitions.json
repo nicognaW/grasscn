@@ -236,12 +236,13 @@
     {
       "sourcePath": "registry/ui/chart.tsx",
       "historicalSha256": "9509734db423af0b769cfac3fb04be2fdc9e14be5c056429020e64fe15590f07",
-      "currentSha256": "d195c4491d2e1b6db16d7d18653c28251a78d324c6efb4e09af7ba269b59c5bd",
-      "classification": "preexisting-main-source-drift",
-      "reason": "Approved PR37 functional lint/tooling cleanup source from accepted main c7b908. Current bytes exactly match that main Git blob; semantic equivalence is not asserted. Historical proof applies only to its archived source; current behavior and rendering require fresh verification. No current verification is granted.",
-      "introducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7",
+      "currentSha256": "c68b3fe148cd830b246284d7e977459252452ed7225c6c2057644798ae5848f9",
+      "classification": "owned-behavior-repair",
+      "reason": "Owned default tooltip native numeric glyph and minimum readable integer GUI2/GUI3 repair. Original assets and custom formatter ReactNode API are preserved. Historical proof authenticates only the archived source; fresh current runtime and installation checks remain required, and no current native pixel equivalence is granted.",
       "acceptedMainSnapshot": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
-      "currentSemanticEquivalence": "not-asserted"
+      "currentSemanticEquivalence": "not-asserted",
+      "introducedAfter": "1985ecf452b21389b8e1f99fd883536509814cb3",
+      "upstreamIntroducedBy": "3b3d488fd1dcc21f5ecec7b42087adaef86d32f7"
     },
     {
       "sourcePath": "registry/ui/checkbox.tsx",

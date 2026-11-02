@@ -9,6 +9,7 @@
     "apps/web/app/charts/page.tsx",
     "apps/web/app/components/[[...slug]]/page.tsx",
     "apps/web/app/docs/[[...slug]]/page.tsx",
+    "apps/web/app/docs/layout.tsx",
     "apps/web/app/layout.tsx",
     "apps/web/app/not-found.tsx",
     "apps/web/app/page.tsx",
@@ -162,6 +163,7 @@
     "apps/web/lib/component-symbols.ts",
     "apps/web/lib/example-installation.ts",
     "apps/web/lib/installation.ts",
+    "apps/web/lib/search-results.ts",
     "apps/web/lib/source.ts",
     "apps/web/mdx-components.tsx",
     "apps/web/next.config.mjs",
@@ -177,6 +179,7 @@
     "packages/pixel-perfect/src/installed/verify-button-consumers.mjs",
     "packages/pixel-perfect/src/installed/verify-manual-consumers.mjs",
     "packages/pixel-perfect/src/runtime/docs-reference-types.ts",
+    "packages/pixel-perfect/src/runtime/historical-evidence.ts",
     "packages/pixel-perfect/src/runtime/type-context.mjs",
     "packages/pixel-perfect/src/runtime/verification-types.ts",
     "packages/pixel-perfect/src/runtime/verify-porting.mjs",
@@ -193,12 +196,14 @@
     "packages/pixel-perfect/tests/integration/website/overlay-documentation.spec.ts",
     "packages/pixel-perfect/tests/reference/capture-header-branding.mjs",
     "packages/pixel-perfect/tests/reference/verify-header-branding.mjs",
+    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts",
     "packages/tests/cli/verify-cli-consumer.mjs",
     "packages/tests/cli/verify-manual-consumers.mjs",
     "packages/tests/src/checks/acceptance-preview.mjs",
     "packages/tests/src/checks/audit-preview.mjs",
     "packages/tests/src/checks/documentation-inventory.mjs",
     "packages/tests/src/checks/type-context.mjs",
+    "packages/tests/src/checks/verify-generation-cache-ownership.ts",
     "packages/tests/src/checks/verify-next-development.mjs",
     "packages/tests/src/checks/verify-next-workflow.mjs",
     "packages/tests/src/checks/verify.mjs",
@@ -222,6 +227,7 @@
     "packages/tests/tests/unit/consumer-build-identity.test.mjs",
     "packages/tests/tests/unit/consumer-metadata.test.mjs",
     "packages/tests/tests/unit/consumer-registry.test.mjs",
+    "packages/tests/tests/unit/document-search-results.test.ts",
     "packages/tests/tests/unit/documentation-inventory.test.mjs",
     "packages/tests/tests/unit/example-prerequisites.test.mjs",
     "packages/tests/tests/unit/isolated-host-routing.test.mjs",
@@ -231,6 +237,7 @@
     "packages/tests/tests/unit/prepared-consumers.test.mjs",
     "packages/tests/tests/unit/verification-summary.test.mjs",
     "packages/tests/tests/unit/workspace-type-ownership.test.ts",
+    "packages/tests/tests/website/docs-acceptance.spec.ts",
     "packages/tests/tests/website/docs-examples.spec.ts",
     "packages/tests/tests/website/docs-inputs.spec.ts",
     "packages/tests/tests/website/docs-installation.spec.ts",
@@ -238,10 +245,7 @@
     "packages/tests/tests/website/layout-documentation.spec.ts",
     "packages/tests/tests/website/minecraft-documentation.spec.ts",
     "packages/tests/tests/website/next-showcase.spec.ts",
-    "packages/tests/tests/website/overlay-documentation.spec.ts",
-    "packages/pixel-perfect/src/runtime/historical-evidence.ts",
-    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts",
-    "packages/tests/src/checks/verify-generation-cache-ownership.ts"
+    "packages/tests/tests/website/overlay-documentation.spec.ts"
   ],
   "immutableSourceInputs": [
     {
@@ -508,6 +512,11 @@
       "file": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
       "baseline": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
       "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
+    },
+    {
+      "file": "apps/web/registry/ui/chart.tsx",
+      "baseline": "apps/web/registry/ui/chart.tsx",
+      "reason": "Owned default tooltip native-number and minimum integer GUI-scale repair; only exact unchanged statements retain inherited debt. No full-file clean or native pixel-verification claim."
     }
   ],
   "attribution": "Approved main c7b908 (including PR37 functional cleanup) is the current source-quality baseline. Full authored scope must pass the actual toolchain; only exact unchanged baseline statements can retain attributed debt. Older main46/1369/4caf/e009 counts are historical, not current acceptance. This metadata grants no semantic equivalence, source verification or native verification.",

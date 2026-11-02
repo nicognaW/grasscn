@@ -45,10 +45,20 @@ test("documentation search finds authored prose and follows its section", async 
   await expect(
     page.getByRole("option", {
       exact: true,
-      name: "Activate a button to hear the original Minecraft click.",
+      name: "Button",
     })
   ).toBeVisible();
+  await expect(
+    page.getByRole("option", { exact: true, name: "Button" })
+  ).toContainText("hear the original Minecraft click");
+  await expect(
+    page.getByRole("option", { exact: true, name: "Button" })
+  ).toHaveAttribute("aria-selected", "true");
   await search.press("ArrowDown");
+  await search.press("ArrowUp");
+  await expect(
+    page.getByRole("option", { exact: true, name: "Button" })
+  ).toHaveAttribute("aria-selected", "true");
   await search.press("Enter");
   await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
   await expect(
@@ -63,9 +73,9 @@ test("documentation search discovers the public component export", async ({
   const search = page.getByRole("combobox", { name: "Search documentation" });
   await search.fill("buttonVariants");
   await page
-    .getByRole("option", { exact: true, name: "buttonVariants" })
+    .getByRole("option", { exact: true, name: "Button" })
     .click({ timeout: 5000 });
-  await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
+  await expect(page).toHaveURL(`${website}/docs/components/button`);
   await expect(
     page.getByRole("heading", { exact: true, name: "Button" })
   ).toBeVisible();
@@ -77,9 +87,9 @@ test("documentation search discovers a component alias", async ({ page }) => {
     .getByRole("combobox", { name: "Search documentation" })
     .fill("push button");
   await page
-    .getByRole("option", { exact: true, name: "push button" })
+    .getByRole("option", { exact: true, name: "Button" })
     .click({ timeout: 5000 });
-  await expect(page).toHaveURL(`${website}/docs/components/button#usage`);
+  await expect(page).toHaveURL(`${website}/docs/components/button`);
 });
 
 test("the legacy Button link retains its query and reaches the usage section", async ({

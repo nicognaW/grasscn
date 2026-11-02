@@ -51,7 +51,20 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <SiteFrame>{children}</SiteFrame>
+        <SiteFrame
+          searchPages={source.getPages().map((page) => ({
+            description: page.data.description ?? "",
+            terms: [
+              ...page.data.aliases,
+              ...page.data.exports,
+              ...(componentSymbols[page.slugs.at(-1) ?? ""]?.exports ?? []),
+            ],
+            title: page.data.title,
+            url: page.url,
+          }))}
+        >
+          {children}
+        </SiteFrame>
         <LegacyDocumentationLinks pages={pages} groups={groups} />
       </body>
     </html>

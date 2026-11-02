@@ -59,7 +59,7 @@ test("all production sections share navigation and omit internal status content"
   expect(errors).toEqual([]);
 });
 
-test("search shows all items, more than six matches, and nested component imports", async ({
+test("search shows distinct component pages and resolves nested component exports", async ({
   page,
 }) => {
   await page.goto(origin);
@@ -70,18 +70,16 @@ test("search shows all items, more than six matches, and nested component import
 
   await search.click();
   await search.fill("field");
-  await expect
-    .poll(async () => page.getByRole("option").count())
-    .toBeGreaterThan(6);
+  await expect(page.getByRole("option").first()).toHaveAccessibleName("Field");
   await expect(
-    page.getByRole("option", { exact: true, name: "FieldLabel" })
+    page.getByRole("option", { exact: true, name: "Field" })
   ).toBeVisible();
   await search.fill("CardHeader");
-  await page.getByRole("option", { exact: true, name: "CardHeader" }).click();
+  await page.getByRole("option", { exact: true, name: "Card" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
     "Card"
   );
-  await expect(page).toHaveURL(`${origin}docs/components/card#usage`);
+  await expect(page).toHaveURL(`${origin}docs/components/card`);
   await search.fill("你好");
   await expect(page.getByRole("option")).toHaveCount(0);
 });
@@ -265,11 +263,14 @@ test("shared controls retain native rendering and the sticky header is opaque", 
       views.getByRole("tab", { name: label, exact: true })
     ).toHaveAttribute("data-slot", "tabs-trigger");
   }
-  await expect(
-    page
-      .getByRole("navigation", { exact: true, name: "Documentation" })
-      .getByRole("link", { exact: true, name: "Button" })
-  ).toHaveAttribute("data-slot", "button");
+
+  const componentLink = page
+    .getByRole("navigation", { exact: true, name: "Documentation" })
+    .getByRole("link", { exact: true, name: "Button" });
+
+  await expect(componentLink).toHaveAttribute("aria-current", "page");
+  await expect(componentLink).not.toHaveClass(/\bmc-button\b/u);
+  await expect(componentLink.locator(".mc-bitmap")).toBeVisible();
   expect(
     await page
       .getByRole("banner")

@@ -1,19 +1,17 @@
+@import "../registry/ui/minecraft-unifont-metrics.css";
+
 .document-text {
   --mc-scale: 2;
   --mc-pixel: calc(1px * var(--mc-scale));
   --mc-ink: currentColor;
-  line-height: 18px;
+  font-family: "Minecraft Bitmap", "Minecraft Unihex Metrics", monospace;
+  font-size: calc(8px * var(--mc-scale));
+  font-kerning: none;
+  line-height: 24px;
 }
 .document-word {
   display: inline;
   white-space: nowrap;
-}
-.document-wrapped-space {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
 }
 .document-heading {
   margin: 0;
@@ -23,19 +21,47 @@
   line-height: 18px;
 }
 .document-text .mc-bitmap {
+  display: inline-block;
   position: relative;
   vertical-align: top;
 }
-.document-text .mc-text-accessible {
+.document-text .mc-text-pixels {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.document-text [data-mc-label-ready] > canvas {
+  z-index: 1;
+}
+.document-text .mc-text-accessible {
+  position: relative;
+  inset: auto;
+  display: inline;
+  width: auto;
+  height: auto;
   padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: pre;
   border: 0;
+  font-family: "Minecraft Bitmap", "Minecraft Unihex Metrics", monospace;
+  font-size: calc(8px * var(--mc-scale, 2));
+  font-kerning: none;
+  font-synthesis: none;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  user-select: text;
+  cursor: text;
+}
+:is(button, [role="option"]) .document-text .mc-text-accessible {
+  user-select: none;
+  cursor: inherit;
 }
 .document-text .mc-code-token {
   --mc-ink: currentColor;
@@ -105,13 +131,10 @@
   outline-offset: -2px;
 }
 .documentation-code-collapsed {
-  max-height: 248px;
+  max-height: 320px;
 }
 .documentation-code-line {
-  display: block;
-  height: 18px;
-  width: max-content;
-  min-width: 100%;
+  display: inline;
 }
 .documentation-code-line > .document-text {
   white-space: pre;
@@ -198,6 +221,31 @@
   width: 100%;
   min-width: 0;
 }
+.documentation-installation,
+.documentation-example,
+.documentation-implementation {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.documentation-example > [data-example-installation] {
+  padding: 8px 16px 16px;
+  line-height: 24px;
+}
+.documentation-example [data-example-installation] > ul {
+  margin-block: 16px 0;
+}
+.documentation-installation-tabs > [data-slot="tabs-content"],
+.documentation-manual {
+  padding: 24px;
+}
+.minecraft-prose > :is(h2, h3, h4) {
+  margin-top: 24px;
+}
+.minecraft-document > h1 .document-text {
+  --mc-scale: 3;
+  line-height: 30px;
+}
 .documentation-install-command > [data-slot="tabs"] {
   width: 100%;
   min-width: 0;
@@ -242,9 +290,4 @@
   max-height: 240px;
   overflow: auto;
   white-space: pre;
-}
-
-/* Unmeasured bitmap paragraphs must not widen the document before layout. */
-.minecraft-paragraph[data-mc-paragraph-ready="false"] {
-  overflow-x: clip;
 }
