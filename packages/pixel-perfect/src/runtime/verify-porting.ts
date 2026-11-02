@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
+import { mkdir, readFile, writeFile, stat, readdir } from "node:fs/promises";
 import path from "node:path";
 
 import {
@@ -567,7 +567,7 @@ try {
         const file = name.slice("browser:".length);
         const directory = path.join(output, "checkpoints", file);
 
-        let summary: ReturnType<typeof checkpointSummary>;
+        let summary: ReturnType<typeof checkpointSummary> | undefined;
 
         try {
           summary = checkpointSummary(

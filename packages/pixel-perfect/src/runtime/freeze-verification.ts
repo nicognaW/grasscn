@@ -11,7 +11,7 @@ import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import {
   validateHistoricalEvidence,
   historicalMapComponents,
-} from "./historical-evidence.ts";
+} from "@ppt/runtime/historical-evidence";
 
 assert.ok(process.argv[2], "Pass a new snapshot directory");
 
