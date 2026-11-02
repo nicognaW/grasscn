@@ -129,6 +129,7 @@ export const AttachmentFixture = () => {
         </Attachment>
       </AttachmentGroup>
       <button
+        type="button"
         id="read-attachment-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

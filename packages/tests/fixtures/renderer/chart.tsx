@@ -134,6 +134,7 @@ const ApiFixture = () => {
         </BarChart>
       </ChartContainer>
       <button
+        type="button"
         id="resize"
         onClick={() => {
           setWide((v) => !v);
@@ -142,6 +143,7 @@ const ApiFixture = () => {
         Resize
       </button>
       <button
+        type="button"
         id="theme"
         onClick={() => {
           setDark((v) => !v);
@@ -150,6 +152,7 @@ const ApiFixture = () => {
         Theme
       </button>
       <button
+        type="button"
         id="update"
         onClick={() => {
           setRevision((v) => v + 1);
@@ -158,6 +161,7 @@ const ApiFixture = () => {
         Update
       </button>
       <button
+        type="button"
         id="plot-update"
         onClick={() => {
           setRevision((v) => v + 1);
@@ -204,6 +208,7 @@ const MetricFixture = () => {
         ]}
       />
       <button
+        type="button"
         id="metric-update"
         onClick={() => {
           setChanged((value) => !value);
@@ -212,6 +217,7 @@ const MetricFixture = () => {
         Update metric
       </button>
       <button
+        type="button"
         id="metric-format"
         onClick={() => {
           setCustom((value) => !value);

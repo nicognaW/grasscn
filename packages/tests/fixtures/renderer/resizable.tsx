@@ -66,21 +66,31 @@ export const ResizableFixture = () => {
         </ResizablePanel>
       </ResizablePanelGroup>
       <button
+        type="button"
         id="set-layout"
         onClick={() => group.current?.setLayout({ left: 25, right: 75 })}
       >
         Set layout
       </button>
-      <button id="collapse" onClick={() => panel.current?.collapse()}>
+      <button
+        type="button"
+        id="collapse"
+        onClick={() => panel.current?.collapse()}
+      >
         Collapse
       </button>
-      <button id="expand" onClick={() => panel.current?.expand()}>
+      <button type="button" id="expand" onClick={() => panel.current?.expand()}>
         Expand
       </button>
-      <button id="resize" onClick={() => panel.current?.resize("35%")}>
+      <button
+        type="button"
+        id="resize"
+        onClick={() => panel.current?.resize("35%")}
+      >
         Resize panel
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setRefs(

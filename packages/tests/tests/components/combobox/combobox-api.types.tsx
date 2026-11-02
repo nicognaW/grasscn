@@ -54,7 +54,9 @@ export const SingleApi = () => {
         )}
       />
       <ComboboxTrigger
-        render={(props, state) => <button {...props} data-state={state.open} />}
+        render={(props, state) => (
+          <button type="button" {...props} data-state={state.open} />
+        )}
       />
       <ComboboxContent
         side="top"

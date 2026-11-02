@@ -59,6 +59,7 @@ const Inspector = () => {
       <output id="mobile">{String(ctx.isMobile)}</output>
       <output id="open-mobile">{String(ctx.openMobile)}</output>
       <button
+        type="button"
         id="external"
         onClick={() => {
           ctx.setOpen((value) => !value);
@@ -67,6 +68,7 @@ const Inspector = () => {
         External toggle
       </button>
       <button
+        type="button"
         id="double"
         onClick={() => {
           ctx.setOpen((v) => !v);
@@ -379,6 +381,7 @@ export const SidebarFixture = () => {
       <SidebarInset>
         <SidebarTrigger id="toggle" />
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefValue(

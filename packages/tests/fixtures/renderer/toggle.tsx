@@ -25,7 +25,13 @@ export const ToggleFixture = () => {
     <>
       <Toggle
         render={
-          asChild ? anchor ? <a href="#target" /> : <button /> : undefined
+          asChild ? (
+            anchor ? (
+              <a href="#target" />
+            ) : (
+              <button type="button" />
+            )
+          ) : undefined
         }
         id="subject"
         ref={ref}
@@ -65,6 +71,7 @@ export const ToggleFixture = () => {
         {p.get("text")}
       </Toggle>
       <button
+        type="button"
         id="external"
         onClick={() => {
           setPressed((v) => !v);
@@ -74,6 +81,7 @@ export const ToggleFixture = () => {
         External
       </button>
       <button
+        type="button"
         id="read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

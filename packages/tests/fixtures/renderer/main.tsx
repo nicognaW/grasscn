@@ -256,7 +256,9 @@ const SelectFixture = () => {
         }
       >
         <SelectTrigger
-          render={params.has("triggerAsChild") ? <button /> : undefined}
+          render={
+            params.has("triggerAsChild") ? <button type="button" /> : undefined
+          }
           id={single ? "subject" : "select-trigger"}
           aria-label="Game mode"
           ref={triggerRef}
@@ -314,6 +316,7 @@ const SelectFixture = () => {
         )}
       </Select>
       <button
+        type="submit"
         id="select-external"
         onClick={() => {
           setValue(`item-${titles.length - 1}`);
@@ -322,6 +325,7 @@ const SelectFixture = () => {
         Select externally
       </button>
       <button
+        type="submit"
         id="read-select-refs"
         onClick={() => {
           setRefs(
@@ -391,7 +395,7 @@ const RadioFixture = () => {
             params.has("anchor") ? (
               <a href="#radio" />
             ) : (
-              <button />
+              <button type="submit" />
             )
           ) : undefined
         }
@@ -466,6 +470,7 @@ const RadioFixture = () => {
         {params.has("form") && <button type="submit">Save mode</button>}
       </form>
       <button
+        type="button"
         id="radio-external"
         onClick={() => {
           setValue("adventure");
@@ -474,6 +479,7 @@ const RadioFixture = () => {
         Choose externally
       </button>
       <button
+        type="button"
         id="radio-read-refs"
         onClick={() => {
           setRefs(`${rootRef.current?.tagName}/${itemRef.current?.tagName}`);
@@ -509,7 +515,7 @@ const SwitchFixture = () => {
           params.has("anchor") ? (
             <a href="#switch" />
           ) : (
-            <button />
+            <button type="submit" />
           )
         ) : undefined
       }
@@ -565,6 +571,7 @@ const SwitchFixture = () => {
         {params.has("form") && <button type="submit">Save switch</button>}
       </form>
       <button
+        type="button"
         id="switch-external"
         onClick={() => {
           setChecked((current) => !current);
@@ -573,6 +580,7 @@ const SwitchFixture = () => {
         Change externally
       </button>
       <button
+        type="button"
         id="switch-read-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "missing");
@@ -773,7 +781,9 @@ const ContextFixture = () => {
         onOpenChange={handleOpen}
       >
         <ContextMenuTrigger
-          render={params.has("triggerAsChild") ? <button /> : undefined}
+          render={
+            params.has("triggerAsChild") ? <button type="button" /> : undefined
+          }
           id="context-hit"
           ref={trigger}
           style={
@@ -800,6 +810,7 @@ const ContextFixture = () => {
         {popup}
       </ContextMenu>
       <button
+        type="button"
         id="context-outside"
         style={{ bottom: 8, position: "fixed", right: 8 }}
         onClick={() => {
@@ -832,7 +843,7 @@ const CollapsibleFixture = () => {
   const child = (
     <>
       <CollapsibleTrigger
-        render={params.has("asChild") ? <button /> : undefined}
+        render={params.has("asChild") ? <button type="button" /> : undefined}
         ref={trigger}
         {...(native && !body ? { "data-subject": "true", id: "subject" } : {})}
         {...(native && !body && params.get("state") === "disabled"
@@ -879,6 +890,7 @@ const CollapsibleFixture = () => {
       >
         {params.has("contentAsChild") ? (
           <button
+            type="button"
             onClick={() => {
               setChanges((n) => n + 1);
             }}
@@ -945,6 +957,7 @@ const CollapsibleFixture = () => {
         {child}
       </Collapsible>
       <button
+        type="button"
         id="collapsible-refs"
         style={{ bottom: 8, position: "fixed", right: 8 }}
         onClick={() => {
@@ -960,6 +973,7 @@ const CollapsibleFixture = () => {
         Read collapsible refs
       </button>
       <button
+        type="button"
         id="collapsible-external"
         onClick={() => {
           setOpen((value) => !value);
@@ -1172,6 +1186,7 @@ const MenubarFixture = () => {
                 <Button scale={scale} />
               ) : native || params.has("triggerAsChild") ? (
                 <button
+                  type="button"
                   style={
                     native
                       ? {
@@ -1228,6 +1243,7 @@ const MenubarFixture = () => {
         )}
       </Menubar>
       <button
+        type="button"
         id="menubar-outside"
         style={{ bottom: 8, position: "fixed", right: 8 }}
         onClick={() => {
@@ -1446,6 +1462,7 @@ const DropdownFixture = () => {
               <Button scale={scale} />
             ) : native || params.has("triggerAsChild") ? (
               <button
+                type="button"
                 style={
                   native
                     ? {
@@ -1484,6 +1501,7 @@ const DropdownFixture = () => {
         {popup}
       </DropdownMenu>
       <button
+        type="button"
         id="menu-outside"
         style={{ bottom: 8, position: "fixed", right: 8 }}
         onClick={() => {
@@ -1641,6 +1659,7 @@ const PopoverFixture = () => {
         </PopoverContent>
       </Popover>
       <button
+        type="button"
         id="popover-outside"
         style={{ bottom: 8, position: "fixed", right: 8 }}
       >
@@ -2093,6 +2112,7 @@ const DialogFixture = () => {
         </DialogContent>
       </Dialog>
       <button
+        type="button"
         id="dialog-external"
         onClick={() => {
           setOpen((current) => !current);
@@ -2103,6 +2123,7 @@ const DialogFixture = () => {
       <output aria-label="Dialog actions">{actions}</output>
       <output aria-label="Dialog changes">{changes}</output>
       <button
+        type="button"
         id="dialog-read-refs"
         onClick={() => {
           setActions(
@@ -2501,6 +2522,7 @@ const Fixture = () => {
         <output aria-label="Selected tab">{tabsValue}</output>
         <output aria-label="Tab changes">{count}</output>
         <button
+          type="button"
           id="select-last-tab"
           onClick={() => {
             setTabsValue(`tab-${titles.length - 1}`);
@@ -2509,6 +2531,7 @@ const Fixture = () => {
           Select last tab externally
         </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(
@@ -2553,6 +2576,7 @@ const Fixture = () => {
           {undefined}
         </Progress>
         <button
+          type="button"
           id="update-progress"
           onClick={() => {
             setProgressValue(Number(params.get("next") ?? 100));
@@ -2561,6 +2585,7 @@ const Fixture = () => {
           Update progress
         </button>
         <button
+          type="button"
           id="unknown-progress"
           onClick={() => {
             setProgressValue(null);
@@ -2569,6 +2594,7 @@ const Fixture = () => {
           Unknown progress
         </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(progressRef.current?.tagName ?? "missing");
@@ -2653,6 +2679,7 @@ const Fixture = () => {
           )}
         </ScrollArea>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(
@@ -2667,6 +2694,7 @@ const Fixture = () => {
         <output aria-label="Activations">{count}</output>
         <output aria-label="Pointer events">{commits}</output>
         <button
+          type="button"
           id="shrink-content"
           onClick={() => {
             setScrollContent(24);
@@ -2675,6 +2703,7 @@ const Fixture = () => {
           Shrink content
         </button>
         <button
+          type="button"
           id="grow-content"
           onClick={() => {
             setScrollContent(480);
@@ -2689,7 +2718,9 @@ const Fixture = () => {
   if (params.get("component") === "separator") {
     return (
       <>
-        <button id="before">Before separator</button>
+        <button type="button" id="before">
+          Before separator
+        </button>
         <Separator
           render={params.has("asChild") ? <hr /> : undefined}
           id="subject"
@@ -2707,8 +2738,11 @@ const Fixture = () => {
         >
           {undefined}
         </Separator>
-        <button id="after">After separator</button>
+        <button type="button" id="after">
+          After separator
+        </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(separatorRef.current?.tagName ?? "missing");
@@ -2754,6 +2788,7 @@ const Fixture = () => {
           defaultValue="Minecraft"
         />
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(labelRef.current?.tagName ?? "missing");
@@ -2812,6 +2847,7 @@ const Fixture = () => {
         <output aria-label="Textarea changes">{count}</output>
         <output aria-label="Submissions">{submitted}</output>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(textareaRef.current?.tagName ?? "missing");
@@ -2847,6 +2883,7 @@ const Fixture = () => {
                 {params.has("action") && (
                   <CardAction>
                     <button
+                      type="button"
                       onClick={() => {
                         setCount((current) => current + 1);
                       }}
@@ -2876,6 +2913,7 @@ const Fixture = () => {
           )}
         </Card>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(cardRef.current?.tagName ?? "missing");
@@ -2900,6 +2938,7 @@ const Fixture = () => {
           <TooltipTrigger
             render={
               <button
+                type="button"
                 id="tooltip-trigger"
                 style={{
                   marginTop: params.get("edge") === "top" ? 0 : 240,
@@ -2938,8 +2977,11 @@ const Fixture = () => {
             )}
           </TooltipContent>
         </Tooltip>
-        <button id="next">Next focus target</button>
+        <button type="button" id="next">
+          Next focus target
+        </button>
         <button
+          type="button"
           id="external-open"
           onClick={() => {
             setTooltipOpen(true);
@@ -2948,6 +2990,7 @@ const Fixture = () => {
           Open externally
         </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(tooltipRef.current?.tagName ?? "missing");
@@ -3002,7 +3045,9 @@ const Fixture = () => {
             }}
             data-subject="true"
           />
-          <button id="submit">Submit</button>
+          <button type="submit" id="submit">
+            Submit
+          </button>
           <button type="reset" id="reset">
             Reset
           </button>
@@ -3010,8 +3055,11 @@ const Fixture = () => {
         <output aria-label="Input changes">{count}</output>
         <output aria-label="Input value">{inputValue}</output>
         <output aria-label="Submissions">{submitted}</output>
-        <button id="next">Next focus target</button>
+        <button type="button" id="next">
+          Next focus target
+        </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(inputRef.current?.tagName ?? "missing");
@@ -3021,6 +3069,7 @@ const Fixture = () => {
         </button>
         <output aria-label="Root ref">{refName}</output>
         <button
+          type="button"
           id="imperative"
           onClick={() => {
             if (inputRef.current) {
@@ -3092,8 +3141,11 @@ const Fixture = () => {
         <output aria-label="Changes">{count}</output>
         <output aria-label="Commits">{commits}</output>
         <output aria-label="Root ref">{refName}</output>
-        <button id="next">Next focus target</button>
+        <button type="button" id="next">
+          Next focus target
+        </button>
         <button
+          type="button"
           id="read-ref"
           onClick={() => {
             setRefName(sliderRef.current?.id ?? "missing");
@@ -3125,7 +3177,9 @@ const Fixture = () => {
           data-subject="true"
         />
         <output aria-label="Changes">{count}</output>
-        <button id="next">Next focus target</button>
+        <button type="button" id="next">
+          Next focus target
+        </button>
       </>
     );
   }

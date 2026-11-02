@@ -51,6 +51,7 @@ export const DialogFooterFixture = () => {
         </DialogContent>
       </Dialog>
       <button
+        type="button"
         id="inspect-footer"
         onClick={() => {
           setTag(ref.current?.tagName ?? "none");

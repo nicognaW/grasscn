@@ -7,7 +7,7 @@ const groupRef = React.createRef<HTMLDivElement>();
 
 const toggle = (
   <Toggle
-    render={<button />}
+    render={<button type="button" />}
     ref={itemRef}
     scale={3}
     pressed

@@ -84,6 +84,7 @@ export const MarkerFixture = () => {
       </Marker>
       <output id="events">{count}</output>
       <button
+        type="button"
         id="read-marker-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");

@@ -242,6 +242,7 @@ export const QuestionnaireFixture = () => {
         </QuestionnaireActions>
       </Questionnaire>
       <button
+        type="button"
         id="read-questionnaire-ref"
         onClick={() => {
           setTag(ref.current?.tagName ?? "");
@@ -251,6 +252,7 @@ export const QuestionnaireFixture = () => {
       </button>
       <output id="questionnaire-ref">{tag}</output>
       <button
+        type="button"
         id="force-features"
         onClick={() => {
           setForced("features");

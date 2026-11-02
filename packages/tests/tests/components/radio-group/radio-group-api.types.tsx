@@ -23,7 +23,7 @@ const valid = (
 
 const composition = (
   <RadioGroup render={<fieldset />}>
-    <RadioGroupItem value="survival" render={<button />}>
+    <RadioGroupItem value="survival" render={<button type="button" />}>
       {undefined}
     </RadioGroupItem>
   </RadioGroup>

@@ -157,6 +157,7 @@ export const InputGroupFixture = () => {
         )}
       </InputGroup>
       <button
+        type="submit"
         id="read-ref"
         onClick={(event) => {
           event.preventDefault();

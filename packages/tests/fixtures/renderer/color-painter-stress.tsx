@@ -20,6 +20,7 @@ export const ColorPainterStressFixture = () => {
       <div style={{ bottom: 0, position: "fixed", right: 0 }}>
         {([1, 2, 3] as const).map((value) => (
           <button
+            type="button"
             key={value}
             onClick={() => {
               setScale(value);
@@ -29,6 +30,7 @@ export const ColorPainterStressFixture = () => {
           </button>
         ))}
         <button
+          type="button"
           onClick={() => {
             setNoise((value) => !value);
           }}
@@ -36,6 +38,7 @@ export const ColorPainterStressFixture = () => {
           Toggle siblings
         </button>
         <button
+          type="button"
           onClick={() => {
             setMounted((value) => !value);
           }}

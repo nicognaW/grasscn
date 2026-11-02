@@ -132,10 +132,11 @@ export const CarouselFixture = () => {
           }}
         />
       </Carousel>
-      <button id="api" onClick={() => api?.scrollTo(2, true)}>
+      <button type="button" id="api" onClick={() => api?.scrollTo(2, true)}>
         API scroll
       </button>
       <button
+        type="button"
         id="add"
         onClick={() => {
           setCount((v) => v + 1);
@@ -143,7 +144,7 @@ export const CarouselFixture = () => {
       >
         Add slide
       </button>
-      <button id="reinit" onClick={() => api?.reInit()}>
+      <button type="button" id="reinit" onClick={() => api?.reInit()}>
         Reinit
       </button>
       <output id="index">{index}</output>
