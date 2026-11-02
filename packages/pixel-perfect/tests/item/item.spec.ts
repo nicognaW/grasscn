@@ -6,6 +6,25 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Inputs read by this file's closed Item-row, Label-title and Separator routes. */
+interface ItemComparisonCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+  label?: string;
+  text?: string;
+  placeholder?: string;
+  selected?: boolean;
+  alignment?: string;
+  wrapWidth?: number;
+}
+
+interface ItemComparisonManifest {
+  cases: ItemComparisonCase[];
+}
+
 test.describe.configure({ mode: "parallel" });
 
 for (const [part, directory] of [
@@ -15,9 +34,11 @@ for (const [part, directory] of [
 ]) {
   const base = `tests/reference/${directory}`;
 
+  // SAFETY: This closed row/item, title/label and separator/separator table reads only the retained manifests whose real shared and variant fields define this local projection.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact finite retained constituent-manifest boundary; runtime read/parse phase is preserved.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${base}/manifest.json`), "utf-8")
-  );
+  ) as ItemComparisonManifest;
 
   test(`Item ${part} comparator detects one changed pixel`, () => {
     const expected = PNG.sync.read(
