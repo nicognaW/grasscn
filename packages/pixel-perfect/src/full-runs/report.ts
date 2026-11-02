@@ -5,30 +5,68 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { normalizeCasePath } from "@grasscn/tests/case-paths";
+import type { BrowserVerification } from "@grasscn/tests/checkpoints";
 import {
   fullRoot,
-  fullRunPaths,
   readRunPlan,
   readRunState,
   readRunAttempts,
 } from "@ppt/full-runs/history";
+import type { FullVerificationReceipt } from "@ppt/full-runs/history";
+import { readIssuePages, readCommentPages } from "@ppt/full-runs/report-api";
+import {
+  readRetainedCatalogue,
+  readRetainedSummary,
+  readRetainedBrowserReport,
+  readFindingReview,
+  readPublicationJournal,
+} from "@ppt/full-runs/report-readers";
+import type {
+  ReportApiResponse,
+  FullCaseRecord,
+  FullCaseHistory,
+  FullCompletedCase,
+  FullReportDraft,
+  CompletedRun,
+  RetainedResult,
+  GitHubFindingIssue,
+  GitHubReportComment,
+  PublicationJournal,
+  PublishedFinding,
+  FindingLink,
+  FindingRecord,
+  FindingReviewDraft,
+  GitHubPublicationBody,
+  ReportDocument,
+  ReportComparable,
+  PreparedReport,
+  PublishedReport,
+  RepairHandoff,
+} from "@ppt/full-runs/report-types";
 import {
   evidenceLocation,
-  readRunPlanPaths,
   validateReview,
   findingBody,
 } from "@ppt/full-runs/review";
+import type { RetainedArtifact } from "@ppt/full-runs/review";
 import { caseKey } from "@ppt/selection/suite";
+
 export { validateReview } from "@ppt/full-runs/review";
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
-const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
+// Retain original JavaScript truthiness for legacy or incomplete receipt fields.
+const hasText = (value: string | null | undefined): value is string =>
+  Boolean(value);
 
-const read = (file) =>
-  JSON.parse(fs.readFileSync(file, "utf-8").replace(/^\uFEFF/, ""));
+const hasNonzeroNumber = (value: number | null | undefined): value is number =>
+  Boolean(value);
 
-const api = (args) =>
-  JSON.parse(
+const hash = (bytes: string | Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+const json = (value: ReportDocument) => `${JSON.stringify(value, null, 2)}\n`;
+
+const api = (args: string[]) => {
+  const parsed: unknown = JSON.parse(
     execFileSync("gh", ["api", ...args], {
       cwd: fullRoot,
       encoding: "utf-8",
@@ -36,15 +74,21 @@ const api = (args) =>
     })
   );
 
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  // SAFETY: these endpoints return only issue/comment records or paginated arrays of those records.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  return parsed as ReportApiResponse;
+};
 
-function atomic(file, value) {
+const same = (a: ReportComparable, b: ReportComparable) =>
+  JSON.stringify(a) === JSON.stringify(b);
+
+const atomic = function atomic(file: string, value: ReportDocument) {
   const temp = `${file}.${process.pid}.tmp`;
   fs.writeFileSync(temp, json(value));
   fs.renameSync(temp, file);
-}
+};
 
-function beneath(root, file) {
+const beneath = function beneath(root: string, file: string) {
   const resolved = fs.realpathSync(file);
   const parent = fs.realpathSync(root);
 
@@ -53,17 +97,23 @@ function beneath(root, file) {
   }
 
   return resolved;
-}
+};
 
-function evidence(root, file) {
-  file = beneath(root, file);
+const evidence = function evidence(root: string, file: string) {
+  const retainedFile = beneath(root, file);
 
-  return { localPath: file, sha256: hash(fs.readFileSync(file)) };
-}
+  return {
+    localPath: retainedFile,
+    sha256: hash(fs.readFileSync(retainedFile)),
+  };
+};
 
 /** Read historical evidence only. Never calls authorizeFullRun or launches a browser. */
-export function completedRunReport(number) {
+export const completedRunReport = function completedRunReport(
+  number: string | number | undefined
+) {
   const run = readRunPlan(number);
+  const testedCommit = run.plan.commit;
   const state = readRunState(number);
 
   if (run.plan.repository.toLowerCase() !== run.repo.toLowerCase()) {
@@ -72,7 +122,7 @@ export function completedRunReport(number) {
 
   if (
     state?.phase !== "completed" ||
-    !["passed", "failed"].includes(state.outcome)
+    !["passed", "failed"].some((outcome) => outcome === state.outcome)
   ) {
     throw new Error(
       "Full collection is incomplete; defer finding publication and repairs"
@@ -82,18 +132,18 @@ export function completedRunReport(number) {
   if (
     state.issue !== run.number ||
     state.repository !== run.repo ||
-    state.commit !== run.plan.commit ||
+    state.commit !== testedCommit ||
     state.planHash !== run.planHash ||
     !same(state.environment, run.plan.environment) ||
-    !state.executionThread ||
-    !state.approval?.eventId
+    !hasText(state.executionThread) ||
+    !hasNonzeroNumber(state.approval?.eventId)
   ) {
     throw new Error(
       "Completed state does not bind this plan, snapshot, environment and executor"
     );
   }
 
-  const attempts = readRunAttempts(number).toSorted((a, b) =>
+  const attempts = readRunAttempts(number).sort((a, b) =>
     a.directory.localeCompare(b.directory)
   );
 
@@ -133,15 +183,15 @@ export function completedRunReport(number) {
     throw new Error("Duplicate Full scope identities");
   }
 
-  const records = new Map();
-  const history = new Map();
-  const sourceHashes = new Map();
-  const ownerSources = new Map();
-  const definitionHashes = new Map();
+  const records = new Map<string | undefined, FullCaseRecord>();
+  const history = new Map<string, FullCaseHistory[]>();
+  const sourceHashes = new Map<string, Set<string>>();
+  const ownerSources = new Map<string, string>();
+  const definitionHashes = new Map<string, Set<string>>();
   const files = new Set(last.fullCases.map((test) => test.file));
-  const retainedEvidence = [];
+  const retainedEvidence: RetainedArtifact[] = [];
 
-  let environment;
+  let environment: FullVerificationReceipt["environment"] | undefined;
 
   for (const attempt of attempts) {
     beneath(run.paths.attempts, attempt.directory);
@@ -163,13 +213,14 @@ export function completedRunReport(number) {
         );
       }
 
-      continue; // A guard can stop before verification starts. This attempt contributes no results.
+      // A guard can stop before verification starts. This attempt contributes no results.
+      continue;
     }
 
     const binding = receipt.environment?.fullRun;
 
     if (
-      receipt.source?.commit !== run.plan.commit ||
+      receipt.source?.commit !== testedCommit ||
       receipt.browserScope !== "full" ||
       binding?.issue !== run.number ||
       binding?.planHash !== run.planHash ||
@@ -189,9 +240,9 @@ export function completedRunReport(number) {
       "ci",
       "webgl",
       "edge",
-    ]) {
+    ] as const) {
       if (!same(receipt.environment[field], run.plan.environment[field])) {
-        throw Error(`Receipt environment differs from approved ${field}`);
+        throw new Error(`Receipt environment differs from approved ${field}`);
       }
     }
 
@@ -215,7 +266,7 @@ export function completedRunReport(number) {
       throw new Error("Attempt environment/tree changed across resumes");
     }
 
-    environment = receipt.environment;
+    ({ environment } = receipt);
 
     if (receipt.sourceAfter && !same(receipt.sourceAfter, receipt.source)) {
       throw new Error("Source changed during collection");
@@ -259,7 +310,9 @@ export function completedRunReport(number) {
         path.join(directory, "expected.json")
       );
 
-      const expected = read(expectedFile);
+      // SAFETY: the retained checkpoint reporter writes this declaration catalogue; existing schema/source checks remain below.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const expected = readRetainedCatalogue(expectedFile);
 
       if (
         ![2, 3].includes(expected.schemaVersion) ||
@@ -284,7 +337,12 @@ export function completedRunReport(number) {
         lines.pop();
       }
 
-      const journal = lines.filter(Boolean).map((line) => JSON.parse(line));
+      const journal = lines.filter(Boolean).map(
+        (line) =>
+          // SAFETY: each complete journal line is a checkpoint reporter result with existing identity checks below.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+          JSON.parse(line) as RetainedResult
+      );
 
       const declarations = new Map(
         expected.tests.map((test) => [test.id, test])
@@ -292,23 +350,17 @@ export function completedRunReport(number) {
 
       if (!sourceHashes.has(file)) {
         // Resolve the path in the approved snapshot, including pre-extraction runs.
-        const candidates = receipt.pptOnly
-          ? [`packages/pixel-perfect/tests/${file}`]
-          : [
-              `packages/pixel-perfect/tests/${file}`,
-              `packages/tests/tests/${file}`,
-            ];
+        const candidates =
+          receipt.pptOnly === true
+            ? [`packages/pixel-perfect/tests/${file}`]
+            : [
+                `packages/pixel-perfect/tests/${file}`,
+                `packages/tests/tests/${file}`,
+              ];
 
         const sources = execFileSync(
           "git",
-          [
-            "ls-tree",
-            "-r",
-            "--name-only",
-            run.plan.commit,
-            "--",
-            ...candidates,
-          ],
+          ["ls-tree", "-r", "--name-only", testedCommit, "--", ...candidates],
           { cwd: fullRoot, encoding: "utf-8" }
         )
           .trim()
@@ -325,7 +377,7 @@ export function completedRunReport(number) {
 
         const bytes = execFileSync(
           "git",
-          ["show", `${run.plan.commit}:${sources[0]}`],
+          ["show", `${testedCommit}:${sources[0]}`],
           { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
         );
 
@@ -335,7 +387,7 @@ export function completedRunReport(number) {
           file,
           new Set([
             hash(bytes),
-            hash(bytes.toString("utf-8").replaceAll(/\r?\n/g, "\r\n")),
+            hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
           ])
         );
       }
@@ -343,9 +395,13 @@ export function completedRunReport(number) {
       for (const declaration of expected.tests) {
         const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
 
+        // SAFETY: this file's source-hash cache is initialized immediately above.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const approvedSourceHashes = sourceHashes.get(file) as Set<string>;
+
         if (
           !scope.has(key) ||
-          !sourceHashes.get(file).has(declaration.sourceSha256)
+          !approvedSourceHashes.has(declaration.sourceSha256)
         ) {
           throw new Error(
             "Declaration source or case identity differs from approved scope"
@@ -365,8 +421,8 @@ export function completedRunReport(number) {
           }
         } else {
           if (
-            !expected.sourceRoot ||
-            !expected.repositoryRoot ||
+            !hasText(expected.sourceRoot) ||
+            !hasText(expected.repositoryRoot) ||
             !Array.isArray(declaration.sourceFiles)
           ) {
             throw new Error("Checkpoint is missing source-root binding");
@@ -444,7 +500,7 @@ export function completedRunReport(number) {
             if (!definitionHashes.has(repositoryFile)) {
               const bytes = execFileSync(
                 "git",
-                ["show", `${run.plan.commit}:${repositoryFile}`],
+                ["show", `${testedCommit}:${repositoryFile}`],
                 { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
               );
 
@@ -452,12 +508,18 @@ export function completedRunReport(number) {
                 repositoryFile,
                 new Set([
                   hash(bytes),
-                  hash(bytes.toString("utf-8").replaceAll(/\r?\n/g, "\r\n")),
+                  hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
                 ])
               );
             }
 
-            if (!definitionHashes.get(repositoryFile).has(source.sha256)) {
+            // SAFETY: this repository source's hash cache is populated above.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+            const approvedDefinitionHashes = definitionHashes.get(
+              repositoryFile
+            ) as Set<string>;
+
+            if (!approvedDefinitionHashes.has(source.sha256)) {
               throw new Error(
                 "Checkpoint definition source differs from approved snapshot"
               );
@@ -518,9 +580,13 @@ export function completedRunReport(number) {
               throw new Error("Invalid artifact filename");
             }
 
+            // SAFETY: artifact iteration comes from this same checkpoint verification attachment.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+            const verification = record.verification as BrowserVerification;
+
             const result = evidence(
               attempt.directory,
-              path.join(record.verification.outputDirectory, artifact.file)
+              path.join(verification.outputDirectory, artifact.file)
             );
 
             if (result.sha256 !== artifact.pngSha256) {
@@ -531,6 +597,8 @@ export function completedRunReport(number) {
           }
         );
 
+        // SAFETY: these ordered entries define exactly the owned Full case-record protocol.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         const result = Object.fromEntries([
           ["key", key],
           ["file", file],
@@ -543,7 +611,7 @@ export function completedRunReport(number) {
           ["verification", record.verification],
           ["journal", journalFile],
           ["attempt", attempt.directory],
-        ]);
+        ]) as FullCaseRecord;
 
         const previous = records.get(key);
 
@@ -555,14 +623,18 @@ export function completedRunReport(number) {
         }
 
         records.set(key, result);
+        // SAFETY: these ordered entries preserve one exact case-history record.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         history.set(key, [
           ...(history.get(key) ?? []),
+          // SAFETY: these ordered entries define the owned case-history record.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           Object.fromEntries([
             ["status", record.status],
             ["expectedStatus", record.expectedStatus],
             ["retry", record.retry],
             ["attempt", attempt.directory],
-          ]),
+          ]) as FullCaseHistory,
         ]);
 
         if (record.status !== "interrupted") {
@@ -576,14 +648,18 @@ export function completedRunReport(number) {
           path.join(directory, "summary.json")
         );
 
-        const summary = read(summaryFile);
+        // SAFETY: the checkpoint reporter writes this terminal summary; original completeness checks remain below.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const summary = readRetainedSummary(summaryFile);
 
         const browserFile = beneath(
           attempt.directory,
           path.join(directory, "playwright.json")
         );
 
-        const browser = read(browserFile);
+        // SAFETY: Playwright JSON reporter writes its root errors array; original completion checks remain below.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const browser = readRetainedBrowserReport(browserFile);
 
         retainedEvidence.push(
           evidence(attempt.directory, summaryFile),
@@ -592,9 +668,9 @@ export function completedRunReport(number) {
 
         if (
           !["passed", "failed"].includes(summary.status) ||
-          summary.changedSources?.length ||
-          summary.counts?.interrupted ||
-          browser.errors?.length ||
+          hasNonzeroNumber(summary.changedSources?.length) ||
+          hasNonzeroNumber(summary.counts?.interrupted) ||
+          hasNonzeroNumber(browser.errors?.length) ||
           (raw && !raw.endsWith("\n")) ||
           expected.tests.some((test) => !terminal.has(test.id))
         ) {
@@ -615,7 +691,7 @@ export function completedRunReport(number) {
           throw new Error("Retained pass has no source-bound attempt");
         }
 
-        const old = read(
+        const old = readRetainedCatalogue(
           beneath(
             from.directory,
             path.join(from.directory, "checkpoints", file, "expected.json")
@@ -655,7 +731,7 @@ export function completedRunReport(number) {
 
   for (const file of files) {
     if (!last.checks?.some((check) => check.name === `browser:${file}`)) {
-      throw Error("Final receipt did not finish every Full file");
+      throw new Error("Final receipt did not finish every Full file");
     }
   }
 
@@ -674,35 +750,41 @@ export function completedRunReport(number) {
       throw new Error(`Uncollected Full case: ${key}`);
     }
 
+    // SAFETY: every case record is inserted together with its history in the journal loop.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const caseHistory = history.get(key) as FullCaseHistory[];
+
+    // SAFETY: the owned result plus these ordered derived fields forms a complete final case.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     return Object.fromEntries([
       ...Object.entries(result),
-      ["history", history.get(key)],
+      ["history", caseHistory],
       ["unexpected", result.status !== result.expectedStatus],
       [
         "flaky",
         ["passed", "failed", "timedOut"].includes(result.status) &&
           result.status === result.expectedStatus &&
-          history
-            .get(key)
-            .some(
-              (item) =>
-                ["passed", "failed", "timedOut"].includes(item.status) &&
-                item.status !== item.expectedStatus
-            ),
+          caseHistory.some(
+            (item) =>
+              ["passed", "failed", "timedOut"].includes(item.status) &&
+              item.status !== item.expectedStatus
+          ),
       ],
-    ]);
+    ]) as FullCompletedCase;
   });
 
   if (cases.some((test) => test.unexpected) === last.passed) {
     throw new Error("Receipt outcome disagrees with final case results");
   }
 
-  const report = Object.fromEntries([
+  // SAFETY: these ordered entries define the report before its evidence hash is appended.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const reportDraft = Object.fromEntries([
     ["schemaVersion", 1],
     ["runIssue", run.number],
     ["repository", run.repo],
     ["issueUrl", run.issue.html_url],
-    ["testedCommit", run.plan.commit],
+    ["testedCommit", testedCommit],
     ["planHash", run.planHash],
     ["scope", "full"],
     ["environment", run.plan.environment],
@@ -715,26 +797,34 @@ export function completedRunReport(number) {
     ["flaky", cases.filter((test) => test.flaky)],
     [
       "skipped",
-      cases.filter((test) => test.status === "skipped").map((test) => test.key),
+      cases.flatMap((test) => (test.status === "skipped" ? [test.key] : [])),
     ],
     ["evidence", retainedEvidence],
-  ]);
+  ]) as FullReportDraft;
 
-  report.evidenceHash = hash(json(report));
+  const report = Object.assign(reportDraft, {
+    evidenceHash: hash(json(reportDraft)),
+  });
 
+  // SAFETY: these ordered entries return the bound run and its completed report.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   return Object.fromEntries([
     ["run", run],
     ["report", report],
-  ]);
-}
+  ]) as CompletedRun;
+};
 
-export function prepareReport(number) {
+export const prepareReport = function prepareReport(
+  number: string | number | undefined
+) {
   const { run, report } = completedRunReport(number);
   const directory = path.join(run.paths.directory, "reporting");
   fs.mkdirSync(directory, { recursive: true });
   const file = path.join(directory, `report-${report.evidenceHash}.json`);
   atomic(file, report);
 
+  // SAFETY: these ordered entries define the prepared review template, including contributor instructions.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const review = Object.fromEntries([
     ["schemaVersion", 1],
     ["runIssue", run.number],
@@ -747,7 +837,7 @@ export function prepareReport(number) {
       "instructions",
       "Inspect evidence and existing issues. Account for every failure exactly once. Each semantic problemKey needs a cause hypothesis and evidence; shared error text alone is not a root cause. Optional existingIssue requires reuseReason. No repairs until collection completes.",
     ],
-  ]);
+  ]) as FindingReviewDraft;
 
   const reviewFile = path.join(directory, `review-${report.evidenceHash}.json`);
 
@@ -755,18 +845,25 @@ export function prepareReport(number) {
     atomic(reviewFile, review);
   }
 
+  // SAFETY: these ordered entries are the report preparation command result.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   return Object.fromEntries([
     ["report", file],
     ["review", reviewFile],
     ["failures", report.failures.length],
     ["flaky", report.flaky.length],
     ["publishing", false],
-  ]);
-}
+  ]) as PreparedReport;
+};
 
-export function publishReport(number, reviewFile) {
+export const publishReport = function publishReport(
+  number: string | number | undefined,
+  reviewFile: string
+) {
   const { run, report } = completedRunReport(number);
-  const review = read(reviewFile);
+  // SAFETY: this file is the contributor's completed finding-review document, validated immediately below.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const review = readFindingReview(reviewFile);
 
   validateReview(report, review);
   const directory = path.join(run.paths.directory, "reporting");
@@ -780,8 +877,12 @@ export function publishReport(number, reviewFile) {
       { flag: "wx" }
     );
   } catch (error) {
-    if (error.code === "EEXIST") {
-      throw Error(
+    // SAFETY: the try block only performs the exclusive Node filesystem lock write.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const failure = error as NodeJS.ErrnoException;
+
+    if (failure.code === "EEXIST") {
+      throw new Error(
         `Another publisher or stale publication claim exists: ${lock}; inspect before removing it`,
         { cause: error }
       );
@@ -792,11 +893,17 @@ export function publishReport(number, reviewFile) {
 
   const journalFile = path.join(directory, "publication.json");
 
-  const journal = fs.existsSync(journalFile)
-    ? read(journalFile)
+  // SAFETY: prior publication writes this journal; preserve all extra persisted fields.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const journal: PublicationJournal = fs.existsSync(journalFile)
+    ? readPublicationJournal(journalFile)
     : { groups: {} };
 
-  function writeApi(endpoint, body, method = "POST") {
+  const writeApi = function writeApi(
+    endpoint: string,
+    body: GitHubPublicationBody,
+    method = "POST"
+  ) {
     const file = path.join(directory, `request-${process.pid}.json`);
     fs.writeFileSync(file, json(body));
 
@@ -805,12 +912,25 @@ export function publishReport(number, reviewFile) {
     } finally {
       fs.rmSync(file, { force: true });
     }
-  }
+  };
+
+  const writeIssueComment = (
+    endpoint:
+      | `repos/${string}/issues/${number}/comments`
+      | `repos/${string}/issues/comments/${number}`,
+    body: { body: string },
+    method = "POST"
+  ) =>
+    // SAFETY: both comment create/update endpoints return REST issue-comment records.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    writeApi(endpoint, body, method) as GitHubReportComment;
 
   try {
     // Paginate bodies rather than relying on eventually indexed search. After an ambiguous
     // API error, stop; a later invocation scans operation markers before retrying writes.
-    const issues = api([
+    // SAFETY: the paginated issue-list endpoint returns arrays of REST issue records.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    const issues = readIssuePages([
       "--paginate",
       "--slurp",
       `repos/${run.repo}/issues?state=all&per_page=100`,
@@ -818,8 +938,10 @@ export function publishReport(number, reviewFile) {
       .flat()
       .filter((issue) => !issue.pull_request);
 
+    // SAFETY: the paginated repository-comment endpoint returns arrays of REST comment records.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const repositoryComments = review.groups.length
-      ? api([
+      ? readCommentPages([
           "--paginate",
           "--slurp",
           `repos/${run.repo}/issues/comments?per_page=100`,
@@ -827,7 +949,7 @@ export function publishReport(number, reviewFile) {
       : [];
 
     atomic(evidenceLocation(report), report);
-    const links = [];
+    const links: FindingLink[] = [];
 
     for (const group of review.groups) {
       const identity = hash(`${run.repo.toLowerCase()}\n${group.problemKey}`);
@@ -840,7 +962,8 @@ export function publishReport(number, reviewFile) {
           issue.body?.includes(marker) ??
           repositoryComments.some(
             (comment) =>
-              comment.issue_url === issue.url && comment.body?.includes(marker)
+              comment.issue_url === issue.url &&
+              comment.body?.includes(marker) === true
           )
       );
 
@@ -850,9 +973,9 @@ export function publishReport(number, reviewFile) {
         );
       }
 
-      let issue = matches[0];
+      let issue = matches.at(0);
 
-      if (group.existingIssue) {
+      if (hasNonzeroNumber(group.existingIssue)) {
         const chosen = issues.find(
           (item) => item.number === group.existingIssue
         );
@@ -871,101 +994,142 @@ export function publishReport(number, reviewFile) {
       }
 
       if (!issue) {
+        // SAFETY: this exact issue-create body and response follow GitHub issue endpoint contracts.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         issue = writeApi(
           `repos/${run.repo}/issues`,
+          // SAFETY: these ordered entries are the issue-create title, body and labels request.
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           Object.fromEntries([
             ["title", group.title],
             ["body", `${marker}\n\n${findingBody(report, group)}`],
             ["labels", ["needs-triage"]],
-          ])
-        );
+          ]) as GitHubPublicationBody
+        ) as GitHubFindingIssue;
         issues.push(issue);
       }
 
+      // SAFETY: these ordered entries define the retained finding and its reviewed evidence binding.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       atomic(
         path.join(directory, `finding-${hash(group.problemKey)}.json`),
+        // SAFETY: these ordered entries bind the reviewed finding to its report.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         Object.fromEntries([
           ["report", evidenceLocation(report)],
           ["reportSha256", hash(json(report))],
           ["reviewedBy", review.reviewedBy],
           ["group", group],
-        ])
+        ]) as FindingRecord
       );
-      journal.groups[group.problemKey] = Object.fromEntries([
+
+      // SAFETY: these ordered entries bind this reviewed problem to its published issue.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      const publishedGroup = Object.fromEntries([
         ["issue", issue.number],
         ["url", issue.html_url],
         ["evidenceHash", report.evidenceHash],
         ["groupHash", hash(json(group))],
-      ]);
+      ]) as PublishedFinding;
+
+      journal.groups[group.problemKey] = publishedGroup;
       atomic(journalFile, journal);
 
-      const comments = api([
+      // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
+
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+
+      const comments = readCommentPages([
         "--paginate",
         "--slurp",
         `repos/${run.repo}/issues/${issue.number}/comments`,
       ]).flat();
 
-      if (!comments.some((comment) => comment.body?.includes(occurrence))) {
-        const comment = writeApi(
+      if (
+        !comments.some((comment) => comment.body?.includes(occurrence) === true)
+      ) {
+        // SAFETY: the create-comment endpoint returns a REST issue-comment record.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+        const comment = writeIssueComment(
           `repos/${run.repo}/issues/${issue.number}/comments`,
           {
-            body: `${marker}\n${occurrence}\n\n${group.reuseReason ? `Reuse rationale: ${group.reuseReason}\n\n` : ""}${findingBody(report, group)}`,
+            body: `${marker}\n${occurrence}\n\n${hasText(group.reuseReason) ? `Reuse rationale: ${group.reuseReason}\n\n` : ""}${findingBody(report, group)}`,
           }
         );
 
-        journal.groups[group.problemKey].comment = comment.id;
+        publishedGroup.comment = comment.id;
         atomic(journalFile, journal);
       }
 
+      // SAFETY: these ordered entries are the finding link shown in the report.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
       links.push(
+        // SAFETY: these ordered entries define the problem, issue URL and state link.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
         Object.fromEntries([
           ["problem", group.problemKey],
           ["issue", issue.html_url],
           ["state", issue.state],
-        ])
+        ]) as FindingLink
       );
     }
 
     const marker = `<!-- grasscn-full-report:v1:${run.number}:${run.planHash} -->`;
     const body = `${marker}\n\nFull collection completed: **${report.outcome}** against local commit ${report.testedCommit}. Scope: ${report.total} Full cases; ${report.failures.length} unexpected final results, ${report.flaky.length} recovered/flaky cases, ${report.skipped.length} skipped. Skips are not passes.\n\nPlan hash: ${report.planHash}\nExecution session: ${report.executionSession ?? report.executionThread}\nEnvironment: ${JSON.stringify(report.environment)}\nReviewed by: ${review.reviewedBy}\nEvidence bundle sha256 identity: ${report.evidenceHash}\n\n${links.map((link) => `- ${link.problem}: ${link.issue} (${link.state}; no automatic reopening)`).join("\n") || "No unexpected final failures."}\n\nFlaky case identities: ${report.flaky.length} (complete identities in local report bundle)\nSkipped case identities: ${report.skipped.length} (complete identities in local report bundle)\n\nLocal retained evidence (not uploaded):\n${evidenceLocation(report)} (file sha256 ${hash(json(report))}); contains every attempt receipt/journal/artifact path and recorded sha256\n\nThese results apply only to this Full snapshot. Base coverage is separate. Findings enter the normal work queue; merging is not blocked. Repairs may use any suitable session after completion. A Full rerun needs a new issue, human approval and independent execution session.\n`;
 
-    const comments = api([
+    // SAFETY: the paginated comment endpoint returns arrays of REST issue-comment records.
+
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+
+    const comments = readCommentPages([
       "--paginate",
       "--slurp",
       `repos/${run.repo}/issues/${run.number}/comments`,
     ]).flat();
 
-    const existing = comments.filter((comment) =>
-      comment.body?.includes(marker)
+    const existing = comments.filter(
+      (comment) => comment.body?.includes(marker) === true
     );
 
     if (existing.length > 1) {
       throw new Error("Duplicate run report markers require review");
     }
 
+    // SAFETY: comment update/create endpoints both return a REST issue-comment record.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     const comment = existing.length
-      ? writeApi(
+      ? writeIssueComment(
           `repos/${run.repo}/issues/comments/${existing[0].id}`,
           { body },
           "PATCH"
         )
-      : writeApi(`repos/${run.repo}/issues/${run.number}/comments`, { body });
+      : writeIssueComment(`repos/${run.repo}/issues/${run.number}/comments`, {
+          body,
+        });
 
     journal.report = { comment: comment.id, evidenceHash: report.evidenceHash };
     atomic(journalFile, journal);
 
+    // SAFETY: these ordered entries are the publication command result.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     return Object.fromEntries([
       ["reportComment", comment.html_url],
       ["findings", links],
-    ]);
+    ]) as PublishedReport;
   } finally {
     fs.rmSync(lock, { force: true });
   }
-}
+};
 
-export function repairHandoff(number, reviewFile, problemKey) {
+export const repairHandoff = function repairHandoff(
+  number: string | number | undefined,
+  reviewFile: string,
+  problemKey: string | undefined
+) {
   const { run, report } = completedRunReport(number);
-  const review = read(reviewFile);
+  // SAFETY: this file is the contributor's completed finding-review document, validated immediately below.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+  const review = readFindingReview(reviewFile);
 
   validateReview(report, review);
   const group = review.groups.find((item) => item.problemKey === problemKey);
@@ -979,16 +1143,18 @@ export function repairHandoff(number, reviewFile, problemKey) {
 
   const journalFile = path.join(directory, "publication.json");
 
+  // SAFETY: the publication writer owns this journal's finding bindings.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const published = fs.existsSync(journalFile)
-    ? read(journalFile).groups?.[problemKey]
+    ? readPublicationJournal(journalFile).groups?.[group.problemKey]
     : null;
 
   const issue = published?.url;
 
   if (
-    !issue ||
-    published.evidenceHash !== report.evidenceHash ||
-    published.groupHash !== hash(json(group))
+    !hasText(issue) ||
+    published?.evidenceHash !== report.evidenceHash ||
+    published?.groupHash !== hash(json(group))
   ) {
     throw new Error(
       "Publish/link this reviewed finding and evidence before creating its repair handoff"
@@ -1001,10 +1167,12 @@ export function repairHandoff(number, reviewFile, problemKey) {
     `# Repair handoff: ${group.title}\n\nFinding issue: ${issue}\n\n${findingBody(report, group)}`
   );
 
+  // SAFETY: these ordered entries are the nonexecuting repair-handoff result.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   return Object.fromEntries([
     ["handoff", file],
     ["issue", issue],
     ["sessionCreated", false],
     ["fullExecutionAuthorized", false],
-  ]);
-}
+  ]) as RepairHandoff;
+};

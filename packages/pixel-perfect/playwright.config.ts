@@ -16,7 +16,7 @@ const proxyPort = full
 
 export default defineConfig({
   fullyParallel: false,
-  globalSetup: "./src/selection/guard.mjs",
+  globalSetup: "./src/selection/guard.ts",
   grep: inventory || full ? undefined : baseGrep(),
   grepInvert: !inventory && full ? baseGrep() : undefined,
   outputDir: path.join(pixelPerfectTestRoot, "browser"),

@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
 
-import type { TestError } from "@playwright/test/reporter";
 import { fullRunPaths } from "@ppt/full-runs/history";
 import type { FullEnvironment } from "@ppt/full-runs/plan";
 
@@ -15,7 +14,7 @@ export interface CompletedFindingCase {
   expectedStatus: string;
   status: string;
   retry: number;
-  errors?: TestError[];
+  errors?: (string | null)[];
   artifacts: RetainedArtifact[];
   journal: string;
 }

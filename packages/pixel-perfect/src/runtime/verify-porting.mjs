@@ -14,8 +14,8 @@ import {
   serveProductionFixture,
 } from "@grasscn/tests/fixture";
 import { packageBin } from "@grasscn/tests/tooling";
-import { serveFullHosts } from "@ppt/full-runs/hosts.mjs";
-import { assertFullBrowserExecution } from "@ppt/full-runs/run.mjs";
+import { serveFullHosts } from "@ppt/full-runs/hosts";
+import { assertFullBrowserExecution } from "@ppt/full-runs/run";
 import {
   repoRoot,
   webRoot,

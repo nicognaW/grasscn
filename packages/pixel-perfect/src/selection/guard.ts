@@ -12,8 +12,7 @@ export default async function browserSelectionGuard() {
   const cases = collectBrowserCases(args, { effectiveSelection: true });
 
   if (process.env.GRASSCN_BROWSER_SCOPE === "full") {
-    const { assertFullBrowserExecution } =
-      await import("@ppt/full-runs/run.mjs");
+    const { assertFullBrowserExecution } = await import("@ppt/full-runs/run");
 
     assertFullBrowserExecution(cases);
   } else {
