@@ -134,7 +134,7 @@ export async function serveProductionFixture({
             request.url as string,
             "http://127.0.0.1"
           ).pathname
-        ).replace(/^\/+/, "") || "index.html";
+        ).replace(/^\/+/u, "") || "index.html";
 
       let file = path.resolve(directory, name);
 

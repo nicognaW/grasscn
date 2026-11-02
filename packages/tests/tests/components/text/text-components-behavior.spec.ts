@@ -19,7 +19,7 @@ test("Typography retains native text inside semantic headings and prose elements
     await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
     const subject = page.locator("[data-subject]");
     await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
-    await expect(subject).toHaveText(/Hello 世界/);
+    await expect(subject).toHaveText(/Hello 世界/u);
     expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
   }
 });
@@ -92,7 +92,7 @@ test("Breadcrumb links preserve keyboard navigation, composed anchors and refs",
   await subject.focus();
   await expect(subject).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/#destination$/);
+  await expect(page).toHaveURL(/#destination$/u);
   await expect(page.locator("#events")).toHaveText("1");
   await page.locator("#read-ref").click();
   await expect(page.locator("#tag")).toHaveText("A");

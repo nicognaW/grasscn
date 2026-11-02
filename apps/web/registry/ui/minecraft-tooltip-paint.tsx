@@ -34,7 +34,7 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
       return;
     }
 
-    const rgba = style.backgroundColor.match(/[\d.]+/g)?.map(Number);
+    const rgba = style.backgroundColor.match(/[\d.]+/gu)?.map(Number);
 
     if (rgba && rgba.length >= 3) {
       const alpha = rgba[3] ?? 1;
@@ -89,7 +89,7 @@ const solidBackdrop = function solidBackdrop(node: HTMLElement) {
       (child) => child.nodeType === Node.TEXT_NODE && child.textContent?.trim()
     );
 
-    const background = style.backgroundColor.match(/[\d.]+/g)?.map(Number);
+    const background = style.backgroundColor.match(/[\d.]+/gu)?.map(Number);
 
     const differentColor =
       background &&

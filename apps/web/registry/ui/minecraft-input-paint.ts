@@ -277,7 +277,7 @@ export const attachMinecraftInput = function attachMinecraftInput(
     const supported =
       ["text", "search", "url", "tel"].includes(input.type) &&
       chars.every(
-        (char) => /^[\u0020-\u007E]$/.test(char) || getUnihexGlyph(char)
+        (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
       ) &&
       style.direction !== "rtl";
 

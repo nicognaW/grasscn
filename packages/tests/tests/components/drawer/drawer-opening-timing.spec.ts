@@ -8,7 +8,7 @@ for (const scale of [2] as const) {
     page,
   }, info) => {
     await page.setViewportSize({ height: 900, width: 1536 });
-    await page.goto(`${preview.replace(/\/$/, "")}/#drawer`);
+    await page.goto(`${preview.replace(/\/$/u, "")}/#drawer`);
     await expect
       .poll(async () =>
         page
@@ -147,7 +147,7 @@ for (const scale of [2] as const) {
 test("Drawer stays visible during its closing transition, then restores focus", async ({
   page,
 }) => {
-  await page.goto(`${preview.replace(/\/$/, "")}/components/drawer`);
+  await page.goto(`${preview.replace(/\/$/u, "")}/components/drawer`);
 
   const trigger = page.getByRole("button", {
     exact: true,

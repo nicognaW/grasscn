@@ -12,7 +12,7 @@ for (const scale of [2] as const) {
           height = mobile ? 844 : 955;
 
         await page.setViewportSize({ width, height });
-        await page.goto(`${preview.replace(/\/$/, "")}/#/components/${route}`);
+        await page.goto(`${preview.replace(/\/$/u, "")}/#/components/${route}`);
 
         if (route === "date-picker")
           await page
@@ -137,7 +137,7 @@ for (const scale of [2] as const) {
         width: mobile ? 390 : 1440,
         height: mobile ? 844 : 955,
       });
-      await page.goto(`${preview.replace(/\/$/, "")}/#native-select`);
+      await page.goto(`${preview.replace(/\/$/u, "")}/#native-select`);
       const select = page.locator("select#native-mode");
       await select.selectOption("world");
       await expect(select).toHaveValue("world");

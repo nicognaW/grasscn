@@ -194,7 +194,7 @@ const Hotbar = ({
 
         let next: number | undefined;
 
-        if (/^[1-9]$/.test(event.key)) {
+        if (/^[1-9]$/u.test(event.key)) {
           next = Number(event.key) - 1;
         }
 

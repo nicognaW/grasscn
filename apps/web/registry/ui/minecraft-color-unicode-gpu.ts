@@ -227,7 +227,7 @@ export const paintColorUnihexGPU = function paintColorUnihexGPU(
         Number.parseInt(fill.slice(5, 7), 16),
         fill.length === 9 ? Number.parseInt(fill.slice(7, 9), 16) / 255 : 1,
       ]
-    : (fill.match(/[\d.]+/g)?.map(Number) ?? [255, 255, 255, 1]);
+    : (fill.match(/[\d.]+/gu)?.map(Number) ?? [255, 255, 255, 1]);
 
   gl.uniform4f(
     gl.getUniformLocation(program, "ink"),

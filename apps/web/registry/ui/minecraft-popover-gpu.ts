@@ -150,7 +150,7 @@ export const paintPopoverGlyph = function paintPopoverGlyph(
 
   const ink = fill.startsWith("#")
     ? Number.parseInt(fill.slice(1, 3), 16)
-    : Number(/[\d.]+/.exec(fill)?.[0] ?? 255);
+    : Number(/[\d.]+/u.exec(fill)?.[0] ?? 255);
 
   gl.uniform1f(gl.getUniformLocation(program, "ink"), ink / 255);
   gl.clearColor(0, 0, 0, 0);

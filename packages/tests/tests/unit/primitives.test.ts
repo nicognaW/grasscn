@@ -73,7 +73,7 @@ test("primitive policy rejects direct, transitive and optional Radix routes", as
     await json("package.json", { dependencies: { "radix-ui": "1.0.0" } });
     let result = check();
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /package\.json dependencies: radix-ui/);
+    assert.match(result.stderr, /package\.json dependencies: radix-ui/u);
     await json("package.json", { dependencies: { "@base-ui/react": "1.9.0" } });
 
     for (const field of [
@@ -94,7 +94,7 @@ test("primitive policy rejects direct, transitive and optional Radix routes", as
       });
       result = check();
       assert.equal(result.status, 1);
-      assert.match(result.stderr, /example -> @radix-ui\/react-dialog/);
+      assert.match(result.stderr, /example -> @radix-ui\/react-dialog/u);
     }
   });
 });
@@ -107,14 +107,14 @@ test("primitive policy checks built source and catches obsolete registry payload
     });
     let result = check("--built");
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /built button\/button\.tsx: cmdk/);
+    assert.match(result.stderr, /built button\/button\.tsx: cmdk/u);
     await json("public/r/button.json", { files: [] });
     await json("public/r/removed-component.json", {});
     result = check("--built");
     assert.equal(result.status, 1);
     assert.match(
       result.stderr,
-      /obsolete built payload: removed-component\.json/
+      /obsolete built payload: removed-component\.json/u
     );
     assert.ok(
       (await readFile(path.join(directory, "public/r/removed-component.json")))
@@ -170,7 +170,7 @@ test("upstream cmdk may carry Radix, but a shared dependency must not create ano
     });
     const result = check();
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /lockfile: @radix-ui\/react-dialog/);
+    assert.match(result.stderr, /lockfile: @radix-ui\/react-dialog/u);
   });
 });
 
@@ -210,6 +210,6 @@ test("cmdk is restricted to Command source and registry closures containing Comm
     );
     const result = check();
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /preview\/bad\.tsx: cmdk/);
+    assert.match(result.stderr, /preview\/bad\.tsx: cmdk/u);
   });
 });
