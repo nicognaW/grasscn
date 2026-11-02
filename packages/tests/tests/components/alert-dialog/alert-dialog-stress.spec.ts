@@ -29,8 +29,8 @@ for (const selection of ["alert-dialog"]) {
         );
       await stage.getByRole("button", { name: "Open confirmation" }).click();
 
-      const overlay = page.locator('[data-slot="alert-dialog-overlay"]'),
-        dialog = page.getByRole("alertdialog");
+      const overlay = page.locator('[data-slot="alert-dialog-overlay"]');
+      const dialog = page.getByRole("alertdialog");
 
       await expect(overlay).toHaveAttribute(
         "data-mc-confirmation-frame",
@@ -41,9 +41,9 @@ for (const selection of ["alert-dialog"]) {
       );
 
       const state = await overlay.locator("canvas").evaluate((node) => {
-        const canvas = node as HTMLCanvasElement,
-          gl = canvas.getContext("webgl")!,
-          pixel = new Uint8Array(4);
+        const canvas = node as HTMLCanvasElement;
+        const gl = canvas.getContext("webgl")!;
+        const pixel = new Uint8Array(4);
 
         gl.readPixels(20, 20, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
 

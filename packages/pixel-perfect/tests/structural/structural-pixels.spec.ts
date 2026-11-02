@@ -173,10 +173,10 @@ test.describe("Structural native constituents", () => {
                 createHash("sha256").update(expectedBytes).digest("hex")
               ).toBe(c.sha256);
 
-              const actualBytes = await subject.screenshot(),
-                actual = PNG.sync.read(actualBytes),
-                expected = PNG.sync.read(expectedBytes),
-                { mismatchedPixels, diff } = compare(expected, actual);
+              const actualBytes = await subject.screenshot();
+              const actual = PNG.sync.read(actualBytes);
+              const expected = PNG.sync.read(expectedBytes);
+              const { mismatchedPixels, diff } = compare(expected, actual);
 
               writeFileSync(info.outputPath("actual.png"), actualBytes);
               writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

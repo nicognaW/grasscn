@@ -33,9 +33,10 @@ for (const scale of [1, 2, 3]) {
         // No text/font readiness wait occurs before clicking or sampling.
         const frames = await page.evaluate(async () => {
           const trigger = document.querySelector<HTMLButtonElement>(
-              '[data-slot="collapsible-trigger"]'
-            )!,
-            start = performance.now();
+            '[data-slot="collapsible-trigger"]'
+          )!;
+
+          const start = performance.now();
 
           trigger.click();
           const frames = [];
@@ -49,13 +50,15 @@ for (const scale of [1, 2, 3]) {
             );
 
             const content = document.querySelector<HTMLElement>(
-                '[data-slot="collapsible-content"]'
-              )!,
-              label = content.querySelector<HTMLElement>(
-                "[data-mc-label-layout-ready]"
-              )!,
-              rect = content.getBoundingClientRect(),
-              style = getComputedStyle(content);
+              '[data-slot="collapsible-content"]'
+            )!;
+
+            const label = content.querySelector<HTMLElement>(
+              "[data-mc-label-layout-ready]"
+            )!;
+
+            const rect = content.getBoundingClientRect();
+            const style = getComputedStyle(content);
 
             const lines = Array.from(
               label.querySelectorAll<HTMLElement>(".mc-label-line")

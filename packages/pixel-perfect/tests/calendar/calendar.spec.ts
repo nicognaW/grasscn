@@ -165,12 +165,13 @@ for (const component of ["calendar", "date-picker"]) {
             );
 
             const actual = await page
-                .locator("[data-subject]")
-                .screenshot({ animations: "disabled" }),
-              mismatchedPixels = different(
-                PNG.sync.read(bytes),
-                PNG.sync.read(actual)
-              );
+              .locator("[data-subject]")
+              .screenshot({ animations: "disabled" });
+
+            const mismatchedPixels = different(
+              PNG.sync.read(bytes),
+              PNG.sync.read(actual)
+            );
 
             writeFileSync(
               info.outputPath("metrics.json"),

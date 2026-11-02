@@ -122,11 +122,12 @@ for (const directory of ["tests/reference", "tests/reference/button-cjk"]) {
           c.sha256
         );
 
-        const actualBytes = await trigger.screenshot(),
-          { diff, mismatchedPixels } = compare(
-            PNG.sync.read(expectedBytes),
-            PNG.sync.read(actualBytes)
-          );
+        const actualBytes = await trigger.screenshot();
+
+        const { diff, mismatchedPixels } = compare(
+          PNG.sync.read(expectedBytes),
+          PNG.sync.read(actualBytes)
+        );
 
         writeFileSync(info.outputPath("actual.png"), actualBytes);
         writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));

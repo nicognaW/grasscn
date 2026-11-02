@@ -261,8 +261,8 @@ const TabsTrigger = ({
   const text = isMinecraftTextContent(content) ? String(content) : null;
 
   React.useLayoutEffect(() => {
-    let cancelled = false,
-      frame = 0;
+    let cancelled = false;
+    let frame = 0;
 
     if (!element) {
       return;
