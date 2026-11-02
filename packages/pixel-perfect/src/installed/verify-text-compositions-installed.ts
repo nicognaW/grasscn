@@ -356,7 +356,7 @@ fs.writeFileSync(
         "Two workers; pages closed every50 cases; all browsers closed finally",
       cases: results,
       command:
-        "shadcn add <local-registry>/r/" + name + ".json --yes --overwrite",
+        `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
       comparatorNegativeControl:
         "One changed RGBA channel yields exactly one mismatched pixel",
       consumer:

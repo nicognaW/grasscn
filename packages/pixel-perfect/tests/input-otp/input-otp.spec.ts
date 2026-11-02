@@ -76,7 +76,7 @@ for (const c of manifest.cases) {
         alias: "base",
         case: c.name,
         component: "input-otp",
-        manifest: dir + "/manifest.json",
+        manifest: `${dir}/manifest.json`,
         mismatchedPixels,
         part: "slot",
         tolerance: 0,

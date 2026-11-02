@@ -280,7 +280,7 @@ fs.writeFileSync(
       browser: browserVersion,
       cases: results,
       command:
-        "shadcn add <local-registry>/r/" + name + ".json --yes --overwrite",
+        `shadcn add <local-registry>/r/${name}.json --yes --overwrite`,
       comparatorNegativeControl:
         "One altered RGBA channel yields exactly one mismatch",
       consumer:

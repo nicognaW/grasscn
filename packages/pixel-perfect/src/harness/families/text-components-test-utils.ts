@@ -190,7 +190,7 @@ export const nativeTextTests = function nativeTextTests(
             info.outputPath("metrics.json"),
             JSON.stringify({
               component,
-              manifest: directory + "/manifest.json",
+              manifest: `${directory}/manifest.json`,
               part,
               alias: part,
               case: c.name,

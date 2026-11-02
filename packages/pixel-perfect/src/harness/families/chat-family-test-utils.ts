@@ -106,7 +106,7 @@ export const nativeChatTests = function nativeChatTests(
           alias: "base",
           case: c.name,
           component,
-          manifest: directory + "/manifest.json",
+          manifest: `${directory}/manifest.json`,
           mismatchedPixels,
           part:
             component === "message" || component === "bubble"
