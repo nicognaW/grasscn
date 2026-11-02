@@ -7,7 +7,9 @@ import { minecraftInputAssets } from "@grasscn/web/ui/minecraft-input-assets";
 import { webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const hash = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
 const dirt = await readFile(webFile("assets/title-dirt.png"));
 const grassSide = await readFile(webFile("assets/title-grass_block_side.png"));
 
@@ -45,12 +47,13 @@ const pixels = [];
 let cursor = 0;
 
 for (const char of "GRASSCN") {
-  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0) - 32];
+  const [gx, gy, advance] = minecraftGlyphs[char.codePointAt(0)! - 32];
 
   for (let y = 0; y < 8; y += 1) {
     for (let x = 0; x < advance; x += 1) {
-      if (atlas.data[((gy + y) * atlas.width + gx + x) * 4 + 3] > 0)
+      if (atlas.data[((gy + y) * atlas.width + gx + x) * 4 + 3] > 0) {
         pixels.push([cursor + x, y]);
+      }
     }
   }
 
@@ -58,11 +61,13 @@ for (const char of "GRASSCN") {
 }
 
 // Expand the original bitmap strokes for the heavy main-menu wordmark.
-const fine = new Set();
+const fine = new Set<string>();
 
 for (const [x, y] of pixels) {
   for (let fy = -2; fy < 7; fy += 1) {
-    for (let fx = -2; fx < 7; fx++) fine.add(`${x * 5 + fx},${y * 5 + fy}`);
+    for (let fx = -2; fx < 7; fx += 1) {
+      fine.add(`${x * 5 + fx},${y * 5 + fy}`);
+    }
   }
 }
 
@@ -71,13 +76,13 @@ const faceHeight = 35;
 const left = 11;
 const top = 5;
 
-const point = (x, y) => [
+const point = (x: number, y: number) => [
   +(center + (left + x - center) * (0.94 + (0.06 * y) / faceHeight)).toFixed(3),
   top + y,
 ];
 
-const pos = (p) => p.join(",");
-const rows = new Map();
+const pos = (p: number[]) => p.join(",");
+const rows = new Map<number, number[]>();
 
 for (const key of fine) {
   const [x, y] = key.split(",").map(Number);
@@ -86,7 +91,7 @@ for (const key of fine) {
     rows.set(y, []);
   }
 
-  rows.get(y).push(x);
+  rows.get(y)!.push(x);
 }
 
 let light = "";
@@ -96,7 +101,7 @@ let shade = "";
 for (const [y, xs] of rows) {
   xs.sort((a, b) => a - b);
 
-  let start = xs[0];
+  let [start] = xs;
   let last = start;
 
   const run = () => {

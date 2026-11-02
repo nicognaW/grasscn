@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { inflateRawSync } from "node:zlib";
 
-import { repoRoot, webFile } from "@ppt/paths";
+import { webFile } from "@ppt/paths";
 
 const source = await readFile(
   webFile(path.join("registry/ui/minecraft-unifont-data.ts")),
@@ -11,15 +11,17 @@ const source = await readFile(
 );
 
 const zip = Buffer.from(
-  /export const unifontZip = "([^"]+)"/.exec(source)[1],
+  /export const unifontZip = "([^"]+)"/.exec(source)![1],
   "base64"
 );
 
+// SAFETY: generate-unifont-assets emits this exact array of native provider [from, to, left, right] ranges.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const overrides = JSON.parse(
-  /export const unifontOverrides = (\[.*\]) as const/.exec(source)[1]
-);
+  /export const unifontOverrides = (\[.*\]) as const/.exec(source)![1]
+) as [number, number, number, number][];
 
-const cjk = (code) =>
+const cjk = (code: number) =>
   [
     [0x11_00, 0x11_ff],
     [0x2e_80, 0x9f_ff],
@@ -42,7 +44,7 @@ if (end < 0) {
 }
 
 let position = zip.readUInt32LE(end + 16);
-const glyphs = [];
+const glyphs: [number, number][] = [];
 
 while (zip.readUInt32LE(position) === 0x02_01_4b_50) {
   const length = zip.readUInt32LE(position + 20);
@@ -86,6 +88,8 @@ while (zip.readUInt32LE(position) === 0x02_01_4b_50) {
       let right = -1;
 
       for (let x = 0; x < bitWidth; x += 1) {
+        // Native Unihex rows pack at most 32 glyph pixels; unsigned shift and one-bit mask read the original bitmap.
+        // oxlint-disable-next-line no-bitwise
         if (rows.some((row) => (row >>> (bitWidth - 1 - x)) & 1)) {
           left = Math.min(left, x);
           right = Math.max(right, x);
@@ -102,8 +106,7 @@ while (zip.readUInt32LE(position) === 0x02_01_4b_50) {
       );
 
       if (fixed) {
-        left = fixed[2];
-        right = fixed[3];
+        [left, right] = fixed.slice(2);
       }
 
       glyphs.push([code, (right - left + 1) / 2 + 1]);
@@ -115,7 +118,7 @@ while (zip.readUInt32LE(position) === 0x02_01_4b_50) {
 
 glyphs.sort((a, b) => a[0] - b[0]);
 
-const ranges = [];
+const ranges: [number, number, number][] = [];
 
 for (const [code, advance] of glyphs) {
   const last = ranges.at(-1);
