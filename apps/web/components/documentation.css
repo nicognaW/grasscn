@@ -136,6 +136,11 @@
 .documentation-code-line {
   display: inline;
 }
+.documentation-code-endline {
+  display: inline-block;
+  height: 1em;
+  width: 0;
+}
 .documentation-code-line > .document-text {
   white-space: pre;
 }
