@@ -59,7 +59,7 @@ test("SystemToast uses the UVs and metrics observed in its normalized native con
         "utf-8"
       )
     ) as typeof CapturedData2
-  )[0] as any;
+  )[0];
 
   expect(toastGlyphAtlas).toEqual(glyphs);
   expect(Object.keys(glyphs)).toHaveLength(112);

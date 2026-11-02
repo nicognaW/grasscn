@@ -5,11 +5,15 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type toastReference from "../reference/toast/manifest.json";
+
 const directory = "tests/reference/toast";
 
+// SAFETY: the retained native Toast producer owns this exact manifest; preserve the original runtime read/parse phase.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-);
+) as typeof toastReference;
 
 const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
