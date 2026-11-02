@@ -44,7 +44,7 @@ for (const scale of [2]) {
       })
       .toBe(0);
     await expect(stage).toContainText("6 people in this workspace");
-    await expect(stage.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
+    await expect(stage.getByRole("button", { name: /Hat:/u })).toHaveCount(0);
     await expect(
       stage.getByRole("button", { exact: true, name: "Load player" })
     ).toBeVisible();

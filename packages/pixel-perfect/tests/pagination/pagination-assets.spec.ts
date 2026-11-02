@@ -19,7 +19,7 @@ test("Pagination embeds all four original recipe-book arrow PNGs unchanged", () 
   );
 
   const images = Array.from(
-    source.matchAll(/data:image\/png;base64,([A-Za-z0-9+/=]+)/g),
+    source.matchAll(/data:image\/png;base64,([A-Za-z0-9+/=]+)/gu),
     (match) => Buffer.from(match[1], "base64")
   );
 

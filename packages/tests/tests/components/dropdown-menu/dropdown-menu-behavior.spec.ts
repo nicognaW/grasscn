@@ -9,7 +9,7 @@ test("Dropdown Menu keyboard navigation skips disabled items and opens nested me
   await trigger.focus();
   await trigger.press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -21,7 +21,7 @@ test("Dropdown Menu keyboard navigation skips disabled items and opens nested me
   ).toBeFocused();
   await page.keyboard.press("Home");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("End");
   await expect(
@@ -48,14 +48,14 @@ test("Dropdown Menu selects an action once and permits keeping it open", async (
 }) => {
   await page.goto("/?component=dropdown-menu");
   await page.getByRole("button", { exact: true, name: "Game menu" }).click();
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
   await expect(page.getByRole("menu")).toHaveCount(0);
   await page.goto("/?component=dropdown-menu&preventAction");
   await page.getByRole("button", { exact: true, name: "Game menu" }).click();
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
@@ -225,9 +225,9 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
   await page.keyboard.press("Escape");
   await trigger.click();
   expect(await voices()).toHaveLength(2);
-  await page.getByRole("menuitem", { name: /Resume game/ }).hover();
+  await page.getByRole("menuitem", { name: /Resume game/u }).hover();
   expect(await voices()).toHaveLength(2);
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   expect(await voices()).toHaveLength(2);
   await trigger.click();
   await page

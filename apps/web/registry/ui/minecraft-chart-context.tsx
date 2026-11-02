@@ -119,7 +119,7 @@ export function chartColorChannels(
   }
 
   if (color.startsWith("rgb")) {
-    return (color.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+    return (color.match(/[\d.]+/gu) ?? []).slice(0, 3).map(Number);
   }
 
   const canvas = document.createElement("canvas");
@@ -562,7 +562,7 @@ export const ChartPixelSurface = ({
             style.strokeDasharray === "none"
               ? []
               : style.strokeDasharray
-                  .split(/[ ,]+/)
+                  .split(/[ ,]+/u)
                   .map((value) => Number.parseFloat(value))
           );
           mask.stroke(path);

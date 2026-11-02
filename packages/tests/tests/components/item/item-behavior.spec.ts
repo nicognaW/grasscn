@@ -216,7 +216,7 @@ test("Item uses original activation sound once and keeps passive rows silent", a
   });
 
   for (const suffix of ["", "?button=1", "?customAction=1"]) {
-    await page.goto(`/?component=item&${suffix.replace(/^\?/, "")}`);
+    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
     await ready(page);
     const subject = page.locator("[data-subject]");
     await subject.hover();
@@ -234,7 +234,7 @@ test("Item uses original activation sound once and keeps passive rows silent", a
     "?childCancel=1",
     "?disabled=1",
   ]) {
-    await page.goto(`/?component=item&${suffix.replace(/^\?/, "")}`);
+    await page.goto(`/?component=item&${suffix.replace(/^\?/u, "")}`);
     await ready(page);
     await page.locator("[data-subject]").dispatchEvent("click");
     expect(await page.evaluate(() => (window as any).sounds)).toEqual([]);

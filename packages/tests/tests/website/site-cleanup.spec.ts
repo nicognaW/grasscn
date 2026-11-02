@@ -20,7 +20,7 @@ test("catalog consolidates pages and removes discarded controls and copy", async
   await expect(page.getByRole("group", { name: "Preview scale" })).toHaveCount(
     0
   );
-  await expect(page.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Hat:/u })).toHaveCount(0);
   await expect(page.locator('[data-stage="avatar"]')).toContainText(
     "Jordan Lee"
   );

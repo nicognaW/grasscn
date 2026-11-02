@@ -37,7 +37,7 @@ test("Menubar navigates between open menus with the keyboard", async ({
   await page.goto("/?component=menubar");
   await game(page).press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -51,12 +51,12 @@ test("Menubar navigates between open menus with the keyboard", async ({
   await expect(
     page.getByRole("menuitem", { exact: true, name: "Create world" })
   ).toBeVisible();
-  await expect(page.getByRole("menuitem", { name: /Resume game/ })).toHaveCount(
-    0
-  );
+  await expect(
+    page.getByRole("menuitem", { name: /Resume game/u })
+  ).toHaveCount(0);
   await page.keyboard.press("ArrowLeft");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeVisible();
 });
 
@@ -103,13 +103,13 @@ test("Menubar selects an action once and permits cancelling automatic dismissal"
   page,
 }) => {
   await openMenu(page);
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
   await expect(page.getByRole("menu")).toHaveCount(0);
   await openMenu(page, "preventAction");
-  await page.getByRole("menuitem", { name: /Resume game/ }).click();
+  await page.getByRole("menuitem", { name: /Resume game/u }).click();
   await expect(page.getByLabel("Menu actions", { exact: true })).toHaveText(
     "1"
   );
@@ -224,7 +224,7 @@ test("Menubar typeahead focuses a matching action", async ({ page }) => {
   await page.goto("/?component=menubar");
   await game(page).press("ArrowDown");
   await expect(
-    page.getByRole("menuitem", { name: /Resume game/ })
+    page.getByRole("menuitem", { name: /Resume game/u })
   ).toBeFocused();
   await page.keyboard.press("m");
   await expect(
@@ -280,7 +280,7 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   expect(await voices()).toEqual([
     { rate: 1, source: minecraftClickSound, volume: 0.25 },
   ]);
-  await page.getByRole("menuitem", { name: /Resume game/ }).hover();
+  await page.getByRole("menuitem", { name: /Resume game/u }).hover();
   expect(await voices()).toHaveLength(1);
   await page
     .getByRole("menuitemcheckbox", { exact: true, name: "Show coordinates" })
