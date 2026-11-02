@@ -2,11 +2,7 @@
 
 import { MessageScroller as Primitive } from "@shadcn/react/message-scroller";
 
-export {
-  useMessageScroller,
-  useMessageScrollerScrollable,
-  useMessageScrollerVisibility,
-} from "@shadcn/react/message-scroller";
+import { useMessageScroller as usePrimitiveMessageScroller, useMessageScrollerScrollable as usePrimitiveMessageScrollerScrollable, useMessageScrollerVisibility as usePrimitiveMessageScrollerVisibility } from "@shadcn/react/message-scroller";
 
 import "./minecraft-message-scroller.css";
 import * as React from "react";
@@ -19,6 +15,8 @@ import {
   minecraftStyle,
 } from "./minecraft-render";
 import { minecraftTextareaAssets } from "./minecraft-textarea-assets";
+
+export { usePrimitiveMessageScroller as useMessageScroller, usePrimitiveMessageScrollerScrollable as useMessageScrollerScrollable, usePrimitiveMessageScrollerVisibility as useMessageScrollerVisibility };
 
 interface MessageScrollerPaintStyle extends React.CSSProperties {
   "--mc-scale": number;
