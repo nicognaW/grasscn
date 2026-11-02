@@ -1,4 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
+import { nativeTextGap } from "@tests/harness/native-text-gap";
 
 for (const scale of [1, 2, 3]) {
   test(`default chart tooltip separates native labels and values at host GUI ${scale}`, async ({
@@ -20,24 +21,9 @@ for (const scale of [1, 2, 3]) {
       )
     ).toBe(tooltipScale);
 
-    const gap = await tooltip.evaluate((element) => {
-      const labels = [...element.querySelectorAll(".mc-bitmap")];
-
-      const name = labels
-        .find((label) => label.textContent === "Mobile")
-        ?.querySelector(".mc-text-pixels");
-
-      const value = labels
-        .find((label) => label.textContent === "12")
-        ?.querySelector(".mc-text-pixels");
-
-      if (!name || !value) {
-        throw new Error("The default native tooltip row must be painted");
-      }
-
-      return (
-        value.getBoundingClientRect().x - name.getBoundingClientRect().right
-      );
+    const gap = await tooltip.evaluate(nativeTextGap, {
+      label: "Mobile",
+      value: "12",
     });
 
     expect(gap).toBeGreaterThanOrEqual(4 * tooltipScale);
