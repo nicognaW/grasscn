@@ -7,6 +7,7 @@ import { minecraftSeparatorAssets } from "@grasscn/web/ui/minecraft-separator-as
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/separator/asset-provenance.json";
 import manifest from "../reference/separator/manifest.json";
 
 const compare = function compare(expected: PNG, actual: PNG) {
@@ -112,12 +113,14 @@ for (const asChild of [false, true]) {
 }
 
 test("Separator embeds unchanged original title and in-world textures", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/separator/asset-provenance.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/separator/asset-provenance.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   for (const edge of ["header", "footer"] as const) {
     const bytes = Buffer.from(

@@ -6,15 +6,19 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type CapturedData0 from "../reference/empty/manifest.json";
+
 test.describe.configure({ mode: "parallel" });
 
 test("Empty comparator catches one changed pixel", () => {
+  // SAFETY: This read consumes the same pinned tests/reference/empty/manifest.json producer data described by the type-only import; retain the runtime read and parse phase.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile("tests/reference/empty/manifest.json"),
       "utf-8"
     )
-  );
+  ) as typeof CapturedData0;
 
   const expected = PNG.sync.read(
     readFileSync(
