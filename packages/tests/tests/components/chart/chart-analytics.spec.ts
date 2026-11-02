@@ -77,10 +77,11 @@ for (const scale of [2]) {
                   !image.data
                     .subarray(a, a + 4)
                     .equals(image.data.subarray(b, b + 4))
-                )
+                ) {
                   throw new Error(
                     `${type}: noninteger pixel block at${x},${y}`
                   );
+                }
               }
       }
 

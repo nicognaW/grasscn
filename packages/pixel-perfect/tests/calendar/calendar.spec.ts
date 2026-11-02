@@ -98,9 +98,13 @@ for (const component of ["calendar", "date-picker"]) {
               range: alias.startsWith("range-") ? alias.slice(6) : "",
             });
 
-            if (c.text != null) q.set("text", c.text);
+            if (c.text != null) {
+              q.set("text", c.text);
+            }
 
-            if (c.wrapWidth) q.set("wrapWidth", String(c.wrapWidth));
+            if (c.wrapWidth) {
+              q.set("wrapWidth", String(c.wrapWidth));
+            }
             await page.goto("/?" + q);
             await expect(page.locator("[data-subject]")).toBeVisible();
 
@@ -112,31 +116,36 @@ for (const component of ["calendar", "date-picker"]) {
 
               for (const canvas of await page
                 .locator("[data-subject] [data-mc-label-ready]")
-                .all())
+                .all()) {
                 await expect(canvas).toHaveAttribute(
                   "data-mc-label-ready",
                   "true"
                 );
+              }
             }
 
-            if (part === "trigger-cjk")
+            if (part === "trigger-cjk") {
               for (const text of await page
                 .locator("[data-subject] [data-mc-label-ready]")
-                .all())
+                .all()) {
                 await expect(text).toHaveAttribute(
                   "data-mc-label-ready",
                   "true"
                 );
+              }
+            }
             await page.mouse.move(0, 0);
 
             if (
               alias === "base" &&
               (c.state === "hover" || c.state === "disabled-hover")
-            )
+            ) {
               await page.locator("[data-subject]").hover({ force: true });
+            }
 
-            if (alias === "base" && c.state === "focus")
+            if (alias === "base" && c.state === "focus") {
               await page.locator("[data-subject]").focus();
+            }
             await page.evaluate(
               async () =>
                 await new Promise((r) =>

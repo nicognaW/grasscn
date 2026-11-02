@@ -3023,7 +3023,9 @@ const Fixture = () => {
         <button
           id="imperative"
           onClick={() => {
-            if (inputRef.current) inputRef.current.value = "Done";
+            if (inputRef.current) {
+              inputRef.current.value = "Done";
+            }
           }}
         >
           Set through ref

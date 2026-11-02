@@ -93,7 +93,9 @@ test.describe("DataTable original native label constituents", () => {
           alignment: c.alignment ?? "left",
         });
 
-        if (c.wrapWidth != null) q.set("wrapWidth", String(c.wrapWidth));
+        if (c.wrapWidth != null) {
+          q.set("wrapWidth", String(c.wrapWidth));
+        }
         await page.goto(`/?component=data-table&${q}`);
 
         const subject = page.locator(
@@ -104,8 +106,11 @@ test.describe("DataTable original native label constituents", () => {
           subject.locator("[data-mc-label-layout-ready]")
         ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-        for (const text of await subject.locator("[data-mc-label-ready]").all())
+        for (const text of await subject
+          .locator("[data-mc-label-ready]")
+          .all()) {
           await expect(text).toHaveAttribute("data-mc-label-ready", "true");
+        }
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

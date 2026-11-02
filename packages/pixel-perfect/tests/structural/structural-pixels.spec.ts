@@ -100,10 +100,13 @@ test.describe("Structural native constituents", () => {
                 alignment: c.alignment ?? "left",
               });
 
-              if (c.wrapWidth != null)
+              if (c.wrapWidth != null) {
                 params.set("wrapWidth", String(c.wrapWidth));
+              }
 
-              if (active) params.set("active", "1");
+              if (active) {
+                params.set("active", "1");
+              }
               await page.goto(`/?${params}`);
               const subject = page.locator("[data-subject]");
               await expect(subject).toBeVisible();
@@ -122,7 +125,9 @@ test.describe("Structural native constituents", () => {
               await page.mouse.move(0, 0);
 
               if (!active && part === "button") {
-                if (c.state === "hover") await subject.hover();
+                if (c.state === "hover") {
+                  await subject.hover();
+                }
 
                 if (c.state === "focus") {
                   await subject.focus();
@@ -132,19 +137,21 @@ test.describe("Structural native constituents", () => {
                 }
               }
 
-              if (part === "text")
+              if (part === "text") {
                 await expect(subject).toHaveAttribute(
                   "data-mc-label-layout-ready",
                   "true"
                 );
+              }
 
               for (const label of await subject
                 .locator("[data-mc-label-ready]")
-                .all())
+                .all()) {
                 await expect(label).toHaveAttribute(
                   "data-mc-label-ready",
                   "true"
                 );
+              }
               await page.evaluate(
                 async () =>
                   await new Promise<void>((resolve) =>

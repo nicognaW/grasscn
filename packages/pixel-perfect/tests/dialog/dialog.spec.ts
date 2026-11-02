@@ -87,12 +87,17 @@ for (const directory of [
           state: c.state,
         });
 
-        if (c.text != null) query.set("text", c.text);
+        if (c.text != null) {
+          query.set("text", c.text);
+        }
 
-        if (c.disabledIndex != null)
+        if (c.disabledIndex != null) {
           query.set("disabledIndex", String(c.disabledIndex));
+        }
 
-        if (c.checked) query.set("patterned", "1");
+        if (c.checked) {
+          query.set("patterned", "1");
+        }
         await page.goto(`/?${query}`);
         await page.addStyleTag({
           content: `html,body{background:${c.background}} #root{opacity:0}`,
@@ -110,19 +115,24 @@ for (const directory of [
 
           for (const line of await dialog
             .locator("[data-mc-dialog-unicode-ready]")
-            .all())
+            .all()) {
             await expect(line).toHaveAttribute(
               "data-mc-dialog-unicode-ready",
               "true"
             );
+          }
         }
 
         await page.mouse.move(0, 0);
         const button = dialog.getByRole("button").nth(c.targetIndex ?? 0);
 
-        if (c.state === "hover") await button.hover();
+        if (c.state === "hover") {
+          await button.hover();
+        }
 
-        if (c.state === "focus") await button.focus();
+        if (c.state === "focus") {
+          await button.focus();
+        }
         await page.evaluate(
           async () =>
             await new Promise<void>((resolve) =>

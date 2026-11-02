@@ -84,9 +84,13 @@ for (const directory of [
             align: c.alignment ?? "left",
           });
 
-          if (c.wrapWidth != null) params.set("wrapWidth", String(c.wrapWidth));
+          if (c.wrapWidth != null) {
+            params.set("wrapWidth", String(c.wrapWidth));
+          }
 
-          if (expanded) params.set("expanded", "1");
+          if (expanded) {
+            params.set("expanded", "1");
+          }
           await page.goto(`/?${params}`);
           const subject = page.locator("[data-subject]");
           await expect(page.locator('[data-slot="collapsible"]')).toHaveCount(
@@ -98,12 +102,14 @@ for (const directory of [
           });
           await page.mouse.move(0, 0);
 
-          if (body)
+          if (body) {
             await expect(
               subject.locator("[data-mc-label-layout-ready]")
             ).toHaveAttribute("data-mc-label-layout-ready", "true");
-          else {
-            if (c.state === "hover") await subject.hover();
+          } else {
+            if (c.state === "hover") {
+              await subject.hover();
+            }
 
             if (c.state === "focus") {
               await subject.focus();
@@ -115,8 +121,9 @@ for (const directory of [
 
           for (const label of await subject
             .locator("[data-mc-label-ready]")
-            .all())
+            .all()) {
             await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+          }
           await page.evaluate(
             async () =>
               await new Promise<void>((resolve) =>
