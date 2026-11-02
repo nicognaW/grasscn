@@ -5,6 +5,32 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+import type inputReference from "../reference/input/manifest.json";
+
+type QuestionnaireInputCase = (typeof inputReference)["cases"][number];
+
+/** Fields consumed from this file's closed Label, Controls, Button and Input routes. */
+interface QuestionnaireComparisonCase extends CapturedReferenceCase {
+  label?: string;
+  text?: string;
+  placeholder?: string;
+  checked?: boolean;
+  x?: number;
+  y?: number;
+  background?: string;
+  alignment?: string;
+  wrapWidth?: number;
+  maxLength?: number;
+  cursor?: number;
+  anchor?: number;
+}
+
+interface QuestionnaireComparisonManifest {
+  background: string;
+  cases: QuestionnaireComparisonCase[];
+}
+
 const parts = [
   ["title", "label"],
   ["description", "label"],
@@ -17,12 +43,14 @@ const parts = [
 ];
 
 for (const [part, dir] of parts) {
+  // SAFETY: The closed constituent table reads retained Label, Controls, ASCII/CJK Button and Input manifests with this real shared core, variant optionals and string background headers.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained constituent boundary; the existing runtime read/parse phase is preserved.
   const manifest = JSON.parse(
     readFileSync(
       pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
       "utf-8"
     )
-  );
+  ) as QuestionnaireComparisonManifest;
 
   test.describe(`Questionnaire actual ${part} native constituents ${dir}`, () => {
     test.describe.configure({ mode: "parallel" });
@@ -104,7 +132,9 @@ for (const [part, dir] of parts) {
           }
 
           if (part === "input") {
-            const cursor = c.cursor ?? c.text.length;
+            // SAFETY: Only the per-iteration [input, input] route enters this branch; its retained Input cases have required string text, as the type-only artifact import records.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation; no property read or fallback is added.
+            const cursor = c.cursor ?? (c as QuestionnaireInputCase).text.length;
             const anchor = c.anchor ?? cursor;
 
             await subject.evaluate(
@@ -117,7 +147,9 @@ for (const [part, dir] of parts) {
               },
               { cursor, anchor }
             );
-            await page.clock.runFor(c.caretMs);
+            // SAFETY: This same captured Input route supplies the retained case's required numeric caretMs; the existing clock call and property read stay in place.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Existing closed-route correlation to the exact Input artifact.
+            await page.clock.runFor((c as QuestionnaireInputCase).caretMs);
             await expect(subject).toHaveAttribute("data-mc-ready", "true");
           } else {
             for (const glyph of await subject
