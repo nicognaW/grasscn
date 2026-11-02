@@ -19,7 +19,7 @@ import {
 
 import "./minecraft-avatar.css";
 
-export type { MinecraftAvatarSkin };
+export type { MinecraftAvatarSkin } from "./minecraft-avatar-assets";
 
 interface AvatarPaintStyle extends React.CSSProperties {
   "--mc-avatar-size": number;
