@@ -567,7 +567,7 @@ const ChartProfilerFrame = ({
     [key]
   );
 
-  const unit = sectors[0] ? sectors[0].outerRadius / 105 : scale;
+  const unit = sectors.at(0) ? sectors[0].outerRadius / 105 : scale;
 
   const width = useChartWidth() ?? 0;
   const height = useChartHeight() ?? 0;
