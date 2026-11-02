@@ -5,9 +5,18 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
+import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
+import type { Browser } from "@playwright/test";
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, webFile, pixelPerfectFile } from "@ppt/paths";
+import type {
+  InstalledTextRegistry,
+  InstalledTextMap,
+  TextCaptureManifest,
+  TextCaptureGroup,
+  InstalledTextResult,
+} from "@ppt/installed/text-verification-protocol";
+import { webFile, pixelPerfectFile } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
@@ -26,19 +35,39 @@ const supported = new Set([
 
 assert.ok(
   consumerArgument && supported.has(name) && url,
-  "Usage: bun src/installed/verify-text-installed.mjs <consumer> <badge|typography|breadcrumb|kbd|empty> <fixture-url> [registered-manifest] [part]"
+  "Usage: bun src/installed/verify-text-installed.ts <consumer> <badge|typography|breadcrumb|kbd|empty> <fixture-url> [registered-manifest] [part]"
 );
 
 const consumer = path.resolve(consumerArgument);
 
-const json = async (file) =>
-  JSON.parse(await readFile(evidenceFile(file), "utf-8"));
+const readMap = async (file: string) =>
+  // SAFETY: the authored component map owns this fresh metadata read.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact component-map producer boundary.
+  JSON.parse(await readFile(evidenceFile(file), "utf-8")) as InstalledTextMap;
 
-const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const readRegistry = async (file: string) =>
+  // SAFETY: registry.json is the authored producer of installed source descriptors.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry descriptor producer boundary.
+  JSON.parse(
+    await readFile(evidenceFile(file), "utf-8")
+  ) as InstalledTextRegistry;
 
-const map = await json("registry/minecraft-map.json");
+const readTextCapture = async (file: string) =>
+  // SAFETY: the existing registration check restricts this call to the selected text family's captured manifest.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Button/label/badge/empty capture producer boundary.
+  JSON.parse(
+    await readFile(evidenceFile(file), "utf-8")
+  ) as TextCaptureManifest;
+
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+const map = await readMap("registry/minecraft-map.json");
 const component = map.components.find((c) => c.name === name);
-const item = (await json("registry.json")).items.find((i) => i.name === name);
+
+const item = (await readRegistry("registry.json")).items.find(
+  (i) => i.name === name
+);
 
 assert.ok(
   component?.pixelVerification.manifest && item,
@@ -57,11 +86,13 @@ if (manifestArgument) {
   );
 }
 
+// SAFETY: the initialized shadcn consumer configuration is the installedRegistryFile settings owner.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer configuration boundary.
 const settings = JSON.parse(
   await readFile(path.join(consumer, "components.json"), "utf-8")
-);
+) as InstalledComponentSettings & { rsc?: boolean };
 
-const canonical = (bytes) => {
+const canonical = (bytes: Buffer) => {
   let text = bytes
     .toString()
     .replaceAll("\r\n", "\n")
@@ -113,17 +144,17 @@ assert.equal(
   `Consumer typecheck failed:\n${types.stdout ?? ""}${types.stderr ?? ""}`
 );
 
-const groups = [];
+const groups: TextCaptureGroup[] = [];
 
 for (const manifestFile of manifests.filter(
   (file) => !manifestArgument || file === manifestArgument
 )) {
-  const manifest = await json(manifestFile);
+  const manifest = await readTextCapture(manifestFile);
 
-  const nativeEmpty =
+  const nativeEmpty: boolean =
     name === "empty" && manifestFile === component.pixelVerification.manifest;
 
-  const allParts =
+  const allParts: string[] =
     name === "form"
       ? ["label", "description", "message"]
       : name === "field"
@@ -163,7 +194,7 @@ for (const manifestFile of manifests.filter(
   });
 }
 
-function compare(expected, actual) {
+function compare(expected: PNG, actual: PNG) {
   assert.deepEqual(
     [actual.width, actual.height],
     [expected.width, expected.height]
@@ -199,17 +230,15 @@ const tasks = groups.flatMap((group) =>
   )
 );
 
-const results = [];
-const pageErrors = [];
-const browserVersions = new Set();
+const results: InstalledTextResult[] = [];
+const pageErrors: string[] = [];
+const browserVersions = new Set<string>();
 
-let completed = 0;
 let next = 0;
 
 async function worker() {
-  let browser;
+  let browser: Browser | undefined;
   let count = 0;
-  let page;
 
   const open = async () => {
     browser = await chromium.launch({ channel: "msedge" });
@@ -219,15 +248,19 @@ async function worker() {
       1,
       "Browser changed during verification"
     );
-    page = await browser.newPage({
+
+    const page = await browser.newPage({
       deviceScaleFactor: 1,
       viewport: { height: 900, width: 1536 },
     });
+
     page.on("pageerror", (error) => pageErrors.push(error.message));
+
+    return page;
   };
 
   try {
-    await open();
+    let page = await open();
 
     while (next < tasks.length) {
       const taskIndex = next;
@@ -235,11 +268,11 @@ async function worker() {
       const { group, part, c } = tasks[taskIndex];
 
       if (count && count % 128 === 0) {
-        await browser.close();
-        await open();
+        await browser!.close();
+        page = await open();
       } else if (count && count % 50 === 0) {
         await page.close();
-        page = await browser.newPage({
+        page = await browser!.newPage({
           deviceScaleFactor: 1,
           viewport: { height: 900, width: 1536 },
         });
@@ -368,10 +401,6 @@ async function worker() {
         name: c.name,
         part,
       });
-
-      if ((completed += 1 % 128 === 0)) {
-        console.log(`${name}: ${completed}/${tasks.length} appearances exact`);
-      }
     }
   } finally {
     if (browser) {
@@ -427,11 +456,16 @@ for (const group of groups) {
 
   const primary = group.manifestFile === component.pixelVerification.manifest;
 
+  interface InstallationReports {
+    [manifest: string]: string | undefined;
+  }
+
+  const additionalReports: InstallationReports | undefined =
+    component.pixelVerification.additionalInstallationReports;
+
   const registered = primary
     ? component.pixelVerification.installationReport
-    : component.pixelVerification.additionalInstallationReports?.[
-        group.manifestFile
-      ];
+    : additionalReports?.[group.manifestFile];
 
   const output = partArgument
     ? `tests/reference/${name}/diagnostic-${partArgument}.json`

@@ -4,39 +4,55 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
-import {
-  pixelPerfectTestRoot,
-  repoRoot,
-  webFile,
-  pixelPerfectFile,
-} from "@ppt/paths";
+import type {
+  InstalledTextRegistry,
+  InstalledTextItem,
+  MessageCaptureManifest,
+  InstalledChatResult,
+  InstalledChatError,
+  InstalledTextFailure,
+} from "@ppt/installed/text-verification-protocol";
+import { pixelPerfectTestRoot, webFile, pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
 const [consumerArgument, name, origin, definition] = process.argv.slice(2);
 
 if (!consumerArgument || !["message", "bubble"].includes(name) || !origin) {
   throw new Error(
-    "Usage: bun src/installed/verify-chat-installed.mjs <consumer> <message|bubble> <fixture-url> [registry-item-file]"
+    "Usage: bun src/installed/verify-chat-installed.ts <consumer> <message|bubble> <fixture-url> [registry-item-file]"
   );
 }
 
 const consumer = path.resolve(consumerArgument);
 
-const item = definition
-  ? JSON.parse(fs.readFileSync(definition, "utf-8"))
-  : JSON.parse(
-      fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
-    ).items.find((i) => i.name === name);
+let item: InstalledTextItem | undefined;
 
+if (definition) {
+  // SAFETY: the supplied descriptor owns this verifier's exact shadcn item source list.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete supplied registry item descriptor boundary.
+  item = JSON.parse(fs.readFileSync(definition, "utf-8")) as InstalledTextItem;
+} else {
+  // SAFETY: the authored registry document owns this item lookup; missing items retain their original later failure.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete registry document boundary.
+  const registry = JSON.parse(
+    fs.readFileSync(webFile(path.join("registry.json")), "utf-8")
+  ) as InstalledTextRegistry;
+
+  item = registry.items.find((candidate) => candidate.name === name);
+}
+
+// SAFETY: this is the initialized shadcn consumer configuration; preserve its optional rsc behavior.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Concrete initialized consumer settings boundary.
 const settings = JSON.parse(
   fs.readFileSync(path.join(consumer, "components.json"), "utf-8")
-);
+) as InstalledComponentSettings & { rsc?: boolean };
 
-const sha = (b) => createHash("sha256").update(b).digest("hex");
+const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
-const canonical = (b) => {
+const canonical = (b: Buffer) => {
   let t = b
     .toString()
     .replaceAll(/\/\*[\s\S]*?\*\//g, "")
@@ -49,7 +65,7 @@ const canonical = (b) => {
   return t.replace(/^(?:\/\/[^\n]*\n\s*)+/, "");
 };
 
-const files = item.files.map((f) => {
+const files = item!.files.map((f) => {
   const base = path.basename(f.path);
   const source = fs.readFileSync(webFile(path.join(f.path)));
 
@@ -80,25 +96,27 @@ const types = spawnSync(
 
 assert.equal(types.status, 0, types.stdout + types.stderr);
 
+// SAFETY: this fixed synchronous read selects the native message/spinner capture producer after the consumer typecheck.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual text-family capture producer boundary.
 const manifest = JSON.parse(
   fs.readFileSync(
     pixelPerfectFile(path.join("tests/reference/message/manifest.json")),
     "utf-8"
   )
-);
+) as MessageCaptureManifest;
 
 const tasks = manifest.cases.map((c) => ({ c, part: name }));
 
 const browser = await chromium.launch({ channel: "msedge" });
 const browserVersion = browser.version();
-const results = [];
-const errors = [];
+const results: InstalledChatResult[] = [];
+const errors: InstalledChatError[] = [];
 
 let next = 0;
 
 fs.mkdirSync(path.join(pixelPerfectTestRoot, "chat"), { recursive: true });
 
-function compare(a, b) {
+function compare(a: PNG, b: PNG) {
   if (a.width !== b.width || a.height !== b.height) {
     throw new Error("dimensions");
   }
@@ -204,7 +222,10 @@ async function worker() {
           actual
         );
       }
-    } catch (error) {
+    } catch (failure) {
+      // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
+      const error = failure as InstalledTextFailure;
       errors.push({ error: error.message, name: c.name, part });
       console.log(c.name, part, error.message);
     }
