@@ -80,7 +80,7 @@ export const OverlayFixture = () => {
             position: "fixed",
             top: y,
             width: width * scale,
-          } as React.CSSProperties,
+          } satisfies React.CSSProperties,
           ...(p.has("wrapWidth")
             ? { maxWidth: Number(p.get("wrapWidth")) }
             : {}),
