@@ -7,7 +7,10 @@ import { PNG } from "pngjs";
 
 const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
 
-async function focusByKeyboard(page: Page, locator: Locator) {
+const focusByKeyboard = async function focusByKeyboard(
+  page: Page,
+  locator: Locator
+) {
   for (let i = 0; i < 256; i += 1) {
     await page.keyboard.press("Tab");
 
@@ -19,9 +22,12 @@ async function focusByKeyboard(page: Page, locator: Locator) {
   }
 
   throw new Error("Preview control was not keyboard reachable");
-}
+};
 
-async function nativePixels(locator: Locator, file: string) {
+const nativePixels = async function nativePixels(
+  locator: Locator,
+  file: string
+) {
   const actual = PNG.sync.read(
     await locator.screenshot({ animations: "disabled" })
   );
@@ -35,7 +41,7 @@ async function nativePixels(locator: Locator, file: string) {
     actual.data.equals(expected.data),
     "Preview chrome must preserve native pixels"
   ).toBe(true);
-}
+};
 
 for (const scale of [2]) {
   test(`Preview native pixels at scale ${scale}`, async ({ page }) => {

@@ -1,6 +1,6 @@
 import { test, expect } from "@grasscn/tests/test";
 
-async function ready(page: any) {
+const ready = async function ready(page: any) {
   for (const text of await page.locator("[data-mc-selectable-ready]").all()) {
     await expect(text).toHaveAttribute("data-mc-selectable-ready", "true");
   }
@@ -8,7 +8,7 @@ async function ready(page: any) {
   for (const text of await page.locator("[data-mc-label-ready]").all()) {
     await expect(text).toHaveAttribute("data-mc-label-ready", "true");
   }
-}
+};
 
 test("CodeBlock all eight exports retain semantics, ref, keyboard focus and real multiline selection", async ({
   page,

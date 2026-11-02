@@ -11,7 +11,10 @@ export const minecraftTextWidth = (text: string) =>
     return sum + (minecraftGlyphs[codePoint - 32]?.[2] ?? 6);
   }, 0);
 
-export function wrapMinecraftTooltip(text: string, maxWidth: number) {
+export const wrapMinecraftTooltip = function wrapMinecraftTooltip(
+  text: string,
+  maxWidth: number
+) {
   const lines: string[] = [];
 
   for (const paragraph of text.split("\n")) {
@@ -50,4 +53,4 @@ export function wrapMinecraftTooltip(text: string, maxWidth: number) {
   }
 
   return lines;
-}
+};

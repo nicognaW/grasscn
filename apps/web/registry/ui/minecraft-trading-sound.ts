@@ -1,7 +1,7 @@
 import { getMinecraftSoundVolume } from "./minecraft-sound";
 import { tradingSounds } from "./minecraft-trading-sound-assets";
 
-export function playTradingSound() {
+export const playTradingSound = function playTradingSound() {
   const master = getMinecraftSoundVolume();
 
   if (typeof Audio === "undefined" || master === 0) {
@@ -16,4 +16,4 @@ export function playTradingSound() {
   void sound.play().catch(() => {
     /* empty */
   });
-}
+};

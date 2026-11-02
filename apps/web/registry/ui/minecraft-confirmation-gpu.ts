@@ -1,5 +1,7 @@
 // Original post/box_blur.fsh arithmetic and post_effect/blur.json pass order.
-export function createConfirmationPainter(canvas: HTMLCanvasElement) {
+export const createConfirmationPainter = function createConfirmationPainter(
+  canvas: HTMLCanvasElement
+) {
   const gl = canvas.getContext("webgl", {
     alpha: true,
     antialias: false,
@@ -176,4 +178,4 @@ export function createConfirmationPainter(canvas: HTMLCanvasElement) {
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
   };
-}
+};

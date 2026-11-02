@@ -6,7 +6,7 @@ import { MinecraftText } from "./minecraft-text";
 
 export const CardScaleContext = React.createContext(2);
 
-function wrap(text: string, width: number, bold: boolean) {
+const wrap = function wrap(text: string, width: number, bold: boolean) {
   const lines: string[] = [];
 
   const advance = (char: string) => {
@@ -51,7 +51,7 @@ function wrap(text: string, width: number, bold: boolean) {
   }
 
   return lines;
-}
+};
 
 export const MinecraftCardText = ({
   children,

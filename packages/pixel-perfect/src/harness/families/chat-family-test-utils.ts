@@ -6,7 +6,9 @@ import { compare } from "@ppt/harness/families/text-components-test-utils";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-export function nativeChatTests(component: "message" | "bubble") {
+export const nativeChatTests = function nativeChatTests(
+  component: "message" | "bubble"
+) {
   test.describe.configure({ mode: "parallel" });
 
   const directory = "tests/reference/message";
@@ -108,4 +110,4 @@ export function nativeChatTests(component: "message" | "bubble") {
       expect(mismatchedPixels).toBe(0);
     });
   }
-}
+};

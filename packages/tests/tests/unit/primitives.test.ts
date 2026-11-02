@@ -15,7 +15,7 @@ interface PrimitivePolicyFixture {
   json: (name: string, value: object) => Promise<void>;
 }
 
-async function fixture(
+const fixture = async function fixture(
   run: (context: PrimitivePolicyFixture) => Promise<void>
 ) {
   await mkdir(output, { recursive: true });
@@ -65,7 +65,7 @@ async function fixture(
     assert.ok(path.basename(directory).startsWith("primitives-"));
     await rm(directory, { force: true, recursive: true });
   }
-}
+};
 
 test("primitive policy rejects direct, transitive and optional Radix routes", async () => {
   await fixture(async ({ json, check }) => {

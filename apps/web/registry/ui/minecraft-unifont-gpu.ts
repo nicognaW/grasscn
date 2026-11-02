@@ -23,7 +23,7 @@ export type UnihexAtlas = Record<
 
 const atlases = new WeakMap<CanvasRenderingContext2D, UnihexAtlas>();
 
-export function setUnihexAtlas(
+export const setUnihexAtlas = function setUnihexAtlas(
   context: CanvasRenderingContext2D,
   atlas?: UnihexAtlas
 ) {
@@ -32,16 +32,18 @@ export function setUnihexAtlas(
   } else {
     atlases.delete(context);
   }
-}
+};
 
-export function positionUnihex(
+export const positionUnihex = function positionUnihex(
   context: CanvasRenderingContext2D,
   bounds: DOMRect
 ) {
   origins.set(context, bounds);
-}
+};
 
-function releasePainter(painter: Painter | null | undefined) {
+const releasePainter = function releasePainter(
+  painter: Painter | null | undefined
+) {
   if (!painter) {
     return;
   }
@@ -51,9 +53,11 @@ function releasePainter(painter: Painter | null | undefined) {
   gl.deleteTexture(texture);
   gl.deleteProgram(program);
   gl.getExtension("WEBGL_lose_context")?.loseContext();
-}
+};
 
-export function disposeUnihex(context: CanvasRenderingContext2D) {
+export const disposeUnihex = function disposeUnihex(
+  context: CanvasRenderingContext2D
+) {
   origins.delete(context);
   atlases.delete(context);
 
@@ -67,9 +71,9 @@ export function disposeUnihex(context: CanvasRenderingContext2D) {
     releasePainter(sharedPainter);
     sharedPainter = undefined;
   }
-}
+};
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -157,9 +161,9 @@ function create(): Painter | null {
 
     throw error;
   }
-}
+};
 
-export function paintUnihexGPU(
+export const paintUnihexGPU = function paintUnihexGPU(
   context: CanvasRenderingContext2D,
   glyph: UnihexGlyph,
   x: number,
@@ -287,4 +291,4 @@ export function paintUnihexGPU(
   );
 
   return true;
-}
+};

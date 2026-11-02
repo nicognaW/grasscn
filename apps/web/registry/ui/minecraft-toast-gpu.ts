@@ -20,7 +20,7 @@ interface Painter {
 
 let shared: Painter | null | undefined;
 
-function create(): Painter | null {
+const create = function create(): Painter | null {
   const canvas = document.createElement("canvas");
 
   const gl = canvas.getContext("webgl", {
@@ -125,9 +125,9 @@ function create(): Painter | null {
   );
 
   return { buffer, canvas, font, gl, program, sprite };
-}
+};
 
-export function paintToast(
+export const paintToast = function paintToast(
   canvas: HTMLCanvasElement,
   bounds: DOMRect,
   width: number,
@@ -432,4 +432,4 @@ export function paintToast(
   );
 
   return true;
-}
+};

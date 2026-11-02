@@ -1,6 +1,6 @@
 import { minecraftGlyphs } from "./minecraft-font";
 
-export function paintSignGpu(
+export const paintSignGpu = function paintSignGpu(
   texture: HTMLImageElement,
   font: HTMLImageElement,
   lines: readonly string[],
@@ -228,4 +228,4 @@ export function paintSignGpu(
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
   return pixels;
-}
+};

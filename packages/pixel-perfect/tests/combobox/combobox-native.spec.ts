@@ -24,7 +24,7 @@ test.afterEach(({ page, browser }, info) => {
   expect(errors).toEqual([]);
 });
 
-function compare(
+const compare = function compare(
   bytes: Buffer,
   expectedBytes: Buffer,
   c: any,
@@ -57,7 +57,7 @@ function compare(
     JSON.stringify({ case: c.name, kind, mismatchedPixels: n })
   );
   expect(n).toBe(0);
-}
+};
 
 test.describe.configure({ mode: "parallel" });
 

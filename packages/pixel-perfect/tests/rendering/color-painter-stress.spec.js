@@ -47,7 +47,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
 
   const checks = [];
 
-  async function verify(scale) {
+  const verify = async function verify(scale) {
     await page
       .getByRole("button", { exact: true, name: `Scale ${scale}` })
       .click();
@@ -78,7 +78,7 @@ test("Colored CJK labels share bounded GPU resources and preserve native pixels"
 
     expect(different).toBe(0);
     checks.push({ mismatchedPixels: different, scale });
-  }
+  };
 
   for (const scale of [1, 2, 3, 1, 3]) {
     await verify(scale);

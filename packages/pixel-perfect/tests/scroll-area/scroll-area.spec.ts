@@ -26,7 +26,7 @@ const manifest = JSON.parse(
   }[];
 };
 
-function compare(expected: PNG, actual: PNG) {
+const compare = function compare(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
     expected.height,
@@ -54,7 +54,7 @@ function compare(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatchedPixels };
-}
+};
 
 test("ScrollArea comparator catches a one-pixel change", async () => {
   const expected = PNG.sync.read(

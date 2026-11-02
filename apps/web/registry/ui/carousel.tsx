@@ -36,7 +36,7 @@ type CarouselContextProps = CarouselProps & {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
-function useCarousel() {
+const useCarousel = function useCarousel() {
   const value = React.useContext(CarouselContext);
 
   if (!value) {
@@ -44,7 +44,7 @@ function useCarousel() {
   }
 
   return value;
-}
+};
 
 const Carousel = ({
   orientation = "horizontal",

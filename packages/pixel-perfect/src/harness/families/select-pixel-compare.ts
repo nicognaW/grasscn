@@ -1,6 +1,9 @@
 import { PNG } from "pngjs";
 
-export function compareSelectPixels(expected: PNG, actual: PNG) {
+export const compareSelectPixels = function compareSelectPixels(
+  expected: PNG,
+  actual: PNG
+) {
   if (actual.width !== expected.width || actual.height !== expected.height) {
     throw new Error("Select image geometry differs");
   }
@@ -28,4 +31,4 @@ export function compareSelectPixels(expected: PNG, actual: PNG) {
   }
 
   return { diff, mismatches };
-}
+};

@@ -1,7 +1,7 @@
 import type { MapMarker } from "./map";
 import { mapAtlas } from "./minecraft-map-atlas";
 
-export function mapGpuPixels(
+export const mapGpuPixels = function mapGpuPixels(
   terrain: ImageData,
   images: readonly HTMLImageElement[],
   markers: readonly MapMarker[],
@@ -234,4 +234,4 @@ export function mapGpuPixels(
   gl.getExtension("WEBGL_lose_context")?.loseContext();
 
   return output;
-}
+};

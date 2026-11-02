@@ -1,6 +1,6 @@
 import { Separator } from "@grasscn/web/ui/separator";
 
-export function SeparatorApiContract() {
+export const SeparatorApiContract = function SeparatorApiContract() {
   const supported = (
     <Separator
       orientation="horizontal"
@@ -18,4 +18,4 @@ export function SeparatorApiContract() {
   const invented = <Separator edge="outline" />;
 
   return [supported, composed, vertical, invented];
-}
+};

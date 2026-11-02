@@ -1,7 +1,7 @@
 import { bookPageSounds } from "./minecraft-book-sound-assets";
 import { getMinecraftSoundVolume } from "./minecraft-sound";
 
-export function playBookPageTurn() {
+export const playBookPageTurn = function playBookPageTurn() {
   const volume = getMinecraftSoundVolume();
 
   if (typeof Audio === "undefined" || volume === 0) {
@@ -17,4 +17,4 @@ export function playBookPageTurn() {
   void sound.play().catch(() => {
     /* empty */
   });
-}
+};
