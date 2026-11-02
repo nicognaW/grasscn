@@ -79,7 +79,7 @@ for (const scale of [2] as const) {
                   .subarray(start, start + 4)
                   .equals(image.data.subarray(offset, offset + 4))
               )
-                differing++;
+                differing += 1;
             }
         }
       }

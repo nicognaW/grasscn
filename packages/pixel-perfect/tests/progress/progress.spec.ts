@@ -187,7 +187,7 @@ test("Progress notch painter preserves the background through transparent corner
                 .subarray(index, index + 4)
                 .equals(backdrop.data.subarray(index, index + 4))
             ).toBe(true);
-            checked++;
+            checked += 1;
           }
         }
       }
