@@ -351,9 +351,11 @@ export const ChartPixelSurface = ({
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const [paint, setPaint] = React.useState(0);
   const [ready, setReady] = React.useState(false);
+
   const backgroundStyle: React.CSSProperties & {
     "--mc-chart-surface-background": string;
   } = { "--mc-chart-surface-background": background };
+
   const canvasStyle: React.CSSProperties & {
     "--mc-chart-surface-height": number;
     "--mc-chart-surface-width": number;
