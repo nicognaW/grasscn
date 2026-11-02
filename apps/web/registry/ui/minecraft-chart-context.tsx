@@ -249,6 +249,7 @@ export const ChartAxisTick = ({
 
 export function useChartGeometry() {
   const { scale, store } = useStore();
+
   const snapshot = React.useSyncExternalStore(
     store.subscribe,
     store.getSnapshot,
