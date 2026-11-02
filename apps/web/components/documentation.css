@@ -55,6 +55,7 @@
   line-height: 1;
   letter-spacing: 0;
   color: transparent;
+  text-shadow: none;
   -webkit-text-fill-color: transparent;
   user-select: text;
   cursor: text;

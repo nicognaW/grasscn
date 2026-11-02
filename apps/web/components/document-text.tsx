@@ -31,33 +31,41 @@ export const documentText = (children: ReactNode): ReactNode => {
     /* eslint-disable react/no-react-children -- The MDX rendering boundary must flatten and preserve arbitrary React children before native glyph rendering. */
     Children.map(nodes, (child): ReactNode => {
       if (isTextNode(child)) {
-        return String(child)
-          .split(/(?<whitespace>\s+)/u)
-          .map((word, index) => {
-            if (!word) {
-              return null;
-            }
+        return (
+          String(child)
+            .split(/(?<whitespace>\s+)/u)
+            // Preserve literal punctuation and identifier text while allowing native-sized segments to wrap.
+            .flatMap((segment) =>
+              /^[ -~]*$/u.test(segment)
+                ? segment.split(/(?<=[\p{P}\p{S}])/u)
+                : [segment]
+            )
+            .map((word, index) => {
+              if (!word) {
+                return null;
+              }
 
-            if (/^\s+$/u.test(word)) {
-              return word;
-            }
+              if (/^\s+$/u.test(word)) {
+                return word;
+              }
 
-            return (
-              <span /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
-                className="document-word"
-                /* eslint-enable shadcn/no-unknown-classes */
-                /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
-                key={index}
-                /* eslint-enable react-doctor/no-array-index-as-key */
-              >
-                {/^[ -~]*$/u.test(word) ? (
-                  <MinecraftText>{word}</MinecraftText>
-                ) : (
-                  <MinecraftUnicodeLabel text={word} />
-                )}
-              </span>
-            );
-          });
+              return (
+                <span /* eslint-disable shadcn/no-unknown-classes -- These classes are defined in components/documentation.css and loaded by the documentation layout. */
+                  className="document-word"
+                  /* eslint-enable shadcn/no-unknown-classes */
+                  /* eslint-disable react-doctor/no-array-index-as-key -- These positions identify immutable generated document segments; text and source identity own replacement. */
+                  key={index}
+                  /* eslint-enable react-doctor/no-array-index-as-key */
+                >
+                  {/^[ -~]*$/u.test(word) ? (
+                    <MinecraftText>{word}</MinecraftText>
+                  ) : (
+                    <MinecraftUnicodeLabel text={word} />
+                  )}
+                </span>
+              );
+            })
+        );
       }
 
       if (
