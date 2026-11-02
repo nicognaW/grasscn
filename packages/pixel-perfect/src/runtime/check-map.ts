@@ -26,7 +26,8 @@ import type {
 } from "@ppt/runtime/map-evidence";
 import { PNG } from "pngjs";
 
-const jsonText = async (file: string) => await readFile(evidenceFile(file), "utf-8");
+const jsonText = async (file: string) =>
+  await readFile(evidenceFile(file), "utf-8");
 
 const args = process.argv.slice(2);
 const mapArg = args.indexOf("--map");
