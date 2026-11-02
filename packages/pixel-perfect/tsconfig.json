@@ -17,23 +17,6 @@
       "@ppt/*": ["../pixel-perfect/src/*"],
       "@tests/paths": ["../tests/src/paths.ts"],
       "@ppt/paths": ["../pixel-perfect/src/paths.ts"],
-      "@grasscn/tests/fixture": ["../tests/src/runtime/fixture.ts"],
-      "@grasscn/tests/coordination": ["../tests/src/runtime/coordination.ts"],
-      "@grasscn/tests/dependency-identity": [
-        "../tests/src/runtime/dependency-identity.ts"
-      ],
-      "@grasscn/tests/installed-registry-file": [
-        "../tests/src/installed/registry-file.ts"
-      ],
-      "@grasscn/tests/checkpoints": ["../tests/src/runtime/checkpoints.ts"],
-      "@grasscn/tests/checkpoint-reporter": [
-        "../tests/src/runtime/checkpoint-reporter.ts"
-      ],
-      "@grasscn/tests/guarded-entry": [
-        "../tests/src/runtime/guarded-entry.ts"
-      ],
-      "@grasscn/tests/case-paths": ["../tests/src/runtime/case-paths.ts"],
-      "@grasscn/tests/hosts": ["../tests/src/runtime/hosts.ts"],
       "@grasscn/tests/next-production": [
         "../tests/src/runtime/next-production.mjs"
       ],
