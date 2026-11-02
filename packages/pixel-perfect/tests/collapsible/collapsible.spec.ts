@@ -5,6 +5,22 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Consumed fields shared by the retained ASCII/CJK Buttons and Label routes. */
+interface CollapsibleComparisonCase extends CapturedReferenceCase {
+  label: string;
+  x?: number;
+  y?: number;
+  background?: string;
+  alignment?: string;
+  wrapWidth?: number;
+}
+
+interface CollapsibleComparisonManifest {
+  cases: CollapsibleComparisonCase[];
+}
+
 const compareRgba = function compareRgba(expected: PNG, actual: PNG) {
   expect([actual.width, actual.height]).toEqual([
     expected.width,
@@ -53,9 +69,11 @@ for (const directory of [
   "tests/reference/button-cjk",
   "tests/reference/label",
 ]) {
+  // SAFETY: The closed retained ASCII Button, CJK Button and Label routes all supply required label/core fields; coordinates, alignment, background and wrapWidth are real variant optionals.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as CollapsibleComparisonManifest;
 
   const body = directory.endsWith("/label");
 

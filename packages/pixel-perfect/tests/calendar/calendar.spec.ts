@@ -5,6 +5,25 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Consumed fields of the six retained Calendar/Date Picker constituent families. */
+interface CalendarComparisonCase extends CapturedReferenceCase {
+  x?: number;
+  y?: number;
+  label?: string;
+  background?: string;
+  alignment?: string;
+  checked?: boolean;
+  text?: string;
+  wrapWidth?: number;
+}
+
+interface CalendarComparisonManifest {
+  background: string;
+  cases: CalendarComparisonCase[];
+}
+
 import type CapturedData0 from "../reference/calendar-day/manifest.json";
 
 const different = function different(a: PNG, b: PNG) {
@@ -57,12 +76,14 @@ for (const component of ["calendar", "date-picker"]) {
         ]
       : []),
   ]) {
+    // SAFETY: The closed Calendar/Date Picker constituent routes read retained Calendar-day, Card, Label, Pagination Arrow and ASCII/CJK Button manifests with this real core, variant optionals and string header background.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
     const manifest = JSON.parse(
       readFileSync(
         pixelPerfectFile(`tests/reference/${dir}/manifest.json`),
         "utf-8"
       )
-    );
+    ) as CalendarComparisonManifest;
 
     test.describe(`${component} actual native ${part} constituents`, () => {
       test.describe.configure({ mode: "parallel" });

@@ -5,19 +5,57 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+interface ChartProvenanceCase extends CapturedReferenceCase {
+  page: number;
+  x: number;
+  y: number;
+}
+
+interface ChartFramePin {
+  name: string;
+  sha256: string;
+}
+
+interface ChartProvenanceManifest {
+  sourceJarSha256: string;
+  captureSourceSha256: string;
+  caseDefinitionSha256: string;
+  cases: ChartProvenanceCase[];
+  frames: ChartFramePin[];
+}
+
+interface ChartRepeatedCase {
+  name: string;
+  mismatchedPixels: number;
+  decodedRgbaSha256: string;
+}
+
+interface ChartProvenanceRepeat {
+  sourceJarSha256: string;
+  captureSourceSha256: string;
+  caseDefinitionSha256: string;
+  cases: ChartRepeatedCase[];
+}
+
 const hash = (b: Buffer) => createHash("sha256").update(b).digest("hex");
 
 for (const kind of ["fps", "pie"]) {
   test(`Chart ${kind} expected pixels come from pinned original full frames and source snapshots`, () => {
     const dir = `tests/reference/chart-${kind}`;
 
+    // SAFETY: Both retained Chart FPS/Pie manifests supply the consumed identity strings, positioned/page cases and frame name/hash pins; all original provenance checks remain.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
     const m = JSON.parse(
       readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
-    );
+    ) as ChartProvenanceManifest;
 
+    // SAFETY: Both retained Chart FPS/Pie repeatability artifacts contain these identity strings and per-case numeric mismatch/string decoded-digest records; original checks remain.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
     const r = JSON.parse(
       readFileSync(pixelPerfectFile(`${dir}/repeatability.json`), "utf-8")
-    );
+    ) as ChartProvenanceRepeat;
 
     expect(
       hash(
@@ -47,7 +85,9 @@ for (const kind of ["fps", "pie"]) {
 
       expect(hash(bytes)).toBe(c.sha256);
       expect(hash(frameBytes)).toBe(
-        m.frames.find((f: { name: string }) => f.name === frameName).sha256
+        // SAFETY: Each retained FPS/Pie case page/scale has exactly one frame pin in its paired manifest; this bounded retained relation preserves the original lookup and raw failure path.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact bounded manifest-to-frame relation; no generic guaranteed-find contract.
+        (m.frames.find((f: { name: string }) => f.name === frameName) as ChartFramePin).sha256
       );
 
       for (let y = 0; y < expected.height; y += 1) {
@@ -61,7 +101,9 @@ for (const kind of ["fps", "pie"]) {
       }
 
       expect(pixels.equals(expected.data)).toBe(true);
-      const repeated = r.cases.find((v: { name: string }) => v.name === c.name);
+      // SAFETY: Each retained FPS/Pie case has exactly one paired repeat record with the consumed mismatch/digest fields. Preserve this bounded retained lookup and its raw failure path.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact paired retained capture/repeat relation; no new success check or fallback.
+      const repeated = r.cases.find((v: { name: string }) => v.name === c.name) as ChartRepeatedCase;
       expect(repeated.mismatchedPixels).toBe(0);
       expect(repeated.decodedRgbaSha256).toBe(hash(expected.data));
     }
