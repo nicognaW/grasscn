@@ -4,10 +4,9 @@ import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { TestInfo } from "@playwright/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 /** Fields consumed from the closed Suggestions, Input and Input CJK routes. */
 interface ComboboxComparisonCase extends CapturedReferenceCase {
@@ -160,7 +159,10 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         if (c.state.endsWith("hover")) {
           // SAFETY: Within the Suggestions route, the existing hover-state guard selects exactly the retained hover cases, all with numeric targetIndex.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual closed-route/variant contract at the existing guard; no added property read or validation.
-          await subject.getByRole("option").nth((c as ComboboxHoveredSuggestionCase).targetIndex).hover();
+          await subject
+            .getByRole("option")
+            .nth((c as ComboboxHoveredSuggestionCase).targetIndex)
+            .hover();
         } else {
           await page.mouse.move(0, 0);
         }
@@ -174,8 +176,8 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
 
         // SAFETY: This existing Suggestions branch uses the same captured retained producer, whose labels are string arrays.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Actual closed-route/variant contract at the existing guard; no added property read or validation.
-        const unicodeCount = (c as ComboboxSuggestionsCase).labels.filter((label: string) =>
-          /[^\u0020-\u007E]/u.test(label)
+        const unicodeCount = (c as ComboboxSuggestionsCase).labels.filter(
+          (label: string) => /[^\u0020-\u007E]/u.test(label)
         ).length;
 
         await expect(subject.locator("[data-mc-menu-text-ready]")).toHaveCount(

@@ -2,10 +2,9 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 /** Consumed fields shared by the retained ASCII/CJK Buttons and Label routes. */
 interface CollapsibleComparisonCase extends CapturedReferenceCase {

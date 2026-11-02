@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
+
 import type labelReference from "../../../tests/reference/label/manifest.json";
 
 export const compare = function compare(expected: PNG, actual: PNG) {

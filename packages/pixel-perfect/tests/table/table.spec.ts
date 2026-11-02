@@ -4,10 +4,9 @@ import path from "node:path";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import type { TestInfo } from "@playwright/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 /** Shared consumed shape of the retained Separator and Table-background captures. */
 interface TablePositionedCase extends CapturedReferenceCase {

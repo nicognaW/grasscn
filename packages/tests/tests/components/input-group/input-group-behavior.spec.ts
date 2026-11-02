@@ -99,17 +99,21 @@ test("Input Group plays only the original button audio", async ({ page }) => {
   await page.goto("/?component=input-group");
   await page.locator("[data-slot=input-group-text]").click();
   await page.getByRole("textbox").fill("世界");
-  expect(await page.evaluate(() =>
-    // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-    (window as typeof window & InputGroupPlaybackState).sounds
-  )).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & InputGroupPlaybackState).sounds
+    )
+  ).toEqual([]);
   await page.getByRole("button", { exact: true, name: "Send" }).click();
-  expect(await page.evaluate(() =>
-    // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-    (window as typeof window & InputGroupPlaybackState).sounds
-  )).toEqual([
-    { rate: 1, src: minecraftClickSound, volume: 0.25 },
-  ]);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Input Group reader follows navigation initialized with the exact paired sounds producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & InputGroupPlaybackState).sounds
+    )
+  ).toEqual([{ rate: 1, src: minecraftClickSound, volume: 0.25 }]);
 });

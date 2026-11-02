@@ -119,18 +119,24 @@ test("Questionnaire choice and navigation interactions play the original click e
   await page.goto("/?component=questionnaire");
   const choice = page.getByRole("radio", { name: /Creative/u });
   await choice.hover();
-  expect(await page.evaluate(() =>
-    // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-    (window as typeof window & QuestionnairePlaybackState).voices.length
-  )).toBe(0);
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & QuestionnairePlaybackState).voices.length
+    )
+  ).toBe(0);
   await choice.check();
   await page.getByRole("button", { exact: true, name: "Next" }).click();
-  expect(await page.evaluate(() =>
-    // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-    (window as typeof window & QuestionnairePlaybackState).voices
-  )).toEqual([
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Questionnaire reader follows navigation initialized with the exact paired voices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & QuestionnairePlaybackState).voices
+    )
+  ).toEqual([
     { original: true, rate: 1, volume: 0.25 },
     { original: true, rate: 1, volume: 0.25 },
   ]);

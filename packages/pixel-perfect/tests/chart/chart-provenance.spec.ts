@@ -2,10 +2,9 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-
-import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
 
 interface ChartProvenanceCase extends CapturedReferenceCase {
   page: number;
@@ -87,7 +86,11 @@ for (const kind of ["fps", "pie"]) {
       expect(hash(frameBytes)).toBe(
         // SAFETY: Each retained FPS/Pie case page/scale has exactly one frame pin in its paired manifest; this bounded retained relation preserves the original lookup and raw failure path.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact bounded manifest-to-frame relation; no generic guaranteed-find contract.
-        (m.frames.find((f: { name: string }) => f.name === frameName) as ChartFramePin).sha256
+        (
+          m.frames.find(
+            (f: { name: string }) => f.name === frameName
+          ) as ChartFramePin
+        ).sha256
       );
 
       for (let y = 0; y < expected.height; y += 1) {
@@ -103,7 +106,9 @@ for (const kind of ["fps", "pie"]) {
       expect(pixels.equals(expected.data)).toBe(true);
       // SAFETY: Each retained FPS/Pie case has exactly one paired repeat record with the consumed mismatch/digest fields. Preserve this bounded retained lookup and its raw failure path.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact paired retained capture/repeat relation; no new success check or fallback.
-      const repeated = r.cases.find((v: { name: string }) => v.name === c.name) as ChartRepeatedCase;
+      const repeated = r.cases.find(
+        (v: { name: string }) => v.name === c.name
+      ) as ChartRepeatedCase;
       expect(repeated.mismatchedPixels).toBe(0);
       expect(repeated.decodedRgbaSha256).toBe(hash(expected.data));
     }

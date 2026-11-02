@@ -4,8 +4,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
-import type buttonReference from "../../../tests/reference/manifest.json";
+
 import type labelReference from "../../../tests/reference/label/manifest.json";
+import type buttonReference from "../../../tests/reference/manifest.json";
 import type tooltipReference from "../../../tests/reference/tooltip/manifest.json";
 
 type TextReference =

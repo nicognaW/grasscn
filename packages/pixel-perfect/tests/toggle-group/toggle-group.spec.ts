@@ -2,10 +2,10 @@ import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
+import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile, webFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
 import type ToggleAssetData from "../reference/toggle/asset-provenance.json";
 
 type ToggleAssetPins = Pick<typeof ToggleAssetData, "assets">;

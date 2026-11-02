@@ -279,10 +279,11 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   });
 
   const voices = async () =>
-    page.evaluate(() =>
-      // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
-      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-      (window as typeof window & MenubarPlaybackState).__menubarVoices
+    page.evaluate(
+      () =>
+        // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+        (window as typeof window & MenubarPlaybackState).__menubarVoices
     );
 
   await page.goto("/?component=menubar&keepOpen");
@@ -324,21 +325,27 @@ for (const query of ["nativeButtonChild", "controlled&reject"]) {
     });
     await openMenu(page, query);
     await expect
-      .poll(async () => page.evaluate(() =>
-        // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-        (window as typeof window & MenubarCounterState).__menubarVoices
-      ))
+      .poll(async () =>
+        page.evaluate(
+          () =>
+            // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+            (window as typeof window & MenubarCounterState).__menubarVoices
+        )
+      )
       .toBe(1);
     await page.keyboard.press("Escape");
     await game(page).focus();
     await game(page).press("Enter");
     await expect
-      .poll(async () => page.evaluate(() =>
-        // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
-        (window as typeof window & MenubarCounterState).__menubarVoices
-      ))
+      .poll(async () =>
+        page.evaluate(
+          () =>
+            // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
+            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
+            (window as typeof window & MenubarCounterState).__menubarVoices
+        )
+      )
       .toBe(2);
   });
 }
