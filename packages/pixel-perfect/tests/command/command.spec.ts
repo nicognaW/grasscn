@@ -1,3 +1,4 @@
+import type { CommandCaptureManifest } from "@ppt/installed/control-capture-protocol";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -9,7 +10,7 @@ import { PNG } from "pngjs";
 
 test.describe.configure({ mode: "parallel" });
 
-const sha = (b) => createHash("sha256").update(b).digest("hex");
+const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
 for (const [folder, part] of [
   ["suggestions", "list"],
@@ -18,9 +19,11 @@ for (const [folder, part] of [
 ]) {
   const directory = path.join("tests/reference", folder);
 
-  const manifest = JSON.parse(
+  // SAFETY: the existing Command suggestion/input route table selects these concrete captured-reference producers.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact CommandCaptureManifest producer boundary with original collection read timing.
+const manifest = JSON.parse(
     readFileSync(path.join(directory, "manifest.json"), "utf-8")
-  );
+  ) as CommandCaptureManifest;
 
   for (const c of manifest.cases) {
     test(`command ${folder || "button"} ${c.name}`, async ({ page }, info) => {
@@ -52,7 +55,7 @@ for (const [folder, part] of [
         );
         query.set("selectedIndex", String(c.selectedIndex));
       } else {
-        query.set("text", c.text);
+        query.set("text", c.text!);
         query.set("placeholder", c.placeholder ?? "");
 
         const caseMaxLength = c.maxLength;
@@ -76,7 +79,7 @@ for (const [folder, part] of [
         await subject.focus();
 
         if (c.state.endsWith("hover")) {
-          await subject.getByRole("option").nth(c.targetIndex).hover();
+          await subject.getByRole("option").nth(c.targetIndex!).hover();
         } else {
           await page.mouse.move(0, 0);
         }
@@ -123,19 +126,21 @@ for (const [folder, part] of [
           await page.mouse.move(0, 0);
         }
 
-        const cursor = c.cursor ?? c.text.length;
+        const cursor = c.cursor ?? c.text!.length;
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
           (node, { cursor, anchor }) =>
-            node.setSelectionRange(
+            // SAFETY: this entry fixture route renders an HTML input with native selection support.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
+              (node as HTMLInputElement).setSelectionRange(
               Math.min(cursor, anchor),
               Math.max(cursor, anchor),
               cursor < anchor ? "backward" : "forward"
             ),
           { anchor, cursor }
         );
-        await page.clock.runFor(c.caretMs);
+        await page.clock.runFor(c.caretMs!);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       }
 

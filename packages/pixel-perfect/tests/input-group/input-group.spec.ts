@@ -1,3 +1,4 @@
+import type { InputGroupCaptureManifest, InputGroupEntryElement } from "@ppt/installed/control-capture-protocol";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -9,7 +10,7 @@ import { PNG } from "pngjs";
 
 test.describe.configure({ mode: "parallel" });
 
-const sha = (b) => createHash("sha256").update(b).digest("hex");
+const sha = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
 
 for (const [folder, part] of [
   ["input", "input"],
@@ -23,9 +24,11 @@ for (const [folder, part] of [
   const directory = path.join("tests/reference", folder);
   const reference = directory;
 
-  const manifest = JSON.parse(
+  // SAFETY: the existing InputGroup entry/label/button route table selects these concrete captured-reference producers.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact InputGroupCaptureManifest producer boundary with original collection read timing.
+const manifest = JSON.parse(
     readFileSync(path.join(directory, "manifest.json"), "utf-8")
-  );
+  ) as InputGroupCaptureManifest;
 
   for (const c of manifest.cases) {
     test(`input-group ${folder || "button"} ${c.name}`, async ({
@@ -114,12 +117,14 @@ for (const [folder, part] of [
       }
 
       if (entry) {
-        const cursor = c.cursor ?? c.text.length;
+        const cursor = c.cursor ?? c.text!.length;
         const anchor = c.anchor ?? cursor;
 
         await subject.evaluate(
           (node, { cursor, anchor }) =>
-            node.setSelectionRange(
+            // SAFETY: this entry fixture route renders an HTML input or textarea with native selection support.
+              // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact entry subject DOM API producer boundary.
+              (node as InputGroupEntryElement).setSelectionRange(
               Math.min(cursor, anchor),
               Math.max(cursor, anchor),
               cursor < anchor ? "backward" : "forward"
@@ -136,7 +141,7 @@ for (const [folder, part] of [
           );
         }
 
-        await page.clock.runFor(c.caretMs);
+        await page.clock.runFor(c.caretMs!);
         await expect(subject).toHaveAttribute("data-mc-ready", "true");
       } else {
         await page.evaluate(
