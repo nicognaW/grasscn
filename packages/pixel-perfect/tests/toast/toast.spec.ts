@@ -9,7 +9,7 @@ import type toastReference from "../reference/toast/manifest.json";
 
 const directory = "tests/reference/toast";
 
-// SAFETY: the retained native Toast producer owns this exact manifest; preserve the original runtime read/parse phase.
+// SAFETY: this read consumes retained toast/manifest.json with its exact imported shape; preserve the original runtime read/parse phase.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")

@@ -16,7 +16,7 @@ const hash = (bytes: Buffer) =>
 const directory = "tests/reference/table-background";
 
 test("Table expected grip pixels are exact crops from both original native launches and retained fullframes", () => {
-  // SAFETY: the retained native crop producer owns this exact manifest; keep its original read/parse and hash checks.
+  // SAFETY: this read consumes retained table-background/manifest.json with its exact imported shape; retain the original read/parse and provenance hash checks.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
@@ -26,7 +26,7 @@ test("Table expected grip pixels are exact crops from both original native launc
     pixelPerfectFile(`${directory}/crop-derivation.json`)
   );
 
-  // SAFETY: the retained crop derivation producer owns these exact source/crop fields; retain the original proof bytes and parse phase.
+  // SAFETY: this read consumes retained table-background/crop-derivation.json with its exact imported source/crop fields; retain the original proof bytes and parse phase.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const proof = JSON.parse(proofBytes.toString()) as typeof cropDerivation;
 
@@ -99,7 +99,7 @@ test("Table expected grip pixels are exact crops from both original native launc
 });
 
 test("Table ships unchanged original list and separator PNG artwork", () => {
-  // SAFETY: the maintained native asset generator writes SourceProvenance with SHA-256 source pins; existing artwork/hash checks remain unchanged.
+  // SAFETY: retained table-background/asset-provenance.json records SHA-256 strings under sources; this consumer reads those pins and retains its artwork/hash assertions.
   // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   const provenance = JSON.parse(
     readFileSync(
