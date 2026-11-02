@@ -9,7 +9,7 @@ import react from "ultracite/oxlint/react";
 import shadcn from "ultracite/oxlint/shadcn";
 import vitest from "ultracite/oxlint/vitest";
 
-import { generatedCode } from "./tooling-scope.mjs";
+import { generatedCode, retainedSourceInputs } from "./tooling-scope.mjs";
 
 // Next-only rules target the application directories introduced by #23,
 // never reusable registry components or test fixtures.
@@ -19,7 +19,11 @@ const jsPlugins = selectJsPlugins(["react-doctor"]);
 export default defineConfig({
   env: core.env,
   extends: [core, playwright, react, vitest, shadcn, antiSlop, jsPlugins],
-  ignorePatterns: [...(core.ignorePatterns ?? []), ...generatedCode],
+  ignorePatterns: [
+    ...(core.ignorePatterns ?? []),
+    ...generatedCode,
+    ...retainedSourceInputs,
+  ],
   jsPlugins: [...jsPlugins.jsPlugins, ...shadcn.jsPlugins],
   options: { typeAware: true },
   overrides: [

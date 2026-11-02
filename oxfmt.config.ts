@@ -1,9 +1,18 @@
 import { defineConfig } from "oxfmt";
 import ultracite from "ultracite/oxfmt";
 
-import { generatedCode } from "./tooling-scope.mjs";
+import {
+  generatedCode,
+  retainedEvidenceData,
+  retainedSourceInputs,
+} from "./tooling-scope.mjs";
 
 export default defineConfig({
   ...ultracite,
-  ignorePatterns: [...(ultracite.ignorePatterns ?? []), ...generatedCode],
+  ignorePatterns: [
+    ...(ultracite.ignorePatterns ?? []),
+    ...generatedCode,
+    ...retainedSourceInputs,
+    ...retainedEvidenceData,
+  ],
 });
