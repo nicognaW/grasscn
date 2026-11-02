@@ -7,6 +7,29 @@ import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type { CapturedReferenceCase } from "@ppt/installed/reference-case";
+
+/** Shared consumed shape of the retained Separator and Table-background captures. */
+interface TablePositionedCase extends CapturedReferenceCase {
+  background: string;
+  x: number;
+  y: number;
+}
+
+interface TableLabelCase extends TablePositionedCase {
+  label: string;
+  alignment: string;
+  wrapWidth?: number;
+}
+
+interface TableLabelManifest {
+  cases: TableLabelCase[];
+}
+
+interface TablePositionedManifest {
+  cases: TablePositionedCase[];
+}
+
 const repo = path.resolve(".");
 
 const compare = function compare(
@@ -64,12 +87,14 @@ test.afterEach(({ page, browser }, info) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
+// SAFETY: The fixed retained Label manifest supplies the consumed label, alignment, geometry and identity fields; wrapWidth is a real optional number.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const labelManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile(path.join(repo, "tests/reference/label/manifest.json")),
     "utf-8"
   )
-);
+) as TableLabelManifest;
 
 test.describe("Table original native label constituents", () => {
   test.describe.configure({ mode: "parallel" });
@@ -147,6 +172,8 @@ test.describe("Table original native label constituents", () => {
   }
 });
 
+// SAFETY: The fixed retained Separator manifest supplies every consumed identity, state, background and coordinate field.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const separatorManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile(
@@ -154,7 +181,7 @@ const separatorManifest = JSON.parse(
     ),
     "utf-8"
   )
-);
+) as TablePositionedManifest;
 
 test.describe("Table native header/footer separator artwork", () => {
   test.describe.configure({ mode: "parallel" });
@@ -200,6 +227,8 @@ test.describe("Table native header/footer separator artwork", () => {
   }
 });
 
+// SAFETY: The fixed retained six Table-background ROI captures supply the consumed identity, state, background and coordinate fields; no current generator lineage is assumed.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained capture boundary; existing runtime read/parse phase is preserved.
 const listBackground = JSON.parse(
   readFileSync(
     pixelPerfectFile(
@@ -207,7 +236,7 @@ const listBackground = JSON.parse(
     ),
     "utf-8"
   )
-);
+) as TablePositionedManifest;
 
 for (const c of listBackground.cases) {
   test(`Table exact native list background:${c.name}`, async ({
