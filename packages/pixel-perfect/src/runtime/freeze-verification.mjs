@@ -4,7 +4,13 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-import { repoRoot, webFile } from "@ppt/paths";
+import { repoRoot } from "@ppt/paths";
+import { evidenceFile } from "@ppt/runtime/evidence-paths";
+
+import {
+  validateHistoricalEvidence,
+  historicalMapComponents,
+} from "./historical-evidence.ts";
 
 assert.ok(process.argv[2], "Pass a new snapshot directory");
 
@@ -42,8 +48,23 @@ for (const name of [...new Set(names)].toSorted()) {
 }
 
 const map = JSON.parse(
-  await readFile(webFile("registry/minecraft-map.json"), "utf-8")
+  await readFile(evidenceFile("registry/minecraft-map.json"), "utf8")
 );
+/** @type {unknown} */
+
+const registry = JSON.parse(
+  await readFile(evidenceFile("registry.json"), "utf-8")
+);
+
+const historicalEvidence = await validateHistoricalEvidence({
+  archiveDirectory: path.join(
+    repoRoot,
+    "packages/pixel-perfect/evidence/historical-installed-977f538"
+  ),
+  map,
+  registry,
+  resolvePath: evidenceFile,
+});
 
 await writeFile(
   path.join(output, "source-manifest.json"),
@@ -51,12 +72,12 @@ await writeFile(
     {
       bun: Bun.version,
       capturedAt: new Date().toISOString(),
-      components: map.components.map((c) => ({
-        name: c.name,
-        status: c.implementation.status,
-        pixels: c.pixelVerification.status,
-      })),
+      components: historicalMapComponents(
+        JSON.stringify(map),
+        historicalEvidence
+      ),
       files: records,
+      historicalEvidence,
       minecraftVersion: map.minecraftVersion,
       sourceJarSha256: map.sourceJarSha256,
     },

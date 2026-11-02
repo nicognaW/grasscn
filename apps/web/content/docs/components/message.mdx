@@ -1,0 +1,45 @@
+---
+title: Message
+description: Original Minecraft chat foreground rows with accessible content.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Original Minecraft chat foreground rows with accessible content.
+
+## Preview
+
+<ComponentExample name="message-example" />
+
+## Usage
+
+Place MessageContent inside Message. Scalar content automatically prefixes the supplied author, so pass only the message body. `kind="system"` uses yellow system text; align supports start/end.
+
+## Composition
+
+MessageGroup groups rows but does not supply scale context. Set scale on each Message or inherit it from MessageScroller. MessageAvatar, Header and Footer support additional arrangements; rich children are preserved rather than treated as a plain chat string.
+
+## Interaction and limits
+
+Keep stable message identifiers in a scrolling conversation and choose live-region behavior for your application. Captured coverage concerns fixed chat foreground rows, colors, widths and glyph sets; avatar arrangements, reactions, fading and arbitrary rich content are outside that native scope.
+
+See [Bubble](/docs/components/bubble) for conversation composition and [Message Scroller](/docs/components/message-scroller) for bounded history and follow-latest behavior.
+
+## Installation
+
+<Installation name="message" title="Message" initialFile="message.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="message"
+  title="Message"
+  initialFile="registry/ui/message.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="message" />

@@ -1,0 +1,46 @@
+---
+title: Book
+description: A paged plain-text reader with original page-turn arrows.
+aliases: [Book, BookProps]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+A paged plain-text reader with original page-turn arrows.
+
+## Preview
+
+<ComponentExample name="book-example" />
+
+## Usage
+
+Import `Book` from `@/components/ui/book` and provide `pages`, a readonly array of plain strings. Use JavaScript `\n` escapes for paragraph breaks. `page` is a zero-based index; pair it with `onPageChange`, or supply `defaultPage`. The displayed index is clamped to the available pages.
+
+The primary field guide supplies all three pages inline. At default scale 2 the 192 by 192 logical-pixel book occupies 384 by 384 browser pixels.
+
+## Composition
+
+The reader has a fixed 114 logical-pixel text column and 128 logical-pixel page height. Split long content into pages yourself; it has no editing, Markdown or rich-content API. Empty arrays produce an empty first page.
+
+Focus the group and press Left/Right or PageUp/PageDown. Only available direction buttons render. Pointer arrow activation plays the original page-turn sound unless `turnSound={false}`; keyboard paging does not request that sound. The page body exposes a named document role.
+
+## Installation
+
+<Installation name="book" title="Book" />
+
+## Component source
+
+<ComponentSource name="book" title="Book" />
+
+## Interactive playground
+
+<MinecraftPlayground name="book" />
+
+## Verified coverage and limitations
+
+Original book textures, arrows and bitmap text are retained. These short field-guide pages are new content; they do not establish a native pixel match for all wrapping, languages, overflow or page lengths.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

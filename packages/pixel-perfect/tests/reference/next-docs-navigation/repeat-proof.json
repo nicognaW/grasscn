@@ -1,0 +1,111 @@
+{
+  "nativeLaunches": 2,
+  "scope": "Header Button and Search Input native constituents; sidebar/TOC textured composition not established here",
+  "cases": [
+    {
+      "name": "docs-header-components-s1.png",
+      "width": 100,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "38ad1c392a32f983b538df8f99250f61e868856bf46c0135ab36e07674848853"
+    },
+    {
+      "name": "docs-header-components-s2.png",
+      "width": 200,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "6db126729d96bceb07aba99620bfec37ab9db089cee6ee8e093960e1e81707e4"
+    },
+    {
+      "name": "docs-header-components-s3.png",
+      "width": 300,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "12a6d8cb280e8cd14630d555b36540061887b1f60af056db237a5de87f018b26"
+    },
+    {
+      "name": "docs-search-empty-s1.png",
+      "width": 200,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9f475bda20e95dd425fd7b5a9dd00a0798abd38d8d7a731e6563ab0d4aedf932"
+    },
+    {
+      "name": "docs-search-empty-s2.png",
+      "width": 400,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "861babf9ab1c26f31e7e1b94ab8854bf43629559a7b259c5cf8d8200ca663be4"
+    },
+    {
+      "name": "docs-search-empty-s3.png",
+      "width": 600,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "9d2ce39e964dde92297b7c206a49ab97ae5e28baea1ac4dcf96458af92ba1a3d"
+    },
+    {
+      "name": "docs-search-focus-s1.png",
+      "width": 200,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "a1a2594752eab95d1b405ec5ea75bc7f369566d1aa5b5d505736c2fa82f6c733"
+    },
+    {
+      "name": "docs-search-focus-s2.png",
+      "width": 400,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "bb3b09ae9a400fc65b32e9361d0f640bed46109df2cb57d0a744ab146dcdab68"
+    },
+    {
+      "name": "docs-search-focus-s3.png",
+      "width": 600,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "53c404426a79a9f2adeb388a29dde6c2487d5b69e22c05c742af0cfebf2838a6"
+    },
+    {
+      "name": "docs-search-hear-s1.png",
+      "width": 200,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "53f748f080bc62a17da2f109710c2c45e9de6167befa086a9e0d1fe4e9b66534"
+    },
+    {
+      "name": "docs-search-hear-s2.png",
+      "width": 400,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "f4f7b9bab2058f6bc686e650823ceb54c16ec1f5b229c18ed90947b7c6353661"
+    },
+    {
+      "name": "docs-search-hear-s3.png",
+      "width": 600,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "7230d65b92d69b5f48f197a70087d296bd7a57074918f8f7835c7f5cc4edfa66"
+    },
+    {
+      "name": "docs-search-symbol-s1.png",
+      "width": 200,
+      "height": 20,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "081503cdd347c93b1285477574c1dfdb1cb076c74989f46334ddb11d1c511e37"
+    },
+    {
+      "name": "docs-search-symbol-s2.png",
+      "width": 400,
+      "height": 40,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "7cf142031f355c57b54da26cb4e94c9874958b485ece62fd6789f8a828648e05"
+    },
+    {
+      "name": "docs-search-symbol-s3.png",
+      "width": 600,
+      "height": 60,
+      "differingPixels": 0,
+      "decodedRgbaSha256": "aa4526aea8029f722624a9dd05bc40e326fabe06d4f6385497c09902d2cfe692"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+---
+title: Spinner
+description: The original four-phase loading-dots sequence.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+The original four-phase loading-dots sequence.
+
+## Preview
+
+<ComponentExample name="spinner-example" />
+
+## Usage
+
+Spinner is an SVG role="status" with aria-label="Loading" by default; give it the specific loading task as in the example. Scale defaults to 2 and logicalWidth to 26. Optional timeMs fixes a phase for deterministic display. Each phase lasts 300 ms; reduced motion freezes phase zero.
+
+## Composition
+
+Use a visible task label alongside the status when a page has multiple loads. Do not continually announce every phase. The retained playground can pause/fix phases; arbitrary viewBox and SVG rescaling fall outside the original loading-dots matrix.
+
+## Installation
+
+<Installation name="spinner" title="Spinner" />
+
+## Component source
+
+<ComponentSource name="spinner" title="Spinner" />
+
+## Interactive playground
+
+<LayoutPlayground name="spinner" />

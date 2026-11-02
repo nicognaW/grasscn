@@ -1,0 +1,54 @@
+---
+title: Map
+description: Palette-index terrain, selectable decorations and a separate bearing locator.
+aliases: [MinecraftMap, LocatorBar, MinecraftMapProps, MapMarker, LocatorMarker]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+Palette-index terrain, selectable decorations and a separate bearing locator.
+
+## Preview
+
+<ComponentExample name="map-example" />
+
+## Usage
+
+Import `MinecraftMap` and `LocatorBar` from `@/components/ui/map`, using the installable identity `map`. `MinecraftMap` requires a `Uint8Array` of exactly 16,384 bytes: one palette index for each of 128 by 128 pixels. It does not accept RGBA bytes, a PNG or a world seed.
+
+The primary example creates its entire two-color palette tile inline. It needs no saved world, external pixel file or demo-only `map-world-data` helper. Palette indices whose base color is zero are transparent. Replace the array when updating terrain.
+
+## Composition
+
+Markers have unique IDs, labels and x/y map coordinates; positions map to `64 + x / 2`, `64 + y / 2`. `decoration` chooses a supported atlas entry; `rotation` is a step index multiplied by 22.5 degrees. `onMarkerSelect` returns the marker ID. Bare-terrain `onMapClick` returns clamped pixel coordinates from 0 through 127 and is pointer-only; labelled marker buttons provide keyboard access.
+
+The named `LocatorBar` example supplies `bearing` in degrees and controls `heading` separately. It shows bearings relative to heading in (-60, 60]. Marker color, shape and optional up/down direction are independent API fields. Rotation and terrain generation remain caller responsibilities.
+
+### Map Locator
+
+<ComponentExample name="map-locator" />
+
+## Installation
+
+<Installation name="map" title="Map" />
+
+The locator example additionally uses the `button` item for heading controls. The terrain example requires only this Map installation and its inline pixel data.
+
+<Installation name="button" title="Locator controls: Button" />
+
+## Component source
+
+<ComponentSource name="map" title="Map" />
+
+## Interactive playground
+
+<MinecraftPlayground name="map" />
+
+## Verified coverage and limitations
+
+The illustrative palette tile differs from the frozen saved-world capture; do not compare it to that capture as if its input matched. Retained palette, terrain and decoration cases apply only to their recorded data and geometry. Atlas/GPU marker painting is asynchronous; fallback DOM placement alone does not demonstrate native pixel fidelity.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

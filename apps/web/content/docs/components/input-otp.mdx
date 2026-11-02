@@ -1,0 +1,45 @@
+---
+title: Input OTP
+description: One accessible code input rendered as Minecraft cells.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+One accessible code input rendered as Minecraft cells.
+
+## Preview
+
+<ComponentExample name="input-otp-example" />
+
+## Usage
+
+Import `InputOTP`, `InputOTPGroup`, `InputOTPSlot` and `InputOTPSeparator` from `@/components/ui/input-otp`. `maxLength` is required; give slots explicit zero-based indices. `value`/`onChange` use a string and `onComplete` receives the complete code.
+
+## Composition
+
+The root owns typing, selection, paste and form behavior. Name that real input; individual visual cells are aria-hidden and removed from tab order. The example uses text input with six characters, not a numeric-only pattern. Set `inputMode` and `pattern` deliberately if your application requires digits.
+
+## API and accessibility
+
+`readOnly` and `disabled` propagate to the decorative slots. The separator defaults to a dash, scale to 2. Cell segmentation and separators are web composition; fixed cell glyph references do not establish fidelity for all strings or password-manager overlays.
+
+See the [underlying API](https://input-otp.rodz.dev/) for shared semantics.
+
+## Read only
+
+<ComponentExample name="input-otp-readonly-example" title="Read only" />
+
+## Installation
+
+<Installation name="input-otp" title="Input OTP" />
+
+## Component source
+
+<ComponentSource name="input-otp" title="Input OTP" />
+
+## Interactive playground
+
+<InputPlayground name="input-otp" />

@@ -1,0 +1,8 @@
+
+..\..\packages\tests\tests\overlay-examples.test.mjs:
+(pass) the copied world table exposes its caption, column headers and complete data [9.85ms]
+
+ 1 pass
+ 0 fail
+ 5 expect() calls
+Ran 1 test across 1 file. [50.00ms]

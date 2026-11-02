@@ -19,14 +19,11 @@ test("advancement tree selection, keyboard, details and panning", async ({
       "http://127.0.0.1:5174/adventure.html"
     }?scale=2&mask=1`
   );
-
-  const tree = page.getByRole("group", { name: "Advancement tree" });
-
-  const first = page.getByRole("button", {
-    exact: true,
-    name: "Milestone 0, completed",
-  });
-
+  const tree = page.getByRole("group", { name: "Advancement tree" }),
+    first = page.getByRole("button", {
+      exact: true,
+      name: "Milestone 0, completed",
+    });
   await first.hover();
   await expect(page.locator('[data-slot="tooltip-content"]')).toContainText(
     "Milestone 0"
@@ -68,14 +65,20 @@ test("advancement roadmap is available in the local website", async ({
   await expect(
     page.getByRole("heading", { exact: true, name: "Advancement Tree" })
   ).toBeVisible();
+
+  const playground = page.getByRole("region", {
+    exact: true,
+    name: "advancement-tree playground",
+  });
+
   await expect(
-    page.getByRole("group", { name: "Release roadmap" })
+    playground.getByRole("group", { name: "Release roadmap" })
   ).toBeVisible();
-  await page
+  await playground
     .getByRole("button", { exact: true, name: "Mark incomplete" })
     .click();
   await expect(
-    page.getByRole("button", { exact: true, name: "Plan" })
+    playground.getByRole("button", { exact: true, name: "Plan" })
   ).toHaveAttribute("data-completed", "false");
   expect(
     await page.evaluate(

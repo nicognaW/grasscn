@@ -1,0 +1,45 @@
+---
+title: Switch
+description: An ON/OFF cycle button with accessible switch state.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+An ON/OFF cycle button with accessible switch state.
+
+## Preview
+
+<ComponentExample name="switch-example" />
+
+## Usage
+
+Import `Switch` from `@/components/ui/switch`. Use `checked`/`onCheckedChange(next, details)` or `defaultChecked`. The example starts OFF and toggles clouds through an associated label.
+
+## Composition
+
+Supply an external [Label](/docs/components/label) using `id`/`htmlFor`, or an accessible name directly. The painted ON/OFF words are hidden from accessibility APIs and do not replace that name. `disabled` prevents pointer and keyboard activation.
+
+## API and accessibility
+
+Only `size="default"` is supported; another size throws. Scale defaults to 2. This is web switch semantics on the native CycleButton appearance, without a sliding-thumb variant. The playground demonstrates controlled and locked settings.
+
+See the [underlying API](https://base-ui.com/react/components/switch) for shared semantics.
+
+## Locked setting
+
+<ComponentExample name="switch-disabled-example" title="Locked setting" />
+
+## Installation
+
+<Installation name="switch" title="Switch" />
+
+## Component source
+
+<ComponentSource name="switch" title="Switch" />
+
+## Interactive playground
+
+<InputPlayground name="switch" />

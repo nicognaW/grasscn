@@ -1,0 +1,33 @@
+{"serverLocale":"zh-CN","serverDefaultDate":"2026/10/30","serverExplicitDate":"10/30/2026"}
+uncheck in C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-20
+○ sherif skipped, not selected by --only
+○ oxlint skipped, not selected by --only
+○ oxfmt skipped, not selected by --only
+▶ tsc -p apps\web\tsconfig.json --noEmit
+▶ tsc -p packages\tests\tsconfig.json --noEmit
+✔ tsc passed 8.5s
+
+✔ all checks passed (tsc)
+bun test v1.4.4 (38afee6c8)
+Reusing production build: unchanged apps/web tree 5eb8e20f27dc35bc543fdc9b5bc63734638b2001 from6d76d5b
+▲ Next.js 16.4.2
+- Local:         http://127.0.0.1:5190
+- Network:       http://127.0.0.1:5190
+✓ Ready in 93ms
+✓ Running next.config.mjs took 21ms
+[MDX] generated files in 5.700300000000027ms
+
+Running 11 tests using 1 worker
+
+[1/11] tests\overlay-documentation.spec.ts:53:1 › overlay documentation exposes exact examples, own grouped source and retained playgrounds
+[2/11] tests\overlay-documentation.spec.ts:123:1 › documentation confirmation callbacks update once and close their actual modal
+[3/11] tests\overlay-documentation.spec.ts:157:1 › documentation edge panels expose labelled Done actions
+[4/11] tests\overlay-documentation.spec.ts:179:1 › documentation menu and command examples dispatch real selections
+[5/11] tests\overlay-documentation.spec.ts:216:1 › documentation tooltip and popover open from their real focusable triggers
+[6/11] tests\overlay-documentation.spec.ts:250:1 › documentation Calendar and Date Picker select with their actual DayPicker 10 APIs
+[7/11] tests\overlay-documentation.spec.ts:274:1 › documentation world browser filters and pages through TanStack Table 9
+[8/11] tests\overlay-documentation.spec.ts:304:1 › documentation message scroller appends messages and navigates its bounded history
+[9/11] tests\overlay-documentation.spec.ts:332:1 › documentation bubble reactions and attachment actions retain local state
+[10/11] tests\overlay-documentation.spec.ts:361:1 › overlay documentation remains usable at its default mobile width
+[11/11] tests\overlay-documentation.spec.ts:378:1 › default documentation packaged avatar faces match native PlayerFaceExtractor
+  11 passed (49.8s)

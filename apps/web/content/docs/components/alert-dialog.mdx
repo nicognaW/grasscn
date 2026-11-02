@@ -1,0 +1,49 @@
+---
+title: Alert Dialog
+description: An explicit confirmation with Minecraft ConfirmScreen artwork.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+An explicit confirmation with Minecraft ConfirmScreen artwork.
+
+## Preview
+
+<ComponentExample name="alert-dialog-example" />
+
+## Usage
+
+Control `open` and `onOpenChange` when confirmation changes application state. In the example, Yes increments the confirmation count and calls `setOpen(false)`. `AlertDialogAction` is a plain Grasscn Button and does not close automatically.
+
+## Composition
+
+Place Title and Description in Header, then Action and Cancel in Footer. Content creates its portal and full-screen overlay. `AlertDialogCancel` uses the primitive Close behavior; root scale defaults to 2.
+
+## Interaction and limits
+
+Keep the warning specific and keep a cancel action available. The backdrop blur uses a local DOM snapshot and the original shader arithmetic; retained reference cases cover their recorded capture conditions. Arbitrary cross-origin imagery, video and vector underlays need separate evidence. This UI does not delete files itself.
+
+See the [upstream API](https://base-ui.com/react/components/alert-dialog) for the underlying part and event contracts.
+
+## Installation
+
+<Installation
+  name="alert-dialog"
+  title="Alert Dialog"
+  initialFile="alert-dialog.tsx"
+/>
+
+## Component source
+
+<ComponentSource
+  name="alert-dialog"
+  title="Alert Dialog"
+  initialFile="registry/ui/alert-dialog.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="alert-dialog" />

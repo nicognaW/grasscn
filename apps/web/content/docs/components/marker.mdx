@@ -1,0 +1,37 @@
+---
+title: Marker
+description: Native label and separator constituents for checkpoint notices.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Native label and separator constituents for checkpoint notices.
+
+## Preview
+
+<ComponentExample name="marker-example" />
+
+## Usage
+
+A scalar Marker child is automatically wrapped in MarkerContent. variant supports default, separator and border; separatorEdge defaults to header. MarkerContent accepts align and logical maxWidth. MarkerIcon is decorative and aria-hidden, so keep the notice text meaningful without it.
+
+## Composition
+
+The bordered notice below combines MarkerIcon and MarkerContent. Separator/border line and label constituents retain their declared cases; custom icons, links and notice arrangements are web compositions, without a native Marker widget claim.
+
+<ComponentExample name="marker-border" />
+
+## Installation
+
+<Installation name="marker" title="Marker" />
+
+## Component source
+
+<ComponentSource name="marker" title="Marker" />
+
+## Interactive playground
+
+<LayoutPlayground name="marker" />

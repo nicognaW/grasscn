@@ -1,0 +1,24 @@
+{
+  "minecraftVersion": "26.2",
+  "javaRelease": "JAVA_VERSION=\"25.0.1\"\nMODULES=\"java.base java.compiler java.datatransfer java.xml java.prefs java.desktop java.instrument java.logging java.management java.security.sasl java.naming java.rmi java.management.rmi java.net.http java.scripting java.security.jgss java.transaction.xa java.sql java.sql.rowset java.xml.crypto java.se java.smartcardio jdk.accessibility jdk.internal.jvmstat jdk.attach jdk.charsets jdk.internal.opt jdk.zipfs jdk.compiler jdk.crypto.cryptoki jdk.crypto.ec jdk.crypto.mscapi jdk.dynalink jdk.internal.ed jdk.editpad jdk.internal.vm.ci jdk.graal.compiler jdk.graal.compiler.management jdk.hotspot.agent jdk.httpserver jdk.incubator.vector jdk.internal.le jdk.internal.md jdk.jartool jdk.javadoc jdk.jcmd jdk.management jdk.management.agent jdk.jconsole jdk.jdeps jdk.jdwp.agent jdk.jdi jdk.jfr jdk.jlink jdk.jpackage jdk.jshell jdk.jsobject jdk.jstatd jdk.localedata jdk.management.jfr jdk.naming.dns jdk.naming.rmi jdk.net jdk.nio.mapmode jdk.sctp jdk.security.auth jdk.security.jgss jdk.unsupported jdk.unsupported.desktop jdk.xml.dom\"\n",
+  "javaExecutableSha256": "4c062924e741a9663353a8b44ce1c1523534063aa7d6c9be1df241126a1ce074",
+  "javacExecutableSha256": "a1057a56fe25875d9286661a1da0c604e21caed8472ae8101a43999590942bb4",
+  "captureRunner": "source-input/capture-controls.mjs",
+  "captureRunnerSha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb",
+  "nativeLaunches": 2,
+  "nativeCaptureCountPerLaunch": 3,
+  "scaleSelection": "Native captures retain scales 1,2,3. Browser comparisons must select only explicitly mapped website-default Base cases; capture availability is not browser coverage.",
+  "settings": "Two isolated offline game directories, en_us, GUI scales1/2/3, forceUnicodeFont=false, highContrast=false, no mods or resource packs; manifest pins original JAR/source/case hashes.",
+  "guard": {
+    "ExitCode": 0,
+    "Reason": "completed",
+    "PeakCpu": 44.50757575757576,
+    "PeakRam": 79.22318242800957,
+    "CpuCap": 10,
+    "CpuReadback": 1000,
+    "RamCapGiB": 4.0,
+    "PauseCount": 5
+  },
+  "guardTaskSha256": "0b116396cc1d961497b7c4afbd0f5d45bb341f8a7a91d21a9b5941f9d27077c2",
+  "scope": "Actual website default Slider Volume: 50%, 200x20 logical, value0.5, normal, #202020; browserdefaultGUI2only, nativeprovenanceGUI1/2/3."
+}

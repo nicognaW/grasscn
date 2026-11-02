@@ -1,0 +1,37 @@
+---
+title: Resizable
+description: Resizable panel composition with original recipe-arrow constituents.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Resizable panel composition with original recipe-arrow constituents.
+
+## Preview
+
+<ComponentExample name="resizable-example" />
+
+## Usage
+
+This port forwards react-resizable-panels v4 GroupProps. Use orientation and groupRef, percentage strings for panel defaultSize/minSize, and onLayoutChanged for completed layout updates. The example names panels left/right, constrains both to 30%, and resets with `groupRef.setLayout({left:50,right:50})`. Do not use the older direction or onLayout API.
+
+## Composition
+
+ResizableHandle defaults to withHandle=false; set it to show opposing original recipe arrows. Keep the separator accessible name and library keyboard handling. Panel percentages, drag hitbox, overall track and vertical rotation are web adaptations, not a vanilla split-pane widget.
+
+## Installation
+
+<Installation name="resizable" title="Resizable" />
+
+## Component source
+
+<ComponentSource name="resizable" title="Resizable" />
+
+## Interactive playground
+
+<LayoutPlayground name="resizable" />
+
+For the inherited interaction contract, see [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels). The restrictions above describe the installed Grasscn implementation.

@@ -1,111 +1,109 @@
-import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { chromium, expect } from "@playwright/test";
-import { repoRoot, webFile } from "@tests/paths";
+import { repoRoot } from "@tests/paths";
 
-const origin = process.argv[2] ?? "http://127.0.0.1:5176/";
+import { documentationInventory } from "./documentation-inventory.mjs";
+
+const origin = (process.argv[2] ?? "http://127.0.0.1:5176").replace(/\/$/u, "");
 
 const out = path.resolve(
-  process.argv[3] ?? path.join(repoRoot, ".pixel-perfect-test/preview-audit")
+  process.argv[3] ?? path.join(repoRoot, "test-results/preview-audit")
 );
 
-const catalog = JSON.parse(
-  await readFile(webFile("catalog.generated.json"), "utf-8")
-);
+const inventory = documentationInventory();
 
 await mkdir(out, { recursive: true });
 
 const browser = await chromium.launch({ channel: "msedge" });
-const page = await browser.newPage({ viewport: { height: 1000, width: 1440 } });
+const page = await browser.newPage();
 const errors = [];
 const rows = [];
 
-page.on("pageerror", (e) => errors.push(e.message));
+page.on("pageerror", (error) => errors.push(error.message));
 
 try {
-  await page.goto(origin);
-  await expect(
-    page.getByRole("heading", { name: /Familiar controls/ })
-  ).toBeVisible();
-  await expect(
-    page.locator("main .component-grid > .component-card")
-  ).toHaveCount(catalog.components.length);
-
-  const duplicates = await page.evaluate(() => {
-    const seen = new Set();
-    const duplicates = [];
-
-    for (const n of document.querySelectorAll("[id]")) {
-      if (seen.has(n.id)) {
-        duplicates.push(n.id);
-      }
-
-      seen.add(n.id);
-    }
-
-    return duplicates;
-  });
-
-  expect(duplicates).toEqual([]);
-  await page.evaluate(() => {
-    window.scrollTo(0, 0);
-  });
-  await page.screenshot({ path: path.join(out, "desktop.png") });
-
-  for (const c of catalog.components) {
-    await page.goto(`${origin}#${c.name}`);
-    const region = page.getByRole("region", { exact: true, name: c.title });
-    await expect(region).toBeVisible();
-    await expect(
-      page.locator("main .component-grid > .component-card")
-    ).toHaveCount(1);
-    rows.push({ component: c.name, visible: true });
-  }
-
   for (const viewport of [
     { height: 1000, width: 1440 },
     { height: 844, width: 390 },
   ]) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
     await page.setViewportSize(viewport);
-    await page.goto(`${origin}#all`);
+
+    for (const route of [
+      "/",
+      "/charts",
+      "/docs/components/button",
+      "/docs/components/form",
+    ]) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+      await page.goto(origin + route);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+      // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+      const scrollWidth = await page.evaluate(
+        () => document.documentElement.scrollWidth
+      );
+
+      expect(scrollWidth).toBeLessThanOrEqual(viewport.width);
+      // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+      await page.screenshot({
+        fullPage: true,
+        path: path.join(
+          out,
+          `${viewport.width}-${route.replaceAll("/", "-") || "home"}.png`
+        ),
+      });
+      rows.push({ route, scrollWidth, viewport });
+    }
+  }
+
+  for (const entry of inventory.pages) {
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+    await page.goto(origin + entry.route);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
     await expect(
-      page.locator("main .component-grid > .component-card")
-    ).toHaveCount(catalog.components.length);
+      page
+        .locator(".minecraft-document")
+        .getByRole("heading", { exact: true, level: 1, name: entry.title })
+    ).toHaveText(entry.title);
 
-    const width = await page.evaluate(() => ({
-      scroll: document.documentElement.scrollWidth,
-      viewport: innerWidth,
-    }));
+    if (entry.playground) {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+      await expect(page.locator(".documentation-playground")).toBeVisible();
+    }
 
-    rows.push({ viewport, width });
-    await page.evaluate(() => {
-      window.scrollTo(0, 0);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One browser page must finish each route/viewport assertion before navigating.
+    const duplicates = await page.locator("[id]").evaluateAll((nodes) => {
+      const seen = new Set();
+
+      return nodes.flatMap((node) => {
+        if (seen.has(node.id)) {
+          return [node.id];
+        }
+
+        seen.add(node.id);
+
+        return [];
+      });
     });
-    await page.screenshot({
-      path: path.join(
-        out,
-        viewport.width === 390 ? "mobile.png" : "desktop-final.png"
-      ),
+
+    expect(duplicates).toEqual([]);
+    rows.push({
+      playground: entry.playground,
+      route: entry.route,
+      visible: true,
     });
   }
 
   expect(errors).toEqual([]);
-  console.log(
-    `Preview audit: ${catalog.components.length} demos render; no runtime errors`
-  );
 } finally {
   await writeFile(
     path.join(out, "report.json"),
     `${JSON.stringify(
-      {
-        browser: browser.version(),
-        components: catalog.components.length,
-        coveredComponents: catalog.completedCount,
-        errors,
-        origin,
-        rows,
-      },
+      { browser: browser.version(), errors, inventory, origin, rows },
       null,
       2
     )}\n`

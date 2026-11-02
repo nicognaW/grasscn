@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import path from "node:path";
 
+import { parseWebsiteIdentity } from "@grasscn/tests/verification-types";
 import { test as base } from "@playwright/test";
 import { PNG } from "pngjs";
 
@@ -77,6 +78,10 @@ export const test = base.extend<{ grasscnVerificationArtifacts: void }>({
             subjectSlot,
             testId: info.testId,
             titlePath: info.titlePath,
+            websiteIdentity:
+              process.env.GRASSCN_WEBSITE_IDENTITY === undefined
+                ? null
+                : parseWebsiteIdentity(process.env.GRASSCN_WEBSITE_IDENTITY),
           })
         ),
         contentType: "application/json",

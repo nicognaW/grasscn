@@ -101,9 +101,14 @@ for (const component of ["sheet", "drawer"]) {
 
     for (let i = 0; i < 8; i += 1) {
       await page.keyboard.press("Tab");
-      expect(
-        await panel.evaluate((n) => n.contains(document.activeElement))
-      ).toBe(true);
+      // Base UI wraps through an external focus guard, then queues the internal target on the next animation frame.
+      // eslint-disable-next-line no-await-in-loop -- Wait for each queued focus-guard handoff before issuing the next Tab.
+      await expect
+        .poll(
+          async () =>
+            await panel.evaluate((n) => n.contains(document.activeElement))
+        )
+        .toBe(true);
     }
 
     expect(await panel.evaluate((n) => n.scrollHeight > n.clientHeight)).toBe(

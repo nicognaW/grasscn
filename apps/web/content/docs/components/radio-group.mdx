@@ -1,0 +1,45 @@
+---
+title: Radio Group
+description: Exclusive choices using Minecraft Checkbox artwork.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { InputPlayground } from "@/components/input-playground";
+
+Exclusive choices using Minecraft Checkbox artwork.
+
+## Preview
+
+<ComponentExample name="radio-group-example" />
+
+## Usage
+
+Import `RadioGroup` and `RadioGroupItem` from `@/components/ui/radio-group`. Give each item a distinct value, and control the group with `value`/`onValueChange(next, details)` or use `defaultValue`.
+
+## Composition
+
+Name the group with `aria-label` or `aria-labelledby`, and associate each item with its own [Label](/docs/components/label). Items inherit scale and disabled state from the group. To implement a clear action, set controlled value to an empty value as in the retained playground; activating the selected radio alone does not provide toggle deselection.
+
+## API and accessibility
+
+The artwork is square Checkbox imagery, not circular radio artwork. Group layout, exclusive selection and keyboard navigation are web adaptations. Scale defaults to 2; disabling the group disables its items.
+
+See the [underlying API](https://base-ui.com/react/components/radio-group) for shared semantics.
+
+## Disabled group
+
+<ComponentExample name="radio-group-disabled-example" title="Disabled group" />
+
+## Installation
+
+<Installation name="radio-group" title="Radio Group" />
+
+## Component source
+
+<ComponentSource name="radio-group" title="Radio Group" />
+
+## Interactive playground
+
+<InputPlayground name="radio-group" />

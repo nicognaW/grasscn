@@ -1,0 +1,45 @@
+---
+title: Dialog
+description: A modal composed from the original Minecraft PopupScreen surface.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+A modal composed from the original Minecraft PopupScreen surface.
+
+## Preview
+
+<ComponentExample name="dialog-example" />
+
+## Usage
+
+Keep `DialogTitle` and `DialogDescription` in `DialogHeader`. The root defaults to scale 2 and Content inherits it. The example controls `open` and closes only after its Continue callback has updated the saved count.
+
+## Composition
+
+`DialogContent` owns Portal and Overlay; do not add another default layer. `DialogFooter` contains `DialogClose` and real Buttons. Content width 250 is in logical pixels. `showCloseButton` supports false only: the port closes through footer actions or Escape.
+
+## Interaction and limits
+
+A Button used for submit or confirmation must call your open-state setter when the action succeeds. `DialogClose` closes automatically. Focus trapping and return are Base UI behavior; responsive overflow and custom rich content are web adaptations beyond the fixed native PopupScreen cases.
+
+See the [upstream API](https://base-ui.com/react/components/dialog) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="dialog" title="Dialog" initialFile="dialog.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="dialog"
+  title="Dialog"
+  initialFile="registry/ui/dialog.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="dialog" />

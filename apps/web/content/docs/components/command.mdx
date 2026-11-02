@@ -1,0 +1,51 @@
+---
+title: Command
+description: Searchable commands with Minecraft suggestions and input rendering.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Searchable commands with Minecraft suggestions and input rendering.
+
+## Preview
+
+<ComponentExample name="command-example" />
+
+## Usage
+
+`CommandInput` uses cmdk value/onValueChange when controlled. `CommandItem` uses value, keywords and onSelect. The example filters commands and reports the selected value; searching for 生存 also finds Survival.
+
+## Composition
+
+Place Input before List, then Group/Item and Empty inside the list. List defaults to the suggestions surface and also supports popup. `CommandDialog` composes the same command engine with Grasscn Dialog; control its open state and provide a meaningful title and description.
+
+## Interaction and limits
+
+### Command palette
+
+`CommandDialog` already creates the `Command` root. Pass Input and List directly as its children. This example explicitly closes after selecting a command, and the dialog restores the opening button's focus.
+
+<ComponentExample name="command-palette-example" />
+
+`CommandShortcut` only paints a hint and does not register a global hotkey. cmdk is the intentional Radix dependency exception; the surrounding dialog remains Base UI. Group arrangements and shortcuts are web compositions beyond the original input/suggestion constituents.
+
+See the [upstream API](https://cmdk.paco.me/) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="command" title="Command" initialFile="command.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="command"
+  title="Command"
+  initialFile="registry/ui/command.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="command" />

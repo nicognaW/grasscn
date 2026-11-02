@@ -1,0 +1,52 @@
+---
+title: Player Preview
+description: A rotatable WebGL2 player model using embedded or caller-supplied skins.
+aliases: [PlayerPreview, PlayerPreviewProps, PlayerRotation]
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { MinecraftPlayground } from "@/components/minecraft-playground";
+
+A rotatable WebGL2 player model using embedded or caller-supplied skins.
+
+## Preview
+
+<ComponentExample name="player-preview-example" />
+
+## Usage
+
+Import `PlayerPreview` from `@/components/ui/player-preview`. The primary example uses the included `wide/steve` skin and reports `onLoadingStatusChange` as `loading`, `loaded` or `error`. No caller texture is required for built-in skins. The named Alex example explicitly uses `model="slim"`.
+
+WebGL2 is required; there is no alternate 3D renderer. An error status must be handled as unavailable rendering rather than a loaded skin. Default dimensions are 80 by 120 logical pixels at scale 2.
+
+## Composition
+
+Source precedence is `src`, then `username`, then `skin`. Caller textures must be 64 by 64 PNG skin atlases. Remote servers must permit anonymous CORS access for Canvas/WebGL. Explicit `model="wide"` or `model="slim"` overrides inference; custom texture inference examines unused arm UV transparency.
+
+`username` requests `https://mc-heads.net/skin/<encoded username>`, a third-party service rather than authenticated profile lookup. It is optional and absent from the primary example. Supply `src` for a resource you control.
+
+Pair `rotation` with `onRotationChange` or use `defaultRotation`. Drag to rotate; focused arrows change angles by 5 degrees and Home resets. Pitch is clamped to -50 through 50 degrees. The focusable group has instructions/status while the canvas is hidden from assistive technology.
+
+### Player Preview Alex
+
+<ComponentExample name="player-preview-alex" />
+
+## Installation
+
+<Installation name="player-preview" title="Player Preview" />
+
+## Component source
+
+<ComponentSource name="player-preview" title="Player Preview" />
+
+## Interactive playground
+
+<MinecraftPlayground name="player-preview" />
+
+## Verified coverage and limitations
+
+The built-in assets and declared pose/raster cases retain their evidence. Arbitrary skin URLs, poses, viewport sizes, slim inference and GPU/software raster environments are not universally pixel verified. A ready canvas on this site alone does not prove an independent consumer's WebGL path.
+
+The retained playground is additional interactive reference content. It is distinct from the maintained consumer example shown under Preview. Documentation layouts and controls are web adaptations; source/reference bytes and their original provenance remain authoritative for declared cases.

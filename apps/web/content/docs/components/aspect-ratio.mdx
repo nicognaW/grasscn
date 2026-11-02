@@ -1,0 +1,35 @@
+---
+title: Aspect Ratio
+description: Unskinned aspect-ratio layout for caller-supplied content.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Unskinned aspect-ratio layout for caller-supplied content.
+
+## Preview
+
+<ComponentExample name="aspect-ratio-example" />
+
+## Usage
+
+ratio defaults to 1 and is forwarded to CSS aspect-ratio. There is no scale prop, frame, texture or Minecraft primitive counterpart. The example embeds its own image data and alt text, so copying it does not require a website asset. Replace the image with your own resource and preserve integer sampling for pixel art.
+
+## Composition
+
+The ratio container supplies geometry only. Install Card separately for a framed image, and choose width/height rules on the child explicitly. Child artwork retains its own provenance and fidelity scope; resizing the container does not establish native pixels.
+
+## Installation
+
+<Installation name="aspect-ratio" title="Aspect Ratio" />
+
+## Component source
+
+<ComponentSource name="aspect-ratio" title="Aspect Ratio" />
+
+## Interactive playground
+
+<LayoutPlayground name="aspect-ratio" />

@@ -11,8 +11,8 @@ for (const scale of [2] as const) {
     test(`Original F3 charts stay visible and analytics selector stays on screen at GUI${scale} ${device}`, async ({
       page,
     }) => {
-      await page.setViewportSize({ height, width });
-      await page.goto(`${preview.replace(/\/$/, "")}/#/components/chart`);
+      await page.setViewportSize({ width, height });
+      await page.goto(`${preview.replace(/\/$/u, "")}/docs/components/chart`);
 
       const native = page.locator("[data-chart-native-examples]");
       const fps = native.locator("[data-native-chart=fps]");
@@ -54,7 +54,6 @@ for (const scale of [2] as const) {
       const trigger = page.locator(
         '[data-slot=select-trigger][aria-label="Chart type"]'
       );
-
       await trigger.evaluate((n) => {
         scrollBy(0, n.getBoundingClientRect().top - 80);
       });

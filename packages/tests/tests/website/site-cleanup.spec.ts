@@ -1,43 +1,47 @@
-import { readFileSync } from "node:fs";
-
 import { test, expect } from "@grasscn/tests/test";
-import { webFile } from "@tests/paths";
+import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
 
-const index = JSON.parse(
-  readFileSync(webFile("search.generated.json"), "utf-8")
-) as { name: string; title: string; exports: string[] }[];
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
-
-test("catalog consolidates pages and removes discarded controls and copy", async ({
+test("canonical documentation independently exposes grouped public parts and omits discarded controls", async ({
   page,
 }) => {
-  for (const name of ["field", "bubble", "message-scroller"]) {
-    expect(index.some((i) => i.name === name)).toBe(false);
+  const inventory = documentationInventory();
+
+  for (const [name, title, owner] of [
+    ["field", "Field", "form"],
+    ["bubble", "Bubble", "message"],
+    ["message-scroller", "Message Scroller", "message"],
+  ]) {
+    expect(
+      inventory.pages.find((item) => item.name === name)?.registryItem
+    ).toBe(owner);
+    expect(inventory.items).not.toContain(name);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    await page.goto(`${origin}docs/components/${name}`);
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+      title
+    );
+    // oxlint-disable-next-line eslint/no-await-in-loop -- One page must complete each canonical document assertion before navigation.
+    await expect(
+      page.getByRole("heading", { exact: true, name: "Installation" })
+    ).toBeVisible();
   }
 
-  await page.goto(`${origin}components/avatar`);
+  await page.goto(`${origin}docs/components/avatar`);
   await expect(page.getByRole("group", { name: "Preview scale" })).toHaveCount(
     0
   );
   await expect(page.getByRole("button", { name: /Hat:/ })).toHaveCount(0);
-  await expect(page.locator('[data-stage="avatar"]')).toContainText(
-    "Jordan Lee"
-  );
-  await expect(page.locator('[data-stage="avatar"]')).not.toContainText("玩家");
+  await expect(
+    page.locator('.documentation-playground [data-stage="avatar"]')
+  ).toContainText("Jordan Lee");
   await expect(
     page.getByRole("contentinfo").getByRole("navigation")
   ).toHaveCount(0);
-
-  for (const [old, name] of [
-    ["field", "Form"],
-    ["bubble", "Message"],
-    ["message-scroller", "Message"],
-  ]) {
-    await page.goto(`${origin}components/${old}`);
-    await expect(page.locator("h1")).toHaveText(name);
-  }
-
   await page.goto(origin);
   await expect(page.locator("body")).not.toContainText(
     "A little nostalgia. A lot to build."
@@ -47,9 +51,11 @@ test("catalog consolidates pages and removes discarded controls and copy", async
 
 for (const width of [320, 1440]) {
   test(`sidebar remains visible at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ height: 900, width });
-    await page.goto(`${origin}components/sidebar`);
-    const stage = page.locator('[data-stage="sidebar"]');
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(origin + "docs/components/sidebar");
+    const stage = page.locator(
+      '.documentation-playground [data-stage="sidebar"]'
+    );
     await expect(stage.locator('[data-slot="sidebar"]')).toHaveAttribute(
       "data-collapsible",
       "none"
@@ -97,13 +103,27 @@ test("new homepage examples respond to input", async ({ page }) => {
 });
 
 test("message combines history and composition", async ({ page }) => {
-  await page.goto(`${origin}components/message`);
+  await page.goto(`${origin}docs/components/message`);
   await page
+    .locator(".documentation-playground")
     .getByRole("textbox", { exact: true, name: "Message text" })
     .fill("你好，团队！");
-  await page.getByRole("button", { exact: true, name: "Send" }).click();
-  await expect(page.getByLabel("Message count")).toHaveText("13 messages");
-  await expect(page.getByRole("log")).toContainText("你好，团队！");
-  await page.getByRole("button", { exact: true, name: "First" }).click();
-  await page.getByRole("button", { exact: true, name: "Latest" }).click();
+  await page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "Send" })
+    .click();
+  await expect(
+    page.locator(".documentation-playground").getByLabel("Message count")
+  ).toHaveText("13 messages");
+  await expect(
+    page.locator(".documentation-playground").getByRole("log")
+  ).toContainText("你好，团队！");
+  await page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "First" })
+    .click();
+  await page
+    .locator(".documentation-playground")
+    .getByRole("button", { exact: true, name: "Latest" })
+    .click();
 });

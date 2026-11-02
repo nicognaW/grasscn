@@ -11,14 +11,26 @@ import vitest from "ultracite/oxlint/vitest";
 
 import { generatedCode } from "./tooling-scope.mjs";
 
-// Next-only rules target the application directories introduced by #23,
-// never reusable registry components or test fixtures.
+// All repository tests use Bun or Playwright. Retain test-quality rules without
+// requiring imports from a framework that this workspace does not install.
+const testRules = defineConfig({
+  ...vitest,
+  overrides: vitest.overrides?.map((override) => ({
+    ...override,
+    // Browser specs use Playwright's own preset and naming convention.
+    excludeFiles: ["**/*.spec.ts", "**/*.spec.tsx"],
+    rules: {
+      ...override.rules,
+      "vitest/prefer-importing-vitest-globals": "off",
+    },
+  })),
+});
 
 const jsPlugins = selectJsPlugins(["react-doctor"]);
 
 export default defineConfig({
   env: core.env,
-  extends: [core, playwright, react, vitest, shadcn, antiSlop, jsPlugins],
+  extends: [core, playwright, react, testRules, shadcn, antiSlop, jsPlugins],
   ignorePatterns: [...(core.ignorePatterns ?? []), ...generatedCode],
   jsPlugins: [...jsPlugins.jsPlugins, ...shadcn.jsPlugins],
   options: { typeAware: true },

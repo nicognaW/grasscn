@@ -1,0 +1,45 @@
+---
+title: Avatar
+description: Packaged Minecraft player faces with accessible image semantics.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Packaged Minecraft player faces with accessible image semantics.
+
+## Preview
+
+<ComponentExample name="avatar-example" />
+
+## Usage
+
+Use `AvatarImage skin="wide/steve"` or another exported packaged skin name to render the original face and optional hat layer. Supply `alt` for the player name. The example needs no external image service.
+
+## Composition
+
+Avatar supports size sm/default/lg, corresponding to logical 12/16/20 pixels; other sizes throw. Image has hat=true and upsideDown=false defaults. AvatarGroup can set scale explicitly; otherwise it uses the first explicit child scale, then 2. GroupCount labels additional members.
+
+## Interaction and limits
+
+Arbitrary `src` values use an ordinary image and are subject to network availability and image delivery permissions. Empty fallback renders Steve; scalar fallback paints a Label. Grouping, badges and custom rich fallback are web compositions rather than native player-list layouts.
+
+See the [upstream API](https://base-ui.com/react/components/avatar) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="avatar" title="Avatar" initialFile="avatar.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="avatar"
+  title="Avatar"
+  initialFile="registry/ui/avatar.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="avatar" />

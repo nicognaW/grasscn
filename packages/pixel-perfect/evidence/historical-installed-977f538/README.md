@@ -1,0 +1,5 @@
+# Historical installed-source snapshots
+
+These immutable blobs retain the original Git bytes used by recorded installation reports at977f538ddc56c7a432b49f96f41382282a65ff71. The manifest binds each declaring report hash to its component, registry item, native manifest and complete source-file set. Only explicitly archived source versions can resolve the known historical drift; compressed/raw hashes and original byte lengths are checked. Reports, native captures and repeatability records remain unchanged.
+
+This archive authenticates historical proof. It does not verify the current implementation. The separate `current-transitions.json` records exact reviewed current hashes and reasons, without granting rendering equivalence or pixel coverage. Unknown current changes fail. Map listings and frozen receipts expose matching and drifting source files separately. Fresh selected Base receipts establish only their actual current cases; current CLI installation proves delivered source and installability. Historical Full results are never promoted to a newly approved or executed Full run.

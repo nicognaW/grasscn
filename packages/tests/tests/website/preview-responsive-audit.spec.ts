@@ -1,13 +1,14 @@
-import { test, expect } from "@grasscn/tests/test";
-import type { Page, Locator } from "@grasscn/tests/test";
+import { test, expect, type Page, type Locator } from "@grasscn/tests/test";
 
-const origin = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
+const origin = (
+  process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"
+).replace(/\/?$/u, "/");
 
 async function open(page: Page, name: string) {
-  await page.setViewportSize({ height: 844, width: 390 });
-  await page.goto(`${origin}#${name}`);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${origin}docs/components/${name}`);
 
-  return page.locator(`#component-${name}`);
+  return page.locator(".documentation-playground");
 }
 
 async function inside(child: Locator, parent: Locator) {
@@ -83,7 +84,11 @@ for (const scale of [2]) {
     await card
       .getByRole("button", { exact: true, name: "Save player" })
       .click();
-    await expect(card.getByLabel("Saved player")).toHaveText("玩家");
+    await expect(
+      card
+        .getByLabel("Saved player")
+        .locator(":scope > [data-slot=label] > .mc-text-accessible")
+    ).toHaveText("玩家");
   });
 }
 

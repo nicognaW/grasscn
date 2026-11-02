@@ -1,0 +1,66 @@
+.minecraft-search {
+  position: relative;
+  width: 400px;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+.minecraft-search-popup {
+  position: absolute;
+  z-index: 60;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #202020;
+}
+.minecraft-search .mc-command-input {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.minecraft-search-popup .mc-command-list {
+  max-height: min(416px, 50dvh);
+}
+.minecraft-search-popup .mc-command-item {
+  flex-direction: column;
+  overflow: hidden;
+  align-items: stretch;
+  gap: 8px;
+  padding: 12px;
+  white-space: normal;
+}
+.minecraft-search-context {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-height: 48px;
+  overflow: hidden;
+  color: #aaa;
+}
+.minecraft-search-status {
+  padding: 16px;
+  --mc-scale: 2;
+}
+.minecraft-header nav {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.minecraft-header-text-link {
+  --mc-scale: 2;
+  display: inline-flex;
+}
+@media (max-width: 1100px) {
+  .minecraft-header {
+    flex-wrap: wrap;
+  }
+  .minecraft-search {
+    order: 4;
+    margin-left: auto;
+  }
+}
+@media (max-width: 720px) {
+  .minecraft-search {
+    width: 100%;
+    margin: 0;
+  }
+}

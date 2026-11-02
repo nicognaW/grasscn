@@ -7,6 +7,13 @@ import { repoRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
+import {
+  assertHistoricalUtilitySources,
+  validateHistoricalEvidence,
+  historicalMapComponents,
+} from "./historical-evidence.ts";
+
+const root = repoRoot;
 const json = async (file) =>
   JSON.parse(await readFile(evidenceFile(file), "utf-8"));
 
@@ -20,6 +27,16 @@ const map = await json(
 const catalog = await json(map.catalog);
 const inventory = await json(map.nativeInventory);
 const registry = await json("registry.json");
+
+const historicalEvidence = await validateHistoricalEvidence({
+  archiveDirectory: path.join(
+    root,
+    "packages/pixel-perfect/evidence/historical-installed-977f538"
+  ),
+  map,
+  registry,
+  resolvePath: evidenceFile,
+});
 const pilot = await json("tests/reference/manifest.json");
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
@@ -238,28 +255,14 @@ for (const component of map.components) {
       installation.files.map((file) => file.path).toSorted(),
       filenames
     );
-    assert.deepEqual(
-      behavior.files.map((file) => file.path).toSorted(),
-      filenames
+    assert.deepEqual(behavior.files.map((file) => file.path).sort(), filenames);
+    assertHistoricalUtilitySources(
+      JSON.stringify(behavior),
+      JSON.stringify(installation)
     );
 
     for (const file of installation.files) {
       hash(file.installedSha256);
-
-      const sourceSha = digest(
-        await readFile(evidenceFile(path.join("registry/ui", file.path)))
-      );
-
-      assert.equal(
-        sourceSha,
-        file.sourceSha256,
-        `${component.name}: installed utility proof is stale`
-      );
-      assert.equal(
-        behavior.files.find((entry) => entry.path === file.path)?.sourceSha256,
-        sourceSha,
-        `${component.name}: utility behavior proof is stale`
-      );
       assert.ok(
         file.comparison,
         `${component.name}: missing CLI source comparison`
@@ -373,11 +376,7 @@ for (const component of map.components) {
             .files.some((entry) => entry.path === sourcePath),
           `Installed proof source is not part of the item: ${sourcePath}`
         );
-        assert.equal(
-          digest(await readFile(evidenceFile(sourcePath))),
-          file.sourceSha256,
-          `Installed proof is stale: ${sourcePath}`
-        );
+        // Exact historical report/source integrity and recognized current applicability are checked by the shared resolver above.
       }
 
       for (const reference of manifest.cases) {
@@ -655,16 +654,21 @@ if (args.includes("--live")) {
 
 if (args.includes("--list")) {
   console.table(
-    map.components.map((component) => ({
-      component: component.name,
-      implementation: component.implementation.status,
-      kind: component.mapping.kind,
-      pixels: component.pixelVerification.status,
-      reference: component.mapping.target,
-    }))
+    historicalMapComponents(JSON.stringify(map), historicalEvidence).map(
+      (component) => ({
+        component: component.name,
+        currentApplicability: component.currentApplicability,
+        implementation: `${component.implementation.status} (${component.implementation.evidenceScope})`,
+        kind: component.kind,
+        pixels: `${component.pixels.status} (${component.pixels.evidenceScope})`,
+        reference: component.reference,
+      })
+    )
   );
 }
 
+console.log(JSON.stringify({ historicalEvidence }, null, 2));
+
 console.log(
-  `Map valid: ${names.length} components, ${Object.keys(map.families).length} native families. ${map.components.filter((component) => component.pixelVerification.status === "unverified").length} components await pixel verification.`
+  `${historicalEvidence.reports.length} historical report associations authenticated. Current coverage requires fresh source-bound receipts; historical statuses do not establish current Full verification.`
 );

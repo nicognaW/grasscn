@@ -1,0 +1,46 @@
+---
+title: Field
+description: Labels, descriptions and errors for Grasscn form controls.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+
+Labels, descriptions and errors for Grasscn form controls.
+
+## Preview
+
+<ComponentExample name="field-example" />
+
+## Usage
+
+Field is delivered by the `form` item; there is no separate field registry item. Import `Field`, `FieldLabel`, `FieldContent` and `FieldDescription` from `@/components/ui/field`. The example connects its label and description to a real Input.
+
+## Composition
+
+Use `FieldGroup` inside `FieldSet`, with `FieldLegend` for the group name. `FieldTitle` supplies non-label text. Field `orientation` is vertical (default), horizontal or responsive; responsive changes at container width 448px under FieldGroup. `FieldSeparator` inserts a separator with optional text. These layouts compose native constituents as web adaptations.
+
+## API and accessibility
+
+Set `aria-invalid` and `aria-describedby` on the control yourself: `data-invalid` on Field does not establish either. `FieldError` accepts an errors array, deduplicates messages, and has `role="alert"`; explicit children override generated messages. FieldSet/FieldGroup do not supply scale context, so pass scale to text and control parts when changing it. FieldLegend supports `variant="legend"` (default) or `variant="label"`. FieldSeparator has no scale prop and uses default-scale children.
+
+See the [underlying API](https://react-hook-form.com/docs/usecontroller/controller) for shared semantics.
+
+## Validation message
+
+<ComponentExample name="field-validation-example" title="Validation message" />
+
+## Installation
+
+<Installation name="form" title="Field" initialFile="registry/ui/field.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="form"
+  title="Field"
+  initialFile="registry/ui/field.tsx"
+/>
+
+The [Form playground](/docs/components/form#interactive-playground) retains the complete Controller composition with reset, disabling and validation.

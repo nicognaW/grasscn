@@ -1,0 +1,35 @@
+---
+title: Pagination
+description: Recipe arrows and numbered navigation links.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { LayoutPlayground } from "@/components/layout-playground";
+
+Recipe arrows and numbered navigation links.
+
+## Preview
+
+<ComponentExample name="pagination-example" />
+
+## Usage
+
+Pagination is a labelled nav; PaginationLink isActive adds aria-current="page". Links retain href navigation unless your onClick prevents it. This example owns page state and disables previous/next at the bounds with aria-disabled. Those disabled links prevent navigation; the component does not fetch pages or clamp your state.
+
+## Composition
+
+Previous/Next use recipe-book arrow constituents; numbered links reuse Button. PaginationEllipsis is decorative and hidden from assistive technology, so it cannot be your only interactive overflow control. The numeric arrangement is a web adaptation; the native recipe book hides unavailable arrows.
+
+## Installation
+
+<Installation name="pagination" title="Pagination" />
+
+## Component source
+
+<ComponentSource name="pagination" title="Pagination" />
+
+## Interactive playground
+
+<LayoutPlayground name="pagination" />

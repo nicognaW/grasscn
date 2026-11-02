@@ -1,0 +1,53 @@
+---
+title: Chart
+description: Recharts compositions with Minecraft plot surfaces, glyphs and colors.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+Recharts compositions with Minecraft plot surfaces, glyphs and colors.
+
+## Preview
+
+<ComponentExample name="fps-example" tabListWidth={240} />
+
+## Usage
+
+Use the runnable FPS and profiler recipes for native-style plots, or the metric example for application data. The existing [chart showcase](/charts) includes all maintained analytics examples and their matching source; this page documents installation and composition.
+
+## Composition
+
+`ChartContainer` requires config and supplies ResponsiveContainer geometry plus color variables. Each config key defines color or a light/dark theme, not both. Put ChartTooltip/ChartTooltipContent and ChartLegend/ChartLegendContent inside that context. Pass actual data/dataKey values to Recharts 3 and give the chart an accessible name.
+
+## Profiler composition
+
+<ComponentExample name="profiler-example" tabListWidth={240} />
+
+## Application metrics
+
+<ComponentExample name="metric-example" tabListWidth={240} />
+
+## Interaction and limits
+
+Container defaults to scale 2 and initialDimension 320 by 200. Tooltip supports dot/line/dashed indicators and nameKey/labelKey; Legend supports hideIcon. FPS/profiler fixed inputs have native reference coverage; responsive analytics, arbitrary labels, tooltip/legend arrangements and all eight analytics layouts are web adaptations. Keep a textual data summary for readers who cannot inspect the plot.
+
+See the [upstream API](https://recharts.org/) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="chart" title="Chart" initialFile="chart.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="chart"
+  title="Chart"
+  initialFile="registry/ui/chart.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="chart" />

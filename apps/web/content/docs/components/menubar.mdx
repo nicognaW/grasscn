@@ -1,0 +1,45 @@
+---
+title: Menubar
+description: A keyboard-accessible command bar made of Minecraft menu parts.
+---
+
+import { ComponentExample } from "@/components/component-example";
+import { ComponentSource } from "@/components/component-source";
+import { Installation } from "@/components/installation";
+import { OverlayPlayground } from "@/components/overlay-playground";
+
+A keyboard-accessible command bar made of Minecraft menu parts.
+
+## Preview
+
+<ComponentExample name="menubar-example" />
+
+## Usage
+
+Use `Menubar` once around multiple `MenubarMenu` roots. Each Menu owns a Trigger and Content. The example exposes Game and World menus whose items update the visible action result.
+
+## Composition
+
+`MenubarMenu` is a Base UI Menu.Root, distinct from the outer Menubar primitive. Triggers default to Grasscn Buttons; Content owns portal positioning and defaults to bottom/start with sideOffset 4. Checkbox/radio and submenu exports follow the menu part model.
+
+## Interaction and limits
+
+Use the menu keyboard model for traversal rather than adding competing arrow handlers. Shortcuts are display-only. The combined command bar is a web adaptation; its buttons, labels, checkboxes and surfaces retain only their declared native constituent coverage.
+
+See the [upstream API](https://base-ui.com/react/components/menubar) for the underlying part and event contracts.
+
+## Installation
+
+<Installation name="menubar" title="Menubar" initialFile="menubar.tsx" />
+
+## Component source
+
+<ComponentSource
+  name="menubar"
+  title="Menubar"
+  initialFile="registry/ui/menubar.tsx"
+/>
+
+## Interactive playground
+
+<OverlayPlayground name="menubar" />

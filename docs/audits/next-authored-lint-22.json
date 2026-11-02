@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "baseline": "c7b90818c977e59b5ebdcbc11bac39ba7e0dad61",
+  "authoredFiles": [
+    "apps/web/app/api/installation/[name]/[file]/route.ts",
+    "apps/web/app/api/installation/[name]/route.ts",
+    "apps/web/app/api/search/route.ts",
+    "apps/web/app/charts/[type]/page.tsx",
+    "apps/web/app/charts/page.tsx",
+    "apps/web/app/components/[[...slug]]/page.tsx",
+    "apps/web/app/docs/[[...slug]]/page.tsx",
+    "apps/web/app/docs/layout.tsx",
+    "apps/web/app/layout.tsx",
+    "apps/web/app/not-found.tsx",
+    "apps/web/app/page.tsx",
+    "apps/web/components/button-playground.tsx",
+    "apps/web/components/charts/showcase.tsx",
+    "apps/web/components/code-view.tsx",
+    "apps/web/components/component-example.tsx",
+    "apps/web/components/component-source.tsx",
+    "apps/web/components/document-code-block.tsx",
+    "apps/web/components/document-elements.tsx",
+    "apps/web/components/document-link.tsx",
+    "apps/web/components/document-navigation.tsx",
+    "apps/web/components/document-paragraph.tsx",
+    "apps/web/components/document-search.tsx",
+    "apps/web/components/document-text.tsx",
+    "apps/web/components/example-tabs.tsx",
+    "apps/web/components/input-playground.tsx",
+    "apps/web/components/installation-command.tsx",
+    "apps/web/components/installation-tabs.tsx",
+    "apps/web/components/installation.tsx",
+    "apps/web/components/layout-playground.tsx",
+    "apps/web/components/legacy-documentation-links.tsx",
+    "apps/web/components/manual-installation.tsx",
+    "apps/web/components/minecraft-playground.tsx",
+    "apps/web/components/overlay-playground.tsx",
+    "apps/web/components/site-frame.tsx",
+    "apps/web/components/sonner-playground.tsx",
+    "apps/web/examples/button-example.tsx",
+    "apps/web/examples/button/catalog.ts",
+    "apps/web/examples/catalog.ts",
+    "apps/web/examples/charts/area-sources-example.tsx",
+    "apps/web/examples/charts/area-visitors-example.tsx",
+    "apps/web/examples/charts/bar-sources-example.tsx",
+    "apps/web/examples/charts/bar-visitors-example.tsx",
+    "apps/web/examples/charts/catalog.ts",
+    "apps/web/examples/charts/donut-sources-example.tsx",
+    "apps/web/examples/charts/donut-visitors-example.tsx",
+    "apps/web/examples/charts/fps-example.tsx",
+    "apps/web/examples/charts/line-sources-example.tsx",
+    "apps/web/examples/charts/line-visitors-example.tsx",
+    "apps/web/examples/charts/metric-example.tsx",
+    "apps/web/examples/charts/pie-sources-example.tsx",
+    "apps/web/examples/charts/pie-visitors-example.tsx",
+    "apps/web/examples/charts/profiler-example.tsx",
+    "apps/web/examples/charts/radar-sources-example.tsx",
+    "apps/web/examples/charts/radar-visitors-example.tsx",
+    "apps/web/examples/charts/radial-sources-example.tsx",
+    "apps/web/examples/charts/radial-visitors-example.tsx",
+    "apps/web/examples/charts/request-volume-example.tsx",
+    "apps/web/examples/charts/stacked-bar-sources-example.tsx",
+    "apps/web/examples/charts/stacked-bar-visitors-example.tsx",
+    "apps/web/examples/definition.ts",
+    "apps/web/examples/inputs/catalog.ts",
+    "apps/web/examples/inputs/checkbox-disabled-example.tsx",
+    "apps/web/examples/inputs/checkbox-example.tsx",
+    "apps/web/examples/inputs/combobox-example.tsx",
+    "apps/web/examples/inputs/combobox-multiple-example.tsx",
+    "apps/web/examples/inputs/field-example.tsx",
+    "apps/web/examples/inputs/field-validation-example.tsx",
+    "apps/web/examples/inputs/form-example.tsx",
+    "apps/web/examples/inputs/input-disabled-example.tsx",
+    "apps/web/examples/inputs/input-example.tsx",
+    "apps/web/examples/inputs/input-group-example.tsx",
+    "apps/web/examples/inputs/input-otp-example.tsx",
+    "apps/web/examples/inputs/input-otp-readonly-example.tsx",
+    "apps/web/examples/inputs/input-readonly-example.tsx",
+    "apps/web/examples/inputs/label-example.tsx",
+    "apps/web/examples/inputs/label-wrapped-example.tsx",
+    "apps/web/examples/inputs/native-select-disabled-example.tsx",
+    "apps/web/examples/inputs/native-select-example.tsx",
+    "apps/web/examples/inputs/questionnaire-example.tsx",
+    "apps/web/examples/inputs/radio-group-disabled-example.tsx",
+    "apps/web/examples/inputs/radio-group-example.tsx",
+    "apps/web/examples/inputs/select-example.tsx",
+    "apps/web/examples/inputs/select-placeholder-example.tsx",
+    "apps/web/examples/inputs/slider-disabled-example.tsx",
+    "apps/web/examples/inputs/slider-example.tsx",
+    "apps/web/examples/inputs/switch-disabled-example.tsx",
+    "apps/web/examples/inputs/switch-example.tsx",
+    "apps/web/examples/inputs/textarea-example.tsx",
+    "apps/web/examples/inputs/textarea-readonly-example.tsx",
+    "apps/web/examples/inputs/toggle-disabled-example.tsx",
+    "apps/web/examples/inputs/toggle-example.tsx",
+    "apps/web/examples/inputs/toggle-group-example.tsx",
+    "apps/web/examples/inputs/toggle-group-multiple-example.tsx",
+    "apps/web/examples/layout/aspect-ratio-example.tsx",
+    "apps/web/examples/layout/badge-achievements.tsx",
+    "apps/web/examples/layout/badge-example.tsx",
+    "apps/web/examples/layout/breadcrumb-example.tsx",
+    "apps/web/examples/layout/button-group-example.tsx",
+    "apps/web/examples/layout/card-example.tsx",
+    "apps/web/examples/layout/catalog.ts",
+    "apps/web/examples/layout/code-block-diff.tsx",
+    "apps/web/examples/layout/code-block-example.tsx",
+    "apps/web/examples/layout/collapsible-example.tsx",
+    "apps/web/examples/layout/empty-create.tsx",
+    "apps/web/examples/layout/empty-example.tsx",
+    "apps/web/examples/layout/kbd-example.tsx",
+    "apps/web/examples/layout/marker-border.tsx",
+    "apps/web/examples/layout/marker-example.tsx",
+    "apps/web/examples/layout/pagination-example.tsx",
+    "apps/web/examples/layout/progress-example.tsx",
+    "apps/web/examples/layout/resizable-example.tsx",
+    "apps/web/examples/layout/scroll-area-example.tsx",
+    "apps/web/examples/layout/separator-example.tsx",
+    "apps/web/examples/layout/sidebar-example.tsx",
+    "apps/web/examples/layout/sidebar-responsive.tsx",
+    "apps/web/examples/layout/sonner-example.tsx",
+    "apps/web/examples/layout/spinner-example.tsx",
+    "apps/web/examples/layout/tabs-example.tsx",
+    "apps/web/examples/layout/trace-example.tsx",
+    "apps/web/examples/layout/typography-example.tsx",
+    "apps/web/examples/minecraft/advancement-tree-example.tsx",
+    "apps/web/examples/minecraft/book-example.tsx",
+    "apps/web/examples/minecraft/catalog.ts",
+    "apps/web/examples/minecraft/hotbar-example.tsx",
+    "apps/web/examples/minecraft/hotbar-tools.tsx",
+    "apps/web/examples/minecraft/hud-example.tsx",
+    "apps/web/examples/minecraft/map-example.tsx",
+    "apps/web/examples/minecraft/map-locator.tsx",
+    "apps/web/examples/minecraft/player-list-example.tsx",
+    "apps/web/examples/minecraft/player-list-scoreboard.tsx",
+    "apps/web/examples/minecraft/player-preview-alex.tsx",
+    "apps/web/examples/minecraft/player-preview-example.tsx",
+    "apps/web/examples/minecraft/sign-example.tsx",
+    "apps/web/examples/minecraft/sign-hanging.tsx",
+    "apps/web/examples/minecraft/trading-example.tsx",
+    "apps/web/examples/overlays/alert-dialog-example.tsx",
+    "apps/web/examples/overlays/attachment-example.tsx",
+    "apps/web/examples/overlays/avatar-example.tsx",
+    "apps/web/examples/overlays/bubble-example.tsx",
+    "apps/web/examples/overlays/calendar-example.tsx",
+    "apps/web/examples/overlays/carousel-example.tsx",
+    "apps/web/examples/overlays/catalog.ts",
+    "apps/web/examples/overlays/command-example.tsx",
+    "apps/web/examples/overlays/command-palette-example.tsx",
+    "apps/web/examples/overlays/context-menu-example.tsx",
+    "apps/web/examples/overlays/data-table-example.tsx",
+    "apps/web/examples/overlays/date-picker-example.tsx",
+    "apps/web/examples/overlays/date-picker-range-example.tsx",
+    "apps/web/examples/overlays/dialog-example.tsx",
+    "apps/web/examples/overlays/drawer-example.tsx",
+    "apps/web/examples/overlays/dropdown-menu-example.tsx",
+    "apps/web/examples/overlays/item-example.tsx",
+    "apps/web/examples/overlays/menubar-example.tsx",
+    "apps/web/examples/overlays/message-example.tsx",
+    "apps/web/examples/overlays/popover-example.tsx",
+    "apps/web/examples/overlays/sheet-example.tsx",
+    "apps/web/examples/overlays/table-example.tsx",
+    "apps/web/examples/overlays/tooltip-example.tsx",
+    "apps/web/lib/component-symbols.ts",
+    "apps/web/lib/example-installation.ts",
+    "apps/web/lib/installation.ts",
+    "apps/web/lib/search-results.ts",
+    "apps/web/lib/source.ts",
+    "apps/web/mdx-components.tsx",
+    "apps/web/next.config.mjs",
+    "apps/web/postcss.config.mjs",
+    "apps/web/scripts/example-installation.test.ts",
+    "apps/web/scripts/generate-component-symbols.mjs",
+    "apps/web/scripts/layout-examples.test.tsx",
+    "apps/web/scripts/minecraft-examples.test.tsx",
+    "apps/web/source.config.ts",
+    "oxlint.config.ts",
+    "packages/pixel-perfect/cli/verify-consumer-button.mjs",
+    "packages/pixel-perfect/src/installed/button-consumer-types.ts",
+    "packages/pixel-perfect/src/installed/verify-button-consumers.mjs",
+    "packages/pixel-perfect/src/installed/verify-manual-consumers.mjs",
+    "packages/pixel-perfect/src/runtime/docs-reference-types.ts",
+    "packages/pixel-perfect/src/runtime/historical-evidence.ts",
+    "packages/pixel-perfect/src/runtime/type-context.mjs",
+    "packages/pixel-perfect/src/runtime/verification-types.ts",
+    "packages/pixel-perfect/src/runtime/verify-porting.mjs",
+    "packages/pixel-perfect/tests/integration/website/docs-example-pixels.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/docs-header-branding.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/docs-input-pixels.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/docs-installation-pixels.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/docs-mobile-tabs.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/docs-navigation-pixels.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/layout-documentation.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/minecraft-documentation.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/next-foundation.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/next-showcase.spec.ts",
+    "packages/pixel-perfect/tests/integration/website/overlay-documentation.spec.ts",
+    "packages/pixel-perfect/tests/reference/capture-header-branding.mjs",
+    "packages/pixel-perfect/tests/reference/verify-header-branding.mjs",
+    "packages/pixel-perfect/tests/unit/historical-evidence.test.ts",
+    "packages/tests/cli/verify-cli-consumer.mjs",
+    "packages/tests/cli/verify-manual-consumers.mjs",
+    "packages/tests/src/checks/acceptance-preview.mjs",
+    "packages/tests/src/checks/audit-preview.mjs",
+    "packages/tests/src/checks/documentation-inventory.mjs",
+    "packages/tests/src/checks/type-context.mjs",
+    "packages/tests/src/checks/verify-generation-cache-ownership.ts",
+    "packages/tests/src/checks/verify-next-development.mjs",
+    "packages/tests/src/checks/verify-next-workflow.mjs",
+    "packages/tests/src/checks/verify.mjs",
+    "packages/tests/src/harness/native-text-gap.ts",
+    "packages/tests/src/installed/consumer-boundary.mjs",
+    "packages/tests/src/installed/consumer-build-identity.mjs",
+    "packages/tests/src/installed/consumer-metadata.ts",
+    "packages/tests/src/installed/consumer-registry.mjs",
+    "packages/tests/src/installed/consumer-validation-types.ts",
+    "packages/tests/src/installed/example-prerequisites.mjs",
+    "packages/tests/src/installed/prepared-consumers.mjs",
+    "packages/tests/src/installed/verify-cli-consumer.mjs",
+    "packages/tests/src/installed/verify-manual-consumers.mjs",
+    "packages/tests/src/runtime/dependency-identity.mjs",
+    "packages/tests/src/runtime/hosts.mjs",
+    "packages/tests/src/runtime/isolated-host-routing.mjs",
+    "packages/tests/src/runtime/next-production.mjs",
+    "packages/tests/src/runtime/owned-http-process.mjs",
+    "packages/tests/src/runtime/verification-types.ts",
+    "packages/tests/tests/components/chart/chart-tooltip-spacing.spec.ts",
+    "packages/tests/tests/unit/component-source.test.tsx",
+    "packages/tests/tests/unit/consumer-boundary.test.mjs",
+    "packages/tests/tests/unit/consumer-build-identity.test.mjs",
+    "packages/tests/tests/unit/consumer-metadata.test.mjs",
+    "packages/tests/tests/unit/consumer-registry.test.mjs",
+    "packages/tests/tests/unit/document-search-results.test.ts",
+    "packages/tests/tests/unit/documentation-inventory.test.mjs",
+    "packages/tests/tests/unit/example-prerequisites.test.mjs",
+    "packages/tests/tests/unit/isolated-host-routing.test.mjs",
+    "packages/tests/tests/unit/next-production.test.mjs",
+    "packages/tests/tests/unit/overlay-examples.test.mjs",
+    "packages/tests/tests/unit/owned-http-process.test.mjs",
+    "packages/tests/tests/unit/prepared-consumers.test.mjs",
+    "packages/tests/tests/unit/verification-summary.test.mjs",
+    "packages/tests/tests/unit/workspace-type-ownership.test.ts",
+    "packages/tests/tests/website/docs-acceptance.spec.ts",
+    "packages/tests/tests/website/docs-examples.spec.ts",
+    "packages/tests/tests/website/docs-inputs.spec.ts",
+    "packages/tests/tests/website/docs-installation.spec.ts",
+    "packages/tests/tests/website/docs-navigation.spec.ts",
+    "packages/tests/tests/website/layout-documentation.spec.ts",
+    "packages/tests/tests/website/minecraft-documentation.spec.ts",
+    "packages/tests/tests/website/next-showcase.spec.ts",
+    "packages/tests/tests/website/overlay-documentation.spec.ts"
+  ],
+  "immutableSourceInputs": [
+    {
+      "file": "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/docs-input-defaults/source-input/capture-docs-input-defaults.mjs",
+      "sha256": "0b116396cc1d961497b7c4afbd0f5d45bb341f8a7a91d21a9b5941f9d27077c2"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/docs-installation-controls/source-input/capture-docs-installation.mjs",
+      "sha256": "c989759bf0c6315d2a0fa23e27f27f39223eb87da567d461982c4ee10f836317"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/next-docs-navigation/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/next-docs-navigation/source-input/capture-docs-navigation.mjs",
+      "sha256": "2336687ae3ccaed10ac0f296b40d4b87ada47f32b652e0fb0e074bf179ee8478"
+    },
+    {
+      "file": "packages/pixel-perfect/tests/reference/showcase-code-tabs/source-input/capture-controls.mjs",
+      "sha256": "d0112664352b429c2d0f53762902ddd74e5696a5b54f220cd535ac6e1e79b2cb"
+    }
+  ],
+  "inheritedOwners": [
+    {
+      "file": "apps/web/components/home/application-examples.tsx",
+      "baseline": "apps/web/home-examples.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/components/home/homepage.tsx",
+      "baseline": "apps/web/home.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/components/home/showcase-panel.tsx",
+      "baseline": "apps/web/showcase-panel.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/components/home/title-scene.tsx",
+      "baseline": "apps/web/title-scene.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/demos/aspect-ratio.tsx",
+      "baseline": "apps/web/demos/aspect-ratio.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/demos/button.tsx",
+      "baseline": "apps/web/demos/button.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/demos/calendar.tsx",
+      "baseline": "apps/web/demos/calendar.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/examples/overlays/data-table-features-example.tsx",
+      "baseline": "apps/web/demos/data-table.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/examples/overlays/message-scroller-example.tsx",
+      "baseline": "apps/web/demos/message.tsx",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/pixel-perfect/src/selection/suite.mjs",
+      "baseline": "packages/pixel-perfect/src/selection/suite.mjs",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/pixel-perfect/tests/integration/website/preview-branding.spec.ts",
+      "baseline": "packages/pixel-perfect/tests/integration/website/preview-branding.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/pixel-perfect/tests/integration/website/preview.spec.ts",
+      "baseline": "packages/pixel-perfect/tests/integration/website/preview.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/cli/test.mjs",
+      "baseline": "packages/tests/cli/test.mjs",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/src/harness/test.ts",
+      "baseline": "packages/tests/src/harness/test.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/src/installed/registry-file.mjs",
+      "baseline": "packages/tests/src/installed/registry-file.mjs",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/alert-dialog/alert-dialog-stress.spec.ts",
+      "baseline": "packages/tests/tests/components/alert-dialog/alert-dialog-stress.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/badge/badge-advancement-behavior.spec.ts",
+      "baseline": "packages/tests/tests/components/badge/badge-advancement-behavior.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/chart/chart-analytics.spec.ts",
+      "baseline": "packages/tests/tests/components/chart/chart-analytics.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/chart/chart-integer-width.spec.ts",
+      "baseline": "packages/tests/tests/components/chart/chart-integer-width.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/chart/chart-preservation.spec.ts",
+      "baseline": "packages/tests/tests/components/chart/chart-preservation.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/chart/chart-web-metric.spec.ts",
+      "baseline": "packages/tests/tests/components/chart/chart-web-metric.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/form/form-field-preview.spec.ts",
+      "baseline": "packages/tests/tests/components/form/form-field-preview.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/overlays/overlay-gallery-repair.spec.ts",
+      "baseline": "packages/tests/tests/components/overlays/overlay-gallery-repair.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/select/select-initial-placement.spec.ts",
+      "baseline": "packages/tests/tests/components/select/select-initial-placement.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/components/select/select-viewport-repair.spec.ts",
+      "baseline": "packages/tests/tests/components/select/select-viewport-repair.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/structural/structural-repair-preview.spec.ts",
+      "baseline": "packages/tests/tests/components/structural/structural-repair-preview.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/website/gallery-integration.spec.ts",
+      "baseline": "packages/tests/tests/website/gallery-integration.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/home.spec.ts",
+      "baseline": "packages/tests/tests/website/home.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/native-expansion-preview.spec.ts",
+      "baseline": "packages/tests/tests/website/native-expansion-preview.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/preview-branding.spec.ts",
+      "baseline": "packages/tests/tests/website/preview-branding.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/preview-responsive-audit.spec.ts",
+      "baseline": "packages/tests/tests/website/preview-responsive-audit.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/website/preview-scrollbars.spec.ts",
+      "baseline": "packages/tests/tests/website/preview-scrollbars.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/preview-sound.spec.ts",
+      "baseline": "packages/tests/tests/website/preview-sound.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/website/preview-text-style-repair.spec.ts",
+      "baseline": "packages/tests/tests/website/preview-text-style-repair.spec.ts",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "packages/tests/tests/website/preview.spec.ts",
+      "baseline": "packages/tests/tests/website/preview.spec.ts",
+      "reason": "Owned migration assertions, retained-playground locators and Menubar close/reopen/focus readiness boundaries require zero new-hunk diagnostics. Exact unchanged statements retain only attributed debt; this owner is not a full-file clean claim."
+    },
+    {
+      "file": "packages/tests/tests/website/site-cleanup.spec.ts",
+      "baseline": "packages/tests/tests/website/site-cleanup.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/website/site-release.spec.ts",
+      "baseline": "packages/tests/tests/website/site-release.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "workspace-paths.mjs",
+      "baseline": "workspace-paths.mjs",
+      "reason": "Retained/copy-migrated owner; only authored migration hunks are repaired. Existing diagnostics remain debt and are not a clean-file claim."
+    },
+    {
+      "file": "apps/web/demos/data-table.tsx",
+      "baseline": "apps/web/demos/data-table.tsx",
+      "reason": "Owned aria-sort mapping and header semantics; inherited TanStack renderers and native geometry retain exact baseline statements."
+    },
+    {
+      "file": "apps/web/demos/resizable.tsx",
+      "baseline": "apps/web/demos/resizable.tsx",
+      "reason": "Owned per-instance IDs and layout keys; inherited native panel and Card geometry remains unchanged."
+    },
+    {
+      "file": "apps/web/registry/ui/minecraft-confirmation-snapshot.ts",
+      "baseline": "apps/web/registry/ui/minecraft-confirmation-snapshot.ts",
+      "reason": "Owned fixed-pseudo containing-block and clone-only offset repair; existing snapshot renderer statements remain baseline debt. This is owned implementation, not immutable source-input."
+    },
+    {
+      "file": "packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts",
+      "baseline": "packages/tests/tests/components/advancement-tree/advancement-gestures.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/advancement-tree/adventure.spec.ts",
+      "baseline": "packages/tests/tests/components/advancement-tree/adventure.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/drawer/drawer-opening-timing.spec.ts",
+      "baseline": "packages/tests/tests/components/drawer/drawer-opening-timing.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/tests/tests/components/overlays/overlay-behavior.spec.ts",
+      "baseline": "packages/tests/tests/components/overlays/overlay-behavior.spec.ts",
+      "reason": "Owned current migration regression assertions, retained-playground locators and settled-state checks; unchanged baseline assertions retain only exact attributed debt."
+    },
+    {
+      "file": "packages/pixel-perfect/src/runtime/check-map.mjs",
+      "baseline": "packages/pixel-perfect/src/runtime/check-map.mjs",
+      "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
+    },
+    {
+      "file": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
+      "baseline": "packages/pixel-perfect/src/runtime/freeze-verification.mjs",
+      "reason": "Owned explicit historical-snapshot applicability integration; unchanged native/provenance/RGBA checks and source-freeze behavior retain their exact baseline debt."
+    },
+    {
+      "file": "apps/web/registry/ui/chart.tsx",
+      "baseline": "apps/web/registry/ui/chart.tsx",
+      "reason": "Owned default tooltip native-number, minimum integer GUI-scale and four-logical-pixel label/value gap repair; only exact unchanged statements retain inherited debt. No full-file clean or native pixel-verification claim."
+    },
+    {
+      "file": "packages/tests/fixtures/renderer/chart.tsx",
+      "baseline": "packages/tests/fixtures/renderer/chart.tsx",
+      "reason": "Owned API fixture forwards its existing case.scale input for default tooltip GUI1/2/3 geometry checks. Only exact unchanged statements retain inherited debt; no full-file clean or native pixel-verification claim."
+    }
+  ],
+  "attribution": "Approved main c7b908 (including PR37 functional cleanup) is the current source-quality baseline. Full authored scope must pass the actual toolchain; only exact unchanged baseline statements can retain attributed debt. Older main46/1369/4caf/e009 counts are historical, not current acceptance. This metadata grants no semantic equivalence, source verification or native verification.",
+  "readOnlyAudits": [
+    "test-results/22-main29-lint/rest-attribution.json",
+    "test-results/22-main29-lint/inherited-app-ledger.json",
+    "test-results/22-main29-lint/inherited-app-unmapped-audit.json",
+    "test-results/22-batch-repair/attribution-current.json",
+    "test-results/22-batch-repair/exact-baseline-statements.json",
+    "test-results/22-batch-repair/data-table-unchanged-renderers.json"
+  ],
+  "limits": "The authored source scope must actually pass Uncheck. Neither a baseline attribution nor a formatter pass establishes runtime behavior or PPT acceptance. Captured source-input bytes are never rewritten.",
+  "hunkCorrections": [
+    "17 new canonical-origin regexes retain Unicode mode",
+    "Actual const-arrow/default Button example source assertions",
+    "Typed owned Form/Field registry metadata",
+    "New source SVG HTTP byte comparison with explicit received/original buffers",
+    "Checked Next static image metadata without global SVG casts",
+    "Home dictionary/callback adapters and required Next Link roles",
+    "New search requests run independently; single-page document checks remain ordered",
+    "Full-only source branding comparator retains every RGBA/negative-control assertion and is not executed",
+    "Per-instance retained Resizable identities and layout keys",
+    "Truthful retained DataTable header sort semantics",
+    "Viewport-fixed pseudo clone offsets preserve original exact RGBA assertions",
+    "Runtime response cache is excluded narrowly while compiled/public output remains immutable",
+    "Executable example metadata resolves only within its owning examples directory",
+    "Immediate and ready paragraph overflow invariants preserve native bitmap rendering"
+  ],
+  "authoredFormattingFiles": [
+    "apps/web/app/globals.css",
+    "apps/web/components/document-navigation.css",
+    "apps/web/components/documentation.css",
+    "packages/pixel-perfect/evidence/historical-installed-977f538/manifest.json",
+    "packages/pixel-perfect/evidence/historical-installed-977f538/current-transitions.json"
+  ]
+}

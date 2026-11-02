@@ -1,0 +1,23 @@
+{
+  "basedOnCommit": "344d1d1473d2fbbc213ee20a68edb47649c625b1",
+  "scope": "One newly declared actual website-default grass constituent; no Full browser matrix execution",
+  "captureRunnerSha256": "c42fcc3d4438eeea849a59039498f68e62da307fdc706b7ce817e009261580d8",
+  "frozenCaptureRunner": "source/capture-header-branding.executed.mjs.txt",
+  "taskSha256": "aa2856aa4e55b49e30a7727ae53e40e9892115fdc51beb5cbc936d6dc88db491",
+  "javaRuntimeRelease": "JAVA_VERSION=\"25.0.1\"\nMODULES=\"java.base java.compiler java.datatransfer java.xml java.prefs java.desktop java.instrument java.logging java.management java.security.sasl java.naming java.rmi java.management.rmi java.net.http java.scripting java.security.jgss java.transaction.xa java.sql java.sql.rowset java.xml.crypto java.se java.smartcardio jdk.accessibility jdk.internal.jvmstat jdk.attach jdk.charsets jdk.internal.opt jdk.zipfs jdk.compiler jdk.crypto.cryptoki jdk.crypto.ec jdk.crypto.mscapi jdk.dynalink jdk.internal.ed jdk.editpad jdk.internal.vm.ci jdk.graal.compiler jdk.graal.compiler.management jdk.hotspot.agent jdk.httpserver jdk.incubator.vector jdk.internal.le jdk.internal.md jdk.jartool jdk.javadoc jdk.jcmd jdk.management jdk.management.agent jdk.jconsole jdk.jdeps jdk.jdwp.agent jdk.jdi jdk.jfr jdk.jlink jdk.jpackage jdk.jshell jdk.jsobject jdk.jstatd jdk.localedata jdk.management.jfr jdk.naming.dns jdk.naming.rmi jdk.net jdk.nio.mapmode jdk.sctp jdk.security.auth jdk.security.jgss jdk.unsupported jdk.unsupported.desktop jdk.xml.dom\"\n",
+  "guardLogPrefix": "canonical .native-reference/nx-tools/logs/nx22-header-native",
+  "guard": {
+    "ExitCode": 0,
+    "Reason": "completed",
+    "PeakCpu": 62.31617647058823,
+    "PeakRam": 76.53420888751998,
+    "CpuCap": 10,
+    "CpuReadback": 1000,
+    "RamCapGiB": 4,
+    "PauseCount": 8
+  },
+  "repeatability": "Two fresh isolated offline launches, full-frame and crop decoded RGBA equal",
+  "svgSourceSha256": "78576f26114a3f83b72d81e698979e140d2331d2946ae4f6411adc2ed8e78888",
+  "svgPublicSha256": "78576f26114a3f83b72d81e698979e140d2331d2946ae4f6411adc2ed8e78888",
+  "browserAcceptance": "Pending actual integrated header on final source snapshot"
+}

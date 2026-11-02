@@ -2,11 +2,15 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import { workspaceNames } from "./verification-types.ts";
+
+/** @param {string | Uint8Array} bytes - Verification input. */
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
 // A lock identifies intended dependencies; installed bytes identify what ran.
 // Generated tool caches are excluded because running a check may update them.
-export function installedDependencyIdentity(root) {
+/** @param {string} root - Verification input. */
+export const installedDependencyIdentity = (root) => {
   const lock = path.join(root, "bun.lock");
   const modules = path.join(root, "node_modules");
 
@@ -19,7 +23,12 @@ export function installedDependencyIdentity(root) {
 
   let files = 0;
 
-  function visit(file, relative) {
+  /**
+   * @param {string} file - Installed path.
+   * @param {string} relative - Stable identity path.
+   * @returns {void} Completes the ordered traversal.
+   */
+  const visit = (file, relative) => {
     const info = fs.lstatSync(file);
 
     if (info.isSymbolicLink()) {
@@ -65,14 +74,13 @@ export function installedDependencyIdentity(root) {
         .update("\0");
       files += 1;
     }
-  }
+  };
 
   visit(modules, "node_modules");
 
-  const workspaces =
-    Bun.JSON5.parse(fs.readFileSync(lock, "utf-8")).workspaces ?? {};
+  const workspaces = workspaceNames(fs.readFileSync(lock, "utf-8"));
 
-  for (const workspace of Object.keys(workspaces).toSorted()) {
+  for (const workspace of workspaces.toSorted()) {
     if (!workspace) {
       continue;
     }
@@ -90,8 +98,9 @@ export function installedDependencyIdentity(root) {
 
   return {
     bun: Bun.version,
+    bunOptionsSha256: digest(process.env.BUN_OPTIONS ?? ""),
     files,
     installedSha256: hash.digest("hex"),
     lockSha256: digest(fs.readFileSync(lock)),
   };
-}
+};

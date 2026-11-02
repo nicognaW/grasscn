@@ -6,26 +6,26 @@ import path from "node:path";
 import { serveProductionFixture } from "@grasscn/tests/fixture";
 import { webRoot } from "@tests/paths";
 
+import {
+  isolatedHttpTarget,
+  isolatedTunnelTarget,
+} from "./isolated-host-routing.mjs";
+import { serveNextProduction } from "./next-production.mjs";
+
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.
-export async function serveVerificationHosts({
-  fixturePort,
-  previewPort,
-  proxyPort,
-}) {
-  const owned = new Set([fixturePort, previewPort]);
-
-  const map = new Map([
-    [5174, fixturePort],
-    [5178, fixturePort],
-    [5176, previewPort],
-  ]);
-
+/** @param {import("./isolated-host-routing.mjs").HostExecution} execution - Owned loopback ports. */
+export const serveVerificationHosts = async (execution) => {
+  const { fixturePort, previewPort, proxyPort } = execution;
+  /** @type {Set<import("node:stream").Duplex>} */
   const sockets = new Set();
 
+  /** @param {import("node:stream").Duplex} socket - Owned connection. */
   const track = (socket) => {
     sockets.add(socket);
-    socket.once("close", () => sockets.delete(socket));
+    socket.once("close", () => {
+      sockets.delete(socket);
+    });
 
     return socket;
   };
@@ -36,22 +36,26 @@ export async function serveVerificationHosts({
     }
   };
 
+  /** @type {Awaited<ReturnType<typeof serveProductionFixture>> | undefined} */
   let fixture;
+  /** @type {Awaited<ReturnType<typeof serveNextProduction>> | undefined} */
   let preview;
+  /** @type {import("node:http").Server | undefined} */
   let proxy;
 
   try {
     fixture = await serveProductionFixture({ port: fixturePort });
-    const { preview: startPreview } = await import("vite");
-    preview = await startPreview({
-      configFile: path.join(webRoot, "vite.config.ts"),
-      preview: { host: "127.0.0.1", port: previewPort, strictPort: true },
-    });
-    proxy = http.createServer(async (request, response) => {
+    preview = await serveNextProduction({ port: previewPort });
+
+    /**
+     * @param {import("node:http").IncomingMessage} request - Browser proxy request.
+     * @param {import("node:http").ServerResponse} response - Owned proxy response.
+     */
+    const handleRequest = async (request, response) => {
       let target;
 
       try {
-        target = new URL(request.url, `http://${request.headers.host}`);
+        target = new URL(request.url ?? "", `http://${request.headers.host}`);
 
         if (
           target.protocol !== "http:" ||
@@ -62,13 +66,15 @@ export async function serveVerificationHosts({
 
         // The registry uses strict JSON routes, independently of Vite's SPA fallback.
         if (target.port === "5173") {
-          if (!["GET", "HEAD"].includes(request.method)) {
+          if (!["GET", "HEAD"].includes(request.method ?? "")) {
             response.writeHead(405, { Allow: "GET, HEAD" }).end();
 
             return;
           }
 
-          const match = /^\/r\/([a-zA-Z0-9_-]+\.json)$/.exec(target.pathname);
+          const match = /^\/r\/(?<file>[a-zA-Z0-9_-]+\.json)$/u.exec(
+            target.pathname
+          );
 
           if (!match) {
             response
@@ -80,7 +86,7 @@ export async function serveVerificationHosts({
 
           try {
             const content = await readFile(
-              path.join(webRoot, "public/r", match[1])
+              path.join(webRoot, "public/r", match.groups?.file ?? "")
             );
 
             response
@@ -89,18 +95,22 @@ export async function serveVerificationHosts({
               })
               .end(request.method === "HEAD" ? undefined : content);
           } catch (error) {
+            const missing =
+              error instanceof Error &&
+              "code" in error &&
+              error.code === "ENOENT";
+
             response
-              .writeHead(error.code === "ENOENT" ? 404 : 500, {
+              .writeHead(missing ? 404 : 500, {
                 "Content-Type": "application/json",
               })
               .end(
                 request.method === "HEAD"
                   ? undefined
                   : JSON.stringify({
-                      error:
-                        error.code === "ENOENT"
-                          ? "Registry item not found"
-                          : "Unable to read registry",
+                      error: missing
+                        ? "Registry item not found"
+                        : "Unable to read registry",
                     })
               );
           }
@@ -108,14 +118,11 @@ export async function serveVerificationHosts({
           return;
         }
 
-        const port = map.get(Number(target.port)) ?? Number(target.port);
-
-        if (!owned.has(port)) {
-          throw new Error("Unowned browser port");
-        }
-
-        target.hostname = "127.0.0.1";
-        target.port = String(port);
+        target = isolatedHttpTarget(
+          request.url ?? "",
+          request.headers.host ?? "",
+          execution
+        );
       } catch {
         response.writeHead(502);
         response.end("Verification only serves its isolated snapshot");
@@ -143,31 +150,27 @@ export async function serveVerificationHosts({
         response.end();
       });
       request.pipe(upstream);
+    };
+
+    proxy = http.createServer((request, response) => {
+      handleRequest(request, response).catch(() => {
+        if (!response.headersSent) {
+          response.writeHead(502);
+        }
+
+        response.end("Verification proxy request failed");
+      });
     });
-    proxy.on("connection", track);
+    proxy.on("connection", (socket) => {
+      track(socket);
+    });
     proxy.on("connect", (request, socket, head) => {
       // Playwright APIRequestContext tunnels HTTP too. Restrict CONNECT to the
       // same owned HTTP hosts; the virtual registry loops into our strict handler.
       let port;
 
       try {
-        const target = new URL(`http://${request.url}`);
-
-        if (
-          !["127.0.0.1", "localhost"].includes(target.hostname) ||
-          target.host !== request.url
-        ) {
-          throw new Error("Unowned tunnel");
-        }
-
-        port =
-          target.port === "5173"
-            ? proxyPort
-            : (map.get(Number(target.port)) ?? Number(target.port));
-
-        if (target.port !== "5173" && !owned.has(port)) {
-          throw new Error("Unowned tunnel port");
-        }
+        port = isolatedTunnelTarget(request.url ?? "", execution);
       } catch {
         socket.end("HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n");
 
@@ -187,11 +190,20 @@ export async function serveVerificationHosts({
         })
       );
 
-      upstream.on("error", () => socket.destroy());
-      socket.on("error", () => upstream.destroy());
-      socket.once("close", () => upstream.destroy());
-      upstream.once("close", () => socket.destroy());
+      upstream.on("error", () => {
+        socket.destroy();
+      });
+      socket.on("error", () => {
+        upstream.destroy();
+      });
+      socket.once("close", () => {
+        upstream.destroy();
+      });
+      upstream.once("close", () => {
+        socket.destroy();
+      });
     });
+    // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
     await new Promise((resolve, reject) => {
       proxy.once("error", reject);
       proxy.listen(proxyPort, "127.0.0.1", resolve);
@@ -201,22 +213,22 @@ export async function serveVerificationHosts({
       close: async () => {
         closeSockets();
         proxy.closeAllConnections();
-        await new Promise((resolve) => proxy.close(resolve));
-        await new Promise((resolve) => preview.httpServer.close(resolve));
+        // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
+        await new Promise((resolve) => {
+          proxy.close(resolve);
+        });
+        await preview.close();
         await fixture.close();
       },
       fixtureBundleUrl: fixture.url,
+      websiteIdentity: preview.identity,
     };
   } catch (error) {
     closeSockets();
     proxy?.closeAllConnections();
     proxy?.close();
-
-    if (preview) {
-      await new Promise((resolve) => preview.httpServer.close(resolve));
-    }
-
+    await preview?.close();
     await fixture?.close();
     throw error;
   }
-}
+};

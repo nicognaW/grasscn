@@ -14,6 +14,9 @@ const catalogueFile = path.join(browserRoot, "src/selection/base-cases.json");
 const escape = (value) => value.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export const caseKey = (test) => JSON.stringify([test.file, test.titlePath]);
 
+/** @typedef {{file:string, titlePath:string[], package:string, projectName:string, id?:string}} BrowserCase */
+/** @typedef {{file:string, title:string, titlePath:string[], components:string[], evidence:{kind:string, reason:string, route?:string, url?:string, upstreamTest?:string}}} BaseCase */
+/** @returns {BaseCase[]} Source-qualified default PPT catalogue. */
 export function baseCatalogue() {
   const data = JSON.parse(fs.readFileSync(catalogueFile, "utf-8"));
 
@@ -181,6 +184,7 @@ function withoutReporter(args) {
   return result;
 }
 
+/** @param {string[]} [args] @param {{effectiveSelection?:boolean}} [options] @returns {BrowserCase[]} */
 export function collectBrowserCases(
   args = [],
   { effectiveSelection = false } = {}
@@ -235,6 +239,7 @@ export function collectBrowserCases(
   return flattenBrowserReport(report);
 }
 
+/** @param {BrowserCase[]} cases @returns {{base:BrowserCase[], full:BrowserCase[], evidence:Map<string,BaseCase>}} */
 export function classifyBrowserCases(cases) {
   if (cases.some((test) => test.package !== "pixel-perfect")) {
     throw new Error(

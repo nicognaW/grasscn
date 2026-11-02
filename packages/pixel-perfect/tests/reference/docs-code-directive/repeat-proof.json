@@ -1,0 +1,24 @@
+{
+  "nativeLaunches": 2,
+  "source": "Original Minecraft Font with native color, semicolon-inclusive executable directive.",
+  "cases": [
+    {
+      "name": "docs-code-directive-semicolon-s1.png",
+      "width": 100,
+      "height": 9,
+      "differentPixels": 0
+    },
+    {
+      "name": "docs-code-directive-semicolon-s2.png",
+      "width": 200,
+      "height": 18,
+      "differentPixels": 0
+    },
+    {
+      "name": "docs-code-directive-semicolon-s3.png",
+      "width": 300,
+      "height": 27,
+      "differentPixels": 0
+    }
+  ]
+}

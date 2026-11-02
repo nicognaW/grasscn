@@ -1,0 +1,103 @@
+{"serverLocale":"zh-CN","serverDefaultDate":"2026/10/30","serverExplicitDate":"10/30/2026"}
+uncheck in C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-20
+○ sherif skipped, not selected by --only
+○ oxlint skipped, not selected by --only
+○ oxfmt skipped, not selected by --only
+▶ tsc -p apps\web\tsconfig.json --noEmit
+▶ tsc -p packages\tests\tsconfig.json --noEmit
+✔ tsc passed 8.6s
+
+✔ all checks passed (tsc)
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.mjs took 25ms
+- Experiments (use with caution):
+  · cpus: 1
+
+[MDX] generated files in 10.994100000000003ms
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.0s
+  Running TypeScript ...
+  Finished TypeScript in 1947ms ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/87) ...
+  Generating static pages using 1 worker (21/87) 
+  Generating static pages using 1 worker (43/87) 
+  Generating static pages using 1 worker (65/87) 
+✓ Generating static pages using 1 worker (87/87) in 3.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/installation/[name]
+├ ƒ /api/installation/[name]/[file]
+├ ƒ /api/search
+├ ○ /charts
+├   /charts/[type]
+│ ├ ● /charts/metric
+│ ├ ● /charts/profiler
+│ ├ ● /charts/fps
+│ └ ● [+8 more paths]
+├ ƒ /components/[[...slug]]
+└   /docs/[[...slug]]
+  ├ ● /docs
+  ├ ● /docs/components/advancement-tree
+  ├ ● /docs/components/alert-dialog
+  └ ● [+68 more paths]
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+▲ Next.js 16.4.2
+- Local:         http://127.0.0.1:5190
+- Network:       http://127.0.0.1:5190
+✓ Ready in 87ms
+✓ Running next.config.mjs took 21ms
+[MDX] generated files in 5.615099999999984ms
+
+Running 11 tests using 1 worker
+
+[1/11] tests\overlay-documentation.spec.ts:53:1 › overlay documentation exposes exact examples, own grouped source and retained playgrounds
+[2/11] tests\overlay-documentation.spec.ts:123:1 › documentation confirmation callbacks update once and close their actual modal
+[3/11] tests\overlay-documentation.spec.ts:157:1 › documentation edge panels expose labelled Done actions
+[4/11] tests\overlay-documentation.spec.ts:179:1 › documentation menu and command examples dispatch real selections
+[5/11] tests\overlay-documentation.spec.ts:216:1 › documentation tooltip and popover open from their real focusable triggers
+  1) tests\overlay-documentation.spec.ts:216:1 › documentation tooltip and popover open from their real focusable triggers 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('.documentation-example').first().getByRole('button', { name: 'Inspect pickaxe', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" locator('.documentation-example').first().getByRole('button', { name: 'Inspect pickaxe', exact: true }) with timeout 5000ms
+      - waiting for locator('.documentation-example').first().getByRole('button', { name: 'Inspect pickaxe', exact: true })
+        13 × locator resolved to <button tabindex="0" type="button" data-size="default" data-variant="default" data-slot="tooltip-trigger" id="base-ui-_R_vgminpfiurb_" data-base-ui-tooltip-trigger="" class="mc-button relative inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0">…</button>
+           - unexpected value "inactive"
+
+
+      223 |   await expect(
+      224 |     example.getByRole("button", { name: "Inspect pickaxe", exact: true })
+    > 225 |   ).toBeFocused();
+          |     ^
+      226 |   await expect(page.getByRole("tooltip")).toContainText("Diamond Pickaxe");
+      227 |   await page.keyboard.press("Escape");
+      228 |   await expect(page.getByRole("tooltip")).toHaveCount(0);
+        at C:\Users\admin\Documents\Codex\2026-10-28\hel\outputs\grasscn\.native-reference\nx-20\packages\tests\tests\overlay-documentation.spec.ts:225:5
+
+    Error Context: ..\..\.pixel-perfect-test\overlays20c\browser\overlay-documentation-docu-8d42a-eir-real-focusable-triggers\error-context.md
+
+
+[6/11] tests\overlay-documentation.spec.ts:246:1 › documentation Calendar and Date Picker select with their actual DayPicker 10 APIs
+[7/11] tests\overlay-documentation.spec.ts:270:1 › documentation world browser filters and pages through TanStack Table 9
+[8/11] tests\overlay-documentation.spec.ts:300:1 › documentation message scroller appends messages and navigates its bounded history
+[9/11] tests\overlay-documentation.spec.ts:328:1 › documentation bubble reactions and attachment actions retain local state
+[10/11] tests\overlay-documentation.spec.ts:357:1 › overlay documentation remains usable at its default mobile width
+[11/11] tests\overlay-documentation.spec.ts:374:1 › default documentation packaged avatar faces match native PlayerFaceExtractor
+  1 failed
+    tests\overlay-documentation.spec.ts:216:1 › documentation tooltip and popover open from their real focusable triggers 
+  10 passed (57.8s)
