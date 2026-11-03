@@ -4,7 +4,8 @@ import { Separator } from "@/components/ui/separator";
 
 const SeparatorExample = () => (
   <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-    style={{ display: "grid", gap: 32, maxWidth: "100%", width: 400 }}
+    className="grid [gap:32px] [width:400px]"
+    style={{ maxWidth: "100%" }}
     /* eslint-enable shadcn/no-inline-styles */
   >
     <Separator

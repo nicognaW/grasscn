@@ -42,11 +42,13 @@ const TradingExample = () => {
 
   return (
     <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ display: "grid", gap: 16, maxWidth: "100%" }}
+      className="grid [gap:16px]"
+      style={{ maxWidth: "100%" }}
       /* eslint-enable shadcn/no-inline-styles */
     >
       <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        style={{ maxWidth: "100%", overflowX: "auto" }}
+        className="overflow-x-auto"
+        style={{ maxWidth: "100%" }}
         /* eslint-enable shadcn/no-inline-styles */
       >
         <Trading

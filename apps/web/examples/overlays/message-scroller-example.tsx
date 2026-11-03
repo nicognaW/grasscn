@@ -109,9 +109,8 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             </MessageScrollerContent>
           </MessageScrollerViewport>
           <div
+            className="flex justify-end"
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
               minHeight: 20 * scale,
               paddingTop: 2 * scale,
             }}
