@@ -87,7 +87,7 @@ const Badge = ({
   React.useEffect((): ReturnType<React.EffectCallback> => {
     if (
       plain === undefined ||
-      ![...plain].some((char) => char.codePointAt(0)! > 127)
+      !Array.from(plain).some((char) => char.codePointAt(0)! > 127)
     ) {
       return;
     }
@@ -105,7 +105,7 @@ const Badge = ({
   }, [plain]);
 
   const widthOf = (text: string) =>
-    [...text].reduce(
+    Array.from(text).reduce(
       (sum, char) =>
         sum +
         (char.codePointAt(0)! < 128

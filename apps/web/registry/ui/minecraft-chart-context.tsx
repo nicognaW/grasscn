@@ -218,7 +218,7 @@ export const ChartAxisTick = ({
     };
   }, [text]);
 
-  const width = [...text].reduce(
+  const width = Array.from(text).reduce(
     (sum, char) =>
       sum +
       (minecraftGlyphs[char.charCodeAt(0) - 32]?.[2] ??

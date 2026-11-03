@@ -284,7 +284,7 @@ const TabsTrigger = ({
                 ?.getBoundingClientRect().width ?? 0) / scale
             )
           : Math.ceil(
-              [...text].reduce(
+              Array.from(text).reduce(
                 (sum, char) =>
                   sum +
                   (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??

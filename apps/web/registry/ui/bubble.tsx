@@ -223,7 +223,7 @@ const BubbleContent = ({
       .split("\n")
       .map((line) =>
         Math.ceil(
-          [...line].reduce(
+          Array.from(line).reduce(
             (sum, char) =>
               sum +
               (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??

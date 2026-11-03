@@ -58,7 +58,7 @@ const glyphAdvance = (char: string) =>
   0;
 
 const advance = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + glyphAdvance(char), 0));
+  Math.ceil(Array.from(text).reduce((sum, char) => sum + glyphAdvance(char), 0));
 
 const trimToWidth = function trimToWidth(
   text: string,
@@ -68,7 +68,7 @@ const trimToWidth = function trimToWidth(
   let length = 0;
   let used = 0;
 
-  const chars = backwards ? [...text].reverse() : [...text];
+  const chars = backwards ? Array.from(text).reverse() : [...text];
 
   for (const char of chars) {
     const next = glyphAdvance(char);
@@ -261,7 +261,7 @@ export const attachMinecraftInput = function attachMinecraftInput(
 
     wasFocused = focused;
     const blink = Math.floor((Date.now() - focusedAt) / 300) % 2 === 0;
-    const chars = [...(value + input.placeholder)];
+    const chars = Array.from(value + input.placeholder);
 
     if (
       !loadingUnihex &&

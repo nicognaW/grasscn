@@ -27,7 +27,7 @@ const wrap = function wrap(text: string, width: number, bold: boolean) {
 
   for (let remaining of text.split("\n")) {
     while (
-      [...remaining].reduce((sum, char) => sum + advance(char), 0) > width
+      Array.from(remaining).reduce((sum, char) => sum + advance(char), 0) > width
     ) {
       let count = 0;
       let used = 0;
@@ -99,7 +99,7 @@ export const MinecraftCardText = ({
   const lines = wrap(String(children), width, bold);
 
   const widths = lines.map((line) =>
-    [...line].reduce(
+    Array.from(line).reduce(
       (sum, char) =>
         sum +
         minecraftGlyphs[(char.codePointAt(0) ?? Number.NaN) - 32][2] +

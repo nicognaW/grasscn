@@ -22,7 +22,7 @@ export const DialogLayoutContext = React.createContext({
 
 const widthOf = function widthOf(text: string, bold: boolean) {
   return Math.ceil(
-    [...text].reduce((sum, char) => {
+    Array.from(text).reduce((sum, char) => {
       const ascii = asciiGlyphs[char.codePointAt(0)! - 32];
 
       return (
@@ -102,7 +102,7 @@ export const MinecraftDialogText = ({
 
   if (
     !isMinecraftTextContent(children) ||
-    ![...String(children)].every(
+    !Array.from(String(children)).every(
       (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {

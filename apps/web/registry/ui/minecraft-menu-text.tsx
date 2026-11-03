@@ -50,7 +50,7 @@ export const MinecraftMenuText = ({
   }
 
   if (
-    ![...text].every(
+    !Array.from(text).every(
       (char) => /^[\u0020-\u007E]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
@@ -62,7 +62,7 @@ export const MinecraftMenuText = ({
   }
 
   const width = Math.ceil(
-    [...text].reduce(
+    Array.from(text).reduce(
       (sum, char) =>
         sum +
         (minecraftGlyphs[char.codePointAt(0)! - 32]?.[2] ??

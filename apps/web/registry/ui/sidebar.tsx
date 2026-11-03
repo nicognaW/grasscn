@@ -796,7 +796,7 @@ const collapsedContent = function collapsedContent(
         child.props.children === undefined)
   );
 
-  return icon ?? [...plainText(children)][0] ?? "?";
+  return icon ?? Array.from(plainText(children))[0] ?? "?";
 };
 
 const sidebarMenuButtonVariants = cva("mc-sidebar-menu-button", {

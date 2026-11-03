@@ -1,7 +1,7 @@
 import { minecraftGlyphs } from "./minecraft-font";
 
 export const minecraftTextWidth = (text: string) =>
-  [...text].reduce((sum, char) => {
+  Array.from(text).reduce((sum, char) => {
     const codePoint = char.codePointAt(0);
 
     if (codePoint === undefined) {

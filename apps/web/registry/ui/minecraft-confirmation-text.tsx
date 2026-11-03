@@ -20,7 +20,7 @@ const advance = (char: string) =>
   0;
 
 const widthOf = (text: string) =>
-  Math.ceil([...text].reduce((sum, char) => sum + advance(char), 0));
+  Math.ceil(Array.from(text).reduce((sum, char) => sum + advance(char), 0));
 
 const wrap = function wrap(text: string, maximum: number) {
   const lines: string[] = [];
@@ -108,7 +108,7 @@ export const MinecraftConfirmationText = ({
 
   if (
     !isMinecraftTextContent(children) ||
-    ![...String(children)].every(
+    !Array.from(String(children)).every(
       (char) => /^[\u0020-\u007E\n]$/u.test(char) || getUnihexGlyph(char)
     )
   ) {
