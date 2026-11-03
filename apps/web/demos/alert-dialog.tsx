@@ -44,7 +44,7 @@ const AlertDialogDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setMessage(event.target.value);
             }}
-            style={{ width: 320, height: 100 }}
+            style={{ height: 100, width: 320 }}
           />
         </label>
       </div>

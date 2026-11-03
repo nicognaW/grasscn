@@ -14,8 +14,8 @@ export const Demo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
       data-stage="calendar"
       style={{
         display: "grid",
-        gridTemplateColumns: "minmax(0,1fr)",
         gap: 8 * scale,
+        gridTemplateColumns: "minmax(0,1fr)",
       }}
     >
       <Calendar

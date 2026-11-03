@@ -153,7 +153,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               </div>
               <Card
                 scale={scale}
-                style={{ padding: 10 * scale, gap: 8 * scale, minWidth: 0 }}
+                style={{ gap: 8 * scale, minWidth: 0, padding: 10 * scale }}
               >
                 <CardHeader>
                   <CardTitle>{selected}</CardTitle>

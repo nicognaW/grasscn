@@ -51,7 +51,7 @@ const ScrollAreaDemo = ({ scale }: DemoProps) => {
                 setOffset(Math.round(event.currentTarget.scrollTop / scale));
               },
             }}
-            style={{ width: 200 * scale, maxWidth: "100%", height: 64 * scale }}
+            style={{ height: 64 * scale, maxWidth: "100%", width: 200 * scale }}
           >
             <div
               className="h-(--demo-height) overflow-hidden"

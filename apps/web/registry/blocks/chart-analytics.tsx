@@ -278,7 +278,11 @@ export const AnalyticsChartExample = ({
       </ChartContainer>
       <details
         className="mc-chart-data"
-        style={{ "--mc-scale": scale } as React.CSSProperties}
+        style={
+          /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+            "--mc-scale": scale,
+          } as React.CSSProperties
+        }
       >
         <summary>View chart data</summary>
         <div>

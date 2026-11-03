@@ -46,9 +46,9 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
                 tabIndex={0}
                 aria-label="World context menu target"
                 style={{
-                  width: 200 * scale,
                   maxWidth: "100%",
                   minHeight: 80 * scale,
+                  width: 200 * scale,
                 }}
               />
             }

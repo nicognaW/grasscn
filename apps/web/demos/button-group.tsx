@@ -59,7 +59,7 @@ const ButtonGroupDemo = ({ scale }: DemoProps) => {
           scale={scale}
           orientation={orientation}
           aria-label="World actions"
-          style={{ maxWidth: "100%", flexWrap: "wrap" }}
+          style={{ flexWrap: "wrap", maxWidth: "100%" }}
         >
           <ButtonGroupText
             scale={scale}

@@ -36,7 +36,7 @@ const AvatarDemo = ({ scale }: DemoProps) => {
         className="flex flex-wrap gap-3"
       >
         <label
-          style={{ display: "grid", gap: 8, minWidth: 0, flex: "1 1 180px" }}
+          style={{ display: "grid", flex: "1 1 180px", gap: 8, minWidth: 0 }}
         >
           Minecraft username
           <Input

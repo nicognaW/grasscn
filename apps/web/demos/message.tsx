@@ -95,7 +95,7 @@ const History = ({ scale }: DemoProps) => {
       <div className="demo-stage" data-stage="message">
         <MessageScroller
           scale={scale}
-          style={{ width: 320 * scale, maxWidth: "100%", height: 94 * scale }}
+          style={{ height: 94 * scale, maxWidth: "100%", width: 320 * scale }}
         >
           <MessageScrollerViewport
             aria-label="Player chat"
@@ -132,14 +132,14 @@ const History = ({ scale }: DemoProps) => {
               direction="end"
               behavior="instant"
               style={{
-                position: "relative",
+                bottom: "auto",
                 left: "auto",
+                maxWidth: "100%",
+                position: "relative",
                 right: "auto",
                 top: "auto",
-                bottom: "auto",
                 transform: "none",
                 width: 100 * scale,
-                maxWidth: "100%",
               }}
             >
               Latest

@@ -322,7 +322,7 @@ const ChartTooltipContent = ({
                             }
                           )}
                           style={
-                            {
+                            /* SAFETY: --color-bg, --color-border are this owner's CSS custom-property channels; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
                               "--color-bg": indicatorColor,
                               "--color-border": indicatorColor,
                             } as React.CSSProperties

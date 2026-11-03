@@ -47,8 +47,8 @@ const AspectRatioDemo = ({ scale }: DemoProps) => {
             style={{
               background: "#383838",
               border: "2px solid #a0a0a0",
-              overflow: "hidden",
               display: "grid",
+              overflow: "hidden",
               placeItems: "center",
             }}
           >

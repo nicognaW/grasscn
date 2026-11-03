@@ -73,7 +73,7 @@ const CarouselDemo = ({ scale }: DemoProps) => {
               <CarouselItem key={name} style={{ height: 120 * scale }}>
                 <Card
                   scale={scale}
-                  style={{ width: "100%", height: "100%", padding: 8 * scale }}
+                  style={{ height: "100%", padding: 8 * scale, width: "100%" }}
                 >
                   <CardHeader>
                     <CardTitle>{name}</CardTitle>

@@ -138,7 +138,11 @@ const ComboboxInput = ({
       <div
         data-slot="combobox-input-group"
         className="mc-combobox-input-group"
-        style={{ "--mc-scale": scale } as React.CSSProperties}
+        style={
+          /* SAFETY: --mc-scale is this owner's CSS custom-property channel; this CSSProperties view passes the exact owned variable map to React without changing its values. */ {
+            "--mc-scale": scale,
+          } as React.CSSProperties
+        }
       >
         <Primitive.Input
           data-slot="combobox-input"

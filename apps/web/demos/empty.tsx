@@ -41,7 +41,7 @@ const EmptyDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setDescription(event.target.value);
             }}
-            style={{ width: 320, height: 100 }}
+            style={{ height: 100, width: 320 }}
           />
         </label>
       </div>

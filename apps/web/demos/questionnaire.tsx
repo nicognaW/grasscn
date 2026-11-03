@@ -64,7 +64,7 @@ const QuestionnaireDemo = ({ scale }: DemoProps) => {
           ref={form}
           key={session}
           scale={scale}
-          style={{ width: "100%", maxWidth: 600 }}
+          style={{ maxWidth: 600, width: "100%" }}
           items={items}
           shortcuts="numbers"
           onSubmit={(event) => {
