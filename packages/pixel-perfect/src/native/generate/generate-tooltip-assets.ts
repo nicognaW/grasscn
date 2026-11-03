@@ -178,11 +178,11 @@ for (const name of ["background", "frame"]) {
 await writeFile(
   webFile("registry/ui/minecraft-tooltip-sprites.ts"),
   `// Original Minecraft artwork: Mojang Studios. Pieces are exact crops of original PNGs.\nexport const minecraftTooltipSprites = ${JSON.stringify(sprites)} as const\nexport const minecraftTooltipAtlas = ${JSON.stringify(
-    {
-      width: atlasWidth,
-      height: atlasHeight,
-      locations,
-    }
+    Object.fromEntries([
+      ["width", atlasWidth],
+      ["height", atlasHeight],
+      ["locations", locations],
+    ])
   )} as const\n`
 );
 

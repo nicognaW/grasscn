@@ -51,14 +51,19 @@ const IconMeter = ({
 
   const step = kind === "air" ? 1 : 2;
 
-  const prefix =
-    kind === "health"
-      ? `gui/sprites/hud/heart/${condition === "normal" ? "" : `${condition}_`}`
-      : kind === "hunger"
-        ? "gui/sprites/hud/food_"
-        : kind === "armor"
-          ? "gui/sprites/hud/armor_"
-          : "gui/sprites/hud/air";
+  let _selectedPrefix: string;
+
+  if (kind === "health") {
+    _selectedPrefix = `gui/sprites/hud/heart/${condition === "normal" ? "" : `${condition}_`}`;
+  } else if (kind === "hunger") {
+    _selectedPrefix = "gui/sprites/hud/food_";
+  } else if (kind === "armor") {
+    _selectedPrefix = "gui/sprites/hud/armor_";
+  } else {
+    _selectedPrefix = "gui/sprites/hud/air";
+  }
+
+  const prefix = _selectedPrefix;
 
   return (
     <div

@@ -38,13 +38,17 @@ const TraceDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
           onClick={() => {
-            setStatus((value) =>
-              value === "running"
-                ? "error"
-                : value === "error"
-                  ? "pending"
-                  : "running"
-            );
+            setStatus((value) => {
+              if (value === "running") {
+                return "error";
+              }
+
+              if (value === "error") {
+                return "pending";
+              }
+
+              return "running";
+            });
           }}
         >
           Change status

@@ -137,24 +137,27 @@ export const MinecraftDialogText = ({
       style={{ width: widest * scale }}
     >
       <span aria-hidden="true">
-        {lines.map((line, index) => (
-          <span
-            className="mc-card-text-line"
-            key={index}
-            style={{
-              paddingLeft:
-                (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) *
-                scale,
-            }}
-          >
-            {unicode ? (
+        {lines.map((line, index) => {
+          const _precedingkey = index;
+
+          const _precedingstyle: React.ComponentProps<"span">["style"] = {
+            paddingLeft:
+              (Math.floor(widest / 2) - Math.floor(widths[index] / 2)) * scale,
+          };
+
+          let _selectedContent: React.ReactNode;
+
+          if (unicode) {
+            _selectedContent = (
               <DialogUnicodeLine
                 text={line}
                 bold={bold}
                 scale={scale}
                 width={widths[index]}
               />
-            ) : bold ? (
+            );
+          } else if (bold) {
+            _selectedContent = (
               <span className="mc-bitmap mc-card-bold">
                 <span className="mc-card-bold-pixels">
                   {Array.from(line, (char, i) => {
@@ -181,11 +184,21 @@ export const MinecraftDialogText = ({
                   })}
                 </span>
               </span>
-            ) : (
-              <MinecraftText>{line}</MinecraftText>
-            )}
-          </span>
-        ))}
+            );
+          } else {
+            _selectedContent = <MinecraftText>{line}</MinecraftText>;
+          }
+
+          return (
+            <span
+              className="mc-card-text-line"
+              key={_precedingkey}
+              style={_precedingstyle}
+            >
+              {_selectedContent}
+            </span>
+          );
+        })}
       </span>
       <span className="mc-dialog-accessible">{text}</span>
     </span>

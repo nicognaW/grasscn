@@ -376,19 +376,21 @@ const sidebarControlLabel = function sidebarControlLabel(
   visit(children);
   flush();
 
-  return parts.map((child, index) => (
-    <React.Fragment key={index}>
-      {typeof child === "string" ? (
-        /^[\u0020-\u007E]*$/u.test(child) ? (
-          <MinecraftText className="mc-text">{child}</MinecraftText>
-        ) : (
-          <MinecraftUnicodeLabel text={child} />
-        )
+  return parts.map((child, index) => {
+    let _selectedContent: React.ReactNode;
+
+    if (typeof child === "string") {
+      _selectedContent = /^[\u0020-\u007E]*$/u.test(child) ? (
+        <MinecraftText className="mc-text">{child}</MinecraftText>
       ) : (
-        child
-      )}
-    </React.Fragment>
-  ));
+        <MinecraftUnicodeLabel text={child} />
+      );
+    } else {
+      _selectedContent = child;
+    }
+
+    return <React.Fragment key={index}>{_selectedContent}</React.Fragment>;
+  });
 };
 
 const SidebarControl = ({

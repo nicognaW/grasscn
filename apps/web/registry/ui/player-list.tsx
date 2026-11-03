@@ -266,11 +266,29 @@ const PlayerList = ({
   const columnWidth = Math.max(22, rowWidth ?? 9 + nameWidth + scoreWidth + 13);
   const bodyWidth = columns * columnWidth + (columns - 1) * 5;
 
-  const head =
-    typeof header === "string" ? header.split("\n") : header ? [header] : [];
+  let _selectedHead: React.ReactNode[];
 
-  const foot =
-    typeof footer === "string" ? footer.split("\n") : footer ? [footer] : [];
+  if (typeof header === "string") {
+    _selectedHead = header.split("\n");
+  } else if (header) {
+    _selectedHead = [header];
+  } else {
+    _selectedHead = [];
+  }
+
+  const head = _selectedHead;
+
+  let _selectedFoot: React.ReactNode[];
+
+  if (typeof footer === "string") {
+    _selectedFoot = footer.split("\n");
+  } else if (footer) {
+    _selectedFoot = [footer];
+  } else {
+    _selectedFoot = [];
+  }
+
+  const foot = _selectedFoot;
 
   const fullWidth = Math.max(
     bodyWidth,
