@@ -202,7 +202,8 @@ for (const kind of ["suggestions", "input", "input-cjk"]) {
         }
 
         await page.evaluate(async () => {
-          const frameCompletion = Promise.withResolvers<void>();
+          const frameCompletion: PromiseWithResolvers<void> =
+            Promise.withResolvers();
 
           try {
             requestAnimationFrame(() => {

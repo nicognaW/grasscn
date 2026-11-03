@@ -72,7 +72,8 @@ export const nativeChatTests = function nativeChatTests(
       }
 
       await page.evaluate(async () => {
-        const frameCompletion: PromiseWithResolvers<void> = Promise.withResolvers();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {

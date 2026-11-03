@@ -123,7 +123,8 @@ test.describe("Select native matrix", () => {
       }
 
       await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers<void>();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {

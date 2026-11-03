@@ -138,7 +138,8 @@ test.describe("Toggle native recipe-filter matrix", () => {
       }
 
       await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers<void>();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {
