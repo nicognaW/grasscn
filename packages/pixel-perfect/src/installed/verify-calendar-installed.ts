@@ -82,7 +82,12 @@ const files = item!.files.map((f) => {
   };
 });
 
-const buildCalendarQuery = (c: CalendarCaptureManifest["cases"][number], part: string, alias: string, manifest: CalendarCaptureManifest) => {
+const buildCalendarQuery = (
+  c: CalendarCaptureManifest["cases"][number],
+  part: string,
+  alias: string,
+  manifest: CalendarCaptureManifest
+) => {
   const q: LegacyCalendarQuery = {
     align: c.alignment ?? "left",
     background: c.background ?? manifest.background ?? "#202020",
@@ -116,15 +121,51 @@ const buildCalendarQuery = (c: CalendarCaptureManifest["cases"][number], part: s
   return q;
 };
 
-const captureCalendarAlias = async (c: CalendarCaptureManifest["cases"][number], part: string, alias: string, manifest: CalendarCaptureManifest, dir: string, fixturePage: Page | undefined) => {
+const browser = await chromium.launch({ channel: "msedge" });
+const pageErrors: string[] = [];
+
+let comparisons = 0;
+let page: Page | undefined;
+
+const inputIdentity = installedConsumerIdentity(consumer);
+
+const runtimeIdentity = {
+  browser: browser.version(),
+  consumer: inputIdentity,
+  files,
+  settings,
+  url,
+  verifier: hash(fs.readFileSync(import.meta.filename)),
+  viewport: [1536, 900, 1],
+};
+
+const differences = function differences(a: DecodedPixels, b: DecodedPixels) {
+  assert.deepEqual([a.width, a.height], [b.width, b.height]);
+  let count = 0;
+
+  for (let i = 0; i < a.data.length; i += 4) {
+    count += Number(
+      !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
+    );
+  }
+
+  return count;
+};
+
+const captureCalendarAlias = async (
+  c: CalendarCaptureManifest["cases"][number],
+  part: string,
+  alias: string,
+  manifest: CalendarCaptureManifest,
+  dir: string,
+  fixturePage: Page | undefined
+) => {
   const q = buildCalendarQuery(c, part, alias, manifest);
 
   await fixturePage!.evaluate((calendarFields) => {
     // SAFETY: the retained Calendar bridge receives string query fields, updates history/background and renders the keyed marker.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Calendar consumer bridge invocation boundary.
-    (window as LegacyCalendarConsumerWindow).renderCalendarCase(
-      calendarFields
-    );
+    (window as LegacyCalendarConsumerWindow).renderCalendarCase(calendarFields);
   }, q);
   await expect(fixturePage!.locator("#marker")).toHaveAttribute(
     "data-case",
@@ -181,9 +222,7 @@ const captureCalendarAlias = async (c: CalendarCaptureManifest["cases"][number],
   });
 
   const bytes = fs.readFileSync(
-    pixelPerfectFile(
-      path.join("tests/reference", dir, "captures", c.name)
-    )
+    pixelPerfectFile(path.join("tests/reference", dir, "captures", c.name))
   );
 
   assert.equal(hash(bytes), c.sha256);
@@ -208,37 +247,6 @@ const captureCalendarAlias = async (c: CalendarCaptureManifest["cases"][number],
   }
 
   return { actual, actualBytes };
-};
-
-const browser = await chromium.launch({ channel: "msedge" });
-const pageErrors: string[] = [];
-
-let comparisons = 0;
-let page: Page | undefined;
-
-const inputIdentity = installedConsumerIdentity(consumer);
-
-const runtimeIdentity = {
-  browser: browser.version(),
-  consumer: inputIdentity,
-  files,
-  settings,
-  url,
-  verifier: hash(fs.readFileSync(import.meta.filename)),
-  viewport: [1536, 900, 1],
-};
-
-const differences = function differences(a: DecodedPixels, b: DecodedPixels) {
-  assert.deepEqual([a.width, a.height], [b.width, b.height]);
-  let count = 0;
-
-  for (let i = 0; i < a.data.length; i += 4) {
-    count += Number(
-      !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
-    );
-  }
-
-  return count;
 };
 
 try {
@@ -351,7 +359,14 @@ try {
           );
         }
 
-        const { actual, actualBytes } = await captureCalendarAlias(c, part, alias, manifest, dir, page);
+        const { actual, actualBytes } = await captureCalendarAlias(
+          c,
+          part,
+          alias,
+          manifest,
+          dir,
+          page
+        );
 
         record[
           alias === "base"

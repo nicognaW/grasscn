@@ -62,7 +62,13 @@ const files = item!.files.map((f) => {
 });
 
 const pageErrors: string[] = [];
-const buildQuestionnaireQuery = (c: QuestionnaireCaptureManifest["cases"][number], part: string, action: string, m: QuestionnaireCaptureManifest) => {
+
+const buildQuestionnaireQuery = (
+  c: QuestionnaireCaptureManifest["cases"][number],
+  part: string,
+  action: string,
+  m: QuestionnaireCaptureManifest
+) => {
   const q = new URLSearchParams({
     action,
     align: c.alignment ?? "left",
@@ -98,7 +104,14 @@ const buildQuestionnaireQuery = (c: QuestionnaireCaptureManifest["cases"][number
   return q;
 };
 
-const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases"][number], part: string, action: string, m: QuestionnaireCaptureManifest, dir: string, fixturePage: Page | undefined) => {
+const captureQuestionnaireAction = async (
+  c: QuestionnaireCaptureManifest["cases"][number],
+  part: string,
+  action: string,
+  m: QuestionnaireCaptureManifest,
+  dir: string,
+  fixturePage: Page | undefined
+) => {
   const q = buildQuestionnaireQuery(c, part, action, m);
 
   await fixturePage!.goto(`${urlArg}?${q}`);
@@ -106,10 +119,7 @@ const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases
   await expect(subject).toBeVisible();
 
   if (["title", "description", "error", "progress"].includes(part)) {
-    await expect(subject).toHaveAttribute(
-      "data-mc-label-layout-ready",
-      "true"
-    );
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
   }
 
   if (part === "input") {
@@ -119,15 +129,11 @@ const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases
   await fixturePage!.mouse.move(0, 0);
 
   if (c.state.startsWith("focus")) {
-    await (
-      part === "checkbox" ? subject.locator("input") : subject
-    ).focus();
+    await (part === "checkbox" ? subject.locator("input") : subject).focus();
   }
 
   if (c.state === "hover") {
-    await (
-      part === "checkbox" ? subject.locator("input") : subject
-    ).hover();
+    await (part === "checkbox" ? subject.locator("input") : subject).hover();
   }
 
   if (part === "input") {
@@ -148,9 +154,7 @@ const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases
     await fixturePage!.clock.runFor(c.caretMs!);
     await expect(subject).toHaveAttribute("data-mc-ready", "true");
   } else {
-    for (const glyph of await subject
-      .locator("[data-mc-label-ready]")
-      .all()) {
+    for (const glyph of await subject.locator("[data-mc-label-ready]").all()) {
       await expect(glyph).toHaveAttribute("data-mc-label-ready", "true");
     }
 
@@ -170,9 +174,7 @@ const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases
   }
 
   const bytes = fs.readFileSync(
-    `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
-      c.name
-    }`
+    `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${c.name}`
   );
 
   if (hash(bytes) !== c.sha256) {
@@ -198,9 +200,7 @@ const captureQuestionnaireAction = async (c: QuestionnaireCaptureManifest["cases
   let n = 0;
 
   for (let i = 0; i < b.data.length; i += 4) {
-    n += Number(
-      !a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4))
-    );
+    n += Number(!a.data.subarray(i, i + 4).equals(b.data.subarray(i, i + 4)));
   }
 
   if (n) {
@@ -295,7 +295,14 @@ try {
           }
         }
 
-        const a = await captureQuestionnaireAction(c, part, action, m, dir, page);
+        const a = await captureQuestionnaireAction(
+          c,
+          part,
+          action,
+          m,
+          dir,
+          page
+        );
 
         const field: keyof QuestionnaireCaseResult =
           action === "next"

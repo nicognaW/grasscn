@@ -104,7 +104,10 @@ const pageErrors: string[] = [];
 
 let next = 0;
 
-const verifyInputOtpCase = async (c: OtpCaptureManifest["cases"][number], page: Page) => {
+const verifyInputOtpCase = async (
+  c: OtpCaptureManifest["cases"][number],
+  page: Page
+) => {
   await page.clock.install({ time: new Date("2026-10-28T00:00:00Z") });
   await page.clock.pauseAt(new Date("2026-10-28T00:00:01Z"));
 
@@ -165,13 +168,12 @@ const verifyInputOtpCase = async (c: OtpCaptureManifest["cases"][number], page: 
 
   for (let i = 0; i < expected.data.length; i += 4) {
     mutations += Number(
-      !expected.data
-        .subarray(i, i + 4)
-        .equals(changed.data.subarray(i, i + 4))
+      !expected.data.subarray(i, i + 4).equals(changed.data.subarray(i, i + 4))
     );
   }
 
   assert.equal(mutations, 1);
+
   return {
     decodedRgbaSha256: sha(actual.data),
     mismatchedPixels: 0,
