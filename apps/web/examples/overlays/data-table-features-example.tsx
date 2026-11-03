@@ -1,12 +1,11 @@
 "use client";
 
+import type { DataTableFeatures } from "@/components/data-table-features";
+
 import { createColumnHelper, useTable } from "@tanstack/react-table";
 import * as React from "react";
 
-import {
-  features,
-  type DataTableFeatures,
-} from "@/components/data-table-features";
+import { features } from "@/components/data-table-features";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";

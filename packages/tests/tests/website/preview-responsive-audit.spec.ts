@@ -1,4 +1,6 @@
-import { test, expect, type Page, type Locator } from "@grasscn/tests/test";
+import type { Page, Locator } from "@grasscn/tests/test";
+
+import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"

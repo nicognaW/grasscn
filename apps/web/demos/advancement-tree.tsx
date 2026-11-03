@@ -1,12 +1,11 @@
+import type { DemoVariables } from "../demo-variables";
+import type { AdvancementNode } from "../registry/ui/advancement-tree";
+import type { DemoProps } from "../types";
+
 import * as React from "react";
 
-import type { DemoVariables } from "../demo-variables";
-import {
-  AdvancementTree,
-  type AdvancementNode,
-} from "../registry/ui/advancement-tree";
+import { AdvancementTree } from "../registry/ui/advancement-tree";
 import { Button } from "../registry/ui/button";
-import type { DemoProps } from "../types";
 
 const milestones: AdvancementNode[] = [
   {

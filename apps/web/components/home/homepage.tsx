@@ -1,14 +1,13 @@
 "use client";
 
+import type { AnalyticsChartType } from "../../registry/blocks/chart-analytics";
+
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
 import grass from "../../assets/grass-block-48.png";
-import {
-  AnalyticsChartExample,
-  type AnalyticsChartType,
-} from "../../registry/blocks/chart-analytics";
+import { AnalyticsChartExample } from "../../registry/blocks/chart-analytics";
 import { FpsChartExample } from "../../registry/blocks/chart-fps";
 import { Avatar, AvatarImage } from "../../registry/ui/avatar";
 import { Button } from "../../registry/ui/button";

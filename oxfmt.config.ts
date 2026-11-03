@@ -15,4 +15,18 @@ export default defineConfig({
     ...retainedSourceInputs,
     ...retainedEvidenceData,
   ],
+  sortImports: {
+    groups: [
+      "type",
+      "builtin",
+      "external",
+      ["internal", "subpath"],
+      ["parent", "sibling", "index"],
+      "style",
+      "unknown",
+    ],
+    ignoreCase: true,
+    newlinesBetween: true,
+    order: "asc",
+  },
 });
