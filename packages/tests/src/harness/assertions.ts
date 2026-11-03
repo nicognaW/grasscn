@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 
 type ExpectMessage = [message?: Parameters<typeof expect>[1]];
+type LengthValue = { readonly length: number } | null | undefined;
 
 // These helpers retain the original hard matcher and its diagnostic value.
 export const expectNotNull: <T>(
@@ -33,14 +34,16 @@ export const expectTruthy: <T>(
   expect(value, ...message).toBeTruthy();
 };
 
-export const expectLength: <T>(
+export const expectLength: <T extends LengthValue>(
   value: T,
   length: number,
   ...message: ExpectMessage
-) => asserts value is NonNullable<T> = function expectLength<T>(
+) => asserts value is NonNullable<T> = function expectLength<
+  T extends LengthValue,
+>(
   value: T,
   length: number,
   ...message: ExpectMessage
 ): asserts value is NonNullable<T> {
-  expect<unknown>(value, ...message).toHaveLength(length);
+  expect<LengthValue>(value, ...message).toHaveLength(length);
 };
