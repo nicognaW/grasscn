@@ -11,7 +11,7 @@ import {
   readPreparedProductionBuild,
 } from "@grasscn/tests/next-production";
 
-import { parseProductionIdentity } from "../../src/runtime/verification-types.ts";
+import { parseProductionIdentity } from "../../src/runtime/verification-types";
 
 test("production identity separates Next response cache from compiled pages, chunks and registry delivery", async () => {
   const directory = fs.mkdtempSync(

@@ -1,3 +1,5 @@
+import type * as VerificationTypes from "../runtime/verification-types";
+
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
@@ -14,11 +16,11 @@ import {
   preparedProject,
   retainedArtifacts,
   retainedBrowserVersion,
-} from "../runtime/verification-types.ts";
-/** @typedef {import("../runtime/verification-types.ts").PreparedProject} PreparedProject */
-/** @typedef {import("../runtime/verification-types.ts").SourceIdentity} SourceIdentity */
-/** @typedef {import("../runtime/verification-types.ts").WebsiteIdentity} WebsiteIdentity */
-/** @typedef {import("../runtime/verification-types.ts").ConsumerSnapshot} ConsumerSnapshot */
+} from "../runtime/verification-types";
+/** @typedef {VerificationTypes.PreparedProject} PreparedProject */
+/** @typedef {VerificationTypes.SourceIdentity} SourceIdentity */
+/** @typedef {VerificationTypes.WebsiteIdentity} WebsiteIdentity */
+/** @typedef {VerificationTypes.ConsumerSnapshot} ConsumerSnapshot */
 import {
   assertExternalProject,
   assertIndependentDependencies,
@@ -29,16 +31,24 @@ import {
 } from "./consumer-boundary";
 import { consumerBuildIdentity } from "./consumer-build-identity";
 
+type PreparedProject = VerificationTypes.PreparedProject;
+
+type SourceIdentity = VerificationTypes.SourceIdentity;
+
+type WebsiteIdentity = VerificationTypes.WebsiteIdentity;
+
+type ConsumerSnapshot = VerificationTypes.ConsumerSnapshot;
+
 /**
  * @template {PreparedProject} T
  * @param {T} project - Prepared installation with retained identities.
  * @param {{excludedRoots?: string[]}} [options] - Forbidden source/workspace roots.
  * @returns {Promise<T>} The unchanged validated installation.
  */
-export const validatePreparedProject = async (
-  project,
-  { excludedRoots } = {}
-) => {
+export const validatePreparedProject = async <T extends PreparedProject>(
+  project: T,
+  { excludedRoots }: { excludedRoots?: string[] } = {}
+): Promise<T> => {
   assert.ok(
     project.installedBytes?.installedSha256 &&
       project.inputs?.sha256 &&
@@ -99,8 +109,16 @@ export const consumerVerificationEnvironment = () => ({
  * @param {{source: SourceIdentity, websiteIdentity: WebsiteIdentity, status?: string}} expected - Expected frozen snapshot.
  */
 export const assertPreparedSnapshot = (
-  prepared,
-  { source, websiteIdentity, status = "prepared" }
+  prepared: ConsumerSnapshot,
+  {
+    source,
+    websiteIdentity,
+    status = "prepared",
+  }: {
+    source: SourceIdentity;
+    websiteIdentity: WebsiteIdentity;
+    status?: string;
+  }
 ) => {
   assert.equal(prepared.status, status, `Consumer receipt must be ${status}`);
   assert.deepEqual(
@@ -134,6 +152,12 @@ export const readPreparedConsumerProjects = async ({
   source,
   websiteIdentity,
   requirePassedRuntime = true,
+}: {
+  kind: string;
+  artifactDirectory: string;
+  source: SourceIdentity;
+  websiteIdentity: WebsiteIdentity;
+  requirePassedRuntime?: boolean;
 }) => {
   assert.ok(
     ["manual", "cli"].includes(kind),
@@ -174,10 +198,10 @@ export const readPreparedConsumerProjects = async ({
     );
   }
 
-  /** @type {(ConsumerSnapshot & Record<string, unknown>) | undefined} */
-  let runtime;
+  /** @type {ReturnType<typeof parseConsumerSnapshot> | undefined} */
+  let runtime: ReturnType<typeof parseConsumerSnapshot> | undefined;
   /** @type {string | undefined} */
-  let browserVersion;
+  let browserVersion: string | undefined;
 
   if (requirePassedRuntime) {
     runtime = parseConsumerSnapshot(
@@ -244,7 +268,7 @@ export const readPreparedConsumerProjects = async ({
   );
   // Reverse before constructing the map to preserve the first matching runtime entry.
   /** @type {Map<string, PreparedProject>} */
-  const observedByFramework = new Map();
+  const observedByFramework = new Map<string, PreparedProject>();
 
   const reversedObserved = rawObserved.slice();
   reversedObserved.reverse();
@@ -294,8 +318,11 @@ export const readPreparedConsumerProjects = async ({
  * @param {{port?: number, startupTimeout?: number}} [options] - Explicit owned loopback listener.
  */
 export const servePreparedConsumer = async (
-  project,
-  { port, startupTimeout = 120_000 } = {}
+  project: PreparedProject & { id?: string },
+  {
+    port,
+    startupTimeout = 120_000,
+  }: { port?: number; startupTimeout?: number } = {}
 ) => {
   assert.ok(
     port !== undefined && Number.isInteger(port) && port > 0,

@@ -1,3 +1,5 @@
+import type * as RegistryFileTypes from "./registry-file";
+
 import assert from "node:assert/strict";
 import { readFile, stat, realpath } from "node:fs/promises";
 import path from "node:path";
@@ -5,15 +7,36 @@ import path from "node:path";
 import { installedRegistryFile } from "@grasscn/tests/installed-registry-file";
 
 import { sha256 } from "./consumer-boundary";
-import { isRegistryPayload } from "./consumer-metadata.ts";
+import { isRegistryPayload } from "./consumer-metadata";
+
+interface RegistryFile {
+  path: string;
+  type?: string;
+  target?: string;
+}
+
+interface RegistryPayload {
+  name: string;
+  files: RegistryFile[];
+}
+
+interface RegistryEntry {
+  url: string;
+  sha256: string;
+  payload: RegistryPayload;
+}
 
 /** @typedef {{path: string, type?: string, target?: string}} RegistryFile */
 /** @typedef {{name: string, files: RegistryFile[]}} RegistryPayload */
 /** @typedef {{url: string, sha256: string, payload: RegistryPayload}} RegistryEntry */
 /** @param {string} origin @param {{name:string}[]} items @param {string} source @returns {Promise<Map<string,RegistryEntry>>} */
-export const fetchPublicRegistry = async (origin, items, source) => {
+export const fetchPublicRegistry = async (
+  origin: string,
+  items: { name: string }[],
+  source: string
+): Promise<Map<string, RegistryEntry>> => {
   /** @type {Map<string,RegistryEntry>} */
-  const payloads = new Map();
+  const payloads = new Map<string, RegistryEntry>();
 
   for (const item of items) {
     assert.ok(
@@ -40,7 +63,7 @@ export const fetchPublicRegistry = async (origin, items, source) => {
       `Public registry payload must match current source build: ${item.name}`
     );
     /** @type {unknown} */
-    const decoded = JSON.parse(bytes.toString("utf-8"));
+    const decoded: unknown = JSON.parse(bytes.toString("utf-8"));
     assert.ok(
       isRegistryPayload(decoded),
       "Registry item must contain named file definitions"
@@ -59,12 +82,12 @@ export const fetchPublicRegistry = async (origin, items, source) => {
 
 /** @param {Map<string,RegistryEntry>} payloads @param {string} consumer @param {{aliases: Record<string,string>}} settings */
 export const assertRegistryInstallation = async (
-  payloads,
-  consumer,
-  settings
+  payloads: Map<string, RegistryEntry>,
+  consumer: string,
+  settings: RegistryFileTypes.InstalledComponentSettings
 ) => {
   /** @type {Map<string,string>} */
-  const targets = new Map();
+  const targets = new Map<string, string>();
 
   for (const { payload } of payloads.values()) {
     for (const file of payload.files) {
@@ -86,7 +109,7 @@ export const assertRegistryInstallation = async (
 
   let importsChecked = 0;
   /** @type {Record<string,string>} */
-  const installed = {};
+  const installed: Record<string, string> = {};
 
   for (const [original, filename] of targets) {
     const bytes = await readFile(filename);

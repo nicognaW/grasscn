@@ -1,3 +1,5 @@
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
+
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
@@ -12,13 +14,49 @@ import {
   directoryIdentity,
 } from "./consumer-boundary";
 import { consumerBuildIdentity } from "./consumer-build-identity";
-import { encodeConsumerFile } from "./consumer-validation-types.ts";
+import { encodeConsumerFile } from "./consumer-validation-types";
 
-/** @param {import("node:crypto").BinaryLike} bytes - Source bytes to hash. */
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+type PreparedManualConsumer = ConsumerValidationTypes.PreparedManualConsumer;
+
+export interface PreparedConsumerBuild extends PreparedManualConsumer {
+  build: "passed";
+  buildCommand: string[];
+  buildSettings: {
+    bun: string;
+    bundler: string;
+    cpus?: number;
+    smol?: boolean;
+  };
+  typecheck: "passed";
+}
+
+interface PrepareManualConsumerInput {
+  commonDirectory: string;
+  consumer: string;
+  copiedExamples: Record<string, string>;
+  dependencies: Record<string, string>;
+  framework: string;
+  manifests: ConsumerValidationTypes.ManualManifest[];
+  origin: string;
+  root: string;
+}
+
+/** @param {string | Uint8Array} bytes - Source bytes to hash. */
+const hash = (bytes: string | Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
+type GeneratedConsumerJson =
+  | null
+  | boolean
+  | number
+  | string
+  | GeneratedConsumerJson[]
+  | { [key: string]: GeneratedConsumerJson };
+
+type GeneratedConsumerFile = string | { [key: string]: GeneratedConsumerJson };
 
 /** @param {string} file - Absolute candidate file path. */
-const exists = async (file) => {
+const exists = async (file: string) => {
   try {
     const info = await stat(file);
 
@@ -29,7 +67,7 @@ const exists = async (file) => {
 };
 
 /** @param {string[]} args @param {string} cwd */
-const run = async (args, cwd) => {
+const run = async (args: string[], cwd: string) => {
   const child = Bun.spawn(["bun", ...args], {
     cwd,
     env: consumerEnvironment(),
@@ -47,15 +85,17 @@ const run = async (args, cwd) => {
  * @property {Record<string, string>} copiedExamples - Complete example source collected from the public documentation.
  * @property {Record<string, string>} dependencies - Package versions declared by the collected public manifests.
  * @property {string} framework - Framework currently visited by the sequential consumer owner.
- * @property {import("./consumer-validation-types.ts").ManualManifest[]} manifests - Validated public file inventories in collection order.
+ * @property {ConsumerValidationTypes.ManualManifest[]} manifests - Validated public file inventories in collection order.
  * @property {string} origin - Owned production documentation origin.
  * @property {string} root - Source workspace excluded from installed consumer resolution.
  */
 /** Prepare, install, typecheck and build one isolated consumer from the collected public inputs.
  * @param {PrepareManualConsumerInput} input - Collected public inputs and the independent framework destination.
- * @returns {Promise<import("./consumer-validation-types.ts").PreparedManualConsumer>} Prepared source, dependency and production-output identities.
+ * @returns {Promise<PreparedConsumerBuild>} Prepared source, dependency and production-output identities.
  */
-export const prepareManualConsumer = async (input) => {
+export const prepareManualConsumer = async (
+  input: PrepareManualConsumerInput
+): Promise<PreparedConsumerBuild> => {
   const {
     commonDirectory,
     consumer,
@@ -70,8 +110,8 @@ export const prepareManualConsumer = async (input) => {
   await mkdir(path.join(consumer, "src/lib"), { recursive: true });
   await assertExternalProject(consumer, [root, path.dirname(commonDirectory)]);
 
-  /** @param {string} name @param {unknown} contents */
-  const write = async (name, contents) => {
+  /** @param {string} name @param {GeneratedConsumerFile} contents */
+  const write = async (name: string, contents: GeneratedConsumerFile) => {
     const file = path.join(consumer, name);
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, encodeConsumerFile(contents));
@@ -122,7 +162,7 @@ export const prepareManualConsumer = async (input) => {
 
   await write("package.json", packageData);
   /** @type {Map<string, string>} */
-  const files = new Map();
+  const files = new Map<string, string>();
 
   for (const manifest of manifests) {
     for (const file of manifest.files) {
@@ -130,7 +170,7 @@ export const prepareManualConsumer = async (input) => {
         !file.destination.includes("..") && !path.isAbsolute(file.destination)
       );
       /** @type {Response} */
-      const response = await fetch(`${origin}${file.url}?download=1`);
+      const response: Response = await fetch(`${origin}${file.url}?download=1`);
       assert.ok(response.ok, `Download complete ${file.destination}`);
       assert.equal(
         response.headers.get("x-grasscn-destination"),
@@ -277,7 +317,7 @@ export const prepareManualConsumer = async (input) => {
   );
 
   /** @type {{bun: string; bundler: string; cpus?: number; smol?: boolean}} */
-  const buildSettings = {
+  const buildSettings: PreparedConsumerBuild["buildSettings"] = {
     bun: Bun.version,
     bundler: framework === "next" ? "webpack" : "vite",
   };

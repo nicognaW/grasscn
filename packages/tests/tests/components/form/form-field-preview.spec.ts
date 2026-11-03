@@ -1,6 +1,6 @@
 import { expectDefined } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
-import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
+import { documentationRegistry } from "@tests/checks/documentation-inventory";
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"

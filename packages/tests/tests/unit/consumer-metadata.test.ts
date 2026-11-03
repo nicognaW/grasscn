@@ -4,7 +4,7 @@ import {
   isInstalledMetadata,
   isPackageMetadata,
   isRegistryPayload,
-} from "../../src/installed/consumer-metadata.ts";
+} from "../../src/installed/consumer-metadata";
 
 test("consumer metadata rejects malformed dependencies and installed versions", () => {
   expect(

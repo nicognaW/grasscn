@@ -1,17 +1,33 @@
+import type * as PlaywrightTypes from "@playwright/test";
+
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-/** @param {import("node:crypto").BinaryLike} bytes - Source bytes to hash. */
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+interface ConsumerPageObservation {
+  consumerPage: PlaywrightTypes.Page;
+}
+
+type ConsumerPageVerification = ConsumerPageObservation & {
+  expect: typeof PlaywrightTypes.expect;
+};
+
+type ConsumerCaptureVerification = ConsumerPageVerification & {
+  output: string;
+  framework: string;
+};
+
+/** @param {string | Uint8Array} bytes - Source bytes to hash. */
+const hash = (bytes: string | Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 /**
  * @typedef {object} ConsumerPageObservation
- * @property {import("@playwright/test").Page} consumerPage - The same live installed-consumer page used by the sequential owner.
+ * @property {PlaywrightTypes.Page} consumerPage - The same live installed-consumer page used by the sequential owner.
  */
 /**
- * @typedef {ConsumerPageObservation & {expect: typeof import("@playwright/test").expect}} ConsumerPageVerification
+ * @typedef {ConsumerPageObservation & {expect: typeof PlaywrightTypes.expect}} ConsumerPageVerification
  */
 /**
  * @typedef {ConsumerPageVerification & {output:string,framework:string}} ConsumerCaptureVerification
@@ -21,7 +37,9 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
  * @param {ConsumerCaptureVerification} input - The owned page, pinned observer and framework evidence destination.
  * @returns {Promise<void>}
  */
-export const verifyInstalledButton = async (input) => {
+export const verifyInstalledButton = async (
+  input: ConsumerCaptureVerification
+): Promise<void> => {
   const { consumerPage, expect, framework, output } = input;
 
   const button = consumerPage.getByRole("button", {
@@ -40,7 +58,9 @@ export const verifyInstalledButton = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledForm = async (input) => {
+export const verifyInstalledForm = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const form = consumerPage.getByRole("region", {
@@ -86,7 +106,9 @@ export const verifyInstalledForm = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledCodeBlock = async (input) => {
+export const verifyInstalledCodeBlock = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const codeBlock = consumerPage.getByRole("region", {
@@ -132,7 +154,16 @@ export const verifyInstalledCodeBlock = async (input) => {
  * @param {ConsumerCaptureVerification} input - The owned page, pinned observer and framework evidence destination.
  * @returns {Promise<Array<{initialSha256:string,model:string|null,resetSha256:string,rotatedSha256:string}>>} Original per-model canvas hashes and observed model attributes.
  */
-export const verifyInstalledPlayerPreviews = async (input) => {
+export const verifyInstalledPlayerPreviews = async (
+  input: ConsumerCaptureVerification
+): Promise<
+  {
+    initialSha256: string;
+    model: string | null;
+    resetSha256: string;
+    rotatedSha256: string;
+  }[]
+> => {
   const { consumerPage, expect, framework, output } = input;
 
   const steve = consumerPage.getByRole("group", {
@@ -202,7 +233,9 @@ export const verifyInstalledPlayerPreviews = async (input) => {
  * @param {ConsumerPageObservation} input - Owned page for the installed map interaction.
  * @returns {Promise<void>}
  */
-export const verifyInstalledMap = async (input) => {
+export const verifyInstalledMap = async (
+  input: ConsumerPageObservation
+): Promise<void> => {
   const { consumerPage } = input;
 
   const map = consumerPage.getByRole("region", {
@@ -218,7 +251,9 @@ export const verifyInstalledMap = async (input) => {
  * @param {ConsumerPageObservation} input - Owned page for the installed sign readiness observation.
  * @returns {Promise<void>}
  */
-export const verifyInstalledSign = async (input) => {
+export const verifyInstalledSign = async (
+  input: ConsumerPageObservation
+): Promise<void> => {
   const { consumerPage } = input;
 
   const sign = consumerPage.getByRole("group", {
@@ -242,7 +277,9 @@ export const verifyInstalledSign = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledTrading = async (input) => {
+export const verifyInstalledTrading = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const trading = consumerPage.getByRole("region", {
@@ -293,7 +330,9 @@ export const verifyInstalledTrading = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledResizable = async (input) => {
+export const verifyInstalledResizable = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const resizable = consumerPage.getByRole("region", {
@@ -320,7 +359,9 @@ export const verifyInstalledResizable = async (input) => {
  * @param {ConsumerCaptureVerification} input - The owned page, pinned observer and framework evidence destination.
  * @returns {Promise<void>}
  */
-export const verifyInstalledSidebar = async (input) => {
+export const verifyInstalledSidebar = async (
+  input: ConsumerCaptureVerification
+): Promise<void> => {
   const { consumerPage, expect, framework, output } = input;
 
   const sidebar = consumerPage.getByRole("region", {
@@ -360,7 +401,9 @@ export const verifyInstalledSidebar = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledDataTable = async (input) => {
+export const verifyInstalledDataTable = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const table = consumerPage.getByRole("region", {
@@ -392,7 +435,9 @@ export const verifyInstalledDataTable = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledDatePicker = async (input) => {
+export const verifyInstalledDatePicker = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const datePicker = consumerPage.getByRole("region", {
@@ -422,7 +467,9 @@ export const verifyInstalledDatePicker = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledMessageScroller = async (input) => {
+export const verifyInstalledMessageScroller = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const message = consumerPage.getByRole("region", {
@@ -457,7 +504,9 @@ export const verifyInstalledMessageScroller = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledAlertDialog = async (input) => {
+export const verifyInstalledAlertDialog = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const alert = consumerPage.getByRole("region", {
@@ -489,7 +538,9 @@ export const verifyInstalledAlertDialog = async (input) => {
  * @param {ConsumerPageVerification} input - The owned page and pinned observer.
  * @returns {Promise<void>}
  */
-export const verifyInstalledCommandPalette = async (input) => {
+export const verifyInstalledCommandPalette = async (
+  input: ConsumerPageVerification
+): Promise<void> => {
   const { consumerPage, expect } = input;
 
   const command = consumerPage.getByRole("region", {

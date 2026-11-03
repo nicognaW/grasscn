@@ -1,3 +1,5 @@
+import type * as VerificationTypes from "../runtime/verification-types";
+
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomUUID, createHash } from "node:crypto";
@@ -25,8 +27,8 @@ import {
   packageManager,
   taskHashes as parseTaskHashes,
   registryDocument,
-} from "../runtime/verification-types.ts";
-import { verifyGenerationCacheOwnership } from "./verify-generation-cache-ownership.ts";
+} from "../runtime/verification-types";
+import { verifyGenerationCacheOwnership } from "./verify-generation-cache-ownership";
 
 // Execute once sources are frozen, through the 4% build guard. Backups are kept;
 // generated-output restoration and source probes never touch another worktree.
@@ -48,8 +50,8 @@ assert.ok(
 
 const source = await sourceIdentity();
 
-/** @type {import("../runtime/verification-types.ts").WorkflowReport} */
-const report = {
+/** @type {VerificationTypes.WorkflowReport} */
+const report: VerificationTypes.WorkflowReport = {
   bun: Bun.version,
   passed: false,
   source,
@@ -58,7 +60,7 @@ const report = {
 };
 
 /** @param {Buffer} value - Owned process error output. */
-const onStderr = (value) => {
+const onStderr = (value: Buffer) => {
   process.stderr.write(value);
 };
 
@@ -67,7 +69,11 @@ const onStderr = (value) => {
  * @param {string[]} args - Owned command arguments.
  * @param {{capture?: boolean}} [options] - Capture output without echoing it.
  */
-const run = async (name, args, { capture = false } = {}) => {
+const run = async (
+  name: string,
+  args: string[],
+  { capture = false }: { capture?: boolean } = {}
+) => {
   let stdout = "";
 
   const child = spawn(process.execPath, args, {
@@ -82,7 +88,7 @@ const run = async (name, args, { capture = false } = {}) => {
   });
 
   /** @param {Buffer} value - Owned process output. */
-  const onStdout = (value) => {
+  const onStdout = (value: Buffer) => {
     stdout += value.toString("utf-8");
 
     if (!capture) {
@@ -96,7 +102,7 @@ const run = async (name, args, { capture = false } = {}) => {
   /** @type {Promise<number | null>} */
 
   // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-  const completion = new Promise((resolve, reject) => {
+  const completion = new Promise<number | null>((resolve, reject) => {
     child.once("error", reject);
     child.once("exit", resolve);
   });
@@ -110,7 +116,7 @@ const run = async (name, args, { capture = false } = {}) => {
 };
 
 /** @type {string} */
-let turbo;
+let turbo: string;
 
 const preserveInstalledDependencies = async () => {
   const root = await realpath(repoRoot);
@@ -120,7 +126,7 @@ const preserveInstalledDependencies = async () => {
   );
 
   /** @type {{target: string, relative: string, physical: string}[]} */
-  const targets = [];
+  const targets: { target: string; relative: string; physical: string }[] = [];
 
   for (const workspace of new Set(["", ...workspaces])) {
     const target = path.resolve(repoRoot, workspace, "node_modules");
@@ -147,7 +153,9 @@ const preserveInstalledDependencies = async () => {
       );
       targets.push({ physical, relative, target });
     } catch (error) {
-      if (error.code !== "ENOENT") {
+      // SAFETY: this catch receives only errors from the owned Node filesystem and assertion operations above; their optional errno code is read without changing the original error or rethrow.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node fs/assert failure boundary; preserve the original code lookup and error object.
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
         throw error;
       }
     }
@@ -178,7 +186,7 @@ const generatedDocsIdentity = async () => {
   const hash = createHash("sha256");
 
   /** @param {string} folder - Generated source folder. */
-  const visit = async (folder) => {
+  const visit = async (folder: string) => {
     const entries = await readdir(folder, { withFileTypes: true });
 
     const sortedEntries = entries.slice();
@@ -204,7 +212,7 @@ const generatedDocsIdentity = async () => {
 };
 
 /** @param {string} name - Task-hash receipt step. */
-const taskHashes = async (name) =>
+const taskHashes = async (name: string) =>
   parseTaskHashes(
     await run(name, [turbo, "run", "build", "--dry=json"], { capture: true })
   );
@@ -304,7 +312,13 @@ try {
   ]);
 
   /** @type {{name: string, file: string, task: string, change: (bytes: Buffer) => Buffer, run: string[]}[]} */
-  const probes = [
+  const probes: {
+    name: string;
+    file: string;
+    task: string;
+    change: (bytes: Buffer) => Buffer;
+    run: string[];
+  }[] = [
     {
       change: (bytes) =>
         Buffer.concat([

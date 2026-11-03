@@ -11,7 +11,7 @@ import {
   isolatedHttpTarget,
   isolatedTunnelTarget,
 } from "./isolated-host-routing";
-import { serveNextProduction } from "./next-production.mjs";
+import { serveNextProduction } from "./next-production";
 
 // Preserve absolute legacy loopback URLs without reading the mutable foreground
 // preview or changing test source. All browser HTTP traffic stays in this Job.

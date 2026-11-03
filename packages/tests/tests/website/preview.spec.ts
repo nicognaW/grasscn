@@ -1,5 +1,5 @@
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 import { PNG } from "pngjs";
 
 const catalog = { components: documentationInventory().playgrounds };

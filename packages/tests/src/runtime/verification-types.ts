@@ -418,7 +418,7 @@ export interface DevelopmentReport {
   command: string[];
   finishedAt?: string;
   generatedInputsRestored?: boolean;
-  pages: { route: string; title: string }[];
+  pages: { route: string; title: string | null }[];
   passed: boolean;
   process?: { pid: number | undefined; runtime: string };
   source: SourceIdentity;

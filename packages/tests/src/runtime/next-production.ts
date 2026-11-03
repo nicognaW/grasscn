@@ -1,3 +1,5 @@
+import type * as VerificationTypes from "./verification-types";
+
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -7,22 +9,38 @@ import path from "node:path";
 import { repoRoot, webRoot } from "@tests/paths";
 import { packageBin } from "@tests/tooling";
 
-import { installedDependencyIdentity } from "./dependency-identity.ts";
+import { installedDependencyIdentity } from "./dependency-identity";
 import { serveOwnedHttpProcess } from "./owned-http-process";
-import { parseProductionIdentity } from "./verification-types.ts";
+import { parseProductionIdentity } from "./verification-types";
 
-/** @typedef {import("./verification-types.ts").SourceIdentity} SourceIdentity */
-/** @typedef {import("./verification-types.ts").FileIdentity} FileIdentity */
-/** @typedef {import("./verification-types.ts").ProductionIdentity} ProductionIdentity */
+type SourceIdentity = VerificationTypes.SourceIdentity;
+
+type FileIdentity = VerificationTypes.FileIdentity;
+
+type ProductionIdentity = VerificationTypes.ProductionIdentity;
+
+interface BuildOptions {
+  source?: SourceIdentity;
+  directory?: string;
+  root?: string;
+  receiptPath?: string;
+  verifiedCommand?: string[];
+  verifiedExitCode?: number;
+}
+
+/** @typedef {VerificationTypes.SourceIdentity} SourceIdentity */
+/** @typedef {VerificationTypes.FileIdentity} FileIdentity */
+/** @typedef {VerificationTypes.ProductionIdentity} ProductionIdentity */
 /** @typedef {{source?: SourceIdentity, directory?: string, root?: string, receiptPath?: string, verifiedCommand?: string[], verifiedExitCode?: number}} BuildOptions */
 
 /** @param {string | Uint8Array} value - Verification input. */
-const digest = (value) => createHash("sha256").update(value).digest("hex");
+const digest = (value: string | Uint8Array) =>
+  createHash("sha256").update(value).digest("hex");
 
 /** @param {string} [directory] - Verification input. */
-export const sourceIdentity = async (directory = repoRoot) => {
+export const sourceIdentity = async (directory: string = repoRoot) => {
   /** @param {string[]} args - Verification input. */
-  const git = (args) =>
+  const git = (args: string[]) =>
     execFileSync("git", args, {
       cwd: directory,
       encoding: "utf-8",
@@ -73,7 +91,10 @@ export const sourceIdentity = async (directory = repoRoot) => {
 export const productionBuildIdentity = async ({
   directory = webRoot,
   source,
-} = {}) => {
+}: {
+  directory?: string;
+  source?: SourceIdentity;
+} = {}): Promise<ProductionIdentity> => {
   assert.ok(
     source !== undefined &&
       source.commit.length > 0 &&
@@ -81,10 +102,10 @@ export const productionBuildIdentity = async ({
     "Production build needs source identity"
   );
   /** @type {FileIdentity[]} */
-  const files = [];
+  const files: FileIdentity[] = [];
 
   /** @param {string} folder - Verification input. */
-  const visit = async (folder) => {
+  const visit = async (folder: string) => {
     const entries = await readdir(folder);
     entries.sort();
 
@@ -139,7 +160,10 @@ export const productionBuildIdentity = async ({
  * @param {ProductionIdentity} identity - Recorded build source.
  * @param {SourceIdentity} source - Current source snapshot.
  */
-export const assertProductionSource = (identity, source) => {
+export const assertProductionSource = (
+  identity: Pick<ProductionIdentity, "source">,
+  source: SourceIdentity
+) => {
   assert.ok(
     identity?.source?.commit === source?.commit &&
       identity?.source?.treeSha256 === source?.treeSha256,
@@ -157,17 +181,17 @@ const receipt = path.join(
  * @param {string} root - Installed workspace root.
  * @param {string} directory - Generated web root.
  */
-const preparationIdentity = async (root, directory) => {
+const preparationIdentity = async (root: string, directory: string) => {
   const dependencies = installedDependencyIdentity(root);
   assert.ok(
     dependencies,
     "Prepared production requires installed dependency bytes"
   );
   /** @type {FileIdentity[]} */
-  const generated = [];
+  const generated: FileIdentity[] = [];
 
   /** @param {string} folder - Verification input. */
-  const visit = async (folder) => {
+  const visit = async (folder: string) => {
     const entries = await readdir(folder);
     entries.sort();
 
@@ -218,7 +242,10 @@ const preparationIdentity = async (root, directory) => {
  * @param {unknown} command - Recorded build command.
  * @param {string} root - Workspace owning the build command.
  */
-const verifiedRootBuildCommand = (command, root) => {
+const verifiedRootBuildCommand = (
+  command: BuildOptions["verifiedCommand"],
+  root: string
+) => {
   if (!Array.isArray(command) || command[0] !== process.execPath) {
     return false;
   }
@@ -244,7 +271,7 @@ const verifiedRootBuildCommand = (command, root) => {
 };
 
 /** @param {BuildOptions} [options] - Verification input. */
-export const stampProductionBuild = async (options = {}) => {
+export const stampProductionBuild = async (options: BuildOptions = {}) => {
   const source = options.source ?? (await sourceIdentity());
 
   const directory = options.directory ?? webRoot;
@@ -277,7 +304,9 @@ export const stampProductionBuild = async (options = {}) => {
 
 /** Reuse a completed build only through the exact frozen production boundary. */
 /** @param {BuildOptions} [options] - Verification input. */
-export const readPreparedProductionBuild = async (options = {}) => {
+export const readPreparedProductionBuild = async (
+  options: BuildOptions = {}
+) => {
   const source = options.source ?? (await sourceIdentity());
 
   const identity = parseProductionIdentity(
@@ -315,6 +344,10 @@ export const serveNextProduction = async ({
   port = 5176,
   expectedSource,
   startupTimeout = 120_000,
+}: {
+  port?: number;
+  expectedSource?: SourceIdentity;
+  startupTimeout?: number;
 } = {}) => {
   const source = expectedSource ?? (await sourceIdentity());
 
@@ -331,12 +364,12 @@ export const serveNextProduction = async ({
   const { createServer } = await import("node:net");
   const probe = createServer();
   // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     probe.once("error", reject);
     probe.listen(port, "127.0.0.1", resolve);
   });
   // eslint-disable-next-line promise/avoid-new -- Bridge the owned process or server callback events into an awaited lifecycle step.
-  await new Promise((resolve) => {
+  await new Promise<Error | undefined>((resolve) => {
     probe.close(resolve);
   });
 

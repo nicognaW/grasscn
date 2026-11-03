@@ -60,7 +60,12 @@ test("CLI installed imports cannot escape into an existing external source", asy
 
   await assert.rejects(
     assertRegistryInstallation(payloads, consumer, {
-      aliases: { ui: "@/components/ui" },
+      aliases: {
+        components: "@/components",
+        hooks: "@/hooks",
+        lib: "@/lib",
+        ui: "@/components/ui",
+      },
     }),
     /inside consumer/u
   );

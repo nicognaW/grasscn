@@ -18,13 +18,13 @@
       "@tests/paths": ["../tests/src/paths.ts"],
       "@ppt/paths": ["../pixel-perfect/src/paths.ts"],
       "@grasscn/tests/next-production": [
-        "../tests/src/runtime/next-production.mjs"
+        "../tests/src/runtime/next-production.ts"
       ],
       "@grasscn/tests/consumer-registry": [
-        "../tests/src/installed/consumer-registry.mjs"
+        "../tests/src/installed/consumer-registry.ts"
       ],
       "@grasscn/tests/prepared-consumers": [
-        "../tests/src/installed/prepared-consumers.mjs"
+        "../tests/src/installed/prepared-consumers.ts"
       ]
     },
     "types": ["bun", "node", "vite/client"],

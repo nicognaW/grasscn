@@ -19,8 +19,19 @@ import manifest from "../../package.json";
 
 const consumerRoot = path.join(repoRoot, "packages/pixel-perfect");
 
-const publicJavaScript = Object.entries(manifest.exports).filter(([, target]) =>
-  /\.(?:[cm]?js)$/u.test(target)
+const publicOwnerExports = Object.entries(manifest.exports).filter(
+  ([subpath]) =>
+    Object.hasOwn(
+      consumerConfig.compilerOptions.paths,
+      `${manifest.name}/${subpath.slice(2)}`
+    )
+);
+
+// Retain the owned-JS/ancestor-TS resolution counterexample for every current
+// explicitly mapped public owner, even after its maintained implementation is TS.
+const publicJavaScript = publicOwnerExports.map(
+  ([subpath, target]) =>
+    [subpath, target.replace(/\.(?:[cm]?js|ts)$/u, ".mjs")] as const
 );
 
 const configuredPaths = new Map<string, string[]>(
@@ -110,7 +121,8 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
       })
     );
 
-    for (const [subpath, target] of publicJavaScript) {
+    for (const [subpath, currentTarget] of publicOwnerExports) {
+      const target = currentTarget.replace(/\.(?:[cm]?js|ts)$/u, ".mjs");
       write(path.join(ownedPackage, target), 'export const owner = "owned";');
       write(
         path.join(ancestorPackage, ancestorExports[subpath]),
@@ -148,7 +160,9 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
                 targets.map((target) =>
                   path.join(
                     ownedPackage,
-                    path.relative(testRoot, path.resolve(consumerRoot, target))
+                    path
+                      .relative(testRoot, path.resolve(consumerRoot, target))
+                      .replace(/\.(?:[cm]?js|ts)$/u, ".mjs")
                   )
                 ),
               ],
@@ -172,7 +186,8 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
     sortedPublicAliases.sort();
     assert.deepEqual(sortedConfiguredAliases, sortedPublicAliases);
 
-    for (const [subpath, target] of publicJavaScript) {
+    for (const [subpath, currentTarget] of publicOwnerExports) {
+      const target = currentTarget.replace(/\.(?:[cm]?js|ts)$/u, ".mjs");
       const prefix = `======== Module name '${alias(subpath)}' was successfully resolved to '`;
 
       const resolution = bound.output
@@ -190,7 +205,7 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
       );
       assert.deepEqual(configuredPaths.get(alias(subpath)), [
         path
-          .relative(consumerRoot, path.join(testRoot, target))
+          .relative(consumerRoot, path.join(testRoot, currentTarget))
           .replaceAll(path.sep, "/"),
       ]);
 
@@ -200,7 +215,7 @@ test("public JavaScript type ownership rejects ancestor TypeScript implementatio
 
       assert.equal(
         realpathSync(runtime),
-        realpathSync(path.join(testRoot, target))
+        realpathSync(path.join(testRoot, currentTarget))
       );
     }
 

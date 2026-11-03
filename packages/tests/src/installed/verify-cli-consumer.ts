@@ -1,3 +1,6 @@
+import type * as PlaywrightTypes from "@playwright/test";
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
+
 import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -23,22 +26,25 @@ import {
 import {
   fetchPublicRegistry,
   assertRegistryInstallation,
-} from "./consumer-registry.mjs";
+} from "./consumer-registry";
 import {
   parseWebsiteIdentity,
   parseCliReceipt,
   parseRegistry,
   encodeConsumerFile,
-} from "./consumer-validation-types.ts";
-import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
+} from "./consumer-validation-types";
+import { consumerVerificationEnvironment } from "./prepared-consumers";
 
 // Run only under the shared resource guard with an already owned production website.
 // This is deliberately separate from manual projects: shadcn is the only Grasscn writer here.
 const root = repoRoot;
 const phase = process.env.GRASSCN_CLI_CONSUMER_PHASE;
 
+const isCliPhase = (value: unknown): value is "prepare" | "runtime" =>
+  value === "prepare" || value === "runtime";
+
 assert.ok(
-  ["prepare", "runtime"].includes(phase),
+  isCliPhase(phase),
   "Use prepare (4%) then runtime (10%) under the shared guard"
 );
 
@@ -91,19 +97,30 @@ await mkdir(output, { recursive: true });
 
 const preparedFile = path.join(output, "prepared.json");
 
-/** @type {import("./consumer-validation-types.ts").CliReport | undefined} */
-let prepared;
+type CliInputs =
+  | { phase: "prepare"; prepared: undefined }
+  | {
+      phase: "runtime";
+      prepared: ConsumerValidationTypes.CliReport;
+    };
+
+let inputs: CliInputs;
 
 if (phase === "runtime") {
-  prepared = parseCliReceipt(await readFile(preparedFile, "utf-8"));
+  const prepared = parseCliReceipt(await readFile(preparedFile, "utf-8"));
   assert.equal(prepared.status, "prepared");
   assert.deepEqual(prepared.source, source);
   assert.deepEqual(prepared.websiteIdentity, websiteIdentity);
+  inputs = { phase, prepared };
+} else {
+  inputs = { phase, prepared: undefined };
 }
+
+const { phase: activePhase, prepared } = inputs;
 
 try {
   await readFile(
-    phase === "prepare" ? preparedFile : path.join(output, "report.json")
+    activePhase === "prepare" ? preparedFile : path.join(output, "report.json")
   );
   assert.fail("CLI phase requires fresh execution; old reports cannot resume");
 } catch (error) {
@@ -127,8 +144,8 @@ assert.equal(await git.exited, 0);
 
 await assertExternalProject(consumer, [root, path.dirname(commonDirectory)]);
 
-/** @type {import("./consumer-validation-types.ts").CliReport} */
-const report = {
+/** @type {ConsumerValidationTypes.CliReport} */
+const report: ConsumerValidationTypes.CliReport = {
   ...prepared,
   bun: Bun.version,
   consumer,
@@ -150,15 +167,25 @@ if (prepared) {
   );
 }
 
-/** @param {string} filename @param {unknown} contents */
-const write = async (filename, contents) => {
+type GeneratedConsumerJson =
+  | null
+  | boolean
+  | number
+  | string
+  | GeneratedConsumerJson[]
+  | { [key: string]: GeneratedConsumerJson };
+
+type GeneratedConsumerFile = string | { [key: string]: GeneratedConsumerJson };
+
+/** @param {string} filename @param {GeneratedConsumerFile} contents */
+const write = async (filename: string, contents: GeneratedConsumerFile) => {
   const destination = path.join(consumer, filename);
   await mkdir(path.dirname(destination), { recursive: true });
   await writeFile(destination, encodeConsumerFile(contents));
 };
 
 /** @param {string[]} args - Arguments for the independent consumer command. */
-const run = async (args) => {
+const run = async (args: string[]) => {
   const child = Bun.spawn([process.execPath, ...args], {
     cwd: consumer,
     env: consumerEnvironment(),
@@ -177,7 +204,7 @@ let browser;
 let server;
 
 try {
-  if (phase === "prepare") {
+  if (activePhase === "prepare") {
     await write("package.json", {
       dependencies: {
         clsx: "2.1.1",
@@ -397,9 +424,11 @@ try {
 
     const observerRequire = createRequire(path.join(testRoot, "package.json"));
 
-    /** @type {typeof import("@playwright/test")} */
+    /** @type {typeof PlaywrightTypes} */
     // eslint-disable-next-line typescript/no-unsafe-assignment -- Preserve the pinned observer module selected through its own package resolution.
-    const playwrightModule = observerRequire("@playwright/test");
+    const playwrightModule: typeof PlaywrightTypes =
+      observerRequire("@playwright/test");
+
     const { chromium } = playwrightModule;
 
     browser = await chromium.launch({ channel: "msedge", headless: true });
@@ -410,7 +439,7 @@ try {
       viewport: { height: 900, width: 1280 },
     });
 
-    const errors = [];
+    const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(`http://127.0.0.1:${port}`);
     const subject = page.getByRole("button", { exact: true, name: "Button" });
@@ -449,7 +478,7 @@ try {
   }
 
   await writeFile(
-    phase === "prepare" ? preparedFile : path.join(output, "report.json"),
+    activePhase === "prepare" ? preparedFile : path.join(output, "report.json"),
     JSON.stringify(report, null, 2)
   );
   console.log(

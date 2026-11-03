@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { expectDefined } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
-import { documentationRegistry } from "@tests/checks/documentation-inventory.mjs";
+import { documentationRegistry } from "@tests/checks/documentation-inventory";
 
 // These properties capture clipboard writes performed by this test page.
 declare global {

@@ -1,3 +1,7 @@
+import type * as PlaywrightTypes from "@playwright/test";
+import type * as ConsumerValidationTypes from "./consumer-validation-types";
+import type * as ManualPreparationTypes from "./manual-consumer-preparation";
+
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import {
@@ -33,9 +37,9 @@ import {
   parsePublicInputs,
   parseManualReceipt,
   parseManualManifest,
-} from "./consumer-validation-types.ts";
+} from "./consumer-validation-types";
 import { assertExamplePrerequisites } from "./example-prerequisites";
-import { prepareManualConsumer } from "./manual-consumer-preparation.mjs";
+import { prepareManualConsumer } from "./manual-consumer-preparation";
 import {
   verifyInstalledButton,
   verifyInstalledForm,
@@ -51,19 +55,26 @@ import {
   verifyInstalledMessageScroller,
   verifyInstalledAlertDialog,
   verifyInstalledCommandPalette,
-} from "./manual-consumer-workflows.mjs";
-import { consumerVerificationEnvironment } from "./prepared-consumers.mjs";
+} from "./manual-consumer-workflows";
+import { consumerVerificationEnvironment } from "./prepared-consumers";
 
 // Run through the workspace resource guard with an owned production website already available.
 // These consumers start empty: no CLI-installed Grasscn files, developer aliases or fixture imports.
 const root = repoRoot;
 
-/** @param {import("node:crypto").BinaryLike} bytes - Source bytes to hash. */
-const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
+/** @param {string | Uint8Array} bytes - Source bytes to hash. */
+const hash = (bytes: string | Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
+
 const phase = process.env.GRASSCN_MANUAL_CONSUMER_PHASE;
 
+const isManualPhase = (
+  value: unknown
+): value is "collect" | "prepare" | "runtime" =>
+  value === "collect" || value === "prepare" || value === "runtime";
+
 assert.ok(
-  ["collect", "prepare", "runtime"].includes(phase),
+  isManualPhase(phase),
   "Use collect (10%), prepare (4%) then runtime (10%) under the shared guard"
 );
 
@@ -123,7 +134,7 @@ assert.equal(
 );
 
 /** @param {string} file - Absolute candidate file path. */
-const exists = async (file) => {
+const exists = async (file: string) => {
   try {
     const info = await stat(file);
 
@@ -138,14 +149,30 @@ await mkdir(output, { recursive: true });
 const publicInputsFile = path.join(output, "public-inputs.json");
 const preparedFile = path.join(output, "prepared.json");
 
-/** @type {import("./consumer-validation-types.ts").PreparedManualReport | undefined} */
-let prepared;
+interface PrepareManualDependencies {
+  [specifier: string]: string;
+}
 
-/** @type {import("./consumer-validation-types.ts").PublicInputs | undefined} */
-let publicInputs;
+type PublicInputs = ConsumerValidationTypes.PublicInputs;
 
-if (phase !== "collect") {
-  publicInputs = parsePublicInputs(await readFile(publicInputsFile, "utf-8"));
+type PreparedReport = ConsumerValidationTypes.PreparedManualReport;
+
+type PreparedEntry = ConsumerValidationTypes.PreparedManualConsumer;
+
+type PhaseInputs =
+  | { phase: "collect"; publicInputs: undefined; prepared: undefined }
+  | { phase: "prepare"; publicInputs: PublicInputs; prepared: undefined }
+  | { phase: "runtime"; publicInputs: PublicInputs; prepared: PreparedReport };
+
+let inputs: PhaseInputs;
+
+if (phase === "collect") {
+  inputs = { phase, prepared: undefined, publicInputs: undefined };
+} else {
+  const publicInputs = parsePublicInputs(
+    await readFile(publicInputsFile, "utf-8")
+  );
+
   assert.deepEqual(
     publicInputs.source,
     source,
@@ -156,18 +183,23 @@ if (phase !== "collect") {
     websiteIdentity,
     "Collected visitor host must remain identical"
   );
+
+  if (phase === "runtime") {
+    const prepared = parseManualReceipt(await readFile(preparedFile, "utf-8"));
+    assert.equal(prepared.status, "prepared");
+    assert.deepEqual(prepared.source, source);
+    assert.deepEqual(prepared.websiteIdentity, websiteIdentity);
+    assert.equal(
+      prepared.publicInputsSha256,
+      hash(await readFile(publicInputsFile))
+    );
+    inputs = { phase, prepared, publicInputs };
+  } else {
+    inputs = { phase, prepared: undefined, publicInputs };
+  }
 }
 
-if (phase === "runtime") {
-  prepared = parseManualReceipt(await readFile(preparedFile, "utf-8"));
-  assert.equal(prepared.status, "prepared");
-  assert.deepEqual(prepared.source, source);
-  assert.deepEqual(prepared.websiteIdentity, websiteIdentity);
-  assert.equal(
-    prepared.publicInputsSha256,
-    hash(await readFile(publicInputsFile))
-  );
-}
+const collectedInputs = inputs.publicInputs;
 
 if (phase === "collect") {
   assert.ok(
@@ -191,13 +223,43 @@ if (phase === "runtime") {
 }
 
 const projectRoot =
-  publicInputs?.projectRoot ??
+  collectedInputs?.projectRoot ??
   (await mkdtemp(path.join(tmpdir(), "grasscn-manual-")));
 
 await assertExternalProject(projectRoot, [root, path.dirname(commonDirectory)]);
 
-/** @type {import("./consumer-validation-types.ts").ManualReport} */
-const report = {
+/** @type {ConsumerValidationTypes.ManualReport} */
+type RuntimeConsumer = ConsumerValidationTypes.PreparedManualConsumer & {
+  build: "passed";
+  typecheck: "passed";
+  lockSha256: string;
+  packageSha256: string;
+  physicalDirectory: string;
+  items: { dependencies: string[]; files: number; name: string }[];
+  runtime: {
+    alertDialogConfirmAndFocus: string;
+    buttonVisible: string;
+    chartFpsProfilerAndMetric: string;
+    codeBlockExactClipboard: string;
+    codeBlockRendererResourcesReady: string;
+    commandPaletteSelectAndFocus: string;
+    dataTableV9PageFilterSelection: string;
+    datePickerPortalSelection: string;
+    formValidationSaveAndReset: string;
+    mapMarkerCallback: string;
+    messageScrollerAppendAndHistory: string;
+    playerPreviewWideAndSlimWebGL2: string;
+    resizableV4KeyboardReset: string;
+    sidebarDesktopAndMobilePortal: string;
+    signCanvas: string;
+    tradingCallback: string;
+  };
+  webgl: Awaited<ReturnType<typeof verifyInstalledPlayerPreviews>>;
+};
+
+const report: Omit<ConsumerValidationTypes.ManualReport, "consumers"> & {
+  consumers: (ManualPreparationTypes.PreparedConsumerBuild | RuntimeConsumer)[];
+} = {
   bun: Bun.version,
   consumers: [],
   environment: consumerVerificationEnvironment(),
@@ -209,14 +271,14 @@ const report = {
   websiteIdentity,
 };
 
-if (publicInputs) {
+if (collectedInputs) {
   assert.equal(
-    publicInputs.bun,
+    collectedInputs.bun,
     Bun.version,
     "Collected Bun runtime unchanged"
   );
   assert.deepEqual(
-    publicInputs.environment,
+    collectedInputs.environment,
     report.environment,
     "Consumer environment unchanged between phases"
   );
@@ -238,19 +300,33 @@ assert.equal(Bun.version, "1.4.4");
 
 const sourceRequire = createRequire(path.join(testRoot, "package.json"));
 
-/** @type {typeof import("@playwright/test")} */
+/** @type {typeof PlaywrightTypes} */
 // eslint-disable-next-line typescript/no-unsafe-assignment -- Preserve the pinned observer module selected through its own package resolution.
-const playwrightModule = sourceRequire("@playwright/test");
+const playwrightModule: typeof PlaywrightTypes =
+  sourceRequire("@playwright/test");
+
 const { chromium, expect } = playwrightModule;
 
-const browser =
-  phase === "prepare"
-    ? undefined
-    : await chromium.launch({ channel: "msedge", headless: true });
+type ConsumerSession =
+  | (Extract<PhaseInputs, { phase: "prepare" }> & { browser: undefined })
+  | (Extract<PhaseInputs, { phase: "collect" | "runtime" }> & {
+      browser: PlaywrightTypes.Browser;
+    });
 
-report.browserVersion = browser?.version() ?? publicInputs.browserVersion;
+const session: ConsumerSession =
+  inputs.phase === "prepare"
+    ? { ...inputs, browser: undefined }
+    : {
+        ...inputs,
+        browser: await chromium.launch({ channel: "msedge", headless: true }),
+      };
 
-if (phase === "runtime") {
+const { phase: activePhase, publicInputs, browser } = session;
+
+report.browserVersion =
+  activePhase === "prepare" ? publicInputs.browserVersion : browser.version();
+
+if (activePhase === "runtime") {
   assert.equal(
     report.browserVersion,
     publicInputs.browserVersion,
@@ -261,12 +337,8 @@ if (phase === "runtime") {
 let server;
 
 try {
-  let copiedExamples = publicInputs?.copiedExamples;
-  let manifests = publicInputs?.manifests;
-  let exampleItems = publicInputs?.exampleItems;
-
-  if (phase === "collect") {
-    const page = await browser.newPage({
+  if (session.phase === "collect") {
+    const page = await session.browser.newPage({
       deviceScaleFactor: 1,
       viewport: { height: 900, width: 1280 },
     });
@@ -293,8 +365,12 @@ try {
       exampleCode.includes('import { Button } from "@/components/ui/button"')
     );
     report.exampleSha256 = hash(exampleCode);
-    copiedExamples = { button: exampleCode };
-    exampleItems = {
+
+    const copiedExamples: PublicInputs["copiedExamples"] = {
+      button: exampleCode,
+    };
+
+    const exampleItems: PublicInputs["exampleItems"] = {
       button: await example
         .locator("a[data-example-item]")
         .evaluateAll((links) =>
@@ -355,11 +431,14 @@ try {
     report.copiedExamples = Object.fromEntries(
       Object.entries(copiedExamples).map(([name, code]) => [name, hash(code)])
     );
-    manifests = [];
+    const manifests: PublicInputs["manifests"] = [];
 
     for (const name of new Set(Object.values(exampleItems).flat())) {
       /** @type {Response} */
-      const response = await fetch(`${origin}/api/installation/${name}`);
+      const response: Response = await fetch(
+        `${origin}/api/installation/${name}`
+      );
+
       assert.ok(response.ok, `Public ${name} inventory available`);
       manifests.push(parseManualManifest(await response.json()));
     }
@@ -394,6 +473,7 @@ try {
     );
     report.status = "collected";
   } else {
+    const { copiedExamples, manifests, exampleItems } = session.publicInputs;
     report.publicInputsSha256 = hash(await readFile(publicInputsFile));
     report.copiedExamples = Object.fromEntries(
       Object.entries(copiedExamples).map(([name, code]) => [name, hash(code)])
@@ -405,7 +485,7 @@ try {
     }
 
     /** @type {Record<string, string>} */
-    const dependencies = {
+    const dependencies: PrepareManualDependencies = {
       clsx: "2.1.1",
       react: "19.3.1",
       "react-dom": "19.3.1",
@@ -425,7 +505,7 @@ try {
     for (const framework of ["vite", "next"]) {
       const consumer = path.join(projectRoot, framework);
 
-      if (phase === "prepare") {
+      if (session.phase === "prepare") {
         const preparedConsumer = await prepareManualConsumer({
           commonDirectory,
           consumer,
@@ -442,7 +522,7 @@ try {
       }
 
       // eslint-disable-next-line react-doctor/js-index-maps -- The receipt has exactly two framework entries and is scanned once per owned framework.
-      const built = prepared.consumers.find(
+      const built: PreparedEntry | undefined = session.prepared.consumers.find(
         (entry) => entry.framework === framework
       );
 
@@ -476,8 +556,12 @@ try {
         built.buildOutput,
         "Prepared consumer production bytes unchanged"
       );
+
       /** @type {Map<string, string>} */
-      const files = new Map(Object.entries(built.downloadedFiles));
+      const files = new Map<string, string>(
+        Object.entries(built.downloadedFiles)
+      );
+
       const { prebuildInputs } = built;
       const port = framework === "vite" ? 5188 : 5189;
       await assertConsumerPortAvailable(port);
@@ -529,9 +613,9 @@ try {
         await Bun.sleep(500);
       }
 
-      const errors = [];
+      const errors: string[] = [];
 
-      const consumerPage = await browser.newPage({
+      const consumerPage = await session.browser.newPage({
         deviceScaleFactor: 1,
         viewport: { height: 900, width: 1280 },
       });
@@ -665,7 +749,7 @@ try {
       output,
       new Set(["report.json", "prepared.json", "collection-report.json"])
     );
-    report.status = phase === "prepare" ? "prepared" : "passed";
+    report.status = activePhase === "prepare" ? "prepared" : "passed";
   }
 } catch (error) {
   report.status = "failed";
@@ -680,11 +764,11 @@ try {
 
   await browser?.close();
   await writeFile(
-    phase === "prepare"
+    activePhase === "prepare"
       ? preparedFile
       : path.join(
           output,
-          phase === "collect" ? "collection-report.json" : "report.json"
+          activePhase === "collect" ? "collection-report.json" : "report.json"
         ),
     JSON.stringify(report, null, 2)
   );

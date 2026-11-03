@@ -1,3 +1,6 @@
+import type * as PlaywrightTypes from "@playwright/test";
+import type * as VerificationTypes from "../runtime/verification-types";
+
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -10,7 +13,7 @@ import { chromium, expect } from "@playwright/test";
 import { repoRoot, webRoot } from "@tests/paths";
 
 import { assertConsumerPortAvailable } from "../installed/consumer-boundary";
-import { documentationInventory } from "./documentation-inventory.mjs";
+import { documentationInventory } from "./documentation-inventory";
 
 // Ordinary root dev command, fresh generated inputs, expanded public routes.
 // Run through the shared 10% browser guard; this is not a Full test matrix.
@@ -34,8 +37,8 @@ assert.ok(
   "Development backups must stay physically in this source workspace"
 );
 
-/** @type {import("../runtime/verification-types.ts").DevelopmentReport} */
-const report = {
+/** @type {VerificationTypes.DevelopmentReport} */
+const report: VerificationTypes.DevelopmentReport = {
   bun: Bun.version,
   command: ["bun", "run", "dev"],
   pages: [],
@@ -62,7 +65,9 @@ for (const [index, name] of [
       preservedInputs.push({ index, name });
     }
   } catch (error) {
-    if (error.code !== "ENOENT") {
+    // SAFETY: this catch receives only errors from the owned Node filesystem and assertion operations above; their optional errno code is read without changing the original error or rethrow.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node fs/assert failure boundary; preserve the original code lookup and error object.
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
       throw error;
     }
   }
@@ -82,18 +87,18 @@ const child = spawn(process.execPath, ["run", "dev"], {
 
 report.process = { pid: child.pid, runtime: process.execPath };
 
-/** @type {import("@playwright/test").Browser | undefined} */
-let browser;
+/** @type {PlaywrightTypes.Browser | undefined} */
+let browser: PlaywrightTypes.Browser | undefined;
 let logs = "";
 
 /** @param {Buffer} value - Owned development server output. */
-const onStdout = (value) => {
+const onStdout = (value: Buffer) => {
   logs += value.toString("utf-8");
   process.stdout.write(value);
 };
 
 /** @param {Buffer} value - Owned development server error output. */
-const onStderr = (value) => {
+const onStderr = (value: Buffer) => {
   logs += value.toString("utf-8");
   process.stderr.write(value);
 };
@@ -119,7 +124,7 @@ try {
   });
 
   const page = await context.newPage();
-  const errors = [];
+  const errors: string[] = [];
 
   page.on("pageerror", (error) => errors.push(error.message));
   const inventory = documentationInventory();
@@ -226,7 +231,9 @@ try {
         path.join(directory, `generated-dev-after-${index}`)
       );
     } catch (error) {
-      if (error.code !== "ENOENT") {
+      // SAFETY: this catch receives only errors from the owned Node filesystem and assertion operations above; their optional errno code is read without changing the original error or rethrow.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact Node fs/assert failure boundary; preserve the original code lookup and error object.
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
         // eslint-disable-next-line no-unsafe-finally -- Restoration failures must fail verification instead of silently losing prior generated inputs.
         throw error;
       }

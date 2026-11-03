@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
-import { documentationInventory } from "@tests/checks/documentation-inventory.mjs";
+import { documentationInventory } from "@tests/checks/documentation-inventory";
 import { registryFile } from "@tests/paths";
 
 const origin = (
