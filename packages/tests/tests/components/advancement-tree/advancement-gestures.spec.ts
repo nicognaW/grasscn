@@ -13,7 +13,9 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
   page,
 }, info) => {
   for (const width of [1440, 1024, 390]) {
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await page.setViewportSize({ height: 1000, width });
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await page.goto("http://127.0.0.1:5176/components/advancement-tree");
 
     const browse = page.getByRole("button", {
@@ -21,9 +23,11 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       name: "Browse documentation",
     });
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     const mobileNavigation = await browse.isVisible();
 
     if (mobileNavigation) {
+      // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
       await browse.click();
     }
 
@@ -32,10 +36,12 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
       name: "Documentation",
     });
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     await expect(
       navigation.getByRole("link", { exact: true, name: "Advancement Tree" })
     ).toBeVisible();
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
     const clipped = await navigation
       .locator("a.mc-button")
       .evaluateAll((links) =>
@@ -58,6 +64,7 @@ test("component navigation labels fit their buttons on desktop and mobile", asyn
     expect(clipped, `clipped component labels at ${width}px`).toEqual([]);
 
     if (width === 1440) {
+      // oxlint-disable-next-line no-await-in-loop -- Viewport/navigation/gesture/clip geometry workflow uses one page and pointer at each width.
       await page.screenshot({
         path: info.outputPath("advancement-navigation-fixed.png"),
       });

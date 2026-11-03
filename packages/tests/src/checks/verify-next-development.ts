@@ -112,6 +112,7 @@ try {
   while (!logs.includes("Ready in")) {
     assert.ok(child.exitCode === null, `Ordinary dev exited ${child.exitCode}`);
     assert.ok(Date.now() < deadline, "Ordinary dev did not become ready");
+    // oxlint-disable-next-line no-await-in-loop -- Wait loop polls the same child readiness; route loop navigates and reads the one development page.
     await delay(100);
   }
 
@@ -141,6 +142,7 @@ try {
     "/charts/line",
     ...inventory.pages.map((entry) => entry.route),
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Wait loop polls the same child readiness; route loop navigates and reads the one development page.
     const response = await page.goto(`http://127.0.0.1:5176${route}`, {
       timeout: 120_000,
       waitUntil: "domcontentloaded",
@@ -156,7 +158,9 @@ try {
             .getByRole("heading", { exact: true, level: 1, name: title })
         : page.getByRole("heading", { level: 1 });
 
+    // oxlint-disable-next-line no-await-in-loop -- Wait loop polls the same child readiness; route loop navigates and reads the one development page.
     await expect(heading).toBeVisible({ timeout: 30_000 });
+    // oxlint-disable-next-line no-await-in-loop -- Wait loop polls the same child readiness; route loop navigates and reads the one development page.
     report.pages.push({ route, title: await heading.textContent() });
   }
 

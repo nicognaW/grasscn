@@ -208,6 +208,7 @@ try {
       name === "production-build" &&
       process.env.GRASSCN_REUSE_PREPARED_NEXT_BUILD === "1"
     ) {
+      // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
       report.websiteBuild = await readPreparedProductionBuild({ source });
       report.checks.push({
         exitCode: 0,
@@ -215,6 +216,7 @@ try {
         reusedCompletedBuild: true,
         verifiedCommand: report.websiteBuild.verifiedCommand,
       });
+      // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
       await save();
       continue;
     }
@@ -222,10 +224,12 @@ try {
     let browserEnvironment: NodeJS.ProcessEnv = {};
 
     if (name === "normal-browser") {
+      // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
       await writeFile(
         path.join(output, "verification-phase.json"),
         JSON.stringify({ phase: "browser", source })
       );
+      // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
       hosts = await serveVerificationHosts({
         fixturePort: 5284,
         previewPort: 5286,
@@ -277,6 +281,7 @@ try {
 
     // SAFETY: Node's ChildProcess exit event provides (code, signal); events.once rejects on spawn errors.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This owned child has no callers operating on its handle after exit.
+    // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
     const [exitCode, signal] = (await once(child, "exit")) as [
       number | null,
       NodeJS.Signals | null,
@@ -285,10 +290,12 @@ try {
     const code = exitCode ?? (signal === null ? 0 : 1);
 
     report.checks.push({ exitCode: code, name });
+    // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
     await save();
     assert.equal(code, 0, `${name} failed`);
 
     if (name === "production-build") {
+      // oxlint-disable-next-line no-await-in-loop -- The ordinary owner stages form one required preparation pipeline; later stages consume generated/build/fixture outputs and recorded previous results.
       report.websiteBuild = await stampProductionBuild({
         source,
         verifiedCommand: [process.execPath, ...args],

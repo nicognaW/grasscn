@@ -42,6 +42,7 @@ try {
     { height: 1000, width: 1440 },
     { height: 844, width: 390 },
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
     await page.setViewportSize(viewport);
 
     for (const route of [
@@ -50,14 +51,18 @@ try {
       "/docs/components/button",
       "/docs/components/form",
     ]) {
+      // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
       await page.goto(origin + route);
+      // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
+      // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
       const scrollWidth = await page.evaluate(
         () => document.documentElement.scrollWidth
       );
 
       expect(scrollWidth).toBeLessThanOrEqual(viewport.width);
+      // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
       await page.screenshot({
         fullPage: true,
         path: path.join(
@@ -70,7 +75,9 @@ try {
   }
 
   for (const entry of inventory.pages) {
+    // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
     await page.goto(origin + entry.route);
+    // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
     await expect(
       page
         .locator(".minecraft-document")
@@ -78,9 +85,11 @@ try {
     ).toHaveText(entry.title);
 
     if (entry.playground) {
+      // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
       await expect(page.locator(".documentation-playground")).toBeVisible();
     }
 
+    // oxlint-disable-next-line no-await-in-loop -- Viewport and navigation loops share one page; measured content/screenshots belong to each current viewport/route before advancing.
     const duplicates = await page.locator("[id]").evaluateAll((nodes) => {
       const seen = new Set<string>();
 

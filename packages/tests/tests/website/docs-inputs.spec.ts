@@ -255,16 +255,22 @@ test("Input family docs copy complete executable primary examples", async ({
     "field",
     "questionnaire",
   ]) {
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     const example = await primary(page, name);
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     await clipboard(page);
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     await example.getByRole("tab", { exact: true, name: "Code" }).click();
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     await example.getByRole("button", { exact: true, name: "Copy" }).click();
 
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     const code = await readFile(
       path.resolve("../../apps/web/examples/inputs", `${name}-example.tsx`),
       "utf-8"
     );
 
+    // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
     expect(await page.evaluate(() => window.copied)).toBe(code);
   }
 });
@@ -276,12 +282,17 @@ test("Input docs default layouts fit desktop and narrow viewports", async ({
 
   for (const width of [1536, 390]) {
     for (const name of ["form", "combobox"]) {
+      // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
       await page.setViewportSize({ height: 900, width });
+      // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
       const example = await primary(page, name);
+      // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
       await expect(example).toBeVisible();
       expect(
+        // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
         await page.evaluate(() => document.documentElement.scrollWidth)
       ).toBeLessThanOrEqual(width);
+      // oxlint-disable-next-line no-await-in-loop -- Current docs page/clipboard and viewport are overwritten each iteration; each copied example/assertion/screenshot must finish first.
       await page.screenshot({
         path: info.outputPath(`${name}-${width}-actual.png`),
       });

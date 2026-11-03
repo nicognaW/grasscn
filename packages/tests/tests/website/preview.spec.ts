@@ -413,6 +413,7 @@ test("Every component has a working dedicated preview and navigation", async ({
   };
 
   for (const component of documentationPages) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await verifyDocumentationPage(component);
   }
 
@@ -632,6 +633,7 @@ test("Mobile component pages contain default previews before and after paragraph
   };
 
   for (const component of previewComponents) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await verifyMobilePreviewComponent(component);
   }
 });
@@ -677,10 +679,12 @@ test("Button label editor accepts CJK text without stripping characters", async 
   await page.goto(`${origin}docs/components/button`);
 
   for (const label of ["你好，世界", "こんにちは世界", "안녕하세요 세계"]) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await page
       .locator(".documentation-playground")
       .getByLabel("Button label", { exact: true })
       .fill(label);
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(
       page
         .locator(".documentation-playground")
@@ -693,7 +697,9 @@ test("Button label editor accepts CJK text without stripping characters", async 
       )
       .first();
 
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(button).toHaveAccessibleName(label);
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await expect(button.locator("[data-mc-label-ready]")).toHaveAttribute(
       "data-mc-label-ready",
       "true"
@@ -722,6 +728,7 @@ test("Text entry defaults disable browser spelling and correction", async ({
   };
 
   for (const component of textControlComponents) {
+    // oxlint-disable-next-line no-await-in-loop -- Existing complete documentation/mobile/text-control owners share one page; locale text fill/readiness loop mutates same button fixture.
     await verifyTextControlComponent(component);
   }
 });
