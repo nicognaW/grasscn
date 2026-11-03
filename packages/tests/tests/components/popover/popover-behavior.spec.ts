@@ -269,6 +269,7 @@ test("Popover buttons play the original click once; hover, focus and Escape stay
       [];
 
     window.__popoverSounds = recordedSounds;
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
       recordedSounds.push({
         rate: this.playbackRate,

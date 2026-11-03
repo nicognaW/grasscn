@@ -180,6 +180,7 @@ test("Dialog buttons play the original click once; hover and Escape remain silen
     // SAFETY: This addInitScript owns __dialogSounds, creating its empty audio trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & DialogAudioState).__dialogSounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The init script creates __dialogSounds; this unchanged media play mock records only rate, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.

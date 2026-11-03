@@ -84,6 +84,7 @@ test("Copy uses mocked clipboard, live state and reset timer", async ({
   await page.addInitScript(() =>
     Object.defineProperty(navigator, "clipboard", {
       value: {
+        // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
         writeText: (value: string) => {
           // SAFETY: This owned writeText mock creates __copied with its string argument only when a clipboard write occurs.
           (window as typeof window & CodeBlockClipboardState).__copied = value;
@@ -116,6 +117,7 @@ test("Canceled or disabled copy remains silent and does not write", async ({
   await page.addInitScript(() =>
     Object.defineProperty(navigator, "clipboard", {
       value: {
+        // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
         writeText: (value: string) => {
           // SAFETY: This owned writeText mock creates __copied with its string argument only when a clipboard write occurs.
           (window as typeof window & CodeBlockClipboardState).__copied = value;

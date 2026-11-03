@@ -40,6 +40,7 @@ export const recordAudioPlayback = async (page: Page) => {
     const recordings: RecordedAudioPlayback[] = [];
     const fixture = Object.assign(window, { __soundVoices: recordings });
 
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       fixture.__soundVoices.push({
         rate: this.playbackRate,
@@ -68,6 +69,7 @@ export const recordOriginalClick = async (page: Page) => {
     const recordings: RecordedOriginalClick[] = [];
     const fixture = Object.assign(window, { voices: recordings });
 
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       fixture.voices.push({
         original: this.src.startsWith("data:audio/ogg;base64,"),
@@ -95,6 +97,7 @@ export const recordPitchedPlayback = async (page: Page) => {
     const recordings: RecordedPitchedPlayback[] = [];
     const fixture = Object.assign(window, { sounds: recordings });
 
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       fixture.sounds.push({
         pitch: this.playbackRate,
@@ -122,6 +125,7 @@ export const recordAudioSources = async (page: Page) => {
     const recordings: string[] = [];
     const fixture = Object.assign(window, { sounds: recordings });
 
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       fixture.sounds.push(this.src);
 

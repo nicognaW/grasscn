@@ -256,6 +256,7 @@ test("Sidebar uses the original click sound once per accepted native-button acti
     // SAFETY: This init script owns this test document's pitched-playback trace and creates its empty array before installing play.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
     (window as typeof window & SidebarClickAudioState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The same test initializer creates this trace; the unchanged play mock appends pitch, source and volume from its media receiver.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
@@ -320,6 +321,7 @@ test("Sidebar prevented trigger activation stays silent and does not change stat
     // SAFETY: This separate init script owns a numeric play counter and initializes it before installing its counter-only mock.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.
     (window as typeof window & SidebarPreventedAudioState).sounds = 0;
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: This test initializes sounds to0; the unchanged mock increments that numeric counter once per play invocation.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact per-test browser state initialized by the paired addInitScript.

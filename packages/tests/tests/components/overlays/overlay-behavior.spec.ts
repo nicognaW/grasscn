@@ -130,6 +130,7 @@ for (const component of ["sheet", "drawer"]) {
       // SAFETY: This Overlay initScript creates sounds as an empty playback trace before navigation and playback.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
       (window as typeof window & OverlayPlaybackState).sounds = [];
+      // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
       HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
         // SAFETY: The paired Overlay initializer owns sounds; this unchanged native play mock appends only rate, source and volume.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.

@@ -104,6 +104,7 @@ test("Questionnaire choice and navigation interactions play the original click e
     // SAFETY: This Questionnaire initScript creates voices as an empty playback trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
     (window as typeof window & QuestionnairePlaybackState).voices = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: The paired Questionnaire initializer owns voices; this unchanged native play mock appends only original-asset flag, rate and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.

@@ -229,6 +229,7 @@ test("Pagination uses original audio once per accepted action and stays silent w
     // SAFETY: Pagination action playback initializes its own empty sounds trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & PaginationPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: Pagination action playback initializes sounds; this unchanged media play mock records only pitch, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
@@ -274,6 +275,7 @@ test("Pagination original arrows retain native links and keyboard activation wit
     // SAFETY: Pagination arrow playback initializes its own empty sounds trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & PaginationPlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: Pagination arrow playback initializes sounds; this unchanged media play mock records only pitch, source and volume.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
@@ -299,6 +301,7 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
     // SAFETY: Pagination arrow silence initializes its own empty sounds trace before navigation and playback.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
     (window as typeof window & PaginationArrowSourceState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play(this: HTMLMediaElement) {
       // SAFETY: Pagination arrow silence initializes sounds; this unchanged media play mock records only source strings.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.

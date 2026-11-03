@@ -146,6 +146,7 @@ test("Toggle plays original game audio once per accepted activation", async ({
   await page.addInitScript(() => {
     // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
     (window as TogglePlaybackState).sounds = [];
+    // oxlint-disable-next-line typescript/promise-function-async -- This browser API stub records synchronously and returns its original fulfilled Promise; async would change throw and Promise-adoption timing.
     HTMLMediaElement.prototype.play = function play() {
       // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
       // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
