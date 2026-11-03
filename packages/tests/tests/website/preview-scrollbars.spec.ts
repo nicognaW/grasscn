@@ -46,7 +46,7 @@ for (const scale of [2]) {
         content.style.cssText = "width:600px;height:800px";
         content.textContent = "Scrollable world list";
         region.append(content);
-        (portal ? document.body : document.querySelector("main")).append(
+        (portal ? document.body : document.querySelector("main")!).append(
           region
         );
       }
