@@ -270,8 +270,9 @@ test("Context Menu preview supports CJK actions, toggles and right-click submenu
     .locator(".documentation-playground")
     .getByLabel("World context menu target", { exact: true });
 
-  const open = () =>
-    trigger.click({ button: "right", position: { x: 24, y: 24 } });
+  const open = async () => {
+    await trigger.click({ button: "right", position: { x: 24, y: 24 } });
+  };
 
   await open();
   const menu = page.getByRole("menu").first();
