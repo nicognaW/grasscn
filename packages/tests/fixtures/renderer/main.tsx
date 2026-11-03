@@ -268,7 +268,8 @@ const SelectFixture = () => {
           id={single ? "subject" : "select-trigger"}
           aria-label="Game mode"
           ref={triggerRef}
-          style={{ width: width * scale }}
+          className="fixture-geometry-width"
+          style={{ "--fixture-width": `${width * scale}px` }}
           data-subject={
             (single ? "subject" : "select-trigger") === "subject"
               ? "true"
@@ -812,15 +813,8 @@ const ContextFixture = () => {
           }
           id="context-hit"
           ref={trigger}
-          style={
-            native
-              ? { inset: 0, position: "fixed" }
-              : {
-                  border: "2px solid #aaa",
-                  display: "block",
-                  height: 200,
-                  width: 400,
-                }
+          className={
+            native ? "fixture-context-native-hit" : "fixture-context-web-hit"
           }
           onContextMenu={
             params.has("preventTrigger")
@@ -1667,7 +1661,7 @@ const PopoverFixture = () => {
                     id="popover-input"
                     scale={scale}
                     defaultValue="Minecraft"
-                    style={{ width: "100%" }}
+                    className="fixture-main-full-width"
                   />
                   <Button type="submit" scale={scale}>
                     Save
@@ -1829,11 +1823,11 @@ const AlertDialogFixture = () => {
             </div>
             <Button
               scale={scale}
+              className="fixture-dialog-underlay-button"
               style={{
-                left: 18 * scale,
-                position: "absolute",
-                top: 100 * scale,
-                width: 140 * scale,
+                "--fixture-width": `${140 * scale}px`,
+                "--fixture-x": `${18 * scale}px`,
+                "--fixture-y": `${100 * scale}px`,
               }}
             >
               Behind the dialog
@@ -2089,11 +2083,11 @@ const DialogFixture = () => {
             </div>
             <Button
               scale={scale}
+              className="fixture-dialog-underlay-button"
               style={{
-                left: 18 * scale,
-                position: "absolute",
-                top: 100 * scale,
-                width: 140 * scale,
+                "--fixture-width": `${140 * scale}px`,
+                "--fixture-x": `${18 * scale}px`,
+                "--fixture-y": `${100 * scale}px`,
               }}
             >
               Behind the dialog
@@ -2200,7 +2194,8 @@ const FixtureTabsTrigger = () => (
         id="subject"
         value="subject"
         disabled={state.startsWith("disabled")}
-        style={{ width: width * scale }}
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
         data-subject="true"
       >
         {params.get("label") ?? "Game"}
@@ -2294,7 +2289,8 @@ const FixtureTabs = () => {
         defaultValue={`tab-${params.get("selectedIndex") ?? 0}`}
         value={params.has("controlled") ? tabsValue : undefined}
         dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
-        style={{ width: width * scale }}
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
         onValueChange={(next: string) => {
           if (!params.has("reject")) {
             setTabsValue(next);
@@ -2439,7 +2435,7 @@ const FixtureScrollArea = () => {
         >
           <Button
             scale={scale}
-            style={{ width: "100%" }}
+            className="fixture-main-full-width"
             onClick={() => {
               setCount((current) => current + 1);
             }}
@@ -2548,7 +2544,8 @@ const FixtureSeparator = () => {
         role={params.has("semantic") ? "separator" : "none"}
         aria-label={params.has("semantic") ? "Settings sections" : undefined}
         data-testid="native-separator"
-        style={{ width: width * scale }}
+        className="fixture-geometry-width"
+        style={{ "--fixture-width": `${width * scale}px` }}
         onClick={() => {
           setCount((current) => current + 1);
         }}
@@ -2659,9 +2656,10 @@ const FixtureTextarea = () => {
           disabled={state === "disabled"}
           readOnly={state.includes("readonly")}
           placeholder={params.get("placeholder") ?? ""}
+          className="fixture-geometry-width fixture-geometry-height"
           style={{
-            width: width * scale,
-            height: Number(params.get("height") ?? 80) * scale,
+            "--fixture-width": `${width * scale}px`,
+            "--fixture-height": `${Number(params.get("height") ?? 80) * scale}px`,
           }}
           onChange={(event) => {
             setInputValue(event.target.value);
@@ -2871,7 +2869,8 @@ const FixtureInput = () => {
           name="message"
           aria-label="Test input"
           scale={scale}
-          style={{ width: width * scale }}
+          className="fixture-geometry-width"
+          style={{ "--fixture-width": `${width * scale}px` }}
           value={params.has("uncontrolled") ? undefined : inputValue}
           defaultValue={
             params.has("uncontrolled")

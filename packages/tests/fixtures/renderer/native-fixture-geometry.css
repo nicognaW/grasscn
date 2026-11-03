@@ -335,3 +335,24 @@
 #root .fixture-pagination-native-hidden {
   display: none;
 }
+
+/* Fixture-owned dimensions and composition hit areas. */
+#root .fixture-main-full-width {
+  width: 100%;
+}
+.fixture-dialog-underlay .fixture-dialog-underlay-button {
+  left: var(--fixture-x);
+  position: absolute;
+  top: var(--fixture-y);
+  width: var(--fixture-width);
+}
+#root .fixture-context-native-hit {
+  inset: 0;
+  position: fixed;
+}
+#root .fixture-context-web-hit {
+  border: 2px solid #aaa;
+  display: block;
+  height: 200px;
+  width: 400px;
+}
