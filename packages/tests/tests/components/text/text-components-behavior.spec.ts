@@ -1,3 +1,4 @@
+import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 
 interface TextPlaybackState extends Window {
@@ -7,6 +8,50 @@ interface TextPlaybackState extends Window {
 type InitializedTextPlaybackState = typeof window &
   TextPlaybackState & {
     sounds: string[];
+  };
+
+const verifyTypographyElement = async (page: Page, part: string, tag: string) => {
+    await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
+    const subject = page.locator("[data-subject]");
+    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
+    await expect(subject).toHaveText(/Hello 世界/u);
+    expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
+  };
+
+const verifyBadgeComposition = async (page: Page, suffix: string) => {
+    await page.goto(`/?component=badge&${suffix}`);
+    const subject = page.locator("[data-subject]");
+    await expect(subject).toBeVisible();
+
+    if (suffix.includes("rich")) {
+      await expect(subject.locator("strong")).toHaveText("Rich");
+    }
+
+    if (suffix.includes("asChild")) {
+      await expect(subject).toHaveAttribute("href", "#destination");
+      await subject.click();
+      await expect(page.locator("#events")).toHaveText("1");
+      await page.locator("#read-ref").click();
+      await expect(page.locator("#tag")).toHaveText("A");
+    } else if (suffix.includes("世界")) {
+      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
+        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
+      }
+    }
+  };
+
+const verifySilentTextComponent = async (page: Page, component: string) => {
+    await page.goto(
+      `/?component=${component}&native=1&asChild=1&text=Continue`
+    );
+    await page.locator("[data-subject]").hover();
+    await page.locator("[data-subject]").click();
+    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
+    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
+    expect(
+      await page.evaluate(() => (window as InitializedTextPlaybackState).sounds)
+    ).toEqual([]);
+    // oxlint-enable typescript/no-unsafe-type-assertion
   };
 
 test("Typography retains native text inside semantic headings and prose elements", async ({
@@ -25,12 +70,8 @@ test("Typography retains native text inside semantic headings and prose elements
     p: "P",
     small: "SMALL",
   })) {
-    await page.goto(`/?component=typography&part=${part}&text=Hello%20世界`);
-    const subject = page.locator("[data-subject]");
-    await expect(subject).toHaveAttribute("data-mc-label-layout-ready", "true");
-    await expect(subject).toHaveText(/Hello 世界/u);
-    expect(await subject.evaluate((node) => node.tagName)).toBe(tag);
-  }
+await verifyTypographyElement(page, part, tag);
+}
 });
 
 test("Typography preserves wrapping, line breaks and full accessible heading names", async ({
@@ -115,26 +156,8 @@ test("Badge supports native plain/CJK content, rich children and asChild links",
     "text=Rich&rich=1",
     "text=Continue&asChild=1",
   ]) {
-    await page.goto(`/?component=badge&${suffix}`);
-    const subject = page.locator("[data-subject]");
-    await expect(subject).toBeVisible();
-
-    if (suffix.includes("rich")) {
-      await expect(subject.locator("strong")).toHaveText("Rich");
-    }
-
-    if (suffix.includes("asChild")) {
-      await expect(subject).toHaveAttribute("href", "#destination");
-      await subject.click();
-      await expect(page.locator("#events")).toHaveText("1");
-      await page.locator("#read-ref").click();
-      await expect(page.locator("#tag")).toHaveText("A");
-    } else if (suffix.includes("世界")) {
-      for (const line of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(line).toHaveAttribute("data-mc-label-ready", "true");
-      }
-    }
-  }
+await verifyBadgeComposition(page, suffix);
+}
 });
 
 test("Kbd exposes keyboard semantics and refs without inventing button semantics", async ({
@@ -169,16 +192,6 @@ test("Text and passive keyboard components remain silent on pointer and keyboard
   });
 
   for (const component of ["badge", "typography", "breadcrumb", "kbd"]) {
-    await page.goto(
-      `/?component=${component}&native=1&asChild=1&text=Continue`
-    );
-    await page.locator("[data-subject]").hover();
-    await page.locator("[data-subject]").click();
-    // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
-    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
-    expect(
-      await page.evaluate(() => (window as InitializedTextPlaybackState).sounds)
-    ).toEqual([]);
-    // oxlint-enable typescript/no-unsafe-type-assertion
-  }
+await verifySilentTextComponent(page, component);
+}
 });
