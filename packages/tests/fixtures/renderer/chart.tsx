@@ -65,6 +65,14 @@ const ApiFixture = () => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
+  let selectedFixtureBranch1: "line" | "dashed" | "dot";
+
+  if (p.get("indicator") === "line") {
+    selectedFixtureBranch1 = "line";
+  } else {
+    selectedFixtureBranch1 = p.get("indicator") === "dashed" ? "dashed" : "dot";
+  }
+
   return (
     <>
       <ChartContainer
@@ -86,13 +94,7 @@ const ApiFixture = () => {
               <ChartTooltipContent
                 hideLabel={p.has("hideLabel")}
                 hideIndicator={p.has("hideIndicator")}
-                indicator={
-                  p.get("indicator") === "line"
-                    ? "line"
-                    : p.get("indicator") === "dashed"
-                      ? "dashed"
-                      : "dot"
-                }
+                indicator={selectedFixtureBranch1}
                 nameKey={p.get("nameKey") ?? undefined}
                 labelKey={p.get("labelKey") ?? undefined}
                 formatter={

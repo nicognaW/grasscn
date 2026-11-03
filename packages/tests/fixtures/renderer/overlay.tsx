@@ -8,6 +8,7 @@ import {
 import * as Drawer from "@grasscn/web/ui/drawer";
 import { Input } from "@grasscn/web/ui/input";
 import * as Sheet from "@grasscn/web/ui/sheet";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 export const OverlayFixture = () => {
@@ -94,6 +95,81 @@ export const OverlayFixture = () => {
         }
       : {};
 
+  let selectedFixtureBranch1: ReactNode;
+
+  if (native && part === "surface") {
+    selectedFixtureBranch1 = p.has("text") ? (
+      <>
+        <CardHeader>
+          <Title render={<CardTitle />}>{p.get("label")}</Title>
+          <Description render={<CardDescription />}>
+            {p.get("text")}
+          </Description>
+        </CardHeader>
+        <CardFooter>
+          <Close>Done</Close>
+        </CardFooter>
+      </>
+    ) : null;
+  } else {
+    selectedFixtureBranch1 = native ? (
+      <>
+        <Title
+          {...(part === "title" ? textProps : { style: { display: "none" } })}
+        >
+          {p.get("label") ?? "Hello Minecraft"}
+        </Title>
+        <Description
+          {...(part === "description"
+            ? textProps
+            : { style: { display: "none" } })}
+        >
+          {p.get("label") ?? "Hello Minecraft"}
+        </Description>
+      </>
+    ) : (
+      <>
+        <Header>
+          <Title>World settings 世界</Title>
+          <Description>{"Settings\n第二行"}</Description>
+        </Header>
+        <label>
+          Name
+          <Input aria-label="World name" defaultValue="Minecraft" />
+        </label>
+        <div
+          className={
+            p.has("scroll")
+              ? "fixture-overlay-scroll-spacer"
+              : "fixture-overlay-empty-spacer"
+          }
+        />
+        <Footer>
+          {p.has("snap") && (
+            <Button
+              id="snap-next"
+              scale={scale}
+              onClick={() => {
+                setSnap(snap === 0.5 ? 1 : 0.5);
+              }}
+            >
+              Change snap
+            </Button>
+          )}
+          <Button
+            scale={scale}
+            onClick={() => {
+              setCount((v) => v + 1);
+            }}
+          >
+            Save
+          </Button>
+          <Close>Cancel</Close>
+        </Footer>
+      </>
+    );
+  }
+
   return (
     <>
       <Root
@@ -150,78 +226,7 @@ export const OverlayFixture = () => {
               }
             : {})}
         >
-          {native && part === "surface" ? (
-            p.has("text") ? (
-              <>
-                <CardHeader>
-                  <Title render={<CardTitle />}>{p.get("label")}</Title>
-                  <Description render={<CardDescription />}>
-                    {p.get("text")}
-                  </Description>
-                </CardHeader>
-                <CardFooter>
-                  <Close>Done</Close>
-                </CardFooter>
-              </>
-            ) : null
-          ) : native ? (
-            <>
-              <Title
-                {...(part === "title"
-                  ? textProps
-                  : { style: { display: "none" } })}
-              >
-                {p.get("label") ?? "Hello Minecraft"}
-              </Title>
-              <Description
-                {...(part === "description"
-                  ? textProps
-                  : { style: { display: "none" } })}
-              >
-                {p.get("label") ?? "Hello Minecraft"}
-              </Description>
-            </>
-          ) : (
-            <>
-              <Header>
-                <Title>World settings 世界</Title>
-                <Description>{"Settings\n第二行"}</Description>
-              </Header>
-              <label>
-                Name
-                <Input aria-label="World name" defaultValue="Minecraft" />
-              </label>
-              <div
-                className={
-                  p.has("scroll")
-                    ? "fixture-overlay-scroll-spacer"
-                    : "fixture-overlay-empty-spacer"
-                }
-              />
-              <Footer>
-                {p.has("snap") && (
-                  <Button
-                    id="snap-next"
-                    scale={scale}
-                    onClick={() => {
-                      setSnap(snap === 0.5 ? 1 : 0.5);
-                    }}
-                  >
-                    Change snap
-                  </Button>
-                )}
-                <Button
-                  scale={scale}
-                  onClick={() => {
-                    setCount((v) => v + 1);
-                  }}
-                >
-                  Save
-                </Button>
-                <Close>Cancel</Close>
-              </Footer>
-            </>
-          )}
+          {selectedFixtureBranch1}
         </Content>
       </Root>
       <button

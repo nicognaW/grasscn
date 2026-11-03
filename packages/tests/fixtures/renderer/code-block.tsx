@@ -9,6 +9,7 @@ import {
   CodeBlockLine,
   CodeBlockFooter,
 } from "@grasscn/web/ui/code-block";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 const q = new URLSearchParams(location.search);
@@ -32,6 +33,25 @@ export const CodeBlockFixture = () => {
     text,
     q.get("language") ?? "typescript"
   );
+
+  let selectedFixtureBranch1: ReactNode;
+
+  if (q.has("highlight")) {
+    selectedFixtureBranch1 = highlighted.map((line, index) => (
+      <CodeBlockLine key={index}>{line}</CodeBlockLine>
+    ));
+  } else {
+    selectedFixtureBranch1 = q.has("lines") ? (
+      <>
+        <CodeBlockLine variant="added">Added 世界</CodeBlockLine>
+        <CodeBlockLine />
+        <CodeBlockLine variant="removed">Removed</CodeBlockLine>
+        <CodeBlockLine variant="highlighted">Highlight</CodeBlockLine>
+      </>
+    ) : (
+      text
+    );
+  }
 
   return (
     <div className="fixture-code-block-frame">
@@ -68,20 +88,7 @@ export const CodeBlockFixture = () => {
           }
           data-subject="true"
         >
-          {q.has("highlight") ? (
-            highlighted.map((line, index) => (
-              <CodeBlockLine key={index}>{line}</CodeBlockLine>
-            ))
-          ) : q.has("lines") ? (
-            <>
-              <CodeBlockLine variant="added">Added 世界</CodeBlockLine>
-              <CodeBlockLine />
-              <CodeBlockLine variant="removed">Removed</CodeBlockLine>
-              <CodeBlockLine variant="highlighted">Highlight</CodeBlockLine>
-            </>
-          ) : (
-            text
-          )}
+          {selectedFixtureBranch1}
         </CodeBlockContent>
         <CodeBlockFooter>Original text palette</CodeBlockFooter>
       </CodeBlock>

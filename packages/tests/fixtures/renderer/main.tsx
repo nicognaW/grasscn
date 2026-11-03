@@ -126,6 +126,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@grasscn/web/ui/tooltip";
+import type { ReactNode } from "react";
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
@@ -234,6 +235,22 @@ const SelectFixture = () => {
     </SelectItem>
   ));
 
+  let selectedFixtureBranch1: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch1 = content;
+  } else {
+    selectedFixtureBranch1 = params.has("group") ? (
+      <SelectGroup>
+        <SelectLabel>Game modes</SelectLabel>
+        {content}
+        <SelectSeparator />
+      </SelectGroup>
+    ) : (
+      content
+    );
+  }
+
   const controls = (
     <>
       <Select
@@ -316,17 +333,7 @@ const SelectFixture = () => {
                 : undefined
             }
           >
-            {params.has("contentAsChild") ? (
-              content
-            ) : params.has("group") ? (
-              <SelectGroup>
-                <SelectLabel>Game modes</SelectLabel>
-                {content}
-                <SelectSeparator />
-              </SelectGroup>
-            ) : (
-              content
-            )}
+            {selectedFixtureBranch1}
           </SelectContent>
         )}
       </Select>
@@ -403,54 +410,60 @@ const RadioFixture = () => {
     ? ["subject"]
     : ["survival", "creative", "adventure", "spectator"];
 
-  const items = names.map((name, index) => (
-    <div
-      key={name}
-      style={{ "--fixture-layout-7": `${4 * scale}px` }}
-      className="fixture-owner-layout-12 fixture-owner-layout-13 fixture-owner-layout-14"
-    >
-      <RadioGroupItem
-        render={
-          params.has("itemAsChild") ? (
-            params.has("anchor") ? (
-              <a href="#radio" />
-            ) : (
-              <button type="submit" />
-            )
-          ) : undefined
-        }
-        id={single ? "subject" : `radio-${name}`}
-        ref={index === 0 ? itemRef : undefined}
-        value={name}
-        aria-label={name}
-        disabled={
-          single
-            ? state === "disabled"
-            : index === Number(params.get("disabledIndex") ?? -1)
-        }
-        onClick={(event) => {
-          setEvents((current) => current + 1);
+  const items = names.map((name, index) => {
+    let selectedFixtureBranch2: ReactNode;
 
-          if (params.has("prevent")) {
-            event.preventDefault();
-            event.preventBaseUIHandler();
-          }
-        }}
-        data-subject={
-          (single ? "subject" : `radio-${name}`) === "subject"
-            ? "true"
-            : undefined
-        }
+    if (params.has("itemAsChild")) {
+      selectedFixtureBranch2 = params.has("anchor") ? (
+        <a href="#radio" />
+      ) : (
+        <button type="submit" />
+      );
+    } else {
+      selectedFixtureBranch2 = undefined;
+    }
+
+    return (
+      <div
+        key={name}
+        style={{ "--fixture-layout-7": `${4 * scale}px` }}
+        className="fixture-owner-layout-12 fixture-owner-layout-13 fixture-owner-layout-14"
       >
-        {undefined}
-      </RadioGroupItem>
-      {!single && (
-        <Label scale={scale} htmlFor={`radio-${name}`}>
-          {name[0].toUpperCase() + name.slice(1)}
-        </Label>
-      )}
-    </div>
-  ));
+        <RadioGroupItem
+          render={selectedFixtureBranch2}
+          id={single ? "subject" : `radio-${name}`}
+          ref={index === 0 ? itemRef : undefined}
+          value={name}
+          aria-label={name}
+          disabled={
+            single
+              ? state === "disabled"
+              : index === Number(params.get("disabledIndex") ?? -1)
+          }
+          onClick={(event) => {
+            setEvents((current) => current + 1);
+
+            if (params.has("prevent")) {
+              event.preventDefault();
+              event.preventBaseUIHandler();
+            }
+          }}
+          data-subject={
+            (single ? "subject" : `radio-${name}`) === "subject"
+              ? "true"
+              : undefined
+          }
+        >
+          {undefined}
+        </RadioGroupItem>
+        {!single && (
+          <Label scale={scale} htmlFor={`radio-${name}`}>
+            {name[0].toUpperCase() + name.slice(1)}
+          </Label>
+        )}
+      </div>
+    );
+  });
 
   const group = (
     <RadioGroup
@@ -528,17 +541,21 @@ const SwitchFixture = () => {
   const ref = React.useRef<HTMLButtonElement>(null);
   const [tag, setTag] = React.useState("");
 
+  let selectedFixtureBranch3: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch3 = params.has("anchor") ? (
+      <a href="#switch" />
+    ) : (
+      <button type="submit" />
+    );
+  } else {
+    selectedFixtureBranch3 = undefined;
+  }
+
   const control = (
     <Switch
-      render={
-        params.has("asChild") ? (
-          params.has("anchor") ? (
-            <a href="#switch" />
-          ) : (
-            <button type="submit" />
-          )
-        ) : undefined
-      }
+      render={selectedFixtureBranch3}
       id="subject"
       ref={ref}
       scale={scale}
@@ -775,6 +792,18 @@ const ContextFixture = () => {
     </>
   );
 
+  let selectedFixtureBranch4: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch4 = (
+      <ContextMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+        Composed action
+      </ContextMenuItem>
+    );
+  } else {
+    selectedFixtureBranch4 = native ? nativeBody : rows;
+  }
+
   const popup = (
     <ContextMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -809,15 +838,7 @@ const ContextFixture = () => {
             : undefined
       }
     >
-      {params.has("contentAsChild") ? (
-        <ContextMenuItem render={<a href="#menu-composed" />} onClick={choose}>
-          Composed action
-        </ContextMenuItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
+      {selectedFixtureBranch4}
     </ContextMenuContent>
   );
 
@@ -881,6 +902,52 @@ const CollapsibleFixture = () => {
   const trigger = React.useRef<HTMLButtonElement>(null);
   const content = React.useRef<HTMLDivElement>(null);
 
+  let selectedFixtureBranch5: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch5 = "World details";
+  } else {
+    selectedFixtureBranch5 = native
+      ? (params.get("label") ?? "Button")
+      : "World details";
+  }
+
+  let selectedFixtureBranch6: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch6 = (
+      <button
+        type="button"
+        onClick={() => {
+          setChanges((n) => n + 1);
+        }}
+      >
+        Inside action
+      </button>
+    );
+  } else if (native) {
+    selectedFixtureBranch6 = params.get("text") ?? "";
+  } else {
+    selectedFixtureBranch6 = params.has("rich") ? (
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setChanges((n) => n + 1);
+        }}
+      >
+        <input
+          aria-label="World name"
+          spellCheck={false}
+          autoCorrect="off"
+          defaultValue="Minecraft"
+        />
+        <Button type="submit">Save world</Button>
+      </form>
+    ) : (
+      "\u4F60\u597D\uFF0C\u4E16\u754C\nHello Minecraft"
+    );
+  }
+
   const child = (
     <>
       <CollapsibleTrigger
@@ -902,11 +969,7 @@ const CollapsibleFixture = () => {
             : undefined
         }
       >
-        {params.has("asChild")
-          ? "World details"
-          : native
-            ? (params.get("label") ?? "Button")
-            : "World details"}
+        {selectedFixtureBranch5}
       </CollapsibleTrigger>
       <CollapsibleContent
         render={params.has("contentAsChild") ? <section /> : undefined}
@@ -933,38 +996,18 @@ const CollapsibleFixture = () => {
             : undefined
         }
       >
-        {params.has("contentAsChild") ? (
-          <button
-            type="button"
-            onClick={() => {
-              setChanges((n) => n + 1);
-            }}
-          >
-            Inside action
-          </button>
-        ) : native ? (
-          (params.get("text") ?? "")
-        ) : params.has("rich") ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setChanges((n) => n + 1);
-            }}
-          >
-            <input
-              aria-label="World name"
-              spellCheck={false}
-              autoCorrect="off"
-              defaultValue="Minecraft"
-            />
-            <Button type="submit">Save world</Button>
-          </form>
-        ) : (
-          "\u4F60\u597D\uFF0C\u4E16\u754C\nHello Minecraft"
-        )}
+        {selectedFixtureBranch6}
       </CollapsibleContent>
     </>
   );
+
+  let selectedFixtureBranch7: ReactNode;
+
+  if (native) {
+    selectedFixtureBranch7 = body || params.has("expanded");
+  } else {
+    selectedFixtureBranch7 = params.has("controlled") ? open : undefined;
+  }
 
   return (
     <>
@@ -972,13 +1015,7 @@ const CollapsibleFixture = () => {
         render={params.has("rootAsChild") ? <article /> : undefined}
         ref={root}
         scale={scale}
-        open={
-          native
-            ? body || params.has("expanded")
-            : params.has("controlled")
-              ? open
-              : undefined
-        }
+        open={selectedFixtureBranch7}
         defaultOpen={params.has("open")}
         disabled={params.has("disabled")}
         onOpenChange={(next) => {
@@ -1182,6 +1219,18 @@ const MenubarFixture = () => {
     </>
   );
 
+  let selectedFixtureBranch8: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch8 = (
+      <MenubarItem render={<a href="#menu-composed" />} onClick={choose}>
+        Composed action
+      </MenubarItem>
+    );
+  } else {
+    selectedFixtureBranch8 = native ? nativeBody : rows;
+  }
+
   const popup = (
     <MenubarContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1219,54 +1268,55 @@ const MenubarFixture = () => {
             : undefined
       }
     >
-      {params.has("contentAsChild") ? (
-        <MenubarItem render={<a href="#menu-composed" />} onClick={choose}>
-          Composed action
-        </MenubarItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
+      {selectedFixtureBranch8}
     </MenubarContent>
   );
 
   const nativeTriggerPositioned =
     triggerPixels && (!native || params.has("nativeButtonChild"));
 
+  let selectedFixtureBranch9: ReactNode;
+
+  if (native || (triggerPixels && params.has("open"))) {
+    selectedFixtureBranch9 = true;
+  } else {
+    selectedFixtureBranch9 = params.has("controlled")
+      ? menuValue === "game"
+      : undefined;
+  }
+
+  let selectedFixtureBranch10: ReactNode;
+
+  if (params.has("nativeButtonChild")) {
+    selectedFixtureBranch10 = <Button scale={scale} />;
+  } else {
+    selectedFixtureBranch10 =
+      native || params.has("triggerAsChild") ? (
+        <button
+          type="button"
+          className={native ? "fixture-native-anchor" : undefined}
+          style={
+            native
+              ? {
+                  "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                  "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                }
+              : undefined
+          }
+        />
+      ) : undefined;
+  }
+
   return (
     <>
       <Menubar ref={rootRef} scale={scale}>
         <MenubarMenu
-          open={
-            native || (triggerPixels && params.has("open"))
-              ? true
-              : params.has("controlled")
-                ? menuValue === "game"
-                : undefined
-          }
+          open={selectedFixtureBranch9}
           defaultOpen={params.has("open")}
           onOpenChange={handleOpen}
         >
           <MenubarTrigger
-            render={
-              params.has("nativeButtonChild") ? (
-                <Button scale={scale} />
-              ) : native || params.has("triggerAsChild") ? (
-                <button
-                  type="button"
-                  className={native ? "fixture-native-anchor" : undefined}
-                  style={
-                    native
-                      ? {
-                          "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
-                          "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
-                        }
-                      : undefined
-                  }
-                />
-              ) : undefined
-            }
+            render={selectedFixtureBranch10}
             ref={trigger}
             disabled={
               params.has("disabled") ||
@@ -1486,6 +1536,18 @@ const DropdownFixture = () => {
     </>
   );
 
+  let selectedFixtureBranch11: ReactNode;
+
+  if (params.has("contentAsChild")) {
+    selectedFixtureBranch11 = (
+      <DropdownMenuItem render={<a href="#menu-composed" />} onClick={choose}>
+        Composed action
+      </DropdownMenuItem>
+    );
+  } else {
+    selectedFixtureBranch11 = native ? nativeBody : rows;
+  }
+
   const popup = (
     <DropdownMenuContent
       render={params.has("contentAsChild") ? <section /> : undefined}
@@ -1523,49 +1585,54 @@ const DropdownFixture = () => {
             : undefined
       }
     >
-      {params.has("contentAsChild") ? (
-        <DropdownMenuItem render={<a href="#menu-composed" />} onClick={choose}>
-          Composed action
-        </DropdownMenuItem>
-      ) : native ? (
-        nativeBody
-      ) : (
-        rows
-      )}
+      {selectedFixtureBranch11}
     </DropdownMenuContent>
   );
 
   const nativeTriggerPositioned =
     triggerPixels && (!native || params.has("nativeButtonChild"));
 
+  let selectedFixtureBranch12: ReactNode;
+
+  if (native) {
+    selectedFixtureBranch12 = true;
+  } else {
+    selectedFixtureBranch12 = params.has("controlled") ? open : undefined;
+  }
+
+  let selectedFixtureBranch13: ReactNode;
+
+  if (params.has("nativeButtonChild")) {
+    selectedFixtureBranch13 = <Button scale={scale} />;
+  } else {
+    selectedFixtureBranch13 =
+      native || params.has("triggerAsChild") ? (
+        <button
+          type="button"
+          className={native ? "fixture-native-anchor" : undefined}
+          style={
+            native
+              ? {
+                  "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
+                  "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
+                }
+              : undefined
+          }
+        />
+      ) : undefined;
+  }
+
   return (
     <>
       <DropdownMenu
         scale={scale}
-        open={native ? true : params.has("controlled") ? open : undefined}
+        open={selectedFixtureBranch12}
         defaultOpen={params.has("open")}
         modal={native || params.has("nonmodal") ? false : undefined}
         onOpenChange={handleOpen}
       >
         <DropdownMenuTrigger
-          render={
-            params.has("nativeButtonChild") ? (
-              <Button scale={scale} />
-            ) : native || params.has("triggerAsChild") ? (
-              <button
-                type="button"
-                className={native ? "fixture-native-anchor" : undefined}
-                style={
-                  native
-                    ? {
-                        "--fixture-anchor-x": `${Number(params.get("x")) * scale}px`,
-                        "--fixture-anchor-y": `${Number(params.get("y")) * scale}px`,
-                      }
-                    : undefined
-                }
-              />
-            ) : undefined
-          }
+          render={selectedFixtureBranch13}
           ref={trigger}
           disabled={
             params.has("disabled") ||
@@ -2834,6 +2901,18 @@ const FixtureTooltip = () => {
   const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
   const tooltipRef = React.useRef<HTMLDivElement>(null);
 
+  let selectedFixtureBranch14: ReactNode;
+
+  if (params.has("asChild")) {
+    selectedFixtureBranch14 = params.get("text") ?? "Tooltip";
+  } else {
+    selectedFixtureBranch14 = params.has("rich") ? (
+      <strong>Rich tooltip</strong>
+    ) : (
+      (params.get("text") ?? "Tooltip")
+    );
+  }
+
   return (
     <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
       <Tooltip
@@ -2873,13 +2952,7 @@ const FixtureTooltip = () => {
           sideOffset={Number(params.get("offset") ?? 0)}
           data-subject="true"
         >
-          {params.has("asChild") ? (
-            (params.get("text") ?? "Tooltip")
-          ) : params.has("rich") ? (
-            <strong>Rich tooltip</strong>
-          ) : (
-            (params.get("text") ?? "Tooltip")
-          )}
+          {selectedFixtureBranch14}
         </TooltipContent>
       </Tooltip>
       <button type="button" id="next">

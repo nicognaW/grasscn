@@ -6,6 +6,7 @@ import {
   InputGroupButton,
   InputGroupText,
 } from "@grasscn/web/ui/input-group";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
@@ -68,43 +69,43 @@ export const InputGroupFixture = () => {
   };
 
   if (native) {
-    return (
-      <InputGroup
-        scale={scale}
-        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
-        style={position}
-      >
-        {part === "text" ? (
-          <InputGroupText
-            id="subject"
-            maxWidth={
-              p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined
-            }
-            align={p.get("align") === "center" ? "center" : "left"}
-            className="fixture-geometry-height"
-            style={{
-              "--fixture-height": `${Number(p.get("height") ?? 9) * scale}px`,
-              width: width * scale,
-            }}
-            data-subject="true"
-          >
-            {p.get("label") ?? ""}
-          </InputGroupText>
-        ) : part === "button" ? (
-          <InputGroupButton
-            id="subject"
-            ref={button}
-            disabled={state.startsWith("disabled")}
-            className="fixture-geometry-height fixture-geometry-width"
-            style={{
-              "--fixture-height": `${Number(p.get("height") ?? 20) * scale}px`,
-              "--fixture-width": `${width * scale}px`,
-            }}
-            data-subject="true"
-          >
-            {p.get("label") ?? "Button"}
-          </InputGroupButton>
-        ) : part === "textarea" ? (
+    let selectedFixtureBranch1: ReactNode;
+
+    if (part === "text") {
+      selectedFixtureBranch1 = (
+        <InputGroupText
+          id="subject"
+          maxWidth={p.has("wrapWidth") ? Number(p.get("wrapWidth")) : undefined}
+          align={p.get("align") === "center" ? "center" : "left"}
+          className="fixture-geometry-height"
+          style={{
+            "--fixture-height": `${Number(p.get("height") ?? 9) * scale}px`,
+            width: width * scale,
+          }}
+          data-subject="true"
+        >
+          {p.get("label") ?? ""}
+        </InputGroupText>
+      );
+    } else if (part === "button") {
+      selectedFixtureBranch1 = (
+        <InputGroupButton
+          id="subject"
+          ref={button}
+          disabled={state.startsWith("disabled")}
+          className="fixture-geometry-height fixture-geometry-width"
+          style={{
+            "--fixture-height": `${Number(p.get("height") ?? 20) * scale}px`,
+            "--fixture-width": `${width * scale}px`,
+          }}
+          data-subject="true"
+        >
+          {p.get("label") ?? "Button"}
+        </InputGroupButton>
+      );
+    } else {
+      selectedFixtureBranch1 =
+        part === "textarea" ? (
           <InputGroupTextarea ref={area} {...shared} />
         ) : (
           <InputGroupInput
@@ -114,7 +115,16 @@ export const InputGroupFixture = () => {
             }
             {...shared}
           />
-        )}
+        );
+    }
+
+    return (
+      <InputGroup
+        scale={scale}
+        className="fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width"
+        style={position}
+      >
+        {selectedFixtureBranch1}
       </InputGroup>
     );
   }

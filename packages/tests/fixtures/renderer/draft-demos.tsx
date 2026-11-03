@@ -339,21 +339,29 @@ const DraftDemos = ({
         <PlayerList
           {...common}
           players={(sample.labels ?? roster.map((p) => p.name)).map(
-            (name, i) => ({
-              id: String(i),
-              latency:
-                (sample.labels?.length ?? 3) === 3
-                  ? [42, 220, 670][i]
-                  : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
-              name,
-              score:
-                sample.checked === true
-                  ? (sample.labels?.length ?? 3) === 3
+            (name, i) => {
+              let selectedFixtureBranch1: number | undefined;
+
+              if (sample.checked === true) {
+                selectedFixtureBranch1 =
+                  (sample.labels?.length ?? 3) === 3
                     ? [18, 12, 7][i]
-                    : i * 3 + 7
-                  : undefined,
-              skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
-            })
+                    : i * 3 + 7;
+              } else {
+                selectedFixtureBranch1 = undefined;
+              }
+
+              return {
+                id: String(i),
+                latency:
+                  (sample.labels?.length ?? 3) === 3
+                    ? [42, 220, 670][i]
+                    : [-1, 42, 149, 150, 299, 300, 670, 1200][i % 8],
+                name,
+                score: selectedFixtureBranch1,
+                skin: (["slim/alex", "wide/steve", "wide/kai"] as const)[i % 3],
+              };
+            }
           )}
           header={sample.label}
           footer={sample.text}

@@ -9,6 +9,7 @@ import {
   TableCell,
   TableCaption,
 } from "@grasscn/web/ui/table";
+import type { ReactNode } from "react";
 import * as React from "react";
 
 interface TableReferenceStyle extends React.CSSProperties {
@@ -55,58 +56,58 @@ export const TableFixture = () => {
   };
 
   if (p.has("native")) {
-    // SAFETY: the existing minecraft-table.css header rule consumes this exact named variable; satisfies checks its value before the CSSProperties view is passed to React.
-    return (
-      <Table
-        scale={scale}
-        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-table-fixed"
-        style={{
-          "--fixture-width": `${width * scale}px`,
-          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
-          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
-        }}
-      >
-        {part === "header" ? (
-          <TableHeader id="subject" data-subject="true">
-            <TableRow
-              className="fixture-geometry-height"
-              style={{ "--fixture-height": `${height * scale}px` }}
-            >
-              <TableHead
-                className="fixture-geometry-height fixture-table-padding-zero"
-                style={{
-                  "--fixture-height": `${height * scale}px`,
-                }}
-              />
-            </TableRow>
-          </TableHeader>
-        ) : part === "footer" ? (
-          <TableFooter id="subject" data-subject="true">
-            <TableRow
-              className="fixture-geometry-height"
-              style={{ "--fixture-height": `${height * scale}px` }}
-            >
-              <TableCell
-                className="fixture-geometry-height fixture-table-padding-zero"
-                style={{
-                  "--fixture-height": `${height * scale}px`,
-                }}
-              />
-            </TableRow>
-          </TableFooter>
-        ) : part === "caption" ? (
-          <TableCaption
-            id="subject"
-            {...layout}
-            className="fixture-geometry-height fixture-table-padding-zero"
+    let selectedFixtureBranch1: ReactNode;
+
+    if (part === "header") {
+      selectedFixtureBranch1 = (
+        <TableHeader id="subject" data-subject="true">
+          <TableRow
+            className="fixture-geometry-height"
             style={{ "--fixture-height": `${height * scale}px` }}
-            data-subject="true"
           >
-            {label}
-          </TableCaption>
-        ) : part === "head" ? (
+            <TableHead
+              className="fixture-geometry-height fixture-table-padding-zero"
+              style={{
+                "--fixture-height": `${height * scale}px`,
+              }}
+            />
+          </TableRow>
+        </TableHeader>
+      );
+    } else if (part === "footer") {
+      selectedFixtureBranch1 = (
+        <TableFooter id="subject" data-subject="true">
+          <TableRow
+            className="fixture-geometry-height"
+            style={{ "--fixture-height": `${height * scale}px` }}
+          >
+            <TableCell
+              className="fixture-geometry-height fixture-table-padding-zero"
+              style={{
+                "--fixture-height": `${height * scale}px`,
+              }}
+            />
+          </TableRow>
+        </TableFooter>
+      );
+    } else if (part === "caption") {
+      selectedFixtureBranch1 = (
+        <TableCaption
+          id="subject"
+          {...layout}
+          className="fixture-geometry-height fixture-table-padding-zero"
+          style={{ "--fixture-height": `${height * scale}px` }}
+          data-subject="true"
+        >
+          {label}
+        </TableCaption>
+      );
+    } else {
+      selectedFixtureBranch1 =
+        part === "head" ? (
           <TableHeader
             style={
+              // SAFETY: the existing minecraft-table.css header rule consumes this exact named variable; satisfies checks its value before the CSSProperties view is passed to React.
               {
                 "--mc-table-header": "none",
               } satisfies TableReferenceStyle as TableReferenceStyle
@@ -154,7 +155,20 @@ export const TableFixture = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        )}
+        );
+    }
+
+    return (
+      <Table
+        scale={scale}
+        className="fixture-placement-fixed fixture-geometry-x fixture-geometry-y fixture-geometry-width fixture-table-fixed"
+        style={{
+          "--fixture-width": `${width * scale}px`,
+          "--fixture-x": `${Number(p.get("x") ?? 16) * scale}px`,
+          "--fixture-y": `${Number(p.get("y") ?? 16) * scale}px`,
+        }}
+      >
+        {selectedFixtureBranch1}
       </Table>
     );
   }

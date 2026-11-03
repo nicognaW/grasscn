@@ -134,17 +134,20 @@ for (const component of ["sonner"]) {
         HTMLMediaElement.prototype.play = function play(
           this: HTMLMediaElement
         ) {
+          let selectedFixtureBranch1: "in" | "out" | "click" | "other";
+
+          if (this.src === sounds.in) {
+            selectedFixtureBranch1 = "in";
+          } else if (this.src === sounds.out) {
+            selectedFixtureBranch1 = "out";
+          } else {
+            selectedFixtureBranch1 = this.src === click ? "click" : "other";
+          }
+
           // SAFETY: this play mock writes only kind, playbackRate and volume to the log initialized above.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           (window as typeof window & ToastPlaybackWindow).sounds.push({
-            kind:
-              this.src === sounds.in
-                ? "in"
-                : this.src === sounds.out
-                  ? "out"
-                  : this.src === click
-                    ? "click"
-                    : "other",
+            kind: selectedFixtureBranch1,
             rate: this.playbackRate,
             volume: this.volume,
           });
@@ -222,14 +225,18 @@ for (const component of ["sonner"]) {
         HTMLMediaElement.prototype.play = function play(
           this: HTMLMediaElement
         ) {
+          let selectedFixtureBranch2: "in" | "out" | "other";
+
+          if (this.src === sounds.in) {
+            selectedFixtureBranch2 = "in";
+          } else {
+            selectedFixtureBranch2 = this.src === sounds.out ? "out" : "other";
+          }
+
           // SAFETY: this play mock appends only the three string tags to the log initialized above.
           // oxlint-disable-next-line typescript/no-unsafe-type-assertion
           (window as typeof window & StrictToastSoundWindow).sounds.push(
-            this.src === sounds.in
-              ? "in"
-              : this.src === sounds.out
-                ? "out"
-                : "other"
+            selectedFixtureBranch2
           );
 
           return Promise.resolve();
