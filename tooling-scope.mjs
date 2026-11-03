@@ -444,4 +444,13 @@ export const retainedEvidenceData = [
   "packages/tests/fixtures/reference/title-splash/provenance.json",
   "packages/tests/fixtures/reference/toast/sound-provenance.json",
   "packages/tests/fixtures/reference/trading/scrollbar/trading-scroll-events.json",
+  // Retained historical verification, source-recovery and resource observations.
+  "packages/pixel-perfect/tests/reference/badge-advancement/asset-provenance.json",
+  "packages/pixel-perfect/tests/reference/input-otp/font-context.json",
+  "packages/pixel-perfect/tests/reference/item/font-context.json",
+  "packages/pixel-perfect/tests/reference/message/font-context.json",
+  "packages/pixel-perfect/tests/reference/radio-group/asset-provenance.json",
+  "packages/pixel-perfect/tests/reference/resizable/asset-provenance.json",
+  "packages/pixel-perfect/tests/reference/spinner/font-context.json",
+  "packages/pixel-perfect/tests/reference/table-background/asset-provenance.json",
 ];
