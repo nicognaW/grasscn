@@ -70,8 +70,9 @@ const ProgressDemo = ({ scale }: DemoProps) => {
           label={`Progress: ${value}%`}
           value={[value]}
           onValueChange={(next) =>
-            { 
-            setValue(typeof next === "number" ? next : next[0]); }
+            {
+setValue(typeof next === "number" ? next : next[0]);
+}
           }
           min={0}
           max={100}

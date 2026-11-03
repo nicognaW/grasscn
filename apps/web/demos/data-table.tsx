@@ -17,7 +17,7 @@ import {
 } from "../registry/ui/table";
 import type { DemoProps } from "../types";
 
-interface World { id: string; name: string; players: number }
+type World = { id: string; name: string; players: number };
 
 const helper = createColumnHelper<DataTableFeatures, World>();
 
@@ -47,7 +47,6 @@ const DataTableDemo = ({ scale }: DemoProps) => {
     () =>
       helper.columns([
         helper.accessor("name", {
-          filterFn: "includesString",
           header: ({ column }) => (
             <Button
               type="button"
@@ -60,9 +59,12 @@ const DataTableDemo = ({ scale }: DemoProps) => {
                   "--demo-width": `${100 * scale}px`,
                 } satisfies DemoVariables as DemoVariables
               }
-              onClick={() =>{  column.toggleSorting(); }}
+              onClick={() => {
+column.toggleSorting();
+}}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
+          filterFn: "includesString",
           sortFn: "text",
         }),
         helper.accessor("players", {
@@ -74,8 +76,11 @@ const DataTableDemo = ({ scale }: DemoProps) => {
   );
 
   const table = useTable({
+    features,
     columns,
     data: worlds,
+    getRowId: (row) => row.id,
+    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
     defaultColumn: {
       cell: (info) => (
         <MinecraftDisclosureText scale={scale}>
@@ -83,9 +88,6 @@ const DataTableDemo = ({ scale }: DemoProps) => {
         </MinecraftDisclosureText>
       ),
     },
-    features,
-    getRowId: (row) => row.id,
-    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
   });
 
   return (
@@ -151,7 +153,9 @@ const DataTableDemo = ({ scale }: DemoProps) => {
                 tabIndex={0}
                 aria-selected={row.getIsSelected()}
                 data-state={row.getIsSelected() ? "selected" : undefined}
-                onClick={() =>{  row.toggleSelected(); }}
+                onClick={() => {
+row.toggleSelected();
+}}
                 onKeyDown={(e) => {
                   if (
                     e.target === e.currentTarget &&
@@ -190,7 +194,9 @@ const DataTableDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
           disabled={!table.getCanPreviousPage()}
-          onClick={() =>{  table.previousPage(); }}
+          onClick={() => {
+table.previousPage();
+}}
         >
           Previous
         </Button>
@@ -205,7 +211,9 @@ const DataTableDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
           disabled={!table.getCanNextPage()}
-          onClick={() =>{  table.nextPage(); }}
+          onClick={() => {
+table.nextPage();
+}}
         >
           Next
         </Button>

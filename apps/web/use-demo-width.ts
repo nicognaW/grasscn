@@ -16,8 +16,8 @@ export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
 
       const pixels =
         element.clientWidth -
-        Number.parseFloat(style.paddingLeft) -
-        Number.parseFloat(style.paddingRight);
+        parseFloat(style.paddingLeft) -
+        parseFloat(style.paddingRight);
 
       if (pixels > 0) {
         setWidth(Math.max(1, Math.floor(pixels / scale)));
@@ -28,7 +28,9 @@ export const useDemoWidth = function useDemoWidth(scale: 1 | 2 | 3) {
     const observer = new ResizeObserver(measure);
     observer.observe(element);
 
-    return () =>{  observer.disconnect(); };
+    return () => {
+observer.disconnect();
+};
   }, [scale]);
 
   return { ref, width };

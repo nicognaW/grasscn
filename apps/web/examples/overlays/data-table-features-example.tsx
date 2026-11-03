@@ -3,8 +3,10 @@
 import { createColumnHelper, useTable } from "@tanstack/react-table";
 import * as React from "react";
 
-import { features } from '@/components/data-table-features';
-import type { DataTableFeatures } from '@/components/data-table-features';
+import {
+  features,
+  type DataTableFeatures,
+} from "@/components/data-table-features";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
@@ -17,7 +19,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 
-interface World { id: string; name: string; players: number }
+type World = { id: string; name: string; players: number };
 
 const helper = createColumnHelper<DataTableFeatures, World>();
 
@@ -33,16 +35,18 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
     () =>
       helper.columns([
         helper.accessor("name", {
-          filterFn: "includesString",
           header: ({ column }) => (
             <Button
               type="button"
               scale={scale}
               aria-label="World"
               style={{ width: 100 * scale, maxWidth: "100%" }}
-              onClick={() =>{  column.toggleSorting(); }}
+              onClick={() => {
+column.toggleSorting();
+}}
             >{`World${column.getIsSorted() === "asc" ? " ^" : column.getIsSorted() === "desc" ? " v" : ""}`}</Button>
           ),
+          filterFn: "includesString",
           sortFn: "text",
         }),
         helper.accessor("players", {
@@ -54,8 +58,11 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
   );
 
   const table = useTable({
+    features,
     columns,
     data: worlds,
+    getRowId: (row) => row.id,
+    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
     defaultColumn: {
       cell: (info) => (
         <MinecraftDisclosureText scale={scale}>
@@ -63,9 +70,6 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         </MinecraftDisclosureText>
       ),
     },
-    features,
-    getRowId: (row) => row.id,
-    initialState: { pagination: { pageIndex: 0, pageSize: 2 } },
   });
 
   return (
@@ -84,7 +88,7 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         <Button
           type="button"
           scale={scale}
-          style={{ maxWidth: "100%", width: 100 * scale }}
+          style={{ width: 100 * scale, maxWidth: "100%" }}
           aria-pressed={table.getColumn("players")?.getIsVisible()}
           onClick={() => table.getColumn("players")?.toggleVisibility()}
         >
@@ -116,7 +120,9 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
                 tabIndex={0}
                 aria-selected={row.getIsSelected()}
                 data-state={row.getIsSelected() ? "selected" : undefined}
-                onClick={() =>{  row.toggleSelected(); }}
+                onClick={() => {
+row.toggleSelected();
+}}
                 onKeyDown={(e) => {
                   if (
                     e.target === e.currentTarget &&
@@ -149,7 +155,9 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
           type="button"
           style={{ width: 80 * scale }}
           disabled={!table.getCanPreviousPage()}
-          onClick={() =>{  table.previousPage(); }}
+          onClick={() => {
+table.previousPage();
+}}
         >
           Previous
         </Button>
@@ -158,7 +166,9 @@ const DataTableDemo = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
           type="button"
           style={{ width: 80 * scale }}
           disabled={!table.getCanNextPage()}
-          onClick={() =>{  table.nextPage(); }}
+          onClick={() => {
+table.nextPage();
+}}
         >
           Next
         </Button>

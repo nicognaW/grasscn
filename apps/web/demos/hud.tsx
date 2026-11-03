@@ -64,8 +64,10 @@ const HudDemo = ({ scale }: DemoProps) => {
         </Button>
         <Button
           scale={scale}
-          onClick={() =>{ 
-            setProgress((v) => ((Math.round(v * 100) + 15) % 101) / 100); }
+          onClick={() =>
+            {
+setProgress((v) => ((Math.round(v * 100) + 15) % 101) / 100);
+}
           }
           className="w-(--demo-width)"
           style={

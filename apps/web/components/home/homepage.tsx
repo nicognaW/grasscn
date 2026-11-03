@@ -597,7 +597,9 @@ const Performance = () => {
     const o = new ResizeObserver(measure);
     o.observe(el);
 
-    return () => {  o.disconnect(); };
+    return () => {
+o.disconnect();
+};
   }, []);
 
   return (
