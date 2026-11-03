@@ -15,7 +15,7 @@ Paths are relative to the Git root. Read the files themselves for current comman
 | Generated data | `packages/pixel-perfect/tests/reference/map/demo-world/` | Verify frozen input, independently repeated generation and renderer output as separate links. See `dynamic-data.md`. |
 | Registry installation | `apps/web/registry.json`, `public/r/`, component installation reports | Build and install through the actual shadcn CLI in a separate consumer. Include every required resource; keep helper guarantees distinct from component guarantees. |
 | Integrated preview | `apps/web/demos.json`, `apps/web/demos/`, `packages/tests/tests/website/native-expansion-preview.spec.ts` | Add a realistic working demo and verify surrounding layout and connected controls at desktop/mobile widths. |
-| Local verification | `package.json`, `packages/pixel-perfect/cli/run-porting.ps1`, `packages/pixel-perfect/src/runtime/verify-porting.mjs` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
+| Local verification | `package.json`, `packages/pixel-perfect/cli/run-porting.ps1`, `packages/pixel-perfect/src/runtime/verify-porting.ts` | Use guarded local suites and source-bound receipts. See `local-verification.md` for scope and merge checks. |
 | Domain and decision | `GLOSSARY.md`, `docs/adr/0001-captured-references.md` | Use the current terms and captured-reference acceptance decision. |
 
 ## Useful Button rendering findings
@@ -44,7 +44,7 @@ Run these directly when needed; they are not routine package commands:
 - `bun packages/pixel-perfect/tests/reference/capture.ts <version-directory> <java-bin>` captures Button reference cases.
 - `bun packages/pixel-perfect/tests/reference/capture-controls.ts <version-directory> <java-bin> [case-file]` captures the selected control corpus.
 - `bun packages/pixel-perfect/src/native/verify-reference-repeat.ts <first-capture-directory> <second-capture-directory>` checks independently captured outputs.
-- `bun packages/pixel-perfect/src/native/generate/generate-assets.mjs <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
+- `bun packages/pixel-perfect/src/native/generate/generate-assets.ts <extracted-asset-directory>` generates the foundational Button/font assets; it is not a complete registry asset rebuild.
 - `bun packages/pixel-perfect/src/runtime/check-map.ts --list` lists component mappings.
 
 Read the corresponding script for additional inputs and scope. Capturing or regenerating a particular corpus does not establish verified coverage for the entire registry.
