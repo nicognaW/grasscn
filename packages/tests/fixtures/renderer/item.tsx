@@ -16,8 +16,6 @@ import {
 } from "@grasscn/web/ui/minecraft-sound";
 import * as React from "react";
 
-import { cn } from "./utils";
-
 const q = new URLSearchParams(location.search);
 const scale = Number(q.get("scale") ?? 2) as 1 | 2 | 3;
 const state = q.get("state") ?? "normal";
@@ -99,8 +97,10 @@ const ItemFixture = () => {
     </>
   );
 
+  const height = Number(q.get("height") ?? 36) * scale;
+
   const commonStyle = {
-    "--fixture-height": `${Number(q.get("height") ?? 36) * scale}px`,
+    "--fixture-height": `${height}px`,
     "--fixture-x": `${Number(q.get("x") ?? 16) * scale}px`,
 
     "--fixture-y": `${Number(q.get("y") ?? 16) * scale}px`,
@@ -158,15 +158,10 @@ const ItemFixture = () => {
         ref={ref}
         scale={scale}
         selected={q.get("selected") === "true"}
-        className={cn(
-          { "fixture-geometry-height": !rich },
-          "fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
-        )}
+        className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={{
           ...commonStyle,
-          "--fixture-height": rich
-            ? undefined
-            : commonStyle["--fixture-height"],
+          height: rich ? undefined : height,
         }}
         tabIndex={state === "focus" ? 0 : undefined}
         onClick={(event) => {
