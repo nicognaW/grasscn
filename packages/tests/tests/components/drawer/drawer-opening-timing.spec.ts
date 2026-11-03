@@ -80,7 +80,7 @@ for (const scale of [2] as const) {
         mutationCompletion.reject(error);
       }
 
-      return mutationCompletion.promise;
+      return await mutationCompletion.promise;
     });
 
     // No waiting for backdrop-ready or animation end: inspect the first mounted frame.
@@ -220,7 +220,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
       mutationCompletion2.reject(error);
     }
 
-    return mutationCompletion2.promise;
+    return await mutationCompletion2.promise;
   });
 
   expect(closing.ending).toBe(true);

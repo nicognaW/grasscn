@@ -85,10 +85,11 @@ test("custom skin can fail, recover, and replace another model without remountin
     );
 
     if (name === "Missing") {
-      return route.fulfill({ body: "", status: 404 });
+      await route.fulfill({ body: "", status: 404 });
+      return;
     }
 
-    return route.fulfill({
+    await route.fulfill({
       body: readFileSync(
         fixtureFile(`${name === "Dream" ? "dream" : "steve"}-skin.png`)
       ),

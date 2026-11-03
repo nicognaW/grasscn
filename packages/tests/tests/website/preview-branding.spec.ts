@@ -27,7 +27,9 @@ test("Header serves the preserved branding source at its actual production geome
     "src",
     /grasscn-logo(?:-[A-Za-z0-9_-]+)?\.svg(?:\?.*)?$/
   );
-  await logo.evaluate(async (node: HTMLImageElement) => node.decode());
+  await logo.evaluate(async (node: HTMLImageElement) => {
+    await node.decode();
+  });
 
   const image = PNG.sync.read(
     await logo.screenshot({ path: info.outputPath("actual-header-logo.png") })

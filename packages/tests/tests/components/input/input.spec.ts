@@ -132,7 +132,7 @@ test("Input pointer position uses the same original font advances", async ({
 }) => {
   await page.goto("/?component=input&text=WWWWWW");
   const input = page.getByRole("textbox", { name: "Test input" });
-  await page.evaluate(async () => document.fonts.ready);
+  await page.evaluate(async () => await document.fonts.ready);
   const bounds = (await input.boundingBox())!;
   await page.mouse.click(
     bounds.x + (4 + 6 * 3) * 2,

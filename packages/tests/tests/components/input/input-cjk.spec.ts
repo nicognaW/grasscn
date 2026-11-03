@@ -11,7 +11,7 @@ test("CJK pointer hit-testing uses the original glyph advances", async ({
     await page.goto(`/?${new URLSearchParams({ component: "input", text })}`);
     const input = page.getByRole("textbox", { name: "Test input" });
     await expect(input).toHaveAttribute("data-mc-bitmap", "true");
-    await page.evaluate(async () => document.fonts.ready);
+    await page.evaluate(async () => await document.fonts.ready);
     const bounds = (await input.boundingBox())!;
     await page.mouse.click(
       bounds.x + (4 + advance * 2) * 2,
