@@ -347,7 +347,9 @@ export const completedRunReport = function completedRunReport(
         expected.tests.map((test) => [test.id, test])
       );
 
-      if (!sourceHashes.has(file)) {
+      let approvedSourceHashes = sourceHashes.get(file);
+
+      if (approvedSourceHashes === undefined) {
         // Resolve the path in the approved snapshot, including pre-extraction runs.
         const candidates =
           receipt.pptOnly === true
@@ -382,21 +384,15 @@ export const completedRunReport = function completedRunReport(
 
         // Windows core.autocrlf checks out committed text with CRLF; both byte
         // representations identify the same committed source, not changed logic.
-        sourceHashes.set(
-          file,
-          new Set([
-            hash(bytes),
-            hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
-          ])
-        );
+        approvedSourceHashes = new Set([
+          hash(bytes),
+          hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
+        ]);
+        sourceHashes.set(file, approvedSourceHashes);
       }
 
       for (const declaration of expected.tests) {
         const key = caseKey({ file, titlePath: declaration.title?.slice(2) });
-
-        // SAFETY: this file's source-hash cache is initialized immediately above.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        const approvedSourceHashes = sourceHashes.get(file) as Set<string>;
 
         if (
           !scope.has(key) ||
@@ -496,27 +492,21 @@ export const completedRunReport = function completedRunReport(
               );
             }
 
-            if (!definitionHashes.has(repositoryFile)) {
+            let approvedDefinitionHashes = definitionHashes.get(repositoryFile);
+
+            if (approvedDefinitionHashes === undefined) {
               const bytes = execFileSync(
                 "git",
                 ["show", `${testedCommit}:${repositoryFile}`],
                 { cwd: fullRoot, maxBuffer: 16 * 1024 * 1024 }
               );
 
-              definitionHashes.set(
-                repositoryFile,
-                new Set([
-                  hash(bytes),
-                  hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
-                ])
-              );
+              approvedDefinitionHashes = new Set([
+                hash(bytes),
+                hash(bytes.toString("utf-8").replaceAll(/\r?\n/gu, "\r\n")),
+              ]);
+              definitionHashes.set(repositoryFile, approvedDefinitionHashes);
             }
-
-            // SAFETY: this repository source's hash cache is populated above.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-            const approvedDefinitionHashes = definitionHashes.get(
-              repositoryFile
-            ) as Set<string>;
 
             if (!approvedDefinitionHashes.has(source.sha256)) {
               throw new Error(
