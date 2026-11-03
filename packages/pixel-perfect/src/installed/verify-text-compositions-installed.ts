@@ -211,11 +211,11 @@ const verifyComposedTextCase = async (
     const images = [...document.querySelectorAll(".mc-surface>span")]
       .map(
         (node) =>
-          /url\(["']?(?<imageUrl>.*?)["']?\)/.exec(
+          /url\(["']?(?<imageUrl>.*?)["']?\)/u.exec(
             getComputedStyle(node).backgroundImage
           )?.[1]
       )
-      .filter(Boolean);
+      .filter((imageSource): imageSource is string => Boolean(imageSource));
 
     await Promise.all(
       images.map(async (src) => {
@@ -224,8 +224,8 @@ const verifyComposedTextCase = async (
         try {
           const image = new Image();
           image.onload = image.onerror = imageCompletion.resolve;
-          // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-          image.src = src!;
+          // The same Boolean predicate excludes absent or empty captured URLs before this native setter.
+          image.src = src;
         } catch (error) {
           imageCompletion.reject(error);
         }
