@@ -171,7 +171,7 @@ export const serveProductionFixture = async function serveProductionFixture({
     }
   });
 
-  const listening = Promise.withResolvers<void>();
+  const listening: PromiseWithResolvers<void> = Promise.withResolvers();
 
   try {
     server.once("error", listening.reject);

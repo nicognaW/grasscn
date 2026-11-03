@@ -54,7 +54,8 @@ for (const scale of [1, 2, 3] as const) {
       await viewport.hover();
       await page.mouse.wheel(0, -100);
       await page.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers<void>();
+        const frameCompletion: PromiseWithResolvers<void> =
+          Promise.withResolvers();
 
         try {
           requestAnimationFrame(() => {

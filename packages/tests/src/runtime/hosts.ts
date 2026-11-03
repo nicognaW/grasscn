@@ -208,7 +208,7 @@ export const serveVerificationHosts =
         });
       });
       proxy = proxyServer;
-      const listening = Promise.withResolvers<void>();
+      const listening: PromiseWithResolvers<void> = Promise.withResolvers();
 
       try {
         proxyServer.once("error", listening.reject);
