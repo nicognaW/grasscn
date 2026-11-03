@@ -1,5 +1,6 @@
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+
 declare global {
   interface Window {
     __popoverSounds?: { rate: number; source: string; volume: number }[];
@@ -252,6 +253,7 @@ test("Popover buttons play the original click once; hover, focus and Escape stay
   await page.addInitScript(() => {
     const recordedSounds: { rate: number; source: string; volume: number }[] =
       [];
+
     window.__popoverSounds = recordedSounds;
     HTMLMediaElement.prototype.play = function play() {
       recordedSounds.push({

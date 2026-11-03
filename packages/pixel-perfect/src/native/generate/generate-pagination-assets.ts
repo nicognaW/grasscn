@@ -41,6 +41,7 @@ const assetInputNames = [
   "page_forward.png",
   "page_forward_highlighted.png",
 ];
+
 const assetInputReads = await Promise.allSettled(
   assetInputNames.map(
     async (filename) => await readFile(path.join(directory, filename))

@@ -141,7 +141,7 @@ test.describe("Select CJK native matrix", () => {
           frameCompletion.reject(error);
         }
 
-        return await frameCompletion.promise;
+        await frameCompletion.promise;
       });
 
       for (const label of await subject

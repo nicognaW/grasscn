@@ -262,6 +262,7 @@ export const ChartFixture = () => {
   if (p.has("metric")) {
     return <MetricFixture />;
   }
+
   if (c.element === "chart-fps") {
     return (
       <FpsChartExample
@@ -280,6 +281,7 @@ export const ChartFixture = () => {
       />
     );
   }
+
   if (c.element === "chart-pie") {
     return (
       <ProfilerChartExample
@@ -298,5 +300,6 @@ export const ChartFixture = () => {
       />
     );
   }
+
   return <ApiFixture />;
 };

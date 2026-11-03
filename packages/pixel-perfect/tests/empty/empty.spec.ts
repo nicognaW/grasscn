@@ -125,7 +125,7 @@ for (const [part, directory] of [
           frameCompletion.reject(error);
         }
 
-        return await frameCompletion.promise;
+        await frameCompletion.promise;
       });
 
       const expectedBytes = readFileSync(

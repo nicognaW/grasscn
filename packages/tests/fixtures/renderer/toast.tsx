@@ -3,6 +3,7 @@ import { Toaster, toast as notify } from "@grasscn/web/ui/sonner";
 import * as React from "react";
 
 const p = new URLSearchParams(location.search);
+
 // SAFETY: owned fixture callers select the public GUI scales 1, 2, or 3; retain this query parse and its scale-2 default.
 const scale = Number(p.get("scale") ?? 2) as 1 | 2 | 3;
 const count = Number(p.get("count") ?? 1);
