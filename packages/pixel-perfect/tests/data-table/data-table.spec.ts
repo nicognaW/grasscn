@@ -7,6 +7,8 @@ import type { TestInfo } from "@playwright/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type labelReference from "../reference/label/manifest.json";
+
 const repo = path.resolve(".");
 
 const compare = function compare(
@@ -64,12 +66,14 @@ test.afterEach(({ page, browser }, info) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
+// SAFETY: The fixed label read consumes the exact retained manifest represented by this type-only import; retain the fresh read and parse.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
 const labelManifest = JSON.parse(
   readFileSync(
     pixelPerfectFile(path.join(repo, "tests/reference/label/manifest.json")),
     "utf-8"
   )
-);
+) as typeof labelReference;
 
 test.describe("DataTable original native label constituents", () => {
   test.describe.configure({ mode: "parallel" });
