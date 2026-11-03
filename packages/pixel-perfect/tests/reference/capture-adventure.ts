@@ -394,9 +394,9 @@ for (const scale of [1, 2, 3]) {
   }
 }
 
-const pages = [...new Set(definitions.map((c) => c.page ?? 0))].sort(
-  (a, b) => a - b
-);
+const pageValues = [...new Set(definitions.map((c) => c.page ?? 0))];
+pageValues.sort((a, b) => a - b);
+const pages = pageValues;
 
 if (pages.some((page, index) => page !== index)) {
   throw new Error("Native pages must be contiguous from zero");

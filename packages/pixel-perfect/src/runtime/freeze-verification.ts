@@ -28,7 +28,10 @@ const names = execFileSync(
 
 const records: { bytes: number; path: string; sha256: string }[] = [];
 
-for (const name of [...new Set(names)].sort()) {
+const verificationNames = [...new Set(names)];
+verificationNames.sort();
+
+for (const name of verificationNames) {
   if (
     name.startsWith("packages/pixel-perfect/tests/reference/") &&
     !/\.(?:json|java|mjs)$/u.test(name)
