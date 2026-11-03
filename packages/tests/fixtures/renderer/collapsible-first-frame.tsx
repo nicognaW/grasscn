@@ -32,10 +32,9 @@ export const CollapsibleFirstFrameFixture = () => {
     <div data-warm-ready={ready} className="fixture-collapsible-warm-frame">
       <Collapsible
         scale={scale}
-        className="fixture-geometry-width"
+        className="fixture-geometry-width fixture-collapsible-max-width"
         style={{
           "--fixture-width": `${Number(q.get("width") ?? 200) * scale}px`,
-          maxWidth: "100%",
         }}
       >
         <CollapsibleTrigger disabled={!ready}>World details</CollapsibleTrigger>
