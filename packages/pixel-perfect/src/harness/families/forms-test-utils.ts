@@ -1,3 +1,9 @@
+type FormsReference = {
+  cases: ((typeof labelReference)["cases"][number] & {
+    text?: string | null;
+  })[];
+};
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -63,9 +69,11 @@ export const formsNativeTests = function formsNativeTests(
   });
 
   for (const directory of directories) {
+    // SAFETY: The sole label manifest retains the Java Case optional text input; every runtime fallback remains unchanged.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-    );
+    ) as FormsReference;
 
     const parts =
       component === "form"

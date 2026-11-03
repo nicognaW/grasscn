@@ -1,3 +1,24 @@
+import type labelReference from "../reference/label/manifest.json";
+type EmptySource =
+  | (typeof CapturedData0)["cases"][number]
+  | (typeof labelReference)["cases"][number];
+type EmptyCase = Pick<
+  EmptySource,
+  | "name"
+  | "background"
+  | "height"
+  | "scale"
+  | "width"
+  | "x"
+  | "y"
+  | "sha256"
+  | "label"
+> & {
+  alignment?: string;
+  wrapWidth?: number;
+};
+type EmptyReference = { cases: EmptyCase[] };
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -40,9 +61,11 @@ for (const [part, directory] of [
   ["title", "tests/reference/label"],
   ["description", "tests/reference/label"],
 ]) {
+  // SAFETY: The literal tuple selects only empty/label manifests; this local consumed protocol preserves existing optional alignment and wrapWidth lookups.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as EmptyReference;
 
   for (const c of manifest.cases) {
     test(`Empty ${part} native pixels: ${c.name}`, async ({ page }, info) => {

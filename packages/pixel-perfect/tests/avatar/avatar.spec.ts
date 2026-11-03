@@ -5,13 +5,16 @@ import { pixelPerfectTest as test, expect } from "@grasscn/pixel-perfect/test";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
+import type avatarReference from "../reference/avatar/manifest.json";
 import type CapturedData0 from "../reference/label/manifest.json";
 
 const dir = "tests/reference/avatar";
 
+// SAFETY: The fixed avatar directory reads the retained PlayerFaceExtractor manifest represented by the exact type-only JSON import.
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
 const manifest = JSON.parse(
   readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
-);
+) as typeof avatarReference;
 
 const difference = function difference(a: PNG, b: PNG) {
   expect([a.width, a.height]).toEqual([b.width, b.height]);

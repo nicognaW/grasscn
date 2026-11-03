@@ -1,3 +1,18 @@
+import type labelReference from "../reference/label/manifest.json";
+type OverlaySource =
+  | (typeof CapturedData0)["cases"][number]
+  | (typeof labelReference)["cases"][number];
+type OverlayCase = Pick<
+  OverlaySource,
+  "name" | "background" | "height" | "scale" | "width" | "x" | "y" | "sha256"
+> & {
+  alignment?: string;
+  label?: string;
+  text?: string;
+  wrapWidth?: number;
+};
+type OverlayReference = { cases: OverlayCase[] };
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -66,9 +81,11 @@ for (const component of ["sheet", "drawer"]) {
   for (const directory of ["card", "label"]) {
     const folder = `tests/reference/${directory}`;
 
+    // SAFETY: Only card/label native constituents reach this read; their Java Case and captured manifests own this consumed protocol, with optional fields preserving the existing null checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
     const manifest = JSON.parse(
       readFileSync(pixelPerfectFile(`${folder}/manifest.json`), "utf-8")
-    );
+    ) as OverlayReference;
 
     test.describe(`${component} native constituents ${directory}`, () => {
       test.describe.configure({ mode: "parallel" });

@@ -1,3 +1,7 @@
+import type messageReference from "../../../tests/reference/message/manifest.json";
+import type spinnerReference from "../../../tests/reference/spinner/manifest.json";
+type CompositionReference = typeof messageReference | typeof spinnerReference;
+
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -13,9 +17,11 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
 
   const directory = `tests/reference/${component === "spinner" ? component : "message"}`;
 
+  // SAFETY: The directory expression selects only the retained message or spinner manifest represented by these exact imported types.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact owned retained-JSON producer boundary; runtime read and parse stay unchanged.
   const manifest = JSON.parse(
     readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
-  );
+  ) as CompositionReference;
 
   test(`${component} comparator catches one changed pixel`, () => {
     const expected = PNG.sync.read(
