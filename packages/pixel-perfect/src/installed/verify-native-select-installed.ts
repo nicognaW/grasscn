@@ -32,7 +32,7 @@ const { PNG } = require("pngjs") as typeof PngJs;
 const verifyNativeSelectCase = async (
   c: NativeSelectCaptureManifest["cases"][number],
   dir: string,
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
   const q = new URLSearchParams({
     background: c.background,
@@ -47,36 +47,36 @@ const verifyNativeSelectCase = async (
     y: String(c.y),
   });
 
-  await fixturePage!.goto(`${urlArg}?${q}`);
-  await expect(fixturePage!.locator(".mc-select-trigger")).toHaveAttribute(
+  await fixturePage.goto(`${urlArg}?${q}`);
+  await expect(fixturePage.locator(".mc-select-trigger")).toHaveAttribute(
     "data-mc-select-ready",
     "true"
   );
-  await expect(fixturePage!.locator(".mc-select-trigger-label")).toHaveText(
+  await expect(fixturePage.locator(".mc-select-trigger-label")).toHaveText(
     c.label
   );
 
-  for (const label of await fixturePage!
+  for (const label of await fixturePage
     .locator(".mc-native-select-art [data-mc-label-ready]")
     .all()) {
     await expect(label).toHaveAttribute("data-mc-label-ready", "true");
   }
 
-  await fixturePage!.mouse.move(0, 0);
+  await fixturePage.mouse.move(0, 0);
 
   await (c.state === "focus"
-    ? fixturePage!.locator("#subject").focus()
-    : fixturePage!.evaluate(() =>
+    ? fixturePage.locator("#subject").focus()
+    : fixturePage.evaluate(() =>
         // SAFETY: the native-select fixture focuses HTML controls; preserve the existing optional blur call.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
         (document.activeElement as HTMLElement | null)?.blur()
       ));
 
   if (c.state.endsWith("hover")) {
-    await fixturePage!.locator("#subject").hover({ force: true });
+    await fixturePage.locator("#subject").hover({ force: true });
   }
 
-  await fixturePage!.evaluate(async () => {
+  await fixturePage.evaluate(async () => {
     const frameCompletion = Promise.withResolvers();
 
     try {
@@ -91,9 +91,7 @@ const verifyNativeSelectCase = async (
   });
 
   const actual = PNG.sync.read(
-    await fixturePage!
-      .locator("#subject")
-      .screenshot({ animations: "disabled" })
+    await fixturePage.locator("#subject").screenshot({ animations: "disabled" })
   );
 
   const expected = PNG.sync.read(
@@ -224,7 +222,7 @@ try {
         );
       }
 
-      results.push(await verifyNativeSelectCase(c, dir, page));
+      results.push(await verifyNativeSelectCase(c, dir, page!));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");

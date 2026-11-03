@@ -41,18 +41,18 @@ const m = JSON.parse(
 
 const verifyAvatarCase = async (
   c: AvatarCaptureManifest["cases"][number],
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
-  await fixturePage!.evaluate((avatarCase) => {
+  await fixturePage.evaluate((avatarCase) => {
     // SAFETY: the retained Avatar bridge consumes these actual captured case fields and returns void.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained Avatar consumer bridge invocation boundary.
     (window as LegacyAvatarConsumerWindow).renderCase(avatarCase);
   }, c);
-  await expect(fixturePage!.locator("[data-mc-avatar-face]")).toHaveAttribute(
+  await expect(fixturePage.locator("[data-mc-avatar-face]")).toHaveAttribute(
     "data-ready",
     "true"
   );
-  await fixturePage!.evaluate(async () => {
+  await fixturePage.evaluate(async () => {
     const frameCompletion = Promise.withResolvers();
 
     try {
@@ -67,9 +67,7 @@ const verifyAvatarCase = async (
   });
 
   const got = PNG.sync.read(
-    await fixturePage!
-      .locator("#subject")
-      .screenshot({ animations: "disabled" })
+    await fixturePage.locator("#subject").screenshot({ animations: "disabled" })
   );
 
   const want = PNG.sync.read(
@@ -129,7 +127,7 @@ try {
     }
 
     const c = m.cases[i];
-    results.push(await verifyAvatarCase(c, page));
+    results.push(await verifyAvatarCase(c, page!));
 
     if (i % 128 === 127) {
       console.log(`${i + 1} matched`);

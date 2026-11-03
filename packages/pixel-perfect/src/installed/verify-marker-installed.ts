@@ -30,7 +30,7 @@ const { PNG } = require("pngjs") as typeof PngJs;
 const verifyMarkerCase = async (
   c: MarkerCaptureManifest["cases"][number],
   dir: string,
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
   const queryFields = {
     align: c.alignment ?? "left",
@@ -53,35 +53,35 @@ const verifyMarkerCase = async (
 
   const q = new URLSearchParams(queryFields);
 
-  await fixturePage!.goto(`${urlArg}?${q}`);
+  await fixturePage.goto(`${urlArg}?${q}`);
 
   if (dir === "label") {
     await expect(
-      fixturePage!.locator("[data-mc-label-layout-ready]")
+      fixturePage.locator("[data-mc-label-layout-ready]")
     ).toHaveAttribute("data-mc-label-layout-ready", "true");
 
-    for (const label of await fixturePage!
+    for (const label of await fixturePage
       .locator("[data-mc-label-ready]")
       .all()) {
       await expect(label).toHaveAttribute("data-mc-label-ready", "true");
     }
   }
 
-  await fixturePage!.mouse.move(0, 0);
+  await fixturePage.mouse.move(0, 0);
 
   await (c.state === "focus"
-    ? fixturePage!.locator("#subject").focus()
-    : fixturePage!.evaluate(() =>
+    ? fixturePage.locator("#subject").focus()
+    : fixturePage.evaluate(() =>
         // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
         (document.activeElement as HTMLElement | null)?.blur()
       ));
 
   if (c.state.endsWith("hover")) {
-    await fixturePage!.locator("#subject").hover({ force: true });
+    await fixturePage.locator("#subject").hover({ force: true });
   }
 
-  await fixturePage!.evaluate(async () => {
+  await fixturePage.evaluate(async () => {
     const frameCompletion = Promise.withResolvers();
 
     try {
@@ -96,9 +96,7 @@ const verifyMarkerCase = async (
   });
 
   const actual = PNG.sync.read(
-    await fixturePage!
-      .locator("#subject")
-      .screenshot({ animations: "disabled" })
+    await fixturePage.locator("#subject").screenshot({ animations: "disabled" })
   );
 
   const expected = PNG.sync.read(
@@ -228,7 +226,7 @@ try {
         );
       }
 
-      results.push(await verifyMarkerCase(c, dir, page));
+      results.push(await verifyMarkerCase(c, dir, page!));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");

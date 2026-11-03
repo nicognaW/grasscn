@@ -125,17 +125,17 @@ assert.equal(comparator(control, mutation), 1);
 const advanceToastPhase = async (
   c: ToastCaptureManifest["cases"][number],
   component: string,
-  fixturePage: Page | undefined
+  fixturePage: Page
 ) => {
   if (c.state === "exiting") {
-    await fixturePage!.clock.fastForward(600);
-    await fixturePage!.locator("#close").evaluate((n: HTMLElement) => {
+    await fixturePage.clock.fastForward(600);
+    await fixturePage.locator("#close").evaluate((n: HTMLElement) => {
       // SAFETY: the Sonner fixture #close is its HTML close button; retain the existing direct click call.
       n.click();
     });
-    await fixturePage!.clock.fastForward(component === "sonner" ? 16 : 0);
+    await fixturePage.clock.fastForward(component === "sonner" ? 16 : 0);
     await expect(
-      fixturePage!
+      fixturePage
         .locator(
           component === "sonner" ? "[data-sonner-toast]" : '[data-slot="toast"]'
         )
@@ -146,14 +146,14 @@ const advanceToastPhase = async (
     );
   }
 
-  await fixturePage!.clock.fastForward(c.timeMs);
+  await fixturePage.clock.fastForward(c.timeMs);
 
   if (c.state !== "exiting" || c.timeMs < 600) {
-    await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
+    await expect(fixturePage.locator("[data-mc-toast-ready]")).toHaveCount(
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await fixturePage!
+    for (const canvas of await fixturePage
       .locator("[data-mc-toast-ready]")
       .all()) {
       await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
@@ -170,7 +170,7 @@ try {
 
   const verifyToastCase = async (
     c: ToastCaptureManifest["cases"][number],
-    fixturePage: Page | undefined
+    fixturePage: Page
   ) => {
     const component = componentArg;
 
@@ -193,31 +193,31 @@ try {
       q.set("text", c.text);
     }
 
-    await fixturePage!.goto(`${urlArg}?${q}`);
+    await fixturePage.goto(`${urlArg}?${q}`);
 
     if (component === "sonner") {
-      await expect(fixturePage!.locator("#created")).toHaveText(
+      await expect(fixturePage.locator("#created")).toHaveText(
         String(c.selectedIndex ?? 1)
       );
     }
 
-    await fixturePage!.clock.fastForward(0);
-    await fixturePage!.addStyleTag({
+    await fixturePage.clock.fastForward(0);
+    await fixturePage.addStyleTag({
       content:
         "#root{visibility:hidden}#subject,[data-sonner-toast],[data-mc-sonner-ghost]{visibility:visible}",
     });
-    const subject = fixturePage!.locator("#subject");
+    const subject = fixturePage.locator("#subject");
     await expect(subject).toBeVisible();
     await expect(
-      fixturePage!.locator(
+      fixturePage.locator(
         component === "sonner" ? "[data-sonner-toast]" : '[data-slot="toast"]'
       )
     ).toHaveCount(c.selectedIndex ?? 1);
-    await expect(fixturePage!.locator("[data-mc-toast-ready]")).toHaveCount(
+    await expect(fixturePage.locator("[data-mc-toast-ready]")).toHaveCount(
       c.selectedIndex ?? 1
     );
 
-    for (const canvas of await fixturePage!
+    for (const canvas of await fixturePage
       .locator("[data-mc-toast-ready]")
       .all()) {
       await expect(canvas).toHaveAttribute("data-mc-toast-ready", "true");
@@ -225,9 +225,7 @@ try {
 
     await advanceToastPhase(c, component, fixturePage);
 
-    await fixturePage!.evaluate(() =>
-      window.dispatchEvent(new Event("resize"))
-    );
+    await fixturePage.evaluate(() => window.dispatchEvent(new Event("resize")));
 
     const actualBytes = await subject.screenshot({ animations: "disabled" });
     const actual = PNG.sync.read(actualBytes);
@@ -279,7 +277,7 @@ try {
         c.name,
         mismatchedPixels,
         JSON.stringify(
-          await fixturePage!
+          await fixturePage
             .locator('[data-slot="toast"]')
             .evaluateAll((nodes) =>
               nodes.map((n): { rect: unknown; text: string | null } => ({
@@ -318,7 +316,7 @@ try {
     }
 
     errors = [];
-    results.push(await verifyToastCase(c, page));
+    results.push(await verifyToastCase(c, page!));
 
     if (index % 64 === 0) {
       console.log("Compared", index, "native cases");
