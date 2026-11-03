@@ -140,13 +140,14 @@ for (const [folder, part] of [
           (
             node: HTMLInputElement,
             { cursor: selectionCursor, anchor: selectionAnchor }
-          ) =>
+          ) => {
             // SAFETY: this entry fixture route renders an HTML input with native selection support.
             node.setSelectionRange(
               Math.min(selectionCursor, selectionAnchor),
               Math.max(selectionCursor, selectionAnchor),
               selectionCursor < selectionAnchor ? "backward" : "forward"
-            ),
+            );
+          },
           { anchor, cursor }
         );
         await page.clock.runFor(c.caretMs!);
