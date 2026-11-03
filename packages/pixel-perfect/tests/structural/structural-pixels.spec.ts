@@ -81,11 +81,24 @@ test.describe("Structural native constituents", () => {
         readFileSync(pixelPerfectFile(`${directory}/manifest.json`), "utf-8")
       ) as StructuralReferenceManifest;
 
-      const part = directory.endsWith("/label")
-        ? "text"
-        : directory.endsWith("/separator")
-          ? "separator"
-          : "button";
+      let partSelection: "text" | "separator" | "button";
+
+      switch (true) {
+        case directory.endsWith("/label"): {
+          partSelection = "text";
+          break;
+        }
+        case directory.endsWith("/separator"): {
+          partSelection = "separator";
+          break;
+        }
+        default: {
+          partSelection = "button";
+          break;
+        }
+      }
+
+      const part = partSelection;
 
       for (const c of manifest.cases) {
         for (const orientation of component === "button-group" &&

@@ -154,13 +154,19 @@ for (const manifestFile of manifests.filter(
   const nativeEmpty: boolean =
     name === "empty" && manifestFile === component.pixelVerification.manifest;
 
-  const allParts: string[] =
-    name === "form"
-      ? ["label", "description", "message"]
-      : name === "field"
-        ? ["label", "legend", "title", "description"]
-        : name === "typography"
-          ? [
+  let allPartsSelection: string[];
+
+  switch (true) {
+    case name === "form": {
+      allPartsSelection = ["label", "description", "message"];
+      break;
+    }
+    case name === "field": {
+      allPartsSelection = ["label", "legend", "title", "description"];
+      break;
+    }
+    case name === "typography": {
+      allPartsSelection = [
               "default",
               "h1",
               "h2",
@@ -173,12 +179,25 @@ for (const manifestFile of manifests.filter(
               "lead",
               "large",
               "muted",
-            ]
-          : name === "breadcrumb"
-            ? ["link", "page"]
-            : name === "empty" && !nativeEmpty
-              ? ["title", "description"]
-              : ["default"];
+            ];
+      break;
+    }
+    case name === "breadcrumb": {
+      allPartsSelection = ["link", "page"];
+      break;
+    }
+    case name === "empty" && !nativeEmpty: {
+      allPartsSelection = ["title", "description"];
+      break;
+    }
+    default: {
+      allPartsSelection = ["default"];
+      break;
+    }
+  }
+
+  const allParts: string[] =
+    allPartsSelection;
 
   if (partArgument) {
     assert.ok(

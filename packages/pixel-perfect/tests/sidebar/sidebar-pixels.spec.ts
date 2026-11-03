@@ -140,18 +140,31 @@ test.describe("Sidebar original native constituent cases", () => {
           c.width === 103 &&
           c.label === "你好，世界");
 
-      const parts =
-        kind === "button"
-          ? [
+      let partsSelection: string[];
+
+      switch (true) {
+        case kind === "button": {
+          partsSelection = [
               "menu-button",
               "sub-button",
               ...(representative
                 ? ["trigger", "group-action", "menu-action"]
                 : []),
-            ]
-          : kind === "label"
-            ? ["label", "badge"]
-            : [kind];
+            ];
+          break;
+        }
+        case kind === "label": {
+          partsSelection = ["label", "badge"];
+          break;
+        }
+        default: {
+          partsSelection = [kind];
+          break;
+        }
+      }
+
+      const parts =
+        partsSelection;
 
       for (const part of parts) {
         for (const active of ["menu-button", "sub-button"].includes(part) &&

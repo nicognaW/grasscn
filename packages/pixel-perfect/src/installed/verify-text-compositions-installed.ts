@@ -72,12 +72,25 @@ const canonical = (bytes: Buffer) => {
 const files = item!.files.map((file) => {
   const filename = path.basename(file.path);
 
+  let directorySelection: "hooks" | "lib" | "components/ui";
+
+  switch (true) {
+    case file.type === "registry:hook": {
+      directorySelection = "hooks";
+      break;
+    }
+    case file.type === "registry:lib": {
+      directorySelection = "lib";
+      break;
+    }
+    default: {
+      directorySelection = "components/ui";
+      break;
+    }
+  }
+
   const directory =
-    file.type === "registry:hook"
-      ? "hooks"
-      : file.type === "registry:lib"
-        ? "lib"
-        : "components/ui";
+    directorySelection;
 
   const source = fs.readFileSync(webFile(path.join(file.path)));
 
