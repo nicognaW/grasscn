@@ -43,7 +43,10 @@ export const BaseUICompositionFixture = () => {
         className={(state) =>
           state.disabled ? "state-disabled" : "state-enabled"
         }
-        style={(state) => ({ width: state.disabled ? 300 : 240 })}
+        style={
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Approved style(state) API probe: existing assertions require the native callback to change width from 240px to 300px.
+          (state) => ({ width: state.disabled ? 300 : 240 })
+        }
       >
         Stateful button
       </Button>

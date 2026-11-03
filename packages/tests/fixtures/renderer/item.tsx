@@ -123,11 +123,13 @@ const ItemFixture = () => {
         align={q.get("align") === "center" ? "center" : "left"}
 
         style={{
+          /* oxlint-disable shadcn/no-inline-styles -- Approved ItemTitle fixture contract: adding className switches the real renderer; retain the original inline geometry and absent className. */
           height,
           left: x,
           position: "fixed",
           top: y,
           width: commonStyle.width,
+          /* oxlint-enable shadcn/no-inline-styles */
         }}
         data-subject="true"
       >
@@ -177,6 +179,7 @@ const ItemFixture = () => {
         className="fixture-geometry-x fixture-placement-fixed fixture-geometry-y"
         style={{
           ...commonStyle,
+          // oxlint-disable-next-line shadcn/no-inline-styles -- Approved Item default-layer probe removes inline height before asserting native dimensions; a height class would survive removal.
           height: rich ? undefined : height,
         }}
         tabIndex={state === "focus" ? 0 : undefined}

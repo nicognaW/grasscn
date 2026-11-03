@@ -88,7 +88,11 @@ export const ChatFamilyFixture = () => {
             })}
             style={
               native
-                ? { ...common, width: scaledWidth }
+                ? {
+                    ...common,
+                    // oxlint-disable-next-line shadcn/no-inline-styles -- Approved native Bubble fixture input: BubbleContent reads element.style.width to select fixed sizing; a class changes that algorithm input.
+                    width: scaledWidth,
+                  }
                 : { color: common.color }
             }
             onClick={(event) => {
