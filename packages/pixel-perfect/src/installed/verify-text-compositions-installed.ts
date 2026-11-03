@@ -307,12 +307,12 @@ const worker = async function worker() {
       }
 
       await verifyComposedTextCase(c, page);
-    } catch (failure) {
+    } catch (error) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
-      const error = failure as InstalledTextFailure;
-      errors.push(`${c.name}: ${error.message}`);
-      console.log(name, c.name, error.message);
+      const failure = error as InstalledTextFailure;
+      errors.push(`${c.name}: ${failure.message}`);
+      console.log(name, c.name, failure.message);
     }
   }
 

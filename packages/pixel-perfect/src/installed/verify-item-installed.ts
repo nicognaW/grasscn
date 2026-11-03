@@ -410,11 +410,11 @@ const worker = async function worker() {
         part,
         plain,
       });
-    } catch (failure) {
+    } catch (error) {
       // SAFETY: preserve the existing message projection from the owned Node/PNG/Playwright APIs without normalizing arbitrary rejections.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed Item failure message projection boundary.
-      const error = failure as InstalledTextFailure;
-      const message = `${part}/${plain ? "plain/" : ""}${c.name}: ${error.message}`;
+      const failure = error as InstalledTextFailure;
+      const message = `${part}/${plain ? "plain/" : ""}${c.name}: ${failure.message}`;
       errors.push(message);
       console.log(message);
     }

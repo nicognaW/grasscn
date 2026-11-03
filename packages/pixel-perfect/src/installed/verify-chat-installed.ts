@@ -235,12 +235,12 @@ const worker = async function worker() {
       }
 
       await verifyChatCase(c, part, page);
-    } catch (failure) {
+    } catch (error) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
-      const error = failure as InstalledTextFailure;
-      errors.push({ error: error.message, name: c.name, part });
-      console.log(c.name, part, error.message);
+      const failure = error as InstalledTextFailure;
+      errors.push({ error: failure.message, name: c.name, part });
+      console.log(c.name, part, failure.message);
     }
   }
 

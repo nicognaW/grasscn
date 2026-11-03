@@ -595,7 +595,7 @@ try {
           );
 
           collectionComplete =
-            !Boolean(browserReport.errors?.length) &&
+            (browserReport.errors?.length ?? 0) === 0 &&
             expected.tests.every((test) => terminal.has(test.id));
         } catch {
           // Preserve the existing unavailable/incomplete-evidence fallback.
@@ -605,8 +605,8 @@ try {
           collectionComplete &&
           summary?.status === "failed" &&
           summary.counts.failed + summary.counts.timedOut > 0 &&
-          !Boolean(summary.counts.interrupted) &&
-          !Boolean(summary.changedSources?.length)
+          summary.counts.interrupted === 0 &&
+          (summary.changedSources?.length ?? 0) === 0
         ) {
           testFailures = true;
           console.error(
