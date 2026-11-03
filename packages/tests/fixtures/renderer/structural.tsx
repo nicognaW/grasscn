@@ -132,8 +132,8 @@ export const StructuralFixture = () => {
               scale={scale}
               orientation="horizontal"
               edge={p.get("edge") === "footer" ? "footer" : "header"}
-              className="fixture-geometry-width"
-              style={{ "--fixture-width": `${width * scale}px`, minWidth: 0 }}
+              className="fixture-geometry-width fixture-structural-min-width-zero"
+              style={{ "--fixture-width": `${width * scale}px` }}
               data-subject="true"
             />
           ) : (
@@ -200,7 +200,7 @@ export const StructuralFixture = () => {
         <Pagination
           aria-label="World pages"
           className={cn({
-            "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width":
+            "fixture-geometry-x fixture-placement-absolute fixture-geometry-y fixture-geometry-width fixture-pagination-native-start":
               native,
           })}
           style={
@@ -208,13 +208,16 @@ export const StructuralFixture = () => {
               ? {
                   ...position,
                   "--fixture-width": `${width * scale}px`,
-                  justifyContent: "flex-start",
                 }
               : undefined
           }
         >
           <PaginationContent>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationPrevious scale={scale} href="#previous" />
             </PaginationItem>
             <PaginationItem>
@@ -222,10 +225,10 @@ export const StructuralFixture = () => {
                 id="subject"
                 ref={ref}
                 scale={scale}
-                className="fixture-geometry-height"
+                className="fixture-geometry-height fixture-geometry-width"
                 style={{
                   "--fixture-height": `${height * scale}px`,
-                  width: width * scale,
+                  "--fixture-width": `${width * scale}px`,
                 }}
                 href="#next"
                 aria-disabled={state === "disabled" || undefined}
@@ -245,10 +248,18 @@ export const StructuralFixture = () => {
                 {native ? label : String(page)}
               </PaginationLink>
             </PaginationItem>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationEllipsis scale={scale} />
             </PaginationItem>
-            <PaginationItem style={{ display: native ? "none" : undefined }}>
+            <PaginationItem
+              className={
+                native ? "fixture-pagination-native-hidden" : undefined
+              }
+            >
               <PaginationNext scale={scale} href="#next" />
             </PaginationItem>
           </PaginationContent>

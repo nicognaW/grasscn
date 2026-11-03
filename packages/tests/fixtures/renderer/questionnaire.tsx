@@ -100,7 +100,8 @@ export const QuestionnaireFixture = () => {
                 value="yes"
                 checked={q.get("checked") === "true"}
                 disabled={q.get("state") === "disabled"}
-                style={{ ...bounds, display: "flex", minHeight: 0, gap: 0 }}
+                className="fixture-questionnaire-native-choice"
+                style={{ ...bounds }}
                 data-subject="true"
               />
             </QuestionnaireChoices>
