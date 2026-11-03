@@ -26,6 +26,125 @@ const { chromium, expect } =
 // SAFETY: createRequire resolves the installed pngjs decoder used by this comparator.
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact installed pngjs module API boundary.
 const { PNG } = require("pngjs") as typeof PngJs;
+const verifyMarkerCase = async (c: MarkerCaptureManifest["cases"][number], dir: string, fixturePage: Page | undefined) => {
+  const queryFields = {
+    align: c.alignment ?? "left",
+    background: c.background,
+    height: String(c.height),
+    label: c.label ?? "",
+    native: "1",
+    part: dir === "label" ? "text" : "line",
+    scale: String(c.scale),
+    state: c.state,
+    timeMs: String(c.timeMs ?? 0),
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  };
+
+  if (c.wrapWidth ?? 0) {
+    Object.assign(queryFields, { wrapWidth: String(c.wrapWidth) });
+  }
+
+  const q = new URLSearchParams(queryFields);
+
+  await fixturePage!.goto(`${urlArg}?${q}`);
+
+  if (dir === "label") {
+    await expect(
+      fixturePage!.locator("[data-mc-label-layout-ready]")
+    ).toHaveAttribute("data-mc-label-layout-ready", "true");
+
+    for (const label of await fixturePage!
+      .locator("[data-mc-label-ready]")
+      .all()) {
+      await expect(label).toHaveAttribute("data-mc-label-ready", "true");
+    }
+  }
+
+  await fixturePage!.mouse.move(0, 0);
+
+  await (c.state === "focus"
+    ? fixturePage!.locator("#subject").focus()
+    : fixturePage!.evaluate(() =>
+        // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
+        (document.activeElement as HTMLElement | null)?.blur()
+      ));
+
+  if (c.state.endsWith("hover")) {
+    await fixturePage!.locator("#subject").hover({ force: true });
+  }
+
+  await fixturePage!.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const actual = PNG.sync.read(
+    await fixturePage!.locator("#subject").screenshot({ animations: "disabled" })
+  );
+
+  const expected = PNG.sync.read(
+    fs.readFileSync(
+      `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
+        c.name
+      }`
+    )
+  );
+
+  assert.deepEqual(
+    [actual.width, actual.height],
+    [expected.width, expected.height]
+  );
+  assert.equal(
+    hash(
+      fs.readFileSync(
+        pixelPerfectFile(
+          path.join("tests/reference", dir, "captures", c.name)
+        )
+      )
+    ),
+    c.sha256
+  );
+  let different = 0;
+
+  for (let i = 0; i < expected.data.length; i += 4) {
+    if (
+      !actual.data
+        .subarray(i, i + 4)
+        .equals(expected.data.subarray(i, i + 4))
+    ) {
+      different += 1;
+    }
+  }
+
+  if (different) {
+    fs.writeFileSync(
+      path.join(pixelPerfectTestRoot, "marker-actual.png"),
+      PNG.sync.write(actual)
+    );
+    throw new Error(`${c.name} ${different} pixels`);
+  }
+
+  return {
+    decodedRgbaSha256: createHash("sha256")
+      .update(actual.data)
+      .digest("hex"),
+    mismatchedPixels: 0,
+    name: c.name,
+  };
+};
+
 const browser = await chromium.launch({ channel: "msedge" });
 
 // SAFETY: the initialized shadcn components.json owns the existing rsc setting.
@@ -108,122 +227,7 @@ try {
         );
       }
 
-      const queryFields = {
-        align: c.alignment ?? "left",
-        background: c.background,
-        height: String(c.height),
-        label: c.label ?? "",
-        native: "1",
-        part: dir === "label" ? "text" : "line",
-        scale: String(c.scale),
-        state: c.state,
-        timeMs: String(c.timeMs ?? 0),
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      };
-
-      if (c.wrapWidth ?? 0) {
-        Object.assign(queryFields, { wrapWidth: String(c.wrapWidth) });
-      }
-
-      const q = new URLSearchParams(queryFields);
-
-      await page!.goto(`${urlArg}?${q}`);
-
-      if (dir === "label") {
-        await expect(
-          page!.locator("[data-mc-label-layout-ready]")
-        ).toHaveAttribute("data-mc-label-layout-ready", "true");
-
-        for (const label of await page!
-          .locator("[data-mc-label-ready]")
-          .all()) {
-          await expect(label).toHaveAttribute("data-mc-label-ready", "true");
-        }
-      }
-
-      await page!.mouse.move(0, 0);
-
-      await (c.state === "focus"
-        ? page!.locator("#subject").focus()
-        : page!.evaluate(() =>
-            // SAFETY: this fixture focuses HTML subject controls; preserve the existing optional active-element blur.
-            // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Focused HTML fixture element DOM API boundary.
-            (document.activeElement as HTMLElement | null)?.blur()
-          ));
-
-      if (c.state.endsWith("hover")) {
-        await page!.locator("#subject").hover({ force: true });
-      }
-
-      await page!.evaluate(async () => {
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        return await frameCompletion.promise;
-      });
-
-      const actual = PNG.sync.read(
-        await page!.locator("#subject").screenshot({ animations: "disabled" })
-      );
-
-      const expected = PNG.sync.read(
-        fs.readFileSync(
-          `${pixelPerfectFile(path.join("tests/reference", dir))}/captures/${
-            c.name
-          }`
-        )
-      );
-
-      assert.deepEqual(
-        [actual.width, actual.height],
-        [expected.width, expected.height]
-      );
-      assert.equal(
-        hash(
-          fs.readFileSync(
-            pixelPerfectFile(
-              path.join("tests/reference", dir, "captures", c.name)
-            )
-          )
-        ),
-        c.sha256
-      );
-      let different = 0;
-
-      for (let i = 0; i < expected.data.length; i += 4) {
-        if (
-          !actual.data
-            .subarray(i, i + 4)
-            .equals(expected.data.subarray(i, i + 4))
-        ) {
-          different += 1;
-        }
-      }
-
-      if (different) {
-        fs.writeFileSync(
-          path.join(pixelPerfectTestRoot, "marker-actual.png"),
-          PNG.sync.write(actual)
-        );
-        throw new Error(`${c.name} ${different} pixels`);
-      }
-
-      results.push({
-        decodedRgbaSha256: createHash("sha256")
-          .update(actual.data)
-          .digest("hex"),
-        mismatchedPixels: 0,
-        name: c.name,
-      });
+      results.push(await verifyMarkerCase(c, dir, page));
 
       if (results.length % 128 === 0) {
         console.log(dir, results.length, "exact");
