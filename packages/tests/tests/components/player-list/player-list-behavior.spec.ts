@@ -4,9 +4,10 @@ interface PlayerListPlaybackState extends Window {
   played?: number;
 }
 
-type InitializedPlayerListPlaybackState = typeof window & PlayerListPlaybackState & {
-  played: number;
-};
+type InitializedPlayerListPlaybackState = typeof window &
+  PlayerListPlaybackState & {
+    played: number;
+  };
 
 const fixture =
   process.env.GRASSCN_EXPANSION_URL ?? "http://127.0.0.1:5174/adventure.html";
@@ -20,7 +21,8 @@ test("player list supports pointer and keyboard selection without UI sound", asy
   await page.addInitScript(() => {
     // SAFETY: this write installs the actual recorder field on the new page; it is optional before this producer assignment.
     (window as PlayerListPlaybackState).played = 0;
-    (window as any).Audio = class {
+    const audioMockDescriptor: PropertyDescriptor = {};
+    audioMockDescriptor.value = class {
       play() {
         // SAFETY: this page init script assigns the exact recorder before installing playback; the callback and post-navigation observations read that initialized field without changing any lookup.
         // oxlint-disable typescript/no-unsafe-type-assertion -- Exact initialized page-local playback recorder protocol; preserve original field reads and resets.
@@ -30,6 +32,7 @@ test("player list supports pointer and keyboard selection without UI sound", asy
         return;
       }
     };
+    Object.defineProperty(window, "Audio", audioMockDescriptor);
   });
   await page.goto(
     url({

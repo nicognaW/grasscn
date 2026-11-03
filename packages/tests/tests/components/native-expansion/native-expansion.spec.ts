@@ -34,7 +34,7 @@ test("book navigation and native page-turn sound", async ({ page }) => {
       }
     }
 
-    (window as any).Audio = RecordedAudio;
+    Object.defineProperty(window, "Audio", { value: RecordedAudio });
   });
 
   const sample = {
