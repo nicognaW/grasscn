@@ -562,7 +562,7 @@ export const completedRunReport = function completedRunReport(
         const key = caseKey({ file, titlePath: declaration.title.slice(2) });
         accounted.add(key);
 
-        const verification = record.verification;
+        const { verification } = record;
 
         const artifacts =
           verification?.artifacts.map((artifact) => {
