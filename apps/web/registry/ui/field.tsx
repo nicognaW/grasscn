@@ -169,9 +169,9 @@ const FieldError = ({
     return (
       <ul className="mc-field-error-list">
         {uniqueErrors.map(
-          (error, index) =>
+          (error) =>
             error?.message && (
-              <li key={index}>
+              <li key={error.message}>
                 <MinecraftProse scale={scale}>{error.message}</MinecraftProse>
               </li>
             )
