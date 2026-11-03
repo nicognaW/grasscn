@@ -25,6 +25,12 @@ import {
 } from "../registry/ui/context-menu";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-context-menu-1-min-height": `${number}px`;
+  "--mc-intrinsic-demos-context-menu-1-width": `${number}px`;
+}
 
 const ContextMenuDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World Settings");
@@ -67,11 +73,14 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
                 scale={scale}
                 tabIndex={0}
                 aria-label="World context menu target"
-                style={{
-                  maxWidth: "100%",
-                  minHeight: 80 * scale,
-                  width: 200 * scale,
-                }}
+                className="max-w-full min-h-(--mc-intrinsic-demos-context-menu-1-min-height) w-(--mc-intrinsic-demos-context-menu-1-width)"
+                style={
+                  // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                  {
+                    "--mc-intrinsic-demos-context-menu-1-min-height": `${80 * scale}px`,
+                    "--mc-intrinsic-demos-context-menu-1-width": `${200 * scale}px`,
+                  } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+                }
               />
             }
           >

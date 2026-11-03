@@ -486,15 +486,14 @@ const Toaster = ({
             key={model.key}
             aria-hidden="true"
             data-mc-sonner-ghost=""
+            className="[isolation:isolate] pointer-events-none fixed z-999999999"
             style={{
               height: model.bounds.height,
-              isolation: "isolate",
+
               left: model.bounds.x,
-              pointerEvents: "none",
-              position: "fixed",
+
               top: model.bounds.y,
               width: model.bounds.width,
-              zIndex: 999999999,
             }}
           >
             <ModelGraphic model={model} scale={scale} />

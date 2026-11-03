@@ -2,6 +2,11 @@ import * as React from "react";
 
 import { paintToast } from "./minecraft-toast-gpu";
 import { toastLayout } from "./minecraft-toast-layout";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility": string;
+}
 
 export interface ToastMotion {
   phase: "entering" | "exiting" | "shown" | "hidden";
@@ -122,15 +127,14 @@ export const MinecraftToastGraphic = ({
       ref={ref}
       data-mc-toast-ready={ready}
       aria-hidden="true"
-      style={{
-        height: "100%",
-        left: 0,
-        pointerEvents: "none",
-        position: "absolute",
-        top: 0,
-        visibility: ready ? "visible" : "hidden",
-        width: "100%",
-      }}
+      className="h-full left-0 pointer-events-none absolute top-0 [visibility:var(--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility)] w-full"
+      style={
+        // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+        {
+          "--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility":
+            ready ? "visible" : "hidden",
+        } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+      }
     />
   );
 };

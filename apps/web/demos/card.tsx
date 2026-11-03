@@ -29,7 +29,7 @@ const CardDemo = ({ scale }: DemoProps) => {
             } satisfies DemoVariables as DemoVariables
           }
         >
-          <Card scale={scale} style={{ width: "100%" }}>
+          <Card scale={scale} className="w-full">
             <CardHeader>
               <CardTitle>World Settings</CardTitle>
               <CardDescription>Change your world options.</CardDescription>

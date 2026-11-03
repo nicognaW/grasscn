@@ -98,7 +98,7 @@ export const MinecraftPopoverText = ({
   if (!unicode) {
     return (
       <span className="mc-popover-text" data-mc-popover-text-ready="true">
-        <span aria-hidden="true" style={{ display: "block" }}>
+        <span aria-hidden="true" className="block">
           <MinecraftCardText bold={bold}>{text}</MinecraftCardText>
         </span>
         <span className="mc-card-accessible">{text}</span>

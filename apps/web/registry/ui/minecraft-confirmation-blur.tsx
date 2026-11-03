@@ -1,6 +1,11 @@
 import * as React from "react";
 
 import { useConfirmationSnapshot } from "./minecraft-confirmation-snapshot";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility": string;
+}
 
 // Screen's post-effect is six alternating box passes, not a Gaussian blur.
 // This SVG path is still under native pixel verification.
@@ -42,7 +47,7 @@ export const MinecraftConfirmationBlur = ({
         width="0"
         height="0"
         aria-hidden="true"
-        style={{ pointerEvents: "none", position: "absolute" }}
+        className="pointer-events-none absolute"
       >
         <defs>
           <filter
@@ -69,14 +74,14 @@ export const MinecraftConfirmationBlur = ({
       <canvas
         ref={canvas}
         aria-hidden="true"
-        style={{
-          height: "100%",
-          inset: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          visibility: ready && radius > 0 ? "visible" : "hidden",
-          width: "100%",
-        }}
+        className="h-full [inset:0] pointer-events-none absolute [visibility:var(--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility)] w-full"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility":
+              ready && radius > 0 ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle2 as IntrinsicLayoutStyle2
+        }
       />
     </>
   );

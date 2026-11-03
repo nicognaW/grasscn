@@ -38,12 +38,7 @@ const PlayerListDemo = ({ scale }: DemoProps) => {
       className="demo-stage demo-stage-display-grid demo-stage-gap-20 max-w-full"
       data-stage="player-list"
     >
-      <div
-        className="demo-layout-demos-player-list-1"
-        style={{
-          maxWidth: "100%",
-        }}
-      >
+      <div className="demo-layout-demos-player-list-1 max-w-full">
         <div className="max-w-full overflow-x-auto">
           <PlayerList
             scale={scale}

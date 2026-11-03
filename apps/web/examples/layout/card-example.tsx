@@ -19,10 +19,7 @@ const CardExample = () => {
   const [saved, setSaved] = useState(false);
 
   return (
-    <Card /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      style={{ maxWidth: "100%", width: 472 }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
+    <Card className="max-w-full w-118">
       <CardHeader>
         <CardTitle>World Settings</CardTitle>
         <CardDescription>Change your world options.</CardDescription>

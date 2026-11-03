@@ -141,7 +141,8 @@ export const DialogUnicodeLine = ({
       ref={ref}
       data-mc-dialog-unicode-ready={ready}
       aria-hidden="true"
-      style={{ display: "block", height: 9 * scale, width: width * scale }}
+      className="block"
+      style={{ height: 9 * scale, width: width * scale }}
     />
   );
 };

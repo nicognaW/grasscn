@@ -3,11 +3,7 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const AspectRatioExample = () => (
-  <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-    className="[width:400px]"
-    style={{ maxWidth: "100%" }}
-    /* eslint-enable shadcn/no-inline-styles */
-  >
+  <div className="[width:400px] max-w-full">
     <AspectRatio ratio={16 / 9}>
       <img
         width="160"

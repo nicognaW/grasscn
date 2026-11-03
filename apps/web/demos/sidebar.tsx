@@ -32,6 +32,12 @@ import {
 } from "../registry/ui/sidebar";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-sidebar-1-gap": `${number}px`;
+  "--mc-intrinsic-demos-sidebar-1-padding": `${number}px`;
+}
 
 const SidebarDemo = ({ scale }: DemoProps) => {
   const stage = useDemoWidth(scale);
@@ -179,7 +185,14 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               </div>
               <Card
                 scale={scale}
-                style={{ gap: 8 * scale, minWidth: 0, padding: 10 * scale }}
+                className="gap-(--mc-intrinsic-demos-sidebar-1-gap) min-w-0 p-(--mc-intrinsic-demos-sidebar-1-padding)"
+                style={
+                  // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                  {
+                    "--mc-intrinsic-demos-sidebar-1-gap": `${8 * scale}px`,
+                    "--mc-intrinsic-demos-sidebar-1-padding": `${10 * scale}px`,
+                  } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+                }
               >
                 <CardHeader>
                   <CardTitle>{selected}</CardTitle>

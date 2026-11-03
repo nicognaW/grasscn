@@ -10,6 +10,25 @@ import {
   ResizableHandle,
 } from "../registry/ui/resizable";
 import type { DemoProps } from "../types";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-resizable-1-padding": `${number}px`;
+  "--mc-intrinsic-demos-resizable-1-gap": `${number}px`;
+}
+
+interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-resizable-2-gap": `${number}px`;
+}
+
+interface IntrinsicLayoutStyle3 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-resizable-3-padding": `${number}px`;
+  "--mc-intrinsic-demos-resizable-3-gap": `${number}px`;
+}
+
+interface IntrinsicLayoutStyle4 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-demos-resizable-4-gap": `${number}px`;
+}
 
 const ResizableDemo = ({ scale }: DemoProps) => {
   const identity = React.useId();
@@ -81,18 +100,27 @@ const ResizableDemo = ({ scale }: DemoProps) => {
           <ResizablePanel id={left} defaultSize="50%" minSize="30%">
             <Card
               scale={scale}
-              style={{
-                width: "100%",
-                height: "100%",
-                padding: 4 * scale,
-                gap: 8 * scale,
-                overflow: "hidden",
-              }}
+              className="w-full h-full p-(--mc-intrinsic-demos-resizable-1-padding) gap-(--mc-intrinsic-demos-resizable-1-gap) overflow-hidden"
+              style={
+                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                {
+                  "--mc-intrinsic-demos-resizable-1-gap": `${8 * scale}px`,
+                  "--mc-intrinsic-demos-resizable-1-padding": `${4 * scale}px`,
+                } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+              }
             >
               <CardHeader>
                 <CardTitle>Bag</CardTitle>
               </CardHeader>
-              <CardContent style={{ display: "grid", gap: 4 * scale }}>
+              <CardContent
+                className="grid gap-(--mc-intrinsic-demos-resizable-2-gap)"
+                style={
+                  // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                  {
+                    "--mc-intrinsic-demos-resizable-2-gap": `${4 * scale}px`,
+                  } satisfies IntrinsicLayoutStyle2 as IntrinsicLayoutStyle2
+                }
+              >
                 {["Log", "Ore", "Gem"].map((label) => (
                   <Button
                     key={label}
@@ -112,18 +140,27 @@ const ResizableDemo = ({ scale }: DemoProps) => {
           <ResizablePanel id={right} defaultSize="50%" minSize="30%">
             <Card
               scale={scale}
-              style={{
-                width: "100%",
-                height: "100%",
-                padding: 4 * scale,
-                gap: 8 * scale,
-                overflow: "hidden",
-              }}
+              className="w-full h-full p-(--mc-intrinsic-demos-resizable-3-padding) gap-(--mc-intrinsic-demos-resizable-3-gap) overflow-hidden"
+              style={
+                // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                {
+                  "--mc-intrinsic-demos-resizable-3-gap": `${8 * scale}px`,
+                  "--mc-intrinsic-demos-resizable-3-padding": `${4 * scale}px`,
+                } satisfies IntrinsicLayoutStyle3 as IntrinsicLayoutStyle3
+              }
             >
               <CardHeader>
                 <CardTitle>Grid</CardTitle>
               </CardHeader>
-              <CardContent style={{ display: "grid", gap: 4 * scale }}>
+              <CardContent
+                className="grid gap-(--mc-intrinsic-demos-resizable-4-gap)"
+                style={
+                  // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+                  {
+                    "--mc-intrinsic-demos-resizable-4-gap": `${4 * scale}px`,
+                  } satisfies IntrinsicLayoutStyle4 as IntrinsicLayoutStyle4
+                }
+              >
                 {["Axe", "Hoe", "Map"].map((label) => (
                   <Button
                     key={label}

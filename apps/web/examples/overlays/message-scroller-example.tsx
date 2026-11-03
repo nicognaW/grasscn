@@ -14,6 +14,12 @@ import {
   MessageScrollerButton,
   useMessageScroller,
 } from "@/components/ui/message-scroller";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height": `${number}px`;
+  "--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top": `${number}px`;
+}
 
 type Line = { author?: string; text: string; system?: boolean };
 
@@ -109,11 +115,14 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             </MessageScrollerContent>
           </MessageScrollerViewport>
           <div
-            className="flex justify-end"
-            style={{
-              minHeight: 20 * scale,
-              paddingTop: 2 * scale,
-            }}
+            className="flex justify-end min-h-(--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height) pt-(--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top)"
+            style={
+              // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+              {
+                "--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height": `${20 * scale}px`,
+                "--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top": `${2 * scale}px`,
+              } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+            }
           >
             <MessageScrollerButton
               direction="end"

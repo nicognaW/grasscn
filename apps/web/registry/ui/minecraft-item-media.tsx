@@ -6,6 +6,15 @@ import {
   retainItemMedia,
   releaseItemMedia,
 } from "./minecraft-item-media-gpu";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility": string;
+}
+
+interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility": string;
+}
 
 export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
@@ -113,15 +122,27 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
         aria-hidden="true"
         draggable={false}
         src={minecraftItemAssets.thumbnail.image}
-        className="mc-item-thumbnail"
-        style={{ visibility: painted ? "hidden" : "visible" }}
+        className="mc-item-thumbnail [visibility:var(--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility)]"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility":
+              painted ? "hidden" : "visible",
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       />
       <canvas
         ref={canvas}
         aria-hidden="true"
         data-mc-item-media-ready={painted}
-        className="mc-item-thumbnail"
-        style={{ visibility: painted ? "visible" : "hidden" }}
+        className="mc-item-thumbnail [visibility:var(--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility)]"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-ui-minecraft-item-media-2-visibility":
+              painted ? "visible" : "hidden",
+          } satisfies IntrinsicLayoutStyle2 as IntrinsicLayoutStyle2
+        }
       />
     </>
   );

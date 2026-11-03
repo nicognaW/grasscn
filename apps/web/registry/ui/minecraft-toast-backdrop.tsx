@@ -83,13 +83,7 @@ export const MinecraftToastBackdrop = ({
     <canvas
       ref={ref}
       aria-hidden="true"
-      style={{
-        height: "100%",
-        inset: 0,
-        pointerEvents: "none",
-        position: "absolute",
-        width: "100%",
-      }}
+      className="h-full [inset:0] pointer-events-none absolute w-full"
     />
   );
 };

@@ -41,7 +41,10 @@ const AspectRatioDemo = ({ scale }: DemoProps) => {
         ))}
       </div>
       <div className="demo-stage" data-stage="aspect-ratio">
-        <div style={{ width: Math.min(320, 160 * scale), maxWidth: "100%" }}>
+        <div
+          className="max-w-full"
+          style={{ width: Math.min(320, 160 * scale) }}
+        >
           <AspectRatio
             ratio={ratio}
             style={{

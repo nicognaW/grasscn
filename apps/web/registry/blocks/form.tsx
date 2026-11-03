@@ -19,6 +19,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
 import { Textarea } from "@/components/ui/textarea";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-intrinsic-registry-blocks-form-1-gap": `${number}px`;
+  "--mc-intrinsic-registry-blocks-form-1-max-width": `${number}px`;
+}
 
 const schema = z.object({
   name: z
@@ -74,12 +80,14 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         aria-label="Player and world settings"
         noValidate
         onSubmit={form.handleSubmit(setSaved)}
-        style={{
-          display: "grid",
-          gap: 12 * scale,
-          maxWidth: 420 * scale,
-          minWidth: 0,
-        }}
+        className="grid gap-(--mc-intrinsic-registry-blocks-form-1-gap) max-w-(--mc-intrinsic-registry-blocks-form-1-max-width) min-w-0"
+        style={
+          // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+          {
+            "--mc-intrinsic-registry-blocks-form-1-gap": `${12 * scale}px`,
+            "--mc-intrinsic-registry-blocks-form-1-max-width": `${420 * scale}px`,
+          } satisfies IntrinsicLayoutStyle1 as IntrinsicLayoutStyle1
+        }
       >
         <FieldSet disabled={disabled}>
           <FieldLegend scale={scale} maxWidth={width}>
@@ -185,7 +193,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             />
           </FieldGroup>
         </FieldSet>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 * scale }}>
+        <div className="flex flex-wrap" style={{ gap: 8 * scale }}>
           <Button scale={scale} type="submit" disabled={disabled}>
             Save player
           </Button>

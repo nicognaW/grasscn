@@ -268,7 +268,7 @@ export const MinecraftSignPaint = ({
       height={(hanging ? 74 : 110) * scale}
       data-ready={ready}
       aria-hidden="true"
-      style={{ display: "block", imageRendering: "pixelated" }}
+      className="block [image-rendering:pixelated]"
     />
   );
 };

@@ -21,9 +21,9 @@ const HotbarDemo = ({ scale }: DemoProps) => {
 
   return (
     <div
-      className="demo-stage demo-layout-demos-hotbar-1"
+      className="demo-stage demo-layout-demos-hotbar-1 demo-stage-display-grid demo-stage-gap-20"
       data-stage="hotbar"
-      style={{ display: "grid", gap: 20, padding: 20 }}
+      style={{ padding: 20 }}
     >
       <Hotbar
         value={value}

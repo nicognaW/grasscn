@@ -161,7 +161,7 @@ export const MinecraftConfirmationText = ({
 
   return (
     <span
-      className="mc-confirmation-text"
+      className="mc-confirmation-text block"
       data-mc-confirmation-native-height={
         Math.min(title ? 1 : 15, nativeLines.length) * 9 * scale
       }
@@ -170,7 +170,7 @@ export const MinecraftConfirmationText = ({
           ? Math.max(0, ...text.split("\n").map(widthOf)) * scale
           : undefined
       }
-      style={{ display: "block", width: widest * scale }}
+      style={{ width: widest * scale }}
     >
       <span aria-hidden="true">
         {lines.map((line, index) => (

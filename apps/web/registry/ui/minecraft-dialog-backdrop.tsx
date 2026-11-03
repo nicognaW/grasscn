@@ -133,7 +133,7 @@ export const MinecraftDialogBackdrop = () => {
         width="0"
         height="0"
         aria-hidden="true"
-        style={{ pointerEvents: "none", position: "absolute" }}
+        className="pointer-events-none absolute"
       >
         <defs>
           {Array.from({ length: 17 }, (_, index) => 192 + index).map(
@@ -174,13 +174,11 @@ export const MinecraftDialogBackdrop = () => {
         <span
           aria-hidden="true"
           key={index}
+          className="left-0 pointer-events-none absolute right-0"
           style={{
             backdropFilter: `url(#${id}-${band.alpha})`,
             height: band.height,
-            left: 0,
-            pointerEvents: "none",
-            position: "absolute",
-            right: 0,
+
             top: band.start,
           }}
         />

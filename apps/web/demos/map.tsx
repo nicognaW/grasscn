@@ -52,7 +52,7 @@ const MapDemo = ({ scale }: DemoProps) => {
           <p className="grass-note">Select a marker or a point on the map.</p>
         </div>
       </div>
-      <div className="demo-layout-demos-map-2" style={{ maxWidth: "100%" }}>
+      <div className="demo-layout-demos-map-2 max-w-full">
         <LocatorBar
           scale={scale}
           heading={heading}

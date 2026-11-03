@@ -41,16 +41,8 @@ const TradingExample = () => {
   const [completed, setCompleted] = useState(0);
 
   return (
-    <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-      className="grid gap-4"
-      style={{ maxWidth: "100%" }}
-      /* eslint-enable shadcn/no-inline-styles */
-    >
-      <div /* eslint-disable shadcn/no-inline-styles -- Copyable examples retain their exact integer layout and renderer geometry without repository-only CSS. */
-        className="overflow-x-auto"
-        style={{ maxWidth: "100%" }}
-        /* eslint-enable shadcn/no-inline-styles */
-      >
+    <div className="grid gap-4 max-w-full">
+      <div className="overflow-x-auto max-w-full">
         <Trading
           title="Village market"
           offers={offers}
