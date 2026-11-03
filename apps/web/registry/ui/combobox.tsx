@@ -516,7 +516,8 @@ const ComboboxChipsInput = ({
         render ?? (
           <Input
             scale={scale}
-            style={{ background: "transparent", border: 0, width: 80 * scale }}
+            className="[border:0]"
+            style={{ background: "transparent", width: 80 * scale }}
           />
         )
       }

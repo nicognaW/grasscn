@@ -195,7 +195,7 @@ const Slider = ({
           onPointerCancelCapture?.(event);
         }}
       >
-        <SliderPrimitive.Control style={{ inset: 0, position: "absolute" }}>
+        <SliderPrimitive.Control className="absolute inset-0">
           <SliderPrimitive.Track
             style={{ inset: 0, position: "absolute" }}
             data-slot="slider-track"

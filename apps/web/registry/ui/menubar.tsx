@@ -270,7 +270,7 @@ const MenubarContent = ({
           collisionPadding={collisionPadding}
           collisionBoundary={collisionBoundary}
           collisionAvoidance={collisionAvoidance}
-          style={{ zIndex: 50 }}
+          className="z-50"
         >
           <Primitive.Popup
             render={render}
@@ -604,7 +604,7 @@ const MenubarSubContent = ({
         collisionPadding={collisionPadding}
         collisionBoundary={collisionBoundary}
         collisionAvoidance={collisionAvoidance}
-        style={{ zIndex: 50 }}
+        className="z-50"
       >
         <Primitive.Popup
           render={render}

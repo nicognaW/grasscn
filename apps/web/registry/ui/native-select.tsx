@@ -180,7 +180,7 @@ const NativeSelect = ({
             <SelectTrigger
               aria-disabled={props.disabled ?? undefined}
               tabIndex={-1}
-              style={{ height: "100%", width: "100%" }}
+              className="h-full w-full"
             >
               {label}
             </SelectTrigger>

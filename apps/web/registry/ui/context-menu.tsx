@@ -231,7 +231,7 @@ const ContextMenuContent = ({
       <MenuScaleContext.Provider value={scale}>
         <Primitive.Positioner
           data-mc-positioner=""
-          style={{ zIndex: 50 }}
+          className="z-50"
           side={side}
           align={align}
           sideOffset={sideOffset}
@@ -566,7 +566,7 @@ const ContextMenuSubContent = ({
     <MenuScaleContext.Provider value={scale}>
       <Primitive.Positioner
         data-mc-positioner=""
-        style={{ zIndex: 50 }}
+        className="z-50"
         side={side}
         align={align}
         sideOffset={sideOffset}

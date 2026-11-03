@@ -43,7 +43,7 @@ const PopoverDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setMessage(event.target.value);
             }}
-            style={{ height: 100, width: 320 }}
+            className="h-25 w-80"
           />
         </label>
       </div>

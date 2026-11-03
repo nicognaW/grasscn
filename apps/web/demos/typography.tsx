@@ -28,7 +28,7 @@ const TypographyDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setText(event.target.value);
             }}
-            style={{ height: 100, width: 320 }}
+            className="h-25 w-80"
           />
         </label>
       </div>

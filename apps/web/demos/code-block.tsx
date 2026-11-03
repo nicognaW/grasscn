@@ -36,7 +36,7 @@ const CodeBlockDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setCode(event.target.value);
             }}
-            style={{ height: 120, width: 340 }}
+            className="h-30 w-85"
           />
         </label>
         <label>

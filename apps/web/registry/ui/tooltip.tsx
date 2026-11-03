@@ -194,7 +194,7 @@ const TooltipContent = ({
     <TooltipPrimitive.Portal keepMounted={keepMounted}>
       <TooltipPrimitive.Positioner
         data-mc-positioner=""
-        style={{ zIndex: 50 }}
+        className="z-50"
         side={side}
         align={align}
         sideOffset={sideOffset}

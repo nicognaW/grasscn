@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
@@ -10,6 +11,11 @@ import {
 import { Input } from "../registry/ui/input";
 import { Textarea } from "../registry/ui/textarea";
 import type { DemoProps } from "../types";
+
+interface PresentationLayoutStyle1 extends IntrinsicLayoutCSSProperties {
+  "--mc-presentation-demos-collapsible-1-height": `${number}px`;
+  "--mc-presentation-demos-collapsible-1-width": `${number}px`;
+}
 
 const CollapsibleDemo = ({ scale }: DemoProps) => {
   const [title, setTitle] = React.useState("World details");
@@ -50,7 +56,14 @@ const CollapsibleDemo = ({ scale }: DemoProps) => {
             onChange={(event) => {
               setMessage(event.target.value);
             }}
-            style={{ height: 50 * scale, maxWidth: "100%", width: 160 * scale }}
+            className="h-(--mc-presentation-demos-collapsible-1-height) w-(--mc-presentation-demos-collapsible-1-width) max-w-full"
+            style={
+              // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
+              {
+                "--mc-presentation-demos-collapsible-1-height": `${50 * scale}px`,
+                "--mc-presentation-demos-collapsible-1-width": `${160 * scale}px`,
+              } satisfies PresentationLayoutStyle1 as PresentationLayoutStyle1
+            }
           />
         </label>
         <Button
