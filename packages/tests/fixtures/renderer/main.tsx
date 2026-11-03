@@ -2139,6 +2139,895 @@ const DialogFixture = () => {
   );
 };
 
+const FixtureTabsTrigger = () => (
+  <Tabs
+    scale={scale}
+    defaultValue={params.get("selected") === "true" ? "subject" : null}
+  >
+    <TabsList
+      aria-label="Test tab trigger"
+      activateOnFocus={
+        params.get("activationMode") !== "manual" &&
+        params.get("component") !== "tabs-trigger"
+      }
+    >
+      <TabsTrigger
+        id="subject"
+        value="subject"
+        disabled={state.startsWith("disabled")}
+        style={{ width: width * scale }}
+        data-subject="true"
+      >
+        {params.get("label") ?? "Game"}
+      </TabsTrigger>
+    </TabsList>
+  </Tabs>
+);
+
+const FixtureTabs = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const tabsRef = React.useRef<HTMLDivElement>(null);
+  const tabsListRef = React.useRef<HTMLDivElement>(null);
+  const tabsTriggerRef = React.useRef<HTMLButtonElement>(null);
+  const tabsContentRef = React.useRef<HTMLDivElement>(null);
+
+  const [tabsValue, setTabsValue] = React.useState(
+    `tab-${params.get("selectedIndex") ?? 0}`
+  );
+
+  // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
+  // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
+  const titles: string[] = params.has("labels")
+    ? (JSON.parse(params.get("labels")!) as FixtureLabels)
+    : ["Game", "World", "More"];
+  // oxlint-enable typescript/no-unsafe-type-assertion
+
+  const panel = Number(params.get("contentHeight") ?? 0);
+
+  const triggers = titles.map((title, index) => (
+    <TabsTrigger
+      render={
+        params.has("triggerAsChild") && index === 0 ? (
+          <a href="#composed-tab" />
+        ) : undefined
+      }
+      key={index}
+      value={`tab-${index}`}
+      ref={index === 0 ? tabsTriggerRef : undefined}
+      disabled={
+        params.has("disabledIndex") &&
+        Number(params.get("disabledIndex")) === index
+      }
+    >
+      {title}
+    </TabsTrigger>
+  ));
+
+  const contents = (
+    <>
+      <TabsList
+        render={params.has("listAsChild") ? <nav /> : undefined}
+        id={panel > 0 ? "tab-list" : "subject"}
+        ref={tabsListRef}
+        aria-label="Test tabs"
+        activateOnFocus={
+          params.get("activationMode") !== "manual" &&
+          params.get("component") !== "tabs-trigger"
+        }
+        data-subject={
+          (panel > 0 ? "tab-list" : "subject") === "subject"
+            ? "true"
+            : undefined
+        }
+      >
+        {triggers}
+      </TabsList>
+      {titles.map((title, index) => (
+        <TabsContent
+          key={index}
+          value={`tab-${index}`}
+          ref={index === 0 ? tabsContentRef : undefined}
+          keepMounted={params.has("forceMount") ? true : undefined}
+          style={{ height: panel > 0 ? panel * scale : undefined }}
+        >
+          {panel > 0 && !params.has("panelText") ? null : (
+            <span>{title} content</span>
+          )}
+        </TabsContent>
+      ))}
+    </>
+  );
+
+  return (
+    <>
+      <Tabs
+        render={params.has("asChild") ? <section /> : undefined}
+        id={panel > 0 ? "subject" : "tabs-root"}
+        ref={tabsRef}
+        scale={scale}
+        defaultValue={`tab-${params.get("selectedIndex") ?? 0}`}
+        value={params.has("controlled") ? tabsValue : undefined}
+        dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
+        style={{ width: width * scale }}
+        onValueChange={(next: string) => {
+          if (!params.has("reject")) {
+            setTabsValue(next);
+          }
+
+          setCount((current) => current + 1);
+        }}
+        data-subject={
+          (panel > 0 ? "subject" : "tabs-root") === "subject"
+            ? "true"
+            : undefined
+        }
+      >
+        {contents}
+      </Tabs>
+      <output aria-label="Selected tab">{tabsValue}</output>
+      <output aria-label="Tab changes">{count}</output>
+      <button
+        type="button"
+        id="select-last-tab"
+        onClick={() => {
+          setTabsValue(`tab-${titles.length - 1}`);
+        }}
+      >
+        Select last tab externally
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(
+            `${tabsRef.current?.tagName}/${tabsListRef.current?.tagName}/${tabsTriggerRef.current?.tagName}/${tabsContentRef.current?.tagName}`
+          );
+        }}
+      >
+        Read refs
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+    </>
+  );
+};
+
+const FixtureProgress = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const progressRef = React.useRef<HTMLDivElement>(null);
+
+  const [progressValue, setProgressValue] = React.useState<number | null>(
+    params.has("unknown") ? null : Number(params.get("value") ?? 50)
+  );
+
+  return (
+    <>
+      <Progress
+        render={
+          params.has("asChild") ? (
+            <section data-testid="composed-progress" />
+          ) : undefined
+        }
+        id="subject"
+        ref={progressRef}
+        scale={scale}
+        value={progressValue}
+        max={Number(params.get("max") ?? 100)}
+        color={(params.get("color") ?? "pink") as BossBarColor}
+        overlay={(params.get("overlay") ?? "progress") as BossBarOverlay}
+        aria-label="Test progress"
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        aria-valuetext={
+          params.has("customLabel")
+            ? `${progressValue} of ${Number(params.get("max") ?? 100)} loaded`
+            : undefined
+        }
+        data-subject="true"
+      >
+        {undefined}
+      </Progress>
+      <button
+        type="button"
+        id="update-progress"
+        onClick={() => {
+          setProgressValue(Number(params.get("next") ?? 100));
+        }}
+      >
+        Update progress
+      </button>
+      <button
+        type="button"
+        id="unknown-progress"
+        onClick={() => {
+          setProgressValue(null);
+        }}
+      >
+        Unknown progress
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(progressRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureScrollArea = () => {
+  const [count, setCount] = React.useState(0);
+  const [commits, setCommits] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+  const [scrollValue, setScrollValue] = React.useState(0);
+
+  const [scrollContent, setScrollContent] = React.useState(
+    Number(params.get("contentHeight") ?? 480)
+  );
+
+  React.useEffect(() => {
+    if (params.get("component") === "scroll-area" && viewportRef.current) {
+      viewportRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
+    }
+  }, []);
+
+  const rows = (
+    <div
+      key="rows"
+      style={{ "--fixture-layout-16": `${scrollContent * scale}px` }}
+      className="fixture-owner-layout-32 fixture-owner-layout-33"
+    >
+      {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
+        <div
+          key={index}
+          style={{ "--fixture-layout-17": `${24 * scale}px` }}
+          className="fixture-owner-layout-34 fixture-owner-layout-35 fixture-owner-layout-36"
+        >
+          <Button
+            scale={scale}
+            style={{ width: "100%" }}
+            onClick={() => {
+              setCount((current) => current + 1);
+            }}
+          >{`Row ${index + 1}`}</Button>
+        </div>
+      ))}
+    </div>
+  );
+
+  const customBar = params.has("customBar") ? (
+    <ScrollBar key="bar" data-testid="custom-scrollbar" />
+  ) : null;
+
+  return (
+    <>
+      <ScrollArea
+        render={params.has("asChild") ? <section /> : undefined}
+        id="subject"
+        ref={scrollAreaRef}
+        viewportRef={viewportRef}
+        role="region"
+        aria-label="Test scroll area"
+        disabled={state === "disabled"}
+        scale={scale}
+        onPointerDown={() => {
+          setCommits((current) => current + 1);
+        }}
+        viewportProps={{
+          "aria-label": "Scrollable content",
+          onScroll: (event) => {
+            setScrollValue(event.currentTarget.scrollTop);
+          },
+        }}
+        style={
+          params.has("defaults")
+            ? undefined
+            : {
+                height: Number(params.get("height") ?? 80) * scale,
+                width: width * scale,
+              }
+        }
+        data-subject="true"
+      >
+        {params.has("asChild") ? (
+          <>
+            {rows}
+            {customBar}
+          </>
+        ) : (
+          [rows, customBar]
+        )}
+      </ScrollArea>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(
+            `${scrollAreaRef.current?.tagName}/${viewportRef.current?.tagName}`
+          );
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Scroll offset">{scrollValue}</output>
+      <output aria-label="Activations">{count}</output>
+      <output aria-label="Pointer events">{commits}</output>
+      <button
+        type="button"
+        id="shrink-content"
+        onClick={() => {
+          setScrollContent(24);
+        }}
+      >
+        Shrink content
+      </button>
+      <button
+        type="button"
+        id="grow-content"
+        onClick={() => {
+          setScrollContent(480);
+        }}
+      >
+        Grow content
+      </button>
+    </>
+  );
+};
+
+const FixtureSeparator = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const separatorRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <>
+      <button type="button" id="before">
+        Before separator
+      </button>
+      <Separator
+        render={params.has("asChild") ? <hr /> : undefined}
+        id="subject"
+        ref={separatorRef}
+        scale={scale}
+        edge={state === "footer" ? "footer" : "header"}
+        role={params.has("semantic") ? "separator" : "none"}
+        aria-label={params.has("semantic") ? "Settings sections" : undefined}
+        data-testid="native-separator"
+        style={{ width: width * scale }}
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        data-subject="true"
+      >
+        {undefined}
+      </Separator>
+      <button type="button" id="after">
+        After separator
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(separatorRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureLabel = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const labelRef = React.useRef<HTMLLabelElement>(null);
+
+  return (
+    <>
+      <Label
+        id="subject"
+        ref={labelRef}
+        htmlFor="label-input"
+        scale={scale}
+        aria-disabled={state === "disabled" || undefined}
+        maxWidth={
+          params.has("wrapWidth") ? Number(params.get("wrapWidth")) : undefined
+        }
+        align={params.get("alignment") === "center" ? "center" : "left"}
+        style={{
+          width: width * scale,
+          height: Number(params.get("height") ?? 9) * scale,
+        }}
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+        data-subject="true"
+      >
+        {params.has("rich") ? <strong>Rich label</strong> : label}
+      </Label>
+      <Input
+        id="label-input"
+        disabled={state === "disabled"}
+        defaultValue="Minecraft"
+      />
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(labelRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureTextarea = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const [inputValue, setInputValue] = React.useState(
+    params.get("text") ?? "Hello Minecraft"
+  );
+
+  const [submitted, setSubmitted] = React.useState(0);
+  React.useEffect(() => {
+    if (params.get("component") === "textarea" && textareaRef.current) {
+      textareaRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
+    }
+  }, []);
+
+  return (
+    <>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted((current) => current + 1);
+        }}
+      >
+        <Textarea
+          id="subject"
+          ref={textareaRef}
+          name="message"
+          aria-label="Test textarea"
+          scale={scale}
+          value={params.has("uncontrolled") ? undefined : inputValue}
+          defaultValue={
+            params.has("uncontrolled") ? (params.get("text") ?? "") : undefined
+          }
+          disabled={state === "disabled"}
+          readOnly={state.includes("readonly")}
+          placeholder={params.get("placeholder") ?? ""}
+          style={{
+            width: width * scale,
+            height: Number(params.get("height") ?? 80) * scale,
+          }}
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            setCount((current) => current + 1);
+          }}
+          data-subject="true"
+        />
+        <button type="submit" id="submit">
+          Submit
+        </button>
+        <button type="reset" id="reset">
+          Reset
+        </button>
+      </form>
+      <output aria-label="Textarea value">{inputValue}</output>
+      <output aria-label="Textarea changes">{count}</output>
+      <output aria-label="Submissions">{submitted}</output>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(textareaRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+    </>
+  );
+};
+
+const FixtureCard = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <>
+      <Card
+        id="subject"
+        ref={cardRef}
+        aria-label="Test card"
+        scale={scale}
+        style={{
+          "--fixture-layout-18": `${width * scale}px`,
+          "--fixture-layout-21": `${Number(params.get("height") ?? 200) * scale}px`,
+          padding: params.has("text") ? undefined : 0,
+        }}
+        className="fixture-owner-layout-37 fixture-owner-layout-46"
+        data-subject="true"
+      >
+        {params.has("text") && (
+          <>
+            <CardHeader>
+              <CardTitle>{params.get("label") ?? "World Settings"}</CardTitle>
+              <CardDescription>{params.get("text")}</CardDescription>
+              {params.has("action") && (
+                <CardAction>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCount((current) => current + 1);
+                    }}
+                  >
+                    Action
+                  </button>
+                </CardAction>
+              )}
+            </CardHeader>
+            {params.has("content") && (
+              <CardContent>
+                <label htmlFor="card-input">Name</label>
+                <Input id="card-input" defaultValue="Minecraft" />
+              </CardContent>
+            )}
+            <CardFooter>
+              <Button
+                scale={scale}
+                onClick={() => {
+                  setCount((current) => current + 1);
+                }}
+              >
+                Done
+              </Button>
+            </CardFooter>
+          </>
+        )}
+      </Card>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(cardRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Activations">{count}</output>
+    </>
+  );
+};
+
+const FixtureTooltip = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
+  const tooltipRef = React.useRef<HTMLDivElement>(null);
+
+  return (
+    <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
+      <Tooltip
+        open={params.has("controlled") ? tooltipOpen : undefined}
+        defaultOpen={params.has("open")}
+        onOpenChange={setTooltipOpen}
+      >
+        <TooltipTrigger
+          render={
+            <button
+              type="button"
+              id="tooltip-trigger"
+              className="fixture-edge-anchor"
+              style={{
+                "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
+                "--fixture-edge-left": `${params.get("edge") === "left" ? 0 : 300}px`,
+              }}
+              onClick={() => {
+                setCount((current) => current + 1);
+              }}
+            />
+          }
+        >
+          {"Inspect"}
+        </TooltipTrigger>
+        <TooltipContent
+          render={params.has("asChild") ? <div /> : undefined}
+          id="subject"
+          ref={tooltipRef}
+          scale={scale}
+          maxWidth={Number(params.get("wrapWidth") ?? 170)}
+          side={
+            (params.get("side") ?? "top") as "top" | "bottom" | "left" | "right"
+          }
+          sideOffset={Number(params.get("offset") ?? 0)}
+          data-subject="true"
+        >
+          {params.has("asChild") ? (
+            (params.get("text") ?? "Tooltip")
+          ) : params.has("rich") ? (
+            <strong>Rich tooltip</strong>
+          ) : (
+            (params.get("text") ?? "Tooltip")
+          )}
+        </TooltipContent>
+      </Tooltip>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="external-open"
+        onClick={() => {
+          setTooltipOpen(true);
+        }}
+      >
+        Open externally
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(tooltipRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <output aria-label="Tooltip open">{String(tooltipOpen)}</output>
+      <output aria-label="Activations">{count}</output>
+    </TooltipProvider>
+  );
+};
+
+const FixtureInput = () => {
+  const [count, setCount] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const [inputValue, setInputValue] = React.useState(
+    params.get("text") ?? "Hello Minecraft"
+  );
+
+  const [submitted, setSubmitted] = React.useState(0);
+
+  return (
+    <>
+      <form
+        id="input-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSubmitted((current) => current + 1);
+        }}
+      >
+        <Input
+          ref={inputRef}
+          id="subject"
+          name="message"
+          aria-label="Test input"
+          scale={scale}
+          style={{ width: width * scale }}
+          value={params.has("uncontrolled") ? undefined : inputValue}
+          defaultValue={
+            params.has("uncontrolled")
+              ? (params.get("text") ?? "Hello Minecraft")
+              : undefined
+          }
+          type={params.get("type") ?? "text"}
+          placeholder={params.get("placeholder") ?? undefined}
+          disabled={state === "disabled"}
+          readOnly={state.includes("readonly")}
+          required={params.has("required")}
+          pattern={params.get("pattern") ?? undefined}
+          maxLength={
+            params.has("maxLength")
+              ? Number(params.get("maxLength"))
+              : undefined
+          }
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            setCount((current) => current + 1);
+          }}
+          data-subject="true"
+        />
+        <button type="submit" id="submit">
+          Submit
+        </button>
+        <button type="reset" id="reset">
+          Reset
+        </button>
+      </form>
+      <output aria-label="Input changes">{count}</output>
+      <output aria-label="Input value">{inputValue}</output>
+      <output aria-label="Submissions">{submitted}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(inputRef.current?.tagName ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <output aria-label="Root ref">{refName}</output>
+      <button
+        type="button"
+        id="imperative"
+        onClick={() => {
+          if (inputRef.current) {
+            inputRef.current.value = "Done";
+          }
+        }}
+      >
+        Set through ref
+      </button>
+    </>
+  );
+};
+
+const FixtureSlider = () => {
+  const [count, setCount] = React.useState(0);
+  const [commits, setCommits] = React.useState(0);
+  const [refName, setRefName] = React.useState("");
+  const sliderRef = React.useRef<HTMLDivElement>(null);
+
+  const [values, setValues] = React.useState(
+    (params.get("values") ?? params.get("value") ?? "500")
+      .split(",")
+      .map(Number)
+  );
+
+  return (
+    <>
+      <form id="slider-form">
+        <Slider
+          ref={sliderRef}
+          id="subject"
+          name="volume"
+          scale={scale}
+          aria-label="Volume"
+          label={params.get("label") ?? undefined}
+          value={
+            params.has("uncontrolled") || params.has("default-range")
+              ? undefined
+              : values
+          }
+          defaultValue={params.has("default-range") ? undefined : values}
+          min={0}
+          max={1000}
+          step={1}
+          disabled={state === "disabled"}
+          dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
+          orientation={
+            params.get("orientation") === "vertical" ? "vertical" : "horizontal"
+          }
+          style={
+            params.get("orientation") === "vertical"
+              ? undefined
+              : { width: width * scale }
+          }
+          onValueCommitted={() => {
+            setCommits((current) => current + 1);
+          }}
+          onValueChange={(next) => {
+            setValues(typeof next === "number" ? [next] : [...next]);
+            setCount((current) => current + 1);
+          }}
+          data-subject="true"
+        />
+      </form>
+      <output aria-label="Values">{values.join(",")}</output>
+      <output aria-label="Changes">{count}</output>
+      <output aria-label="Commits">{commits}</output>
+      <output aria-label="Root ref">{refName}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+      <button
+        type="button"
+        id="read-ref"
+        onClick={() => {
+          setRefName(sliderRef.current?.id ?? "missing");
+        }}
+      >
+        Read ref
+      </button>
+      <button type="reset" form="slider-form" id="reset">
+        Reset
+      </button>
+    </>
+  );
+};
+
+const FixtureCheckbox = () => {
+  const [count, setCount] = React.useState(0);
+
+  const [checked, setChecked] = React.useState<boolean | "indeterminate">(
+    params.get("checked") === "mixed"
+      ? "indeterminate"
+      : params.get("checked") === "true"
+  );
+
+  return (
+    <>
+      <Checkbox
+        id="subject"
+        aria-label="Test checkbox"
+        scale={scale}
+        checked={checked === true}
+        indeterminate={checked === "indeterminate"}
+        disabled={state === "disabled"}
+        onCheckedChange={(value) => {
+          setChecked(value);
+          setCount(count + 1);
+        }}
+        data-subject="true"
+      />
+      <output aria-label="Changes">{count}</output>
+      <button type="button" id="next">
+        Next focus target
+      </button>
+    </>
+  );
+};
+
+const FixtureButton = () => {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <>
+      <Button
+        id="subject"
+        scale={scale}
+        disabled={state === "disabled"}
+        style={params.has("width") ? { width: width * scale } : undefined}
+        onClick={() => {
+          setCount(count + 1);
+        }}
+        data-subject="true"
+      >
+        {label}
+      </Button>
+      <output aria-label="Activations">{count}</output>
+      <Button render={<a href="#destination" />}>Continue</Button>
+      <Button
+        disabled
+        onClick={() => {
+          setCount(count + 100);
+        }}
+      >
+        Disabled
+      </Button>
+      <a href="#utility" className={buttonVariants()}>
+        Utility link
+      </a>
+    </>
+  );
+};
+
 const Fixture = () => {
   if (params.get("component") === "tabs-fallback") {
     return <TabsFallbackFixture />;
@@ -2352,869 +3241,55 @@ const Fixture = () => {
     return <SelectFixture />;
   }
 
-  const [count, setCount] = React.useState(0);
-  const [commits, setCommits] = React.useState(0);
-  const [refName, setRefName] = React.useState("");
-  const sliderRef = React.useRef<HTMLDivElement>(null);
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-  const labelRef = React.useRef<HTMLLabelElement>(null);
-  const separatorRef = React.useRef<HTMLDivElement>(null);
-
-  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
-  const viewportRef = React.useRef<HTMLDivElement>(null);
-
-  const [scrollValue, setScrollValue] = React.useState(0);
-
-  const [scrollContent, setScrollContent] = React.useState(
-    Number(params.get("contentHeight") ?? 480)
-  );
-
-  const progressRef = React.useRef<HTMLDivElement>(null);
-
-  const [progressValue, setProgressValue] = React.useState<number | null>(
-    params.has("unknown") ? null : Number(params.get("value") ?? 50)
-  );
-
-  const tabsRef = React.useRef<HTMLDivElement>(null);
-  const tabsListRef = React.useRef<HTMLDivElement>(null);
-  const tabsTriggerRef = React.useRef<HTMLButtonElement>(null);
-  const tabsContentRef = React.useRef<HTMLDivElement>(null);
-
-  const [tabsValue, setTabsValue] = React.useState(
-    `tab-${params.get("selectedIndex") ?? 0}`
-  );
-
-  const [inputValue, setInputValue] = React.useState(
-    params.get("text") ?? "Hello Minecraft"
-  );
-
-  const [submitted, setSubmitted] = React.useState(0);
-  const [tooltipOpen, setTooltipOpen] = React.useState(params.has("open"));
-  const tooltipRef = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
-    if (params.get("component") === "textarea" && textareaRef.current) {
-      textareaRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
-    }
-  }, []);
-  React.useEffect(() => {
-    if (params.get("component") === "scroll-area" && viewportRef.current) {
-      viewportRef.current.scrollTop = Number(params.get("scroll") ?? 0) * scale;
-    }
-  }, []);
-
   if (params.get("component") === "tabs-trigger") {
-    return (
-      <Tabs
-        scale={scale}
-        defaultValue={params.get("selected") === "true" ? "subject" : null}
-      >
-        <TabsList
-          aria-label="Test tab trigger"
-          activateOnFocus={
-            params.get("activationMode") !== "manual" &&
-            params.get("component") !== "tabs-trigger"
-          }
-        >
-          <TabsTrigger
-            id="subject"
-            value="subject"
-            disabled={state.startsWith("disabled")}
-            style={{ width: width * scale }}
-            data-subject="true"
-          >
-            {params.get("label") ?? "Game"}
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-    );
+    return <FixtureTabsTrigger />;
   }
 
   if (params.get("component") === "tabs") {
-    // SAFETY: owned Tabs titles callers serialize string label arrays; preserve this branch's existing parameter/default read.
-    // oxlint-disable typescript/no-unsafe-type-assertion -- Exact Tabs titles query-label producer boundary.
-    const titles: string[] = params.has("labels")
-      ? (JSON.parse(params.get("labels")!) as FixtureLabels)
-      : ["Game", "World", "More"];
-    // oxlint-enable typescript/no-unsafe-type-assertion
-
-    const panel = Number(params.get("contentHeight") ?? 0);
-
-    const triggers = titles.map((title, index) => (
-      <TabsTrigger
-        render={
-          params.has("triggerAsChild") && index === 0 ? (
-            <a href="#composed-tab" />
-          ) : undefined
-        }
-        key={index}
-        value={`tab-${index}`}
-        ref={index === 0 ? tabsTriggerRef : undefined}
-        disabled={
-          params.has("disabledIndex") &&
-          Number(params.get("disabledIndex")) === index
-        }
-      >
-        {title}
-      </TabsTrigger>
-    ));
-
-    const contents = (
-      <>
-        <TabsList
-          render={params.has("listAsChild") ? <nav /> : undefined}
-          id={panel > 0 ? "tab-list" : "subject"}
-          ref={tabsListRef}
-          aria-label="Test tabs"
-          activateOnFocus={
-            params.get("activationMode") !== "manual" &&
-            params.get("component") !== "tabs-trigger"
-          }
-          data-subject={
-            (panel > 0 ? "tab-list" : "subject") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          {triggers}
-        </TabsList>
-        {titles.map((title, index) => (
-          <TabsContent
-            key={index}
-            value={`tab-${index}`}
-            ref={index === 0 ? tabsContentRef : undefined}
-            keepMounted={params.has("forceMount") ? true : undefined}
-            style={{ height: panel > 0 ? panel * scale : undefined }}
-          >
-            {panel > 0 && !params.has("panelText") ? null : (
-              <span>{title} content</span>
-            )}
-          </TabsContent>
-        ))}
-      </>
-    );
-
-    return (
-      <>
-        <Tabs
-          render={params.has("asChild") ? <section /> : undefined}
-          id={panel > 0 ? "subject" : "tabs-root"}
-          ref={tabsRef}
-          scale={scale}
-          defaultValue={`tab-${params.get("selectedIndex") ?? 0}`}
-          value={params.has("controlled") ? tabsValue : undefined}
-          dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
-          style={{ width: width * scale }}
-          onValueChange={(next: string) => {
-            if (!params.has("reject")) {
-              setTabsValue(next);
-            }
-
-            setCount((current) => current + 1);
-          }}
-          data-subject={
-            (panel > 0 ? "subject" : "tabs-root") === "subject"
-              ? "true"
-              : undefined
-          }
-        >
-          {contents}
-        </Tabs>
-        <output aria-label="Selected tab">{tabsValue}</output>
-        <output aria-label="Tab changes">{count}</output>
-        <button
-          type="button"
-          id="select-last-tab"
-          onClick={() => {
-            setTabsValue(`tab-${titles.length - 1}`);
-          }}
-        >
-          Select last tab externally
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(
-              `${tabsRef.current?.tagName}/${tabsListRef.current?.tagName}/${tabsTriggerRef.current?.tagName}/${tabsContentRef.current?.tagName}`
-            );
-          }}
-        >
-          Read refs
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-      </>
-    );
+    return <FixtureTabs />;
   }
 
   if (params.get("component") === "progress") {
-    return (
-      <>
-        <Progress
-          render={
-            params.has("asChild") ? (
-              <section data-testid="composed-progress" />
-            ) : undefined
-          }
-          id="subject"
-          ref={progressRef}
-          scale={scale}
-          value={progressValue}
-          max={Number(params.get("max") ?? 100)}
-          color={(params.get("color") ?? "pink") as BossBarColor}
-          overlay={(params.get("overlay") ?? "progress") as BossBarOverlay}
-          aria-label="Test progress"
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          aria-valuetext={
-            params.has("customLabel")
-              ? `${progressValue} of ${Number(params.get("max") ?? 100)} loaded`
-              : undefined
-          }
-          data-subject="true"
-        >
-          {undefined}
-        </Progress>
-        <button
-          type="button"
-          id="update-progress"
-          onClick={() => {
-            setProgressValue(Number(params.get("next") ?? 100));
-          }}
-        >
-          Update progress
-        </button>
-        <button
-          type="button"
-          id="unknown-progress"
-          onClick={() => {
-            setProgressValue(null);
-          }}
-        >
-          Unknown progress
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(progressRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
+    return <FixtureProgress />;
   }
 
   if (params.get("component") === "scroll-area") {
-    const rows = (
-      <div
-        key="rows"
-        style={{ "--fixture-layout-16": `${scrollContent * scale}px` }}
-        className="fixture-owner-layout-32 fixture-owner-layout-33"
-      >
-        {Array.from({ length: Math.ceil(scrollContent / 24) }, (_, index) => (
-          <div
-            key={index}
-            style={{ "--fixture-layout-17": `${24 * scale}px` }}
-            className="fixture-owner-layout-34 fixture-owner-layout-35 fixture-owner-layout-36"
-          >
-            <Button
-              scale={scale}
-              style={{ width: "100%" }}
-              onClick={() => {
-                setCount((current) => current + 1);
-              }}
-            >{`Row ${index + 1}`}</Button>
-          </div>
-        ))}
-      </div>
-    );
-
-    const customBar = params.has("customBar") ? (
-      <ScrollBar key="bar" data-testid="custom-scrollbar" />
-    ) : null;
-
-    return (
-      <>
-        <ScrollArea
-          render={params.has("asChild") ? <section /> : undefined}
-          id="subject"
-          ref={scrollAreaRef}
-          viewportRef={viewportRef}
-          role="region"
-          aria-label="Test scroll area"
-          disabled={state === "disabled"}
-          scale={scale}
-          onPointerDown={() => {
-            setCommits((current) => current + 1);
-          }}
-          viewportProps={{
-            "aria-label": "Scrollable content",
-            onScroll: (event) => {
-              setScrollValue(event.currentTarget.scrollTop);
-            },
-          }}
-          style={
-            params.has("defaults")
-              ? undefined
-              : {
-                  height: Number(params.get("height") ?? 80) * scale,
-                  width: width * scale,
-                }
-          }
-          data-subject="true"
-        >
-          {params.has("asChild") ? (
-            <>
-              {rows}
-              {customBar}
-            </>
-          ) : (
-            [rows, customBar]
-          )}
-        </ScrollArea>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(
-              `${scrollAreaRef.current?.tagName}/${viewportRef.current?.tagName}`
-            );
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Scroll offset">{scrollValue}</output>
-        <output aria-label="Activations">{count}</output>
-        <output aria-label="Pointer events">{commits}</output>
-        <button
-          type="button"
-          id="shrink-content"
-          onClick={() => {
-            setScrollContent(24);
-          }}
-        >
-          Shrink content
-        </button>
-        <button
-          type="button"
-          id="grow-content"
-          onClick={() => {
-            setScrollContent(480);
-          }}
-        >
-          Grow content
-        </button>
-      </>
-    );
+    return <FixtureScrollArea />;
   }
 
   if (params.get("component") === "separator") {
-    return (
-      <>
-        <button type="button" id="before">
-          Before separator
-        </button>
-        <Separator
-          render={params.has("asChild") ? <hr /> : undefined}
-          id="subject"
-          ref={separatorRef}
-          scale={scale}
-          edge={state === "footer" ? "footer" : "header"}
-          role={params.has("semantic") ? "separator" : "none"}
-          aria-label={params.has("semantic") ? "Settings sections" : undefined}
-          data-testid="native-separator"
-          style={{ width: width * scale }}
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          data-subject="true"
-        >
-          {undefined}
-        </Separator>
-        <button type="button" id="after">
-          After separator
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(separatorRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
+    return <FixtureSeparator />;
   }
 
   if (params.get("component") === "label") {
-    return (
-      <>
-        <Label
-          id="subject"
-          ref={labelRef}
-          htmlFor="label-input"
-          scale={scale}
-          aria-disabled={state === "disabled" || undefined}
-          maxWidth={
-            params.has("wrapWidth")
-              ? Number(params.get("wrapWidth"))
-              : undefined
-          }
-          align={params.get("alignment") === "center" ? "center" : "left"}
-          style={{
-            width: width * scale,
-            height: Number(params.get("height") ?? 9) * scale,
-          }}
-          onClick={() => {
-            setCount((current) => current + 1);
-          }}
-          data-subject="true"
-        >
-          {params.has("rich") ? <strong>Rich label</strong> : label}
-        </Label>
-        <Input
-          id="label-input"
-          disabled={state === "disabled"}
-          defaultValue="Minecraft"
-        />
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(labelRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
+    return <FixtureLabel />;
   }
 
   if (params.get("component") === "textarea") {
-    return (
-      <>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSubmitted((current) => current + 1);
-          }}
-        >
-          <Textarea
-            id="subject"
-            ref={textareaRef}
-            name="message"
-            aria-label="Test textarea"
-            scale={scale}
-            value={params.has("uncontrolled") ? undefined : inputValue}
-            defaultValue={
-              params.has("uncontrolled")
-                ? (params.get("text") ?? "")
-                : undefined
-            }
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            placeholder={params.get("placeholder") ?? ""}
-            style={{
-              width: width * scale,
-              height: Number(params.get("height") ?? 80) * scale,
-            }}
-            onChange={(event) => {
-              setInputValue(event.target.value);
-              setCount((current) => current + 1);
-            }}
-            data-subject="true"
-          />
-          <button type="submit" id="submit">
-            Submit
-          </button>
-          <button type="reset" id="reset">
-            Reset
-          </button>
-        </form>
-        <output aria-label="Textarea value">{inputValue}</output>
-        <output aria-label="Textarea changes">{count}</output>
-        <output aria-label="Submissions">{submitted}</output>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(textareaRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-      </>
-    );
+    return <FixtureTextarea />;
   }
 
   if (params.get("component") === "card") {
-    return (
-      <>
-        <Card
-          id="subject"
-          ref={cardRef}
-          aria-label="Test card"
-          scale={scale}
-          style={{
-            "--fixture-layout-18": `${width * scale}px`,
-            "--fixture-layout-21": `${Number(params.get("height") ?? 200) * scale}px`,
-            padding: params.has("text") ? undefined : 0,
-          }}
-          className="fixture-owner-layout-37 fixture-owner-layout-46"
-          data-subject="true"
-        >
-          {params.has("text") && (
-            <>
-              <CardHeader>
-                <CardTitle>{params.get("label") ?? "World Settings"}</CardTitle>
-                <CardDescription>{params.get("text")}</CardDescription>
-                {params.has("action") && (
-                  <CardAction>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCount((current) => current + 1);
-                      }}
-                    >
-                      Action
-                    </button>
-                  </CardAction>
-                )}
-              </CardHeader>
-              {params.has("content") && (
-                <CardContent>
-                  <label htmlFor="card-input">Name</label>
-                  <Input id="card-input" defaultValue="Minecraft" />
-                </CardContent>
-              )}
-              <CardFooter>
-                <Button
-                  scale={scale}
-                  onClick={() => {
-                    setCount((current) => current + 1);
-                  }}
-                >
-                  Done
-                </Button>
-              </CardFooter>
-            </>
-          )}
-        </Card>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(cardRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Activations">{count}</output>
-      </>
-    );
+    return <FixtureCard />;
   }
 
   if (params.get("component") === "tooltip") {
-    return (
-      <TooltipProvider delay={Number(params.get("delay") ?? 0)}>
-        <Tooltip
-          open={params.has("controlled") ? tooltipOpen : undefined}
-          defaultOpen={params.has("open")}
-          onOpenChange={setTooltipOpen}
-        >
-          <TooltipTrigger
-            render={
-              <button
-                type="button"
-                id="tooltip-trigger"
-                className="fixture-edge-anchor"
-                style={{
-                  "--fixture-edge-top": `${params.get("edge") === "top" ? 0 : 240}px`,
-                  "--fixture-edge-left": `${params.get("edge") === "left" ? 0 : 300}px`,
-                }}
-                onClick={() => {
-                  setCount((current) => current + 1);
-                }}
-              />
-            }
-          >
-            {"Inspect"}
-          </TooltipTrigger>
-          <TooltipContent
-            render={params.has("asChild") ? <div /> : undefined}
-            id="subject"
-            ref={tooltipRef}
-            scale={scale}
-            maxWidth={Number(params.get("wrapWidth") ?? 170)}
-            side={
-              (params.get("side") ?? "top") as
-                | "top"
-                | "bottom"
-                | "left"
-                | "right"
-            }
-            sideOffset={Number(params.get("offset") ?? 0)}
-            data-subject="true"
-          >
-            {params.has("asChild") ? (
-              (params.get("text") ?? "Tooltip")
-            ) : params.has("rich") ? (
-              <strong>Rich tooltip</strong>
-            ) : (
-              (params.get("text") ?? "Tooltip")
-            )}
-          </TooltipContent>
-        </Tooltip>
-        <button type="button" id="next">
-          Next focus target
-        </button>
-        <button
-          type="button"
-          id="external-open"
-          onClick={() => {
-            setTooltipOpen(true);
-          }}
-        >
-          Open externally
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(tooltipRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <output aria-label="Tooltip open">{String(tooltipOpen)}</output>
-        <output aria-label="Activations">{count}</output>
-      </TooltipProvider>
-    );
+    return <FixtureTooltip />;
   }
 
   if (params.get("component") === "input") {
-    return (
-      <>
-        <form
-          id="input-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSubmitted((current) => current + 1);
-          }}
-        >
-          <Input
-            ref={inputRef}
-            id="subject"
-            name="message"
-            aria-label="Test input"
-            scale={scale}
-            style={{ width: width * scale }}
-            value={params.has("uncontrolled") ? undefined : inputValue}
-            defaultValue={
-              params.has("uncontrolled")
-                ? (params.get("text") ?? "Hello Minecraft")
-                : undefined
-            }
-            type={params.get("type") ?? "text"}
-            placeholder={params.get("placeholder") ?? undefined}
-            disabled={state === "disabled"}
-            readOnly={state.includes("readonly")}
-            required={params.has("required")}
-            pattern={params.get("pattern") ?? undefined}
-            maxLength={
-              params.has("maxLength")
-                ? Number(params.get("maxLength"))
-                : undefined
-            }
-            onChange={(event) => {
-              setInputValue(event.target.value);
-              setCount((current) => current + 1);
-            }}
-            data-subject="true"
-          />
-          <button type="submit" id="submit">
-            Submit
-          </button>
-          <button type="reset" id="reset">
-            Reset
-          </button>
-        </form>
-        <output aria-label="Input changes">{count}</output>
-        <output aria-label="Input value">{inputValue}</output>
-        <output aria-label="Submissions">{submitted}</output>
-        <button type="button" id="next">
-          Next focus target
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(inputRef.current?.tagName ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <output aria-label="Root ref">{refName}</output>
-        <button
-          type="button"
-          id="imperative"
-          onClick={() => {
-            if (inputRef.current) {
-              inputRef.current.value = "Done";
-            }
-          }}
-        >
-          Set through ref
-        </button>
-      </>
-    );
+    return <FixtureInput />;
   }
 
-  const [checked, setChecked] = React.useState<boolean | "indeterminate">(
-    params.get("checked") === "mixed"
-      ? "indeterminate"
-      : params.get("checked") === "true"
-  );
-
-  const [values, setValues] = React.useState(
-    (params.get("values") ?? params.get("value") ?? "500")
-      .split(",")
-      .map(Number)
-  );
-
   if (params.get("component") === "slider") {
-    return (
-      <>
-        <form id="slider-form">
-          <Slider
-            ref={sliderRef}
-            id="subject"
-            name="volume"
-            scale={scale}
-            aria-label="Volume"
-            label={params.get("label") ?? undefined}
-            value={
-              params.has("uncontrolled") || params.has("default-range")
-                ? undefined
-                : values
-            }
-            defaultValue={params.has("default-range") ? undefined : values}
-            min={0}
-            max={1000}
-            step={1}
-            disabled={state === "disabled"}
-            dir={params.get("dir") === "rtl" ? "rtl" : "ltr"}
-            orientation={
-              params.get("orientation") === "vertical"
-                ? "vertical"
-                : "horizontal"
-            }
-            style={
-              params.get("orientation") === "vertical"
-                ? undefined
-                : { width: width * scale }
-            }
-            onValueCommitted={() => {
-              setCommits((current) => current + 1);
-            }}
-            onValueChange={(next) => {
-              setValues(typeof next === "number" ? [next] : [...next]);
-              setCount((current) => current + 1);
-            }}
-            data-subject="true"
-          />
-        </form>
-        <output aria-label="Values">{values.join(",")}</output>
-        <output aria-label="Changes">{count}</output>
-        <output aria-label="Commits">{commits}</output>
-        <output aria-label="Root ref">{refName}</output>
-        <button type="button" id="next">
-          Next focus target
-        </button>
-        <button
-          type="button"
-          id="read-ref"
-          onClick={() => {
-            setRefName(sliderRef.current?.id ?? "missing");
-          }}
-        >
-          Read ref
-        </button>
-        <button type="reset" form="slider-form" id="reset">
-          Reset
-        </button>
-      </>
-    );
+    return <FixtureSlider />;
   }
 
   if (params.get("component") === "checkbox") {
-    return (
-      <>
-        <Checkbox
-          id="subject"
-          aria-label="Test checkbox"
-          scale={scale}
-          checked={checked === true}
-          indeterminate={checked === "indeterminate"}
-          disabled={state === "disabled"}
-          onCheckedChange={(value) => {
-            setChecked(value);
-            setCount(count + 1);
-          }}
-          data-subject="true"
-        />
-        <output aria-label="Changes">{count}</output>
-        <button type="button" id="next">
-          Next focus target
-        </button>
-      </>
-    );
+    return <FixtureCheckbox />;
   }
 
-  return (
-    <>
-      <Button
-        id="subject"
-        scale={scale}
-        disabled={state === "disabled"}
-        style={params.has("width") ? { width: width * scale } : undefined}
-        onClick={() => {
-          setCount(count + 1);
-        }}
-        data-subject="true"
-      >
-        {label}
-      </Button>
-      <output aria-label="Activations">{count}</output>
-      <Button render={<a href="#destination" />}>Continue</Button>
-      <Button
-        disabled
-        onClick={() => {
-          setCount(count + 100);
-        }}
-      >
-        Disabled
-      </Button>
-      <a href="#utility" className={buttonVariants()}>
-        Utility link
-      </a>
-    </>
-  );
+  return <FixtureButton />;
 };
 
 createRoot(document.querySelector("#root")!).render(
