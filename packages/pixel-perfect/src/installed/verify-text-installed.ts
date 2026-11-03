@@ -530,32 +530,31 @@ for (const group of groups) {
     : (registered ?? `tests/reference/${name}/installation-verification.json`);
 
   await mkdir(path.dirname(pixelPerfectFile(output)), { recursive: true });
-  await writeFile(
-    pixelPerfectFile(output),
-    `${JSON.stringify(
-      {
-        browser: [...browserVersions][0],
-        caseIsolation:
-          "Two workers; fresh page every50 cases; browser restarted every128 cases and closed finally",
-        cases,
-        command: `shadcn add http://127.0.0.1:5173/r/${name}.json --yes --overwrite`,
-        comparatorNegativeControl:
-          "One changed RGBA pixel detected in each native case",
-        consumer:
-          "Separate initialized shadcn Vite/React consumer with independent npm dependencies",
-        consumerRsc: settings.rsc,
-        devicePixelRatio: 1,
-        files,
-        pageErrors,
-        sourceJarSha256: group.manifest.sourceJarSha256,
-        typecheck: { command: "bun --bun tsc --noEmit", exitCode: 0 },
-        viewport: [1536, 900],
-        ...(partArgument ? { partialPart: partArgument } : {}),
-      },
-      null,
-      2
-    )}\n`
-  );
+  const reportFile = pixelPerfectFile(output);
+  const report = {
+    browser: [...browserVersions][0],
+    caseIsolation:
+      "Two workers; fresh page every50 cases; browser restarted every128 cases and closed finally",
+    cases,
+    command: `shadcn add http://127.0.0.1:5173/r/${name}.json --yes --overwrite`,
+    comparatorNegativeControl:
+      "One changed RGBA pixel detected in each native case",
+    consumer:
+      "Separate initialized shadcn Vite/React consumer with independent npm dependencies",
+    consumerRsc: settings.rsc,
+    devicePixelRatio: 1,
+    files,
+    pageErrors,
+    sourceJarSha256: group.manifest.sourceJarSha256,
+    typecheck: { command: "bun --bun tsc --noEmit", exitCode: 0 },
+    viewport: [1536, 900],
+  };
+
+  if (partArgument) {
+    Object.assign(report, { partialPart: partArgument });
+  }
+
+  await writeFile(reportFile, `${JSON.stringify(report, null, 2)}\n`);
 }
 
 console.log(

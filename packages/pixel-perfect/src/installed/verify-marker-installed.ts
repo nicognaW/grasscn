@@ -108,7 +108,7 @@ try {
         );
       }
 
-      const q = new URLSearchParams({
+      const queryFields: Record<string, string> = {
         align: c.alignment ?? "left",
         background: c.background,
         height: String(c.height),
@@ -121,8 +121,13 @@ try {
         width: String(c.width),
         x: String(c.x),
         y: String(c.y),
-        ...((c.wrapWidth ?? 0) ? { wrapWidth: String(c.wrapWidth) } : {}),
-      });
+      };
+
+      if (c.wrapWidth ?? 0) {
+        queryFields.wrapWidth = String(c.wrapWidth);
+      }
+
+      const q = new URLSearchParams(queryFields);
 
       await page!.goto(`${urlArg}?${q}`);
 

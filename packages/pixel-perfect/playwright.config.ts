@@ -28,7 +28,7 @@ export default defineConfig({
     browserName: "chromium",
     channel: "msedge",
     deviceScaleFactor: 1,
-    launchOptions: proxyPort
+    launchOptions: proxyPort !== undefined && proxyPort !== ""
       ? {
           args: [
             `--proxy-server=http://127.0.0.1:${proxyPort}`,
@@ -36,7 +36,7 @@ export default defineConfig({
           ],
         }
       : undefined,
-    proxy: proxyPort ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
+    proxy: proxyPort !== undefined && proxyPort !== "" ? { server: `http://127.0.0.1:${proxyPort}` } : undefined,
     viewport: { height: 900, width: 1280 },
   },
   webServer:

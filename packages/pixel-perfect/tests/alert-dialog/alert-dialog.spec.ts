@@ -100,7 +100,7 @@ for (const constituentDirectory of [
           labels: JSON.stringify(c.labels),
         });
 
-        if (c.checked) {
+        if (c.checked === true) {
           query.set("patterned", "1");
         }
 

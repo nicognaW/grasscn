@@ -21,11 +21,11 @@ const javaBin = path.resolve(
   process.argv[3] ?? process.env.MINECRAFT_JAVA_BIN ?? ""
 );
 
-if (!process.argv[2] && !process.env.MINECRAFT_VERSION_DIR) {
+if (!process.argv[2] && (process.env.MINECRAFT_VERSION_DIR ?? "") === "") {
   throw new Error("Pass the Minecraft version directory as argument 1");
 }
 
-if (!process.argv[3] && !process.env.MINECRAFT_JAVA_BIN) {
+if (!process.argv[3] && (process.env.MINECRAFT_JAVA_BIN ?? "") === "") {
   throw new Error("Pass the Java 25 bin directory as argument 2");
 }
 

@@ -459,13 +459,24 @@ for (const [manifestFile, output, _part] of [
     const button = matching.find((result) => result.mode === "button");
     const plain = matching.find((result) => result.mode === "plain");
 
-    return {
+    const result: Pick<InstalledItemResult, "decodedRgbaSha256" | "mismatchedPixels" | "name"> & {
+      buttonDecodedRgbaSha256?: string;
+      plainDecodedRgbaSha256?: string;
+    } = {
       decodedRgbaSha256: primary.decodedRgbaSha256,
       mismatchedPixels: 0,
       name: c.name,
-      ...(button ? { buttonDecodedRgbaSha256: button.decodedRgbaSha256 } : {}),
-      ...(plain ? { plainDecodedRgbaSha256: plain.decodedRgbaSha256 } : {}),
     };
+
+    if (button) {
+      result.buttonDecodedRgbaSha256 = button.decodedRgbaSha256;
+    }
+
+    if (plain) {
+      result.plainDecodedRgbaSha256 = plain.decodedRgbaSha256;
+    }
+
+    return result;
   });
 
   fs.writeFileSync(

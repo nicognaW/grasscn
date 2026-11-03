@@ -80,9 +80,14 @@ const files = item.files.map((file) => {
     `${file.path} changed beyond CLI transforms`
   );
 
+  const sourceLocation: { path: string; sourcePath?: string } = { path: basename };
+
+  if (file.type === "registry:hook") {
+    sourceLocation.sourcePath = file.path;
+  }
+
   return {
-    path: basename,
-    ...(file.type === "registry:hook" ? { sourcePath: file.path } : {}),
+    ...sourceLocation,
     installedPath,
     sourceSha256: sha(source),
     installedSha256: sha(installed),

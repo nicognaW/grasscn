@@ -28,11 +28,11 @@ const javaBin = path.resolve(
   process.argv[3] ?? process.env.MINECRAFT_JAVA_BIN ?? ""
 );
 
-if (!process.argv[2] && !process.env.MINECRAFT_VERSION_DIR) {
+if (!process.argv[2] && (process.env.MINECRAFT_VERSION_DIR ?? "") === "") {
   throw new Error("Pass the Minecraft version directory as argument 1");
 }
 
-if (!process.argv[3] && !process.env.MINECRAFT_JAVA_BIN) {
+if (!process.argv[3] && (process.env.MINECRAFT_JAVA_BIN ?? "") === "") {
   throw new Error("Pass the Java 25 bin directory as argument 2");
 }
 
@@ -386,12 +386,17 @@ for (const scale of [1, 2, 3]) {
 
     const bytes = await readFile(path.join(captures, name));
 
-    cases.push({
+    const capturedLayout: Omit<ControlCaptureCase, "scale" | "sha256"> = {
       ...definition,
       ...(layouts[`${definition.name}-s${scale}`] ?? layouts[definition.name]),
-      ...(definition.element === "textarea"
-        ? { widgetWidth: definition.width }
-        : {}),
+    };
+
+    if (definition.element === "textarea") {
+      capturedLayout.widgetWidth = definition.width;
+    }
+
+    cases.push({
+      ...capturedLayout,
       name,
       scale,
       sha256: sha256(bytes),

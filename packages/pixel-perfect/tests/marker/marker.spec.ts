@@ -56,7 +56,7 @@ for (const dir of ["label", "separator"]) {
               Number(new URLSearchParams(location.search).get("timeMs") ?? 0))
         );
 
-        const q = new URLSearchParams({
+        const queryFields: Record<string, string> = {
           align: c.alignment ?? "left",
           background: c.background,
           component: "marker",
@@ -70,8 +70,13 @@ for (const dir of ["label", "separator"]) {
           width: String(c.width),
           x: String(c.x),
           y: String(c.y),
-          ...((c.wrapWidth ?? 0) ? { wrapWidth: String(c.wrapWidth) } : {}),
-        });
+        };
+
+        if (c.wrapWidth ?? 0) {
+          queryFields.wrapWidth = String(c.wrapWidth);
+        }
+
+        const q = new URLSearchParams(queryFields);
 
         await page.goto(`/?${q}`);
 
