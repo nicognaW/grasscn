@@ -101,11 +101,12 @@ const fixture = async function fixture(
       report: { startedAt: "2026-10-31T00:00:00Z" },
     };
 
-    const save = async (records: object[]) =>
-      writeFile(
+    const save = async (records: object[]) => {
+      await writeFile(
         journal,
         `${records.map((checkpointRecord) => JSON.stringify(checkpointRecord)).join("\n")}\n`
       );
+    };
 
     await run({ candidate, file, journal, output, record, root, save });
   } finally {
@@ -114,8 +115,8 @@ const fixture = async function fixture(
   }
 };
 
-test("checkpoints retain only source-identical successful tests and intact artifacts", async () =>
-  fixture(async ({ root, file, record, save, candidate, output }) => {
+test("checkpoints retain only source-identical successful tests and intact artifacts", async () => {
+  await fixture(async ({ root, file, record, save, candidate, output }) => {
     await save([record]);
     const retained = await reusableBrowserTests([candidate], file, root);
     assert.equal(retained.length, 1);
@@ -125,10 +126,11 @@ test("checkpoints retain only source-identical successful tests and intact artif
     await writeFile(path.join(output, "actual.png"), "rendered bytes");
     await writeFile(path.join(root, "tests", file), "changed source");
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
-  }));
+  });
+});
 
-test("failures and retries supersede earlier passes; interrupted writes do not create passes", async () =>
-  fixture(async ({ root, file, record, save, candidate, journal }) => {
+test("failures and retries supersede earlier passes; interrupted writes do not create passes", async () => {
+  await fixture(async ({ root, file, record, save, candidate, journal }) => {
     for (const failed of [
       { ...record, status: "failed" },
       { ...record, retry: 1 },
@@ -147,10 +149,11 @@ test("failures and retries supersede earlier passes; interrupted writes do not c
     );
     await writeFile(journal, `{"id":"unfinished"\n${JSON.stringify(record)}\n`);
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
-  }));
+  });
+});
 
-test("a corrupt newer journal cannot recover an older pass", async () =>
-  fixture(async ({ root, file, record, save, candidate }) => {
+test("a corrupt newer journal cannot recover an older pass", async () => {
+  await fixture(async ({ root, file, record, save, candidate }) => {
     await save([record]);
     const directory = path.join(root, "newer/checkpoints", file);
     await mkdir(directory, { recursive: true });
@@ -174,10 +177,11 @@ test("a corrupt newer journal cannot recover an older pass", async () =>
       await reusableBrowserTests([candidate, newer], file, root),
       []
     );
-  }));
+  });
+});
 
-test("Playwright can retain a complete file without repeating its tests", async () =>
-  fixture(async ({ root, file, candidate }) => {
+test("Playwright can retain a complete file without repeating its tests", async () => {
+  await fixture(async ({ root, file, candidate }) => {
     const reporter = fileURLToPath(
       import.meta.resolve("@grasscn/tests/checkpoint-reporter")
     );
@@ -236,7 +240,8 @@ test("Playwright can retain a complete file without repeating its tests", async 
       (await readFile(path.join(root, "runs.txt"), "utf-8")).trim().split("\n"),
       ["first", "second"]
     );
-  }));
+  });
+});
 
 test("nested browser file filters match the same exact case path on Windows and POSIX", () => {
   const pattern = new RegExp(browserFilePattern("button/native.spec.ts"), "u");
@@ -247,8 +252,8 @@ test("nested browser file filters match the same exact case path on Windows and 
   assert.throws(() => browserFilePattern("../button/native.spec.ts"));
 });
 
-test("nested helper-defined checkpoints retain only both source-identical inputs", async () =>
-  fixture(async ({ root, record, candidate, output }) => {
+test("nested helper-defined checkpoints retain only both source-identical inputs", async () => {
+  await fixture(async ({ root, record, candidate, output }) => {
     const file = "button/native.spec.ts";
     const owner = `tests/${file}`;
     const definition = "src/family.mjs";
@@ -301,10 +306,11 @@ test("nested helper-defined checkpoints retain only both source-identical inputs
     await writeFile(path.join(root, definition), "helper source");
     await writeFile(path.join(root, owner), "changed wrapper");
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
-  }));
+  });
+});
 
-test("Playwright checkpoints bind a nested owning file separately from its declaring helper", async () =>
-  fixture(async ({ root, candidate }) => {
+test("Playwright checkpoints bind a nested owning file separately from its declaring helper", async () => {
+  await fixture(async ({ root, candidate }) => {
     await rm(path.join(root, "tests/sample.spec.ts"));
 
     const definition = "src/declare.mjs";
@@ -372,4 +378,5 @@ test("Playwright checkpoints bind a nested owning file separately from its decla
     );
     await writeFile(path.join(root, definition), "changed helper source");
     assert.deepEqual(await reusableBrowserTests([candidate], file, root), []);
-  }));
+  });
+});

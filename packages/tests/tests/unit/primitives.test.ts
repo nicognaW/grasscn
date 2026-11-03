@@ -21,8 +21,9 @@ const fixture = async function fixture(
   await mkdir(output, { recursive: true });
   const directory = await mkdtemp(path.join(output, "primitives-"));
 
-  const json = async (name: string, value: object) =>
-    writeFile(path.join(directory, name), JSON.stringify(value));
+  const json = async (name: string, value: object) => {
+    await writeFile(path.join(directory, name), JSON.stringify(value));
+  };
 
   try {
     for (const folder of ["scripts", "registry/ui", "preview", "public/r"]) {

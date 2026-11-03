@@ -258,7 +258,7 @@ test("Popover buttons play the original click once; hover, focus and Escape stay
   });
 
   const voices = async () =>
-    page.evaluate(() => (window as any).__popoverSounds);
+    await page.evaluate(() => (window as any).__popoverSounds);
 
   await page.goto("/?component=popover");
 

@@ -279,7 +279,7 @@ test("Menubar native activation plays once and hover/menu navigation stay silent
   });
 
   const voices = async () =>
-    page.evaluate(
+    await page.evaluate(
       () =>
         // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -326,7 +326,7 @@ for (const query of ["nativeButtonChild", "controlled&reject"]) {
     await openMenu(page, query);
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -339,7 +339,7 @@ for (const query of ["nativeButtonChild", "controlled&reject"]) {
     await game(page).press("Enter");
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: This Menubar reader follows navigation initialized with the exact paired __menubarVoices producer.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.

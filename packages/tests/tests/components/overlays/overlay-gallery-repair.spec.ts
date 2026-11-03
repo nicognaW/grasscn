@@ -19,7 +19,7 @@ for (const scale of [2]) {
     const panel = page.locator("[data-slot=drawer-content]");
     await expect(panel).toBeVisible();
     await expect
-      .poll(async () => panel.evaluate((e) => e.scrollHeight - e.clientHeight))
+      .poll(async () => await panel.evaluate((e) => e.scrollHeight - e.clientHeight))
       .toBeLessThanOrEqual(2);
     await page.getByRole("button", { exact: true, name: "Done" }).click();
     await expect(trigger).toBeFocused();

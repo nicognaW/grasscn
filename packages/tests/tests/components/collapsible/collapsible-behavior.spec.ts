@@ -125,7 +125,7 @@ test("Collapsible clicks use the original asset once and disabled actions are si
 }) => {
   await recordAudioPlayback(page);
 
-  const voices = async () => recordedAudioPlayback(page);
+  const voices = async () => await recordedAudioPlayback(page);
 
   await page.goto("/?component=collapsible");
   await trigger(page).hover();

@@ -223,7 +223,7 @@ test("Dropdown Menu hover stays silent; native trigger and checkbox activation c
   });
 
   const voices = async () =>
-    page.evaluate(
+    await page.evaluate(
       () =>
         // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuSounds producer.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -283,7 +283,7 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
     await trigger.click();
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.
@@ -296,7 +296,7 @@ for (const query of ["nonmodal", "controlled&reject", "nativeButtonChild"]) {
     await trigger.press("Enter");
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: This Dropdown Menu reader follows navigation initialized with the exact paired __menuVoices producer.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned media state initialized by the paired addInitScript.

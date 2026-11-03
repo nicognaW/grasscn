@@ -137,7 +137,7 @@ test("Analytics chart rerasterizes when available width changes", async ({
 
   const width = await canvas.getAttribute("width");
   await page.setViewportSize({ height: 1000, width: 540 });
-  await expect.poll(async () => canvas.getAttribute("width")).not.toBe(width);
+  await expect.poll(async () => await canvas.getAttribute("width")).not.toBe(width);
   await expect(chart.locator("canvas")).toHaveAttribute(
     "data-mc-ready",
     "true"

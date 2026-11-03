@@ -80,7 +80,7 @@ test("AlertDialog preserves fixed native UI while the page underneath scrolls", 
     document.querySelector("#root")!.append(spacer);
     scrollTo(0, 400);
   });
-  await expect.poll(async () => page.evaluate(() => scrollY)).toBe(400);
+  await expect.poll(async () => await page.evaluate(() => scrollY)).toBe(400);
   await expect
     .poll(async () =>
       PNG.sync.read(await page.screenshot()).data.equals(expected)

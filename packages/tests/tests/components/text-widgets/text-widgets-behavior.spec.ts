@@ -48,20 +48,20 @@ test("MessageScroller preserves provider/hooks, viewport ref, scroll API and vis
   const viewport = page.getByTestId("viewport");
   await expect
     .poll(async () =>
-      viewport.evaluate(
+      await viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
     .toBe(true);
   await page.getByRole("button", { exact: true, name: "API start" }).click();
-  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
   await expect(page.getByTestId("scrollable")).toContainText('"end":true');
   await page.getByRole("button", { exact: true, name: "API message" }).click();
   await expect(page.getByTestId("visible")).toContainText('"15"');
   await page.getByRole("button", { exact: true, name: "API end" }).click();
   await expect
     .poll(async () =>
-      viewport.evaluate(
+      await viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
@@ -75,13 +75,13 @@ test("MessageScroller native buttons and auto-scroll retain keyboard/manual cont
 }) => {
   await page.goto("?component=message-scroller&position=start");
   const viewport = page.getByTestId("viewport");
-  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
   const end = page.getByRole("button", { exact: true, name: "Scroll to end" });
   await end.focus();
   await page.keyboard.press("Enter");
   await expect
     .poll(async () =>
-      viewport.evaluate(
+      await viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
@@ -90,15 +90,15 @@ test("MessageScroller native buttons and auto-scroll retain keyboard/manual cont
   await expect(page.getByTestId("message-31")).toBeAttached();
   await expect
     .poll(async () =>
-      viewport.evaluate(
+      await viewport.evaluate(
         (n) => n.scrollTop + n.clientHeight >= n.scrollHeight - 2
       )
     )
     .toBe(true);
   await page.getByRole("button", { exact: true, name: "API start" }).click();
-  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
   await page.getByRole("button", { exact: true, name: "Append" }).click();
-  await expect.poll(async () => viewport.evaluate((n) => n.scrollTop)).toBe(0);
+  await expect.poll(async () => await viewport.evaluate((n) => n.scrollTop)).toBe(0);
 });
 
 test("MessageScroller preserves visible anchor position on prepend", async ({

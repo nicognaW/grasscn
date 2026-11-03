@@ -118,7 +118,7 @@ test("Switch uses original click audio once per activation, and respects cancell
   });
 
   const sounds = async () =>
-    page.evaluate(
+    await page.evaluate(
       () =>
         // SAFETY: This paired reader runs after navigation's init script creates switchSounds with the recorded audio contract.
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.

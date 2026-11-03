@@ -214,7 +214,7 @@ test("Sidebar content uses original scrolling geometry and forwards scroll event
   await viewport.hover();
   await page.mouse.wheel(0, 500);
   await expect
-    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => await viewport.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await expect
     .poll(async () =>

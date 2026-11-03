@@ -178,7 +178,7 @@ test("Drawer stays visible during its closing transition, then restores focus", 
   await expect(panel).toBeVisible();
   await expect
     .poll(async () =>
-      panel.evaluate((n) =>
+      await panel.evaluate((n) =>
         n.getAnimations().every((a) => a.playState === "finished")
       )
     )

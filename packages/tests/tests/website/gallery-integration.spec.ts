@@ -34,7 +34,7 @@ for (const viewport of [
         await expect(card).toBeVisible();
         await expect
           .poll(async () =>
-            page.evaluate(
+            await page.evaluate(
               () => document.documentElement.scrollWidth <= innerWidth
             )
           )

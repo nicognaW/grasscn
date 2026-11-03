@@ -153,7 +153,7 @@ test("AlertDialog uses one original click per button activation and keeps hover 
 }) => {
   await recordAudioPlayback(page);
 
-  const sounds = async () => recordedAudioPlayback(page);
+  const sounds = async () => await recordedAudioPlayback(page);
 
   await page.goto("/?component=alert-dialog");
 

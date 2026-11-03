@@ -13,12 +13,13 @@ interface Voice {
 }
 
 const voices = async (page: Page) =>
-  page.evaluate(() => (window as any).__previewVoices as Voice[]);
+  await page.evaluate(() => (window as any).__previewVoices as Voice[]);
 
-const clearVoices = async (page: Page) =>
-  page.evaluate(() => {
+const clearVoices = async (page: Page) => {
+  await page.evaluate(() => {
     (window as any).__previewVoices = [];
   });
+};
 
 const origin = (
   process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/"

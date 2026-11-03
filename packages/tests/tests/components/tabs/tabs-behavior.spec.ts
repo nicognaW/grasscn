@@ -139,7 +139,7 @@ test("Tabs play one original click only for accepted selection changes", async (
   await page.goto("/?component=tabs&controlled=1");
 
   const sounds = async () =>
-    page.evaluate(
+    await page.evaluate(
       () =>
         (
           window as Window & {

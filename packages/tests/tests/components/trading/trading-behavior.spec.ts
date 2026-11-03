@@ -98,7 +98,7 @@ test("trading selection, result feedback and native scrollbar controls", async (
   await page.goto(url());
   await expect
     .poll(async () =>
-      page.evaluate(() => document.documentElement.dataset.tradingRef)
+      await page.evaluate(() => document.documentElement.dataset.tradingRef)
     )
     .toBe("trading");
   await page.getByRole("button", { exact: true, name: "Offer 2" }).click();

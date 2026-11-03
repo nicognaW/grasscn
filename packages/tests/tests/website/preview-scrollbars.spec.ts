@@ -25,7 +25,7 @@ for (const scale of [2]) {
 
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             getComputedStyle(document.documentElement, "::-webkit-scrollbar")
               .width
@@ -89,7 +89,7 @@ for (const scale of [2]) {
     await nested.focus();
     await nested.press("End");
     await expect
-      .poll(async () => nested.evaluate((e) => e.scrollTop))
+      .poll(async () => await nested.evaluate((e) => e.scrollTop))
       .toBeGreaterThan(0);
     const nav = page.locator(".minecraft-docs-sidebar nav");
     await expect(nav).toBeAttached();

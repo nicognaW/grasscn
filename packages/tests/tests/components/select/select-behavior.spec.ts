@@ -183,7 +183,7 @@ test("Select uses the original cycle-button click for opening, while list select
       return Promise.resolve();
     };
   });
-  const voices = async () => page.evaluate(() => (window as any).selectVoices);
+  const voices = async () => await page.evaluate(() => (window as any).selectVoices);
   await page.goto("/?component=select");
   await page.getByRole("combobox").hover();
   expect(await voices()).toEqual([]);
@@ -204,7 +204,7 @@ test("Select uses the original cycle-button click for opening, while list select
   await viewport.hover();
   await page.mouse.wheel(0, 120);
   await expect
-    .poll(async () => viewport.evaluate((node) => node.scrollTop))
+    .poll(async () => await viewport.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   expect(await voices()).toEqual([]);
   await page.keyboard.press("End");

@@ -27,7 +27,7 @@ const digest = (data: Uint8Array) =>
 export const verifyPortingEvidence = async function verifyPortingEvidence(
   root: string
 ) {
-  const bytes = async (name: string) => readFile(evidenceFile(name, root));
+  const bytes = async (name: string) => await readFile(evidenceFile(name, root));
 
   const readTradingManifest = async (name: string) => {
     const source = await bytes(name);

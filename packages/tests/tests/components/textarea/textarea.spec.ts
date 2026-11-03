@@ -41,7 +41,7 @@ test("Textarea keeps its native ref, uncontrolled form data and reset repaint", 
   await expect(area).toHaveValue("Hello");
   await expect
     .poll(async () =>
-      area.evaluate((node: HTMLElement) =>
+      await area.evaluate((node: HTMLElement) =>
         node.style.getPropertyValue("--mc-textarea-image")
       )
     )
@@ -93,7 +93,7 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   await page.mouse.move(bounds.x + bounds.width - 6, bounds.y + 50);
   await page.mouse.up();
   await expect
-    .poll(async () => area.evaluate((node) => node.scrollTop))
+    .poll(async () => await area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
   await area.evaluate((node) => {
     node.scrollTop = 0;
@@ -101,6 +101,6 @@ test("Textarea scrollbar can be dragged and wheel scrolling remains native", asy
   await area.hover();
   await page.mouse.wheel(0, 100);
   await expect
-    .poll(async () => area.evaluate((node) => node.scrollTop))
+    .poll(async () => await area.evaluate((node) => node.scrollTop))
     .toBeGreaterThan(0);
 });

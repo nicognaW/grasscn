@@ -175,7 +175,7 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
   const canvas = page.locator("#themed-pixels canvas");
 
   const hasColor = async (color: number[]) =>
-    canvas.evaluate((element: HTMLCanvasElement, expectedColor) => {
+    await canvas.evaluate((element: HTMLCanvasElement, expectedColor) => {
       const pixels = element
         .getContext("2d")!
         .getImageData(0, 0, element.width, element.height).data;
@@ -193,8 +193,8 @@ test("pixel shapes follow the same ChartConfig theme variables as Recharts SVG s
       return false;
     }, color);
 
-  await expect.poll(async () => hasColor([34, 221, 68])).toBe(true);
+  await expect.poll(async () => await hasColor([34, 221, 68])).toBe(true);
   await page.locator("#theme").click();
-  await expect.poll(async () => hasColor([0, 170, 17])).toBe(true);
+  await expect.poll(async () => await hasColor([0, 170, 17])).toBe(true);
   expect(await hasColor([34, 221, 68])).toBe(false);
 });

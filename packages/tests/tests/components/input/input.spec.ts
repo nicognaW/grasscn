@@ -83,7 +83,7 @@ test("Input uses the real DOM ref and repaints imperative value assignments", as
   await expect(input).toHaveValue("Done");
   await expect
     .poll(async () =>
-      input.evaluate((element: HTMLInputElement) =>
+      await input.evaluate((element: HTMLInputElement) =>
         element.style.getPropertyValue("--mc-input-image")
       )
     )

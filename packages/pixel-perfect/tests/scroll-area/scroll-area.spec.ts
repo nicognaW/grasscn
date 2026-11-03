@@ -73,7 +73,7 @@ for (const c of manifest.cases) {
     await expect(card).toHaveAttribute("data-mc-scroll-ready", "true");
     const viewport = card.locator('[data-slot="scroll-area-viewport"]');
     await expect
-      .poll(async () => viewport.evaluate((node) => node.scrollTop))
+      .poll(async () => await viewport.evaluate((node) => node.scrollTop))
       .toBe(c.value * c.scale);
 
     if (c.state === "focus") {
@@ -166,7 +166,7 @@ for (const scale of [1, 2, 3]) {
     await expect(subject).toHaveAttribute("data-mc-scroll-ready", "true");
     await expect
       .poll(async () =>
-        subject
+        await subject
           .locator('[data-slot="scroll-area-viewport"]')
           .evaluate((node) => node.scrollTop)
       )

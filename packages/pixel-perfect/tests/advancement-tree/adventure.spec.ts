@@ -38,7 +38,7 @@ for (const c of manifest.cases) {
     await expect(page.locator("[data-subject] img")).toHaveCount(8);
     await expect
       .poll(async () =>
-        page
+        await page
           .locator("[data-subject] img")
           .evaluateAll((images: HTMLImageElement[]) =>
             images.every((image) => image.complete && image.naturalWidth > 0)

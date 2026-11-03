@@ -157,7 +157,7 @@ for (const component of ["sonner"]) {
     await ready(page);
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: this test's initScript initializes this precise playback log before navigation.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion
@@ -181,7 +181,7 @@ for (const component of ["sonner"]) {
     await page.getByRole("button", { exact: true, name: "Undo" }).click();
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: this test's initScript initializes this precise playback log before navigation.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion
@@ -244,7 +244,7 @@ for (const component of ["sonner"]) {
     await ready(page);
     await expect
       .poll(async () =>
-        page.evaluate(
+        await page.evaluate(
           () =>
             // SAFETY: the separate StrictMode initScript initializes this string-only log before navigation.
             // oxlint-disable-next-line typescript/no-unsafe-type-assertion

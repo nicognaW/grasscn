@@ -60,21 +60,23 @@ const fixture = async function fixture(
   }
 };
 
-test("workload waits for enforced budgets before executing", async () =>
-  fixture(async ({ child, exited, gate, marker }) => {
+test("workload waits for enforced budgets before executing", async () => {
+  await fixture(async ({ child, exited, gate, marker }) => {
     await setTimeout(150);
     await assert.rejects(access(marker));
     await writeFile(gate, JSON.stringify({ enforced: true, pid: child.pid }));
     assert.equal((await exited)[0], 0);
     await access(marker);
-  }));
+  });
+});
 
-test("another process's budget gate cannot start the workload", async () =>
-  fixture(async ({ child, exited, gate, marker }) => {
+test("another process's budget gate cannot start the workload", async () => {
+  await fixture(async ({ child, exited, gate, marker }) => {
     await writeFile(
       gate,
       JSON.stringify({ enforced: true, pid: Number(child.pid) + 1 })
     );
     assert.notEqual((await exited)[0], 0);
     await assert.rejects(access(marker));
-  }));
+  });
+});

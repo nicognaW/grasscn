@@ -83,7 +83,7 @@ for (const scale of [2] as const) {
 
       if (scroll.maximum > 0) {
         await expect
-          .poll(async () => viewport.evaluate((n) => n.scrollTop))
+          .poll(async () => await viewport.evaluate((n) => n.scrollTop))
           .not.toBe(scroll.top);
       } else {
         // Base UI may show the entire list when item alignment has enough room.

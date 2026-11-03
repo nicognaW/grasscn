@@ -107,7 +107,7 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await player.press("ArrowLeft");
   await expect
     .poll(async () =>
-      page.evaluate(() =>
+      await page.evaluate(() =>
         JSON.parse(document.documentElement.dataset.rotation ?? "null")
       )
     )
@@ -115,7 +115,7 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await player.press("Home");
   await expect
     .poll(async () =>
-      page.evaluate(() =>
+      await page.evaluate(() =>
         JSON.parse(document.documentElement.dataset.rotation ?? "null")
       )
     )
@@ -129,7 +129,7 @@ test("player preview keyboard, pointer rotation, clamp and reset", async ({
   await page.mouse.up();
   await expect
     .poll(async () =>
-      page.evaluate(
+      await page.evaluate(
         () =>
           JSON.parse(document.documentElement.dataset.rotation ?? "null")?.pitch
       )

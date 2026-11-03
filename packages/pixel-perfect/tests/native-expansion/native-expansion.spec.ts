@@ -56,7 +56,7 @@ for (const { reference, sample } of specimens) {
 
     await expect
       .poll(async () =>
-        subject
+        await subject
           .locator("img")
           .evaluateAll((images: HTMLImageElement[]) =>
             images.every((image) => image.complete && image.naturalWidth > 0)
