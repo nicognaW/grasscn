@@ -9,7 +9,8 @@ import type { ToggleReferenceCase } from "@ppt/installed/reference-case";
 import { pixelPerfectFile } from "@ppt/paths";
 import { PNG } from "pngjs";
 
-const sha = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
+const sha = (bytes: Uint8Array) =>
+  createHash("sha256").update(bytes).digest("hex");
 
 interface InstalledToggleCase {
   c: ToggleReferenceCase;
@@ -23,7 +24,14 @@ interface InstalledToggleRendering extends InstalledToggleCase {
   type: string;
 }
 
-const verifyToggleRendering = async ({ c, manifestFile, name, page, type, url }: InstalledToggleRendering) => {
+const verifyToggleRendering = async ({
+  c,
+  manifestFile,
+  name,
+  page,
+  type,
+  url,
+}: InstalledToggleRendering) => {
   const params = new URLSearchParams({
     background: c.background,
     checked: String(c.checked),
@@ -73,9 +81,7 @@ const verifyToggleRendering = async ({ c, manifestFile, name, page, type, url }:
   });
 
   const expectedBytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(expectedBytes), c.sha256);
@@ -91,17 +97,31 @@ const verifyToggleRendering = async ({ c, manifestFile, name, page, type, url }:
     actual.data.equals(expected.data),
     `Installed Toggle pixels differ: ${c.name}`
   );
+
   return actual;
 };
 
-export const verifyToggleCase = async ({ c, manifestFile, name, page, url }: InstalledToggleCase) => {
+export const verifyToggleCase = async ({
+  c,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledToggleCase) => {
   await page.setViewportSize({ height: 900, width: 1536 });
   const renderings = [];
 
   for (const type of name === "toggle-group"
     ? ["single", "multiple"]
     : ["single"]) {
-    const actual = await verifyToggleRendering({ c, manifestFile, name, page, type, url });
+    const actual = await verifyToggleRendering({
+      c,
+      manifestFile,
+      name,
+      page,
+      type,
+      url,
+    });
 
     renderings.push(sha(actual.data));
   }

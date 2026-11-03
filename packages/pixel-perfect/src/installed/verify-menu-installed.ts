@@ -28,7 +28,14 @@ interface InstalledMenuRendering extends InstalledMenuCase {
   kind: string;
 }
 
-const verifyMenuRendering = async ({ c, kind, manifestFile, name, page, url }: InstalledMenuRendering) => {
+const verifyMenuRendering = async ({
+  c,
+  kind,
+  manifestFile,
+  name,
+  page,
+  url,
+}: InstalledMenuRendering) => {
   const params = new URLSearchParams({
     checked: String(c.checked ?? false),
     component: name,
@@ -123,9 +130,7 @@ const verifyMenuRendering = async ({ c, kind, manifestFile, name, page, url }: I
   assert.equal(bounds.y, c.y * c.scale);
 
   const bytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(bytes), c.sha256);
@@ -141,6 +146,7 @@ const verifyMenuRendering = async ({ c, kind, manifestFile, name, page, url }: I
     actual.data.equals(expected.data),
     `Installed Menu pixels differ: ${c.name} ${kind}`
   );
+
   return actual;
 };
 
@@ -148,7 +154,14 @@ interface InstalledMenubarTriggerRendering extends InstalledMenubarTriggerCase {
   open: boolean;
 }
 
-const verifyMenubarTriggerRendering = async ({ c, manifestFile, name, open, page, url }: InstalledMenubarTriggerRendering) => {
+const verifyMenubarTriggerRendering = async ({
+  c,
+  manifestFile,
+  name,
+  open,
+  page,
+  url,
+}: InstalledMenubarTriggerRendering) => {
   const params = new URLSearchParams({
     component: name,
     label: c.label,
@@ -205,9 +218,7 @@ const verifyMenubarTriggerRendering = async ({ c, manifestFile, name, open, page
   );
 
   const bytes = await readFile(
-    pixelPerfectFile(
-      path.join(path.dirname(manifestFile), "captures", c.name)
-    )
+    pixelPerfectFile(path.join(path.dirname(manifestFile), "captures", c.name))
   );
 
   assert.equal(sha(bytes), c.sha256);
@@ -223,6 +234,7 @@ const verifyMenubarTriggerRendering = async ({ c, manifestFile, name, open, page
     actual.data.equals(expected.data),
     `Installed Menubar trigger pixels differ: ${c.name} open:${open}`
   );
+
   return actual;
 };
 
@@ -238,7 +250,14 @@ export const verifyMenuCase = async ({
   for (const kind of c.element === "menu-checkbox"
     ? ["menu-checkbox", "menu-radio"]
     : [c.element]) {
-    const actual = await verifyMenuRendering({ c, kind, manifestFile, name, page, url });
+    const actual = await verifyMenuRendering({
+      c,
+      kind,
+      manifestFile,
+      name,
+      page,
+      url,
+    });
 
     if (result) {
       result.radioDecodedRgbaSha256 = sha(actual.data);
@@ -272,7 +291,14 @@ export const verifyMenubarTriggerCase = async ({
   let result: InstalledCaseResult | undefined;
 
   for (const open of c.state === "hover" ? [false, true] : [false]) {
-    const actual = await verifyMenubarTriggerRendering({ c, manifestFile, name, open, page, url });
+    const actual = await verifyMenubarTriggerRendering({
+      c,
+      manifestFile,
+      name,
+      open,
+      page,
+      url,
+    });
 
     if (result) {
       result.openDecodedRgbaSha256 = sha(actual.data);

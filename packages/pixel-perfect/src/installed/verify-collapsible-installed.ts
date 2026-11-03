@@ -81,7 +81,14 @@ interface InstalledCollapsibleRendering {
   url: string;
 }
 
-const verifyCollapsibleRendering = async ({ body, c, expanded, expected, page, url }: InstalledCollapsibleRendering) => {
+const verifyCollapsibleRendering = async ({
+  body,
+  c,
+  expanded,
+  expected,
+  page,
+  url,
+}: InstalledCollapsibleRendering) => {
   const params = collapsibleParams(c, body, expanded);
 
   await page.goto(`${url}?${params}`);
@@ -144,6 +151,7 @@ const verifyCollapsibleRendering = async ({ body, c, expanded, expected, page, u
     actual.data.equals(expected.data),
     `Installed Collapsible pixels differ: ${c.name} expanded:${expanded}`
   );
+
   return actual;
 };
 
@@ -164,7 +172,14 @@ export const verifyCollapsibleCase = async ({
   let result: InstalledCollapsibleResult | undefined;
 
   for (const expanded of body ? [true] : [false, true]) {
-    const actual = await verifyCollapsibleRendering({ body, c, expanded, expected, page, url });
+    const actual = await verifyCollapsibleRendering({
+      body,
+      c,
+      expanded,
+      expected,
+      page,
+      url,
+    });
 
     if (result) {
       result.expandedDecodedRgbaSha256 = sha(actual.data);
