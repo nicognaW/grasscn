@@ -905,9 +905,9 @@
     {
       "sourcePath": "registry/ui/message.tsx",
       "historicalSha256": "86ef06bbc482f675ad46f8ce547e769aa16e27c17b106fb3f583b558c64b26c0",
-      "currentSha256": "6db09015d38b3ed409fce8d0cf3147c44f9c169c2ba5c3b47e054fd602b45904",
+      "currentSha256": "2913d849f290eb38c7548853a6c84112e925a3daafb05872b721d7e25c13bea3",
       "classification": "reviewed-source-transition",
-      "reason": "Reviewed formatting of registry/ui/message.tsx from source 75c568a to 6b0838f, preserved byte-for-byte in combined source 4b9cbb7. The actual full module AST, import declaration order and class expressions are unchanged; actual complete Bun and browser emitted JavaScript bytes match for this formatting step. Prior reviewed source and policy lineage is retained. Complete Main-to-current emitted/runtime semantic equivalence is not asserted. Historical proof remains bound to its original archived source; no current behavior or pixel verification is granted.",
+      "reason": "Reviewed formatting of registry/ui/message.tsx from source 75c568a to 6b0838f, preserved byte-for-byte in combined source 4b9cbb7. The actual full module AST, import declaration order and class expressions are unchanged; actual complete Bun and browser emitted JavaScript bytes match for this formatting step. Prior reviewed source and policy lineage is retained. Complete Main-to-current emitted/runtime semantic equivalence is not asserted. Historical proof remains bound to its original archived source; no current behavior or pixel verification is granted. Numeric MessageContent condition explicitly selects positive width while preserving the original ternary result for every IEEE754 numeric state and undefined; actual whole source/type/comment and emitted predicate inverse qualified. This does not grant current appearance equivalence or overwrite historical evidence.",
       "reviewedSourceSnapshot": "4b9cbb75f83e8712f1a4ac78cf59e07c04931c93",
       "priorPolicySnapshot": "04ad573ef10414cc9f6eb95f9bd2d2e02217754d",
       "priorCurrentSha256": "7433f76e28ee1e9ba6cbacdb288f0ab0ed0d492330a551aac47148ccc31b511b",
