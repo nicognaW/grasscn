@@ -166,7 +166,11 @@ const MessageContent = ({
   const [width, setWidth] = React.useState<number>();
   const scalar = isMinecraftTextContent(children);
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
     const element = node.current!;
 

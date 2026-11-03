@@ -132,7 +132,11 @@ const MinecraftProse = ({
   ...props
 }: MinecraftProseProps) => {
   const node = React.useRef<HTMLElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   const [fontReady, setFontReady] = React.useState(false);
   const [containerWidth, setContainerWidth] = React.useState<number>();
 

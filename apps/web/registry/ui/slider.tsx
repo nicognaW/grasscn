@@ -53,7 +53,10 @@ const Slider = ({
 
   const initialValue = React.useRef(uncontrolled);
   const root = React.useRef<HTMLDivElement>(null);
-  React.useImperativeHandle(ref, () => root.current!);
+  React.useImperativeHandle<typeof root.current, typeof root.current>(
+    ref,
+    () => root.current
+  );
   React.useEffect(() => {
     if (value !== undefined) {
       return;

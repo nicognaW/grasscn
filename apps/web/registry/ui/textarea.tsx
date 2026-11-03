@@ -22,7 +22,11 @@ const Textarea = ({
   scale?: 1 | 2 | 3;
 }) => {
   const node = React.useRef<HTMLTextAreaElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftTextarea(node.current, scale) : undefined,

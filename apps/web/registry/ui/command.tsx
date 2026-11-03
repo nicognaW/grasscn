@@ -120,7 +120,11 @@ const CommandInput = ({
   const scale = explicit ?? inherited;
 
   const node = React.useRef<HTMLInputElement>(null);
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useEffect(
     () =>
       node.current ? attachMinecraftInput(node.current, scale) : undefined,
@@ -153,7 +157,11 @@ const CommandList = ({
   const scale = React.useContext(MenuScaleContext);
   const node = React.useRef<HTMLDivElement>(null);
 
-  React.useImperativeHandle(ref, () => node.current!, []);
+  React.useImperativeHandle<typeof node.current, typeof node.current>(
+    ref,
+    () => node.current,
+    []
+  );
   React.useLayoutEffect(() => {
     const element = node.current!;
     const items = element.querySelector<HTMLElement>("[data-mc-command-items]");
