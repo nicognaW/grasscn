@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type {
   DecodedPixels,
   OverlayCaptureManifest,
@@ -115,6 +116,135 @@ const compare = function compare(a: DecodedPixels, b: DecodedPixels) {
   return { diff, mismatchedPixels: n };
 };
 
+const captureOverlayPart = async (c: OverlayCaptureManifest["cases"][number], name: string, dir: string, part: string, folder: string, page: Page) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background,
+    component: name,
+    height: String(c.height),
+    native: "1",
+    part,
+    scale: String(c.scale),
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  const optionalLabel = c.label;
+
+  if (optionalLabel !== null && optionalLabel !== undefined) {
+    q.set("label", c.label!);
+  }
+
+  const optionalText = c.text;
+
+  if (optionalText !== null && optionalText !== undefined) {
+    q.set("text", c.text!);
+  }
+
+  const optionalWrapWidth = c.wrapWidth;
+
+  if (
+    optionalWrapWidth !== null &&
+    optionalWrapWidth !== undefined
+  ) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  await page.goto(`${base}?${q}`);
+  await page.mouse.move(0, 0);
+  await page.addStyleTag({
+    content: "#root{visibility:hidden}#subject{visibility:visible}",
+  });
+  await page.addStyleTag({
+    content: `[data-slot="${name}-overlay"]{visibility:hidden!important}[data-slot="${name}-content"]{visibility:hidden}#subject{visibility:visible}`,
+  });
+  const target = page.locator("#subject");
+  await expect(target).toBeVisible();
+
+  if (dir === "label") {
+    await expect(target).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+
+    for (const line of await target
+      .locator("[data-mc-label-ready]")
+      .all()) {
+      await expect(line).toHaveAttribute(
+        "data-mc-label-ready",
+        "true"
+      );
+    }
+  }
+
+  await page.evaluate(async () => {
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    return await frameCompletion.promise;
+  });
+
+  const expectedBytes = fs.readFileSync(
+    path.join(folder, "captures", c.name)
+  );
+
+  if (hash(expectedBytes) !== c.sha256) {
+    throw new Error(`reference hash ${c.name}`);
+  }
+
+  const actualBytes = await target.screenshot({
+    animations: "disabled",
+  });
+
+  const actual = PNG.sync.read(actualBytes);
+  const expected = PNG.sync.read(expectedBytes);
+  const result = compare(expected, actual);
+
+  // Keep capture artifacts outside the consumer's Vite/Tailwind watch root.
+  const out = repositoryFile(
+    path.join(
+      ".pixel-perfect-test",
+      "installed-verification",
+      path.basename(consumer),
+      name,
+      `${part}-${c.name}`
+    )
+  );
+
+  fs.mkdirSync(out, { recursive: true });
+  fs.writeFileSync(
+    path.join(out, "metrics.json"),
+    JSON.stringify({
+      case: c.name,
+      mismatchedPixels: result.mismatchedPixels,
+      part,
+      tolerance: 0,
+      totalPixels: actual.width * actual.height,
+    })
+  );
+
+  if (result.mismatchedPixels) {
+    fs.writeFileSync(path.join(out, "actual.png"), actualBytes);
+    fs.writeFileSync(
+      path.join(out, "diff.png"),
+      PNG.sync.write(result.diff)
+    );
+    throw new Error(
+      `${name} ${dir} ${part} ${c.name}: ${result.mismatchedPixels} pixels`
+    );
+  }
+
+  return actual;
+};
+
 try {
   const pending = [...names];
   await Promise.all(
@@ -164,130 +294,7 @@ try {
                 page.on("pageerror", (e) => errors.push(e.message));
               }
 
-              const q = new URLSearchParams({
-                align: c.alignment ?? "left",
-                background: c.background,
-                component: name,
-                height: String(c.height),
-                native: "1",
-                part,
-                scale: String(c.scale),
-                width: String(c.width),
-                x: String(c.x),
-                y: String(c.y),
-              });
-
-              const optionalLabel = c.label;
-
-              if (optionalLabel !== null && optionalLabel !== undefined) {
-                q.set("label", c.label!);
-              }
-
-              const optionalText = c.text;
-
-              if (optionalText !== null && optionalText !== undefined) {
-                q.set("text", c.text!);
-              }
-
-              const optionalWrapWidth = c.wrapWidth;
-
-              if (
-                optionalWrapWidth !== null &&
-                optionalWrapWidth !== undefined
-              ) {
-                q.set("wrapWidth", String(c.wrapWidth));
-              }
-
-              await page.goto(`${base}?${q}`);
-              await page.mouse.move(0, 0);
-              await page.addStyleTag({
-                content: "#root{visibility:hidden}#subject{visibility:visible}",
-              });
-              await page.addStyleTag({
-                content: `[data-slot="${name}-overlay"]{visibility:hidden!important}[data-slot="${name}-content"]{visibility:hidden}#subject{visibility:visible}`,
-              });
-              const target = page.locator("#subject");
-              await expect(target).toBeVisible();
-
-              if (dir === "label") {
-                await expect(target).toHaveAttribute(
-                  "data-mc-label-layout-ready",
-                  "true"
-                );
-
-                for (const line of await target
-                  .locator("[data-mc-label-ready]")
-                  .all()) {
-                  await expect(line).toHaveAttribute(
-                    "data-mc-label-ready",
-                    "true"
-                  );
-                }
-              }
-
-              await page.evaluate(async () => {
-                const frameCompletion = Promise.withResolvers();
-
-                try {
-                  requestAnimationFrame(() => {
-                    requestAnimationFrame(frameCompletion.resolve);
-                  });
-                } catch (error) {
-                  frameCompletion.reject(error);
-                }
-
-                return await frameCompletion.promise;
-              });
-
-              const expectedBytes = fs.readFileSync(
-                path.join(folder, "captures", c.name)
-              );
-
-              if (hash(expectedBytes) !== c.sha256) {
-                throw new Error(`reference hash ${c.name}`);
-              }
-
-              const actualBytes = await target.screenshot({
-                animations: "disabled",
-              });
-
-              const actual = PNG.sync.read(actualBytes);
-              const expected = PNG.sync.read(expectedBytes);
-              const result = compare(expected, actual);
-
-              // Keep capture artifacts outside the consumer's Vite/Tailwind watch root.
-              const out = repositoryFile(
-                path.join(
-                  ".pixel-perfect-test",
-                  "installed-verification",
-                  path.basename(consumer),
-                  name,
-                  `${part}-${c.name}`
-                )
-              );
-
-              fs.mkdirSync(out, { recursive: true });
-              fs.writeFileSync(
-                path.join(out, "metrics.json"),
-                JSON.stringify({
-                  case: c.name,
-                  mismatchedPixels: result.mismatchedPixels,
-                  part,
-                  tolerance: 0,
-                  totalPixels: actual.width * actual.height,
-                })
-              );
-
-              if (result.mismatchedPixels) {
-                fs.writeFileSync(path.join(out, "actual.png"), actualBytes);
-                fs.writeFileSync(
-                  path.join(out, "diff.png"),
-                  PNG.sync.write(result.diff)
-                );
-                throw new Error(
-                  `${name} ${dir} ${part} ${c.name}: ${result.mismatchedPixels} pixels`
-                );
-              }
+              const actual = await captureOverlayPart(c, name, dir, part, folder, page);
 
               record[
                 part === "description"

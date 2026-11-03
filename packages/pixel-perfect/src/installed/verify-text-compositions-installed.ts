@@ -7,6 +7,7 @@ import path from "node:path";
 import type { InstalledComponentSettings } from "@grasscn/tests/installed-registry-file";
 import { packageBin } from "@grasscn/tests/tooling";
 import { chromium, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type {
   InstalledTextRegistry,
   InstalledTextItem,
@@ -148,6 +149,134 @@ const compare = function compare(expected: PNG, actual: PNG) {
   return count;
 };
 
+const verifyComposedTextCase = async (c: ComposedTextCaptureManifest["cases"][number], page: Page) => {
+  const url = new URL(origin);
+  url.search = "";
+
+  for (const [key, value] of Object.entries(c)) {
+    if (typeof value === "string" || typeof value === "number") {
+      url.searchParams.set(key, String(value));
+    }
+  }
+
+  url.searchParams.set("component", name);
+  url.searchParams.set("native", "1");
+  await page.goto(url.href);
+  const subject = page.locator("#subject");
+  let slotSelection: string;
+
+  if (name === "code-block") {
+    slotSelection = "code-block-content";
+  } else if (name === "trace") {
+    slotSelection = "trace-line";
+  } else if (name === "message-scroller") {
+    slotSelection = "message-scroller-item";
+  } else {
+    slotSelection = name;
+  }
+
+  await expect(subject).toHaveAttribute("data-slot", slotSelection);
+  await expect(subject).toBeVisible();
+
+  if (name === "code-block") {
+    await expect(
+      subject.locator("[data-mc-selectable-ready]")
+    ).toHaveAttribute("data-mc-selectable-ready", "true");
+  }
+
+  if (name === "message-scroller") {
+    await expect(subject.locator("[data-mc-chat-ready]")).toHaveAttribute(
+      "data-mc-chat-ready",
+      "true"
+    );
+  }
+
+  for (const node of await subject
+    .locator("[data-mc-label-layout-ready]")
+    .all()) {
+    await expect(node).toHaveAttribute(
+      "data-mc-label-layout-ready",
+      "true"
+    );
+  }
+
+  for (const node of await subject.locator("[data-mc-label-ready]").all()) {
+    await expect(node).toHaveAttribute("data-mc-label-ready", "true");
+  }
+
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+
+    const images = [...document.querySelectorAll(".mc-surface>span")]
+      .map(
+        (node) =>
+          /url\(["']?(?<imageUrl>.*?)["']?\)/.exec(
+            getComputedStyle(node).backgroundImage
+          )?.[1]
+      )
+      .filter(Boolean);
+
+    await Promise.all(
+      images.map(async (src) => {
+        const imageCompletion = Promise.withResolvers();
+
+        try {
+          const image = new Image();
+          image.onload = image.onerror = imageCompletion.resolve;
+          // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
+          image.src = src!;
+        } catch (error) {
+          imageCompletion.reject(error);
+        }
+
+        return await imageCompletion.promise;
+      })
+    );
+    const frameCompletion = Promise.withResolvers();
+
+    try {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(frameCompletion.resolve);
+      });
+    } catch (error) {
+      frameCompletion.reject(error);
+    }
+
+    await frameCompletion.promise;
+  });
+
+  const expectedBytes = fs.readFileSync(
+    pixelPerfectFile(
+      path.join("tests/reference", directory, "captures", c.name)
+    )
+  );
+
+  assert.equal(sha(expectedBytes), c.sha256, "Native PNG integrity");
+
+  const actualBytes = await subject.screenshot();
+  const actual = PNG.sync.read(actualBytes);
+  const mismatchedPixels = compare(PNG.sync.read(expectedBytes), actual);
+
+  results.push({
+    decodedRgbaSha256: sha(actual.data),
+    mismatchedPixels,
+    name: c.name,
+  });
+
+  if (mismatchedPixels) {
+    console.log(name, c.name, mismatchedPixels);
+
+    const failures = repositoryFile(
+      path.join(
+        ".pixel-perfect-test/text-components-integration/next-pixel-failures"
+      )
+    );
+
+    fs.mkdirSync(failures, { recursive: true });
+    fs.writeFileSync(path.join(failures, `${name}-${c.name}`), actualBytes);
+  }
+};
+
 const worker = async function worker() {
   let page = await browser.newPage({
     deviceScaleFactor: 1,
@@ -176,131 +305,7 @@ const worker = async function worker() {
         page.on("pageerror", (error) => errors.push(error.message));
       }
 
-      const url = new URL(origin);
-      url.search = "";
-
-      for (const [key, value] of Object.entries(c)) {
-        if (typeof value === "string" || typeof value === "number") {
-          url.searchParams.set(key, String(value));
-        }
-      }
-
-      url.searchParams.set("component", name);
-      url.searchParams.set("native", "1");
-      await page.goto(url.href);
-      const subject = page.locator("#subject");
-      let slotSelection: string;
-
-      if (name === "code-block") {
-        slotSelection = "code-block-content";
-      } else if (name === "trace") {
-        slotSelection = "trace-line";
-      } else if (name === "message-scroller") {
-        slotSelection = "message-scroller-item";
-      } else {
-        slotSelection = name;
-      }
-
-      await expect(subject).toHaveAttribute("data-slot", slotSelection);
-      await expect(subject).toBeVisible();
-
-      if (name === "code-block") {
-        await expect(
-          subject.locator("[data-mc-selectable-ready]")
-        ).toHaveAttribute("data-mc-selectable-ready", "true");
-      }
-
-      if (name === "message-scroller") {
-        await expect(subject.locator("[data-mc-chat-ready]")).toHaveAttribute(
-          "data-mc-chat-ready",
-          "true"
-        );
-      }
-
-      for (const node of await subject
-        .locator("[data-mc-label-layout-ready]")
-        .all()) {
-        await expect(node).toHaveAttribute(
-          "data-mc-label-layout-ready",
-          "true"
-        );
-      }
-
-      for (const node of await subject.locator("[data-mc-label-ready]").all()) {
-        await expect(node).toHaveAttribute("data-mc-label-ready", "true");
-      }
-
-      await page.evaluate(async () => {
-        await document.fonts.ready;
-
-        const images = [...document.querySelectorAll(".mc-surface>span")]
-          .map(
-            (node) =>
-              /url\(["']?(?<imageUrl>.*?)["']?\)/.exec(
-                getComputedStyle(node).backgroundImage
-              )?.[1]
-          )
-          .filter(Boolean);
-
-        await Promise.all(
-          images.map(async (src) => {
-            const imageCompletion = Promise.withResolvers();
-
-            try {
-              const image = new Image();
-              image.onload = image.onerror = imageCompletion.resolve;
-              // Array.filter(Boolean) above excludes the absent regex capture; keep the original native Boolean call.
-              image.src = src!;
-            } catch (error) {
-              imageCompletion.reject(error);
-            }
-
-            return await imageCompletion.promise;
-          })
-        );
-        const frameCompletion = Promise.withResolvers();
-
-        try {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(frameCompletion.resolve);
-          });
-        } catch (error) {
-          frameCompletion.reject(error);
-        }
-
-        await frameCompletion.promise;
-      });
-
-      const expectedBytes = fs.readFileSync(
-        pixelPerfectFile(
-          path.join("tests/reference", directory, "captures", c.name)
-        )
-      );
-
-      assert.equal(sha(expectedBytes), c.sha256, "Native PNG integrity");
-
-      const actualBytes = await subject.screenshot();
-      const actual = PNG.sync.read(actualBytes);
-      const mismatchedPixels = compare(PNG.sync.read(expectedBytes), actual);
-
-      results.push({
-        decodedRgbaSha256: sha(actual.data),
-        mismatchedPixels,
-        name: c.name,
-      });
-
-      if (mismatchedPixels) {
-        console.log(name, c.name, mismatchedPixels);
-
-        const failures = repositoryFile(
-          path.join(
-            ".pixel-perfect-test/text-components-integration/next-pixel-failures"
-          )
-        );
-
-        fs.mkdirSync(failures, { recursive: true });
-        fs.writeFileSync(path.join(failures, `${name}-${c.name}`), actualBytes);
-      }
+      await verifyComposedTextCase(c, page);
     } catch (failure) {
       // SAFETY: the owned Node/PNG and Playwright operations expose message; keep the original property access and failure coercion.
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Narrow message projection at this concrete verifier failure boundary.
