@@ -356,3 +356,21 @@
   height: 200px;
   width: 400px;
 }
+
+/* Native fixture geometry is applied only in the original active branches. */
+#root .fixture-native-collapse-hidden-trigger {
+  left: -10000px;
+  position: fixed;
+}
+#root .fixture-native-collapse-padding {
+  padding: 0;
+}
+#root .fixture-native-collapse-root {
+  left: var(--fixture-collapse-left);
+  position: fixed;
+  top: var(--fixture-collapse-top);
+  width: var(--fixture-collapse-width);
+}
+#root .fixture-main-slider-width[data-orientation="horizontal"] {
+  width: var(--fixture-width);
+}
