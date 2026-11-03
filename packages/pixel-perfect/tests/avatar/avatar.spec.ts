@@ -122,6 +122,29 @@ const labels = JSON.parse(
   readFileSync(pixelPerfectFile("tests/reference/label/manifest.json"), "utf-8")
 ) as typeof CapturedData0;
 
+// Native capture Case.wrapWidth is a nullable Integer; zero or absence disables wrapping.
+const avatarFallbackQuery = (c: (typeof CapturedData0)["cases"][number]) => {
+  const q = new URLSearchParams({
+    align: c.alignment ?? "left",
+    background: c.background,
+    component: "avatar",
+    height: String(c.height),
+    label: c.label,
+    native: "1",
+    part: "label",
+    scale: String(c.scale),
+    width: String(c.width),
+    x: String(c.x),
+    y: String(c.y),
+  });
+
+  if ((c.wrapWidth ?? 0) !== 0) {
+    q.set("wrapWidth", String(c.wrapWidth));
+  }
+
+  return q;
+};
+
 test.describe("AvatarFallback original Label constituents", () => {
   test.describe.configure({ mode: "parallel" });
 
@@ -129,23 +152,7 @@ test.describe("AvatarFallback original Label constituents", () => {
     test(`avatar fallback ${c.name}`, async ({ page }, info) => {
       await page.setViewportSize({ height: 900, width: 1536 });
 
-      const q = new URLSearchParams({
-        align: c.alignment ?? "left",
-        background: c.background,
-        component: "avatar",
-        height: String(c.height),
-        label: c.label,
-        native: "1",
-        part: "label",
-        scale: String(c.scale),
-        width: String(c.width),
-        x: String(c.x),
-        y: String(c.y),
-      });
-
-      if (c.wrapWidth) {
-        q.set("wrapWidth", String(c.wrapWidth));
-      }
+      const q = avatarFallbackQuery(c);
 
       await page.goto(`/?${q}`);
       await expect(
