@@ -87,11 +87,11 @@ test.describe("Select CJK native matrix", () => {
       await subject.evaluate(
         (node, p) =>
           Object.assign(node.style, {
-            height: p.height + "px",
-            left: p.x + "px",
+            height: `${p.height  }px`,
+            left: `${p.x  }px`,
             position: "fixed",
-            top: p.y + "px",
-            width: p.width + "px",
+            top: `${p.y  }px`,
+            width: `${p.width  }px`,
           }),
         {
           height: c.height * c.scale,

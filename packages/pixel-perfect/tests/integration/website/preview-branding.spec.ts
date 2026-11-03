@@ -39,7 +39,7 @@ test("Grasscn project identity and native branding assets are consistent", async
   const provenance = JSON.parse(
     await readFile(
       evidenceFile("preview/branding.provenance.json", pixelPerfectRoot),
-      "utf8"
+      "utf-8"
     )
   );
 

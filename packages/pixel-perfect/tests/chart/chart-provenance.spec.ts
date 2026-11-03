@@ -47,7 +47,7 @@ for (const kind of ["fps", "pie"]) {
     // SAFETY: Both retained Chart FPS/Pie manifests supply the consumed identity strings, positioned/page cases and frame name/hash pins; all original provenance checks remain.
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained producer boundary; preserve the existing fresh runtime read/parse phase.
     const m = JSON.parse(
-      readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf8")
+      readFileSync(pixelPerfectFile(`${dir}/manifest.json`), "utf-8")
     ) as ChartProvenanceManifest;
 
     // SAFETY: Both retained Chart FPS/Pie repeatability artifacts contain these identity strings and per-case numeric mismatch/string decoded-digest records; original checks remain.

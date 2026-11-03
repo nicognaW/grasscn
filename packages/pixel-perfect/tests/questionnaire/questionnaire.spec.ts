@@ -102,7 +102,7 @@ for (const [part, dir] of parts) {
             q.set("maxLength", String(c.maxLength));
           }
 
-          await page.goto("/?" + q);
+          await page.goto(`/?${  q}`);
           const subject = page.locator("[data-subject]");
           await expect(subject).toBeVisible();
 
