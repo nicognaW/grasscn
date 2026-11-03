@@ -156,19 +156,12 @@ for (const manifestFile of manifests.filter(
 
   let allPartsSelection: string[];
 
-  switch (true) {
-    case name === "form": {
-      allPartsSelection = ["label", "description", "message"];
-      break;
-    }
-
-    case name === "field": {
-      allPartsSelection = ["label", "legend", "title", "description"];
-      break;
-    }
-
-    case name === "typography": {
-      allPartsSelection = [
+  if (name === "form") {
+    allPartsSelection = ["label", "description", "message"];
+  } else if (name === "field") {
+    allPartsSelection = ["label", "legend", "title", "description"];
+  } else if (name === "typography") {
+    allPartsSelection = [
               "default",
               "h1",
               "h2",
@@ -182,23 +175,12 @@ for (const manifestFile of manifests.filter(
               "large",
               "muted",
             ];
-      break;
-    }
-
-    case name === "breadcrumb": {
-      allPartsSelection = ["link", "page"];
-      break;
-    }
-
-    case name === "empty" && !nativeEmpty: {
-      allPartsSelection = ["title", "description"];
-      break;
-    }
-
-    default: {
-      allPartsSelection = ["default"];
-      break;
-    }
+  } else if (name === "breadcrumb") {
+    allPartsSelection = ["link", "page"];
+  } else if (name === "empty" && !nativeEmpty) {
+    allPartsSelection = ["title", "description"];
+  } else {
+    allPartsSelection = ["default"];
   }
 
   const allParts: string[] =

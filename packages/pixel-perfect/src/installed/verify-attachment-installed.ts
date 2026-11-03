@@ -163,21 +163,12 @@ try {
 
         let mediaStateSelection: string;
 
-        switch (true) {
-          case c.state === "hover": {
-            mediaStateSelection = "1";
-            break;
-          }
-
-          case c.state === "icon-hover": {
-            mediaStateSelection = "2";
-            break;
-          }
-
-          default: {
-            mediaStateSelection = "0";
-            break;
-          }
+        if (c.state === "hover") {
+          mediaStateSelection = "1";
+        } else if (c.state === "icon-hover") {
+          mediaStateSelection = "2";
+        } else {
+          mediaStateSelection = "0";
         }
 
         await expect(
@@ -288,21 +279,12 @@ try {
     fs.mkdirSync(target, { recursive: true });
     let reportFilenameSelection: string;
 
-    switch (true) {
-      case part === "row": {
-        reportFilenameSelection = "row-installation-verification.json";
-        break;
-      }
-
-      case dir === ".": {
-        reportFilenameSelection = "action-ascii-installation-verification.json";
-        break;
-      }
-
-      default: {
-        reportFilenameSelection = "action-cjk-installation-verification.json";
-        break;
-      }
+    if (part === "row") {
+      reportFilenameSelection = "row-installation-verification.json";
+    } else if (dir === ".") {
+      reportFilenameSelection = "action-ascii-installation-verification.json";
+    } else {
+      reportFilenameSelection = "action-cjk-installation-verification.json";
     }
 
     fs.writeFileSync(

@@ -142,27 +142,18 @@ test.describe("Sidebar original native constituent cases", () => {
 
       let partsSelection: string[];
 
-      switch (true) {
-        case kind === "button": {
-          partsSelection = [
+      if (kind === "button") {
+        partsSelection = [
               "menu-button",
               "sub-button",
               ...(representative
                 ? ["trigger", "group-action", "menu-action"]
                 : []),
             ];
-          break;
-        }
-
-        case kind === "label": {
-          partsSelection = ["label", "badge"];
-          break;
-        }
-
-        default: {
-          partsSelection = [kind];
-          break;
-        }
+      } else if (kind === "label") {
+        partsSelection = ["label", "badge"];
+      } else {
+        partsSelection = [kind];
       }
 
       const parts =
@@ -220,36 +211,18 @@ test.describe("Sidebar original native constituent cases", () => {
             const subject = page.locator("[data-subject]");
             let slotSelection: string;
 
-            switch (true) {
-              case part === "sub-button": {
-                slotSelection = "sidebar-menu-sub-button";
-                break;
-              }
-
-              case part === "label": {
-                slotSelection = "sidebar-group-label";
-                break;
-              }
-
-              case part === "badge": {
-                slotSelection = "sidebar-menu-badge";
-                break;
-              }
-
-              case part === "panel": {
-                slotSelection = "sidebar";
-                break;
-              }
-
-              case part === "scroll": {
-                slotSelection = "sidebar-content";
-                break;
-              }
-
-              default: {
-                slotSelection = `sidebar-${part}`;
-                break;
-              }
+            if (part === "sub-button") {
+              slotSelection = "sidebar-menu-sub-button";
+            } else if (part === "label") {
+              slotSelection = "sidebar-group-label";
+            } else if (part === "badge") {
+              slotSelection = "sidebar-menu-badge";
+            } else if (part === "panel") {
+              slotSelection = "sidebar";
+            } else if (part === "scroll") {
+              slotSelection = "sidebar-content";
+            } else {
+              slotSelection = `sidebar-${part}`;
             }
 
             await expect(subject).toHaveAttribute(

@@ -56,26 +56,14 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
       await expect(subject).toBeVisible();
       let slotSelection: string;
 
-      switch (true) {
-        case component === "code-block": {
-          slotSelection = "code-block-content";
-          break;
-        }
-
-        case component === "trace": {
-          slotSelection = "trace-line";
-          break;
-        }
-
-        case component === "message-scroller": {
-          slotSelection = "message-scroller-item";
-          break;
-        }
-
-        default: {
-          slotSelection = component;
-          break;
-        }
+      if (component === "code-block") {
+        slotSelection = "code-block-content";
+      } else if (component === "trace") {
+        slotSelection = "trace-line";
+      } else if (component === "message-scroller") {
+        slotSelection = "message-scroller-item";
+      } else {
+        slotSelection = component;
       }
 
       await expect(subject).toHaveAttribute(
@@ -142,26 +130,14 @@ export const nativeTextCompositionTests = function nativeTextCompositionTests(
       writeFileSync(info.outputPath("diff.png"), PNG.sync.write(diff));
       let metricPartSelection: string;
 
-      switch (true) {
-        case component === "code-block": {
-          metricPartSelection = "content";
-          break;
-        }
-
-        case component === "trace": {
-          metricPartSelection = "line";
-          break;
-        }
-
-        case component === "message-scroller": {
-          metricPartSelection = "item";
-          break;
-        }
-
-        default: {
-          metricPartSelection = "default";
-          break;
-        }
+      if (component === "code-block") {
+        metricPartSelection = "content";
+      } else if (component === "trace") {
+        metricPartSelection = "line";
+      } else if (component === "message-scroller") {
+        metricPartSelection = "item";
+      } else {
+        metricPartSelection = "default";
       }
 
       writeFileSync(
