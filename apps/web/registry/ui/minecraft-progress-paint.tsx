@@ -36,7 +36,7 @@ const create = function create(): Painter | null {
     gl.shaderSource(result, source);
     gl.compileShader(result);
 
-    if (!gl.getShaderParameter(result, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(result, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(result) ?? "Progress shader failed");
     }
 

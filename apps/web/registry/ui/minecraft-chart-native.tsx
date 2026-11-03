@@ -371,7 +371,7 @@ const paintProfiler = function paintProfiler(
       gl.shaderSource(s, source);
       gl.compileShader(s);
 
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      if (gl.getShaderParameter(s, gl.COMPILE_STATUS) !== true) {
         return null;
       }
 
@@ -398,7 +398,7 @@ const paintProfiler = function paintProfiler(
     gl.attachShader(program, fs);
     gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
       return false;
     }
 

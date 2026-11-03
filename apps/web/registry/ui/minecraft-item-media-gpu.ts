@@ -30,7 +30,7 @@ const create = function create(): Painter | null {
     gl.shaderSource(value, source);
     gl.compileShader(value);
 
-    if (!gl.getShaderParameter(value, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(value, gl.COMPILE_STATUS) !== true) {
       throw new Error(gl.getShaderInfoLog(value) ?? "Item media shader failed");
     }
 
@@ -53,7 +53,7 @@ const create = function create(): Painter | null {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Item media shader link failed"
     );

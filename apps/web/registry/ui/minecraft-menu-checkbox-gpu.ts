@@ -30,7 +30,7 @@ const create = function create(): Painter | null {
     gl.shaderSource(shaderHandle, source);
     gl.compileShader(shaderHandle);
 
-    if (!gl.getShaderParameter(shaderHandle, gl.COMPILE_STATUS)) {
+    if (gl.getShaderParameter(shaderHandle, gl.COMPILE_STATUS) !== true) {
       throw new Error(
         gl.getShaderInfoLog(shaderHandle) ?? "Checkbox shader failed"
       );
@@ -55,7 +55,7 @@ const create = function create(): Painter | null {
   gl.linkProgram(program);
   gl.useProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  if (gl.getProgramParameter(program, gl.LINK_STATUS) !== true) {
     throw new Error(
       gl.getProgramInfoLog(program) ?? "Checkbox shader link failed"
     );
