@@ -69,13 +69,12 @@ const SonnerFixture = () => {
       />
       <div
         id="subject"
-        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width"
+        className="fixture-geometry-height fixture-geometry-x fixture-placement-fixed fixture-geometry-y fixture-geometry-width fixture-owned-inline-1"
         style={{
           "--fixture-height": `${height}px`,
           "--fixture-width": `${width}px`,
           "--fixture-x": `${x}px`,
           "--fixture-y": `${y}px`,
-          pointerEvents: "none",
         }}
         data-subject="true"
       />

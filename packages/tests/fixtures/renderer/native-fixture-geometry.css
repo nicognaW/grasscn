@@ -233,3 +233,42 @@
   margin-top: var(--fixture-edge-top);
   margin-left: var(--fixture-edge-left);
 }
+
+/* Authored fixture DOM layout; caller style API probes remain inline. */
+#root div.fixture-owned-inline-1 {
+  pointer-events: none;
+}
+
+/* Sidebar-owned geometry. Group/Menu Action inline position/top overrides stay intact. */
+#root .fixture-sidebar-native-geometry {
+  height: var(--fixture-sidebar-native-height);
+  left: var(--fixture-sidebar-native-left);
+  position: fixed;
+  top: var(--fixture-sidebar-native-top);
+  width: var(--fixture-sidebar-native-width);
+}
+#root .fixture-sidebar-margin-zero {
+  margin: 0;
+}
+#root .fixture-sidebar-min-height-zero {
+  min-height: 0;
+}
+#root .fixture-sidebar-padding {
+  padding: var(--fixture-sidebar-native-padding);
+}
+#root .fixture-sidebar-gap {
+  gap: var(--fixture-sidebar-native-gap);
+}
+#root .fixture-sidebar-native-provider {
+  min-height: 0;
+}
+#root .fixture-sidebar-app-provider {
+  min-height: 400px;
+  position: relative;
+}
+#root .fixture-sidebar-native-row {
+  left: 0;
+  position: absolute;
+  top: var(--fixture-sidebar-row-top);
+  width: 100%;
+}
