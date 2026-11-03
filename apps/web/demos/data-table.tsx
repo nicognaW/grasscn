@@ -129,19 +129,29 @@ const DataTableDemo = ({ scale }: DemoProps) => {
         <TableHeader>
           {table.getHeaderGroups().map((group) => (
             <TableRow key={group.id}>
-              {group.headers.map((header) => (
-                <TableHead
-                  key={header.id}
-                  aria-sort={sortDirection(header.column.getIsSorted())}
-                >
-                  {header.isPlaceholder ? null : typeof header.column.columnDef
-                      .header === "string" ? (
-                    header.column.columnDef.header
-                  ) : (
-                    <table.FlexRender header={header} />
-                  )}
-                </TableHead>
-              ))}
+              {group.headers.map((header) => {
+                const _precedingkey = header.id;
+
+                const _precedingariasort = sortDirection(
+                  header.column.getIsSorted()
+                );
+
+                let _selectedContent: React.ReactNode;
+
+                if (header.isPlaceholder) {
+                  _selectedContent = null;
+                } else if (typeof header.column.columnDef.header === "string") {
+                  _selectedContent = header.column.columnDef.header;
+                } else {
+                  _selectedContent = <table.FlexRender header={header} />;
+                }
+
+                return (
+                  <TableHead key={_precedingkey} aria-sort={_precedingariasort}>
+                    {_selectedContent}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>

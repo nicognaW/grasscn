@@ -43,7 +43,15 @@ export const MinecraftItemMedia = ({ scale }: { scale: 1 | 2 | 3 }) => {
           pointer.y < mediaBounds.bottom
         : media.matches(":hover");
 
-      const state: 0 | 1 | 2 = hovered ? (overIcon ? 2 : 1) : 0;
+      let _selectedState: 0 | 1 | 2;
+
+      if (hovered) {
+        _selectedState = overIcon ? 2 : 1;
+      } else {
+        _selectedState = 0;
+      }
+
+      const state: 0 | 1 | 2 = _selectedState;
 
       const key = [rect.x, rect.y, innerWidth, innerHeight, state, scale].join(
         ":"

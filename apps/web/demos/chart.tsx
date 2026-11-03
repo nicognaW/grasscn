@@ -147,15 +147,17 @@ const ChartDemo = ({ scale }: DemoProps) => {
     [circular, period]
   );
 
-  const series = React.useMemo(
-    () =>
-      circular
-        ? ["visitors"]
-        : device === "both"
-          ? ["desktop", "mobile"]
-          : [device],
-    [circular, device]
-  );
+  const series = React.useMemo(() => {
+    if (circular) {
+      return ["visitors"];
+    }
+
+    if (device === "both") {
+      return ["desktop", "mobile"];
+    }
+
+    return [device];
+  }, [circular, device]);
 
   const total = data.reduce(
     (n, row) =>

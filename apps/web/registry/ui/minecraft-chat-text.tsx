@@ -280,14 +280,17 @@ const MinecraftChatText = ({
     return value;
   };
 
-  const rendered =
-    text === null ? (
+  let _selectedRendered: React.ReactNode;
+
+  if (text === null) {
+    _selectedRendered =
       accessibleText === null ? (
         <span className="mc-chat-rich-inline">{richText(content)}</span>
       ) : (
         content
-      )
-    ) : (
+      );
+  } else {
+    _selectedRendered = (
       <>
         {lines.map((line, index) => (
           <span
@@ -320,6 +323,9 @@ const MinecraftChatText = ({
         <span className="mc-text-accessible">{accessibleText}</span>
       </>
     );
+  }
+
+  const rendered = _selectedRendered;
 
   const Component = MinecraftRender;
 

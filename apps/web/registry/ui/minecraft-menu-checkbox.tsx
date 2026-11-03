@@ -31,13 +31,23 @@ export const MinecraftMenuCheckboxSprite = () => {
       const checked = item.hasAttribute("data-checked");
       const highlighted = Object.hasOwn(item.dataset, "highlighted");
 
-      const name = checked
-        ? highlighted
+      let _selectedName:
+        | "checkbox_selected_highlighted"
+        | "checkbox_selected"
+        | "checkbox_highlighted"
+        | "checkbox";
+
+      if (checked) {
+        _selectedName = highlighted
           ? "checkbox_selected_highlighted"
-          : "checkbox_selected"
-        : highlighted
-          ? "checkbox_highlighted"
-          : "checkbox";
+          : "checkbox_selected";
+      } else if (highlighted) {
+        _selectedName = "checkbox_highlighted";
+      } else {
+        _selectedName = "checkbox";
+      }
+
+      const name = _selectedName;
 
       const next = JSON.stringify([
         name,

@@ -274,36 +274,45 @@ const MinecraftItemText = ({
     return value;
   };
 
-  const rendered = supported ? (
-    <>
-      {lines.map((line, index) => (
-        <span
-          aria-hidden="true"
-          className="mc-label-line mc-dynamic-layout-minecraft-item-text-1"
-          key={index}
-          style={
-            /* SAFETY: The owned mc-dynamic-layout-minecraft-item-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
-            {
-              "--mc-dynamic-minecraft-item-text-1-padding-left":
-                align === "center"
-                  ? (Math.floor((width - widest) / 2) +
-                      Math.floor(widest / 2) -
-                      Math.floor(textWidth(line) / 2)) *
-                    scale
-                  : 0,
-            } satisfies MinecraftItemTextLayoutStyle1 as MinecraftItemTextLayoutStyle1
-          }
-        >
-          <MinecraftColorUnicodeLabel text={line} atlas={minecraftItemAtlas} />
-        </span>
-      ))}
-      <span className="mc-text-accessible">{accessibleText}</span>
-    </>
-  ) : accessibleText === null ? (
-    <span>{richText(content)}</span>
-  ) : (
-    content
-  );
+  let _selectedRendered: React.ReactNode;
+
+  if (supported) {
+    _selectedRendered = (
+      <>
+        {lines.map((line, index) => (
+          <span
+            aria-hidden="true"
+            className="mc-label-line mc-dynamic-layout-minecraft-item-text-1"
+            key={index}
+            style={
+              /* SAFETY: The owned mc-dynamic-layout-minecraft-item-text-1 rule consumes exactly these CSS variables; satisfies checks the finite map and this CSSProperties view passes it to React without changing the original value expressions. */
+              {
+                "--mc-dynamic-minecraft-item-text-1-padding-left":
+                  align === "center"
+                    ? (Math.floor((width - widest) / 2) +
+                        Math.floor(widest / 2) -
+                        Math.floor(textWidth(line) / 2)) *
+                      scale
+                    : 0,
+              } satisfies MinecraftItemTextLayoutStyle1 as MinecraftItemTextLayoutStyle1
+            }
+          >
+            <MinecraftColorUnicodeLabel
+              text={line}
+              atlas={minecraftItemAtlas}
+            />
+          </span>
+        ))}
+        <span className="mc-text-accessible">{accessibleText}</span>
+      </>
+    );
+  } else if (accessibleText === null) {
+    _selectedRendered = <span>{richText(content)}</span>;
+  } else {
+    _selectedRendered = content;
+  }
+
+  const rendered = _selectedRendered;
 
   const Component = MinecraftRender;
 
