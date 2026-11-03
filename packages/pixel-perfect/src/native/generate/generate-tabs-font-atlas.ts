@@ -79,7 +79,15 @@ const codepoints = new Set(
   })
 );
 
-assert.deepEqual(Object.keys(observed).sort(), [...codepoints].sort());
+const observedGlyphCodes = Object.keys(observed);
+
+observedGlyphCodes.sort();
+
+const requestedGlyphCodes = [...codepoints];
+
+requestedGlyphCodes.sort();
+
+assert.deepEqual(observedGlyphCodes, requestedGlyphCodes);
 
 const atlas = Object.fromEntries(
   Object.entries(observed).map(([code, { u0, u1, v0, v1 }]) => [

@@ -47,8 +47,18 @@ test("Select uses the observed CJK atlas without changing the original renderer"
       (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
     >;
 
-  expect(Object.keys(selectUnihexAtlas).sort()).toEqual(
-    Object.keys(observed).sort()
+  const atlasCodepoints = Object.keys(selectUnihexAtlas);
+
+  atlasCodepoints.sort();
+
+  const atlasComparison = expect(atlasCodepoints);
+
+  const observedCodepoints = Object.keys(observed);
+
+  observedCodepoints.sort();
+
+  atlasComparison.toEqual(
+    observedCodepoints
   );
 
   for (const [code, uv] of Object.entries(selectUnihexAtlas)) {

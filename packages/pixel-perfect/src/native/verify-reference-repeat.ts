@@ -36,9 +36,17 @@ for (const key of [
   assert.equal(first[key], second[key], `Capture identity differs: ${key}`);
 }
 
+const firstCaseNames = first.cases.map((c) => c.name);
+
+firstCaseNames.sort();
+
+const secondCaseNames = second.cases.map((c) => c.name);
+
+secondCaseNames.sort();
+
 assert.deepEqual(
-  first.cases.map((c) => c.name).sort(),
-  second.cases.map((c) => c.name).sort()
+  firstCaseNames,
+  secondCaseNames
 );
 
 const cases = [];

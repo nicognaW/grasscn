@@ -149,14 +149,22 @@ for (const component of excluded) {
   );
 }
 
-assert.deepEqual(
-  [...names].sort(),
-  [
+const mappedComponentNames = [...names];
+
+mappedComponentNames.sort();
+
+const supportedComponentNames = [
     ...union.filter(
       (name) => !excluded.some((component) => component.name === name)
     ),
     ...extensions.map((component) => component.name),
-  ].sort(),
+  ];
+
+supportedComponentNames.sort();
+
+assert.deepEqual(
+  mappedComponentNames,
+  supportedComponentNames,
   "Missing or extra supported shadcn component"
 );
 
@@ -291,11 +299,19 @@ for (const component of map.components) {
 
     const filenames = item.files.map((file) => path.basename(file.path)).sort();
 
+    const installedFilePaths = installation.files.map((file) => file.path);
+
+    installedFilePaths.sort();
+
     assert.deepEqual(
-      installation.files.map((file) => file.path).sort(),
+      installedFilePaths,
       filenames
     );
-    assert.deepEqual(behavior.files.map((file) => file.path).sort(), filenames);
+    const behaviorFilePaths = behavior.files.map((file) => file.path);
+
+    behaviorFilePaths.sort();
+
+    assert.deepEqual(behaviorFilePaths, filenames);
     assertHistoricalUtilitySources(
       JSON.stringify(behavior),
       JSON.stringify(installation)
@@ -402,13 +418,29 @@ for (const component of map.components) {
       assert.equal(repeat.captureSourceSha256, manifest.captureSourceSha256);
       assert.equal(repeat.caseDefinitionSha256, manifest.caseDefinitionSha256);
       assert.deepEqual(report.pageErrors, []);
+      const reportedCaseNames = report.cases.map((c) => c.name);
+
+      reportedCaseNames.sort();
+
+      const manifestCaseNames = manifest.cases.map((c) => c.name);
+
+      manifestCaseNames.sort();
+
       assert.deepEqual(
-        report.cases.map((c) => c.name).sort(),
-        manifest.cases.map((c) => c.name).sort()
+        reportedCaseNames,
+        manifestCaseNames
       );
+      const repeatedCaseNames = repeat.cases.map((c) => c.name);
+
+      repeatedCaseNames.sort();
+
+      const manifestCaseNames2 = manifest.cases.map((c) => c.name);
+
+      manifestCaseNames2.sort();
+
       assert.deepEqual(
-        repeat.cases.map((c) => c.name).sort(),
-        manifest.cases.map((c) => c.name).sort()
+        repeatedCaseNames,
+        manifestCaseNames2
       );
 
       for (const file of report.files) {
@@ -589,9 +621,17 @@ for (const component of map.components) {
           observation.caseDefinitionSha256,
           manifest.caseDefinitionSha256
         );
+        const observedCaseNames = observation.cases.map((c) => c.name);
+
+        observedCaseNames.sort();
+
+        const nativeCaseNames = manifest.cases.map((c) => c.name);
+
+        nativeCaseNames.sort();
+
         assert.deepEqual(
-          observation.cases.map((c) => c.name).sort(),
-          manifest.cases.map((c) => c.name).sort()
+          observedCaseNames,
+          nativeCaseNames
         );
         assert.ok(
           observation.cases.every((c) => c.mismatchedPixels === 0),

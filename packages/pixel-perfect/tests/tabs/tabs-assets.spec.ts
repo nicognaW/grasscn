@@ -76,8 +76,18 @@ test("Tabs CJK atlas uses observed native UVs without changing native pixels", (
       (typeof BoundaryReference2)[keyof typeof BoundaryReference2]
     >;
 
-  expect(Object.keys(tabsUnihexAtlas).sort()).toEqual(
-    Object.keys(observed).sort()
+  const atlasCodepoints = Object.keys(tabsUnihexAtlas);
+
+  atlasCodepoints.sort();
+
+  const atlasComparison = expect(atlasCodepoints);
+
+  const observedCodepoints = Object.keys(observed);
+
+  observedCodepoints.sort();
+
+  atlasComparison.toEqual(
+    observedCodepoints
   );
 
   for (const [code, uv] of Object.entries(tabsUnihexAtlas)) {
