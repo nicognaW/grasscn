@@ -1,8 +1,8 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { Calendar } from "../registry/ui/calendar";
 import { Label } from "../registry/ui/label";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--demo-stage-gap": `${number}px`;

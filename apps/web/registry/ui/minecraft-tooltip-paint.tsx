@@ -1,9 +1,9 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { MinecraftSurface } from "./minecraft-surface";
 import { gpuTooltipPixels } from "./minecraft-tooltip-gpu";
 import { minecraftTooltipSprites as sprites } from "./minecraft-tooltip-sprites";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility": string;
@@ -210,7 +210,7 @@ export const MinecraftTooltipSurface = ({
         ref={canvas}
         aria-hidden="true"
         data-mc-tooltip-painted={painted}
-        className="h-full [inset:0] pointer-events-none absolute [visibility:var(--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility)] w-full"
+        className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-tooltip-paint-1-visibility)] absolute [inset:0] h-full w-full"
         style={
           // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
           {

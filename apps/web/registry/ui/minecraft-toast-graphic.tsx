@@ -1,8 +1,8 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { paintToast } from "./minecraft-toast-gpu";
 import { toastLayout } from "./minecraft-toast-layout";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility": string;
@@ -127,7 +127,7 @@ export const MinecraftToastGraphic = ({
       ref={ref}
       data-mc-toast-ready={ready}
       aria-hidden="true"
-      className="h-full left-0 pointer-events-none absolute top-0 [visibility:var(--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility)] w-full"
+      className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-toast-graphic-1-visibility)] absolute top-0 left-0 h-full w-full"
       style={
         // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
         {

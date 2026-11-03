@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
@@ -12,7 +13,6 @@ import {
   type CarouselApi,
 } from "../registry/ui/carousel";
 import type { DemoProps } from "../types";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-demos-carousel-1-padding": `${number}px`;
@@ -86,7 +86,7 @@ const CarouselDemo = ({ scale }: DemoProps) => {
               <CarouselItem key={name} style={{ height: 120 * scale }}>
                 <Card
                   scale={scale}
-                  className="h-full p-(--mc-intrinsic-demos-carousel-1-padding) w-full"
+                  className="h-full w-full p-(--mc-intrinsic-demos-carousel-1-padding)"
                   style={
                     // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
                     {

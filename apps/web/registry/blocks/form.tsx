@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,7 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { MinecraftDisclosureText } from "@/components/ui/minecraft-disclosure-text";
 import { Textarea } from "@/components/ui/textarea";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-blocks-form-1-gap": `${number}px`;
@@ -80,7 +80,7 @@ export const FormExample = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
         aria-label="Player and world settings"
         noValidate
         onSubmit={form.handleSubmit(setSaved)}
-        className="grid gap-(--mc-intrinsic-registry-blocks-form-1-gap) max-w-(--mc-intrinsic-registry-blocks-form-1-max-width) min-w-0"
+        className="grid max-w-(--mc-intrinsic-registry-blocks-form-1-max-width) min-w-0 gap-(--mc-intrinsic-registry-blocks-form-1-gap)"
         style={
           // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
           {

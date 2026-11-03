@@ -486,7 +486,7 @@ const Toaster = ({
             key={model.key}
             aria-hidden="true"
             data-mc-sonner-ghost=""
-            className="[isolation:isolate] pointer-events-none fixed z-999999999"
+            className="pointer-events-none fixed [isolation:isolate] z-999999999"
             style={{
               height: model.bounds.height,
 

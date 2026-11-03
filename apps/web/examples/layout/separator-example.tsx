@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 
 const SeparatorExample = () => (
-  <div className="grid gap-8 [width:400px] max-w-full">
+  <div className="grid [width:400px] max-w-full gap-8">
     <Separator
       /* eslint-disable jsx-a11y/prefer-tag-over-role -- Keep the native component tag, CSS geometry and explicit composed ARIA role together. */
       role="separator"

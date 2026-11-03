@@ -79,7 +79,7 @@ export const MinecraftMenuCheckboxSprite = () => {
       ref={ref}
       aria-hidden="true"
       data-mc-menu-sprite-ready="false"
-      className="h-full [inset:0] pointer-events-none absolute w-full"
+      className="pointer-events-none absolute [inset:0] h-full w-full"
     />
   );
 };

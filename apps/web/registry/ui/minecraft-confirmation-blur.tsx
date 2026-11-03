@@ -1,7 +1,7 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { useConfirmationSnapshot } from "./minecraft-confirmation-snapshot";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle2 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility": string;
@@ -74,7 +74,7 @@ export const MinecraftConfirmationBlur = ({
       <canvas
         ref={canvas}
         aria-hidden="true"
-        className="h-full [inset:0] pointer-events-none absolute [visibility:var(--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility)] w-full"
+        className="pointer-events-none [visibility:var(--mc-intrinsic-registry-ui-minecraft-confirmation-blur-2-visibility)] absolute [inset:0] h-full w-full"
         style={
           // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
           {

@@ -174,7 +174,7 @@ export const MinecraftDialogBackdrop = () => {
         <span
           aria-hidden="true"
           key={index}
-          className="left-0 pointer-events-none absolute right-0"
+          className="pointer-events-none absolute right-0 left-0"
           style={{
             backdropFilter: `url(#${id}-${band.alpha})`,
             height: band.height,

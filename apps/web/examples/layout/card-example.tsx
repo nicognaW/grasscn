@@ -19,7 +19,7 @@ const CardExample = () => {
   const [saved, setSaved] = useState(false);
 
   return (
-    <Card className="max-w-full w-118">
+    <Card className="w-118 max-w-full">
       <CardHeader>
         <CardTitle>World Settings</CardTitle>
         <CardDescription>Change your world options.</CardDescription>

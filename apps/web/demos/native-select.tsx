@@ -1,11 +1,12 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
+
+import { Label } from "../registry/ui/label";
 import {
   NativeSelect,
   NativeSelectOption,
   NativeSelectOptGroup,
 } from "../registry/ui/native-select";
-import { Label } from "../registry/ui/label";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--demo-stage-gap": `${number}px`;

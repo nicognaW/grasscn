@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import {
   Card,
@@ -25,7 +26,6 @@ import {
 } from "../registry/ui/context-menu";
 import { Input } from "../registry/ui/input";
 import type { DemoProps } from "../types";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-demos-context-menu-1-min-height": `${number}px`;
@@ -73,7 +73,7 @@ const ContextMenuDemo = ({ scale }: DemoProps) => {
                 scale={scale}
                 tabIndex={0}
                 aria-label="World context menu target"
-                className="max-w-full min-h-(--mc-intrinsic-demos-context-menu-1-min-height) w-(--mc-intrinsic-demos-context-menu-1-width)"
+                className="min-h-(--mc-intrinsic-demos-context-menu-1-min-height) w-(--mc-intrinsic-demos-context-menu-1-width) max-w-full"
                 style={
                   // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
                   {

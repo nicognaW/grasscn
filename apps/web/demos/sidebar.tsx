@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import type { DemoVariables } from "../demo-variables";
 import { Button } from "../registry/ui/button";
@@ -32,7 +33,6 @@ import {
 } from "../registry/ui/sidebar";
 import type { DemoProps } from "../types";
 import { useDemoWidth } from "../use-demo-width";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-demos-sidebar-1-gap": `${number}px`;
@@ -185,7 +185,7 @@ const SidebarDemo = ({ scale }: DemoProps) => {
               </div>
               <Card
                 scale={scale}
-                className="gap-(--mc-intrinsic-demos-sidebar-1-gap) min-w-0 p-(--mc-intrinsic-demos-sidebar-1-padding)"
+                className="min-w-0 gap-(--mc-intrinsic-demos-sidebar-1-gap) p-(--mc-intrinsic-demos-sidebar-1-padding)"
                 style={
                   // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
                   {

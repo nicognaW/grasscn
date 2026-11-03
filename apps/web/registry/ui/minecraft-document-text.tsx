@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { minecraftGlyphs } from "./minecraft-font";
 import { minecraftInputAssets } from "./minecraft-input-assets";
 import { minecraftStyle } from "./minecraft-render";
 import { getUnihexGlyph, loadUnihex, paintUnihex } from "./minecraft-unifont";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility": string;
@@ -193,7 +193,7 @@ const MinecraftDocumentText = ({
       <canvas
         ref={ref}
         aria-hidden="true"
-        className="block [image-rendering:pixelated] [visibility:var(--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility)]"
+        className="[visibility:var(--mc-intrinsic-registry-ui-minecraft-document-text-1-visibility)] block [image-rendering:pixelated]"
         style={
           // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
           {

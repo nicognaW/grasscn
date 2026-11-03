@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { minecraftItemAssets } from "./minecraft-item-assets";
 import {
@@ -6,7 +7,6 @@ import {
   retainItemMedia,
   releaseItemMedia,
 } from "./minecraft-item-media-gpu";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-registry-ui-minecraft-item-media-1-visibility": string;

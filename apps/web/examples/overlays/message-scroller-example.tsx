@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +15,6 @@ import {
   MessageScrollerButton,
   useMessageScroller,
 } from "@/components/ui/message-scroller";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height": `${number}px`;
@@ -115,7 +115,7 @@ const History = ({ scale = 2 }: { scale?: 1 | 2 | 3 }) => {
             </MessageScrollerContent>
           </MessageScrollerViewport>
           <div
-            className="flex justify-end min-h-(--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height) pt-(--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top)"
+            className="flex min-h-(--mc-intrinsic-examples-overlays-message-scroller-example-1-min-height) justify-end pt-(--mc-intrinsic-examples-overlays-message-scroller-example-1-padding-top)"
             style={
               // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
               {

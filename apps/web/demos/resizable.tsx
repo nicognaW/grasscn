@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 import type { GroupImperativeHandle } from "react-resizable-panels";
 
 import type { DemoVariables } from "../demo-variables";
@@ -10,7 +11,6 @@ import {
   ResizableHandle,
 } from "../registry/ui/resizable";
 import type { DemoProps } from "../types";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--mc-intrinsic-demos-resizable-1-padding": `${number}px`;
@@ -100,7 +100,7 @@ const ResizableDemo = ({ scale }: DemoProps) => {
           <ResizablePanel id={left} defaultSize="50%" minSize="30%">
             <Card
               scale={scale}
-              className="w-full h-full p-(--mc-intrinsic-demos-resizable-1-padding) gap-(--mc-intrinsic-demos-resizable-1-gap) overflow-hidden"
+              className="h-full w-full gap-(--mc-intrinsic-demos-resizable-1-gap) overflow-hidden p-(--mc-intrinsic-demos-resizable-1-padding)"
               style={
                 // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
                 {
@@ -140,7 +140,7 @@ const ResizableDemo = ({ scale }: DemoProps) => {
           <ResizablePanel id={right} defaultSize="50%" minSize="30%">
             <Card
               scale={scale}
-              className="w-full h-full p-(--mc-intrinsic-demos-resizable-3-padding) gap-(--mc-intrinsic-demos-resizable-3-gap) overflow-hidden"
+              className="h-full w-full gap-(--mc-intrinsic-demos-resizable-3-gap) overflow-hidden p-(--mc-intrinsic-demos-resizable-3-padding)"
               style={
                 // SAFETY: These required variables are consumed by the literal layout utility classes or existing demo role hooks; satisfies checks their primitive values and the interface supplies React’s CSSProperties view.
                 {

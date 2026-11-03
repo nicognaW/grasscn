@@ -10,9 +10,7 @@ const InputDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="input">
         <div className="demo-pair">
-          <label htmlFor="preview-input">
-            EDITABLE
-          </label>
+          <label htmlFor="preview-input">EDITABLE</label>
           <Input
             id="preview-input"
             aria-label="Demo input"
@@ -25,9 +23,7 @@ const InputDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label htmlFor="preview-input-readonly">
-            READ ONLY
-          </label>
+          <label htmlFor="preview-input-readonly">READ ONLY</label>
           <Input
             id="preview-input-readonly"
             aria-label="Read-only demo input"
@@ -37,9 +33,7 @@ const InputDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label htmlFor="preview-input-disabled">
-            DISABLED
-          </label>
+          <label htmlFor="preview-input-disabled">DISABLED</label>
           <Input
             id="preview-input-disabled"
             aria-label="Disabled demo input"

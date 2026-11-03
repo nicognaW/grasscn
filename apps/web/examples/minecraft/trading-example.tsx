@@ -41,8 +41,8 @@ const TradingExample = () => {
   const [completed, setCompleted] = useState(0);
 
   return (
-    <div className="grid gap-4 max-w-full">
-      <div className="overflow-x-auto max-w-full">
+    <div className="grid max-w-full gap-4">
+      <div className="max-w-full overflow-x-auto">
         <Trading
           title="Village market"
           offers={offers}

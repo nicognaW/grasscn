@@ -1,7 +1,7 @@
 import * as React from "react";
+import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 import { Marker, MarkerContent, MarkerIcon } from "../registry/ui/marker";
-import type { CSSProperties as IntrinsicLayoutCSSProperties } from "react";
 
 interface IntrinsicLayoutStyle1 extends IntrinsicLayoutCSSProperties {
   "--demo-stage-gap": `${number}px`;

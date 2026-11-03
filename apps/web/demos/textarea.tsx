@@ -12,9 +12,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
     <>
       <div className="demo-stage" data-stage="textarea">
         <div className="demo-pair">
-          <label htmlFor="preview-textarea">
-            EDITABLE
-          </label>
+          <label htmlFor="preview-textarea">EDITABLE</label>
           <Textarea
             id="preview-textarea"
             aria-label="Demo textarea"
@@ -27,9 +25,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label htmlFor="preview-textarea-readonly">
-            READ ONLY
-          </label>
+          <label htmlFor="preview-textarea-readonly">READ ONLY</label>
           <Textarea
             id="preview-textarea-readonly"
             aria-label="Read-only demo textarea"
@@ -39,9 +35,7 @@ const TextareaDemo = ({ scale }: DemoProps) => {
           />
         </div>
         <div className="demo-pair">
-          <label htmlFor="preview-textarea-disabled">
-            DISABLED
-          </label>
+          <label htmlFor="preview-textarea-disabled">DISABLED</label>
           <Textarea
             id="preview-textarea-disabled"
             aria-label="Disabled demo textarea"

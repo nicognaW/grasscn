@@ -1,6 +1,6 @@
+import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import type { IncomingMessage } from "node:http";
-import { readFile } from "node:fs/promises";
 
 interface RegistryServerRequest extends IncomingMessage {
   url: string;
