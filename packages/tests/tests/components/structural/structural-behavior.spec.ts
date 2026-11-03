@@ -1,6 +1,6 @@
-import type { Page } from "@playwright/test";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
+import type { Page } from "@playwright/test";
 import type { RecordedPitchedPlayback } from "@tests/harness/audio-playback";
 
 interface PaginationPlaybackState {
@@ -11,123 +11,130 @@ interface PaginationArrowSourceState {
   sounds: string[];
 }
 
-const verifyAspectRatioGeometry = async (page: Page, ratio: number, width: number) => {
-      await page.goto(
-        `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
-      );
-      const node = page.locator("#ratio");
-      await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
-      await expect(node).toHaveAttribute("data-ref", "true");
-      const rect = (await node.boundingBox())!;
-      expect(rect.width).toBe(width);
-      expect(rect.height).toBeCloseTo(width / ratio, 1);
-      const art = (await page.locator("#art").boundingBox())!;
-      expect([art.width, art.height]).toEqual([40, 40]);
-    };
+const verifyAspectRatioGeometry = async (
+  page: Page,
+  ratio: number,
+  width: number
+) => {
+  await page.goto(
+    `/?component=aspect-ratio&ratio=${ratio}&containerWidth=${width}`
+  );
+  const node = page.locator("#ratio");
+  await expect(node).toHaveAttribute("data-slot", "aspect-ratio");
+  await expect(node).toHaveAttribute("data-ref", "true");
+  const rect = (await node.boundingBox())!;
+  expect(rect.width).toBe(width);
+  expect(rect.height).toBeCloseTo(width / ratio, 1);
+  const art = (await page.locator("#art").boundingBox())!;
+  expect([art.width, art.height]).toEqual([40, 40]);
+};
 
-const verifyButtonGroupOrientation = async (page: Page, orientation: string) => {
-    await page.goto(`/?component=button-group&orientation=${orientation}`);
-    const group = page.getByRole("group", { name: "Game actions" });
-    await expect(group).toHaveAttribute("data-orientation", orientation);
+const verifyButtonGroupOrientation = async (
+  page: Page,
+  orientation: string
+) => {
+  await page.goto(`/?component=button-group&orientation=${orientation}`);
+  const group = page.getByRole("group", { name: "Game actions" });
+  await expect(group).toHaveAttribute("data-orientation", orientation);
 
-    const first = (await page.locator("[data-subject]").boundingBox())!;
+  const first = (await page.locator("[data-subject]").boundingBox())!;
 
-    const last = (await group
-      .getByRole("button", { exact: true, name: "Next" })
-      .boundingBox())!;
+  const last = (await group
+    .getByRole("button", { exact: true, name: "Next" })
+    .boundingBox())!;
 
-    expect(
-      orientation === "horizontal" ? last.x > first.x : last.y > first.y
-    ).toBe(true);
-    await page.locator("[data-subject]").click();
-    await group.getByRole("button", { exact: true, name: "Next" }).click();
-    await expect(page.locator("#events")).toHaveText("2");
-    await expect(group.getByRole("separator")).toHaveAttribute(
-      "aria-orientation",
-      "vertical"
-    );
-    await expect(page.locator("#slotted")).toHaveAttribute(
-      "data-slot",
-      "button-group-text"
-    );
-    await expect(page.locator("#variant")).toHaveClass(
-      /mc-button-group-vertical/
-    );
-  };
+  expect(
+    orientation === "horizontal" ? last.x > first.x : last.y > first.y
+  ).toBe(true);
+  await page.locator("[data-subject]").click();
+  await group.getByRole("button", { exact: true, name: "Next" }).click();
+  await expect(page.locator("#events")).toHaveText("2");
+  await expect(group.getByRole("separator")).toHaveAttribute(
+    "aria-orientation",
+    "vertical"
+  );
+  await expect(page.locator("#slotted")).toHaveAttribute(
+    "data-slot",
+    "button-group-text"
+  );
+  await expect(page.locator("#variant")).toHaveClass(
+    /mc-button-group-vertical/
+  );
+};
 
 const verifyBlockedPaginationAction = async (page: Page, suffix: string) => {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    await expect(page.locator("#events")).toHaveText("0");
-    expect(new URL(page.url()).hash).toBe("");
-  };
+  await page.goto(`/?component=pagination&${suffix}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  await expect(page.locator("#events")).toHaveText("0");
+  expect(new URL(page.url()).hash).toBe("");
+};
 
 const verifyCanceledPaginationAudio = async (page: Page, suffix: string) => {
-    await page.goto(`/?component=pagination&${suffix}`);
-    await page.locator("[data-subject]").dispatchEvent("click");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([]);
-  };
+  await page.goto(`/?component=pagination&${suffix}`);
+  await page.locator("[data-subject]").dispatchEvent("click");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination action playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
+};
 
 const verifyPaginationArrowKeyboard = async (page: Page, forward: boolean) => {
-    await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
+  await page.goto(`/?component=pagination&part=arrow&checked=${forward}`);
 
-    const arrow = page.getByRole("link", {
-      name: forward ? "Go to next page" : "Go to previous page",
-    });
+  const arrow = page.getByRole("link", {
+    name: forward ? "Go to next page" : "Go to previous page",
+  });
 
-    await expect(arrow).toHaveAttribute("href", "#next");
-    await arrow.hover();
-    await arrow.focus();
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([]);
-    await page.keyboard.press("Enter");
-    expect(new URL(page.url()).hash).toBe("#next");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationPlaybackState).sounds
-      )
-    ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
-  };
+  await expect(arrow).toHaveAttribute("href", "#next");
+  await arrow.hover();
+  await arrow.focus();
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([]);
+  await page.keyboard.press("Enter");
+  expect(new URL(page.url()).hash).toBe("#next");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow playback reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationPlaybackState).sounds
+    )
+  ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
+};
 
 const verifySuppressedPaginationArrow = async (page: Page, suffix: string) => {
-    await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
-    const arrow = page.locator("[data-subject]");
-    await expect(arrow).toContainText("World");
-    await arrow.dispatchEvent("click");
-    expect(new URL(page.url()).hash).toBe("");
-    expect(
-      await page.evaluate(
-        () =>
-          // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
-          (window as typeof window & PaginationArrowSourceState).sounds
-      )
-    ).toEqual([]);
-  };
+  await page.goto(`/?component=pagination&part=arrow&text=World&${suffix}`);
+  const arrow = page.locator("[data-subject]");
+  await expect(arrow).toContainText("World");
+  await arrow.dispatchEvent("click");
+  expect(new URL(page.url()).hash).toBe("");
+  expect(
+    await page.evaluate(
+      () =>
+        // SAFETY: This Pagination arrow silence reader runs after navigation initializes its paired sounds trace.
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact test-owned audio state initialized by the paired addInitScript.
+        (window as typeof window & PaginationArrowSourceState).sounds
+    )
+  ).toEqual([]);
+};
 
 test("Aspect Ratio preserves exact box geometry at 1:1, 4:3 and 16:9", async ({
   page,
 }) => {
   for (const ratio of [1, 4 / 3, 16 / 9]) {
     for (const width of [160, 320, 640]) {
-await verifyAspectRatioGeometry(page, ratio, width);
-}
+      await verifyAspectRatioGeometry(page, ratio, width);
+    }
   }
 });
 
@@ -152,8 +159,8 @@ test("Button Group preserves horizontal/vertical geometry and independent activa
   page,
 }) => {
   for (const orientation of ["horizontal", "vertical"]) {
-await verifyButtonGroupOrientation(page, orientation);
-}
+    await verifyButtonGroupOrientation(page, orientation);
+  }
 });
 
 test("Button Group disabled buttons stay disabled and keyboard focus stays independent", async ({
@@ -203,8 +210,8 @@ test("Pagination cancellation and disabled links prevent activation and navigati
   page,
 }) => {
   for (const suffix of ["cancel=1", "state=disabled"]) {
-await verifyBlockedPaginationAction(page, suffix);
-}
+    await verifyBlockedPaginationAction(page, suffix);
+  }
 });
 
 test("Pagination uses original audio once per accepted action and stays silent when canceled", async ({
@@ -248,8 +255,8 @@ test("Pagination uses original audio once per accepted action and stays silent w
   ).toEqual([{ pitch: 1, source: minecraftClickSound, volume: 0.25 }]);
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
-await verifyCanceledPaginationAudio(page, suffix);
-}
+    await verifyCanceledPaginationAudio(page, suffix);
+  }
 });
 
 test("Pagination original arrows retain native links and keyboard activation with original click audio", async ({
@@ -273,8 +280,8 @@ test("Pagination original arrows retain native links and keyboard activation wit
   });
 
   for (const forward of [false, true]) {
-await verifyPaginationArrowKeyboard(page, forward);
-}
+    await verifyPaginationArrowKeyboard(page, forward);
+  }
 });
 
 test("Pagination original arrows preserve custom content and cancel disabled or prevented actions", async ({
@@ -296,6 +303,6 @@ test("Pagination original arrows preserve custom content and cancel disabled or 
   });
 
   for (const suffix of ["cancel=1", "state=disabled"]) {
-await verifySuppressedPaginationArrow(page, suffix);
-}
+    await verifySuppressedPaginationArrow(page, suffix);
+  }
 });
