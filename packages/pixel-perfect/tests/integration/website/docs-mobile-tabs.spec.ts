@@ -83,7 +83,7 @@ test("mobile documentation Preview and Code remain visible and match compact nat
     await readFile(new URL("manifest.json", family), "utf-8")
   );
 
-  for (const state of ["preview", "code"]) {
+  const verifyMobileTabState = async (state: string) => {
     if (state === "code") {
       await tabs.getByRole("tab", { exact: true, name: "Code" }).click();
       await example.getByRole("button", { exact: true, name: "Copy" }).focus();
@@ -131,6 +131,10 @@ test("mobile documentation Preview and Code remain visible and match compact nat
       })
     );
     expect(result.count).toBe(0);
+  };
+
+  for (const state of ["preview", "code"]) {
+    await verifyMobileTabState(state);
   }
 
   expect(
