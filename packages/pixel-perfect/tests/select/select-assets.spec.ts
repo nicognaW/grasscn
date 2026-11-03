@@ -10,7 +10,7 @@ import type BoundaryReference2 from "../reference/select-extra/glyph-atlas.json"
 import type BoundaryReference3 from "../reference/select-extra/repeatability.json";
 import type BoundaryReference1 from "../reference/select/asset-provenance.json";
 
-const json = (file: string) =>
+const json = (file: string): unknown =>
   JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
 
 test("Select retains original list texture bytes", () => {

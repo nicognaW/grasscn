@@ -7,6 +7,13 @@ import { pixelPerfectRoot } from "@ppt/paths";
 import { evidenceFile } from "@ppt/runtime/evidence-paths";
 import { PNG } from "pngjs";
 
+import type RegistryIdentityData from "../../../../../apps/web/registry.json";
+import type BrandingProvenance from "../../../../../apps/web/branding.provenance.json";
+
+type RegistryIdentity = Pick<typeof RegistryIdentityData, "name"> & {
+  packages?: { ""?: { name: string } };
+};
+
 const differences = (left: PNG, right: PNG) => {
   let count = 0;
 
@@ -25,9 +32,11 @@ const differences = (left: PNG, right: PNG) => {
 
 test("Grasscn project identity and native branding assets are consistent", async () => {
   for (const file of ["registry.json"]) {
+    // SAFETY: This fixed registry identity input supplies name; the existing optional packages root check retains its legacy identity projection without changing reads or checks.
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact registry identity consumer boundary; preserve this fresh parse and the optional legacy branch.
     const metadata = JSON.parse(
       readFileSync(evidenceFile(file, pixelPerfectRoot), "utf-8")
-    );
+    ) as RegistryIdentity;
 
     expect(metadata.name).toBe("grasscn");
 
@@ -36,21 +45,20 @@ test("Grasscn project identity and native branding assets are consistent", async
     }
   }
 
+  // SAFETY: evidenceFile maps this retained preview path to the exact imported branding.provenance.json, including generated SHA records and native comparison cases.
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Exact retained branding producer boundary; preserve the original fresh read and parse.
   const provenance = JSON.parse(
     await readFile(
       evidenceFile("preview/branding.provenance.json", pixelPerfectRoot),
       "utf-8"
     )
-  );
+  ) as typeof BrandingProvenance;
 
   expect(provenance.sourceJarSha256).toBe(
     "40896ee9f1e2bec3c934daac7e93d41e9e3d9c2f8ae0ca366d52ffbfd1afa290"
   );
 
-  for (const [file, record] of Object.entries(provenance.generated) as [
-    string,
-    { sha256: string },
-  ][]) {
+  for (const [file, record] of Object.entries(provenance.generated)) {
     const bytes = await readFile(
       evidenceFile(`preview/assets/${file}`, pixelPerfectRoot)
     );

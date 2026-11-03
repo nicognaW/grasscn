@@ -11,7 +11,7 @@ import type BoundaryReference2 from "../reference/tabs-extra/glyph-atlas.json";
 import type BoundaryReference3 from "../reference/tabs-extra/repeatability.json";
 import type BoundaryReference1 from "../reference/tabs/asset-provenance.json";
 
-const json = (file: string) =>
+const json = (file: string): unknown =>
   JSON.parse(readFileSync(pixelPerfectFile(file), "utf-8"));
 
 const decode = (uri: string) =>
