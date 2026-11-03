@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -125,7 +126,8 @@ for (const [part, directory] of [
           }
 
           if (c.state === "icon-hover") {
-            const box = (await subject.boundingBox())!;
+            const box = await subject.boundingBox();
+expectNotNull(box, "Missing required bounding box: box");
             await page.mouse.move(box.x + 18 * c.scale, box.y + 18 * c.scale);
           }
 
@@ -184,7 +186,8 @@ for (const [part, directory] of [
 
           await frameCompletion.promise;
         });
-        const box = (await subject.boundingBox())!;
+        const box = await subject.boundingBox();
+expectNotNull(box, "Missing required bounding box: box");
         expect([box.x, box.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
         const bytes = readFileSync(

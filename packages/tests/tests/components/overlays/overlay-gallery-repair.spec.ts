@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const origin = (
@@ -38,14 +39,16 @@ for (const scale of [2]) {
     await group.scrollIntoViewIfNeeded();
     await expect
       .poll(async () => {
-        const face = (await group
+        const face = await group
           .locator("[data-slot=avatar]")
           .first()
-          .boundingBox())!;
+          .boundingBox();
+expectNotNull(face, "Missing required bounding box: face");
 
-        const count = (await group
+        const count = await group
           .locator("[data-slot=avatar-group-count]")
-          .boundingBox())!;
+          .boundingBox();
+expectNotNull(count, "Missing required bounding box: count");
 
         return Math.abs(face.height - count.height);
       })
@@ -83,7 +86,8 @@ for (const scale of [2]) {
     await expect(dialog).toHaveAttribute("data-mc-confirmation-ready", "true");
     await expect
       .poll(async () => {
-        const r = (await dialog.boundingBox())!;
+        const r = await dialog.boundingBox();
+expectNotNull(r, "Missing required bounding box: r");
 
         return (
           r.x >= 0 && r.y >= 0 && r.x + r.width <= 390 && r.y + r.height <= 844
@@ -92,9 +96,10 @@ for (const scale of [2]) {
       .toBe(true);
 
     for (const name of ["Yes", "No"]) {
-      const r = (await dialog
+      const r = await dialog
         .getByRole("button", { exact: true, name })
-        .boundingBox())!;
+        .boundingBox();
+expectNotNull(r, "Missing required bounding box: r");
 
       expect(r.x).toBeGreaterThanOrEqual(0);
       expect(r.x + r.width).toBeLessThanOrEqual(390);
@@ -108,12 +113,14 @@ for (const scale of [2]) {
       });
       await expect
         .poll(async () => {
-          const a = (await header.boundingBox())!;
+          const a = await header.boundingBox();
+expectNotNull(a, "Missing required bounding box: a");
 
-          const b = (await dialog
+          const b = await dialog
             .locator(".mc-alert-dialog-description .mc-card-text-line")
             .last()
-            .boundingBox())!;
+            .boundingBox();
+expectNotNull(b, "Missing required bounding box: b");
 
           return b.y >= a.y && b.y + b.height <= a.y + a.height + 1;
         })
@@ -141,7 +148,8 @@ test("Short viewport AlertDialog layout remains stable while resizing", async ({
   await expect(dialog).toHaveAttribute("data-mc-confirmation-compact", "true");
   await expect
     .poll(async () => {
-      const b = (await dialog.boundingBox())!;
+      const b = await dialog.boundingBox();
+expectNotNull(b, "Missing required bounding box: b");
 
       return b.y >= 0 && b.y + b.height <= 240;
     })

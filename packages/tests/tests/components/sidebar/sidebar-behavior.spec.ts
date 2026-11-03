@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { writeFileSync } from "node:fs";
 
 import { test, expect } from "@grasscn/tests/test";
@@ -126,17 +127,20 @@ test("Sidebar right-side positioning reserves the matching inset space", async (
 }) => {
   await page.goto("/?component=sidebar&side=right");
 
-  const provider = (await page
+  const provider = await page
     .locator('[data-slot="sidebar-wrapper"]')
-    .boundingBox())!;
+    .boundingBox();
+expectNotNull(provider, "Missing required bounding box: provider");
 
-  const container = (await page
+  const container = await page
     .locator('[data-slot="sidebar-container"]')
-    .boundingBox())!;
+    .boundingBox();
+expectNotNull(container, "Missing required bounding box: container");
 
-  const inset = (await page
+  const inset = await page
     .locator('[data-slot="sidebar-inset"]')
-    .boundingBox())!;
+    .boundingBox();
+expectNotNull(inset, "Missing required bounding box: inset");
 
   expect(container.x + container.width).toBe(provider.x + provider.width);
   expect(inset.x + inset.width).toBe(container.x);
@@ -231,11 +235,13 @@ test("Sidebar skeleton is deterministic and optional action placement does not c
     page.locator('[data-slot="sidebar-menu-skeleton"]')
   ).toHaveAttribute("aria-busy", "true");
 
-  const action = (await page
+  const action = await page
     .getByRole("button", { exact: true, name: "World actions" })
-    .boundingBox())!;
+    .boundingBox();
+expectNotNull(action, "Missing required bounding box: action");
 
-  const button = (await page.locator("#menu-worlds").boundingBox())!;
+  const button = await page.locator("#menu-worlds").boundingBox();
+expectNotNull(button, "Missing required bounding box: button");
 
   expect(action.y).toBe(button.y);
   expect(action.x).toBeGreaterThan(button.x);

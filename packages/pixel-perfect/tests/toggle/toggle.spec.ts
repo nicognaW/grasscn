@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -159,7 +160,8 @@ test.describe("Toggle native recipe-filter matrix", () => {
 
         await frameCompletion.promise;
       });
-      const bounds = (await subject.boundingBox())!;
+      const bounds = await subject.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
       expect([bounds.x, bounds.y]).toEqual([c.x * c.scale, c.y * c.scale]);
 
       const expectedBytes = readFileSync(

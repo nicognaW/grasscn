@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 const preview = process.env.GRASSCN_PREVIEW_URL ?? "http://127.0.0.1:5176/";
@@ -64,7 +65,8 @@ for (const scale of [2] as const) {
       await trigger.click();
       const popup = page.locator("[data-slot=select-content]");
       await expect(popup).toBeVisible();
-      const before = (await popup.boundingBox())!;
+      const before = await popup.boundingBox();
+expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -90,7 +92,8 @@ for (const scale of [2] as const) {
       } else {
         // Base UI may show the entire list when item alignment has enough room.
         for (const option of await popup.getByRole("option").all()) {
-          const bounds = (await option.boundingBox())!;
+          const bounds = await option.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
           expect(bounds.y).toBeGreaterThanOrEqual(before.y);
           expect(bounds.y + bounds.height).toBeLessThanOrEqual(
             before.y + before.height
@@ -115,7 +118,8 @@ for (const scale of [2] as const) {
         await frameCompletion.promise;
       });
       // Item-aligned Base UI lists can expand while scrolling, but must stay in bounds.
-      const after = (await popup.boundingBox())!;
+      const after = await popup.boundingBox();
+expectNotNull(after, "Missing required bounding box: after");
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.y + after.height).toBeLessThanOrEqual(height);
       await page.keyboard.press("End");

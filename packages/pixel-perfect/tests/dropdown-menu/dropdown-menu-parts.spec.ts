@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -119,7 +120,8 @@ for (const c of manifest.cases) {
 
         await frameCompletion.promise;
       });
-      const bounds = (await subject.boundingBox())!;
+      const bounds = await subject.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
       expect(bounds.x).toBe(c.x * c.scale);
       expect(bounds.y).toBe(c.y * c.scale);
 

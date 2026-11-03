@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
 
@@ -50,8 +51,10 @@ test("Input Group addon alignment and cancelled focus remain functional", async 
 
     await expect(addon).toHaveAttribute("data-align", align);
 
-    const a = (await addon.boundingBox())!;
-    const f = (await field.boundingBox())!;
+    const a = await addon.boundingBox();
+expectNotNull(a, "Missing required bounding box: a");
+    const f = await field.boundingBox();
+expectNotNull(f, "Missing required bounding box: f");
 
     expect(
       align.startsWith("block") ? Math.abs(a.y - f.y) : Math.abs(a.x - f.x)

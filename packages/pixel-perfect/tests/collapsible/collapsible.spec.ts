@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
@@ -160,7 +161,8 @@ for (const directory of [
 
             await frameCompletion.promise;
           });
-          const bounds = (await subject.boundingBox())!;
+          const bounds = await subject.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
           expect([bounds.x, bounds.y]).toEqual([
             (c.x ?? 16) * c.scale,
             (c.y ?? 16) * c.scale,

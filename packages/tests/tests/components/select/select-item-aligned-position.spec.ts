@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 for (const scale of [1, 2, 3] as const) {
@@ -37,15 +38,18 @@ for (const scale of [1, 2, 3] as const) {
       await expect(popup).toHaveAttribute("data-mc-select-ready", "true");
       await expect
         .poll(async () => {
-          const row = (await selected.boundingBox())!;
-          const anchor = (await trigger.boundingBox())!;
+          const row = await selected.boundingBox();
+expectNotNull(row, "Missing required bounding box: row");
+          const anchor = await trigger.boundingBox();
+expectNotNull(anchor, "Missing required bounding box: anchor");
 
           return Math.abs(
             row.y + row.height / 2 - anchor.y - anchor.height / 2
           );
         })
         .toBeLessThanOrEqual(1);
-      const before = (await popup.boundingBox())!;
+      const before = await popup.boundingBox();
+expectNotNull(before, "Missing required bounding box: before");
       expect(before.x).toBeGreaterThanOrEqual(0);
       expect(before.x + before.width).toBeLessThanOrEqual(width);
       expect(before.y).toBeGreaterThanOrEqual(0);
@@ -69,7 +73,8 @@ for (const scale of [1, 2, 3] as const) {
 
         return await frameCompletion.promise;
       });
-      const after = (await popup.boundingBox())!;
+      const after = await popup.boundingBox();
+expectNotNull(after, "Missing required bounding box: after");
       expect(after.x).toBeGreaterThanOrEqual(0);
       expect(after.y).toBeGreaterThanOrEqual(0);
       expect(after.x + after.width).toBeLessThanOrEqual(width);

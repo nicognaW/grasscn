@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import { documentationInventory } from "@tests/checks/documentation-inventory";
 import { PNG } from "pngjs";
@@ -647,7 +648,8 @@ test("Tooltip padding preserves the controls underneath it", async ({
     "data-mc-tooltip-painted",
     "false"
   );
-  const clip = (await content.boundingBox())!;
+  const clip = await content.boundingBox();
+expectNotNull(clip, "Missing required bounding box: clip");
   const shown = PNG.sync.read(await page.screenshot({ clip }));
   await content.evaluate((node) => {
     node.style.visibility = "hidden";

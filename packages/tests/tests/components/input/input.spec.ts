@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 
 test("Input preserves controlled editing, selection, keyboard deletion and change events", async ({
@@ -133,7 +134,8 @@ test("Input pointer position uses the same original font advances", async ({
   await page.goto("/?component=input&text=WWWWWW");
   const input = page.getByRole("textbox", { name: "Test input" });
   await page.evaluate(async () => await document.fonts.ready);
-  const bounds = (await input.boundingBox())!;
+  const bounds = await input.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
   await page.mouse.click(
     bounds.x + (4 + 6 * 3) * 2,
     bounds.y + bounds.height / 2

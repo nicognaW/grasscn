@@ -1,3 +1,4 @@
+import { expectNotNull } from "@grasscn/tests/assertions";
 import { test, expect } from "@grasscn/tests/test";
 import type { Page } from "@grasscn/tests/test";
 import { minecraftClickSound } from "@grasscn/web/ui/minecraft-sound-assets";
@@ -19,7 +20,8 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
   await openMenu(page);
   const menu = page.getByRole("menu");
   await expect(menu).toBeVisible();
-  const trigger = (await page.locator("#context-hit").boundingBox())!;
+  const trigger = await page.locator("#context-hit").boundingBox();
+expectNotNull(trigger, "Missing required bounding box: trigger");
 
   const border = await page.locator("#context-hit").evaluate((node) => {
     const style = getComputedStyle(node);
@@ -30,7 +32,8 @@ test("Context Menu uses pointer anchoring and skips disabled items with the keyb
     ];
   });
 
-  const bounds = (await menu.boundingBox())!;
+  const bounds = await menu.boundingBox();
+expectNotNull(bounds, "Missing required bounding box: bounds");
   expect([bounds.x, bounds.y]).toEqual([
     trigger.x + border[0] + 24 + 4,
     trigger.y + border[1] + 24,
